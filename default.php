@@ -154,15 +154,6 @@ foreach ($combined as $row) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIP SWP Calculator</title>
-    <script>
-        // Check for saved theme preference or default to light mode
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        if (savedTheme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    </script>
     <meta name="description"
         content="Use our free SIP & SWP calculator to plan your investments. A simple, accurate tool designed for global investors.">
     <link rel="canonical" href="https://sipswpcalculator.com">
@@ -177,10 +168,19 @@ foreach ($combined as $row) {
             "description": "A free, easy-to-use SIP SWP calculator for Global investors."
         }
     </script>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS v3 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { darkMode: 'class', };
+        tailwindcss.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        accent: '#8b5cf6',
+                    }
+                }
+            }
+        }
     </script>
 
     <!-- Chart.js (modern build) -->
@@ -205,7 +205,7 @@ foreach ($combined as $row) {
     <div class="max-w-7xl mx-auto px-4 py-10">
         <main id="main-content" role="main">
 
-            <div class="bg-gray-800 rounded-lg shadow-lg mb-6 p-6">
+            <div class="card-gradient rounded-lg mb-6 p-6">
                 <div>
                     <form method="post" novalidate>
                         <fieldset class="mb-6">
@@ -294,7 +294,7 @@ foreach ($combined as $row) {
             </div>
 
             <!-- Chart Section -->
-            <section class="bg-gray-800 rounded-lg shadow-lg mb-6 p-6" aria-label="Investment growth visualization">
+            <section class="card-gradient rounded-lg mb-6 p-6" aria-label="Investment growth visualization">
                 <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
                     <div>
                         <h2 class="text-2xl font-bold mb-2">Corpus, Cumulative Investment & SWP Withdrawals</h2>
@@ -313,7 +313,7 @@ foreach ($combined as $row) {
             </section>
 
             <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
-                <div class="bg-gray-800 rounded-lg shadow-lg mb-6 p-6">
+                <div class="card-gradient rounded-lg mb-6 p-6">
                     <h5 class="text-lg font-bold mb-3">Note</h5>
                     <p class="text-sm text-gray-400"><strong>All amounts are in USD.</strong> End-of-Year Corpus = your
                         portfolio value at the end of the year (includes all principal invested so far and interest earned).
@@ -321,11 +321,11 @@ foreach ($combined as $row) {
                         table below shows the year-by-year breakdown.</p>
                 </div>
 
-                <div class="bg-gray-800 rounded-lg shadow-lg p-6">
+                <div class="card-gradient rounded-lg p-6">
                     <h2 class="text-2xl font-bold mb-6">Yearly Report</h2>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm border-collapse">
-                            <thead class="bg-gray-900 border-b border-gray-700">
+                            <thead class="table-header-gradient border-b border-gray-700">
                                 <tr>
                                     <th class="px-4 py-3 text-left font-semibold"
                                         title="Financial year number of the simulation">Year</th>

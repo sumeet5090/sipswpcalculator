@@ -37,9 +37,9 @@ textarea:focus {
 }
 
 /* Enhanced card/section styling with gradients */
-.bg-gray-800 {
-	background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+.card-gradient {
+	background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 /* Better legend and label styling */
@@ -50,8 +50,8 @@ label {
 }
 
 /* Improve table header styling */
-thead {
-	background: linear-gradient(135deg, #1f2937 0%, #0f172a 100%) !important;
+.table-header-gradient {
+	background: linear-gradient(135deg, #1f2937 0%, #0f172a 100%);
 }
 
 table th {
