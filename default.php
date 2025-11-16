@@ -178,6 +178,11 @@ foreach ($combined as $row) {
     </script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        };
+    </script>
     <!-- <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'"> -->
     <link rel="stylesheet" href="styles.css">
 
