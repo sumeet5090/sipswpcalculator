@@ -151,7 +151,7 @@ foreach ($combined as $row) {
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Free SIP Calculator</title>
+	<title>Not Free SIP Calculator</title>
 	<meta name="description"
 		content="Use our free SIP & SWP calculator to plan your investments. A simple, accurate tool designed for Indian investors.">
 	<link rel="canonical" href="http://sip-calculator.sumeet-boga.lovestoblog.com/?i=1">
