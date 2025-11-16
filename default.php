@@ -178,13 +178,24 @@ foreach ($combined as $row) {
     </script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'"> -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
 
     <!-- Chart.js (modern build) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
     <!-- Chart.js Zoom plugin (adds wheel/pinch/drag zoom + pan) -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.umd.min.js"></script>
+
+    <script>
+        // Pass chart data to the external script
+        window.chartData = {
+            years: <?= json_encode($years_data) ?>,
+            cumulative: <?= json_encode($cumulative_numbers) ?>,
+            corpus: <?= json_encode($combined_numbers) ?>,
+            swp: <?= json_encode($swp_numbers) ?>
+        };
+    </script>
+    <script src="script.js"></script>
 </head>
 
 <body class="bg-gray-900 text-gray-100">
@@ -367,17 +378,6 @@ foreach ($combined as $row) {
     </footer>
 
     </div>
-
-    <script>
-        // Pass chart data to the external script
-        window.chartData = {
-            years: <?= json_encode($years_data) ?>,
-            cumulative: <?= json_encode($cumulative_numbers) ?>,
-            corpus: <?= json_encode($combined_numbers) ?>,
-            swp: <?= json_encode($swp_numbers) ?>
-        };
-    </script>
-    <script src="script.js"></script>
 </body>
 
 </html>
