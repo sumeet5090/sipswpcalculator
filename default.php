@@ -99,17 +99,19 @@ if ($action === 'download_csv') {
 	echo "\xEF\xBB\xBF"; // BOM for UTF-8 Excel
 	$csv = new SplTempFileObject();
 	$csv->setCsvControl(',', '"', "\\");
+	$csv->fputcsv(['Note: All amounts are in USD']);
+	$csv->fputcsv([]);
 	$csv->fputcsv([
 		'Year',
-		'Start-of-Year Corpus (₹)',
-		'Monthly SIP (₹)',
-		'Annual SIP Contribution (₹)',
-		'Total SIP Invested to Date (₹)',
-		'Monthly SWP Withdrawal (₹)',
-		'Annual SWP Withdrawal (₹)',
-		'Total SWP Withdrawals to Date (₹)',
-		'Interest Earned This Year (₹)',
-		'End-of-Year Corpus (₹)'
+		'Start-of-Year Corpus',
+		'Monthly SIP',
+		'Annual SIP Contribution',
+		'Total SIP Invested to Date',
+		'Monthly SWP Withdrawal',
+		'Annual SWP Withdrawal',
+		'Total SWP Withdrawals to Date',
+		'Interest Earned This Year',
+		'End-of-Year Corpus'
 	]);
 	for ($y = 1; $y <= $simulation_years; $y++) {
 		$row = $combined[$y];
@@ -190,7 +192,7 @@ foreach ($combined as $row) {
 						<legend class="mb-3">SIP Details</legend>
 						<div class="row g-3">
 							<div class="col-md-3">
-								<label class="form-label">Monthly SIP Investment (₹)</label>
+								<label class="form-label">Monthly SIP Investment</label>
 								<input type="number" step="0.01" name="sip" class="form-control" required min="1"
 									value="<?= htmlspecialchars((string) $sip) ?>">
 							</div>
@@ -217,7 +219,7 @@ foreach ($combined as $row) {
 						<!-- SWP automatically starts the year after SIP ends -->
 						<div class="row g-3">
 							<div class="col-md-3">
-								<label class="form-label">Monthly SWP Withdrawal (₹)</label>
+								<label class="form-label">Monthly SWP Withdrawal</label>
 								<input type="number" step="0.01" name="swp_withdrawal" class="form-control" required
 									min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
 							</div>
@@ -270,12 +272,12 @@ foreach ($combined as $row) {
 
 		<?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
 			<div class="card shadow mb-3">
-				<div class="card-body">
-					<h5 class="mb-2">Note</h5>
-					<p class="small text-muted mb-0">End-of-Year Corpus = your portfolio value at the end of the year
-						(includes all
-						principal invested so far and interest earned). The table below shows the year-by-year breakdown.
-					</p>
+			<div class="card-body">
+				<h5 class="mb-2">Note</h5>
+				<p class="small text-muted mb-0"><strong>All amounts are in USD.</strong> End-of-Year Corpus = your portfolio value at the end of the year
+					(includes all
+					principal invested so far and interest earned). The table below shows the year-by-year breakdown.
+				</p>
 				</div>
 			</div>
 
@@ -289,32 +291,32 @@ foreach ($combined as $row) {
 									<th data-bs-toggle="tooltip" title="Financial year number of the simulation">Year</th>
 									<th data-bs-toggle="tooltip"
 										title="Corpus at the start of the year (carryover from previous year end)">
-										Start-of-Year Corpus (₹)</th>
+										Start-of-Year Corpus ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Monthly SIP amount for that year (annual step-up applied)">Monthly
-										SIP (₹)</th>
+										SIP ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Total SIP contributed during that year (Monthly SIP × 12)">Annual
-										SIP Contribution (₹)</th>
+										SIP Contribution ($)</th>
 									<th data-bs-toggle="tooltip" title="Total SIP contributed cumulatively up to this year">
 										Total SIP
-										Invested to Date (₹)</th>
+										Invested to Date ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Monthly SWP amount for that year (starts after SIP period)">Monthly
-										SWP Withdrawal (₹)</th>
+										SWP Withdrawal ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Total SWP withdrawn during that year (sum of monthly withdrawals actually paid)">
 										Annual SWP
-										Withdrawal (₹)</th>
+										Withdrawal ($)</th>
 									<th data-bs-toggle="tooltip" title="Total SWP withdrawn cumulatively up to this year">
 										Total SWP
-										Withdrawals to Date (₹)</th>
+										Withdrawals to Date ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Interest portion earned during this year (End Corpus - Start Corpus - Net Contribution)">
-										Interest Earned This Year (₹)</th>
+										Interest Earned This Year ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Portfolio value at year end (includes principal + interest), also used by the chart">
-										End-of-Year Corpus (₹)</th>
+										End-of-Year Corpus ($)</th>
 								</tr>
 							</thead>
 							<tbody>
