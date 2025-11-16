@@ -178,11 +178,6 @@ foreach ($combined as $row) {
     </script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class'
-        };
-    </script>
     <link rel="stylesheet" href="styles.css">
     <!-- Chart.js (modern build) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
@@ -190,16 +185,7 @@ foreach ($combined as $row) {
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.umd.min.js"></script>
 </head>
 
-<body
-    class="bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-    <!-- Theme toggle button - fixed position for mobile accessibility -->
-    <button id="themeToggle" type="button"
-        class="px-3 sm:px-4 py-2 rounded-lg bg-blue-100 dark:bg-gray-700 text-blue-900 dark:text-gray-200 hover:bg-blue-200 dark:hover:bg-gray-600 transition-colors font-medium text-xs sm:text-sm shadow-sm hover:shadow-md whitespace-nowrap"
-        style="position: fixed; top: 1rem; right: 1rem; z-index: 9999; pointer-events: auto;">
-        <span class="light-mode">🌙 Dark</span>
-        <span class="dark-mode hidden">☀️ Light</span>
-    </button>
-
+<body class="bg-gray-900 text-gray-100">
     <div class="max-w-7xl mx-auto px-4 py-10">
         <header class="mb-8 text-center">
             <h1 class="text-4xl font-bold mb-4">Free SIP & SWP Calculator</h1>
