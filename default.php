@@ -99,17 +99,19 @@ if ($action === 'download_csv') {
 	echo "\xEF\xBB\xBF"; // BOM for UTF-8 Excel
 	$csv = new SplTempFileObject();
 	$csv->setCsvControl(',', '"', "\\");
+	$csv->fputcsv(['Note: All amounts are in USD']);
+	$csv->fputcsv([]);
 	$csv->fputcsv([
 		'Year',
-		'Start-of-Year Corpus ($)',
-		'Monthly SIP ($)',
-		'Annual SIP Contribution ($)',
-		'Total SIP Invested to Date ($)',
-		'Monthly SWP Withdrawal ($)',
-		'Annual SWP Withdrawal ($)',
-		'Total SWP Withdrawals to Date ($)',
-		'Interest Earned This Year ($)',
-		'End-of-Year Corpus ($)'
+		'Start-of-Year Corpus',
+		'Monthly SIP',
+		'Annual SIP Contribution',
+		'Total SIP Invested to Date',
+		'Monthly SWP Withdrawal',
+		'Annual SWP Withdrawal',
+		'Total SWP Withdrawals to Date',
+		'Interest Earned This Year',
+		'End-of-Year Corpus'
 	]);
 	for ($y = 1; $y <= $simulation_years; $y++) {
 		$row = $combined[$y];
@@ -190,7 +192,7 @@ foreach ($combined as $row) {
 						<legend class="mb-3">SIP Details</legend>
 						<div class="row g-3">
 							<div class="col-md-3">
-								<label class="form-label">Monthly SIP Investment ($)</label>
+								<label class="form-label">Monthly SIP Investment</label>
 								<input type="number" step="0.01" name="sip" class="form-control" required min="1"
 									value="<?= htmlspecialchars((string) $sip) ?>">
 							</div>
@@ -217,7 +219,7 @@ foreach ($combined as $row) {
 						<!-- SWP automatically starts the year after SIP ends -->
 						<div class="row g-3">
 							<div class="col-md-3">
-								<label class="form-label">Monthly SWP Withdrawal ($)</label>
+								<label class="form-label">Monthly SWP Withdrawal</label>
 								<input type="number" step="0.01" name="swp_withdrawal" class="form-control" required
 									min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
 							</div>
@@ -270,12 +272,12 @@ foreach ($combined as $row) {
 
 		<?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
 			<div class="card shadow mb-3">
-				<div class="card-body">
-					<h5 class="mb-2">Note</h5>
-					<p class="small text-muted mb-0">End-of-Year Corpus = your portfolio value at the end of the year
-						(includes all
-						principal invested so far and interest earned). The table below shows the year-by-year breakdown.
-					</p>
+			<div class="card-body">
+				<h5 class="mb-2">Note</h5>
+				<p class="small text-muted mb-0"><strong>All amounts are in USD.</strong> End-of-Year Corpus = your portfolio value at the end of the year
+					(includes all
+					principal invested so far and interest earned). The table below shows the year-by-year breakdown.
+				</p>
 				</div>
 			</div>
 
