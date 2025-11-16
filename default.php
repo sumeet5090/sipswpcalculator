@@ -368,9 +368,7 @@ foreach ($combined as $row) {
 							</tbody>
 						</table>
 					</div>
-					<p class="mt-3 text-muted fst-italic">Disclaimer: This tool is for illustrative purposes only and does
-						not
-						constitute financial advice.</p>
+					<p class="mt-3 text-muted fst-italic">Disclaimer: This tool is for illustrative purposes only and does not constitute Financial Advice.</p>
 				</div>
 			</div>
 		<?php endif; ?>
