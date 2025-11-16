@@ -154,33 +154,6 @@ foreach ($combined as $row) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIP SWP Calculator</title>
-    <meta name="description"
-        content="Use our free SIP & SWP calculator to plan your investments. A simple, accurate tool designed for global investors.">
-    <link rel="canonical" href="https://sipswpcalculator.com">
-    <meta name="robots" content="index,follow">
-    <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "SIP SWP Calculator",
-    "url": "https://sipswpcalculator.com",
-    "applicationCategory": "Finance",
-    "description": "A free, easy-to-use SIP SWP calculator for Global investors."
-  }
-  </script>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class'
-        };
-    </script>
-    <!-- Chart.js (modern build) -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
-    <!-- Chart.js Zoom plugin (adds wheel/pinch/drag zoom + pan) -->
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.umd.min.js"></script>
-
-    <link rel="stylesheet" href="styles.css">
     <script>
         // Check for saved theme preference or default to light mode
         const savedTheme = localStorage.getItem('theme') || 'light';
@@ -190,11 +163,39 @@ foreach ($combined as $row) {
             document.documentElement.classList.remove('dark');
         }
     </script>
+    <meta name="description" content="Use our free SIP & SWP calculator to plan your investments. A simple, accurate tool designed for global investors.">
+    <link rel="canonical" href="https://sipswpcalculator.com">
+    <meta name="robots" content="index,follow">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "SIP SWP Calculator",
+            "url": "https://sipswpcalculator.com",
+            "applicationCategory": "Finance",
+            "description": "A free, easy-to-use SIP SWP calculator for Global investors."
+        }
+    </script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        };
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js (modern build) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
+    <!-- Chart.js Zoom plugin (adds wheel/pinch/drag zoom + pan) -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.umd.min.js"></script>
 </head>
 
-<body class="bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+<body
+    class="bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-300">
     <!-- Theme toggle button - fixed position for mobile accessibility -->
-    <button id="themeToggle" type="button" class="px-3 sm:px-4 py-2 rounded-lg bg-blue-100 dark:bg-gray-700 text-blue-900 dark:text-gray-200 hover:bg-blue-200 dark:hover:bg-gray-600 transition-colors font-medium text-xs sm:text-sm shadow-sm hover:shadow-md whitespace-nowrap" style="position: fixed; top: 1rem; right: 1rem; z-index: 9999; pointer-events: auto;">
+    <button id="themeToggle" type="button"
+        class="px-3 sm:px-4 py-2 rounded-lg bg-blue-100 dark:bg-gray-700 text-blue-900 dark:text-gray-200 hover:bg-blue-200 dark:hover:bg-gray-600 transition-colors font-medium text-xs sm:text-sm shadow-sm hover:shadow-md whitespace-nowrap"
+        style="position: fixed; top: 1rem; right: 1rem; z-index: 9999; pointer-events: auto;">
         <span class="light-mode">🌙 Dark</span>
         <span class="dark-mode hidden">☀️ Light</span>
     </button>
@@ -351,11 +352,13 @@ foreach ($combined as $row) {
                                     <td class="px-4 py-3"><?= $row['year'] ?></td>
                                     <td class="px-4 py-3"><?= formatInr($row['begin_balance']) ?></td>
                                     <td class="px-4 py-3">
-                                        <?= $row['sip_monthly'] !== null ? formatInr($row['sip_monthly']) : '-' ?></td>
+                                        <?= $row['sip_monthly'] !== null ? formatInr($row['sip_monthly']) : '-' ?>
+                                    </td>
                                     <td class="px-4 py-3"><?= formatInr($row['annual_contribution']) ?></td>
                                     <td class="px-4 py-3"><?= formatInr($row['cumulative_invested']) ?></td>
                                     <td class="px-4 py-3">
-                                        <?= $row['swp_monthly'] !== null ? formatInr($row['swp_monthly']) : '-' ?></td>
+                                        <?= $row['swp_monthly'] !== null ? formatInr($row['swp_monthly']) : '-' ?>
+                                    </td>
                                     <td class="px-4 py-3">
                                         <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
                                     </td>
