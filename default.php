@@ -178,8 +178,8 @@ foreach ($combined as $row) {
     </script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
-    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <!-- <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'"> -->
+    <link rel="stylesheet" href="styles.css">
 
     <!-- Chart.js (modern build) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
