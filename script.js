@@ -1,8 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-	// enable Bootstrap tooltips
-	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-	tooltipTriggerList.map(function (el) { return new bootstrap.Tooltip(el); });
-
 	// Register the zoom plugin (needed for CDN UMD build)
 	if (window['chartjs-plugin-zoom']) {
 		Chart.register(window['chartjs-plugin-zoom']);

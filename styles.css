@@ -1,3 +1,9 @@
+/* Dark theme customization */
+:root {
+	--color-primary: #3b82f6;
+	--color-secondary: #6b7280;
+}
+
 /* Ensure touch gestures (pinch/drag) are captured by the canvas, not the page */
 #corpusChart {
 	touch-action: none;
@@ -6,8 +12,28 @@
 	/* old Edge */
 	user-select: none;
 	-webkit-user-select: none;
-	min-height: 280px;
-	/* give some breathing room for gesture UI */
 	width: 100%;
 	display: block;
+}
+
+/* Tooltip styling */
+.tooltip {
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: white;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-size: 12px;
+	pointer-events: none;
+	z-index: 1000;
+}
+
+/* Smooth transitions */
+button {
+	transition: all 0.2s ease;
+}
+
+/* Input focus styling */
+input:focus {
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
