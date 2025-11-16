@@ -1,7 +1,65 @@
 /* Dark theme customization */
 :root {
-	--color-primary: #3b82f6;
+	--color-primary: #6366f1;
 	--color-secondary: #6b7280;
+	--color-accent: #8b5cf6;
+	--color-success: #10b981;
+}
+
+/* Enhanced dark theme with better contrast and visual hierarchy */
+body {
+	background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+	background-attachment: fixed;
+}
+
+/* Improved button styling with hover effects */
+button[type="submit"],
+button[type="reset"] {
+	position: relative;
+	overflow: hidden;
+	font-weight: 600;
+}
+
+button[type="submit"]:hover {
+	filter: brightness(1.1);
+}
+
+button[type="reset"]:hover {
+	filter: brightness(1.05);
+}
+
+/* Enhance input field focus states */
+input:focus,
+select:focus,
+textarea:focus {
+	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+	transition: all 0.2s ease;
+}
+
+/* Enhanced card/section styling with gradients */
+.bg-gray-800 {
+	background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Better legend and label styling */
+legend,
+label {
+	color: #dbeafe;
+	font-weight: 500;
+}
+
+/* Improve table header styling */
+thead {
+	background: linear-gradient(135deg, #1f2937 0%, #0f172a 100%) !important;
+}
+
+table th {
+	color: #dbeafe;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	letter-spacing: 0.05em;
 }
 
 /* Screen Reader Only - Hide from visual display but visible to assistive technology */

@@ -188,9 +188,9 @@ foreach ($combined as $row) {
 <body class="bg-gray-900 text-gray-100">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:bg-blue-600 focus:text-white focus:p-2">Skip to main content</a>
     
-    <header role="banner" class="mb-8 text-center">
-        <h1 class="text-4xl font-bold mb-4">Free SIP & SWP Calculator</h1>
-        <p class="text-lg text-gray-400">Visualize your investment growth with our integrated tool.</p>
+    <header role="banner" class="mt-8 mb-8 text-center bg-gradient-to-r from-blue-600 to-indigo-600 py-12 px-4 rounded-lg shadow-xl">
+        <h1 class="text-5xl font-bold mb-3 text-white drop-shadow-lg">Free SIP & SWP Calculator</h1>
+        <p class="text-lg text-blue-100">Visualize your investment growth with our integrated tool.</p>
     </header>
 
     <div class="max-w-7xl mx-auto px-4 py-10">
