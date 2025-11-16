@@ -4,6 +4,42 @@
 	--color-secondary: #6b7280;
 }
 
+/* Screen Reader Only - Hide from visual display but visible to assistive technology */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
+
+/* Show sr-only elements on focus (for skip-to-content link) */
+.sr-only:focus,
+.focus:not-sr-only:focus {
+	position: static;
+	width: auto;
+	height: auto;
+	padding: inherit;
+	margin: inherit;
+	overflow: visible;
+	clip: auto;
+	white-space: normal;
+	z-index: 50;
+}
+
+/* Enhanced focus-visible styling for keyboard accessibility */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+	outline: 2px solid #3b82f6;
+	outline-offset: 2px;
+}
+
 /* Ensure touch gestures (pinch/drag) are captured by the canvas, not the page */
 #corpusChart {
 	touch-action: none;
