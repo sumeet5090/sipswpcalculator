@@ -1,25 +1,8 @@
 <?php
 declare(strict_types=1);
 
-// Format numbers in Indian numbering system with Lakh/Cr suffix for large numbers
-function formatInr(float|int $num): string
-{
-	$absNum = abs($num);
-	if ($absNum >= 10000000) { // 1 Crore
-		return '₹' . round($num / 10000000, 2) . ' Cr';
-	} elseif ($absNum >= 100000) { // 1 Lakh
-		return '₹' . round($num / 100000, 2) . ' L';
-	} else {
-		$numStr = (string) round($num);
-		if (strlen($numStr) > 3) {
-			$last3 = substr($numStr, -3);
-			$rest = substr($numStr, 0, -3);
-			$rest = preg_replace("/\\B(?=(\\d{2})+(?!\\d))/", ",", $rest);
-			return '₹' . $rest . ',' . $last3;
-		}
-		return '₹' . $numStr;
-	}
-}
+// Include the helper functions
+require_once __DIR__ . '/functions.php';
 
 // Default values.
 $default_sip = 1000;
@@ -190,21 +173,7 @@ foreach ($combined as $row) {
 	<!-- Chart.js Zoom plugin (adds wheel/pinch/drag zoom + pan) -->
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.umd.min.js"></script>
 
-	<style>
-		/* Ensure touch gestures (pinch/drag) are captured by the canvas, not the page */
-		#corpusChart {
-			touch-action: none;
-			/* modern browsers */
-			-ms-touch-action: none;
-			/* old Edge */
-			user-select: none;
-			-webkit-user-select: none;
-			min-height: 280px;
-			/* give some breathing room for gesture UI */
-			width: 100%;
-			display: block;
-		}
-	</style>
+	<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -376,124 +345,15 @@ foreach ($combined as $row) {
 	</div>
 
 	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-			// enable Bootstrap tooltips
-			var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-			tooltipTriggerList.map(function (el) { return new bootstrap.Tooltip(el); });
-
-			// Register the zoom plugin (needed for CDN UMD build)
-			if (window['chartjs-plugin-zoom']) {
-				Chart.register(window['chartjs-plugin-zoom']);
-			}
-
-			// Chart data from PHP
-			const years = <?= json_encode($years_data) ?>;
-			const cumulative = <?= json_encode($cumulative_numbers) ?>;
-			const corpus = <?= json_encode($combined_numbers) ?>;
-			const swp = <?= json_encode($swp_numbers) ?>;
-
-			function inrCompact(num) {
-				if (num >= 10000000) return '₹' + (num / 10000000).toFixed(2) + ' Cr';
-				if (num >= 100000) return '₹' + (num / 100000).toFixed(2) + ' L';
-				return '₹' + num.toLocaleString('en-IN');
-			}
-
-			const ctx = document.getElementById('corpusChart').getContext('2d');
-
-			const chart = new Chart(ctx, {
-				type: 'line',
-				data: {
-					labels: years,
-					datasets: [
-						{
-							label: 'Total SIP Invested (₹)',
-							data: cumulative,
-							borderWidth: 2,
-							tension: 0.35,
-							pointRadius: 3,
-							pointHoverRadius: 6,
-							borderColor: 'rgba(0, 200, 150, 1)',
-							backgroundColor: 'rgba(0, 200, 150, 0.08)',
-							fill: true,
-						},
-						{
-							label: 'End-of-Year Corpus (₹)',
-							data: corpus,
-							borderWidth: 2.5,
-							tension: 0.4,
-							pointRadius: 3,
-							pointHoverRadius: 6,
-							borderColor: 'rgba(102, 102, 255, 1)',
-							backgroundColor: 'rgba(102, 102, 255, 0.06)',
-							fill: true,
-						},
-						{
-							label: 'Annual SWP Withdrawals (₹)',
-							data: swp,
-							borderWidth: 2,
-							tension: 0.35,
-							pointRadius: 3,
-							pointHoverRadius: 6,
-							borderColor: 'rgba(255, 99, 132, 1)',
-							backgroundColor: 'rgba(255, 99, 132, 0.04)',
-							borderDash: [6, 4],
-							fill: false,
-						}
-					]
-				},
-				options: {
-					responsive: true,
-					maintainAspectRatio: false,
-					interaction: { intersect: false, mode: 'index' },
-					plugins: {
-						legend: { position: 'top' },
-						tooltip: {
-							callbacks: {
-								label: ctx => `${ctx.dataset.label}: ${inrCompact(ctx.raw)}`
-							}
-						},
-						zoom: {
-							limits: {
-								x: { min: Math.min(...years), max: Math.max(...years) },
-								y: { min: 0 } // amounts shouldn't go negative
-							},
-							pan: {
-								enabled: true,
-								mode: 'xy',
-								modifierKey: 'alt' // hold Alt to pan (prevents accidental pans)
-							},
-							zoom: {
-								wheel: { enabled: true },     // scroll to zoom
-								pinch: { enabled: true },     // pinch to zoom (touch)
-								drag: { enabled: true },     // drag selection to zoom
-								pan: { enabled: true, mode: 'xy' }
-							}
-						}
-					},
-					scales: {
-						x: {
-							title: { display: true, text: 'Year' }
-						},
-						y: {
-							title: { display: true, text: 'Amount (₹)' },
-							ticks: {
-								callback: val => inrCompact(val)
-							}
-						}
-					},
-					animations: {
-						tension: { duration: 1000, easing: 'easeOutQuart' }
-					}
-				}
-			});
-
-			// Reset zoom handlers
-			const resetBtn = document.getElementById('resetZoomBtn');
-			if (resetBtn) resetBtn.addEventListener('click', () => chart.resetZoom());
-			// double-click canvas to reset zoom
-			document.getElementById('corpusChart').addEventListener('dblclick', () => chart.resetZoom());
-		});
+		// Pass chart data to the external script
+		window.chartData = {
+			years: <?= json_encode($years_data) ?>,
+			cumulative: <?= json_encode($cumulative_numbers) ?>,
+			corpus: <?= json_encode($combined_numbers) ?>,
+			swp: <?= json_encode($swp_numbers) ?>
+		};
 	</script>
+	<script src="script.js"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

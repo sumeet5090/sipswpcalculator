@@ -1,0 +1,13 @@
+/* Ensure touch gestures (pinch/drag) are captured by the canvas, not the page */
+#corpusChart {
+	touch-action: none;
+	/* modern browsers */
+	-ms-touch-action: none;
+	/* old Edge */
+	user-select: none;
+	-webkit-user-select: none;
+	min-height: 280px;
+	/* give some breathing room for gesture UI */
+	width: 100%;
+	display: block;
+}
