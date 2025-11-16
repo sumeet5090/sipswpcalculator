@@ -202,7 +202,7 @@ foreach ($combined as $row) {
 
     <div class="max-w-7xl mx-auto px-4 py-10">
         <header class="mb-8 text-center">
-            <h1 class="text-4xl font-bold mb-4">Free SIP & SWP Calculator</h1>
+            <h1 class="text-4xl font-bold mb-4">Free SIP and SWP Calculator</h1>
             <p class="text-lg text-gray-400">Visualize your investment growth with our integrated tool.</p>
         </header>
 
