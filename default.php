@@ -178,7 +178,7 @@ foreach ($combined as $row) {
     </script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
     <!-- Chart.js (modern build) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
     <!-- Chart.js Zoom plugin (adds wheel/pinch/drag zoom + pan) -->
@@ -351,8 +351,6 @@ foreach ($combined as $row) {
                         </tbody>
                     </table>
                 </div>
-                <p class="mt-4 text-sm text-gray-400 italic">Disclaimer: This tool is for illustrative purposes only and
-                    does not constitute financial advice.</p>
             </div>
         <?php endif; ?>
 
