@@ -101,15 +101,15 @@ if ($action === 'download_csv') {
 	$csv->setCsvControl(',', '"', "\\");
 	$csv->fputcsv([
 		'Year',
-		'Start-of-Year Corpus (₹)',
-		'Monthly SIP (₹)',
-		'Annual SIP Contribution (₹)',
-		'Total SIP Invested to Date (₹)',
-		'Monthly SWP Withdrawal (₹)',
-		'Annual SWP Withdrawal (₹)',
-		'Total SWP Withdrawals to Date (₹)',
-		'Interest Earned This Year (₹)',
-		'End-of-Year Corpus (₹)'
+		'Start-of-Year Corpus ($)',
+		'Monthly SIP ($)',
+		'Annual SIP Contribution ($)',
+		'Total SIP Invested to Date ($)',
+		'Monthly SWP Withdrawal ($)',
+		'Annual SWP Withdrawal ($)',
+		'Total SWP Withdrawals to Date ($)',
+		'Interest Earned This Year ($)',
+		'End-of-Year Corpus ($)'
 	]);
 	for ($y = 1; $y <= $simulation_years; $y++) {
 		$row = $combined[$y];
@@ -190,7 +190,7 @@ foreach ($combined as $row) {
 						<legend class="mb-3">SIP Details</legend>
 						<div class="row g-3">
 							<div class="col-md-3">
-								<label class="form-label">Monthly SIP Investment (₹)</label>
+								<label class="form-label">Monthly SIP Investment ($)</label>
 								<input type="number" step="0.01" name="sip" class="form-control" required min="1"
 									value="<?= htmlspecialchars((string) $sip) ?>">
 							</div>
@@ -217,7 +217,7 @@ foreach ($combined as $row) {
 						<!-- SWP automatically starts the year after SIP ends -->
 						<div class="row g-3">
 							<div class="col-md-3">
-								<label class="form-label">Monthly SWP Withdrawal (₹)</label>
+								<label class="form-label">Monthly SWP Withdrawal ($)</label>
 								<input type="number" step="0.01" name="swp_withdrawal" class="form-control" required
 									min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
 							</div>

@@ -15,9 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	const swp = window.chartData.swp;
 
 	function inrCompact(num) {
-		if (num >= 10000000) return '₹' + (num / 10000000).toFixed(2) + ' Cr';
-		if (num >= 100000) return '₹' + (num / 100000).toFixed(2) + ' L';
-		return '₹' + num.toLocaleString('en-IN');
+		if (num >= 1000000) return '$' + (num / 1000000).toFixed(2) + 'M';
+		return '$' + num.toLocaleString('en-US');
 	}
 
 	const ctx = document.getElementById('corpusChart').getContext('2d');
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			labels: years,
 			datasets: [
 				{
-					label: 'Total SIP Invested (₹)',
+					label: 'Total SIP Invested ($)',
 					data: cumulative,
 					borderWidth: 2,
 					tension: 0.35,
@@ -39,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					fill: true,
 				},
 				{
-					label: 'End-of-Year Corpus (₹)',
+					label: 'End-of-Year Corpus ($)',
 					data: corpus,
 					borderWidth: 2.5,
 					tension: 0.4,
@@ -50,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					fill: true,
 				},
 				{
-					label: 'Annual SWP Withdrawals (₹)',
+					label: 'Annual SWP Withdrawals ($)',
 					data: swp,
 					borderWidth: 2,
 					tension: 0.35,
@@ -97,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					title: { display: true, text: 'Year' }
 				},
 				y: {
-					title: { display: true, text: 'Amount (₹)' },
+					title: { display: true, text: 'Amount ($)' },
 					ticks: {
 						callback: val => inrCompact(val)
 					}
