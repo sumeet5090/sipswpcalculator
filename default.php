@@ -179,7 +179,7 @@ foreach ($combined as $row) {
 <body>
 	<div class="container my-5">
 		<header class="mb-4 text-center">
-			<h1 class="mb-3">Free SIP & SWP Calculator</h1>
+			<h1 class="mb-3">Not Free SIP & SWP Calculator</h1>
 			<p class="lead">Visualize your investment growth with our integrated tool.</p>
 		</header>
 
