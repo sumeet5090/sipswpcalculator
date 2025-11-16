@@ -289,32 +289,32 @@ foreach ($combined as $row) {
 									<th data-bs-toggle="tooltip" title="Financial year number of the simulation">Year</th>
 									<th data-bs-toggle="tooltip"
 										title="Corpus at the start of the year (carryover from previous year end)">
-										Start-of-Year Corpus (₹)</th>
+										Start-of-Year Corpus ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Monthly SIP amount for that year (annual step-up applied)">Monthly
-										SIP (₹)</th>
+										SIP ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Total SIP contributed during that year (Monthly SIP × 12)">Annual
-										SIP Contribution (₹)</th>
+										SIP Contribution ($)</th>
 									<th data-bs-toggle="tooltip" title="Total SIP contributed cumulatively up to this year">
 										Total SIP
-										Invested to Date (₹)</th>
+										Invested to Date ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Monthly SWP amount for that year (starts after SIP period)">Monthly
-										SWP Withdrawal (₹)</th>
+										SWP Withdrawal ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Total SWP withdrawn during that year (sum of monthly withdrawals actually paid)">
 										Annual SWP
-										Withdrawal (₹)</th>
+										Withdrawal ($)</th>
 									<th data-bs-toggle="tooltip" title="Total SWP withdrawn cumulatively up to this year">
 										Total SWP
-										Withdrawals to Date (₹)</th>
+										Withdrawals to Date ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Interest portion earned during this year (End Corpus - Start Corpus - Net Contribution)">
-										Interest Earned This Year (₹)</th>
+										Interest Earned This Year ($)</th>
 									<th data-bs-toggle="tooltip"
 										title="Portfolio value at year end (includes principal + interest), also used by the chart">
-										End-of-Year Corpus (₹)</th>
+										End-of-Year Corpus ($)</th>
 								</tr>
 							</thead>
 							<tbody>
