@@ -396,14 +396,67 @@ foreach ($combined as $row) {
     </main>
 
     <!-- Footer Section -->
-    <footer role="contentinfo" class="bg-slate-800/40 border-t border-slate-700 mt-16 py-10 px-4 text-center text-sm text-slate-400 backdrop-blur">
-        <p class="mb-3">
-            <span class="text-amber-400 font-semibold">Disclaimer:</span> This calculator is for educational and illustrative purposes only. It does not constitute financial, tax, or investment advice. Please consult with a qualified financial advisor before making any investment decisions.
-        </p>
-        <p>© 2024 SIP/SWP Calculator. All rights reserved.</p>
+    <footer role="contentinfo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 mb-8">
+        <div class="card-gradient p-8 md:p-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- About Section -->
+                <div>
+                    <h3 class="text-lg font-bold mb-3 light:text-purple-900 dark:text-indigo-300">About Calculator</h3>
+                    <p class="text-sm light:text-slate-700 dark:text-slate-400 leading-relaxed">
+                        A powerful, free tool designed to help investors visualize and plan their SIP and SWP strategies with precision and ease.
+                    </p>
+                </div>
+                
+                <!-- Quick Links Section -->
+                <div>
+                    <h3 class="text-lg font-bold mb-3 light:text-purple-900 dark:text-indigo-300">Features</h3>
+                    <ul class="text-sm space-y-2 light:text-slate-700 dark:text-slate-400">
+                        <li class="flex items-center">
+                            <span class="mr-2 light:text-purple-600 dark:text-indigo-400">✓</span>
+                            <span>Real-time calculations</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="mr-2 light:text-purple-600 dark:text-indigo-400">✓</span>
+                            <span>Interactive visualization</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="mr-2 light:text-purple-600 dark:text-indigo-400">✓</span>
+                            <span>CSV export</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Support Section -->
+                <div>
+                    <h3 class="text-lg font-bold mb-3 light:text-purple-900 dark:text-indigo-300">Support</h3>
+                    <p class="text-sm light:text-slate-700 dark:text-slate-400 leading-relaxed">
+                        For questions or feedback about this calculator, please reach out. We're here to help you achieve your financial goals.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Disclaimer Section -->
+            <div class="border-t light:border-purple-200 dark:border-slate-700 pt-8">
+                <div class="mb-6 p-4 light:bg-amber-50/50 dark:bg-amber-950/20 rounded-lg light:border light:border-amber-200/50 dark:border-amber-900/30">
+                    <p class="text-sm light:text-amber-900 dark:text-amber-200">
+                        <span class="font-bold block mb-2">⚠️ Disclaimer</span>
+                        <span>This calculator is for educational and illustrative purposes only. It does not constitute financial, tax, or investment advice. Past performance is not indicative of future results. Please consult with a qualified financial advisor before making any investment decisions.</span>
+                    </p>
+                </div>
+
+                <!-- Copyright Section -->
+                <div class="text-center border-t light:border-purple-200 dark:border-slate-700 pt-6">
+                    <p class="text-xs light:text-slate-600 dark:text-slate-500 font-medium">
+                        © 2024 SIP/SWP Calculator. All rights reserved.
+                    </p>
+                    <p class="text-xs light:text-slate-500 dark:text-slate-600 mt-2">
+                        Built with care for global investors • <span class="light:text-purple-600 dark:text-indigo-400">No tracking • No ads • Free forever</span>
+                    </p>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    </div>
 </body>
 
 </html>
