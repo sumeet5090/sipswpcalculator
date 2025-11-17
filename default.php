@@ -255,7 +255,7 @@ foreach ($combined as $row) {
 
     <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
 
-        <div class="card-gradient mb-8 p-8">
+        <div class="card-gradient mb-8 p-8" style="margin-top: -2rem;">
             <form method="post" novalidate>
                     <fieldset class="mb-6">
                         <legend class="text-xl font-bold mb-4">SIP Details</legend>
@@ -324,7 +324,7 @@ foreach ($combined as $row) {
         </div>
 
         <!-- Chart Section -->
-        <section class="card-gradient mb-8 p-8" aria-label="Investment growth visualization">
+        <section class="card-gradient mb-8 p-8 mt-6" aria-label="Investment growth visualization">
             <div class="mb-6">
                 <h2 class="text-2xl font-bold mb-2">Investment Growth Visualization</h2>
                 <p class="text-slate-400 text-sm">Interactive chart: Use mouse scroll to zoom, pinch on touch to zoom, drag to select zoom area. Hold Alt and drag to pan.</p>
@@ -341,13 +341,13 @@ foreach ($combined as $row) {
         </section>
 
         <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
-            <section class="card-gradient mb-8 p-8" aria-label="Results explanation">
-                <h5 class="text-lg font-bold mb-3">Summary</h5>
+            <section class="card-gradient mb-8 p-8 mt-6" aria-label="Results explanation">
+                <h5 class="text-lg font-bold mb-3 mt-0">Summary</h5>
                 <p class="text-slate-300"><strong>All amounts are in USD.</strong> The End-of-Year Corpus represents your portfolio value at year-end (all principal invested plus interest earned). The table below provides a detailed year-by-year breakdown.</p>
             </section>
 
-            <section class="card-gradient p-8" aria-label="Detailed yearly report">
-                <h2 class="text-2xl font-bold mb-6">Detailed Yearly Report</h2>
+            <section class="card-gradient p-8 mt-6" aria-label="Detailed yearly report">
+                <h2 class="text-2xl font-bold mb-6 mt-0">Detailed Yearly Report</h2>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
                         <thead class="table-header-gradient">
@@ -396,12 +396,12 @@ foreach ($combined as $row) {
     </main>
 
     <!-- Footer Section -->
-    <footer role="contentinfo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 mb-8">
+    <footer role="contentinfo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-8">
         <div class="card-gradient p-8 md:p-10">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 mt-0">
                 <!-- About Section -->
                 <div>
-                    <h3 class="text-lg font-bold mb-3 light:text-purple-900 dark:text-indigo-300">About Calculator</h3>
+                    <h3 class="text-lg font-bold mb-3 mt-0 light:text-purple-900 dark:text-indigo-300">About Calculator</h3>
                     <p class="text-sm light:text-slate-700 dark:text-slate-400 leading-relaxed">
                         A powerful, free tool designed to help investors visualize and plan their SIP and SWP strategies with precision and ease.
                     </p>
@@ -409,7 +409,7 @@ foreach ($combined as $row) {
                 
                 <!-- Quick Links Section -->
                 <div>
-                    <h3 class="text-lg font-bold mb-3 light:text-purple-900 dark:text-indigo-300">Features</h3>
+                    <h3 class="text-lg font-bold mb-3 mt-0 light:text-purple-900 dark:text-indigo-300">Features</h3>
                     <ul class="text-sm space-y-2 light:text-slate-700 dark:text-slate-400">
                         <li class="flex items-center">
                             <span class="mr-2 light:text-purple-600 dark:text-indigo-400">✓</span>
@@ -428,7 +428,7 @@ foreach ($combined as $row) {
                 
                 <!-- Support Section -->
                 <div>
-                    <h3 class="text-lg font-bold mb-3 light:text-purple-900 dark:text-indigo-300">Support</h3>
+                    <h3 class="text-lg font-bold mb-3 mt-0 light:text-purple-900 dark:text-indigo-300">Support</h3>
                     <p class="text-sm light:text-slate-700 dark:text-slate-400 leading-relaxed">
                         For questions or feedback about this calculator, please reach out. We're here to help you achieve your financial goals.
                     </p>
@@ -436,7 +436,7 @@ foreach ($combined as $row) {
             </div>
 
             <!-- Disclaimer Section -->
-            <div class="border-t light:border-purple-200 dark:border-slate-700 pt-8">
+            <div class="border-t light:border-purple-200 dark:border-slate-700 pt-6 mt-0">
                 <div class="mb-6 p-4 light:bg-amber-50/50 dark:bg-amber-950/20 rounded-lg light:border light:border-amber-200/50 dark:border-amber-900/30">
                     <p class="text-sm light:text-amber-900 dark:text-amber-200">
                         <span class="font-bold block mb-2">⚠️ Disclaimer</span>
