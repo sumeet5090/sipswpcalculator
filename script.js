@@ -1,5 +1,14 @@
-// Theme toggle management - runs immediately
+// Initialize theme on page load (before content renders)
 (function() {
+	const savedTheme = localStorage.getItem('theme') || 'dark';
+	document.documentElement.setAttribute('data-theme', savedTheme);
+	if (savedTheme === 'light') {
+		document.documentElement.classList.add('light');
+	}
+})();
+
+document.addEventListener('DOMContentLoaded', function () {
+	// Theme toggle management
 	const themeToggle = document.getElementById('themeToggle');
 	const moonIcon = document.getElementById('moonIcon');
 	const sunIcon = document.getElementById('sunIcon');
@@ -7,25 +16,33 @@
 	function setTheme(theme) {
 		localStorage.setItem('theme', theme);
 		document.documentElement.setAttribute('data-theme', theme);
-
+		
+		// Update classes for Tailwind dark: mode and custom CSS
 		if (theme === 'light') {
 			document.documentElement.classList.add('light');
-			moonIcon.style.display = 'none';
-			sunIcon.style.display = 'inline-block';
+			document.body.classList.add('light-mode');
+			document.body.classList.remove('dark-mode');
+			if (moonIcon) moonIcon.style.display = 'none';
+			if (sunIcon) sunIcon.style.display = 'inline-block';
 		} else {
 			document.documentElement.classList.remove('light');
-			moonIcon.style.display = 'inline-block';
-			sunIcon.style.display = 'none';
+			document.body.classList.remove('light-mode');
+			document.body.classList.add('dark-mode');
+			if (moonIcon) moonIcon.style.display = 'inline-block';
+			if (sunIcon) sunIcon.style.display = 'none';
 		}
+		console.log('Theme set to:', theme);
 	}
 
-	// Load saved theme
+	// Initialize theme on DOM ready
 	const savedTheme = localStorage.getItem('theme') || 'dark';
 	setTheme(savedTheme);
 
 	// Toggle on click
 	if (themeToggle) {
-		themeToggle.addEventListener('click', function() {
+		themeToggle.addEventListener('click', function(e) {
+			e.preventDefault();
+			e.stopPropagation();
 			const currentTheme = localStorage.getItem('theme') || 'dark';
 			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 			setTheme(newTheme);
@@ -34,14 +51,14 @@
 		// Also handle touchend for mobile reliability
 		themeToggle.addEventListener('touchend', function(e) {
 			e.preventDefault();
+			e.stopPropagation();
 			const currentTheme = localStorage.getItem('theme') || 'dark';
 			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 			setTheme(newTheme);
 		});
+	} else {
+		console.warn('Theme toggle button not found!');
 	}
-})();
-
-document.addEventListener('DOMContentLoaded', function () {
 	// Register the zoom plugin (needed for CDN UMD build)
 	if (window['chartjs-plugin-zoom']) {
 		Chart.register(window['chartjs-plugin-zoom']);
