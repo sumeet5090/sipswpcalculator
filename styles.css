@@ -268,6 +268,14 @@ html.light .table-header-gradient {
 	border-bottom: none;
 }
 
+table {
+	border-collapse: collapse;
+}
+
+html.light table {
+	color: #0f172a;
+}
+
 table th {
 	color: #dbeafe;
 	font-weight: 700;
@@ -289,16 +297,23 @@ html.light table th {
 table td {
 	border-color: rgba(148, 163, 184, 0.1);
 	padding: 14px 12px !important;
+	color: inherit;
+	font-weight: 500;
 }
 
 html.light table td {
-	border-color: rgba(91, 33, 182, 0.1);
+	border-color: rgba(91, 33, 182, 0.12);
 	color: #0f172a;
 	font-weight: 500;
 }
 
 table tbody tr {
 	transition: all 0.2s ease;
+	border-bottom: 1px solid;
+}
+
+html.light table tbody tr {
+	border-color: rgba(91, 33, 182, 0.1);
 }
 
 table tbody tr:hover {
@@ -306,7 +321,72 @@ table tbody tr:hover {
 }
 
 html.light table tbody tr:hover {
-	background: rgba(91, 33, 182, 0.05);
+	background: rgba(91, 33, 182, 0.08);
+}
+
+/* Even row styling for better readability */
+table tbody tr:nth-child(even) {
+	background: rgba(0, 0, 0, 0.2);
+}
+
+html.light table tbody tr:nth-child(even) {
+	background: rgba(91, 33, 182, 0.03);
+}
+
+/* Table wrapper with rounded corners and shadow */
+.overflow-x-auto {
+	border-radius: 12px;
+	background: transparent;
+	overflow: hidden;
+}
+
+/* Enhanced table styling */
+table {
+	background: transparent;
+}
+
+html.light table {
+	background: transparent;
+}
+
+table thead th {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+}
+
+table tbody tr td {
+	vertical-align: middle;
+	line-height: 1.5;
+}
+
+html.light table tbody tr td {
+	line-height: 1.6;
+}
+
+/* Better spacing and alignment for financial data */
+table td:nth-child(2),
+table td:nth-child(4),
+table td:nth-child(5),
+table td:nth-child(7),
+table td:nth-child(8),
+table td:nth-child(9),
+table td:nth-child(10) {
+	text-align: right;
+	font-family: 'Courier New', monospace;
+	letter-spacing: 0.3px;
+}
+
+html.light table td:nth-child(2),
+html.light table td:nth-child(4),
+html.light table td:nth-child(5),
+html.light table td:nth-child(7),
+html.light table td:nth-child(8),
+html.light table td:nth-child(9),
+html.light table td:nth-child(10) {
+	font-family: 'Courier New', monospace;
+	color: #5b21b6;
+	font-weight: 600;
 }
 
 /* Screen Reader Only */

@@ -348,9 +348,9 @@ foreach ($combined as $row) {
 
             <section class="card-gradient p-8 mt-6" aria-label="Detailed yearly report">
                 <h2 class="text-2xl font-bold mb-6 mt-0">Detailed Yearly Report</h2>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm">
-                        <thead class="table-header-gradient">
+                <div class="overflow-x-auto rounded-lg" style="box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
+                    <table class="w-full text-sm border-collapse">
+                        <thead class="table-header-gradient sticky top-0">
                             <tr>
                                 <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Financial year number">Year</th>
                                 <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Corpus at year start">Start Corpus</th>
