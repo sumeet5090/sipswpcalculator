@@ -439,7 +439,9 @@ foreach ($combined as $row) {
                 <div>
                     <h3 class="text-lg font-bold mb-3 mt-0 light:text-purple-900 dark:text-indigo-300">Support</h3>
                     <p class="text-sm light:text-slate-700 dark:text-slate-400 leading-relaxed">
-                        For questions or feedback about this calculator, please reach out. We're here to help you achieve your financial goals.
+                        For questions or feedback about this calculator, 
+                        <a href="mailto:help@sipswpcalculator.com" class="font-semibold light:text-purple-600 dark:text-indigo-400 hover:light:text-purple-700 hover:dark:text-indigo-300 underline transition-colors">reach out to us</a>. 
+                        We're here to help you achieve your financial goals.
                     </p>
                 </div>
             </div>
