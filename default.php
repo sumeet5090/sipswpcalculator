@@ -190,166 +190,142 @@ foreach ($combined as $row) {
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.umd.min.js"></script>
 </head>
 
-<body
-    class="bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-    <!-- Theme toggle button - fixed position for mobile accessibility -->
-    <button id="themeToggle" type="button"
-        class="px-3 sm:px-4 py-2 rounded-lg bg-blue-100 dark:bg-gray-700 text-blue-900 dark:text-gray-200 hover:bg-blue-200 dark:hover:bg-gray-600 transition-colors font-medium text-xs sm:text-sm shadow-sm hover:shadow-md whitespace-nowrap"
-        style="position: fixed; top: 1rem; right: 1rem; z-index: 9999; pointer-events: auto;">
-        <span class="light-mode">🌙 Dark</span>
-        <span class="dark-mode hidden">☀️ Light</span>
-    </button>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-gray-100 min-h-screen">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-2">Skip to main content</a>
+    
+    <header role="banner" class="relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8">
+        <!-- Decorative background elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-40 -right-40 w-80 h-80 bg-indigo-600/20 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="relative max-w-7xl mx-auto text-center">
+            <h1 class="text-5xl sm:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+                Free SIP & SWP Calculator
+            </h1>
+            <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+                Plan, visualize, and optimize your investment strategy with our powerful financial calculator
+            </p>
+        </div>
+    </header>
 
-    <div class="max-w-7xl mx-auto px-4 py-10">
-        <header class="mb-8 text-center">
-            <h1 class="text-4xl font-bold mb-4">Free SIP and SWP Calculator</h1>
-            <p class="text-lg text-gray-400">Visualize your investment growth with our integrated tool.</p>
-        </header>
+    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
 
-        <div class="bg-gray-800 rounded-lg shadow-lg mb-6 p-6">
-            <div>
-                <form method="post" novalidate>
+        <div class="card-gradient mb-8 p-8">
+            <form method="post" novalidate>
                     <fieldset class="mb-6">
                         <legend class="text-xl font-bold mb-4">SIP Details</legend>
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2">Monthly SIP
-                                    Investment</label>
+                                <label class="block text-sm font-medium mb-2">Monthly SIP Investment</label>
                                 <input type="number" step="0.01" name="sip"
-                                    class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:border-blue-500"
+                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
                                     required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2">Years of Investment</label>
+                                <label class="block text-sm font-medium mb-2">Years of Investment</label>
                                 <input type="number" name="years"
-                                    class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:border-blue-500"
+                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
                                     required min="1" value="<?= htmlspecialchars((string) $years) ?>">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2">Annual Interest Rate (%
-                                    p.a.)</label>
+                                <label class="block text-sm font-medium mb-2">Annual Interest Rate (% p.a.)</label>
                                 <input type="number" step="0.01" name="rate"
-                                    class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:border-blue-500"
+                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
                                     required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2">Annual SIP Increase
-                                    (%)</label>
+                                <label class="block text-sm font-medium mb-2">Annual SIP Increase (%)</label>
                                 <input type="number" step="0.01" name="stepup"
-                                    class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:border-blue-500"
+                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
                                     required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="mb-6">
+                    <fieldset class="mt-8">
                         <legend class="text-xl font-bold mb-4">SWP Details</legend>
-                        <!-- SWP automatically starts the year after SIP ends -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <p class="text-sm text-slate-400 mb-6">SWP automatically starts the year after SIP ends. Monthly withdrawals are capped to available funds.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2">Monthly SWP
-                                    Withdrawal</label>
+                                <label class="block text-sm font-medium mb-2">Monthly SWP Withdrawal</label>
                                 <input type="number" step="0.01" name="swp_withdrawal"
-                                    class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:border-blue-500"
+                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
                                     required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2">Annual SWP Increase
-                                    (%)</label>
+                                <label class="block text-sm font-medium mb-2">Annual SWP Increase (%)</label>
                                 <input type="number" step="0.01" name="swp_stepup"
-                                    class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:border-blue-500"
+                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
                                     required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2">Number of SWP Years</label>
+                                <label class="block text-sm font-medium mb-2">Number of SWP Years</label>
                                 <input type="number" name="swp_years"
-                                    class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:border-blue-500"
+                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
                                     required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
                             </div>
                         </div>
-                        <p class="text-sm text-gray-400">Note: SWP automatically starts in the year immediately
-                            following your SIP period. Monthly withdrawals are capped to available funds.</p>
                     </fieldset>
-                    <div class="flex gap-2">
+
+                    <div class="flex flex-wrap gap-4 mt-8">
                         <button type="submit" name="action" value="calculate"
-                            class="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded font-medium">Calculate</button>
+                            class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-300">Calculate Results</button>
                         <button type="submit" name="action" value="download_csv"
-                            class="px-6 py-2 bg-gray-700 hover:bg-gray-600 rounded font-medium">Download CSV
-                            Report</button>
+                            class="px-8 py-3 bg-slate-700 hover:bg-slate-600 text-slate-100 font-semibold rounded-lg border border-slate-600 transition-all duration-300">Download CSV Report</button>
                         <button type="reset"
-                            class="px-6 py-2 bg-gray-700 hover:bg-gray-600 rounded font-medium border border-red-600">Reset</button>
+                            class="px-8 py-3 bg-slate-700 hover:bg-slate-600 text-slate-100 font-semibold rounded-lg border border-slate-600 transition-all duration-300">Reset Form</button>
                     </div>
                 </form>
             </div>
         </div>
 
         <!-- Chart Section -->
-        <div class="bg-gray-800 rounded-lg shadow-lg mb-6 p-6">
-            <div>
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-                    <div>
-                        <h2 class="text-2xl font-bold mb-2">Corpus, Cumulative Investment & SWP Withdrawals</h2>
-                        <p class="text-sm text-gray-400">Hover to inspect. Scroll to zoom, pinch on touch, drag to zoom
-                            selection. Alt+Drag to pan.</p>
-                    </div>
-                    <button id="resetZoomBtn" type="button"
-                        class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm font-medium border border-gray-600">
-                        Reset Zoom
-                    </button>
-                </div>
-                <div class="relative" style="height: 360px;">
-                    <canvas id="corpusChart"></canvas>
-                </div>
+        <section class="card-gradient mb-8 p-8" aria-label="Investment growth visualization">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold mb-2">Investment Growth Visualization</h2>
+                <p class="text-slate-400 text-sm">Interactive chart: Use mouse scroll to zoom, pinch on touch to zoom, drag to select zoom area. Hold Alt and drag to pan.</p>
             </div>
-        </div>
+            <div class="flex justify-end mb-4">
+                <button id="resetZoomBtn" type="button" aria-label="Reset chart zoom to default view"
+                    class="px-6 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-100 font-semibold rounded-lg border border-slate-600 transition-all duration-300">
+                    Reset Zoom
+                </button>
+            </div>
+            <div class="relative" style="height: 420px;" role="img" aria-label="Line chart showing corpus, cumulative investment, and SWP withdrawals over years">
+                <canvas id="corpusChart" role="img" aria-label="Investment growth chart"></canvas>
+            </div>
+        </section>
 
         <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
-            <div class="bg-gray-800 rounded-lg shadow-lg mb-6 p-6">
-                <h5 class="text-lg font-bold mb-3">Note</h5>
-                <p class="text-sm text-gray-400"><strong>All amounts are in USD.</strong> End-of-Year Corpus = your
-                    portfolio value at the end of the year (includes all principal invested so far and interest earned). The
-                    table below shows the year-by-year breakdown.</p>
-            </div>
+            <section class="card-gradient mb-8 p-8" aria-label="Results explanation">
+                <h5 class="text-lg font-bold mb-3">Summary</h5>
+                <p class="text-slate-300"><strong>All amounts are in USD.</strong> The End-of-Year Corpus represents your portfolio value at year-end (all principal invested plus interest earned). The table below provides a detailed year-by-year breakdown.</p>
+            </section>
 
-            <div class="bg-gray-800 rounded-lg shadow-lg p-6">
-                <h2 class="text-2xl font-bold mb-6">Yearly Report</h2>
+            <section class="card-gradient p-8" aria-label="Detailed yearly report">
+                <h2 class="text-2xl font-bold mb-6">Detailed Yearly Report</h2>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm border-collapse">
-                        <thead class="bg-gray-900 border-b border-gray-700">
+                    <table class="w-full text-sm">
+                        <thead class="table-header-gradient">
                             <tr>
-                                <th class="px-4 py-3 text-left font-semibold"
-                                    title="Financial year number of the simulation">Year</th>
-                                <th class="px-4 py-3 text-left font-semibold"
-                                    title="Corpus at the start of the year (carryover from previous year end)">Start-of-Year
-                                    Corpus</th>
-                                <th class="px-4 py-3 text-left font-semibold"
-                                    title="Monthly SIP amount for that year (annual step-up applied)">Monthly SIP</th>
-                                <th class="px-4 py-3 text-left font-semibold"
-                                    title="Total SIP contributed during that year (Monthly SIP × 12)">Annual SIP
-                                    Contribution</th>
-                                <th class="px-4 py-3 text-left font-semibold"
-                                    title="Total SIP contributed cumulatively up to this year">Total SIP Invested to Date
-                                </th>
-                                <th class="px-4 py-3 text-left font-semibold"
-                                    title="Monthly SWP amount for that year (starts after SIP period)">Monthly SWP
-                                    Withdrawal</th>
-                                <th class="px-4 py-3 text-left font-semibold"
-                                    title="Total SWP withdrawn during that year (sum of monthly withdrawals actually paid)">
-                                    Annual SWP Withdrawal</th>
-                                <th class="px-4 py-3 text-left font-semibold"
-                                    title="Total SWP withdrawn cumulatively up to this year">Total SWP Withdrawals to Date
-                                </th>
-                                <th class="px-4 py-3 text-left font-semibold"
-                                    title="Interest portion earned during this year (End Corpus - Start Corpus - Net Contribution)">
-                                    Interest Earned This Year</th>
-                                <th class="px-4 py-3 text-left font-semibold"
-                                    title="Portfolio value at year end (includes principal + interest), also used by the chart">
-                                    End-of-Year Corpus</th>
+                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Financial year number">Year</th>
+                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Corpus at year start">Start Corpus</th>
+                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Monthly SIP amount">Monthly SIP</th>
+                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Annual SIP contribution">Annual SIP</th>
+                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Cumulative SIP">Total SIP Invested</th>
+                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Monthly withdrawal">Monthly SWP</th>
+                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Annual withdrawal">Annual SWP</th>
+                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Cumulative withdrawals">Total SWP</th>
+                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Interest earned">Interest</th>
+                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="End of year corpus">End Corpus</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($combined as $row): ?>
                                 <tr class="border-b border-gray-700 hover:bg-gray-700">
-                                    <td class="px-4 py-3"><?= $row['year'] ?></td>
+                                    <td scope="row" class="px-4 py-3"><?= $row['year'] ?></td>
                                     <td class="px-4 py-3"><?= formatInr($row['begin_balance']) ?></td>
                                     <td class="px-4 py-3">
                                         <?= $row['sip_monthly'] !== null ? formatInr($row['sip_monthly']) : '-' ?>
@@ -372,10 +348,18 @@ foreach ($combined as $row) {
                         </tbody>
                     </table>
                 </div>
-                <p class="mt-4 text-sm text-gray-400 italic">Disclaimer: This tool is for illustrative purposes only and
-                    does not constitute financial advice.</p>
-            </div>
+            </section>
         <?php endif; ?>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer role="contentinfo" class="bg-slate-800/40 border-t border-slate-700 mt-16 py-10 px-4 text-center text-sm text-slate-400 backdrop-blur">
+        <p class="mb-3">
+            <span class="text-amber-400 font-semibold">Disclaimer:</span> This calculator is for educational and illustrative purposes only. It does not constitute financial, tax, or investment advice. Please consult with a qualified financial advisor before making any investment decisions.
+        </p>
+        <p>© 2024 SIP/SWP Calculator. All rights reserved.</p>
+    </footer>
 
     </div>
 
