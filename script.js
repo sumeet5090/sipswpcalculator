@@ -1,3 +1,46 @@
+// Theme toggle management - runs immediately
+(function() {
+	const themeToggle = document.getElementById('themeToggle');
+	const moonIcon = document.getElementById('moonIcon');
+	const sunIcon = document.getElementById('sunIcon');
+
+	function setTheme(theme) {
+		localStorage.setItem('theme', theme);
+		document.documentElement.setAttribute('data-theme', theme);
+
+		if (theme === 'light') {
+			document.documentElement.classList.add('light');
+			moonIcon.style.display = 'none';
+			sunIcon.style.display = 'inline-block';
+		} else {
+			document.documentElement.classList.remove('light');
+			moonIcon.style.display = 'inline-block';
+			sunIcon.style.display = 'none';
+		}
+	}
+
+	// Load saved theme
+	const savedTheme = localStorage.getItem('theme') || 'dark';
+	setTheme(savedTheme);
+
+	// Toggle on click
+	if (themeToggle) {
+		themeToggle.addEventListener('click', function() {
+			const currentTheme = localStorage.getItem('theme') || 'dark';
+			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+			setTheme(newTheme);
+		});
+
+		// Also handle touchend for mobile reliability
+		themeToggle.addEventListener('touchend', function(e) {
+			e.preventDefault();
+			const currentTheme = localStorage.getItem('theme') || 'dark';
+			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+			setTheme(newTheme);
+		});
+	}
+})();
+
 document.addEventListener('DOMContentLoaded', function () {
 	// Register the zoom plugin (needed for CDN UMD build)
 	if (window['chartjs-plugin-zoom']) {

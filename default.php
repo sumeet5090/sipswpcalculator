@@ -155,13 +155,16 @@ foreach ($combined as $row) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIP SWP Calculator</title>
     <script>
-        // Check for saved theme preference or default to light mode
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        if (savedTheme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        // Initialize theme on page load (runs before rendering)
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'light') {
+                document.documentElement.classList.add('light');
+            } else {
+                document.documentElement.classList.remove('light');
+            }
+        })();
     </script>
     <meta name="description" content="Use our free SIP & SWP calculator to plan your investments. A simple, accurate tool designed for global investors.">
     <link rel="canonical" href="https://sipswpcalculator.com">
@@ -176,8 +179,21 @@ foreach ($combined as $row) {
             "description": "A free, easy-to-use SIP SWP calculator for Global investors."
         }
     </script>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS v3 -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwindcss.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        accent: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
     <script>
         tailwind.config = {
             darkMode: 'class'
@@ -201,22 +217,37 @@ foreach ($combined as $row) {
     <script src="script.js"></script>
 </head>
 
-<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-gray-100 min-h-screen">
+<body class="light:bg-gradient-to-br light:from-slate-50 light:via-white light:to-slate-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 light:text-slate-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-2">Skip to main content</a>
+    
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" type="button" aria-label="Toggle between dark and light theme"
+        class="fixed top-6 right-6 z-50 p-3 rounded-full backdrop-blur-md transition-all duration-300 shadow-lg hover:shadow-xl
+        light:bg-slate-900/10 light:hover:bg-slate-900/20 light:text-slate-700 light:border light:border-slate-300
+        dark:bg-slate-100/10 dark:hover:bg-slate-100/20 dark:text-slate-200 dark:border dark:border-slate-700">
+        <!-- Moon icon (for dark mode) -->
+        <span id="moonIcon" class="inline-block text-2xl transition-transform duration-300">
+            🌙
+        </span>
+        <!-- Sun icon (for light mode) -->
+        <span id="sunIcon" class="hidden inline-block text-2xl transition-transform duration-300">
+            ☀️
+        </span>
+    </button>
     
     <header role="banner" class="relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8">
         <!-- Decorative background elements -->
         <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute -top-40 -right-40 w-80 h-80 bg-indigo-600/20 rounded-full blur-3xl"></div>
-            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl"></div>
+            <div class="absolute -top-40 -right-40 w-80 h-80 light:bg-blue-200/30 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-40 -left-40 w-80 h-80 light:bg-purple-200/30 dark:bg-purple-600/20 rounded-full blur-3xl"></div>
         </div>
         
         <!-- Content -->
         <div class="relative max-w-7xl mx-auto text-center">
-            <h1 class="text-5xl sm:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+            <h1 class="text-5xl sm:text-6xl font-bold light:text-slate-900 dark:text-white mb-4 drop-shadow-lg">
                 Free SIP & SWP Calculator
             </h1>
-            <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+            <p class="text-xl light:text-slate-700 dark:text-slate-300 max-w-2xl mx-auto">
                 Plan, visualize, and optimize your investment strategy with our powerful financial calculator
             </p>
         </div>
