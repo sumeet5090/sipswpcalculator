@@ -249,7 +249,7 @@ foreach ($combined as $row) {
     
     <!-- Inline critical Tailwind config and load Tailwind async -->
     <script>
-        // Set Tailwind config before loading the script
+        // Set Tailwind config BEFORE loading the script
         window.tailwindConfig = {
             darkMode: 'class',
             theme: {
@@ -261,16 +261,33 @@ foreach ($combined as $row) {
                 }
             }
         };
+        
+        // Create a promise to track when Tailwind is ready
+        window.tailwindReady = new Promise((resolve) => {
+            // Check if Tailwind is already loaded
+            if (window.tailwindcss) {
+                window.tailwindcss.config = window.tailwindConfig;
+                resolve();
+            } else {
+                // Watch for Tailwind to load
+                const checkTailwind = setInterval(() => {
+                    if (window.tailwindcss) {
+                        window.tailwindcss.config = window.tailwindConfig;
+                        clearInterval(checkTailwind);
+                        resolve();
+                    }
+                }, 50);
+                // Timeout after 5 seconds
+                setTimeout(() => {
+                    clearInterval(checkTailwind);
+                    resolve();
+                }, 5000);
+            }
+        });
     </script>
     
     <!-- Load Tailwind asynchronously to not block rendering -->
     <script async src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Apply config when Tailwind is ready
-        if (window.tailwindcss) {
-            tailwindcss.config = window.tailwindConfig;
-        }
-    </script>
 </head>
 
 <body class="light:bg-gradient-to-br light:from-slate-50 light:via-white light:to-slate-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 light:text-slate-900 dark:text-gray-100 min-h-screen transition-colors duration-300">

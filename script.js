@@ -7,7 +7,17 @@
 	}
 })();
 
-document.addEventListener('DOMContentLoaded', function () {
+// Wait for both DOM and Tailwind to be ready
+Promise.all([
+	new Promise(resolve => {
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', resolve);
+		} else {
+			resolve();
+		}
+	}),
+	window.tailwindReady || Promise.resolve()
+]).then(() => {
 	// Theme toggle management
 	const themeToggle = document.getElementById('themeToggle');
 	const moonIcon = document.getElementById('moonIcon');
