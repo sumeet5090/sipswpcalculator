@@ -64,6 +64,8 @@ body {
 	font-smooth: antialiased;
 	-webkit-font-smoothing: antialiased;
 	color: #e5e7eb;
+	font-size: 16px;
+	line-height: 1.6;
 }
 
 /* Premium card styling with glass-morphism effect - Dark */
@@ -99,6 +101,8 @@ label {
 	color: #dbeafe;
 	font-weight: 600;
 	letter-spacing: 0.5px;
+	font-size: 0.95rem;
+	display: block;
 }
 
 html.light legend,
@@ -112,7 +116,7 @@ html.light label {
 html.light legend {
 	color: #0f172a;
 	font-weight: 700;
-	font-size: 1.125rem;
+	font-size: 1.1rem;
 }
 
 /* Professional input styling */
@@ -124,6 +128,8 @@ textarea {
 	border: 1.5px solid rgba(148, 163, 184, 0.25);
 	color: #e5e7eb;
 	transition: all 0.3s ease;
+	font-size: 0.95rem;
+	padding: 0.75rem 1rem;
 }
 
 html.light input[type="number"],
@@ -135,6 +141,7 @@ html.light textarea {
 	color: #0f172a;
 	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 	font-weight: 400;
+	font-size: 0.95rem;
 }
 
 input[type="number"]:hover,
@@ -182,6 +189,7 @@ button {
 	cursor: pointer;
 	position: relative;
 	overflow: hidden;
+	font-size: 0.95rem;
 }
 
 button::before {
@@ -281,17 +289,19 @@ html.light .table-header-gradient {
 
 table {
 	border-collapse: collapse;
+	font-size: 0.9rem;
 }
 
 html.light table {
 	color: #0f172a;
+	font-size: 0.9rem;
 }
 
 table th {
 	color: #dbeafe;
 	font-weight: 700;
 	text-transform: uppercase;
-	font-size: 0.7rem;
+	font-size: 0.75rem;
 	letter-spacing: 0.1em;
 	padding: 16px 12px !important;
 }
@@ -300,7 +310,7 @@ html.light table th {
 	color: #ffffff;
 	font-weight: 700;
 	text-transform: uppercase;
-	font-size: 0.7rem;
+	font-size: 0.75rem;
 	letter-spacing: 0.1em;
 	padding: 16px 12px !important;
 }
@@ -310,12 +320,14 @@ table td {
 	padding: 14px 12px !important;
 	color: inherit;
 	font-weight: 500;
+	font-size: 0.9rem;
 }
 
 html.light table td {
 	border-color: rgba(91, 33, 182, 0.12);
 	color: #0f172a;
 	font-weight: 500;
+	font-size: 0.9rem;
 }
 
 table tbody tr {
@@ -458,6 +470,8 @@ h1, h2, h3, h4, h5, h6 {
 	color: #f1f5f9;
 	font-weight: 700;
 	letter-spacing: -0.5px;
+	margin: 0;
+	padding: 0;
 }
 
 html.light h1,
@@ -487,23 +501,27 @@ html.light h1 {
 h2 {
 	font-size: 1.875rem;
 	margin-bottom: 1.5rem;
+	line-height: 1.2;
 }
 
 html.light h2 {
 	font-size: 1.875rem;
 	margin-bottom: 1.5rem;
 	font-weight: 700;
+	line-height: 1.2;
 }
 
 h5 {
-	font-size: 1.25rem;
+	font-size: 1.125rem;
 	margin-bottom: 1rem;
+	line-height: 1.3;
 }
 
 html.light h5 {
-	font-size: 1.25rem;
+	font-size: 1.125rem;
 	margin-bottom: 1rem;
 	font-weight: 700;
+	line-height: 1.3;
 }
 
 /* Tooltip styling */
@@ -513,7 +531,7 @@ html.light h5 {
 	color: white;
 	padding: 8px 12px;
 	border-radius: 6px;
-	font-size: 12px;
+	font-size: 0.85rem;
 	pointer-events: none;
 	z-index: 1000;
 	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
@@ -522,6 +540,7 @@ html.light h5 {
 html.light .tooltip {
 	background: rgba(91, 33, 182, 0.95);
 	color: white;
+	font-size: 0.85rem;
 }
 
 /* Smooth scrollbar styling for Chrome */
