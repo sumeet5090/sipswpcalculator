@@ -1,3 +1,51 @@
+/* CRITICAL CSS - Optimized for Fast First Paint */
+
+/* Prevent layout shift - set base dimensions early */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+/* Critical body styling - inline critical path */
+body {
+	background: linear-gradient(135deg, #0f172a 0%, #1a1f35 50%, #0f172a 100%);
+	background-attachment: fixed;
+	min-height: 100vh;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+	font-smooth: antialiased;
+	-webkit-font-smoothing: antialiased;
+	color: #e5e7eb;
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+html.light body {
+	background: linear-gradient(135deg, #f8fafc 0%, #ffffff 30%, #f0f4f8 60%, #ffffff 100%) !important;
+	background-attachment: fixed !important;
+	color: #0f172a !important;
+	font-weight: 400;
+}
+
+body.light-mode {
+	background: linear-gradient(135deg, #f8fafc 0%, #ffffff 30%, #f0f4f8 60%, #ffffff 100%) !important;
+	background-attachment: fixed !important;
+	color: #0f172a !important;
+	font-weight: 400;
+}
+
+body.dark-mode {
+	background: linear-gradient(135deg, #0f172a 0%, #1a1f35 50%, #0f172a 100%) !important;
+	background-attachment: fixed !important;
+	color: #e5e7eb !important;
+}
+
 /* Premium Dark & Light Theme Customization */
 :root {
 	--color-primary: #6366f1;
@@ -23,49 +71,6 @@ html[data-theme="light"] {
 	--text-primary: #0f172a;
 	--text-secondary: #1e293b;
 	--text-muted: #64748b;
-}
-
-/* Enhanced dark theme with premium aesthetics */
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-html {
-	scroll-behavior: smooth;
-}
-
-html.light body {
-	background: linear-gradient(135deg, #f8fafc 0%, #ffffff 30%, #f0f4f8 60%, #ffffff 100%) !important;
-	background-attachment: fixed !important;
-	color: #0f172a !important;
-	font-weight: 400;
-}
-
-body.light-mode {
-	background: linear-gradient(135deg, #f8fafc 0%, #ffffff 30%, #f0f4f8 60%, #ffffff 100%) !important;
-	background-attachment: fixed !important;
-	color: #0f172a !important;
-	font-weight: 400;
-}
-
-body.dark-mode {
-	background: linear-gradient(135deg, #0f172a 0%, #1a1f35 50%, #0f172a 100%) !important;
-	background-attachment: fixed !important;
-	color: #e5e7eb !important;
-}
-
-body {
-	background: linear-gradient(135deg, #0f172a 0%, #1a1f35 50%, #0f172a 100%);
-	background-attachment: fixed;
-	min-height: 100vh;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-	font-smooth: antialiased;
-	-webkit-font-smoothing: antialiased;
-	color: #e5e7eb;
-	font-size: 16px;
-	line-height: 1.6;
 }
 
 /* Premium card styling with glass-morphism effect - Dark */

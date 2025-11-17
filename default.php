@@ -154,21 +154,27 @@ foreach ($combined as $row) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIP SWP Calculator</title>
+    
+    <!-- Preload critical CSS and fonts -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    
     <script>
-        // Initialize theme on page load (runs before rendering)
+        // Initialize theme on page load (runs before rendering) - Critical path
         (function() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
             if (savedTheme === 'light') {
                 document.documentElement.classList.add('light');
-            } else {
-                document.documentElement.classList.remove('light');
             }
         })();
     </script>
+    
     <meta name="description" content="Use our free SIP & SWP calculator to plan your investments. A simple, accurate tool designed for global investors.">
     <link rel="canonical" href="https://sipswpcalculator.com">
     <meta name="robots" content="index,follow">
+    
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -179,8 +185,12 @@ foreach ($combined as $row) {
             "description": "A free, easy-to-use SIP SWP calculator for Global investors."
         }
     </script>
-    <!-- Tailwind CSS v3 -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load custom CSS first (synchronous, critical) -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Defer Tailwind CSS (non-critical, can load async) -->
+    <script defer src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwindcss.config = {
             darkMode: 'class',
@@ -194,27 +204,6 @@ foreach ($combined as $row) {
             }
         }
     </script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class'
-        };
-    </script>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Chart.js (modern build) -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
-    <!-- Chart.js Zoom plugin (adds wheel/pinch/drag zoom + pan) -->
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.umd.min.js"></script>
-
-    <script>
-        // Pass chart data to the external script
-        window.chartData = {
-            years: <?= json_encode($years_data) ?>,
-            cumulative: <?= json_encode($cumulative_numbers) ?>,
-            corpus: <?= json_encode($combined_numbers) ?>,
-            swp: <?= json_encode($swp_numbers) ?>
-        };
-    </script>
-    <script src="script.js"></script>
 </head>
 
 <body class="light:bg-gradient-to-br light:from-slate-50 light:via-white light:to-slate-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 light:text-slate-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
@@ -467,6 +456,22 @@ foreach ($combined as $row) {
             </div>
         </div>
     </footer>
+
+    <!-- Defer non-critical Chart.js and custom scripts to end of body -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.umd.min.js"></script>
+    
+    <script defer>
+        // Pass chart data to the external script
+        window.chartData = {
+            years: <?= json_encode($years_data) ?>,
+            cumulative: <?= json_encode($cumulative_numbers) ?>,
+            corpus: <?= json_encode($combined_numbers) ?>,
+            swp: <?= json_encode($swp_numbers) ?>
+        };
+    </script>
+    
+    <script defer src="script.js"></script>
 
 </body>
 
