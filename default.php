@@ -155,10 +155,12 @@ foreach ($combined as $row) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIP SWP Calculator</title>
     
-    <!-- Preload critical CSS and fonts -->
+    <!-- Preload and optimize critical resources -->
     <link rel="preload" href="styles.css" as="style">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     
     <script>
         // Initialize theme on page load (runs before rendering) - Critical path
@@ -189,10 +191,66 @@ foreach ($combined as $row) {
     <!-- Load custom CSS first (synchronous, critical) -->
     <link rel="stylesheet" href="styles.css">
     
-    <!-- Defer Tailwind CSS (non-critical, can load async) -->
-    <script defer src="https://cdn.tailwindcss.com"></script>
+    <!-- Critical CSS inlined for faster FCP -->
+    <style>
+        /* Critical above-the-fold styles */
+        html { scroll-behavior: smooth; }
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1f35 50%, #0f172a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            font-smooth: antialiased;
+            -webkit-font-smoothing: antialiased;
+            color: #e5e7eb;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        html.light body {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 30%, #f0f4f8 60%, #ffffff 100%) !important;
+            color: #0f172a !important;
+        }
+        header {
+            position: relative;
+            overflow: hidden;
+            padding: 4rem 1rem;
+        }
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin: 0 0 0.75rem 0;
+            color: #ffffff;
+        }
+        html.light h1 {
+            color: #0f172a;
+        }
+        p {
+            margin: 0;
+            font-size: 1.125rem;
+        }
+        html.light p {
+            color: #1e293b;
+        }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+    
+    <!-- Inline critical Tailwind config and load Tailwind async -->
     <script>
-        tailwindcss.config = {
+        // Set Tailwind config before loading the script
+        window.tailwindConfig = {
             darkMode: 'class',
             theme: {
                 extend: {
@@ -202,6 +260,15 @@ foreach ($combined as $row) {
                     }
                 }
             }
+        };
+    </script>
+    
+    <!-- Load Tailwind asynchronously to not block rendering -->
+    <script async src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Apply config when Tailwind is ready
+        if (window.tailwindcss) {
+            tailwindcss.config = window.tailwindConfig;
         }
     </script>
 </head>
