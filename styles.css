@@ -109,6 +109,12 @@ html.light label {
 	font-size: 0.95rem;
 }
 
+html.light legend {
+	color: #0f172a;
+	font-weight: 700;
+	font-size: 1.125rem;
+}
+
 /* Professional input styling */
 input[type="number"],
 input[type="text"],
@@ -255,6 +261,11 @@ html.light button[name="action"]:hover {
 	background: rgba(255, 255, 255, 0.9);
 	border-color: rgba(91, 33, 182, 0.4);
 	box-shadow: 0 8px 24px rgba(91, 33, 182, 0.15);
+}
+
+/* Theme-aware reset button styling */
+#resetZoomBtn {
+	transition: all 0.3s ease;
 }
 
 /* Improve table header styling */

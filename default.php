@@ -258,7 +258,7 @@ foreach ($combined as $row) {
         <div class="card-gradient mb-8 p-8" style="margin-top: -2rem;">
             <form method="post" novalidate>
                     <fieldset class="mb-6">
-                        <legend class="text-xl font-bold mb-4">SIP Details</legend>
+                        <legend class="text-xl font-bold mb-6 light:text-purple-900 dark:text-white">SIP Details</legend>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                             <div>
                                 <label class="block text-sm font-medium mb-2">Monthly SIP Investment</label>
@@ -286,9 +286,9 @@ foreach ($combined as $row) {
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="mt-8">
-                        <legend class="text-xl font-bold mb-4">SWP Details</legend>
-                        <p class="text-sm text-slate-400 mb-6">SWP automatically starts the year after SIP ends. Monthly withdrawals are capped to available funds.</p>
+                    <fieldset class="mt-10">
+                        <legend class="text-xl font-bold mb-6 light:text-purple-900 dark:text-white">SWP Details</legend>
+                        <p class="text-sm light:text-slate-600 dark:text-slate-400 mb-6">SWP automatically starts the year after SIP ends. Monthly withdrawals are capped to available funds.</p>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
                                 <label class="block text-sm font-medium mb-2">Monthly SWP Withdrawal</label>
@@ -311,7 +311,7 @@ foreach ($combined as $row) {
                         </div>
                     </fieldset>
 
-                    <div class="flex flex-wrap gap-4 mt-8">
+                    <div class="flex flex-wrap gap-4 mt-10">
                         <button type="submit" name="action" value="calculate"
                             class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-300">Calculate Results</button>
                         <button type="submit" name="action" value="download_csv"
@@ -325,25 +325,34 @@ foreach ($combined as $row) {
 
         <!-- Chart Section -->
         <section class="card-gradient mb-8 p-8 mt-6" aria-label="Investment growth visualization">
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold mb-2">Investment Growth Visualization</h2>
-                <p class="text-slate-400 text-sm">Interactive chart: Use mouse scroll to zoom, pinch on touch to zoom, drag to select zoom area. Hold Alt and drag to pan.</p>
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-3 light:text-purple-900 dark:text-white">Investment Growth Visualization</h2>
+                <p class="text-sm light:text-slate-600 dark:text-slate-400">Interactive chart: Use mouse scroll to zoom, pinch on touch to zoom, drag to select zoom area. Hold Alt and drag to pan.</p>
             </div>
-            <div class="flex justify-end mb-4">
+            <div class="flex justify-end mb-6">
                 <button id="resetZoomBtn" type="button" aria-label="Reset chart zoom to default view"
-                    class="px-6 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-100 font-semibold rounded-lg border border-slate-600 transition-all duration-300">
+                    class="px-6 py-2.5 light:bg-purple-600 light:hover:bg-purple-700 light:text-white dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-slate-100 font-semibold rounded-lg light:border-0 dark:border dark:border-slate-600 transition-all duration-300 shadow-sm">
                     Reset Zoom
                 </button>
             </div>
-            <div class="relative" style="height: 420px;" role="img" aria-label="Line chart showing corpus, cumulative investment, and SWP withdrawals over years">
+            <div class="relative rounded-lg overflow-hidden" style="height: 420px; background: rgba(0,0,0,0.02);" role="img" aria-label="Line chart showing corpus, cumulative investment, and SWP withdrawals over years">
                 <canvas id="corpusChart" role="img" aria-label="Investment growth chart"></canvas>
             </div>
         </section>
 
         <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
             <section class="card-gradient mb-8 p-8 mt-6" aria-label="Results explanation">
-                <h5 class="text-lg font-bold mb-3 mt-0">Summary</h5>
-                <p class="text-slate-300"><strong>All amounts are in USD.</strong> The End-of-Year Corpus represents your portfolio value at year-end (all principal invested plus interest earned). The table below provides a detailed year-by-year breakdown.</p>
+                <h5 class="text-lg font-bold mb-4 mt-0 light:text-purple-900 dark:text-white">Summary</h5>
+                <div class="space-y-3 light:text-slate-700 dark:text-slate-300">
+                    <p class="flex items-start gap-3">
+                        <span class="text-lg light:text-purple-600 dark:text-indigo-400 font-bold flex-shrink-0">✓</span>
+                        <span><strong class="light:text-purple-900 dark:text-slate-100">All amounts are in USD.</strong> The End-of-Year Corpus represents your portfolio value at year-end (all principal invested plus interest earned).</span>
+                    </p>
+                    <p class="flex items-start gap-3">
+                        <span class="text-lg light:text-purple-600 dark:text-indigo-400 font-bold flex-shrink-0">✓</span>
+                        <span>The table below provides a detailed year-by-year breakdown of your SIP contributions, SWP withdrawals, and compound growth.</span>
+                    </p>
+                </div>
             </section>
 
             <section class="card-gradient p-8 mt-6" aria-label="Detailed yearly report">
