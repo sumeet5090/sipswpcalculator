@@ -11,34 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggleDarkIcon.classList.remove('hidden');
     }
 
-    themeToggleBtn.addEventListener('click', function() {
-        // toggle icons inside button
-        themeToggleDarkIcon.classList.toggle('hidden');
-        themeToggleLightIcon.classList.toggle('hidden');
+    themeToggleBtn.addEventListener('click', function () {
+        // Toggle the 'dark' class on the root HTML element
+        const isDarkMode = document.documentElement.classList.toggle('dark');
 
-        // if set via local storage previously
-        if (localStorage.getItem('theme')) {
-            if (localStorage.getItem('theme') === 'light') {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            }
+        // Update the theme in localStorage
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
 
-        // if NOT set via local storage previously
-        } else {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-        
-        // We need to update the chart to reflect the theme change
-        if(window.corpusChartInstance) {
+        // Toggle the visibility of the theme icons
+        themeToggleDarkIcon.classList.toggle('hidden', !isDarkMode);
+        themeToggleLightIcon.classList.toggle('hidden', isDarkMode);
+
+        // Update the chart to reflect the theme change
+        if (window.corpusChartInstance) {
             updateChartTheme(window.corpusChartInstance);
         }
     });

@@ -148,12 +148,12 @@ foreach ($combined as $row) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIP SWP Calculator</title>
+    <title>Advanced SIP & SWP Calculator for Investors | Plan Your Mutual Fund Investments</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom scrollbar for a more modern look */
@@ -184,11 +184,12 @@ foreach ($combined as $row) {
         }
     </style>
     <script>
-        // Set Tailwind dark mode based on localStorage
-        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
+        // Apply the theme immediately
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
         } else {
-            document.documentElement.classList.remove('dark')
+            document.documentElement.classList.remove('dark');
         }
     </script>
 </head>
@@ -197,8 +198,15 @@ foreach ($combined as $row) {
 
     <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
         
-        <header class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400">SIP & SWP Calculator</h1>
+        <header class="mb-8">
+            <div class="text-center">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 pb-2">
+                Future-Proof Your Finances
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+                The Ultimate SIP & SWP Calculator to Visualize Your Wealth Creation and Withdrawal Journey
+            </p>
+        </div>
             <button id="theme-toggle" class="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 <svg id="theme-toggle-dark-icon" class="hidden h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
                 <svg id="theme-toggle-light-icon" class="hidden h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 01-1 1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zM5.05 14.95a1 1 0 010-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414 0zM1.707 4.293a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414-1.414l-.707-.707z"></path></svg>
@@ -307,6 +315,41 @@ foreach ($combined as $row) {
                 </div>
             </div>
         </main>
+
+        <div class="text-center mt-8">
+    <a href="sip-calculator.php" class="text-indigo-600 dark:text-indigo-400 hover:underline">
+        Learn more about SIPs and how to use our calculator
+    </a>
+</div>
+
+<div class="mt-12 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm rounded-xl shadow-lg border dark:border-slate-700 p-8">
+            <h2 class="text-3xl font-bold text-center mb-6">Master Your Financial Future with SIP & SWP</h2>
+            <div class="prose prose-lg max-w-none text-slate-600 dark:text-slate-300">
+                <p>Understanding the tools at your disposal is the first step toward effective financial planning. Our calculator is designed to demystify two of the most powerful tools for mutual fund investors: the Systematic Investment Plan (SIP) and the Systematic Withdrawal Plan (SWP).</p>
+                
+                <div class="grid md:grid-cols-2 gap-8 mt-8">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-3 text-indigo-600 dark:text-indigo-400">What is a Systematic Investment Plan (SIP)?</h3>
+                        <p>A SIP is a disciplined investment approach where you invest a fixed amount of money at regular intervals (usually monthly) into a mutual fund scheme. Instead of making a large one-time investment, you invest smaller amounts over time. This strategy helps in averaging out the cost of your investment and harnesses the power of compounding.</p>
+                        <ul class="mt-4 space-y-2">
+                            <li><span class="font-semibold text-green-500">Rupee Cost Averaging:</span> Buy more units when the market is low and fewer when it's high.</li>
+                            <li><span class="font-semibold text-green-500">Power of Compounding:</span> Reinvesting your returns generates earnings on your earnings, leading to exponential growth.</li>
+                            <li><span class="font-semibold text-green-500">Disciplined Investing:</span> Automates the habit of saving and investing regularly.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-3 text-purple-600 dark:text-purple-400">What is a Systematic Withdrawal Plan (SWP)?</h3>
+                        <p>An SWP is the reverse of a SIP. It allows you to withdraw a fixed amount of money from your mutual fund investment at regular intervals. This is an ideal solution for generating a regular cash flow from your investments, especially during retirement. It provides a steady income stream while allowing the remaining investment to continue growing.</p>
+                        <ul class="mt-4 space-y-2">
+                            <li><span class="font-semibold text-green-500">Regular Income:</span> Create a predictable cash flow from your investments.</li>
+                            <li><span class="font-semibold text-green-500">Tax-Efficient:</span> Withdrawals are structured to be tax-efficient, especially for long-term capital gains.</li>
+                            <li><span class="font-semibold text-green-500">Continued Growth:</span> Your remaining corpus stays invested and continues to benefit from market growth.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-center mt-8">Use our advanced calculator to model your SIP investments and plan your SWP withdrawals to see how you can achieve your financial goals, whether it's building a retirement corpus, funding your child's education, or creating a passive income stream.</p>
+            </div>
+        </div>
 
         <footer class="mt-12 text-sm text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm rounded-xl shadow-lg border dark:border-slate-700 p-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
