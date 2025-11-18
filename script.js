@@ -1,182 +1,183 @@
-// Initialize theme on page load (before content renders)
-(function() {
-	const savedTheme = localStorage.getItem('theme') || 'dark';
-	document.documentElement.setAttribute('data-theme', savedTheme);
-	if (savedTheme === 'light') {
-		document.documentElement.classList.add('light');
-	}
-})();
+document.addEventListener('DOMContentLoaded', () => {
+    // Theme Toggler
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
-// Wait for both DOM and Tailwind to be ready
-Promise.all([
-	new Promise(resolve => {
-		if (document.readyState === 'loading') {
-			document.addEventListener('DOMContentLoaded', resolve);
-		} else {
-			resolve();
-		}
-	}),
-	window.tailwindReady || Promise.resolve()
-]).then(() => {
-	// Theme toggle management
-	const themeToggle = document.getElementById('themeToggle');
-	const moonIcon = document.getElementById('moonIcon');
-	const sunIcon = document.getElementById('sunIcon');
+    // Change the icons inside the button based on previous settings
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        themeToggleLightIcon.classList.remove('hidden');
+    } else {
+        themeToggleDarkIcon.classList.remove('hidden');
+    }
 
-	function setTheme(theme) {
-		localStorage.setItem('theme', theme);
-		document.documentElement.setAttribute('data-theme', theme);
-		
-		// Update classes for Tailwind dark: mode and custom CSS
-		if (theme === 'light') {
-			document.documentElement.classList.add('light');
-			document.body.classList.add('light-mode');
-			document.body.classList.remove('dark-mode');
-			if (moonIcon) moonIcon.style.display = 'none';
-			if (sunIcon) sunIcon.style.display = 'inline-block';
-		} else {
-			document.documentElement.classList.remove('light');
-			document.body.classList.remove('light-mode');
-			document.body.classList.add('dark-mode');
-			if (moonIcon) moonIcon.style.display = 'inline-block';
-			if (sunIcon) sunIcon.style.display = 'none';
-		}
-		console.log('Theme set to:', theme);
-	}
+    themeToggleBtn.addEventListener('click', function() {
+        // toggle icons inside button
+        themeToggleDarkIcon.classList.toggle('hidden');
+        themeToggleLightIcon.classList.toggle('hidden');
 
-	// Initialize theme on DOM ready
-	const savedTheme = localStorage.getItem('theme') || 'dark';
-	setTheme(savedTheme);
+        // if set via local storage previously
+        if (localStorage.getItem('theme')) {
+            if (localStorage.getItem('theme') === 'light') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
 
-	// Toggle on click
-	if (themeToggle) {
-		themeToggle.addEventListener('click', function(e) {
-			e.preventDefault();
-			e.stopPropagation();
-			const currentTheme = localStorage.getItem('theme') || 'dark';
-			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-			setTheme(newTheme);
-		});
+        // if NOT set via local storage previously
+        } else {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        // We need to update the chart to reflect the theme change
+        if(window.corpusChartInstance) {
+            updateChartTheme(window.corpusChartInstance);
+        }
+    });
 
-		// Also handle touchend for mobile reliability
-		themeToggle.addEventListener('touchend', function(e) {
-			e.preventDefault();
-			e.stopPropagation();
-			const currentTheme = localStorage.getItem('theme') || 'dark';
-			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-			setTheme(newTheme);
-		});
-	} else {
-		console.warn('Theme toggle button not found!');
-	}
-	// Register the zoom plugin (needed for CDN UMD build)
-	if (window['chartjs-plugin-zoom']) {
-		Chart.register(window['chartjs-plugin-zoom']);
-	}
-
-	// Chart data from PHP
-	const years = window.chartData.years;
-	const cumulative = window.chartData.cumulative;
-	const corpus = window.chartData.corpus;
-	const swp = window.chartData.swp;
-
-	function inrCompact(num) {
-		if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
-		return num.toLocaleString('en-US');
-	}
-
-	const ctx = document.getElementById('corpusChart').getContext('2d');
-
-	const chart = new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels: years,
-			datasets: [
-				{
-					label: 'Total SIP Invested',
-					data: cumulative,
-					borderWidth: 2,
-					tension: 0.35,
-					pointRadius: 3,
-					pointHoverRadius: 6,
-					borderColor: 'rgba(0, 200, 150, 1)',
-					backgroundColor: 'rgba(0, 200, 150, 0.08)',
-					fill: true,
-				},
-				{
-					label: 'End-of-Year Corpus',
-					data: corpus,
-					borderWidth: 2.5,
-					tension: 0.4,
-					pointRadius: 3,
-					pointHoverRadius: 6,
-					borderColor: 'rgba(102, 102, 255, 1)',
-					backgroundColor: 'rgba(102, 102, 255, 0.06)',
-					fill: true,
-				},
-				{
-					label: 'Annual SWP Withdrawals',
-					data: swp,
-					borderWidth: 2,
-					tension: 0.35,
-					pointRadius: 3,
-					pointHoverRadius: 6,
-					borderColor: 'rgba(255, 99, 132, 1)',
-					backgroundColor: 'rgba(255, 99, 132, 0.04)',
-					borderDash: [6, 4],
-					fill: false,
-				}
-			]
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			interaction: { intersect: false, mode: 'index' },
-			plugins: {
-				legend: { position: 'top' },
-				tooltip: {
-					callbacks: {
-						label: ctx => `${ctx.dataset.label}: ${inrCompact(ctx.raw)}`
-					}
-				},
-				zoom: {
-					limits: {
-						x: { min: Math.min(...years), max: Math.max(...years) },
-						y: { min: 0 } // amounts shouldn't go negative
-					},
-					pan: {
-						enabled: true,
-						mode: 'xy',
-						modifierKey: 'alt' // hold Alt to pan (prevents accidental pans)
-					},
-					zoom: {
-						wheel: { enabled: true },     // scroll to zoom
-						pinch: { enabled: true },     // pinch to zoom (touch)
-						drag: { enabled: true },     // drag selection to zoom
-						pan: { enabled: true, mode: 'xy' }
-					}
-				}
-			},
-			scales: {
-				x: {
-					title: { display: true, text: 'Year' }
-				},
-				y: {
-					title: { display: true, text: 'Amount' },
-					ticks: {
-						callback: val => inrCompact(val)
-					}
-				}
-			},
-			animations: {
-				tension: { duration: 1000, easing: 'easeOutQuart' }
-			}
-		}
-	});
-
-	// Reset zoom handlers
-	const resetBtn = document.getElementById('resetZoomBtn');
-	if (resetBtn) resetBtn.addEventListener('click', () => chart.resetZoom());
-	// double-click canvas to reset zoom
-	document.getElementById('corpusChart').addEventListener('dblclick', () => chart.resetZoom());
+    // Chart.js
+    const ctx = document.getElementById('corpusChart');
+    if (ctx && window.chartData.years.length > 0) {
+        const chartConfig = getChartConfig(window.chartData);
+        window.corpusChartInstance = new Chart(ctx, chartConfig);
+    }
 });
+
+function getChartConfig({ years, cumulative, corpus, swp }) {
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+    const textColor = isDarkMode ? '#e2e8f0' : '#334155';
+
+    return {
+        type: 'line',
+        data: {
+            labels: years,
+            datasets: [
+                {
+                    label: 'Total Invested',
+                    data: cumulative,
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#10b981',
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                },
+                {
+                    label: 'Corpus Value',
+                    data: corpus,
+                    borderColor: '#4f46e5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#4f46e5',
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                },
+                {
+                    label: 'Annual Withdrawal',
+                    data: swp,
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    tension: 0.4,
+                    fill: false,
+                    pointBackgroundColor: '#ef4444',
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            },
+            scales: {
+                x: {
+                    grid: {
+                        color: gridColor,
+                    },
+                    ticks: {
+                        color: textColor,
+                    },
+                    title: {
+                        display: true,
+                        text: 'Year',
+                        color: textColor,
+                    }
+                },
+                y: {
+                    grid: {
+                        color: gridColor,
+                    },
+                    ticks: {
+                        color: textColor,
+                        callback: function(value) {
+                            if (value >= 10000000) return (value / 10000000).toFixed(2) + ' Cr';
+                            if (value >= 100000) return (value / 100000).toFixed(2) + ' L';
+                            if (value >= 1000) return (value / 1000).toFixed(2) + ' K';
+                            return value;
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Amount (INR)',
+                        color: textColor,
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor,
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(context.parsed.y);
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    };
+}
+
+function updateChartTheme(chart) {
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+    const textColor = isDarkMode ? '#e2e8f0' : '#334155';
+
+    chart.options.scales.x.grid.color = gridColor;
+    chart.options.scales.x.ticks.color = textColor;
+    chart.options.scales.x.title.color = textColor;
+    chart.options.scales.y.grid.color = gridColor;
+    chart.options.scales.y.ticks.color = textColor;
+    chart.options.scales.y.title.color = textColor;
+    chart.options.plugins.legend.labels.color = textColor;
+    
+    chart.update();
+}

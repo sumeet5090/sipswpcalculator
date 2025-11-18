@@ -148,404 +148,175 @@ foreach ($combined as $row) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIP SWP Calculator</title>
-    
-    <!-- Preload and optimize critical resources -->
-    <link rel="preload" href="styles.css" as="style">
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    
-    <script>
-        // Initialize theme on page load (runs before rendering) - Critical path
-        (function() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            if (savedTheme === 'light') {
-                document.documentElement.classList.add('light');
-            }
-        })();
-    </script>
-    
-    <meta name="description" content="Use our free SIP & SWP calculator to plan your investments. A simple, accurate tool designed for global investors.">
-    <link rel="canonical" href="https://sipswpcalculator.com">
-    <meta name="robots" content="index,follow">
-    
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            "name": "SIP SWP Calculator",
-            "url": "https://sipswpcalculator.com",
-            "applicationCategory": "Finance",
-            "description": "A free, easy-to-use SIP SWP calculator for Global investors."
-        }
-    </script>
-    
-    <!-- Load custom CSS first (synchronous, critical) -->
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- Critical CSS inlined for faster FCP -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Critical above-the-fold styles */
-        html { scroll-behavior: smooth; }
-        body {
-            background: linear-gradient(135deg, #0f172a 0%, #1a1f35 50%, #0f172a 100%);
-            background-attachment: fixed;
-            min-height: 100vh;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            font-smooth: antialiased;
-            -webkit-font-smoothing: antialiased;
-            color: #e5e7eb;
-            font-size: 16px;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
+        /* Custom scrollbar for a more modern look */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-        html.light body {
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 30%, #f0f4f8 60%, #ffffff 100%) !important;
-            color: #0f172a !important;
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
         }
-        header {
-            position: relative;
-            overflow: hidden;
-            padding: 4rem 1rem;
+        ::-webkit-scrollbar-thumb {
+            background: #4f46e5;
+            border-radius: 4px;
         }
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin: 0 0 0.75rem 0;
-            color: #ffffff;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
         }
-        html.light h1 {
-            color: #0f172a;
+        .dark ::-webkit-scrollbar-track {
+            background: #1e293b;
         }
-        p {
-            margin: 0;
-            font-size: 1.125rem;
+        .light ::-webkit-scrollbar-track {
+            background: #e2e8f0;
         }
-        html.light p {
-            color: #1e293b;
+        .light ::-webkit-scrollbar-thumb {
+            background: #4f46e5;
         }
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
+        .light ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
         }
     </style>
-    
-    <!-- Inline critical Tailwind config and load Tailwind async -->
     <script>
-        // Set Tailwind config BEFORE loading the script
-        window.tailwindConfig = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#6366f1',
-                        accent: '#8b5cf6',
-                    }
-                }
-            }
-        };
-        
-        // Create a promise to track when Tailwind is ready
-        window.tailwindReady = new Promise((resolve) => {
-            // Check if Tailwind is already loaded
-            if (window.tailwindcss) {
-                window.tailwindcss.config = window.tailwindConfig;
-                resolve();
-            } else {
-                // Watch for Tailwind to load
-                const checkTailwind = setInterval(() => {
-                    if (window.tailwindcss) {
-                        window.tailwindcss.config = window.tailwindConfig;
-                        clearInterval(checkTailwind);
-                        resolve();
-                    }
-                }, 50);
-                // Timeout after 5 seconds
-                setTimeout(() => {
-                    clearInterval(checkTailwind);
-                    resolve();
-                }, 5000);
-            }
-        });
+        // Set Tailwind dark mode based on localStorage
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
     </script>
-    
-    <!-- Load Tailwind asynchronously to not block rendering -->
-    <script async src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="light:bg-gradient-to-br light:from-slate-50 light:via-white light:to-slate-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 light:text-slate-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:bg-indigo-600 focus:text-white focus:p-2">Skip to main content</a>
-    
-    <!-- Theme Toggle Button -->
-    <button id="themeToggle" type="button" aria-label="Toggle between dark and light theme"
-        class="fixed top-6 right-6 z-50 p-3 rounded-full backdrop-blur-md transition-all duration-300 shadow-lg hover:shadow-xl
-        light:bg-slate-900/10 light:hover:bg-slate-900/20 light:text-slate-700 light:border light:border-slate-300
-        dark:bg-slate-100/10 dark:hover:bg-slate-100/20 dark:text-slate-200 dark:border dark:border-slate-700">
-        <!-- Moon icon (for dark mode) -->
-        <span id="moonIcon" class="inline-block text-2xl transition-transform duration-300">
-            🌙
-        </span>
-        <!-- Sun icon (for light mode) -->
-        <span id="sunIcon" class="hidden inline-block text-2xl transition-transform duration-300">
-            ☀️
-        </span>
-    </button>
-    
-    <header role="banner" class="relative overflow-hidden py-16 px-4 sm:px-6 lg:px-8">
-        <!-- Decorative background elements -->
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute -top-40 -right-40 w-80 h-80 light:bg-blue-200/30 dark:bg-indigo-600/20 rounded-full blur-3xl"></div>
-            <div class="absolute -bottom-40 -left-40 w-80 h-80 light:bg-purple-200/30 dark:bg-purple-600/20 rounded-full blur-3xl"></div>
-        </div>
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
+
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
         
-        <!-- Content -->
-        <div class="relative max-w-7xl mx-auto text-center">
-            <h1 class="text-5xl sm:text-6xl font-bold light:text-slate-900 dark:text-white mb-4 drop-shadow-lg">
-                Free SIP & SWP Calculator
-            </h1>
-            <p class="text-xl light:text-slate-700 dark:text-slate-300 max-w-2xl mx-auto">
-                Plan, visualize, and optimize your investment strategy with our powerful financial calculator
-            </p>
-        </div>
-    </header>
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400">SIP & SWP Calculator</h1>
+            <button id="theme-toggle" class="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg id="theme-toggle-dark-icon" class="hidden h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                <svg id="theme-toggle-light-icon" class="hidden h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 01-1 1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zM5.05 14.95a1 1 0 010-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414 0zM1.707 4.293a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414-1.414l-.707-.707z"></path></svg>
+            </button>
+        </header>
 
-    <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <main>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Form Section -->
+                <div class="lg:col-span-1 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg">
+                    <form method="post" novalidate>
+                        <fieldset class="mb-6">
+                            <legend class="text-xl font-semibold mb-4 text-indigo-600 dark:text-indigo-400">SIP Details</legend>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="sip" class="block text-sm font-medium mb-1">Monthly Investment</label>
+                                    <input type="number" id="sip" name="sip" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
+                                </div>
+                                <div>
+                                    <label for="years" class="block text-sm font-medium mb-1">Investment Period (Years)</label>
+                                    <input type="number" id="years" name="years" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $years) ?>">
+                                </div>
+                                <div>
+                                    <label for="rate" class="block text-sm font-medium mb-1">Expected Return Rate (% p.a.)</label>
+                                    <input type="number" id="rate" step="0.01" name="rate" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
+                                </div>
+                                <div>
+                                    <label for="stepup" class="block text-sm font-medium mb-1">Annual Step-up (%)</label>
+                                    <input type="number" id="stepup" step="0.01" name="stepup" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
+                                </div>
+                            </div>
+                        </fieldset>
 
-        <div class="card-gradient mb-8 p-8" style="margin-top: -2rem;">
-            <form method="post" novalidate>
-                    <fieldset class="mb-6">
-                        <legend class="text-xl font-bold mb-6 light:text-purple-900 dark:text-white">SIP Details</legend>
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Monthly SIP Investment</label>
-                                <input type="number" step="0.01" name="sip"
-                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                    required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
+                        <fieldset>
+                            <legend class="text-xl font-semibold mb-4 text-indigo-600 dark:text-indigo-400">SWP Details</legend>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="swp_withdrawal" class="block text-sm font-medium mb-1">Monthly Withdrawal</label>
+                                    <input type="number" id="swp_withdrawal" step="0.01" name="swp_withdrawal" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
+                                </div>
+                                <div>
+                                    <label for="swp_stepup" class="block text-sm font-medium mb-1">Annual Withdrawal Increase (%)</label>
+                                    <input type="number" id="swp_stepup" step="0.01" name="swp_stepup" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
+                                </div>
+                                <div>
+                                    <label for="swp_years" class="block text-sm font-medium mb-1">Withdrawal Period (Years)</label>
+                                    <input type="number" id="swp_years" name="swp_years" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Years of Investment</label>
-                                <input type="number" name="years"
-                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                    required min="1" value="<?= htmlspecialchars((string) $years) ?>">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Annual Interest Rate (% p.a.)</label>
-                                <input type="number" step="0.01" name="rate"
-                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                    required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Annual SIP Increase (%)</label>
-                                <input type="number" step="0.01" name="stepup"
-                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                    required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
-                            </div>
+                        </fieldset>
+
+                        <div class="flex flex-wrap gap-4 mt-8">
+                            <button type="submit" name="action" value="calculate" class="flex-1 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Calculate</button>
+                            <button type="submit" name="action" value="download_csv" class="flex-1 px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Download CSV</button>
                         </div>
-                    </fieldset>
-                    <fieldset class="mt-10">
-                        <legend class="text-xl font-bold mb-6 light:text-purple-900 dark:text-white">SWP Details</legend>
-                        <p class="text-sm light:text-slate-600 dark:text-slate-400 mb-6">SWP automatically starts the year after SIP ends. Monthly withdrawals are capped to available funds.</p>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Monthly SWP Withdrawal</label>
-                                <input type="number" step="0.01" name="swp_withdrawal"
-                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                    required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Annual SWP Increase (%)</label>
-                                <input type="number" step="0.01" name="swp_stepup"
-                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                    required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Number of SWP Years</label>
-                                <input type="number" name="swp_years"
-                                    class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-500"
-                                    required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
-                            </div>
-                        </div>
-                    </fieldset>
+                    </form>
+                </div>
 
-                    <div class="flex flex-wrap gap-4 mt-10">
-                        <button type="submit" name="action" value="calculate"
-                            class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-300">Calculate Results</button>
-                        <button type="submit" name="action" value="download_csv"
-                            class="px-8 py-3 bg-slate-700 hover:bg-slate-600 text-slate-100 font-semibold rounded-lg border border-slate-600 transition-all duration-300">Download CSV Report</button>
-                        <button type="reset"
-                            class="px-8 py-3 bg-slate-700 hover:bg-slate-600 text-slate-100 font-semibold rounded-lg border border-slate-600 transition-all duration-300">Reset Form</button>
+                <!-- Chart and Table Section -->
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg">
+                        <h2 class="text-2xl font-semibold mb-4">Investment Journey</h2>
+                        <div class="h-96">
+                            <canvas id="corpusChart"></canvas>
+                        </div>
                     </div>
-                </form>
-            </div>
-        </div>
 
-        <!-- Chart Section -->
-        <section class="card-gradient mb-8 p-8 mt-6" aria-label="Investment growth visualization">
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold mb-3 light:text-purple-900 dark:text-white">Investment Growth Visualization</h2>
-                <p class="text-sm light:text-slate-600 dark:text-slate-400">Interactive chart: Use mouse scroll to zoom, pinch on touch to zoom, drag to select zoom area. Hold Alt and drag to pan.</p>
-            </div>
-            <div class="flex justify-end mb-6">
-                <button id="resetZoomBtn" type="button" aria-label="Reset chart zoom to default view"
-                    class="px-6 py-2.5 light:bg-purple-600 light:hover:bg-purple-700 light:text-white dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-slate-100 font-semibold rounded-lg light:border-0 dark:border dark:border-slate-600 transition-all duration-300 shadow-sm">
-                    Reset Zoom
-                </button>
-            </div>
-            <div class="relative rounded-lg overflow-hidden" style="height: 420px; background: rgba(0,0,0,0.02);" role="img" aria-label="Line chart showing corpus, cumulative investment, and SWP withdrawals over years">
-                <canvas id="corpusChart" role="img" aria-label="Investment growth chart"></canvas>
-            </div>
-        </section>
-
-        <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
-            <section class="card-gradient mb-8 p-8 mt-6" aria-label="Results explanation">
-                <h5 class="text-lg font-bold mb-4 mt-0 light:text-purple-900 dark:text-white">Summary</h5>
-                <div class="space-y-3 light:text-slate-700 dark:text-slate-300">
-                    <p class="flex items-start gap-3">
-                        <span class="text-lg light:text-purple-600 dark:text-indigo-400 font-bold flex-shrink-0">✓</span>
-                        <span><strong class="light:text-purple-900 dark:text-slate-100">All amounts are in USD.</strong> The End-of-Year Corpus represents your portfolio value at year-end (all principal invested plus interest earned).</span>
-                    </p>
-                    <p class="flex items-start gap-3">
-                        <span class="text-lg light:text-purple-600 dark:text-indigo-400 font-bold flex-shrink-0">✓</span>
-                        <span>The table below provides a detailed year-by-year breakdown of your SIP contributions, SWP withdrawals, and compound growth.</span>
-                    </p>
-                </div>
-            </section>
-
-            <section class="card-gradient p-8 mt-6" aria-label="Detailed yearly report">
-                <h2 class="text-2xl font-bold mb-6 mt-0">Detailed Yearly Report</h2>
-                <div class="overflow-x-auto rounded-lg" style="box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
-                    <table class="w-full text-sm border-collapse">
-                        <thead class="table-header-gradient sticky top-0">
-                            <tr>
-                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Financial year number">Year</th>
-                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Corpus at year start">Start Corpus</th>
-                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Monthly SIP amount">Monthly SIP</th>
-                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Annual SIP contribution">Annual SIP</th>
-                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Cumulative SIP">Total SIP Invested</th>
-                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Monthly withdrawal">Monthly SWP</th>
-                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Annual withdrawal">Annual SWP</th>
-                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Cumulative withdrawals">Total SWP</th>
-                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="Interest earned">Interest</th>
-                                <th scope="col" class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider" title="End of year corpus">End Corpus</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($combined as $row): ?>
-                                <tr class="border-b border-gray-700 hover:bg-gray-700">
-                                    <td scope="row" class="px-4 py-3"><?= $row['year'] ?></td>
-                                    <td class="px-4 py-3"><?= formatInr($row['begin_balance']) ?></td>
-                                    <td class="px-4 py-3">
-                                        <?= $row['sip_monthly'] !== null ? formatInr($row['sip_monthly']) : '-' ?>
-                                    </td>
-                                    <td class="px-4 py-3"><?= formatInr($row['annual_contribution']) ?></td>
-                                    <td class="px-4 py-3"><?= formatInr($row['cumulative_invested']) ?></td>
-                                    <td class="px-4 py-3">
-                                        <?= $row['swp_monthly'] !== null ? formatInr($row['swp_monthly']) : '-' ?>
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                    </td>
-                                    <td class="px-4 py-3"><?= formatInr($row['interest']) ?></td>
-                                    <td class="px-4 py-3"><?= formatInr($row['combined_total']) ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        <?php endif; ?>
-
-    </main>
-
-    <!-- Footer Section -->
-    <footer role="contentinfo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-8">
-        <div class="card-gradient p-8 md:p-10">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 mt-0">
-                <!-- About Section -->
-                <div>
-                    <h3 class="text-lg font-bold mb-3 mt-0 light:text-purple-900 dark:text-indigo-300">About Calculator</h3>
-                    <p class="text-sm light:text-slate-700 dark:text-slate-400 leading-relaxed">
-                        A powerful, free tool designed to help investors visualize and plan their SIP and SWP strategies with precision and ease.
-                    </p>
-                </div>
-                
-                <!-- Quick Links Section -->
-                <div>
-                    <h3 class="text-lg font-bold mb-3 mt-0 light:text-purple-900 dark:text-indigo-300">Features</h3>
-                    <ul class="text-sm space-y-2 light:text-slate-700 dark:text-slate-400">
-                        <li class="flex items-center">
-                            <span class="mr-2 light:text-purple-600 dark:text-indigo-400">✓</span>
-                            <span>Real-time calculations</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="mr-2 light:text-purple-600 dark:text-indigo-400">✓</span>
-                            <span>Interactive visualization</span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="mr-2 light:text-purple-600 dark:text-indigo-400">✓</span>
-                            <span>CSV export</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Support Section -->
-                <div>
-                    <h3 class="text-lg font-bold mb-3 mt-0 light:text-purple-900 dark:text-indigo-300">Support</h3>
-                    <p class="text-sm light:text-slate-700 dark:text-slate-400 leading-relaxed">
-                        For questions or feedback about this calculator, 
-                        <a href="mailto:help@sipswpcalculator.com" class="font-semibold light:text-purple-600 dark:text-indigo-400 hover:light:text-purple-700 hover:dark:text-indigo-300 underline transition-colors">reach out to us</a>. 
-                        We're here to help you achieve your financial goals.
-                    </p>
+                    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg overflow-hidden">
+                        <div class="p-6">
+                            <h2 class="text-2xl font-semibold">Yearly Breakdown</h2>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-slate-50 dark:bg-slate-700 text-xs uppercase font-semibold">
+                                    <tr>
+                                        <th class="px-6 py-3">Year</th>
+                                        <th class="px-6 py-3 text-right">Start Corpus</th>
+                                        <th class="px-6 py-3 text-right">Annual SIP</th>
+                                        <th class="px-6 py-3 text-right">Total Invested</th>
+                                        <th class="px-6 py-3 text-right">Annual SWP</th>
+                                        <th class="px-6 py-3 text-right">Total Withdrawn</th>
+                                        <th class="px-6 py-3 text-right">Interest</th>
+                                        <th class="px-6 py-3 text-right">End Corpus</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                                    <?php foreach ($combined as $row): ?>
+                                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                                            <td class="px-6 py-4 font-medium"><?= $row['year'] ?></td>
+                                            <td class="px-6 py-4 text-right"><?= formatInr($row['begin_balance']) ?></td>
+                                            <td class="px-6 py-4 text-right text-green-600 dark:text-green-400"><?= formatInr($row['annual_contribution']) ?></td>
+                                            <td class="px-6 py-4 text-right"><?= formatInr($row['cumulative_invested']) ?></td>
+                                            <td class="px-6 py-4 text-right text-red-600 dark:text-red-400"><?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?></td>
+                                            <td class="px-6 py-4 text-right"><?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?></td>
+                                            <td class="px-6 py-4 text-right"><?= formatInr($row['interest']) ?></td>
+                                            <td class="px-6 py-4 text-right font-semibold text-indigo-600 dark:text-indigo-400"><?= formatInr($row['combined_total']) ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
+        </main>
 
-            <!-- Disclaimer Section -->
-            <div class="border-t light:border-purple-200 dark:border-slate-700 pt-6 mt-0">
-                <div class="mb-6 p-4 light:bg-amber-50/50 dark:bg-amber-950/20 rounded-lg light:border light:border-amber-200/50 dark:border-amber-900/30">
-                    <p class="text-sm light:text-amber-900 dark:text-amber-200">
-                        <span class="font-bold block mb-2">⚠️ Disclaimer</span>
-                        <span>This calculator is for educational and illustrative purposes only. It does not constitute financial, tax, or investment advice. Past performance is not indicative of future results. Please consult with a qualified financial advisor before making any investment decisions.</span>
-                    </p>
-                </div>
+        <footer class="mt-12 text-center text-sm text-slate-500 dark:text-slate-400">
+            <p>&copy; <?= date('Y') ?> SIP SWP Calculator. All Rights Reserved.</p>
+            <p class="mt-1">This calculator is for illustrative purposes only. Consult a financial advisor before investing.</p>
+        </footer>
 
-                <!-- Copyright Section -->
-                <div class="text-center border-t light:border-purple-200 dark:border-slate-700 pt-6">
-                    <p class="text-xs light:text-slate-600 dark:text-slate-500 font-medium">
-                        © 2024 SIP/SWP Calculator. All rights reserved.
-                    </p>
-                    <p class="text-xs light:text-slate-500 dark:text-slate-600 mt-2">
-                        Built with care for global investors • <span class="light:text-purple-600 dark:text-indigo-400">No tracking • No ads • Free forever</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    </div>
 
-    <!-- Defer non-critical Chart.js and custom scripts to end of body -->
-    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.umd.min.js"></script>
-    
-    <script defer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script>
         // Pass chart data to the external script
         window.chartData = {
             years: <?= json_encode($years_data) ?>,
@@ -554,9 +325,7 @@ foreach ($combined as $row) {
             swp: <?= json_encode($swp_numbers) ?>
         };
     </script>
-    
-    <script defer src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
-
 </html>
