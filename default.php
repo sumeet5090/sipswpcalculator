@@ -287,8 +287,8 @@ foreach ($combined as $row) {
     </script>
     
     <!-- Load Tailwind asynchronously to not block rendering -->
-    <script async src="https://cdn.tailwindcss.com"></script>
-    <!-- <link rel="stylesheet" href="tailwind.css"> -->
+    <!-- <script async src="https://cdn.tailwindcss.com"></script> -->
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
 <body class="light:bg-gradient-to-br light:from-slate-50 light:via-white light:to-slate-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 light:text-slate-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
