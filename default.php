@@ -193,7 +193,7 @@ foreach ($combined as $row) {
     </script>
 </head>
 
-<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
+<body class="bg-slate-100 dark:bg-gradient-to-br dark:from-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
     <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
         
@@ -209,26 +209,26 @@ foreach ($combined as $row) {
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
                 <!-- Form Section -->
-                <div class="lg:col-span-1 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg">
+                <div class="lg:col-span-1 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm p-6 rounded-xl shadow-lg border dark:border-slate-700">
                     <form method="post" novalidate>
                         <fieldset class="mb-6">
                             <legend class="text-xl font-semibold mb-4 text-indigo-600 dark:text-indigo-400">SIP Details</legend>
                             <div class="space-y-4">
                                 <div>
                                     <label for="sip" class="block text-sm font-medium mb-1">Monthly Investment</label>
-                                    <input type="number" id="sip" name="sip" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
+                                    <input type="number" id="sip" name="sip" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700/50 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
                                 </div>
                                 <div>
                                     <label for="years" class="block text-sm font-medium mb-1">Investment Period (Years)</label>
-                                    <input type="number" id="years" name="years" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $years) ?>">
+                                    <input type="number" id="years" name="years" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700/50 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $years) ?>">
                                 </div>
                                 <div>
                                     <label for="rate" class="block text-sm font-medium mb-1">Expected Return Rate (% p.a.)</label>
-                                    <input type="number" id="rate" step="0.01" name="rate" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
+                                    <input type="number" id="rate" step="0.01" name="rate" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700/50 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
                                 </div>
                                 <div>
                                     <label for="stepup" class="block text-sm font-medium mb-1">Annual Step-up (%)</label>
-                                    <input type="number" id="stepup" step="0.01" name="stepup" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
+                                    <input type="number" id="stepup" step="0.01" name="stepup" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700/50 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
                                 </div>
                             </div>
                         </fieldset>
@@ -238,15 +238,15 @@ foreach ($combined as $row) {
                             <div class="space-y-4">
                                 <div>
                                     <label for="swp_withdrawal" class="block text-sm font-medium mb-1">Monthly Withdrawal</label>
-                                    <input type="number" id="swp_withdrawal" step="0.01" name="swp_withdrawal" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
+                                    <input type="number" id="swp_withdrawal" step="0.01" name="swp_withdrawal" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700/50 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
                                 </div>
                                 <div>
                                     <label for="swp_stepup" class="block text-sm font-medium mb-1">Annual Withdrawal Increase (%)</label>
-                                    <input type="number" id="swp_stepup" step="0.01" name="swp_stepup" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
+                                    <input type="number" id="swp_stepup" step="0.01" name="swp_stepup" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700/50 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
                                 </div>
                                 <div>
                                     <label for="swp_years" class="block text-sm font-medium mb-1">Withdrawal Period (Years)</label>
-                                    <input type="number" id="swp_years" name="swp_years" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
+                                    <input type="number" id="swp_years" name="swp_years" class="w-full px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700/50 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
                                 </div>
                             </div>
                         </fieldset>
@@ -260,7 +260,7 @@ foreach ($combined as $row) {
 
                 <!-- Chart and Table Section -->
                 <div class="lg:col-span-2 space-y-8">
-                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg">
+                    <div class="bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm p-6 rounded-xl shadow-lg border dark:border-slate-700">
                         <h2 class="text-2xl font-semibold mb-4">Investment Journey</h2>
                         <div class="h-96">
                             <canvas id="corpusChart"></canvas>
@@ -268,13 +268,13 @@ foreach ($combined as $row) {
                     </div>
 
                     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
-                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border dark:border-slate-700">
                         <div class="p-6">
                             <h2 class="text-2xl font-semibold">Yearly Breakdown</h2>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50 dark:bg-slate-700 text-xs uppercase font-semibold">
+                                <thead class="bg-slate-50 dark:bg-slate-700/50 text-xs uppercase font-semibold">
                                     <tr>
                                         <th class="px-6 py-3">Year</th>
                                         <th class="px-6 py-3 text-right">Start Corpus</th>
@@ -308,9 +308,36 @@ foreach ($combined as $row) {
             </div>
         </main>
 
-        <footer class="mt-12 text-center text-sm text-slate-500 dark:text-slate-400">
-            <p>&copy; <?= date('Y') ?> SIP SWP Calculator. All Rights Reserved.</p>
-            <p class="mt-1">This calculator is for illustrative purposes only. Consult a financial advisor before investing.</p>
+        <footer class="mt-12 text-sm text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm rounded-xl shadow-lg border dark:border-slate-700 p-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-slate-800 dark:text-slate-200">About Calculator</h3>
+                    <p class="leading-relaxed">A powerful, free tool designed to help investors visualize and plan their SIP and SWP strategies with precision and ease.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-slate-800 dark:text-slate-200">Features</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Real-time calculations</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Interactive visualization</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> CSV export</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-slate-800 dark:text-slate-200">Support</h3>
+                    <p class="leading-relaxed">For questions or feedback about this calculator, <a href="mailto:help@sipswpcalculator.com" class="text-indigo-600 dark:text-indigo-400 hover:underline">reach out to us</a>. We're here to help you achieve your financial goals.</p>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-6">
+                <div class="bg-amber-100/50 dark:bg-amber-900/20 p-4 rounded-lg mb-6 border border-amber-200/50 dark:border-amber-800/30">
+                    <p class="text-amber-800 dark:text-amber-200"><span class="font-bold">⚠️ Disclaimer</span><br>This calculator is for educational and illustrative purposes only. It does not constitute financial, tax, or investment advice. Past performance is not indicative of future results. Please consult with a qualified financial advisor before making any investment decisions.</p>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-xs">&copy; <?= date('Y') ?> SIP/SWP Calculator. All rights reserved.</p>
+                    <p class="text-xs mt-2">Built with care for global investors • <span class="text-indigo-600 dark:text-indigo-400">No tracking • No ads • Free forever</span></p>
+                </div>
+            </div>
         </footer>
 
     </div>
