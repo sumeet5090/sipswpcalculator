@@ -147,8 +147,19 @@ foreach ($combined as $row) {
     $swp_numbers[] = $row['annual_withdrawal'] ?? 0.0;
 }
 ?>
+<?php
+// Function to get the theme from the cookie or system preference
+function get_theme() {
+    if (isset($_COOKIE['theme'])) {
+        return $_COOKIE['theme'];
+    }
+    // Fallback for server-side rendering if you can't access client headers easily
+    return 'light'; 
+}
+$theme = get_theme();
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="<?= $theme === 'dark' ? 'dark' : '' ?>">
 
 <head>
     <meta charset="UTF-8">
@@ -157,13 +168,21 @@ foreach ($combined as $row) {
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script>
-        // Apply the theme immediately
-        const theme = localStorage.getItem('theme');
-        if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        // This script now only handles the initial state for clients without cookies
+        // and ensures the toggle button icon is correct on first load.
+        document.addEventListener('DOMContentLoaded', () => {
+            const theme = localStorage.getItem('theme');
+            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+                themeToggleLightIcon.classList.add('hidden');
+            }
+        });
     </script>
 </head>
 

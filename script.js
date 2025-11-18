@@ -1,26 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Theme Toggler
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
-    // Change the icons inside the button based on previous settings
-    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    // Function to set a cookie
+    function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    // Set initial icon state based on the `dark` class on `<html>`
+    if (document.documentElement.classList.contains('dark')) {
         themeToggleLightIcon.classList.remove('hidden');
+        themeToggleDarkIcon.classList.add('hidden');
     } else {
         themeToggleDarkIcon.classList.remove('hidden');
+        themeToggleLightIcon.classList.add('hidden');
     }
 
     themeToggleBtn.addEventListener('click', function () {
         // Toggle the 'dark' class on the root HTML element
         const isDarkMode = document.documentElement.classList.toggle('dark');
 
-        // Update the theme in localStorage
-        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        // Update theme in localStorage and as a cookie
+        const newTheme = isDarkMode ? 'dark' : 'light';
+        localStorage.setItem('theme', newTheme);
+        setCookie('theme', newTheme, 365); // Set a cookie for 1 year
 
         // Toggle the visibility of the theme icons
-        themeToggleDarkIcon.classList.toggle('hidden', !isDarkMode);
-        themeToggleLightIcon.classList.toggle('hidden', isDarkMode);
+        themeToggleDarkIcon.classList.toggle('hidden', isDarkMode);
+        themeToggleLightIcon.classList.toggle('hidden', !isDarkMode);
 
         // Update the chart to reflect the theme change
         if (window.corpusChartInstance) {
@@ -30,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Chart.js
     const ctx = document.getElementById('corpusChart');
-    if (ctx && window.chartData.years.length > 0) {
+    if (ctx && window.chartData && window.chartData.years.length > 0) {
         const chartConfig = getChartConfig(window.chartData);
         window.corpusChartInstance = new Chart(ctx, chartConfig);
     }
