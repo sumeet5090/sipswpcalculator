@@ -54,6 +54,8 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
     const isDarkMode = document.documentElement.classList.contains('dark');
     const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
     const textColor = isDarkMode ? '#e2e8f0' : '#334155';
+    const chartContainer = document.getElementById('corpusChart').parentElement.parentElement;
+    chartContainer.style.backgroundColor = isDarkMode ? 'rgba(30, 41, 59, 0.5)' : 'white';
 
     return {
         type: 'line',
@@ -169,6 +171,8 @@ function updateChartTheme(chart) {
     const isDarkMode = document.documentElement.classList.contains('dark');
     const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
     const textColor = isDarkMode ? '#e2e8f0' : '#334155';
+    const chartContainer = document.getElementById('corpusChart').parentElement.parentElement;
+    chartContainer.style.backgroundColor = isDarkMode ? 'rgba(30, 41, 59, 0.5)' : 'white';
 
     chart.options.scales.x.grid.color = gridColor;
     chart.options.scales.x.ticks.color = textColor;
