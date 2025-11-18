@@ -155,34 +155,7 @@ foreach ($combined as $row) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advanced SIP & SWP Calculator for Investors | Plan Your Mutual Fund Investments</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom scrollbar for a more modern look */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4f46e5;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6366f1;
-        }
-        .dark ::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-        .light ::-webkit-scrollbar-track {
-            background: #e2e8f0;
-        }
-        .light ::-webkit-scrollbar-thumb {
-            background: #4f46e5;
-        }
-        .light ::-webkit-scrollbar-thumb:hover {
-            background: #6366f1;
-        }
-    </style>
+    
     <script>
         // Apply the theme immediately
         const theme = localStorage.getItem('theme');
@@ -198,16 +171,16 @@ foreach ($combined as $row) {
 
     <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
         
-        <header class="mb-8">
+        <header class="relative mb-8">
             <div class="text-center">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 pb-2">
-                Future-Proof Your Finances
-            </h1>
-            <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-                The Ultimate SIP & SWP Calculator to Visualize Your Wealth Creation and Withdrawal Journey
-            </p>
-        </div>
-            <button id="theme-toggle" class="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 pb-2">
+                    Future-Proof Your Finances
+                </h1>
+                <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+                    The Ultimate SIP & SWP Calculator to Visualize Your Wealth Creation and Withdrawal Journey
+                </p>
+            </div>
+            <button id="theme-toggle" class="absolute top-0 right-0 p-2 rounded-full text-slate-500 dark:text-slate-400 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 <svg id="theme-toggle-dark-icon" class="hidden h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
                 <svg id="theme-toggle-light-icon" class="hidden h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 01-1 1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zM5.05 14.95a1 1 0 010-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414 0zM1.707 4.293a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414-1.414l-.707-.707z"></path></svg>
             </button>
