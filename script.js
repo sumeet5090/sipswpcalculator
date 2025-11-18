@@ -1,47 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-
-    // Function to set a cookie
-    function setCookie(name, value, days) {
-        let expires = "";
-        if (days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    }
-
-    // Set initial icon state based on the `dark` class on `<html>`
-    if (document.documentElement.classList.contains('dark')) {
-        themeToggleLightIcon.classList.remove('hidden');
-        themeToggleDarkIcon.classList.add('hidden');
-    } else {
-        themeToggleDarkIcon.classList.remove('hidden');
-        themeToggleLightIcon.classList.add('hidden');
-    }
-
-    themeToggleBtn.addEventListener('click', function () {
-        // Toggle the 'dark' class on the root HTML element
-        const isDarkMode = document.documentElement.classList.toggle('dark');
-
-        // Update theme in localStorage and as a cookie
-        const newTheme = isDarkMode ? 'dark' : 'light';
-        localStorage.setItem('theme', newTheme);
-        setCookie('theme', newTheme, 365); // Set a cookie for 1 year
-
-        // Toggle the visibility of the theme icons
-        themeToggleDarkIcon.classList.toggle('hidden', isDarkMode);
-        themeToggleLightIcon.classList.toggle('hidden', !isDarkMode);
-
-        // Update the chart to reflect the theme change
-        if (window.corpusChartInstance) {
-            updateChartTheme(window.corpusChartInstance);
-        }
-    });
-
     // Chart.js
     const ctx = document.getElementById('corpusChart');
     if (ctx && window.chartData && window.chartData.years.length > 0) {
@@ -51,9 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function getChartConfig({ years, cumulative, corpus, swp }) {
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-    const textColor = isDarkMode ? '#e2e8f0' : '#334155';
+    const gridColor = 'rgba(255, 255, 255, 0.1)';
+    const textColor = '#e2e8f0';
 
     return {
         type: 'line',
@@ -163,20 +119,4 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
             }
         }
     };
-}
-
-function updateChartTheme(chart) {
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-    const textColor = isDarkMode ? '#e2e8f0' : '#334155';
-
-    chart.options.scales.x.grid.color = gridColor;
-    chart.options.scales.x.ticks.color = textColor;
-    chart.options.scales.x.title.color = textColor;
-    chart.options.scales.y.grid.color = gridColor;
-    chart.options.scales.y.ticks.color = textColor;
-    chart.options.scales.y.title.color = textColor;
-    chart.options.plugins.legend.labels.color = textColor;
-    
-    chart.update();
 }

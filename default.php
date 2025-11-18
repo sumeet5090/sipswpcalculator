@@ -147,62 +147,29 @@ foreach ($combined as $row) {
     $swp_numbers[] = $row['annual_withdrawal'] ?? 0.0;
 }
 ?>
-<?php
-// Function to get the theme from the cookie or system preference
-function get_theme() {
-    if (isset($_COOKIE['theme'])) {
-        return $_COOKIE['theme'];
-    }
-    // Fallback for server-side rendering if you can't access client headers easily
-    return 'light'; 
-}
-$theme = get_theme();
-?>
 <!DOCTYPE html>
-<html lang="en" class="<?= $theme === 'dark' ? 'dark' : '' ?>">
+<html lang="en" class="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advanced SIP & SWP Calculator for Investors | Plan Your Mutual Fund Investments</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script>
-        // This script now only handles the initial state for clients without cookies
-        // and ensures the toggle button icon is correct on first load.
-        document.addEventListener('DOMContentLoaded', () => {
-            const theme = localStorage.getItem('theme');
-            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-
-            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                themeToggleLightIcon.classList.remove('hidden');
-                themeToggleDarkIcon.classList.add('hidden');
-            } else {
-                themeToggleDarkIcon.classList.remove('hidden');
-                themeToggleLightIcon.classList.add('hidden');
-            }
-        });
-    </script>
 </head>
 
-<body class="bg-slate-100 dark:bg-gradient-to-br dark:from-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-200 transition-colors duration-300">
+<body class="dark bg-gradient-to-br from-slate-900 to-slate-800 text-slate-200 transition-colors duration-300">
 
     <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
         
         <header class="relative mb-8">
             <div class="text-center">
-                <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 pb-2">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 pb-2">
                     Future-Proof Your Finances
                 </h1>
-                <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+                <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
                     The Ultimate SIP & SWP Calculator to Visualize Your Wealth Creation and Withdrawal Journey
                 </p>
             </div>
-            <button id="theme-toggle" class="absolute top-0 right-0 p-2 rounded-full text-slate-500 dark:text-slate-400 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                <svg id="theme-toggle-dark-icon" class="hidden h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                <svg id="theme-toggle-light-icon" class="hidden h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 01-1 1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zM5.05 14.95a1 1 0 010-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414 0zM1.707 4.293a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414-1.414l-.707-.707z"></path></svg>
-            </button>
         </header>
 
         <main>
