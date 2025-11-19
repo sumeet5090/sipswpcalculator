@@ -227,21 +227,21 @@ foreach ($combined as $row) {
 
                 <!-- Chart and Table Section -->
                 <div class="lg:col-span-2 space-y-8">
-                    <div class="bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm p-6 rounded-xl shadow-lg border dark:border-slate-700">
+                    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
+                    <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-slate-700">
                         <h2 class="text-2xl font-semibold mb-4">Investment Journey</h2>
                         <div class="h-96">
                             <canvas id="corpusChart"></canvas>
                         </div>
                     </div>
 
-                    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
-                    <div class="bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border dark:border-slate-700">
+                    <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-slate-700">
                         <div class="p-6">
                             <h2 class="text-2xl font-semibold">Yearly Breakdown</h2>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50 dark:bg-slate-700/50 text-xs uppercase font-semibold">
+                                <thead class="bg-slate-700/50 text-xs uppercase font-semibold">
                                     <tr>
                                         <th class="px-6 py-3">Year</th>
                                         <th class="px-6 py-3 text-right">Start Corpus</th>
@@ -253,17 +253,17 @@ foreach ($combined as $row) {
                                         <th class="px-6 py-3 text-right">End Corpus</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                                <tbody class="divide-y divide-slate-700">
                                     <?php foreach ($combined as $row): ?>
-                                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                                        <tr class="hover:bg-slate-700/50">
                                             <td class="px-6 py-4 font-medium"><?= $row['year'] ?></td>
                                             <td class="px-6 py-4 text-right"><?= formatInr($row['begin_balance']) ?></td>
-                                            <td class="px-6 py-4 text-right text-green-600 dark:text-green-400"><?= formatInr($row['annual_contribution']) ?></td>
+                                            <td class="px-6 py-4 text-right text-green-400"><?= formatInr($row['annual_contribution']) ?></td>
                                             <td class="px-6 py-4 text-right"><?= formatInr($row['cumulative_invested']) ?></td>
-                                            <td class="px-6 py-4 text-right text-red-600 dark:text-red-400"><?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?></td>
+                                            <td class="px-6 py-4 text-right text-red-400"><?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?></td>
                                             <td class="px-6 py-4 text-right"><?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?></td>
                                             <td class="px-6 py-4 text-right"><?= formatInr($row['interest']) ?></td>
-                                            <td class="px-6 py-4 text-right font-semibold text-indigo-600 dark:text-indigo-400"><?= formatInr($row['combined_total']) ?></td>
+                                            <td class="px-6 py-4 text-right font-semibold text-indigo-400"><?= formatInr($row['combined_total']) ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
