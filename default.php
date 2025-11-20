@@ -227,7 +227,6 @@ foreach ($combined as $row) {
 
                 <!-- Chart and Table Section -->
                 <div class="lg:col-span-2 space-y-8">
-                    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
                     <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-slate-700">
                         <h2 class="text-2xl font-semibold mb-4">Investment Journey</h2>
                         <div class="h-96">
@@ -235,6 +234,7 @@ foreach ($combined as $row) {
                         </div>
                     </div>
 
+                    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
                     <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-slate-700">
                         <div class="p-6">
                             <h2 class="text-2xl font-semibold">Yearly Breakdown</h2>
