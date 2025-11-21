@@ -178,6 +178,10 @@ foreach ($combined as $row) {
                 <a href="sequence-risk-analyzer.php" class="text-lg text-orange-400 hover:underline">
                     New! Analyze Sequence of Returns Risk &rarr;
                 </a>
+                <br>
+                <a href="swp-heatmap.php" class="text-lg text-sky-400 hover:underline">
+                    New! SWR Heatmap &rarr;
+                </a>
             </div>
         </header>
 
