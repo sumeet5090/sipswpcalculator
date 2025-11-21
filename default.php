@@ -230,6 +230,7 @@ foreach ($combined as $row) {
                         <div class="flex flex-wrap gap-4 mt-8">
                             <button type="submit" name="action" value="calculate" class="flex-1 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Calculate</button>
                             <button type="submit" name="action" value="download_csv" class="flex-1 px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Download CSV</button>
+                            <button type="button" id="openPdfModalBtn" class="w-full mt-4 px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Generate Branded PDF Report</button>
                         </div>
                     </form>
                 </div>
@@ -244,7 +245,7 @@ foreach ($combined as $row) {
                     </div>
 
                     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
-                    <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-slate-700">
+                    <div id="results-table" class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-slate-700">
                         <div class="p-6">
                             <h2 class="text-2xl font-semibold">Yearly Breakdown</h2>
                         </div>
@@ -352,6 +353,36 @@ foreach ($combined as $row) {
         </footer>
 
     </div>
+
+    <!-- PDF Generation Modal -->
+    <div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-slate-800 rounded-xl shadow-2xl p-8 w-full max-w-lg border border-slate-700">
+            <h2 class="text-2xl font-bold text-white mb-6">Create Branded PDF Report</h2>
+            <form id="pdfForm" class="space-y-4">
+                <div>
+                    <label for="clientName" class="block text-sm font-medium mb-1 text-slate-300">Client Name</label>
+                    <input type="text" id="clientName" name="clientName" placeholder="e.g., John Doe" class="w-full px-4 py-2 rounded-lg bg-slate-700/50 border-slate-600 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition">
+                </div>
+                <div>
+                    <label for="advisorName" class="block text-sm font-medium mb-1 text-slate-300">Your Name / Company Name</label>
+                    <input type="text" id="advisorName" name="advisorName" placeholder="e.g., Jane Smith Financials" class="w-full px-4 py-2 rounded-lg bg-slate-700/50 border-slate-600 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition">
+                </div>
+                 <div>
+                    <label for="advisorLogo" class="block text-sm font-medium mb-1 text-slate-300">Your Logo</label>
+                    <input type="file" id="advisorLogo" name="advisorLogo" accept="image/png, image/jpeg" class="w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100">
+                </div>
+                <div>
+                    <label for="customDisclaimer" class="block text-sm font-medium mb-1 text-slate-300">Custom Disclaimer / Message</label>
+                    <textarea id="customDisclaimer" name="customDisclaimer" rows="3" placeholder="e.g., This projection is based on the agreed-upon assumptions..." class="w-full px-4 py-2 rounded-lg bg-slate-700/50 border-slate-600 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition"></textarea>
+                </div>
+                <div class="flex justify-end gap-4 pt-4">
+                    <button type="button" id="closePdfModalBtn" class="px-6 py-2 bg-slate-600 hover:bg-slate-700 text-white font-semibold rounded-lg transition">Cancel</button>
+                    <button type="submit" id="generatePdfBtn" class="px-6 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg transition">Download PDF</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <script>

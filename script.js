@@ -3,7 +3,101 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = document.getElementById('corpusChart');
     if (ctx && window.chartData && window.chartData.years.length > 0) {
         const chartConfig = getChartConfig(window.chartData);
-        window.corpusChartInstance = new Chart(ctx, chartConfig);
+        // Make the chart instance globally accessible
+        window.corpusChart = new Chart(ctx, chartConfig);
+    }
+
+    // PDF Modal Logic
+    const pdfModal = document.getElementById('pdfModal');
+    const openPdfModalBtn = document.getElementById('openPdfModalBtn');
+    const closePdfModalBtn = document.getElementById('closePdfModalBtn');
+    const pdfForm = document.getElementById('pdfForm');
+
+    if (openPdfModalBtn) {
+        openPdfModalBtn.addEventListener('click', () => {
+             if (!window.corpusChart) {
+                alert('Please calculate the results first before generating a report.');
+                return;
+            }
+            pdfModal.classList.remove('hidden');
+        });
+    }
+
+    if (closePdfModalBtn) {
+        closePdfModalBtn.addEventListener('click', () => {
+            pdfModal.classList.add('hidden');
+        });
+    }
+
+    if (pdfModal) {
+        pdfModal.addEventListener('click', (e) => {
+            if (e.target === pdfModal) {
+                pdfModal.classList.add('hidden');
+            }
+        });
+    }
+
+    if (pdfForm) {
+        pdfForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const generatePdfBtn = document.getElementById('generatePdfBtn');
+            generatePdfBtn.disabled = true;
+            generatePdfBtn.textContent = 'Generating...';
+
+            // 1. Collect all data
+            const chartDataURL = window.corpusChart.toBase64Image();
+            const tableHtml = document.getElementById('results-table')?.innerHTML || 'No table data available.';
+
+            const formData = new FormData(pdfForm);
+
+            // Append calculator inputs
+            formData.append('sip', document.getElementById('sip').value);
+            formData.append('years', document.getElementById('years').value);
+            formData.append('rate', document.getElementById('rate').value);
+            formData.append('stepup', document.getElementById('stepup').value);
+            formData.append('swp_withdrawal', document.getElementById('swp_withdrawal').value);
+            formData.append('swp_stepup', document.getElementById('swp_stepup').value);
+            formData.append('swp_years', document.getElementById('swp_years').value);
+            
+            // Append chart and table data
+            formData.append('chartData', chartDataURL);
+            formData.append('tableHtml', tableHtml);
+
+            // 2. Fetch request to the server
+            fetch('generate-pdf.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                }
+                throw new Error('PDF generation failed.');
+            })
+            .then(blob => {
+                // 3. Trigger download
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = `Financial_Report_for_${formData.get('clientName') || 'Client'}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                
+                // Reset button and close modal
+                generatePdfBtn.disabled = false;
+                generatePdfBtn.textContent = 'Download PDF';
+                pdfModal.classList.add('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while generating the PDF. Please check the console.');
+                generatePdfBtn.disabled = false;
+                generatePdfBtn.textContent = 'Download PDF';
+            });
+        });
     }
 });
 
@@ -58,6 +152,7 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            animation: false, // Important for consistent chart rendering for PDF
             interaction: {
                 intersect: false,
                 mode: 'index',
