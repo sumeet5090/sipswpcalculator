@@ -170,18 +170,52 @@ foreach ($combined as $row) {
                     The Ultimate SIP & SWP Calculator to Visualize Your Wealth Creation and Withdrawal Journey
                 </p>
             </div>
-            <div class="text-center mt-4 space-y-2">
-                <a href="goal-reverser.php" class="text-lg text-green-400 hover:underline">
-                    New! Try the "Step-Up" Goal Reverser &rarr;
-                </a>
-                <br>
-                <a href="sequence-risk-analyzer.php" class="text-lg text-orange-400 hover:underline">
-                    New! Analyze Sequence of Returns Risk &rarr;
-                </a>
-                <br>
-                <a href="swp-heatmap.php" class="text-lg text-sky-400 hover:underline">
-                    New! SWR Heatmap &rarr;
-                </a>
+            <div class="mt-8 mb-8">
+                <h2 class="text-2xl font-bold text-center text-slate-200 mb-6">Explore Our Financial Tools</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Card 1: Main Calculator -->
+                    <a href="default.php" class="group block p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 hover:bg-slate-700/60 hover:border-indigo-500 transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-indigo-500/10 rounded-lg">
+                                <svg class="w-10 h-10 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 0v6m0-6L9 13m4-4h2a2 2 0 012 2v2m-6 4h.01M9 17h.01M13 17h.01M17 17h.01M5 7h.01M5 11h.01M5 15h.01M4 4h16a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z"></path></svg>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-slate-100">SIP & SWP Calculator</h3>
+                                <p class="mt-2 text-slate-300 text-sm">Project wealth accumulation and retirement income with our core calculator.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Card 2: Goal Reverser -->
+                    <a href="goal-reverser.php" class="group relative block p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 hover:bg-slate-700/60 hover:border-green-500 transition-all duration-300 transform hover:-translate-y-1">
+                        <span class="absolute top-3 right-3 px-2 py-0.5 bg-green-500 text-white text-xs font-semibold rounded-full">NEW</span>
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-green-500/10 rounded-lg">
+                                 <svg class="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21a9 9 0 100-18 9 9 0 000 18z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-slate-100">Goal Reverser</h3>
+                                <p class="mt-2 text-slate-300 text-sm">Define your target, and we'll calculate the required annual investment increase.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Card 3: SoR Analyzer -->
+                    <a href="sequence-risk-analyzer.php" class="group relative block p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 hover:bg-slate-700/60 hover:border-orange-500 transition-all duration-300 transform hover:-translate-y-1">
+                        <span class="absolute top-3 right-3 px-2 py-0.5 bg-orange-500 text-white text-xs font-semibold rounded-full">NEW</span>
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-orange-500/10 rounded-lg">
+                                <svg class="w-10 h-10 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-slate-100">SoR Analyzer</h3>
+                                <p class="mt-2 text-slate-300 text-sm">See why averages lie; simulate how market timing impacts your retirement.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
             </div>
         </header>
 
