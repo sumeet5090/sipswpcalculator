@@ -170,6 +170,11 @@ foreach ($combined as $row) {
                     The Ultimate SIP & SWP Calculator to Visualize Your Wealth Creation and Withdrawal Journey
                 </p>
             </div>
+            <div class="text-center mt-4">
+                <a href="goal-reverser.php" class="text-lg text-green-400 hover:underline">
+                    New! Try the "Step-Up" Goal Reverser &rarr;
+                </a>
+            </div>
         </header>
 
         <main>
