@@ -70,7 +70,44 @@ if (isset($_POST['action']) && $_POST['action'] == 'calculate_initial_sip') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>"Target-First" Step-Up SIP Planner</title>
+    <title>"Target-First" Step-Up SIP Planner | Goal Based Investing</title>
+    <meta name="description" content="Calculate the required monthly SIP to achieve your financial goals with our Target-First Step-Up Planner. Reverse engineer your investments.">
+    <meta name="keywords" content="Goal Planner, SIP Calculator, Target Amount Calculator, Step-up SIP, Financial Goal Setting">
+    <link rel="canonical" href="https://sipswpcalculator.com/goal-reverser.php">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sipswpcalculator.com/goal-reverser.php">
+    <meta property="og:title" content="Target-First Step-Up SIP Planner">
+    <meta property="og:description" content="Start with your financial goal and find out how much to invest. Reverse engineer your wealth creation journey.">
+    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-goal.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://sipswpcalculator.com/goal-reverser.php">
+    <meta property="twitter:title" content="Target-First Step-Up SIP Planner">
+    <meta property="twitter:description" content="Start with your financial goal and find out how much to invest. Reverse engineer your wealth creation journey.">
+    <meta property="twitter:image" content="https://sipswpcalculator.com/assets/og-image-goal.jpg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FinancialProduct",
+      "name": "Target-First Step-Up Planner",
+      "description": "A tool to calculate required SIP investments based on a target financial goal.",
+      "brand": {
+        "@type": "Brand",
+        "name": "SIP/SWP Calculator"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

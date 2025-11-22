@@ -93,6 +93,43 @@ if (isset($_POST['action']) && $_POST['action'] == 'run_simulation') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sequence of Returns Risk Analyzer | SIP & SWP Calculator</title>
+    <meta name="description" content="Visualize the impact of market timing on your retirement portfolio. Understand Sequence of Returns Risk and test different market scenarios.">
+    <meta name="keywords" content="Sequence of Returns Risk, Retirement Planning, Market Crash Simulator, Portfolio Depletion, SWP Risk">
+    <link rel="canonical" href="https://sipswpcalculator.com/sequence-risk-analyzer.php">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sipswpcalculator.com/sequence-risk-analyzer.php">
+    <meta property="og:title" content="Sequence of Returns Risk Analyzer">
+    <meta property="og:description" content="Don't let a bad market start ruin your retirement. Visualize the impact of Sequence of Returns Risk.">
+    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-risk.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://sipswpcalculator.com/sequence-risk-analyzer.php">
+    <meta property="twitter:title" content="Sequence of Returns Risk Analyzer">
+    <meta property="twitter:description" content="Don't let a bad market start ruin your retirement. Visualize the impact of Sequence of Returns Risk.">
+    <meta property="twitter:image" content="https://sipswpcalculator.com/assets/og-image-risk.jpg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FinancialProduct",
+      "name": "Sequence of Returns Risk Analyzer",
+      "description": "A simulation tool to visualize the impact of market returns sequence on retirement portfolio longevity.",
+      "brand": {
+        "@type": "Brand",
+        "name": "SIP/SWP Calculator"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 

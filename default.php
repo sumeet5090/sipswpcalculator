@@ -154,6 +154,41 @@ foreach ($combined as $row) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advanced SIP & SWP Calculator for Investors | Plan Your Mutual Fund Investments</title>
+    <meta name="description" content="Free SIP & SWP Calculator to plan your mutual fund investments. Calculate SIP returns, SWP withdrawals, and visualize wealth creation with our advanced financial tools.">
+    <meta name="keywords" content="SIP Calculator, SWP Calculator, Mutual Fund Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP">
+    <link rel="canonical" href="https://sipswpcalculator.com/default.php">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sipswpcalculator.com/default.php">
+    <meta property="og:title" content="Advanced SIP & SWP Calculator for Investors">
+    <meta property="og:description" content="Plan your financial future with our comprehensive SIP & SWP calculator. Visualize growth and withdrawals effortlessly.">
+    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://sipswpcalculator.com/default.php">
+    <meta property="twitter:title" content="Advanced SIP & SWP Calculator for Investors">
+    <meta property="twitter:description" content="Plan your financial future with our comprehensive SIP & SWP calculator. Visualize growth and withdrawals effortlessly.">
+    <meta property="twitter:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "SIP & SWP Calculator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "A comprehensive tool for calculating Systematic Investment Plans (SIP) and Systematic Withdrawal Plans (SWP) with visualization."
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
