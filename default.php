@@ -195,7 +195,7 @@ foreach ($combined as $row) {
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/4149/4149678.png">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=<?= time() ?>">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -536,7 +536,7 @@ foreach ($combined as $row) {
         };
         console.log('Chart Data Loaded:', window.chartData);
     </script>
-    <script src="script.js"></script>
+    <script src="script.js?v=<?= time() ?>"></script>
 
 </body>
 </html>
