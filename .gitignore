@@ -24,3 +24,5 @@ coverage/
 *.jar
 *.war
 *.ear
+sitemap.xml
+robots.txt
