@@ -191,6 +191,9 @@ foreach ($combined as $row) {
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/4149/4149678.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
