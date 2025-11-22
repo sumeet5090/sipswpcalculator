@@ -189,6 +189,9 @@ foreach ($combined as $row) {
     }
     </script>
 
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
