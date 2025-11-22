@@ -389,9 +389,70 @@ foreach ($combined as $row) {
                         </ul>
                     </div>
                 </div>
+
+                <!-- FAQ Section -->
+                <div class="mt-12 border-t border-slate-700 pt-8">
+                    <h2 class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+                    <div class="space-y-6">
+                        <div class="bg-slate-700/30 p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-indigo-300 mb-2">Can I start an SWP immediately after my SIP ends?</h3>
+                            <p>Yes, absolutely. This is a common strategy for retirement planning. You accumulate a corpus using SIP during your working years and then switch to SWP to generate a monthly pension-like income post-retirement. Our calculator specifically models this seamless transition.</p>
+                        </div>
+                        <div class="bg-slate-700/30 p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-indigo-300 mb-2">Is SWP better than a fixed deposit interest?</h3>
+                            <p>Generally, yes. SWP from equity or hybrid mutual funds has the potential to offer higher returns than fixed deposits over the long term. Additionally, SWP is more tax-efficient because you are only taxed on the capital gains portion of the withdrawal, whereas FD interest is fully taxable at your slab rate.</p>
+                        </div>
+                        <div class="bg-slate-700/30 p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-indigo-300 mb-2">How does the "Step-up" feature work?</h3>
+                            <p>A "Step-up" SIP means you increase your monthly investment amount by a certain percentage every year (e.g., as your salary increases). This significantly boosts your final corpus. Similarly, a "Step-up" SWP means you increase your withdrawal amount annually to combat inflation.</p>
+                        </div>
+                        <div class="bg-slate-700/30 p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-indigo-300 mb-2">What is a safe withdrawal rate for SWP?</h3>
+                            <p>Financial experts often recommend the "4% rule," suggesting you withdraw 4% of your corpus annually. However, this depends on market conditions and your lifespan. Use our <a href="sequence-risk-analyzer.php" class="text-indigo-400 hover:underline">Sequence of Returns Risk Analyzer</a> to test if your withdrawal rate is sustainable during market crashes.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <p class="text-center mt-8">Use our advanced calculator to model your SIP investments and plan your SWP withdrawals to see how you can achieve your financial goals, whether it's building a retirement corpus, funding your child's education, or creating a passive income stream.</p>
             </div>
         </div>
+
+        <!-- FAQ Schema -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [{
+            "@type": "Question",
+            "name": "Can I start an SWP immediately after my SIP ends?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, absolutely. This is a common strategy for retirement planning. You accumulate a corpus using SIP during your working years and then switch to SWP to generate a monthly pension-like income post-retirement."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Is SWP better than a fixed deposit interest?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Generally, yes. SWP from equity or hybrid mutual funds has the potential to offer higher returns than fixed deposits over the long term. Additionally, SWP is more tax-efficient."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How does the Step-up feature work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A Step-up SIP means you increase your monthly investment amount by a certain percentage every year. Similarly, a Step-up SWP means you increase your withdrawal amount annually to combat inflation."
+            }
+          }, {
+            "@type": "Question",
+            "name": "What is a safe withdrawal rate for SWP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Financial experts often recommend the 4% rule. However, this depends on market conditions. Use our Sequence of Returns Risk Analyzer to test if your withdrawal rate is sustainable."
+            }
+          }]
+        }
+        </script>
 
         <footer class="mt-12 text-sm text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm rounded-xl shadow-lg border dark:border-slate-700 p-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">

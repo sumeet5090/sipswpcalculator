@@ -207,7 +207,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'run_simulation') {
                     <div class="bg-slate-800/50 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-slate-700">
                         <h2 class="text-2xl font-semibold mb-4">Key Takeaways & Buffer Strategies</h2>
                         <div class="prose prose-invert max-w-none">
-                            <p>The chart demonstrates the "Sequence of Returns Risk": the order in which you experience investment returns matters immensely, especially at the start of retirement.</p>
+                            <p>The chart demonstrates the <strong>"Sequence of Returns Risk"</strong>: the order in which you experience investment returns matters immensely, especially at the start of retirement.</p>
                             <ul>
                                 <li><strong class="text-red-400">The Danger Zone:</strong> A bear market in the first few years of withdrawal forces you to sell more units at low prices to generate the same income. This permanently damages your portfolio's ability to recover and grow, drastically shortening its lifespan.</li>
                                 <li><strong class="text-green-400">The Power of a Good Start:</strong> A bull market at the beginning allows your portfolio to grow substantially even while you withdraw, creating a larger cushion for future volatility.</li>
@@ -218,6 +218,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'run_simulation') {
                                 <li><strong>Dynamic Withdrawals:</strong> Be flexible. In down years, consider reducing your withdrawal amount (e.g., forgoing a vacation or large purchase) to preserve your capital.</li>
                                 <li><strong>The "Bucket" Strategy:</strong> Divide your portfolio into three buckets: (1) Short-term needs (1-3 years in cash/bonds), (2) Mid-term needs (3-10 years in a balanced fund), and (3) Long-term growth (10+ years in equities). Replenish Bucket 1 from Bucket 2 during good years.</li>
                             </ol>
+                            
+                            <div class="mt-6 p-4 bg-slate-700/30 rounded-lg border-l-4 border-indigo-500">
+                                <p class="text-sm text-slate-300"><strong>Pro Tip:</strong> Use our <a href="default.php" class="text-indigo-400 hover:underline font-semibold">SIP & SWP Calculator</a> to plan your accumulation phase carefully so you have a large enough corpus to withstand these market fluctuations.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
