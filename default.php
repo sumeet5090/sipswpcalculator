@@ -195,6 +195,7 @@ foreach ($combined as $row) {
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/4149/4149678.png">
 
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -528,11 +529,12 @@ foreach ($combined as $row) {
     <script>
         // Pass chart data to the external script
         window.chartData = {
-            years: <?= json_encode($years_data) ?>,
-            cumulative: <?= json_encode($cumulative_numbers) ?>,
-            corpus: <?= json_encode($combined_numbers) ?>,
-            swp: <?= json_encode($swp_numbers) ?>
+            years: <?php echo json_encode(array_values($years_data)); ?>,
+            cumulative: <?php echo json_encode(array_values($cumulative_numbers)); ?>,
+            corpus: <?php echo json_encode(array_values($combined_numbers)); ?>,
+            swp: <?php echo json_encode(array_values($swp_numbers)); ?>
         };
+        console.log('Chart Data Loaded:', window.chartData);
     </script>
     <script src="script.js"></script>
 
