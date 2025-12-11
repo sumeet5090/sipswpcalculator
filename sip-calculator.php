@@ -39,7 +39,7 @@ require_once __DIR__ . '/functions.php';
 
                 <h2 class="text-2xl font-semibold mt-8 mb-4">The Core Benefits of Investing via SIP</h2>
 
-                <h3 class="text-xl font-semibold">1. Rupee Cost Averaging</h3>
+                <h3 class="text-xl font-semibold">1. Dollar Cost Averaging</h3>
                 <p>This is one of the most significant advantages of a SIP. When you invest a fixed amount regularly,
                     you automatically buy more units of a mutual fund when the price is low and fewer units when the
                     price is high. Over time, this averages out the cost of your investment, reducing the risk

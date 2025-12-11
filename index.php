@@ -223,7 +223,8 @@ foreach ($combined as $row) {
 
         <header class="relative mb-8">
             <div class="text-center">
-                <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 pb-2">
+                <h1
+                    class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 pb-2">
                     Free SIP & SWP Calculator
                 </h1>
                 <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
@@ -235,42 +236,66 @@ foreach ($combined as $row) {
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     <!-- Card 1: Main Calculator -->
-                    <a href="/" class="group block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-indigo-500 transition-all duration-300 transform hover:-translate-y-1">
+                    <a href="/"
+                        class="group block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-indigo-500 transition-all duration-300 transform hover:-translate-y-1">
                         <div class="flex items-start gap-4">
                             <div class="p-3 bg-indigo-100 rounded-lg">
-                                <svg class="w-10 h-10 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 0v6m0-6L9 13m4-4h2a2 2 0 012 2v2m-6 4h.01M9 17h.01M13 17h.01M17 17h.01M5 7h.01M5 11h.01M5 15h.01M4 4h16a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z"></path></svg>
+                                <svg class="w-10 h-10 text-indigo-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M9 7h6m0 0v6m0-6L9 13m4-4h2a2 2 0 012 2v2m-6 4h.01M9 17h.01M13 17h.01M17 17h.01M5 7h.01M5 11h.01M5 15h.01M4 4h16a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z">
+                                    </path>
+                                </svg>
                             </div>
                             <div class="flex-1">
                                 <h3 class="text-xl font-bold text-gray-900">SIP & SWP Calculator</h3>
-                                <p class="mt-2 text-gray-600 text-sm">Project wealth accumulation and retirement income with our core calculator.</p>
+                                <p class="mt-2 text-gray-600 text-sm">Project wealth accumulation and retirement income
+                                    with our core calculator.</p>
                             </div>
                         </div>
                     </a>
 
                     <!-- Card 2: Goal Reverser -->
-                    <a href="/goal-reverser" class="group relative block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-green-500 transition-all duration-300 transform hover:-translate-y-1">
-                        <span class="absolute top-3 right-3 px-2 py-0.5 bg-green-500 text-white text-xs font-semibold rounded-full">NEW</span>
+                    <a href="/goal-reverser"
+                        class="group relative block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-green-500 transition-all duration-300 transform hover:-translate-y-1">
+                        <span
+                            class="absolute top-3 right-3 px-2 py-0.5 bg-green-500 text-white text-xs font-semibold rounded-full">NEW</span>
                         <div class="flex items-start gap-4">
                             <div class="p-3 bg-green-100 rounded-lg">
-                                 <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21a9 9 0 100-18 9 9 0 000 18z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M12 21a9 9 0 100-18 9 9 0 000 18z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path>
+                                </svg>
                             </div>
                             <div class="flex-1">
                                 <h3 class="text-xl font-bold text-gray-900">Goal Reverser</h3>
-                                <p class="mt-2 text-gray-600 text-sm">Define your target, and we'll calculate the required annual investment increase.</p>
+                                <p class="mt-2 text-gray-600 text-sm">Define your target, and we'll calculate the
+                                    required annual investment increase.</p>
                             </div>
                         </div>
                     </a>
 
                     <!-- Card 3: SoR Analyzer -->
-                    <a href="/sequence-risk-analyzer" class="group relative block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-orange-500 transition-all duration-300 transform hover:-translate-y-1">
-                        <span class="absolute top-3 right-3 px-2 py-0.5 bg-orange-500 text-white text-xs font-semibold rounded-full">NEW</span>
+                    <a href="/sequence-risk-analyzer"
+                        class="group relative block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-orange-500 transition-all duration-300 transform hover:-translate-y-1">
+                        <span
+                            class="absolute top-3 right-3 px-2 py-0.5 bg-orange-500 text-white text-xs font-semibold rounded-full">NEW</span>
                         <div class="flex items-start gap-4">
                             <div class="p-3 bg-orange-100 rounded-lg">
-                                <svg class="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                <svg class="w-10 h-10 text-orange-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                                    </path>
+                                </svg>
                             </div>
                             <div class="flex-1">
                                 <h3 class="text-xl font-bold text-gray-900">SoR Analyzer</h3>
-                                <p class="mt-2 text-gray-600 text-sm">See why averages lie; simulate how market timing impacts your retirement.</p>
+                                <p class="mt-2 text-gray-600 text-sm">See why averages lie; simulate how market timing
+                                    impacts your retirement.</p>
                             </div>
                         </div>
                     </a>
@@ -290,19 +315,30 @@ foreach ($combined as $row) {
                             <div class="space-y-4">
                                 <div>
                                     <label for="sip" class="block text-sm font-medium mb-1">Monthly Investment</label>
-                                    <input type="number" id="sip" name="sip" class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
+                                    <input type="number" id="sip" name="sip"
+                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                        required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
                                 </div>
                                 <div>
-                                    <label for="years" class="block text-sm font-medium mb-1">Investment Period (Years)</label>
-                                    <input type="number" id="years" name="years" class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $years) ?>">
+                                    <label for="years" class="block text-sm font-medium mb-1">Investment Period
+                                        (Years)</label>
+                                    <input type="number" id="years" name="years"
+                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                        required min="1" value="<?= htmlspecialchars((string) $years) ?>">
                                 </div>
                                 <div>
-                                    <label for="rate" class="block text-sm font-medium mb-1">Expected Return Rate (% p.a.)</label>
-                                    <input type="number" id="rate" step="0.01" name="rate" class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
+                                    <label for="rate" class="block text-sm font-medium mb-1">Expected Return Rate (%
+                                        p.a.)</label>
+                                    <input type="number" id="rate" step="0.01" name="rate"
+                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                        required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
                                 </div>
                                 <div>
-                                    <label for="stepup" class="block text-sm font-medium mb-1">Annual Step-up (%)</label>
-                                    <input type="number" id="stepup" step="0.01" name="stepup" class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
+                                    <label for="stepup" class="block text-sm font-medium mb-1">Annual Step-up
+                                        (%)</label>
+                                    <input type="number" id="stepup" step="0.01" name="stepup"
+                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                        required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
                                 </div>
                             </div>
                         </fieldset>
@@ -311,24 +347,38 @@ foreach ($combined as $row) {
                             <legend class="text-xl font-semibold mb-4 text-indigo-600">SWP Details</legend>
                             <div class="space-y-4">
                                 <div>
-                                    <label for="swp_withdrawal" class="block text-sm font-medium mb-1">Monthly Withdrawal</label>
-                                    <input type="number" id="swp_withdrawal" step="0.01" name="swp_withdrawal" class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
+                                    <label for="swp_withdrawal" class="block text-sm font-medium mb-1">Monthly
+                                        Withdrawal</label>
+                                    <input type="number" id="swp_withdrawal" step="0.01" name="swp_withdrawal"
+                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                        required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
                                 </div>
                                 <div>
-                                    <label for="swp_stepup" class="block text-sm font-medium mb-1">Annual Withdrawal Increase (%)</label>
-                                    <input type="number" id="swp_stepup" step="0.01" name="swp_stepup" class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
+                                    <label for="swp_stepup" class="block text-sm font-medium mb-1">Annual Withdrawal
+                                        Increase (%)</label>
+                                    <input type="number" id="swp_stepup" step="0.01" name="swp_stepup"
+                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                        required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
                                 </div>
                                 <div>
-                                    <label for="swp_years" class="block text-sm font-medium mb-1">Withdrawal Period (Years)</label>
-                                    <input type="number" id="swp_years" name="swp_years" class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
+                                    <label for="swp_years" class="block text-sm font-medium mb-1">Withdrawal Period
+                                        (Years)</label>
+                                    <input type="number" id="swp_years" name="swp_years"
+                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                        required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
                                 </div>
                             </div>
                         </fieldset>
 
                         <div class="flex flex-wrap gap-4 mt-8">
-                            <button type="submit" name="action" value="calculate" class="flex-1 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Calculate</button>
-                            <button type="submit" name="action" value="download_csv" class="flex-1 px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Download CSV</button>
-                            <button type="button" id="openPdfModalBtn" class="w-full mt-4 px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Generate Branded PDF Report</button>
+                            <button type="submit" name="action" value="calculate"
+                                class="flex-1 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Calculate</button>
+                            <button type="submit" name="action" value="download_csv"
+                                class="flex-1 px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Download
+                                CSV</button>
+                            <button type="button" id="openPdfModalBtn"
+                                class="w-full mt-4 px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Generate
+                                Branded PDF Report</button>
                         </div>
                     </form>
                 </div>
@@ -346,51 +396,51 @@ foreach ($combined as $row) {
 
                     <!-- NOTE: PHP Table will only show on explicit form submit (fallback). JS Updates chart real-time -->
                     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
-                            <div id="results-table"
-                                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-                                <div class="p-6">
-                                    <h2 class="text-2xl font-semibold">Yearly Breakdown</h2>
-                                </div>
-                                <div class="overflow-x-auto">
-                                    <table class="w-full text-sm text-left">
-                                        <thead class="bg-gray-50 text-xs uppercase font-semibold">
-                                            <tr>
-                                                <th class="px-6 py-3">Year</th>
-                                                <th class="px-6 py-3 text-right">Start Corpus</th>
-                                                <th class="px-6 py-3 text-right">Annual SIP</th>
-                                                <th class="px-6 py-3 text-right">Total Invested</th>
-                                                <th class="px-6 py-3 text-right">Annual SWP</th>
-                                                <th class="px-6 py-3 text-right">Total Withdrawn</th>
-                                                <th class="px-6 py-3 text-right">Interest</th>
-                                                <th class="px-6 py-3 text-right">End Corpus</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="divide-y divide-gray-200">
-                                            <?php foreach ($combined as $row): ?>
-                                                    <tr class="hover:bg-gray-50">
-                                                        <td class="px-6 py-4 font-medium"><?= $row['year'] ?></td>
-                                                        <td class="px-6 py-4 text-right"><?= formatInr($row['begin_balance']) ?></td>
-                                                        <td class="px-6 py-4 text-right text-green-600">
-                                                            <?= formatInr($row['annual_contribution']) ?>
-                                                        </td>
-                                                        <td class="px-6 py-4 text-right"><?= formatInr($row['cumulative_invested']) ?>
-                                                        </td>
-                                                        <td class="px-6 py-4 text-right text-red-600">
-                                                            <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                                        </td>
-                                                        <td class="px-6 py-4 text-right">
-                                                            <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                                        </td>
-                                                        <td class="px-6 py-4 text-right"><?= formatInr($row['interest']) ?></td>
-                                                        <td class="px-6 py-4 text-right font-semibold text-indigo-600">
-                                                            <?= formatInr($row['combined_total']) ?>
-                                                        </td>
-                                                    </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div id="results-table"
+                            class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                            <div class="p-6">
+                                <h2 class="text-2xl font-semibold">Yearly Breakdown</h2>
                             </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="bg-gray-50 text-xs uppercase font-semibold">
+                                        <tr>
+                                            <th class="px-6 py-3">Year</th>
+                                            <th class="px-6 py-3 text-right">Start Corpus</th>
+                                            <th class="px-6 py-3 text-right">Annual SIP</th>
+                                            <th class="px-6 py-3 text-right">Total Invested</th>
+                                            <th class="px-6 py-3 text-right">Annual SWP</th>
+                                            <th class="px-6 py-3 text-right">Total Withdrawn</th>
+                                            <th class="px-6 py-3 text-right">Interest</th>
+                                            <th class="px-6 py-3 text-right">End Corpus</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200">
+                                        <?php foreach ($combined as $row): ?>
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-6 py-4 font-medium"><?= $row['year'] ?></td>
+                                                <td class="px-6 py-4 text-right"><?= formatInr($row['begin_balance']) ?></td>
+                                                <td class="px-6 py-4 text-right text-green-600">
+                                                    <?= formatInr($row['annual_contribution']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right"><?= formatInr($row['cumulative_invested']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-red-600">
+                                                    <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right">
+                                                    <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right"><?= formatInr($row['interest']) ?></td>
+                                                <td class="px-6 py-4 text-right font-semibold text-indigo-600">
+                                                    <?= formatInr($row['combined_total']) ?>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>
@@ -418,7 +468,7 @@ foreach ($combined as $row) {
                             one-time investment, you invest smaller amounts over time. This strategy helps in averaging
                             out the cost of your investment and harnesses the power of compounding.</p>
                         <ul class="mt-4 space-y-2">
-                            <li><span class="font-semibold text-green-600">Rupee Cost Averaging:</span> Buy more units
+                            <li><span class="font-semibold text-green-600">Dollar Cost Averaging:</span> Buy more units
                                 when the market is low and fewer when it's high.</li>
                             <li><span class="font-semibold text-green-600">Power of Compounding:</span> Reinvesting your
                                 returns generates earnings on your earnings, leading to exponential growth.</li>
@@ -542,7 +592,7 @@ foreach ($combined as $row) {
                         <div class="bg-gray-100 p-6 rounded-lg">
                             <h3 class="text-xl font-bold text-indigo-600 mb-2">Which is better: SIP or Lump Sum?</h3>
                             <p>In a rising market, Lump Sum often wins mathematically. However, SIP is psychologically
-                                easier and safer for volatile markets as it benefits from <strong>Rupee Cost
+                                easier and safer for volatile markets as it benefits from <strong>Dollar Cost
                                     Averaging</strong>, reducing the risk of investing a large amount at a market peak.
                             </p>
                         </div>
@@ -592,7 +642,7 @@ foreach ($combined as $row) {
             "name": "Which is better: SIP or Lump Sum?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "In a rising market, Lump Sum often wins. However, SIP is safer for volatile markets as it benefits from Rupee Cost Averaging, reducing the risk of investing at a market peak."
+              "text": "In a rising market, Lump Sum often wins. However, SIP is safer for volatile markets as it benefits from Dollar Cost Averaging, reducing the risk of investing at a market peak."
             }
           }, {
             "@type": "Question",
