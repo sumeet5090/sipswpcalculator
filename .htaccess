@@ -1,6 +1,22 @@
 # Enable mod_rewrite for URL rewriting
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  
+  # Set DirectoryIndex to index.php
+  DirectoryIndex index.php
+
+  # Redirect /default.php to /
+  RewriteCond %{THE_REQUEST} \s/default\.php\s [NC]
+  RewriteRule ^default\.php$ / [L,R=301]
+
+  # Redirect /index.php to /
+  RewriteCond %{THE_REQUEST} \s/index\.php\s [NC]
+  RewriteRule ^index\.php$ / [L,R=301]
+
+  # Remove .php extension
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^([^\.]+)$ $1.php [NC,L]
 </IfModule>
 
 # Compress files with gzip for faster transfer

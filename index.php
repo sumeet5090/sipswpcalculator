@@ -153,21 +153,21 @@ foreach ($combined as $row) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced SIP & SWP Calculator for Investors | Plan Your Mutual Fund Investments</title>
-    <meta name="description" content="Free SIP & SWP Calculator to plan your mutual fund investments. Calculate SIP returns, SWP withdrawals, and visualize wealth creation with our advanced financial tools.">
+    <title>Free SIP & SWP Calculator | Plan Mutual Fund Investments</title>
+    <meta name="description" content="Calculate SIP returns, SWP withdrawals, and visualize wealth creation with our free, advanced financial tools. Plan your retirement with accurate projections.">
     <meta name="keywords" content="SIP Calculator, SWP Calculator, Mutual Fund Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP">
-    <link rel="canonical" href="https://sipswpcalculator.com/default.php">
+    <link rel="canonical" href="https://sipswpcalculator.com/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sipswpcalculator.com/default.php">
+    <meta property="og:url" content="https://sipswpcalculator.com/">
     <meta property="og:title" content="Advanced SIP & SWP Calculator for Investors">
     <meta property="og:description" content="Plan your financial future with our comprehensive SIP & SWP calculator. Visualize growth and withdrawals effortlessly.">
     <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://sipswpcalculator.com/default.php">
+    <meta property="twitter:url" content="https://sipswpcalculator.com/">
     <meta property="twitter:title" content="Advanced SIP & SWP Calculator for Investors">
     <meta property="twitter:description" content="Plan your financial future with our comprehensive SIP & SWP calculator. Visualize growth and withdrawals effortlessly.">
     <meta property="twitter:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
@@ -206,7 +206,7 @@ foreach ($combined as $row) {
         <header class="relative mb-8">
             <div class="text-center">
                 <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 pb-2">
-                    Future-Proof Your Finances
+                    Free SIP & SWP Calculator
                 </h1>
                 <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
                     The Ultimate SIP & SWP Calculator to Visualize Your Wealth Creation and Withdrawal Journey
@@ -217,7 +217,7 @@ foreach ($combined as $row) {
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     <!-- Card 1: Main Calculator -->
-                    <a href="default.php" class="group block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-indigo-500 transition-all duration-300 transform hover:-translate-y-1">
+                    <a href="/" class="group block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-indigo-500 transition-all duration-300 transform hover:-translate-y-1">
                         <div class="flex items-start gap-4">
                             <div class="p-3 bg-indigo-100 rounded-lg">
                                 <svg class="w-10 h-10 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 0v6m0-6L9 13m4-4h2a2 2 0 012 2v2m-6 4h.01M9 17h.01M13 17h.01M17 17h.01M5 7h.01M5 11h.01M5 15h.01M4 4h16a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z"></path></svg>
@@ -230,7 +230,7 @@ foreach ($combined as $row) {
                     </a>
 
                     <!-- Card 2: Goal Reverser -->
-                    <a href="goal-reverser.php" class="group relative block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-green-500 transition-all duration-300 transform hover:-translate-y-1">
+                    <a href="/goal-reverser" class="group relative block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-green-500 transition-all duration-300 transform hover:-translate-y-1">
                         <span class="absolute top-3 right-3 px-2 py-0.5 bg-green-500 text-white text-xs font-semibold rounded-full">NEW</span>
                         <div class="flex items-start gap-4">
                             <div class="p-3 bg-green-100 rounded-lg">
@@ -244,7 +244,7 @@ foreach ($combined as $row) {
                     </a>
 
                     <!-- Card 3: SoR Analyzer -->
-                    <a href="sequence-risk-analyzer.php" class="group relative block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-orange-500 transition-all duration-300 transform hover:-translate-y-1">
+                    <a href="/sequence-risk-analyzer" class="group relative block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-orange-500 transition-all duration-300 transform hover:-translate-y-1">
                         <span class="absolute top-3 right-3 px-2 py-0.5 bg-orange-500 text-white text-xs font-semibold rounded-full">NEW</span>
                         <div class="flex items-start gap-4">
                             <div class="p-3 bg-orange-100 rounded-lg">
@@ -366,7 +366,7 @@ foreach ($combined as $row) {
         </main>
 
         <div class="text-center mt-8">
-    <a href="sip-calculator.php" class="text-indigo-600 hover:underline">
+    <a href="/sip-calculator" class="text-indigo-600 hover:underline">
         Learn more about SIPs and how to use our calculator
     </a>
 </div>
@@ -415,7 +415,7 @@ foreach ($combined as $row) {
                         </div>
                         <div class="bg-gray-100 p-6 rounded-lg">
                             <h3 class="text-xl font-bold text-indigo-600 mb-2">What is a safe withdrawal rate for SWP?</h3>
-                            <p>Financial experts often recommend the "4% rule," suggesting you withdraw 4% of your corpus annually. However, this depends on market conditions and your lifespan. Use our <a href="sequence-risk-analyzer.php" class="text-indigo-600 hover:underline">Sequence of Returns Risk Analyzer</a> to test if your withdrawal rate is sustainable during market crashes.</p>
+                            <p>Financial experts often recommend the "4% rule," suggesting you withdraw 4% of your corpus annually. However, this depends on market conditions and your lifespan. Use our <a href="/sequence-risk-analyzer" class="text-indigo-600 hover:underline">Sequence of Returns Risk Analyzer</a> to test if your withdrawal rate is sustainable during market crashes.</p>
                         </div>
                     </div>
                 </div>
