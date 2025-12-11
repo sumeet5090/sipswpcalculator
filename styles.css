@@ -344,3 +344,121 @@ input[type=range]::-webkit-slider-runnable-track {
     background: #e2e8f0;
     border-radius: 2px;
 }
+/* --- Goal Reverser Styles --- */
+.hero-input {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #e2e8f0;
+    text-align: center;
+    color: var(--color-text-primary);
+    font-size: 3rem;
+    font-weight: 800;
+    width: 100%;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+}
+
+.hero-input:focus {
+    outline: none;
+    border-bottom-color: #6366f1; /* Indigo 500 */
+    transform: scale(1.02);
+}
+
+.pill-input {
+    display: inline-flex;
+    align-items: center;
+    background-color: white;
+    box-shadow: var(--shadow-sm);
+    border-radius: 9999px;
+    padding: 8px 20px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.pill-input:focus-within {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.pill-input label {
+    margin-right: 8px;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: 500;
+}
+
+.pill-input input {
+    background: transparent;
+    border: none;
+    color: var(--color-text-primary);
+    width: 60px;
+    padding: 0;
+    box-shadow: none;
+    font-weight: 700;
+    text-align: right;
+}
+
+.pill-input input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Staircase Visualization */
+.staircase-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 300px;
+    padding: 20px;
+    gap: 6px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 1rem;
+    border: 1px solid var(--color-border);
+}
+
+.stair-step {
+    flex-grow: 1;
+    background-image: linear-gradient(to top, #4f46e5, #818cf8);
+    border-radius: 6px 6px 0 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.stair-step:hover {
+    transform: translateY(-4px) scale(1.02);
+    background-image: linear-gradient(to top, #4338ca, #6366f1);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+}
+
+.stair-step .tooltip {
+    visibility: hidden;
+    width: max-content;
+    background-color: #1e293b;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 12px;
+    position: absolute;
+    z-index: 20;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    font-weight: 600;
+    pointer-events: none;
+    box-shadow: var(--shadow-lg);
+}
+
+.stair-step:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+    bottom: 120%;
+}
+

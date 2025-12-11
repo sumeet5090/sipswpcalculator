@@ -115,154 +115,49 @@ if (isset($_POST['action']) && $_POST['action'] == 'calculate_initial_sip') {
     }
     </script>
 
+    <link rel="stylesheet" href="styles.css?v=<?= time() ?>">
+    <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&family=Inter:wght@400;500;700&display=swap"
-        rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        indigo: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
         }
-
-        .font-mono {
-            font-family: 'Roboto Mono', monospace;
-        }
-
-        .hero-input {
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid #007bff;
-            text-align: center;
-            color: #212529;
-            font-size: 3rem;
-            width: 100%;
-            padding: 10px 0;
-        }
-
-        .hero-input:focus {
-            outline: none;
-            border-bottom-color: #0056b3;
-        }
-
-        .pill-input {
-            display: inline-flex;
-            align-items: center;
-            background-color: #e9ecef;
-            border-radius: 9999px;
-            padding: 8px 16px;
-            border: 1px solid #ced4da;
-        }
-
-        .pill-input label {
-            margin-right: 8px;
-            font-size: 0.875rem;
-            color: #495057;
-        }
-
-        .pill-input input {
-            background: transparent;
-            border: none;
-            color: #212529;
-            width: 50px;
-            text-align: right;
-        }
-
-        .pill-input input:focus {
-            outline: none;
-        }
-
-        /* Staircase */
-        .staircase-container {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            height: 250px;
-            padding: 20px;
-            gap: 4px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            overflow-x: auto;
-            border: 1px solid #dee2e6;
-        }
-
-        .stair-step {
-            flex-grow: 1;
-            background-image: linear-gradient(to top, #007bff, #58a6ff);
-            border-radius: 4px 4px 0 0;
-            transition: all 0.2s ease-in-out;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .stair-step:hover {
-            transform: scale(1.05);
-            background-image: linear-gradient(to top, #0056b3, #007bff);
-        }
-
-        .stair-step .tooltip {
-            visibility: hidden;
-            width: 160px;
-            background-color: #212529;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 105%;
-            left: 50%;
-            margin-left: -80px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .stair-step:hover .tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .btn-ghost {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            margin-top: 1rem;
-            border: 2px solid #007bff;
-            color: #007bff;
-            background-color: transparent;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: all 0.2s ease-in-out;
-            cursor: pointer;
-        }
-
-        .btn-ghost:hover {
-            background-color: rgba(0, 123, 255, 0.1);
-            color: #0056b3;
-            border-color: #0056b3;
-        }
-
-        .btn-ghost svg {
-            transition: all 0.2s ease-in-out;
-        }
-    </style>
+    </script>
 </head>
 
-<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+<body class="bg-gray-50 text-gray-800 flex items-center justify-center min-h-screen p-4"
+    style="background-image: var(--gradient-surface); background-attachment: fixed;">
 
-    <div class="max-w-4xl w-full">
+    <div class="max-w-4xl w-full animate-float">
         <header class="text-center mb-8">
-            <h1
-                class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 pb-2">
-                SIP Goal Calculator
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 mb-4">
+                <span class="text-xs font-semibold text-emerald-700 tracking-wide uppercase">Target Based
+                    Planning</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold pb-2">
+                <span class="text-gradient">SIP Goal Calculator</span>
             </h1>
-            <p class="text-gray-600">Start with your goal, and we'll tell you how to begin.</p>
+            <p class="text-lg text-gray-500 font-medium">Start with your target, and we'll reveal the path.</p>
         </header>
 
-        <main class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl border border-gray-200">
+        <main class="glass-card p-6 sm:p-10">
             <!-- Target-First Input -->
             <div id="target-first-calculator" class="text-center">
                 <label class="text-gray-600 text-lg">I want to accumulate</label>
@@ -294,10 +189,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'calculate_initial_sip') {
                     </p>
                 </div>
 
-                <button id="downloadReportBtn" class="btn-ghost">
+                <button id="downloadReportBtn"
+                    class="btn-secondary mt-4 text-indigo-600 border-indigo-200 hover:bg-indigo-50">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="btn-icon">
+                        class="btn-icon mr-2">
                         <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
                         <polyline points="14 2 14 8 20 8"></polyline>
                         <path d="M16 13H8"></path>

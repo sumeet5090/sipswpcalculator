@@ -134,22 +134,48 @@ if (isset($_POST['action']) && $_POST['action'] == 'run_simulation') {
       }
     }
     </script>
-
+    <link rel="stylesheet" href="styles.css?v=<?= time() ?>">
+    <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        indigo: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
-<body class="bg-gray-100 text-gray-800 transition-colors duration-300">
+<body class="bg-gray-50 text-gray-800 transition-colors duration-300"
+    style="background-image: var(--gradient-surface); background-attachment: fixed;">
 
-    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 animate-float">
 
         <header class="relative mb-8 text-center">
-            <h1
-                class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600 pb-2">
-                Sequence of Returns Risk Analyzer
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 border border-rose-100 mb-4">
+                <span class="text-xs font-semibold text-rose-700 tracking-wide uppercase">Retirement Risk
+                    Simulator</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-extrabold pb-2">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-rose-600">Sequence Risk
+                    Analyzer</span>
             </h1>
-            <p class="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-                Visualize how a market crash early in retirement can impact your portfolio's longevity compared to other
-                market conditions.
+            <p class="text-lg sm:text-xl text-gray-500 font-medium max-w-3xl mx-auto mt-2">
+                Visualize how a bad market start can impact your retirement portfolio.
             </p>
         </header>
 
@@ -157,94 +183,122 @@ if (isset($_POST['action']) && $_POST['action'] == 'run_simulation') {
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 <!-- Form Section -->
-                <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                <div class="lg:col-span-1 glass-card p-6 rounded-xl">
                     <div class="space-y-6">
-                        <fieldset>
-                            <legend class="text-xl font-semibold mb-4 text-orange-600">Retirement Plan</legend>
-                            <div class="space-y-4">
+                        <fieldset class="border border-orange-200 rounded-lg p-4 bg-orange-50/30">
+                            <legend class="px-2 font-semibold text-orange-700 flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Retirement Plan
+                            </legend>
+                            <div class="space-y-4 pt-2">
                                 <div>
-                                    <label for="initialCorpus" class="block text-sm font-medium mb-1">Initial Retirement
+                                    <label for="initialCorpus" class="block text-sm font-medium mb-1">Initial
                                         Corpus</label>
-                                    <input type="number" id="initialCorpus" value="1000000"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                    <div class="input-group">
+                                        <span class="absolute left-3 text-gray-400 pointer-events-none">₹</span>
+                                        <input type="number" id="initialCorpus" value="1000000"
+                                            class="input-with-icon pl-8">
+                                    </div>
                                 </div>
                                 <div>
-                                    <label for="monthlyWithdrawal" class="block text-sm font-medium mb-1">Initial
-                                        Monthly Withdrawal</label>
-                                    <input type="number" id="monthlyWithdrawal" value="5000"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                    <label for="monthlyWithdrawal" class="block text-sm font-medium mb-1">Monthly
+                                        Withdrawal</label>
+                                    <div class="input-group">
+                                        <span class="absolute left-3 text-gray-400 pointer-events-none">₹</span>
+                                        <input type="number" id="monthlyWithdrawal" value="5000"
+                                            class="input-with-icon pl-8">
+                                    </div>
                                 </div>
                                 <div>
-                                    <label for="withdrawalPeriod" class="block text-sm font-medium mb-1">Withdrawal
-                                        Period (Years)</label>
-                                    <input type="number" id="withdrawalPeriod" value="30"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                    <label for="withdrawalPeriod" class="block text-sm font-medium mb-1">Duration
+                                        (Years)</label>
+                                    <input type="number" id="withdrawalPeriod" value="30">
                                 </div>
                                 <div>
-                                    <label for="withdrawalIncrease" class="block text-sm font-medium mb-1">Annual
-                                        Withdrawal Increase (%)</label>
-                                    <input type="number" id="withdrawalIncrease" value="5"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                    <label for="withdrawalIncrease" class="block text-sm font-medium mb-1">Annual Incr.
+                                        (%)</label>
+                                    <div class="input-group">
+                                        <input type="number" id="withdrawalIncrease" value="5">
+                                        <span class="input-suffix">%</span>
+                                    </div>
                                 </div>
                             </div>
                         </fieldset>
 
-                        <fieldset>
-                            <legend class="text-xl font-semibold mb-4 text-orange-600">Market Scenarios (1st 2 Years)
+                        <fieldset class="border border-rose-200 rounded-lg p-4 bg-rose-50/30">
+                            <legend class="px-2 font-semibold text-rose-700 flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path>
+                                </svg>
+                                Market Scenarios (Year 1-2)
                             </legend>
-                            <div class="space-y-4">
+                            <div class="space-y-4 pt-2">
                                 <div>
-                                    <label for="bullReturn" class="block text-sm font-medium mb-1">"Bull Market" Start
-                                        (% Annual Return)</label>
+                                    <label for="bullReturn"
+                                        class="block text-sm font-medium mb-1 text-emerald-700">"Bull" Start (%
+                                        Return)</label>
                                     <input type="number" id="bullReturn" value="20" step="0.1"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                        class="border-emerald-200 focus:border-emerald-500 focus:ring-emerald-200">
                                 </div>
                                 <div>
-                                    <label for="bearReturn" class="block text-sm font-medium mb-1">"Bear Market" Start
-                                        (% Annual Return)</label>
+                                    <label for="bearReturn" class="block text-sm font-medium mb-1 text-rose-700">"Bear"
+                                        Start (% Return)</label>
                                     <input type="number" id="bearReturn" value="-15" step="0.1"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                                        class="border-rose-200 focus:border-rose-500 focus:ring-rose-200">
                                 </div>
                                 <div>
-                                    <label for="avgReturn" class="block text-sm font-medium mb-1">Average Return (All
-                                        other years)</label>
-                                    <input type="number" id="avgReturn" value="7" step="0.1"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                    <label for="avgReturn" class="block text-sm font-medium mb-1">Avg Return (Later
+                                        Yrs)</label>
+                                    <input type="number" id="avgReturn" value="7" step="0.1">
                                 </div>
                             </div>
                         </fieldset>
                     </div>
                     <button id="runSimulationBtn"
-                        class="mt-8 w-full px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Run
-                        Simulation</button>
+                        class="mt-8 w-full px-6 py-4 bg-gradient-to-r from-orange-600 to-rose-600 hover:from-orange-700 hover:to-rose-700 text-white font-bold rounded-xl shadow-lg transform transition-all duration-200 hover:scale-[1.02] active:scale-95">
+                        Run Simulation
+                    </button>
                 </div>
 
                 <!-- Chart and Insights Section -->
                 <div class="lg:col-span-2 space-y-8">
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 min-h-[500px]">
-                        <h2 class="text-2xl font-semibold mb-4">Portfolio Depletion Scenarios</h2>
+                    <div class="glass-card p-6 rounded-xl min-h-[500px]">
+                        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                            <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z">
+                                </path>
+                            </svg>
+                            Depletion Scenarios
+                        </h2>
                         <div class="h-96">
                             <canvas id="sequenceRiskChart"></canvas>
                         </div>
                     </div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-                        <h2 class="text-2xl font-semibold mb-4">Key Takeaways & Buffer Strategies</h2>
-                        <div class="prose max-w-none">
+                    <div class="glass-card p-8 rounded-xl">
+                        <h2 class="text-2xl font-bold mb-6">Key Takeaways & Buffer Strategies</h2>
+                        <div class="prose max-w-none text-gray-600">
                             <p>The chart demonstrates the <strong>"Sequence of Returns Risk"</strong>: the order in
                                 which you experience investment returns matters immensely, especially at the start of
                                 retirement.</p>
-                            <ul>
-                                <li><strong class="text-red-600">The Danger Zone:</strong> A bear market in the first
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong class="text-rose-600">The Danger Zone:</strong> A bear market in the first
                                     few years of withdrawal forces you to sell more units at low prices to generate the
                                     same income. This permanently damages your portfolio's ability to recover and grow,
                                     drastically shortening its lifespan.</li>
-                                <li><strong class="text-green-600">The Power of a Good Start:</strong> A bull market at
+                                <li><strong class="text-emerald-600">The Power of a Good Start:</strong> A bull market
+                                    at
                                     the beginning allows your portfolio to grow substantially even while you withdraw,
                                     creating a larger cushion for future volatility.</li>
                             </ul>
-                            <h3 class="text-xl font-semibold mt-6">Buffer Strategies to Mitigate Risk:</h3>
-                            <ol>
+                            <h3 class="text-xl font-semibold mt-6 mb-3 text-gray-800">Buffer Strategies to Mitigate
+                                Risk:</h3>
+                            <ol class="list-decimal pl-5 space-y-2">
                                 <li><strong>Cash Bucket:</strong> Maintain 1-2 years of living expenses in cash or cash
                                     equivalents. During a market downturn, you can draw from this bucket instead of
                                     selling your stocks at a loss.</li>
@@ -257,9 +311,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'run_simulation') {
                                     from Bucket 2 during good years.</li>
                             </ol>
 
-                            <div class="mt-6 p-4 bg-gray-100 rounded-lg border-l-4 border-indigo-500">
-                                <p class="text-sm text-gray-600"><strong>Pro Tip:</strong> Use our <a href="/"
-                                        class="text-indigo-600 hover:underline font-semibold">SIP & SWP Calculator</a>
+                            <div class="mt-8 p-6 bg-indigo-50/50 border border-indigo-100 rounded-xl">
+                                <p class="text-sm text-gray-700"><strong>Pro Tip:</strong> Use our <a href="/"
+                                        class="text-indigo-600 hover:text-indigo-700 font-bold underline decoration-2 decoration-indigo-200 underline-offset-2">SIP
+                                        & SWP Calculator</a>
                                     to plan your accumulation phase carefully so you have a large enough corpus to
                                     withstand these market fluctuations.</p>
                             </div>
@@ -267,14 +322,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'run_simulation') {
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-8">
-                <a href="/" class="text-indigo-600 hover:underline">
-                    &larr; Back to Main SIP/SWP Calculator
+            <div class="text-center mt-12">
+                <a href="/"
+                    class="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-semibold transition-colors">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Main SIP/SWP Calculator
                 </a>
             </div>
         </main>
 
-        <footer class="mt-12 text-sm text-center text-gray-500">
+        <footer class="mt-16 text-sm text-center text-gray-500 glass-card py-6">
             <p class="text-xs">&copy; <?= date('Y') ?> SIP/SWP Calculator. All rights reserved.</p>
         </footer>
 
