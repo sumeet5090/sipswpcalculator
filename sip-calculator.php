@@ -5,7 +5,7 @@ require_once __DIR__ . '/functions.php';
 
 ?>
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -15,19 +15,19 @@ require_once __DIR__ . '/functions.php';
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="dark bg-gradient-to-br from-slate-900 to-slate-800 text-slate-200 transition-colors duration-300">
+<body class="bg-gray-100 text-gray-800 transition-colors duration-300">
 
     <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
         
         <header class="mb-8 flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold text-indigo-400 hover:text-indigo-500 transition-colors">
+            <a href="/" class="text-2xl font-bold text-indigo-600 hover:text-indigo-700 transition-colors">
                 &larr; Back to Calculator
             </a>
         </header>
 
-        <main class="bg-white dark:bg-slate-800/50 dark:backdrop-blur-sm rounded-xl shadow-lg border dark:border-slate-700 p-8">
-            <article class="prose prose-lg max-w-none text-slate-600 dark:text-slate-300">
-                <h1 class="text-4xl font-extrabold text-indigo-600 dark:text-indigo-400 mb-4">A Deep Dive into Systematic Investment Plans (SIPs)</h1>
+        <main class="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+            <article class="prose prose-lg max-w-none text-gray-600">
+                <h1 class="text-4xl font-extrabold text-indigo-600 mb-4">A Deep Dive into Systematic Investment Plans (SIPs)</h1>
                 
                 <p>A Systematic Investment Plan, or SIP, is a powerful and popular method for investing in mutual funds. It allows you to invest a fixed amount of money at regular intervals, such as monthly or quarterly, rather than making a single lump-sum investment. This disciplined approach to investing has several key advantages that make it an ideal choice for both new and experienced investors.</p>
 
@@ -46,7 +46,7 @@ require_once __DIR__ . '/functions.php';
                 <p>SIPs are highly flexible. You can start with a small amount (as low as ₹500 per month) and can increase or decrease your investment amount as your financial situation changes. Most fund houses also allow you to pause or stop your SIP at any time. This makes it a convenient and accessible investment option for everyone.</p>
 
                 <h2 class="text-2xl font-semibold mt-8 mb-4">How to Use a SIP Calculator</h2>
-                <p>A SIP calculator is a tool that helps you estimate the future value of your SIP investments. By entering a few key details, you can get a clear picture of how your money can grow over time. Our <a href="/" class="text-indigo-600 dark:text-indigo-400 hover:underline">SIP & SWP Calculator</a> allows you to input:</p>
+                <p>A SIP calculator is a tool that helps you estimate the future value of your SIP investments. By entering a few key details, you can get a clear picture of how your money can grow over time. Our <a href="/" class="text-indigo-600 hover:underline">SIP & SWP Calculator</a> allows you to input:</p>
                 <ul>
                     <li><strong>Monthly Investment:</strong> The amount you plan to invest each month.</li>
                     <li><strong>Investment Period:</strong> The number of years you plan to continue your SIP.</li>
@@ -63,7 +63,7 @@ require_once __DIR__ . '/functions.php';
             </article>
         </main>
 
-        <footer class="mt-12 text-center text-sm text-slate-600 dark:text-slate-400">
+        <footer class="mt-12 text-center text-sm text-gray-600">
             <p>&copy; <?= date('Y') ?> SIP/SWP Calculator. All rights reserved.</p>
         </footer>
 

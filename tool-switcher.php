@@ -8,7 +8,7 @@
         /* Defaults and Body Style for display */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f9fafb;
+            background-color: #f8f9fa;
             padding: 2rem;
         }
 
@@ -16,12 +16,12 @@
         .tool-switcher {
             display: flex;
             flex-direction: row;
-            background-color: #f3f4f6; /* Equivalent to bg-gray-100 */
+            background-color: #e9ecef; /* Equivalent to bg-gray-200 */
             border-radius: 9999px;   /* Pill-shaped */
             padding: 4px;
             max-width: 700px;
             margin: 2rem auto;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #dee2e6;
         }
 
         /* Hide the actual radio buttons */
@@ -37,7 +37,7 @@
             cursor: pointer;
             border-radius: 9999px;
             font-weight: 500;
-            color: #4b5563; /* Muted gray text */
+            color: #495057; /* Muted gray text */
             transition: all 0.3s ease; /* Smooth transition for all properties */
             white-space: nowrap;
         }
@@ -46,7 +46,7 @@
         .tool-switcher input[type="radio"]:checked + label {
             background-color: white;
             font-weight: 700; /* Bold text */
-            color: #111827;   /* Darker text */
+            color: #212529;   /* Darker text */
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* Slight shadow */
         }
 

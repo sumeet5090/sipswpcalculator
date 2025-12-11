@@ -84,7 +84,7 @@ function render_survival_table($corpus, $return_rate, $inflation, $withdrawal_ra
 }
 ?>
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -98,17 +98,19 @@ function render_survival_table($corpus, $return_rate, $inflation, $withdrawal_ra
             grid-template-columns: repeat(var(--cols, 6), minmax(0, 1fr));
             gap: 8px;
             margin-top: 2rem;
-            background-color: #1f2937;
+            background-color: #f8f9fa;
             padding: 1rem;
             border-radius: 12px;
+            border: 1px solid #dee2e6;
         }
         .header-cell {
-            background-color: #374151;
+            background-color: #e9ecef;
             font-weight: bold;
             text-align: center;
             padding: 0.75rem 0.5rem;
             border-radius: 6px;
             font-size: 0.8rem;
+            color: #495057;
         }
         .cell {
             border-radius: 6px;
@@ -119,14 +121,14 @@ function render_survival_table($corpus, $return_rate, $inflation, $withdrawal_ra
             position: relative;
         }
         .cell.safe {
-             background-color: rgba(16, 185, 129, var(--opacity, 0.7)); /* Green */
+             background-color: rgba(40, 167, 69, var(--opacity, 0.7)); /* Green */
         }
         .cell.depleted {
-             background-color: rgba(239, 68, 68, var(--opacity, 0.7)); /* Red */
+             background-color: rgba(220, 53, 69, var(--opacity, 0.7)); /* Red */
         }
         .cell:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
             z-index: 10;
         }
         .cell-status {
@@ -141,29 +143,29 @@ function render_survival_table($corpus, $return_rate, $inflation, $withdrawal_ra
         }
     </style>
 </head>
-<body class="dark bg-gradient-to-br from-slate-900 to-slate-800 text-slate-200 flex items-center justify-center min-h-screen p-4">
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
 
     <div class="max-w-5xl w-full">
         <header class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-500 pb-2">
+            <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-blue-600 pb-2">
                 Safe Withdrawal Rate (SWR) Heatmap
             </h1>
-            <p class="text-slate-400">Find the sweet spot for your retirement withdrawals.</p>
+            <p class="text-gray-600">Find the sweet spot for your retirement withdrawals.</p>
         </header>
 
-        <main class="bg-slate-800/50 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700">
+        <main class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl border border-gray-200">
             <!-- Input Form -->
             <form method="GET" action="swp-heatmap.php" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                 <div>
-                    <label for="corpus" class="block text-sm font-medium text-slate-300 mb-1">Initial Corpus</label>
+                    <label for="corpus" class="block text-sm font-medium text-gray-700 mb-1">Initial Corpus</label>
                     <input type="number" name="corpus" id="corpus" class="w-full" value="<?= htmlspecialchars($initial_corpus) ?>">
                 </div>
                 <div>
-                    <label for="return" class="block text-sm font-medium text-slate-300 mb-1">Expected Return (% p.a.)</label>
+                    <label for="return" class="block text-sm font-medium text-gray-700 mb-1">Expected Return (% p.a.)</label>
                     <input type="number" name="return" id="return" class="w-full" value="<?= htmlspecialchars($expected_return) ?>">
                 </div>
                 <div>
-                    <label for="inflation" class="block text-sm font-medium text-slate-300 mb-1">Inflation Rate (% p.a.)</label>
+                    <label for="inflation" class="block text-sm font-medium text-gray-700 mb-1">Inflation Rate (% p.a.)</label>
                     <input type="number" name="inflation" id="inflation" class="w-full" value="<?= htmlspecialchars($inflation_rate) ?>">
                 </div>
                 <button type="submit" class="w-full md:w-auto justify-self-start h-10 px-6">Generate Heatmap</button>
@@ -172,13 +174,13 @@ function render_survival_table($corpus, $return_rate, $inflation, $withdrawal_ra
             <!-- Heatmap -->
             <?= render_survival_table($initial_corpus, $expected_return, $inflation_rate, $withdrawal_rates, $durations) ?>
             
-             <div class="mt-6 text-xs text-slate-400 text-center">
+             <div class="mt-6 text-xs text-gray-500 text-center">
                 <p>Each cell shows if your portfolio would survive for a given duration and withdrawal rate. 'Bal' is the final balance.</p>
             </div>
         </main>
         
-        <footer class="mt-8 text-sm text-center text-slate-400">
-             <a href="default.php" class="text-sky-400 hover:underline">
+        <footer class="mt-8 text-sm text-center text-gray-500">
+             <a href="default.php" class="text-sky-500 hover:underline">
                 &larr; Back to Main SIP/SWP Calculator
             </a>
              <p class="mt-4 text-xs">&copy; <?= date('Y') ?> SIP/SWP Calculator. All rights reserved.</p>

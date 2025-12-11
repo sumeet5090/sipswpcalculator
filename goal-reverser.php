@@ -66,7 +66,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'calculate_initial_sip') {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,27 +118,27 @@ if (isset($_POST['action']) && $_POST['action'] == 'calculate_initial_sip') {
         .hero-input {
             background: transparent;
             border: none;
-            border-bottom: 2px solid #4f46e5;
+            border-bottom: 2px solid #007bff;
             text-align: center;
-            color: white;
+            color: #212529;
             font-size: 3rem;
             width: 100%;
             padding: 10px 0;
         }
-        .hero-input:focus { outline: none; border-bottom-color: #818cf8; }
+        .hero-input:focus { outline: none; border-bottom-color: #0056b3; }
         .pill-input {
             display: inline-flex;
             align-items: center;
-            background-color: #374151;
+            background-color: #e9ecef;
             border-radius: 9999px;
             padding: 8px 16px;
-            border: 1px solid #4b5563;
+            border: 1px solid #ced4da;
         }
-        .pill-input label { margin-right: 8px; font-size: 0.875rem; color: #d1d5db; }
+        .pill-input label { margin-right: 8px; font-size: 0.875rem; color: #495057; }
         .pill-input input {
             background: transparent;
             border: none;
-            color: white;
+            color: #212529;
             width: 50px;
             text-align: right;
         }
@@ -152,13 +152,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'calculate_initial_sip') {
             height: 250px;
             padding: 20px;
             gap: 4px;
-            background: #1f2937;
+            background: #f8f9fa;
             border-radius: 12px;
             overflow-x: auto;
+            border: 1px solid #dee2e6;
         }
         .stair-step {
             flex-grow: 1;
-            background-image: linear-gradient(to top, #4f46e5, #818cf8);
+            background-image: linear-gradient(to top, #007bff, #58a6ff);
             border-radius: 4px 4px 0 0;
             transition: all 0.2s ease-in-out;
             position: relative;
@@ -166,12 +167,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'calculate_initial_sip') {
         }
         .stair-step:hover {
             transform: scale(1.05);
-            background-image: linear-gradient(to top, #6366f1, #a5b4fc);
+            background-image: linear-gradient(to top, #0056b3, #007bff);
         }
         .stair-step .tooltip {
             visibility: hidden;
             width: 160px;
-            background-color: #111827;
+            background-color: #212529;
             color: #fff;
             text-align: center;
             border-radius: 6px;
@@ -184,84 +185,105 @@ if (isset($_POST['action']) && $_POST['action'] == 'calculate_initial_sip') {
             opacity: 0;
             transition: opacity 0.3s;
         }
-                .stair-step:hover .tooltip {
-                    visibility: visible;
-                    opacity: 1;
-                }
-                .btn-ghost {
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 0.5rem;
-                    padding: 0.75rem 1.5rem;
-                    margin-top: 1rem;
-                    border: 2px solid #4f46e5; /* slate gray/blue */
-                    color: #818cf8; /* slate gray/blue */
-                    background-color: transparent;
-                    border-radius: 0.5rem;
-                    font-weight: 600;
-                    transition: all 0.2s ease-in-out;
-                    cursor: pointer;
-                }
+        .stair-step:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1rem;
+            border: 2px solid #007bff;
+            color: #007bff;
+            background-color: transparent;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
         
-                .btn-ghost:hover {
-                    background-color: rgba(79, 70, 229, 0.1); /* Light wash of the border color */
-                    color: #a5b4fc;
-                    border-color: #6366f1;
-                }
+        .btn-ghost:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+            color: #0056b3;
+            border-color: #0056b3;
+        }
         
-                .btn-ghost svg {
-                    transition: all 0.2s ease-in-out;
-                }
-            </style>
-        </head>
-        <body class="dark bg-gradient-to-br from-slate-900 to-slate-800 text-slate-200 flex items-center justify-center min-h-screen p-4">
-        
-            <div class="max-w-4xl w-full">
-                <header class="text-center mb-8">
-                    <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 pb-2">
-                        "Target-First" Step-Up Planner
-                    </h1>
-                    <p class="text-slate-400">Start with your goal, and we'll tell you how to begin.</p>
-                </header>
-        
-                <main class="bg-slate-800/50 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700">
-                    <!-- Target-First Input -->
-                    <div id="target-first-calculator" class="text-center">
-                        <label class="text-slate-400 text-lg">I want to accumulate</label>
-                        <input type="number" id="targetAmount" value="10000000" class="hero-input font-mono font-bold">
-                        
-                        <div class="flex justify-center items-center flex-wrap gap-4 mt-6">
-                            <div class="pill-input">
-                                <label for="investmentPeriod">in</label>
-                                <input type="number" id="investmentPeriod" value="15">
-                                <span>Years</span>
-                            </div>
-                            <div class="pill-input">
-                                <label for="returnRate">at</label>
-                                <input type="number" id="returnRate" value="12">
-                                <span>% p.a.</span>
-                            </div>
-                             <div class="pill-input">
-                                <label for="stepUpRate">with an annual step-up of</label>
-                                <input type="number" id="stepUpRate" value="10">
-                                <span>%</span>
-                            </div>
-                        </div>
-        
-                        <div class="mt-8 bg-slate-900/50 p-6 rounded-xl">
-                            <p class="text-slate-400 text-lg">You need to start with a monthly SIP of</p>
-                            <p id="requiredSip" class="font-mono font-bold text-5xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-                                ₹0
-                            </p>
-                        </div>
-                        
-                        <button id="downloadReportBtn" class="btn-ghost">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M16 13H8"></path><path d="M16 17H8"></path><path d="M10 9H8"></path></svg>
-                </footer>
-        
+        .btn-ghost svg {
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+
+    <div class="max-w-4xl w-full">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 pb-2">
+                "Target-First" Step-Up Planner
+            </h1>
+            <p class="text-gray-600">Start with your goal, and we'll tell you how to begin.</p>
+        </header>
+
+        <main class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl border border-gray-200">
+            <!-- Target-First Input -->
+            <div id="target-first-calculator" class="text-center">
+                <label class="text-gray-600 text-lg">I want to accumulate</label>
+                <input type="number" id="targetAmount" value="10000000" class="hero-input font-mono font-bold">
+                
+                <div class="flex justify-center items-center flex-wrap gap-4 mt-6">
+                    <div class="pill-input">
+                        <label for="investmentPeriod">in</label>
+                        <input type="number" id="investmentPeriod" value="15">
+                        <span>Years</span>
+                    </div>
+                    <div class="pill-input">
+                        <label for="returnRate">at</label>
+                        <input type="number" id="returnRate" value="12">
+                        <span>% p.a.</span>
+                    </div>
+                     <div class="pill-input">
+                        <label for="stepUpRate">with an annual step-up of</label>
+                        <input type="number" id="stepUpRate" value="10">
+                        <span>%</span>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-gray-50 p-6 rounded-xl">
+                    <p class="text-gray-600 text-lg">You need to start with a monthly SIP of</p>
+                    <p id="requiredSip" class="font-mono font-bold text-5xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600">
+                        ₹0
+                    </p>
+                </div>
+                
+                <button id="downloadReportBtn" class="btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M16 13H8"></path><path d="M16 17H8"></path><path d="M10 9H8"></path></svg>
+                    Download Summary PDF
+                </button>
+
             </div>
-        
-            <script src="goal-reverser.js"></script>
-        </body>
-        </html>
+            
+            <!-- Staircase Visualization -->
+            <div class="mt-8">
+                <h3 class="text-center text-xl font-bold text-gray-800 mb-4">Your SIP Increases Each Year</h3>
+                <div id="staircase" class="staircase-container">
+                    <!-- Steps will be generated here by JavaScript -->
+                </div>
+            </div>
+
+            <footer class="text-center mt-8">
+                <a href="default.php" class="text-indigo-600 hover:underline">&larr; Back to Main Calculator</a>
+            </footer>
+
+        </main>
+
+        <footer class="text-center text-sm text-gray-500 mt-6">
+            &copy; 2023 SIP/SWP Calculator
+        </footer>
+
+    </div>
+
+    <script src="goal-reverser.js"></script>
+</body>
+</html>

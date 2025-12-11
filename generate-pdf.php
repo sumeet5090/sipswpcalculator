@@ -40,14 +40,6 @@ try {
     }
     
     // --- HTML Generation ---
-    // The table HTML from the browser is not ideal. Let's clean it up for Dompdf.
-    $clean_table_html = preg_replace('/class="[^"]*"/i', '', $inputs['table_html']); // Remove all classes
-    $clean_table_html = str_replace('text-green-400', '', $clean_table_html); // remove color that dompdf wont render
-    $clean_table_html = str_replace('text-red-400', '', $clean_table_html);
-    $clean_table_html = str_replace('font-semibold', '', $clean_table_html);
-    $inputs['table_html'] = $clean_table_html;
-
-
     $html = get_pdf_html($inputs);
     
     // --- PDF Generation ---

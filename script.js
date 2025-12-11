@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function getChartConfig({ years, cumulative, corpus, swp }) {
-    const gridColor = 'rgba(255, 255, 255, 0.1)';
-    const textColor = '#e2e8f0';
+    const gridColor = 'rgba(0, 0, 0, 0.05)';
+    const textColor = '#495057';
 
     return {
         type: 'line',
@@ -113,37 +113,37 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                 {
                     label: 'Total Invested',
                     data: cumulative,
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderColor: '#28a745',
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
                     borderWidth: 2,
                     tension: 0.4,
                     fill: true,
-                    pointBackgroundColor: '#10b981',
+                    pointBackgroundColor: '#28a745',
                     pointRadius: 0,
                     pointHoverRadius: 5,
                 },
                 {
                     label: 'Corpus Value',
                     data: corpus,
-                    borderColor: '#4f46e5',
-                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
                     borderWidth: 2,
                     tension: 0.4,
                     fill: true,
-                    pointBackgroundColor: '#4f46e5',
+                    pointBackgroundColor: '#007bff',
                     pointRadius: 0,
                     pointHoverRadius: 5,
                 },
                 {
                     label: 'Annual Withdrawal',
                     data: swp,
-                    borderColor: '#ef4444',
-                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    borderColor: '#dc3545',
+                    backgroundColor: 'rgba(220, 53, 69, 0.1)',
                     borderWidth: 2,
                     borderDash: [5, 5],
                     tension: 0.4,
                     fill: false,
-                    pointBackgroundColor: '#ef4444',
+                    pointBackgroundColor: '#dc3545',
                     pointRadius: 0,
                     pointHoverRadius: 5,
                 }

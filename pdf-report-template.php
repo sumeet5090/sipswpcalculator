@@ -10,23 +10,23 @@ function get_pdf_html(array $inputs): string {
 
     $styles = "
         @page { margin: 25px; }
-        body { font-family: 'Helvetica', 'DejaVu Sans', sans-serif; color: #333; font-size: 10px; }
-        .header { text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
+        body { font-family: 'Helvetica', 'DejaVu Sans', sans-serif; color: #212529; font-size: 10px; }
+        .header { text-align: center; border-bottom: 2px solid #dee2e6; padding-bottom: 15px; margin-bottom: 20px; }
         .header img { max-width: 150px; max-height: 75px; margin-bottom: 10px; }
-        .header h1 { font-size: 22px; margin: 0; color: #1a202c; }
-        .header p { font-size: 12px; margin: 5px 0 0; color: #718096; }
+        .header h1 { font-size: 22px; margin: 0; color: #007bff; }
+        .header p { font-size: 12px; margin: 5px 0 0; color: #495057; }
         .content { margin: 0; }
-        h2 { font-size: 16px; color: #2d3748; border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-top: 25px; margin-bottom: 15px; }
+        h2 { font-size: 16px; color: #007bff; border-bottom: 1px solid #dee2e6; padding-bottom: 5px; margin-top: 25px; margin-bottom: 15px; }
         .summary-table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
-        .summary-table th, .summary-table td { border: 1px solid #e2e8f0; padding: 8px; text-align: left; }
-        .summary-table th { background-color: #f8fafc; font-weight: bold; }
+        .summary-table th, .summary-table td { border: 1px solid #dee2e6; padding: 8px; text-align: left; }
+        .summary-table th { background-color: #f8f9fa; font-weight: bold; }
         .chart-container { text-align: center; margin-top: 20px; }
         .chart-container img { width: 100%; height: auto; }
         .results-table-container table { width: 100%; border-collapse: collapse; font-size: 9px; }
-        .results-table-container th, .results-table-container td { padding: 5px 8px; text-align: right; border: 1px solid #e2e8f0;}
-        .results-table-container thead th { background-color: #f1f5f9; font-weight: bold; }
-        .results-table-container tbody tr:nth-child(even) { background-color: #f8fafc; }
-        .footer { text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #eee; font-size: 9px; color: #718096; }
+        .results-table-container th, .results-table-container td { padding: 5px 8px; text-align: right; border: 1px solid #dee2e6;}
+        .results-table-container thead th { background-color: #f8f9fa; font-weight: bold; }
+        .results-table-container tbody tr:nth-child(even) { background-color: #f8f9fa; }
+        .footer { text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #dee2e6; font-size: 9px; color: #6c757d; }
         .disclaimer { margin-top: 20px; font-style: italic; }
     ";
 

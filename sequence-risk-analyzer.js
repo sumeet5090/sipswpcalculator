@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 {
                     label: 'Bear Market Start (-15% for 2yr)',
                     data: [],
-                    borderColor: 'rgb(239, 68, 68)',
-                    backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                    borderColor: '#dc3545',
+                    backgroundColor: 'rgba(220, 53, 69, 0.2)',
                     borderWidth: 2,
                     fill: false,
                     tension: 0.1
@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 {
                     label: 'Flat Market Start (7% avg)',
                     data: [],
-                    borderColor: 'rgb(99, 102, 241)',
-                    backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                    borderColor: '#6c757d',
+                    backgroundColor: 'rgba(108, 117, 125, 0.2)',
                     borderWidth: 2,
                     fill: false,
                     tension: 0.1,
@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
                  {
                     label: 'Bull Market Start (+20% for 2yr)',
                     data: [],
-                    borderColor: 'rgb(34, 197, 94)',
-                    backgroundColor: 'rgba(34, 197, 94, 0.2)',
+                    borderColor: '#28a745',
+                    backgroundColor: 'rgba(40, 167, 69, 0.2)',
                     borderWidth: 2,
                     fill: false,
                     tension: 0.1
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: {
                     display: true,
                     text: 'Portfolio Balance Over Time',
-                    color: '#cbd5e1'
+                    color: '#495057'
                 },
                 tooltip: {
                     mode: 'index',
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                  legend: {
                     labels: {
-                        color: '#cbd5e1'
+                        color: '#495057'
                     }
                 }
             },
@@ -76,13 +76,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: {
                         display: true,
                         text: 'Years in Retirement',
-                        color: '#94a3b8'
+                        color: '#6c757d'
                     },
                     ticks: {
-                        color: '#94a3b8'
+                        color: '#6c757d'
                     },
                     grid: {
-                        color: 'rgba(148, 163, 184, 0.2)'
+                        color: 'rgba(0, 0, 0, 0.05)'
                     }
                 },
                 y: {
@@ -90,16 +90,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: {
                         display: true,
                         text: 'Portfolio Value',
-                        color: '#94a3b8'
+                        color: '#6c757d'
                     },
                     ticks: {
-                        color: '#94a3b8',
+                        color: '#6c757d',
                          callback: function(value, index, values) {
                             return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', notation: 'compact' }).format(value);
                         }
                     },
                     grid: {
-                        color: 'rgba(148, 163, 184, 0.2)'
+                        color: 'rgba(0, 0, 0, 0.05)'
                     }
                 }
             }
