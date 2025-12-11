@@ -141,8 +141,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'calculate_initial_sip') {
     </script>
 </head>
 
-<body class="bg-gray-50 text-gray-800 flex items-center justify-center min-h-screen p-4"
+<body class="bg-gray-50 text-gray-800 flex flex-col items-center min-h-screen p-4"
     style="background-image: var(--gradient-surface); background-attachment: fixed;">
+    <?php include 'navbar.php'; ?>
 
     <div class="max-w-4xl w-full animate-float">
         <header class="text-center mb-8">

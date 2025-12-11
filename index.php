@@ -244,9 +244,9 @@ foreach ($combined as $row) {
     </script>
 </head>
 
-<body class="bg-gray-100 text-gray-800 transition-colors duration-300">
-
-    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+    <?php include 'navbar.php'; ?>
+    <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 animate-float">
 
         <header class="relative mb-16 text-center">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-6 animate-float">

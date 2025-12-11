@@ -162,6 +162,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'run_simulation') {
 
 <body class="bg-gray-50 text-gray-800 transition-colors duration-300"
     style="background-image: var(--gradient-surface); background-attachment: fixed;">
+    <?php include 'navbar.php'; ?>
 
     <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 animate-float">
 

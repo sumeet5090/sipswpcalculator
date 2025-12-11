@@ -462,3 +462,11 @@ input[type=range]::-webkit-slider-runnable-track {
     bottom: 120%;
 }
 
+
+/* --- Navbar Styles --- */
+.navbar-glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
