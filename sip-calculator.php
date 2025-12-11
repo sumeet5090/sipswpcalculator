@@ -122,9 +122,7 @@ require_once __DIR__ . '/functions.php';
             </article>
         </main>
 
-        <footer class="mt-12 text-center text-sm text-gray-500 glass-card py-6">
-            <p>&copy; <?= date('Y') ?> SIP/SWP Calculator. All rights reserved.</p>
-        </footer>
+        <?php include 'footer.php'; ?>
 
     </div>
 

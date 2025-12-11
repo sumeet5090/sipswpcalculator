@@ -220,9 +220,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'calculate_initial_sip') {
 
         </main>
 
-        <footer class="text-center text-sm text-gray-500 mt-6">
-            &copy; 2023 SIP/SWP Calculator
-        </footer>
+        <?php include 'footer.php'; ?>
 
     </div>
 

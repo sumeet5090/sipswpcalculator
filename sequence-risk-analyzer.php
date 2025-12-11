@@ -335,9 +335,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'run_simulation') {
             </div>
         </main>
 
-        <footer class="mt-16 text-sm text-center text-gray-500 glass-card py-6">
-            <p class="text-xs">&copy; <?= date('Y') ?> SIP/SWP Calculator. All rights reserved.</p>
-        </footer>
+        <?php include 'footer.php'; ?>
 
     </div>
 

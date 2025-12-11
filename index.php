@@ -216,8 +216,9 @@ foreach ($combined as $row) {
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="styles.css?v=<?= time() ?>">
     <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -249,21 +250,24 @@ foreach ($combined as $row) {
     <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 animate-float">
 
         <header class="relative mb-16 text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-6 animate-float">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-6 animate-float">
                 <span class="relative flex h-3 w-3">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
                 </span>
-                <span class="text-sm font-semibold text-indigo-700 tracking-wide uppercase">Free Financial Planning Tool</span>
+                <span class="text-sm font-semibold text-indigo-700 tracking-wide uppercase">Free Financial Planning
+                    Tool</span>
             </div>
-            
+
             <h1 class="text-5xl md:text-7xl font-extrabold pb-4 tracking-tight">
                 <span class="text-gradient">Visualise Your</span> <br>
                 <span class="text-gray-800">Wealth Journey</span>
             </h1>
-            
+
             <p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
-                The most advanced <strong class="text-indigo-600">SIP & SWP Calculator</strong> on the web. 
+                The most advanced <strong class="text-indigo-600">SIP & SWP Calculator</strong> on the web.
                 Seamlessly plan your investments and retirement income with vivid clarity.
             </p>
 
@@ -271,28 +275,47 @@ foreach ($combined as $row) {
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <!-- Card 1 -->
                     <a href="/" class="glass-card p-6 block group hover:border-indigo-200 text-left">
-                        <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-4 text-white shadow-lg group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        <div
+                            class="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-4 text-white shadow-lg group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 mb-2">SIP & SWP Calculator</h3>
                         <p class="text-sm text-gray-500">Core wealth projection tool.</p>
                     </a>
 
                     <!-- Card 2 -->
-                    <a href="/goal-reverser" class="glass-card p-6 block group hover:border-emerald-200 text-left relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">NEW</div>
-                        <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mb-4 text-white shadow-lg group-hover:scale-110 transition-transform">
-                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    <a href="/goal-reverser"
+                        class="glass-card p-6 block group hover:border-emerald-200 text-left relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">
+                            NEW</div>
+                        <div
+                            class="h-12 w-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mb-4 text-white shadow-lg group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                </path>
+                            </svg>
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 mb-2">Goal Reverser</h3>
                         <p class="text-sm text-gray-500">Structure SIPs by target amount.</p>
                     </a>
 
                     <!-- Card 3 -->
-                    <a href="/sequence-risk-analyzer" class="glass-card p-6 block group hover:border-rose-200 text-left relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-rose-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">NEW</div>
-                        <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center mb-4 text-white shadow-lg group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <a href="/sequence-risk-analyzer"
+                        class="glass-card p-6 block group hover:border-rose-200 text-left relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 bg-rose-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">
+                            NEW</div>
+                        <div
+                            class="h-12 w-12 rounded-xl bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center mb-4 text-white shadow-lg group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 mb-2">SoR Analyzer</h3>
                         <p class="text-sm text-gray-500">Market crash simulation.</p>
@@ -308,47 +331,66 @@ foreach ($combined as $row) {
                 <div class="lg:col-span-1 glass-card p-6 sticky top-4">
                     <form method="post" novalidate>
                         <fieldset class="mb-8">
-                            <legend class="flex items-center gap-2 text-lg font-bold text-indigo-900 mb-6 border-b border-indigo-100 pb-2 w-full">
-                                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <legend
+                                class="flex items-center gap-2 text-lg font-bold text-indigo-900 mb-6 border-b border-indigo-100 pb-2 w-full">
+                                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                    </path>
+                                </svg>
                                 SIP Details
                             </legend>
                             <div class="form-grid">
                                 <div class="form-grid-full">
                                     <label for="sip">Monthly Investment</label>
                                     <div class="input-group">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
-                                        <input type="number" id="sip" name="sip" class="input-with-icon" required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
+                                        <input type="number" id="sip" name="sip" class="input-with-icon" required
+                                            min="1" value="<?= htmlspecialchars((string) $sip) ?>">
                                     </div>
                                 </div>
                                 <div>
                                     <label for="years">Period</label>
                                     <div class="input-group">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                         </svg>
-                                        <input type="number" id="years" name="years" class="input-with-icon" required min="1" value="<?= htmlspecialchars((string) $years) ?>">
+                                        <input type="number" id="years" name="years" class="input-with-icon" required
+                                            min="1" value="<?= htmlspecialchars((string) $years) ?>">
                                         <span class="input-suffix">Years</span>
                                     </div>
                                 </div>
                                 <div>
                                     <label for="rate">Exp. Return</label>
                                     <div class="input-group">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                         </svg>
-                                        <input type="number" id="rate" step="0.01" name="rate" class="input-with-icon" required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
+                                        <input type="number" id="rate" step="0.01" name="rate" class="input-with-icon"
+                                            required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
                                         <span class="input-suffix">%</span>
                                     </div>
                                 </div>
                                 <div class="form-grid-full">
                                     <label for="stepup">Annual Step-up</label>
                                     <div class="input-group">
-                                         <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
                                         </svg>
-                                        <input type="number" id="stepup" step="0.01" name="stepup" class="input-with-icon" required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
+                                        <input type="number" id="stepup" step="0.01" name="stepup"
+                                            class="input-with-icon" required min="0"
+                                            value="<?= htmlspecialchars((string) $stepup) ?>">
                                         <span class="input-suffix">%</span>
                                     </div>
                                 </div>
@@ -356,37 +398,54 @@ foreach ($combined as $row) {
                         </fieldset>
 
                         <fieldset>
-                             <legend class="flex items-center gap-2 text-lg font-bold text-rose-900 mb-6 border-b border-rose-100 pb-2 w-full">
-                                <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            <legend
+                                class="flex items-center gap-2 text-lg font-bold text-rose-900 mb-6 border-b border-rose-100 pb-2 w-full">
+                                <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z">
+                                    </path>
+                                </svg>
                                 SWP Details
                             </legend>
                             <div class="form-grid">
                                 <div class="form-grid-full">
                                     <label for="swp_withdrawal">Monthly Withdrawal</label>
                                     <div class="input-group">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                                         </svg>
-                                        <input type="number" id="swp_withdrawal" step="0.01" name="swp_withdrawal" class="input-with-icon" required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
+                                        <input type="number" id="swp_withdrawal" step="0.01" name="swp_withdrawal"
+                                            class="input-with-icon" required min="0"
+                                            value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
                                     </div>
                                 </div>
                                 <div>
                                     <label for="swp_stepup">Withdrawal Hike</label>
                                     <div class="input-group">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                         </svg>
-                                        <input type="number" id="swp_stepup" step="0.01" name="swp_stepup" class="input-with-icon" required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
+                                        <input type="number" id="swp_stepup" step="0.01" name="swp_stepup"
+                                            class="input-with-icon" required min="0"
+                                            value="<?= htmlspecialchars((string) $swp_stepup) ?>">
                                         <span class="input-suffix">%</span>
                                     </div>
                                 </div>
                                 <div>
                                     <label for="swp_years">Period</label>
                                     <div class="input-group">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
-                                        <input type="number" id="swp_years" name="swp_years" class="input-with-icon" required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
+                                        <input type="number" id="swp_years" name="swp_years" class="input-with-icon"
+                                            required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
                                         <span class="input-suffix">Years</span>
                                     </div>
                                 </div>
@@ -394,14 +453,17 @@ foreach ($combined as $row) {
                         </fieldset>
 
                         <div class="flex flex-col gap-3 mt-8">
-                            <button type="submit" name="action" value="calculate" class="btn-primary w-full py-4 text-lg shadow-lg">
+                            <button type="submit" name="action" value="calculate"
+                                class="btn-primary w-full py-4 text-lg shadow-lg">
                                 Calculate Projection
                             </button>
                             <div class="flex gap-3">
-                                <button type="submit" name="action" value="download_csv" class="btn-secondary flex-1 text-sm">
+                                <button type="submit" name="action" value="download_csv"
+                                    class="btn-secondary flex-1 text-sm">
                                     Download CSV
                                 </button>
-                                <button type="button" id="openPdfModalBtn" class="btn-accent flex-1 text-sm rounded-lg font-semibold shadow-md transition-all">
+                                <button type="button" id="openPdfModalBtn"
+                                    class="btn-accent flex-1 text-sm rounded-lg font-semibold shadow-md transition-all">
                                     Generate PDF
                                 </button>
                             </div>
@@ -413,8 +475,12 @@ foreach ($combined as $row) {
                 <div class="lg:col-span-2 space-y-8">
                     <div class="glass-card p-6">
                         <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
-                             <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
-                             Your Wealth Trajectory
+                            <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z">
+                                </path>
+                            </svg>
+                            Your Wealth Trajectory
                         </h2>
                         <div class="h-[450px] w-full">
                             <canvas id="corpusChart"></canvas>
@@ -428,50 +494,55 @@ foreach ($combined as $row) {
                         <div id="results-table" class="glass-card overflow-hidden">
                             <div class="p-6 border-b border-gray-100">
                                 <h2 class="text-2xl font-bold flex items-center gap-2">
-                                    <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                    <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                        </path>
+                                    </svg>
                                     Yearly Breakdown
                                 </h2>
                             </div>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-sm text-left">
                                     <thead class="bg-gray-50 text-xs uppercase font-semibold text-gray-500">
-                                            <tr>
-                                                <th class="px-6 py-3">Year</th>
-                                                <th class="px-6 py-3 text-right">Start Corpus</th>
-                                                <th class="px-6 py-3 text-right">Annual SIP</th>
-                                                <th class="px-6 py-3 text-right">Total Invested</th>
-                                                <th class="px-6 py-3 text-right">Annual SWP</th>
-                                                <th class="px-6 py-3 text-right">Total Withdrawn</th>
-                                                <th class="px-6 py-3 text-right">Interest</th>
-                                                <th class="px-6 py-3 text-right">End Corpus</th>
+                                        <tr>
+                                            <th class="px-6 py-3">Year</th>
+                                            <th class="px-6 py-3 text-right">Start Corpus</th>
+                                            <th class="px-6 py-3 text-right">Annual SIP</th>
+                                            <th class="px-6 py-3 text-right">Total Invested</th>
+                                            <th class="px-6 py-3 text-right">Annual SWP</th>
+                                            <th class="px-6 py-3 text-right">Total Withdrawn</th>
+                                            <th class="px-6 py-3 text-right">Interest</th>
+                                            <th class="px-6 py-3 text-right">End Corpus</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200">
+                                        <?php foreach ($combined as $row): ?>
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-6 py-4 font-medium"><?= $row['year'] ?></td>
+                                                <td class="px-6 py-4 text-right"><?= formatInr($row['begin_balance']) ?></td>
+                                                <td class="px-6 py-4 text-right text-green-600">
+                                                    <?= formatInr($row['annual_contribution']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right"><?= formatInr($row['cumulative_invested']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-red-600">
+                                                    <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right">
+                                                    <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right"><?= formatInr($row['interest']) ?></td>
+                                                <td class="px-6 py-4 text-right font-semibold text-indigo-600">
+                                                    <?= formatInr($row['combined_total']) ?>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody class="divide-y divide-gray-200">
-                                            <?php foreach ($combined as $row): ?>
-                                                    <tr class="hover:bg-gray-50">
-                                                        <td class="px-6 py-4 font-medium"><?= $row['year'] ?></td>
-                                                        <td class="px-6 py-4 text-right"><?= formatInr($row['begin_balance']) ?></td>
-                                                        <td class="px-6 py-4 text-right text-green-600">
-                                                            <?= formatInr($row['annual_contribution']) ?>
-                                                        </td>
-                                                        <td class="px-6 py-4 text-right"><?= formatInr($row['cumulative_invested']) ?>
-                                                        </td>
-                                                        <td class="px-6 py-4 text-right text-red-600">
-                                                            <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                                        </td>
-                                                        <td class="px-6 py-4 text-right">
-                                                            <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                                        </td>
-                                                        <td class="px-6 py-4 text-right"><?= formatInr($row['interest']) ?></td>
-                                                        <td class="px-6 py-4 text-right font-semibold text-indigo-600">
-                                                            <?= formatInr($row['combined_total']) ?>
-                                                        </td>
-                                                    </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
                             </div>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>
@@ -542,15 +613,19 @@ foreach ($combined as $row) {
                 </div>
 
                 <div class="mt-12">
-                     <h2 class="text-3xl font-bold text-center mb-6">SIP vs RD vs FD vs PPF: A Comparison</h2>
+                    <h2 class="text-3xl font-bold text-center mb-6">SIP vs RD vs FD vs PPF: A Comparison</h2>
                     <div class="glass-card overflow-hidden">
                         <table class="min-w-full">
                             <thead>
                                 <tr class="bg-gray-50 text-gray-700 text-left">
-                                    <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">Feature</th>
-                                    <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider text-indigo-600">SIP (Equity MF)</th>
+                                    <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">Feature
+                                    </th>
+                                    <th
+                                        class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider text-indigo-600">
+                                        SIP (Equity MF)</th>
                                     <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">PPF</th>
-                                    <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">Fixed Deposit (FD)</th>
+                                    <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">Fixed
+                                        Deposit (FD)</th>
                                 </tr>
                             </thead>
                             <tbody class="text-sm">
@@ -686,46 +761,7 @@ foreach ($combined as $row) {
         }
         </script>
 
-        <footer class="mt-16 text-sm text-gray-600 glass-card p-10">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h3 class="font-bold text-lg mb-3 text-gray-800">About Calculator</h3>
-                    <p class="leading-relaxed">A powerful, free tool designed to help investors visualize and plan their
-                        SIP and SWP strategies with precision and ease.</p>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg mb-3 text-gray-800">Features</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Real-time calculations
-                        </li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Interactive
-                            visualization</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> CSV export</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg mb-3 text-gray-800">Support</h3>
-                    <p class="leading-relaxed">For questions or feedback about this calculator, <a
-                            href="mailto:help@sipswpcalculator.com" class="text-indigo-600 hover:underline">reach out to
-                            us</a>. We're here to help you achieve your financial goals.</p>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-200 pt-6">
-                <div class="bg-amber-100 p-4 rounded-lg mb-6 border border-amber-200">
-                    <p class="text-amber-800"><span class="font-bold">⚠️ Disclaimer</span><br>This calculator is for
-                        educational and illustrative purposes only. It does not constitute financial, tax, or investment
-                        advice. Past performance is not indicative of future results. Please consult with a qualified
-                        financial advisor before making any investment decisions.</p>
-                </div>
-
-                <div class="text-center">
-                    <p class="text-xs">&copy; <?= date('Y') ?> SIP/SWP Calculator. All rights reserved.</p>
-                    <p class="text-xs mt-2">Built with care for global investors • <span class="text-indigo-600">No
-                            tracking • No ads • Free forever</span></p>
-                </div>
-            </div>
-        </footer>
+        <?php include 'footer.php'; ?>
 
     </div>
 
