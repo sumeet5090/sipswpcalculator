@@ -7,6 +7,8 @@ if ($current_page == 'goal-reverser.php')
     $current_page = 'goal-reverser.php';
 if ($current_page == 'sequence-risk-analyzer.php')
     $current_page = 'sequence-risk-analyzer.php';
+if ($current_page == 'swp-heatmap.php')
+    $current_page = 'swp-heatmap.php';
 ?>
 
 <nav class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-gray-200/50 transition-all duration-300">
@@ -50,6 +52,11 @@ if ($current_page == 'sequence-risk-analyzer.php')
                     <a href="sequence-risk-analyzer.php"
                         class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'sequence-risk-analyzer.php') ? 'text-white bg-indigo-600 md:bg-transparent md:text-indigo-600 md:font-bold' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600' ?>">Risk
                         Analyzer</a>
+                </li>
+                <li>
+                    <a href="swp-heatmap.php"
+                        class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'swp-heatmap.php') ? 'text-white bg-indigo-600 md:bg-transparent md:text-indigo-600 md:font-bold' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600' ?>">SWP
+                        Heatmap</a>
                 </li>
             </ul>
         </div>
