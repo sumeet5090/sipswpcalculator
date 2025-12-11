@@ -44,12 +44,12 @@ if ($current_page == 'swp-heatmap.php')
                         aria-current="page">Calculator</a>
                 </li>
                 <li>
-                    <a href="goal-reverser.php"
+                    <a href="goal-reverser"
                         class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'goal-reverser.php') ? 'text-white bg-indigo-600 md:bg-transparent md:text-indigo-600 md:font-bold' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600' ?>">Goal
                         Reverser</a>
                 </li>
                 <li>
-                    <a href="sequence-risk-analyzer.php"
+                    <a href="sequence-risk-analyzer"
                         class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'sequence-risk-analyzer.php') ? 'text-white bg-indigo-600 md:bg-transparent md:text-indigo-600 md:font-bold' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600' ?>">Risk
                         Analyzer</a>
                 </li>
