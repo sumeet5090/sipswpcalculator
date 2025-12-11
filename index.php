@@ -312,22 +312,45 @@ foreach ($combined as $row) {
                                 <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 SIP Details
                             </legend>
-                            <div class="space-y-5">
-                                <div class="relative">
-                                    <label for="sip">Monthly Investment (₹)</label>
-                                    <input type="number" id="sip" name="sip" required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
+                            <div class="form-grid">
+                                <div class="form-grid-full">
+                                    <label for="sip">Monthly Investment</label>
+                                    <div class="input-group">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <input type="number" id="sip" name="sip" class="input-with-icon" required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
+                                    </div>
                                 </div>
                                 <div>
-                                    <label for="years">Investment Period (Years)</label>
-                                    <input type="number" id="years" name="years" required min="1" value="<?= htmlspecialchars((string) $years) ?>">
+                                    <label for="years">Period</label>
+                                    <div class="input-group">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        <input type="number" id="years" name="years" class="input-with-icon" required min="1" value="<?= htmlspecialchars((string) $years) ?>">
+                                        <span class="input-suffix">Years</span>
+                                    </div>
                                 </div>
                                 <div>
-                                    <label for="rate">Expected Return (% p.a.)</label>
-                                    <input type="number" id="rate" step="0.01" name="rate" required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
+                                    <label for="rate">Exp. Return</label>
+                                    <div class="input-group">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                        </svg>
+                                        <input type="number" id="rate" step="0.01" name="rate" class="input-with-icon" required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
+                                        <span class="input-suffix">%</span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="stepup">Annual Step-up (%)</label>
-                                    <input type="number" id="stepup" step="0.01" name="stepup" required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
+                                <div class="form-grid-full">
+                                    <label for="stepup">Annual Step-up</label>
+                                    <div class="input-group">
+                                         <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                                        </svg>
+                                        <input type="number" id="stepup" step="0.01" name="stepup" class="input-with-icon" required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
+                                        <span class="input-suffix">%</span>
+                                    </div>
                                 </div>
                             </div>
                         </fieldset>
@@ -337,18 +360,35 @@ foreach ($combined as $row) {
                                 <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                                 SWP Details
                             </legend>
-                            <div class="space-y-5">
-                                <div>
-                                    <label for="swp_withdrawal">Monthly Withdrawal (₹)</label>
-                                    <input type="number" id="swp_withdrawal" step="0.01" name="swp_withdrawal" required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
+                            <div class="form-grid">
+                                <div class="form-grid-full">
+                                    <label for="swp_withdrawal">Monthly Withdrawal</label>
+                                    <div class="input-group">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                        <input type="number" id="swp_withdrawal" step="0.01" name="swp_withdrawal" class="input-with-icon" required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
+                                    </div>
                                 </div>
                                 <div>
-                                    <label for="swp_stepup">Annual Withdrawal Increase (%)</label>
-                                    <input type="number" id="swp_stepup" step="0.01" name="swp_stepup" required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
+                                    <label for="swp_stepup">Withdrawal Hike</label>
+                                    <div class="input-group">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                        </svg>
+                                        <input type="number" id="swp_stepup" step="0.01" name="swp_stepup" class="input-with-icon" required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
+                                        <span class="input-suffix">%</span>
+                                    </div>
                                 </div>
                                 <div>
-                                    <label for="swp_years">Withdrawal Period (Years)</label>
-                                    <input type="number" id="swp_years" name="swp_years" required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
+                                    <label for="swp_years">Period</label>
+                                    <div class="input-group">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <input type="number" id="swp_years" name="swp_years" class="input-with-icon" required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
+                                        <span class="input-suffix">Years</span>
+                                    </div>
                                 </div>
                             </div>
                         </fieldset>
