@@ -221,86 +221,35 @@ foreach ($combined as $row) {
 
     <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
 
-        <header class="relative mb-8">
+        <header class="relative mb-12">
             <div class="text-center">
+                <span
+                    class="inline-block py-1 px-3 rounded-full bg-indigo-100 text-indigo-700 text-sm font-semibold mb-4 tracking-wide uppercase">Free
+                    Financial Planning Tool</span>
                 <h1
-                    class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 pb-2">
-                    Free SIP & SWP Calculator
+                    class="text-5xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 pb-2 mb-4">
+                    Visualise Your Wealth
                 </h1>
-                <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-                    The Ultimate SIP & SWP Calculator to Visualize Your Wealth Creation and Withdrawal Journey
+                <p class="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    The most advanced <strong>SIP & SWP Calculator</strong> on the web. Plan your investment journey,
+                    visualize retirement income, and achieve financial freedom.
                 </p>
             </div>
-            <div class="mt-8 mb-8">
-                <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Explore Our Financial Tools</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <!-- Card 1: Main Calculator -->
-                    <a href="/"
-                        class="group block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-indigo-500 transition-all duration-300 transform hover:-translate-y-1">
-                        <div class="flex items-start gap-4">
-                            <div class="p-3 bg-indigo-100 rounded-lg">
-                                <svg class="w-10 h-10 text-indigo-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M9 7h6m0 0v6m0-6L9 13m4-4h2a2 2 0 012 2v2m-6 4h.01M9 17h.01M13 17h.01M17 17h.01M5 7h.01M5 11h.01M5 15h.01M4 4h16a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold text-gray-900">SIP & SWP Calculator</h3>
-                                <p class="mt-2 text-gray-600 text-sm">Project wealth accumulation and retirement income
-                                    with our core calculator.</p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Card 2: Goal Reverser -->
-                    <a href="/goal-reverser"
-                        class="group relative block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-green-500 transition-all duration-300 transform hover:-translate-y-1">
-                        <span
-                            class="absolute top-3 right-3 px-2 py-0.5 bg-green-500 text-white text-xs font-semibold rounded-full">NEW</span>
-                        <div class="flex items-start gap-4">
-                            <div class="p-3 bg-green-100 rounded-lg">
-                                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M12 21a9 9 0 100-18 9 9 0 000 18z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M12 15a3 3 0 100-6 3 3 0 000 6z"></path>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold text-gray-900">Goal Reverser</h3>
-                                <p class="mt-2 text-gray-600 text-sm">Define your target, and we'll calculate the
-                                    required annual investment increase.</p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Card 3: SoR Analyzer -->
-                    <a href="/sequence-risk-analyzer"
-                        class="group relative block p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:bg-gray-50 hover:border-orange-500 transition-all duration-300 transform hover:-translate-y-1">
-                        <span
-                            class="absolute top-3 right-3 px-2 py-0.5 bg-orange-500 text-white text-xs font-semibold rounded-full">NEW</span>
-                        <div class="flex items-start gap-4">
-                            <div class="p-3 bg-orange-100 rounded-lg">
-                                <svg class="w-10 h-10 text-orange-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold text-gray-900">SoR Analyzer</h3>
-                                <p class="mt-2 text-gray-600 text-sm">See why averages lie; simulate how market timing
-                                    impacts your retirement.</p>
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
+            <!-- Feature Grid (Small) -->
+            <div class="flex justify-center gap-4 mt-8 text-sm text-gray-500 font-medium">
+                <div class="flex items-center gap-1"><svg class="w-4 h-4 text-green-500" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg> Real-Time Updates</div>
+                <div class="flex items-center gap-1"><svg class="w-4 h-4 text-green-500" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg> Inflation Adjusted</div>
+                <div class="flex items-center gap-1"><svg class="w-4 h-4 text-green-500" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg> Mobile Friendly</div>
             </div>
         </header>
 
@@ -308,90 +257,164 @@ foreach ($combined as $row) {
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 <!-- Form Section -->
-                <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-                    <form method="post" novalidate>
-                        <fieldset class="mb-6">
-                            <legend class="text-xl font-semibold mb-4 text-indigo-600">SIP Details</legend>
-                            <div class="space-y-4">
-                                <div>
-                                    <label for="sip" class="block text-sm font-medium mb-1">Monthly Investment</label>
-                                    <input type="number" id="sip" name="sip"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                        required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
+                <div class="lg:col-span-1">
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 sticky top-4">
+                        <form id="calculatorForm" method="post" novalidate>
+                            <fieldset class="mb-6">
+                                <legend class="text-xl font-semibold mb-4 text-indigo-600">SIP Details</legend>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="sip" class="block text-sm font-semibold text-gray-700 mb-1">Monthly
+                                            Investment (₹)</label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="number" id="sip" name="sip"
+                                                class="w-1/2 px-3 py-2 rounded-lg bg-indigo-50 border-transparent focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+                                                required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
+                                            <input type="range" id="sip_range" min="500" max="100000" step="500"
+                                                value="<?= htmlspecialchars((string) $sip) ?>"
+                                                class="w-1/2 accent-indigo-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="years"
+                                            class="block text-sm font-semibold text-gray-700 mb-1">Investment Period
+                                            (Years)</label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="number" id="years" name="years"
+                                                class="w-1/2 px-3 py-2 rounded-lg bg-indigo-50 border-transparent focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+                                                required min="1" max="50"
+                                                value="<?= htmlspecialchars((string) $years) ?>">
+                                            <input type="range" id="years_range" min="1" max="50" step="1"
+                                                value="<?= htmlspecialchars((string) $years) ?>"
+                                                class="w-1/2 accent-indigo-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="rate"
+                                            class="block text-sm font-semibold text-gray-700 mb-1">Expected Return (%
+                                            p.a.)</label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="number" id="rate" step="0.1" name="rate"
+                                                class="w-1/2 px-3 py-2 rounded-lg bg-indigo-50 border-transparent focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+                                                required min="0" max="30"
+                                                value="<?= htmlspecialchars((string) $rate) ?>">
+                                            <input type="range" id="rate_range" min="1" max="30" step="0.1"
+                                                value="<?= htmlspecialchars((string) $rate) ?>"
+                                                class="w-1/2 accent-indigo-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="stepup"
+                                            class="block text-sm font-semibold text-gray-700 mb-1">Annual Step-up
+                                            (%)</label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="number" id="stepup" step="0.1" name="stepup"
+                                                class="w-1/2 px-3 py-2 rounded-lg bg-indigo-50 border-transparent focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+                                                required min="0" max="50"
+                                                value="<?= htmlspecialchars((string) $stepup) ?>">
+                                            <input type="range" id="stepup_range" min="0" max="50" step="1"
+                                                value="<?= htmlspecialchars((string) $stepup) ?>"
+                                                class="w-1/2 accent-indigo-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="years" class="block text-sm font-medium mb-1">Investment Period
-                                        (Years)</label>
-                                    <input type="number" id="years" name="years"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                        required min="1" value="<?= htmlspecialchars((string) $years) ?>">
+                            </fieldset>
+
+                            <fieldset>
+                                <legend class="text-xl font-semibold mb-4 text-indigo-600">SWP Details</legend>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="swp_withdrawal"
+                                            class="block text-sm font-semibold text-gray-700 mb-1">Monthly Withdrawal
+                                            (₹)</label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="number" id="swp_withdrawal" step="500" name="swp_withdrawal"
+                                                class="w-1/2 px-3 py-2 rounded-lg bg-rose-50 border-transparent focus:ring-2 focus:ring-rose-500 focus:bg-white transition"
+                                                required min="0"
+                                                value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
+                                            <input type="range" id="swp_withdrawal_range" min="0" max="200000"
+                                                step="500" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
+                                                class="w-1/2 accent-rose-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="swp_stepup"
+                                            class="block text-sm font-semibold text-gray-700 mb-1">Annual Withdrawal
+                                            Increase (%)</label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="number" id="swp_stepup" step="0.1" name="swp_stepup"
+                                                class="w-1/2 px-3 py-2 rounded-lg bg-rose-50 border-transparent focus:ring-2 focus:ring-rose-500 focus:bg-white transition"
+                                                required min="0" max="20"
+                                                value="<?= htmlspecialchars((string) $swp_stepup) ?>">
+                                            <input type="range" id="swp_stepup_range" min="0" max="20" step="0.5"
+                                                value="<?= htmlspecialchars((string) $swp_stepup) ?>"
+                                                class="w-1/2 accent-rose-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="swp_years"
+                                            class="block text-sm font-semibold text-gray-700 mb-1">Withdrawal Period
+                                            (Years)</label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="number" id="swp_years" name="swp_years"
+                                                class="w-1/2 px-3 py-2 rounded-lg bg-rose-50 border-transparent focus:ring-2 focus:ring-rose-500 focus:bg-white transition"
+                                                required min="1" max="40"
+                                                value="<?= htmlspecialchars((string) $swp_years_input) ?>">
+                                            <input type="range" id="swp_years_range" min="1" max="40" step="1"
+                                                value="<?= htmlspecialchars((string) $swp_years_input) ?>"
+                                                class="w-1/2 accent-rose-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="rate" class="block text-sm font-medium mb-1">Expected Return Rate (%
-                                        p.a.)</label>
-                                    <input type="number" id="rate" step="0.01" name="rate"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                        required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
-                                </div>
-                                <div>
-                                    <label for="stepup" class="block text-sm font-medium mb-1">Annual Step-up
-                                        (%)</label>
-                                    <input type="number" id="stepup" step="0.01" name="stepup"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                        required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
-                                </div>
+                            </fieldset>
+
+                            <div class="flex flex-wrap gap-4 mt-8">
+                                <button type="submit" name="action" value="calculate"
+                                    class="flex-1 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Calculate</button>
+                                <button type="submit" name="action" value="download_csv"
+                                    class="flex-1 px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Download
+                                    CSV</button>
+                                <button type="button" id="openPdfModalBtn"
+                                    class="w-full mt-4 px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Generate
+                                    Branded PDF Report</button>
                             </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend class="text-xl font-semibold mb-4 text-indigo-600">SWP Details</legend>
-                            <div class="space-y-4">
-                                <div>
-                                    <label for="swp_withdrawal" class="block text-sm font-medium mb-1">Monthly
-                                        Withdrawal</label>
-                                    <input type="number" id="swp_withdrawal" step="0.01" name="swp_withdrawal"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                        required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
-                                </div>
-                                <div>
-                                    <label for="swp_stepup" class="block text-sm font-medium mb-1">Annual Withdrawal
-                                        Increase (%)</label>
-                                    <input type="number" id="swp_stepup" step="0.01" name="swp_stepup"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                        required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
-                                </div>
-                                <div>
-                                    <label for="swp_years" class="block text-sm font-medium mb-1">Withdrawal Period
-                                        (Years)</label>
-                                    <input type="number" id="swp_years" name="swp_years"
-                                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-transparent focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                        required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <div class="flex flex-wrap gap-4 mt-8">
-                            <button type="submit" name="action" value="calculate"
-                                class="flex-1 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Calculate</button>
-                            <button type="submit" name="action" value="download_csv"
-                                class="flex-1 px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Download
-                                CSV</button>
-                            <button type="button" id="openPdfModalBtn"
-                                class="w-full mt-4 px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300">Generate
-                                Branded PDF Report</button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Chart and Table Section -->
-                <div class="lg:col-span-2 space-y-8">
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-                        <h2 class="text-2xl font-semibold mb-4">Investment Journey</h2>
-                        <div class="h-96">
-                            <canvas id="corpusChart"></canvas>
-                        </div>
+                        </form>
                     </div>
 
+                    <!-- Chart and Table Section -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <!-- Summary Cards -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div
+                                class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl p-4 text-white shadow-lg">
+                                <p class="text-xs font-medium uppercase opacity-80">Total Invested</p>
+                                <p class="text-xl sm:text-2xl font-bold mt-1" id="val-invested">₹0</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-lg border-l-4 border-green-500">
+                                <p class="text-xs font-bold text-gray-500 uppercase">Final Corpus</p>
+                                <p class="text-xl sm:text-2xl font-bold mt-1 text-gray-800" id="val-corpus">₹0</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-lg border-l-4 border-indigo-500">
+                                <p class="text-xs font-bold text-gray-500 uppercase">Wealth Gained</p>
+                                <p class="text-xl sm:text-2xl font-bold mt-1 text-green-600" id="val-gain">₹0</p>
+                            </div>
+                            <div
+                                class="bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl p-4 text-white shadow-lg">
+                                <p class="text-xs font-medium uppercase opacity-80">Max Monthly SWP</p>
+                                <p class="text-xl sm:text-2xl font-bold mt-1" id="val-swp-income">₹0</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+                            <h2 class="text-2xl font-semibold mb-4">Investment Journey</h2>
+                            <div class="h-96">
+                                <canvas id="corpusChart"></canvas>
+                            </div>
+                        </div>
+
+
+
+                    <!-- NOTE: PHP Table will only show on explicit form submit (fallback). JS Updates chart real-time -->
                     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
                         <div id="results-table"
                             class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
@@ -418,7 +441,8 @@ foreach ($combined as $row) {
                                                 <td class="px-6 py-4 font-medium"><?= $row['year'] ?></td>
                                                 <td class="px-6 py-4 text-right"><?= formatInr($row['begin_balance']) ?></td>
                                                 <td class="px-6 py-4 text-right text-green-600">
-                                                    <?= formatInr($row['annual_contribution']) ?></td>
+                                                    <?= formatInr($row['annual_contribution']) ?>
+                                                </td>
                                                 <td class="px-6 py-4 text-right"><?= formatInr($row['cumulative_invested']) ?>
                                                 </td>
                                                 <td class="px-6 py-4 text-right text-red-600">
@@ -429,7 +453,8 @@ foreach ($combined as $row) {
                                                 </td>
                                                 <td class="px-6 py-4 text-right"><?= formatInr($row['interest']) ?></td>
                                                 <td class="px-6 py-4 text-right font-semibold text-indigo-600">
-                                                    <?= formatInr($row['combined_total']) ?></td>
+                                                    <?= formatInr($row['combined_total']) ?>
+                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -581,7 +606,8 @@ foreach ($combined as $row) {
                                 corpus annually. However, this depends on market conditions and your lifespan. Use our
                                 <a href="/sequence-risk-analyzer" class="text-indigo-600 hover:underline">Sequence of
                                     Returns Risk Analyzer</a> to test if your withdrawal rate is sustainable during
-                                market crashes.</p>
+                                market crashes.
+                            </p>
                         </div>
                         <div class="bg-gray-100 p-6 rounded-lg">
                             <h3 class="text-xl font-bold text-indigo-600 mb-2">Which is better: SIP or Lump Sum?</h3>
