@@ -101,32 +101,40 @@ if ($action === 'download_csv') {
     $csv->setCsvControl(',', '"', "\\");
     $csv->fputcsv(['Note: All amounts are in USD']);
     $csv->fputcsv([]);
-    $csv->fputcsv([
+    $headers = [
         'Year',
         'Start-of-Year Corpus',
         'Monthly SIP',
         'Annual SIP Contribution',
-        'Total SIP Invested to Date',
-        'Monthly SWP Withdrawal',
-        'Annual SWP Withdrawal',
-        'Total SWP Withdrawals to Date',
-        'Interest Earned This Year',
-        'End-of-Year Corpus'
-    ]);
+        'Total SIP Invested to Date'
+    ];
+    if ($enable_swp) {
+        $headers[] = 'Monthly SWP Withdrawal';
+        $headers[] = 'Annual SWP Withdrawal';
+        $headers[] = 'Total SWP Withdrawals to Date';
+    }
+    $headers[] = 'Interest Earned This Year';
+    $headers[] = 'End-of-Year Corpus';
+
+    $csv->fputcsv($headers);
     for ($y = 1; $y <= $simulation_years; $y++) {
         $row = $combined[$y];
-        $csv->fputcsv([
+        $csvRow = [
             $row['year'],
             formatInr($row['begin_balance']),
             $row['sip_monthly'] !== null ? formatInr($row['sip_monthly']) : '-',
             formatInr($row['annual_contribution']),
-            formatInr($row['cumulative_invested']),
-            $row['swp_monthly'] !== null ? formatInr($row['swp_monthly']) : '-',
-            $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-',
-            $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-',
-            formatInr($row['interest']),
-            formatInr($row['combined_total'])
-        ]);
+            formatInr($row['cumulative_invested'])
+        ];
+        if ($enable_swp) {
+            $csvRow[] = $row['swp_monthly'] !== null ? formatInr($row['swp_monthly']) : '-';
+            $csvRow[] = $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-';
+            $csvRow[] = $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-';
+        }
+        $csvRow[] = formatInr($row['interest']);
+        $csvRow[] = formatInr($row['combined_total']);
+
+        $csv->fputcsv($csvRow);
     }
     $csv->rewind();
     while (!$csv->eof()) {
@@ -481,8 +489,10 @@ foreach ($combined as $row) {
                                     <th class="px-6 py-3 text-right">Start Corpus</th>
                                     <th class="px-6 py-3 text-right">Annual SIP</th>
                                     <th class="px-6 py-3 text-right">Total Invested</th>
-                                    <th class="px-6 py-3 text-right">Annual SWP</th>
-                                    <th class="px-6 py-3 text-right">Total Withdrawn</th>
+                                    <?php if ($enable_swp): ?>
+                                                <th class="px-6 py-3 text-right">Annual SWP</th>
+                                        <th class="px-6 py-3 text-right">Total Withdrawn</th>
+                                        <?php endif; ?>
                                     <th class="px-6 py-3 text-right">Interest</th>
                                     <th class="px-6 py-3 text-right">End Corpus</th>
                                 </tr>
@@ -497,12 +507,14 @@ foreach ($combined as $row) {
                                         </td>
                                         <td class="px-6 py-4 text-right"><?= formatInr($row['cumulative_invested']) ?>
                                         </td>
-                                        <td class="px-6 py-4 text-right text-red-600">
-                                            <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                        </td>
-                                        <td class="px-6 py-4 text-right">
-                                            <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                        </td>
+                                        <?php if ($enable_swp): ?>
+                                                        <td class="px-6 py-4 text-right text-red-600">
+                                                <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right">
+                                                <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
+                                            </td>
+                                                <?php endif; ?>
                                         <td class="px-6 py-4 text-right"><?= formatInr($row['interest']) ?></td>
                                         <td class="px-6 py-4 text-right font-semibold text-indigo-600">
                                             <?= formatInr($row['combined_total']) ?>
