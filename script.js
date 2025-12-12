@@ -102,8 +102,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function getChartConfig({ years, cumulative, corpus, swp }) {
-    const gridColor = 'rgba(0, 0, 0, 0.05)';
-    const textColor = '#495057';
+    const ctx = document.getElementById('corpusChart').getContext('2d');
+
+    // Gradients
+    const gradientInvested = ctx.createLinearGradient(0, 0, 0, 400);
+    gradientInvested.addColorStop(0, 'rgba(168, 85, 247, 0.4)'); // Purple 500
+    gradientInvested.addColorStop(1, 'rgba(168, 85, 247, 0.0)');
+
+    const gradientCorpus = ctx.createLinearGradient(0, 0, 0, 400);
+    gradientCorpus.addColorStop(0, 'rgba(79, 70, 229, 0.4)'); // Indigo 600
+    gradientCorpus.addColorStop(1, 'rgba(79, 70, 229, 0.0)');
+
+    const fontFamily = "'Plus Jakarta Sans', sans-serif";
+    const gridColor = 'rgba(0, 0, 0, 0.03)';
+    const textColor = '#6b7280'; // Gray 500
 
     return {
         type: 'line',
@@ -113,91 +125,95 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                 {
                     label: 'Total Invested',
                     data: cumulative,
-                    borderColor: '#28a745',
-                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
-                    borderWidth: 2,
+                    borderColor: '#a855f7', // Purple 500
+                    backgroundColor: gradientInvested,
+                    borderWidth: 3,
                     tension: 0.4,
                     fill: true,
-                    pointBackgroundColor: '#28a745',
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#a855f7',
+                    pointBorderWidth: 2,
                     pointRadius: 0,
-                    pointHoverRadius: 5,
+                    pointHoverRadius: 6,
+                    pointHoverBorderWidth: 3,
                 },
                 {
                     label: 'Corpus Value',
                     data: corpus,
-                    borderColor: '#007bff',
-                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                    borderWidth: 2,
+                    borderColor: '#4f46e5', // Indigo 600
+                    backgroundColor: gradientCorpus,
+                    borderWidth: 3,
                     tension: 0.4,
                     fill: true,
-                    pointBackgroundColor: '#007bff',
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#4f46e5',
+                    pointBorderWidth: 2,
                     pointRadius: 0,
-                    pointHoverRadius: 5,
+                    pointHoverRadius: 6,
+                    pointHoverBorderWidth: 3,
                 },
                 {
                     label: 'Annual Withdrawal',
                     data: swp,
-                    borderColor: '#dc3545',
-                    backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                    borderColor: '#f43f5e', // Rose 500
+                    backgroundColor: 'rgba(244, 63, 94, 0.1)',
                     borderWidth: 2,
-                    borderDash: [5, 5],
+                    borderDash: [6, 4],
                     tension: 0.4,
                     fill: false,
-                    pointBackgroundColor: '#dc3545',
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#f43f5e',
+                    pointBorderWidth: 2,
                     pointRadius: 0,
-                    pointHoverRadius: 5,
+                    pointHoverRadius: 6,
                 }
             ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            animation: false, // Important for consistent chart rendering for PDF
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart',
+            },
             interaction: {
                 intersect: false,
                 mode: 'index',
             },
-            scales: {
-                x: {
-                    grid: {
-                        color: gridColor,
-                    },
-                    ticks: {
-                        color: textColor,
-                    },
-                    title: {
-                        display: true,
-                        text: 'Year',
-                        color: textColor,
-                    }
-                },
-                y: {
-                    grid: {
-                        color: gridColor,
-                    },
-                    ticks: {
-                        color: textColor,
-                        callback: function (value) {
-                            if (value >= 10000000) return (value / 10000000).toFixed(2) + ' Cr';
-                            if (value >= 100000) return (value / 100000).toFixed(2) + ' L';
-                            if (value >= 1000) return (value / 1000).toFixed(2) + ' K';
-                            return value;
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: 'Amount (INR)',
-                        color: textColor,
-                    }
-                }
-            },
             plugins: {
                 legend: {
+                    position: 'top',
+                    align: 'end',
                     labels: {
-                        color: textColor,
+                        usePointStyle: true,
+                        boxWidth: 8,
+                        color: '#374151', // Gray 700
+                        font: {
+                            family: fontFamily,
+                            size: 12,
+                            weight: 600
+                        },
+                        padding: 20
                     }
                 },
                 tooltip: {
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    titleColor: '#111827',
+                    titleFont: {
+                        family: fontFamily,
+                        size: 14,
+                        weight: 'bold'
+                    },
+                    bodyColor: '#4b5563',
+                    bodyFont: {
+                        family: fontFamily,
+                        size: 13
+                    },
+                    borderColor: '#e5e7eb',
+                    borderWidth: 1,
+                    padding: 12,
+                    boxPadding: 4,
+                    usePointStyle: true,
                     callbacks: {
                         label: function (context) {
                             let label = context.dataset.label || '';
@@ -205,11 +221,47 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                                 label += ': ';
                             }
                             if (context.parsed.y !== null) {
-                                label += new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(context.parsed.y);
+                                label += new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(context.parsed.y);
                             }
                             return label;
                         }
                     }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                        drawBorder: false,
+                    },
+                    ticks: {
+                        color: textColor,
+                        font: {
+                            family: fontFamily,
+                            size: 11
+                        }
+                    },
+                },
+                y: {
+                    grid: {
+                        color: gridColor,
+                        borderDash: [4, 4],
+                        drawBorder: false,
+                    },
+                    ticks: {
+                        color: textColor,
+                        font: {
+                            family: fontFamily,
+                            size: 11
+                        },
+                        callback: function (value) {
+                            if (value >= 10000000) return '₹' + (value / 10000000).toFixed(1) + 'Cr';
+                            if (value >= 100000) return '₹' + (value / 100000).toFixed(1) + 'L';
+                            if (value >= 1000) return '₹' + (value / 1000).toFixed(1) + 'k';
+                            return '₹' + value;
+                        }
+                    },
+                    beginAtZero: true
                 }
             }
         }
