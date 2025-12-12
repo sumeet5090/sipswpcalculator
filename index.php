@@ -347,24 +347,24 @@ foreach ($combined as $row) {
 
                         <fieldset>
                             <legend
-                                class="flex items-center gap-2 text-lg font-bold text-rose-900 mb-6 border-b border-rose-100 pb-2 w-full">
-                                <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z">
-                                    </path>
-                                </svg>
-                                SWP Details
-                            </legend>
-                            <!-- SWP Toggle -->
-                            <div class="flex items-center justify-between mb-6 bg-rose-50 p-3 rounded-lg border border-rose-100 hover:border-rose-200 transition-colors">
-                                <span class="text-sm font-semibold text-rose-800">Enable Withdrawal Plan</span>
+                                class="flex items-center justify-between gap-2 text-lg font-bold text-rose-900 mb-6 border-b border-rose-100 pb-2 w-full">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z">
+                                        </path>
+                                    </svg>
+                                    SWP Details
+                                </div>
                                 <label class="toggle-switch relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" id="enable_swp" name="enable_swp" checked
                                         onchange="toggleSwpFields()" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-rose-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-rose-600"></div>
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-rose-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-rose-600">
+                                    </div>
                                 </label>
-                            </div>
+                            </legend>
                             <div class="form-grid">
                                 <div class="form-grid-full">
                                     <label for="swp_withdrawal">Monthly Withdrawal</label>
