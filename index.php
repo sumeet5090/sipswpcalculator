@@ -356,8 +356,17 @@ foreach ($combined as $row) {
                                 </svg>
                                 SWP Details
                             </legend>
+                            <!-- SWP Toggle -->
+                            <div class="flex items-center justify-between mb-6 bg-rose-50 p-3 rounded-lg border border-rose-100 hover:border-rose-200 transition-colors">
+                                <span class="text-sm font-semibold text-rose-800">Enable Withdrawal Plan</span>
+                                <label class="toggle-switch relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="enable_swp" name="enable_swp" checked
+                                        onchange="toggleSwpFields()" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-rose-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-rose-600"></div>
+                                </label>
+                            </div>
                             <div class="form-grid">
-                                <div>
+                                <div class="form-grid-full">
                                     <label for="swp_withdrawal">Monthly Withdrawal</label>
                                     <div class="input-group">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none"
@@ -402,7 +411,7 @@ foreach ($combined as $row) {
 
                         <div class="flex flex-col gap-3 mt-8">
                             <button type="submit" name="action" value="calculate"
-                                class="btn-primary w-full py-4 text-lg shadow-lg">
+                                class="btn-primary w-full py-4 text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-bold tracking-wide bg-[image:var(--gradient-primary)]">
                                 Calculate Projection
                             </button>
 
