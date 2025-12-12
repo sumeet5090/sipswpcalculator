@@ -290,7 +290,7 @@ foreach ($combined as $row) {
                                 SIP Details
                             </legend>
                             <div class="form-grid">
-                                <div class="form-grid-full">
+                                <div>
                                     <label for="sip">Monthly Investment</label>
                                     <div class="input-group">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none"
@@ -328,7 +328,7 @@ foreach ($combined as $row) {
                                         <span class="input-suffix">%</span>
                                     </div>
                                 </div>
-                                <div class="form-grid-full">
+                                <div>
                                     <label for="stepup">Annual Step-up</label>
                                     <div class="input-group">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none"
@@ -357,7 +357,7 @@ foreach ($combined as $row) {
                                 SWP Details
                             </legend>
                             <div class="form-grid">
-                                <div class="form-grid-full">
+                                <div>
                                     <label for="swp_withdrawal">Monthly Withdrawal</label>
                                     <div class="input-group">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="input-icon h-5 w-5" fill="none"
@@ -438,35 +438,39 @@ foreach ($combined as $row) {
 
 
                     <!-- NOTE: PHP Table will only show on explicit form submit (fallback). JS Updates chart real-time -->
-                    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
-                        <div id="results-table" class="glass-card overflow-hidden">
-                            <div class="p-6 border-b border-gray-100">
-                                <h2 class="text-2xl font-bold flex items-center gap-2">
-                                    <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                        </path>
-                                    </svg>
-                                    Yearly Breakdown
-                                </h2>
-                            </div>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-sm text-left">
-                                    <thead class="bg-gray-50 text-xs uppercase font-semibold text-gray-500">
-                                        <tr>
-                                            <th class="px-6 py-3">Year</th>
-                                            <th class="px-6 py-3 text-right">Start Corpus</th>
-                                            <th class="px-6 py-3 text-right">Annual SIP</th>
-                                            <th class="px-6 py-3 text-right">Total Invested</th>
-                                            <th class="px-6 py-3 text-right">Annual SWP</th>
-                                            <th class="px-6 py-3 text-right">Total Withdrawn</th>
-                                            <th class="px-6 py-3 text-right">Interest</th>
-                                            <th class="px-6 py-3 text-right">End Corpus</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-gray-200">
-                                        <?php foreach ($combined as $row): ?>
+
+                </div>
+            </div>
+            
+            <!-- Full Width Results Table -->
+            <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
+                    <div id="results-table" class="glass-card overflow-hidden mt-8">
+                        <div class="p-6 border-b border-gray-100">
+                            <h2 class="text-2xl font-bold flex items-center gap-2">
+                                <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                    </path>
+                                </svg>
+                                Yearly Breakdown
+                            </h2>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-gray-50 text-xs uppercase font-semibold text-gray-500">
+                                    <tr>
+                                        <th class="px-6 py-3">Year</th>
+                                        <th class="px-6 py-3 text-right">Start Corpus</th>
+                                        <th class="px-6 py-3 text-right">Annual SIP</th>
+                                        <th class="px-6 py-3 text-right">Total Invested</th>
+                                        <th class="px-6 py-3 text-right">Annual SWP</th>
+                                        <th class="px-6 py-3 text-right">Total Withdrawn</th>
+                                        <th class="px-6 py-3 text-right">Interest</th>
+                                        <th class="px-6 py-3 text-right">End Corpus</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <?php foreach ($combined as $row): ?>
                                             <tr class="hover:bg-gray-50">
                                                 <td class="px-6 py-4 font-medium"><?= $row['year'] ?></td>
                                                 <td class="px-6 py-4 text-right"><?= formatInr($row['begin_balance']) ?></td>
@@ -486,14 +490,12 @@ foreach ($combined as $row) {
                                                     <?= formatInr($row['combined_total']) ?>
                                                 </td>
                                             </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
-                    <?php endif; ?>
-                </div>
-            </div>
+                    </div>
+            <?php endif; ?>
         </main>
 
         <div class="text-center mt-8">
