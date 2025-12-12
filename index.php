@@ -270,58 +270,6 @@ foreach ($combined as $row) {
                 The most advanced <strong class="text-indigo-600">SIP & SWP Calculator</strong> on the web.
                 Seamlessly plan your investments and retirement income with vivid clarity.
             </p>
-
-            <div class="mt-12 mb-12">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Card 1 -->
-                    <a href="/" class="glass-card p-6 block group hover:border-indigo-200 text-left">
-                        <div
-                            class="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-4 text-white shadow-lg group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-2">SIP & SWP Calculator</h3>
-                        <p class="text-sm text-gray-500">Core wealth projection tool.</p>
-                    </a>
-
-                    <!-- Card 2 -->
-                    <a href="/goal-reverser"
-                        class="glass-card p-6 block group hover:border-emerald-200 text-left relative overflow-hidden">
-                        <div
-                            class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">
-                            NEW</div>
-                        <div
-                            class="h-12 w-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mb-4 text-white shadow-lg group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
-                                </path>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-2">Goal Reverser</h3>
-                        <p class="text-sm text-gray-500">Structure SIPs by target amount.</p>
-                    </a>
-
-                    <!-- Card 3 -->
-                    <a href="/sequence-risk-analyzer"
-                        class="glass-card p-6 block group hover:border-rose-200 text-left relative overflow-hidden">
-                        <div
-                            class="absolute top-0 right-0 bg-rose-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">
-                            NEW</div>
-                        <div
-                            class="h-12 w-12 rounded-xl bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center mb-4 text-white shadow-lg group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-2">SoR Analyzer</h3>
-                        <p class="text-sm text-gray-500">Market crash simulation.</p>
-                    </a>
-                </div>
-            </div>
         </header>
 
         <main>
