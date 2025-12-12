@@ -267,3 +267,39 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
         }
     };
 }
+
+function toggleSwpFields() {
+    const isChecked = document.getElementById('enable_swp').checked;
+    const fields = document.getElementById('swp-fields');
+
+    // Safety check if elements exist
+    if (!fields) return;
+
+    if (isChecked) {
+        fields.style.display = 'grid';
+        setTimeout(() => {
+            fields.style.opacity = '1';
+        }, 10);
+        fields.style.pointerEvents = 'auto';
+
+        // Show SWP dataset in chart if it exists
+        if (window.corpusChart) {
+            window.corpusChart.data.datasets.forEach(ds => {
+                if (ds.label === 'Annual Withdrawal') ds.hidden = false;
+            });
+            window.corpusChart.update();
+        }
+    } else {
+        fields.style.opacity = '0.5'; // Fade out first
+        fields.style.pointerEvents = 'none';
+        fields.style.display = 'none'; // Then hide
+
+        // Hide SWP dataset in chart
+        if (window.corpusChart) {
+            window.corpusChart.data.datasets.forEach(ds => {
+                if (ds.label === 'Annual Withdrawal') ds.hidden = true;
+            });
+            window.corpusChart.update();
+        }
+    }
+}

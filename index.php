@@ -373,7 +373,7 @@ foreach ($combined as $row) {
                                     </div>
                                 </label>
                             </legend>
-                            <div class="form-grid">
+                            <div class="form-grid" id="swp-fields">
                                 <div class="form-grid-full">
                                     <label for="swp_withdrawal">Monthly Withdrawal</label>
                                     <div class="input-group">
