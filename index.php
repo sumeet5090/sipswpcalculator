@@ -405,12 +405,7 @@ foreach ($combined as $row) {
                                 class="btn-primary w-full py-4 text-lg shadow-lg">
                                 Calculate Projection
                             </button>
-                            <div class="flex gap-3">
-                                <button type="button" id="openPdfModalBtn"
-                                    class="btn-accent flex-1 text-sm rounded-lg font-semibold shadow-md transition-all">
-                                    Generate PDF
-                                </button>
-                            </div>
+
                         </div>
                     </form>
                 </div>
@@ -441,7 +436,7 @@ foreach ($combined as $row) {
             <!-- Full Width Results Table -->
             <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action !== 'download_csv'): ?>
                 <div id="results-table" class="glass-card overflow-hidden mt-8">
-                    <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+                    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                         <h2 class="text-2xl font-bold flex items-center gap-2">
                             <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -450,14 +445,24 @@ foreach ($combined as $row) {
                             </svg>
                             Yearly Breakdown
                         </h2>
-                        <button type="submit" name="action" value="download_csv" form="calculator-form"
-                            class="btn-secondary text-sm px-4 py-2 flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                            </svg>
-                            Download CSV
-                        </button>
+                        <div class="flex gap-2">
+                            <button type="submit" name="action" value="download_csv" form="calculator-form"
+                                class="btn-secondary text-sm px-4 py-2 flex items-center gap-2 transition-colors hover:text-indigo-600">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                                Download CSV
+                            </button>
+                            <button type="button" id="openPdfModalBtn"
+                                class="btn-accent text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold shadow-sm hover:shadow-md transition-all">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Generate PDF
+                            </button>
+                        </div>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm text-left">
