@@ -33,6 +33,21 @@ function formatCurrency(value) {
     }).format(value);
 }
 
+function formatAxisTick(value) {
+    const symbol = currencyConfig[currentCurrency].symbol;
+    if (currentCurrency === 'INR') {
+        if (value >= 10000000) return symbol + (value / 10000000).toFixed(1) + 'Cr';
+        if (value >= 100000) return symbol + (value / 100000).toFixed(1) + 'L';
+        if (value >= 1000) return symbol + (value / 1000).toFixed(1) + 'k';
+        return symbol + value;
+    } else {
+        if (value >= 1000000000) return symbol + (value / 1000000000).toFixed(1) + 'B';
+        if (value >= 1000000) return symbol + (value / 1000000).toFixed(1) + 'M';
+        if (value >= 1000) return symbol + (value / 1000).toFixed(1) + 'k';
+        return symbol + value;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Chart.js
     const ctx = document.getElementById('corpusChart');
@@ -479,7 +494,7 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                                 label += ': ';
                             }
                             if (context.parsed.y !== null) {
-                                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(context.parsed.y);
+                                label += formatCurrency(context.parsed.y);
                             }
                             return label;
                         }
@@ -513,10 +528,7 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                             size: 11
                         },
                         callback: function (value) {
-                            if (value >= 1000000000) return '$' + (value / 1000000000).toFixed(1) + 'B';
-                            if (value >= 1000000) return '$' + (value / 1000000).toFixed(1) + 'M';
-                            if (value >= 1000) return '$' + (value / 1000).toFixed(1) + 'k';
-                            return '$' + value;
+                            return formatAxisTick(value);
                         }
                     },
                     beginAtZero: true
