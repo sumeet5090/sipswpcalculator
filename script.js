@@ -112,6 +112,7 @@ function calculateAndRender() {
     const data = calculateCorpus(inputs);
     updateChart(data);
     updateTable(data, inputs.enable_swp);
+    updateSummaryMetrics(data);
 }
 
 function getInputs() {
@@ -248,6 +249,38 @@ function updateTable(data, enableSwp) {
 
         tbody.appendChild(tr);
     });
+}
+
+function updateSummaryMetrics(data) {
+    if (!data || data.length === 0) return;
+
+    const lastRow = data[data.length - 1];
+
+    // Calculate totals
+    // Note: total invested is cumulative_invested of last row
+    // Interest is calculated as Final Value - Invested + Withdrawn? 
+    // Or from row directly?
+    // In our logic: 
+    // Interest = NetBalance - (YearBegin + AnnualContrib - AnnualWithdrawal) is for ONE year.
+    // Total Interest = NetBalance + TotalWithdrawals - TotalInvested.
+
+    const totalInvested = lastRow.cumulative_invested;
+    const finalCorpus = lastRow.combined_total;
+    const totalWithdrawn = lastRow.cumulative_withdrawals || 0;
+
+    // Total Gains = (Final Value + Total Withdrawn) - Total Invested
+    const totalGains = (finalCorpus + totalWithdrawn) - totalInvested;
+
+    // Update DOM
+    const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = formatCurrency(val);
+    };
+
+    setVal('summary-invested', totalInvested);
+    setVal('summary-interest', totalGains);
+    setVal('summary-withdrawn', totalWithdrawn);
+    setVal('summary-corpus', finalCorpus);
 }
 
 function formatCurrency(val) {
