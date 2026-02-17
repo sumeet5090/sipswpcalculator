@@ -99,7 +99,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
     }
+
+    // Initialize Range Sliders
+    setupRangeSliders();
 });
+
+function setupRangeSliders() {
+    const pairs = [
+        { range: 'sip_range', input: 'sip' },
+        { range: 'years_range', input: 'years' },
+        { range: 'rate_range', input: 'rate' },
+        { range: 'stepup_range', input: 'stepup' },
+        { range: 'swp_withdrawal_range', input: 'swp_withdrawal' },
+        { range: 'swp_stepup_range', input: 'swp_stepup' },
+        { range: 'swp_years_range', input: 'swp_years' }
+    ];
+
+    pairs.forEach(pair => {
+        const range = document.getElementById(pair.range);
+        const input = document.getElementById(pair.input);
+
+        if (range && input) {
+            // Range listener
+            range.addEventListener('input', () => {
+                input.value = range.value;
+            });
+
+            // Input listener
+            input.addEventListener('input', () => {
+                range.value = input.value;
+            });
+        }
+    });
+}
 
 function getChartConfig({ years, cumulative, corpus, swp }) {
     const ctx = document.getElementById('corpusChart').getContext('2d');
