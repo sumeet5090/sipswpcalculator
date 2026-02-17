@@ -104,6 +104,161 @@ document.addEventListener('DOMContentLoaded', () => {
     setupRangeSliders();
 });
 
+
+
+// --- Core Calculation Logic ---
+function calculateAndRender() {
+    const inputs = getInputs();
+    const data = calculateCorpus(inputs);
+    updateChart(data);
+    updateTable(data, inputs.enable_swp);
+}
+
+function getInputs() {
+    return {
+        sip: parseFloat(document.getElementById('sip').value) || 0,
+        years: parseInt(document.getElementById('years').value) || 0,
+        rate: parseFloat(document.getElementById('rate').value) || 0,
+        stepup: parseFloat(document.getElementById('stepup').value) || 0,
+        enable_swp: document.getElementById('enable_swp').checked,
+        swp_withdrawal: parseFloat(document.getElementById('swp_withdrawal').value) || 0,
+        swp_stepup: parseFloat(document.getElementById('swp_stepup').value) || 0,
+        swp_years: parseInt(document.getElementById('swp_years').value) || 0
+    };
+}
+
+function calculateCorpus(inp) {
+    const monthlyRate = inp.rate / 100 / 12;
+    const swpStartYear = inp.years + 1;
+    const totalYears = inp.years + inp.swp_years;
+
+    let netBalance = 0.0;
+    let cumulativeInvested = 0.0;
+    let cumulativeWithdrawals = 0.0;
+
+    const results = [];
+
+    for (let y = 1; y <= totalYears; y++) {
+        // Monthly SIP amount for this year
+        let monthlySip = 0.0;
+        if (y <= inp.years) {
+            monthlySip = inp.sip * Math.pow(1 + inp.stepup / 100, y - 1);
+        }
+
+        // Monthly SWP amount for this year
+        let monthlySwp = 0.0;
+        if (inp.enable_swp && y >= swpStartYear) {
+            monthlySwp = inp.swp_withdrawal * Math.pow(1 + inp.swp_stepup / 100, y - swpStartYear);
+        }
+
+        let actualYearWithdrawn = 0.0;
+        let annualContribution = monthlySip * 12; // Approximation, actual is sum of months
+        // Recalculate annual contribution precisely if needed, but stepup is annual.
+        // PHP logic: monthly_sip is constant for the year.
+
+        let yearBegin = netBalance;
+
+        for (let m = 1; m <= 12; m++) {
+            let contrib = (y <= inp.years) ? monthlySip : 0.0;
+            let potentialBalance = netBalance + contrib;
+
+            let withdraw = 0.0;
+            if (inp.enable_swp && y >= swpStartYear && monthlySwp > 0) {
+                withdraw = Math.min(monthlySwp, potentialBalance); // No negative balance
+            }
+
+            actualYearWithdrawn += withdraw;
+            netBalance = (netBalance + contrib - withdraw) * (1 + monthlyRate);
+            if (netBalance < 0) netBalance = 0;
+        }
+
+        cumulativeInvested += annualContribution;
+        if (inp.enable_swp && y >= swpStartYear) {
+            cumulativeWithdrawals += actualYearWithdrawn;
+        }
+
+        let annualWithdrawal = actualYearWithdrawn;
+        let interestEarned = netBalance - (yearBegin + annualContribution - annualWithdrawal);
+
+        results.push({
+            year: y,
+            begin_balance: Math.round(yearBegin),
+            sip_monthly: (y <= inp.years) ? monthlySip : null,
+            annual_contribution: annualContribution,
+            cumulative_invested: cumulativeInvested,
+            swp_monthly: (inp.enable_swp && y >= swpStartYear) ? monthlySwp : null,
+            annual_withdrawal: (inp.enable_swp && y >= swpStartYear) ? annualWithdrawal : null,
+            cumulative_withdrawals: (inp.enable_swp && y >= swpStartYear) ? cumulativeWithdrawals : 0,
+            interest: Math.round(interestEarned),
+            combined_total: Math.round(netBalance)
+        });
+    }
+
+    return results;
+}
+
+// --- Update UI ---
+function updateChart(data) {
+    if (!window.corpusChart) return;
+
+    const yearsLabels = data.map(r => r.year);
+    const investedData = data.map(r => r.cumulative_invested);
+    const corpusData = data.map(r => r.combined_total);
+    const swpData = data.map(r => r.annual_withdrawal || 0);
+
+    window.corpusChart.data.labels = yearsLabels;
+    window.corpusChart.data.datasets[0].data = investedData;
+    window.corpusChart.data.datasets[1].data = corpusData;
+    window.corpusChart.data.datasets[2].data = swpData;
+
+    window.corpusChart.update('none'); // 'none' mode for smooth animation
+}
+
+function updateTable(data, enableSwp) {
+    const tbody = document.getElementById('breakdown-body');
+    if (!tbody) return;
+
+    tbody.innerHTML = ''; // Clear current rows
+
+    data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-gray-50";
+
+        // Helper for currency
+        const fmt = (v) => v !== null ? formatCurrency(v) : '-';
+
+        // SWP Columns HTML
+        let swpCols = '';
+        if (enableSwp) {
+            swpCols = `
+                <td class="px-6 py-4 text-right text-red-600">${fmt(row.annual_withdrawal)}</td>
+                <td class="px-6 py-4 text-right">${fmt(row.cumulative_withdrawals)}</td>
+            `;
+        }
+
+        tr.innerHTML = `
+            <td class="px-6 py-4 font-medium">${row.year}</td>
+            <td class="px-6 py-4 text-right">${formatCurrency(row.begin_balance)}</td>
+            <td class="px-6 py-4 text-right text-green-600">${formatCurrency(row.annual_contribution)}</td>
+            <td class="px-6 py-4 text-right">${formatCurrency(row.cumulative_invested)}</td>
+            ${swpCols}
+            <td class="px-6 py-4 text-right">${formatCurrency(row.interest)}</td>
+            <td class="px-6 py-4 text-right font-semibold text-indigo-600">${formatCurrency(row.combined_total)}</td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+}
+
+function formatCurrency(val) {
+    return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        maximumFractionDigits: 0
+    }).format(val);
+}
+
+// Setup listeners
 function setupRangeSliders() {
     const pairs = [
         { range: 'sip_range', input: 'sip' },
@@ -123,14 +278,25 @@ function setupRangeSliders() {
             // Range listener
             range.addEventListener('input', () => {
                 input.value = range.value;
+                calculateAndRender(); // Trigger calculation
             });
 
             // Input listener
             input.addEventListener('input', () => {
                 range.value = input.value;
+                calculateAndRender(); // Trigger calculation
             });
         }
     });
+
+    // Also listen to SWP toggle
+    const swpToggle = document.getElementById('enable_swp');
+    if (swpToggle) {
+        swpToggle.addEventListener('change', () => {
+            toggleSwpFields(); // existing visual toggle
+            calculateAndRender(); // Re-calculate
+        });
+    }
 }
 
 function getChartConfig({ years, cumulative, corpus, swp }) {
