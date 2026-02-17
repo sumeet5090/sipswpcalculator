@@ -1,3 +1,38 @@
+// State
+let currentCurrency = 'INR';
+const currencyConfig = {
+    'INR': { locale: 'en-IN', symbol: '₹' },
+    'USD': { locale: 'en-US', symbol: '$' },
+    'EUR': { locale: 'en-IE', symbol: '€' }
+};
+
+function updateCurrency(newCurrency) {
+    currentCurrency = newCurrency;
+    // Re-render any displayed values that use formatCurrency
+    // For example, if you have a results display function:
+    calculateAndRender();
+
+    // Update all symbol spans
+    const spans = document.querySelectorAll('.currency-symbol');
+    spans.forEach(span => {
+        span.textContent = currencyConfig[currentCurrency].symbol;
+    });
+}
+
+function formatCurrency(value) {
+    const config = currencyConfig[currentCurrency];
+    if (!config) {
+        console.warn(`Currency config not found for ${currentCurrency}`);
+        return value.toLocaleString(); // Fallback
+    }
+    return new Intl.NumberFormat(config.locale, {
+        style: 'currency',
+        currency: currentCurrency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(value);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Chart.js
     const ctx = document.getElementById('corpusChart');
@@ -281,14 +316,6 @@ function updateSummaryMetrics(data) {
     setVal('summary-interest', totalGains);
     setVal('summary-withdrawn', totalWithdrawn);
     setVal('summary-corpus', finalCorpus);
-}
-
-function formatCurrency(val) {
-    return new Intl.NumberFormat('en-IN', {
-        style: 'currency',
-        currency: 'INR',
-        maximumFractionDigits: 0
-    }).format(val);
 }
 
 // Setup listeners

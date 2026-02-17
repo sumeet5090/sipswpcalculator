@@ -277,11 +277,32 @@ foreach ($combined as $row) {
             <p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
                 The most advanced <strong class="text-indigo-600">SIP & SWP Calculator</strong> on the web.
                 Seamlessly plan your investments and retirement income with vivid clarity.
+                Make informed decisions about your financial future with our advanced, real-time calculator.
             </p>
         </header>
 
         <main>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Currency Selector (Mobile & Desktop) -->
+                <div class="lg:col-span-1 flex justify-end mb-[-1.5rem] relative z-20">
+                    <div class="inline-flex rounded-md shadow-sm" role="group">
+                        <input type="radio" name="currency" id="curr_inr" value="INR" class="peer/inr hidden" checked onchange="updateCurrency('INR')">
+                        <label for="curr_inr" class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg cursor-pointer hover:bg-gray-100 peer-checked/inr:bg-indigo-600 peer-checked/inr:text-white border-r-0 transition-colors">
+                            ₹ INR
+                        </label>
+                        
+                        <input type="radio" name="currency" id="curr_usd" value="USD" class="peer/usd hidden" onchange="updateCurrency('USD')">
+                        <label for="curr_usd" class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 cursor-pointer hover:bg-gray-100 peer-checked/usd:bg-indigo-600 peer-checked/usd:text-white border-r-0 transition-colors">
+                            $ USD
+                        </label>
+                        
+                        <input type="radio" name="currency" id="curr_eur" value="EUR" class="peer/eur hidden" onchange="updateCurrency('EUR')">
+                        <label for="curr_eur" class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-lg cursor-pointer hover:bg-gray-100 peer-checked/eur:bg-indigo-600 peer-checked/eur:text-white transition-colors">
+                            € EUR
+                        </label>
+                    </div>
+                </div>
 
                 <!-- Form Section -->
                 <div class="lg:col-span-1 glass-card p-6 sticky top-4">
@@ -315,7 +336,7 @@ foreach ($combined as $row) {
                                             </div>
                                             <div class="input-group w-32 shrink-0">
                                                 <span
-                                                    class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹</span>
+                                                    class="currency-symbol absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹</span>
                                                 <input type="number" id="sip" name="sip"
                                                     class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
                                                     required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
