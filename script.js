@@ -44,7 +44,7 @@ function updateAllocationChart(data) {
                 labels: ['Invested', 'Gains'],
                 datasets: [{
                     data: [invested, gains],
-                    backgroundColor: ['#334155', '#10b981'], // Slate 700, Emerald 500
+                    backgroundColor: ['#cbd5e1', '#10b981'], // Slate 300, Emerald 500
                     borderWidth: 0,
                     hoverOffset: 4
                 }]
@@ -423,18 +423,18 @@ function setupRangeSliders() {
 function getChartConfig({ years, cumulative, corpus, swp }) {
     const ctx = document.getElementById('corpusChart').getContext('2d');
 
-    // Gradients & Colors matching styles.css
+    // Gradients & Colors matching Light Theme
     const gradientInvested = ctx.createLinearGradient(0, 0, 0, 400);
-    gradientInvested.addColorStop(0, 'rgba(51, 65, 85, 0.5)'); // Slate 700
-    gradientInvested.addColorStop(1, 'rgba(51, 65, 85, 0.1)');
+    gradientInvested.addColorStop(0, 'rgba(79, 70, 229, 0.2)'); // Indigo 600 low opacity
+    gradientInvested.addColorStop(1, 'rgba(79, 70, 229, 0.0)');
 
     const gradientCorpus = ctx.createLinearGradient(0, 0, 0, 400);
-    gradientCorpus.addColorStop(0, 'rgba(16, 185, 129, 0.6)'); // Emerald 500
-    gradientCorpus.addColorStop(1, 'rgba(16, 185, 129, 0.1)');
+    gradientCorpus.addColorStop(0, 'rgba(16, 185, 129, 0.4)'); // Emerald 500
+    gradientCorpus.addColorStop(1, 'rgba(16, 185, 129, 0.05)');
 
     const fontFamily = "'Plus Jakarta Sans', sans-serif";
-    const gridColor = 'rgba(255, 255, 255, 0.08)';
-    const textColor = '#94a3b8'; // Slate 400
+    const gridColor = 'rgba(0, 0, 0, 0.05)'; // Subtle dark grid
+    const textColor = '#64748b'; // Slate 500
 
     return {
         type: 'line',
@@ -444,13 +444,13 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                 {
                     label: 'Total Invested',
                     data: cumulative,
-                    borderColor: '#94a3b8', // Slate 400
+                    borderColor: '#6366f1', // Indigo 500
                     backgroundColor: gradientInvested,
                     borderWidth: 2,
                     tension: 0.4,
                     fill: 'origin',
-                    pointBackgroundColor: '#0f172a', // Slate 900
-                    pointBorderColor: '#94a3b8',
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#6366f1',
                     pointRadius: 0,
                     pointHoverRadius: 6,
                 },
@@ -462,7 +462,7 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                     borderWidth: 3,
                     tension: 0.4,
                     fill: 0, // Fill to dataset 0
-                    pointBackgroundColor: '#0f172a',
+                    pointBackgroundColor: '#ffffff',
                     pointBorderColor: '#10b981',
                     pointBorderWidth: 2,
                     pointRadius: 0,
@@ -472,14 +472,14 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                 {
                     label: 'Annual Withdrawal',
                     data: swp,
-                    borderColor: '#fb7185', // Rose 400
-                    backgroundColor: 'rgba(251, 113, 133, 0.1)',
+                    borderColor: '#f43f5e', // Rose 500
+                    backgroundColor: 'rgba(244, 63, 94, 0.1)',
                     borderWidth: 2,
                     borderDash: [5, 5],
                     tension: 0.4,
                     fill: false,
-                    pointBackgroundColor: '#0f172a',
-                    pointBorderColor: '#fb7185',
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#f43f5e',
                     pointRadius: 0,
                     pointHoverRadius: 6,
                 }

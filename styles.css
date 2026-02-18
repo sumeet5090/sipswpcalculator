@@ -1,37 +1,38 @@
-/* styles.css - Refined Fintech Theme */
+/* styles.css - Refined Fintech Theme (Light Mode) */
 
 /* 1. Reset & Base */
 :root {
     /* Primary Brand Gradient */
-    --gradient-primary: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
 
     /* Accents */
     --color-acc-growth: #10b981;
-    /* Electric Emerald */
-    --color-acc-withdraw: #fb7185;
-    /* Soft Coral */
+    /* Emerald 500 */
+    --color-acc-withdraw: #f43f5e;
+    /* Rose 500 */
 
     /* Colors */
-    --color-text-primary: #f8fafc;
-    /* High-Emphasis White */
-    --color-text-secondary: #94a3b8;
-    /* Medium-Gray */
-    --color-border: #334155;
-    /* Subtle Border */
-    --color-bg: #0f172a;
-    /* Deep Slate/Charcoal */
+    --color-text-primary: #0f172a;
+    /* Slate 900 */
+    --color-text-secondary: #64748b;
+    /* Slate 500 */
+    --color-border: #e2e8f0;
+    /* Slate 200 */
+    --color-bg: #f8fafc;
+    /* Slate 50 */
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.3);
-    --shadow-glow: 0 0 20px rgba(16, 185, 129, 0.15);
-    /* Emerald Glow */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+    --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.15);
+    /* Indigo Glow */
 
     /* Glassmorphism */
-    --glass-bg: rgba(30, 41, 59, 0.7);
-    /* Slate 800 with opacity */
-    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    /* White with opacity */
+    --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(79, 81, 93, 0.1);
 }
 
 /* Scrollbar */
@@ -41,23 +42,23 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: #1e293b;
+    background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #475569;
+    background: #cbd5e1;
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #64748b;
+    background: #94a3b8;
 }
 
 body {
     background-color: var(--color-bg);
     background-image:
-        radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.08), transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(251, 113, 133, 0.08), transparent 25%);
+        radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.05), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.05), transparent 25%);
     background-attachment: fixed;
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     color: var(--color-text-primary);
