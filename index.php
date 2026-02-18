@@ -281,6 +281,53 @@ foreach ($combined as $row) {
         </header>
 
         <main>
+            <!-- Hero Header Section -->
+            <div
+                class="w-full mb-8 relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10">
+                <div class="p-8 text-center relative overflow-hidden">
+                    <!-- Background Glow -->
+                    <div
+                        class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-emerald-500/10 to-transparent opacity-50 pointer-events-none">
+                    </div>
+
+                    <h2 class="relative z-10 text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-3">
+                        Projected Corpus Value</h2>
+                    <div class="relative z-10 text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 mb-8 tracking-tight drop-shadow-sm"
+                        id="summary-corpus">
+                        ₹ 0
+                    </div>
+
+                    <!-- Key Metrics Row -->
+                    <div
+                        class="relative z-10 flex flex-wrap justify-center gap-6 md:gap-16 mb-8 p-4 rounded-2xl bg-slate-50 border border-slate-200 inline-flex backdrop-blur-md items-center shadow-sm">
+                        <div class="text-center">
+                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                                Total Invested</div>
+                            <div class="text-lg md:text-xl font-bold text-slate-900" id="summary-invested">₹ 0
+                            </div>
+                        </div>
+                        <div class="text-center border-l border-slate-200 pl-6 md:pl-16">
+                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                                Wealth Gained</div>
+                            <div class="text-lg md:text-xl font-bold text-emerald-600" id="summary-interest">₹ 0</div>
+                        </div>
+                        <div class="text-center border-l border-slate-200 pl-6 md:pl-16">
+                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                                Total Withdrawn</div>
+                            <div class="text-lg md:text-xl font-bold text-rose-600" id="summary-withdrawn">₹ 0
+                            </div>
+                        </div>
+                        <!-- Donut Chart Integration -->
+                        <div
+                            class="w-full md:w-auto md:border-l md:border-slate-200 mt-6 md:mt-0 md:pl-6 flex justify-center">
+                            <div class="h-24 w-24 md:h-16 md:w-16">
+                                <canvas id="allocationChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 <!-- Left Column: Currency + Form -->
@@ -536,57 +583,62 @@ foreach ($combined as $row) {
                         </form>
                     </div>
                 </div> <!-- Chart and Summary Section -->
-                <div class="lg:col-span-2 space-y-6">
-                    <!-- Hero Result & Chart Card -->
-                    <div
-                        class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10">
-                        <!-- Hero Header -->
-                        <div class="p-8 pb-0 text-center relative overflow-hidden">
-                            <!-- Background Glow -->
-                            <div
-                                class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-emerald-500/10 to-transparent opacity-50 pointer-events-none">
-                            </div>
 
-                            <h2 class="relative z-10 text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-3">
-                                Projected Corpus Value</h2>
-                            <div class="relative z-10 text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 mb-8 tracking-tight drop-shadow-sm"
-                                id="summary-corpus">
-                                ₹ 0
-                            </div>
+                <!-- Hero Result & Summary Card (Moved from Chart Card) -->
+                <div
+                    class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-8 mb-6">
+                    <!-- Hero Header -->
+                    <div class="text-center relative overflow-hidden">
+                        <!-- Background Glow -->
+                        <div
+                            class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-emerald-500/10 to-transparent opacity-50 pointer-events-none">
+                        </div>
 
-                            <!-- Key Metrics Row -->
+                        <h2 class="relative z-10 text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-3">
+                            Projected Corpus Value</h2>
+                        <div class="relative z-10 text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 mb-8 tracking-tight drop-shadow-sm"
+                            id="summary-corpus">
+                            ₹ 0
+                        </div>
+
+                        <!-- Key Metrics Row -->
+                        <div
+                            class="relative z-10 flex flex-wrap justify-center gap-6 md:gap-16 mb-8 p-4 rounded-2xl bg-slate-50 border border-slate-200 inline-flex backdrop-blur-md items-center shadow-sm">
+                            <div class="text-center">
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                                    Total Invested</div>
+                                <div class="text-lg md:text-xl font-bold text-slate-900" id="summary-invested">₹ 0
+                                </div>
+                            </div>
+                            <div class="text-center border-l border-slate-200 pl-6 md:pl-16">
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                                    Wealth Gained</div>
+                                <div class="text-lg md:text-xl font-bold text-emerald-600" id="summary-interest">₹ 0
+                                </div>
+                            </div>
+                            <div class="text-center border-l border-slate-200 pl-6 md:pl-16">
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                                    Total Withdrawn</div>
+                                <div class="text-lg md:text-xl font-bold text-rose-600" id="summary-withdrawn">₹ 0
+                                </div>
+                            </div>
+                            <!-- Donut Chart Integration -->
                             <div
-                                class="relative z-10 flex flex-wrap justify-center gap-6 md:gap-16 mb-8 p-4 rounded-2xl bg-slate-50 border border-slate-200 inline-flex backdrop-blur-md items-center shadow-sm">
-                                <div class="text-center">
-                                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
-                                        Total Invested</div>
-                                    <div class="text-lg md:text-xl font-bold text-slate-900" id="summary-invested">₹ 0
-                                    </div>
-                                </div>
-                                <div class="text-center border-l border-slate-200 pl-6 md:pl-16">
-                                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
-                                        Wealth Gained</div>
-                                    <div class="text-lg md:text-xl font-bold text-emerald-600" id="summary-interest">₹ 0
-                                    </div>
-                                </div>
-                                <div class="text-center border-l border-slate-200 pl-6 md:pl-16">
-                                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
-                                        Total Withdrawn</div>
-                                    <div class="text-lg md:text-xl font-bold text-rose-600" id="summary-withdrawn">₹ 0
-                                    </div>
-                                </div>
-                                <!-- Donut Chart Integration -->
-                                <div
-                                    class="w-full md:w-auto md:border-l md:border-slate-200 mt-6 md:mt-0 md:pl-6 flex justify-center">
-                                    <div class="h-24 w-24 md:h-16 md:w-16">
-                                        <canvas id="allocationChart"></canvas>
-                                    </div>
+                                class="w-full md:w-auto md:border-l md:border-slate-200 mt-6 md:mt-0 md:pl-6 flex justify-center">
+                                <div class="h-24 w-24 md:h-16 md:w-16">
+                                    <canvas id="allocationChart"></canvas>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Hero Result & Chart Card -->
+                    <div
+                        class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-6">
                         <!-- Chart -->
-                        <div class="p-6 pt-0 h-[450px] w-full relative z-10">
+                        <div class="h-[450px] w-full relative z-10">
                             <canvas id="corpusChart"></canvas>
                         </div>
                     </div>
