@@ -556,7 +556,7 @@ foreach ($combined as $row) {
 
                             <!-- Key Metrics Row -->
                             <div
-                                class="relative z-10 flex flex-wrap justify-center gap-6 md:gap-16 mb-8 p-4 rounded-2xl bg-slate-800/30 border border-white/5 inline-flex backdrop-blur-md">
+                                class="relative z-10 flex flex-wrap justify-center gap-6 md:gap-16 mb-8 p-4 rounded-2xl bg-slate-800/30 border border-white/5 inline-flex backdrop-blur-md items-center">
                                 <div class="text-center">
                                     <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
                                         Total Invested</div>
@@ -575,6 +575,13 @@ foreach ($combined as $row) {
                                     <div class="text-lg md:text-xl font-bold text-rose-400" id="summary-withdrawn">₹ 0
                                     </div>
                                 </div>
+                                <!-- Donut Chart Integration -->
+                                <div
+                                    class="w-full md:w-auto md:border-l md:border-white/10 mt-6 md:mt-0 md:pl-6 flex justify-center">
+                                    <div class="h-24 w-24 md:h-16 md:w-16">
+                                        <canvas id="allocationChart"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -583,89 +590,83 @@ foreach ($combined as $row) {
                             <canvas id="corpusChart"></canvas>
                         </div>
                     </div>
-
-
-
-
-                    <!-- Moved Results Table -->
-                    <div id="results-table"
-                        class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl overflow-hidden mt-8">
-                        <div class="p-6 border-b border-white/5 flex justify-between items-center bg-slate-800/30">
-                            <h2 class="text-2xl font-bold flex items-center gap-2 text-slate-200">
-                                <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                    </path>
-                                </svg>
-                                Yearly Breakdown
-                            </h2>
-                            <div class="flex gap-2">
-                                <button type="submit" name="action" value="download_csv" form="calculator-form"
-                                    class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 hover:text-white transition-all">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                                    </svg>
-                                    CSV
-                                </button>
-                                <button type="button" id="openPdfModalBtn"
-                                    class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                    </svg>
-                                    PDF
-                                </button>
-                            </div>
-                        </div>
-                        <div class="overflow-x-auto max-h-[600px] overflow-y-auto custom-scrollbar">
-                            <table class="w-full text-sm text-left relative">
-                                <thead
-                                    class="bg-slate-800/50 text-xs uppercase font-semibold text-slate-400 sticky top-0 z-10 backdrop-blur-md">
-                                    <tr>
-                                        <th class="px-6 py-3 bg-slate-800/80">Year</th>
-                                        <th class="px-6 py-3 text-right bg-slate-800/80">Start Corpus</th>
-                                        <th class="px-6 py-3 text-right bg-slate-800/80">Annual SIP</th>
-                                        <th class="px-6 py-3 text-right bg-slate-800/80">Total Invested</th>
-                                        <?php if ($enable_swp): ?>
-                                            <th class="px-6 py-3 text-right bg-slate-800/80">Annual SWP</th>
-                                            <th class="px-6 py-3 text-right bg-slate-800/80">Total Withdrawn</th>
-                                        <?php endif; ?>
-                                        <th class="px-6 py-3 text-right bg-slate-800/80">Interest</th>
-                                        <th class="px-6 py-3 text-right bg-slate-800/80">End Corpus</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="breakdown-body" class="divide-y divide-white/5 text-slate-300">
-                                    <?php foreach ($combined as $row): ?>
-                                        <tr class="hover:bg-white/5 border-b border-white/5 last:border-0 transition-colors">
-                                            <td class="px-6 py-4 font-medium text-slate-400"><?= $row['year'] ?></td>
-                                            <td class="px-6 py-4 text-right"><?= formatInr($row['begin_balance']) ?></td>
-                                            <td class="px-6 py-4 text-right text-emerald-400">
-                                                <?= formatInr($row['annual_contribution']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-slate-400"><?= formatInr($row['cumulative_invested']) ?>
-                                            </td>
-                                            <?php if ($enable_swp): ?>
-                                                <td class="px-6 py-4 text-right text-rose-400 font-medium">
-                                                    <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                                </td>
-                                                <td class="px-6 py-4 text-right text-slate-500">
-                                                    <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                                </td>
-                                            <?php endif; ?>
-                                            <td class="px-6 py-4 text-right text-emerald-400 font-medium"><?= formatInr($row['interest']) ?></td>
-                                            <td class="px-6 py-4 text-right font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
-                                                <?= formatInr($row['combined_total']) ?>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                    </path>
+                    </svg>
+                    Yearly Breakdown
+                    </h2>
+                    <div class="flex gap-2">
+                        <button type="submit" name="action" value="download_csv" form="calculator-form"
+                            class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 hover:text-white transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            CSV
+                        </button>
+                        <button type="button" id="openPdfModalBtn"
+                            class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            PDF
+                        </button>
                     </div>
                 </div>
+                <div class="overflow-x-auto max-h-[600px] overflow-y-auto custom-scrollbar">
+                    <table class="w-full text-sm text-left relative">
+                        <thead
+                            class="bg-slate-800/50 text-xs uppercase font-semibold text-slate-400 sticky top-0 z-10 backdrop-blur-md">
+                            <tr>
+                                <th class="px-6 py-3 bg-slate-800/80">Year</th>
+                                <th class="px-6 py-3 text-right bg-slate-800/80">Start Corpus</th>
+                                <th class="px-6 py-3 text-right bg-slate-800/80">Annual SIP</th>
+                                <th class="px-6 py-3 text-right bg-slate-800/80">Total Invested</th>
+                                <?php if ($enable_swp): ?>
+                                    <th class="px-6 py-3 text-right bg-slate-800/80">Annual SWP</th>
+                                    <th class="px-6 py-3 text-right bg-slate-800/80">Total Withdrawn</th>
+                                <?php endif; ?>
+                                <th class="px-6 py-3 text-right bg-slate-800/80">Interest</th>
+                                <th class="px-6 py-3 text-right bg-slate-800/80">End Corpus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body" class="divide-y divide-white/5 text-slate-300">
+                            <?php foreach ($combined as $row): ?>
+                                <tr class="hover:bg-white/5 border-b border-white/5 last:border-0 transition-colors">
+                                    <td class="px-6 py-4 font-medium text-slate-400"><?= $row['year'] ?></td>
+                                    <td class="px-6 py-4 text-right"><?= formatInr($row['begin_balance']) ?></td>
+                                    <td class="px-6 py-4 text-right text-emerald-400">
+                                        <?= formatInr($row['annual_contribution']) ?>
+                                    </td>
+                                    <td class="px-6 py-4 text-right text-slate-400">
+                                        <?= formatInr($row['cumulative_invested']) ?>
+                                    </td>
+                                    <?php if ($enable_swp): ?>
+                                        <td class="px-6 py-4 text-right text-rose-400 font-medium">
+                                            <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
+                                        </td>
+                                        <td class="px-6 py-4 text-right text-slate-500">
+                                            <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
+                                        </td>
+                                    <?php endif; ?>
+                                    <td class="px-6 py-4 text-right text-emerald-400 font-medium">
+                                        <?= formatInr($row['interest']) ?>
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 text-right font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
+                                        <?= formatInr($row['combined_total']) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+    </div>
+    </div>
 
 
     </div>

@@ -21,18 +21,60 @@ function updateCurrency(newCurrency) {
 
 function formatCurrency(value) {
     const config = currencyConfig[currentCurrency];
-    if (!config) {
-        console.warn(`Currency config not found for ${currentCurrency}`);
-        return value.toLocaleString(); // Fallback
-    }
     return new Intl.NumberFormat(config.locale, {
         style: 'currency',
         currency: currentCurrency,
-        minimumFractionDigits: 0,
         maximumFractionDigits: 0
     }).format(value);
 }
 
+// 2. Donut Chart Logic
+function updateAllocationChart(data) {
+    const ctx = document.getElementById('allocationChart');
+    if (!ctx) return;
+
+    const lastRow = data[data.length - 1];
+    const invested = lastRow.cumulative_invested;
+    const gains = (lastRow.combined_total + (lastRow.cumulative_withdrawals || 0)) - invested;
+
+    if (!window.allocationChartInstance) {
+        window.allocationChartInstance = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Invested', 'Gains'],
+                datasets: [{
+                    data: [invested, gains],
+                    backgroundColor: ['#334155', '#10b981'], // Slate 700, Emerald 500
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false } // Minimalist
+                }
+            }
+        });
+    } else {
+        window.allocationChartInstance.data.datasets[0].data = [invested, gains];
+        window.allocationChartInstance.update('none');
+    }
+}
+
+// 3. Timestamp
+function updateTimestamp() {
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    const dateStr = now.toLocaleDateString('en-IN', options);
+    const el = document.getElementById('last-updated');
+    if (el) el.textContent = dateStr;
+}
+
+// Fixed formatAxisTick
 function formatAxisTick(value) {
     const symbol = currencyConfig[currentCurrency].symbol;
     if (currentCurrency === 'INR') {
@@ -166,15 +208,17 @@ function calculateAndRender() {
 }
 
 function getInputs() {
+    const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
+
     return {
-        sip: parseFloat(document.getElementById('sip').value) || 0,
-        years: parseInt(document.getElementById('years').value) || 0,
-        rate: parseFloat(document.getElementById('rate').value) || 0,
-        stepup: parseFloat(document.getElementById('stepup').value) || 0,
+        sip: clamp(parseFloat(document.getElementById('sip').value) || 0, 500, 1000000),
+        years: clamp(parseInt(document.getElementById('years').value) || 0, 1, 50),
+        rate: clamp(parseFloat(document.getElementById('rate').value) || 0, 1, 30),
+        stepup: clamp(parseFloat(document.getElementById('stepup').value) || 0, 0, 50),
         enable_swp: document.getElementById('enable_swp').checked,
-        swp_withdrawal: parseFloat(document.getElementById('swp_withdrawal').value) || 0,
-        swp_stepup: parseFloat(document.getElementById('swp_stepup').value) || 0,
-        swp_years: parseInt(document.getElementById('swp_years').value) || 0
+        swp_withdrawal: clamp(parseFloat(document.getElementById('swp_withdrawal').value) || 0, 0, 1000000),
+        swp_stepup: clamp(parseFloat(document.getElementById('swp_stepup').value) || 0, 0, 20),
+        swp_years: clamp(parseInt(document.getElementById('swp_years').value) || 0, 0, 50)
     };
 }
 
