@@ -629,33 +629,33 @@ foreach ($combined as $row) {
                                         <th class="px-6 py-3 text-right bg-slate-800/80">Annual SIP</th>
                                         <th class="px-6 py-3 text-right bg-slate-800/80">Total Invested</th>
                                         <?php if ($enable_swp): ?>
-                                            <th class="px-6 py-3 text-right bg-gray-50">Annual SWP</th>
-                                            <th class="px-6 py-3 text-right bg-gray-50">Total Withdrawn</th>
+                                            <th class="px-6 py-3 text-right bg-slate-800/80">Annual SWP</th>
+                                            <th class="px-6 py-3 text-right bg-slate-800/80">Total Withdrawn</th>
                                         <?php endif; ?>
-                                        <th class="px-6 py-3 text-right bg-gray-50">Interest</th>
-                                        <th class="px-6 py-3 text-right bg-gray-50">End Corpus</th>
+                                        <th class="px-6 py-3 text-right bg-slate-800/80">Interest</th>
+                                        <th class="px-6 py-3 text-right bg-slate-800/80">End Corpus</th>
                                     </tr>
                                 </thead>
-                                <tbody id="breakdown-body" class="divide-y divide-gray-200">
+                                <tbody id="breakdown-body" class="divide-y divide-white/5 text-slate-300">
                                     <?php foreach ($combined as $row): ?>
-                                        <tr class="hover:bg-gray-50 border-b border-gray-100 last:border-0">
-                                            <td class="px-6 py-4 font-medium"><?= $row['year'] ?></td>
+                                        <tr class="hover:bg-white/5 border-b border-white/5 last:border-0 transition-colors">
+                                            <td class="px-6 py-4 font-medium text-slate-400"><?= $row['year'] ?></td>
                                             <td class="px-6 py-4 text-right"><?= formatInr($row['begin_balance']) ?></td>
-                                            <td class="px-6 py-4 text-right text-green-600">
+                                            <td class="px-6 py-4 text-right text-emerald-400">
                                                 <?= formatInr($row['annual_contribution']) ?>
                                             </td>
-                                            <td class="px-6 py-4 text-right"><?= formatInr($row['cumulative_invested']) ?>
+                                            <td class="px-6 py-4 text-right text-slate-400"><?= formatInr($row['cumulative_invested']) ?>
                                             </td>
                                             <?php if ($enable_swp): ?>
-                                                <td class="px-6 py-4 text-right text-red-600">
+                                                <td class="px-6 py-4 text-right text-rose-400 font-medium">
                                                     <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
                                                 </td>
-                                                <td class="px-6 py-4 text-right">
+                                                <td class="px-6 py-4 text-right text-slate-500">
                                                     <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
                                                 </td>
                                             <?php endif; ?>
-                                            <td class="px-6 py-4 text-right"><?= formatInr($row['interest']) ?></td>
-                                            <td class="px-6 py-4 text-right font-semibold text-indigo-600">
+                                            <td class="px-6 py-4 text-right text-emerald-400 font-medium"><?= formatInr($row['interest']) ?></td>
+                                            <td class="px-6 py-4 text-right font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
                                                 <?= formatInr($row['combined_total']) ?>
                                             </td>
                                         </tr>
