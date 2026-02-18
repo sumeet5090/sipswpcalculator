@@ -423,17 +423,17 @@ function setupRangeSliders() {
 function getChartConfig({ years, cumulative, corpus, swp }) {
     const ctx = document.getElementById('corpusChart').getContext('2d');
 
-    // Gradients
+    // Gradients & Colors matching styles.css
     const gradientInvested = ctx.createLinearGradient(0, 0, 0, 400);
-    gradientInvested.addColorStop(0, 'rgba(148, 163, 184, 0.4)'); // Slate 400
-    gradientInvested.addColorStop(1, 'rgba(148, 163, 184, 0.1)');
+    gradientInvested.addColorStop(0, 'rgba(51, 65, 85, 0.5)'); // Slate 700
+    gradientInvested.addColorStop(1, 'rgba(51, 65, 85, 0.1)');
 
     const gradientCorpus = ctx.createLinearGradient(0, 0, 0, 400);
-    gradientCorpus.addColorStop(0, 'rgba(52, 211, 153, 0.6)'); // Emerald 400
-    gradientCorpus.addColorStop(1, 'rgba(52, 211, 153, 0.1)');
+    gradientCorpus.addColorStop(0, 'rgba(16, 185, 129, 0.6)'); // Emerald 500
+    gradientCorpus.addColorStop(1, 'rgba(16, 185, 129, 0.1)');
 
     const fontFamily = "'Plus Jakarta Sans', sans-serif";
-    const gridColor = 'rgba(255, 255, 255, 0.05)';
+    const gridColor = 'rgba(255, 255, 255, 0.08)';
     const textColor = '#94a3b8'; // Slate 400
 
     return {
@@ -449,7 +449,7 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                     borderWidth: 2,
                     tension: 0.4,
                     fill: 'origin',
-                    pointBackgroundColor: '#1e293b',
+                    pointBackgroundColor: '#0f172a', // Slate 900
                     pointBorderColor: '#94a3b8',
                     pointRadius: 0,
                     pointHoverRadius: 6,
@@ -457,13 +457,13 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                 {
                     label: 'Wealth Gained',
                     data: corpus,
-                    borderColor: '#34d399', // Emerald 400
+                    borderColor: '#10b981', // Emerald 500
                     backgroundColor: gradientCorpus,
                     borderWidth: 3,
                     tension: 0.4,
-                    fill: 0, // Fill to dataset 0 (Invested)
-                    pointBackgroundColor: '#1e293b', // Slate 800
-                    pointBorderColor: '#34d399',
+                    fill: 0, // Fill to dataset 0
+                    pointBackgroundColor: '#0f172a',
+                    pointBorderColor: '#10b981',
                     pointBorderWidth: 2,
                     pointRadius: 0,
                     pointHoverRadius: 8,
@@ -478,7 +478,7 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                     borderDash: [5, 5],
                     tension: 0.4,
                     fill: false,
-                    pointBackgroundColor: '#1e293b',
+                    pointBackgroundColor: '#0f172a',
                     pointBorderColor: '#fb7185',
                     pointRadius: 0,
                     pointHoverRadius: 6,
