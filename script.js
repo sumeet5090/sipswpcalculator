@@ -367,6 +367,8 @@ function setupRangeSliders() {
     // Also listen to SWP toggle
     const swpToggle = document.getElementById('enable_swp');
     if (swpToggle) {
+        // Sync state immediately on load
+        toggleSwpFields();
         swpToggle.addEventListener('change', () => {
             toggleSwpFields(); // existing visual toggle
             calculateAndRender(); // Re-calculate
@@ -546,7 +548,7 @@ function toggleSwpFields() {
     if (!fields) return;
 
     if (isChecked) {
-        fields.style.display = 'grid';
+        fields.style.display = 'block';
         setTimeout(() => {
             fields.style.opacity = '1';
         }, 10);
@@ -562,7 +564,10 @@ function toggleSwpFields() {
     } else {
         fields.style.opacity = '0.5'; // Fade out first
         fields.style.pointerEvents = 'none';
-        fields.style.display = 'none'; // Then hide
+
+        // Wait for fade out to complete before display:none
+        // But since we want immediate feel, let's keep it simple or use timeout
+        fields.style.display = 'none';
 
         // Hide SWP dataset in chart
         if (window.corpusChart) {
