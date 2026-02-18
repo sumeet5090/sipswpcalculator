@@ -337,7 +337,8 @@ foreach ($combined as $row) {
                                                     Investment</label>
                                                 <div class="input-group w-28 shrink-0">
                                                     <span
-                                                        class="currency-symbol absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹</span>
+                                                        class="currency-symbol absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹
+                                                    </span>
                                                     <input type="number" id="sip" name="sip"
                                                         class="w-full pl-8 pr-3 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
                                                         required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
@@ -445,7 +446,8 @@ foreach ($combined as $row) {
                                                     Withdrawal</label>
                                                 <div class="input-group w-28 shrink-0">
                                                     <span
-                                                        class="currency-symbol absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹</span>
+                                                        class="currency-symbol absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹
+                                                    </span>
                                                     <input type="number" id="swp_withdrawal" step="500"
                                                         name="swp_withdrawal"
                                                         class="w-full pl-8 pr-3 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 font-semibold text-gray-900"
