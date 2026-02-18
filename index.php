@@ -286,7 +286,7 @@ foreach ($combined as $row) {
 
                 <!-- Left Column: Currency + Form -->
                 <div
-                    class="lg:col-span-1 flex flex-col gap-4 sticky top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto pb-4 pr-1 custom-scrollbar">
+                    class="lg:col-span-1 flex flex-col gap-4 sticky top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto pb-4 pr-4 custom-scrollbar">
 
                     <!-- Currency Selector -->
                     <div class="flex justify-end relative z-20">
