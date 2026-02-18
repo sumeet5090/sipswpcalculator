@@ -255,14 +255,13 @@ foreach ($combined as $row) {
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
     <?php include 'navbar.php'; ?>
-    <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 animate-float">
+    <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
 
         <header class="relative mb-16 text-center">
             <div
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-6 animate-float">
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-6">
                 <span class="relative flex h-3 w-3">
-                    <span
-                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                    <span class="absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
                 </span>
                 <span class="text-sm font-semibold text-indigo-700 tracking-wide uppercase">Free Financial Planning
