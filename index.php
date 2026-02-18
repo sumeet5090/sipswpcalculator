@@ -283,25 +283,32 @@ foreach ($combined as $row) {
 
         <main>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                
+
                 <!-- Left Column: Currency + Form -->
-                <div class="lg:col-span-1 flex flex-col gap-4 sticky top-4 h-fit">
-                    
+                <div
+                    class="lg:col-span-1 flex flex-col gap-4 sticky top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto pb-4 pr-1 custom-scrollbar">
+
                     <!-- Currency Selector -->
                     <div class="flex justify-end relative z-20">
                         <div class="inline-flex rounded-md shadow-sm" role="group">
-                            <input type="radio" name="currency" id="curr_inr" value="INR" class="peer/inr hidden" checked onchange="updateCurrency('INR')">
-                            <label for="curr_inr" class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg cursor-pointer hover:bg-gray-100 peer-checked/inr:bg-indigo-600 peer-checked/inr:text-white border-r-0 transition-colors">
+                            <input type="radio" name="currency" id="curr_inr" value="INR" class="peer/inr hidden"
+                                checked onchange="updateCurrency('INR')">
+                            <label for="curr_inr"
+                                class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg cursor-pointer hover:bg-gray-100 peer-checked/inr:bg-indigo-600 peer-checked/inr:text-white border-r-0 transition-colors">
                                 ₹ INR
                             </label>
-                            
-                            <input type="radio" name="currency" id="curr_usd" value="USD" class="peer/usd hidden" onchange="updateCurrency('USD')">
-                            <label for="curr_usd" class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 cursor-pointer hover:bg-gray-100 peer-checked/usd:bg-indigo-600 peer-checked/usd:text-white border-r-0 transition-colors">
+
+                            <input type="radio" name="currency" id="curr_usd" value="USD" class="peer/usd hidden"
+                                onchange="updateCurrency('USD')">
+                            <label for="curr_usd"
+                                class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 cursor-pointer hover:bg-gray-100 peer-checked/usd:bg-indigo-600 peer-checked/usd:text-white border-r-0 transition-colors">
                                 $ USD
                             </label>
-                            
-                            <input type="radio" name="currency" id="curr_eur" value="EUR" class="peer/eur hidden" onchange="updateCurrency('EUR')">
-                            <label for="curr_eur" class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-lg cursor-pointer hover:bg-gray-100 peer-checked/eur:bg-indigo-600 peer-checked/eur:text-white transition-colors">
+
+                            <input type="radio" name="currency" id="curr_eur" value="EUR" class="peer/eur hidden"
+                                onchange="updateCurrency('EUR')">
+                            <label for="curr_eur"
+                                class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-lg cursor-pointer hover:bg-gray-100 peer-checked/eur:bg-indigo-600 peer-checked/eur:text-white transition-colors">
                                 € EUR
                             </label>
                         </div>
@@ -315,7 +322,8 @@ foreach ($combined as $row) {
                             <div class="relative">
                                 <fieldset
                                     class="mb-8 relative z-10 bg-white/50 p-6 rounded-2xl border border-indigo-100 shadow-sm">
-                                    <legend class="flex items-center gap-2 text-lg font-bold text-indigo-900 mb-6 w-full">
+                                    <legend
+                                        class="flex items-center gap-2 text-lg font-bold text-indigo-900 mb-6 w-full">
                                         <span
                                             class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 text-sm font-bold ring-4 ring-white">1</span>
                                         Accumulation Phase (SIP)
@@ -350,7 +358,8 @@ foreach ($combined as $row) {
                                         <!-- Investment Duration -->
                                         <div>
                                             <div class="flex justify-between items-center mb-2">
-                                                <label for="years" class="text-sm font-semibold text-gray-700">Investment
+                                                <label for="years"
+                                                    class="text-sm font-semibold text-gray-700">Investment
                                                     Duration</label>
                                                 <span
                                                     class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-1 rounded">Years
@@ -365,7 +374,8 @@ foreach ($combined as $row) {
                                                 <div class="input-group w-32 shrink-0">
                                                     <input type="number" id="years" name="years"
                                                         class="w-full pl-3 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
-                                                        required min="1" value="<?= htmlspecialchars((string) $years) ?>">
+                                                        required min="1"
+                                                        value="<?= htmlspecialchars((string) $years) ?>">
                                                     <span
                                                         class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">Yrs</span>
                                                 </div>
@@ -390,7 +400,8 @@ foreach ($combined as $row) {
                                                 <div class="input-group w-32 shrink-0">
                                                     <input type="number" id="rate" step="0.1" name="rate"
                                                         class="w-full pl-3 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
-                                                        required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
+                                                        required min="0"
+                                                        value="<?= htmlspecialchars((string) $rate) ?>">
                                                     <span
                                                         class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">%</span>
                                                 </div>
@@ -415,7 +426,8 @@ foreach ($combined as $row) {
                                                 <div class="input-group w-32 shrink-0">
                                                     <input type="number" id="stepup" step="1" name="stepup"
                                                         class="w-full pl-3 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
-                                                        required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
+                                                        required min="0"
+                                                        value="<?= htmlspecialchars((string) $stepup) ?>">
                                                     <span
                                                         class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">%</span>
                                                 </div>
@@ -439,7 +451,7 @@ foreach ($combined as $row) {
                                         <div class="flex items-center gap-2">
                                             <span
                                                 class="flex items-center justify-center w-8 h-8 rounded-full bg-rose-100 text-rose-600 text-sm font-bold ring-4 ring-white">2</span>
-                                        Withdrawal Phase (SWP)
+                                            Withdrawal Phase (SWP)
                                         </div>
                                         <label class="toggle-switch relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" id="enable_swp" name="enable_swp" checked
@@ -455,15 +467,17 @@ foreach ($combined as $row) {
                                         <div>
                                             <div class="flex justify-between items-center mb-2">
                                                 <label for="swp_withdrawal"
-                                                    class="text-sm font-semibold text-gray-700">Monthly Withdrawal</label>
+                                                    class="text-sm font-semibold text-gray-700">Monthly
+                                                    Withdrawal</label>
                                                 <span
                                                     class="text-xs font-medium text-rose-600 bg-rose-50 px-2 py-1 rounded">Income
                                                     needed</span>
                                             </div>
                                             <div class="flex items-center gap-4">
                                                 <div class="flex-grow">
-                                                    <input type="range" id="swp_withdrawal_range" min="1000" max="200000"
-                                                        step="500" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
+                                                    <input type="range" id="swp_withdrawal_range" min="1000"
+                                                        max="200000" step="500"
+                                                        value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
                                                         class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
                                                 </div>
                                                 <div class="input-group w-32 shrink-0">
@@ -482,7 +496,8 @@ foreach ($combined as $row) {
                                         <div>
                                             <div class="flex justify-between items-center mb-2">
                                                 <label for="swp_years"
-                                                    class="text-sm font-semibold text-gray-700">Withdrawal Duration</label>
+                                                    class="text-sm font-semibold text-gray-700">Withdrawal
+                                                    Duration</label>
                                                 <span
                                                     class="text-xs font-medium text-rose-600 bg-rose-50 px-2 py-1 rounded">Years
                                                     to withdraw</span>
@@ -515,8 +530,8 @@ foreach ($combined as $row) {
                                             </div>
                                             <div class="flex items-center gap-4">
                                                 <div class="flex-grow">
-                                                    <input type="range" id="swp_stepup_range" min="0" max="20" step="0.5"
-                                                        value="<?= htmlspecialchars((string) $swp_stepup) ?>"
+                                                    <input type="range" id="swp_stepup_range" min="0" max="20"
+                                                        step="0.5" value="<?= htmlspecialchars((string) $swp_stepup) ?>"
                                                         class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
                                                 </div>
                                                 <div class="input-group w-32 shrink-0">
@@ -543,7 +558,7 @@ foreach ($combined as $row) {
                             </div>
                         </form>
                     </div>
-                </div>      <!-- Chart and Summary Section -->
+                </div> <!-- Chart and Summary Section -->
                 <div class="lg:col-span-2 space-y-6">
                     <!-- Summary Metrics -->
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -586,7 +601,8 @@ foreach ($combined as $row) {
                     <div id="results-table" class="glass-card overflow-hidden">
                         <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                             <h2 class="text-2xl font-bold flex items-center gap-2">
-                                <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
                                     </path>
@@ -614,7 +630,8 @@ foreach ($combined as $row) {
                         </div>
                         <div class="overflow-x-auto max-h-[600px] overflow-y-auto custom-scrollbar">
                             <table class="w-full text-sm text-left relative">
-                                <thead class="bg-gray-50 text-xs uppercase font-semibold text-gray-500 sticky top-0 z-10 shadow-sm">
+                                <thead
+                                    class="bg-gray-50 text-xs uppercase font-semibold text-gray-500 sticky top-0 z-10 shadow-sm">
                                     <tr>
                                         <th class="px-6 py-3 bg-gray-50">Year</th>
                                         <th class="px-6 py-3 text-right bg-gray-50">Start Corpus</th>
