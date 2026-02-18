@@ -326,16 +326,18 @@ foreach ($combined as $row) {
                                         class="flex items-center gap-2 text-lg font-bold text-indigo-900 mb-3 w-full">
                                         <span
                                             class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 text-sm font-bold ring-4 ring-white">1</span>
-                                        Accumulation Phase (SIP)
+                                        SIP
                                     </legend>
 
                                     <div class="space-y-3">
                                         <!-- Monthly Investment -->
                                         <div>
                                             <div class="flex justify-between items-center mb-1">
-                                                <label for="sip" class="text-sm font-semibold text-gray-700 m-0">Monthly Investment</label>
+                                                <label for="sip" class="text-sm font-semibold text-gray-700 m-0">Monthly
+                                                    Investment</label>
                                                 <div class="input-group w-28 shrink-0">
-                                                    <span class="currency-symbol absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹</span>
+                                                    <span
+                                                        class="currency-symbol absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹</span>
                                                     <input type="number" id="sip" name="sip"
                                                         class="w-full pl-8 pr-3 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
                                                         required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
@@ -349,12 +351,16 @@ foreach ($combined as $row) {
                                         <!-- Investment Duration -->
                                         <div>
                                             <div class="flex justify-between items-center mb-1">
-                                                <label for="years" class="text-sm font-semibold text-gray-700 m-0">Investment Duration</label>
+                                                <label for="years"
+                                                    class="text-sm font-semibold text-gray-700 m-0">Investment
+                                                    Duration</label>
                                                 <div class="input-group w-28 shrink-0">
                                                     <input type="number" id="years" name="years"
                                                         class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
-                                                        required min="1" value="<?= htmlspecialchars((string) $years) ?>">
-                                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">Yrs</span>
+                                                        required min="1"
+                                                        value="<?= htmlspecialchars((string) $years) ?>">
+                                                    <span
+                                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">Yrs</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="years_range" min="1" max="50" step="1"
@@ -365,12 +371,16 @@ foreach ($combined as $row) {
                                         <!-- Expected Return -->
                                         <div>
                                             <div class="flex justify-between items-center mb-1">
-                                                <label for="rate" class="text-sm font-semibold text-gray-700 m-0">Expected Return</label>
+                                                <label for="rate"
+                                                    class="text-sm font-semibold text-gray-700 m-0">Expected
+                                                    Return</label>
                                                 <div class="input-group w-28 shrink-0">
                                                     <input type="number" id="rate" step="0.1" name="rate"
                                                         class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
-                                                        required min="0" value="<?= htmlspecialchars((string) $rate) ?>">
-                                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">%</span>
+                                                        required min="0"
+                                                        value="<?= htmlspecialchars((string) $rate) ?>">
+                                                    <span
+                                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">%</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="rate_range" min="1" max="30" step="0.1"
@@ -381,12 +391,16 @@ foreach ($combined as $row) {
                                         <!-- Annual Step-up -->
                                         <div>
                                             <div class="flex justify-between items-center mb-1">
-                                                <label for="stepup" class="text-sm font-semibold text-gray-700 m-0">Yearly Step-up</label>
+                                                <label for="stepup"
+                                                    class="text-sm font-semibold text-gray-700 m-0">Yearly
+                                                    Step-up</label>
                                                 <div class="input-group w-28 shrink-0">
                                                     <input type="number" id="stepup" step="1" name="stepup"
                                                         class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
-                                                        required min="0" value="<?= htmlspecialchars((string) $stepup) ?>">
-                                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">%</span>
+                                                        required min="0"
+                                                        value="<?= htmlspecialchars((string) $stepup) ?>">
+                                                    <span
+                                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">%</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="stepup_range" min="0" max="50" step="1"
@@ -411,7 +425,7 @@ foreach ($combined as $row) {
                                         <div class="flex items-center gap-2">
                                             <span
                                                 class="flex items-center justify-center w-8 h-8 rounded-full bg-rose-100 text-rose-600 text-sm font-bold ring-4 ring-white">2</span>
-                                            Withdrawal Phase (SWP)
+                                            SWP
                                         </div>
                                         <label class="toggle-switch relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" id="enable_swp" name="enable_swp" checked
@@ -426,28 +440,37 @@ foreach ($combined as $row) {
                                         <!-- Monthly Withdrawal -->
                                         <div>
                                             <div class="flex justify-between items-center mb-1">
-                                                <label for="swp_withdrawal" class="text-sm font-semibold text-gray-700 m-0">Monthly Withdrawal</label>
+                                                <label for="swp_withdrawal"
+                                                    class="text-sm font-semibold text-gray-700 m-0">Monthly
+                                                    Withdrawal</label>
                                                 <div class="input-group w-28 shrink-0">
-                                                    <span class="currency-symbol absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹</span>
-                                                    <input type="number" id="swp_withdrawal" step="500" name="swp_withdrawal"
+                                                    <span
+                                                        class="currency-symbol absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹</span>
+                                                    <input type="number" id="swp_withdrawal" step="500"
+                                                        name="swp_withdrawal"
                                                         class="w-full pl-8 pr-3 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 font-semibold text-gray-900"
-                                                        required min="0" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
+                                                        required min="0"
+                                                        value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
                                                 </div>
                                             </div>
-                                            <input type="range" id="swp_withdrawal_range" min="1000" max="200000" step="500"
-                                                value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
+                                            <input type="range" id="swp_withdrawal_range" min="1000" max="200000"
+                                                step="500" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
                                                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
                                         </div>
 
                                         <!-- Withdrawal Duration -->
                                         <div>
                                             <div class="flex justify-between items-center mb-1">
-                                                <label for="swp_years" class="text-sm font-semibold text-gray-700 m-0">Withdrawal Duration</label>
+                                                <label for="swp_years"
+                                                    class="text-sm font-semibold text-gray-700 m-0">Withdrawal
+                                                    Duration</label>
                                                 <div class="input-group w-28 shrink-0">
                                                     <input type="number" id="swp_years" name="swp_years"
                                                         class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 font-semibold text-gray-900"
-                                                        required min="1" value="<?= htmlspecialchars((string) $swp_years_input) ?>">
-                                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">Yrs</span>
+                                                        required min="1"
+                                                        value="<?= htmlspecialchars((string) $swp_years_input) ?>">
+                                                    <span
+                                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">Yrs</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="swp_years_range" min="1" max="50" step="1"
@@ -458,12 +481,16 @@ foreach ($combined as $row) {
                                         <!-- Withdrawal Hike -->
                                         <div>
                                             <div class="flex justify-between items-center mb-1">
-                                                <label for="swp_stepup" class="text-sm font-semibold text-gray-700 m-0">Withdrawal Hike</label>
+                                                <label for="swp_stepup"
+                                                    class="text-sm font-semibold text-gray-700 m-0">Withdrawal
+                                                    Hike</label>
                                                 <div class="input-group w-28 shrink-0">
                                                     <input type="number" id="swp_stepup" step="0.1" name="swp_stepup"
                                                         class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 font-semibold text-gray-900"
-                                                        required min="0" value="<?= htmlspecialchars((string) $swp_stepup) ?>">
-                                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">%</span>
+                                                        required min="0"
+                                                        value="<?= htmlspecialchars((string) $swp_stepup) ?>">
+                                                    <span
+                                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">%</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="swp_stepup_range" min="0" max="20" step="0.5"
