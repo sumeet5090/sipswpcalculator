@@ -102,9 +102,6 @@ select:focus {
     box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
 }
 
-line-height: 1.1;
-}
-
 /* 3. Components */
 
 /* Elegant Card */
@@ -450,16 +447,23 @@ input[type=range]::-webkit-slider-thumb {
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    background: #4f46e5;
+    background: #10b981;
+    /* Emerald 500 */
     cursor: pointer;
     margin-top: -8px;
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-    transition: transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+    transition: transform 0.2s;
 }
 
-input[type=range]::-webkit-slider-thumb:hover {
+input[type=range]:active::-webkit-slider-thumb {
+    transform: scale(1.4);
+    background: #10b981;
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.2);
+}
+
+input[type=range]:hover::-webkit-slider-thumb {
     transform: scale(1.1);
-    box-shadow: 0 0 0 6px rgba(79, 70, 229, 0.15);
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.15);
 }
 
 input[type=range]::-moz-range-thumb {
@@ -467,15 +471,49 @@ input[type=range]::-moz-range-thumb {
     width: 20px;
     border: none;
     border-radius: 50%;
-    background: #4f46e5;
+    background: #10b981;
     cursor: pointer;
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-    transition: transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+    transition: transform 0.2s;
 }
 
-input[type=range]::-moz-range-thumb:hover {
+input[type=range]:active::-moz-range-thumb {
+    transform: scale(1.4);
+    background: #10b981;
+}
+
+input[type=range]:hover::-moz-range-thumb {
     transform: scale(1.1);
-    box-shadow: 0 0 0 6px rgba(79, 70, 229, 0.15);
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.15);
+}
+
+/* SWP Rose Variant (overrides Emerald) */
+.accent-rose-500::-webkit-slider-thumb {
+    background: #fb7185;
+    /* Rose 400 */
+    box-shadow: 0 0 0 4px rgba(251, 113, 133, 0.1);
+}
+
+.accent-rose-500:active::-webkit-slider-thumb {
+    background: #fb7185;
+    box-shadow: 0 0 0 8px rgba(251, 113, 133, 0.2);
+}
+
+.accent-rose-500:hover::-webkit-slider-thumb {
+    box-shadow: 0 0 0 6px rgba(251, 113, 133, 0.15);
+}
+
+.accent-rose-500::-moz-range-thumb {
+    background: #fb7185;
+    box-shadow: 0 0 0 4px rgba(251, 113, 133, 0.1);
+}
+
+.accent-rose-500:active::-moz-range-thumb {
+    background: #fb7185;
+}
+
+.accent-rose-500:hover::-moz-range-thumb {
+    box-shadow: 0 0 0 6px rgba(251, 113, 133, 0.15);
 }
 
 /* Track Styles */
@@ -662,81 +700,6 @@ input[type=range]::-moz-range-track {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-}
-
-/* --- Tier-1 Semantic Refinements --- */
-
-/* Magnetic Range Slider */
-input[type=range] {
-    -webkit-appearance: none;
-    width: 100%;
-    background: transparent;
-    cursor: pointer;
-    height: 24px;
-    /* Increases touch target */
-    margin-top: -4px;
-}
-
-input[type=range]:focus {
-    outline: none;
-}
-
-/* Webkit Thumb */
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: #10b981;
-    /* Emerald 500 */
-    cursor: pointer;
-    margin-top: -6px;
-    /* Centers thumb on track */
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Track */
-input[type=range]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 4px;
-    cursor: pointer;
-    background: #334155;
-    /* Slate 700 */
-    border-radius: 2px;
-    transition: background 0.3s ease;
-}
-
-/* Hover State */
-input[type=range]:hover::-webkit-slider-thumb {
-    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.1);
-    transform: scale(1.1);
-}
-
-/* Active/Magnetic State */
-input[type=range]:active::-webkit-slider-thumb {
-    height: 24px;
-    width: 24px;
-    margin-top: -10px;
-    background: #34d399;
-    /* Emerald 400 */
-    box-shadow: 0 0 0 12px rgba(16, 185, 129, 0.2);
-}
-
-/* Rose Slider for SWP */
-.accent-rose input[type=range]::-webkit-slider-thumb {
-    background: #f43f5e;
-    /* Rose 500 */
-}
-
-.accent-rose input[type=range]:hover::-webkit-slider-thumb {
-    box-shadow: 0 0 0 8px rgba(244, 63, 94, 0.1);
-}
-
-.accent-rose input[type=range]:active::-webkit-slider-thumb {
-    background: #fb7185;
-    /* Rose 400 */
-    box-shadow: 0 0 0 12px rgba(244, 63, 94, 0.2);
 }
 
 /* Transitions */
