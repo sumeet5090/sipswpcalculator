@@ -317,7 +317,7 @@ function updateTable(data, enableSwp) {
 
     data.forEach(row => {
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-white/5 border-b border-white/5 transition-colors text-slate-300";
+        tr.className = "hover:bg-slate-50 border-b border-slate-100 transition-colors";
 
         // Helper for currency
         const fmt = (v) => v !== null ? formatCurrency(v) : '-';
@@ -326,19 +326,19 @@ function updateTable(data, enableSwp) {
         let swpCols = '';
         if (enableSwp) {
             swpCols = `
-                <td class="px-6 py-4 text-right text-rose-400 font-medium">${fmt(row.annual_withdrawal)}</td>
-                <td class="px-6 py-4 text-right text-slate-400">${fmt(row.cumulative_withdrawals)}</td>
+                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono">${fmt(row.annual_withdrawal)}</td>
+                <td class="px-6 py-4 text-right text-slate-500 font-mono">${fmt(row.cumulative_withdrawals)}</td>
             `;
         }
 
         tr.innerHTML = `
-            <td class="px-6 py-4 font-medium text-slate-400">${row.year}</td>
-            <td class="px-6 py-4 text-right">${formatCurrency(row.begin_balance)}</td>
-            <td class="px-6 py-4 text-right text-emerald-400">${formatCurrency(row.annual_contribution)}</td>
-            <td class="px-6 py-4 text-right text-slate-400">${formatCurrency(row.cumulative_invested)}</td>
+            <td class="px-6 py-4 font-medium text-slate-700">${row.year}</td>
+            <td class="px-6 py-4 text-right font-mono text-slate-600">${formatCurrency(row.begin_balance)}</td>
+            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">${formatCurrency(row.annual_contribution)}</td>
+            <td class="px-6 py-4 text-right text-slate-500 font-mono">${formatCurrency(row.cumulative_invested)}</td>
             ${swpCols}
-            <td class="px-6 py-4 text-right text-emerald-400 font-medium">${formatCurrency(row.interest)}</td>
-            <td class="px-6 py-4 text-right font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">${formatCurrency(row.combined_total)}</td>
+            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">${formatCurrency(row.interest)}</td>
+            <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">${formatCurrency(row.combined_total)}</td>
         `;
 
         tbody.appendChild(tr);
