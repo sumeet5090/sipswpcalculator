@@ -12,7 +12,7 @@ if ($current_page == 'swp-heatmap.php')
 ?>
 
 <nav
-    class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-white/5 bg-slate-900/80 backdrop-blur-md transition-all duration-300">
+    class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/80 backdrop-blur-md transition-all duration-300 shadow-sm">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between p-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse group">
             <div
@@ -23,11 +23,11 @@ if ($current_page == 'swp-heatmap.php')
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path>
                 </svg>
             </div>
-            <span class="self-center text-xl font-bold whitespace-nowrap text-slate-100 tracking-tight">SIP<span
-                    class="text-emerald-400">Calculator</span></span>
+            <span class="self-center text-xl font-bold whitespace-nowrap text-slate-800 tracking-tight">SIP<span
+                    class="text-emerald-600">Calculator</span></span>
         </a>
         <button data-collapse-toggle="navbar-default" type="button"
-            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-slate-400 rounded-lg md:hidden hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-700"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-slate-500 rounded-lg md:hidden hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-200"
             aria-controls="navbar-default" aria-expanded="false"
             onclick="document.getElementById('navbar-default').classList.toggle('hidden')">
             <span class="sr-only">Open main menu</span>
@@ -38,25 +38,25 @@ if ($current_page == 'swp-heatmap.php')
         </button>
         <div class="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul
-                class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-slate-700 rounded-xl md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
+                class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-slate-100 rounded-xl md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
                 <li>
                     <a href="/"
-                        class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'index.php') ? 'text-emerald-400 md:bg-transparent md:text-emerald-400 md:font-bold' : 'text-slate-300 hover:bg-slate-800 md:hover:bg-transparent md:hover:text-emerald-400' ?>"
+                        class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'index.php') ? 'text-emerald-600 md:bg-transparent md:text-emerald-600 md:font-bold' : 'text-slate-600 hover:bg-slate-100 md:hover:bg-transparent md:hover:text-emerald-600' ?>"
                         aria-current="page">Calculator</a>
                 </li>
                 <li>
                     <a href="goal-reverser"
-                        class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'goal-reverser.php') ? 'text-emerald-400 md:bg-transparent md:text-emerald-400 md:font-bold' : 'text-slate-300 hover:bg-slate-800 md:hover:bg-transparent md:hover:text-emerald-400' ?>">Goal
+                        class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'goal-reverser.php') ? 'text-emerald-600 md:bg-transparent md:text-emerald-600 md:font-bold' : 'text-slate-600 hover:bg-slate-100 md:hover:bg-transparent md:hover:text-emerald-600' ?>">Goal
                         Reverser</a>
                 </li>
                 <li>
                     <a href="sequence-risk-analyzer"
-                        class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'sequence-risk-analyzer.php') ? 'text-emerald-400 md:bg-transparent md:text-emerald-400 md:font-bold' : 'text-slate-300 hover:bg-slate-800 md:hover:bg-transparent md:hover:text-emerald-400' ?>">Risk
+                        class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'sequence-risk-analyzer.php') ? 'text-emerald-600 md:bg-transparent md:text-emerald-600 md:font-bold' : 'text-slate-600 hover:bg-slate-100 md:hover:bg-transparent md:hover:text-emerald-600' ?>">Risk
                         Analyzer</a>
                 </li>
                 <li>
                     <a href="swp-heatmap"
-                        class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'swp-heatmap.php') ? 'text-emerald-400 md:bg-transparent md:text-emerald-400 md:font-bold' : 'text-slate-300 hover:bg-slate-800 md:hover:bg-transparent md:hover:text-emerald-400' ?>">SWP
+                        class="block py-2 px-4 rounded-lg md:p-0 transition-all duration-200 <?= ($current_page == 'swp-heatmap.php') ? 'text-emerald-600 md:bg-transparent md:text-emerald-600 md:font-bold' : 'text-slate-600 hover:bg-slate-100 md:hover:bg-transparent md:hover:text-emerald-600' ?>">SWP
                         Heatmap</a>
                 </li>
             </ul>

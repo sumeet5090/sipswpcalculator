@@ -335,12 +335,12 @@ foreach ($combined as $row) {
                                         <div class="group">
                                             <div class="flex justify-between items-end mb-3">
                                                 <label for="sip"
-                                                    class="text-sm font-medium text-slate-400 tracking-wide">Monthly
+                                                    class="text-sm font-medium text-slate-600 tracking-wide">Monthly
                                                     Investment</label>
                                                 <div class="flex items-center gap-1">
                                                     <span class="text-xl font-bold text-slate-500">₹</span>
                                                     <input type="number" id="sip" name="sip"
-                                                        class="w-28 bg-transparent text-right text-2xl font-bold text-emerald-400 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-600 p-0"
+                                                        class="w-28 bg-transparent text-right text-2xl font-bold text-emerald-600 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-300 p-0"
                                                         required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
                                                 </div>
                                             </div>
@@ -361,10 +361,10 @@ foreach ($combined as $row) {
                                         <div class="group">
                                             <div class="flex justify-between items-end mb-3">
                                                 <label for="years"
-                                                    class="text-sm font-medium text-slate-400 tracking-wide">Duration</label>
+                                                    class="text-sm font-medium text-slate-600 tracking-wide">Duration</label>
                                                 <div class="flex items-center gap-1">
                                                     <input type="number" id="years" name="years"
-                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-emerald-400 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-600 p-0"
+                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-emerald-600 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-300 p-0"
                                                         required min="1"
                                                         value="<?= htmlspecialchars((string) $years) ?>">
                                                     <span class="text-lg font-bold text-slate-500">Yrs</span>
@@ -387,11 +387,11 @@ foreach ($combined as $row) {
                                         <div class="group">
                                             <div class="flex justify-between items-end mb-3">
                                                 <label for="rate"
-                                                    class="text-sm font-medium text-slate-400 tracking-wide">Expected
+                                                    class="text-sm font-medium text-slate-600 tracking-wide">Expected
                                                     Return</label>
                                                 <div class="flex items-center gap-1">
                                                     <input type="number" id="rate" step="0.1" name="rate"
-                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-emerald-400 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-600 p-0"
+                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-emerald-600 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-300 p-0"
                                                         required min="0"
                                                         value="<?= htmlspecialchars((string) $rate) ?>">
                                                     <span class="text-lg font-bold text-slate-500">%</span>
@@ -406,11 +406,11 @@ foreach ($combined as $row) {
                                         <div class="group">
                                             <div class="flex justify-between items-end mb-3">
                                                 <label for="stepup"
-                                                    class="text-sm font-medium text-slate-400 tracking-wide">Yearly
+                                                    class="text-sm font-medium text-slate-600 tracking-wide">Yearly
                                                     Step-up</label>
                                                 <div class="flex items-center gap-1">
                                                     <input type="number" id="stepup" step="1" name="stepup"
-                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-emerald-400 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-600 p-0"
+                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-emerald-600 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-300 p-0"
                                                         required min="0"
                                                         value="<?= htmlspecialchars((string) $stepup) ?>">
                                                     <span class="text-lg font-bold text-slate-500">%</span>
@@ -453,13 +453,13 @@ foreach ($combined as $row) {
                                         <div class="group">
                                             <div class="flex justify-between items-end mb-3">
                                                 <label for="swp_withdrawal"
-                                                    class="text-sm font-medium text-slate-400 tracking-wide">Monthly
+                                                    class="text-sm font-medium text-slate-600 tracking-wide">Monthly
                                                     Withdrawal</label>
                                                 <div class="flex items-center gap-1">
                                                     <span class="text-xl font-bold text-slate-500">₹</span>
                                                     <input type="number" id="swp_withdrawal" step="500"
                                                         name="swp_withdrawal"
-                                                        class="w-28 bg-transparent text-right text-2xl font-bold text-rose-400 focus:outline-none focus:border-b-2 focus:border-rose-500 transition-all border-b border-dashed border-slate-600 p-0"
+                                                        class="w-28 bg-transparent text-right text-2xl font-bold text-rose-600 focus:outline-none focus:border-b-2 focus:border-rose-500 transition-all border-b border-dashed border-slate-300 p-0"
                                                         required min="0"
                                                         value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
                                                 </div>
@@ -481,10 +481,10 @@ foreach ($combined as $row) {
                                         <div class="group">
                                             <div class="flex justify-between items-end mb-3">
                                                 <label for="swp_years"
-                                                    class="text-sm font-medium text-slate-400 tracking-wide">Duration</label>
+                                                    class="text-sm font-medium text-slate-600 tracking-wide">Duration</label>
                                                 <div class="flex items-center gap-1">
                                                     <input type="number" id="swp_years" name="swp_years"
-                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-rose-400 focus:outline-none focus:border-b-2 focus:border-rose-500 transition-all border-b border-dashed border-slate-600 p-0"
+                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-rose-600 focus:outline-none focus:border-b-2 focus:border-rose-500 transition-all border-b border-dashed border-slate-300 p-0"
                                                         required min="1"
                                                         value="<?= htmlspecialchars((string) $swp_years_input) ?>">
                                                     <span class="text-lg font-bold text-slate-500">Yrs</span>
@@ -507,11 +507,11 @@ foreach ($combined as $row) {
                                         <div class="group">
                                             <div class="flex justify-between items-end mb-3">
                                                 <label for="swp_stepup"
-                                                    class="text-sm font-medium text-slate-400 tracking-wide">Withdrawal
+                                                    class="text-sm font-medium text-slate-600 tracking-wide">Withdrawal
                                                     Hike</label>
                                                 <div class="flex items-center gap-1">
                                                     <input type="number" id="swp_stepup" step="0.1" name="swp_stepup"
-                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-rose-400 focus:outline-none focus:border-b-2 focus:border-rose-500 transition-all border-b border-dashed border-slate-600 p-0"
+                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-rose-600 focus:outline-none focus:border-b-2 focus:border-rose-500 transition-all border-b border-dashed border-slate-300 p-0"
                                                         required min="0"
                                                         value="<?= htmlspecialchars((string) $swp_stepup) ?>">
                                                     <span class="text-lg font-bold text-slate-500">%</span>
@@ -556,28 +556,28 @@ foreach ($combined as $row) {
 
                             <!-- Key Metrics Row -->
                             <div
-                                class="relative z-10 flex flex-wrap justify-center gap-6 md:gap-16 mb-8 p-4 rounded-2xl bg-slate-800/30 border border-white/5 inline-flex backdrop-blur-md items-center">
+                                class="relative z-10 flex flex-wrap justify-center gap-6 md:gap-16 mb-8 p-4 rounded-2xl bg-slate-50 border border-slate-200 inline-flex backdrop-blur-md items-center shadow-sm">
                                 <div class="text-center">
                                     <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
                                         Total Invested</div>
-                                    <div class="text-lg md:text-xl font-bold text-slate-200" id="summary-invested">₹ 0
+                                    <div class="text-lg md:text-xl font-bold text-slate-900" id="summary-invested">₹ 0
                                     </div>
                                 </div>
-                                <div class="text-center border-l border-white/10 pl-6 md:pl-16">
+                                <div class="text-center border-l border-slate-200 pl-6 md:pl-16">
                                     <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
                                         Wealth Gained</div>
-                                    <div class="text-lg md:text-xl font-bold text-emerald-400 shadow-emerald-500/50"
-                                        id="summary-interest">₹ 0</div>
+                                    <div class="text-lg md:text-xl font-bold text-emerald-600" id="summary-interest">₹ 0
+                                    </div>
                                 </div>
-                                <div class="text-center border-l border-white/10 pl-6 md:pl-16">
+                                <div class="text-center border-l border-slate-200 pl-6 md:pl-16">
                                     <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
                                         Total Withdrawn</div>
-                                    <div class="text-lg md:text-xl font-bold text-rose-400" id="summary-withdrawn">₹ 0
+                                    <div class="text-lg md:text-xl font-bold text-rose-600" id="summary-withdrawn">₹ 0
                                     </div>
                                 </div>
                                 <!-- Donut Chart Integration -->
                                 <div
-                                    class="w-full md:w-auto md:border-l md:border-white/10 mt-6 md:mt-0 md:pl-6 flex justify-center">
+                                    class="w-full md:w-auto md:border-l md:border-slate-200 mt-6 md:mt-0 md:pl-6 flex justify-center">
                                     <div class="h-24 w-24 md:h-16 md:w-16">
                                         <canvas id="allocationChart"></canvas>
                                     </div>
@@ -623,18 +623,33 @@ foreach ($combined as $row) {
                         <div class="glass-card overflow-hidden border border-slate-200 shadow-sm">
                             <div class="overflow-x-auto max-h-[600px] overflow-y-auto custom-scrollbar">
                                 <table class="w-full text-sm text-left relative">
-                                    <thead class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 sticky top-0 z-10">
+                                    <thead
+                                        class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 sticky top-0 z-10">
                                         <tr>
                                             <th class="px-6 py-4 bg-slate-50/95 border-b border-slate-200">Year</th>
-                                            <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200">Start Corpus</th>
-                                            <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600">Annual SIP</th>
-                                            <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200">Total Invested</th>
+                                            <th
+                                                class="px-6 py-4 bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
+                                                Start Corpus</th>
+                                            <th
+                                                class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">
+                                                Annual SIP</th>
+                                            <th
+                                                class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
+                                                Total Invested</th>
                                             <?php if ($enable_swp): ?>
-                                                <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500">Annual SWP</th>
-                                                <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500">Total Withdrawn</th>
+                                                <th
+                                                    class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap">
+                                                    Annual SWP</th>
+                                                <th
+                                                    class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap">
+                                                    Total Withdrawn</th>
                                             <?php endif; ?>
-                                            <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600">Interest</th>
-                                            <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800">End Corpus</th>
+                                            <th
+                                                class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">
+                                                Interest</th>
+                                            <th
+                                                class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">
+                                                End Corpus</th>
                                         </tr>
                                     </thead>
                                     <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
