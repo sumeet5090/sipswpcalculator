@@ -253,7 +253,7 @@ foreach ($combined as $row) {
     </script>
 </head>
 
-<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+<body class="font-sans antialiased text-slate-200">
     <?php include 'navbar.php'; ?>
     <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
 
@@ -320,91 +320,105 @@ foreach ($combined as $row) {
                             <!-- Step 1: Accumulation Phase -->
                             <div class="relative">
                                 <fieldset
-                                    class="mb-4 relative z-10 bg-white/50 p-4 rounded-2xl border border-indigo-100 shadow-sm">
+                                    class="mb-4 relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
                                     <legend
-                                        class="flex items-center gap-2 text-lg font-bold text-indigo-900 mb-3 w-full">
-                                        <span
-                                            class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 text-sm font-bold ring-4 ring-white">1</span>
-                                        SIP
+                                        class="flex items-center gap-3 text-lg font-bold text-emerald-400 mb-6 w-full tracking-tight">
+                                        <div
+                                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] ring-1 ring-emerald-500/50">
+                                            1
+                                        </div>
+                                        SIP Details
                                     </legend>
 
-                                    <div class="space-y-3">
+                                    <div class="space-y-6">
                                         <!-- Monthly Investment -->
-                                        <div>
-                                            <div class="flex justify-between items-center mb-1">
-                                                <label for="sip" class="text-sm font-semibold text-gray-700 m-0">Monthly
+                                        <div class="group">
+                                            <div class="flex justify-between items-end mb-3">
+                                                <label for="sip"
+                                                    class="text-sm font-medium text-slate-400 tracking-wide">Monthly
                                                     Investment</label>
-                                                <div class="input-group w-28 shrink-0">
+                                                <div class="flex items-center gap-1">
+                                                    <span class="text-xl font-bold text-slate-500">₹</span>
                                                     <input type="number" id="sip" name="sip"
-                                                        class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
+                                                        class="w-28 bg-transparent text-right text-2xl font-bold text-emerald-400 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-600 p-0"
                                                         required min="1" value="<?= htmlspecialchars((string) $sip) ?>">
-                                                    <span
-                                                        class="currency-symbol absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="sip_range" min="500" max="100000" step="500"
                                                 value="<?= htmlspecialchars((string) $sip) ?>"
-                                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                                                class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition-all">
+                                            <div class="flex gap-2 mt-3 overflow-x-auto pb-1 no-scrollbar">
+                                                <button type="button" onclick="adjustValue('sip', 500)"
+                                                    class="px-3 py-1 text-xs font-semibold text-emerald-400/80 bg-emerald-500/10 border border-emerald-500/20 rounded-full hover:bg-emerald-500/20 transition-colors whitespace-nowrap">+500</button>
+                                                <button type="button" onclick="adjustValue('sip', 1000)"
+                                                    class="px-3 py-1 text-xs font-semibold text-emerald-400/80 bg-emerald-500/10 border border-emerald-500/20 rounded-full hover:bg-emerald-500/20 transition-colors whitespace-nowrap">+1k</button>
+                                                <button type="button" onclick="adjustValue('sip', 5000)"
+                                                    class="px-3 py-1 text-xs font-semibold text-emerald-400/80 bg-emerald-500/10 border border-emerald-500/20 rounded-full hover:bg-emerald-500/20 transition-colors whitespace-nowrap">+5k</button>
+                                            </div>
                                         </div>
 
                                         <!-- Investment Duration -->
-                                        <div>
-                                            <div class="flex justify-between items-center mb-1">
+                                        <div class="group">
+                                            <div class="flex justify-between items-end mb-3">
                                                 <label for="years"
-                                                    class="text-sm font-semibold text-gray-700 m-0">Investment
-                                                    Duration</label>
-                                                <div class="input-group w-28 shrink-0">
+                                                    class="text-sm font-medium text-slate-400 tracking-wide">Duration</label>
+                                                <div class="flex items-center gap-1">
                                                     <input type="number" id="years" name="years"
-                                                        class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
+                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-emerald-400 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-600 p-0"
                                                         required min="1"
                                                         value="<?= htmlspecialchars((string) $years) ?>">
-                                                    <span
-                                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">Yrs</span>
+                                                    <span class="text-lg font-bold text-slate-500">Yrs</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="years_range" min="1" max="50" step="1"
                                                 value="<?= htmlspecialchars((string) $years) ?>"
-                                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                                                class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition-all">
+                                            <div class="flex gap-2 mt-3">
+                                                <button type="button" onclick="adjustValue('years', 1)"
+                                                    class="px-3 py-1 text-xs font-semibold text-slate-400 bg-slate-700/30 border border-slate-600 rounded-full hover:bg-slate-700/50 transition-colors">+1
+                                                    Yr</button>
+                                                <button type="button" onclick="adjustValue('years', 5)"
+                                                    class="px-3 py-1 text-xs font-semibold text-slate-400 bg-slate-700/30 border border-slate-600 rounded-full hover:bg-slate-700/50 transition-colors">+5
+                                                    Yrs</button>
+                                            </div>
                                         </div>
 
                                         <!-- Expected Return -->
-                                        <div>
-                                            <div class="flex justify-between items-center mb-1">
+                                        <div class="group">
+                                            <div class="flex justify-between items-end mb-3">
                                                 <label for="rate"
-                                                    class="text-sm font-semibold text-gray-700 m-0">Expected
+                                                    class="text-sm font-medium text-slate-400 tracking-wide">Expected
                                                     Return</label>
-                                                <div class="input-group w-28 shrink-0">
+                                                <div class="flex items-center gap-1">
                                                     <input type="number" id="rate" step="0.1" name="rate"
-                                                        class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
+                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-emerald-400 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-600 p-0"
                                                         required min="0"
                                                         value="<?= htmlspecialchars((string) $rate) ?>">
-                                                    <span
-                                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">%</span>
+                                                    <span class="text-lg font-bold text-slate-500">%</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="rate_range" min="1" max="30" step="0.1"
                                                 value="<?= htmlspecialchars((string) $rate) ?>"
-                                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                                                class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition-all">
                                         </div>
 
                                         <!-- Annual Step-up -->
-                                        <div>
-                                            <div class="flex justify-between items-center mb-1">
+                                        <div class="group">
+                                            <div class="flex justify-between items-end mb-3">
                                                 <label for="stepup"
-                                                    class="text-sm font-semibold text-gray-700 m-0">Yearly
+                                                    class="text-sm font-medium text-slate-400 tracking-wide">Yearly
                                                     Step-up</label>
-                                                <div class="input-group w-28 shrink-0">
+                                                <div class="flex items-center gap-1">
                                                     <input type="number" id="stepup" step="1" name="stepup"
-                                                        class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold text-gray-900"
+                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-emerald-400 focus:outline-none focus:border-b-2 focus:border-emerald-500 transition-all border-b border-dashed border-slate-600 p-0"
                                                         required min="0"
                                                         value="<?= htmlspecialchars((string) $stepup) ?>">
-                                                    <span
-                                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">%</span>
+                                                    <span class="text-lg font-bold text-slate-500">%</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="stepup_range" min="0" max="50" step="1"
                                                 value="<?= htmlspecialchars((string) $stepup) ?>"
-                                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                                                class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition-all">
                                         </div>
                                     </div>
                                 </fieldset>
@@ -415,83 +429,97 @@ foreach ($combined as $row) {
                             <!-- Step 2: Withdrawal Phase -->
                             <div class="relative">
                                 <fieldset
-                                    class="relative z-10 bg-white/50 p-4 rounded-2xl border border-rose-100 shadow-sm">
+                                    class="relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
                                     <legend
-                                        class="flex items-center justify-between w-full mb-3 text-lg font-bold text-rose-900">
-                                        <div class="flex items-center gap-2">
-                                            <span
-                                                class="flex items-center justify-center w-8 h-8 rounded-full bg-rose-100 text-rose-600 text-sm font-bold ring-4 ring-white">2</span>
-                                            SWP
+                                        class="flex items-center justify-between w-full mb-6 text-lg font-bold text-rose-400 tracking-tight">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="flex items-center justify-center w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 shadow-[0_0_15px_rgba(244,63,94,0.3)] ring-1 ring-rose-500/50">
+                                                2
+                                            </div>
+                                            SWP Details
                                         </div>
                                         <label class="toggle-switch relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" id="enable_swp" name="enable_swp" checked
                                                 onchange="toggleSwpFields()" class="sr-only peer">
                                             <div
-                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-rose-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-rose-600">
+                                                class="w-11 h-6 bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-rose-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-rose-500">
                                             </div>
                                         </label>
                                     </legend>
 
-                                    <div id="swp-fields" class="space-y-3 transition-all duration-300">
+                                    <div id="swp-fields" class="space-y-6 transition-all duration-300">
                                         <!-- Monthly Withdrawal -->
-                                        <div>
-                                            <div class="flex justify-between items-center mb-1">
+                                        <div class="group">
+                                            <div class="flex justify-between items-end mb-3">
                                                 <label for="swp_withdrawal"
-                                                    class="text-sm font-semibold text-gray-700 m-0">Monthly
+                                                    class="text-sm font-medium text-slate-400 tracking-wide">Monthly
                                                     Withdrawal</label>
-                                                <div class="input-group w-28 shrink-0">
+                                                <div class="flex items-center gap-1">
+                                                    <span class="text-xl font-bold text-slate-500">₹</span>
                                                     <input type="number" id="swp_withdrawal" step="500"
                                                         name="swp_withdrawal"
-                                                        class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 font-semibold text-gray-900"
+                                                        class="w-28 bg-transparent text-right text-2xl font-bold text-rose-400 focus:outline-none focus:border-b-2 focus:border-rose-500 transition-all border-b border-dashed border-slate-600 p-0"
                                                         required min="0"
                                                         value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
-                                                    <span
-                                                        class="currency-symbol absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">₹</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="swp_withdrawal_range" min="1000" max="200000"
                                                 step="500" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
-                                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
+                                                class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-rose-500 hover:accent-rose-400 transition-all">
+                                            <div class="flex gap-2 mt-3 overflow-x-auto pb-1 no-scrollbar">
+                                                <button type="button" onclick="adjustValue('swp_withdrawal', 500)"
+                                                    class="px-3 py-1 text-xs font-semibold text-rose-400/80 bg-rose-500/10 border border-rose-500/20 rounded-full hover:bg-rose-500/20 transition-colors whitespace-nowrap">+500</button>
+                                                <button type="button" onclick="adjustValue('swp_withdrawal', 1000)"
+                                                    class="px-3 py-1 text-xs font-semibold text-rose-400/80 bg-rose-500/10 border border-rose-500/20 rounded-full hover:bg-rose-500/20 transition-colors whitespace-nowrap">+1k</button>
+                                                <button type="button" onclick="adjustValue('swp_withdrawal', 5000)"
+                                                    class="px-3 py-1 text-xs font-semibold text-rose-400/80 bg-rose-500/10 border border-rose-500/20 rounded-full hover:bg-rose-500/20 transition-colors whitespace-nowrap">+5k</button>
+                                            </div>
                                         </div>
 
                                         <!-- Withdrawal Duration -->
-                                        <div>
-                                            <div class="flex justify-between items-center mb-1">
+                                        <div class="group">
+                                            <div class="flex justify-between items-end mb-3">
                                                 <label for="swp_years"
-                                                    class="text-sm font-semibold text-gray-700 m-0">Withdrawal
-                                                    Duration</label>
-                                                <div class="input-group w-28 shrink-0">
+                                                    class="text-sm font-medium text-slate-400 tracking-wide">Duration</label>
+                                                <div class="flex items-center gap-1">
                                                     <input type="number" id="swp_years" name="swp_years"
-                                                        class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 font-semibold text-gray-900"
+                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-rose-400 focus:outline-none focus:border-b-2 focus:border-rose-500 transition-all border-b border-dashed border-slate-600 p-0"
                                                         required min="1"
                                                         value="<?= htmlspecialchars((string) $swp_years_input) ?>">
-                                                    <span
-                                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">Yrs</span>
+                                                    <span class="text-lg font-bold text-slate-500">Yrs</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="swp_years_range" min="1" max="50" step="1"
                                                 value="<?= htmlspecialchars((string) $swp_years_input) ?>"
-                                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
+                                                class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-rose-500 hover:accent-rose-400 transition-all">
+                                            <div class="flex gap-2 mt-3">
+                                                <button type="button" onclick="adjustValue('swp_years', 1)"
+                                                    class="px-3 py-1 text-xs font-semibold text-slate-400 bg-slate-700/30 border border-slate-600 rounded-full hover:bg-slate-700/50 transition-colors">+1
+                                                    Yr</button>
+                                                <button type="button" onclick="adjustValue('swp_years', 5)"
+                                                    class="px-3 py-1 text-xs font-semibold text-slate-400 bg-slate-700/30 border border-slate-600 rounded-full hover:bg-slate-700/50 transition-colors">+5
+                                                    Yrs</button>
+                                            </div>
                                         </div>
 
                                         <!-- Withdrawal Hike -->
-                                        <div>
-                                            <div class="flex justify-between items-center mb-1">
+                                        <div class="group">
+                                            <div class="flex justify-between items-end mb-3">
                                                 <label for="swp_stepup"
-                                                    class="text-sm font-semibold text-gray-700 m-0">Withdrawal
+                                                    class="text-sm font-medium text-slate-400 tracking-wide">Withdrawal
                                                     Hike</label>
-                                                <div class="input-group w-28 shrink-0">
+                                                <div class="flex items-center gap-1">
                                                     <input type="number" id="swp_stepup" step="0.1" name="swp_stepup"
-                                                        class="w-full pl-3 pr-12 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 font-semibold text-gray-900"
+                                                        class="w-20 bg-transparent text-right text-2xl font-bold text-rose-400 focus:outline-none focus:border-b-2 focus:border-rose-500 transition-all border-b border-dashed border-slate-600 p-0"
                                                         required min="0"
                                                         value="<?= htmlspecialchars((string) $swp_stepup) ?>">
-                                                    <span
-                                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm font-medium">%</span>
+                                                    <span class="text-lg font-bold text-slate-500">%</span>
                                                 </div>
                                             </div>
                                             <input type="range" id="swp_stepup_range" min="0" max="20" step="0.5"
                                                 value="<?= htmlspecialchars((string) $swp_stepup) ?>"
-                                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-rose-600">
+                                                class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-rose-500 hover:accent-rose-400 transition-all">
                                         </div>
                                     </div>
                                 </fieldset>
@@ -509,36 +537,49 @@ foreach ($combined as $row) {
                     </div>
                 </div> <!-- Chart and Summary Section -->
                 <div class="lg:col-span-2 space-y-6">
-                    <!-- Summary Metrics -->
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="glass-card p-4 text-center border-b-4 border-indigo-500">
-                            <div class="text-xs font-bold text-gray-500 uppercase tracking-wide">Total Invested</div>
-                            <div class="text-xl font-bold text-gray-900 mt-1" id="summary-invested">...</div>
-                        </div>
-                        <div class="glass-card p-4 text-center border-b-4 border-emerald-500">
-                            <div class="text-xs font-bold text-gray-500 uppercase tracking-wide">Est. Returns</div>
-                            <div class="text-xl font-bold text-emerald-600 mt-1" id="summary-interest">...</div>
-                        </div>
-                        <div class="glass-card p-4 text-center border-b-4 border-rose-500">
-                            <div class="text-xs font-bold text-gray-500 uppercase tracking-wide">Total Withdrawn</div>
-                            <div class="text-xl font-bold text-rose-600 mt-1" id="summary-withdrawn">...</div>
-                        </div>
-                        <div class="glass-card p-4 text-center border-b-4 border-purple-600">
-                            <div class="text-xs font-bold text-gray-500 uppercase tracking-wide">Final Value</div>
-                            <div class="text-xl font-bold text-purple-700 mt-1" id="summary-corpus">...</div>
-                        </div>
-                    </div>
+                    <!-- Hero Result & Chart Card -->
+                    <div
+                        class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10">
+                        <!-- Hero Header -->
+                        <div class="p-8 pb-0 text-center relative overflow-hidden">
+                            <!-- Background Glow -->
+                            <div
+                                class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-emerald-500/10 to-transparent opacity-50 pointer-events-none">
+                            </div>
 
-                    <div class="glass-card p-6">
-                        <h2 class="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
-                            <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z">
-                                </path>
-                            </svg>
-                            Your Wealth Trajectory
-                        </h2>
-                        <div class="h-[450px] w-full">
+                            <h2 class="relative z-10 text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-3">
+                                Projected Corpus Value</h2>
+                            <div class="relative z-10 text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 mb-8 tracking-tight drop-shadow-sm"
+                                id="summary-corpus">
+                                ₹ 0
+                            </div>
+
+                            <!-- Key Metrics Row -->
+                            <div
+                                class="relative z-10 flex flex-wrap justify-center gap-6 md:gap-16 mb-8 p-4 rounded-2xl bg-slate-800/30 border border-white/5 inline-flex backdrop-blur-md">
+                                <div class="text-center">
+                                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                                        Total Invested</div>
+                                    <div class="text-lg md:text-xl font-bold text-slate-200" id="summary-invested">₹ 0
+                                    </div>
+                                </div>
+                                <div class="text-center border-l border-white/10 pl-6 md:pl-16">
+                                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                                        Wealth Gained</div>
+                                    <div class="text-lg md:text-xl font-bold text-emerald-400 shadow-emerald-500/50"
+                                        id="summary-interest">₹ 0</div>
+                                </div>
+                                <div class="text-center border-l border-white/10 pl-6 md:pl-16">
+                                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                                        Total Withdrawn</div>
+                                    <div class="text-lg md:text-xl font-bold text-rose-400" id="summary-withdrawn">₹ 0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chart -->
+                        <div class="p-6 pt-0 h-[450px] w-full relative z-10">
                             <canvas id="corpusChart"></canvas>
                         </div>
                     </div>
@@ -547,10 +588,11 @@ foreach ($combined as $row) {
 
 
                     <!-- Moved Results Table -->
-                    <div id="results-table" class="glass-card overflow-hidden">
-                        <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-                            <h2 class="text-2xl font-bold flex items-center gap-2">
-                                <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor"
+                    <div id="results-table"
+                        class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl overflow-hidden mt-8">
+                        <div class="p-6 border-b border-white/5 flex justify-between items-center bg-slate-800/30">
+                            <h2 class="text-2xl font-bold flex items-center gap-2 text-slate-200">
+                                <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
@@ -560,32 +602,32 @@ foreach ($combined as $row) {
                             </h2>
                             <div class="flex gap-2">
                                 <button type="submit" name="action" value="download_csv" form="calculator-form"
-                                    class="btn-secondary text-sm px-4 py-2 flex items-center gap-2 transition-colors hover:text-indigo-600">
+                                    class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 hover:text-white transition-all">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                     </svg>
-                                    Download CSV
+                                    CSV
                                 </button>
                                 <button type="button" id="openPdfModalBtn"
-                                    class="btn-accent text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold shadow-sm hover:shadow-md transition-all">
+                                    class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
-                                    Generate PDF
+                                    PDF
                                 </button>
                             </div>
                         </div>
                         <div class="overflow-x-auto max-h-[600px] overflow-y-auto custom-scrollbar">
                             <table class="w-full text-sm text-left relative">
                                 <thead
-                                    class="bg-gray-50 text-xs uppercase font-semibold text-gray-500 sticky top-0 z-10 shadow-sm">
+                                    class="bg-slate-800/50 text-xs uppercase font-semibold text-slate-400 sticky top-0 z-10 backdrop-blur-md">
                                     <tr>
-                                        <th class="px-6 py-3 bg-gray-50">Year</th>
-                                        <th class="px-6 py-3 text-right bg-gray-50">Start Corpus</th>
-                                        <th class="px-6 py-3 text-right bg-gray-50">Annual SIP</th>
-                                        <th class="px-6 py-3 text-right bg-gray-50">Total Invested</th>
+                                        <th class="px-6 py-3 bg-slate-800/80">Year</th>
+                                        <th class="px-6 py-3 text-right bg-slate-800/80">Start Corpus</th>
+                                        <th class="px-6 py-3 text-right bg-slate-800/80">Annual SIP</th>
+                                        <th class="px-6 py-3 text-right bg-slate-800/80">Total Invested</th>
                                         <?php if ($enable_swp): ?>
                                             <th class="px-6 py-3 text-right bg-gray-50">Annual SWP</th>
                                             <th class="px-6 py-3 text-right bg-gray-50">Total Withdrawn</th>

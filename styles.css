@@ -3,33 +3,38 @@
 /* 1. Reset & Base */
 :root {
     /* Primary Brand Gradient */
-    --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    --gradient-primary: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    /* Deep Navy */
     /* Indigo to Violet */
-    --gradient-accent: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+    --gradient-accent: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    /* Emerald */
     /* Pink to Rose */
     --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
     /* Emerald */
-    --gradient-surface: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    --gradient-surface: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
 
     /* Colors */
-    --color-text-primary: #1e293b;
-    /* Slate 800 */
-    --color-text-secondary: #475569;
-    /* Slate 600 */
-    --color-border: #e2e8f0;
-    --color-bg: #f8fafc;
+    --color-text-primary: #f8fafc;
     /* Slate 50 */
+    --color-text-secondary: #94a3b8;
+    /* Slate 400 */
+    --color-border: #334155;
+    /* Slate 700 */
+    --color-bg: #020617;
+    /* Slate 950 */
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.15);
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+    --shadow-glow: 0 0 20px rgba(16, 185, 129, 0.15);
+    /* Emerald Glow */
 
     /* Glassmorphism */
-    --glass-bg: rgba(255, 255, 255, 0.9);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.5);
-    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+    --glass-bg: rgba(30, 41, 59, 0.7);
+    /* Slate 800 with opacity */
+    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* Scrollbar */
@@ -70,8 +75,8 @@ html {
 body {
     background-color: var(--color-bg);
     background-image:
-        radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.03) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.03) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(15, 23, 42, 0.5) 0px, transparent 50%);
     background-attachment: fixed;
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     color: var(--color-text-primary);
@@ -87,8 +92,8 @@ h4,
 h5,
 h6 {
     font-weight: 700;
-    color: #0f172a;
-    /* Slate 900 */
+    color: var(--color-text-primary);
+    /* Slate 50 */
     letter-spacing: -0.025em;
 }
 

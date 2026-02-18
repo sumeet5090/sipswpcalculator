@@ -273,7 +273,7 @@ function updateTable(data, enableSwp) {
 
     data.forEach(row => {
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-gray-50";
+        tr.className = "hover:bg-white/5 border-b border-white/5 transition-colors text-slate-300";
 
         // Helper for currency
         const fmt = (v) => v !== null ? formatCurrency(v) : '-';
@@ -282,19 +282,19 @@ function updateTable(data, enableSwp) {
         let swpCols = '';
         if (enableSwp) {
             swpCols = `
-                <td class="px-6 py-4 text-right text-red-600">${fmt(row.annual_withdrawal)}</td>
-                <td class="px-6 py-4 text-right">${fmt(row.cumulative_withdrawals)}</td>
+                <td class="px-6 py-4 text-right text-rose-400 font-medium">${fmt(row.annual_withdrawal)}</td>
+                <td class="px-6 py-4 text-right text-slate-400">${fmt(row.cumulative_withdrawals)}</td>
             `;
         }
 
         tr.innerHTML = `
-            <td class="px-6 py-4 font-medium">${row.year}</td>
+            <td class="px-6 py-4 font-medium text-slate-400">${row.year}</td>
             <td class="px-6 py-4 text-right">${formatCurrency(row.begin_balance)}</td>
-            <td class="px-6 py-4 text-right text-green-600">${formatCurrency(row.annual_contribution)}</td>
-            <td class="px-6 py-4 text-right">${formatCurrency(row.cumulative_invested)}</td>
+            <td class="px-6 py-4 text-right text-emerald-400">${formatCurrency(row.annual_contribution)}</td>
+            <td class="px-6 py-4 text-right text-slate-400">${formatCurrency(row.cumulative_invested)}</td>
             ${swpCols}
-            <td class="px-6 py-4 text-right">${formatCurrency(row.interest)}</td>
-            <td class="px-6 py-4 text-right font-semibold text-indigo-600">${formatCurrency(row.combined_total)}</td>
+            <td class="px-6 py-4 text-right text-emerald-400 font-medium">${formatCurrency(row.interest)}</td>
+            <td class="px-6 py-4 text-right font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">${formatCurrency(row.combined_total)}</td>
         `;
 
         tbody.appendChild(tr);
@@ -381,16 +381,16 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
 
     // Gradients
     const gradientInvested = ctx.createLinearGradient(0, 0, 0, 400);
-    gradientInvested.addColorStop(0, 'rgba(168, 85, 247, 0.4)'); // Purple 500
-    gradientInvested.addColorStop(1, 'rgba(168, 85, 247, 0.0)');
+    gradientInvested.addColorStop(0, 'rgba(148, 163, 184, 0.4)'); // Slate 400
+    gradientInvested.addColorStop(1, 'rgba(148, 163, 184, 0.1)');
 
     const gradientCorpus = ctx.createLinearGradient(0, 0, 0, 400);
-    gradientCorpus.addColorStop(0, 'rgba(79, 70, 229, 0.4)'); // Indigo 600
-    gradientCorpus.addColorStop(1, 'rgba(79, 70, 229, 0.0)');
+    gradientCorpus.addColorStop(0, 'rgba(52, 211, 153, 0.6)'); // Emerald 400
+    gradientCorpus.addColorStop(1, 'rgba(52, 211, 153, 0.1)');
 
     const fontFamily = "'Plus Jakarta Sans', sans-serif";
-    const gridColor = 'rgba(0, 0, 0, 0.03)';
-    const textColor = '#6b7280'; // Gray 500
+    const gridColor = 'rgba(255, 255, 255, 0.05)';
+    const textColor = '#94a3b8'; // Slate 400
 
     return {
         type: 'line',
@@ -400,45 +400,42 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                 {
                     label: 'Total Invested',
                     data: cumulative,
-                    borderColor: '#a855f7', // Purple 500
+                    borderColor: '#94a3b8', // Slate 400
                     backgroundColor: gradientInvested,
-                    borderWidth: 3,
+                    borderWidth: 2,
                     tension: 0.4,
-                    fill: true,
-                    pointBackgroundColor: '#ffffff',
-                    pointBorderColor: '#a855f7',
-                    pointBorderWidth: 2,
+                    fill: 'origin',
+                    pointBackgroundColor: '#1e293b',
+                    pointBorderColor: '#94a3b8',
                     pointRadius: 0,
                     pointHoverRadius: 6,
-                    pointHoverBorderWidth: 3,
                 },
                 {
-                    label: 'Corpus Value',
+                    label: 'Wealth Gained',
                     data: corpus,
-                    borderColor: '#4f46e5', // Indigo 600
+                    borderColor: '#34d399', // Emerald 400
                     backgroundColor: gradientCorpus,
                     borderWidth: 3,
                     tension: 0.4,
-                    fill: true,
-                    pointBackgroundColor: '#ffffff',
-                    pointBorderColor: '#4f46e5',
+                    fill: 0, // Fill to dataset 0 (Invested)
+                    pointBackgroundColor: '#1e293b', // Slate 800
+                    pointBorderColor: '#34d399',
                     pointBorderWidth: 2,
                     pointRadius: 0,
-                    pointHoverRadius: 6,
+                    pointHoverRadius: 8,
                     pointHoverBorderWidth: 3,
                 },
                 {
                     label: 'Annual Withdrawal',
                     data: swp,
-                    borderColor: '#f43f5e', // Rose 500
-                    backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                    borderColor: '#fb7185', // Rose 400
+                    backgroundColor: 'rgba(251, 113, 133, 0.1)',
                     borderWidth: 2,
-                    borderDash: [6, 4],
+                    borderDash: [5, 5],
                     tension: 0.4,
                     fill: false,
-                    pointBackgroundColor: '#ffffff',
-                    pointBorderColor: '#f43f5e',
-                    pointBorderWidth: 2,
+                    pointBackgroundColor: '#1e293b',
+                    pointBorderColor: '#fb7185',
                     pointRadius: 0,
                     pointHoverRadius: 6,
                 }
@@ -462,7 +459,7 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                     labels: {
                         usePointStyle: true,
                         boxWidth: 8,
-                        color: '#374151', // Gray 700
+                        color: textColor,
                         font: {
                             family: fontFamily,
                             size: 12,
@@ -472,19 +469,19 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                     }
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    titleColor: '#111827',
+                    backgroundColor: 'rgba(15, 23, 42, 0.95)', // Slate 900
+                    titleColor: '#f8fafc', // Slate 50
                     titleFont: {
                         family: fontFamily,
                         size: 14,
                         weight: 'bold'
                     },
-                    bodyColor: '#4b5563',
+                    bodyColor: '#cbd5e1', // Slate 300
                     bodyFont: {
                         family: fontFamily,
                         size: 13
                     },
-                    borderColor: '#e5e7eb',
+                    borderColor: '#334155', // Slate 700
                     borderWidth: 1,
                     padding: 12,
                     boxPadding: 4,
@@ -506,31 +503,31 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
             scales: {
                 x: {
                     grid: {
-                        display: false,
-                        drawBorder: false,
+                        color: gridColor,
+                        display: false
                     },
                     ticks: {
                         color: textColor,
                         font: {
-                            family: fontFamily,
-                            size: 11
-                        }
-                    },
+                            family: fontFamily
+                        },
+                        maxRotation: 0
+                    }
                 },
                 y: {
                     grid: {
                         color: gridColor,
-                        borderDash: [4, 4],
-                        drawBorder: false,
+                        borderDash: [5, 5]
                     },
                     ticks: {
                         color: textColor,
                         font: {
-                            family: fontFamily,
-                            size: 11
+                            family: fontFamily
                         },
                         callback: function (value) {
-                            return formatAxisTick(value);
+                            if (value >= 10000000) return '₹' + (value / 10000000).toFixed(1) + 'Cr';
+                            if (value >= 100000) return '₹' + (value / 100000).toFixed(1) + 'L';
+                            return '₹' + (value / 1000) + 'k';
                         }
                     },
                     beginAtZero: true
@@ -539,6 +536,7 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
         }
     };
 }
+
 
 function toggleSwpFields() {
     const isChecked = document.getElementById('enable_swp').checked;
@@ -576,5 +574,39 @@ function toggleSwpFields() {
             });
             window.corpusChart.update();
         }
+    }
+}
+
+/**
+ * Adjusts the value of an input field by a given delta.
+ * @param {string} elementId - The ID of the input element.
+ * @param {number} delta - The amount to add (can be negative).
+ */
+function adjustValue(elementId, delta) {
+    const input = document.getElementById(elementId);
+    if (!input) return;
+
+    let currentValue = parseFloat(input.value) || 0;
+    let newValue = currentValue + delta;
+
+    // Enforce min/max if defined
+    if (input.min !== '' && newValue < parseFloat(input.min)) {
+        newValue = parseFloat(input.min);
+    }
+    if (input.max !== '' && newValue > parseFloat(input.max)) {
+        newValue = parseFloat(input.max);
+    }
+
+    input.value = newValue;
+
+    // Trigger input event to update slider and calculations
+    input.dispatchEvent(new Event('input'));
+
+    // Also update the slider explicitly if it exists
+    const slider = document.getElementById(elementId + '_range');
+    if (slider) {
+        slider.value = newValue;
+        // Visual feedback on slider track if we were using custom BG, 
+        // but for now the native input event handling in main script should cover it
     }
 }
