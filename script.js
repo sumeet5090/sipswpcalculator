@@ -283,7 +283,7 @@ function getInputs() {
 function calculateCorpus(inp) {
     const monthlyRate = inp.rate / 100 / 12;
     const swpStartYear = inp.years + 1;
-    const totalYears = inp.years + inp.swp_years;
+    const totalYears = inp.enable_swp ? (inp.years + inp.swp_years) : inp.years;
 
     let netBalance = 0.0;
     let cumulativeInvested = 0.0;
