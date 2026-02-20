@@ -260,17 +260,29 @@ function fitTableToContainer() {
     const table = wrapper?.querySelector('table');
     if (!wrapper || !table) return;
 
-    // Reset to base size first so we measure the natural width
-    table.style.fontSize = '';
+    // Reset scale so we can measure the natural table dimensions
+    table.style.transform = '';
+    table.style.transformOrigin = '';
+    table.style.width = '';
+    wrapper.style.height = '';
+
     const containerW = wrapper.clientWidth;
     const tableW = table.scrollWidth;
 
-    if (tableW > containerW) {
-        // Scale font proportionally, floor at 0.55rem
-        const ratio = containerW / tableW;
-        const basePx = parseFloat(getComputedStyle(table).fontSize);
-        const newPx = Math.max(basePx * ratio, 8.8); // 0.55rem ≈ 8.8px
-        table.style.fontSize = newPx + 'px';
+    if (tableW > containerW && containerW > 0) {
+        const scale = containerW / tableW;
+        const naturalH = table.offsetHeight;
+
+        table.style.transformOrigin = 'top left';
+        table.style.transform = `scale(${scale})`;
+        // Keep table at natural width; clipping is handled by overflow-x-hidden
+        table.style.width = tableW + 'px';
+
+        // Shrink wrapper height so scaled table doesn't leave dead whitespace
+        const clampedH = Math.min(naturalH * scale, 600);
+        wrapper.style.maxHeight = clampedH + 'px';
+    } else {
+        wrapper.style.maxHeight = '600px';
     }
 }
 
