@@ -457,21 +457,25 @@ function fitSummaryCards() {
         const el = document.getElementById(id);
         if (!el) return;
 
-        // Ensure styles for measurement
+        // Ensure nowrap for accurate single-line measurement
         el.style.whiteSpace = 'nowrap';
         el.style.overflow = 'hidden';
 
-        // Reset font size to CSS default so we measure the natural width
+        // Reset font size to CSS default
         el.style.fontSize = '';
 
+        // Force reflow so scrollWidth reflects the CSS class font-size
+        void el.offsetWidth;
+
         const parent = el.parentElement;
-        const availableW = parent.clientWidth - parseFloat(getComputedStyle(parent).paddingLeft) - parseFloat(getComputedStyle(parent).paddingRight);
+        const cs = getComputedStyle(parent);
+        const availableW = parent.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
         const textW = el.scrollWidth;
 
         if (textW > availableW && availableW > 0) {
-            const scale = availableW / textW;
             const basePx = parseFloat(getComputedStyle(el).fontSize);
-            el.style.fontSize = Math.max(basePx * scale, 10) + 'px'; // min 10px
+            const newPx = Math.max((availableW / textW) * basePx, 10);
+            el.style.fontSize = newPx + 'px';
         }
     });
 }
