@@ -326,7 +326,7 @@ foreach ($combined as $row) {
                                         <div
                                             class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500/15 text-emerald-500 ring-1 ring-emerald-500/30 text-[10px]">
                                             1</div>
-                                        Accumulation (SIP)
+                                        SIP Details
                                     </legend>
 
                                     <div class="space-y-4">
@@ -341,7 +341,7 @@ foreach ($combined as $row) {
                                                             stroke-width="2.5"
                                                             d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                                                     </svg>
-                                                    Monthly Inv.
+                                                    Monthly
                                                 </label>
                                                 <div class="flex items-center gap-0.5">
                                                     <span class="text-sm font-bold text-slate-400">₹</span>
@@ -445,7 +445,7 @@ foreach ($combined as $row) {
                                             <div
                                                 class="flex items-center justify-center w-5 h-5 rounded-full bg-rose-500/15 text-rose-400 ring-1 ring-rose-500/30 text-[10px]">
                                                 2</div>
-                                            Withdrawal (SWP)
+                                            SWP Details
                                         </div>
                                         <label class="toggle-switch relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" id="enable_swp" name="enable_swp" checked
@@ -468,7 +468,7 @@ foreach ($combined as $row) {
                                                             stroke-width="2.5"
                                                             d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                                                     </svg>
-                                                    Monthly Whd.
+                                                    Monthly
                                                 </label>
                                                 <div class="flex items-center gap-0.5">
                                                     <span class="text-sm font-bold text-slate-400">₹</span>
