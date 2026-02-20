@@ -246,6 +246,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Range Sliders
     setupRangeSliders();
+
+    // Initial calculation on page load (syncs JS table/chart with PHP defaults)
+    calculateAndRender();
 });
 
 
