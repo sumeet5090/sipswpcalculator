@@ -256,34 +256,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- Auto-scale table to prevent horizontal overflow ---
 function fitTableToContainer() {
-    const wrapper = document.getElementById('table-scroll-wrapper');
-    const table = wrapper?.querySelector('table');
-    if (!wrapper || !table) return;
+    // Double RAF: ensures browser has fully completed layout after DOM changes
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        const wrapper = document.getElementById('table-scroll-wrapper');
+        const table = wrapper?.querySelector('table');
+        if (!wrapper || !table) return;
 
-    // Reset scale so we can measure the natural table dimensions
-    table.style.transform = '';
-    table.style.transformOrigin = '';
-    table.style.width = '';
-    wrapper.style.height = '';
+        // Reset scale so we measure the true natural width
+        table.style.transform = '';
+        table.style.transformOrigin = '';
+        table.style.width = '';
+        wrapper.style.maxHeight = '';
 
-    const containerW = wrapper.clientWidth;
-    const tableW = table.scrollWidth;
+        // clientWidth excludes scrollbar; subtract additional safety margin
+        const scrollbarW = wrapper.offsetWidth - wrapper.clientWidth;
+        const containerW = wrapper.offsetWidth - scrollbarW;
+        const tableW = table.scrollWidth;
 
-    if (tableW > containerW && containerW > 0) {
-        const scale = containerW / tableW;
-        const naturalH = table.offsetHeight;
+        if (tableW > containerW && containerW > 0) {
+            const scale = containerW / tableW;
+            const naturalH = table.offsetHeight;
 
-        table.style.transformOrigin = 'top left';
-        table.style.transform = `scale(${scale})`;
-        // Keep table at natural width; clipping is handled by overflow-x-hidden
-        table.style.width = tableW + 'px';
+            table.style.transformOrigin = 'top left';
+            table.style.transform = `scale(${scale})`;
+            table.style.width = tableW + 'px';
 
-        // Shrink wrapper height so scaled table doesn't leave dead whitespace
-        const clampedH = Math.min(naturalH * scale, 600);
-        wrapper.style.maxHeight = clampedH + 'px';
-    } else {
-        wrapper.style.maxHeight = '600px';
-    }
+            // Compensate wrapper height for scale shrinkage (capped at 600px)
+            wrapper.style.maxHeight = Math.min(naturalH * scale, 600) + 'px';
+        } else {
+            wrapper.style.maxHeight = '600px';
+        }
+    }));
 }
 
 
@@ -295,8 +298,7 @@ function calculateAndRender() {
     updateChart(data);
     updateTable(data, inputs.enable_swp);
     updateSummaryMetrics(data);
-    // Re-fit table after content changes
-    requestAnimationFrame(fitTableToContainer);
+    fitTableToContainer();
 }
 
 function getInputs() {
@@ -713,7 +715,7 @@ function toggleSwpFields() {
     }
 
     // Re-fit table after columns change
-    requestAnimationFrame(fitTableToContainer);
+    fitTableToContainer();
 }
 
 /**
