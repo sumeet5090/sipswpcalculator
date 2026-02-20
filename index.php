@@ -274,7 +274,8 @@ foreach ($combined as $row) {
                 <span class="text-gray-800">Wealth Journey</span>
             </h1>
 
-            <p class="text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium px-2 sm:px-0">
+            <p
+                class="text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium px-2 sm:px-0">
                 The most advanced <strong class="text-indigo-600">SIP & SWP Calculator</strong> on the web.
                 Seamlessly plan your investments and retirement income with vivid clarity.
                 Make informed decisions about your financial future with our advanced, real-time calculator.
@@ -320,224 +321,251 @@ foreach ($combined as $row) {
 
                             <!-- Tab Bar -->
                             <div class="flex rounded-xl overflow-hidden border border-slate-200 mb-4" role="tablist">
-                                <button type="button" id="tab-sip" role="tab" aria-selected="true" onclick="switchFormTab('sip')"
+                                <button type="button" id="tab-sip" role="tab" aria-selected="true"
+                                    onclick="switchFormTab('sip')"
                                     class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-emerald-500 text-white">
-                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-white/20 text-[9px]">1</span>
+                                    <span
+                                        class="flex items-center justify-center w-4 h-4 rounded-full bg-white/20 text-[9px]">1</span>
                                     SIP Details
                                 </button>
-                                <button type="button" id="tab-swp" role="tab" aria-selected="false" onclick="switchFormTab('swp')"
+                                <button type="button" id="tab-swp" role="tab" aria-selected="false"
+                                    onclick="switchFormTab('swp')"
                                     class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-400 hover:text-rose-400">
-                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-[9px]">2</span>
+                                    <span
+                                        class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-[9px]">2</span>
                                     SWP Details
                                 </button>
                             </div>
 
                             <!-- SIP Panel -->
                             <div id="panel-sip" role="tabpanel">
-                            <div class="relative">
-                                <fieldset
-                                    class="mb-4 relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
-                                    <legend
-                                        class="flex items-center gap-2 text-xs font-bold text-emerald-500 mb-4 w-full tracking-widest uppercase">
-                                        <div
-                                            class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500/15 text-emerald-500 ring-1 ring-emerald-500/30 text-[10px]">
-                                            1</div>
-                                        SIP Details
-                                    </legend>
+                                <div class="relative">
+                                    <fieldset
+                                        class="mb-4 relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
+                                        <legend
+                                            class="flex items-center gap-2 text-xs font-bold text-emerald-500 mb-4 w-full tracking-widest uppercase">
+                                            <div
+                                                class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500/15 text-emerald-500 ring-1 ring-emerald-500/30 text-[10px]">
+                                                1</div>
+                                            SIP Details
+                                        </legend>
 
-                                    <div class="space-y-3">
-                                        <!-- Row 1: Monthly + Duration -->
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                            <!-- Monthly Investment -->
-                                            <div class="group">
-                                                <label for="sip" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                                                    Monthly
-                                                </label>
-                                                <div class="relative">
-                                                    <span class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
-                                                    <input type="number" id="sip" name="sip"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                        required min="500" step="500" max="1000000"
-                                                        value="<?= htmlspecialchars((string) $sip) ?>">
+                                        <div class="space-y-3">
+                                            <!-- Row 1: Monthly + Duration -->
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                <!-- Monthly Investment -->
+                                                <div class="group">
+                                                    <label for="sip"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2.5"
+                                                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                                                        </svg>
+                                                        Monthly
+                                                    </label>
+                                                    <div class="relative">
+                                                        <span
+                                                            class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
+                                                        <input type="number" id="sip" name="sip"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                            required min="500" step="500" max="1000000"
+                                                            value="<?= htmlspecialchars((string) $sip) ?>">
+                                                    </div>
+                                                    <input type="range" id="sip_range" min="500" max="100000" step="500"
+                                                        value="<?= htmlspecialchars((string) $sip) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                                 </div>
-                                                <input type="range" id="sip_range" min="500" max="100000" step="500"
-                                                    value="<?= htmlspecialchars((string) $sip) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+
+                                                <!-- Duration -->
+                                                <div class="group">
+                                                    <label for="years"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2.5"
+                                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                        Duration
+                                                    </label>
+                                                    <div class="relative">
+                                                        <input type="number" id="years" name="years"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                            required min="1" max="50"
+                                                            value="<?= htmlspecialchars((string) $years) ?>">
+                                                        <span
+                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
+                                                    </div>
+                                                    <input type="range" id="years_range" min="1" max="50" step="1"
+                                                        value="<?= htmlspecialchars((string) $years) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                                </div>
                                             </div>
 
-                                            <!-- Duration -->
-                                            <div class="group">
-                                                <label for="years" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                                    Duration
-                                                </label>
-                                                <div class="relative">
-                                                    <input type="number" id="years" name="years"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                        required min="1" max="50"
-                                                        value="<?= htmlspecialchars((string) $years) ?>">
-                                                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
+                                            <!-- Row 2: Return % + Yearly Step-up -->
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                <!-- Expected Return -->
+                                                <div class="group">
+                                                    <label for="rate"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                                        </svg>
+                                                        Return %
+                                                    </label>
+                                                    <div class="relative">
+                                                        <input type="number" id="rate" step="0.1" name="rate"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                            required min="0" max="30"
+                                                            value="<?= htmlspecialchars((string) $rate) ?>">
+                                                        <span
+                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                                    </div>
+                                                    <input type="range" id="rate_range" min="1" max="30" step="0.1"
+                                                        value="<?= htmlspecialchars((string) $rate) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                                 </div>
-                                                <input type="range" id="years_range" min="1" max="50" step="1"
-                                                    value="<?= htmlspecialchars((string) $years) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+
+                                                <!-- Yearly Step-up -->
+                                                <div class="group">
+                                                    <label for="stepup"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                        </svg>
+                                                        Step-up
+                                                    </label>
+                                                    <div class="relative">
+                                                        <input type="number" id="stepup" step="1" name="stepup"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                            required min="0" max="100"
+                                                            value="<?= htmlspecialchars((string) $stepup) ?>">
+                                                        <span
+                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                                    </div>
+                                                    <input type="range" id="stepup_range" min="0" max="50" step="1"
+                                                        value="<?= htmlspecialchars((string) $stepup) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <!-- Row 2: Return % + Yearly Step-up -->
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                            <!-- Expected Return -->
-                                            <div class="group">
-                                                <label for="rate" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                                                    Return %
-                                                </label>
-                                                <div class="relative">
-                                                    <input type="number" id="rate" step="0.1" name="rate"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                        required min="0" max="30"
-                                                        value="<?= htmlspecialchars((string) $rate) ?>">
-                                                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
-                                                </div>
-                                                <input type="range" id="rate_range" min="1" max="30" step="0.1"
-                                                    value="<?= htmlspecialchars((string) $rate) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                            </div>
-
-                                            <!-- Yearly Step-up -->
-                                            <div class="group">
-                                                <label for="stepup" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                                                    Step-up
-                                                </label>
-                                                <div class="relative">
-                                                    <input type="number" id="stepup" step="1" name="stepup"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                        required min="0" max="100"
-                                                        value="<?= htmlspecialchars((string) $stepup) ?>">
-                                                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
-                                                </div>
-                                                <input type="range" id="stepup_range" min="0" max="50" step="1"
-                                                    value="<?= htmlspecialchars((string) $stepup) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
+                                    </fieldset>
+                                </div>
                             </div><!-- /panel-sip -->
 
                             <!-- SWP Panel -->
                             <div id="panel-swp" role="tabpanel" class="hidden">
-                            <div class="relative">
-                                <fieldset
-                                    class="relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
-                                    <legend
-                                        class="flex items-center justify-between w-full mb-4 text-xs font-bold text-rose-400 tracking-widest uppercase">
-                                        <div class="flex items-center gap-2">
-                                            <div
-                                                class="flex items-center justify-center w-5 h-5 rounded-full bg-rose-500/15 text-rose-400 ring-1 ring-rose-500/30 text-[10px]">
-                                                2</div>
-                                            SWP Details
-                                        </div>
-                                        <label class="toggle-switch relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" id="enable_swp" name="enable_swp" checked
-                                                onchange="toggleSwpFields()" class="sr-only peer">
-                                            <div
-                                                class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
+                                <div class="relative">
+                                    <fieldset
+                                        class="relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
+                                        <legend
+                                            class="flex items-center justify-between w-full mb-4 text-xs font-bold text-rose-400 tracking-widest uppercase">
+                                            <div class="flex items-center gap-2">
+                                                <div
+                                                    class="flex items-center justify-center w-5 h-5 rounded-full bg-rose-500/15 text-rose-400 ring-1 ring-rose-500/30 text-[10px]">
+                                                    2</div>
+                                                SWP Details
                                             </div>
-                                        </label>
-                                    </legend>
-
-                                    <div id="swp-fields" class="space-y-4 transition-all duration-300">
-                                        <!-- Monthly Withdrawal -->
-                                        <div class="group">
-                                            <label for="swp_withdrawal"
-                                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2.5"
-                                                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                                                </svg>
-                                                Monthly
+                                            <label
+                                                class="toggle-switch relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" id="enable_swp" name="enable_swp" checked
+                                                    onchange="toggleSwpFields()" class="sr-only peer">
+                                                <div
+                                                    class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
+                                                </div>
                                             </label>
-                                            <div class="relative">
-                                                <span
-                                                    class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
-                                                <input type="number" id="swp_withdrawal" step="500"
-                                                    name="swp_withdrawal"
-                                                    class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
-                                                    required min="0" max="1000000"
-                                                    value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
-                                            </div>
-                                            <input type="range" id="swp_withdrawal_range" min="1000" max="200000"
-                                                step="500" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
-                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
-                                        </div>
+                                        </legend>
 
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                            <!-- Withdrawal Duration -->
+                                        <div id="swp-fields" class="space-y-4 transition-all duration-300">
+                                            <!-- Monthly Withdrawal -->
                                             <div class="group">
-                                                <label for="swp_years"
+                                                <label for="swp_withdrawal"
                                                     class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
                                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
                                                         viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-width="2.5"
-                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                                                     </svg>
-                                                    Duration
+                                                    Monthly
                                                 </label>
                                                 <div class="relative">
-                                                    <input type="number" id="swp_years" name="swp_years"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
-                                                        required min="1" max="50"
-                                                        value="<?= htmlspecialchars((string) $swp_years_input) ?>">
                                                     <span
-                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
+                                                        class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
+                                                    <input type="number" id="swp_withdrawal" step="500"
+                                                        name="swp_withdrawal"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                        required min="0" max="1000000"
+                                                        value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
                                                 </div>
-                                                <input type="range" id="swp_years_range" min="1" max="50" step="1"
-                                                    value="<?= htmlspecialchars((string) $swp_years_input) ?>"
+                                                <input type="range" id="swp_withdrawal_range" min="1000" max="200000"
+                                                    step="500" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
                                                     class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
                                             </div>
 
-                                            <!-- Withdrawal Hike -->
-                                            <div class="group">
-                                                <label for="swp_stepup"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                                    </svg>
-                                                    Hike %
-                                                </label>
-                                                <div class="relative">
-                                                    <input type="number" id="swp_stepup" step="0.1" name="swp_stepup"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
-                                                        required min="0" max="20"
-                                                        value="<?= htmlspecialchars((string) $swp_stepup) ?>">
-                                                    <span
-                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                <!-- Withdrawal Duration -->
+                                                <div class="group">
+                                                    <label for="swp_years"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2.5"
+                                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                        Duration
+                                                    </label>
+                                                    <div class="relative">
+                                                        <input type="number" id="swp_years" name="swp_years"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                            required min="1" max="50"
+                                                            value="<?= htmlspecialchars((string) $swp_years_input) ?>">
+                                                        <span
+                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
+                                                    </div>
+                                                    <input type="range" id="swp_years_range" min="1" max="50" step="1"
+                                                        value="<?= htmlspecialchars((string) $swp_years_input) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
                                                 </div>
-                                                <input type="range" id="swp_stepup_range" min="0" max="20" step="0.5"
-                                                    value="<?= htmlspecialchars((string) $swp_stepup) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+
+                                                <!-- Withdrawal Hike -->
+                                                <div class="group">
+                                                    <label for="swp_stepup"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                        </svg>
+                                                        Hike %
+                                                    </label>
+                                                    <div class="relative">
+                                                        <input type="number" id="swp_stepup" step="0.1"
+                                                            name="swp_stepup"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                            required min="0" max="20"
+                                                            value="<?= htmlspecialchars((string) $swp_stepup) ?>">
+                                                        <span
+                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                                    </div>
+                                                    <input type="range" id="swp_stepup_range" min="0" max="20"
+                                                        step="0.5" value="<?= htmlspecialchars((string) $swp_stepup) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </fieldset>
-                            </div>
+                                    </fieldset>
+                                </div>
                             </div><!-- /panel-swp -->
 
-                            <div class="flex flex-col gap-3 mt-4">
-                                <button type="submit" name="action" value="calculate"
-                                    class="btn-primary w-full py-3.5 text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-bold tracking-wide bg-[image:var(--gradient-primary)]">
-                                    Calculate Projection
-                                </button>
-                            </div>
+
                         </form>
                     </div>
                 </div> <!-- /left column -->
@@ -591,30 +619,52 @@ foreach ($combined as $row) {
                             <thead class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 sticky top-0 z-10">
                                 <tr>
                                     <th class="px-6 py-4 bg-slate-50/95 border-b border-slate-200">Year</th>
-                                    <th class="px-6 py-4 bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">Start Corpus</th>
-                                    <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">Annual SIP</th>
-                                    <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">Total Invested</th>
+                                    <th class="px-6 py-4 bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
+                                        Start Corpus</th>
+                                    <th
+                                        class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">
+                                        Annual SIP</th>
+                                    <th
+                                        class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
+                                        Total Invested</th>
                                     <?php if ($enable_swp): ?>
-                                        <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap">Annual SWP</th>
-                                        <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap">Total Withdrawn</th>
+                                        <th
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap">
+                                            Annual SWP</th>
+                                        <th
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap">
+                                            Total Withdrawn</th>
                                     <?php endif; ?>
-                                    <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">Interest</th>
-                                    <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">End Corpus</th>
+                                    <th
+                                        class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">
+                                        Interest</th>
+                                    <th
+                                        class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">
+                                        End Corpus</th>
                                 </tr>
                             </thead>
                             <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
                                 <?php foreach ($combined as $row): ?>
                                     <tr class="hover:bg-slate-50 transition-colors">
                                         <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
-                                        <td class="px-6 py-4 text-right font-mono"><?= formatInr($row['begin_balance']) ?></td>
-                                        <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono"><?= formatInr($row['annual_contribution']) ?></td>
-                                        <td class="px-6 py-4 text-right text-slate-500 font-mono"><?= formatInr($row['cumulative_invested']) ?></td>
+                                        <td class="px-6 py-4 text-right font-mono"><?= formatInr($row['begin_balance']) ?>
+                                        </td>
+                                        <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                            <?= formatInr($row['annual_contribution']) ?></td>
+                                        <td class="px-6 py-4 text-right text-slate-500 font-mono">
+                                            <?= formatInr($row['cumulative_invested']) ?></td>
                                         <?php if ($enable_swp): ?>
-                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono"><?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?></td>
-                                            <td class="px-6 py-4 text-right text-slate-500 font-mono"><?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?></td>
+                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono">
+                                                <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-slate-500 font-mono">
+                                                <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
+                                            </td>
                                         <?php endif; ?>
-                                        <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono"><?= formatInr($row['interest']) ?></td>
-                                        <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono"><?= formatInr($row['combined_total']) ?></td>
+                                        <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                            <?= formatInr($row['interest']) ?></td>
+                                        <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
+                                            <?= formatInr($row['combined_total']) ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -846,7 +896,8 @@ foreach ($combined as $row) {
 
     <!-- PDF Generation Modal -->
     <div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
+        <div
+            class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
             <form id="pdfForm" class="space-y-4">
                 <div>
