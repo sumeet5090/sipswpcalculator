@@ -18,7 +18,7 @@ $sip = isset($_POST['sip']) ? (float) $_POST['sip'] : $default_sip;
 $years = isset($_POST['years']) ? (int) $_POST['years'] : $default_years;
 $rate = isset($_POST['rate']) ? (float) $_POST['rate'] : $default_rate;
 $stepup = isset($_POST['stepup']) ? (float) $_POST['stepup'] : $default_stepup;
-$enable_swp = isset($_POST['enable_swp']) ? (bool) $_POST['enable_swp'] : true;
+$enable_swp = isset($_POST['enable_swp']) ? (bool) $_POST['enable_swp'] : false;
 $swp_withdrawal = isset($_POST['swp_withdrawal']) ? (float) $_POST['swp_withdrawal'] : $default_swp_withdrawal;
 $swp_stepup = isset($_POST['swp_stepup']) ? (float) $_POST['swp_stepup'] : $default_swp_stepup;
 $swp_years_input = isset($_POST['swp_years']) ? (int) $_POST['swp_years'] : $default_swp_years;
@@ -461,7 +461,7 @@ foreach ($combined as $row) {
                                                 Config</span>
                                             <label
                                                 class="toggle-switch relative inline-flex items-center cursor-pointer">
-                                                <input type="checkbox" id="enable_swp" name="enable_swp" checked
+                                                <input type="checkbox" id="enable_swp" name="enable_swp"
                                                     onchange="toggleSwpFields()" class="sr-only peer">
                                                 <div
                                                     class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
@@ -594,7 +594,7 @@ foreach ($combined as $row) {
                     </div>
                 </div>
                 <!-- Total Withdrawn -->
-                <div class="glass-card p-4 sm:p-5 text-center swp-col" <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                <div class="glass-card p-4 sm:p-5 text-center">
                     <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Total
                         Withdrawn</div>
                     <div id="summary-withdrawn"
