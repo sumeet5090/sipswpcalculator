@@ -344,7 +344,7 @@ foreach ($combined as $row) {
                                             </label>
                                             <div class="relative">
                                                 <span
-                                                    class="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
+                                                    class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
                                                 <input type="number" id="sip" name="sip"
                                                     class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
                                                     required min="500" step="500" max="1000000"
@@ -469,7 +469,7 @@ foreach ($combined as $row) {
                                             </label>
                                             <div class="relative">
                                                 <span
-                                                    class="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
+                                                    class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
                                                 <input type="number" id="swp_withdrawal" step="500"
                                                     name="swp_withdrawal"
                                                     class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
