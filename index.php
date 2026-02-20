@@ -296,26 +296,23 @@ foreach ($combined as $row) {
 
                             <!-- Currency Selector -->
                             <div class="flex justify-center mb-3">
-                                <div class="inline-flex rounded-lg overflow-hidden border border-slate-200"
-                                    role="group">
-                                    <input type="radio" name="currency" id="curr_inr" value="INR"
-                                        class="peer/inr hidden" checked onchange="updateCurrency('INR')">
-                                    <label for="curr_inr"
-                                        class="px-3 py-1.5 text-xs font-semibold text-slate-500 bg-white cursor-pointer hover:bg-slate-50 peer-checked/inr:bg-indigo-600 peer-checked/inr:text-white transition-colors">
+                                <div class="inline-flex rounded-lg overflow-hidden border border-slate-200" role="group"
+                                    id="currency-group">
+                                    <button type="button" data-currency="INR"
+                                        class="currency-btn px-3 py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
+                                        onclick="updateCurrency('INR')">
                                         ₹ INR
-                                    </label>
-                                    <input type="radio" name="currency" id="curr_usd" value="USD"
-                                        class="peer/usd hidden" onchange="updateCurrency('USD')">
-                                    <label for="curr_usd"
-                                        class="px-3 py-1.5 text-xs font-semibold text-slate-500 bg-white border-x border-slate-200 cursor-pointer hover:bg-slate-50 peer-checked/usd:bg-indigo-600 peer-checked/usd:text-white transition-colors">
+                                    </button>
+                                    <button type="button" data-currency="USD"
+                                        class="currency-btn px-3 py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
+                                        onclick="updateCurrency('USD')">
                                         $ USD
-                                    </label>
-                                    <input type="radio" name="currency" id="curr_eur" value="EUR"
-                                        class="peer/eur hidden" onchange="updateCurrency('EUR')">
-                                    <label for="curr_eur"
-                                        class="px-3 py-1.5 text-xs font-semibold text-slate-500 bg-white cursor-pointer hover:bg-slate-50 peer-checked/eur:bg-indigo-600 peer-checked/eur:text-white transition-colors">
+                                    </button>
+                                    <button type="button" data-currency="EUR"
+                                        class="currency-btn px-3 py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
+                                        onclick="updateCurrency('EUR')">
                                         € EUR
-                                    </label>
+                                    </button>
                                 </div>
                             </div>
 

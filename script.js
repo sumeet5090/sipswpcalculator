@@ -15,6 +15,17 @@ function updateCurrency(newCurrency) {
         span.textContent = currencyConfig[currentCurrency].symbol;
     });
 
+    // Toggle active button styling
+    document.querySelectorAll('.currency-btn').forEach(btn => {
+        if (btn.dataset.currency === newCurrency) {
+            btn.classList.add('bg-indigo-600', 'text-white');
+            btn.classList.remove('bg-white', 'text-slate-500', 'hover:bg-slate-50');
+        } else {
+            btn.classList.remove('bg-indigo-600', 'text-white');
+            btn.classList.add('bg-white', 'text-slate-500', 'hover:bg-slate-50');
+        }
+    });
+
     // Re-render chart and table with new currency
     calculateAndRender();
 
