@@ -408,27 +408,26 @@ foreach ($combined as $row) {
 
                                         <!-- Step-up -->
                                         <div class="group">
-                                            <div class="flex items-center justify-between mb-1.5">
-                                                <label for="stepup"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                                    </svg>
-                                                    Yearly Step-up
-                                                </label>
-                                                <div class="flex items-center gap-0.5">
-                                                    <input type="number" id="stepup" step="1" name="stepup"
-                                                        class="w-10 bg-transparent text-right text-base font-bold text-emerald-600 focus:outline-none border-b border-dashed border-slate-300 focus:border-emerald-500 p-0 leading-tight"
-                                                        required min="0"
-                                                        value="<?= htmlspecialchars((string) $stepup) ?>">
-                                                    <span class="text-xs font-bold text-slate-400">%</span>
-                                                </div>
+                                            <label for="stepup"
+                                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                                Yearly Step-up
+                                            </label>
+                                            <div class="relative">
+                                                <input type="number" id="stepup" step="1" name="stepup"
+                                                    class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                    required min="0" max="100"
+                                                    value="<?= htmlspecialchars((string) $stepup) ?>">
+                                                <span
+                                                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
                                             </div>
                                             <input type="range" id="stepup_range" min="0" max="50" step="1"
                                                 value="<?= htmlspecialchars((string) $stepup) ?>"
-                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500">
+                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                         </div>
                                     </div>
                                 </fieldset>
