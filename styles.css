@@ -1,5 +1,17 @@
 /* styles.css - Refined Fintech Theme (Light Mode) */
 
+/* ── Remove up/down spinner arrows inside SIP & SWP form number inputs ── */
+.glass-card input[type=number]::-webkit-inner-spin-button,
+.glass-card input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.glass-card input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
 /* 1. Reset & Base */
 :root {
     /* Primary Brand Gradient */
