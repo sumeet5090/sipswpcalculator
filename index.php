@@ -5,13 +5,13 @@ declare(strict_types=1);
 require_once __DIR__ . '/functions.php';
 
 // Default values.
-$default_sip = 1000;
-$default_years = 10;
+$default_sip = 10000;
+$default_years = 20;
 $default_rate = 12;
 $default_stepup = 10;
-$default_swp_withdrawal = 10000;
-$default_swp_stepup = 10;
-$default_swp_years = 20;
+$default_swp_withdrawal = 50000;
+$default_swp_stepup = 5;
+$default_swp_years = 10;
 
 // Retrieve POST values or use defaults.
 $sip = isset($_POST['sip']) ? (float) $_POST['sip'] : $default_sip;
@@ -650,9 +650,11 @@ foreach ($combined as $row) {
                                         <td class="px-6 py-4 text-right font-mono"><?= formatInr($row['begin_balance']) ?>
                                         </td>
                                         <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                            <?= formatInr($row['annual_contribution']) ?></td>
+                                            <?= formatInr($row['annual_contribution']) ?>
+                                        </td>
                                         <td class="px-6 py-4 text-right text-slate-500 font-mono">
-                                            <?= formatInr($row['cumulative_invested']) ?></td>
+                                            <?= formatInr($row['cumulative_invested']) ?>
+                                        </td>
                                         <?php if ($enable_swp): ?>
                                             <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono">
                                                 <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
@@ -662,9 +664,11 @@ foreach ($combined as $row) {
                                             </td>
                                         <?php endif; ?>
                                         <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                            <?= formatInr($row['interest']) ?></td>
+                                            <?= formatInr($row['interest']) ?>
+                                        </td>
                                         <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
-                                            <?= formatInr($row['combined_total']) ?></td>
+                                            <?= formatInr($row['combined_total']) ?>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
