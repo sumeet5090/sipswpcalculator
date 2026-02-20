@@ -674,7 +674,7 @@ function toggleSwpFields() {
     // Safety check if elements exist
     if (!fields) return;
 
-    // Toggle all .swp-col elements (thead columns + summary card)
+    // Toggle all .swp-col elements (thead columns + table body cells)
     document.querySelectorAll('.swp-col').forEach(el => {
         el.style.display = isChecked ? '' : 'none';
     });
@@ -685,30 +685,14 @@ function toggleSwpFields() {
             fields.style.opacity = '1';
         }, 10);
         fields.style.pointerEvents = 'auto';
-
-        // Show SWP dataset in chart if it exists
-        if (window.corpusChart) {
-            window.corpusChart.data.datasets.forEach(ds => {
-                if (ds.label === 'Annual Withdrawal') ds.hidden = false;
-            });
-            window.corpusChart.update();
-        }
     } else {
-        fields.style.opacity = '0.5'; // Fade out first
+        fields.style.opacity = '0.5';
         fields.style.pointerEvents = 'none';
         fields.style.display = 'none';
-
-        // Hide SWP dataset in chart
-        if (window.corpusChart) {
-            window.corpusChart.data.datasets.forEach(ds => {
-                if (ds.label === 'Annual Withdrawal') ds.hidden = true;
-            });
-            window.corpusChart.update();
-        }
     }
 
-    // Re-fit table after columns change
-    fitTableToContainer();
+    // Full recalculation — updates chart, table, and summary cards
+    calculateAndRender();
 }
 
 /**
