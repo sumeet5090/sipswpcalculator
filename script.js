@@ -249,7 +249,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial calculation on page load (syncs JS table/chart with PHP defaults)
     calculateAndRender();
+
+    // Re-fit table on window resize
+    window.addEventListener('resize', fitTableToContainer);
 });
+
+// --- Auto-scale table to prevent horizontal overflow ---
+function fitTableToContainer() {
+    const wrapper = document.getElementById('table-scroll-wrapper');
+    const table = wrapper?.querySelector('table');
+    if (!wrapper || !table) return;
+
+    // Reset to base size first so we measure the natural width
+    table.style.fontSize = '';
+    const containerW = wrapper.clientWidth;
+    const tableW = table.scrollWidth;
+
+    if (tableW > containerW) {
+        // Scale font proportionally, floor at 0.55rem
+        const ratio = containerW / tableW;
+        const basePx = parseFloat(getComputedStyle(table).fontSize);
+        const newPx = Math.max(basePx * ratio, 8.8); // 0.55rem ≈ 8.8px
+        table.style.fontSize = newPx + 'px';
+    }
+}
 
 
 
@@ -260,6 +283,8 @@ function calculateAndRender() {
     updateChart(data);
     updateTable(data, inputs.enable_swp);
     updateSummaryMetrics(data);
+    // Re-fit table after content changes
+    requestAnimationFrame(fitTableToContainer);
 }
 
 function getInputs() {
@@ -674,6 +699,9 @@ function toggleSwpFields() {
             window.corpusChart.update();
         }
     }
+
+    // Re-fit table after columns change
+    requestAnimationFrame(fitTableToContainer);
 }
 
 /**
