@@ -542,7 +542,7 @@ foreach ($combined as $row) {
                                 ?>
                             </div>
                         </div>
-                        <div class="glass-card p-3 sm:p-4 text-center swp-col" <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                        <div class="glass-card p-3 sm:p-4 text-center">
                             <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
                                 Total Withdrawn</div>
                             <div id="summary-withdrawn"

@@ -249,6 +249,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial calculation on page load (syncs JS table/chart with PHP defaults)
     calculateAndRender();
+
+    // Re-fit summary cards on resize
+    window.addEventListener('resize', fitSummaryCards);
 });
 
 
@@ -430,6 +433,35 @@ function updateSummaryMetrics(data) {
     setVal('summary-interest', totalGains);
     setVal('summary-withdrawn', totalWithdrawn);
     setVal('summary-corpus', finalCorpus);
+
+    // Auto-scale card values to fit
+    fitSummaryCards();
+}
+
+// Scale down summary card values when text overflows the card
+function fitSummaryCards() {
+    const ids = ['summary-invested', 'summary-interest', 'summary-withdrawn', 'summary-corpus'];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        // Ensure styles for measurement
+        el.style.whiteSpace = 'nowrap';
+        el.style.overflow = 'hidden';
+
+        // Reset font size to CSS default so we measure the natural width
+        el.style.fontSize = '';
+
+        const parent = el.parentElement;
+        const availableW = parent.clientWidth - parseFloat(getComputedStyle(parent).paddingLeft) - parseFloat(getComputedStyle(parent).paddingRight);
+        const textW = el.scrollWidth;
+
+        if (textW > availableW && availableW > 0) {
+            const scale = availableW / textW;
+            const basePx = parseFloat(getComputedStyle(el).fontSize);
+            el.style.fontSize = Math.max(basePx * scale, 10) + 'px'; // min 10px
+        }
+    });
 }
 
 // Setup listeners
