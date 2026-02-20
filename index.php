@@ -459,7 +459,7 @@ foreach ($combined as $row) {
                                     <div id="swp-fields" class="space-y-4 transition-all duration-300">
                                         <!-- Monthly Withdrawal -->
                                         <div class="group">
-                                            <div class="flex items-center justify-between mb-1.5">
+                                            <div class="flex items-center justify-between mb-1.5 gap-11">
                                                 <label for="swp_withdrawal"
                                                     class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
                                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
@@ -474,7 +474,7 @@ foreach ($combined as $row) {
                                                     <span class="text-sm font-bold text-slate-400">₹</span>
                                                     <input type="number" id="swp_withdrawal" step="500"
                                                         name="swp_withdrawal"
-                                                        class="w-20 bg-transparent text-right text-base font-bold text-rose-500 focus:outline-none border-b border-dashed border-slate-300 focus:border-rose-400 p-0 leading-tight"
+                                                        class="w-full bg-transparent text-right text-base font-bold text-rose-500 focus:outline-none border-b border-dashed border-slate-300 focus:border-rose-400 p-0 leading-tight"
                                                         required min="0"
                                                         value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
                                                 </div>
