@@ -888,10 +888,9 @@ foreach ($combined as $row) {
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
                             Financial experts often recommend the "4% rule," suggesting you withdraw 4% of your corpus
-                            annually. However, this depends on market conditions and your lifespan. Use our <a
-                                href="/sequence-risk-analyzer" class="text-indigo-600 hover:underline">Sequence of
-                                Returns Risk Analyzer</a> to test if your withdrawal rate is sustainable during market
-                            crashes.
+                            annually. However, this depends on market conditions, your expected lifespan, and the
+                            sequence of investment returns you experience. A conservative approach is to stress-test
+                            your withdrawal rate against historical market downturns.
                         </div>
                     </details>
                     <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
