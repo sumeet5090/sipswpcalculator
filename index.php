@@ -286,37 +286,38 @@ foreach ($combined as $row) {
 
                 <!-- Left Column: Currency + Form -->
                 <div
-                    class="lg:col-span-1 flex flex-col gap-4 sticky top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar">
+                    class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar">
 
-                    <!-- Currency Selector -->
-                    <div class="flex justify-end relative z-20">
-                        <div class="inline-flex rounded-md shadow-sm" role="group">
-                            <input type="radio" name="currency" id="curr_inr" value="INR" class="peer/inr hidden"
-                                checked onchange="updateCurrency('INR')">
-                            <label for="curr_inr"
-                                class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg cursor-pointer hover:bg-gray-100 peer-checked/inr:bg-indigo-600 peer-checked/inr:text-white border-r-0 transition-colors">
-                                ₹ INR
-                            </label>
 
-                            <input type="radio" name="currency" id="curr_usd" value="USD" class="peer/usd hidden"
-                                onchange="updateCurrency('USD')">
-                            <label for="curr_usd"
-                                class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 cursor-pointer hover:bg-gray-100 peer-checked/usd:bg-indigo-600 peer-checked/usd:text-white border-r-0 transition-colors">
-                                $ USD
-                            </label>
-
-                            <input type="radio" name="currency" id="curr_eur" value="EUR" class="peer/eur hidden"
-                                onchange="updateCurrency('EUR')">
-                            <label for="curr_eur"
-                                class="px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-lg cursor-pointer hover:bg-gray-100 peer-checked/eur:bg-indigo-600 peer-checked/eur:text-white transition-colors">
-                                € EUR
-                            </label>
-                        </div>
-                    </div>
 
                     <!-- Form Section -->
                     <div class="glass-card p-4">
                         <form method="post" novalidate id="calculator-form">
+
+                            <!-- Currency Selector -->
+                            <div class="flex justify-center mb-3">
+                                <div class="inline-flex rounded-lg overflow-hidden border border-slate-200"
+                                    role="group">
+                                    <input type="radio" name="currency" id="curr_inr" value="INR"
+                                        class="peer/inr hidden" checked onchange="updateCurrency('INR')">
+                                    <label for="curr_inr"
+                                        class="px-3 py-1.5 text-xs font-semibold text-slate-500 bg-white cursor-pointer hover:bg-slate-50 peer-checked/inr:bg-indigo-600 peer-checked/inr:text-white transition-colors">
+                                        ₹ INR
+                                    </label>
+                                    <input type="radio" name="currency" id="curr_usd" value="USD"
+                                        class="peer/usd hidden" onchange="updateCurrency('USD')">
+                                    <label for="curr_usd"
+                                        class="px-3 py-1.5 text-xs font-semibold text-slate-500 bg-white border-x border-slate-200 cursor-pointer hover:bg-slate-50 peer-checked/usd:bg-indigo-600 peer-checked/usd:text-white transition-colors">
+                                        $ USD
+                                    </label>
+                                    <input type="radio" name="currency" id="curr_eur" value="EUR"
+                                        class="peer/eur hidden" onchange="updateCurrency('EUR')">
+                                    <label for="curr_eur"
+                                        class="px-3 py-1.5 text-xs font-semibold text-slate-500 bg-white cursor-pointer hover:bg-slate-50 peer-checked/eur:bg-indigo-600 peer-checked/eur:text-white transition-colors">
+                                        € EUR
+                                    </label>
+                                </div>
+                            </div>
 
                             <!-- Tab Bar -->
                             <div class="flex rounded-xl overflow-hidden border border-slate-200 mb-4" role="tablist">
@@ -329,7 +330,7 @@ foreach ($combined as $row) {
                                 </button>
                                 <button type="button" id="tab-swp" role="tab" aria-selected="false"
                                     onclick="switchFormTab('swp')"
-                                    class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-400 hover:text-rose-400">
+                                    class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-400 hover:bg-rose-50 hover:text-rose-500">
                                     <span
                                         class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-[9px]">2</span>
                                     SWP Details
@@ -348,14 +349,8 @@ foreach ($combined as $row) {
                                                 <!-- Monthly Investment -->
                                                 <div class="group">
                                                     <label for="sip"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2.5"
-                                                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                                                        </svg>
-                                                        Monthly
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        Monthly SIP
                                                     </label>
                                                     <div class="relative">
                                                         <span
@@ -373,14 +368,8 @@ foreach ($combined as $row) {
                                                 <!-- Duration -->
                                                 <div class="group">
                                                     <label for="years"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2.5"
-                                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                        </svg>
-                                                        Duration
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        Period (Yrs)
                                                     </label>
                                                     <div class="relative">
                                                         <input type="number" id="years" name="years"
@@ -401,13 +390,8 @@ foreach ($combined as $row) {
                                                 <!-- Expected Return -->
                                                 <div class="group">
                                                     <label for="rate"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                                                        </svg>
-                                                        Return %
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        Expected Return
                                                     </label>
                                                     <div class="relative">
                                                         <input type="number" id="rate" step="0.1" name="rate"
@@ -425,13 +409,8 @@ foreach ($combined as $row) {
                                                 <!-- Yearly Step-up -->
                                                 <div class="group">
                                                     <label for="stepup"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                                        </svg>
-                                                        Step-up
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        Annual Step-up
                                                     </label>
                                                     <div class="relative">
                                                         <input type="number" id="stepup" step="1" name="stepup"
@@ -473,14 +452,8 @@ foreach ($combined as $row) {
                                             <!-- Monthly Withdrawal -->
                                             <div class="group">
                                                 <label for="swp_withdrawal"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2.5"
-                                                            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                                                    </svg>
-                                                    Monthly
+                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                    Monthly SWP
                                                 </label>
                                                 <div class="relative">
                                                     <span
@@ -500,14 +473,8 @@ foreach ($combined as $row) {
                                                 <!-- Withdrawal Duration -->
                                                 <div class="group">
                                                     <label for="swp_years"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2.5"
-                                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                        </svg>
-                                                        Duration
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        SWP Period
                                                     </label>
                                                     <div class="relative">
                                                         <input type="number" id="swp_years" name="swp_years"
@@ -525,13 +492,8 @@ foreach ($combined as $row) {
                                                 <!-- Withdrawal Hike -->
                                                 <div class="group">
                                                     <label for="swp_stepup"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                                        </svg>
-                                                        Hike %
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        Yearly Hike
                                                     </label>
                                                     <div class="relative">
                                                         <input type="number" id="swp_stepup" step="0.1"
@@ -557,11 +519,51 @@ foreach ($combined as $row) {
                     </div>
                 </div> <!-- /left column -->
 
-                <div class="lg:col-span-2 space-y-6">
-                    <!-- Hero Result & Chart Card -->
+                <div class="lg:col-span-2 space-y-4">
+                    <!-- Summary Cards -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="glass-card p-3 sm:p-4 text-center">
+                            <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+                                Total Invested</div>
+                            <div id="summary-invested"
+                                class="text-lg sm:text-xl font-extrabold text-indigo-600 font-mono transition-numbers">
+                                <?= formatInr(end($combined)['cumulative_invested'] ?? 0) ?>
+                            </div>
+                        </div>
+                        <div class="glass-card p-3 sm:p-4 text-center">
+                            <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+                                Total Gains</div>
+                            <div id="summary-interest"
+                                class="text-lg sm:text-xl font-extrabold text-emerald-600 font-mono transition-numbers">
+                                <?php
+                                $lastRow = end($combined);
+                                $totalGains = ($lastRow['combined_total'] + ($lastRow['cumulative_withdrawals'] ?? 0)) - ($lastRow['cumulative_invested'] ?? 0);
+                                echo formatInr($totalGains);
+                                ?>
+                            </div>
+                        </div>
+                        <div class="glass-card p-3 sm:p-4 text-center">
+                            <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+                                Total Withdrawn</div>
+                            <div id="summary-withdrawn"
+                                class="text-lg sm:text-xl font-extrabold text-rose-500 font-mono transition-numbers">
+                                <?= formatInr(end($combined)['cumulative_withdrawals'] ?? 0) ?>
+                            </div>
+                        </div>
+                        <div class="glass-card p-3 sm:p-4 text-center border-2 border-indigo-100">
+                            <div
+                                class="text-[10px] sm:text-xs font-bold text-indigo-400 uppercase tracking-widest mb-1">
+                                Final Corpus</div>
+                            <div id="summary-corpus"
+                                class="text-xl sm:text-2xl font-extrabold text-slate-800 font-mono transition-numbers">
+                                <?= formatInr(end($combined)['combined_total'] ?? 0) ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart Card -->
                     <div
                         class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-6">
-                        <!-- Chart -->
                         <div class="h-[280px] sm:h-[350px] lg:h-[450px] w-full relative z-10">
                             <canvas id="corpusChart"></canvas>
                         </div>
@@ -569,49 +571,7 @@ foreach ($combined as $row) {
                 </div>
             </div><!-- /3-col grid -->
 
-            <!-- Hero Summary Cards -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6">
-                <!-- Total Invested -->
-                <div class="glass-card p-4 sm:p-5 text-center">
-                    <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Total
-                        Invested</div>
-                    <div id="summary-invested"
-                        class="text-lg sm:text-2xl font-extrabold text-indigo-600 font-mono transition-numbers">
-                        <?= formatInr(end($combined)['cumulative_invested'] ?? 0) ?>
-                    </div>
-                </div>
-                <!-- Total Gains -->
-                <div class="glass-card p-4 sm:p-5 text-center">
-                    <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Total
-                        Gains</div>
-                    <div id="summary-interest"
-                        class="text-lg sm:text-2xl font-extrabold text-emerald-600 font-mono transition-numbers">
-                        <?php
-                        $lastRow = end($combined);
-                        $totalGains = ($lastRow['combined_total'] + ($lastRow['cumulative_withdrawals'] ?? 0)) - ($lastRow['cumulative_invested'] ?? 0);
-                        echo formatInr($totalGains);
-                        ?>
-                    </div>
-                </div>
-                <!-- Total Withdrawn -->
-                <div class="glass-card p-4 sm:p-5 text-center">
-                    <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Total
-                        Withdrawn</div>
-                    <div id="summary-withdrawn"
-                        class="text-lg sm:text-2xl font-extrabold text-rose-500 font-mono transition-numbers">
-                        <?= formatInr(end($combined)['cumulative_withdrawals'] ?? 0) ?>
-                    </div>
-                </div>
-                <!-- Final Corpus -->
-                <div class="glass-card p-4 sm:p-5 text-center">
-                    <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Final
-                        Corpus</div>
-                    <div id="summary-corpus"
-                        class="text-lg sm:text-2xl font-extrabold text-slate-800 font-mono transition-numbers">
-                        <?= formatInr(end($combined)['combined_total'] ?? 0) ?>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- Full-width Yearly Breakdown -->
             <div class="mt-8 space-y-4">
@@ -626,7 +586,7 @@ foreach ($combined as $row) {
                     </h2>
                     <div class="flex gap-2">
                         <button type="submit" name="action" value="download_csv" form="calculator-form"
-                            class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all">
+                            class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
@@ -634,7 +594,7 @@ foreach ($combined as $row) {
                             CSV
                         </button>
                         <button type="button" id="openPdfModalBtn"
-                            class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all">
+                            class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all shadow-sm">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

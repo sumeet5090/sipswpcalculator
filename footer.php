@@ -1,19 +1,10 @@
+<?php // footer.php ?>
 <footer class="mt-16 text-sm text-gray-600 glass-card p-10">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <div>
             <h3 class="font-bold text-lg mb-3 text-gray-800">About Calculator</h3>
             <p class="leading-relaxed">A powerful, free tool designed to help investors visualize and plan their
                 SIP and SWP strategies with precision and ease.</p>
-        </div>
-        <div>
-            <h3 class="font-bold text-lg mb-3 text-gray-800">Features</h3>
-            <ul class="space-y-2">
-                <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Real-time calculations
-                </li>
-                <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Interactive
-                    visualization</li>
-                <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> CSV export</li>
-            </ul>
         </div>
         <div>
             <h3 class="font-bold text-lg mb-3 text-gray-800">Support</h3>
