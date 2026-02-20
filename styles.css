@@ -182,18 +182,11 @@ textarea {
     padding-left: 4px;
 }
 
-/* Gradient Focus Ring */
-input:focus {
-    border-color: transparent !important;
-    background-image: linear-gradient(white, white), var(--gradient-primary);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
-}
+/* Gradient Focus Ring – disabled to allow Tailwind focus utilities */
+/* input:focus { ... } */
 
 input:hover {
-    border-color: #94a3b8;
-    /* Slate 400 */
+    /* border-color: #94a3b8; let Tailwind handle hover */
 }
 
 /* Form Grid */

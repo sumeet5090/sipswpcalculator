@@ -332,28 +332,27 @@ foreach ($combined as $row) {
                                     <div class="space-y-4">
                                         <!-- Monthly Investment -->
                                         <div class="group">
-                                            <div class="flex items-center justify-between mb-1.5">
-                                                <label for="sip"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2.5"
-                                                            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                                                    </svg>
-                                                    Monthly
-                                                </label>
-                                                <div class="flex items-center gap-0.5">
-                                                    <span class="text-sm font-bold text-slate-400">₹</span>
-                                                    <input type="number" id="sip" name="sip"
-                                                        class="w-20 bg-transparent text-right text-base font-bold text-emerald-600 focus:outline-none border-b border-dashed border-slate-300 focus:border-emerald-500 p-0 leading-tight"
-                                                        required min="500" step="500"
-                                                        value="<?= htmlspecialchars((string) $sip) ?>">
-                                                </div>
+                                            <label for="sip"
+                                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2.5"
+                                                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                                                </svg>
+                                                Monthly
+                                            </label>
+                                            <div class="relative">
+                                                <span
+                                                    class="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
+                                                <input type="number" id="sip" name="sip"
+                                                    class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                    required min="500" step="500" max="1000000"
+                                                    value="<?= htmlspecialchars((string) $sip) ?>">
                                             </div>
                                             <input type="range" id="sip_range" min="500" max="100000" step="500"
                                                 value="<?= htmlspecialchars((string) $sip) ?>"
-                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500">
+                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                         </div>
 
                                         <div class="grid grid-cols-2 gap-3">
@@ -459,29 +458,28 @@ foreach ($combined as $row) {
                                     <div id="swp-fields" class="space-y-4 transition-all duration-300">
                                         <!-- Monthly Withdrawal -->
                                         <div class="group">
-                                            <div class="flex items-center justify-between mb-1.5">
-                                                <label for="swp_withdrawal"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2.5"
-                                                            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                                                    </svg>
-                                                    Monthly
-                                                </label>
-                                                <div class="flex items-center gap-0.5">
-                                                    <span class="text-sm font-bold text-slate-400">₹</span>
-                                                    <input type="number" id="swp_withdrawal" step="500"
-                                                        name="swp_withdrawal"
-                                                        class="w-20 bg-transparent text-right text-base font-bold text-rose-500 focus:outline-none border-b border-dashed border-slate-300 focus:border-rose-400 p-0 leading-tight"
-                                                        required min="0"
-                                                        value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
-                                                </div>
+                                            <label for="swp_withdrawal"
+                                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2.5"
+                                                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                                                </svg>
+                                                Monthly
+                                            </label>
+                                            <div class="relative">
+                                                <span
+                                                    class="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
+                                                <input type="number" id="swp_withdrawal" step="500"
+                                                    name="swp_withdrawal"
+                                                    class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                    required min="0" max="1000000"
+                                                    value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
                                             </div>
                                             <input type="range" id="swp_withdrawal_range" min="1000" max="200000"
                                                 step="500" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
-                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500">
+                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
                                         </div>
 
                                         <div class="grid grid-cols-2 gap-3">
