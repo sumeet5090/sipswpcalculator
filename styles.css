@@ -197,9 +197,7 @@ textarea {
 /* Gradient Focus Ring – disabled to allow Tailwind focus utilities */
 /* input:focus { ... } */
 
-input:hover {
-    /* border-color: #94a3b8; let Tailwind handle hover */
-}
+/* input:hover — border handled by Tailwind utilities */
 
 /* Form Grid */
 .form-grid {
@@ -715,4 +713,80 @@ input[type=range]::-moz-range-track {
 
 .transition-numbers {
     transition: all 0.3s ease-out;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE OVERRIDES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Small screens (phones) ── */
+@media (max-width: 640px) {
+
+    /* Compact table cells */
+    th {
+        padding: 0.5rem 0.35rem;
+        font-size: 0.65rem;
+        letter-spacing: 0.02em;
+    }
+
+    td {
+        padding: 0.5rem 0.35rem;
+        font-size: 0.75rem;
+    }
+
+    /* Disable hover lift on touch — causes jank */
+    .glass-card:hover {
+        transform: none;
+        box-shadow: var(--glass-shadow);
+    }
+
+    /* Smaller slider thumb */
+    input[type=range]::-webkit-slider-thumb {
+        height: 16px;
+        width: 16px;
+        margin-top: -6px;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    input[type=range]::-moz-range-thumb {
+        height: 16px;
+        width: 16px;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    /* Goal Reverser hero input */
+    .hero-input {
+        font-size: 1.75rem;
+    }
+
+    /* Staircase shorter on mobile */
+    .staircase-container {
+        height: 200px;
+        padding: 12px;
+        gap: 3px;
+    }
+
+    /* Pill inputs wrap better */
+    .pill-input {
+        padding: 6px 12px;
+    }
+
+    .pill-input label {
+        font-size: 0.75rem;
+    }
+}
+
+/* ── Medium screens (tablets) ── */
+@media (max-width: 768px) {
+
+    /* Slightly smaller table cells */
+    th {
+        padding: 0.625rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    td {
+        padding: 0.625rem 0.5rem;
+        font-size: 0.8rem;
+    }
 }

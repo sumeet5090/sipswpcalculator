@@ -269,12 +269,12 @@ foreach ($combined as $row) {
                     Tool</span>
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-extrabold pb-4 tracking-tight">
+            <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-4 tracking-tight">
                 <span class="text-gradient">Visualise Your</span> <br>
                 <span class="text-gray-800">Wealth Journey</span>
             </h1>
 
-            <p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
+            <p class="text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium px-2 sm:px-0">
                 The most advanced <strong class="text-indigo-600">SIP & SWP Calculator</strong> on the web.
                 Seamlessly plan your investments and retirement income with vivid clarity.
                 Make informed decisions about your financial future with our advanced, real-time calculator.
@@ -286,7 +286,7 @@ foreach ($combined as $row) {
 
                 <!-- Left Column: Currency + Form -->
                 <div
-                    class="lg:col-span-1 flex flex-col gap-4 sticky top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto pb-4 pr-4 custom-scrollbar">
+                    class="lg:col-span-1 flex flex-col gap-4 sticky top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar">
 
                     <!-- Currency Selector -->
                     <div class="flex justify-end relative z-20">
@@ -347,7 +347,7 @@ foreach ($combined as $row) {
 
                                     <div class="space-y-3">
                                         <!-- Row 1: Monthly + Duration -->
-                                        <div class="grid grid-cols-2 gap-3">
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <!-- Monthly Investment -->
                                             <div class="group">
                                                 <label for="sip" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
@@ -386,7 +386,7 @@ foreach ($combined as $row) {
                                         </div>
 
                                         <!-- Row 2: Return % + Yearly Step-up -->
-                                        <div class="grid grid-cols-2 gap-3">
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <!-- Expected Return -->
                                             <div class="group">
                                                 <label for="rate" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
@@ -477,7 +477,7 @@ foreach ($combined as $row) {
                                                 class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
                                         </div>
 
-                                        <div class="grid grid-cols-2 gap-3">
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <!-- Withdrawal Duration -->
                                             <div class="group">
                                                 <label for="swp_years"
@@ -547,7 +547,7 @@ foreach ($combined as $row) {
                     <div
                         class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-6">
                         <!-- Chart -->
-                        <div class="h-[450px] w-full relative z-10">
+                        <div class="h-[280px] sm:h-[350px] lg:h-[450px] w-full relative z-10">
                             <canvas id="corpusChart"></canvas>
                         </div>
                     </div>
@@ -556,7 +556,7 @@ foreach ($combined as $row) {
 
             <!-- Full-width Yearly Breakdown -->
             <div class="mt-8 space-y-4">
-                <div class="flex items-center justify-between mb-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
                     <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
                         <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -846,7 +846,7 @@ foreach ($combined as $row) {
 
     <!-- PDF Generation Modal -->
     <div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-lg border border-gray-200">
+        <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
             <form id="pdfForm" class="space-y-4">
                 <div>
