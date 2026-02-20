@@ -8,15 +8,20 @@ const currencyConfig = {
 
 function updateCurrency(newCurrency) {
     currentCurrency = newCurrency;
-    // Re-render any displayed values that use formatCurrency
-    // For example, if you have a results display function:
-    calculateAndRender();
 
-    // Update all symbol spans
+    // Update all symbol spans in the form
     const spans = document.querySelectorAll('.currency-symbol');
     spans.forEach(span => {
         span.textContent = currencyConfig[currentCurrency].symbol;
     });
+
+    // Re-render chart and table with new currency
+    calculateAndRender();
+
+    // Force chart axis labels to refresh with new symbol
+    if (window.corpusChart) {
+        window.corpusChart.update();
+    }
 }
 
 function formatCurrency(value) {
@@ -569,9 +574,7 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                             family: fontFamily
                         },
                         callback: function (value) {
-                            if (value >= 10000000) return '₹' + (value / 10000000).toFixed(1) + 'Cr';
-                            if (value >= 100000) return '₹' + (value / 100000).toFixed(1) + 'L';
-                            return '₹' + (value / 1000) + 'k';
+                            return formatAxisTick(value);
                         }
                     },
                     beginAtZero: true
