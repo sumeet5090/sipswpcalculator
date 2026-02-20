@@ -344,43 +344,31 @@ foreach ($combined as $row) {
                                         SIP Details
                                     </legend>
 
-                                    <div class="space-y-4">
-                                        <!-- Monthly Investment -->
-                                        <div class="group">
-                                            <label for="sip"
-                                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2.5"
-                                                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                                                </svg>
-                                                Monthly
-                                            </label>
-                                            <div class="relative">
-                                                <span
-                                                    class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
-                                                <input type="number" id="sip" name="sip"
-                                                    class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                    required min="500" step="500" max="1000000"
-                                                    value="<?= htmlspecialchars((string) $sip) ?>">
-                                            </div>
-                                            <input type="range" id="sip_range" min="500" max="100000" step="500"
-                                                value="<?= htmlspecialchars((string) $sip) ?>"
-                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                        </div>
-
+                                    <div class="space-y-3">
+                                        <!-- Row 1: Monthly + Duration -->
                                         <div class="grid grid-cols-2 gap-3">
+                                            <!-- Monthly Investment -->
+                                            <div class="group">
+                                                <label for="sip" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                                    Monthly
+                                                </label>
+                                                <div class="relative">
+                                                    <span class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
+                                                    <input type="number" id="sip" name="sip"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                        required min="500" step="500" max="1000000"
+                                                        value="<?= htmlspecialchars((string) $sip) ?>">
+                                                </div>
+                                                <input type="range" id="sip_range" min="500" max="100000" step="500"
+                                                    value="<?= htmlspecialchars((string) $sip) ?>"
+                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                            </div>
+
                                             <!-- Duration -->
                                             <div class="group">
-                                                <label for="years"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2.5"
-                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                    </svg>
+                                                <label for="years" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                                     Duration
                                                 </label>
                                                 <div class="relative">
@@ -388,23 +376,20 @@ foreach ($combined as $row) {
                                                         class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
                                                         required min="1" max="50"
                                                         value="<?= htmlspecialchars((string) $years) ?>">
-                                                    <span
-                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
+                                                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
                                                 </div>
                                                 <input type="range" id="years_range" min="1" max="50" step="1"
                                                     value="<?= htmlspecialchars((string) $years) ?>"
                                                     class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                             </div>
+                                        </div>
 
+                                        <!-- Row 2: Return % + Yearly Step-up -->
+                                        <div class="grid grid-cols-2 gap-3">
                                             <!-- Expected Return -->
                                             <div class="group">
-                                                <label for="rate"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                                                    </svg>
+                                                <label for="rate" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                                                     Return %
                                                 </label>
                                                 <div class="relative">
@@ -412,37 +397,30 @@ foreach ($combined as $row) {
                                                         class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
                                                         required min="0" max="30"
                                                         value="<?= htmlspecialchars((string) $rate) ?>">
-                                                    <span
-                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
                                                 </div>
                                                 <input type="range" id="rate_range" min="1" max="30" step="0.1"
                                                     value="<?= htmlspecialchars((string) $rate) ?>"
                                                     class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                             </div>
-                                        </div>
 
-                                        <!-- Step-up -->
-                                        <div class="group">
-                                            <label for="stepup"
-                                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                                </svg>
-                                                Yearly Step-up
-                                            </label>
-                                            <div class="relative">
-                                                <input type="number" id="stepup" step="1" name="stepup"
-                                                    class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                    required min="0" max="100"
-                                                    value="<?= htmlspecialchars((string) $stepup) ?>">
-                                                <span
-                                                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                            <!-- Yearly Step-up -->
+                                            <div class="group">
+                                                <label for="stepup" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 mb-1.5">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                                    Step-up
+                                                </label>
+                                                <div class="relative">
+                                                    <input type="number" id="stepup" step="1" name="stepup"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                        required min="0" max="100"
+                                                        value="<?= htmlspecialchars((string) $stepup) ?>">
+                                                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                                </div>
+                                                <input type="range" id="stepup_range" min="0" max="50" step="1"
+                                                    value="<?= htmlspecialchars((string) $stepup) ?>"
+                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                             </div>
-                                            <input type="range" id="stepup_range" min="0" max="50" step="1"
-                                                value="<?= htmlspecialchars((string) $stepup) ?>"
-                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                         </div>
                                     </div>
                                 </fieldset>
