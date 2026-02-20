@@ -24,6 +24,53 @@ function updateCurrency(newCurrency) {
     }
 }
 
+// ── Tab switching ──────────────────────────────────────────────────────────
+function switchFormTab(tab) {
+    const sipPanel = document.getElementById('panel-sip');
+    const swpPanel = document.getElementById('panel-swp');
+    const sipTab = document.getElementById('tab-sip');
+    const swpTab = document.getElementById('tab-swp');
+
+    if (tab === 'sip') {
+        // Show SIP panel
+        sipPanel.classList.remove('hidden');
+        swpPanel.classList.add('hidden');
+        // Active styles for SIP tab
+        sipTab.classList.add('bg-emerald-500', 'text-white');
+        sipTab.classList.remove('bg-white', 'text-slate-400');
+        sipTab.querySelector('span').classList.add('bg-white/20');
+        sipTab.querySelector('span').classList.remove('bg-slate-100');
+        // Inactive styles for SWP tab
+        swpTab.classList.add('bg-white', 'text-slate-400');
+        swpTab.classList.remove('bg-rose-500', 'text-white');
+        swpTab.querySelector('span').classList.add('bg-slate-100');
+        swpTab.querySelector('span').classList.remove('bg-white/20');
+        sipTab.setAttribute('aria-selected', 'true');
+        swpTab.setAttribute('aria-selected', 'false');
+    } else {
+        // Show SWP panel
+        swpPanel.classList.remove('hidden');
+        sipPanel.classList.add('hidden');
+        // Active styles for SWP tab
+        swpTab.classList.add('bg-rose-500', 'text-white');
+        swpTab.classList.remove('bg-white', 'text-slate-400');
+        swpTab.querySelector('span').classList.add('bg-white/20');
+        swpTab.querySelector('span').classList.remove('bg-slate-100');
+        // Inactive styles for SIP tab
+        sipTab.classList.add('bg-white', 'text-slate-400');
+        sipTab.classList.remove('bg-emerald-500', 'text-white');
+        sipTab.querySelector('span').classList.add('bg-slate-100');
+        sipTab.querySelector('span').classList.remove('bg-white/20');
+        swpTab.setAttribute('aria-selected', 'true');
+        sipTab.setAttribute('aria-selected', 'false');
+    }
+}
+
+// Initialise tab on page load
+document.addEventListener('DOMContentLoaded', function () {
+    switchFormTab('sip'); // default to SIP tab
+});
+
 function formatCurrency(value) {
     const config = currencyConfig[currentCurrency];
     return new Intl.NumberFormat(config.locale, {
