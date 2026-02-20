@@ -542,7 +542,7 @@ foreach ($combined as $row) {
                                 ?>
                             </div>
                         </div>
-                        <div class="glass-card p-3 sm:p-4 text-center">
+                        <div class="glass-card p-3 sm:p-4 text-center swp-col" <?= !$enable_swp ? 'style="display:none"' : '' ?>>
                             <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
                                 Total Withdrawn</div>
                             <div id="summary-withdrawn"
@@ -646,14 +646,13 @@ foreach ($combined as $row) {
                                         <td class="px-6 py-4 text-right text-slate-500 font-mono">
                                             <?= formatInr($row['cumulative_invested']) ?>
                                         </td>
-                                        <?php if ($enable_swp): ?>
-                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono">
-                                                <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-slate-500 font-mono">
-                                                <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                            </td>
-                                        <?php endif; ?>
+                                        <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
+                                            <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                            <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
+                                        </td>
+                                        <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col" <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                            <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
+                                        </td>
                                         <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
                                             <?= formatInr($row['interest']) ?>
                                         </td>
