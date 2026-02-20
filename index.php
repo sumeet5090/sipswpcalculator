@@ -552,7 +552,7 @@ foreach ($combined as $row) {
                                 class="text-[10px] sm:text-xs font-bold text-indigo-400 uppercase tracking-widest mb-1">
                                 Final Corpus</div>
                             <div id="summary-corpus"
-                                class="text-xl sm:text-2xl font-extrabold text-slate-800 font-mono transition-numbers">
+                                class="text-lg sm:text-xl font-extrabold text-slate-800 font-mono transition-numbers">
                                 <?= formatInr(end($combined)['combined_total'] ?? 0) ?>
                             </div>
                         </div>

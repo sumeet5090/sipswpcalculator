@@ -262,8 +262,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial calculation on page load (syncs JS table/chart with PHP defaults)
     calculateAndRender();
 
-    // Re-fit summary cards on resize
-    window.addEventListener('resize', fitSummaryCards);
+    // Re-fit summary cards on resize (clear cached base font for breakpoint changes)
+    window.addEventListener('resize', () => {
+        ['summary-invested', 'summary-interest', 'summary-withdrawn', 'summary-corpus'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) delete el.dataset.baseFont;
+        });
+        fitSummaryCards();
+    });
 });
 
 
