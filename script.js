@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function calculateAndRender() {
     const inputs = getInputs();
     const data = calculateCorpus(inputs);
-    updateChart(data);
+    updateChart(data, inputs.enable_swp);
     updateTable(data, inputs.enable_swp);
     updateSummaryMetrics(data);
 }
@@ -351,10 +351,10 @@ function calculateCorpus(inp) {
 }
 
 // --- Update UI ---
-function updateChart(data) {
+function updateChart(data, enableSwp) {
     if (!window.corpusChart) return;
 
-    const yearsLabels = data.map(r => r.year);
+    const yearsLabels = data.map(r => 'Year ' + r.year);
     const investedData = data.map(r => r.cumulative_invested);
     const corpusData = data.map(r => r.combined_total);
     const swpData = data.map(r => r.annual_withdrawal || 0);
@@ -363,8 +363,9 @@ function updateChart(data) {
     window.corpusChart.data.datasets[0].data = investedData;
     window.corpusChart.data.datasets[1].data = corpusData;
     window.corpusChart.data.datasets[2].data = swpData;
+    window.corpusChart.data.datasets[2].hidden = !enableSwp;
 
-    window.corpusChart.update('none'); // 'none' mode for smooth animation
+    window.corpusChart.update();
 }
 
 function updateTable(data, enableSwp) {
