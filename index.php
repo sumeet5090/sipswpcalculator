@@ -254,13 +254,13 @@ foreach ($combined as $row) {
     </script>
 </head>
 
-<body class="font-sans antialiased text-slate-200">
+<body class="font-sans antialiased text-slate-800">
     <?php include 'navbar.php'; ?>
     <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
 
-        <header class="relative mb-16 text-center">
+        <header class="relative mb-6 sm:mb-10 text-center">
             <div
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-6">
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-4">
                 <span class="relative flex h-3 w-3">
                     <span class="absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
@@ -269,16 +269,15 @@ foreach ($combined as $row) {
                     Tool</span>
             </div>
 
-            <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-4 tracking-tight">
+            <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
                 <span class="text-gradient">Visualise Your</span> <br>
                 <span class="text-gray-800">Wealth Journey</span>
             </h1>
 
             <p
-                class="text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium px-2 sm:px-0">
+                class="hidden sm:block text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
                 The most advanced <strong class="text-indigo-600">SIP & SWP Calculator</strong> on the web.
-                Seamlessly plan your investments and retirement income with vivid clarity.
-                Make informed decisions about your financial future with our advanced, real-time calculator.
+                Plan your investments and retirement income with vivid clarity.
             </p>
         </header>
 
@@ -340,15 +339,8 @@ foreach ($combined as $row) {
                             <!-- SIP Panel -->
                             <div id="panel-sip" role="tabpanel">
                                 <div class="relative">
-                                    <fieldset
+                                    <div
                                         class="mb-4 relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
-                                        <legend
-                                            class="flex items-center gap-2 text-xs font-bold text-emerald-500 mb-4 w-full tracking-widest uppercase">
-                                            <div
-                                                class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-500/15 text-emerald-500 ring-1 ring-emerald-500/30 text-[10px]">
-                                                1</div>
-                                            SIP Details
-                                        </legend>
 
                                         <div class="space-y-3">
                                             <!-- Row 1: Monthly + Duration -->
@@ -455,23 +447,18 @@ foreach ($combined as $row) {
                                                 </div>
                                             </div>
                                         </div>
-                                    </fieldset>
+                                    </div>
                                 </div>
                             </div><!-- /panel-sip -->
 
                             <!-- SWP Panel -->
                             <div id="panel-swp" role="tabpanel" class="hidden">
                                 <div class="relative">
-                                    <fieldset
+                                    <div
                                         class="relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
-                                        <legend
-                                            class="flex items-center justify-between w-full mb-4 text-xs font-bold text-rose-400 tracking-widest uppercase">
-                                            <div class="flex items-center gap-2">
-                                                <div
-                                                    class="flex items-center justify-center w-5 h-5 rounded-full bg-rose-500/15 text-rose-400 ring-1 ring-rose-500/30 text-[10px]">
-                                                    2</div>
-                                                SWP Details
-                                            </div>
+                                        <div class="flex items-center justify-between mb-4">
+                                            <span class="text-xs font-bold text-rose-400 tracking-widest uppercase">SWP
+                                                Config</span>
                                             <label
                                                 class="toggle-switch relative inline-flex items-center cursor-pointer">
                                                 <input type="checkbox" id="enable_swp" name="enable_swp" checked
@@ -480,7 +467,7 @@ foreach ($combined as $row) {
                                                     class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
                                                 </div>
                                             </label>
-                                        </legend>
+                                        </div>
 
                                         <div id="swp-fields" class="space-y-4 transition-all duration-300">
                                             <!-- Monthly Withdrawal -->
@@ -561,7 +548,7 @@ foreach ($combined as $row) {
                                                 </div>
                                             </div>
                                         </div>
-                                    </fieldset>
+                                    </div>
                                 </div>
                             </div><!-- /panel-swp -->
 
@@ -581,6 +568,50 @@ foreach ($combined as $row) {
                     </div>
                 </div>
             </div><!-- /3-col grid -->
+
+            <!-- Hero Summary Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6">
+                <!-- Total Invested -->
+                <div class="glass-card p-4 sm:p-5 text-center">
+                    <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Total
+                        Invested</div>
+                    <div id="summary-invested"
+                        class="text-lg sm:text-2xl font-extrabold text-indigo-600 font-mono transition-numbers">
+                        <?= formatInr(end($combined)['cumulative_invested'] ?? 0) ?>
+                    </div>
+                </div>
+                <!-- Total Gains -->
+                <div class="glass-card p-4 sm:p-5 text-center">
+                    <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Total
+                        Gains</div>
+                    <div id="summary-interest"
+                        class="text-lg sm:text-2xl font-extrabold text-emerald-600 font-mono transition-numbers">
+                        <?php
+                        $lastRow = end($combined);
+                        $totalGains = ($lastRow['combined_total'] + ($lastRow['cumulative_withdrawals'] ?? 0)) - ($lastRow['cumulative_invested'] ?? 0);
+                        echo formatInr($totalGains);
+                        ?>
+                    </div>
+                </div>
+                <!-- Total Withdrawn -->
+                <div class="glass-card p-4 sm:p-5 text-center swp-col" <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                    <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Total
+                        Withdrawn</div>
+                    <div id="summary-withdrawn"
+                        class="text-lg sm:text-2xl font-extrabold text-rose-500 font-mono transition-numbers">
+                        <?= formatInr(end($combined)['cumulative_withdrawals'] ?? 0) ?>
+                    </div>
+                </div>
+                <!-- Final Corpus -->
+                <div class="glass-card p-4 sm:p-5 text-center">
+                    <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Final
+                        Corpus</div>
+                    <div id="summary-corpus"
+                        class="text-lg sm:text-2xl font-extrabold text-slate-800 font-mono transition-numbers">
+                        <?= formatInr(end($combined)['combined_total'] ?? 0) ?>
+                    </div>
+                </div>
+            </div>
 
             <!-- Full-width Yearly Breakdown -->
             <div class="mt-8 space-y-4">
@@ -616,7 +647,8 @@ foreach ($combined as $row) {
                 <div class="glass-card overflow-hidden border border-slate-200 shadow-sm">
                     <div class="overflow-x-auto max-h-[600px] overflow-y-auto custom-scrollbar">
                         <table class="w-full text-sm text-left relative">
-                            <thead class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 sticky top-0 z-10">
+                            <thead id="breakdown-head"
+                                class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 sticky top-0 z-10">
                                 <tr>
                                     <th class="px-6 py-4 bg-slate-50/95 border-b border-slate-200">Year</th>
                                     <th class="px-6 py-4 bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
@@ -627,14 +659,12 @@ foreach ($combined as $row) {
                                     <th
                                         class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
                                         Total Invested</th>
-                                    <?php if ($enable_swp): ?>
-                                        <th
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap">
-                                            Annual SWP</th>
-                                        <th
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap">
-                                            Total Withdrawn</th>
-                                    <?php endif; ?>
+                                    <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
+                                        <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                        Annual SWP</th>
+                                    <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col"
+                                        <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                        Total Withdrawn</th>
                                     <th
                                         class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">
                                         Interest</th>
@@ -794,53 +824,108 @@ foreach ($combined as $row) {
             <!-- FAQ Section -->
             <div class="mt-12 border-t border-gray-200 pt-8">
                 <h2 class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
-                <div class="space-y-6">
-                    <div class="bg-gray-100 p-6 rounded-lg">
-                        <h3 class="text-xl font-bold text-indigo-600 mb-2">Can I start an SWP immediately after my
-                            SIP ends?</h3>
-                        <p>Yes, absolutely. This is a common strategy for retirement planning. You accumulate a
-                            corpus using SIP during your working years and then switch to SWP to generate a monthly
+                <div class="space-y-3">
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            Can I start an SWP immediately after my SIP ends?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            Yes, absolutely. This is a common strategy for retirement planning. You accumulate a corpus
+                            using SIP during your working years and then switch to SWP to generate a monthly
                             pension-like income post-retirement. Our calculator specifically models this seamless
-                            transition.</p>
-                    </div>
-                    <div class="bg-gray-100 p-6 rounded-lg">
-                        <h3 class="text-xl font-bold text-indigo-600 mb-2">Is SWP better than a fixed deposit
-                            interest?</h3>
-                        <p>Generally, yes. SWP from equity or hybrid mutual funds has the potential to offer higher
+                            transition.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            Is SWP better than a fixed deposit interest?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            Generally, yes. SWP from equity or hybrid mutual funds has the potential to offer higher
                             returns than fixed deposits over the long term. Additionally, SWP is more tax-efficient
                             because you are only taxed on the capital gains portion of the withdrawal, whereas FD
-                            interest is fully taxable at your slab rate.</p>
-                    </div>
-                    <div class="bg-gray-100 p-6 rounded-lg">
-                        <h3 class="text-xl font-bold text-indigo-600 mb-2">How does the "Step-up" feature work?</h3>
-                        <p>A "Step-up" SIP means you increase your monthly investment amount by a certain percentage
-                            every year (e.g., as your salary increases). This significantly boosts your final
-                            corpus. Similarly, a "Step-up" SWP means you increase your withdrawal amount annually to
-                            combat inflation.</p>
-                    </div>
-                    <div class="bg-gray-100 p-6 rounded-lg">
-                        <h3 class="text-xl font-bold text-indigo-600 mb-2">What is a safe withdrawal rate for SWP?
-                        </h3>
-                        <p>Financial experts often recommend the "4% rule," suggesting you withdraw 4% of your
-                            corpus annually. However, this depends on market conditions and your lifespan. Use our
-                            <a href="/sequence-risk-analyzer" class="text-indigo-600 hover:underline">Sequence of
-                                Returns Risk Analyzer</a> to test if your withdrawal rate is sustainable during
-                            market crashes.
-                        </p>
-                    </div>
-                    <div class="bg-gray-100 p-6 rounded-lg">
-                        <h3 class="text-xl font-bold text-indigo-600 mb-2">Which is better: SIP or Lump Sum?</h3>
-                        <p>In a rising market, Lump Sum often wins mathematically. However, SIP is psychologically
+                            interest is fully taxable at your slab rate.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            How does the "Step-up" feature work?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            A "Step-up" SIP means you increase your monthly investment amount by a certain percentage
+                            every year (e.g., as your salary increases). This significantly boosts your final corpus.
+                            Similarly, a "Step-up" SWP means you increase your withdrawal amount annually to combat
+                            inflation.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            What is a safe withdrawal rate for SWP?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            Financial experts often recommend the "4% rule," suggesting you withdraw 4% of your corpus
+                            annually. However, this depends on market conditions and your lifespan. Use our <a
+                                href="/sequence-risk-analyzer" class="text-indigo-600 hover:underline">Sequence of
+                                Returns Risk Analyzer</a> to test if your withdrawal rate is sustainable during market
+                            crashes.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            Which is better: SIP or Lump Sum?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            In a rising market, Lump Sum often wins mathematically. However, SIP is psychologically
                             easier and safer for volatile markets as it benefits from <strong>Dollar Cost
                                 Averaging</strong>, reducing the risk of investing a large amount at a market peak.
-                        </p>
-                    </div>
-                    <div class="bg-gray-100 p-6 rounded-lg">
-                        <h3 class="text-xl font-bold text-indigo-600 mb-2">Can I lose money in SIP?</h3>
-                        <p>Yes, in the short term. Since SIPs in equity mutual funds are market-linked, the value
-                            can fluctuate. However, historical data shows that over the long term (7-10+ years), the
-                            probability of negative returns in a diversified fund is negligible.</p>
-                    </div>
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            Can I lose money in SIP?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            Yes, in the short term. Since SIPs in equity mutual funds are market-linked, the value can
+                            fluctuate. However, historical data shows that over the long term (7-10+ years), the
+                            probability of negative returns in a diversified fund is negligible.
+                        </div>
+                    </details>
                 </div>
             </div>
 

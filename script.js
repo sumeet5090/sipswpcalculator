@@ -642,6 +642,11 @@ function toggleSwpFields() {
     // Safety check if elements exist
     if (!fields) return;
 
+    // Toggle all .swp-col elements (thead columns + summary card)
+    document.querySelectorAll('.swp-col').forEach(el => {
+        el.style.display = isChecked ? '' : 'none';
+    });
+
     if (isChecked) {
         fields.style.display = 'block';
         setTimeout(() => {
@@ -659,9 +664,6 @@ function toggleSwpFields() {
     } else {
         fields.style.opacity = '0.5'; // Fade out first
         fields.style.pointerEvents = 'none';
-
-        // Wait for fade out to complete before display:none
-        // But since we want immediate feel, let's keep it simple or use timeout
         fields.style.display = 'none';
 
         // Hide SWP dataset in chart
