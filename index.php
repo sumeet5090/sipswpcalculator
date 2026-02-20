@@ -18,6 +18,7 @@ $sip = isset($_POST['sip']) ? (float) $_POST['sip'] : $default_sip;
 $years = isset($_POST['years']) ? (int) $_POST['years'] : $default_years;
 $rate = isset($_POST['rate']) ? (float) $_POST['rate'] : $default_rate;
 $stepup = isset($_POST['stepup']) ? (float) $_POST['stepup'] : $default_stepup;
+$enable_swp = isset($_POST['enable_swp']) ? (bool) $_POST['enable_swp'] : true;
 $swp_withdrawal = isset($_POST['swp_withdrawal']) ? (float) $_POST['swp_withdrawal'] : $default_swp_withdrawal;
 $swp_stepup = isset($_POST['swp_stepup']) ? (float) $_POST['swp_stepup'] : $default_swp_stepup;
 $swp_years_input = isset($_POST['swp_years']) ? (int) $_POST['swp_years'] : $default_swp_years;
