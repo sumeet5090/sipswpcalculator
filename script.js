@@ -157,7 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Chart.js
     const ctx = document.getElementById('corpusChart');
     if (ctx && window.chartData && window.chartData.years.length > 0) {
-        const chartConfig = getChartConfig(window.chartData);
+        const enableSwp = document.getElementById('enable_swp')?.checked || false;
+        const chartConfig = getChartConfig(window.chartData, enableSwp);
         // Make the chart instance globally accessible
         window.corpusChart = new Chart(ctx, chartConfig);
     }
@@ -457,14 +458,20 @@ function fitSummaryCards() {
         const el = document.getElementById(id);
         if (!el) return;
 
-        // Ensure nowrap for accurate single-line measurement
         el.style.whiteSpace = 'nowrap';
         el.style.overflow = 'hidden';
 
-        // Reset font size to CSS default
-        el.style.fontSize = '';
+        // Store the natural CSS font-size on first run so we always scale from the same base
+        if (!el.dataset.baseFont) {
+            el.style.fontSize = '';
+            void el.offsetWidth;
+            el.dataset.baseFont = getComputedStyle(el).fontSize;
+        }
 
-        // Force reflow so scrollWidth reflects the CSS class font-size
+        const basePx = parseFloat(el.dataset.baseFont);
+
+        // Reset to base to measure natural text width at full size
+        el.style.fontSize = basePx + 'px';
         void el.offsetWidth;
 
         const parent = el.parentElement;
@@ -473,9 +480,10 @@ function fitSummaryCards() {
         const textW = el.scrollWidth;
 
         if (textW > availableW && availableW > 0) {
-            const basePx = parseFloat(getComputedStyle(el).fontSize);
             const newPx = Math.max((availableW / textW) * basePx, 10);
             el.style.fontSize = newPx + 'px';
+        } else {
+            el.style.fontSize = basePx + 'px';
         }
     });
 }
@@ -523,7 +531,7 @@ function setupRangeSliders() {
     }
 }
 
-function getChartConfig({ years, cumulative, corpus, swp }) {
+function getChartConfig({ years, cumulative, corpus, swp }, enableSwp = true) {
     const ctx = document.getElementById('corpusChart').getContext('2d');
 
     // Gradients & Colors matching Light Theme
@@ -585,6 +593,7 @@ function getChartConfig({ years, cumulative, corpus, swp }) {
                     pointBorderColor: '#f43f5e',
                     pointRadius: 0,
                     pointHoverRadius: 6,
+                    hidden: !enableSwp,
                 }
             ]
         },
