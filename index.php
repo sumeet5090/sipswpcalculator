@@ -646,7 +646,7 @@ foreach ($combined as $row) {
 
                 <div class="glass-card overflow-hidden border border-slate-200 shadow-sm">
                     <div id="table-scroll-wrapper"
-                        class="max-h-[600px] overflow-y-auto overflow-x-hidden custom-scrollbar">
+                        class="max-h-[600px] overflow-y-auto overflow-x-auto custom-scrollbar">
                         <table class="w-full text-sm text-left relative">
                             <thead id="breakdown-head"
                                 class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 sticky top-0 z-10">

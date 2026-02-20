@@ -249,45 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial calculation on page load (syncs JS table/chart with PHP defaults)
     calculateAndRender();
-
-    // Re-fit table on window resize
-    window.addEventListener('resize', fitTableToContainer);
 });
-
-// --- Auto-scale table to prevent horizontal overflow ---
-function fitTableToContainer() {
-    // Double RAF: ensures browser has fully completed layout after DOM changes
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-        const wrapper = document.getElementById('table-scroll-wrapper');
-        const table = wrapper?.querySelector('table');
-        if (!wrapper || !table) return;
-
-        // Reset scale so we measure the true natural width
-        table.style.transform = '';
-        table.style.transformOrigin = '';
-        table.style.width = '';
-        wrapper.style.maxHeight = '';
-
-        // clientWidth excludes scrollbar; subtract additional safety margin
-        const scrollbarW = wrapper.offsetWidth - wrapper.clientWidth;
-        const containerW = wrapper.offsetWidth - scrollbarW;
-        const tableW = table.scrollWidth;
-
-        if (tableW > containerW && containerW > 0) {
-            const scale = containerW / tableW;
-            const naturalH = table.offsetHeight;
-
-            table.style.transformOrigin = 'top left';
-            table.style.transform = `scale(${scale})`;
-            table.style.width = tableW + 'px';
-
-            // Compensate wrapper height for scale shrinkage (capped at 600px)
-            wrapper.style.maxHeight = Math.min(naturalH * scale, 600) + 'px';
-        } else {
-            wrapper.style.maxHeight = '600px';
-        }
-    }));
-}
 
 
 
@@ -298,7 +260,6 @@ function calculateAndRender() {
     updateChart(data);
     updateTable(data, inputs.enable_swp);
     updateSummaryMetrics(data);
-    fitTableToContainer();
 }
 
 function getInputs() {
