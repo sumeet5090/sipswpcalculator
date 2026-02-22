@@ -341,86 +341,80 @@ foreach ($combined as $row) {
                                         class="mb-4 relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
 
                                         <div class="space-y-3">
-                                            <!-- Row 1: Monthly + Duration -->
-                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                                <!-- Monthly Investment -->
-                                                <div class="group">
-                                                    <label for="sip"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                        Monthly SIP
-                                                    </label>
-                                                    <div class="relative">
-                                                        <span
-                                                            class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
-                                                        <input type="number" id="sip" name="sip"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                            required min="500" step="500" max="1000000"
-                                                            value="<?= htmlspecialchars((string) $sip) ?>">
-                                                    </div>
-                                                    <input type="range" id="sip_range" min="500" max="100000" step="500"
-                                                        value="<?= htmlspecialchars((string) $sip) ?>"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                            <!-- Monthly + Duration -->
+                                            <!-- Monthly Investment -->
+                                            <div class="group">
+                                                <label for="sip"
+                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                    Monthly SIP
+                                                </label>
+                                                <div class="relative">
+                                                    <span
+                                                        class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
+                                                    <input type="number" id="sip" name="sip"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                        required min="500" step="500" max="1000000"
+                                                        value="<?= htmlspecialchars((string) $sip) ?>">
                                                 </div>
-
-                                                <!-- Duration -->
-                                                <div class="group">
-                                                    <label for="years"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                        Period (Yrs)
-                                                    </label>
-                                                    <div class="relative">
-                                                        <input type="number" id="years" name="years"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                            required min="1" max="50"
-                                                            value="<?= htmlspecialchars((string) $years) ?>">
-                                                        <span
-                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
-                                                    </div>
-                                                    <input type="range" id="years_range" min="1" max="50" step="1"
-                                                        value="<?= htmlspecialchars((string) $years) ?>"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                                </div>
+                                                <input type="range" id="sip_range" min="500" max="100000" step="500"
+                                                    value="<?= htmlspecialchars((string) $sip) ?>"
+                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                             </div>
 
-                                            <!-- Row 2: Return % + Yearly Step-up -->
-                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                                <!-- Expected Return -->
-                                                <div class="group">
-                                                    <label for="rate"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                        Expected Return
-                                                    </label>
-                                                    <div class="relative">
-                                                        <input type="number" id="rate" step="0.1" name="rate"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                            required min="0" max="30"
-                                                            value="<?= htmlspecialchars((string) $rate) ?>">
-                                                        <span
-                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
-                                                    </div>
-                                                    <input type="range" id="rate_range" min="1" max="30" step="0.1"
-                                                        value="<?= htmlspecialchars((string) $rate) ?>"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                            <!-- Duration -->
+                                            <div class="group">
+                                                <label for="years"
+                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                    Period (Yrs)
+                                                </label>
+                                                <div class="relative">
+                                                    <input type="number" id="years" name="years"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                        required min="1" max="50"
+                                                        value="<?= htmlspecialchars((string) $years) ?>">
+                                                    <span
+                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
                                                 </div>
+                                                <input type="range" id="years_range" min="1" max="50" step="1"
+                                                    value="<?= htmlspecialchars((string) $years) ?>"
+                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                            </div>
+                                            <!-- Expected Return -->
+                                            <div class="group">
+                                                <label for="rate"
+                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                    Expected Return
+                                                </label>
+                                                <div class="relative">
+                                                    <input type="number" id="rate" step="0.1" name="rate"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                        required min="0" max="30"
+                                                        value="<?= htmlspecialchars((string) $rate) ?>">
+                                                    <span
+                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                                </div>
+                                                <input type="range" id="rate_range" min="1" max="30" step="0.1"
+                                                    value="<?= htmlspecialchars((string) $rate) ?>"
+                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                            </div>
 
-                                                <!-- Yearly Step-up -->
-                                                <div class="group">
-                                                    <label for="stepup"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                        Annual Step-up
-                                                    </label>
-                                                    <div class="relative">
-                                                        <input type="number" id="stepup" step="1" name="stepup"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                            required min="0" max="100"
-                                                            value="<?= htmlspecialchars((string) $stepup) ?>">
-                                                        <span
-                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
-                                                    </div>
-                                                    <input type="range" id="stepup_range" min="0" max="50" step="1"
-                                                        value="<?= htmlspecialchars((string) $stepup) ?>"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                            <!-- Yearly Step-up -->
+                                            <div class="group">
+                                                <label for="stepup"
+                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                    Annual Step-up
+                                                </label>
+                                                <div class="relative">
+                                                    <input type="number" id="stepup" step="1" name="stepup"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                        required min="0" max="100"
+                                                        value="<?= htmlspecialchars((string) $stepup) ?>">
+                                                    <span
+                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
                                                 </div>
+                                                <input type="range" id="stepup_range" min="0" max="50" step="1"
+                                                    value="<?= htmlspecialchars((string) $stepup) ?>"
+                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                             </div>
                                         </div>
                                     </div>
@@ -466,45 +460,43 @@ foreach ($combined as $row) {
                                                     class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
                                             </div>
 
-                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                                <!-- Withdrawal Duration -->
-                                                <div class="group">
-                                                    <label for="swp_years"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                        SWP Period
-                                                    </label>
-                                                    <div class="relative">
-                                                        <input type="number" id="swp_years" name="swp_years"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
-                                                            required min="1" max="50"
-                                                            value="<?= htmlspecialchars((string) $swp_years_input) ?>">
-                                                        <span
-                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
-                                                    </div>
-                                                    <input type="range" id="swp_years_range" min="1" max="50" step="1"
-                                                        value="<?= htmlspecialchars((string) $swp_years_input) ?>"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
-                                                </div>
 
-                                                <!-- Withdrawal Hike -->
-                                                <div class="group">
-                                                    <label for="swp_stepup"
-                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                        Yearly Hike
-                                                    </label>
-                                                    <div class="relative">
-                                                        <input type="number" id="swp_stepup" step="0.1"
-                                                            name="swp_stepup"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
-                                                            required min="0" max="20"
-                                                            value="<?= htmlspecialchars((string) $swp_stepup) ?>">
-                                                        <span
-                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
-                                                    </div>
-                                                    <input type="range" id="swp_stepup_range" min="0" max="20"
-                                                        step="0.5" value="<?= htmlspecialchars((string) $swp_stepup) ?>"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                                            <!-- Withdrawal Duration -->
+                                            <div class="group">
+                                                <label for="swp_years"
+                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                    SWP Period
+                                                </label>
+                                                <div class="relative">
+                                                    <input type="number" id="swp_years" name="swp_years"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                        required min="1" max="50"
+                                                        value="<?= htmlspecialchars((string) $swp_years_input) ?>">
+                                                    <span
+                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
                                                 </div>
+                                                <input type="range" id="swp_years_range" min="1" max="50" step="1"
+                                                    value="<?= htmlspecialchars((string) $swp_years_input) ?>"
+                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                                            </div>
+
+                                            <!-- Withdrawal Hike -->
+                                            <div class="group">
+                                                <label for="swp_stepup"
+                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                    Yearly Hike
+                                                </label>
+                                                <div class="relative">
+                                                    <input type="number" id="swp_stepup" step="0.1" name="swp_stepup"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                        required min="0" max="20"
+                                                        value="<?= htmlspecialchars((string) $swp_stepup) ?>">
+                                                    <span
+                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                                </div>
+                                                <input type="range" id="swp_stepup_range" min="0" max="20" step="0.5"
+                                                    value="<?= htmlspecialchars((string) $swp_stepup) ?>"
+                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
                                             </div>
                                         </div>
                                     </div>
