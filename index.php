@@ -214,7 +214,6 @@ foreach ($combined as $row) {
       "about": "Investment Comparison"
     }
     </script>
-    </script>
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
