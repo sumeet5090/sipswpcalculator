@@ -162,9 +162,9 @@ foreach ($combined as $row) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free SIP & SWP Calculator | Plan Mutual Fund Investments</title>
+    <title>SIP & SWP Calculator 2026 — Plan Investments & Retirement</title>
     <meta name="description"
-        content="Calculate SIP returns, SWP withdrawals, and visualize wealth creation with our free, advanced financial tools. Plan your retirement with accurate projections.">
+        content="India's only combined SIP + SWP simulator. Model your investment journey from ₹500/month to retirement income. Step-up support, charts, PDF reports. Free, no sign-up.">
     <meta name="keywords"
         content="SIP Calculator, SWP Calculator, Mutual Fund Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP">
     <link rel="canonical" href="https://sipswpcalculator.com/">
@@ -201,9 +201,11 @@ foreach ($combined as $row) {
       "description": "A comprehensive tool for calculating Systematic Investment Plans (SIP) and Systematic Withdrawal Plans (SWP) with visualization.",
       "featureList": "SIP Calculator, SWP Calculator, Inflation Adjustment, Visual Charts, CSV Export",
       "screenshot": "https://sipswpcalculator.com/assets/og-image-main.jpg",
+      "dateModified": "2026-02-22",
       "author": {
           "@type": "Person",
-          "name": "Finance Expert"
+          "name": "Sumeet Boga",
+          "url": "https://sipswpcalculator.com/"
       }
     }
     </script>
@@ -269,15 +271,34 @@ foreach ($combined as $row) {
             </div>
 
             <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
-                <span class="text-gradient">Visualise Your</span> <br>
-                <span class="text-gray-800">Wealth Journey</span>
+                <span class="text-gradient">SIP & SWP Calculator</span> <br>
+                <span class="text-gray-800">Visualise Your Wealth Journey</span>
             </h1>
 
-            <p
-                class="hidden sm:block text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
-                The most advanced <strong class="text-indigo-600">SIP & SWP Calculator</strong> on the web.
-                Plan your investments and retirement income with vivid clarity.
+            <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
+                A <dfn><strong class="text-indigo-600">Systematic Investment Plan (SIP)</strong></dfn> lets you invest a
+                fixed amount at regular intervals into mutual funds, harnessing the power of compounding.
+                A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you withdraw a
+                fixed amount periodically, creating a steady retirement income.
             </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-500">
+                <span class="inline-flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    By <strong class="text-slate-700">Sumeet Boga</strong>, Finance & Technology
+                </span>
+                <span class="text-slate-300">|</span>
+                <span class="inline-flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Last Reviewed: <time datetime="2026-02">February 2026</time>
+                </span>
+            </div>
         </header>
 
         <main>
