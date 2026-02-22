@@ -678,7 +678,6 @@ foreach ($combined as $row) {
 
 
     </div>
-    </main>
 
     <div class="text-center mt-8">
         <a href="/sip-calculator" class="text-indigo-600 hover:underline">
@@ -700,7 +699,8 @@ foreach ($combined as $row) {
                     <p>A SIP is a disciplined investment approach where you invest a fixed amount of money at
                         regular intervals (usually monthly) into a mutual fund scheme. Instead of making a large
                         one-time investment, you invest smaller amounts over time. This strategy helps in averaging
-                        out the cost of your investment and harnesses the power of compounding.</p>
+                        out the cost of your investment and harnesses the power of compounding.
+                        <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Read our complete SIP guide →</a></p>
                     <ul class="mt-4 space-y-2">
                         <li><span class="font-semibold text-green-600">Dollar Cost Averaging:</span> Buy more units
                             when the market is low and fewer when it's high.</li>
@@ -713,10 +713,11 @@ foreach ($combined as $row) {
                 <div>
                     <h3 class="text-2xl font-semibold mb-3 text-purple-600">What is a Systematic Withdrawal Plan
                         (SWP)?</h3>
-                    <p>An SWP is the reverse of a SIP. It allows you to withdraw a fixed amount of money from your
+                    <p>An SWP is the reverse of a <a href="/sip-calculator" class="text-indigo-600 hover:underline">SIP</a>. It allows you to withdraw a fixed amount of money from your
                         mutual fund investment at regular intervals. This is an ideal solution for generating a
                         regular cash flow from your investments, especially during retirement. It provides a steady
-                        income stream while allowing the remaining investment to continue growing.</p>
+                        income stream while allowing the remaining investment to continue growing.
+                        <a href="/#panel-swp" class="text-purple-600 hover:underline font-medium">Try the SWP calculator →</a></p>
                     <ul class="mt-4 space-y-2">
                         <li><span class="font-semibold text-green-600">Regular Income:</span> Create a predictable
                             cash flow from your investments.</li>
@@ -897,11 +898,13 @@ foreach ($combined as $row) {
                 </div>
             </div>
 
-            <p class="text-center mt-8">Use our advanced calculator to model your SIP investments and plan your SWP
+            <p class="text-center mt-8">Use our <a href="/" class="text-indigo-600 hover:underline font-medium">advanced SIP & SWP calculator</a> to model your investments and plan your
                 withdrawals to see how you can achieve your financial goals, whether it's building a retirement
-                corpus, funding your child's education, or creating a passive income stream.</p>
+                corpus, funding your child's education, or creating a passive income stream.
+                <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Learn more about how SIPs work →</a></p>
         </div>
     </div>
+    </main>
 
     <!-- FAQ Schema -->
     <script type="application/ld+json">

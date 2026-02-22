@@ -19,6 +19,16 @@ if ($current_page == 'index.php' || $current_page == '')
             <span class="self-center text-xl font-bold whitespace-nowrap text-slate-800 tracking-tight">SIP<span
                     class="text-emerald-600">Calculator</span></span>
         </a>
+        <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
+            <a href="/"
+                class="<?= $current_page === 'index.php' ? 'text-indigo-600 font-semibold' : 'text-slate-600 hover:text-indigo-600' ?> transition-colors">
+                Calculator
+            </a>
+            <a href="/sip-calculator"
+                class="<?= $current_page === 'sip-calculator.php' ? 'text-indigo-600 font-semibold' : 'text-slate-600 hover:text-indigo-600' ?> transition-colors">
+                SIP Guide
+            </a>
+        </nav>
     </div>
 </nav>
 <!-- Spacer to prevent content overlap -->
