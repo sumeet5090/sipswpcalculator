@@ -227,7 +227,7 @@ foreach ($combined as $row) {
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="styles.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -971,7 +971,7 @@ foreach ($combined as $row) {
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <script>
         // Pass chart data to the external script
         window.chartData = {
@@ -982,7 +982,7 @@ foreach ($combined as $row) {
         };
         console.log('Chart Data Loaded:', window.chartData);
     </script>
-    <script src="script.js?v=<?= time() ?>"></script>
+    <script defer src="script.js?v=<?= filemtime(__DIR__ . '/script.js') ?>"></script>
 
 </body>
 

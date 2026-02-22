@@ -14,7 +14,7 @@ require_once __DIR__ . '/functions.php';
     <meta name="description"
         content="A comprehensive guide to understanding Systematic Investment Plans (SIPs), their benefits, and how to use a SIP calculator to plan your financial future.">
     <link rel="canonical" href="https://sipswpcalculator.com/sip-calculator">
-    <link rel="stylesheet" href="styles.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
