@@ -32,5 +32,5 @@ __pycache__/
 *.ear
 
 # If you want to ignore all other .exes but KEEP tailwind:
-# *.exe
+*.exe
 # !tailwindcss.exe
