@@ -1,26 +1,36 @@
-# Ignore build artifacts and temporary files
-/build/
-vendor/
-GEMINI.md
-*.log
-*.tmp
-.DS_Store
+# --- Dependencies ---
 node_modules/
-dist/
+vendor/
+
+# --- Environment & IDE ---
 .env
 .idea/
 .vscode/
+.DS_Store
+
+# --- Logs & Temps ---
+*.log
+*.tmp
 *.bak
 *.swp
-*.class
-*.exe
+GEMINI.md
+
+# --- Build Artifacts ---
+# We KEEP /dist/ because it contains production CSS 
+/build/
+
+# --- Binaries ---
+# We ignore general binaries but KEEP our Tailwind compiler 
 *.dll
 *.so
 *.o
 *.pyc
 __pycache__/
-coverage/
-*.iml
+*.class
 *.jar
 *.war
 *.ear
+
+# If you want to ignore all other .exes but KEEP tailwind:
+# *.exe
+# !tailwindcss.exe
