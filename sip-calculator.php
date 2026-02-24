@@ -15,29 +15,8 @@ require_once __DIR__ . '/functions.php';
         content="A comprehensive guide to understanding Systematic Investment Plans (SIPs), their benefits, and how to use a SIP calculator to plan your financial future.">
     <link rel="canonical" href="https://sipswpcalculator.com/sip-calculator">
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
-    <!-- Tailwind CSS (via CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    },
-                    colors: {
-                        indigo: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#312e81',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Tailwind CSS (production build, purged) -->
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased"
