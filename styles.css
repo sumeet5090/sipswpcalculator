@@ -795,3 +795,74 @@ input[type=range]::-moz-range-track {
         font-size: 0.8rem;
     }
 }
+
+/* ── Missing Tailwind responsive utilities ──
+   The purged tailwind.min.css build does not include sm:/lg: prefixed classes.
+   These manual overrides ensure responsive behavior works correctly. */
+
+/* sm: breakpoint (≥640px) */
+@media (min-width: 640px) {
+    .sm\:hidden {
+        display: none !important;
+    }
+
+    .sm\:flex {
+        display: flex !important;
+    }
+
+    .sm\:flex-row {
+        flex-direction: row !important;
+    }
+
+    .sm\:inline {
+        display: inline !important;
+    }
+
+    .sm\:inline-flex {
+        display: inline-flex !important;
+    }
+
+    .sm\:gap-4 {
+        gap: 1rem !important;
+    }
+
+    .sm\:p-6 {
+        padding: 1.5rem !important;
+    }
+
+    .sm\:p-12 {
+        padding: 3rem !important;
+    }
+
+    .sm\:text-5xl {
+        font-size: 3rem !important;
+        line-height: 1 !important;
+    }
+}
+
+/* md: breakpoint (≥768px) */
+@media (min-width: 768px) {
+    .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .md\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .md\:text-7xl {
+        font-size: 4.5rem !important;
+        line-height: 1 !important;
+    }
+}
+
+/* lg: breakpoint (≥1024px) */
+@media (min-width: 1024px) {
+    .lg\:p-8 {
+        padding: 2rem !important;
+    }
+
+    .lg\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
