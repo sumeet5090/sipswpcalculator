@@ -37,7 +37,9 @@
             <p class="text-amber-800"><span class="font-bold">⚠️ Disclaimer</span><br>This calculator is for
                 educational and illustrative purposes only. It does not constitute financial, tax, or investment
                 advice. Past performance is not indicative of future results. Please consult with a qualified
-                financial advisor before making any investment decisions.</p>
+                financial advisor before making any investment decisions. See our <a href="/privacy"
+                    class="text-amber-900 underline font-medium">Privacy Policy</a> and <a href="/terms"
+                    class="text-amber-900 underline font-medium">Terms of Service</a>.</p>
         </div>
 
         <div class="text-center">

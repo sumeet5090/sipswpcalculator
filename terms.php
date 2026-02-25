@@ -56,6 +56,10 @@ declare(strict_types=1);
                 <p>In no event shall sipswpcalculator.com or its creators be liable for any direct, indirect,
                     incidental, consequential, or punitive damages arising out of your use of, or inability to use, the
                     Website and its calculators.</p>
+
+                <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+                    <a href="/" class="text-indigo-600 hover:underline font-medium">← Return to SIP & SWP Calculator</a>
+                </div>
             </article>
         </main>
 

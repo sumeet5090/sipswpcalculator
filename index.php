@@ -317,383 +317,406 @@ foreach ($combined as $row) {
         </header>
 
         <main>
-            <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-                <!-- Left Column: Currency + Form -->
-                <div
-                    class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar">
-
-
-
-                    <!-- Form Section -->
-                    <div class="glass-card p-4">
-                        <form method="post" novalidate id="calculator-form">
-
-                            <!-- Currency Selector -->
-                            <div class="flex justify-center mb-3">
-                                <div class="inline-flex rounded-lg overflow-hidden border border-slate-200" role="group"
-                                    id="currency-group">
-                                    <button type="button" data-currency="INR"
-                                        class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
-                                        onclick="updateCurrency('INR')">
-                                        ₹ INR
-                                    </button>
-                                    <button type="button" data-currency="USD"
-                                        class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
-                                        onclick="updateCurrency('USD')">
-                                        $ USD
-                                    </button>
-                                    <button type="button" data-currency="EUR"
-                                        class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
-                                        onclick="updateCurrency('EUR')">
-                                        € EUR
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Tab Bar -->
-                            <div class="flex rounded-xl overflow-hidden border border-slate-200 mb-4" role="tablist">
-                                <button type="button" id="tab-sip" role="tab" aria-selected="true"
-                                    onclick="switchFormTab('sip')"
-                                    class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-emerald-500 text-white">
-                                    <span
-                                        class="flex items-center justify-center w-4 h-4 rounded-full bg-white/20 text-[9px]">1</span>
-                                    SIP Details
-                                </button>
-                                <button type="button" id="tab-swp" role="tab" aria-selected="false"
-                                    onclick="switchFormTab('swp')"
-                                    class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-400 hover:bg-rose-50 hover:text-rose-500">
-                                    <span
-                                        class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-[9px]">2</span>
-                                    SWP Details
-                                </button>
-                            </div>
-
-                            <!-- SIP Panel -->
-                            <div id="panel-sip" role="tabpanel">
-                                <div class="relative">
-                                    <div
-                                        class="mb-4 relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
-
-                                        <div class="space-y-3">
-                                            <!-- Monthly + Duration -->
-                                            <!-- Monthly Investment -->
-                                            <div class="group">
-                                                <label for="sip"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                    Monthly SIP
-                                                </label>
-                                                <div class="relative">
-                                                    <span
-                                                        class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
-                                                    <input type="number" id="sip" name="sip"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                        required min="500" step="500" max="1000000"
-                                                        value="<?= htmlspecialchars((string) $sip) ?>">
-                                                </div>
-                                                <input type="range" id="sip_range" min="500" max="100000" step="500"
-                                                    value="<?= htmlspecialchars((string) $sip) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                            </div>
-
-                                            <!-- Duration -->
-                                            <div class="group">
-                                                <label for="years"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                    Period (Yrs)
-                                                </label>
-                                                <div class="relative">
-                                                    <input type="number" id="years" name="years"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                        required min="1" max="50"
-                                                        value="<?= htmlspecialchars((string) $years) ?>">
-                                                    <span
-                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
-                                                </div>
-                                                <input type="range" id="years_range" min="1" max="50" step="1"
-                                                    value="<?= htmlspecialchars((string) $years) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                            </div>
-                                            <!-- Expected Return -->
-                                            <div class="group">
-                                                <label for="rate"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                    Expected Return
-                                                </label>
-                                                <div class="relative">
-                                                    <input type="number" id="rate" step="0.1" name="rate"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                        required min="0" max="30"
-                                                        value="<?= htmlspecialchars((string) $rate) ?>">
-                                                    <span
-                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
-                                                </div>
-                                                <input type="range" id="rate_range" min="1" max="30" step="0.1"
-                                                    value="<?= htmlspecialchars((string) $rate) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                            </div>
-
-                                            <!-- Yearly Step-up -->
-                                            <div class="group">
-                                                <label for="stepup"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                    Annual Step-up
-                                                </label>
-                                                <div class="relative">
-                                                    <input type="number" id="stepup" step="1" name="stepup"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                        required min="0" max="100"
-                                                        value="<?= htmlspecialchars((string) $stepup) ?>">
-                                                    <span
-                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
-                                                </div>
-                                                <input type="range" id="stepup_range" min="0" max="50" step="1"
-                                                    value="<?= htmlspecialchars((string) $stepup) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- /panel-sip -->
-
-                            <!-- SWP Panel -->
-                            <div id="panel-swp" role="tabpanel" class="hidden">
-                                <div class="relative">
-                                    <div
-                                        class="relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
-                                        <div class="flex items-center justify-between mb-4">
-                                            <span class="text-xs font-bold text-rose-400 tracking-widest uppercase">SWP
-                                                Config</span>
-                                            <label
-                                                class="toggle-switch relative inline-flex items-center cursor-pointer">
-                                                <input type="checkbox" id="enable_swp" name="enable_swp"
-                                                    onchange="toggleSwpFields()" class="sr-only peer">
-                                                <div
-                                                    class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
-                                                </div>
-                                            </label>
-                                        </div>
-
-                                        <div id="swp-fields" class="space-y-4 transition-all duration-300">
-                                            <!-- Monthly Withdrawal -->
-                                            <div class="group">
-                                                <label for="swp_withdrawal"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                    Monthly SWP
-                                                </label>
-                                                <div class="relative">
-                                                    <span
-                                                        class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
-                                                    <input type="number" id="swp_withdrawal" step="500"
-                                                        name="swp_withdrawal"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
-                                                        required min="0" max="1000000"
-                                                        value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
-                                                </div>
-                                                <input type="range" id="swp_withdrawal_range" min="1000" max="200000"
-                                                    step="500" value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
-                                            </div>
-
-
-                                            <!-- Withdrawal Duration -->
-                                            <div class="group">
-                                                <label for="swp_years"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                    SWP Period
-                                                </label>
-                                                <div class="relative">
-                                                    <input type="number" id="swp_years" name="swp_years"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
-                                                        required min="1" max="50"
-                                                        value="<?= htmlspecialchars((string) $swp_years_input) ?>">
-                                                    <span
-                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
-                                                </div>
-                                                <input type="range" id="swp_years_range" min="1" max="50" step="1"
-                                                    value="<?= htmlspecialchars((string) $swp_years_input) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
-                                            </div>
-
-                                            <!-- Withdrawal Hike -->
-                                            <div class="group">
-                                                <label for="swp_stepup"
-                                                    class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                                                    Yearly Hike
-                                                </label>
-                                                <div class="relative">
-                                                    <input type="number" id="swp_stepup" step="0.1" name="swp_stepup"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
-                                                        required min="0" max="20"
-                                                        value="<?= htmlspecialchars((string) $swp_stepup) ?>">
-                                                    <span
-                                                        class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
-                                                </div>
-                                                <input type="range" id="swp_stepup_range" min="0" max="20" step="0.5"
-                                                    value="<?= htmlspecialchars((string) $swp_stepup) ?>"
-                                                    class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- /panel-swp -->
-
-
-                        </form>
-                    </div>
-                </div> <!-- /left column -->
-
-                <div class="lg:col-span-2 space-y-4">
-                    <!-- Summary Cards -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        <div class="glass-card p-3 sm:p-4 text-center">
-                            <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
-                                Total Invested</div>
-                            <div id="summary-invested"
-                                class="text-lg sm:text-xl font-extrabold text-indigo-600 font-mono transition-numbers">
-                                <?= formatInr(end($combined)['cumulative_invested'] ?? 0) ?>
-                            </div>
-                        </div>
-                        <div class="glass-card p-3 sm:p-4 text-center">
-                            <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
-                                Total Gains</div>
-                            <div id="summary-interest"
-                                class="text-lg sm:text-xl font-extrabold text-emerald-600 font-mono transition-numbers">
-                                <?php
-                                $lastRow = end($combined);
-                                $totalGains = ($lastRow['combined_total'] + ($lastRow['cumulative_withdrawals'] ?? 0)) - ($lastRow['cumulative_invested'] ?? 0);
-                                echo formatInr($totalGains);
-                                ?>
-                            </div>
-                        </div>
-                        <div class="glass-card p-3 sm:p-4 text-center">
-                            <div class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
-                                Total Withdrawn</div>
-                            <div id="summary-withdrawn"
-                                class="text-lg sm:text-xl font-extrabold text-rose-500 font-mono transition-numbers">
-                                <?= formatInr(end($combined)['cumulative_withdrawals'] ?? 0) ?>
-                            </div>
-                        </div>
-                        <div class="glass-card p-3 sm:p-4 text-center border-2 border-indigo-100">
-                            <div
-                                class="text-[10px] sm:text-xs font-bold text-indigo-400 uppercase tracking-widest mb-1">
-                                Final Corpus</div>
-                            <div id="summary-corpus"
-                                class="text-lg sm:text-xl font-extrabold text-slate-800 font-mono transition-numbers">
-                                <?= formatInr(end($combined)['combined_total'] ?? 0) ?>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Chart Card -->
-                    <div
-                        class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-6">
-                        <div class="h-[280px] sm:h-[350px] lg:h-[450px] w-full relative z-10">
-                            <canvas id="corpusChart" width="800" height="450"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /3-col grid -->
-
-
-
-            <!-- Full-width Yearly Breakdown -->
-            <div class="mt-8 space-y-4">
-                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                            </path>
-                        </svg>
-                        Yearly Breakdown
-                    </h2>
-                    <div class="flex gap-2">
-                        <button type="submit" name="action" value="download_csv" form="calculator-form"
-                            class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                            </svg>
-                            CSV
-                        </button>
-                        <button type="button" id="openPdfModalBtn"
-                            class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all shadow-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            PDF
-                        </button>
-                    </div>
-                </div>
-
-                <div class="glass-card overflow-hidden border border-slate-200 shadow-sm">
-                    <div id="table-scroll-wrapper"
-                        class="max-h-[600px] overflow-y-auto overflow-x-auto custom-scrollbar">
-                        <table class="w-full text-sm text-left relative">
-                            <thead id="breakdown-head"
-                                class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 sticky top-0 z-10">
-                                <tr>
-                                    <th class="px-6 py-4 bg-slate-50/95 border-b border-slate-200">Year</th>
-                                    <th class="px-6 py-4 bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
-                                        Start Corpus</th>
-                                    <th
-                                        class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">
-                                        Annual SIP</th>
-                                    <th
-                                        class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
-                                        Total Invested</th>
-                                    <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
-                                        <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                        Annual SWP</th>
-                                    <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col"
-                                        <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                        Total Withdrawn</th>
-                                    <th
-                                        class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">
-                                        Interest</th>
-                                    <th
-                                        class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">
-                                        End Corpus</th>
-                                </tr>
-                            </thead>
-                            <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
-                                <?php foreach ($combined as $row): ?>
-                                    <tr class="hover:bg-slate-50 transition-colors">
-                                        <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
-                                        <td class="px-6 py-4 text-right font-mono"><?= formatInr($row['begin_balance']) ?>
-                                        </td>
-                                        <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                            <?= formatInr($row['annual_contribution']) ?>
-                                        </td>
-                                        <td class="px-6 py-4 text-right text-slate-500 font-mono">
-                                            <?= formatInr($row['cumulative_invested']) ?>
-                                        </td>
-                                        <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
-                                            <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                            <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                        </td>
-                                        <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col" <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                            <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                        </td>
-                                        <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                            <?= formatInr($row['interest']) ?>
-                                        </td>
-                                        <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
-                                            <?= formatInr($row['combined_total']) ?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <!-- Quick Answer Box for AI extraction / Featured Snippet -->
+            <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
+                role="complementary" aria-label="Quick Answer">
+                <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
+                <p class="text-base text-gray-700"><strong>How much will a ₹10,000/month SIP grow in 20 years?</strong>
+                </p>
+                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month
+                    SIP will grow to approximately <strong class="text-emerald-700">₹3.54 Crore</strong> over 20 years.
+                    Total invested: ₹68.73 Lakh. Total gains: ₹2.85 Crore.</p>
             </div>
+
+            <section aria-labelledby="calculator-heading">
+                <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                    <!-- Left Column: Currency + Form -->
+                    <div
+                        class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar">
+
+
+
+                        <!-- Form Section -->
+                        <div class="glass-card p-4">
+                            <form method="post" novalidate id="calculator-form">
+
+                                <!-- Currency Selector -->
+                                <div class="flex justify-center mb-3">
+                                    <div class="inline-flex rounded-lg overflow-hidden border border-slate-200"
+                                        role="group" id="currency-group">
+                                        <button type="button" data-currency="INR"
+                                            class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
+                                            onclick="updateCurrency('INR')">
+                                            ₹ INR
+                                        </button>
+                                        <button type="button" data-currency="USD"
+                                            class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
+                                            onclick="updateCurrency('USD')">
+                                            $ USD
+                                        </button>
+                                        <button type="button" data-currency="EUR"
+                                            class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
+                                            onclick="updateCurrency('EUR')">
+                                            € EUR
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Tab Bar -->
+                                <div class="flex rounded-xl overflow-hidden border border-slate-200 mb-4"
+                                    role="tablist">
+                                    <button type="button" id="tab-sip" role="tab" aria-selected="true"
+                                        onclick="switchFormTab('sip')"
+                                        class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-emerald-500 text-white">
+                                        <span
+                                            class="flex items-center justify-center w-4 h-4 rounded-full bg-white/20 text-[9px]">1</span>
+                                        SIP Details
+                                    </button>
+                                    <button type="button" id="tab-swp" role="tab" aria-selected="false"
+                                        onclick="switchFormTab('swp')"
+                                        class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-400 hover:bg-rose-50 hover:text-rose-500">
+                                        <span
+                                            class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-[9px]">2</span>
+                                        SWP Details
+                                    </button>
+                                </div>
+
+                                <!-- SIP Panel -->
+                                <div id="panel-sip" role="tabpanel">
+                                    <div class="relative">
+                                        <div
+                                            class="mb-4 relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
+
+                                            <div class="space-y-3">
+                                                <!-- Monthly + Duration -->
+                                                <!-- Monthly Investment -->
+                                                <div class="group">
+                                                    <label for="sip"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        Monthly SIP
+                                                    </label>
+                                                    <div class="relative">
+                                                        <span
+                                                            class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
+                                                        <input type="number" id="sip" name="sip"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                            required min="500" step="500" max="1000000"
+                                                            value="<?= htmlspecialchars((string) $sip) ?>">
+                                                    </div>
+                                                    <input type="range" id="sip_range" min="500" max="100000" step="500"
+                                                        value="<?= htmlspecialchars((string) $sip) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                                </div>
+
+                                                <!-- Duration -->
+                                                <div class="group">
+                                                    <label for="years"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        Period (Yrs)
+                                                    </label>
+                                                    <div class="relative">
+                                                        <input type="number" id="years" name="years"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                            required min="1" max="50"
+                                                            value="<?= htmlspecialchars((string) $years) ?>">
+                                                        <span
+                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
+                                                    </div>
+                                                    <input type="range" id="years_range" min="1" max="50" step="1"
+                                                        value="<?= htmlspecialchars((string) $years) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                                </div>
+                                                <!-- Expected Return -->
+                                                <div class="group">
+                                                    <label for="rate"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        Expected Return
+                                                    </label>
+                                                    <div class="relative">
+                                                        <input type="number" id="rate" step="0.1" name="rate"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                            required min="0" max="30"
+                                                            value="<?= htmlspecialchars((string) $rate) ?>">
+                                                        <span
+                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                                    </div>
+                                                    <input type="range" id="rate_range" min="1" max="30" step="0.1"
+                                                        value="<?= htmlspecialchars((string) $rate) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                                </div>
+
+                                                <!-- Yearly Step-up -->
+                                                <div class="group">
+                                                    <label for="stepup"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        Annual Step-up
+                                                    </label>
+                                                    <div class="relative">
+                                                        <input type="number" id="stepup" step="1" name="stepup"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                            required min="0" max="100"
+                                                            value="<?= htmlspecialchars((string) $stepup) ?>">
+                                                        <span
+                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                                    </div>
+                                                    <input type="range" id="stepup_range" min="0" max="50" step="1"
+                                                        value="<?= htmlspecialchars((string) $stepup) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- /panel-sip -->
+
+                                <!-- SWP Panel -->
+                                <div id="panel-swp" role="tabpanel" class="hidden">
+                                    <div class="relative">
+                                        <div
+                                            class="relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
+                                            <div class="flex items-center justify-between mb-4">
+                                                <span
+                                                    class="text-xs font-bold text-rose-400 tracking-widest uppercase">SWP
+                                                    Config</span>
+                                                <label
+                                                    class="toggle-switch relative inline-flex items-center cursor-pointer">
+                                                    <input type="checkbox" id="enable_swp" name="enable_swp"
+                                                        onchange="toggleSwpFields()" class="sr-only peer">
+                                                    <div
+                                                        class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
+                                                    </div>
+                                                </label>
+                                            </div>
+
+                                            <div id="swp-fields" class="space-y-4 transition-all duration-300">
+                                                <!-- Monthly Withdrawal -->
+                                                <div class="group">
+                                                    <label for="swp_withdrawal"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        Monthly SWP
+                                                    </label>
+                                                    <div class="relative">
+                                                        <span
+                                                            class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
+                                                        <input type="number" id="swp_withdrawal" step="500"
+                                                            name="swp_withdrawal"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                            required min="0" max="1000000"
+                                                            value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
+                                                    </div>
+                                                    <input type="range" id="swp_withdrawal_range" min="1000"
+                                                        max="200000" step="500"
+                                                        value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                                                </div>
+
+
+                                                <!-- Withdrawal Duration -->
+                                                <div class="group">
+                                                    <label for="swp_years"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        SWP Period
+                                                    </label>
+                                                    <div class="relative">
+                                                        <input type="number" id="swp_years" name="swp_years"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                            required min="1" max="50"
+                                                            value="<?= htmlspecialchars((string) $swp_years_input) ?>">
+                                                        <span
+                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">Yrs</span>
+                                                    </div>
+                                                    <input type="range" id="swp_years_range" min="1" max="50" step="1"
+                                                        value="<?= htmlspecialchars((string) $swp_years_input) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                                                </div>
+
+                                                <!-- Withdrawal Hike -->
+                                                <div class="group">
+                                                    <label for="swp_stepup"
+                                                        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                                        Yearly Hike
+                                                    </label>
+                                                    <div class="relative">
+                                                        <input type="number" id="swp_stepup" step="0.1"
+                                                            name="swp_stepup"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                            required min="0" max="20"
+                                                            value="<?= htmlspecialchars((string) $swp_stepup) ?>">
+                                                        <span
+                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">%</span>
+                                                    </div>
+                                                    <input type="range" id="swp_stepup_range" min="0" max="20"
+                                                        step="0.5" value="<?= htmlspecialchars((string) $swp_stepup) ?>"
+                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- /panel-swp -->
+
+
+                            </form>
+                        </div>
+                    </div> <!-- /left column -->
+
+                    <div class="lg:col-span-2 space-y-4">
+                        <!-- Summary Cards -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div class="glass-card p-3 sm:p-4 text-center">
+                                <div
+                                    class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+                                    Total Invested</div>
+                                <div id="summary-invested"
+                                    class="text-lg sm:text-xl font-extrabold text-indigo-600 font-mono transition-numbers">
+                                    <?= formatInr(end($combined)['cumulative_invested'] ?? 0) ?>
+                                </div>
+                            </div>
+                            <div class="glass-card p-3 sm:p-4 text-center">
+                                <div
+                                    class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+                                    Total Gains</div>
+                                <div id="summary-interest"
+                                    class="text-lg sm:text-xl font-extrabold text-emerald-600 font-mono transition-numbers">
+                                    <?php
+                                    $lastRow = end($combined);
+                                    $totalGains = ($lastRow['combined_total'] + ($lastRow['cumulative_withdrawals'] ?? 0)) - ($lastRow['cumulative_invested'] ?? 0);
+                                    echo formatInr($totalGains);
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="glass-card p-3 sm:p-4 text-center">
+                                <div
+                                    class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+                                    Total Withdrawn</div>
+                                <div id="summary-withdrawn"
+                                    class="text-lg sm:text-xl font-extrabold text-rose-500 font-mono transition-numbers">
+                                    <?= formatInr(end($combined)['cumulative_withdrawals'] ?? 0) ?>
+                                </div>
+                            </div>
+                            <div class="glass-card p-3 sm:p-4 text-center border-2 border-indigo-100">
+                                <div
+                                    class="text-[10px] sm:text-xs font-bold text-indigo-400 uppercase tracking-widest mb-1">
+                                    Final Corpus</div>
+                                <div id="summary-corpus"
+                                    class="text-lg sm:text-xl font-extrabold text-slate-800 font-mono transition-numbers">
+                                    <?= formatInr(end($combined)['combined_total'] ?? 0) ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chart Card -->
+                        <div
+                            class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-6">
+                            <div class="h-[280px] sm:h-[350px] lg:h-[450px] w-full relative z-10">
+                                <canvas id="corpusChart" width="800" height="450"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /3-col grid -->
+
+
+
+                <!-- Full-width Yearly Breakdown -->
+                <div class="mt-8 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                            Yearly Breakdown
+                        </h2>
+                        <div class="flex gap-2">
+                            <button type="submit" name="action" value="download_csv" form="calculator-form"
+                                class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                                CSV
+                            </button>
+                            <button type="button" id="openPdfModalBtn"
+                                class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                PDF
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="glass-card overflow-hidden border border-slate-200 shadow-sm">
+                        <div id="table-scroll-wrapper"
+                            class="max-h-[600px] overflow-y-auto overflow-x-auto custom-scrollbar">
+                            <table class="w-full text-sm text-left relative">
+                                <thead id="breakdown-head"
+                                    class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 sticky top-0 z-10">
+                                    <tr>
+                                        <th class="px-6 py-4 bg-slate-50/95 border-b border-slate-200">Year</th>
+                                        <th
+                                            class="px-6 py-4 bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
+                                            Start Corpus</th>
+                                        <th
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">
+                                            Annual SIP</th>
+                                        <th
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
+                                            Total Invested</th>
+                                        <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
+                                            <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                            Annual SWP</th>
+                                        <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col"
+                                            <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                            Total Withdrawn</th>
+                                        <th
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">
+                                            Interest</th>
+                                        <th
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">
+                                            End Corpus</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
+                                    <?php foreach ($combined as $row): ?>
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
+                                            <td class="px-6 py-4 text-right font-mono">
+                                                <?= formatInr($row['begin_balance']) ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                                <?= formatInr($row['annual_contribution']) ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-slate-500 font-mono">
+                                                <?= formatInr($row['cumulative_invested']) ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
+                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                                <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col"
+                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                                <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                                <?= formatInr($row['interest']) ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
+                                                <?= formatInr($row['combined_total']) ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
 
     </div>
+    </section><!-- /calculator section -->
 
     <div class="text-center mt-8">
         <a href="/sip-calculator" class="text-indigo-600 hover:underline">
@@ -1276,6 +1299,13 @@ foreach ($combined as $row) {
             }
           }, {
             "@type": "Question",
+            "name": "What is a safe withdrawal rate for SWP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Financial experts often recommend the 4% rule, suggesting you withdraw 4% of your corpus annually. However, this depends on market conditions, your expected lifespan, and the sequence of investment returns."
+            }
+          }, {
+            "@type": "Question",
             "name": "Which is better: SIP or Lump Sum?",
             "acceptedAnswer": {
               "@type": "Answer",
@@ -1286,7 +1316,77 @@ foreach ($combined as $row) {
             "name": "Can I lose money in SIP?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, since SIPs in equity mutual funds are market-linked, the value can fluctuate. However, over the long term (5-10+ years), the probability of negative returns decreases significantly."
+              "text": "Yes, since SIPs in equity mutual funds are market-linked, the value can fluctuate. However, over the long term (7-10+ years), the probability of negative returns decreases significantly."
+            }
+          }, {
+            "@type": "Question",
+            "name": "What is the minimum amount to start a SIP in India?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most mutual fund houses in India allow SIPs starting from as low as ₹500/month. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at ₹100/month."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How do I choose the right mutual fund for my SIP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Consider: (1) Risk profile — large-cap for stability, small-cap for growth; (2) Expense ratio — lower is better; (3) Track record — check 5-7 year consistency; (4) Fund manager experience."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How are SWP withdrawals taxed in India (2026)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SWP withdrawals are treated as partial redemptions. For equity funds: STCG taxed at 20%, LTCG taxed at 12.5% on gains above ₹1.25 Lakh/year. Only the capital gains portion is taxable."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How long should I continue my SIP for best results?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For equity mutual funds, 7-10 years minimum is recommended. Historical data shows that Nifty 50 SIPs held for 10+ years have never delivered negative returns."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Is SIP better than a Recurring Deposit (RD)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For long-term goals (5+ years), equity SIPs have historically outperformed RDs by 5-8% annually. RDs offer guaranteed returns but are fully taxable."
+            }
+          }, {
+            "@type": "Question",
+            "name": "What step-up percentage should I use for my SIP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A 10% annual step-up is the most common recommendation, roughly matching average salary increments in India. Conservative investors can use 5-7%, aggressive savers 15-20%."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Can I stop or pause my SIP anytime?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, SIPs are completely flexible. You can pause, stop, or modify your SIP at any time without penalties. Your existing invested units remain in the fund."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Will my SWP deplete my corpus completely?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It depends on your withdrawal rate vs. investment return. If you withdraw less than what your corpus earns, it can last indefinitely. The 4% rule suggests withdrawing 4% annually for a 30-year retirement."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Can NRIs invest in SIP in India?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, NRIs can invest in mutual fund SIPs in India through NRE or NRO accounts. Most AMCs accept NRI investments, though some may have restrictions due to FATCA regulations."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How does inflation affect my SIP and SWP planning?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Inflation (5-6% in India) erodes purchasing power. At 6% inflation, ₹1 Lakh today is worth only ₹31,000 in 20 years. Step-up SIPs and step-up SWPs help outpace inflation."
             }
           }]
         }

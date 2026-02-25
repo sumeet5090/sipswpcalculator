@@ -54,6 +54,10 @@ declare(strict_types=1);
                 <p>If you have any questions about this Privacy Policy, please contact us at <a
                         href="mailto:help@sipswpcalculator.com"
                         class="text-indigo-600 hover:underline">help@sipswpcalculator.com</a>.</p>
+
+                <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+                    <a href="/" class="text-indigo-600 hover:underline font-medium">← Return to SIP & SWP Calculator</a>
+                </div>
             </article>
         </main>
 
