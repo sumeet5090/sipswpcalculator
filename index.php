@@ -162,11 +162,11 @@ foreach ($combined as $row) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIP & SWP Calculator 2026 — Plan Investments & Retirement</title>
+    <title>SIP Calculator 2026 — Free Step-Up SIP & SWP Planner India</title>
     <meta name="description"
-        content="Calculate SIP returns with step-up, visualize SWP withdrawals & plan your retirement. Free tool with yearly breakdown, PDF reports & CSV export.">
+        content="₹10K/month → ₹1 Crore? Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export — trusted by Indian investors.">
     <meta name="keywords"
-        content="SIP Calculator, SWP Calculator, Mutual Fund Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP">
+        content="SIP Calculator, SIP Calculator India, SIP Return Calculator, Mutual Fund SIP Calculator, SWP Calculator, SWP Planner India, Step-Up SIP Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP, Tax-Efficient Withdrawals">
     <link rel="canonical" href="https://sipswpcalculator.com/">
 
     <!-- Open Graph / Facebook -->
@@ -289,10 +289,12 @@ foreach ($combined as $row) {
             </div>
 
             <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
-                A <dfn><strong class="text-indigo-600">Systematic Investment Plan (SIP)</strong></dfn> lets you invest a
-                fixed amount at regular intervals into mutual funds, harnessing the power of compounding.
-                A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you withdraw a
-                fixed amount periodically, creating a steady retirement income.
+                This free <dfn><strong class="text-indigo-600">SIP calculator India</strong></dfn> helps you estimate
+                your <strong>mutual fund SIP returns</strong> with annual step-up (top-up) compounding.
+                A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan
+                tax-efficient withdrawals for a steady retirement income. Use this <strong>SIP return
+                    calculator</strong>
+                to visualize growth, compare scenarios, and download detailed PDF reports — all for free.
             </p>
 
             <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-500">
@@ -703,55 +705,195 @@ foreach ($combined as $row) {
         <h2 class="text-3xl font-bold text-center mb-6">Master Your Financial Future with SIP & SWP</h2>
         <div class="prose prose-lg max-w-none text-gray-600">
             <p>Understanding the tools at your disposal is the first step toward effective financial planning. Our
-                calculator is designed to demystify two of the most powerful tools for mutual fund investors: the
-                Systematic Investment Plan (SIP) and the Systematic Withdrawal Plan (SWP).</p>
+                <strong>mutual fund SIP calculator</strong> is designed to demystify two of the most powerful tools
+                for Indian and global investors: the Systematic Investment Plan (SIP) and the Systematic Withdrawal Plan
+                (SWP).
+            </p>
 
+            <!-- Standalone SIP Definition -->
             <div class="grid md:grid-cols-2 gap-8 mt-8">
-                <div>
-                    <h3 class="text-2xl font-semibold mb-3 text-indigo-600">What is a Systematic Investment Plan
-                        (SIP)?</h3>
-                    <p>A SIP is a disciplined investment approach where you invest a fixed amount of money at
-                        regular intervals (usually monthly) into a mutual fund scheme. Instead of making a large
-                        one-time investment, you invest smaller amounts over time. This strategy helps in averaging
-                        out the cost of your investment and harnesses the power of compounding.
+                <div itemscope itemtype="https://schema.org/DefinedTerm">
+                    <h3 class="text-2xl font-semibold mb-3 text-indigo-600" id="what-is-sip">What is a Systematic
+                        Investment Plan (SIP)?</h3>
+                    <p itemprop="description">A <dfn><strong>Systematic Investment Plan (SIP)</strong></dfn> is a method
+                        of
+                        investing a fixed amount of money at regular intervals (monthly, quarterly) into mutual funds.
+                        SIPs use <strong>rupee cost averaging</strong> and <strong>compounding</strong> to build wealth
+                        over time, making them ideal for long-term goals like retirement, education, or wealth creation.
+                        As per <a href="https://www.amfiindia.com/" target="_blank" rel="noopener"
+                            class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows in India crossed ₹21,000
+                        Crore/month in 2025.
                         <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Read our complete
                             SIP guide →</a>
                     </p>
                     <ul class="mt-4 space-y-2">
-                        <li><span class="font-semibold text-green-600">Dollar Cost Averaging:</span> Buy more units
-                            when the market is low and fewer when it's high.</li>
-                        <li><span class="font-semibold text-green-600">Power of Compounding:</span> Reinvesting your
-                            returns generates earnings on your earnings, leading to exponential growth.</li>
-                        <li><span class="font-semibold text-green-600">Disciplined Investing:</span> Automates the
-                            habit of saving and investing regularly.</li>
+                        <li><span class="font-semibold text-green-600">Rupee Cost Averaging:</span> Buy more units when
+                            NAV is low, fewer when it's high — reducing average cost automatically.</li>
+                        <li><span class="font-semibold text-green-600">Power of Compounding:</span> Reinvesting returns
+                            generates earnings on earnings, leading to exponential growth over 10-20+ years.</li>
+                        <li><span class="font-semibold text-green-600">Disciplined Investing:</span> Automates saving
+                            and removes emotional decision-making from investing.</li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="text-2xl font-semibold mb-3 text-purple-600">What is a Systematic Withdrawal Plan
-                        (SWP)?</h3>
-                    <p>An SWP is the reverse of a <a href="/sip-calculator"
-                            class="text-indigo-600 hover:underline">SIP</a>. It allows you to withdraw a fixed amount of
-                        money from your
-                        mutual fund investment at regular intervals. This is an ideal solution for generating a
-                        regular cash flow from your investments, especially during retirement. It provides a steady
-                        income stream while allowing the remaining investment to continue growing.
+
+                <!-- Standalone SWP Definition -->
+                <div itemscope itemtype="https://schema.org/DefinedTerm">
+                    <h3 class="text-2xl font-semibold mb-3 text-purple-600" id="what-is-swp">What is a Systematic
+                        Withdrawal Plan (SWP)?</h3>
+                    <p itemprop="description">A <dfn><strong>Systematic Withdrawal Plan (SWP)</strong></dfn> allows
+                        investors
+                        to withdraw a fixed amount from their mutual fund corpus at regular intervals.
+                        SWP provides a steady, <strong>tax-efficient income stream</strong> during retirement while
+                        allowing the remaining investment to continue growing. Unlike FD interest (taxed at slab rate),
+                        SWP withdrawals are taxed only on the capital gains portion — making them significantly more
+                        efficient.
                         <a href="/#panel-swp" class="text-purple-600 hover:underline font-medium">Try the SWP calculator
                             →</a>
                     </p>
                     <ul class="mt-4 space-y-2">
                         <li><span class="font-semibold text-green-600">Regular Income:</span> Create a predictable
-                            cash flow from your investments.</li>
-                        <li><span class="font-semibold text-green-600">Tax-Efficient:</span> Withdrawals are
-                            structured to be tax-efficient, especially for long-term capital gains.</li>
-                        <li><span class="font-semibold text-green-600">Continued Growth:</span> Your remaining
-                            corpus stays invested and continues to benefit from market growth.</li>
+                            pension-like cash flow from your mutual fund investments.</li>
+                        <li><span class="font-semibold text-green-600">Tax-Efficient Withdrawals:</span> Only the
+                            capital gains portion is taxed (LTCG at 12.5% above ₹1.25 Lakh for equity funds).</li>
+                        <li><span class="font-semibold text-green-600">Continued Growth:</span> Remaining corpus stays
+                            invested and benefits from market growth, potentially outliving you.</li>
                     </ul>
                 </div>
             </div>
 
+            <!-- How to Use This Calculator -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">How to Use This SIP & SWP Calculator</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100">
+                        <div class="text-emerald-600 font-bold text-lg mb-2">Step 1: Enter SIP Details</div>
+                        <p class="text-sm">Set your <strong>monthly SIP amount</strong> (₹500 to ₹10 Lakh), investment
+                            period (1-50 years), expected annual return rate, and optional <strong>annual step-up
+                                percentage</strong>.</p>
+                    </div>
+                    <div class="bg-rose-50/50 p-6 rounded-xl border border-rose-100">
+                        <div class="text-rose-600 font-bold text-lg mb-2">Step 2: Configure SWP (Optional)</div>
+                        <p class="text-sm">Switch to the SWP tab, enable it, and set your <strong>monthly withdrawal
+                                amount</strong>, withdrawal period, and yearly hike. The SWP phase begins automatically
+                            after your SIP period ends.</p>
+                    </div>
+                    <div class="bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
+                        <div class="text-indigo-600 font-bold text-lg mb-2">Step 3: Analyze Results</div>
+                        <p class="text-sm">View the interactive <strong>growth chart</strong>, yearly breakdown table,
+                            and summary cards. Export results as <strong>CSV</strong> or generate a branded <strong>PDF
+                                report</strong> for clients.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIP Formula -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">SIP Calculator Formula</h2>
+                <div
+                    class="bg-gray-50 p-6 rounded-xl border border-gray-200 font-mono text-sm sm:text-base overflow-x-auto">
+                    <p class="font-bold text-indigo-700 mb-2">Future Value of SIP (Annuity Due):</p>
+                    <p class="text-lg mb-4">FV = P × [ { (1 + i)<sup>n</sup> - 1 } / i ] × (1 + i)</p>
+                    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                        <div>
+                            <dt class="inline font-bold">FV</dt>
+                            <dd class="inline">= Future Value (Maturity Amount)</dd>
+                        </div>
+                        <div>
+                            <dt class="inline font-bold">P</dt>
+                            <dd class="inline">= Monthly Investment Amount</dd>
+                        </div>
+                        <div>
+                            <dt class="inline font-bold">i</dt>
+                            <dd class="inline">= Monthly Rate (Annual Rate ÷ 12 ÷ 100)</dd>
+                        </div>
+                        <div>
+                            <dt class="inline font-bold">n</dt>
+                            <dd class="inline">= Total Payments (Years × 12)</dd>
+                        </div>
+                    </dl>
+                </div>
+                <p class="mt-4 text-sm text-gray-500">Our calculator uses month-by-month simulation with step-up
+                    compounding, which is more accurate than the simple annuity formula for long-term projections.
+                    Source: <a href="https://www.amfiindia.com/" target="_blank" rel="noopener"
+                        class="text-indigo-600 hover:underline">AMFI India</a> standard methodology.</p>
+            </div>
+
+            <!-- Worked Examples -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">SIP Return Examples: How Much Can You Earn?</h2>
+                <div class="grid md:grid-cols-3 gap-6 not-prose">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h4 class="text-lg font-bold text-emerald-700 mb-2">₹5,000/month for 15 Years</h4>
+                        <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex justify-between"><span>Total Invested:</span> <span
+                                    class="font-bold">₹19.09L</span></li>
+                            <li class="flex justify-between"><span>Wealth Gained:</span> <span
+                                    class="font-bold text-green-600">+₹21.41L</span></li>
+                            <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
+                                    Value:</span> <span class="font-bold text-indigo-700">₹40.50L</span></li>
+                        </ul>
+                        <p class="text-xs text-gray-400 mt-3">Money multiplied ~2.1×</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-indigo-100 ring-2 ring-indigo-100">
+                        <div class="text-xs font-bold text-indigo-600 mb-1">MOST POPULAR</div>
+                        <h4 class="text-lg font-bold text-indigo-700 mb-2">₹10,000/month for 20 Years</h4>
+                        <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex justify-between"><span>Total Invested:</span> <span
+                                    class="font-bold">₹68.73L</span></li>
+                            <li class="flex justify-between"><span>Wealth Gained:</span> <span
+                                    class="font-bold text-green-600">+₹2.85Cr</span></li>
+                            <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
+                                    Value:</span> <span class="font-bold text-indigo-700">₹3.54Cr</span></li>
+                        </ul>
+                        <p class="text-xs text-gray-400 mt-3">Money multiplied ~5.1×</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h4 class="text-lg font-bold text-rose-700 mb-2">₹25,000/month for 30 Years</h4>
+                        <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex justify-between"><span>Total Invested:</span> <span
+                                    class="font-bold">₹4.94Cr</span></li>
+                            <li class="flex justify-between"><span>Wealth Gained:</span> <span
+                                    class="font-bold text-green-600">+₹36.91Cr</span></li>
+                            <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
+                                    Value:</span> <span class="font-bold text-rose-700">₹41.85Cr</span></li>
+                        </ul>
+                        <p class="text-xs text-gray-400 mt-3">Money multiplied ~8.5×</p>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-400 mt-4 text-center">Note: These are illustrative projections. Actual
+                    returns depend on market conditions. Mutual fund investments are subject to market risks. Read all
+                    scheme-related documents carefully.</p>
+            </div>
+
+            <!-- Risks Section -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Risks of SIP & SWP Investments</h2>
+                <div class="bg-amber-50/50 p-6 rounded-xl border border-amber-200">
+                    <ul class="space-y-3 text-gray-700">
+                        <li><strong class="text-amber-700">Market Risk:</strong> Returns depend on stock/bond market
+                            performance. Equity SIPs can show negative returns in the short term (1-3 years). However,
+                            over 7-10+ years, diversified equity funds have historically delivered positive returns.
+                        </li>
+                        <li><strong class="text-amber-700">Sequence-of-Returns Risk (SWP):</strong> If markets crash
+                            early in your SWP phase, your corpus depletes faster. Stress-test your withdrawal rate
+                            against downturns.</li>
+                        <li><strong class="text-amber-700">Inflation Risk:</strong> A 6-7% return on debt funds may not
+                            beat inflation (5-6%). Equity SIPs historically outpace inflation over the long term.</li>
+                        <li><strong class="text-amber-700">No Guaranteed Returns:</strong> Unlike PPF or FDs, mutual
+                            fund returns are not guaranteed. Past performance does not guarantee future results. Always
+                            consult a <a href="https://www.sebi.gov.in/" target="_blank" rel="noopener"
+                                class="text-indigo-600 hover:underline">SEBI</a>-registered financial advisor.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Mr. Sharma story (promoted from H3 to H2) -->
             <div class="mt-12 bg-indigo-50/50 p-8 rounded-xl border border-indigo-100/50 backdrop-blur-sm">
-                <h3 class="text-2xl font-bold text-indigo-700 mb-4">Real-Life Success Story: The "Mr. Sharma"
-                    Strategy</h3>
+                <h2 class="text-2xl font-bold text-indigo-700 mb-4">Real-Life Success Story: The "Mr. Sharma" Strategy
+                </h2>
                 <p class="mb-4">Meet Mr. Sharma (30). He decides to invest <strong>₹10,000/month</strong> in an
                     Equity Mutual Fund via SIP for his retirement at age 60.</p>
                 <ul class="list-disc pl-5 space-y-2 mb-4">
@@ -759,10 +901,12 @@ foreach ($combined as $row) {
                     <li><strong>Strategy:</strong> Step-up SIP. Increase investment by 10% every year as his salary
                         grows.</li>
                     <li><strong>Result:</strong> By age 60, avoiding the urge to stop during market lows, his corpus
-                        grows exponentially due to compounding.</li>
+                        grows to ₹3.54 Crore — and with SWP at ₹50,000/month, he earns a steady retirement income while
+                        the corpus continues to grow.</li>
                 </ul>
-                <p class="font-semibold">Moral: It's not just about starting early; it's about increasing your
-                    investment as you grow.</p>
+                <p class="font-semibold">Moral: It's not just about starting early — it's about increasing your
+                    investment as you grow. <a href="/sip-step-up-calculator"
+                        class="text-indigo-600 hover:underline">Learn more about Step-Up SIP →</a></p>
             </div>
 
             <div class="mt-12">
@@ -915,6 +1059,179 @@ foreach ($combined as $row) {
                             Yes, in the short term. Since SIPs in equity mutual funds are market-linked, the value can
                             fluctuate. However, historical data shows that over the long term (7-10+ years), the
                             probability of negative returns in a diversified fund is negligible.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            What is the minimum amount to start a SIP in India?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            Most mutual fund houses in India allow SIPs starting from as low as
+                            <strong>₹500/month</strong>. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at
+                            ₹100/month. The key is to start early — even ₹500/month over 20 years at 12% can grow to ₹5+
+                            Lakhs.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            How do I choose the right mutual fund for my SIP?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            Consider: (1) <strong>Risk profile</strong> — large-cap for stability, small-cap for
+                            aggressive growth; (2) <strong>Expense ratio</strong> — lower is better, prefer direct
+                            plans; (3) <strong>Track record</strong> — check 5-7 year consistency, not just 1-year
+                            returns; (4) <strong>Fund manager experience</strong>. Use AMFI's mutual fund comparison
+                            tools for data.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            How are SWP withdrawals taxed in India (2026)?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition=" transform
+                                duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            SWP withdrawals are treated as partial redemptions. For <strong>equity funds</strong>: STCG
+                            (held &lt;1 year) taxed at 20%, LTCG taxed at 12.5% on gains above ₹1.25 Lakh/year. For
+                            <strong>debt funds</strong> (purchased after Apr 2023): taxed at your income slab rate. Only
+                            the <em>capital gains portion</em> of each withdrawal is taxable — the principal component
+                            is tax-free.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            How long should I continue my SIP for best results?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            For equity mutual funds, <strong>7-10 years minimum</strong> is recommended to ride out
+                            market cycles and benefit from compounding. Historical data shows that Nifty 50 SIPs held
+                            for 10+ years have never delivered negative returns. For retirement goals, 20-30 year SIPs
+                            yield the best compounding effect.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            Is SIP better than a Recurring Deposit (RD)?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            For <strong>long-term goals (5+ years)</strong>, equity SIPs have historically outperformed
+                            RDs by 5-8% annually. RDs offer guaranteed returns (~6-7%) but are fully taxable. SIPs in
+                            equity funds offer higher growth potential with LTCG tax benefits, but carry market risk.
+                            For short-term goals (1-3 years), RDs or debt fund SIPs may be safer.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            What step-up percentage should I use for my SIP?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            A <strong>10% annual step-up</strong> is the most common recommendation — roughly matching
+                            average salary increments in India. Conservative investors can use 5-7%, while aggressive
+                            savers might go up to 15-20%. Even a 5% step-up dramatically outperforms a flat SIP over 20+
+                            years. Use our calculator above to compare different step-up rates.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            Can I stop or pause my SIP anytime?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            Yes, SIPs are completely flexible. You can <strong>pause, stop, or modify</strong> your SIP
+                            at any time without penalties. Your existing invested units remain in the fund and continue
+                            growing. However, stopping during market downturns is the most common mistake — it means you
+                            miss buying units at lower prices, which is exactly when SIPs are most beneficial.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            Will my SWP deplete my corpus completely?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            It depends on your <strong>withdrawal rate vs. investment return</strong>. If you withdraw
+                            less than what your corpus earns, it can last indefinitely. The "4% rule" suggests
+                            withdrawing 4% annually to sustain a 30-year retirement. Use our calculator to stress-test
+                            different withdrawal amounts and see exactly when your corpus would run out.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            Can NRIs invest in SIP in India?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            Yes, NRIs can invest in mutual fund SIPs in India through their <strong>NRE or NRO
+                                accounts</strong>. Most AMCs accept NRI investments, though some sectoral/thematic funds
+                            may have restrictions for US/Canada-based NRIs due to FATCA regulations. Tax treatment
+                            follows India's DTAA provisions with the NRI's country of residence.
+                        </div>
+                    </details>
+                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <summary
+                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
+                            How does inflation affect my SIP and SWP planning?
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-200"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
+                            Inflation (typically 5-6% in India) erodes purchasing power over time. At 6% inflation, ₹1
+                            Lakh today is worth only ₹31,000 in 20 years. This is why <strong>step-up SIPs</strong> are
+                            critical — they increase your investment to outpace inflation. For SWP, use the step-up
+                            withdrawal feature to increase monthly withdrawals by 5-7% annually to maintain your
+                            lifestyle.
                         </div>
                     </details>
                 </div>

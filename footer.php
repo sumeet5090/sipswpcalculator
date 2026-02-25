@@ -11,11 +11,19 @@
             <ul class="space-y-2 text-sm">
                 <li><a href="/" class="text-indigo-600 hover:underline">SIP & SWP Calculator</a></li>
                 <li><a href="/sip-calculator" class="text-indigo-600 hover:underline">SIP Calculator Guide</a></li>
+                <li><a href="/sip-step-up-calculator" class="text-indigo-600 hover:underline">Step-Up SIP Guide</a></li>
+                <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline">SWP Retirement
+                        Planning</a></li>
+                <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline">Mutual Fund Tax 2026</a>
+                </li>
+                <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline">SIP vs FD vs PPF</a></li>
+                <li><a href="/swp-tax-calculator" class="text-indigo-600 hover:underline">SWP Tax Calculator</a></li>
             </ul>
         </div>
         <div>
             <h3 class="font-bold text-lg mb-3 text-gray-800">Support & Legal</h3>
             <ul class="space-y-2 text-sm">
+                <li><a href="/about" class="text-indigo-600 hover:underline">About Us</a></li>
                 <li><a href="mailto:help@sipswpcalculator.com" class="text-indigo-600 hover:underline">Contact Us</a>
                 </li>
                 <li><a href="/privacy" class="text-indigo-600 hover:underline">Privacy Policy</a></li>
