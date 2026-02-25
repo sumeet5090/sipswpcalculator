@@ -318,17 +318,17 @@ foreach ($combined as $row) {
                                 <div class="inline-flex rounded-lg overflow-hidden border border-slate-200" role="group"
                                     id="currency-group">
                                     <button type="button" data-currency="INR"
-                                        class="currency-btn px-3 py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
+                                        class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
                                         onclick="updateCurrency('INR')">
                                         ₹ INR
                                     </button>
                                     <button type="button" data-currency="USD"
-                                        class="currency-btn px-3 py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
+                                        class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
                                         onclick="updateCurrency('USD')">
                                         $ USD
                                     </button>
                                     <button type="button" data-currency="EUR"
-                                        class="currency-btn px-3 py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
+                                        class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
                                         onclick="updateCurrency('EUR')">
                                         € EUR
                                     </button>
@@ -371,7 +371,7 @@ foreach ($combined as $row) {
                                                     <span
                                                         class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
                                                     <input type="number" id="sip" name="sip"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
                                                         required min="500" step="500" max="1000000"
                                                         value="<?= htmlspecialchars((string) $sip) ?>">
                                                 </div>
@@ -388,7 +388,7 @@ foreach ($combined as $row) {
                                                 </label>
                                                 <div class="relative">
                                                     <input type="number" id="years" name="years"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
                                                         required min="1" max="50"
                                                         value="<?= htmlspecialchars((string) $years) ?>">
                                                     <span
@@ -406,7 +406,7 @@ foreach ($combined as $row) {
                                                 </label>
                                                 <div class="relative">
                                                     <input type="number" id="rate" step="0.1" name="rate"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
                                                         required min="0" max="30"
                                                         value="<?= htmlspecialchars((string) $rate) ?>">
                                                     <span
@@ -425,7 +425,7 @@ foreach ($combined as $row) {
                                                 </label>
                                                 <div class="relative">
                                                     <input type="number" id="stepup" step="1" name="stepup"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
                                                         required min="0" max="100"
                                                         value="<?= htmlspecialchars((string) $stepup) ?>">
                                                     <span
@@ -470,7 +470,7 @@ foreach ($combined as $row) {
                                                         class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">₹</span>
                                                     <input type="number" id="swp_withdrawal" step="500"
                                                         name="swp_withdrawal"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-1.5 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
                                                         required min="0" max="1000000"
                                                         value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
                                                 </div>
@@ -488,7 +488,7 @@ foreach ($combined as $row) {
                                                 </label>
                                                 <div class="relative">
                                                     <input type="number" id="swp_years" name="swp_years"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
                                                         required min="1" max="50"
                                                         value="<?= htmlspecialchars((string) $swp_years_input) ?>">
                                                     <span
@@ -507,7 +507,7 @@ foreach ($combined as $row) {
                                                 </label>
                                                 <div class="relative">
                                                     <input type="number" id="swp_stepup" step="0.1" name="swp_stepup"
-                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                        class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
                                                         required min="0" max="20"
                                                         value="<?= htmlspecialchars((string) $swp_stepup) ?>">
                                                     <span
@@ -594,7 +594,7 @@ foreach ($combined as $row) {
                     </h2>
                     <div class="flex gap-2">
                         <button type="submit" name="action" value="download_csv" form="calculator-form"
-                            class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
+                            class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
@@ -602,7 +602,7 @@ foreach ($combined as $row) {
                             CSV
                         </button>
                         <button type="button" id="openPdfModalBtn"
-                            class="text-sm px-4 py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all shadow-sm">
+                            class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all shadow-sm">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
