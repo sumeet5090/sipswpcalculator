@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "css:build": "tailwind --input src/input.css --output dist/tailwind.min.css --minify",
+    "css:watch": "tailwind --input src/input.css --output dist/tailwind.min.css --watch"
+  },
   "devDependencies": {
     "tailwindcss": "^4.2.0"
   },
