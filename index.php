@@ -201,7 +201,7 @@ foreach ($combined as $row) {
       "description": "A comprehensive tool for calculating Systematic Investment Plans (SIP) and Systematic Withdrawal Plans (SWP) with visualization.",
       "featureList": "SIP Calculator, SWP Calculator, Inflation Adjustment, Visual Charts, CSV Export",
       "screenshot": "https://sipswpcalculator.com/assets/og-image-main.jpg",
-      "dateModified": "2026-02-22",
+      "dateModified": "2026-02-25",
       "author": {
           "@type": "Person",
           "name": "Sumeet Boga",
@@ -255,14 +255,21 @@ foreach ($combined as $row) {
             </h1>
 
             <!-- EEAT Trust Bar -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
+            <div
+                class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
                 <div class="flex items-center gap-2">
-                    <img src="https://ui-avatars.com/api/?name=Sumeet+Boga&background=10b981&color=fff&rounded=true" alt="Sumeet Boga" class="w-7 h-7 rounded-full shadow-sm border border-emerald-100">
-                    <span>Developed by <strong class="text-slate-700">Sumeet Boga</strong>, Software Developer & Finance Specialist</span>
+                    <img src="https://ui-avatars.com/api/?name=Sumeet+Boga&background=10b981&color=fff&rounded=true"
+                        alt="Sumeet Boga" class="w-7 h-7 rounded-full shadow-sm border border-emerald-100">
+                    <span>Developed by <strong class="text-slate-700">Sumeet Boga</strong>, Software Developer & Finance
+                        Specialist</span>
                 </div>
                 <span class="hidden sm:inline text-slate-300">|</span>
-                <div class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div
+                    class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                     Verified for Accuracy: February 2026
                 </div>
             </div>

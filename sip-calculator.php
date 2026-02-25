@@ -17,6 +17,59 @@ require_once __DIR__ . '/functions.php';
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <!-- Tailwind CSS (production build, purged) -->
     <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Can I lose money in a SIP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, in the short term. Mutual funds are subject to market risks. However, over long periods (7+ years), the probability of negative returns in diversified equity funds historically drops to near zero."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is the \"Exit Load\"?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most funds charge a fee (usually 1%) if you redeem units within 1 year of purchase. This is to discourage premature withdrawals. Ensure you factor this into calculations for short-term goals."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is SIP interest taxable?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SIPs don't earn \"interest\" but \"capital gains.\" These gains are taxed only upon redemption (selling). Refer to the global tax table above (e.g., India 12.5% LTCG)."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can I pause my SIP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, most Asset Management Companies (AMCs) allow you to \"Pause\" a SIP for 1-6 months without cancelling it. This is useful during temporary financial crunches."
+        }
+      }]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://sipswpcalculator.com/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "SIP Guide",
+        "item": "https://sipswpcalculator.com/sip-calculator"
+      }]
+    }
+    </script>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased"
