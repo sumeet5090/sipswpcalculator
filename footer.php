@@ -14,10 +14,13 @@
             </ul>
         </div>
         <div>
-            <h3 class="font-bold text-lg mb-3 text-gray-800">Support</h3>
-            <p class="leading-relaxed">For questions or feedback about this calculator, <a
-                    href="mailto:help@sipswpcalculator.com" class="text-indigo-600 hover:underline">reach out to
-                    us</a>. We're here to help you achieve your financial goals.</p>
+            <h3 class="font-bold text-lg mb-3 text-gray-800">Support & Legal</h3>
+            <ul class="space-y-2 text-sm">
+                <li><a href="mailto:help@sipswpcalculator.com" class="text-indigo-600 hover:underline">Contact Us</a>
+                </li>
+                <li><a href="/privacy" class="text-indigo-600 hover:underline">Privacy Policy</a></li>
+                <li><a href="/terms" class="text-indigo-600 hover:underline">Terms of Service</a></li>
+            </ul>
         </div>
     </div>
 

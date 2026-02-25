@@ -164,7 +164,7 @@ foreach ($combined as $row) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIP & SWP Calculator 2026 — Plan Investments & Retirement</title>
     <meta name="description"
-        content="India's only combined SIP + SWP simulator. Model your investment journey from ₹500/month to retirement income. Step-up support, charts, PDF reports. Free, no sign-up.">
+        content="Calculate SIP returns with step-up, visualize SWP withdrawals & plan your retirement. Free tool with yearly breakdown, PDF reports & CSV export.">
     <meta name="keywords"
         content="SIP Calculator, SWP Calculator, Mutual Fund Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP">
     <link rel="canonical" href="https://sipswpcalculator.com/">
@@ -253,6 +253,19 @@ foreach ($combined as $row) {
                 <span class="text-gradient">SIP & SWP Calculator</span> <br>
                 <span class="text-gray-800">Visualise Your Wealth Journey</span>
             </h1>
+
+            <!-- EEAT Trust Bar -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
+                <div class="flex items-center gap-2">
+                    <img src="https://ui-avatars.com/api/?name=Sumeet+Boga&background=10b981&color=fff&rounded=true" alt="Sumeet Boga" class="w-7 h-7 rounded-full shadow-sm border border-emerald-100">
+                    <span>Developed by <strong class="text-slate-700">Sumeet Boga</strong>, Software Developer & Finance Specialist</span>
+                </div>
+                <span class="hidden sm:inline text-slate-300">|</span>
+                <div class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Verified for Accuracy: February 2026
+                </div>
+            </div>
 
             <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
                 A <dfn><strong class="text-indigo-600">Systematic Investment Plan (SIP)</strong></dfn> lets you invest a
