@@ -12,6 +12,14 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="keywords"
         content="SWP retirement planning, systematic withdrawal plan retirement, SWP for pension, 4% rule India, retirement income mutual fund, SWP vs pension plan">
     <link rel="canonical" href="https://sipswpcalculator.com/swp-retirement-planning">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sipswpcalculator.com/swp-retirement-planning">
+    <meta property="og:title" content="Retirement Planning with SWP: Complete 2026 Guide">
+    <meta property="og:description"
+        content="Plan your retirement income using a Systematic Withdrawal Plan. Learn the 4% rule, SWP vs pension plans, and tax implications.">
+    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
     <link rel="icon" type="image/png" href="/assets/favicon.png">
@@ -73,7 +81,8 @@ require_once __DIR__ . '/functions.php'; ?>
                     corpus continues to earn market returns.</p>
                 <p>This strategy is increasingly popular among Indian retirees because it is <strong>more
                         tax-efficient</strong> than Fixed Deposit interest and offers the potential for
-                    <strong>inflation-beating growth</strong> on the remaining corpus.</p>
+                    <strong>inflation-beating growth</strong> on the remaining corpus.
+                </p>
 
                 <h2>SWP vs Traditional Pension Plans</h2>
                 <div class="overflow-x-auto not-prose">
@@ -189,6 +198,19 @@ require_once __DIR__ . '/functions.php'; ?>
                         SWP Calculator →</a>
                 </div>
 
+                <div class="bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 mt-8 not-prose">
+                    <p class="font-bold text-gray-800 mb-3">Related Reading</p>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/swp-tax-calculator" class="text-indigo-600 hover:underline font-medium">SWP Tax
+                                Calculator</a> — Calculate post-tax income from your SWP withdrawals</li>
+                        <li><a href="/sip-step-up-calculator"
+                                class="text-indigo-600 hover:underline font-medium">Step-Up SIP Guide</a> — Build a
+                            larger corpus before starting SWP</li>
+                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
+                                Fund Tax 2026</a> — Complete tax rules for equity & debt funds</li>
+                    </ul>
+                </div>
+
                 <h2>Frequently Asked Questions</h2>
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">Is SWP better than monthly pension
@@ -204,7 +226,8 @@ require_once __DIR__ . '/functions.php'; ?>
                     <div class="pb-4 text-gray-600">Unlike pension plans, the remaining mutual fund corpus goes to your
                         <strong>nominee/legal heir</strong>. This is a significant advantage of SWP over traditional
                         annuities, which typically stop payments upon death (or the spouse's death in joint-life
-                        options).</div>
+                        options).
+                    </div>
                 </details>
 
                 <details class="group">

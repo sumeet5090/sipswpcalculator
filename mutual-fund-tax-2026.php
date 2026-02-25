@@ -12,6 +12,14 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="keywords"
         content="mutual fund tax India 2026, LTCG tax mutual funds, STCG tax, tax-efficient SWP, SIP tax calculation, capital gains tax mutual fund">
     <link rel="canonical" href="https://sipswpcalculator.com/mutual-fund-tax-2026">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sipswpcalculator.com/mutual-fund-tax-2026">
+    <meta property="og:title" content="Mutual Fund Tax Rules 2026: LTCG, STCG & Tax-Efficient Withdrawals">
+    <meta property="og:description"
+        content="Complete 2026 guide to mutual fund taxation. LTCG at 12.5%, STCG at 20% for equity. SWP tax efficiency and global comparison.">
+    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
     <link rel="icon" type="image/png" href="/assets/favicon.png">
@@ -97,7 +105,8 @@ require_once __DIR__ . '/functions.php'; ?>
                     of the most favorable tax treatments available for investments in India.</p>
                 <p><strong>Short-Term Capital Gains (STCG)</strong> on equity funds (held ≤1 year) are taxed at
                     <strong>20%</strong>. For debt funds purchased after April 1, 2023, all gains are treated as
-                    short-term regardless of holding period and taxed at your income slab rate.</p>
+                    short-term regardless of holding period and taxed at your income slab rate.
+                </p>
 
                 <h2>Tax Treatment of SIP Investments (FIFO Method)</h2>
                 <p>Each SIP installment is treated as a <strong>separate purchase</strong> by the Income Tax Department.
@@ -198,6 +207,19 @@ require_once __DIR__ . '/functions.php'; ?>
                     <a href="/"
                         class="inline-block bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-emerald-700 transition-colors">Launch
                         Calculator →</a>
+                </div>
+
+                <div class="bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 mt-8 not-prose">
+                    <p class="font-bold text-gray-800 mb-3">Related Reading</p>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/swp-tax-calculator" class="text-indigo-600 hover:underline font-medium">SWP Tax
+                                Calculator</a> — Calculate exact post-tax income from SWP</li>
+                        <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
+                                PPF</a> — Tax comparison across investment types</li>
+                        <li><a href="/sip-step-up-calculator"
+                                class="text-indigo-600 hover:underline font-medium">Step-Up SIP Guide</a> — Maximize
+                            pre-tax wealth with step-up strategy</li>
+                    </ul>
                 </div>
 
                 <h2>Frequently Asked Questions</h2>

@@ -12,6 +12,14 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="keywords"
         content="SWP tax calculator, SWP tax India, post-tax SWP income, capital gains SWP withdrawal, mutual fund withdrawal tax">
     <link rel="canonical" href="https://sipswpcalculator.com/swp-tax-calculator">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sipswpcalculator.com/swp-tax-calculator">
+    <meta property="og:title" content="SWP Tax Calculator: Calculate Post-Tax Withdrawal Income">
+    <meta property="og:description"
+        content="Calculate the tax on SWP withdrawals. LTCG vs STCG, FIFO method, and strategies to maximize post-tax retirement income.">
+    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
     <link rel="icon" type="image/png" href="/assets/favicon.png">
@@ -167,6 +175,18 @@ require_once __DIR__ . '/functions.php'; ?>
                     <a href="/"
                         class="inline-block bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-emerald-700 transition-colors">Launch
                         SWP Calculator →</a>
+                </div>
+
+                <div class="bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 mt-8 not-prose">
+                    <p class="font-bold text-gray-800 mb-3">Related Reading</p>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
+                                Retirement Planning</a> — Plan your complete retirement income strategy</li>
+                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
+                                Fund Tax 2026</a> — Complete tax rules for all fund types</li>
+                        <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
+                                PPF</a> — Why SWP is more tax-efficient than FD interest</li>
+                    </ul>
                 </div>
 
                 <h2>Frequently Asked Questions</h2>

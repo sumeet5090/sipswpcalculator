@@ -12,6 +12,14 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="keywords"
         content="step-up SIP calculator, top-up SIP, SIP with annual increase, step-up vs flat SIP, SIP step-up strategy">
     <link rel="canonical" href="https://sipswpcalculator.com/sip-step-up-calculator">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sipswpcalculator.com/sip-step-up-calculator">
+    <meta property="og:title" content="Step-Up SIP Calculator: How a 10% Annual Increase Doubles Your Corpus">
+    <meta property="og:description"
+        content="Compare flat vs step-up SIP with worked examples. See why a 10% annual increase can double your corpus over 20 years.">
+    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
     <link rel="icon" type="image/png" href="/assets/favicon.png">
@@ -172,6 +180,18 @@ require_once __DIR__ . '/functions.php'; ?>
                         Step-Up SIP Calculator →</a>
                 </div>
 
+                <div class="bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 mt-8 not-prose">
+                    <p class="font-bold text-gray-800 mb-3">Related Reading</p>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
+                                PPF</a> — How step-up SIP compares to other investments</li>
+                        <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
+                                Retirement Planning</a> — Transition from SIP to retirement income</li>
+                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
+                                Fund Tax 2026</a> — Tax implications of your SIP gains</li>
+                    </ul>
+                </div>
+
                 <h2>Frequently Asked Questions</h2>
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">What is the ideal step-up percentage?
@@ -202,7 +222,8 @@ require_once __DIR__ . '/functions.php'; ?>
                         top-ups?</summary>
                     <div class="pb-4 text-gray-600">Both work. Step-up SIPs are automatic and disciplined. Lump sum
                         top-ups (e.g., investing your annual bonus) can be done alongside step-up SIPs. The key is to
-                        <strong>increase your total investment systematically</strong>.</div>
+                        <strong>increase your total investment systematically</strong>.
+                    </div>
                 </details>
             </article>
         </main>

@@ -10,6 +10,14 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="description"
         content="Learn about the team behind SIP & SWP Calculator — India's free step-up SIP planner and retirement income tool. Developed by Sumeet Boga, Software Developer & Finance Specialist.">
     <link rel="canonical" href="https://sipswpcalculator.com/about">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sipswpcalculator.com/about">
+    <meta property="og:title" content="About Us | SIP & SWP Calculator">
+    <meta property="og:description"
+        content="Meet the team behind SIP & SWP Calculator — a free step-up SIP planner and retirement income tool built by Sumeet Boga.">
+    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
     <link rel="icon" type="image/png" href="/assets/favicon.png">

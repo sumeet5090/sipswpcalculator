@@ -12,6 +12,14 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="keywords"
         content="SIP vs FD, SIP vs PPF, mutual fund vs fixed deposit, best investment India 2026, SIP vs RD, NPS vs SIP">
     <link rel="canonical" href="https://sipswpcalculator.com/sip-vs-fd-vs-ppf">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sipswpcalculator.com/sip-vs-fd-vs-ppf">
+    <meta property="og:title" content="SIP vs FD vs PPF 2026: Which Investment Gives the Best Returns?">
+    <meta property="og:description"
+        content="Compare SIP vs Fixed Deposits vs PPF vs NPS for 2026. See returns, risk, taxation, and liquidity side-by-side.">
+    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
     <link rel="icon" type="image/png" href="/assets/favicon.png">
@@ -139,7 +147,8 @@ require_once __DIR__ . '/functions.php'; ?>
                 <h2>Fixed Deposits — Safety vs Growth</h2>
                 <p>FDs offer predictable returns (6-7%) and are ideal for <strong>emergency funds</strong> or
                     <strong>short-term goals</strong> (1-3 years). However, FD interest is fully taxed at your income
-                    slab rate, and post-tax returns often barely match inflation.</p>
+                    slab rate, and post-tax returns often barely match inflation.
+                </p>
 
                 <h2>Recurring Deposit (RD) vs SIP</h2>
                 <p>RDs and SIPs both involve regular monthly investments, but the similarity ends there. RDs offer
@@ -194,6 +203,19 @@ require_once __DIR__ . '/functions.php'; ?>
                     <a href="/"
                         class="inline-block bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-emerald-700 transition-colors">Launch
                         SIP Calculator →</a>
+                </div>
+
+                <div class="bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 mt-8 not-prose">
+                    <p class="font-bold text-gray-800 mb-3">Related Reading</p>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/sip-step-up-calculator"
+                                class="text-indigo-600 hover:underline font-medium">Step-Up SIP Guide</a> — How annual
+                            increases multiply your returns</li>
+                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
+                                Fund Tax 2026</a> — Tax comparison: SIP vs FD vs PPF</li>
+                        <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
+                                Retirement Planning</a> — Convert your SIP corpus into retirement income</li>
+                    </ul>
                 </div>
 
                 <h2>Frequently Asked Questions</h2>

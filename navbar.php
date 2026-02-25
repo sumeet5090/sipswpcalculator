@@ -31,6 +31,40 @@ if ($current_page == 'index.php' || $current_page == '')
                 class="<?= $current_page === 'sip-calculator.php' ? 'text-indigo-600 font-semibold' : 'text-slate-600 hover:text-indigo-600' ?> transition-colors">
                 SIP Guide
             </a>
+            <div class="relative group">
+                <button type="button"
+                    class="text-slate-600 hover:text-indigo-600 transition-colors inline-flex items-center gap-1">
+                    Guides
+                    <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div
+                    class="absolute right-0 top-full pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <div class="bg-white rounded-xl shadow-xl border border-slate-200 py-2">
+                        <a href="/sip-step-up-calculator"
+                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Step-Up
+                            SIP Guide</a>
+                        <a href="/swp-retirement-planning"
+                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SWP
+                            Retirement Planning</a>
+                        <a href="/mutual-fund-tax-2026"
+                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Mutual
+                            Fund Tax 2026</a>
+                        <a href="/sip-vs-fd-vs-ppf"
+                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SIP
+                            vs FD vs PPF</a>
+                        <a href="/swp-tax-calculator"
+                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SWP
+                            Tax Calculator</a>
+                        <div class="border-t border-slate-100 my-1"></div>
+                        <a href="/about"
+                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">About
+                            Us</a>
+                    </div>
+                </div>
+            </div>
         </nav>
 
         <!-- Mobile hamburger button -->
@@ -58,6 +92,26 @@ if ($current_page == 'index.php' || $current_page == '')
                 class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'sip-calculator.php' ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' ?> transition-colors">
                 SIP Guide
             </a>
+            <div class="pt-2 pb-1 px-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Guides</div>
+            <a href="/sip-step-up-calculator"
+                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">Step-Up
+                SIP Guide</a>
+            <a href="/swp-retirement-planning"
+                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">SWP
+                Retirement Planning</a>
+            <a href="/mutual-fund-tax-2026"
+                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">Mutual
+                Fund Tax 2026</a>
+            <a href="/sip-vs-fd-vs-ppf"
+                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">SIP
+                vs FD vs PPF</a>
+            <a href="/swp-tax-calculator"
+                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">SWP
+                Tax Calculator</a>
+            <div class="border-t border-slate-100 my-1"></div>
+            <a href="/about"
+                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">About
+                Us</a>
         </div>
     </div>
 </nav>

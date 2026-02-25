@@ -162,27 +162,29 @@ foreach ($combined as $row) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIP Calculator 2026 — Free Step-Up SIP & SWP Planner India</title>
+    <title>SIP Calculator 2026 — Free Step-Up SIP & SWP Planner Online</title>
     <meta name="description"
-        content="₹10K/month → ₹1 Crore? Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export — trusted by Indian investors.">
+        content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export — trusted by investors worldwide.">
     <meta name="keywords"
-        content="SIP Calculator, SIP Calculator India, SIP Return Calculator, Mutual Fund SIP Calculator, SWP Calculator, SWP Planner India, Step-Up SIP Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP, Tax-Efficient Withdrawals">
+        content="SIP Calculator, SIP Calculator Online, SIP Return Calculator, Mutual Fund SIP Calculator, SWP Calculator, SWP Planner, Step-Up SIP Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP, Tax-Efficient Withdrawals, SIP Calculator India, SIP Calculator USA, SIP Calculator UK, Mutual Fund Return Calculator">
     <link rel="canonical" href="https://sipswpcalculator.com/">
+    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/">
+    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sipswpcalculator.com/">
-    <meta property="og:title" content="Advanced SIP & SWP Calculator for Investors">
+    <meta property="og:title" content="SIP Calculator 2026 — Free Step-Up SIP & SWP Planner">
     <meta property="og:description"
-        content="Plan your financial future with our comprehensive SIP & SWP calculator. Visualize growth and withdrawals effortlessly.">
+        content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export.">
     <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://sipswpcalculator.com/">
-    <meta property="twitter:title" content="Advanced SIP & SWP Calculator for Investors">
+    <meta property="twitter:title" content="SIP Calculator 2026 — Free Step-Up SIP & SWP Planner">
     <meta property="twitter:description"
-        content="Plan your financial future with our comprehensive SIP & SWP calculator. Visualize growth and withdrawals effortlessly.">
+        content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export.">
     <meta property="twitter:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
 
     <!-- Structured Data: SoftwareApplication -->
@@ -228,6 +230,21 @@ foreach ($combined as $row) {
       "category": "Investment Planning Tool",
       "feesAndCommissionsSpecification": "Free — no fees or commissions",
       "areaServed": "Worldwide"
+    }
+    </script>
+    <!-- Structured Data: WebSite (for sitelinks search box) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "SIP & SWP Calculator",
+      "url": "https://sipswpcalculator.com/",
+      "description": "Free online SIP and SWP calculator with step-up compounding, visual charts, and retirement income projections.",
+      "publisher": {
+        "@type": "Person",
+        "name": "Sumeet Boga",
+        "url": "https://sipswpcalculator.com/about"
+      }
     }
     </script>
 
@@ -289,31 +306,16 @@ foreach ($combined as $row) {
             </div>
 
             <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
-                This free <dfn><strong class="text-indigo-600">SIP calculator India</strong></dfn> helps you estimate
+                This free <dfn><strong class="text-indigo-600">SIP calculator</strong></dfn> helps you estimate
                 your <strong>mutual fund SIP returns</strong> with annual step-up (top-up) compounding.
                 A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan
                 tax-efficient withdrawals for a steady retirement income. Use this <strong>SIP return
                     calculator</strong>
-                to visualize growth, compare scenarios, and download detailed PDF reports — all for free.
+                to visualize growth, compare scenarios, and download detailed PDF reports — free for investors
+                worldwide.
             </p>
 
-            <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-500">
-                <span class="inline-flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                    </svg>
-                    By <strong class="text-slate-700">Sumeet Boga</strong>, Finance & Technology
-                </span>
-                <span class="text-slate-300">|</span>
-                <span class="inline-flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    Last Reviewed: <time datetime="2026-02">February 2026</time>
-                </span>
-            </div>
+
         </header>
 
         <main>
