@@ -185,12 +185,13 @@ foreach ($combined as $row) {
         content="Plan your financial future with our comprehensive SIP & SWP calculator. Visualize growth and withdrawals effortlessly.">
     <meta property="twitter:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
 
-    <!-- Structured Data -->
+    <!-- Structured Data: SoftwareApplication -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
       "name": "SIP & SWP Calculator",
+      "url": "https://sipswpcalculator.com/",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "Web",
       "offers": {
@@ -198,9 +199,11 @@ foreach ($combined as $row) {
         "price": "0",
         "priceCurrency": "USD"
       },
-      "description": "A comprehensive tool for calculating Systematic Investment Plans (SIP) and Systematic Withdrawal Plans (SWP) with visualization.",
-      "featureList": "SIP Calculator, SWP Calculator, Inflation Adjustment, Visual Charts, CSV Export",
+      "description": "Free online SIP calculator India with step-up compounding and SWP retirement planner. Visualize mutual fund growth, yearly breakdown, and tax-efficient withdrawals.",
+      "featureList": ["SIP Calculator", "SWP Calculator", "Step-Up SIP", "Visual Charts", "CSV Export", "Branded PDF Reports"],
       "screenshot": "https://sipswpcalculator.com/assets/og-image-main.jpg",
+      "image": "https://sipswpcalculator.com/assets/og-image-main.jpg",
+      "datePublished": "2024-12-01",
       "dateModified": "2026-02-25",
       "author": {
           "@type": "Person",
@@ -209,11 +212,22 @@ foreach ($combined as $row) {
       }
     }
     </script>
+    <!-- Structured Data: FinancialProduct -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Table",
-      "about": "Investment Comparison"
+      "@type": "FinancialProduct",
+      "name": "SIP & SWP Investment Calculator",
+      "description": "Free online calculator for planning Systematic Investment Plans and Systematic Withdrawal Plans with step-up compounding, visual charts, and retirement income projections.",
+      "url": "https://sipswpcalculator.com/",
+      "provider": {
+        "@type": "Person",
+        "name": "Sumeet Boga",
+        "url": "https://sipswpcalculator.com/"
+      },
+      "category": "Investment Planning Tool",
+      "feesAndCommissionsSpecification": "Free — no fees or commissions",
+      "areaServed": "Worldwide"
     }
     </script>
 
@@ -221,7 +235,7 @@ foreach ($combined as $row) {
     <link rel="manifest" href="manifest.json">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/4149/4149678.png">
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
 
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -301,6 +315,7 @@ foreach ($combined as $row) {
         </header>
 
         <main>
+            <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 <!-- Left Column: Currency + Form -->
@@ -573,7 +588,7 @@ foreach ($combined as $row) {
                     <div
                         class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-6">
                         <div class="h-[280px] sm:h-[350px] lg:h-[450px] w-full relative z-10">
-                            <canvas id="corpusChart"></canvas>
+                            <canvas id="corpusChart" width="800" height="450"></canvas>
                         </div>
                     </div>
                 </div>
@@ -754,6 +769,8 @@ foreach ($combined as $row) {
                 <h2 class="text-3xl font-bold text-center mb-6">SIP vs RD vs FD vs PPF: A Comparison</h2>
                 <div class="glass-card overflow-hidden">
                     <table class="min-w-full">
+                        <caption class="sr-only">SIP vs PPF vs Fixed Deposit: Investment Comparison for Indian Investors
+                            (2026)</caption>
                         <thead>
                             <tr class="bg-gray-50 text-gray-700 text-left">
                                 <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">Feature

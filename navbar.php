@@ -20,6 +20,8 @@ if ($current_page == 'index.php' || $current_page == '')
             <span class="self-center text-xl font-bold whitespace-nowrap text-slate-800 tracking-tight">SIP<span
                     class="text-emerald-600">Calculator</span></span>
         </a>
+
+        <!-- Desktop nav -->
         <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
             <a href="/"
                 class="<?= $current_page === 'index.php' ? 'text-indigo-600 font-semibold' : 'text-slate-600 hover:text-indigo-600' ?> transition-colors">
@@ -30,7 +32,52 @@ if ($current_page == 'index.php' || $current_page == '')
                 SIP Guide
             </a>
         </nav>
+
+        <!-- Mobile hamburger button -->
+        <button id="mobile-menu-btn" type="button"
+            class="sm:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+            aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation menu">
+            <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                </path>
+            </svg>
+            <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Mobile menu dropdown -->
+    <div id="mobile-menu" class="sm:hidden hidden border-t border-slate-200 bg-white/95 backdrop-blur-md">
+        <div class="px-4 py-3 space-y-1">
+            <a href="/"
+                class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'index.php' ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' ?> transition-colors">
+                Calculator
+            </a>
+            <a href="/sip-calculator"
+                class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'sip-calculator.php' ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' ?> transition-colors">
+                SIP Guide
+            </a>
+        </div>
     </div>
 </nav>
 <!-- Spacer to prevent content overlap -->
 <div class="h-16"></div>
+
+<script>
+    (function () {
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const hamburger = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+        if (btn && menu) {
+            btn.addEventListener('click', function () {
+                const isOpen = !menu.classList.contains('hidden');
+                menu.classList.toggle('hidden');
+                hamburger.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+                btn.setAttribute('aria-expanded', !isOpen);
+            });
+        }
+    })();
+</script>

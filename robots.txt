@@ -1,3 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /dist/
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /generate-pdf.php
+
 Sitemap: https://sipswpcalculator.com/sitemap.xml
