@@ -243,7 +243,7 @@ foreach ($combined as $row) {
       "screenshot": "https://sipswpcalculator.com/assets/og-image-main.jpg",
       "image": "https://sipswpcalculator.com/assets/og-image-main.jpg",
       "datePublished": "2024-12-01",
-      "dateModified": "2026-02-25",
+      "dateModified": "2026-02-27",
       "author": {
           "@type": "Person",
           "name": "Sumeet Boga",
@@ -739,7 +739,7 @@ foreach ($combined as $row) {
                 <!-- Full-width Yearly Breakdown -->
                 <div class="mt-8 space-y-4">
                     <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <h2 id="yearly-breakdown" class="text-xl font-bold text-slate-800 flex items-center gap-2">
                             <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
@@ -852,7 +852,8 @@ foreach ($combined as $row) {
     </div>
 
     <div class="mt-12 glass-card p-8">
-        <h2 class="text-3xl font-bold text-center mb-6">Master Your Financial Future with SIP & SWP</h2>
+        <h2 id="master-financial-future" class="text-3xl font-bold text-center mb-6">Master Your Financial Future with
+            SIP & SWP</h2>
         <div class="prose prose-lg max-w-none text-gray-600">
             <p>Understanding the tools at your disposal is the first step toward effective financial planning. Our
                 <strong>mutual fund SIP calculator</strong> is designed to demystify two of the most powerful tools
@@ -913,7 +914,8 @@ foreach ($combined as $row) {
 
             <!-- How to Use This Calculator -->
             <div class="mt-12">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">How to Use This SIP & SWP Calculator</h2>
+                <h2 id="how-to-use-calculator" class="text-2xl font-bold text-gray-800 mb-4">How to Use This SIP & SWP
+                    Calculator</h2>
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100">
                         <div class="text-emerald-600 font-bold text-lg mb-2">Step 1: Enter SIP Details</div>
@@ -938,7 +940,8 @@ foreach ($combined as $row) {
 
             <!-- SIP Formula -->
             <div class="mt-12">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">SIP Calculator Formula</h2>
+                <h2 id="sip-calculator-formula" class="text-2xl font-bold text-gray-800 mb-4">SIP Calculator Formula
+                </h2>
                 <div
                     class="bg-gray-50 p-6 rounded-xl border border-gray-200 font-mono text-sm sm:text-base overflow-x-auto">
                     <p class="font-bold text-indigo-700 mb-2">Future Value of SIP (Annuity Due):</p>
@@ -970,7 +973,8 @@ foreach ($combined as $row) {
 
             <!-- Worked Examples -->
             <div class="mt-12">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">SIP Return Examples: How Much Can You Earn?</h2>
+                <h2 id="sip-return-examples" class="text-2xl font-bold text-gray-800 mb-6">SIP Return Examples: How Much
+                    Can You Earn?</h2>
                 <div class="grid md:grid-cols-3 gap-6 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                         <h4 class="text-lg font-bold text-emerald-700 mb-2">₹5,000/month for 15 Years</h4>
@@ -1034,7 +1038,8 @@ foreach ($combined as $row) {
 
             <!-- Risks Section -->
             <div class="mt-12">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Risks of SIP & SWP Investments</h2>
+                <h2 id="investment-risks" class="text-2xl font-bold text-gray-800 mb-4">Risks of SIP & SWP Investments
+                </h2>
                 <div class="bg-amber-50/50 p-6 rounded-xl border border-amber-200">
                     <ul class="space-y-3 text-gray-700">
                         <li><strong class="text-amber-700">Market Risk:</strong> Returns depend on stock/bond market
@@ -1056,7 +1061,8 @@ foreach ($combined as $row) {
 
             <!-- Mr. Sharma story (promoted from H3 to H2) -->
             <div class="mt-12 bg-indigo-50/50 p-8 rounded-xl border border-indigo-100/50 backdrop-blur-sm">
-                <h2 class="text-2xl font-bold text-indigo-700 mb-4">Real-Life Success Story: The "Mr. Sharma" Strategy
+                <h2 id="real-life-success-story" class="text-2xl font-bold text-indigo-700 mb-4">Real-Life Success
+                    Story: The "Mr. Sharma" Strategy
                 </h2>
                 <p class="mb-4">Meet Mr. Sharma (30). He decides to invest <strong>₹10,000/month</strong> in an
                     Equity Mutual Fund via SIP for his retirement at age 60.</p>
@@ -1074,7 +1080,8 @@ foreach ($combined as $row) {
             </div>
 
             <div class="mt-12">
-                <h2 class="text-3xl font-bold text-center mb-6">SIP vs RD vs FD vs PPF: A Comparison</h2>
+                <h2 id="investment-comparison" class="text-3xl font-bold text-center mb-6">SIP vs RD vs FD vs PPF: A
+                    Comparison</h2>
                 <div class="glass-card overflow-hidden">
                     <table class="min-w-full">
                         <caption class="sr-only">SIP vs PPF vs Fixed Deposit: Investment Comparison for Indian Investors
@@ -1123,7 +1130,7 @@ foreach ($combined as $row) {
 
             <!-- FAQ Section -->
             <div class="mt-12 border-t border-gray-200 pt-8">
-                <h2 class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+                <h2 id="faq" class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
                 <div class="space-y-3">
                     <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
                         <summary
@@ -1552,7 +1559,7 @@ foreach ($combined as $row) {
     <div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
         <div
             class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
+            <h2 id="branded-pdf-report" class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
             <form id="pdfForm" class="space-y-4">
                 <!-- SECURITY: CSRF Token for PDF generation form -->
                 <input type="hidden" name="csrf_token"
