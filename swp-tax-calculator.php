@@ -12,6 +12,8 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="keywords"
         content="SWP tax calculator, SWP tax India, post-tax SWP income, capital gains SWP withdrawal, mutual fund withdrawal tax">
     <link rel="canonical" href="https://sipswpcalculator.com/swp-tax-calculator">
+    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/swp-tax-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/swp-tax-calculator">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://sipswpcalculator.com/swp-tax-calculator">

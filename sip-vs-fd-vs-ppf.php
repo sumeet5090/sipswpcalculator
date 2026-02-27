@@ -12,6 +12,8 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="keywords"
         content="SIP vs FD, SIP vs PPF, mutual fund vs fixed deposit, best investment India 2026, SIP vs RD, NPS vs SIP">
     <link rel="canonical" href="https://sipswpcalculator.com/sip-vs-fd-vs-ppf">
+    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/sip-vs-fd-vs-ppf">
+    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/sip-vs-fd-vs-ppf">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://sipswpcalculator.com/sip-vs-fd-vs-ppf">

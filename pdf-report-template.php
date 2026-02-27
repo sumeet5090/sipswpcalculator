@@ -99,7 +99,8 @@ function get_pdf_html(array $inputs): string
     $html .= "
         </div>
         <div class='footer'>
-            <p>This report was generated on " . date('F j, Y') . " using the Advanced SIP & SWP Calculator. It is for illustrative purposes only and should not be considered as financial advice. Projections are based on the inputs provided and are not guaranteed.</p>
+            <p>This report was generated on " . date('F j, Y') . " using the <strong>Advanced SIP & SWP Calculator</strong> (https://sipswpcalculator.com).</p>
+            <p style='margin-top: 5px; font-size: 8px;'>It is for illustrative purposes only and should not be considered as financial advice. Projections are based on the inputs provided and are not guaranteed.</p>
         </div>
     </body>
     </html>";

@@ -12,6 +12,8 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="keywords"
         content="mutual fund tax India 2026, LTCG tax mutual funds, STCG tax, tax-efficient SWP, SIP tax calculation, capital gains tax mutual fund">
     <link rel="canonical" href="https://sipswpcalculator.com/mutual-fund-tax-2026">
+    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/mutual-fund-tax-2026">
+    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/mutual-fund-tax-2026">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://sipswpcalculator.com/mutual-fund-tax-2026">

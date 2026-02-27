@@ -2,8 +2,8 @@
 let currentCurrency = 'INR';
 const currencyConfig = {
     'INR': { locale: 'en-IN', symbol: '₹' },
-    'USD': { locale: 'en-IN', symbol: '$' }, // Force Indian grouping (1,00,000)
-    'EUR': { locale: 'en-IN', symbol: '€' }  // Force Indian grouping
+    'USD': { locale: 'en-US', symbol: '$' },
+    'EUR': { locale: 'en-US', symbol: '€' } 
 };
 
 function updateCurrency(newCurrency) {

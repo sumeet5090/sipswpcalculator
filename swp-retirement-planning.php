@@ -12,6 +12,10 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="keywords"
         content="SWP retirement planning, systematic withdrawal plan retirement, SWP for pension, 4% rule India, retirement income mutual fund, SWP vs pension plan">
     <link rel="canonical" href="https://sipswpcalculator.com/swp-retirement-planning">
+    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/swp-retirement-planning">
+    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/swp-retirement-planning">
+    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/swp-retirement-planning">
+    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/swp-retirement-planning">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://sipswpcalculator.com/swp-retirement-planning">

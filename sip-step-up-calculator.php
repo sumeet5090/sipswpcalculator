@@ -12,6 +12,10 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="keywords"
         content="step-up SIP calculator, top-up SIP, SIP with annual increase, step-up vs flat SIP, SIP step-up strategy">
     <link rel="canonical" href="https://sipswpcalculator.com/sip-step-up-calculator">
+    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/sip-step-up-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/sip-step-up-calculator">
+    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/sip-step-up-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/sip-step-up-calculator">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://sipswpcalculator.com/sip-step-up-calculator">

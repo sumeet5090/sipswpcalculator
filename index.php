@@ -100,6 +100,10 @@ if ($action === 'download_csv') {
     echo "\xEF\xBB\xBF"; // BOM for UTF-8 Excel
     $csv = new SplTempFileObject();
     $csv->setCsvControl(',', '"', "\\");
+    $csv->fputcsv(['Financial Projection Report']);
+    $csv->fputcsv(['Source:', 'https://sipswpcalculator.com/ (Advanced SIP & SWP Calculator)']);
+    $csv->fputcsv(['Date Generated:', date('Y-m-d')]);
+    $csv->fputcsv([]);
     $csv->fputcsv(['Note: All amounts are in USD']);
     $csv->fputcsv([]);
     $headers = [
@@ -1270,6 +1274,17 @@ foreach ($combined as $row) {
                     work →</a>
             </p>
         </div>
+        <div class="mt-12 p-6 bg-slate-50 border border-slate-200 rounded-xl text-center max-w-2xl mx-auto">
+            <p class="font-bold text-slate-800 text-lg mb-2">Cite This Calculator</p>
+            <p class="text-slate-600 text-sm mb-4">Writing an article, blog post, or research paper? You can cite this
+                tool using the following format.</p>
+            <div
+                class="bg-white p-4 border border-slate-200 rounded-lg text-left text-sm text-slate-700 font-mono overflow-x-auto select-all">
+                Boga, S. (2026). Advanced SIP & SWP Calculator. sipswpcalculator.com. Retrieved from
+                https://sipswpcalculator.com/
+            </div>
+        </div>
+    </div>
     </div>
     </main>
 
@@ -1447,7 +1462,7 @@ foreach ($combined as $row) {
             cumulative: <?php echo json_encode(array_values($cumulative_numbers)); ?>,
             corpus: <?php echo json_encode(array_values($combined_numbers)); ?>,
             swp: <?php echo json_encode(array_values($swp_numbers)); ?>
-        };
+    };
     </script>
     <script defer src="script.js?v=<?= filemtime(__DIR__ . '/script.js') ?>"></script>
 

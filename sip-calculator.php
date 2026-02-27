@@ -14,6 +14,8 @@ require_once __DIR__ . '/functions.php';
     <meta name="description"
         content="Master SIPs: learn the compounding formula, 2026 LTCG/STCG tax rules (India, USA, UK), step-up strategy with worked examples. Free SIP calculator included.">
     <link rel="canonical" href="https://sipswpcalculator.com/sip-calculator">
+    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/sip-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/sip-calculator">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://sipswpcalculator.com/sip-calculator">
@@ -25,6 +27,12 @@ require_once __DIR__ . '/functions.php';
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <!-- Tailwind CSS (production build, purged) -->
     <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Article","headline":"SIP Guide 2026: Formula, Tax Rules, Step-Up Strategy & Examples","author":{"@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about"},"datePublished":"2026-02-25","dateModified":"2026-02-25"}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sipswpcalculator.com/"},{"@type":"ListItem","position":2,"name":"SIP Calculator","item":"https://sipswpcalculator.com/sip-calculator"}]}
+    </script>
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
