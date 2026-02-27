@@ -4,12 +4,30 @@ if ($current_page == 'index.php' || $current_page == '')
     $current_page = 'index.php';
 ?>
 
+<style>
+    /* Desktop Guides dropdown - pure CSS, no Tailwind group-hover needed */
+    .nav-dropdown .nav-dropdown-menu {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s, visibility 0.2s;
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-dropdown:hover .nav-chevron {
+        transform: rotate(180deg);
+    }
+</style>
+
 <nav
     class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/80 backdrop-blur-md transition-all duration-300 shadow-sm">
     <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
-        <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse group">
+        <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
             <div
-                class="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-all duration-300">
+                class="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg shadow-lg shadow-emerald-500/20 transition-all duration-300">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24"
                     height="24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -31,17 +49,16 @@ if ($current_page == 'index.php' || $current_page == '')
                 class="<?= $current_page === 'sip-calculator.php' ? 'text-indigo-600 font-semibold' : 'text-slate-600 hover:text-indigo-600' ?> transition-colors">
                 SIP Guide
             </a>
-            <div class="relative group">
+            <div class="relative nav-dropdown">
                 <button type="button"
                     class="text-slate-600 hover:text-indigo-600 transition-colors inline-flex items-center gap-1">
                     Guides
-                    <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor"
+                    <svg class="w-4 h-4 transition-transform nav-chevron" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </button>
-                <div
-                    class="absolute right-0 top-full pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div class="absolute right-0 top-full pt-2 w-56 z-50 nav-dropdown-menu">
                     <div class="bg-white rounded-xl shadow-xl border border-slate-200 py-2">
                         <a href="/sip-step-up-calculator"
                             class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Step-Up
