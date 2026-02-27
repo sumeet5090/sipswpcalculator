@@ -33,6 +33,41 @@ require_once __DIR__ . '/functions.php'; ?>
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sipswpcalculator.com/"},{"@type":"ListItem","position":2,"name":"Mutual Fund Tax 2026","item":"https://sipswpcalculator.com/mutual-fund-tax-2026"}]}
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Is there TDS on mutual fund redemptions?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, there is no TDS on mutual fund redemptions for resident Indians (unlike FDs where TDS applies at 10%). You need to self-report capital gains in your ITR and pay tax accordingly."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How is SIP taxed if I redeem after 2 years?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Each SIP installment's holding period is calculated separately. If your first SIP was 2 years ago, those units qualify for LTCG. But your last installment (1 month ago) would be STCG. The tax is calculated per unit using the FIFO method."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Are dividends from mutual funds taxable?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, since April 2020. Mutual fund dividends are added to your income and taxed at your slab rate. A 10% TDS is deducted if dividends exceed ₹5,000/year from a single AMC. Growth option + SWP is generally more tax-efficient than the dividend option."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can I set off capital losses against gains?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Short-term capital losses can be set off against both STCG and LTCG. Long-term capital losses can only be set off against LTCG. Unused losses can be carried forward for up to 8 assessment years. This is the basis of tax-loss harvesting."
+        }
+      }]
+    }
+    </script>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased"

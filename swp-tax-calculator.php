@@ -33,6 +33,41 @@ require_once __DIR__ . '/functions.php'; ?>
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sipswpcalculator.com/"},{"@type":"ListItem","position":2,"name":"SWP Tax Calculator","item":"https://sipswpcalculator.com/swp-tax-calculator"}]}
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Is SWP from mutual funds taxable?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, but only the capital gains portion is taxable, not the full withdrawal. The principal component is returned tax-free. This makes the effective tax rate on SWP much lower than on FD interest."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How is the capital gains portion calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Using the FIFO method: the earliest units are redeemed first. For each unit, capital gain = Redemption NAV - Purchase NAV. Your AMC provides this in the Capital Gains Statement."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can I claim tax-loss harvesting with SWP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. If some of your mutual fund units are at a loss, you can redeem them to book short-term capital losses, which can be set off against capital gains from SWP withdrawals. This can significantly reduce your overall tax liability."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is there GST on mutual fund transactions?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There's no GST on the investment or redemption amount. However, the fund's expense ratio includes GST on management fees (typically 0.5-2% annually). This is deducted from the fund's NAV, not billed separately."
+        }
+      }]
+    }
+    </script>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased"

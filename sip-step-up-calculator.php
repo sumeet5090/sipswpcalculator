@@ -47,6 +47,41 @@ require_once __DIR__ . '/functions.php'; ?>
       ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "What is the ideal step-up percentage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "10% annually is ideal for most salaried individuals. It roughly matches average salary increments. Conservative savers can use 5-7%, aggressive investors 15%."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Do all AMCs support step-up SIP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most major AMCs offer automatic step-up/top-up SIP options. You set the percentage and frequency, and the AMC auto-increases your SIP amount each year."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can I combine step-up SIP with step-up SWP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! Our SIP & SWP calculator supports both. You can model a 10% step-up SIP during accumulation and a 5% step-up SWP during retirement — all in one simulation."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is step-up SIP better than lump sum top-ups?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Both work. Step-up SIPs are automatic and disciplined. Lump sum top-ups can be done alongside step-up SIPs. The key is to increase your total investment systematically."
+        }
+      }]
+    }
+    </script>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased"

@@ -8,7 +8,7 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | SIP & SWP Calculator</title>
     <meta name="description"
-        content="Learn about the team behind SIP & SWP Calculator — India's free step-up SIP planner and retirement income tool. Developed by Sumeet Boga, Software Developer & Finance Specialist.">
+        content="Learn about the team behind SIP & SWP Calculator — a free step-up SIP planner and retirement income tool. Developed by Sumeet Boga, Software Developer & Finance Specialist.">
     <link rel="canonical" href="https://sipswpcalculator.com/about">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">

@@ -14,6 +14,14 @@ require_once __DIR__ . '/functions.php';
     <meta name="description"
         content="Master SIPs: learn the compounding formula, 2026 LTCG/STCG tax rules (India, USA, UK), step-up strategy with worked examples. Free SIP calculator included.">
     <link rel="canonical" href="https://sipswpcalculator.com/sip-calculator">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sipswpcalculator.com/sip-calculator">
+    <meta property="og:title" content="SIP Guide 2026: Formula, Tax Rules, Step-Up Strategy & Examples">
+    <meta property="og:description"
+        content="Master SIPs: learn the compounding formula, 2026 LTCG/STCG tax rules, step-up strategy with worked examples. Free SIP calculator included.">
+    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <!-- Tailwind CSS (production build, purged) -->
     <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">

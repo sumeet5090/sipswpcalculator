@@ -11,7 +11,14 @@ declare(strict_types=1);
     <meta name="description"
         content="Privacy policy for the SIP & SWP Calculator. We respect your privacy and do not collect personal financial data.">
     <link rel="canonical" href="https://sipswpcalculator.com/privacy">
-
+    <meta name="robots" content="noindex, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sipswpcalculator.com/privacy">
+    <meta property="og:title" content="Privacy Policy | SIP & SWP Calculator">
+    <meta property="og:description"
+        content="Privacy policy for the SIP & SWP Calculator. We respect your privacy and do not collect personal financial data.">
+    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
 </head>

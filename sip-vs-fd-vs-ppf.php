@@ -33,6 +33,34 @@ require_once __DIR__ . '/functions.php'; ?>
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sipswpcalculator.com/"},{"@type":"ListItem","position":2,"name":"SIP vs FD vs PPF","item":"https://sipswpcalculator.com/sip-vs-fd-vs-ppf"}]}
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Can I invest in both SIP and PPF simultaneously?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely — and it's recommended! Use PPF for your safe, tax-free allocation and equity SIP for growth. A common split is 60% SIP + 40% PPF for moderate-risk investors. Adjust based on your age and risk tolerance."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is ₹10,000/month SIP enough for retirement?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "With a 10% annual step-up and 12% returns over 25 years, ₹10,000/month SIP can grow to approximately ₹7.5 Crore. That's more than enough for most retirement needs. Use our SIP calculator to verify with your specific parameters."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What about SCSS and POMIS for retirees?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Senior Citizens' Saving Scheme (SCSS) and Post Office Monthly Income Scheme (POMIS) offer guaranteed monthly income at 8-8.2%. They're excellent as a fixed-income allocation alongside SWP from mutual funds."
+        }
+      }]
+    }
+    </script>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased"

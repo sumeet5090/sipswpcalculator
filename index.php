@@ -201,7 +201,7 @@ foreach ($combined as $row) {
         "price": "0",
         "priceCurrency": "USD"
       },
-      "description": "Free online SIP calculator India with step-up compounding and SWP retirement planner. Visualize mutual fund growth, yearly breakdown, and tax-efficient withdrawals.",
+      "description": "Free online SIP calculator with step-up compounding and SWP retirement planner. Visualize mutual fund growth, yearly breakdown, and tax-efficient withdrawals.",
       "featureList": ["SIP Calculator", "SWP Calculator", "Step-Up SIP", "Visual Charts", "CSV Export", "Branded PDF Reports"],
       "screenshot": "https://sipswpcalculator.com/assets/og-image-main.jpg",
       "image": "https://sipswpcalculator.com/assets/og-image-main.jpg",
@@ -1448,7 +1448,6 @@ foreach ($combined as $row) {
             corpus: <?php echo json_encode(array_values($combined_numbers)); ?>,
             swp: <?php echo json_encode(array_values($swp_numbers)); ?>
         };
-        console.log('Chart Data Loaded:', window.chartData);
     </script>
     <script defer src="script.js?v=<?= filemtime(__DIR__ . '/script.js') ?>"></script>
 

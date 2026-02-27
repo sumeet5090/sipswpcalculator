@@ -50,6 +50,48 @@ require_once __DIR__ . '/functions.php'; ?>
       ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Is SWP better than monthly pension from NPS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends on your risk appetite. NPS offers guaranteed income but with lower returns and full taxation. SWP offers higher growth potential and better tax efficiency, but carries market risk."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What happens to my SWP corpus when I die?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Unlike pension plans, the remaining mutual fund corpus goes to your nominee/legal heir. This is a significant advantage of SWP over traditional annuities."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can I increase my SWP withdrawal over time?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, many AMCs allow you to modify your SWP amount. Our calculator includes a step-up SWP feature that lets you model annual increases to combat inflation."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How much corpus do I need for ₹1 Lakh/month SWP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "At a 4% annual withdrawal rate: ₹1,00,000 × 12 ÷ 0.04 = ₹3 Crore. At a conservative 3.5% rate: approximately ₹3.43 Crore."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Which is the best mutual fund for SWP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For SWP, prioritize capital preservation. Balanced Advantage Funds, Conservative Hybrid Funds, or Multi-Asset Allocation funds are generally safer options than pure small-cap or mid-cap funds."
+        }
+      }]
+    }
+    </script>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased"
