@@ -346,8 +346,8 @@ foreach ($combined as $row) {
             <div
                 class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
                 <div class="flex items-center gap-2">
-                    <img src="https://ui-avatars.com/api/?name=Sumeet+Boga&background=10b981&color=fff&rounded=true"
-                        alt="Sumeet Boga" class="w-7 h-7 rounded-full shadow-sm border border-emerald-100">
+                    <img src="/assets/sumeet-boga.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
+                        class="w-7 h-7 rounded-full shadow-sm border border-emerald-100 object-cover">
                     <span>Developed by <strong class="text-slate-700">Sumeet Boga</strong>, Software Developer & Finance
                         Specialist</span>
                 </div>

@@ -27,6 +27,7 @@ require_once __DIR__ . '/functions.php';
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
     <!-- Tailwind CSS (production build, purged) -->
     <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"Article","headline":"SIP Guide 2026: Formula, Tax Rules, Step-Up Strategy & Examples","author":{"@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about"},"datePublished":"2026-02-25","dateModified":"2026-02-25"}
     </script>
