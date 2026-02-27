@@ -92,22 +92,31 @@ if ($current_page == 'index.php' || $current_page == '')
                 class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'sip-calculator.php' ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' ?> transition-colors">
                 SIP Guide
             </a>
-            <div class="pt-2 pb-1 px-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Guides</div>
-            <a href="/sip-step-up-calculator"
-                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">Step-Up
-                SIP Guide</a>
-            <a href="/swp-retirement-planning"
-                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">SWP
-                Retirement Planning</a>
-            <a href="/mutual-fund-tax-2026"
-                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">Mutual
-                Fund Tax 2026</a>
-            <a href="/sip-vs-fd-vs-ppf"
-                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">SIP
-                vs FD vs PPF</a>
-            <a href="/swp-tax-calculator"
-                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">SWP
-                Tax Calculator</a>
+            <button id="mobile-guides-btn" type="button"
+                class="w-full flex items-center justify-between px-3 py-3 rounded-lg text-base font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">
+                Guides
+                <svg id="mobile-guides-icon" class="w-4 h-4 transition-transform duration-200" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div id="mobile-guides-menu" class="hidden pl-4 pr-2 py-1 space-y-1 bg-slate-50/50 rounded-lg">
+                <a href="/sip-step-up-calculator"
+                    class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition-colors">Step-Up
+                    SIP Guide</a>
+                <a href="/swp-retirement-planning"
+                    class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition-colors">SWP
+                    Retirement Planning</a>
+                <a href="/mutual-fund-tax-2026"
+                    class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition-colors">Mutual
+                    Fund Tax 2026</a>
+                <a href="/sip-vs-fd-vs-ppf"
+                    class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition-colors">SIP
+                    vs FD vs PPF</a>
+                <a href="/swp-tax-calculator"
+                    class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-100 transition-colors">SWP
+                    Tax Calculator</a>
+            </div>
             <div class="border-t border-slate-100 my-1"></div>
             <a href="/about"
                 class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">About
@@ -131,6 +140,16 @@ if ($current_page == 'index.php' || $current_page == '')
                 hamburger.classList.toggle('hidden');
                 closeIcon.classList.toggle('hidden');
                 btn.setAttribute('aria-expanded', !isOpen);
+            });
+        }
+
+        const guidesBtn = document.getElementById('mobile-guides-btn');
+        const guidesMenu = document.getElementById('mobile-guides-menu');
+        const guidesIcon = document.getElementById('mobile-guides-icon');
+        if (guidesBtn && guidesMenu) {
+            guidesBtn.addEventListener('click', function () {
+                guidesMenu.classList.toggle('hidden');
+                guidesIcon.classList.toggle('rotate-180');
             });
         }
     })();

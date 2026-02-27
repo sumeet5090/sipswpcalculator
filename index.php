@@ -393,7 +393,7 @@ foreach ($combined as $row) {
                                 <div id="panel-sip" role="tabpanel">
                                     <div class="relative">
                                         <div
-                                            class="mb-4 relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
+                                            class="mb-4 relative z-10 bg-[var(--glass-bg)] p-4 sm:p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
 
                                             <div class="space-y-3">
                                                 <!-- Monthly + Duration -->
@@ -480,7 +480,7 @@ foreach ($combined as $row) {
                                 <div id="panel-swp" role="tabpanel" class="hidden">
                                     <div class="relative">
                                         <div
-                                            class="relative z-10 bg-[var(--glass-bg)] p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
+                                            class="relative z-10 bg-[var(--glass-bg)] p-4 sm:p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
                                             <div class="flex items-center justify-between mb-4">
                                                 <span
                                                     class="text-xs font-bold text-rose-400 tracking-widest uppercase">SWP
@@ -613,7 +613,7 @@ foreach ($combined as $row) {
 
                         <!-- Chart Card -->
                         <div
-                            class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-6">
+                            class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-4 sm:p-6">
                             <div class="h-[280px] sm:h-[350px] lg:h-[450px] w-full relative z-10">
                                 <canvas id="corpusChart" width="800" height="450"></canvas>
                             </div>
@@ -1462,7 +1462,7 @@ foreach ($combined as $row) {
             cumulative: <?php echo json_encode(array_values($cumulative_numbers)); ?>,
             corpus: <?php echo json_encode(array_values($combined_numbers)); ?>,
             swp: <?php echo json_encode(array_values($swp_numbers)); ?>
-    };
+        };
     </script>
     <script defer src="script.js?v=<?= filemtime(__DIR__ . '/script.js') ?>"></script>
 
