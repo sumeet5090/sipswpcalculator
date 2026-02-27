@@ -18,6 +18,8 @@
                 </li>
                 <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline">SIP vs FD vs PPF</a></li>
                 <li><a href="/swp-tax-calculator" class="text-indigo-600 hover:underline">SWP Tax Calculator</a></li>
+                <li><a href="/compound-interest-calculator" class="text-indigo-600 hover:underline">Compound Interest
+                        Calculator</a></li>
             </ul>
         </div>
         <div>

@@ -174,6 +174,7 @@ foreach ($combined as $row) {
     <link rel="canonical" href="https://sipswpcalculator.com/">
     <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/">
     <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
+    <meta name="robots" content="index, follow">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -251,6 +252,57 @@ foreach ($combined as $row) {
       }
     }
     </script>
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "SIP & SWP Calculator",
+      "url": "https://sipswpcalculator.com/",
+      "logo": "https://sipswpcalculator.com/assets/favicon.png",
+      "description": "Free online financial planning tools for SIP and SWP calculations worldwide.",
+      "founder": {
+        "@type": "Person",
+        "name": "Sumeet Boga"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "help@sipswpcalculator.com",
+        "contactType": "customer service"
+      },
+      "sameAs": ["https://www.linkedin.com/in/sumeetboga/"]
+    }
+    </script>
+    <!-- Structured Data: HowTo -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Use the SIP & SWP Calculator",
+      "description": "A step-by-step guide to calculating your SIP returns, planning SWP retirement income, and exporting results.",
+      "totalTime": "PT2M",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Enter SIP Details",
+          "text": "Set your monthly SIP amount (₹500 to ₹10 Lakh or equivalent in USD/EUR/GBP), investment period (1-50 years), expected annual return rate, and optional annual step-up percentage."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Configure SWP (Optional)",
+          "text": "Switch to the SWP tab, enable it, and set your monthly withdrawal amount, withdrawal period, and yearly hike. The SWP phase begins automatically after your SIP period ends."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Analyze Results",
+          "text": "View the interactive growth chart, yearly breakdown table, and summary cards. Export results as CSV or generate a branded PDF report for clients."
+        }
+      ]
+    }
+    </script>
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -324,7 +376,8 @@ foreach ($combined as $row) {
 
         <main>
             <!-- Quick Answer Box for AI extraction / Featured Snippet -->
-            <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
+            <div id="quick-answer"
+                class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
                 role="complementary" aria-label="Quick Answer">
                 <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
                 <p class="text-base text-gray-700"><strong>How much will a ₹10,000/month SIP grow in 20 years?</strong>
@@ -333,6 +386,18 @@ foreach ($combined as $row) {
                     SIP will grow to approximately <strong class="text-emerald-700">₹3.54 Crore</strong> over 20 years.
                     Total invested: ₹68.73 Lakh. Total gains: ₹2.85 Crore.</p>
             </div>
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "SIP Calculator 2026",
+              "speakable": {
+                "@type": "SpeakableSpecification",
+                "cssSelector": ["#quick-answer"]
+              },
+              "url": "https://sipswpcalculator.com/"
+            }
+            </script>
 
             <section aria-labelledby="calculator-heading">
                 <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
@@ -363,9 +428,14 @@ foreach ($combined as $row) {
                                             $ USD
                                         </button>
                                         <button type="button" data-currency="EUR"
-                                            class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
+                                            class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-r border-slate-200"
                                             onclick="updateCurrency('EUR')">
                                             € EUR
+                                        </button>
+                                        <button type="button" data-currency="GBP"
+                                            class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
+                                            onclick="updateCurrency('GBP')">
+                                            £ GBP
                                         </button>
                                     </div>
                                 </div>
@@ -651,6 +721,14 @@ foreach ($combined as $row) {
                                 </svg>
                                 PDF
                             </button>
+                        <button type="button" id="shareCalcBtn"
+                                class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-indigo-600 border border-indigo-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                                </svg>
+                                <span id="shareBtnText">Share</span>
+                            </button>
                         </div>
                     </div>
 
@@ -687,32 +765,32 @@ foreach ($combined as $row) {
                                 </thead>
                                 <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
                                     <?php foreach ($combined as $row): ?>
-                                        <tr class="hover:bg-slate-50 transition-colors">
-                                            <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
-                                            <td class="px-6 py-4 text-right font-mono">
-                                                <?= formatInr($row['begin_balance']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                                <?= formatInr($row['annual_contribution']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-slate-500 font-mono">
-                                                <?= formatInr($row['cumulative_invested']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
-                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                                <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col"
-                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                                <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                                <?= formatInr($row['interest']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
-                                                <?= formatInr($row['combined_total']) ?>
-                                            </td>
-                                        </tr>
+                                            <tr class="hover:bg-slate-50 transition-colors">
+                                                <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
+                                                <td class="px-6 py-4 text-right font-mono">
+                                                    <?= formatInr($row['begin_balance']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                                    <?= formatInr($row['annual_contribution']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-slate-500 font-mono">
+                                                    <?= formatInr($row['cumulative_invested']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
+                                                    <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                                    <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col"
+                                                    <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                                    <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                                    <?= formatInr($row['interest']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
+                                                    <?= formatInr($row['combined_total']) ?>
+                                                </td>
+                                            </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -890,6 +968,20 @@ foreach ($combined as $row) {
                                     Value:</span> <span class="font-bold text-rose-700">₹41.85Cr</span></li>
                         </ul>
                         <p class="text-xs text-gray-400 mt-3">Money multiplied ~8.5×</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-teal-100">
+                        <div class="text-xs font-bold text-teal-600 mb-1">🌍 GLOBAL EXAMPLE</div>
+                        <h4 class="text-lg font-bold text-teal-700 mb-2">$500/month for 20 Years</h4>
+                        <p class="text-xs text-gray-500 mb-3">@ 10% return, 5% annual step-up</p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex justify-between"><span>Total Invested:</span> <span
+                                    class="font-bold">$198,396</span></li>
+                            <li class="flex justify-between"><span>Wealth Gained:</span> <span
+                                    class="font-bold text-green-600">+$218,104</span></li>
+                            <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
+                                    Value:</span> <span class="font-bold text-teal-700">$416,500</span></li>
+                        </ul>
+                        <p class="text-xs text-gray-400 mt-3">Money multiplied ~2.1×</p>
                     </div>
                 </div>
                 <p class="text-xs text-gray-400 mt-4 text-center">Note: These are illustrative projections. Actual

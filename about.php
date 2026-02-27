@@ -35,7 +35,7 @@ require_once __DIR__ . '/functions.php'; ?>
       "jobTitle": "Software Developer & Finance Specialist",
       "description": "Creator of SIP & SWP Calculator. Passionate about making financial planning accessible through technology.",
       "knowsAbout": ["Systematic Investment Plans", "Systematic Withdrawal Plans", "Mutual Fund Investing", "Financial Planning", "Tax-Efficient Investing", "Web Development"],
-      "sameAs": []
+      "sameAs": ["https://www.linkedin.com/in/sumeetboga/"]
     }
     </script>
 </head>
@@ -58,7 +58,8 @@ require_once __DIR__ . '/functions.php'; ?>
                 <h2>Our Mission</h2>
                 <p>We believe that <strong>everyone deserves access to professional-grade financial planning
                         tools</strong> — without paywalls, account requirements, or hidden agendas. SIP & SWP Calculator
-                    was built to help Indian investors (and global users) visualize the power of systematic investing
+                    was built to help investors worldwide — including India, USA, UK, and beyond — visualize the power
+                    of systematic investing
                     and plan their retirement income with confidence.</p>
 
                 <h2>About the Creator</h2>

@@ -3,7 +3,8 @@ let currentCurrency = 'INR';
 const currencyConfig = {
     'INR': { locale: 'en-IN', symbol: '₹' },
     'USD': { locale: 'en-US', symbol: '$' },
-    'EUR': { locale: 'en-US', symbol: '€' } 
+    'EUR': { locale: 'en-US', symbol: '€' },
+    'GBP': { locale: 'en-GB', symbol: '£' }
 };
 
 function updateCurrency(newCurrency) {
@@ -259,8 +260,68 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Range Sliders
     setupRangeSliders();
 
+    // ── Restore from shared URL params ────────────────────────────────
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('sip')) {
+        const paramMap = {
+            'sip': 'sip', 'years': 'years', 'rate': 'rate', 'stepup': 'stepup',
+            'swp': 'swp_withdrawal', 'swp_years': 'swp_years', 'swp_stepup': 'swp_stepup'
+        };
+        for (const [param, inputId] of Object.entries(paramMap)) {
+            if (urlParams.has(param)) {
+                const el = document.getElementById(inputId);
+                if (el) el.value = urlParams.get(param);
+                const rangeEl = document.getElementById(inputId + '_range');
+                if (rangeEl) rangeEl.value = urlParams.get(param);
+            }
+        }
+        if (urlParams.get('swp_on') === '1') {
+            const toggle = document.getElementById('enable_swp');
+            if (toggle) { toggle.checked = true; toggleSwpFields(); }
+        }
+        if (urlParams.has('cur')) {
+            updateCurrency(urlParams.get('cur'));
+        }
+    }
+
     // Initial calculation on page load (syncs JS table/chart with PHP defaults)
     calculateAndRender();
+
+    // ── Share button ─────────────────────────────────────────────────
+    const shareBtn = document.getElementById('shareCalcBtn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', function () {
+            const inputs = getInputs();
+            const params = new URLSearchParams();
+            params.set('sip', inputs.sip);
+            params.set('years', inputs.years);
+            params.set('rate', inputs.rate);
+            params.set('stepup', inputs.stepup);
+            params.set('cur', currentCurrency);
+            if (inputs.enable_swp) {
+                params.set('swp_on', '1');
+                params.set('swp', inputs.swp_withdrawal);
+                params.set('swp_years', inputs.swp_years);
+                params.set('swp_stepup', inputs.swp_stepup);
+            }
+            const shareUrl = window.location.origin + '/?' + params.toString();
+
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                const btnText = document.getElementById('shareBtnText');
+                btnText.textContent = 'Copied!';
+                shareBtn.classList.remove('text-indigo-600', 'border-indigo-200');
+                shareBtn.classList.add('text-emerald-600', 'border-emerald-300', 'bg-emerald-50');
+                setTimeout(() => {
+                    btnText.textContent = 'Share';
+                    shareBtn.classList.add('text-indigo-600', 'border-indigo-200');
+                    shareBtn.classList.remove('text-emerald-600', 'border-emerald-300', 'bg-emerald-50');
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                prompt('Copy this link:', shareUrl);
+            });
+        });
+    }
 
     // Re-fit summary cards on resize (clear cached base font for breakpoint changes)
     window.addEventListener('resize', () => {
