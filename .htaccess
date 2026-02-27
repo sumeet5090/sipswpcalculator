@@ -1,4 +1,58 @@
-# Enable mod_rewrite for URL rewriting
+# ============================================================
+# SECURITY: Disable directory browsing
+# ============================================================
+Options -Indexes
+
+# Suppress server signature / PHP version from headers & errors
+ServerSignature Off
+Header unset X-Powered-By
+Header unset Server
+
+# ============================================================
+# SECURITY: Block access to sensitive files & directories
+# ============================================================
+# Block .env, .git, .gitignore, .gitattributes, .editorconfig
+<FilesMatch "^\.(env|git|gitignore|gitattributes|editorconfig|DS_Store)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# Block composer files, package files, READMEs, logs
+<FilesMatch "(composer\.(json|lock)|package(-lock)?\.json|\.log$|\.sql$|\.bak$|\.swp$|~$)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# Block access to PHP include files that should never be called directly
+<FilesMatch "^(functions|pdf-report-template|navbar|footer)\.php$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# Block access to vendor directory entirely
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^vendor(/.*)?$ - [F,L]
+</IfModule>
+
+# ============================================================
+# URL Rewriting (SEO & routing)
+# ============================================================
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
@@ -18,13 +72,36 @@
   RewriteCond %{THE_REQUEST} \s/index\.php\s [NC]
   RewriteRule ^index\.php$ / [L,R=301]
 
+  # ── SECURITY: Block common attack patterns in URLs ──
+  # Block SQL injection attempts in query strings
+  RewriteCond %{QUERY_STRING} (union|select|insert|drop|delete|update|concat|char|hex|load_file|outfile|information_schema) [NC]
+  RewriteRule .* - [F,L]
+
+  # Block path traversal (../ or ..\)
+  RewriteCond %{REQUEST_URI} (\.\./|\.\.\\) [NC]
+  RewriteRule .* - [F,L]
+
+  # Block null byte injection
+  RewriteCond %{REQUEST_URI} (%00|\\x00) [NC]
+  RewriteRule .* - [F,L]
+
+  # Block script injection attempts in query strings
+  RewriteCond %{QUERY_STRING} (<script|<iframe|<object|<embed|javascript:) [NC]
+  RewriteRule .* - [F,L]
+
+  # Block common vulnerability scanner probes
+  RewriteCond %{REQUEST_URI} (wp-admin|wp-login|wp-config|wp-content|xmlrpc\.php|\.asp$|\.aspx$|\.jsp$) [NC]
+  RewriteRule .* - [F,L]
+
   # Remove .php extension
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^([^\.]+)$ $1.php [NC,L]
 </IfModule>
 
-# Compress files with gzip for faster transfer
+# ============================================================
+# Performance: Compression
+# ============================================================
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html
   AddOutputFilterByType DEFLATE text/plain
@@ -36,7 +113,9 @@
   AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
-# Set expires headers for browser caching (far-future expiration)
+# ============================================================
+# Performance: Browser caching
+# ============================================================
 <IfModule mod_expires.c>
   ExpiresActive On
   
@@ -83,10 +162,31 @@
 # Enable ETag for cache validation
 FileETag MTime Size
 
+# ============================================================
 # Security headers
+# ============================================================
 Header set X-Content-Type-Options "nosniff"
 Header set X-Frame-Options "SAMEORIGIN"
 Header set X-XSS-Protection "1; mode=block"
 Header set Referrer-Policy "strict-origin-when-cross-origin"
-Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://analytics.ahrefs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://analytics.ahrefs.com"
+Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://analytics.ahrefs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://analytics.ahrefs.com; base-uri 'self'; form-action 'self';"
 Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+# HSTS: Force HTTPS for 1 year, include subdomains, allow preload list
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+# ============================================================
+# PHP Security (via .htaccess)
+# ============================================================
+# Disable error display (log only)
+php_flag display_errors Off
+php_flag display_startup_errors Off
+php_flag log_errors On
+# Hide PHP version from response headers
+php_flag expose_php Off
+# Limit upload size (2MB max for logo uploads)
+php_value upload_max_filesize 2M
+php_value post_max_size 8M
+# Limit input nesting depth
+php_value max_input_nesting_level 5
+# Disable dangerous functions
+php_value disable_functions "exec,passthru,shell_exec,system,proc_open,popen,curl_multi_exec,show_source,highlight_file"

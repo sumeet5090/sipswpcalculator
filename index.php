@@ -1,6 +1,12 @@
 <?php
 declare(strict_types=1);
 
+// ── SECURITY: Start session for CSRF protection ──
+session_start();
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Include the helper functions
 require_once __DIR__ . '/functions.php';
 
@@ -13,16 +19,42 @@ $default_swp_withdrawal = 50000;
 $default_swp_stepup = 5;
 $default_swp_years = 10;
 
-// Retrieve POST values or use defaults.
-$sip = isset($_POST['sip']) ? (float) $_POST['sip'] : $default_sip;
-$years = isset($_POST['years']) ? (int) $_POST['years'] : $default_years;
-$rate = isset($_POST['rate']) ? (float) $_POST['rate'] : $default_rate;
-$stepup = isset($_POST['stepup']) ? (float) $_POST['stepup'] : $default_stepup;
+// ── SECURITY: Helper to clamp numeric values to safe ranges ──
+function clamp(float $val, float $min, float $max): float
+{
+    return max($min, min($max, $val));
+}
+
+// ── SECURITY: Validate POST requests (CSRF & Honeypot) ──
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // 1. Honeypot check: If the hidden 'website_url' field is filled, it's a bot.
+    if (!empty($_POST['website_url'])) {
+        http_response_code(403);
+        die('Forbidden: Automated request detected.');
+    }
+    // 2. CSRF Token check
+    $token = $_POST['csrf_token'] ?? '';
+    if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
+        http_response_code(403);
+        die('Forbidden: Invalid security token. Please reload the page and try again.');
+    }
+}
+
+// Retrieve POST values with server-side validation & range clamping
+$sip = isset($_POST['sip']) ? clamp((float) $_POST['sip'], 500, 1000000) : (float) $default_sip;
+$years = isset($_POST['years']) ? (int) clamp((float) $_POST['years'], 1, 50) : $default_years;
+$rate = isset($_POST['rate']) ? clamp((float) $_POST['rate'], 1, 30) : (float) $default_rate;
+$stepup = isset($_POST['stepup']) ? clamp((float) $_POST['stepup'], 0, 50) : (float) $default_stepup;
 $enable_swp = isset($_POST['enable_swp']) ? (bool) $_POST['enable_swp'] : false;
-$swp_withdrawal = isset($_POST['swp_withdrawal']) ? (float) $_POST['swp_withdrawal'] : $default_swp_withdrawal;
-$swp_stepup = isset($_POST['swp_stepup']) ? (float) $_POST['swp_stepup'] : $default_swp_stepup;
-$swp_years_input = isset($_POST['swp_years']) ? (int) $_POST['swp_years'] : $default_swp_years;
+$swp_withdrawal = isset($_POST['swp_withdrawal']) ? clamp((float) $_POST['swp_withdrawal'], 0, 1000000) : (float) $default_swp_withdrawal;
+$swp_stepup = isset($_POST['swp_stepup']) ? clamp((float) $_POST['swp_stepup'], 0, 20) : (float) $default_swp_stepup;
+$swp_years_input = isset($_POST['swp_years']) ? (int) clamp((float) $_POST['swp_years'], 0, 50) : $default_swp_years;
+
+// ── SECURITY: Whitelist allowed actions ──
 $action = $_POST['action'] ?? '';
+if (!in_array($action, ['', 'download_csv'], true)) {
+    $action = '';
+}
 
 // SWP automatically starts the year immediately following the SIP period.
 $swp_start = $years + 1;
@@ -413,6 +445,16 @@ foreach ($combined as $row) {
                         <!-- Form Section -->
                         <div class="glass-card p-4">
                             <form method="post" novalidate id="calculator-form">
+                                <!-- SECURITY: CSRF Token for main form -->
+                                <input type="hidden" name="csrf_token"
+                                    value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+
+                                <!-- SECURITY: Honeypot field (hidden from real users, catches bots) -->
+                                <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+                                    <label for="website_url">Leave this field empty</label>
+                                    <input type="text" id="website_url" name="website_url" tabindex="-1"
+                                        autocomplete="off">
+                                </div>
 
                                 <!-- Currency Selector -->
                                 <div class="flex justify-center mb-3">
@@ -828,7 +870,7 @@ foreach ($combined as $row) {
                         investing a fixed amount of money at regular intervals (monthly, quarterly) into mutual funds.
                         SIPs use <strong>rupee cost averaging</strong> and <strong>compounding</strong> to build wealth
                         over time, making them ideal for long-term goals like retirement, education, or wealth creation.
-                        As per <a href="https://www.amfiindia.com/" target="_blank" rel="noopener"
+                        As per <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
                             class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows in India crossed ₹21,000
                         Crore/month in 2025.
                         <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Read our complete
@@ -922,7 +964,7 @@ foreach ($combined as $row) {
                 </div>
                 <p class="mt-4 text-sm text-gray-500">Our calculator uses month-by-month simulation with step-up
                     compounding, which is more accurate than the simple annuity formula for long-term projections.
-                    Source: <a href="https://www.amfiindia.com/" target="_blank" rel="noopener"
+                    Source: <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
                         class="text-indigo-600 hover:underline">AMFI India</a> standard methodology.</p>
             </div>
 
@@ -1006,7 +1048,7 @@ foreach ($combined as $row) {
                             beat inflation (5-6%). Equity SIPs historically outpace inflation over the long term.</li>
                         <li><strong class="text-amber-700">No Guaranteed Returns:</strong> Unlike PPF or FDs, mutual
                             fund returns are not guaranteed. Past performance does not guarantee future results. Always
-                            consult a <a href="https://www.sebi.gov.in/" target="_blank" rel="noopener"
+                            consult a <a href="https://www.sebi.gov.in/" target="_blank" rel="noopener noreferrer"
                                 class="text-indigo-600 hover:underline">SEBI</a>-registered financial advisor.</li>
                     </ul>
                 </div>
@@ -1512,6 +1554,10 @@ foreach ($combined as $row) {
             class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
             <form id="pdfForm" class="space-y-4">
+                <!-- SECURITY: CSRF Token for PDF generation form -->
+                <input type="hidden" name="csrf_token"
+                    value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+
                 <div>
                     <label for="clientName" class="block text-sm font-medium mb-1 text-gray-600">Client Name</label>
                     <input type="text" id="clientName" name="clientName" placeholder="e.g., John Doe"

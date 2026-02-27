@@ -101,13 +101,13 @@ require_once __DIR__ . '/functions.php'; ?>
                 <h2>Our Commitment to Accuracy</h2>
                 <p>All financial data, tax rates, and formulas on this site are verified against official sources:</p>
                 <ul>
-                    <li><a href="https://www.amfiindia.com/" target="_blank" rel="noopener"
+                    <li><a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
                             class="text-indigo-600 hover:underline">AMFI India</a> — Mutual fund industry data and SIP
                         methodology</li>
-                    <li><a href="https://www.sebi.gov.in/" target="_blank" rel="noopener"
+                    <li><a href="https://www.sebi.gov.in/" target="_blank" rel="noopener noreferrer"
                             class="text-indigo-600 hover:underline">SEBI</a> — Regulatory framework for mutual funds
                     </li>
-                    <li><a href="https://incometaxindia.gov.in/" target="_blank" rel="noopener"
+                    <li><a href="https://incometaxindia.gov.in/" target="_blank" rel="noopener noreferrer"
                             class="text-indigo-600 hover:underline">Income Tax India</a> — Capital gains tax rates
                         (LTCG/STCG)</li>
                 </ul>
