@@ -323,13 +323,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Re-fit summary cards on resize (clear cached base font for breakpoint changes)
+    // Re-fit summary cards on resize (debounced to prevent excessive reflows)
+    let resizeTimer;
     window.addEventListener('resize', () => {
-        ['summary-invested', 'summary-interest', 'summary-withdrawn', 'summary-corpus'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) delete el.dataset.baseFont;
-        });
-        fitSummaryCards();
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            ['summary-invested', 'summary-interest', 'summary-withdrawn', 'summary-corpus'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) delete el.dataset.baseFont;
+            });
+            fitSummaryCards();
+        }, 150);
     });
 });
 
@@ -451,7 +455,8 @@ function updateTable(data, enableSwp) {
     const tbody = document.getElementById('breakdown-body');
     if (!tbody) return;
 
-    tbody.innerHTML = ''; // Clear current rows
+    // Build all rows in a DocumentFragment (off-DOM) to trigger only ONE reflow
+    const fragment = document.createDocumentFragment();
 
     data.forEach(row => {
         const tr = document.createElement('tr');
@@ -479,8 +484,12 @@ function updateTable(data, enableSwp) {
             <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono whitespace-nowrap">${formatCurrency(row.combined_total)}</td>
         `;
 
-        tbody.appendChild(tr);
+        fragment.appendChild(tr);
     });
+
+    // Single DOM operation: clear + append
+    tbody.innerHTML = '';
+    tbody.appendChild(fragment);
 }
 
 function updateSummaryMetrics(data) {
@@ -519,36 +528,44 @@ function updateSummaryMetrics(data) {
 }
 
 // Scale down summary card values when text overflows the card
+// OPTIMIZED: batch all DOM reads, then all DOM writes (no forced reflow)
 function fitSummaryCards() {
     const ids = ['summary-invested', 'summary-interest', 'summary-withdrawn', 'summary-corpus'];
-    ids.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
+    const elements = ids.map(id => document.getElementById(id)).filter(Boolean);
+    if (elements.length === 0) return;
 
+    // ── WRITE PASS 1: Reset all elements to base state ──
+    elements.forEach(el => {
         el.style.whiteSpace = 'nowrap';
         el.style.overflow = 'hidden';
-
-        // Store the natural CSS font-size on first run so we always scale from the same base
         if (!el.dataset.baseFont) {
             el.style.fontSize = '';
-            void el.offsetWidth;
+        }
+    });
+
+    // ── READ PASS: Measure everything in one batch ──
+    const measurements = elements.map(el => {
+        if (!el.dataset.baseFont) {
             el.dataset.baseFont = getComputedStyle(el).fontSize;
         }
-
         const basePx = parseFloat(el.dataset.baseFont);
-
-        // Reset to base to measure natural text width at full size
         el.style.fontSize = basePx + 'px';
-        void el.offsetWidth;
+        return { el, basePx };
+    });
 
+    // Force a single layout calculation for all elements at once
+    const results = measurements.map(({ el, basePx }) => {
         const parent = el.parentElement;
         const cs = getComputedStyle(parent);
         const availableW = parent.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
         const textW = el.scrollWidth;
+        return { el, basePx, availableW, textW };
+    });
 
+    // ── WRITE PASS 2: Apply all computed font sizes ──
+    results.forEach(({ el, basePx, availableW, textW }) => {
         if (textW > availableW && availableW > 0) {
-            const newPx = Math.max((availableW / textW) * basePx, 10);
-            el.style.fontSize = newPx + 'px';
+            el.style.fontSize = Math.max((availableW / textW) * basePx, 10) + 'px';
         } else {
             el.style.fontSize = basePx + 'px';
         }

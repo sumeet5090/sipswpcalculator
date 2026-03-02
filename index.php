@@ -586,7 +586,7 @@ foreach ($combined as $row) {
         }
     </style>
 
-    <!-- Non-blocking CSS: Google Fonts -->
+    <!-- Google Fonts: preload + swap (has size-matching fallback in critical CSS above) -->
     <link rel="preload"
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -595,19 +595,9 @@ foreach ($combined as $row) {
             href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     </noscript>
 
-    <!-- Non-blocking CSS: App styles -->
-    <link rel="preload" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
-    </noscript>
-
-    <!-- Non-blocking CSS: Tailwind -->
-    <link rel="preload" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
-    </noscript>
+    <!-- Render-blocking CSS: loaded before first paint to prevent FOUC/CLS -->
+    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
 </head>
 
@@ -1074,32 +1064,32 @@ foreach ($combined as $row) {
                                 </thead>
                                 <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
                                     <?php foreach ($combined as $row): ?>
-                                            <tr class="hover:bg-slate-50 transition-colors">
-                                                <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
-                                                <td class="px-6 py-4 text-right font-mono">
-                                                    <?= formatInr($row['begin_balance']) ?>
-                                                </td>
-                                                <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                                    <?= formatInr($row['annual_contribution']) ?>
-                                                </td>
-                                                <td class="px-6 py-4 text-right text-slate-500 font-mono">
-                                                    <?= formatInr($row['cumulative_invested']) ?>
-                                                </td>
-                                                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
-                                                    <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                                    <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                                </td>
-                                                <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col"
-                                                    <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                                    <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                                </td>
-                                                <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                                    <?= formatInr($row['interest']) ?>
-                                                </td>
-                                                <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
-                                                    <?= formatInr($row['combined_total']) ?>
-                                                </td>
-                                            </tr>
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
+                                            <td class="px-6 py-4 text-right font-mono">
+                                                <?= formatInr($row['begin_balance']) ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                                <?= formatInr($row['annual_contribution']) ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-slate-500 font-mono">
+                                                <?= formatInr($row['cumulative_invested']) ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
+                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                                <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col"
+                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                                <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                                <?= formatInr($row['interest']) ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
+                                                <?= formatInr($row['combined_total']) ?>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
