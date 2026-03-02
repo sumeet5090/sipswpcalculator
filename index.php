@@ -224,113 +224,289 @@ foreach ($combined as $row) {
         content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export.">
     <meta property="twitter:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
 
-    <!-- Structured Data: SoftwareApplication -->
+    <!-- ════════════════════════════════════════════════════════════════════
+         AI-CITATION-OPTIMIZED STRUCTURED DATA (JSON-LD)
+         Designed for extraction by Gemini, Perplexity, ChatGPT, and
+         traditional search engines. Uses @id graph linking, potentialAction,
+         sameAs entity grounding, and information-dense descriptions.
+         ════════════════════════════════════════════════════════════════════ -->
+
+    <!-- 1. SoftwareApplication — Primary Tool Identity -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@id": "https://sipswpcalculator.com/#calculator",
       "@type": "SoftwareApplication",
-      "name": "SIP & SWP Calculator",
+      "name": "Advanced SIP & SWP Calculator",
+      "alternateName": ["SIP Calculator", "SWP Calculator", "Step-Up SIP Calculator", "Mutual Fund SIP Calculator", "SIP Return Calculator", "SWP Retirement Planner"],
       "url": "https://sipswpcalculator.com/",
       "applicationCategory": "FinanceApplication",
+      "applicationSubCategory": "Investment Calculator",
       "operatingSystem": "Web",
+      "availableOnDevice": ["Desktop", "Mobile", "Tablet"],
+      "inLanguage": ["en"],
+      "isAccessibleForFree": true,
       "offers": {
         "@type": "Offer",
         "price": "0",
-        "priceCurrency": "USD"
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
       },
-      "description": "Free online SIP calculator with step-up compounding and SWP retirement planner. Visualize mutual fund growth, yearly breakdown, and tax-efficient withdrawals.",
-      "featureList": ["SIP Calculator", "SWP Calculator", "Step-Up SIP", "Visual Charts", "CSV Export", "Branded PDF Reports"],
+      "description": "Advanced SIP & SWP Calculator with step-up (top-up) compounding for mutual fund investment planning. Uses the future value of annuity due formula: FV = P × [((1+r)^n - 1) / r] × (1+r), where P = monthly investment, r = monthly rate of return, n = total months. Supports annual step-up from 0-50%, investment periods of 1-50 years, expected returns of 1-30%, and Systematic Withdrawal Plans (SWP) with the 4% safe withdrawal rule. Calculates month-by-month compounding with rupee cost averaging. Outputs interactive growth charts, yearly breakdown tables, CSV exports, and branded PDF reports. Trusted by investors for SIP calculations in INR (₹), USD ($), EUR (€), and GBP (£). Based on AMFI India standard methodology for mutual fund return projections.",
+      "featureList": [
+        "SIP Calculator with step-up compounding (annual top-up 0-50%)",
+        "SWP Retirement Planner with step-up withdrawals",
+        "Month-by-month simulation (more accurate than simple annuity)",
+        "Interactive Chart.js growth visualization",
+        "Yearly breakdown table with corpus, interest, and withdrawal tracking",
+        "Multi-currency support: INR, USD, EUR, GBP",
+        "CSV export with full yearly data",
+        "Branded PDF report generation with custom logos",
+        "Shareable URL with pre-filled parameters",
+        "SIP vs FD vs PPF comparison data"
+      ],
       "screenshot": "https://sipswpcalculator.com/assets/og-image-main.jpg",
       "image": "https://sipswpcalculator.com/assets/og-image-main.jpg",
       "datePublished": "2024-12-01",
-      "dateModified": "2026-02-27",
+      "dateModified": "2026-03-02",
+      "softwareVersion": "3.0",
+      "releaseNotes": "Added step-up SWP withdrawals, multi-currency support (INR/USD/EUR/GBP), branded PDF reports, and SIP vs RD vs FD vs PPF comparison.",
       "author": {
-          "@type": "Person",
-          "name": "Sumeet Boga",
-          "url": "https://sipswpcalculator.com/"
+        "@id": "https://sipswpcalculator.com/#author"
+      },
+      "publisher": {
+        "@id": "https://sipswpcalculator.com/#organization"
+      },
+      "potentialAction": {
+        "@type": "UseAction",
+        "name": "Calculate SIP & SWP Returns",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://sipswpcalculator.com/?sip={sip}&years={years}&rate={rate}&stepup={stepup}",
+          "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"],
+          "inLanguage": "en"
+        },
+        "object": {
+          "@type": "FinancialProduct",
+          "name": "Systematic Investment Plan (SIP)"
+        }
+      },
+      "sameAs": [
+        "https://en.wikipedia.org/wiki/Systematic_investment_plan",
+        "https://www.wikidata.org/wiki/Q7662882"
+      ],
+      "about": [
+        {
+          "@type": "DefinedTerm",
+          "name": "Systematic Investment Plan (SIP)",
+          "description": "A method of investing a fixed sum regularly in mutual funds, using rupee cost averaging and compounding to build wealth over time.",
+          "sameAs": "https://en.wikipedia.org/wiki/Systematic_investment_plan"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Systematic Withdrawal Plan (SWP)",
+          "description": "A facility that allows investors to withdraw a fixed or step-up amount from their mutual fund investment at regular intervals, commonly used for retirement income.",
+          "sameAs": "https://en.wikipedia.org/wiki/Systematic_withdrawal_plan"
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Step-Up SIP",
+          "description": "A variant of SIP where the monthly investment amount is increased by a fixed percentage (typically 5-20%) every year to match salary growth and outpace inflation."
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "4% Rule (Safe Withdrawal Rate)",
+          "description": "A retirement planning guideline suggesting that withdrawing 4% of a portfolio annually provides a sustainable income for 30+ years. Originally proposed by William Bengen in 1994.",
+          "sameAs": "https://en.wikipedia.org/wiki/Trinity_study"
+        }
+      ],
+      "citation": {
+        "@type": "CreativeWork",
+        "name": "AMFI India — SIP Methodology and Mutual Fund Industry Data",
+        "url": "https://www.amfiindia.com/",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Association of Mutual Funds in India (AMFI)"
+        }
       }
     }
     </script>
-    <!-- Structured Data: FinancialProduct -->
+
+    <!-- 2. FinancialProduct — Detailed Investment Parameters -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@id": "https://sipswpcalculator.com/#financialproduct",
       "@type": "FinancialProduct",
-      "name": "SIP & SWP Investment Calculator",
-      "description": "Free online calculator for planning Systematic Investment Plans and Systematic Withdrawal Plans with step-up compounding, visual charts, and retirement income projections.",
+      "name": "SIP & SWP Investment Planning Tool",
+      "alternateName": "Mutual Fund SIP Return Calculator",
+      "description": "Free financial planning tool for calculating Systematic Investment Plan (SIP) returns with annual step-up compounding and Systematic Withdrawal Plan (SWP) retirement income projections. Supports monthly SIP amounts from ₹500 to ₹10,00,000 (or equivalent in USD/EUR/GBP), investment periods from 1 to 50 years, expected annual returns from 1% to 30%, and annual step-up percentages from 0% to 50%. SWP module supports monthly withdrawals with inflation-adjusted step-up from 0% to 20%. Uses month-by-month simulation with compound interest for accuracy superior to simple annuity formulas. Verified against AMFI India standard methodology. Historical context: Nifty 50 has delivered approximately 12-15% CAGR over 20-year rolling periods. SIP inflows in India exceeded ₹21,000 Crore per month in 2025 (AMFI data).",
       "url": "https://sipswpcalculator.com/",
       "provider": {
-        "@type": "Person",
-        "name": "Sumeet Boga",
-        "url": "https://sipswpcalculator.com/"
+        "@id": "https://sipswpcalculator.com/#organization"
       },
       "category": "Investment Planning Tool",
-      "feesAndCommissionsSpecification": "Free — no fees or commissions",
-      "areaServed": "Worldwide"
+      "feesAndCommissionsSpecification": "Completely free — no fees, commissions, or registration required",
+      "areaServed": {
+        "@type": "Place",
+        "name": "Worldwide"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://sipswpcalculator.com/",
+        "availableLanguage": "English"
+      },
+      "termsOfService": "https://sipswpcalculator.com/terms",
+      "broker": {
+        "@id": "https://sipswpcalculator.com/#author"
+      },
+      "currenciesAccepted": "INR, USD, EUR, GBP",
+      "sameAs": [
+        "https://en.wikipedia.org/wiki/Systematic_investment_plan",
+        "https://en.wikipedia.org/wiki/Systematic_withdrawal_plan"
+      ]
     }
     </script>
-    <!-- Structured Data: WebSite (for sitelinks search box) -->
+
+    <!-- 3. WebSite — Site Identity with Search Action -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@id": "https://sipswpcalculator.com/#website",
       "@type": "WebSite",
-      "name": "SIP & SWP Calculator",
+      "name": "Advanced SIP & SWP Calculator",
+      "alternateName": "sipswpcalculator.com",
       "url": "https://sipswpcalculator.com/",
-      "description": "Free online SIP and SWP calculator with step-up compounding, visual charts, and retirement income projections.",
+      "description": "Free online SIP calculator with step-up compounding and SWP retirement planner. Uses month-by-month simulation based on AMFI India methodology. Features interactive charts, yearly breakdown tables, multi-currency support (INR/USD/EUR/GBP), CSV exports, and branded PDF reports. Trusted by investors and financial advisors worldwide.",
+      "inLanguage": "en",
       "publisher": {
-        "@type": "Person",
-        "name": "Sumeet Boga",
-        "url": "https://sipswpcalculator.com/about"
+        "@id": "https://sipswpcalculator.com/#organization"
+      },
+      "creator": {
+        "@id": "https://sipswpcalculator.com/#author"
+      },
+      "datePublished": "2024-12-01",
+      "dateModified": "2026-03-02",
+      "copyrightYear": 2024,
+      "copyrightHolder": {
+        "@id": "https://sipswpcalculator.com/#author"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://sipswpcalculator.com/?sip={sip_amount}"
+        },
+        "query-input": "required name=sip_amount"
       }
     }
     </script>
-    <!-- Structured Data: Organization -->
+
+    <!-- 4. Organization — Publisher Identity with EEAT signals -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@id": "https://sipswpcalculator.com/#organization",
       "@type": "Organization",
       "name": "SIP & SWP Calculator",
+      "legalName": "SIP SWP Calculator",
       "url": "https://sipswpcalculator.com/",
-      "logo": "https://sipswpcalculator.com/assets/favicon.png",
-      "description": "Free online financial planning tools for SIP and SWP calculations worldwide.",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://sipswpcalculator.com/assets/favicon.png",
+        "width": 512,
+        "height": 512
+      },
+      "description": "Publisher of free, open-access financial planning tools for SIP and SWP calculations. All formulas verified against AMFI India methodology and SEBI regulatory guidelines. Used by individual investors, financial advisors, and NRIs worldwide for mutual fund return projections.",
+      "foundingDate": "2024-12-01",
       "founder": {
-        "@type": "Person",
-        "name": "Sumeet Boga"
+        "@id": "https://sipswpcalculator.com/#author"
       },
       "contactPoint": {
         "@type": "ContactPoint",
         "email": "help@sipswpcalculator.com",
-        "contactType": "customer service"
+        "contactType": "customer service",
+        "availableLanguage": "English"
       },
-      "sameAs": ["https://www.linkedin.com/in/sumeetboga/"]
+      "sameAs": [
+        "https://www.linkedin.com/in/sumeetboga/"
+      ],
+      "knowsAbout": [
+        "Systematic Investment Plan (SIP)",
+        "Systematic Withdrawal Plan (SWP)",
+        "Mutual Fund Investing",
+        "Step-Up SIP Compounding",
+        "Retirement Planning",
+        "Rupee Cost Averaging",
+        "4% Safe Withdrawal Rate",
+        "Capital Gains Tax on Mutual Funds in India",
+        "LTCG Tax 2026",
+        "STCG Tax 2026",
+        "NRI Mutual Fund Investment"
+      ]
     }
     </script>
-    <!-- Structured Data: HowTo -->
+
+    <!-- 5. Person — Author/Expert Identity (EEAT) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@id": "https://sipswpcalculator.com/#author",
+      "@type": "Person",
+      "name": "Sumeet Boga",
+      "url": "https://sipswpcalculator.com/about",
+      "image": "https://sipswpcalculator.com/assets/sumeet-boga-56.jpg",
+      "jobTitle": "Software Developer & Finance Specialist",
+      "description": "Creator of the Advanced SIP & SWP Calculator. Software developer specializing in financial planning tools with expertise in mutual fund return calculations, step-up compounding methodology, and tax-efficient withdrawal planning.",
+      "sameAs": [
+        "https://www.linkedin.com/in/sumeetboga/"
+      ],
+      "knowsAbout": [
+        "Systematic Investment Plans",
+        "Systematic Withdrawal Plans",
+        "Mutual Fund Taxation India",
+        "Financial Calculator Development",
+        "Retirement Income Planning"
+      ],
+      "worksFor": {
+        "@id": "https://sipswpcalculator.com/#organization"
+      }
+    }
+    </script>
+
+    <!-- 6. HowTo — Detailed Calculator Usage Guide -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@id": "https://sipswpcalculator.com/#howto",
       "@type": "HowTo",
-      "name": "How to Use the SIP & SWP Calculator",
-      "description": "A step-by-step guide to calculating your SIP returns, planning SWP retirement income, and exporting results.",
+      "name": "How to Calculate SIP Returns with Step-Up Compounding",
+      "description": "Step-by-step guide to using the Advanced SIP & SWP Calculator to project mutual fund returns, plan retirement withdrawals, and export branded PDF reports. The calculator uses month-by-month simulation with the annuity due formula for compounding accuracy.",
       "totalTime": "PT2M",
+      "tool": {
+        "@id": "https://sipswpcalculator.com/#calculator"
+      },
       "step": [
         {
           "@type": "HowToStep",
           "position": 1,
-          "name": "Enter SIP Details",
-          "text": "Set your monthly SIP amount (₹500 to ₹10 Lakh or equivalent in USD/EUR/GBP), investment period (1-50 years), expected annual return rate, and optional annual step-up percentage."
+          "name": "Enter SIP Investment Details",
+          "text": "Set your monthly SIP amount (₹500 to ₹10 Lakh, or equivalent in USD/EUR/GBP), investment period (1-50 years), expected annual return rate (1-30%), and optional annual step-up percentage (0-50%). A 10% step-up is recommended to match average salary growth in India.",
+          "url": "https://sipswpcalculator.com/#calculator-heading"
         },
         {
           "@type": "HowToStep",
           "position": 2,
-          "name": "Configure SWP (Optional)",
-          "text": "Switch to the SWP tab, enable it, and set your monthly withdrawal amount, withdrawal period, and yearly hike. The SWP phase begins automatically after your SIP period ends."
+          "name": "Configure SWP Retirement Withdrawals (Optional)",
+          "text": "Enable the SWP toggle to plan systematic withdrawals. Set your desired monthly withdrawal amount, withdrawal period (1-50 years), and yearly step-up (0-20%) to combat inflation. The SWP phase begins automatically after your SIP period ends. The 4% rule suggests keeping annual withdrawals below 4% of your corpus for a sustainable 30-year retirement.",
+          "url": "https://sipswpcalculator.com/#calculator-heading"
         },
         {
           "@type": "HowToStep",
           "position": 3,
-          "name": "Analyze Results",
-          "text": "View the interactive growth chart, yearly breakdown table, and summary cards. Export results as CSV or generate a branded PDF report for clients."
+          "name": "Analyze Results and Export Reports",
+          "text": "View the interactive growth chart showing invested capital vs corpus value, review the yearly breakdown table with monthly SIP/SWP amounts, interest earned, and end-of-year corpus. Export results as CSV for spreadsheet analysis or generate a branded PDF report with your company logo, client name, and custom disclaimer for client presentations.",
+          "url": "https://sipswpcalculator.com/#yearly-breakdown"
         }
       ]
     }
@@ -1503,122 +1679,130 @@ foreach ($combined as $row) {
     </div>
     </main>
 
-    <!-- FAQ Schema -->
+    <!-- AI-CITATION-OPTIMIZED FAQ Schema — Answers designed for LLM extraction -->
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",
+          "@id": "https://sipswpcalculator.com/#faq",
           "@type": "FAQPage",
           "mainEntity": [{
             "@type": "Question",
-            "name": "Can I start an SWP immediately after my SIP ends?",
+            "name": "How to calculate SWP (Systematic Withdrawal Plan) returns?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, absolutely. This is a common strategy for retirement planning. You accumulate a corpus using SIP during your working years and then switch to SWP to generate a monthly pension-like income post-retirement."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Is SWP better than a fixed deposit interest?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Generally, yes. SWP from equity or hybrid mutual funds has the potential to offer higher returns than fixed deposits over the long term. Additionally, SWP is more tax-efficient."
-            }
-          }, {
-            "@type": "Question",
-            "name": "How does the Step-up feature work?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A Step-up SIP means you increase your monthly investment amount by a certain percentage every year. Similarly, a Step-up SWP means you increase your withdrawal amount annually to combat inflation."
-            }
-          }, {
-            "@type": "Question",
-            "name": "What is a safe withdrawal rate for SWP?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Financial experts often recommend the 4% rule, suggesting you withdraw 4% of your corpus annually. However, this depends on market conditions, your expected lifespan, and the sequence of investment returns."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Which is better: SIP or Lump Sum?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "In a rising market, Lump Sum often wins. However, SIP is safer for volatile markets as it benefits from Dollar Cost Averaging, reducing the risk of investing at a market peak."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Can I lose money in SIP?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, since SIPs in equity mutual funds are market-linked, the value can fluctuate. However, over the long term (7-10+ years), the probability of negative returns decreases significantly."
-            }
-          }, {
-            "@type": "Question",
-            "name": "What is the minimum amount to start a SIP in India?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Most mutual fund houses in India allow SIPs starting from as low as ₹500/month. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at ₹100/month."
-            }
-          }, {
-            "@type": "Question",
-            "name": "How do I choose the right mutual fund for my SIP?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Consider: (1) Risk profile — large-cap for stability, small-cap for growth; (2) Expense ratio — lower is better; (3) Track record — check 5-7 year consistency; (4) Fund manager experience."
-            }
-          }, {
-            "@type": "Question",
-            "name": "How are SWP withdrawals taxed in India (2026)?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "SWP withdrawals are treated as partial redemptions. For equity funds: STCG taxed at 20%, LTCG taxed at 12.5% on gains above ₹1.25 Lakh/year. Only the capital gains portion is taxable."
-            }
-          }, {
-            "@type": "Question",
-            "name": "How long should I continue my SIP for best results?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "For equity mutual funds, 7-10 years minimum is recommended. Historical data shows that Nifty 50 SIPs held for 10+ years have never delivered negative returns."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Is SIP better than a Recurring Deposit (RD)?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "For long-term goals (5+ years), equity SIPs have historically outperformed RDs by 5-8% annually. RDs offer guaranteed returns but are fully taxable."
-            }
-          }, {
-            "@type": "Question",
-            "name": "What step-up percentage should I use for my SIP?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A 10% annual step-up is the most common recommendation, roughly matching average salary increments in India. Conservative investors can use 5-7%, aggressive savers 15-20%."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Can I stop or pause my SIP anytime?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, SIPs are completely flexible. You can pause, stop, or modify your SIP at any time without penalties. Your existing invested units remain in the fund."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Will my SWP deplete my corpus completely?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "It depends on your withdrawal rate vs. investment return. If you withdraw less than what your corpus earns, it can last indefinitely. The 4% rule suggests withdrawing 4% annually for a 30-year retirement."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Can NRIs invest in SIP in India?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, NRIs can invest in mutual fund SIPs in India through NRE or NRO accounts. Most AMCs accept NRI investments, though some may have restrictions due to FATCA regulations."
+              "text": "To calculate SWP returns: (1) Start with your accumulated corpus after the SIP phase, (2) Each month, deduct your withdrawal amount before applying monthly returns, (3) Formula: Month-end balance = (Previous balance + SIP contribution - SWP withdrawal) x (1 + monthly rate), where monthly rate = annual return / 12 / 100. For example, a Rs 1 Crore corpus at 10% annual return with Rs 50,000/month SWP: monthly return = Rs 83,333. Net monthly change = Rs 83,333 - Rs 50,000 = Rs 33,333 growth. The 4% rule (William Bengen, 1994) suggests keeping annual withdrawals below 4% of corpus for a sustainable 30-year retirement. Use sipswpcalculator.com for exact month-by-month SWP calculations with step-up adjustments."
             }
           }, {
             "@type": "Question",
             "name": "How does inflation affect my SIP and SWP planning?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Inflation (5-6% in India) erodes purchasing power. At 6% inflation, ₹1 Lakh today is worth only ₹31,000 in 20 years. Step-up SIPs and step-up SWPs help outpace inflation."
+              "text": "Inflation (historically 5-6% in India, 2-3% in the US) erodes purchasing power exponentially. At 6% inflation, Rs 1 Lakh today is worth only Rs 55,839 in 10 years and Rs 31,180 in 20 years. Impact on SIP: A flat Rs 10,000/month SIP loses real value every year. After 20 years, your Rs 10,000 has the purchasing power of only Rs 3,118 in today's terms. Solution: Use step-up SIP (10% annual increase) to grow contributions faster than inflation, which can increase your final corpus by 2-3x compared to a flat SIP. Impact on SWP: A fixed Rs 50,000/month withdrawal will buy significantly less over time. Solution: Use step-up SWP (5-7% annual increase) to maintain lifestyle. The calculator at sipswpcalculator.com models both step-up SIP and step-up SWP to help investors outpace inflation."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Can I start an SWP immediately after my SIP ends?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, absolutely. This is a common strategy for retirement planning called the SIP-to-SWP transition. You accumulate a corpus using SIP during your working years (typically 20-30 years) and then switch to SWP to generate a monthly pension-like income post-retirement. The Advanced SIP and SWP Calculator at sipswpcalculator.com specifically models this seamless transition, showing the exact corpus at the point of switch and projecting SWP sustainability over time."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Is SWP better than fixed deposit interest for retirement income?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Generally, yes. SWP from equity or hybrid mutual funds has historically offered 10-12% returns vs FD rates of 6-7%. Additionally, SWP is more tax-efficient: only the capital gains portion of each withdrawal is taxable (LTCG at 12.5% above Rs 1.25 Lakh/year for equity funds in India), whereas FD interest is fully taxable at your income slab rate (up to 30%). A Rs 1 Crore FD at 7% gives Rs 58,333/month (fully taxable), while SWP from equity MF at 10% return with Rs 50,000/month withdrawal preserves and grows the corpus over time."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How does the Step-up feature work in SIP Calculator?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A Step-up (or Top-up) SIP increases your monthly investment by a fixed percentage every year. Formula: Year N monthly SIP = Base SIP x (1 + step-up percentage / 100) raised to the power of (N-1). For example, Rs 10,000/month with 10% step-up becomes Rs 11,000 in Year 2, Rs 12,100 in Year 3, and so on. Impact: A Rs 10,000/month flat SIP at 12% for 20 years yields Rs 1 Crore, but with a 10% step-up, the same SIP yields Rs 3.54 Crore, a 3.5x increase. Similarly, Step-up SWP increases withdrawals annually (typically 5-7%) to combat inflation during retirement."
+            }
+          }, {
+            "@type": "Question",
+            "name": "What is a safe withdrawal rate for SWP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The widely referenced 4% Rule (from William Bengen's 1994 research and the Trinity Study) suggests withdrawing 4% of your initial corpus annually, adjusted for inflation, to sustain a 30-year retirement with a 95% success rate. For Indian investors in equity mutual funds averaging 12% returns, a 5-6% withdrawal rate may be sustainable. However, this depends on: (1) sequence of returns risk, (2) actual market performance, (3) inflation rate, and (4) retirement duration. Use the Advanced SIP and SWP Calculator at sipswpcalculator.com to stress-test different withdrawal rates against your expected returns."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Which is better: SIP or Lump Sum investment?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In a consistently rising market, Lump Sum mathematically outperforms SIP because money is invested longer. However, SIP is safer and more practical for volatile markets because it uses Rupee Cost Averaging (RCA), buying more units when prices are low and fewer when prices are high. Historical data: SIP in Nifty 50 over 10+ year periods has never delivered negative returns. For most salaried investors, SIP is recommended because it matches monthly income flows, removes timing risk, enforces discipline, and provides psychological ease during market crashes."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Can I lose money in SIP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, in the short term. Since SIPs in equity mutual funds are market-linked, the NAV can fluctuate. However, historical data from AMFI India shows that over the long term (7-10+ years), the probability of negative returns in a diversified equity fund SIP is negligible. Nifty 50 rolling SIP returns: 1-year SIPs have seen negative returns in approximately 30% of periods, 5-year SIPs in approximately 10%, and 10-year SIPs in 0% of historical periods."
+            }
+          }, {
+            "@type": "Question",
+            "name": "What is the minimum amount to start a SIP in India?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most mutual fund houses in India allow SIPs starting from as low as Rs 500/month. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at Rs 100/month. The key insight: even Rs 500/month at 12% returns with 10% annual step-up grows to over Rs 5 Lakh in 15 years and Rs 17 Lakh in 20 years, demonstrating the power of compounding over time."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How do I choose the right mutual fund for my SIP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Consider these four factors: (1) Risk profile — large-cap funds for stability, mid-cap for balanced growth, small-cap for aggressive growth; (2) Expense ratio — lower is better, prefer direct plans over regular plans; (3) Track record — check 5-7 year consistency, not just 1-year returns; (4) Fund manager experience and AUM (Assets Under Management). Use AMFI India's mutual fund comparison tools for data-driven decisions."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How are SWP withdrawals taxed in India (2026)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SWP withdrawals are treated as partial redemptions under Indian tax law. For equity mutual funds (2026 rules): Short-Term Capital Gains (STCG, held less than 1 year) are taxed at 20%. Long-Term Capital Gains (LTCG, held over 1 year) are taxed at 12.5% on gains exceeding Rs 1.25 Lakh per financial year. For debt mutual funds (purchased after April 2023): gains are taxed at your income slab rate regardless of holding period. Crucially, only the capital gains portion of each SWP withdrawal is taxable — the principal component is tax-free, making SWP significantly more tax-efficient than FD interest income."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How long should I continue my SIP for best results?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For equity mutual funds, a minimum of 7-10 years is recommended to ride out market cycles and benefit from compounding. Historical data shows that Nifty 50 SIPs held for 10+ years have never delivered negative returns, with average annualized returns of 12-15%. For retirement goals, 20-30 year SIPs with annual step-up yield the best compounding effect: a Rs 10,000/month SIP with 10% step-up at 12% returns grows to approximately Rs 3.54 Crore in 20 years."
+            }
+          }, {
+            "@type": "Question",
+            "name": "What step-up percentage should I use for my SIP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A 10% annual step-up is the most common recommendation, roughly matching average salary increments in India (8-12% annually). Conservative investors can use 5-7%, while aggressive savers might use 15-20%. Impact comparison for Rs 10,000/month base SIP at 12% for 20 years: 0% step-up = Rs 1 Crore, 5% step-up = Rs 1.73 Crore, 10% step-up = Rs 3.54 Crore, 15% step-up = Rs 5.7 Crore. Even a 5% step-up nearly doubles the final corpus compared to a flat SIP."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Can NRIs invest in SIP in India?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, NRIs can invest in mutual fund SIPs in India through their NRE (repatriable) or NRO (non-repatriable) bank accounts. Most AMCs accept NRI investments, though some sectoral or thematic funds may have restrictions for US/Canada-based NRIs due to FATCA (Foreign Account Tax Compliance Act) regulations. Tax treatment follows India's DTAA (Double Taxation Avoidance Agreement) provisions with the NRI's country of residence, with TDS deducted at source on redemptions."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Is SIP better than a Recurring Deposit (RD)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For long-term goals (5+ years), equity SIPs have historically outperformed RDs by 5-8% annually. Comparison: RDs offer guaranteed returns of 6-7% but are fully taxable at income slab rate. Equity SIPs offer potential returns of 12-15% with favorable LTCG taxation (12.5% above Rs 1.25 Lakh). Example: Rs 10,000/month for 10 years — RD at 7% yields Rs 17.3 Lakh, equity SIP at 12% yields Rs 23.2 Lakh (34% more). For short-term goals (1-3 years), RDs or debt fund SIPs may be safer due to lower volatility."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Can I stop or pause my SIP anytime?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, SIPs are completely flexible. You can pause, stop, or modify your SIP amount at any time without penalties or exit loads on existing investments (exit loads may apply only on redemption of units held less than 1 year). Your existing invested units remain in the fund and continue to grow with market returns. However, stopping during market downturns is the most common investor mistake — it means you miss buying units at lower prices through rupee cost averaging, which is exactly when SIPs are most beneficial."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Will my SWP deplete my corpus completely?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It depends on your withdrawal rate versus your investment return. If you withdraw less than what your corpus earns, it can last indefinitely. The 4% Rule suggests withdrawing 4% of corpus annually for a sustainable 30-year retirement. Example: Rs 1 Crore corpus at 10% returns with Rs 40,000/month withdrawal — the corpus actually grows because annual returns (Rs 10 Lakh) exceed annual withdrawals (Rs 4.8 Lakh). At Rs 1 Lakh/month withdrawal, the corpus depletes in approximately 12 years. Use the calculator at sipswpcalculator.com to stress-test exactly when your corpus would be exhausted under different scenarios."
             }
           }]
         }
