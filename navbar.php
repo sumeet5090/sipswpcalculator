@@ -151,14 +151,14 @@ if ($current_page == 'index.php' || $current_page == '')
 <div class="h-16"></div>
 
 <script>
-    (function () {
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        const hamburger = document.getElementById('hamburger-icon');
-        const closeIcon = document.getElementById('close-icon');
+    document.addEventListener('DOMContentLoaded', function () {
+        var btn = document.getElementById('mobile-menu-btn');
+        var menu = document.getElementById('mobile-menu');
+        var hamburger = document.getElementById('hamburger-icon');
+        var closeIcon = document.getElementById('close-icon');
         if (btn && menu) {
             btn.addEventListener('click', function () {
-                const isOpen = !menu.classList.contains('hidden');
+                var isOpen = !menu.classList.contains('hidden');
                 menu.classList.toggle('hidden');
                 hamburger.classList.toggle('hidden');
                 closeIcon.classList.toggle('hidden');
@@ -166,14 +166,14 @@ if ($current_page == 'index.php' || $current_page == '')
             });
         }
 
-        const guidesBtn = document.getElementById('mobile-guides-btn');
-        const guidesMenu = document.getElementById('mobile-guides-menu');
-        const guidesIcon = document.getElementById('mobile-guides-icon');
+        var guidesBtn = document.getElementById('mobile-guides-btn');
+        var guidesMenu = document.getElementById('mobile-guides-menu');
+        var guidesIcon = document.getElementById('mobile-guides-icon');
         if (guidesBtn && guidesMenu) {
             guidesBtn.addEventListener('click', function () {
                 guidesMenu.classList.toggle('hidden');
                 guidesIcon.classList.toggle('rotate-180');
             });
         }
-    })();
+    });
 </script>

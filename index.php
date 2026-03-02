@@ -342,15 +342,87 @@ foreach ($combined as $row) {
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/favicon.png">
 
-    <!-- Google Fonts: Plus Jakarta Sans -->
+    <!-- Preconnect to font & CDN origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
-    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
-    <!-- Tailwind CSS (production build, purged) -->
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
+    <!-- Critical above-the-fold CSS inlined for instant FCP -->
+    <style>
+        :root {
+            --gradient-primary: linear-gradient(135deg, #4f46e5, #4338ca);
+            --glass-bg: rgba(255, 255, 255, .9);
+            --glass-border: 1px solid rgba(255, 255, 255, .5);
+            --glass-shadow: 0 8px 32px 0 rgba(79, 81, 93, .1);
+            --color-bg: #f8fafc;
+            --color-text-primary: #0f172a;
+            --color-text-secondary: #64748b;
+            --color-border: #e2e8f0
+        }
+
+        body {
+            background-color: var(--color-bg);
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased
+        }
+
+        .navbar-glass {
+            background: rgba(255, 255, 255, .85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px)
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 1rem;
+            position: relative
+        }
+
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: var(--gradient-primary)
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: var(--color-text-primary)
+        }
+    </style>
+
+    <!-- Non-blocking CSS: Google Fonts -->
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+    </noscript>
+
+    <!-- Non-blocking CSS: App styles -->
+    <link rel="preload" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
+    </noscript>
+
+    <!-- Non-blocking CSS: Tailwind -->
+    <link rel="preload" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
+    </noscript>
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
 </head>
 
@@ -378,8 +450,9 @@ foreach ($combined as $row) {
             <div
                 class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
                 <div class="flex items-center gap-2">
-                    <img src="/assets/sumeet-boga.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
-                        class="w-7 h-7 rounded-full shadow-sm border border-emerald-100 object-cover">
+                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
+                        class="w-7 h-7 rounded-full shadow-sm border border-emerald-100 object-cover" width="28"
+                        height="28" fetchpriority="high" decoding="async">
                     <span>Developed by <strong class="text-slate-700">Sumeet Boga</strong>, Software Developer & Finance
                         Specialist</span>
                 </div>
