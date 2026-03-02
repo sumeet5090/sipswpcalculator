@@ -26,8 +26,8 @@ if ($current_page == 'index.php' || $current_page == '')
     class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/80 backdrop-blur-md transition-all duration-300 shadow-sm">
     <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <div
-                class="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg shadow-lg shadow-emerald-500/20 transition-all duration-300">
+            <div class="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg shadow-lg shadow-emerald-500/20 transition-all duration-300"
+                style="min-width:40px;min-height:40px">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24"
                     height="24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

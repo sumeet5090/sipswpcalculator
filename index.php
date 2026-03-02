@@ -536,9 +536,18 @@ foreach ($combined as $row) {
             --color-border: #e2e8f0
         }
 
+        @font-face {
+            font-family: 'Plus Jakarta Sans Fallback';
+            src: local('Arial');
+            size-adjust: 107%;
+            ascent-override: 90%;
+            descent-override: 22%;
+            line-gap-override: 0%
+        }
+
         body {
             background-color: var(--color-bg);
-            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', 'Inter', Arial, sans-serif;
             color: var(--color-text-primary);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased
@@ -775,6 +784,7 @@ foreach ($combined as $row) {
                                                     </div>
                                                     <input type="range" id="sip_range" min="500" max="100000" step="500"
                                                         value="<?= htmlspecialchars((string) $sip) ?>"
+                                                        aria-label="Monthly SIP amount slider"
                                                         class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                                 </div>
 
@@ -794,6 +804,7 @@ foreach ($combined as $row) {
                                                     </div>
                                                     <input type="range" id="years_range" min="1" max="50" step="1"
                                                         value="<?= htmlspecialchars((string) $years) ?>"
+                                                        aria-label="Investment period slider"
                                                         class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                                 </div>
                                                 <!-- Expected Return -->
@@ -812,6 +823,7 @@ foreach ($combined as $row) {
                                                     </div>
                                                     <input type="range" id="rate_range" min="1" max="30" step="0.1"
                                                         value="<?= htmlspecialchars((string) $rate) ?>"
+                                                        aria-label="Expected return rate slider"
                                                         class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                                 </div>
 
@@ -831,6 +843,7 @@ foreach ($combined as $row) {
                                                     </div>
                                                     <input type="range" id="stepup_range" min="0" max="50" step="1"
                                                         value="<?= htmlspecialchars((string) $stepup) ?>"
+                                                        aria-label="Annual step-up percentage slider"
                                                         class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
                                                 </div>
                                             </div>
@@ -850,7 +863,8 @@ foreach ($combined as $row) {
                                                 <label
                                                     class="toggle-switch relative inline-flex items-center cursor-pointer">
                                                     <input type="checkbox" id="enable_swp" name="enable_swp"
-                                                        onchange="toggleSwpFields()" class="sr-only peer">
+                                                        onchange="toggleSwpFields()" class="sr-only peer"
+                                                        aria-label="Enable Systematic Withdrawal Plan (SWP)">
                                                     <div
                                                         class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
                                                     </div>
@@ -876,6 +890,7 @@ foreach ($combined as $row) {
                                                     <input type="range" id="swp_withdrawal_range" min="1000"
                                                         max="200000" step="500"
                                                         value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
+                                                        aria-label="Monthly SWP withdrawal slider"
                                                         class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
                                                 </div>
 
@@ -896,6 +911,7 @@ foreach ($combined as $row) {
                                                     </div>
                                                     <input type="range" id="swp_years_range" min="1" max="50" step="1"
                                                         value="<?= htmlspecialchars((string) $swp_years_input) ?>"
+                                                        aria-label="SWP period slider"
                                                         class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
                                                 </div>
 
@@ -916,6 +932,7 @@ foreach ($combined as $row) {
                                                     </div>
                                                     <input type="range" id="swp_stepup_range" min="0" max="20"
                                                         step="0.5" value="<?= htmlspecialchars((string) $swp_stepup) ?>"
+                                                        aria-label="SWP yearly hike slider"
                                                         class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
                                                 </div>
                                             </div>
@@ -1057,32 +1074,32 @@ foreach ($combined as $row) {
                                 </thead>
                                 <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
                                     <?php foreach ($combined as $row): ?>
-                                        <tr class="hover:bg-slate-50 transition-colors">
-                                            <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
-                                            <td class="px-6 py-4 text-right font-mono">
-                                                <?= formatInr($row['begin_balance']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                                <?= formatInr($row['annual_contribution']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-slate-500 font-mono">
-                                                <?= formatInr($row['cumulative_invested']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
-                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                                <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col"
-                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                                <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                                <?= formatInr($row['interest']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
-                                                <?= formatInr($row['combined_total']) ?>
-                                            </td>
-                                        </tr>
+                                            <tr class="hover:bg-slate-50 transition-colors">
+                                                <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
+                                                <td class="px-6 py-4 text-right font-mono">
+                                                    <?= formatInr($row['begin_balance']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                                    <?= formatInr($row['annual_contribution']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-slate-500 font-mono">
+                                                    <?= formatInr($row['cumulative_invested']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
+                                                    <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                                    <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col"
+                                                    <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                                    <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                                    <?= formatInr($row['interest']) ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
+                                                    <?= formatInr($row['combined_total']) ?>
+                                                </td>
+                                            </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
