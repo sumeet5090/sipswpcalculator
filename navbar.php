@@ -58,7 +58,7 @@ if ($current_page == 'index.php' || $current_page == '')
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </button>
-                <div class="absolute right-0 top-full pt-2 w-56 z-50 nav-dropdown-menu">
+                <div class="absolute right-0 top-full pt-2 w-72 z-50 nav-dropdown-menu">
                     <div class="bg-white rounded-xl shadow-xl border border-slate-200 py-2">
                         <a href="/sip-step-up-calculator"
                             class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Step-Up
