@@ -8,7 +8,7 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | SIP & SWP Calculator</title>
     <meta name="description"
-        content="Learn about the team behind SIP & SWP Calculator — a free step-up SIP planner and retirement income tool. Developed by Sumeet Boga, Software Developer & Finance Specialist.">
+        content="Learn about the team behind SIP & SWP Calculator — a free step-up SIP planner and retirement income tool. Built by Sumeet Boga, Software Engineer & Finance Enthusiast.">
     <link rel="canonical" href="https://sipswpcalculator.com/about">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -33,10 +33,10 @@ require_once __DIR__ . '/functions.php'; ?>
       "@type": "Person",
       "name": "Sumeet Boga",
       "url": "https://sipswpcalculator.com/about",
-      "jobTitle": "Software Developer & Finance Specialist",
+      "jobTitle": "Software Engineer & Finance Enthusiast",
       "description": "Creator of SIP & SWP Calculator. Passionate about making financial planning accessible through technology.",
       "knowsAbout": ["Systematic Investment Plans", "Systematic Withdrawal Plans", "Mutual Fund Investing", "Financial Planning", "Tax-Efficient Investing", "Web Development"],
-      "sameAs": ["https://www.linkedin.com/in/sumeetboga/"]
+      "sameAs": ["https://www.linkedin.com/in/sumeet-boga/"]
     }
     </script>
 </head>
@@ -66,14 +66,18 @@ require_once __DIR__ . '/functions.php'; ?>
                 <h2>About the Creator</h2>
                 <div
                     class="flex flex-col sm:flex-row items-start gap-6 not-prose bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
-                    <div class="flex-shrink-0">
-                        <div
-                            class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                            SB</div>
-                    </div>
+                    <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
+                        class="flex-shrink-0 hover:opacity-80 transition-opacity">
+                        <img src="/assets/sumeet-boga.jpg" alt="Sumeet Boga"
+                            class="w-20 h-20 rounded-full shadow-lg border-2 border-emerald-200 object-cover" width="80"
+                            height="80">
+                    </a>
                     <div>
-                        <h3 class="text-xl font-bold text-slate-800 mb-1">Sumeet Boga</h3>
-                        <p class="text-sm text-indigo-600 font-medium mb-3">Software Developer & Finance Specialist</p>
+                        <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
+                            class="hover:opacity-80 transition-opacity">
+                            <h3 class="text-xl font-bold text-slate-800 mb-1">Sumeet Boga</h3>
+                        </a>
+                        <p class="text-sm text-indigo-600 font-medium mb-3">Software Engineer & Finance Enthusiast</p>
                         <p class="text-gray-600 text-sm leading-relaxed">Sumeet combines software engineering expertise
                             with a deep passion for personal finance. Having experienced firsthand the lack of
                             transparent, free financial planning tools in India, he built SIP Calculator to bridge the

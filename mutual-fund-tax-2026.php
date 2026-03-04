@@ -82,12 +82,14 @@ require_once __DIR__ . '/functions.php'; ?>
             <p class="text-lg text-gray-500 font-medium mt-2 mb-6">LTCG, STCG & Tax-Efficient Withdrawal Strategies</p>
             <div
                 class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
-                <div class="flex items-center gap-2">
+                <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
+                    class="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga"
-                        class="w-7 h-7 rounded-full shadow-sm border border-emerald-100 object-cover" width="28"
-                        height="28">
-                    <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Finance Specialist</span>
-                </div>
+                        class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32"
+                        height="32">
+                    <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance
+                        Enthusiast</span>
+                </a>
                 <span class="hidden sm:inline text-slate-300">|</span>
                 <div
                     class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">

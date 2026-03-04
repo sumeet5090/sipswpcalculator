@@ -109,12 +109,14 @@ require_once __DIR__ . '/functions.php';
             <!-- EEAT Trust Bar -->
             <div
                 class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
-                <div class="flex items-center gap-2">
+                <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
+                    class="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga"
-                        class="w-7 h-7 rounded-full shadow-sm border border-emerald-100 object-cover" width="28"
-                        height="28">
-                    <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Finance Specialist</span>
-                </div>
+                        class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32"
+                        height="32">
+                    <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance
+                        Enthusiast</span>
+                </a>
                 <span class="hidden sm:inline text-slate-300">|</span>
                 <div
                     class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
@@ -243,7 +245,8 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
                                     class="font-bold text-green-600">+₹37,96,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2"><span>Final Value:</span>
-                                <span class="font-bold text-emerald-700">₹49,96,000</span></li>
+                                <span class="font-bold text-emerald-700">₹49,96,000</span>
+                            </li>
                         </ul>
                         <p class="text-xs text-gray-400 mt-4">Your money multiplied ~4.2x through compounding alone.</p>
                     </div>
@@ -256,7 +259,8 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
                                     class="font-bold text-green-600">+₹2,85,27,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2"><span>Final Value:</span>
-                                <span class="font-bold text-indigo-700">₹3,54,00,000</span></li>
+                                <span class="font-bold text-indigo-700">₹3,54,00,000</span>
+                            </li>
                         </ul>
                         <p class="text-xs text-gray-400 mt-4">Step-up SIP supercharges compounding — 3.5x more than flat
                             SIP!</p>

@@ -429,7 +429,7 @@ foreach ($combined as $row) {
         "availableLanguage": "English"
       },
       "sameAs": [
-        "https://www.linkedin.com/in/sumeetboga/"
+        "https://www.linkedin.com/in/sumeet-boga/"
       ],
       "knowsAbout": [
         "Systematic Investment Plan (SIP)",
@@ -456,10 +456,10 @@ foreach ($combined as $row) {
       "name": "Sumeet Boga",
       "url": "https://sipswpcalculator.com/about",
       "image": "https://sipswpcalculator.com/assets/sumeet-boga-56.jpg",
-      "jobTitle": "Software Developer & Finance Specialist",
+      "jobTitle": "Software Engineer & Finance Enthusiast",
       "description": "Creator of the Advanced SIP & SWP Calculator. Software developer specializing in financial planning tools with expertise in mutual fund return calculations, step-up compounding methodology, and tax-efficient withdrawal planning.",
       "sameAs": [
-        "https://www.linkedin.com/in/sumeetboga/"
+        "https://www.linkedin.com/in/sumeet-boga/"
       ],
       "knowsAbout": [
         "Systematic Investment Plans",
@@ -624,13 +624,14 @@ foreach ($combined as $row) {
             <!-- EEAT Trust Bar -->
             <div
                 class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
-                <div class="flex items-center gap-2">
+                <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
+                    class="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
-                        class="w-7 h-7 rounded-full shadow-sm border border-emerald-100 object-cover" width="28"
-                        height="28" fetchpriority="high" decoding="async">
-                    <span>Developed by <strong class="text-slate-700">Sumeet Boga</strong>, Software Developer & Finance
-                        Specialist</span>
-                </div>
+                        class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32"
+                        height="32" fetchpriority="high" decoding="async">
+                    <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance
+                        Enthusiast</span>
+                </a>
                 <span class="hidden sm:inline text-slate-300">|</span>
                 <div
                     class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
@@ -1064,32 +1065,32 @@ foreach ($combined as $row) {
                                 </thead>
                                 <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
                                     <?php foreach ($combined as $row): ?>
-                                        <tr class="hover:bg-slate-50 transition-colors">
-                                            <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
-                                            <td class="px-6 py-4 text-right font-mono">
-                                                <?= formatInr($row['begin_balance']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                                <?= formatInr($row['annual_contribution']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-slate-500 font-mono">
-                                                <?= formatInr($row['cumulative_invested']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
-                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                                <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col"
-                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                                <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                                <?= formatInr($row['interest']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
-                                                <?= formatInr($row['combined_total']) ?>
-                                            </td>
-                                        </tr>
+                                                <tr class="hover:bg-slate-50 transition-colors">
+                                                    <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
+                                                    <td class="px-6 py-4 text-right font-mono">
+                                                        <?= formatInr($row['begin_balance']) ?>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                                        <?= formatInr($row['annual_contribution']) ?>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-right text-slate-500 font-mono">
+                                                        <?= formatInr($row['cumulative_invested']) ?>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
+                                                        <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                                        <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col"
+                                                        <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                                        <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                                        <?= formatInr($row['interest']) ?>
+                                                    </td>
+                                                    <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
+                                                        <?= formatInr($row['combined_total']) ?>
+                                                    </td>
+                                                </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
