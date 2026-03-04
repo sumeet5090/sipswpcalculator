@@ -71,11 +71,13 @@ if ($current_page == 'index.php' || $current_page == '')
                         <a href="/swp-vs-fixed-deposit" class="block px-6 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors whitespace-nowrap">SWP vs Fixed Deposit</a>
                         <a href="/sip-for-beginners" class="block px-6 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors whitespace-nowrap">SIP for Beginners</a>
                         <a href="/inflation-impact-on-sip" class="block px-6 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors whitespace-nowrap">Inflation Impact on SIP</a>
-                        <div class="border-t border-slate-100 my-1"></div>
-                        <a href="/about" class="block px-6 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors whitespace-nowrap">About Us</a>
                     </div>
                 </div>
             </div>
+            <a href="/about"
+                class="<?= $current_page === 'about.php' ? 'text-indigo-600 font-semibold' : 'text-slate-600 hover:text-indigo-600' ?> transition-colors">
+                About
+            </a>
         </nav>
 
         <!-- Mobile hamburger button -->
@@ -124,7 +126,7 @@ if ($current_page == 'index.php' || $current_page == '')
             </div>
             <div class="border-t border-slate-100 my-1"></div>
             <a href="/about"
-                class="block px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">About Us</a>
+                class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'about.php' ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' ?> transition-colors">About Us</a>
         </div>
     </div>
 </nav>
