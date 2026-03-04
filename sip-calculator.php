@@ -118,7 +118,7 @@ require_once __DIR__ . '/functions.php';
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    Verified for Accuracy: February 2026
+                    Updated: March 2026
                 </div>
             </div>
         </header>

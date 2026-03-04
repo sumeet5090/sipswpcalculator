@@ -125,13 +125,14 @@ require_once __DIR__ . '/functions.php'; ?>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    Updated: February 2026
+                    Updated: March 2026
                 </div>
             </div>
         </header>
 
         <main class="glass-card p-8 sm:p-12">
-            <article class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900">
+            <article
+                class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900 prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-strong:text-gray-800">
 
                 <h2>What is SWP-based Retirement Income?</h2>
                 <p>A <dfn><strong>Systematic Withdrawal Plan (SWP)</strong></dfn> allows retirees to withdraw a fixed
@@ -248,27 +249,6 @@ require_once __DIR__ . '/functions.php'; ?>
                     <li><strong>Review annually</strong> — adjust withdrawal amount based on corpus performance</li>
                 </ol>
 
-                <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-200 not-prose mt-8">
-                    <p class="text-lg font-bold text-emerald-800 mb-2">Ready to plan your retirement?</p>
-                    <p class="text-gray-600 mb-4">Use our free SIP & SWP calculator to model your accumulation phase
-                        (SIP) and distribution phase (SWP) in one seamless simulation.</p>
-                    <a href="/"
-                        class="inline-block bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-emerald-700 transition-colors">Launch
-                        SWP Calculator →</a>
-                </div>
-
-                <div class="bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 mt-8 not-prose">
-                    <p class="font-bold text-gray-800 mb-3">Related Reading</p>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/swp-tax-calculator" class="text-indigo-600 hover:underline font-medium">SWP Tax
-                                Calculator</a> — Calculate post-tax income from your SWP withdrawals</li>
-                        <li><a href="/sip-step-up-calculator"
-                                class="text-indigo-600 hover:underline font-medium">Step-Up SIP Guide</a> — Build a
-                            larger corpus before starting SWP</li>
-                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
-                                Fund Tax 2026</a> — Complete tax rules for equity & debt funds</li>
-                    </ul>
-                </div>
 
                 <h2>Frequently Asked Questions</h2>
                 <details class="group">
@@ -314,6 +294,40 @@ require_once __DIR__ . '/functions.php'; ?>
                         growth). This protects against sequence-of-return risk while maintaining long-term growth
                         potential.</div>
                 </details>
+                <!-- Related Guides -->
+                <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 not-prose">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
+                                Calculator</a> — Calculate exact SWP withdrawal sustainability</li>
+                        <li><a href="/swp-tax-calculator" class="text-indigo-600 hover:underline font-medium">SWP Tax
+                                Calculator</a> — Understand LTCG & STCG on your withdrawals</li>
+                        <li><a href="/swp-vs-fixed-deposit" class="text-indigo-600 hover:underline font-medium">SWP vs
+                                Fixed Deposit</a> — Which gives better retirement income?</li>
+                        <li><a href="/sip-step-up-calculator"
+                                class="text-indigo-600 hover:underline font-medium">Step-Up SIP Guide</a> — Build a
+                            bigger corpus for retirement</li>
+                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
+                                Fund Tax 2026</a> — LTCG, STCG & tax-efficient strategies</li>
+                    </ul>
+                </div>
+
+                <!-- CTA -->
+                <div
+                    class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
+                    <h2 class="text-2xl font-bold mb-4 text-white">Plan Your Retirement Income</h2>
+                    <p class="mb-8 text-indigo-100">Use our free SWP calculator to see exactly how long your corpus will
+                        last and how much you can withdraw monthly.</p>
+                    <a href="/"
+                        class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
+                        Launch SWP Calculator
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                </div>
+
             </article>
         </main>
 

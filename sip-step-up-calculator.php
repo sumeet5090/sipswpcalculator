@@ -113,13 +113,14 @@ require_once __DIR__ . '/functions.php'; ?>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    Updated: February 2026
+                    Updated: March 2026
                 </div>
             </div>
         </header>
 
         <main class="glass-card p-8 sm:p-12">
-            <article class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900">
+            <article
+                class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900 prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-strong:text-gray-800">
 
                 <h2>What is a Step-Up / Top-Up SIP?</h2>
                 <p>A <dfn><strong>Step-Up SIP</strong></dfn> (also called Top-Up SIP) is a variation of a regular SIP
@@ -223,26 +224,6 @@ require_once __DIR__ . '/functions.php'; ?>
                         (5-6%) to maintain real value.</li>
                 </ol>
 
-                <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-200 not-prose mt-8">
-                    <p class="text-lg font-bold text-emerald-800 mb-2">Try the Step-Up SIP Calculator</p>
-                    <p class="text-gray-600 mb-4">Our free calculator lets you compare flat vs step-up SIP scenarios
-                        instantly. Adjust the "Annual Step-Up %" slider to see the dramatic impact.</p>
-                    <a href="/"
-                        class="inline-block bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-emerald-700 transition-colors">Launch
-                        Step-Up SIP Calculator →</a>
-                </div>
-
-                <div class="bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 mt-8 not-prose">
-                    <p class="font-bold text-gray-800 mb-3">Related Reading</p>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
-                                PPF</a> — How step-up SIP compares to other investments</li>
-                        <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
-                                Retirement Planning</a> — Transition from SIP to retirement income</li>
-                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
-                                Fund Tax 2026</a> — Tax implications of your SIP gains</li>
-                    </ul>
-                </div>
 
                 <h2>Frequently Asked Questions</h2>
                 <details class="group">
@@ -277,6 +258,40 @@ require_once __DIR__ . '/functions.php'; ?>
                         <strong>increase your total investment systematically</strong>.
                     </div>
                 </details>
+                <!-- Related Guides -->
+                <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 not-prose">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
+                                Calculator</a> — Model step-up SIP with live projections</li>
+                        <li><a href="/sip-for-beginners" class="text-indigo-600 hover:underline font-medium">SIP for
+                                Beginners</a> — Complete guide to starting your first SIP</li>
+                        <li><a href="/inflation-impact-on-sip"
+                                class="text-indigo-600 hover:underline font-medium">Inflation Impact on SIP</a> — Why
+                            step-up SIP is essential to beat inflation</li>
+                        <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
+                                PPF</a> — Compare returns across investment options</li>
+                        <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
+                                Retirement Planning</a> — Convert your SIP corpus into retirement income</li>
+                    </ul>
+                </div>
+
+                <!-- CTA -->
+                <div
+                    class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
+                    <h2 class="text-2xl font-bold mb-4 text-white">See Step-Up SIP in Action</h2>
+                    <p class="mb-8 text-indigo-100">Use our free calculator to compare flat vs step-up SIP and see how a
+                        small annual increase can triple your corpus.</p>
+                    <a href="/"
+                        class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
+                        Launch SIP Calculator
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                </div>
+
             </article>
         </main>
         <?php include 'footer.php'; ?>

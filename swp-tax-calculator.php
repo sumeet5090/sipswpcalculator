@@ -98,12 +98,13 @@ require_once __DIR__ . '/functions.php'; ?>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    Updated: February 2026
+                    Updated: March 2026
                 </div>
             </div>
         </header>
         <main class="glass-card p-8 sm:p-12">
-            <article class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900">
+            <article
+                class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900 prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-strong:text-gray-800">
 
                 <h2>How SWP Withdrawals Are Taxed (FIFO Method)</h2>
                 <p>When you set up a Systematic Withdrawal Plan (SWP) from a mutual fund, each withdrawal is treated as
@@ -221,26 +222,6 @@ require_once __DIR__ . '/functions.php'; ?>
                         "reset" your cost basis higher, reducing future tax liability.</li>
                 </ol>
 
-                <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-200 not-prose mt-8">
-                    <p class="text-lg font-bold text-emerald-800 mb-2">Plan Your Tax-Efficient SWP</p>
-                    <p class="text-gray-600 mb-4">Use our free SWP calculator to determine your optimal withdrawal
-                        amount and see how long your corpus will last at different withdrawal rates.</p>
-                    <a href="/"
-                        class="inline-block bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-emerald-700 transition-colors">Launch
-                        SWP Calculator →</a>
-                </div>
-
-                <div class="bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 mt-8 not-prose">
-                    <p class="font-bold text-gray-800 mb-3">Related Reading</p>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
-                                Retirement Planning</a> — Plan your complete retirement income strategy</li>
-                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
-                                Fund Tax 2026</a> — Complete tax rules for all fund types</li>
-                        <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
-                                PPF</a> — Why SWP is more tax-efficient than FD interest</li>
-                    </ul>
-                </div>
 
                 <h2>Frequently Asked Questions</h2>
                 <details class="group">
@@ -274,6 +255,39 @@ require_once __DIR__ . '/functions.php'; ?>
                         fund's expense ratio includes GST on management fees (typically 0.5-2% annually). This is
                         deducted from the fund's NAV, not billed separately.</div>
                 </details>
+                <!-- Related Guides -->
+                <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 not-prose">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
+                                Calculator</a> — Model SWP withdrawals with tax projections</li>
+                        <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
+                                Retirement Planning</a> — Complete guide to retirement income via SWP</li>
+                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
+                                Fund Tax 2026</a> — LTCG, STCG & tax-efficient strategies</li>
+                        <li><a href="/swp-vs-fixed-deposit" class="text-indigo-600 hover:underline font-medium">SWP vs
+                                Fixed Deposit</a> — Tax efficiency comparison for retirement</li>
+                        <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
+                                PPF</a> — Compare tax treatment across investments</li>
+                    </ul>
+                </div>
+
+                <!-- CTA -->
+                <div
+                    class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
+                    <h2 class="text-2xl font-bold mb-4 text-white">Calculate Your SWP Tax Liability</h2>
+                    <p class="mb-8 text-indigo-100">Use our free calculator to simulate SWP withdrawals and estimate
+                        your capital gains tax at different holding periods.</p>
+                    <a href="/"
+                        class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
+                        Launch SWP Calculator
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                </div>
+
             </article>
         </main>
         <?php include 'footer.php'; ?>
