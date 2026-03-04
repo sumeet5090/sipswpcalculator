@@ -92,15 +92,48 @@ require_once __DIR__ . '/functions.php';
 
     <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
 
-        <header class="mb-12 text-center">
-            <h1 class="text-4xl font-extrabold pb-2">
+        <header class="relative mb-6 sm:mb-10 text-center">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-4">
+                <span class="relative flex h-3 w-3">
+                    <span class="absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
+                </span>
+                <span class="text-sm font-semibold text-indigo-700 tracking-wide uppercase">Free Calculator</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
                 <span class="text-gradient">Compound Interest Calculator</span>
             </h1>
-            <p class="text-lg text-gray-500 font-medium mt-2">See exactly how your money grows with the power of
-                compounding</p>
+
+            <div
+                class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
+                <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
+                    class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
+                        class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32"
+                        height="32" fetchpriority="high" decoding="async">
+                    <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance
+                        Enthusiast</span>
+                </a>
+                <span class="hidden sm:inline text-slate-300">|</span>
+                <div
+                    class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Updated: March 2026
+                </div>
+            </div>
+
+            <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
+                See exactly how your money grows with the power of compounding
+            </p>
         </header>
 
-        <main class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900">
+        <main
+            class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900 prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-strong:text-gray-800">
 
             <!-- Interactive Calculator -->
             <div class="not-prose mb-12">
@@ -353,27 +386,37 @@ require_once __DIR__ . '/functions.php';
                     equity investors dramatically outperform short-term traders.</li>
             </ul>
 
-            <div class="not-prose bg-emerald-50 p-6 rounded-xl border border-emerald-200 mt-8 mb-6">
-                <p class="text-lg font-bold text-emerald-800 mb-2">Ready to Plan Your SIP?</p>
-                <p class="text-gray-600 mb-4">Compound interest is even more powerful when combined with regular monthly
-                    investments (SIPs). Our free calculator models step-up SIP with built-in SWP retirement planning.
-                </p>
-                <a href="/"
-                    class="inline-block bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-emerald-700 transition-colors">Launch
-                    SIP Calculator →</a>
+            <!-- Related Guides -->
+            <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 not-prose">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">SIP Guide 2026</a>
+                        — Formula, Tax Rules & Strategy</li>
+                    <li><a href="/sip-step-up-calculator" class="text-indigo-600 hover:underline font-medium">Step-Up
+                            SIP</a> — How a 10% Annual Increase Doubles Your Corpus</li>
+                    <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
+                            PPF</a> — Which is Best?</li>
+                    <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
+                            Retirement Planning</a> — Convert your corpus into income</li>
+                </ul>
             </div>
 
-            <h2>Related Guides</h2>
-            <ul>
-                <li><a href="/sip-calculator" class="text-indigo-600 hover:underline">SIP Guide 2026: Formula, Tax
-                        Rules & Strategy</a></li>
-                <li><a href="/sip-step-up-calculator" class="text-indigo-600 hover:underline">Step-Up SIP: How a 10%
-                        Annual Increase Doubles Your Corpus</a></li>
-                <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline">SIP vs FD vs PPF: Which is
-                        Best?</a></li>
-                <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline">SWP Retirement Planning
-                        Guide</a></li>
-            </ul>
+            <!-- CTA -->
+            <div
+                class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
+                <h2 class="text-2xl font-bold mb-4 text-white">Ready to Plan Your SIP?</h2>
+                <p class="mb-8 text-indigo-100">Compound interest is even more powerful when combined with regular
+                    monthly investments (SIPs). Our free calculator models step-up SIP with built-in SWP retirement
+                    planning.</p>
+                <a href="/"
+                    class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
+                    Launch SIP Calculator
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+            </div>
         </main>
 
         <?php include 'footer.php'; ?>

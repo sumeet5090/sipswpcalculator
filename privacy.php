@@ -29,15 +29,24 @@ declare(strict_types=1);
     <?php include 'navbar.php'; ?>
 
     <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
-        <header class="mb-12 text-center">
-            <h1 class="text-4xl font-extrabold pb-2">
+        <header class="relative mb-6 sm:mb-10 text-center">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4">
+                <span class="text-sm font-semibold text-slate-600 tracking-wide uppercase">Legal Document</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
                 <span class="text-gradient">Privacy Policy</span>
             </h1>
-            <p class="text-lg text-gray-500 font-medium mt-2">Last Updated: February 2026</p>
+
+            <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
+                Last Updated: March 2026
+            </p>
         </header>
 
         <main class="glass-card p-8 sm:p-12">
-            <article class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900">
+            <article
+                class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900 prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-strong:text-gray-800">
                 <h2>1. Information We Collect</h2>
                 <p>We believe in absolute privacy. The SIP & SWP Calculator functions entirely client-side (in your
                     browser) or via stateless server calculations. <strong>We do not ask for, collect, store, or
