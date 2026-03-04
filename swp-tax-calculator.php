@@ -82,9 +82,22 @@ require_once __DIR__ . '/functions.php'; ?>
             <p class="text-lg text-gray-500 font-medium mt-2 mb-6">Understand how your SWP withdrawals are taxed and
                 maximize post-tax income</p>
             <div
-                class="flex items-center justify-center gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60">
-                <span>By <strong class="text-slate-700">Sumeet Boga</strong></span><span>·</span>
-                <span>Updated: <time datetime="2026-02-25">February 2026</time></span>
+                class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
+                <div class="flex items-center gap-2">
+                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga"
+                        class="w-7 h-7 rounded-full shadow-sm border border-emerald-100 object-cover" width="28"
+                        height="28">
+                    <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Finance Specialist</span>
+                </div>
+                <span class="hidden sm:inline text-slate-300">|</span>
+                <div
+                    class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Updated: February 2026
+                </div>
             </div>
         </header>
         <main class="glass-card p-8 sm:p-12">
