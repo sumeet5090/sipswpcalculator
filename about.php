@@ -54,7 +54,8 @@ require_once __DIR__ . '/functions.php'; ?>
         </header>
 
         <main class="glass-card p-8 sm:p-12">
-            <article class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900">
+            <article
+                class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900 prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-strong:text-gray-800">
 
                 <h2>Our Mission</h2>
                 <p>We believe that <strong>everyone deserves access to professional-grade financial planning
@@ -115,7 +116,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             class="text-indigo-600 hover:underline">Income Tax India</a> — Capital gains tax rates
                         (LTCG/STCG)</li>
                 </ul>
-                <p><strong>Last verified:</strong> <time datetime="2026-02-25">February 2026</time></p>
+                <p><strong>Last verified:</strong> <time datetime="2026-03-01">March 2026</time></p>
 
                 <h2>Disclaimer</h2>
                 <p>This calculator is for <strong>educational and illustrative purposes only</strong>. The projections
@@ -126,13 +127,19 @@ require_once __DIR__ . '/functions.php'; ?>
                 <p>Have questions, feedback, or found an error? Reach us at <a href="mailto:help@sipswpcalculator.com"
                         class="text-indigo-600 hover:underline">help@sipswpcalculator.com</a>.</p>
 
-                <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-200 not-prose mt-8">
-                    <p class="text-lg font-bold text-emerald-800 mb-2">Start Planning Your Financial Future</p>
-                    <p class="text-gray-600 mb-4">Our free SIP & SWP calculator helps you visualize exactly how your
+                <div
+                    class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
+                    <h2 class="text-2xl font-bold mb-4 text-white">Start Planning Your Financial Future</h2>
+                    <p class="mb-8 text-indigo-100">Our free SIP & SWP calculator helps you visualize exactly how your
                         investments grow and plan for a comfortable retirement.</p>
                     <a href="/"
-                        class="inline-block bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-emerald-700 transition-colors">Launch
-                        Calculator →</a>
+                        class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
+                        Launch Calculator
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
                 </div>
             </article>
         </main>
