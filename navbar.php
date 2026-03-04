@@ -58,39 +58,29 @@ if ($current_page == 'index.php' || $current_page == '')
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </button>
-                <div class="absolute right-0 top-full pt-2 w-72 z-50 nav-dropdown-menu">
-                    <div class="bg-white rounded-xl shadow-xl border border-slate-200 py-2">
+                <div class="absolute right-0 top-full pt-2 z-50 nav-dropdown-menu">
+                    <div class="bg-white rounded-xl shadow-xl border border-slate-200 py-2 whitespace-nowrap">
                         <a href="/sip-step-up-calculator"
-                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Step-Up
-                            SIP Guide</a>
+                            class="block px-5 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Step-Up SIP Guide</a>
                         <a href="/swp-retirement-planning"
-                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SWP
-                            Retirement Planning</a>
+                            class="block px-5 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SWP Retirement Planning</a>
                         <a href="/mutual-fund-tax-2026"
-                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Mutual
-                            Fund Tax 2026</a>
+                            class="block px-5 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Mutual Fund Tax 2026</a>
                         <a href="/sip-vs-fd-vs-ppf"
-                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SIP
-                            vs FD vs PPF</a>
+                            class="block px-5 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SIP vs FD vs PPF</a>
                         <a href="/swp-tax-calculator"
-                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SWP
-                            Tax Calculator</a>
+                            class="block px-5 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SWP Tax Calculator</a>
                         <a href="/compound-interest-calculator"
-                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Compound
-                            Interest Calculator</a>
+                            class="block px-5 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Compound Interest Calculator</a>
                         <a href="/swp-vs-fixed-deposit"
-                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SWP
-                            vs Fixed Deposit</a>
+                            class="block px-5 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SWP vs Fixed Deposit</a>
                         <a href="/sip-for-beginners"
-                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SIP
-                            for Beginners</a>
+                            class="block px-5 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">SIP for Beginners</a>
                         <a href="/inflation-impact-on-sip"
-                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Inflation
-                            Impact on SIP</a>
+                            class="block px-5 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">Inflation Impact on SIP</a>
                         <div class="border-t border-slate-100 my-1"></div>
                         <a href="/about"
-                            class="block px-4 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">About
-                            Us</a>
+                            class="block px-5 py-2.5 text-sm text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">About Us</a>
                     </div>
                 </div>
             </div>
