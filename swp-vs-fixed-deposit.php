@@ -329,68 +329,214 @@ require_once __DIR__ . '/functions.php';
                 </ul>
 
                 <!-- H2: Best Strategy -->
-                <h2 id="optimal-strategy" class="text-3xl font-bold mt-10 mb-4 text-gray-800">The Optimal Strategy: SWP
-                    + FD Combination</h2>
+                <h2 id="optimal-strategy" class="text-3xl font-bold mt-10 mb-4 text-gray-800">The Optimal Strategy: The
+                    SWP + FD Bucket Architecture</h2>
                 <p>
-                    Smart retirees don't choose one or the other — they use <strong>both strategically</strong>. A
-                    recommended allocation:
+                    Smart retirees never choose one or the other — they deploy <strong>both strategically</strong> using
+                    what institutional wealth managers call the "Bucket Strategy". This eliminates the weaknesses of
+                    both instruments while capturing their strengths.
                 </p>
-                <ul>
-                    <li><strong>70-80% in SWP</strong> (equity hybrid fund) — for long-term growth and regular income
-                    </li>
-                    <li><strong>20-30% in FD/Liquid Fund</strong> — for 1-2 years of emergency expenses</li>
-                </ul>
+
+                <div class="grid md:grid-cols-3 gap-6 my-8 not-prose">
+                    <div class="bg-white border-2 border-blue-200 p-5 rounded-2xl shadow-sm relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 bg-blue-200 text-blue-800 text-xs font-bold px-3 py-1 rounded-bl-lg">
+                            20-30%</div>
+                        <h4 class="text-blue-800 font-extrabold text-lg mb-3">🏦 FD / Liquid Fund</h4>
+                        <p class="text-sm font-bold text-gray-700 mb-2">Purpose: Emergency Buffer (1-3 Years)</p>
+                        <ul class="text-xs text-gray-500 space-y-1 list-disc list-inside">
+                            <li>Park 1-3 years of living expenses here</li>
+                            <li>Your SWP draws from this bucket first</li>
+                            <li>Zero volatility, instant liquidity</li>
+                            <li>Yield: 6-7% (FD) or 5-6% (Liquid Fund)</li>
+                        </ul>
+                    </div>
+                    <div
+                        class="bg-white border-2 border-indigo-200 p-5 rounded-2xl shadow-md relative overflow-hidden transform md:-translate-y-2">
+                        <div
+                            class="absolute top-0 right-0 bg-indigo-200 text-indigo-800 text-xs font-bold px-3 py-1 rounded-bl-lg">
+                            30-40%</div>
+                        <h4 class="text-indigo-800 font-extrabold text-lg mb-3">⚖️ Hybrid / BAF</h4>
+                        <p class="text-sm font-bold text-gray-700 mb-2">Purpose: Medium-Term Bridge (4-10 Years)</p>
+                        <ul class="text-xs text-gray-500 space-y-1 list-disc list-inside">
+                            <li>Balanced Advantage Funds dynamically allocate between equity and debt</li>
+                            <li>Refills the FD bucket annually as it depletes</li>
+                            <li>Yield: 8-10% with moderate volatility</li>
+                        </ul>
+                    </div>
+                    <div
+                        class="bg-emerald-50 border-2 border-emerald-200 p-5 rounded-2xl shadow-sm relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 bg-emerald-200 text-emerald-800 text-xs font-bold px-3 py-1 rounded-bl-lg">
+                            30-50%</div>
+                        <h4 class="text-emerald-800 font-extrabold text-lg mb-3">📈 Pure Equity</h4>
+                        <p class="text-sm font-bold text-gray-700 mb-2">Purpose: Long-Term Growth Engine (10+ Years)</p>
+                        <ul class="text-xs text-gray-500 space-y-1 list-disc list-inside">
+                            <li>Never touched for a decade — left to compound freely</li>
+                            <li>Yields 12-14% over the long term</li>
+                            <li>This bucket funds your retirement for decades and your legacy</li>
+                        </ul>
+                    </div>
+                </div>
                 <p>
-                    This "bucket strategy" ensures you never need to sell equity during a market downturn, while still
-                    benefiting from
-                    long-term equity returns and SWP tax efficiency.
+                    With this architecture, if markets crash 40% tomorrow, you simply continue withdrawing from your
+                    FD/Liquid Fund bucket. You never need to sell equity at a loss. Your equity bucket gets 3+ years to
+                    recover — and historically, no major index has failed to recover within that time frame.
                 </p>
 
                 <!-- FAQ Section -->
                 <div class="mt-12">
                     <h2 id="faq" class="text-2xl font-bold mb-6 text-gray-800">Frequently Asked Questions</h2>
-                    <dl class="space-y-6">
-                        <div>
-                            <dt class="font-bold text-lg text-gray-900">Is SWP better than Fixed Deposit for retirement?
-                            </dt>
-                            <dd class="mt-2 text-gray-600">For most retirees with a 10+ year horizon, yes. SWP offers
-                                higher returns (10-12% vs 6-7%),
-                                better tax efficiency, and inflation protection. However, FDs offer guaranteed safety
-                                for conservative investors.</dd>
-                        </div>
-                        <div>
-                            <dt class="font-bold text-lg text-gray-900">How much monthly income from $1 Million: SWP vs
-                                FD?</dt>
-                            <dd class="mt-2 text-gray-600">FD at 7% gives ~$583/month (fully taxable). SWP at 10%
-                                with $500/month withdrawal
-                                sustains the corpus for 25+ years because returns exceed withdrawals. After tax, SWP
-                                provides significantly higher effective income.</dd>
-                        </div>
-                        <div>
-                            <dt class="font-bold text-lg text-gray-900">What are the risks of SWP over FD?</dt>
-                            <dd class="mt-2 text-gray-600">SWP carries market risk — returns are not guaranteed. During
-                                prolonged bear markets,
-                                withdrawals can deplete the corpus faster (sequence of returns risk). This is why
-                                maintaining a 1-2 year FD buffer is recommended.</dd>
-                        </div>
-                    </dl>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">Is SWP better than Fixed Deposit
+                            for retirement income?</summary>
+                        <div class="pb-4 text-gray-600">For most retirees with a 10+ year horizon, <strong>yes, SWP is
+                                mathematically superior</strong>. SWP from equity or hybrid mutual funds historically
+                            offers 10-12% returns vs FD rates of 6-7%. SWP is also dramatically more tax-efficient: only
+                            the capital gains portion is taxable (LTCG at 12.5% above $1.25 Lakh/year), while the entire
+                            FD interest is taxable at your income slab rate (up to 30%). However, FDs offer guaranteed
+                            returns and capital safety, making them essential for your emergency buffer (the first 1-3
+                            years of expenses). The answer is not either/or — it is <strong>both, deployed
+                                strategically</strong> via the Bucket Architecture.</div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">How much monthly income can I get
+                            from $1 Million in SWP vs FD?</summary>
+                        <div class="pb-4 text-gray-600"><strong>FD Route:</strong> $1M at 7% generates ~$70,000/year or
+                            $5,833/month in interest. But after 30% tax, you keep only ~$4,083/month. The corpus stays
+                            flat (no growth), and inflation erodes your purchasing power by 6% annually. In 15 years,
+                            that $4,083 buys what $1,800 buys today.<br><br><strong>SWP Route:</strong> $1M in an equity
+                            hybrid fund earning 10% with a $5,000/month withdrawal ($60,000/year = 6% withdrawal rate)
+                            will deplete faster, so a <strong>safer $4,000/month withdrawal (4.8%)</strong> can sustain
+                            the corpus for 25+ years. And crucially, because most of the withdrawal in early years is
+                            principal (tax-free), your effective tax rate is near zero initially—far more cash in hand
+                            than FD interest.</div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">What are the exact tax differences
+                            between SWP and FD in 2026?</summary>
+                        <div class="pb-4 text-gray-600"><strong>FD Tax Reality:</strong> Every single rupee/dollar of
+                            interest earned is added to your taxable income. If you are in the 30% bracket, a 7% FD
+                            yields only 4.9% post-tax. TDS of 10% is automatically deducted if annual interest exceeds
+                            $400 ($500 for senior citizens).<br><br><strong>SWP Tax Reality:</strong> When you withdraw
+                            $10,000 via SWP, you do NOT pay tax on $10,000. Each unit sold has a cost basis. If you
+                            bought the unit for $80 and it is now worth $100, only the $20 gain is taxable. Further, the
+                            first $1.25 Lakh of Long-Term Capital Gains per financial year is <strong>completely
+                                exempt</strong>. Gains above that are taxed at a flat 12.5%. For most retirees, the
+                            effective tax on SWP is <strong>3-5% of the withdrawal amount</strong> vs 20-30% on FD
+                            interest. This is a massive 6-8x tax efficiency advantage.</div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">What about the FD premature
+                            withdrawal penalty vs SWP exit load?</summary>
+                        <div class="pb-4 text-gray-600">FD premature withdrawal typically incurs a 0.5-1% penalty on the
+                            interest rate. For example, if your FD rate is 7%, premature withdrawal may pay only 6-6.5%.
+                            Additionally, you lose the higher rate entirely if it was a long-tenure FD.<br><br>For SWP
+                            from equity mutual funds, there is typically a <strong>1% exit load if redeemed within 1
+                                year</strong> of purchase. After 1 year, there is zero exit load. Since SWP from
+                            retirement corpus typically involves units held for years, exit load is almost never a
+                            factor. <strong>Winner: SWP</strong> — zero cost to access your money after year 1.</div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">Do senior citizens get better FD
+                            rates? Does that change the equation?</summary>
+                        <div class="pb-4 text-gray-600">Yes, most banks offer an additional 0.25-0.50% interest for
+                            senior citizens (age 60+), bringing FD rates to 7.5-8%. Section 80TTB also provides a
+                            deduction of up to $50,000 on interest income for seniors. However, even with these
+                            benefits, a 7.5% FD yielding ~5.75% post-tax (20% bracket) still <strong>loses to inflation
+                                at 6%</strong>. The FD rate advantage for seniors narrows the gap but does not eliminate
+                            it. SWP from a Balanced Advantage Fund earning 9-10% still provides superior real
+                            (inflation-adjusted) returns, even accounting for LTCG taxation.</div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">What happens to my FD corpus vs
+                            SWP corpus if I live longer than expected?</summary>
+                        <div class="pb-4 text-gray-600">This is the <strong>longevity risk</strong> — the risk of
+                            outliving your money. With FD-only retirement, your principal is continuously consumed by
+                            withdrawals and never grows. If you planned for 20 years but live 30, you run out of money
+                            entirely.<br><br>With SWP, your underlying equity corpus continues to grow. If your fund
+                            earns 10% and you withdraw only 4%, the remaining 6% compounds year after year. After 20
+                            years, your SWP corpus could actually be <strong>larger than when you started</strong> —
+                            meaning you can fund an indefinite retirement. This is the single most important reason
+                            sophisticated investors choose SWP over FD for retirement: <strong>it is the only mechanism
+                                that can mathematically outlive you.</strong></div>
+                    </details>
                 </div>
 
                 <!-- Related Guides -->
-                <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
-                                Calculator</a> — Calculate exact SWP withdrawal sustainability</li>
-                        <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
-                                Retirement Planning</a> — Complete guide to SWP for retirement income</li>
-                        <li><a href="/sip-for-beginners" class="text-indigo-600 hover:underline font-medium">SIP for
-                                Beginners</a> — Start your investment journey with SIP</li>
-                        <li><a href="/inflation-impact-on-sip"
-                                class="text-indigo-600 hover:underline font-medium">Inflation Impact on SIP</a> — How
-                            inflation erodes your returns and how to beat it</li>
-                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
-                                Fund Tax 2026</a> — LTCG, STCG & tax-efficient strategies</li>
+                <div class="mt-14 bg-slate-50 border border-slate-200 p-8 rounded-2xl not-prose">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-3">Continue Your
+                        Research</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/" class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP
+                                Sustainability Calculator</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— Model SWP vs FD scenarios with your exact
+                                corpus and withdrawal amounts.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/swp-retirement-planning"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Retirement SWP
+                                Blueprint</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— The complete 3-Bucket Strategy and
+                                Sequence of Return Risk mitigation guide.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/inflation-impact-on-sip"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">The Fisher
+                                Equation Guide</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— See the exact math behind why FDs yield
+                                negative real returns after inflation.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/mutual-fund-tax-2026"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Mutual Fund
+                                Tax Guide 2026</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— Master LTCG exemptions and capital gain
+                                harvesting for maximum post-tax income.</span>
+                        </li>
                     </ul>
                 </div>
 
@@ -398,8 +544,8 @@ require_once __DIR__ . '/functions.php';
                 <div
                     class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
                     <h2 class="text-2xl font-bold mb-4 text-white">Calculate Your SWP Sustainability</h2>
-                    <p class="mb-8 text-indigo-100">Use our free calculator to see exactly how long your corpus will
-                        last with SWP withdrawals at different rates.</p>
+                    <p class="mb-8 text-indigo-100">Use our free calculator to model SWP vs FD scenarios side-by-side.
+                        See exactly how long your corpus will last and find your optimal withdrawal rate.</p>
                     <a href="/"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch SWP Calculator

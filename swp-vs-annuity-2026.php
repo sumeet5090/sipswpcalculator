@@ -360,51 +360,151 @@ require_once __DIR__ . '/functions.php';
                 <!-- FAQ Section -->
                 <div class="mt-12">
                     <h2 id="faq" class="text-2xl font-bold mb-6 text-gray-800">Frequently Asked Questions</h2>
-                    <dl class="space-y-6">
-                        <div>
-                            <dt class="font-bold text-lg text-gray-900">Which is better worldwide, SWP or Annuity?</dt>
-                            <dd class="mt-2 text-gray-600">SWP is generally better for growth, flexibility, and post-tax
-                                returns, making it ideal for the majority of a retiree's portfolio if they can handle
-                                mild volatility. The principal in an SWP belongs to you. Annuities are better for people
-                                who want absolute guarantees and zero market risk, acting as 'longevity insurance', but
-                                they offer very low post-tax yields and little flexibility.</dd>
-                        </div>
-                        <div>
-                            <dt class="font-bold text-lg text-gray-900">How does the taxation of SWP differ from an
-                                Annuity in 2026?</dt>
-                            <dd class="mt-2 text-gray-600">Annuity payouts are fully added to your income and taxed at
-                                your marginal slab rate (up to 30%). SWP is significantly more tax-efficient: only the
-                                capital gains portion of a withdrawal is taxed, while the principal is tax-free. Long
-                                Term Capital Gains (LTCG) in equity funds are taxed at just 12.5% on gains exceeding
-                                $1,500 per financial year.</dd>
-                        </div>
-                        <div>
-                            <dt class="font-bold text-lg text-gray-900">What is the "Sequence of Returns" risk in SWPs?
-                            </dt>
-                            <dd class="mt-2 text-gray-600">Sequence of returns risk refers to the danger of the stock
-                                market crashing right when you begin your retirement. If your portfolio crashes by 20%
-                                early on, and you continue to withdraw $500 every month via an SWP, you force the
-                                sale of mutual fund units at depressed prices, permanently destroying capital. Annuities
-                                have zero sequence of returns risk.</dd>
-                        </div>
-                    </dl>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">Which is better worldwide — SWP or
+                            Annuity?</summary>
+                        <div class="pb-4 text-gray-600">SWP is generally better for <strong>growth, flexibility, and
+                                post-tax returns</strong>, making it ideal for the majority of a retiree's portfolio if
+                            they can handle mild volatility. The principal in an SWP belongs to you and can be withdrawn
+                            anytime or passed to heirs. Annuities are better for people who want <strong>absolute
+                                guarantees and zero market risk</strong>, acting as "longevity insurance". However,
+                            annuities offer very low post-tax yields (4-4.5% after tax) and little flexibility. The
+                            expert consensus is to use <strong>both</strong>: an annuity to cover your bare-minimum
+                            "floor" expenses, and SWP for everything above that.</div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">How exactly does SWP taxation
+                            differ from Annuity taxation in 2026?</summary>
+                        <div class="pb-4 text-gray-600"><strong>Annuity:</strong> The entire payout is added to your
+                            income and taxed at your marginal slab rate. If you are in the 30% bracket, a 6% annuity
+                            yields only 4.2% post-tax. Every single payout is fully taxable — there is no distinction
+                            between "principal" and "interest".<br><br><strong>SWP:</strong> Each withdrawal is a
+                            partial redemption of mutual fund units. Only the <em>capital gain portion</em> is taxable.
+                            In the initial years, 80-90% of each withdrawal is your own principal returning to you
+                            (completely tax-free). The gains portion is taxed at just 12.5% LTCG, and the first $1.25
+                            Lakh of LTCG per year is fully exempt. Effective tax rate on SWP: <strong>1-4%</strong> vs
+                            20-30% on annuity income.</div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">What is "Sequence of Returns Risk"
+                            and how does it affect SWP?</summary>
+                        <div class="pb-4 text-gray-600">Sequence of returns risk (SORR) refers to the danger of a major
+                            market crash occurring in the <strong>first 3-5 years</strong> of your retirement. If your
+                            corpus drops 30% in Year 1 and you continue withdrawing the same amount via SWP, you
+                            permanently destroy capital that would have compounded for decades. Annuities are immune to
+                            this risk. Mitigation: use the <strong>3-Bucket Strategy</strong> — keep 3 years of expenses
+                            in cash/liquid funds, so you never sell equity during a crash. Read our <a
+                                href="/swp-retirement-planning" class="text-indigo-600 hover:underline">Retirement SWP
+                                Blueprint</a> for the detailed implementation.</div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">Is the NPS annuity mandatory? Can
+                            I use SWP instead?</summary>
+                        <div class="pb-4 text-gray-600">Under current NPS rules, you <strong>must</strong> use at least
+                            40% of your NPS corpus to purchase a life annuity from an IRDA-approved insurer at
+                            retirement. The remaining 60% can be withdrawn as a lump sum (tax-free on the 60% portion).
+                            That lump-sum amount can then be deployed into a mutual fund SWP — this is the optimal
+                            configuration. Use the mandatory 40% annuity as your "floor" income, and use SWP from the
+                            60% lump sum for growth and flexibility.</div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">What about "Joint Life" annuity
+                            options for couples?</summary>
+                        <div class="pb-4 text-gray-600">Joint-life annuities continue paying the surviving spouse after
+                            the primary annuitant dies — but the trade-off is a <strong>20-30% lower initial
+                                payout</strong> compared to a single-life annuity. For example, if a single-life annuity
+                            pays $500/month, the same corpus as a joint-life annuity may pay only $400/month. With SWP,
+                            this is a non-issue: the remaining mutual fund corpus is simply transferred to the
+                            nominee/surviving spouse via a simple transmission process, maintaining full flexibility and
+                            compound growth potential for the surviving partner.</div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">Can I get a "step-up" annuity that
+                            increases payouts each year?</summary>
+                        <div class="pb-4 text-gray-600">Some insurers offer annuities with a 3% or 5% simple annual
+                            increase. However, these plans come with a <strong>significantly lower starting
+                                payout</strong> — often 30-40% less than a flat annuity. This reduces the initial yield
+                            to 3.5-4%, which is barely above savings account rates. With SWP, you can implement custom
+                            step-ups of 5-7% annually while maintaining a 4% initial withdrawal rate, and because your
+                            underlying equity portfolio targets 10-12% growth, the math works out far more favorably
+                            than any step-up annuity product.</div>
+                    </details>
                 </div>
 
                 <!-- Related Guides -->
-                <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
-                                Calculator</a> — Calculate exact SWP withdrawal sustainability with Step-Up inflation
-                            features.</li>
-                        <li><a href="/mathematics-of-4-percent-rule-swp"
-                                class="text-indigo-600 hover:underline font-medium">Mathematics of the 4% Rule</a> — How
-                            to safely drain a portfolio without going broke.</li>
-                        <li><a href="/sip-to-swp-transition-guide"
-                                class="text-indigo-600 hover:underline font-medium">Navigating the SIP to SWP
-                                Transition</a> — The ultimate bridge between wealth creation and retirement income.</li>
-                        <li><a href="/swp-vs-fixed-deposit" class="text-indigo-600 hover:underline font-medium">SWP vs
-                                Fixed Deposit 2026</a> — Detailed comparison of Mutual fund SWPs vs traditional FDs.
+                <div class="mt-14 bg-slate-50 border border-slate-200 p-8 rounded-2xl not-prose">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-3">Continue Your
+                        Research</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/mathematics-of-4-percent-rule-swp"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Mathematics of
+                                the 4% Rule</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— The Trinity Study math behind safe
+                                withdrawal rates for 30-year retirements.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/swp-retirement-planning"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Retirement SWP
+                                Blueprint</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— The complete 3-Bucket Strategy and SORR
+                                mitigation guide.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/sip-to-swp-transition-guide"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SIP to SWP
+                                Transition Guide</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— How to bridge the gap between wealth
+                                creation and retirement income.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/swp-vs-fixed-deposit"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP vs Fixed
+                                Deposit 2026</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— Detailed comparison of SWP returns vs
+                                traditional FD interest income.</span>
                         </li>
                     </ul>
                 </div>

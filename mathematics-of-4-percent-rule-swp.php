@@ -228,11 +228,72 @@ require_once __DIR__ . '/functions.php';
                     market underperformance.
                 </p>
 
+                <h2>Frequently Asked Questions</h2>
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Does the 4% rule work for early
+                        retirees (FIRE) with 40-50 year retirements?</summary>
+                    <div class="pb-4 text-gray-600">The original Trinity Study only modeled 30-year retirements. For
+                        FIRE (Financial Independence, Retire Early) practitioners targeting 40-50 year retirements, most
+                        Monte Carlo simulations recommend a lower <strong>3.0-3.5% initial withdrawal rate</strong>. The
+                        longer your retirement, the more vulnerable you are to compounding inflation and a prolonged
+                        bear market. With a 3.25% withdrawal rate from a 70/30 equity-bond portfolio, US historical data
+                        shows a 95%+ success rate even over 50-year periods.</div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Should I use a lower rate (3.5%) for
+                        emerging markets like India?</summary>
+                    <div class="pb-4 text-gray-600">Yes. While Indian equity markets have historically delivered higher
+                        nominal returns (12-15% vs 10% in the US), inflation is also significantly higher (5-6% vs
+                        2-3%). The <strong>real return</strong> (nominal minus inflation) is roughly similar: 6-7%.
+                        However, higher volatility in emerging markets and currency depreciation risk justify a more
+                        conservative <strong>3.5% initial withdrawal rate</strong> with a 5-6% annual inflation step-up.
+                        This provides a safety margin for the unpredictable sequence of returns in more volatile
+                        markets.</div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">What is the difference between the
+                        Bengen Study and the Trinity Study?</summary>
+                    <div class="pb-4 text-gray-600"><strong>Bengen (1994)</strong> was the original research paper by
+                        financial advisor William Bengen. He analyzed US stock and bond returns from 1926-1992 and found
+                        that a 4% initial withdrawal rate, adjusted for inflation, never depleted a 50/50 stock/bond
+                        portfolio over any 30-year period in history. The <strong>Trinity Study (1998)</strong> by three
+                        Trinity University professors expanded on Bengen's work by testing multiple withdrawal rates
+                        (3-12%), multiple asset allocations, and multiple time periods. Both reached the same
+                        conclusion: 4% is the sweet spot for US-based retirements.</div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">What if my fund returns only 7-8%
+                        instead of 10-12%?</summary>
+                    <div class="pb-4 text-gray-600">This is where the math gets dangerous. At 8% nominal return and 6%
+                        inflation, your real return is only 2%. A 4% withdrawal rate now exceeds your real yield by 2x,
+                        meaning <strong>you are consuming principal every year</strong>. In this scenario, either: (a)
+                        reduce your withdrawal rate to 3% or lower, or (b) increase your equity allocation to boost
+                        expected returns (accepting higher volatility), or (c) consider a <a href="/swp-vs-annuity-2026"
+                            class="text-indigo-600 hover:underline">partial annuity</a> for guaranteed floor income
+                        while reducing your SWP withdrawal amount.</div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Can I withdraw more than 4% if markets
+                        are booming?</summary>
+                    <div class="pb-4 text-gray-600">Yes, this is called <strong>"dynamic" or "guardrails" withdrawal
+                            strategy</strong>. When your portfolio grows beyond a threshold (e.g., the corpus has
+                        increased 25% above your starting amount), you can increase your withdrawal. Conversely, if the
+                        corpus drops 20% below the starting value, you reduce withdrawals by 10-20%. This dynamic
+                        approach has been shown to support withdrawal rates up to 5-5.5% over 30 years, because you are
+                        automatically adjusting to market reality instead of mechanically withdrawing a fixed
+                        inflation-adjusted amount regardless of what your portfolio is doing.</div>
+                </details>
+
                 <div
                     class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
                     <h2 class="text-2xl font-bold mb-4 text-white">Test the 4% Rule Mathematically</h2>
                     <p class="mb-8 text-indigo-100">Stop guessing. Input your exact retirement corpus into our free
-                        application and see month-by-month withdrawals plotted visually.</p>
+                        calculator and see month-by-month withdrawals plotted visually with step-up inflation modeling.
+                    </p>
                     <a href="/"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Open SWP Calculator
@@ -244,17 +305,74 @@ require_once __DIR__ . '/functions.php';
                 </div>
 
                 <!-- Related Links -->
-                <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Continue Reading</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/sip-to-swp-transition-guide"
-                                class="text-indigo-600 hover:underline font-medium">Navigating the SIP to SWP
-                                Transition</a> — The bridging strategy before retirement.</li>
-                        <li><a href="/swp-vs-annuity-2026" class="text-indigo-600 hover:underline font-medium">SWP vs
-                                Annuity 2026</a> — The differences in tax efficiency and inflation.</li>
-                        <li><a href="/inflation-impact-on-sip"
-                                class="text-indigo-600 hover:underline font-medium">Inflation Impact on SIP and
-                                Wealth</a> — A detailed look at the silent tax.</li>
+                <div class="mt-14 bg-slate-50 border border-slate-200 p-8 rounded-2xl not-prose">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-3">Continue Reading
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/swp-retirement-planning"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Retirement SWP
+                                Blueprint</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— Apply the 4% rule with the institutional
+                                3-Bucket Strategy for crash protection.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/sip-to-swp-transition-guide"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SIP to SWP
+                                Transition Guide</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— How to bridge wealth creation with
+                                retirement income.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/swp-vs-annuity-2026"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP vs Annuity
+                                2026</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— Tax efficiency and inflation protection
+                                comparison.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/inflation-impact-on-sip"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Inflation
+                                Impact on SIP</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— The Fisher Equation and real vs nominal
+                                return math.</span>
+                        </li>
                     </ul>
                 </div>
 

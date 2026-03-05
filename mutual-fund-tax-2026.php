@@ -243,64 +243,198 @@ require_once __DIR__ . '/functions.php'; ?>
                 </div>
 
                 <h2>Tax-Saving Strategies for Mutual Fund Investors</h2>
+
+                <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Strategy 1: Annual LTCG Harvesting ($1.25 Lakh
+                    Exemption)</h3>
+                <p>Every financial year, you get a <strong>$1.25 Lakh tax-free exemption on equity LTCG</strong>. If you
+                    don't use it, you lose it. The strategy: near the end of each financial year (January-March), redeem
+                    enough equity mutual fund units to book up to $1.25 Lakh in long-term gains, then immediately
+                    reinvest the proceeds back into the same fund. You pay <strong>zero tax</strong> on the gains, and
+                    your cost basis resets to the current (higher) NAV. This effectively eliminates a massive future tax
+                    liability.</p>
+                <div class="bg-indigo-50 border border-indigo-200 p-5 rounded-xl my-6 text-sm not-prose">
+                    <p class="font-bold text-indigo-800 mb-2">LTCG Harvesting Example</p>
+                    <p class="text-gray-700">You invested $5 Lakh in an equity fund. After 3 years, it is worth $8 Lakh
+                        (gain = $3 Lakh). If you redeem everything at once, you pay 12.5% on ($3L - $1.25L) = $21,875 in
+                        tax.</p>
+                    <p class="text-gray-700 mt-2"><strong>Instead:</strong> Harvest $1.25L of gains in Year 1 (tax =
+                        $0), $1.25L in Year 2 (tax = $0), and the remaining $0.50L in Year 3 (tax = $0 because it is
+                        under the exemption). <strong>Total tax paid: $0</strong> instead of $21,875.</p>
+                </div>
+
+                <h3 class="text-xl font-bold mt-8 mb-3 text-gray-800">Strategy 2: Use ELSS for Section 80C (Old Tax
+                    Regime)</h3>
+                <p>If you are on the Old Tax Regime, <strong>Equity-Linked Savings Schemes (ELSS)</strong> provide a
+                    dual benefit: a tax deduction up to $1.5 Lakh under Section 80C, plus the equity fund growth. ELSS
+                    has the shortest lock-in of any 80C instrument (3 years vs 5 years for FDs and 15 years for PPF).
+                    After the lock-in, gains qualify for the favorable 12.5% LTCG treatment.</p>
+
+                <h3 class="text-xl font-bold mt-8 mb-3 text-gray-800">Strategy 3: Time Your SWP for LTCG Treatment</h3>
+                <p>If you are starting an SWP from a lump-sum investment, always wait at least <strong>12 months after
+                        the investment</strong> before beginning the SWP. This ensures every unit sold via the FIFO
+                    method has crossed the 1-year mark, qualifying all gains as LTCG (12.5%) rather than STCG (20%). For
+                    SIP investors, wait until your oldest SIP installment is 13+ months old.</p>
+
+                <h3 class="text-xl font-bold mt-8 mb-3 text-gray-800">Strategy 4: Tax-Loss Harvesting</h3>
+                <p>If one of your mutual funds is currently showing a loss, you can sell it to <strong>book a capital
+                        loss</strong> and immediately reinvest the proceeds into a similar (but not identical) fund.
+                    This realized loss can offset any capital gains you have in the same year, reducing your tax bill.
+                    Key rules:</p>
                 <ul>
-                    <li><strong>Harvest LTCG annually:</strong> Redeem and reinvest up to $1,500 in gains each year
-                        to use the tax-free exemption</li>
-                    <li><strong>Use ELSS for Section 80C:</strong> Tax-saving mutual funds with 3-year lock-in provide
-                        dual benefit — tax deduction + wealth creation</li>
-                    <li><strong>Time your SWP:</strong> Start SWP after all units cross the 1-year mark to ensure LTCG
-                        treatment</li>
-                    <li><strong>Prefer equity for long-term:</strong> Post-2023, debt funds lost the indexation benefit
-                        — equity is now far more tax-efficient</li>
+                    <li><strong>Short-term losses</strong> can offset both STCG and LTCG</li>
+                    <li><strong>Long-term losses</strong> can only offset LTCG</li>
+                    <li>Unused losses can be <strong>carried forward for 8 years</strong></li>
+                    <li>To claim the carry-forward, you must file your ITR before the due date</li>
                 </ul>
 
+                <h3 class="text-xl font-bold mt-8 mb-3 text-gray-800">Strategy 5: Growth Option Over Dividend Option —
+                    Always</h3>
+                <p>Since April 2020, mutual fund dividends are added to your taxable income and taxed at your slab rate
+                    (up to 30%). Additionally, a 10% TDS is deducted on dividends exceeding $5,000/year from a single
+                    AMC. The <strong>Growth Option + SWP combination is always more tax-efficient</strong> than the
+                    Dividend option because SWP taxation only hits the gain portion (not the entire withdrawal), and you
+                    control the timing.</p>
 
                 <h2>Frequently Asked Questions</h2>
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">Is there TDS on mutual fund
                         redemptions?</summary>
                     <div class="pb-4 text-gray-600">No, there is <strong>no TDS on mutual fund redemptions</strong> for
-                        resident Indians (unlike FDs where TDS applies at 10%). You need to self-report capital gains in
-                        your ITR and pay tax accordingly.</div>
+                        resident Indians (unlike FDs where TDS applies at 10%). You receive the full redemption amount
+                        and are responsible for self-reporting capital gains in your Income Tax Return (ITR). However,
+                        note that <strong>NRIs face TDS</strong>: 12.5% on LTCG from equity funds and 30% on STCG. NRIs
+                        can claim refunds by filing ITR if their total income falls in a lower bracket.</div>
                 </details>
 
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">How is SIP taxed if I redeem after 2
                         years?</summary>
-                    <div class="pb-4 text-gray-600">Each SIP installment's holding period is calculated separately. If
-                        your first SIP was 2 years ago, those units qualify for LTCG. But your last installment (1 month
-                        ago) would be STCG. The tax is calculated per unit using the FIFO method.</div>
+                    <div class="pb-4 text-gray-600">Each SIP installment's holding period is calculated
+                        <strong>independently</strong>. If you started a monthly SIP 2 years ago, your first 12
+                        installments (months 1-12) all have holding periods exceeding 12 months and qualify for LTCG
+                        (12.5%). However, your most recent installments (last 12 months) would be STCG (20%). The tax
+                        department uses <strong>FIFO (First In, First Out)</strong> — your oldest (and most
+                        tax-efficient) units are sold first. This is actually favorable for retirees starting SWPs, as
+                        the earliest units have the longest holding periods and the highest proportion of tax-free
+                        principal.</div>
                 </details>
 
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">Are dividends from mutual funds
-                        taxable?</summary>
-                    <div class="pb-4 text-gray-600">Yes, since April 2020. Mutual fund dividends are added to your
-                        income and taxed at your slab rate. A 10% TDS is deducted if dividends exceed $50/year from a
-                        single AMC. Growth option + SWP is generally more tax-efficient than the dividend option.</div>
+                        taxable in 2026?</summary>
+                    <div class="pb-4 text-gray-600">Yes, since April 2020 (post-DDT abolition), mutual fund dividends
+                        are treated as normal income and added to your total taxable income. They are taxed at your
+                        marginal slab rate (up to 30% + cess). A 10% TDS is also deducted if annual dividends from a
+                        single AMC exceed $5,000. <strong>This is why the Growth + SWP combination is universally
+                            recommended over the Dividend option</strong> — it gives you control over taxation timing
+                        and only the gain component is taxed, not the entire payout.</div>
                 </details>
 
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">Can I set off capital losses against
-                        gains?</summary>
-                    <div class="pb-4 text-gray-600">Yes. Short-term capital losses can be set off against both STCG and
-                        LTCG. Long-term capital losses can only be set off against LTCG. Unused losses can be carried
-                        forward for up to 8 assessment years. This is the basis of "tax-loss harvesting."</div>
+                        capital gains?</summary>
+                    <div class="pb-4 text-gray-600">Yes, this is the basis of the <strong>tax-loss harvesting
+                            strategy</strong>. Short-term capital losses can be set off against both STCG and LTCG in
+                        the same financial year. Long-term capital losses can <strong>only</strong> be set off against
+                        LTCG (not STCG). If your total losses exceed your total gains in a year, the excess can be
+                        <strong>carried forward for up to 8 assessment years</strong>. Critical requirement: you must
+                        file your ITR before the due date (typically July 31) to claim the carry-forward benefit. If you
+                        miss the deadline, you permanently lose the ability to carry forward those losses.</div>
                 </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">How are international / global equity
+                        funds taxed in India?</summary>
+                    <div class="pb-4 text-gray-600">International equity funds (funds investing in US stocks, global
+                        ETFs, etc.) are treated as <strong>non-equity funds</strong> for Indian tax purposes, regardless
+                        of their equity allocation. This means: gains are taxed at your income slab rate if the holding
+                        period is less than 2 years (STCG), and at <strong>12.5% without indexation</strong> if held
+                        longer than 2 years (LTCG). There is no $1.25 Lakh LTCG exemption for international funds. This
+                        makes them significantly less tax-efficient than domestic equity funds for Indian residents.
+                    </div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">What is the "grandfathering" clause
+                        for pre-2018 equity investments?</summary>
+                    <div class="pb-4 text-gray-600">When LTCG tax on equity was reintroduced in the 2018 Budget, a
+                        <strong>grandfathering clause</strong> was provided to protect gains earned before January 31,
+                        2018. Any gains accrued up to that date are completely tax-free. The cost of acquisition is
+                        treated as the <strong>higher of</strong>: (a) your actual purchase price, or (b) the NAV on
+                        January 31, 2018. This means if you bought an equity fund at $100 NAV, and on Jan 31, 2018 it
+                        was $500, your cost basis is $500. Any gain after that is taxable at 12.5%. This clause remains
+                        relevant for long-term investors holding pre-2018 SIPs.</div>
+                </details>
+
                 <!-- Related Guides -->
-                <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 not-prose">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
-                                Calculator</a> — Calculate tax-efficient withdrawal strategies</li>
-                        <li><a href="/swp-tax-calculator" class="text-indigo-600 hover:underline font-medium">SWP Tax
-                                Calculator</a> — Step-by-step SWP tax computation guide</li>
-                        <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
-                                Retirement Planning</a> — Tax-efficient retirement income via SWP</li>
-                        <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
-                                PPF</a> — Compare post-tax returns across investments</li>
-                        <li><a href="/sip-for-beginners" class="text-indigo-600 hover:underline font-medium">SIP for
-                                Beginners</a> — Start your tax-efficient investment journey</li>
+                <div class="mt-14 bg-slate-50 border border-slate-200 p-8 rounded-2xl not-prose">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-3">Continue Your Tax
+                        Education</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/swp-tax-calculator"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP Tax
+                                Calculator</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— Compute your exact LTCG and STCG
+                                liability on SWP withdrawals.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/swp-vs-fixed-deposit"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP vs FD Tax
+                                Comparison</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— See the 6-8x tax efficiency advantage of
+                                SWP over FD interest.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/swp-retirement-planning"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Retirement SWP
+                                Blueprint</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— Tax-efficient retirement income
+                                architecture with the 3-Bucket Strategy.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/sip-vs-fd-vs-ppf"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SIP vs FD vs
+                                PPF</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— Compare post-tax real returns across all
+                                major asset classes.</span>
+                        </li>
                     </ul>
                 </div>
 
@@ -308,8 +442,8 @@ require_once __DIR__ . '/functions.php'; ?>
                 <div
                     class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
                     <h2 class="text-2xl font-bold mb-4 text-white">Optimize Your Mutual Fund Taxes</h2>
-                    <p class="mb-8 text-indigo-100">Use our free calculator to model tax-efficient SIP & SWP strategies
-                        and maximize your post-tax returns.</p>
+                    <p class="mb-8 text-indigo-100">Use our free calculator to model tax-efficient SIP & SWP strategies,
+                        simulate LTCG harvesting, and maximize your post-tax returns.</p>
                     <a href="/"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch Calculator

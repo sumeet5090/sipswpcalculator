@@ -135,7 +135,7 @@ require_once __DIR__ . '/functions.php';
 
                 <!-- AI Featured Snippet Summary -->
                 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 not-prose">
-                    <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 Quick Summary: SIP for Beginners</h2>
+                    <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 Quick Summary: The Complete SIP Guide</h2>
                     <p class="text-gray-700 text-sm leading-relaxed">
                         A <strong>Systematic Investment Plan (SIP)</strong> is a method of investing a fixed amount
                         monthly in mutual funds,
@@ -151,222 +151,408 @@ require_once __DIR__ . '/functions.php';
                 </div>
 
                 <!-- H2: What is SIP -->
-                <h2 id="what-is-sip" class="text-3xl font-bold mb-4 text-gray-800">What Is SIP (Systematic Investment
-                    Plan)?</h2>
+                <h2 id="what-is-sip" class="text-3xl font-bold mb-4 text-gray-800">What Exactly Is a SIP (Systematic
+                    Investment Plan)?</h2>
                 <p>
-                    A <strong>Systematic Investment Plan (SIP)</strong> is not a product — it's a <em>method</em> of
-                    investing in mutual funds.
-                    Instead of investing a large lump sum at once, you invest a fixed amount at regular intervals
-                    (usually monthly).
-                    Your bank account is auto-debited, and mutual fund units are purchased at the current market price
-                    (NAV).
+                    A <strong>Systematic Investment Plan (SIP)</strong> is often misunderstood as a financial product
+                    itself.
+                    It is not a product — it is a <em>highly disciplined method</em> of investing in mutual funds.
+                    Instead of trying to time the market by investing a large lump sum at once, you invest a fixed
+                    amount at regular intervals (usually monthly).
+                    Your bank account is auto-debited on a fixed date, and mutual fund units are purchased at the
+                    current market price, known as the Net Asset Value (NAV).
                 </p>
                 <p>
-                    Think of SIP like a recurring deposit (RD) at a bank, but instead of a fixed interest rate, your
-                    money is invested in
-                    the stock market through professionally managed mutual funds — giving you the potential for
-                    <strong>much higher returns</strong>
-                    (12-15% historically vs 6-7% in RDs).
+                    Think of a SIP like a recurring deposit (RD) at a bank, but with a massive upgrade. Instead of
+                    earning a fixed, often inflation-losing interest rate,
+                    your money is invested in the stock market through professionally managed mutual funds. This gives
+                    you the potential for <strong>significantly higher returns</strong>
+                    (historically 12-15% in equities vs 5-7% in traditional savings), while mitigating the risks of a
+                    volatile stock market.
                 </p>
 
-                <!-- H2: How SIP Works -->
-                <h2 id="how-sip-works" class="text-3xl font-bold mt-10 mb-4 text-gray-800">How Does SIP Work? The Rupee
-                    Cost Averaging Advantage</h2>
+                <!-- H2: The Core Mechanics -->
+                <h2 id="how-sip-works" class="text-3xl font-bold mt-10 mb-4 text-gray-800">The Core Mechanics: Rupee
+                    Cost Averaging & Compounding</h2>
                 <p>
-                    SIP's secret weapon is <strong>Rupee Cost Averaging (RCA)</strong>. Here's how it works:
+                    The brilliance of a SIP lies in two mathematical principles working simultaneously: <strong>Rupee
+                        Cost Averaging (RCA)</strong> and <strong>Compounding</strong>.
                 </p>
-                <ul>
-                    <li>When markets are <strong>down</strong>, your fixed SIP amount buys <strong>more units</strong>
-                        (units are cheaper)</li>
-                    <li>When markets are <strong>up</strong>, the same amount buys <strong>fewer units</strong> (units
-                        are expensive)</li>
-                    <li>Over time, your <strong>average cost per unit</strong> is lower than the average market price
-                    </li>
-                </ul>
+
+                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">1. Rupee Cost Averaging (Eliminating Market
+                    Timing)</h3>
                 <p>
-                    This eliminates the need to "time the market" — arguably the biggest advantage for beginners. You
-                    don't need to know
-                    when markets will go up or down. SIP does the work for you.
+                    The number one reason beginners lose money in the stock market is trying to "time" it — buying when
+                    prices are high (due to FOMO) and selling when prices crash (due to panic).
+                    SIP automates this and forces you to do the exact opposite.
+                </p>
+                <div class="overflow-x-auto my-6 not-prose">
+                    <table class="w-full text-sm border-collapse border border-slate-200">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-4 py-3 border border-slate-200 text-left font-bold text-slate-700">Month
+                                </th>
+                                <th class="px-4 py-3 border border-slate-200 text-right font-bold text-slate-700">Market
+                                    State</th>
+                                <th class="px-4 py-3 border border-slate-200 text-right font-bold text-slate-700">SIP
+                                    Amount</th>
+                                <th class="px-4 py-3 border border-slate-200 text-right font-bold text-slate-700">NAV
+                                    Price</th>
+                                <th class="px-4 py-3 border border-slate-200 text-right font-bold text-slate-700">Units
+                                    Bought</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="px-4 py-3 border border-slate-200 text-left">January</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right">Normal</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$100</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$10</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono font-bold">10.00</td>
+                            </tr>
+                            <tr class="bg-red-50">
+                                <td class="px-4 py-3 border border-slate-200 text-left">February</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right text-red-600 font-bold">Market
+                                    Crash</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$100</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$5</td>
+                                <td
+                                    class="px-4 py-3 border border-slate-200 text-right font-mono font-bold text-emerald-600">
+                                    20.00</td>
+                            </tr>
+                            <tr class="bg-emerald-50">
+                                <td class="px-4 py-3 border border-slate-200 text-left">March</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right text-emerald-600 font-bold">Bull
+                                    Market</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$100</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$20</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono font-bold">5.00</td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="bg-slate-100 font-bold">
+                            <tr>
+                                <td colspan="2" class="px-4 py-3 border border-slate-200 text-left">Totals (Average)
+                                </td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$300</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$11.66 (Avg price)
+                                </td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">35.00 units</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <p>
+                    <em>Notice what happened in February.</em> Because the market crashed, your strict $100 bought you
+                    <strong>double the units</strong>.
+                    When the market eventually recovers, those cheaply bought units are what generate massive wealth.
+                    You don't need to know when the crash is coming; SIP handles it automatically.
+                </p>
+
+                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">2. Exponential Compounding</h3>
+                <p>
+                    While simple interest grows linearly (a straight line), compound interest grows exponentially (a
+                    hockey-stick curve).
+                    The interest you earn in Year 1 begins earning its own interest in Year 2. Over decades, the
+                    interest significantly outweighs your actual deposits.
                 </p>
 
                 <!-- H2: How to Start SIP -->
-                <h2 id="how-to-start-sip" class="text-3xl font-bold mt-10 mb-4 text-gray-800">How to Start a SIP: 4-Step
-                    Beginner Guide</h2>
+                <h2 id="how-to-start-sip" class="text-3xl font-bold mt-10 mb-4 text-gray-800">The 5-Step Action Plan:
+                    Starting Your First SIP</h2>
 
-                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 1: Complete Your KYC (5 Minutes)</h3>
+                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 1: Emergency Fund & Debt Check</h3>
                 <p>
-                    KYC (Know Your Customer) is a one-time registration required by SEBI. You can complete it online via
-                    CAMS KRA or KFintech using your <strong>PAN card</strong>, <strong>Aadhaar</strong>, and a selfie.
-                    Most platforms like Groww, Zerodha, or Kuvera handle KYC during signup.
+                    Before starting an equity SIP, ensure you have: (a) Paid off high-interest toxic debt like credit
+                    cards (which charge 24-36% annually — no SIP can out-earn that consistently),
+                    and (b) Saved 3-6 months of living expenses in a liquid savings account or liquid mutual fund. An
+                    equity SIP is for <em>long-term wealth</em>, not emergency cash.
                 </p>
 
-                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 2: Choose Your First Mutual Fund</h3>
-                <p>For beginners, stick to these safe starting points:</p>
-                <ul>
-                    <li><strong>Nifty 50 Index Fund</strong> — Tracks India's top 50 companies. Low expense ratio
-                        (~0.1-0.2%). Best for pure beginners.</li>
-                    <li><strong>Large-Cap Fund</strong> — Invests in established, top-100 companies. Moderate risk.</li>
-                    <li><strong>Balanced Advantage Fund</strong> — Automatically shifts between equity and debt. Lowest
-                        volatility.</li>
-                </ul>
-                <p><strong>Pro tip:</strong> Always choose <strong>Direct Plans</strong> (not Regular) — they have
-                    0.5-1% lower expense ratios, which compounds to lakhs over 20 years.</p>
-
-                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 3: Set Up Your SIP (10 Minutes)</h3>
-                <ul>
-                    <li><strong>Amount:</strong> Start with whatever you can afford — even $5/month. You can increase
-                        anytime.</li>
-                    <li><strong>SIP Date:</strong> Choose any date between 1st and 28th. Most investors use salary
-                        credit date + 2 days.</li>
-                    <li><strong>Bank Mandate:</strong> Set up auto-debit (NACH mandate) so SIP runs automatically every
-                        month.</li>
-                </ul>
-
-                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 4: Stay Invested for 7+ Years</h3>
+                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 2: Complete Your KYC (100% Online)</h3>
                 <p>
-                    This is the <strong>most important step</strong>. The power of SIP comes from long-term compounding.
-                    <strong>Do not stop your SIP during market crashes</strong> — that is when you're buying units at
-                    the lowest prices,
-                    which will give you the best returns when markets recover. Historical data shows that investors who
-                    continued SIPs
-                    through the 2008 and 2020 crashes saw the highest long-term returns.
+                    KYC (Know Your Customer) is a mandatory, one-time regulatory requirement. You can complete it
+                    entirely online via central agencies like CAMS or KFintech using:
+                    Your tax identification number (PAN card in India), National ID (Aadhaar), a canceled cheque, and a
+                    quick video selfie. Modern investment apps (Groww, Zerodha, Kuvera) integrate this smoothly into
+                    their 5-minute onboarding process.
+                </p>
+
+                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 3: Choose the Right Fund Category</h3>
+                <p>The universe of mutual funds is vast, but beginners should keep it simple and boring. Avoid sectoral
+                    or thematic funds (like "Tech Funds" or "Energy Funds") which require precise timing.</p>
+                <ul>
+                    <li><strong>Index Funds (Highly Recommended):</strong> Funds that blindly track a major index (like
+                        the Nifty 50 or S&P 500). They have extremely low fees (expense ratios of ~0.1-0.2%) and
+                        outperform 80% of active fund managers over a 15-year period.</li>
+                    <li><strong>Large-Cap Active Funds:</strong> Invest in the top 100 established, blue-chip companies.
+                        Slightly higher fees, but theoretically offer downside protection during crashes.</li>
+                    <li><strong>Flexi-Cap Funds:</strong> The fund manager has the freedom to invest across large, mid,
+                        and small-cap stocks based on market conditions. Good for a "fill it, shut it, forget it" core
+                        portfolio.</li>
+                </ul>
+                <div class="bg-amber-50 border-l-4 border-amber-500 p-4 my-6">
+                    <p class="font-bold text-amber-800 m-0">🚨 The Golden Rule of Selection:</p>
+                    <p class="text-amber-800 mt-2 m-0">Always choose <strong>Direct Plans</strong>, never "Regular
+                        Plans." Regular plans pay a daily hidden commission to the broker/agent from your corpus. Direct
+                        plans do not. A 1% difference in expense ratio can cost you 15-20% of your total final wealth
+                        over 25 years.</p>
+                </div>
+
+                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 4: Set the Logistics (Date & Amount)</h3>
+                <ul>
+                    <li><strong>Amount:</strong> Start with whatever is comfortable — even $10 or $50 a month. It is
+                        about building the habit, not the initial size. You will use the Step-Up strategy later.</li>
+                    <li><strong>SIP Date:</strong> Mathematically, the date of your SIP (1st vs 15th vs 28th) makes
+                        <strong>almost zero difference</strong> over a 10-year horizon. Practically, set it for 2-3 days
+                        after your salary hits your bank account to enforce the "pay yourself first" principle.</li>
+                    <li><strong>Bank Mandate:</strong> Register an OTM (One Time Mandate) with your bank. This
+                        authorizes the platform to auto-debit the exact SIP amount automatically. Remove human willpower
+                        from the equation.</li>
+                </ul>
+
+                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 5: Survive the Behavioral Traps (7+ Years)
+                </h3>
+                <p>
+                    Setting up the SIP is 10% of the work; doing absolutely nothing for the next decade is the remaining
+                    90%.
+                    Markets <em>will</em> crash by 20-30% every few years. Your portfolio will briefly show negative
+                    returns.
+                    <strong>Do not stop or pause your SIP during these times.</strong> Doing so cuts off the Rupee Cost
+                    Averaging engine precisely when prices are cheapest.
                 </p>
 
                 <!-- H2: Power of Compounding -->
-                <h2 id="sip-power-of-compounding" class="text-3xl font-bold mt-10 mb-4 text-gray-800">The Power of
-                    Compounding: SIP Growth Examples</h2>
+                <h2 id="sip-power-of-compounding" class="text-3xl font-bold mt-10 mb-4 text-gray-800">The Mathematics of
+                    Wealth: SIP Growth Scenarios</h2>
+                <p>Let's look at the mathematical reality of long-term disciplined investing. Small monthly amounts
+                    scale to staggering numbers over decades.</p>
 
                 <div class="grid md:grid-cols-2 gap-8 my-8 not-prose">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h4 class="text-lg font-bold text-emerald-700 mb-2">$50/month for 20 Years @ 12%</h4>
-                        <ul class="space-y-2 text-sm text-gray-700">
-                            <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">$12,00,000</span></li>
-                            <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+$37,96,000</span></li>
-                            <li class="flex justify-between border-t border-gray-100 pt-2"><span>Final Value:</span>
-                                <span class="font-bold text-emerald-700">$49,96,000</span>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-t-emerald-500">
+                        <h4 class="text-lg font-bold text-gray-900 mb-2">Scenario A: The Flat SIP</h4>
+                        <p class="text-sm text-gray-500 mb-4">$500/month for 20 Years @ 12% annual return</p>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li class="flex justify-between items-center"><span class="text-gray-500">Total
+                                    Invested:</span> <span class="font-bold text-gray-900 font-mono">$1,20,000</span>
                             </li>
+                            <li class="flex justify-between items-center"><span class="text-gray-500">Wealth Gained
+                                    (Interest):</span> <span
+                                    class="font-bold text-emerald-600 font-mono">+$3,79,573</span></li>
+                            <li class="flex justify-between items-center border-t border-gray-200 pt-3"><span
+                                    class="font-bold text-gray-900">Final Portfolio Value:</span> <span
+                                    class="text-xl font-extrabold text-emerald-700 font-mono">$4,99,573</span></li>
                         </ul>
-                        <p class="text-xs text-gray-500 mt-4">Your money multiplied ~4.2x through compounding alone.</p>
+                        <p class="text-xs text-gray-500 mt-4 leading-relaxed">Your money multiplied ~4.1x. The majority
+                            of your final wealth isn't your money; it's the interest earned on your interest.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h4 class="text-lg font-bold text-indigo-700 mb-2">$100/month + 10% Step-Up for 20 Years @
-                            12%</h4>
-                        <ul class="space-y-2 text-sm text-gray-700">
-                            <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">$68,73,000</span></li>
-                            <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+$2,85,27,000</span></li>
-                            <li class="flex justify-between border-t border-gray-100 pt-2"><span>Final Value:</span>
-                                <span class="font-bold text-indigo-700">$3,54,00,000</span>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-t-indigo-600">
+                        <h4 class="text-lg font-bold text-gray-900 mb-2">Scenario B: The Step-Up SIP</h4>
+                        <p class="text-sm text-gray-500 mb-4">$500/month + <span
+                                class="bg-indigo-100 text-indigo-800 px-1 rounded">10% Annual Increase</span> for 20
+                            Years @ 12%</p>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li class="flex justify-between items-center"><span class="text-gray-500">Total
+                                    Invested:</span> <span class="font-bold text-gray-900 font-mono">$3,43,649</span>
                             </li>
+                            <li class="flex justify-between items-center"><span class="text-gray-500">Wealth Gained
+                                    (Interest):</span> <span
+                                    class="font-bold text-emerald-600 font-mono">+$10,31,048</span></li>
+                            <li class="flex justify-between items-center border-t border-gray-200 pt-3"><span
+                                    class="font-bold text-gray-900">Final Portfolio Value:</span> <span
+                                    class="text-xl font-extrabold text-indigo-700 font-mono">$13,74,697</span></li>
                         </ul>
-                        <p class="text-xs text-gray-500 mt-4">Step-up SIP supercharges compounding — 3.5x more than flat
-                            SIP!</p>
+                        <p class="text-xs text-gray-500 mt-4 leading-relaxed">By simply increasing your SIP by 10% once
+                            a year (aligning with salary hikes), your final corpus is <strong>2.7x larger</strong> than
+                            Scenario A.</p>
                     </div>
                 </div>
 
-                <!-- H2: Step-Up SIP -->
-                <h2 id="step-up-sip-strategy" class="text-3xl font-bold mt-10 mb-4 text-gray-800">Step-Up SIP: The
-                    Strategy That Triples Your Corpus</h2>
-                <p>
-                    A <strong>Step-Up SIP (Top-Up SIP)</strong> automatically increases your monthly investment by a
-                    fixed percentage every year.
-                    As your salary grows, your SIP grows with it. This is the single most impactful strategy beginners
-                    can use.
-                </p>
-                <p>
-                    <strong>Formula:</strong> Year N monthly SIP = Base SIP × (1 + step-up%)^(N-1)<br>
-                    <strong>Example:</strong> $100 base with 10% step-up → Year 2: $11,000 → Year 3: $12,100 → Year
-                    5: $14,641
-                </p>
-                <p>
-                    <strong>Impact comparison</strong> for $100/month at 12% for 20 years:
-                </p>
-                <ul>
-                    <li>0% step-up: <strong>$1 Million</strong></li>
-                    <li>5% step-up: <strong>$1.73 Million</strong></li>
-                    <li>10% step-up: <strong>$3.54 Million</strong> (3.5× more!)</li>
-                    <li>15% step-up: <strong>$5.7 Million</strong></li>
-                </ul>
+                <!-- H2: Edge Cases and What-Ifs -->
+                <h2 id="edge-cases-what-ifs" class="text-3xl font-bold mt-10 mb-4 text-gray-800">Edge Cases: What
+                    Happens When Things Go Wrong?</h2>
 
-                <!-- H2: Common Mistakes -->
-                <h2 id="common-sip-mistakes" class="text-3xl font-bold mt-10 mb-4 text-gray-800">5 Common SIP Mistakes
-                    Beginners Make</h2>
-                <ol>
-                    <li><strong>Stopping SIP during market crashes</strong> — This is the #1 mistake. You're buying
-                        fewer units at higher prices in bull markets and more at lower prices during crashes. Stopping
-                        means you miss the best buying opportunity.</li>
-                    <li><strong>Chasing last year's returns</strong> — Don't pick a fund just because it gave 40% last
-                        year. Focus on 5-7 year consistency and low expense ratios.</li>
-                    <li><strong>Not using step-up</strong> — A flat SIP for 20 years significantly underperforms a 10%
-                        step-up SIP. Always increase with your salary.</li>
-                    <li><strong>Investing in Regular Plans</strong> — Direct plans save 0.5-1% annually in commissions,
-                        which compounds to lakhs over decades.</li>
-                    <li><strong>Redeeming too early</strong> — SIP needs 7-10+ years to show its magic. Withdrawing in
-                        2-3 years defeats the purpose of compounding.</li>
-                </ol>
+                <h3 class="text-xl font-bold mt-6 mb-2 text-gray-800">What if I miss a SIP payment due to low bank
+                    balance?</h3>
+                <p>
+                    The Mutual Fund AMC does not penalize you or cancel your folio. However, your <em>bank</em> might
+                    charge an ECS/NACH bounce fee (typically $2-$5).
+                    If you miss 3 consecutive SIP installments, the AMC will typically auto-cancel the SIP mandate to
+                    prevent you from accumulating bank charges.
+                    Your existing invested money remains fully safe and continues to grow in the market. You can simply
+                    start a new SIP mandate when your finances stabilize.
+                </p>
+
+                <h3 class="text-xl font-bold mt-6 mb-2 text-gray-800">What if I lose my job and can't continue the SIP?
+                </h3>
+                <p>
+                    SIPs are completely flexible, unlike traditional insurance endowment policies that lock you in. You
+                    can "Pause" your SIP from your investment dashboard.
+                    Most platforms allow a pause for up to 3 to 6 months. If you need longer, you can completely "Stop"
+                    or "Cancel" the SIP.
+                    Stopping a SIP <strong>does not mean withdrawing your money</strong>. The units you already bought
+                    stay invested and compound. There are zero penalties for stopping a SIP.
+                </p>
+
+                <h3 class="text-xl font-bold mt-6 mb-2 text-gray-800">What if the market crashes by 40% right after I
+                    start?</h3>
+                <p>
+                    From a mathematical standpoint, a market crash in the early years of your SIP accumulation phase is
+                    the <strong>best thing that can happen to you</strong>.
+                    If the market crashes 40%, NAVs drop by 40%. This means your monthly SIP amount suddenly buys you
+                    40% more units every single month the market stays down.
+                    You are accumulating a massive volume of assets at wholesale prices. When the market inevitably
+                    recovers 5 years later, the sheer volume of units you accumulated will slingshot your portfolio
+                    value to new highs.
+                    <em>Early crashes = Good. Late crashes (right before retirement) = Bad (which is why we shift to
+                        debt near retirement).</em>
+                </p>
+
+                <!-- H2: Advanced Strategy: The Core-Satellite Approach -->
+                <h2 id="core-satellite-strategy" class="text-3xl font-bold mt-10 mb-4 text-gray-800">Going Beyond
+                    Basics: The Core-Satellite Portfolio</h2>
+                <p>Once you are comfortable with a basic Index Fund SIP, you can structure your portfolio using
+                    institutional methods.</p>
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-xl my-6">
+                    <h4 class="font-bold text-slate-800 text-lg mb-3">The 80/20 Rule</h4>
+                    <ul class="space-y-4">
+                        <li>
+                            <strong>The Core (80% of your SIPs):</strong> Extremely stable, diversified, totally boring
+                            funds. Focus on broad market Index Funds (Nifty 50) and Flexi-Cap funds.
+                            This forms the bedrock of your retirement and compounding engine. You never touch this.
+                        </li>
+                        <li>
+                            <strong>The Satellite (20% of your SIPs):</strong> High risk, high reward tactical
+                            allocations. This includes Small-Cap funds, Mid-Cap funds, or international/US equity funds.
+                            If the satellite crashes, your core protects you. If the satellite booms, it provides alpha
+                            (excess returns) to your overall portfolio.
+                        </li>
+                    </ul>
+                </div>
+
 
                 <!-- FAQ Section -->
-                <div class="mt-12">
-                    <h2 id="faq" class="text-2xl font-bold mb-6 text-gray-800">Frequently Asked Questions</h2>
+                <div class="mt-16">
+                    <h2 id="faq" class="text-3xl font-bold mb-6 text-gray-800">Extensive FAQ: Every Question Answered
+                    </h2>
                     <dl class="space-y-6">
-                        <div>
-                            <dt class="font-bold text-lg text-gray-900">What is SIP and how does it work?</dt>
-                            <dd class="mt-2 text-gray-600">SIP is a method of investing a fixed amount monthly in mutual
-                                funds. It automatically buys units at current market prices — more units when prices are
-                                low, fewer when high. This Rupee Cost Averaging reduces risk and builds wealth through
-                                compounding over 7+ years.</dd>
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                            <dt class="font-bold text-lg text-indigo-900 border-b border-gray-100 pb-3 mb-3">Is SIP a
+                                Mutual Fund or a stock?</dt>
+                            <dd class="text-gray-600 leading-relaxed">Neither. SIP is simply an <em>instruction</em> to
+                                your bank and broker to invest a specific amount of money on a specific date into a
+                                specific Mutual Fund. The Mutual Fund then takes that money and buys stocks on your
+                                behalf.</dd>
                         </div>
-                        <div>
-                            <dt class="font-bold text-lg text-gray-900">What is the minimum amount to start SIP?</dt>
-                            <dd class="mt-2 text-gray-600">$5/month with most fund houses. Some like SBI MF allow
-                                $1/month. You can start with any amount and increase later.</dd>
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                            <dt class="font-bold text-lg text-indigo-900 border-b border-gray-100 pb-3 mb-3">Can I
+                                withdraw my money anytime?</dt>
+                            <dd class="text-gray-600 leading-relaxed">Yes. Unless you invest in an ELSS (Equity Linked
+                                Savings Scheme, a tax-saving fund with a strict 3-year lock-in), open-ended mutual funds
+                                are highly liquid. You can push "Redeem" and the money will hit your bank account in 2
+                                to 3 working days. However, withdrawing within the first 1 year usually incurs a 1% Exit
+                                Load penalty and Short Term Capital Gains tax.</dd>
                         </div>
-                        <div>
-                            <dt class="font-bold text-lg text-gray-900">Is SIP safe for beginners?</dt>
-                            <dd class="mt-2 text-gray-600">SIP in equity funds carries market risk, but it's one of the
-                                safest ways to enter the stock market due to Rupee Cost Averaging and professional
-                                management. Start with index funds or large-cap funds for lowest risk.</dd>
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                            <dt class="font-bold text-lg text-indigo-900 border-b border-gray-100 pb-3 mb-3">Should I
+                                pause my SIP when the market is at an "all-time high"?</dt>
+                            <dd class="text-gray-600 leading-relaxed">Absolutely not. Historical data shows that markets
+                                spend a significant portion of their existence at or near "all-time highs." If you stop
+                                investing at all-time highs, you miss out on the subsequent years of growth. Trying to
+                                time the market defeats the entire mathematical purpose of Rupee Cost Averaging.</dd>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                            <dt class="font-bold text-lg text-indigo-900 border-b border-gray-100 pb-3 mb-3">How are the
+                                returns taxed?</dt>
+                            <dd class="text-gray-600 leading-relaxed">For equity mutual funds (worldwide context varies,
+                                but using standard models): If you sell units within 1 year, you pay Short-Term Capital
+                                Gains (STCG) tax, typically higher (~20%). If you sell after 1 year, you pay Long-Term
+                                Capital Gains (LTCG) tax, typically lower (~12.5%), and often with an initial tax-free
+                                exemption bracket. Crucially, SIP taxation follows the FIFO (First In, First Out)
+                                method. Every individual monthly installment has its own 1-year clock before it
+                                qualifies for LTCG.</dd>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                            <dt class="font-bold text-lg text-indigo-900 border-b border-gray-100 pb-3 mb-3">What
+                                happens to my SIP if the investment platform (Groww, Zerodha) shuts down?</dt>
+                            <dd class="text-gray-600 leading-relaxed">Your money is 100% safe. The investment platforms
+                                are merely transaction conduits. Your actual mutual fund units are held digitally in
+                                your name with the central depositories (NSDL/CDSL) and the Mutual Fund Company (AMC).
+                                If an app disappears tomorrow, you can simply log directly into the AMC's website (e.g.,
+                                HDFC AMC, Vanguard) using your PAN/ID and access your portfolio seamlessly.</dd>
                         </div>
                     </dl>
                 </div>
 
                 <!-- Related Guides -->
-                <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
-                                Calculator</a> — Calculate your SIP returns with step-up compounding</li>
-                        <li><a href="/sip-step-up-calculator"
-                                class="text-indigo-600 hover:underline font-medium">Step-Up SIP Guide</a> — How a 10%
-                            annual increase doubles your corpus</li>
-                        <li><a href="/inflation-impact-on-sip"
-                                class="text-indigo-600 hover:underline font-medium">Inflation Impact on SIP</a> — How
-                            inflation erodes returns and the step-up solution</li>
-                        <li><a href="/swp-vs-fixed-deposit" class="text-indigo-600 hover:underline font-medium">SWP vs
-                                Fixed Deposit</a> — Convert your SIP corpus into retirement income</li>
-                        <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
-                                PPF</a> — Which investment option is best for your goal?</li>
+                <div class="mt-12 bg-indigo-50 p-8 rounded-2xl border border-indigo-100 shadow-inner">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Continue Your Journey: Related Masterguides</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="bg-indigo-200 text-indigo-800 rounded-full p-1 mr-3 mt-0.5"><svg
+                                    class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg></span>
+                            <a href="/sip-calculator"
+                                class="text-indigo-700 hover:text-indigo-900 font-bold transition-colors">Advanced SIP &
+                                SWP Calculator</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— Model your precise scenario with
+                                completely customizable step-up percentages.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-indigo-200 text-indigo-800 rounded-full p-1 mr-3 mt-0.5"><svg
+                                    class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg></span>
+                            <a href="/inflation-impact-on-sip"
+                                class="text-indigo-700 hover:text-indigo-900 font-bold transition-colors">The Silent
+                                Killer: Inflation Impact on SIP</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— Why relying on flat SIPs guarantees your
+                                purchasing power erodes over 20 years.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-indigo-200 text-indigo-800 rounded-full p-1 mr-3 mt-0.5"><svg
+                                    class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg></span>
+                            <a href="/sip-to-swp-transition-guide"
+                                class="text-indigo-700 hover:text-indigo-900 font-bold transition-colors">The SIP to SWP
+                                Transition Masterguide</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— How to flawlessly automate the bucket
+                                strategy to protect your corpus 3 years before retirement.</span>
+                        </li>
                     </ul>
                 </div>
 
                 <!-- CTA -->
                 <div
-                    class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
-                    <h2 class="text-2xl font-bold mb-4 text-white">Ready to Start Your SIP Journey?</h2>
-                    <p class="mb-8 text-indigo-100">Use our free calculator to see how much wealth you can build with
-                        SIP. Try different step-up percentages to find your optimal strategy.</p>
-                    <a href="/"
-                        class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
-                        Launch SIP Calculator
-                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </a>
+                    class="mt-14 p-10 bg-gradient-to-br from-indigo-700 via-indigo-800 to-purple-900 rounded-3xl text-white shadow-2xl text-center not-prose relative overflow-hidden">
+                    <div
+                        class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] opacity-30">
+                    </div>
+                    <div class="relative z-10">
+                        <h2 class="text-3xl md:text-4xl font-extrabold mb-5 text-white tracking-tight">Stop reading.
+                            Start compounding.</h2>
+                        <p class="mb-10 text-indigo-200 text-lg md:text-xl max-w-2xl mx-auto font-medium">Use our
+                            institutional-grade calculator to stress-test your exact SIP scenario, model inflation, and
+                            map out your path to financial independence.</p>
+                        <a href="/"
+                            class="inline-flex items-center px-10 py-4 bg-white text-indigo-800 font-extrabold text-lg rounded-xl shadow-xl hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-2xl hover:scale-105 transform transition-all duration-300 ring-4 ring-white/20">
+                            Launch the Ultimate SIP/SWP Calculator
+                            <svg class="w-6 h-6 ml-3 stroke-current" fill="none" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
+
+            </article>
 
             </article>
         </main>

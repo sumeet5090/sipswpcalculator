@@ -205,11 +205,72 @@ require_once __DIR__ . '/functions.php';
                     the entire 50-year lifecycle of your money on a single graph.
                 </p>
 
+                <h2>Frequently Asked Questions</h2>
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">What happens if I don't de-risk before
+                        retirement?</summary>
+                    <div class="pb-4 text-gray-600">If your entire corpus is in aggressive small-cap or mid-cap equity
+                        on the day you retire, a 30-40% market crash (which statistically happens every 8-12 years)
+                        would immediately destroy decades of compounding. With 100% equity and a 40% crash, your $1M
+                        corpus drops to $600K. Your SWP now draws from a severely depleted pool, and the
+                        <strong>sequence of returns risk</strong> creates a death spiral: you sell more units at lower
+                        prices, accelerating depletion. The Glide Path approach prevents this by ensuring at least 2-3
+                        years of expenses are in near-zero-volatility assets before you turn on the SWP tap.</div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">When should I stop my SIPs and start
+                        SWP?</summary>
+                    <div class="pb-4 text-gray-600">You don't "stop and start" on the same day. The transition is
+                        gradual over 3-5 years. <strong>Phase 1 (T-5 to T-3 years):</strong> Continue SIPs but redirect
+                        new SIPs to balanced/hybrid funds. <strong>Phase 2 (T-3 to T-1 years):</strong> Stop equity SIPs
+                        entirely. Start harvesting LTCG (up to $1.25L/year tax-free). Build Bucket 1 with 2-3 years of
+                        expenses. <strong>Phase 3 (Retirement Day):</strong> Activate SWP from Bucket 1 only. Your
+                        equity allocation should now be 50-60% (down from 80-90%), and your SWP source is a
+                        low-volatility fund, not a pure equity fund.</div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Won't shifting from equity to debt
+                        create a huge tax bill?</summary>
+                    <div class="pb-4 text-gray-600">This is the most common fear — and it's a valid one. If you dump
+                        everything at once, yes, a massive LTCG event triggers. The solution: <strong>tax harvesting
+                            over multiple financial years</strong>. Each year, redeem up to $1.25 Lakh in LTCG from
+                        equity (completely tax-free). Reinvest the proceeds into your Bucket 1/2 (liquid/hybrid funds).
+                        Over 3-5 years, you smoothly shift your asset allocation while paying <strong>zero
+                            taxes</strong> on up to $6.25 Lakh of capital gains. This is the intellectual advantage of
+                        the transition guide — you must plan the tax drag, not just the asset allocation.</div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">What if I need a large lump sum
+                        (medical emergency) during retirement?</summary>
+                    <div class="pb-4 text-gray-600">This is a critical edge case the Bucket Strategy handles elegantly.
+                        Bucket 1 (liquid funds) provides <strong>instant T+1 day liquidity</strong> — you can redeem any
+                        amount and receive it the next business day. For larger emergencies beyond your liquid buffer,
+                        you can redeem from Bucket 2 (hybrid funds) within T+2 days. You should <em>never</em> have to
+                        touch Bucket 3 (equity) in a panic. Additionally, maintaining a separate <strong>Health
+                            Emergency Fund</strong> (6-12 months of expenses in a savings account or sweep-in FD) is
+                        recommended on top of the 3-Bucket structure.</div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Should I use a Balanced Advantage Fund
+                        (BAF) as my single SWP fund?</summary>
+                    <div class="pb-4 text-gray-600">BAFs are excellent for the <strong>middle bucket</strong> (Bucket 2)
+                        because they dynamically shift between equity and debt based on market valuations. However,
+                        using a BAF as your <em>only</em> SWP fund is a compromise — they still carry 20-30% equity
+                        allocation even in expensive markets, meaning some crash exposure remains. The Bucket Strategy
+                        is superior: use a liquid fund for Bucket 1 (zero volatility), BAF for Bucket 2 (moderate
+                        volatility), and a pure equity fund for Bucket 3 (maximum growth). This layered approach gives
+                        you more control than any single fund can.</div>
+                </details>
+
                 <div
                     class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
                     <h2 class="text-2xl font-bold mb-4 text-white">Visualize Your Lifelong Financial Journey</h2>
                     <p class="mb-8 text-indigo-100">Set your SIP accumulation phase and immediately attach an SWP
-                        decumulation phase to see exactly how your money bridges the gap.</p>
+                        decumulation phase to see exactly how your money bridges the gap over 50 years.</p>
                     <a href="/"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch Full Lifecycle Calculator
@@ -220,17 +281,73 @@ require_once __DIR__ . '/functions.php';
                     </a>
                 </div>
 
-                <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Further Reading</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/mathematics-of-4-percent-rule-swp"
-                                class="text-indigo-600 hover:underline font-medium">Mathematics of the 4% Rule</a> — How
-                            to safely drain a portfolio without going broke.</li>
-                        <li><a href="/swp-vs-annuity-2026" class="text-indigo-600 hover:underline font-medium">SWP vs
-                                Annuity 2026</a> — The differences in tax efficiency between two decumulation
-                            strategies.</li>
-                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
-                                Fund Taxation in 2026</a> — Detailed breakdown of STCG, LTCG, and tax harvesting rules.
+                <div class="mt-14 bg-slate-50 border border-slate-200 p-8 rounded-2xl not-prose">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-3">Further Reading
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/mathematics-of-4-percent-rule-swp"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Mathematics of
+                                the 4% Rule</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— The exact math behind sustainable
+                                withdrawal rates for 30-year retirements.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/swp-vs-annuity-2026"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP vs Annuity
+                                2026</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— Floor & Upside Strategy for combining
+                                guaranteed and market-linked income.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/mutual-fund-tax-2026"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Mutual Fund
+                                Tax 2026</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— LTCG harvesting, Section 80C, and
+                                tax-loss strategies you need during the transition.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z">
+                                    </path>
+                                    <path
+                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
+                                    </path>
+                                </svg></span>
+                            <a href="/swp-retirement-planning"
+                                class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Retirement SWP
+                                Blueprint</a>
+                            <span class="text-gray-600 ml-2 block sm:inline">— The complete post-retirement 3-Bucket
+                                execution guide.</span>
                         </li>
                     </ul>
                 </div>
