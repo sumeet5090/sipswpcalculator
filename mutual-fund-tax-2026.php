@@ -120,8 +120,8 @@ require_once __DIR__ . '/functions.php'; ?>
                         </thead>
                         <tbody>
                             <tr class="border-b">
-                                <td class="py-3 px-4 font-medium">Equity Funds (â‰¥65% equity)</td>
-                                <td class="py-3 px-4">â‰¤ 1 year</td>
+                                <td class="py-3 px-4 font-medium">Equity Funds (≥65% equity)</td>
+                                <td class="py-3 px-4">≤ 1 year</td>
                                 <td class="py-3 px-4">STCG (Section 111A)</td>
                                 <td class="py-3 px-4 font-bold text-rose-600">20%</td>
                             </tr>
@@ -138,14 +138,14 @@ require_once __DIR__ . '/functions.php'; ?>
                                 <td class="py-3 px-4 font-bold text-rose-600">Income slab rate</td>
                             </tr>
                             <tr class="border-b">
-                                <td class="py-3 px-4 font-medium">Hybrid Funds (â‰¥65% equity)</td>
+                                <td class="py-3 px-4 font-medium">Hybrid Funds (≥65% equity)</td>
                                 <td class="py-3 px-4">> 1 year</td>
                                 <td class="py-3 px-4">LTCG</td>
                                 <td class="py-3 px-4 font-bold text-emerald-600">12.5% (above $1.25L)</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4 font-medium">Gold/International Funds</td>
-                                <td class="py-3 px-4">â‰¤ 2 years</td>
+                                <td class="py-3 px-4">≤ 2 years</td>
                                 <td class="py-3 px-4">STCG</td>
                                 <td class="py-3 px-4 font-bold text-rose-600">Income slab rate</td>
                             </tr>
@@ -157,7 +157,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <p><strong>Long-Term Capital Gains (LTCG)</strong> on equity mutual funds (held >1 year) are taxed at a
                     flat rate of <strong>12.5%</strong> on gains exceeding $1,500 in a financial year. This is one
                     of the most favorable tax treatments available for investments worldwide.</p>
-                <p><strong>Short-Term Capital Gains (STCG)</strong> on equity funds (held â‰¤1 year) are taxed at
+                <p><strong>Short-Term Capital Gains (STCG)</strong> on equity funds (held ≤1 year) are taxed at
                     <strong>20%</strong>. For debt funds purchased after April 1, 2023, all gains are treated as
                     short-term regardless of holding period and taxed at your income slab rate.
                 </p>
@@ -221,22 +221,22 @@ require_once __DIR__ . '/functions.php'; ?>
                         </thead>
                         <tbody>
                             <tr class="border-b">
-                                <td class="py-3 px-4 font-medium">ðŸ‡®ðŸ‡³ India</td>
+                                <td class="py-3 px-4 font-medium">🇮🇳 India</td>
                                 <td class="py-3 px-4">12.5% (equity >1yr)</td>
                                 <td class="py-3 px-4">$1,500/year</td>
                                 <td class="py-3 px-4">ELSS (Sec 80C, $1.5L)</td>
                             </tr>
                             <tr class="border-b">
-                                <td class="py-3 px-4 font-medium">ðŸ‡ºðŸ‡¸ USA</td>
+                                <td class="py-3 px-4 font-medium">🇺🇸 USA</td>
                                 <td class="py-3 px-4">0/15/20% (income-based)</td>
                                 <td class="py-3 px-4">$44,625 for 0% bracket</td>
                                 <td class="py-3 px-4">Roth IRA, 401(k)</td>
                             </tr>
                             <tr>
-                                <td class="py-3 px-4 font-medium">ðŸ‡¬ðŸ‡§ UK</td>
+                                <td class="py-3 px-4 font-medium">🇬🇧 UK</td>
                                 <td class="py-3 px-4">10/20% (basic/higher rate)</td>
-                                <td class="py-3 px-4">Â£3,000/year CGT allowance</td>
-                                <td class="py-3 px-4">ISA (Â£20K/year, tax-free)</td>
+                                <td class="py-3 px-4">£3,000/year CGT allowance</td>
+                                <td class="py-3 px-4">ISA (£20K/year, tax-free)</td>
                             </tr>
                         </tbody>
                     </table>
@@ -287,7 +287,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     <li>To claim the carry-forward, you must file your ITR before the due date</li>
                 </ul>
 
-                <h3 class="text-xl font-bold mt-8 mb-3 text-gray-800">Strategy 5: Growth Option Over Dividend Option â€”
+                <h3 class="text-xl font-bold mt-8 mb-3 text-gray-800">Strategy 5: Growth Option Over Dividend Option —
                     Always</h3>
                 <p>Since April 2020, mutual fund dividends are added to your taxable income and taxed at your slab rate
                     (up to 30%). Additionally, a 10% TDS is deducted on dividends exceeding $5,000/year from a single
@@ -313,7 +313,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         <strong>independently</strong>. If you started a monthly SIP 2 years ago, your first 12
                         installments (months 1-12) all have holding periods exceeding 12 months and qualify for LTCG
                         (12.5%). However, your most recent installments (last 12 months) would be STCG (20%). The tax
-                        department uses <strong>FIFO (First In, First Out)</strong> â€” your oldest (and most
+                        department uses <strong>FIFO (First In, First Out)</strong> — your oldest (and most
                         tax-efficient) units are sold first. This is actually favorable for retirees starting SWPs, as
                         the earliest units have the longest holding periods and the highest proportion of tax-free
                         principal.
@@ -327,7 +327,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         are treated as normal income and added to your total taxable income. They are taxed at your
                         marginal slab rate (up to 30% + cess). A 10% TDS is also deducted if annual dividends from a
                         single AMC exceed $5,000. <strong>This is why the Growth + SWP combination is universally
-                            recommended over the Dividend option</strong> â€” it gives you control over taxation timing
+                            recommended over the Dividend option</strong> — it gives you control over taxation timing
                         and only the gain component is taxed, not the entire payout.</div>
                 </details>
 
@@ -387,7 +387,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             <a href="/swp-tax-calculator"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP Tax
                                 Calculator</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” Compute your exact LTCG and STCG
+                            <span class="text-gray-600 ml-2 block sm:inline">— Compute your exact LTCG and STCG
                                 liability on SWP withdrawals.</span>
                         </li>
                         <li class="flex items-start">
@@ -403,7 +403,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             <a href="/swp-vs-fixed-deposit"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP vs FD Tax
                                 Comparison</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” See the 6-8x tax efficiency advantage of
+                            <span class="text-gray-600 ml-2 block sm:inline">— See the 6-8x tax efficiency advantage of
                                 SWP over FD interest.</span>
                         </li>
                         <li class="flex items-start">
@@ -419,7 +419,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             <a href="/swp-retirement-planning"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Retirement SWP
                                 Blueprint</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” Tax-efficient retirement income
+                            <span class="text-gray-600 ml-2 block sm:inline">— Tax-efficient retirement income
                                 architecture with the 3-Bucket Strategy.</span>
                         </li>
                         <li class="flex items-start">
@@ -435,7 +435,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             <a href="/sip-vs-fd-vs-ppf"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SIP vs FD vs
                                 PPF</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” Compare post-tax real returns across all
+                            <span class="text-gray-600 ml-2 block sm:inline">— Compare post-tax real returns across all
                                 major asset classes.</span>
                         </li>
                     </ul>

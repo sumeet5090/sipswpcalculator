@@ -45,7 +45,7 @@ require_once __DIR__ . '/functions.php'; ?>
         "name": "Can I invest in both SIP and PPF simultaneously?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Absolutely â€” and it's recommended! Use PPF for your safe, tax-free allocation and equity SIP for growth. A common split is 60% SIP + 40% PPF for moderate-risk investors. Adjust based on your age and risk tolerance."
+          "text": "Absolutely — and it's recommended! Use PPF for your safe, tax-free allocation and equity SIP for growth. A common split is 60% SIP + 40% PPF for moderate-risk investors. Adjust based on your age and risk tolerance."
         }
       }, {
         "@type": "Question",
@@ -101,7 +101,7 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <!-- AI Featured Snippet Summary -->
                 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 mt-6 not-prose">
-                    <h2 class="text-lg font-bold text-indigo-800 mb-3">ðŸ“‹ The TL;DR: Which Asset Wins?</h2>
+                    <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 The TL;DR: Which Asset Wins?</h2>
                     <p class="text-gray-700 text-sm leading-relaxed">
                         <strong>There is no single "best" investment; there is only optimal asset allocation.</strong>
                         <br><br>
@@ -152,7 +152,7 @@ require_once __DIR__ . '/functions.php'; ?>
                                 <td class="py-4 px-4 font-medium">+ 1.03%</td>
                                 <td class="py-4 px-4 font-medium text-red-500 font-bold">- 1.04% <br><span
                                         class="text-[10px] text-red-400 font-normal">(Post-tax loss)</span></td>
-                                <td class="py-4 px-4 font-medium text-emerald-700">+ 2.8% to 5.6%</td>
+                                <td class="py-4 px-4 font-medium text-emerald-500">+ 2.8% to 5.6%</td>
                             </tr>
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="py-4 px-4 font-bold text-gray-700">Risk Profile</td>
@@ -305,7 +305,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             </tr>
                             <tr class="hover:bg-slate-50 transition-colors">
                                 <td class="py-4 px-4 font-bold text-gray-800">Child's Higher Education</td>
-                                <td class="py-4 px-4 font-medium text-emerald-700">5 to 10 Years</td>
+                                <td class="py-4 px-4 font-medium text-emerald-500">5 to 10 Years</td>
                                 <td class="py-4 px-4 text-gray-600"><strong>60% Equity SIP + 40% PPF/Debt.</strong> Use
                                     the "Glide Path" strategy. For the first 7 years, accumulate via SIPs. In the last 3
                                     years, begin systematic transfers (STP) into stable debt to lock in your gains.</td>
@@ -341,7 +341,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             <a href="/"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Advanced SIP
                                 Sandbox</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” Model side-by-side asset comparisons
+                            <span class="text-gray-600 ml-2 block sm:inline">— Model side-by-side asset comparisons
                                 using live compounding graphs.</span>
                         </li>
                         <li class="flex items-start">
@@ -357,7 +357,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             <a href="/inflation-impact-on-sip"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">The Fisher
                                 Equation Guide</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” See the exact math behind why FDs yield
+                            <span class="text-gray-600 ml-2 block sm:inline">— See the exact math behind why FDs yield
                                 negative real returns.</span>
                         </li>
                         <li class="flex items-start">
@@ -373,7 +373,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             <a href="/swp-retirement-planning"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Retirement SWP
                                 Blueprint</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” How to intelligently draw down from your
+                            <span class="text-gray-600 ml-2 block sm:inline">— How to intelligently draw down from your
                                 equity corpus in retirement without paying massive taxes.</span>
                         </li>
                     </ul>
@@ -399,7 +399,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">Can I invest in both SIP and PPF
                         simultaneously?</summary>
-                    <div class="pb-4 text-gray-600">Absolutely â€” and it's recommended! Use PPF for your safe, tax-free
+                    <div class="pb-4 text-gray-600">Absolutely — and it's recommended! Use PPF for your safe, tax-free
                         allocation and equity SIP for growth. A common split is 60% SIP + 40% PPF for moderate-risk
                         investors. Adjust based on your age and risk tolerance.</div>
                 </details>

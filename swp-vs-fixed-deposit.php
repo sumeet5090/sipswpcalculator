@@ -130,7 +130,7 @@ require_once __DIR__ . '/functions.php';
 
                 <!-- AI Featured Snippet Summary -->
                 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 not-prose">
-                    <h2 class="text-lg font-bold text-indigo-800 mb-3">ðŸ“‹ Quick Summary: SWP vs Fixed Deposit</h2>
+                    <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 Quick Summary: SWP vs Fixed Deposit</h2>
                     <p class="text-gray-700 text-sm leading-relaxed">
                         <strong>SWP (Systematic Withdrawal Plan)</strong> from mutual funds generally outperforms Fixed
                         Deposits for retirement income in 2026.
@@ -140,7 +140,7 @@ require_once __DIR__ . '/functions.php';
                         $500/month withdrawal can last 25+ years,
                         while the same amount in FD depletes faster due to lower returns and higher taxation. However,
                         FDs offer guaranteed capital safety suitable for
-                        conservative investors. <strong>Best strategy:</strong> Use a combination â€” 70-80% in SWP for
+                        conservative investors. <strong>Best strategy:</strong> Use a combination — 70-80% in SWP for
                         growth + 20-30% in FD for emergency liquidity.
                     </p>
                 </div>
@@ -151,7 +151,7 @@ require_once __DIR__ . '/functions.php';
                 <p>
                     A <strong>Systematic Withdrawal Plan (SWP)</strong> allows you to withdraw a fixed or step-up amount
                     from your mutual fund investment
-                    at regular intervals â€” monthly, quarterly, or annually. Unlike redeeming your entire investment, SWP
+                    at regular intervals — monthly, quarterly, or annually. Unlike redeeming your entire investment, SWP
                     lets the remaining corpus
                     continue earning returns while providing <strong>regular income</strong>. This makes it the
                     preferred choice for retirees who want
@@ -162,7 +162,7 @@ require_once __DIR__ . '/functions.php';
                     funds), so you're only withdrawing
                     a portion while the balance compounds. If your withdrawal rate stays below the return rate, your
                     corpus can actually <em>grow</em>
-                    over time â€” something a Fixed Deposit can never do.
+                    over time — something a Fixed Deposit can never do.
                 </p>
 
                 <!-- H2: What is FD -->
@@ -220,9 +220,9 @@ require_once __DIR__ . '/functions.php';
                             </tr>
                             <tr class="bg-gray-50/50">
                                 <td class="px-6 py-4 font-medium">Inflation Protection</td>
-                                <td class="px-6 py-4"><strong class="text-emerald-600">Yes</strong> â€” equity beats
+                                <td class="px-6 py-4"><strong class="text-emerald-600">Yes</strong> — equity beats
                                     inflation</td>
-                                <td class="px-6 py-4"><strong class="text-red-500">No</strong> â€” real returns often
+                                <td class="px-6 py-4"><strong class="text-red-500">No</strong> — real returns often
                                     negative</td>
                             </tr>
                             <tr>
@@ -299,7 +299,7 @@ require_once __DIR__ . '/functions.php';
                 <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">SWP Taxation (Equity Mutual Funds)</h3>
                 <ul>
                     <li>Each SWP withdrawal is treated as a <strong>partial redemption</strong></li>
-                    <li>Only the <strong>capital gains portion</strong> is taxable â€” the principal is tax-free</li>
+                    <li>Only the <strong>capital gains portion</strong> is taxable — the principal is tax-free</li>
                     <li>LTCG (holding &gt; 1 year): <strong>12.5%</strong> on gains above $1,500/year</li>
                     <li>STCG (holding &lt; 1 year): <strong>20%</strong></li>
                     <li>For most retirees, the effective tax rate on SWP is only <strong>3-5%</strong> of the withdrawal
@@ -332,7 +332,7 @@ require_once __DIR__ . '/functions.php';
                 <h2 id="optimal-strategy" class="text-3xl font-bold mt-10 mb-4 text-gray-800">The Optimal Strategy: The
                     SWP + FD Bucket Architecture</h2>
                 <p>
-                    Smart retirees never choose one or the other â€” they deploy <strong>both strategically</strong> using
+                    Smart retirees never choose one or the other — they deploy <strong>both strategically</strong> using
                     what institutional wealth managers call the "Bucket Strategy". This eliminates the weaknesses of
                     both instruments while capturing their strengths.
                 </p>
@@ -342,7 +342,7 @@ require_once __DIR__ . '/functions.php';
                         <div
                             class="absolute top-0 right-0 bg-blue-200 text-blue-800 text-xs font-bold px-3 py-1 rounded-bl-lg">
                             20-30%</div>
-                        <h4 class="text-blue-800 font-extrabold text-lg mb-3">ðŸ¦ FD / Liquid Fund</h4>
+                        <h4 class="text-blue-800 font-extrabold text-lg mb-3">🏦 FD / Liquid Fund</h4>
                         <p class="text-sm font-bold text-gray-700 mb-2">Purpose: Emergency Buffer (1-3 Years)</p>
                         <ul class="text-xs text-gray-500 space-y-1 list-disc list-inside">
                             <li>Park 1-3 years of living expenses here</li>
@@ -356,7 +356,7 @@ require_once __DIR__ . '/functions.php';
                         <div
                             class="absolute top-0 right-0 bg-indigo-200 text-indigo-800 text-xs font-bold px-3 py-1 rounded-bl-lg">
                             30-40%</div>
-                        <h4 class="text-indigo-800 font-extrabold text-lg mb-3">âš–ï¸ Hybrid / BAF</h4>
+                        <h4 class="text-indigo-800 font-extrabold text-lg mb-3">⚖️ Hybrid / BAF</h4>
                         <p class="text-sm font-bold text-gray-700 mb-2">Purpose: Medium-Term Bridge (4-10 Years)</p>
                         <ul class="text-xs text-gray-500 space-y-1 list-disc list-inside">
                             <li>Balanced Advantage Funds dynamically allocate between equity and debt</li>
@@ -369,10 +369,10 @@ require_once __DIR__ . '/functions.php';
                         <div
                             class="absolute top-0 right-0 bg-emerald-200 text-emerald-800 text-xs font-bold px-3 py-1 rounded-bl-lg">
                             30-50%</div>
-                        <h4 class="text-emerald-800 font-extrabold text-lg mb-3">ðŸ“ˆ Pure Equity</h4>
+                        <h4 class="text-emerald-800 font-extrabold text-lg mb-3">📈 Pure Equity</h4>
                         <p class="text-sm font-bold text-gray-700 mb-2">Purpose: Long-Term Growth Engine (10+ Years)</p>
                         <ul class="text-xs text-gray-500 space-y-1 list-disc list-inside">
-                            <li>Never touched for a decade â€” left to compound freely</li>
+                            <li>Never touched for a decade — left to compound freely</li>
                             <li>Yields 12-14% over the long term</li>
                             <li>This bucket funds your retirement for decades and your legacy</li>
                         </ul>
@@ -381,7 +381,7 @@ require_once __DIR__ . '/functions.php';
                 <p>
                     With this architecture, if markets crash 40% tomorrow, you simply continue withdrawing from your
                     FD/Liquid Fund bucket. You never need to sell equity at a loss. Your equity bucket gets 3+ years to
-                    recover â€” and historically, no major index has failed to recover within that time frame.
+                    recover — and historically, no major index has failed to recover within that time frame.
                 </p>
 
                 <!-- FAQ Section -->
@@ -397,7 +397,7 @@ require_once __DIR__ . '/functions.php';
                             the capital gains portion is taxable (LTCG at 12.5% above $1.25 Lakh/year), while the entire
                             FD interest is taxable at your income slab rate (up to 30%). However, FDs offer guaranteed
                             returns and capital safety, making them essential for your emergency buffer (the first 1-3
-                            years of expenses). The answer is not either/or â€” it is <strong>both, deployed
+                            years of expenses). The answer is not either/or — it is <strong>both, deployed
                                 strategically</strong> via the Bucket Architecture.</div>
                     </details>
 
@@ -411,7 +411,7 @@ require_once __DIR__ . '/functions.php';
                             hybrid fund earning 10% with a $5,000/month withdrawal ($60,000/year = 6% withdrawal rate)
                             will deplete faster, so a <strong>safer $4,000/month withdrawal (4.8%)</strong> can sustain
                             the corpus for 25+ years. And crucially, because most of the withdrawal in early years is
-                            principal (tax-free), your effective tax rate is near zero initiallyâ€”far more cash in hand
+                            principal (tax-free), your effective tax rate is near zero initially—far more cash in hand
                             than FD interest.</div>
                     </details>
 
@@ -439,7 +439,7 @@ require_once __DIR__ . '/functions.php';
                             from equity mutual funds, there is typically a <strong>1% exit load if redeemed within 1
                                 year</strong> of purchase. After 1 year, there is zero exit load. Since SWP from
                             retirement corpus typically involves units held for years, exit load is almost never a
-                            factor. <strong>Winner: SWP</strong> â€” zero cost to access your money after year 1.</div>
+                            factor. <strong>Winner: SWP</strong> — zero cost to access your money after year 1.</div>
                     </details>
 
                     <details class="group">
@@ -457,12 +457,12 @@ require_once __DIR__ . '/functions.php';
                     <details class="group">
                         <summary class="cursor-pointer font-bold text-slate-800 py-2">What happens to my FD corpus vs
                             SWP corpus if I live longer than expected?</summary>
-                        <div class="pb-4 text-gray-600">This is the <strong>longevity risk</strong> â€” the risk of
+                        <div class="pb-4 text-gray-600">This is the <strong>longevity risk</strong> — the risk of
                             outliving your money. With FD-only retirement, your principal is continuously consumed by
                             withdrawals and never grows. If you planned for 20 years but live 30, you run out of money
                             entirely.<br><br>With SWP, your underlying equity corpus continues to grow. If your fund
                             earns 10% and you withdraw only 4%, the remaining 6% compounds year after year. After 20
-                            years, your SWP corpus could actually be <strong>larger than when you started</strong> â€”
+                            years, your SWP corpus could actually be <strong>larger than when you started</strong> —
                             meaning you can fund an indefinite retirement. This is the single most important reason
                             sophisticated investors choose SWP over FD for retirement: <strong>it is the only mechanism
                                 that can mathematically outlive you.</strong></div>
@@ -486,7 +486,7 @@ require_once __DIR__ . '/functions.php';
                                 </svg></span>
                             <a href="/" class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP
                                 Sustainability Calculator</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” Model SWP vs FD scenarios with your exact
+                            <span class="text-gray-600 ml-2 block sm:inline">— Model SWP vs FD scenarios with your exact
                                 corpus and withdrawal amounts.</span>
                         </li>
                         <li class="flex items-start">
@@ -502,7 +502,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/swp-retirement-planning"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Retirement SWP
                                 Blueprint</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” The complete 3-Bucket Strategy and
+                            <span class="text-gray-600 ml-2 block sm:inline">— The complete 3-Bucket Strategy and
                                 Sequence of Return Risk mitigation guide.</span>
                         </li>
                         <li class="flex items-start">
@@ -518,7 +518,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/inflation-impact-on-sip"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">The Fisher
                                 Equation Guide</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” See the exact math behind why FDs yield
+                            <span class="text-gray-600 ml-2 block sm:inline">— See the exact math behind why FDs yield
                                 negative real returns after inflation.</span>
                         </li>
                         <li class="flex items-start">
@@ -534,7 +534,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/mutual-fund-tax-2026"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Mutual Fund
                                 Tax Guide 2026</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” Master LTCG exemptions and capital gain
+                            <span class="text-gray-600 ml-2 block sm:inline">— Master LTCG exemptions and capital gain
                                 harvesting for maximum post-tax income.</span>
                         </li>
                     </ul>

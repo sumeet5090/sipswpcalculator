@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-// â”€â”€ SECURITY: Start session for CSRF protection â”€â”€
+// ── SECURITY: Start session for CSRF protection ──
 session_start();
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -19,13 +19,13 @@ $default_swp_withdrawal = 50000;
 $default_swp_stepup = 5;
 $default_swp_years = 10;
 
-// â”€â”€ SECURITY: Helper to clamp numeric values to safe ranges â”€â”€
+// ── SECURITY: Helper to clamp numeric values to safe ranges ──
 function clamp(float $val, float $min, float $max): float
 {
     return max($min, min($max, $val));
 }
 
-// â”€â”€ SECURITY: Validate POST requests (CSRF & Honeypot) â”€â”€
+// ── SECURITY: Validate POST requests (CSRF & Honeypot) ──
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 1. Honeypot check: If the hidden 'website_url' field is filled, it's a bot.
     if (!empty($_POST['website_url'])) {
@@ -50,7 +50,7 @@ $swp_withdrawal = isset($_POST['swp_withdrawal']) ? clamp((float) $_POST['swp_wi
 $swp_stepup = isset($_POST['swp_stepup']) ? clamp((float) $_POST['swp_stepup'], 0, 20) : (float) $default_swp_stepup;
 $swp_years_input = isset($_POST['swp_years']) ? (int) clamp((float) $_POST['swp_years'], 0, 50) : $default_swp_years;
 
-// â”€â”€ SECURITY: Whitelist allowed actions â”€â”€
+// ── SECURITY: Whitelist allowed actions ──
 $action = $_POST['action'] ?? '';
 if (!in_array($action, ['', 'download_csv'], true)) {
     $action = '';
@@ -198,9 +198,9 @@ foreach ($combined as $row) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIP Calculator 2026 â€” Free Step-Up SIP & SWP Planner Online</title>
+    <title>SIP Calculator 2026 — Free Step-Up SIP & SWP Planner Online</title>
     <meta name="description"
-        content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export â€” trusted by investors worldwide.">
+        content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export — trusted by investors worldwide.">
     <meta name="keywords"
         content="SIP Calculator, SIP Calculator Online, SIP Return Calculator, Mutual Fund SIP Calculator, SWP Calculator, SWP Planner, Step-Up SIP Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP, Tax-Efficient Withdrawals, SIP Calculator India, SIP Calculator USA, SIP Calculator UK, Mutual Fund Return Calculator">
     <link rel="canonical" href="https://sipswpcalculator.com/">
@@ -211,7 +211,7 @@ foreach ($combined as $row) {
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sipswpcalculator.com/">
-    <meta property="og:title" content="SIP Calculator 2026 â€” Free Step-Up SIP & SWP Planner">
+    <meta property="og:title" content="SIP Calculator 2026 — Free Step-Up SIP & SWP Planner">
     <meta property="og:description"
         content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export.">
     <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
@@ -219,19 +219,19 @@ foreach ($combined as $row) {
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://sipswpcalculator.com/">
-    <meta property="twitter:title" content="SIP Calculator 2026 â€” Free Step-Up SIP & SWP Planner">
+    <meta property="twitter:title" content="SIP Calculator 2026 — Free Step-Up SIP & SWP Planner">
     <meta property="twitter:description"
         content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export.">
     <meta property="twitter:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
 
-    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    <!-- ════════════════════════════════════════════════════════════════════
          AI-CITATION-OPTIMIZED STRUCTURED DATA (JSON-LD)
          Designed for extraction by Gemini, Perplexity, ChatGPT, and
          traditional search engines. Uses @id graph linking, potentialAction,
          sameAs entity grounding, and information-dense descriptions.
-         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+         ════════════════════════════════════════════════════════════════════ -->
 
-    <!-- 1. SoftwareApplication â€” Primary Tool Identity -->
+    <!-- 1. SoftwareApplication — Primary Tool Identity -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -252,7 +252,7 @@ foreach ($combined as $row) {
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock"
       },
-      "description": "Advanced SIP & SWP Calculator with step-up (top-up) compounding for mutual fund investment planning. Uses the future value of annuity due formula: FV = P Ã— [((1+r)^n - 1) / r] Ã— (1+r), where P = monthly investment, r = monthly rate of return, n = total months. Supports annual step-up from 0-50%, investment periods of 1-50 years, expected returns of 1-30%, and Systematic Withdrawal Plans (SWP) with the 4% safe withdrawal rule. Calculates month-by-month compounding with rupee cost averaging. Outputs interactive growth charts, yearly breakdown tables, CSV exports, and branded PDF reports. Trusted by investors for SIP calculations in INR (â‚¹), USD ($), EUR (â‚¬), and GBP (Â£). Based on AMFI India standard methodology for mutual fund return projections.",
+      "description": "Advanced SIP & SWP Calculator with step-up (top-up) compounding for mutual fund investment planning. Uses the future value of annuity due formula: FV = P × [((1+r)^n - 1) / r] × (1+r), where P = monthly investment, r = monthly rate of return, n = total months. Supports annual step-up from 0-50%, investment periods of 1-50 years, expected returns of 1-30%, and Systematic Withdrawal Plans (SWP) with the 4% safe withdrawal rule. Calculates month-by-month compounding with rupee cost averaging. Outputs interactive growth charts, yearly breakdown tables, CSV exports, and branded PDF reports. Trusted by investors for SIP calculations in INR (₹), USD ($), EUR (€), and GBP (£). Based on AMFI India standard methodology for mutual fund return projections.",
       "featureList": [
         "SIP Calculator with step-up compounding (annual top-up 0-50%)",
         "SWP Retirement Planner with step-up withdrawals",
@@ -322,7 +322,7 @@ foreach ($combined as $row) {
       ],
       "citation": {
         "@type": "CreativeWork",
-        "name": "AMFI India â€” SIP Methodology and Mutual Fund Industry Data",
+        "name": "AMFI India — SIP Methodology and Mutual Fund Industry Data",
         "url": "https://www.amfiindia.com/",
         "publisher": {
           "@type": "Organization",
@@ -332,7 +332,7 @@ foreach ($combined as $row) {
     }
     </script>
 
-    <!-- 2. FinancialProduct â€” Detailed Investment Parameters -->
+    <!-- 2. FinancialProduct — Detailed Investment Parameters -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -346,7 +346,7 @@ foreach ($combined as $row) {
         "@id": "https://sipswpcalculator.com/#organization"
       },
       "category": "Investment Planning Tool",
-      "feesAndCommissionsSpecification": "Completely free â€” no fees, commissions, or registration required",
+      "feesAndCommissionsSpecification": "Completely free — no fees, commissions, or registration required",
       "areaServed": {
         "@type": "Place",
         "name": "Worldwide"
@@ -368,7 +368,7 @@ foreach ($combined as $row) {
     }
     </script>
 
-    <!-- 3. WebSite â€” Site Identity with Search Action -->
+    <!-- 3. WebSite — Site Identity with Search Action -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -402,7 +402,7 @@ foreach ($combined as $row) {
     }
     </script>
 
-    <!-- 4. Organization â€” Publisher Identity with EEAT signals -->
+    <!-- 4. Organization — Publisher Identity with EEAT signals -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -447,7 +447,7 @@ foreach ($combined as $row) {
     }
     </script>
 
-    <!-- 5. Person â€” Author/Expert Identity (EEAT) -->
+    <!-- 5. Person — Author/Expert Identity (EEAT) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -474,7 +474,7 @@ foreach ($combined as $row) {
     }
     </script>
 
-    <!-- 6. HowTo â€” Detailed Calculator Usage Guide -->
+    <!-- 6. HowTo — Detailed Calculator Usage Guide -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -626,7 +626,7 @@ foreach ($combined as $row) {
                 class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
                 <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
                     class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga â€” Creator of SIP Calculator"
+                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
                         class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32"
                         height="32" fetchpriority="high" decoding="async">
                     <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance
@@ -646,10 +646,10 @@ foreach ($combined as $row) {
             <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
                 This free <dfn><strong class="text-indigo-600">SIP calculator</strong></dfn> helps you estimate
                 your <strong>mutual fund SIP returns</strong> with annual step-up (top-up) compounding.
-                A <dfn><strong class="text-rose-600">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan
+                A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan
                 tax-efficient withdrawals for a steady retirement income. Use this <strong>SIP return
                     calculator</strong>
-                to visualize growth, compare scenarios, and download detailed PDF reports â€” free for investors
+                to visualize growth, compare scenarios, and download detailed PDF reports — free for investors
                 worldwide.
             </p>
 
@@ -713,7 +713,7 @@ foreach ($combined as $row) {
                                         <button type="button" data-currency="INR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
                                             onclick="updateCurrency('INR')">
-                                            â‚¹ INR
+                                            ₹ INR
                                         </button>
                                         <button type="button" data-currency="USD"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
@@ -723,12 +723,12 @@ foreach ($combined as $row) {
                                         <button type="button" data-currency="EUR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-r border-slate-200"
                                             onclick="updateCurrency('EUR')">
-                                            â‚¬ EUR
+                                            € EUR
                                         </button>
                                         <button type="button" data-currency="GBP"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
                                             onclick="updateCurrency('GBP')">
-                                            Â£ GBP
+                                            £ GBP
                                         </button>
                                     </div>
                                 </div>
@@ -738,14 +738,14 @@ foreach ($combined as $row) {
                                     role="tablist">
                                     <button type="button" id="tab-sip" role="tab" aria-selected="true"
                                         onclick="switchFormTab('sip')"
-                                        class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-emerald-700 text-white">
+                                        class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-emerald-500 text-white">
                                         <span
                                             class="flex items-center justify-center w-4 h-4 rounded-full bg-white/20 text-[9px]">1</span>
                                         SIP Details
                                     </button>
                                     <button type="button" id="tab-swp" role="tab" aria-selected="false"
                                         onclick="switchFormTab('swp')"
-                                        class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-500 hover:bg-rose-50 hover:text-rose-600">
+                                        class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-500 hover:bg-rose-50 hover:text-rose-500">
                                         <span
                                             class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-[9px]">2</span>
                                         SWP Details
@@ -768,7 +768,7 @@ foreach ($combined as $row) {
                                                     </label>
                                                     <div class="relative">
                                                         <span
-                                                            class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">â‚¹</span>
+                                                            class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">₹</span>
                                                         <input type="number" id="sip" name="sip"
                                                             class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
                                                             required min="500" step="500" max="1000000"
@@ -858,7 +858,7 @@ foreach ($combined as $row) {
                                                         onchange="toggleSwpFields()" class="sr-only peer"
                                                         aria-label="Enable Systematic Withdrawal Plan (SWP)">
                                                     <div
-                                                        class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-600">
+                                                        class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
                                                     </div>
                                                 </label>
                                             </div>
@@ -872,10 +872,10 @@ foreach ($combined as $row) {
                                                     </label>
                                                     <div class="relative">
                                                         <span
-                                                            class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">â‚¹</span>
+                                                            class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">₹</span>
                                                         <input type="number" id="swp_withdrawal" step="500"
                                                             name="swp_withdrawal"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-rose-600 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                            class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
                                                             required min="0" max="1000000"
                                                             value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
                                                     </div>
@@ -967,7 +967,7 @@ foreach ($combined as $row) {
                                     class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
                                     Total Withdrawn</div>
                                 <div id="summary-withdrawn"
-                                    class="text-lg sm:text-xl font-extrabold text-rose-600 font-mono transition-numbers">
+                                    class="text-lg sm:text-xl font-extrabold text-rose-500 font-mono transition-numbers">
                                     <?= formatInr(end($combined)['cumulative_withdrawals'] ?? 0) ?>
                                 </div>
                             </div>
@@ -998,7 +998,7 @@ foreach ($combined as $row) {
                 <div class="mt-8 space-y-4">
                     <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
                         <h2 id="yearly-breakdown" class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
                                 </path>
@@ -1056,7 +1056,7 @@ foreach ($combined as $row) {
                                             class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
                                             Total Invested</th>
                                         <th scope="col"
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-600 whitespace-nowrap swp-col"
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
                                             <?= !$enable_swp ? 'style="display:none"' : '' ?>>
                                             Annual SWP</th>
                                         <th scope="col"
@@ -1084,7 +1084,7 @@ foreach ($combined as $row) {
                                             <td class="px-6 py-4 text-right text-slate-500 font-mono">
                                                 <?= formatInr($row['cumulative_invested']) ?>
                                             </td>
-                                            <td class="px-6 py-4 text-right text-rose-600 font-medium font-mono swp-col"
+                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
                                                 <?= !$enable_swp ? 'style="display:none"' : '' ?>>
                                                 <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
                                             </td>
@@ -1140,11 +1140,11 @@ foreach ($combined as $row) {
                             class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows worldwide crossed $21,000
                         Crore/month in 2025.
                         <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Read our complete
-                            SIP guide â†’</a>
+                            SIP guide →</a>
                     </p>
                     <ul class="mt-4 space-y-2">
                         <li><span class="font-semibold text-green-700">Rupee Cost Averaging:</span> Buy more units when
-                            NAV is low, fewer when it's high â€” reducing average cost automatically.</li>
+                            NAV is low, fewer when it's high — reducing average cost automatically.</li>
                         <li><span class="font-semibold text-green-700">Power of Compounding:</span> Reinvesting returns
                             generates earnings on earnings, leading to exponential growth over 10-20+ years.</li>
                         <li><span class="font-semibold text-green-700">Disciplined Investing:</span> Automates saving
@@ -1161,10 +1161,10 @@ foreach ($combined as $row) {
                         to withdraw a fixed amount from their mutual fund corpus at regular intervals.
                         SWP provides a steady, <strong>tax-efficient income stream</strong> during retirement while
                         allowing the remaining investment to continue growing. Unlike FD interest (taxed at slab rate),
-                        SWP withdrawals are taxed only on the capital gains portion â€” making them significantly more
+                        SWP withdrawals are taxed only on the capital gains portion — making them significantly more
                         efficient.
                         <a href="/#panel-swp" class="text-purple-600 hover:underline font-medium">Try the SWP calculator
-                            â†’</a>
+                            →</a>
                     </p>
                     <ul class="mt-4 space-y-2">
                         <li><span class="font-semibold text-green-700">Regular Income:</span> Create a predictable
@@ -1210,7 +1210,7 @@ foreach ($combined as $row) {
                 <div
                     class="bg-gray-50 p-6 rounded-xl border border-gray-200 font-mono text-sm sm:text-base overflow-x-auto">
                     <p class="font-bold text-indigo-700 mb-2">Future Value of SIP (Annuity Due):</p>
-                    <p class="text-lg mb-4">FV = P Ã— [ { (1 + i)<sup>n</sup> - 1 } / i ] Ã— (1 + i)</p>
+                    <p class="text-lg mb-4">FV = P × [ { (1 + i)<sup>n</sup> - 1 } / i ] × (1 + i)</p>
                     <dl class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                         <div>
                             <dt class="inline font-bold">FV</dt>
@@ -1222,11 +1222,11 @@ foreach ($combined as $row) {
                         </div>
                         <div>
                             <dt class="inline font-bold">i</dt>
-                            <dd class="inline">= Monthly Rate (Annual Rate Ã· 12 Ã· 100)</dd>
+                            <dd class="inline">= Monthly Rate (Annual Rate ÷ 12 ÷ 100)</dd>
                         </div>
                         <div>
                             <dt class="inline font-bold">n</dt>
-                            <dd class="inline">= Total Payments (Years Ã— 12)</dd>
+                            <dd class="inline">= Total Payments (Years × 12)</dd>
                         </div>
                     </dl>
                 </div>
@@ -1252,7 +1252,7 @@ foreach ($combined as $row) {
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-indigo-700">$40.50L</span></li>
                         </ul>
-                        <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1Ã—</p>
+                        <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-indigo-100 ring-2 ring-indigo-100">
                         <div class="text-xs font-bold text-indigo-600 mb-1">MOST POPULAR</div>
@@ -1266,7 +1266,7 @@ foreach ($combined as $row) {
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-indigo-700">$3.54Cr</span></li>
                         </ul>
-                        <p class="text-xs text-gray-500 mt-3">Money multiplied ~5.1Ã—</p>
+                        <p class="text-xs text-gray-500 mt-3">Money multiplied ~5.1×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                         <h3 class="text-lg font-bold text-rose-700 mb-2">$25,000/month for 30 Years</h3>
@@ -1279,10 +1279,10 @@ foreach ($combined as $row) {
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-rose-700">$41.85Cr</span></li>
                         </ul>
-                        <p class="text-xs text-gray-500 mt-3">Money multiplied ~8.5Ã—</p>
+                        <p class="text-xs text-gray-500 mt-3">Money multiplied ~8.5×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-teal-100">
-                        <div class="text-xs font-bold text-teal-600 mb-1">ðŸŒ GLOBAL EXAMPLE</div>
+                        <div class="text-xs font-bold text-teal-600 mb-1">🌍 GLOBAL EXAMPLE</div>
                         <h3 class="text-lg font-bold text-teal-700 mb-2">$500/month for 20 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 10% return, 5% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
@@ -1293,7 +1293,7 @@ foreach ($combined as $row) {
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-teal-700">$416,500</span></li>
                         </ul>
-                        <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1Ã—</p>
+                        <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1×</p>
                     </div>
                 </div>
                 <p class="text-xs text-gray-500 mt-4 text-center">Note: These are illustrative projections. Actual
@@ -1336,12 +1336,12 @@ foreach ($combined as $row) {
                     <li><strong>Strategy:</strong> Step-up SIP. Increase investment by 10% every year as his salary
                         grows.</li>
                     <li><strong>Result:</strong> By age 60, avoiding the urge to stop during market lows, his corpus
-                        grows to $3.54 Million â€” and with SWP at $500/month, he earns a steady retirement income while
+                        grows to $3.54 Million — and with SWP at $500/month, he earns a steady retirement income while
                         the corpus continues to grow.</li>
                 </ul>
-                <p class="font-semibold">Moral: It's not just about starting early â€” it's about increasing your
+                <p class="font-semibold">Moral: It's not just about starting early — it's about increasing your
                     investment as you grow. <a href="/sip-step-up-calculator"
-                        class="text-indigo-600 hover:underline">Learn more about Step-Up SIP â†’</a></p>
+                        class="text-indigo-600 hover:underline">Learn more about Step-Up SIP →</a></p>
             </div>
 
             <div class="mt-12">
@@ -1372,7 +1372,7 @@ foreach ($combined as $row) {
                             </tr>
                             <tr class="border-b hover:bg-indigo-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Risk Profile</td>
-                                <td class="py-4 px-6 text-rose-600 font-medium">High (Market Linked)</td>
+                                <td class="py-4 px-6 text-rose-500 font-medium">High (Market Linked)</td>
                                 <td class="py-4 px-6 text-emerald-600 font-medium">Risk-Free (Govt Backed)</td>
                                 <td class="py-4 px-6 text-emerald-600 font-medium">Low Risk</td>
                             </tr>
@@ -1510,7 +1510,7 @@ foreach ($combined as $row) {
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
                             Most mutual fund houses worldwide allow SIPs starting from as low as
                             <strong>$5/month</strong>. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at
-                            $1/month. The key is to start early â€” even $5/month over 20 years at 12% can grow to $5+
+                            $1/month. The key is to start early — even $5/month over 20 years at 12% can grow to $5+
                             Lakhs.
                         </div>
                     </details>
@@ -1525,9 +1525,9 @@ foreach ($combined as $row) {
                             </svg>
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Consider: (1) <strong>Risk profile</strong> â€” large-cap for stability, small-cap for
-                            aggressive growth; (2) <strong>Expense ratio</strong> â€” lower is better, prefer direct
-                            plans; (3) <strong>Track record</strong> â€” check 5-7 year consistency, not just 1-year
+                            Consider: (1) <strong>Risk profile</strong> — large-cap for stability, small-cap for
+                            aggressive growth; (2) <strong>Expense ratio</strong> — lower is better, prefer direct
+                            plans; (3) <strong>Track record</strong> — check 5-7 year consistency, not just 1-year
                             returns; (4) <strong>Fund manager experience</strong>. Use AMFI's mutual fund comparison
                             tools for data.
                         </div>
@@ -1546,7 +1546,7 @@ foreach ($combined as $row) {
                             SWP withdrawals are treated as partial redemptions. For <strong>equity funds</strong>: STCG
                             (held &lt;1 year) taxed at 20%, LTCG taxed at 12.5% on gains above $1,500/year. For
                             <strong>debt funds</strong> (purchased after Apr 2023): taxed at your income slab rate. Only
-                            the <em>capital gains portion</em> of each withdrawal is taxable â€” the principal component
+                            the <em>capital gains portion</em> of each withdrawal is taxable — the principal component
                             is tax-free.
                         </div>
                     </details>
@@ -1595,7 +1595,7 @@ foreach ($combined as $row) {
                             </svg>
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            A <strong>10% annual step-up</strong> is the most common recommendation â€” roughly matching
+                            A <strong>10% annual step-up</strong> is the most common recommendation — roughly matching
                             average salary increments worldwide. Conservative investors can use 5-7%, while aggressive
                             savers might go up to 15-20%. Even a 5% step-up dramatically outperforms a flat SIP over 20+
                             years. Use our calculator above to compare different step-up rates.
@@ -1614,7 +1614,7 @@ foreach ($combined as $row) {
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
                             Yes, SIPs are completely flexible. You can <strong>pause, stop, or modify</strong> your SIP
                             at any time without penalties. Your existing invested units remain in the fund and continue
-                            growing. However, stopping during market downturns is the most common mistake â€” it means you
+                            growing. However, stopping during market downturns is the most common mistake — it means you
                             miss buying units at lower prices, which is exactly when SIPs are most beneficial.
                         </div>
                     </details>
@@ -1665,7 +1665,7 @@ foreach ($combined as $row) {
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
                             Inflation (typically 5-6% worldwide) erodes purchasing power over time. At 6% inflation, $1
                             Lakh today is worth only $310 in 20 years. This is why <strong>step-up SIPs</strong> are
-                            critical â€” they increase your investment to outpace inflation. For SWP, use the step-up
+                            critical — they increase your investment to outpace inflation. For SWP, use the step-up
                             withdrawal feature to increase monthly withdrawals by 5-7% annually to maintain your
                             lifestyle.
                         </div>
@@ -1678,7 +1678,7 @@ foreach ($combined as $row) {
                 withdrawals to see how you can achieve your financial goals, whether it's building a retirement
                 corpus, funding your child's education, or creating a passive income stream.
                 <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Learn more about how SIPs
-                    work â†’</a>
+                    work →</a>
             </p>
         </div>
         <div class="mt-12 p-6 bg-slate-50 border border-slate-200 rounded-xl text-center max-w-2xl mx-auto">
@@ -1695,7 +1695,7 @@ foreach ($combined as $row) {
     </div>
     </main>
 
-    <!-- AI-CITATION-OPTIMIZED FAQ Schema â€” Answers designed for LLM extraction -->
+    <!-- AI-CITATION-OPTIMIZED FAQ Schema — Answers designed for LLM extraction -->
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -1769,14 +1769,14 @@ foreach ($combined as $row) {
             "name": "How do I choose the right mutual fund for my SIP?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Consider these four factors: (1) Risk profile â€” large-cap funds for stability, mid-cap for balanced growth, small-cap for aggressive growth; (2) Expense ratio â€” lower is better, prefer direct plans over regular plans; (3) Track record â€” check 5-7 year consistency, not just 1-year returns; (4) Fund manager experience and AUM (Assets Under Management). Use AMFI India's mutual fund comparison tools for data-driven decisions."
+              "text": "Consider these four factors: (1) Risk profile — large-cap funds for stability, mid-cap for balanced growth, small-cap for aggressive growth; (2) Expense ratio — lower is better, prefer direct plans over regular plans; (3) Track record — check 5-7 year consistency, not just 1-year returns; (4) Fund manager experience and AUM (Assets Under Management). Use AMFI India's mutual fund comparison tools for data-driven decisions."
             }
           }, {
             "@type": "Question",
             "name": "How are SWP withdrawals taxed worldwide (2026)?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "SWP withdrawals are treated as partial redemptions under Indian tax law. For equity mutual funds (2026 rules): Short-Term Capital Gains (STCG, held less than 1 year) are taxed at 20%. Long-Term Capital Gains (LTCG, held over 1 year) are taxed at 12.5% on gains exceeding $1,500 per financial year. For debt mutual funds (purchased after April 2023): gains are taxed at your income slab rate regardless of holding period. Crucially, only the capital gains portion of each SWP withdrawal is taxable â€” the principal component is tax-free, making SWP significantly more tax-efficient than FD interest income."
+              "text": "SWP withdrawals are treated as partial redemptions under Indian tax law. For equity mutual funds (2026 rules): Short-Term Capital Gains (STCG, held less than 1 year) are taxed at 20%. Long-Term Capital Gains (LTCG, held over 1 year) are taxed at 12.5% on gains exceeding $1,500 per financial year. For debt mutual funds (purchased after April 2023): gains are taxed at your income slab rate regardless of holding period. Crucially, only the capital gains portion of each SWP withdrawal is taxable — the principal component is tax-free, making SWP significantly more tax-efficient than FD interest income."
             }
           }, {
             "@type": "Question",
@@ -1804,21 +1804,21 @@ foreach ($combined as $row) {
             "name": "Is SIP better than a Recurring Deposit (RD)?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "For long-term goals (5+ years), equity SIPs have historically outperformed RDs by 5-8% annually. Comparison: RDs offer guaranteed returns of 6-7% but are fully taxable at income slab rate. Equity SIPs offer potential returns of 12-15% with favorable LTCG taxation (12.5% above $1,500). Example: $100/month for 10 years â€” RD at 7% yields $17,300, equity SIP at 12% yields $23,200 (34% more). For short-term goals (1-3 years), RDs or debt fund SIPs may be safer due to lower volatility."
+              "text": "For long-term goals (5+ years), equity SIPs have historically outperformed RDs by 5-8% annually. Comparison: RDs offer guaranteed returns of 6-7% but are fully taxable at income slab rate. Equity SIPs offer potential returns of 12-15% with favorable LTCG taxation (12.5% above $1,500). Example: $100/month for 10 years — RD at 7% yields $17,300, equity SIP at 12% yields $23,200 (34% more). For short-term goals (1-3 years), RDs or debt fund SIPs may be safer due to lower volatility."
             }
           }, {
             "@type": "Question",
             "name": "Can I stop or pause my SIP anytime?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, SIPs are completely flexible. You can pause, stop, or modify your SIP amount at any time without penalties or exit loads on existing investments (exit loads may apply only on redemption of units held less than 1 year). Your existing invested units remain in the fund and continue to grow with market returns. However, stopping during market downturns is the most common investor mistake â€” it means you miss buying units at lower prices through rupee cost averaging, which is exactly when SIPs are most beneficial."
+              "text": "Yes, SIPs are completely flexible. You can pause, stop, or modify your SIP amount at any time without penalties or exit loads on existing investments (exit loads may apply only on redemption of units held less than 1 year). Your existing invested units remain in the fund and continue to grow with market returns. However, stopping during market downturns is the most common investor mistake — it means you miss buying units at lower prices through rupee cost averaging, which is exactly when SIPs are most beneficial."
             }
           }, {
             "@type": "Question",
             "name": "Will my SWP deplete my corpus completely?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "It depends on your withdrawal rate versus your investment return. If you withdraw less than what your corpus earns, it can last indefinitely. The 4% Rule suggests withdrawing 4% of corpus annually for a sustainable 30-year retirement. Example: $1 Million corpus at 10% returns with $400/month withdrawal â€” the corpus actually grows because annual returns ($10,000) exceed annual withdrawals ($4,800). At $1,200/month withdrawal, the corpus depletes in approximately 12 years. Use the calculator at sipswpcalculator.com to stress-test exactly when your corpus would be exhausted under different scenarios."
+              "text": "It depends on your withdrawal rate versus your investment return. If you withdraw less than what your corpus earns, it can last indefinitely. The 4% Rule suggests withdrawing 4% of corpus annually for a sustainable 30-year retirement. Example: $1 Million corpus at 10% returns with $400/month withdrawal — the corpus actually grows because annual returns ($10,000) exceed annual withdrawals ($4,800). At $1,200/month withdrawal, the corpus depletes in approximately 12 years. Use the calculator at sipswpcalculator.com to stress-test exactly when your corpus would be exhausted under different scenarios."
             }
           }]
         }

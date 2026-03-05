@@ -8,14 +8,14 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | SIP & SWP Calculator</title>
     <meta name="description"
-        content="Learn about the team behind SIP & SWP Calculator â€” a free step-up SIP planner and retirement income tool. Built by Sumeet Boga, Software Engineer & Finance Enthusiast.">
+        content="Learn about the team behind SIP & SWP Calculator — a free step-up SIP planner and retirement income tool. Built by Sumeet Boga, Software Engineer & Finance Enthusiast.">
     <link rel="canonical" href="https://sipswpcalculator.com/about">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sipswpcalculator.com/about">
     <meta property="og:title" content="About Us | SIP & SWP Calculator">
     <meta property="og:description"
-        content="Meet the team behind SIP & SWP Calculator â€” a free step-up SIP planner and retirement income tool built by Sumeet Boga.">
+        content="Meet the team behind SIP & SWP Calculator — a free step-up SIP planner and retirement income tool built by Sumeet Boga.">
     <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
@@ -66,7 +66,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
                 <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
                     class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga â€” Creator of SIP Calculator"
+                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
                         class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32"
                         height="32" fetchpriority="high" decoding="async">
                     <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance
@@ -85,7 +85,7 @@ require_once __DIR__ . '/functions.php'; ?>
 
             <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
                 We believe that <strong class="text-indigo-600">everyone deserves access to professional-grade financial
-                    planning tools</strong> â€” without paywalls, account requirements, or hidden agendas.
+                    planning tools</strong> — without paywalls, account requirements, or hidden agendas.
             </p>
         </header>
 
@@ -97,8 +97,8 @@ require_once __DIR__ . '/functions.php'; ?>
                         class="relative z-10 bg-[var(--glass-bg)] p-6 sm:p-8 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
                         <h2 class="text-2xl font-bold text-indigo-900 mb-4">Our Mission</h2>
                         <p class="text-gray-600 leading-relaxed text-lg">
-                            SIP & SWP Calculator was built to help investors worldwide â€” including India, USA, UK, and
-                            beyond â€” visualize the power of systematic investing and plan their retirement income with
+                            SIP & SWP Calculator was built to help investors worldwide — including India, USA, UK, and
+                            beyond — visualize the power of systematic investing and plan their retirement income with
                             confidence.
                         </p>
                     </div>
@@ -179,12 +179,12 @@ require_once __DIR__ . '/functions.php'; ?>
                             <p class="text-sm text-gray-600 mb-3">All financial data, tax rates, and formulas are
                                 verified against official sources:</p>
                             <ul class="text-sm text-gray-500 space-y-2 mb-4 font-medium">
-                                <li>â€¢ <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
+                                <li>• <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
                                         class="text-indigo-600 hover:text-indigo-500 hover:underline">AMFI India</a>
                                 </li>
-                                <li>â€¢ <a href="https://www.sebi.gov.in/" target="_blank" rel="noopener noreferrer"
+                                <li>• <a href="https://www.sebi.gov.in/" target="_blank" rel="noopener noreferrer"
                                         class="text-indigo-600 hover:text-indigo-500 hover:underline">SEBI</a></li>
-                                <li>â€¢ <a href="https://incometaxindia.gov.in/" target="_blank" rel="noopener noreferrer"
+                                <li>• <a href="https://incometaxindia.gov.in/" target="_blank" rel="noopener noreferrer"
                                         class="text-indigo-600 hover:text-indigo-500 hover:underline">Income Tax
                                         India</a></li>
                             </ul>

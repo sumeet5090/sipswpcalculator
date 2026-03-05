@@ -130,7 +130,7 @@ require_once __DIR__ . '/functions.php';
 
                 <!-- AI Featured Snippet Summary -->
                 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 not-prose">
-                    <h2 class="text-lg font-bold text-indigo-800 mb-3">ðŸ“‹ Quick Summary: SWP vs Annuity</h2>
+                    <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 Quick Summary: SWP vs Annuity</h2>
                     <p class="text-gray-700 text-sm leading-relaxed">
                         For Indian retirees in 2026, a <strong>Systematic Withdrawal Plan (SWP)</strong> from mutual
                         funds generally offers superior wealth generation, tax efficiency, and liquidity compared to an
@@ -154,7 +154,7 @@ require_once __DIR__ . '/functions.php';
                 </p>
                 <p>
                     In 2026, with changing tax codes and inflation rates, making the wrong choice can mean running out
-                    of money a decade too earlyâ€”or paying millions in unnecessary taxes. Here is a definitive,
+                    of money a decade too early—or paying millions in unnecessary taxes. Here is a definitive,
                     data-backed comparison to help you structure your retirement income.
                 </p>
 
@@ -185,7 +185,7 @@ require_once __DIR__ . '/functions.php';
                     <li><strong>Benefit:</strong> You maintain complete control of your capital. The remainder of your
                         money stays invested in markets, meaning it can compound and outpace inflation over the
                         retirement years.</li>
-                    <li><strong>Drawback:</strong> You face "sequence of returns risk"â€”if the market crashes in the
+                    <li><strong>Drawback:</strong> You face "sequence of returns risk"—if the market crashes in the
                         first few years of your retirement, continuing to withdraw a fixed amount can drain your
                         portfolio prematurely.</li>
                 </ul>
@@ -287,7 +287,7 @@ require_once __DIR__ . '/functions.php';
                 <p>
                     Mutual Funds, on the other hand, hold equities that generally appreciate alongside or slightly above
                     the rate of inflation. Through a structured SWP strategy, it's highly feasible to step-up your
-                    withdrawals by 5-6% annually to match living costs, without draining the principalâ€”provided your
+                    withdrawals by 5-6% annually to match living costs, without draining the principal—provided your
                     withdrawal rate remains sensible (like the <a href="/mathematics-of-4-percent-rule-swp">4%
                         Rule</a>).
                 </p>
@@ -362,7 +362,7 @@ require_once __DIR__ . '/functions.php';
                     <h2 id="faq" class="text-2xl font-bold mb-6 text-gray-800">Frequently Asked Questions</h2>
 
                     <details class="group">
-                        <summary class="cursor-pointer font-bold text-slate-800 py-2">Which is better worldwide â€” SWP or
+                        <summary class="cursor-pointer font-bold text-slate-800 py-2">Which is better worldwide — SWP or
                             Annuity?</summary>
                         <div class="pb-4 text-gray-600">SWP is generally better for <strong>growth, flexibility, and
                                 post-tax returns</strong>, making it ideal for the majority of a retiree's portfolio if
@@ -379,7 +379,7 @@ require_once __DIR__ . '/functions.php';
                             differ from Annuity taxation in 2026?</summary>
                         <div class="pb-4 text-gray-600"><strong>Annuity:</strong> The entire payout is added to your
                             income and taxed at your marginal slab rate. If you are in the 30% bracket, a 6% annuity
-                            yields only 4.2% post-tax. Every single payout is fully taxable â€” there is no distinction
+                            yields only 4.2% post-tax. Every single payout is fully taxable — there is no distinction
                             between "principal" and "interest".<br><br><strong>SWP:</strong> Each withdrawal is a
                             partial redemption of mutual fund units. Only the <em>capital gain portion</em> is taxable.
                             In the initial years, 80-90% of each withdrawal is your own principal returning to you
@@ -395,7 +395,7 @@ require_once __DIR__ . '/functions.php';
                             market crash occurring in the <strong>first 3-5 years</strong> of your retirement. If your
                             corpus drops 30% in Year 1 and you continue withdrawing the same amount via SWP, you
                             permanently destroy capital that would have compounded for decades. Annuities are immune to
-                            this risk. Mitigation: use the <strong>3-Bucket Strategy</strong> â€” keep 3 years of expenses
+                            this risk. Mitigation: use the <strong>3-Bucket Strategy</strong> — keep 3 years of expenses
                             in cash/liquid funds, so you never sell equity during a crash. Read our <a
                                 href="/swp-retirement-planning" class="text-indigo-600 hover:underline">Retirement SWP
                                 Blueprint</a> for the detailed implementation.</div>
@@ -407,7 +407,7 @@ require_once __DIR__ . '/functions.php';
                         <div class="pb-4 text-gray-600">Under current NPS rules, you <strong>must</strong> use at least
                             40% of your NPS corpus to purchase a life annuity from an IRDA-approved insurer at
                             retirement. The remaining 60% can be withdrawn as a lump sum (tax-free on the 60% portion).
-                            That lump-sum amount can then be deployed into a mutual fund SWP â€” this is the optimal
+                            That lump-sum amount can then be deployed into a mutual fund SWP — this is the optimal
                             configuration. Use the mandatory 40% annuity as your "floor" income, and use SWP from the
                             60% lump sum for growth and flexibility.</div>
                     </details>
@@ -416,7 +416,7 @@ require_once __DIR__ . '/functions.php';
                         <summary class="cursor-pointer font-bold text-slate-800 py-2">What about "Joint Life" annuity
                             options for couples?</summary>
                         <div class="pb-4 text-gray-600">Joint-life annuities continue paying the surviving spouse after
-                            the primary annuitant dies â€” but the trade-off is a <strong>20-30% lower initial
+                            the primary annuitant dies — but the trade-off is a <strong>20-30% lower initial
                                 payout</strong> compared to a single-life annuity. For example, if a single-life annuity
                             pays $500/month, the same corpus as a joint-life annuity may pay only $400/month. With SWP,
                             this is a non-issue: the remaining mutual fund corpus is simply transferred to the
@@ -429,7 +429,7 @@ require_once __DIR__ . '/functions.php';
                             increases payouts each year?</summary>
                         <div class="pb-4 text-gray-600">Some insurers offer annuities with a 3% or 5% simple annual
                             increase. However, these plans come with a <strong>significantly lower starting
-                                payout</strong> â€” often 30-40% less than a flat annuity. This reduces the initial yield
+                                payout</strong> — often 30-40% less than a flat annuity. This reduces the initial yield
                             to 3.5-4%, which is barely above savings account rates. With SWP, you can implement custom
                             step-ups of 5-7% annually while maintaining a 4% initial withdrawal rate, and because your
                             underlying equity portfolio targets 10-12% growth, the math works out far more favorably
@@ -455,7 +455,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/mathematics-of-4-percent-rule-swp"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Mathematics of
                                 the 4% Rule</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” The Trinity Study math behind safe
+                            <span class="text-gray-600 ml-2 block sm:inline">— The Trinity Study math behind safe
                                 withdrawal rates for 30-year retirements.</span>
                         </li>
                         <li class="flex items-start">
@@ -471,7 +471,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/swp-retirement-planning"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Retirement SWP
                                 Blueprint</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” The complete 3-Bucket Strategy and SORR
+                            <span class="text-gray-600 ml-2 block sm:inline">— The complete 3-Bucket Strategy and SORR
                                 mitigation guide.</span>
                         </li>
                         <li class="flex items-start">
@@ -487,7 +487,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/sip-to-swp-transition-guide"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SIP to SWP
                                 Transition Guide</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” How to bridge the gap between wealth
+                            <span class="text-gray-600 ml-2 block sm:inline">— How to bridge the gap between wealth
                                 creation and retirement income.</span>
                         </li>
                         <li class="flex items-start">
@@ -503,7 +503,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/swp-vs-fixed-deposit"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP vs Fixed
                                 Deposit 2026</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” Detailed comparison of SWP returns vs
+                            <span class="text-gray-600 ml-2 block sm:inline">— Detailed comparison of SWP returns vs
                                 traditional FD interest income.</span>
                         </li>
                     </ul>

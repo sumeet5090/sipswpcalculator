@@ -56,7 +56,7 @@ require_once __DIR__ . '/functions.php';
         "name": "What is SIP and how does it work?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "SIP (Systematic Investment Plan) is a method of investing a fixed amount regularly (usually monthly) in mutual funds. It works by automatically deducting a set amount from your bank account and purchasing mutual fund units at the current NAV (Net Asset Value). When NAVs are low, you get more units; when high, fewer units. This mechanism is called Rupee Cost Averaging, which reduces the impact of market volatility. Over time, compounding multiplies your wealth â€” a $5,000/month SIP at 12% for 20 years grows to approximately $50 Lakh from just $12 Lakh invested."
+          "text": "SIP (Systematic Investment Plan) is a method of investing a fixed amount regularly (usually monthly) in mutual funds. It works by automatically deducting a set amount from your bank account and purchasing mutual fund units at the current NAV (Net Asset Value). When NAVs are low, you get more units; when high, fewer units. This mechanism is called Rupee Cost Averaging, which reduces the impact of market volatility. Over time, compounding multiplies your wealth — a $5,000/month SIP at 12% for 20 years grows to approximately $50 Lakh from just $12 Lakh invested."
         }
       }, {
         "@type": "Question",
@@ -87,7 +87,7 @@ require_once __DIR__ . '/functions.php';
         {"@type": "HowToStep", "position": 1, "name": "Complete KYC", "text": "Complete your KYC (Know Your Customer) online via CAMS or KFintech using your PAN card, Aadhaar, and a selfie. This one-time process takes 5-10 minutes."},
         {"@type": "HowToStep", "position": 2, "name": "Choose a Mutual Fund", "text": "Select a fund based on your risk profile. Beginners should start with large-cap index funds (like Nifty 50 Index Fund) or balanced advantage funds for lower volatility."},
         {"@type": "HowToStep", "position": 3, "name": "Set Up SIP", "text": "Use an investment platform (Groww, Zerodha, Kuvera) or the AMC website. Set your monthly amount (start with $5-5,000), SIP date (any date 1-28), and bank mandate (auto-debit)."},
-        {"@type": "HowToStep", "position": 4, "name": "Stay Invested for 7+ Years", "text": "The power of SIP comes from long-term compounding. Do not stop during market crashes â€” that is when SIP buys more units at lower prices, benefiting you most."}
+        {"@type": "HowToStep", "position": 4, "name": "Stay Invested for 7+ Years", "text": "The power of SIP comes from long-term compounding. Do not stop during market crashes — that is when SIP buys more units at lower prices, benefiting you most."}
       ]
     }
     </script>
@@ -135,7 +135,7 @@ require_once __DIR__ . '/functions.php';
 
                 <!-- AI Featured Snippet Summary -->
                 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 not-prose">
-                    <h2 class="text-lg font-bold text-indigo-800 mb-3">ðŸ“‹ Quick Summary: The Complete SIP Guide</h2>
+                    <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 Quick Summary: The Complete SIP Guide</h2>
                     <p class="text-gray-700 text-sm leading-relaxed">
                         A <strong>Systematic Investment Plan (SIP)</strong> is a method of investing a fixed amount
                         monthly in mutual funds,
@@ -156,7 +156,7 @@ require_once __DIR__ . '/functions.php';
                 <p>
                     A <strong>Systematic Investment Plan (SIP)</strong> is often misunderstood as a financial product
                     itself.
-                    It is not a product â€” it is a <em>highly disciplined method</em> of investing in mutual funds.
+                    It is not a product — it is a <em>highly disciplined method</em> of investing in mutual funds.
                     Instead of trying to time the market by investing a large lump sum at once, you invest a fixed
                     amount at regular intervals (usually monthly).
                     Your bank account is auto-debited on a fixed date, and mutual fund units are purchased at the
@@ -182,7 +182,7 @@ require_once __DIR__ . '/functions.php';
                 <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">1. Rupee Cost Averaging (Eliminating Market
                     Timing)</h3>
                 <p>
-                    The number one reason beginners lose money in the stock market is trying to "time" it â€” buying when
+                    The number one reason beginners lose money in the stock market is trying to "time" it — buying when
                     prices are high (due to FOMO) and selling when prices crash (due to panic).
                     SIP automates this and forces you to do the exact opposite.
                 </p>
@@ -263,7 +263,7 @@ require_once __DIR__ . '/functions.php';
                 <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 1: Emergency Fund & Debt Check</h3>
                 <p>
                     Before starting an equity SIP, ensure you have: (a) Paid off high-interest toxic debt like credit
-                    cards (which charge 24-36% annually â€” no SIP can out-earn that consistently),
+                    cards (which charge 24-36% annually — no SIP can out-earn that consistently),
                     and (b) Saved 3-6 months of living expenses in a liquid savings account or liquid mutual fund. An
                     equity SIP is for <em>long-term wealth</em>, not emergency cash.
                 </p>
@@ -291,7 +291,7 @@ require_once __DIR__ . '/functions.php';
                         portfolio.</li>
                 </ul>
                 <div class="bg-amber-50 border-l-4 border-amber-500 p-4 my-6">
-                    <p class="font-bold text-amber-800 m-0">ðŸš¨ The Golden Rule of Selection:</p>
+                    <p class="font-bold text-amber-800 m-0">🚨 The Golden Rule of Selection:</p>
                     <p class="text-amber-800 mt-2 m-0">Always choose <strong>Direct Plans</strong>, never "Regular
                         Plans." Regular plans pay a daily hidden commission to the broker/agent from your corpus. Direct
                         plans do not. A 1% difference in expense ratio can cost you 15-20% of your total final wealth
@@ -300,7 +300,7 @@ require_once __DIR__ . '/functions.php';
 
                 <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 4: Set the Logistics (Date & Amount)</h3>
                 <ul>
-                    <li><strong>Amount:</strong> Start with whatever is comfortable â€” even $10 or $50 a month. It is
+                    <li><strong>Amount:</strong> Start with whatever is comfortable — even $10 or $50 a month. It is
                         about building the habit, not the initial size. You will use the Step-Up strategy later.</li>
                     <li><strong>SIP Date:</strong> Mathematically, the date of your SIP (1st vs 15th vs 28th) makes
                         <strong>almost zero difference</strong> over a 10-year horizon. Practically, set it for 2-3 days
@@ -497,7 +497,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/sip-calculator"
                                 class="text-indigo-700 hover:text-indigo-900 font-bold transition-colors">Advanced SIP &
                                 SWP Calculator</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” Model your precise scenario with
+                            <span class="text-gray-600 ml-2 block sm:inline">— Model your precise scenario with
                                 completely customizable step-up percentages.</span>
                         </li>
                         <li class="flex items-start">
@@ -510,7 +510,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/inflation-impact-on-sip"
                                 class="text-indigo-700 hover:text-indigo-900 font-bold transition-colors">The Silent
                                 Killer: Inflation Impact on SIP</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” Why relying on flat SIPs guarantees your
+                            <span class="text-gray-600 ml-2 block sm:inline">— Why relying on flat SIPs guarantees your
                                 purchasing power erodes over 20 years.</span>
                         </li>
                         <li class="flex items-start">
@@ -523,7 +523,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/sip-to-swp-transition-guide"
                                 class="text-indigo-700 hover:text-indigo-900 font-bold transition-colors">The SIP to SWP
                                 Transition Masterguide</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” How to flawlessly automate the bucket
+                            <span class="text-gray-600 ml-2 block sm:inline">— How to flawlessly automate the bucket
                                 strategy to protect your corpus 3 years before retirement.</span>
                         </li>
                     </ul>

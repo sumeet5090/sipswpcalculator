@@ -88,7 +88,7 @@ require_once __DIR__ . '/functions.php';
 
                 <!-- Summary snippet -->
                 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 not-prose">
-                    <h2 class="text-lg font-bold text-indigo-800 mb-3">ðŸ“‹ The Transition Strategy</h2>
+                    <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 The Transition Strategy</h2>
                     <p class="text-gray-700 text-sm leading-relaxed">
                         Moving from accumulating wealth via <strong>SIPs</strong> to withdrawing it via
                         <strong>SWPs</strong> is not a switch you flip over night. The most dangerous time in an
@@ -104,13 +104,13 @@ require_once __DIR__ . '/functions.php';
                 <p>
                     For 20 years, you did everything right. Every month, rain or shine, bull market or bear, your SIP
                     (Systematic Investment Plan) scooped up mutual fund units. The power of compounding worked its
-                    magic. Now, youâ€™ve hit your target corpus and you're ready to retire.
+                    magic. Now, you’ve hit your target corpus and you're ready to retire.
                 </p>
                 <p>
                     But the game is fundamentally about to change. <strong>Accumulation (saving) and Decumulation
                         (withdrawing) require entirely different skill sets.</strong> In accumulating, market crashes
-                    are your friendâ€”you buy units cheaper. In decumulating via an SWP (Systematic Withdrawal Plan),
-                    market crashes are your enemyâ€”you are forced to sell <em>more</em> units at rock-bottom prices just
+                    are your friend—you buy units cheaper. In decumulating via an SWP (Systematic Withdrawal Plan),
+                    market crashes are your enemy—you are forced to sell <em>more</em> units at rock-bottom prices just
                     to buy groceries.
                 </p>
 
@@ -233,20 +233,20 @@ require_once __DIR__ . '/functions.php';
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">Won't shifting from equity to debt
                         create a huge tax bill?</summary>
-                    <div class="pb-4 text-gray-600">This is the most common fear â€” and it's a valid one. If you dump
+                    <div class="pb-4 text-gray-600">This is the most common fear — and it's a valid one. If you dump
                         everything at once, yes, a massive LTCG event triggers. The solution: <strong>tax harvesting
                             over multiple financial years</strong>. Each year, redeem up to $1.25 Lakh in LTCG from
                         equity (completely tax-free). Reinvest the proceeds into your Bucket 1/2 (liquid/hybrid funds).
                         Over 3-5 years, you smoothly shift your asset allocation while paying <strong>zero
                             taxes</strong> on up to $6.25 Lakh of capital gains. This is the intellectual advantage of
-                        the transition guide â€” you must plan the tax drag, not just the asset allocation.</div>
+                        the transition guide — you must plan the tax drag, not just the asset allocation.</div>
                 </details>
 
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">What if I need a large lump sum
                         (medical emergency) during retirement?</summary>
                     <div class="pb-4 text-gray-600">This is a critical edge case the Bucket Strategy handles elegantly.
-                        Bucket 1 (liquid funds) provides <strong>instant T+1 day liquidity</strong> â€” you can redeem any
+                        Bucket 1 (liquid funds) provides <strong>instant T+1 day liquidity</strong> — you can redeem any
                         amount and receive it the next business day. For larger emergencies beyond your liquid buffer,
                         you can redeem from Bucket 2 (hybrid funds) within T+2 days. You should <em>never</em> have to
                         touch Bucket 3 (equity) in a panic. Additionally, maintaining a separate <strong>Health
@@ -259,7 +259,7 @@ require_once __DIR__ . '/functions.php';
                         (BAF) as my single SWP fund?</summary>
                     <div class="pb-4 text-gray-600">BAFs are excellent for the <strong>middle bucket</strong> (Bucket 2)
                         because they dynamically shift between equity and debt based on market valuations. However,
-                        using a BAF as your <em>only</em> SWP fund is a compromise â€” they still carry 20-30% equity
+                        using a BAF as your <em>only</em> SWP fund is a compromise — they still carry 20-30% equity
                         allocation even in expensive markets, meaning some crash exposure remains. The Bucket Strategy
                         is superior: use a liquid fund for Bucket 1 (zero volatility), BAF for Bucket 2 (moderate
                         volatility), and a pure equity fund for Bucket 3 (maximum growth). This layered approach gives
@@ -298,7 +298,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/mathematics-of-4-percent-rule-swp"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Mathematics of
                                 the 4% Rule</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” The exact math behind sustainable
+                            <span class="text-gray-600 ml-2 block sm:inline">— The exact math behind sustainable
                                 withdrawal rates for 30-year retirements.</span>
                         </li>
                         <li class="flex items-start">
@@ -314,7 +314,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/swp-vs-annuity-2026"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP vs Annuity
                                 2026</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” Floor & Upside Strategy for combining
+                            <span class="text-gray-600 ml-2 block sm:inline">— Floor & Upside Strategy for combining
                                 guaranteed and market-linked income.</span>
                         </li>
                         <li class="flex items-start">
@@ -330,7 +330,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/mutual-fund-tax-2026"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Mutual Fund
                                 Tax 2026</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” LTCG harvesting, Section 80C, and
+                            <span class="text-gray-600 ml-2 block sm:inline">— LTCG harvesting, Section 80C, and
                                 tax-loss strategies you need during the transition.</span>
                         </li>
                         <li class="flex items-start">
@@ -346,7 +346,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/swp-retirement-planning"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Retirement SWP
                                 Blueprint</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">â€” The complete post-retirement 3-Bucket
+                            <span class="text-gray-600 ml-2 block sm:inline">— The complete post-retirement 3-Bucket
                                 execution guide.</span>
                         </li>
                     </ul>

@@ -156,17 +156,17 @@ require_once __DIR__ . '/functions.php';
                 <div
                     class="bg-gray-50 p-6 rounded-xl border border-gray-200 my-6 font-mono text-sm sm:text-base overflow-x-auto">
                     <p class="font-bold text-indigo-700 mb-2">The SIP Formula:</p>
-                    <p class="text-lg mb-4">FV = P Ã— [ { (1 + i)<sup>n</sup> - 1 } / i ] Ã— (1 + i)</p>
+                    <p class="text-lg mb-4">FV = P × [ { (1 + i)<sup>n</sup> - 1 } / i ] × (1 + i)</p>
                     <ul class="list-none space-y-2 p-0">
                         <li><strong>FV</strong> = Future Value (Maturity Amount)</li>
                         <li><strong>P</strong> = Fixed Investment Amount per period (e.g., Monthly SIP)</li>
-                        <li><strong>n</strong> = Total number of payments (Tenure in Years Ã— 12)</li>
+                        <li><strong>n</strong> = Total number of payments (Tenure in Years × 12)</li>
                         <li><strong>i</strong> = Periodic Rate of Interest (Annual Rate / 12 / 100)</li>
                     </ul>
                 </div>
 
                 <p>
-                    <strong>Why the extra <code>Ã— (1 + i)</code>?</strong><br>
+                    <strong>Why the extra <code>× (1 + i)</code>?</strong><br>
                     This adjustment is made because SIP payments are technically an "Annuity Due" (payments made at the
                     start of the period) or to account for the interest compounded on the immediate investment for that
                     month, depending on the specific fund house's calculation method. Our calculator uses the standard
@@ -200,7 +200,7 @@ require_once __DIR__ . '/functions.php';
                     <!-- Example 2 -->
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden">
                         <div class="absolute top-0 right-0 p-4 opacity-10">
-                            <svg class="w-24 h-24 text-rose-600" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-24 h-24 text-rose-500" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 8.586 15.293 4.293A1 1 0 0117 6v1z"
                                     clip-rule="evenodd" />
@@ -249,7 +249,7 @@ require_once __DIR__ . '/functions.php';
                         <tbody class="bg-white divide-y divide-gray-200">
                             <!-- India -->
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap font-bold text-indigo-600">ðŸ‡®ðŸ‡³ India</td>
+                                <td class="px-6 py-4 whitespace-nowrap font-bold text-indigo-600">🇮🇳 India</td>
                                 <td class="px-6 py-4">Equity Funds</td>
                                 <td class="px-6 py-4"><strong>20%</strong><br><span
                                         class="text-xs text-gray-500">(Holding < 12 months)</span>
@@ -265,7 +265,7 @@ require_once __DIR__ . '/functions.php';
                             </tr>
                             <!-- USA -->
                             <tr class="bg-gray-50/50">
-                                <td class="px-6 py-4 whitespace-nowrap font-bold text-blue-600">ðŸ‡ºðŸ‡¸ USA</td>
+                                <td class="px-6 py-4 whitespace-nowrap font-bold text-blue-600">🇺🇸 USA</td>
                                 <td class="px-6 py-4">Mutual Funds</td>
                                 <td class="px-6 py-4">Ordinary Income Tax<br><span class="text-xs text-gray-500">(10% -
                                         37%*)</span></td>
@@ -274,11 +274,11 @@ require_once __DIR__ . '/functions.php';
                             </tr>
                             <!-- Europe (UK) -->
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap font-bold text-purple-600">ðŸ‡ªðŸ‡º / ðŸ‡¬ðŸ‡§ UK</td>
+                                <td class="px-6 py-4 whitespace-nowrap font-bold text-purple-600">🇪🇺 / 🇬🇧 UK</td>
                                 <td class="px-6 py-4">ISA / Regular</td>
                                 <td class="px-6 py-4" colspan="2">
-                                    <strong>ISA:</strong> Tax-Free (Â£20k limit)<br>
-                                    <strong>General:</strong> CGT Allowance dropped to Â£3,000<br>
+                                    <strong>ISA:</strong> Tax-Free (£20k limit)<br>
+                                    <strong>General:</strong> CGT Allowance dropped to £3,000<br>
                                     <em>Rates: 10% (Basic) / 20% (Higher)</em>
                                 </td>
                             </tr>
@@ -347,17 +347,17 @@ require_once __DIR__ . '/functions.php';
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
                     <ul class="space-y-2 text-sm">
                         <li><a href="/sip-step-up-calculator"
-                                class="text-indigo-600 hover:underline font-medium">Step-Up SIP Guide</a> â€” How a 10%
+                                class="text-indigo-600 hover:underline font-medium">Step-Up SIP Guide</a> — How a 10%
                             annual increase doubles your corpus</li>
                         <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
-                                Retirement Planning</a> â€” Generate steady retirement income from your mutual fund corpus
+                                Retirement Planning</a> — Generate steady retirement income from your mutual fund corpus
                         </li>
                         <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
-                                Fund Tax Rules 2026</a> â€” LTCG, STCG & tax-efficient withdrawal strategies</li>
+                                Fund Tax Rules 2026</a> — LTCG, STCG & tax-efficient withdrawal strategies</li>
                         <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
-                                PPF</a> â€” Which investment gives the best returns for your goal?</li>
+                                PPF</a> — Which investment gives the best returns for your goal?</li>
                         <li><a href="/swp-tax-calculator" class="text-indigo-600 hover:underline font-medium">SWP Tax
-                                Calculator India</a> â€” Calculate post-tax income from SWP withdrawals</li>
+                                Calculator India</a> — Calculate post-tax income from SWP withdrawals</li>
                     </ul>
                 </div>
 

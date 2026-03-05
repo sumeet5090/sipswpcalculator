@@ -75,7 +75,7 @@ declare(strict_types=1);
                     Website and its calculators.</p>
 
                 <div class="mt-8 pt-6 border-t border-gray-200 text-center">
-                    <a href="/" class="text-indigo-600 hover:underline font-medium">â† Return to SIP & SWP Calculator</a>
+                    <a href="/" class="text-indigo-600 hover:underline font-medium">← Return to SIP & SWP Calculator</a>
                 </div>
             </article>
         </main>

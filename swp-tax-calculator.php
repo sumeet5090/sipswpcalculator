@@ -110,7 +110,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <p>When you set up a Systematic Withdrawal Plan (SWP) from a mutual fund, each withdrawal is treated as
                     a <strong>partial redemption</strong>. The Income Tax Department uses the <strong>First-In-First-Out
                         (FIFO)</strong> method to determine which units are being sold.</p>
-                <p>Crucially, <strong>only the capital gains portion</strong> of each withdrawal is taxable â€” the
+                <p>Crucially, <strong>only the capital gains portion</strong> of each withdrawal is taxable — the
                     principal (cost of acquisition) is returned tax-free. This makes SWP fundamentally different from FD
                     interest, where the entire interest amount is taxable.</p>
 
@@ -118,11 +118,11 @@ require_once __DIR__ . '/functions.php'; ?>
                     <p class="font-bold text-indigo-800 mb-2">Example: $500 monthly SWP withdrawal</p>
                     <p class="text-sm text-gray-600">If you invested $10 Lakh and your corpus is now $15 Lakh:</p>
                     <ul class="text-sm text-gray-600 mt-2 space-y-1">
-                        <li>â€¢ Capital gains ratio = (15L - 10L) / 15L = <strong>33.3%</strong></li>
-                        <li>â€¢ Taxable portion per withdrawal = $500 Ã— 33.3% = <strong>$16,650</strong></li>
-                        <li>â€¢ Tax-free portion (principal) = $500 Ã— 66.7% = <strong>$33,350</strong></li>
-                        <li>â€¢ If LTCG applies: Tax = $16,650 Ã— 12.5% = <strong>$2,081/month</strong></li>
-                        <li>â€¢ <strong>Effective tax rate on $500 withdrawal = only 4.2%!</strong></li>
+                        <li>• Capital gains ratio = (15L - 10L) / 15L = <strong>33.3%</strong></li>
+                        <li>• Taxable portion per withdrawal = $500 × 33.3% = <strong>$16,650</strong></li>
+                        <li>• Tax-free portion (principal) = $500 × 66.7% = <strong>$33,350</strong></li>
+                        <li>• If LTCG applies: Tax = $16,650 × 12.5% = <strong>$2,081/month</strong></li>
+                        <li>• <strong>Effective tax rate on $500 withdrawal = only 4.2%!</strong></li>
                     </ul>
                 </div>
 
@@ -145,7 +145,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Tax rate on gains</td>
                                 <td class="py-3 px-4 text-green-700">12.5% LTCG / 20% STCG</td>
-                                <td class="py-3 px-4 text-rose-600">Income slab rate (always)</td>
+                                <td class="py-3 px-4 text-rose-500">Income slab rate (always)</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Annual exemption</td>
@@ -206,7 +206,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     </table>
                 </div>
                 <p class="text-xs text-gray-500">* After $1.25L annual LTCG exemption. Effective tax rate ranges from
-                    ~1.1% to ~4.1% on total withdrawal â€” far lower than FD taxation.</p>
+                    ~1.1% to ~4.1% on total withdrawal — far lower than FD taxation.</p>
 
                 <h2>Strategies to Minimize SWP Tax</h2>
                 <ol>
@@ -260,15 +260,15 @@ require_once __DIR__ . '/functions.php'; ?>
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
                     <ul class="space-y-2 text-sm">
                         <li><a href="/" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
-                                Calculator</a> â€” Model SWP withdrawals with tax projections</li>
+                                Calculator</a> — Model SWP withdrawals with tax projections</li>
                         <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
-                                Retirement Planning</a> â€” Complete guide to retirement income via SWP</li>
+                                Retirement Planning</a> — Complete guide to retirement income via SWP</li>
                         <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
-                                Fund Tax 2026</a> â€” LTCG, STCG & tax-efficient strategies</li>
+                                Fund Tax 2026</a> — LTCG, STCG & tax-efficient strategies</li>
                         <li><a href="/swp-vs-fixed-deposit" class="text-indigo-600 hover:underline font-medium">SWP vs
-                                Fixed Deposit</a> â€” Tax efficiency comparison for retirement</li>
+                                Fixed Deposit</a> — Tax efficiency comparison for retirement</li>
                         <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
-                                PPF</a> â€” Compare tax treatment across investments</li>
+                                PPF</a> — Compare tax treatment across investments</li>
                     </ul>
                 </div>
 
