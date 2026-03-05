@@ -36,7 +36,7 @@
 
     <div class="border-t border-gray-200 pt-6">
         <div class="bg-amber-100 p-4 rounded-lg mb-6 border border-amber-200">
-            <p class="text-amber-800"><span class="font-bold">⚠️ Disclaimer</span><br>This calculator is for
+            <p class="text-amber-800"><span class="font-bold">âš ï¸ Disclaimer</span><br>This calculator is for
                 educational and illustrative purposes only. It does not constitute financial, tax, or investment
                 advice. Past performance is not indicative of future results. Please consult with a qualified
                 financial advisor before making any investment decisions. See our <a href="/privacy"
@@ -46,8 +46,8 @@
 
         <div class="text-center">
             <p class="text-xs">&copy; <?= date('Y') ?> SIP/SWP Calculator. All rights reserved.</p>
-            <p class="text-xs mt-2">Built with care for global investors • <span class="text-indigo-600">No
-                    tracking • No ads • Free forever</span></p>
+            <p class="text-xs mt-2">Built with care for global investors â€¢ <span class="text-indigo-600">No
+                    tracking â€¢ No ads â€¢ Free forever</span></p>
         </div>
     </div>
 </footer>

@@ -1,10 +1,10 @@
 // State
 let currentCurrency = 'INR';
 const currencyConfig = {
-    'INR': { locale: 'en-IN', symbol: '₹' },
+    'INR': { locale: 'en-IN', symbol: 'â‚¹' },
     'USD': { locale: 'en-US', symbol: '$' },
-    'EUR': { locale: 'en-US', symbol: '€' },
-    'GBP': { locale: 'en-GB', symbol: '£' }
+    'EUR': { locale: 'en-US', symbol: 'â‚¬' },
+    'GBP': { locale: 'en-GB', symbol: 'Â£' }
 };
 
 function updateCurrency(newCurrency) {
@@ -36,7 +36,7 @@ function updateCurrency(newCurrency) {
     }
 }
 
-// ── Tab switching ──────────────────────────────────────────────────────────
+// â”€â”€ Tab switching â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function switchFormTab(tab) {
     const sipPanel = document.getElementById('panel-sip');
     const swpPanel = document.getElementById('panel-swp');
@@ -48,13 +48,13 @@ function switchFormTab(tab) {
         sipPanel.classList.remove('hidden');
         swpPanel.classList.add('hidden');
         // Active styles for SIP tab
-        sipTab.classList.add('bg-emerald-500', 'text-white');
+        sipTab.classList.add('bg-emerald-700', 'text-white');
         sipTab.classList.remove('bg-white', 'text-slate-500');
         sipTab.querySelector('span').classList.add('bg-white/20');
         sipTab.querySelector('span').classList.remove('bg-slate-100');
         // Inactive styles for SWP tab
         swpTab.classList.add('bg-white', 'text-slate-500');
-        swpTab.classList.remove('bg-rose-500', 'text-white');
+        swpTab.classList.remove('bg-rose-600', 'text-white');
         swpTab.querySelector('span').classList.add('bg-slate-100');
         swpTab.querySelector('span').classList.remove('bg-white/20');
         sipTab.setAttribute('aria-selected', 'true');
@@ -64,13 +64,13 @@ function switchFormTab(tab) {
         swpPanel.classList.remove('hidden');
         sipPanel.classList.add('hidden');
         // Active styles for SWP tab
-        swpTab.classList.add('bg-rose-500', 'text-white');
+        swpTab.classList.add('bg-rose-600', 'text-white');
         swpTab.classList.remove('bg-white', 'text-slate-500');
         swpTab.querySelector('span').classList.add('bg-white/20');
         swpTab.querySelector('span').classList.remove('bg-slate-100');
         // Inactive styles for SIP tab
         sipTab.classList.add('bg-white', 'text-slate-500');
-        sipTab.classList.remove('bg-emerald-500', 'text-white');
+        sipTab.classList.remove('bg-emerald-700', 'text-white');
         sipTab.querySelector('span').classList.add('bg-slate-100');
         sipTab.querySelector('span').classList.remove('bg-white/20');
         swpTab.setAttribute('aria-selected', 'true');
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Range Sliders
     setupRangeSliders();
 
-    // ── Restore from shared URL params ────────────────────────────────
+    // â”€â”€ Restore from shared URL params â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('sip')) {
         const paramMap = {
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial calculation on page load (syncs JS table/chart with PHP defaults)
     calculateAndRender();
 
-    // ── Share button ─────────────────────────────────────────────────
+    // â”€â”€ Share button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const shareBtn = document.getElementById('shareCalcBtn');
     if (shareBtn) {
         shareBtn.addEventListener('click', function () {
@@ -469,7 +469,7 @@ function updateTable(data, enableSwp) {
         let swpCols = '';
         if (enableSwp) {
             swpCols = `
-                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap">${fmt(row.annual_withdrawal)}</td>
+                <td class="px-6 py-4 text-right text-rose-600 font-medium font-mono whitespace-nowrap">${fmt(row.annual_withdrawal)}</td>
                 <td class="px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap">${fmt(row.cumulative_withdrawals)}</td>
             `;
         }
@@ -534,7 +534,7 @@ function fitSummaryCards() {
     const elements = ids.map(id => document.getElementById(id)).filter(Boolean);
     if (elements.length === 0) return;
 
-    // ── WRITE PASS 1: Reset all elements to base state ──
+    // â”€â”€ WRITE PASS 1: Reset all elements to base state â”€â”€
     elements.forEach(el => {
         el.style.whiteSpace = 'nowrap';
         el.style.overflow = 'hidden';
@@ -543,7 +543,7 @@ function fitSummaryCards() {
         }
     });
 
-    // ── READ PASS: Measure everything in one batch ──
+    // â”€â”€ READ PASS: Measure everything in one batch â”€â”€
     const measurements = elements.map(el => {
         if (!el.dataset.baseFont) {
             el.dataset.baseFont = getComputedStyle(el).fontSize;
@@ -562,7 +562,7 @@ function fitSummaryCards() {
         return { el, basePx, availableW, textW };
     });
 
-    // ── WRITE PASS 2: Apply all computed font sizes ──
+    // â”€â”€ WRITE PASS 2: Apply all computed font sizes â”€â”€
     results.forEach(({ el, basePx, availableW, textW }) => {
         if (textW > availableW && availableW > 0) {
             el.style.fontSize = Math.max((availableW / textW) * basePx, 10) + 'px';
@@ -800,7 +800,7 @@ function toggleSwpFields() {
         fields.style.display = 'none';
     }
 
-    // Full recalculation — updates chart, table, and summary cards
+    // Full recalculation â€” updates chart, table, and summary cards
     calculateAndRender();
 }
 

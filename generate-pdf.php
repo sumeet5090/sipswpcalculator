@@ -14,13 +14,13 @@ require_once __DIR__ . '/pdf-report-template.php';
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-// ── SECURITY: Only allow POST requests ──
+// â”€â”€ SECURITY: Only allow POST requests â”€â”€
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     die('Method Not Allowed');
 }
 
-// ── SECURITY: CSRF token validation ──
+// â”€â”€ SECURITY: CSRF token validation â”€â”€
 session_start();
 $token = $_POST['csrf_token'] ?? '';
 if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
@@ -28,7 +28,7 @@ if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
     die('Forbidden: Invalid security token. Please reload the page and try again.');
 }
 
-// ── SECURITY: Rate limiting (max 10 PDFs per minute per IP) ──
+// â”€â”€ SECURITY: Rate limiting (max 10 PDFs per minute per IP) â”€â”€
 $rate_limit_dir = sys_get_temp_dir() . '/sipswp_rate_limits/';
 if (!is_dir($rate_limit_dir)) {
     @mkdir($rate_limit_dir, 0700, true);
@@ -47,7 +47,7 @@ $rate_data[] = $now;
 file_put_contents($rate_file, json_encode($rate_data));
 
 try {
-    // ── SECURITY: Sanitize all text inputs ──
+    // â”€â”€ SECURITY: Sanitize all text inputs â”€â”€
     $inputs = [
         'client_name' => mb_substr(strip_tags($_POST['clientName'] ?? 'N/A'), 0, 100),
         'advisor_name' => mb_substr(strip_tags($_POST['advisorName'] ?? 'N/A'), 0, 100),
@@ -64,13 +64,13 @@ try {
         'logo_base64' => null,
     ];
 
-    // ── SECURITY: Validate chart data is a valid base64 data URI ──
+    // â”€â”€ SECURITY: Validate chart data is a valid base64 data URI â”€â”€
     $chart_raw = $_POST['chartData'] ?? '';
     if ($chart_raw !== '' && preg_match('/^data:image\/(png|jpeg|gif|webp);base64,[A-Za-z0-9+\/=]+$/', $chart_raw)) {
         $inputs['chart_base64'] = $chart_raw;
     }
 
-    // ── SECURITY: Sanitize table HTML (strip dangerous tags/attributes) ──
+    // â”€â”€ SECURITY: Sanitize table HTML (strip dangerous tags/attributes) â”€â”€
     $table_raw = $_POST['tableHtml'] ?? '<table><tr><td>No data</td></tr></table>';
     // Whitelist only safe HTML tags for the table
     $inputs['table_html'] = strip_tags(
@@ -89,7 +89,7 @@ try {
         $inputs['table_html']
     );
 
-    // ── SECURITY: Validate numeric inputs (clamp to safe ranges) ──
+    // â”€â”€ SECURITY: Validate numeric inputs (clamp to safe ranges) â”€â”€
     $inputs['sip'] = max(0, min(10000000, (float) ($_POST['sip'] ?? 0)));
     $inputs['years'] = max(0, min(50, (int) ($_POST['years'] ?? 0)));
     $inputs['rate'] = max(0, min(50, (float) ($_POST['rate'] ?? 0)));
@@ -98,7 +98,7 @@ try {
     $inputs['swp_stepup'] = max(0, min(50, (float) ($_POST['swp_stepup'] ?? 0)));
     $inputs['swp_years'] = max(0, min(50, (int) ($_POST['swp_years'] ?? 0)));
 
-    // ── SECURITY: Validate file upload (real image check, size limit) ──
+    // â”€â”€ SECURITY: Validate file upload (real image check, size limit) â”€â”€
     if (isset($_FILES['advisorLogo']) && $_FILES['advisorLogo']['error'] === UPLOAD_ERR_OK) {
         $tmp_name = $_FILES['advisorLogo']['tmp_name'];
         $file_size = $_FILES['advisorLogo']['size'];
@@ -125,7 +125,7 @@ try {
             throw new \RuntimeException('Image dimensions too large. Maximum 2000x2000 pixels.');
         }
 
-        // Safe to proceed — use detected MIME type (not the user-supplied one)
+        // Safe to proceed â€” use detected MIME type (not the user-supplied one)
         $safe_mime = $image_info['mime'];
         $data = file_get_contents($tmp_name);
         $inputs['logo_base64'] = 'data:' . $safe_mime . ';base64,' . base64_encode($data);
@@ -136,7 +136,7 @@ try {
 
     // --- PDF Generation ---
     $options = new Options();
-    // ── SECURITY: Disable remote requests to prevent SSRF ──
+    // â”€â”€ SECURITY: Disable remote requests to prevent SSRF â”€â”€
     // Data URIs (base64 images) work without remote enabled
     $options->set('isRemoteEnabled', false);
     $options->set('defaultFont', 'Helvetica');

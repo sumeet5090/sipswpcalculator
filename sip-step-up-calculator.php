@@ -73,7 +73,7 @@ require_once __DIR__ . '/functions.php'; ?>
         "name": "Can I combine step-up SIP with step-up SWP?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes! Our SIP & SWP calculator supports both. You can model a 10% step-up SIP during accumulation and a 5% step-up SWP during retirement — all in one simulation."
+          "text": "Yes! Our SIP & SWP calculator supports both. You can model a 10% step-up SIP during accumulation and a 5% step-up SWP during retirement â€” all in one simulation."
         }
       }, {
         "@type": "Question",
@@ -127,7 +127,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     where you <strong>automatically increase your monthly investment amount by a fixed percentage every
                         year</strong>. For example, if you start with $100/month and set a 10% annual step-up, your
                     SIP increases to $11,000 in Year 2, $12,100 in Year 3, and so on.</p>
-                <p>This approach mirrors real life — as your salary grows, your investments grow proportionally. It's
+                <p>This approach mirrors real life â€” as your salary grows, your investments grow proportionally. It's
                     the <strong>single most powerful strategy</strong> for maximizing long-term wealth creation through
                     mutual funds.</p>
 
@@ -159,25 +159,25 @@ require_once __DIR__ . '/functions.php'; ?>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4 font-medium">Wealth Multiplier</td>
-                                <td class="py-3 px-4">4.2×</td>
-                                <td class="py-3 px-4 font-bold text-indigo-700">5.1×</td>
-                                <td class="py-3 px-4 font-bold text-green-700">+0.9×</td>
+                                <td class="py-3 px-4">4.2Ã—</td>
+                                <td class="py-3 px-4 font-bold text-indigo-700">5.1Ã—</td>
+                                <td class="py-3 px-4 font-bold text-green-700">+0.9Ã—</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <p class="text-sm text-gray-500 mt-2">A 10% step-up produces <strong>$2.54 Crore more</strong> than a
-                    flat SIP — that's 3.5× the final corpus!</p>
+                    flat SIP â€” that's 3.5Ã— the final corpus!</p>
 
                 <h2>The Math: Step-Up SIP Formula Explained</h2>
                 <p>The step-up SIP doesn't have a single closed-form formula like flat SIP. Instead, it's calculated
                     year-by-year:</p>
                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 font-mono text-sm">
                     <p class="mb-2"><strong>For each year Y (from 1 to N):</strong></p>
-                    <p>Monthly SIP<sub>Y</sub> = P × (1 + S/100)<sup>Y-1</sup></p>
+                    <p>Monthly SIP<sub>Y</sub> = P Ã— (1 + S/100)<sup>Y-1</sup></p>
                     <p class="mt-2">Where P = initial monthly amount, S = annual step-up %</p>
                     <p class="mt-4">The total is then computed month-by-month: Balance<sub>m</sub> =
-                        (Balance<sub>m-1</sub> + SIP<sub>m</sub>) × (1 + r/12)</p>
+                        (Balance<sub>m-1</sub> + SIP<sub>m</sub>) Ã— (1 + r/12)</p>
                 </div>
 
                 <h2>3 Worked Examples</h2>
@@ -204,23 +204,23 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <h2>When Should You Step Up Your SIP?</h2>
                 <ul>
-                    <li><strong>After salary increments</strong> — align your step-up with your annual appraisal cycle
+                    <li><strong>After salary increments</strong> â€” align your step-up with your annual appraisal cycle
                     </li>
-                    <li><strong>After paying off loans</strong> — redirect EMI amounts to SIP step-ups</li>
-                    <li><strong>When expenses reduce</strong> — children become independent, mortgage paid off</li>
-                    <li><strong>During bonus months</strong> — many AMCs allow one-time top-ups alongside regular
+                    <li><strong>After paying off loans</strong> â€” redirect EMI amounts to SIP step-ups</li>
+                    <li><strong>When expenses reduce</strong> â€” children become independent, mortgage paid off</li>
+                    <li><strong>During bonus months</strong> â€” many AMCs allow one-time top-ups alongside regular
                         step-ups</li>
                 </ul>
 
                 <h2>Common Mistakes in Step-Up SIP Planning</h2>
                 <ol>
-                    <li><strong>Setting too aggressive a step-up</strong> — 20-25% annual increases may become
+                    <li><strong>Setting too aggressive a step-up</strong> â€” 20-25% annual increases may become
                         unsustainable. Start with 10% and adjust.</li>
-                    <li><strong>Not starting at all</strong> — waiting for the "right time" or "more money" costs more
+                    <li><strong>Not starting at all</strong> â€” waiting for the "right time" or "more money" costs more
                         than a modest step-up.</li>
-                    <li><strong>Stopping during market crashes</strong> — step-up SIPs are MOST beneficial during
+                    <li><strong>Stopping during market crashes</strong> â€” step-up SIPs are MOST beneficial during
                         downturns (you buy more units at lower prices).</li>
-                    <li><strong>Ignoring inflation adjustment</strong> — your step-up should at minimum match inflation
+                    <li><strong>Ignoring inflation adjustment</strong> â€” your step-up should at minimum match inflation
                         (5-6%) to maintain real value.</li>
                 </ol>
 
@@ -247,7 +247,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         SWP?</summary>
                     <div class="pb-4 text-gray-600">Yes! Our <a href="/" class="text-indigo-600 hover:underline">SIP &
                             SWP calculator</a> supports both. You can model a 10% step-up SIP during accumulation and a
-                        5% step-up SWP during retirement — all in one simulation.</div>
+                        5% step-up SWP during retirement â€” all in one simulation.</div>
                 </details>
 
                 <details class="group">
@@ -263,16 +263,16 @@ require_once __DIR__ . '/functions.php'; ?>
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
                     <ul class="space-y-2 text-sm">
                         <li><a href="/" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
-                                Calculator</a> — Model step-up SIP with live projections</li>
+                                Calculator</a> â€” Model step-up SIP with live projections</li>
                         <li><a href="/sip-for-beginners" class="text-indigo-600 hover:underline font-medium">SIP for
-                                Beginners</a> — Complete guide to starting your first SIP</li>
+                                Beginners</a> â€” Complete guide to starting your first SIP</li>
                         <li><a href="/inflation-impact-on-sip"
-                                class="text-indigo-600 hover:underline font-medium">Inflation Impact on SIP</a> — Why
+                                class="text-indigo-600 hover:underline font-medium">Inflation Impact on SIP</a> â€” Why
                             step-up SIP is essential to beat inflation</li>
                         <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
-                                PPF</a> — Compare returns across investment options</li>
+                                PPF</a> â€” Compare returns across investment options</li>
                         <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
-                                Retirement Planning</a> — Convert your SIP corpus into retirement income</li>
+                                Retirement Planning</a> â€” Convert your SIP corpus into retirement income</li>
                     </ul>
                 </div>
 

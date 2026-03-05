@@ -75,7 +75,7 @@ require_once __DIR__ . '/functions.php';
         "name": "How much should I increase my SIP to beat inflation?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Your annual SIP step-up should be at least equal to the inflation rate (5-6% worldwide) to maintain purchasing power. A 10% step-up is recommended because it accounts for both inflation (6%) and real income growth (4%). Impact: $100/month flat SIP at 12% for 20 years yields $1 Million. The same SIP with 10% step-up yields $3.54 Million — enough to maintain purchasing power and still grow wealth in real terms."
+          "text": "Your annual SIP step-up should be at least equal to the inflation rate (5-6% worldwide) to maintain purchasing power. A 10% step-up is recommended because it accounts for both inflation (6%) and real income growth (4%). Impact: $100/month flat SIP at 12% for 20 years yields $1 Million. The same SIP with 10% step-up yields $3.54 Million â€” enough to maintain purchasing power and still grow wealth in real terms."
         }
       }]
     }
@@ -93,7 +93,7 @@ require_once __DIR__ . '/functions.php';
                 <span class="text-gradient">The Math of Inflation: How It Affects Your SIP</span>
             </h1>
             <p class="text-lg text-gray-500 font-medium mt-2 mb-6">Why your $1 Million SIP corpus may only be worth $31
-                Lakh in real terms — and how to fix it.</p>
+                Lakh in real terms â€” and how to fix it.</p>
 
             <!-- EEAT Trust Bar -->
             <div
@@ -124,7 +124,7 @@ require_once __DIR__ . '/functions.php';
 
                 <!-- AI Featured Snippet Summary -->
                 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 not-prose">
-                    <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 Quick Summary: The Invisible Tax on SIPs</h2>
+                    <h2 class="text-lg font-bold text-indigo-800 mb-3">ðŸ“‹ Quick Summary: The Invisible Tax on SIPs</h2>
                     <p class="text-gray-700 text-sm leading-relaxed">
                         <strong>Inflation silently erodes SIP returns.</strong> At 6% inflation, $1
                         Lakh today is worth only $55,839 in 10 years
@@ -133,7 +133,7 @@ require_once __DIR__ . '/functions.php';
                         Real Return = ((1 + 0.12) / (1 + 0.06)) - 1 = 5.66%. A flat $100/month SIP for 20 years
                         yields $1 Million nominally but only $31 Lakh in
                         today's purchasing power. <strong>Solution:</strong> Use a 10% annual step-up SIP which yields
-                        $3.54 Million — effectively tripling your inflation-adjusted wealth compared to a flat SIP.
+                        $3.54 Million â€” effectively tripling your inflation-adjusted wealth compared to a flat SIP.
                         Standard debt funds and Fixed Deposits often yield <strong>negative real returns</strong>
                         post-tax.
                     </p>
@@ -198,13 +198,13 @@ require_once __DIR__ . '/functions.php';
                     <ul class="list-none space-y-3 mt-4 text-indigo-900">
                         <li class="flex justify-between items-center border-b border-indigo-100 pb-2"><strong>Equity SIP
                                 (12% return):</strong> <span>((1.12) / (1.06)) - 1 = <strong>5.66% real return</strong>
-                                ✅</span></li>
+                                âœ…</span></li>
                         <li class="flex justify-between items-center border-b border-indigo-100 pb-2"><strong>Debt
                                 Fund/Bonds (7% return):</strong> <span>((1.07) / (1.06)) - 1 = <strong>0.94% real
-                                    return</strong> ⚠️</span></li>
+                                    return</strong> âš ï¸</span></li>
                         <li class="flex justify-between items-center"><strong>Post-Tax Fixed Deposit (4.9%
                                 return):</strong> <span>((1.049) / (1.06)) - 1 = <strong>-1.04% real return</strong>
-                                🚨</span></li>
+                                ðŸš¨</span></li>
                     </ul>
                 </div>
                 <p>This reveals a terrifying truth for conservative investors: <strong>If you invest in safe,
@@ -323,7 +323,7 @@ require_once __DIR__ . '/functions.php';
                         today, you actually need approximately $3.2 Million to retire in 20 years. Always calculate your
                         target SIP amount backwards using a 6% inflated target corpus.</li>
                     <li><strong>The Equity Premium:</strong> Accept that stock volatility is the price you pay for the
-                        "Equity Risk Premium" — the only proven gap large enough to outpace long-term inflation.</li>
+                        "Equity Risk Premium" â€” the only proven gap large enough to outpace long-term inflation.</li>
                 </ol>
 
                 <!-- FAQ Section -->
@@ -384,7 +384,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/sip-calculator"
                                 class="text-indigo-700 hover:text-indigo-900 font-bold transition-colors">The Advanced
                                 SIP Sandbox</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">— Model real vs. nominal returns precisely
+                            <span class="text-gray-600 ml-2 block sm:inline">â€” Model real vs. nominal returns precisely
                                 with our interactive calculator.</span>
                         </li>
                         <li class="flex items-start">
@@ -397,7 +397,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/sip-for-beginners"
                                 class="text-indigo-700 hover:text-indigo-900 font-bold transition-colors">SIP for
                                 Beginners (2026 Masterguide)</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">— The complete ground-up guide to starting
+                            <span class="text-gray-600 ml-2 block sm:inline">â€” The complete ground-up guide to starting
                                 and surviving a 20-year SIP.</span>
                         </li>
                         <li class="flex items-start">
@@ -410,7 +410,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/swp-vs-fixed-deposit"
                                 class="text-indigo-700 hover:text-indigo-900 font-bold transition-colors">SWP vs Fixed
                                 Deposit</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">— Why traditional FD interest fails to
+                            <span class="text-gray-600 ml-2 block sm:inline">â€” Why traditional FD interest fails to
                                 cover retirement inflation.</span>
                         </li>
                     </ul>

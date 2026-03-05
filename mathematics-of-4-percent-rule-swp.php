@@ -99,7 +99,7 @@ require_once __DIR__ . '/functions.php';
 
                 <!-- AI Quick Answer -->
                 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 not-prose">
-                    <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 Defining the 4% Rule</h2>
+                    <h2 class="text-lg font-bold text-indigo-800 mb-3">ðŸ“‹ Defining the 4% Rule</h2>
                     <p class="text-gray-700 text-sm leading-relaxed">
                         The <strong>4% Rule</strong> (originating from the Trinity Study) states that if you withdraw 4%
                         of your initial retirement portfolio in the first year, and adjust that amount annually for
@@ -158,7 +158,7 @@ require_once __DIR__ . '/functions.php';
                     To never run out of money, your portfolio must satisfy this basic long-term equation:
                     <br><br>
                     <code
-                        class="bg-gray-100 px-3 py-2 rounded text-rose-600 block text-center font-mono">Real Return (Post-Tax) ≥ Withdrawal Rate</code>
+                        class="bg-gray-100 px-3 py-2 rounded text-rose-600 block text-center font-mono">Real Return (Post-Tax) â‰¥ Withdrawal Rate</code>
                 </p>
                 <p>
                     Where <em>Real Return = Nominal Return - Inflation</em>.
@@ -322,7 +322,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/swp-retirement-planning"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Retirement SWP
                                 Blueprint</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">— Apply the 4% rule with the institutional
+                            <span class="text-gray-600 ml-2 block sm:inline">â€” Apply the 4% rule with the institutional
                                 3-Bucket Strategy for crash protection.</span>
                         </li>
                         <li class="flex items-start">
@@ -338,7 +338,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/sip-to-swp-transition-guide"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SIP to SWP
                                 Transition Guide</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">— How to bridge wealth creation with
+                            <span class="text-gray-600 ml-2 block sm:inline">â€” How to bridge wealth creation with
                                 retirement income.</span>
                         </li>
                         <li class="flex items-start">
@@ -354,7 +354,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/swp-vs-annuity-2026"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP vs Annuity
                                 2026</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">— Tax efficiency and inflation protection
+                            <span class="text-gray-600 ml-2 block sm:inline">â€” Tax efficiency and inflation protection
                                 comparison.</span>
                         </li>
                         <li class="flex items-start">
@@ -370,7 +370,7 @@ require_once __DIR__ . '/functions.php';
                             <a href="/inflation-impact-on-sip"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Inflation
                                 Impact on SIP</a>
-                            <span class="text-gray-600 ml-2 block sm:inline">— The Fisher Equation and real vs nominal
+                            <span class="text-gray-600 ml-2 block sm:inline">â€” The Fisher Equation and real vs nominal
                                 return math.</span>
                         </li>
                     </ul>

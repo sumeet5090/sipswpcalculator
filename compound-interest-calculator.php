@@ -8,7 +8,7 @@ require_once __DIR__ . '/functions.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compound Interest Calculator 2026 — Free Online CI Calculator</title>
+    <title>Compound Interest Calculator 2026 â€” Free Online CI Calculator</title>
     <meta name="description"
         content="Free compound interest calculator with yearly breakdown table. Calculate how your money grows with monthly, quarterly, or annual compounding. Visual charts and exportable results.">
     <meta name="keywords"
@@ -19,7 +19,7 @@ require_once __DIR__ . '/functions.php';
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://sipswpcalculator.com/compound-interest-calculator">
-    <meta property="og:title" content="Compound Interest Calculator 2026 — Free Online CI Calculator">
+    <meta property="og:title" content="Compound Interest Calculator 2026 â€” Free Online CI Calculator">
     <meta property="og:description"
         content="Free compound interest calculator with yearly breakdown. Calculate how your money grows with compounding.">
     <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
@@ -35,7 +35,7 @@ require_once __DIR__ . '/functions.php';
 
     <!-- Structured Data: Article -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Article","headline":"Compound Interest Calculator 2026 — Free Online CI Calculator","author":{"@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about"},"datePublished":"2026-02-27","dateModified":"2026-02-27"}
+    {"@context":"https://schema.org","@type":"Article","headline":"Compound Interest Calculator 2026 â€” Free Online CI Calculator","author":{"@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about"},"datePublished":"2026-02-27","dateModified":"2026-02-27"}
     </script>
     <!-- Structured Data: BreadcrumbList -->
     <script type="application/ld+json">
@@ -58,7 +58,7 @@ require_once __DIR__ . '/functions.php';
         "name": "What is the compound interest formula?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A = P × (1 + r/n)^(n×t), where A = final amount, P = principal, r = annual interest rate (decimal), n = compounding frequency per year, t = time in years."
+          "text": "A = P Ã— (1 + r/n)^(nÃ—t), where A = final amount, P = principal, r = annual interest rate (decimal), n = compounding frequency per year, t = time in years."
         }
       }, {
         "@type": "Question",
@@ -72,7 +72,7 @@ require_once __DIR__ . '/functions.php';
         "name": "What is the Rule of 72?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The Rule of 72 is a quick way to estimate how long it takes to double your money. Divide 72 by your annual interest rate. For example, at 8% interest, your money doubles in approximately 72 ÷ 8 = 9 years."
+          "text": "The Rule of 72 is a quick way to estimate how long it takes to double your money. Divide 72 by your annual interest rate. For example, at 8% interest, your money doubles in approximately 72 Ã· 8 = 9 years."
         }
       }, {
         "@type": "Question",
@@ -110,7 +110,7 @@ require_once __DIR__ . '/functions.php';
                 class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
                 <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
                     class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
+                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga â€” Creator of SIP Calculator"
                         class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32"
                         height="32" fetchpriority="high" decoding="async">
                     <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance
@@ -209,7 +209,7 @@ require_once __DIR__ . '/functions.php';
 
                     <!-- Rule of 72 -->
                     <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 text-center">
-                        <p class="text-sm text-amber-800"><strong>📏 Rule of 72:</strong> At <span
+                        <p class="text-sm text-amber-800"><strong>ðŸ“ Rule of 72:</strong> At <span
                                 id="ci-rule72-rate">8</span>% interest, your money doubles in approximately <strong
                                 id="ci-rule72-years">9</strong> years.</p>
                     </div>
@@ -221,7 +221,7 @@ require_once __DIR__ . '/functions.php';
             <p><dfn><strong>Compound interest</strong></dfn> is interest calculated on both the initial principal and
                 the
                 accumulated interest from previous periods. Unlike <strong>simple interest</strong> (calculated only on
-                the principal), compound interest grows exponentially over time — this is why Albert Einstein allegedly
+                the principal), compound interest grows exponentially over time â€” this is why Albert Einstein allegedly
                 called it the <em>"eighth wonder of the world."</em></p>
 
             <p>Whether you're saving in a bank fixed deposit, investing in mutual funds through <a href="/"
@@ -232,7 +232,7 @@ require_once __DIR__ . '/functions.php';
             <div
                 class="not-prose bg-gray-50 p-6 rounded-xl border border-gray-200 font-mono text-sm sm:text-base overflow-x-auto mb-6">
                 <p class="font-bold text-indigo-700 mb-2">Standard Compound Interest Formula:</p>
-                <p class="text-lg mb-4">A = P × (1 + r/n)<sup>n×t</sup></p>
+                <p class="text-lg mb-4">A = P Ã— (1 + r/n)<sup>nÃ—t</sup></p>
                 <dl class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                     <div>
                         <dt class="inline font-bold">A</dt>
@@ -351,7 +351,7 @@ require_once __DIR__ . '/functions.php';
             <p>The <strong>Rule of 72</strong> is the fastest way to estimate how long it takes to double your money.
                 Simply divide 72 by the annual interest rate:</p>
             <div class="not-prose bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 mb-6 text-center">
-                <p class="text-lg font-bold text-indigo-700 mb-3">Years to double ≈ 72 ÷ Interest Rate</p>
+                <p class="text-lg font-bold text-indigo-700 mb-3">Years to double â‰ˆ 72 Ã· Interest Rate</p>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
                     <div class="bg-white p-3 rounded-lg shadow-sm">
                         <div class="font-bold text-indigo-600">6%</div>
@@ -391,13 +391,13 @@ require_once __DIR__ . '/functions.php';
                 <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
                 <ul class="space-y-2 text-sm">
                     <li><a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">SIP Guide 2026</a>
-                        — Formula, Tax Rules & Strategy</li>
+                        â€” Formula, Tax Rules & Strategy</li>
                     <li><a href="/sip-step-up-calculator" class="text-indigo-600 hover:underline font-medium">Step-Up
-                            SIP</a> — How a 10% Annual Increase Doubles Your Corpus</li>
+                            SIP</a> â€” How a 10% Annual Increase Doubles Your Corpus</li>
                     <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
-                            PPF</a> — Which is Best?</li>
+                            PPF</a> â€” Which is Best?</li>
                     <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
-                            Retirement Planning</a> — Convert your corpus into income</li>
+                            Retirement Planning</a> â€” Convert your corpus into income</li>
                 </ul>
             </div>
 
@@ -430,11 +430,11 @@ require_once __DIR__ . '/functions.php';
             const t = parseInt(document.getElementById('ci-years').value) || 0;
             const n = parseInt(document.getElementById('ci-frequency').value) || 12;
 
-            // A = P × (1 + r/n)^(n*t)
+            // A = P Ã— (1 + r/n)^(n*t)
             const A = P * Math.pow(1 + r / n, n * t);
             const interest = A - P;
             const effectiveRate = (Math.pow(1 + r / n, n) - 1) * 100;
-            const rule72Years = r > 0 ? (72 / (r * 100)).toFixed(1) : '∞';
+            const rule72Years = r > 0 ? (72 / (r * 100)).toFixed(1) : 'âˆž';
 
             // Format
             const fmt = (num) => {
