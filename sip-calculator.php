@@ -190,7 +190,7 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between"><span>Total Invested:</span> <span
                                     class="font-bold">$24,00,000</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+$75,91,479</span></li>
+                                    class="font-bold text-green-700">+$75,91,479</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-indigo-700">$99,91,479</span></li>
                         </ul>
@@ -213,7 +213,7 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between"><span>Total Invested:</span> <span
                                     class="font-bold">$76,26,000</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+$85,56,000</span></li>
+                                    class="font-bold text-green-700">+$85,56,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-rose-700">$1.61 Crores</span></li>
                         </ul>

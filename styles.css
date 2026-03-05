@@ -107,6 +107,15 @@ h6 {
     color: var(--color-text-secondary) !important;
 }
 
+/* WCAG contrast-safe green and emerald variants */
+.text-green-700 {
+    color: oklch(52.7% .154 150.069);
+}
+
+.text-emerald-700 {
+    color: oklch(50.8% .118 165.612);
+}
+
 /* Input Fields */
 input[type="number"],
 select {

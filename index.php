@@ -665,7 +665,8 @@ foreach ($combined as $row) {
                 <p class="text-base text-gray-700"><strong>How much will a $100/month SIP grow in 20 years?</strong>
                 </p>
                 <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a $100/month
-                    SIP will grow to approximately <strong class="text-emerald-700">$3.54 Million</strong> over 20 years.
+                    SIP will grow to approximately <strong class="text-emerald-700">$3.54 Million</strong> over 20
+                    years.
                     Total invested: $68.73 Lakh. Total gains: $2.85 Crore.</p>
             </div>
             <script type="application/ld+json">
@@ -1016,7 +1017,7 @@ foreach ($combined as $row) {
                             </button>
                             <button type="button" id="openPdfModalBtn" aria-haspopup="dialog" aria-expanded="false"
                                 aria-controls="pdfModal"
-                                class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all shadow-sm">
+                                class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all shadow-sm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1043,26 +1044,29 @@ foreach ($combined as $row) {
                                 <thead id="breakdown-head"
                                     class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 sticky top-0 z-10">
                                     <tr>
-                                        <th class="px-6 py-4 bg-slate-50/95 border-b border-slate-200">Year</th>
-                                        <th
+                                        <th scope="col" class="px-6 py-4 bg-slate-50/95 border-b border-slate-200">Year
+                                        </th>
+                                        <th scope="col"
                                             class="px-6 py-4 bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
                                             Start Corpus</th>
-                                        <th
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">
+                                        <th scope="col"
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">
                                             Annual SIP</th>
-                                        <th
+                                        <th scope="col"
                                             class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
                                             Total Invested</th>
-                                        <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
+                                        <th scope="col"
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
                                             <?= !$enable_swp ? 'style="display:none"' : '' ?>>
                                             Annual SWP</th>
-                                        <th class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col"
+                                        <th scope="col"
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col"
                                             <?= !$enable_swp ? 'style="display:none"' : '' ?>>
                                             Total Withdrawn</th>
-                                        <th
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-600 whitespace-nowrap">
+                                        <th scope="col"
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">
                                             Interest</th>
-                                        <th
+                                        <th scope="col"
                                             class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">
                                             End Corpus</th>
                                     </tr>
@@ -1074,7 +1078,7 @@ foreach ($combined as $row) {
                                             <td class="px-6 py-4 text-right font-mono">
                                                 <?= formatInr($row['begin_balance']) ?>
                                             </td>
-                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                            <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono">
                                                 <?= formatInr($row['annual_contribution']) ?>
                                             </td>
                                             <td class="px-6 py-4 text-right text-slate-500 font-mono">
@@ -1139,11 +1143,11 @@ foreach ($combined as $row) {
                             SIP guide →</a>
                     </p>
                     <ul class="mt-4 space-y-2">
-                        <li><span class="font-semibold text-green-600">Rupee Cost Averaging:</span> Buy more units when
+                        <li><span class="font-semibold text-green-700">Rupee Cost Averaging:</span> Buy more units when
                             NAV is low, fewer when it's high — reducing average cost automatically.</li>
-                        <li><span class="font-semibold text-green-600">Power of Compounding:</span> Reinvesting returns
+                        <li><span class="font-semibold text-green-700">Power of Compounding:</span> Reinvesting returns
                             generates earnings on earnings, leading to exponential growth over 10-20+ years.</li>
-                        <li><span class="font-semibold text-green-600">Disciplined Investing:</span> Automates saving
+                        <li><span class="font-semibold text-green-700">Disciplined Investing:</span> Automates saving
                             and removes emotional decision-making from investing.</li>
                     </ul>
                 </div>
@@ -1163,11 +1167,11 @@ foreach ($combined as $row) {
                             →</a>
                     </p>
                     <ul class="mt-4 space-y-2">
-                        <li><span class="font-semibold text-green-600">Regular Income:</span> Create a predictable
+                        <li><span class="font-semibold text-green-700">Regular Income:</span> Create a predictable
                             pension-like cash flow from your mutual fund investments.</li>
-                        <li><span class="font-semibold text-green-600">Tax-Efficient Withdrawals:</span> Only the
+                        <li><span class="font-semibold text-green-700">Tax-Efficient Withdrawals:</span> Only the
                             capital gains portion is taxed (LTCG at 12.5% above $1,500 for equity funds).</li>
-                        <li><span class="font-semibold text-green-600">Continued Growth:</span> Remaining corpus stays
+                        <li><span class="font-semibold text-green-700">Continued Growth:</span> Remaining corpus stays
                             invested and benefits from market growth, potentially outliving you.</li>
                     </ul>
                 </div>
@@ -1238,13 +1242,13 @@ foreach ($combined as $row) {
                     Can You Earn?</h2>
                 <div class="grid md:grid-cols-3 gap-6 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h4 class="text-lg font-bold text-emerald-700 mb-2">$50/month for 15 Years</h4>
+                        <h3 class="text-lg font-bold text-emerald-700 mb-2">$50/month for 15 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
                                     class="font-bold">$19.09L</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+$21.41L</span></li>
+                                    class="font-bold text-green-700">+$21.41L</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-indigo-700">$40.50L</span></li>
                         </ul>
@@ -1252,26 +1256,26 @@ foreach ($combined as $row) {
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-indigo-100 ring-2 ring-indigo-100">
                         <div class="text-xs font-bold text-indigo-600 mb-1">MOST POPULAR</div>
-                        <h4 class="text-lg font-bold text-indigo-700 mb-2">$100/month for 20 Years</h4>
+                        <h3 class="text-lg font-bold text-indigo-700 mb-2">$100/month for 20 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
                                     class="font-bold">$68.73L</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+$2.85Cr</span></li>
+                                    class="font-bold text-green-700">+$2.85Cr</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-indigo-700">$3.54Cr</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~5.1×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h4 class="text-lg font-bold text-rose-700 mb-2">$25,000/month for 30 Years</h4>
+                        <h3 class="text-lg font-bold text-rose-700 mb-2">$25,000/month for 30 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
                                     class="font-bold">$4.94Cr</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+$36.91Cr</span></li>
+                                    class="font-bold text-green-700">+$36.91Cr</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-rose-700">$41.85Cr</span></li>
                         </ul>
@@ -1279,13 +1283,13 @@ foreach ($combined as $row) {
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-teal-100">
                         <div class="text-xs font-bold text-teal-600 mb-1">🌍 GLOBAL EXAMPLE</div>
-                        <h4 class="text-lg font-bold text-teal-700 mb-2">$500/month for 20 Years</h4>
+                        <h3 class="text-lg font-bold text-teal-700 mb-2">$500/month for 20 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 10% return, 5% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
                                     class="font-bold">$198,396</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+$218,104</span></li>
+                                    class="font-bold text-green-700">+$218,104</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-teal-700">$416,500</span></li>
                         </ul>
@@ -1362,7 +1366,7 @@ foreach ($combined as $row) {
                         <tbody class="text-sm">
                             <tr class="border-b hover:bg-indigo-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Expected Returns</td>
-                                <td class="py-4 px-6 font-bold text-green-600">12% - 15% (High)</td>
+                                <td class="py-4 px-6 font-bold text-green-700">12% - 15% (High)</td>
                                 <td class="py-4 px-6 text-gray-600">7.1% (Moderate)</td>
                                 <td class="py-4 px-6 text-gray-600">6% - 7% (Low)</td>
                             </tr>

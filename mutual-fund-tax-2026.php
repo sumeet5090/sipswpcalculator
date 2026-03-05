@@ -186,22 +186,22 @@ require_once __DIR__ . '/functions.php'; ?>
                         <tbody>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">What's taxed?</td>
-                                <td class="py-3 px-4 text-green-600">Only capital gains portion</td>
+                                <td class="py-3 px-4 text-green-700">Only capital gains portion</td>
                                 <td class="py-3 px-4 text-rose-600">Entire interest amount</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Tax rate</td>
-                                <td class="py-3 px-4 text-green-600">12.5% LTCG (with $1.25L exemption)</td>
+                                <td class="py-3 px-4 text-green-700">12.5% LTCG (with $1.25L exemption)</td>
                                 <td class="py-3 px-4 text-rose-600">Income slab rate (up to 30%+)</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">TDS</td>
-                                <td class="py-3 px-4 text-green-600">No TDS on MF redemptions</td>
+                                <td class="py-3 px-4 text-green-700">No TDS on MF redemptions</td>
                                 <td class="py-3 px-4 text-rose-600">10% TDS if interest > $40K/year</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4 font-medium">Potential returns</td>
-                                <td class="py-3 px-4 text-green-600">10-12% (market-linked)</td>
+                                <td class="py-3 px-4 text-green-700">10-12% (market-linked)</td>
                                 <td class="py-3 px-4">6-7% (fixed)</td>
                             </tr>
                         </tbody>
@@ -316,7 +316,8 @@ require_once __DIR__ . '/functions.php'; ?>
                         department uses <strong>FIFO (First In, First Out)</strong> — your oldest (and most
                         tax-efficient) units are sold first. This is actually favorable for retirees starting SWPs, as
                         the earliest units have the longest holding periods and the highest proportion of tax-free
-                        principal.</div>
+                        principal.
+                    </div>
                 </details>
 
                 <details class="group">
@@ -339,7 +340,8 @@ require_once __DIR__ . '/functions.php'; ?>
                         LTCG (not STCG). If your total losses exceed your total gains in a year, the excess can be
                         <strong>carried forward for up to 8 assessment years</strong>. Critical requirement: you must
                         file your ITR before the due date (typically July 31) to claim the carry-forward benefit. If you
-                        miss the deadline, you permanently lose the ability to carry forward those losses.</div>
+                        miss the deadline, you permanently lose the ability to carry forward those losses.
+                    </div>
                 </details>
 
                 <details class="group">
@@ -363,7 +365,8 @@ require_once __DIR__ . '/functions.php'; ?>
                         treated as the <strong>higher of</strong>: (a) your actual purchase price, or (b) the NAV on
                         January 31, 2018. This means if you bought an equity fund at $100 NAV, and on Jan 31, 2018 it
                         was $500, your cost basis is $500. Any gain after that is taxable at 12.5%. This clause remains
-                        relevant for long-term investors holding pre-2018 SIPs.</div>
+                        relevant for long-term investors holding pre-2018 SIPs.
+                    </div>
                 </details>
 
                 <!-- Related Guides -->

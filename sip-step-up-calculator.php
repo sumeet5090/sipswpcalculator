@@ -155,13 +155,13 @@ require_once __DIR__ . '/functions.php'; ?>
                                 <td class="py-3 px-4 font-medium">Maturity Value</td>
                                 <td class="py-3 px-4">$99.92 L</td>
                                 <td class="py-3 px-4 font-bold text-indigo-700">$3.54 Cr</td>
-                                <td class="py-3 px-4 font-bold text-green-600">+$2.54 Cr</td>
+                                <td class="py-3 px-4 font-bold text-green-700">+$2.54 Cr</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4 font-medium">Wealth Multiplier</td>
                                 <td class="py-3 px-4">4.2×</td>
                                 <td class="py-3 px-4 font-bold text-indigo-700">5.1×</td>
-                                <td class="py-3 px-4 font-bold text-green-600">+0.9×</td>
+                                <td class="py-3 px-4 font-bold text-green-700">+0.9×</td>
                             </tr>
                         </tbody>
                     </table>

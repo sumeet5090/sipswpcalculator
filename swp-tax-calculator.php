@@ -144,18 +144,18 @@ require_once __DIR__ . '/functions.php'; ?>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Tax rate on gains</td>
-                                <td class="py-3 px-4 text-green-600">12.5% LTCG / 20% STCG</td>
+                                <td class="py-3 px-4 text-green-700">12.5% LTCG / 20% STCG</td>
                                 <td class="py-3 px-4 text-rose-500">Income slab rate (always)</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Annual exemption</td>
-                                <td class="py-3 px-4 text-green-600">$1,500 LTCG</td>
+                                <td class="py-3 px-4 text-green-700">$1,500 LTCG</td>
                                 <td class="py-3 px-4">None</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">TDS</td>
-                                <td class="py-3 px-4 text-green-600">No TDS</td>
-                                <td class="py-3 px-4 text-green-600">No TDS</td>
+                                <td class="py-3 px-4 text-green-700">No TDS</td>
+                                <td class="py-3 px-4 text-green-700">No TDS</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4 font-medium">Best for</td>
