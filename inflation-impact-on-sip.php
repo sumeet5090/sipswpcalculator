@@ -263,7 +263,7 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between"><span>Purchasing Power Lost:</span> <span
                                     class="font-bold text-red-600">69%</span></li>
                         </ul>
-                        <p class="text-xs text-gray-400 mt-4">Your ₹1 Crore can only buy what ₹31 Lakh buys today.</p>
+                        <p class="text-xs text-gray-500 mt-4">Your ₹1 Crore can only buy what ₹31 Lakh buys today.</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-emerald-100">
                         <h4 class="text-lg font-bold text-emerald-700 mb-2">✅ Step-Up SIP (10% Annual)</h4>
@@ -275,7 +275,7 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between"><span>Real Growth Multiplier:</span> <span
                                     class="font-bold text-emerald-600">3.5x vs flat</span></li>
                         </ul>
-                        <p class="text-xs text-gray-400 mt-4">Still worth over ₹1 Crore in today's purchasing power!</p>
+                        <p class="text-xs text-gray-500 mt-4">Still worth over ₹1 Crore in today's purchasing power!</p>
                     </div>
                 </div>
 

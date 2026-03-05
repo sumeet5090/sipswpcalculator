@@ -174,7 +174,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         </tbody>
                     </table>
                 </div>
-                <p class="text-xs text-gray-400">* Exit load may apply if redeemed within 1 year. ** LTCG exemption up
+                <p class="text-xs text-gray-500">* Exit load may apply if redeemed within 1 year. ** LTCG exemption up
                     to ₹1.25L/year.</p>
 
                 <h2>SIP in Equity Mutual Funds — Pros & Cons</h2>

@@ -248,7 +248,7 @@ require_once __DIR__ . '/functions.php';
                                 <span class="font-bold text-emerald-700">₹49,96,000</span>
                             </li>
                         </ul>
-                        <p class="text-xs text-gray-400 mt-4">Your money multiplied ~4.2x through compounding alone.</p>
+                        <p class="text-xs text-gray-500 mt-4">Your money multiplied ~4.2x through compounding alone.</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                         <h4 class="text-lg font-bold text-indigo-700 mb-2">₹10,000/month + 10% Step-Up for 20 Years @
@@ -262,7 +262,7 @@ require_once __DIR__ . '/functions.php';
                                 <span class="font-bold text-indigo-700">₹3,54,00,000</span>
                             </li>
                         </ul>
-                        <p class="text-xs text-gray-400 mt-4">Step-up SIP supercharges compounding — 3.5x more than flat
+                        <p class="text-xs text-gray-500 mt-4">Step-up SIP supercharges compounding — 3.5x more than flat
                             SIP!</p>
                     </div>
                 </div>

@@ -141,10 +141,10 @@ require_once __DIR__ . '/functions.php';
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
                             <label for="ci-principal"
-                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Initial
+                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Initial
                                 Investment</label>
                             <div class="relative">
-                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400"
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500"
                                     id="ci-symbol">₹</span>
                                 <input type="number" id="ci-principal" value="100000"
                                     class="w-full bg-white border border-slate-200 rounded-lg pl-7 pr-3 py-3 text-sm font-bold text-indigo-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30">
@@ -152,29 +152,29 @@ require_once __DIR__ . '/functions.php';
                         </div>
                         <div>
                             <label for="ci-rate"
-                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Annual
+                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Annual
                                 Interest Rate</label>
                             <div class="relative">
                                 <input type="number" id="ci-rate" value="8" step="0.1" min="0.1" max="50"
                                     class="w-full bg-white border border-slate-200 rounded-lg px-3 py-3 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30">
                                 <span
-                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">%</span>
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500">%</span>
                             </div>
                         </div>
                         <div>
                             <label for="ci-years"
-                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Time
+                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Time
                                 Period</label>
                             <div class="relative">
                                 <input type="number" id="ci-years" value="10" min="1" max="50"
                                     class="w-full bg-white border border-slate-200 rounded-lg px-3 py-3 pr-10 text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30">
                                 <span
-                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">Yrs</span>
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500">Yrs</span>
                             </div>
                         </div>
                         <div>
                             <label for="ci-frequency"
-                                class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Compounding
+                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Compounding
                                 Frequency</label>
                             <select id="ci-frequency"
                                 class="w-full bg-white border border-slate-200 rounded-lg px-3 py-3 text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 cursor-pointer">
@@ -189,7 +189,7 @@ require_once __DIR__ . '/functions.php';
                     <!-- Results -->
                     <div id="ci-results" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                         <div class="bg-indigo-50 p-4 rounded-xl text-center border border-indigo-100">
-                            <div class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mb-1">Final
+                            <div class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest mb-1">Final
                                 Amount</div>
                             <div id="ci-final" class="text-xl font-extrabold text-indigo-700 font-mono">₹2,15,892
                             </div>
@@ -201,7 +201,7 @@ require_once __DIR__ . '/functions.php';
                             </div>
                         </div>
                         <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
-                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Effective
+                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Effective
                                 Annual Rate</div>
                             <div id="ci-effective" class="text-xl font-extrabold text-slate-700 font-mono">8.30%</div>
                         </div>

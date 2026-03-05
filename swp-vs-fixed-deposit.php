@@ -264,7 +264,7 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between border-t border-gray-100 pt-2"><span>Remaining
                                     Corpus:</span> <span class="font-bold text-emerald-700">₹1,18,00,000+</span></li>
                         </ul>
-                        <p class="text-xs text-gray-400 mt-4">Corpus actually <strong>grows</strong> because returns
+                        <p class="text-xs text-gray-500 mt-4">Corpus actually <strong>grows</strong> because returns
                             exceed withdrawals.</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
@@ -279,7 +279,7 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between border-t border-gray-100 pt-2"><span>Corpus Depleted
                                     In:</span> <span class="font-bold text-red-600">~24 Years</span></li>
                         </ul>
-                        <p class="text-xs text-gray-400 mt-4">After tax (30% slab), effective rate drops to ~4.9%.
+                        <p class="text-xs text-gray-500 mt-4">After tax (30% slab), effective rate drops to ~4.9%.
                             Corpus depletes faster.</p>
                     </div>
                 </div>

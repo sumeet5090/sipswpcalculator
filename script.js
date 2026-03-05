@@ -49,11 +49,11 @@ function switchFormTab(tab) {
         swpPanel.classList.add('hidden');
         // Active styles for SIP tab
         sipTab.classList.add('bg-emerald-500', 'text-white');
-        sipTab.classList.remove('bg-white', 'text-slate-400');
+        sipTab.classList.remove('bg-white', 'text-slate-500');
         sipTab.querySelector('span').classList.add('bg-white/20');
         sipTab.querySelector('span').classList.remove('bg-slate-100');
         // Inactive styles for SWP tab
-        swpTab.classList.add('bg-white', 'text-slate-400');
+        swpTab.classList.add('bg-white', 'text-slate-500');
         swpTab.classList.remove('bg-rose-500', 'text-white');
         swpTab.querySelector('span').classList.add('bg-slate-100');
         swpTab.querySelector('span').classList.remove('bg-white/20');
@@ -65,11 +65,11 @@ function switchFormTab(tab) {
         sipPanel.classList.add('hidden');
         // Active styles for SWP tab
         swpTab.classList.add('bg-rose-500', 'text-white');
-        swpTab.classList.remove('bg-white', 'text-slate-400');
+        swpTab.classList.remove('bg-white', 'text-slate-500');
         swpTab.querySelector('span').classList.add('bg-white/20');
         swpTab.querySelector('span').classList.remove('bg-slate-100');
         // Inactive styles for SIP tab
-        sipTab.classList.add('bg-white', 'text-slate-400');
+        sipTab.classList.add('bg-white', 'text-slate-500');
         sipTab.classList.remove('bg-emerald-500', 'text-white');
         sipTab.querySelector('span').classList.add('bg-slate-100');
         sipTab.querySelector('span').classList.remove('bg-white/20');

@@ -205,7 +205,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         </tbody>
                     </table>
                 </div>
-                <p class="text-xs text-gray-400">* After ₹1.25L annual LTCG exemption. Effective tax rate ranges from
+                <p class="text-xs text-gray-500">* After ₹1.25L annual LTCG exemption. Effective tax rate ranges from
                     ~1.1% to ~4.1% on total withdrawal — far lower than FD taxation.</p>
 
                 <h2>Strategies to Minimize SWP Tax</h2>

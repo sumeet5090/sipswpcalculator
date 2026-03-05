@@ -194,7 +194,7 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-indigo-700">₹99,91,479</span></li>
                         </ul>
-                        <p class="text-xs text-gray-400 mt-4">Result: Your money multiplied ~4.1x</p>
+                        <p class="text-xs text-gray-500 mt-4">Result: Your money multiplied ~4.1x</p>
                     </div>
 
                     <!-- Example 2 -->
@@ -217,7 +217,7 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-rose-700">₹1.61 Crores</span></li>
                         </ul>
-                        <p class="text-xs text-gray-400 mt-4">Result: Catch up by increasing contributions.</p>
+                        <p class="text-xs text-gray-500 mt-4">Result: Catch up by increasing contributions.</p>
                     </div>
                 </div>
 
@@ -252,9 +252,9 @@ require_once __DIR__ . '/functions.php';
                                 <td class="px-6 py-4 whitespace-nowrap font-bold text-indigo-600">🇮🇳 India</td>
                                 <td class="px-6 py-4">Equity Funds</td>
                                 <td class="px-6 py-4"><strong>20%</strong><br><span
-                                        class="text-xs text-gray-400">(Holding < 12 months)</span>
+                                        class="text-xs text-gray-500">(Holding < 12 months)</span>
                                 </td>
-                                <td class="px-6 py-4"><strong>12.5%</strong><br><span class="text-xs text-gray-400">(>
+                                <td class="px-6 py-4"><strong>12.5%</strong><br><span class="text-xs text-gray-500">(>
                                         ₹1.25 Lakh profit)</span></td>
                             </tr>
                             <tr>
@@ -267,10 +267,10 @@ require_once __DIR__ . '/functions.php';
                             <tr class="bg-gray-50/50">
                                 <td class="px-6 py-4 whitespace-nowrap font-bold text-blue-600">🇺🇸 USA</td>
                                 <td class="px-6 py-4">Mutual Funds</td>
-                                <td class="px-6 py-4">Ordinary Income Tax<br><span class="text-xs text-gray-400">(10% -
+                                <td class="px-6 py-4">Ordinary Income Tax<br><span class="text-xs text-gray-500">(10% -
                                         37%*)</span></td>
                                 <td class="px-6 py-4"><strong>0% / 15% / 20%</strong><br><span
-                                        class="text-xs text-gray-400">(Based on income)</span></td>
+                                        class="text-xs text-gray-500">(Based on income)</span></td>
                             </tr>
                             <!-- Europe (UK) -->
                             <tr>
