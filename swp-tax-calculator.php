@@ -115,14 +115,14 @@ require_once __DIR__ . '/functions.php'; ?>
                     interest, where the entire interest amount is taxable.</p>
 
                 <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 not-prose mt-4">
-                    <p class="font-bold text-indigo-800 mb-2">Example: ₹50,000 monthly SWP withdrawal</p>
-                    <p class="text-sm text-gray-600">If you invested ₹10 Lakh and your corpus is now ₹15 Lakh:</p>
+                    <p class="font-bold text-indigo-800 mb-2">Example: $500 monthly SWP withdrawal</p>
+                    <p class="text-sm text-gray-600">If you invested $10 Lakh and your corpus is now $15 Lakh:</p>
                     <ul class="text-sm text-gray-600 mt-2 space-y-1">
                         <li>• Capital gains ratio = (15L - 10L) / 15L = <strong>33.3%</strong></li>
-                        <li>• Taxable portion per withdrawal = ₹50,000 × 33.3% = <strong>₹16,650</strong></li>
-                        <li>• Tax-free portion (principal) = ₹50,000 × 66.7% = <strong>₹33,350</strong></li>
-                        <li>• If LTCG applies: Tax = ₹16,650 × 12.5% = <strong>₹2,081/month</strong></li>
-                        <li>• <strong>Effective tax rate on ₹50,000 withdrawal = only 4.2%!</strong></li>
+                        <li>• Taxable portion per withdrawal = $500 × 33.3% = <strong>$16,650</strong></li>
+                        <li>• Tax-free portion (principal) = $500 × 66.7% = <strong>$33,350</strong></li>
+                        <li>• If LTCG applies: Tax = $16,650 × 12.5% = <strong>$2,081/month</strong></li>
+                        <li>• <strong>Effective tax rate on $500 withdrawal = only 4.2%!</strong></li>
                     </ul>
                 </div>
 
@@ -149,7 +149,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Annual exemption</td>
-                                <td class="py-3 px-4 text-green-600">₹1.25 Lakh LTCG</td>
+                                <td class="py-3 px-4 text-green-600">$1,500 LTCG</td>
                                 <td class="py-3 px-4">None</td>
                             </tr>
                             <tr class="border-b">
@@ -166,8 +166,8 @@ require_once __DIR__ . '/functions.php'; ?>
                     </table>
                 </div>
 
-                <h2>Worked Example: Monthly ₹50,000 SWP Tax Calculation</h2>
-                <p>Assume: ₹1 Crore corpus in equity hybrid fund, held >1 year, 12% annual returns, ₹50,000/month SWP:
+                <h2>Worked Example: Monthly $500 SWP Tax Calculation</h2>
+                <p>Assume: $1 Million corpus in equity hybrid fund, held >1 year, 12% annual returns, $500/month SWP:
                 </p>
                 <div class="overflow-x-auto not-prose">
                     <table class="min-w-full text-sm">
@@ -183,39 +183,39 @@ require_once __DIR__ . '/functions.php'; ?>
                         <tbody>
                             <tr class="border-b">
                                 <td class="py-3 px-4">Year 1</td>
-                                <td class="py-3 px-4">₹6.00L</td>
-                                <td class="py-3 px-4">~₹1.80L</td>
-                                <td class="py-3 px-4">₹6,875</td>
-                                <td class="py-3 px-4 text-emerald-600 font-bold">₹5.93L</td>
+                                <td class="py-3 px-4">$6.00L</td>
+                                <td class="py-3 px-4">~$1.80L</td>
+                                <td class="py-3 px-4">$6,875</td>
+                                <td class="py-3 px-4 text-emerald-600 font-bold">$5.93L</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4">Year 5</td>
-                                <td class="py-3 px-4">₹6.00L</td>
-                                <td class="py-3 px-4">~₹2.40L</td>
-                                <td class="py-3 px-4">₹14,375</td>
-                                <td class="py-3 px-4 text-emerald-600 font-bold">₹5.86L</td>
+                                <td class="py-3 px-4">$6.00L</td>
+                                <td class="py-3 px-4">~$2.40L</td>
+                                <td class="py-3 px-4">$14,375</td>
+                                <td class="py-3 px-4 text-emerald-600 font-bold">$5.86L</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4">Year 10</td>
-                                <td class="py-3 px-4">₹6.00L</td>
-                                <td class="py-3 px-4">~₹3.20L</td>
-                                <td class="py-3 px-4">₹24,375</td>
-                                <td class="py-3 px-4 text-emerald-600 font-bold">₹5.76L</td>
+                                <td class="py-3 px-4">$6.00L</td>
+                                <td class="py-3 px-4">~$3.20L</td>
+                                <td class="py-3 px-4">$24,375</td>
+                                <td class="py-3 px-4 text-emerald-600 font-bold">$5.76L</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="text-xs text-gray-500">* After ₹1.25L annual LTCG exemption. Effective tax rate ranges from
+                <p class="text-xs text-gray-500">* After $1.25L annual LTCG exemption. Effective tax rate ranges from
                     ~1.1% to ~4.1% on total withdrawal — far lower than FD taxation.</p>
 
                 <h2>Strategies to Minimize SWP Tax</h2>
                 <ol>
                     <li><strong>Wait for LTCG:</strong> Ensure all SIP units have crossed the 1-year mark before
                         starting SWP. LTCG (12.5%) is much lower than STCG (20%).</li>
-                    <li><strong>Harvest the ₹1.25L exemption:</strong> If your annual SWP gains are under ₹1.25 Lakh,
+                    <li><strong>Harvest the $1.25L exemption:</strong> If your annual SWP gains are under $1,500,
                         you pay <strong>zero tax</strong> on equity fund withdrawals.</li>
                     <li><strong>Split between spouses:</strong> If your spouse also has investments, split SWP across
-                        two accounts to double the ₹1.25L exemption.</li>
+                        two accounts to double the $1.25L exemption.</li>
                     <li><strong>Use hybrid funds:</strong> Equity-oriented hybrid funds (>65% equity) get the same tax
                         treatment as pure equity funds but with lower volatility.</li>
                     <li><strong>Strategic rebalancing:</strong> Periodically book gains within the exempt limit to

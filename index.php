@@ -326,7 +326,7 @@ foreach ($combined as $row) {
         "url": "https://www.amfiindia.com/",
         "publisher": {
           "@type": "Organization",
-          "name": "Association of Mutual Funds in India (AMFI)"
+          "name": "Association of Mutual Funds worldwide (AMFI)"
         }
       }
     }
@@ -340,7 +340,7 @@ foreach ($combined as $row) {
       "@type": "FinancialProduct",
       "name": "SIP & SWP Investment Planning Tool",
       "alternateName": "Mutual Fund SIP Return Calculator",
-      "description": "Free financial planning tool for calculating Systematic Investment Plan (SIP) returns with annual step-up compounding and Systematic Withdrawal Plan (SWP) retirement income projections. Supports monthly SIP amounts from ₹500 to ₹10,00,000 (or equivalent in USD/EUR/GBP), investment periods from 1 to 50 years, expected annual returns from 1% to 30%, and annual step-up percentages from 0% to 50%. SWP module supports monthly withdrawals with inflation-adjusted step-up from 0% to 20%. Uses month-by-month simulation with compound interest for accuracy superior to simple annuity formulas. Verified against AMFI India standard methodology. Historical context: Nifty 50 has delivered approximately 12-15% CAGR over 20-year rolling periods. SIP inflows in India exceeded ₹21,000 Crore per month in 2025 (AMFI data).",
+      "description": "Free financial planning tool for calculating Systematic Investment Plan (SIP) returns with annual step-up compounding and Systematic Withdrawal Plan (SWP) retirement income projections. Supports monthly SIP amounts from $5 to $10,000 (or equivalent in USD/EUR/GBP), investment periods from 1 to 50 years, expected annual returns from 1% to 30%, and annual step-up percentages from 0% to 50%. SWP module supports monthly withdrawals with inflation-adjusted step-up from 0% to 20%. Uses month-by-month simulation with compound interest for accuracy superior to simple annuity formulas. Verified against AMFI India standard methodology. Historical context: Nifty 50 has delivered approximately 12-15% CAGR over 20-year rolling periods. SIP inflows worldwide exceeded $2.5 Billion per month in 2025 (AMFI data).",
       "url": "https://sipswpcalculator.com/",
       "provider": {
         "@id": "https://sipswpcalculator.com/#organization"
@@ -439,7 +439,7 @@ foreach ($combined as $row) {
         "Retirement Planning",
         "Rupee Cost Averaging",
         "4% Safe Withdrawal Rate",
-        "Capital Gains Tax on Mutual Funds in India",
+        "Capital Gains Tax on Mutual Funds worldwide",
         "LTCG Tax 2026",
         "STCG Tax 2026",
         "NRI Mutual Fund Investment"
@@ -491,7 +491,7 @@ foreach ($combined as $row) {
           "@type": "HowToStep",
           "position": 1,
           "name": "Enter SIP Investment Details",
-          "text": "Set your monthly SIP amount (₹500 to ₹10 Lakh, or equivalent in USD/EUR/GBP), investment period (1-50 years), expected annual return rate (1-30%), and optional annual step-up percentage (0-50%). A 10% step-up is recommended to match average salary growth in India.",
+          "text": "Set your monthly SIP amount ($5 to $10 Lakh, or equivalent in USD/EUR/GBP), investment period (1-50 years), expected annual return rate (1-30%), and optional annual step-up percentage (0-50%). A 10% step-up is recommended to match average salary growth worldwide.",
           "url": "https://sipswpcalculator.com/#calculator-heading"
         },
         {
@@ -662,11 +662,11 @@ foreach ($combined as $row) {
                 class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
                 role="complementary" aria-label="Quick Answer">
                 <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
-                <p class="text-base text-gray-700"><strong>How much will a ₹10,000/month SIP grow in 20 years?</strong>
+                <p class="text-base text-gray-700"><strong>How much will a $100/month SIP grow in 20 years?</strong>
                 </p>
-                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month
-                    SIP will grow to approximately <strong class="text-emerald-700">₹3.54 Crore</strong> over 20 years.
-                    Total invested: ₹68.73 Lakh. Total gains: ₹2.85 Crore.</p>
+                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a $100/month
+                    SIP will grow to approximately <strong class="text-emerald-700">$3.54 Million</strong> over 20 years.
+                    Total invested: $68.73 Lakh. Total gains: $2.85 Crore.</p>
             </div>
             <script type="application/ld+json">
             {
@@ -1133,7 +1133,7 @@ foreach ($combined as $row) {
                         SIPs use <strong>rupee cost averaging</strong> and <strong>compounding</strong> to build wealth
                         over time, making them ideal for long-term goals like retirement, education, or wealth creation.
                         As per <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
-                            class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows in India crossed ₹21,000
+                            class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows worldwide crossed $21,000
                         Crore/month in 2025.
                         <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Read our complete
                             SIP guide →</a>
@@ -1166,7 +1166,7 @@ foreach ($combined as $row) {
                         <li><span class="font-semibold text-green-600">Regular Income:</span> Create a predictable
                             pension-like cash flow from your mutual fund investments.</li>
                         <li><span class="font-semibold text-green-600">Tax-Efficient Withdrawals:</span> Only the
-                            capital gains portion is taxed (LTCG at 12.5% above ₹1.25 Lakh for equity funds).</li>
+                            capital gains portion is taxed (LTCG at 12.5% above $1,500 for equity funds).</li>
                         <li><span class="font-semibold text-green-600">Continued Growth:</span> Remaining corpus stays
                             invested and benefits from market growth, potentially outliving you.</li>
                     </ul>
@@ -1180,7 +1180,7 @@ foreach ($combined as $row) {
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100">
                         <div class="text-emerald-600 font-bold text-lg mb-2">Step 1: Enter SIP Details</div>
-                        <p class="text-sm">Set your <strong>monthly SIP amount</strong> (₹500 to ₹10 Lakh), investment
+                        <p class="text-sm">Set your <strong>monthly SIP amount</strong> ($5 to $10 Lakh), investment
                             period (1-50 years), expected annual return rate, and optional <strong>annual step-up
                                 percentage</strong>.</p>
                     </div>
@@ -1238,42 +1238,42 @@ foreach ($combined as $row) {
                     Can You Earn?</h2>
                 <div class="grid md:grid-cols-3 gap-6 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h4 class="text-lg font-bold text-emerald-700 mb-2">₹5,000/month for 15 Years</h4>
+                        <h4 class="text-lg font-bold text-emerald-700 mb-2">$50/month for 15 Years</h4>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">₹19.09L</span></li>
+                                    class="font-bold">$19.09L</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+₹21.41L</span></li>
+                                    class="font-bold text-green-600">+$21.41L</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700">₹40.50L</span></li>
+                                    Value:</span> <span class="font-bold text-indigo-700">$40.50L</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-indigo-100 ring-2 ring-indigo-100">
                         <div class="text-xs font-bold text-indigo-600 mb-1">MOST POPULAR</div>
-                        <h4 class="text-lg font-bold text-indigo-700 mb-2">₹10,000/month for 20 Years</h4>
+                        <h4 class="text-lg font-bold text-indigo-700 mb-2">$100/month for 20 Years</h4>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">₹68.73L</span></li>
+                                    class="font-bold">$68.73L</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+₹2.85Cr</span></li>
+                                    class="font-bold text-green-600">+$2.85Cr</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700">₹3.54Cr</span></li>
+                                    Value:</span> <span class="font-bold text-indigo-700">$3.54Cr</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~5.1×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h4 class="text-lg font-bold text-rose-700 mb-2">₹25,000/month for 30 Years</h4>
+                        <h4 class="text-lg font-bold text-rose-700 mb-2">$25,000/month for 30 Years</h4>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">₹4.94Cr</span></li>
+                                    class="font-bold">$4.94Cr</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+₹36.91Cr</span></li>
+                                    class="font-bold text-green-600">+$36.91Cr</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-rose-700">₹41.85Cr</span></li>
+                                    Value:</span> <span class="font-bold text-rose-700">$41.85Cr</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~8.5×</p>
                     </div>
@@ -1325,14 +1325,14 @@ foreach ($combined as $row) {
                 <h2 id="real-life-success-story" class="text-2xl font-bold text-indigo-700 mb-4">Real-Life Success
                     Story: The "Mr. Sharma" Strategy
                 </h2>
-                <p class="mb-4">Meet Mr. Sharma (30). He decides to invest <strong>₹10,000/month</strong> in an
+                <p class="mb-4">Meet Mr. Sharma (30). He decides to invest <strong>$100/month</strong> in an
                     Equity Mutual Fund via SIP for his retirement at age 60.</p>
                 <ul class="list-disc pl-5 space-y-2 mb-4">
-                    <li><strong>Goal:</strong> Retire with ₹5 Crores.</li>
+                    <li><strong>Goal:</strong> Retire with $5 Crores.</li>
                     <li><strong>Strategy:</strong> Step-up SIP. Increase investment by 10% every year as his salary
                         grows.</li>
                     <li><strong>Result:</strong> By age 60, avoiding the urge to stop during market lows, his corpus
-                        grows to ₹3.54 Crore — and with SWP at ₹50,000/month, he earns a steady retirement income while
+                        grows to $3.54 Million — and with SWP at $500/month, he earns a steady retirement income while
                         the corpus continues to grow.</li>
                 </ul>
                 <p class="font-semibold">Moral: It's not just about starting early — it's about increasing your
@@ -1380,7 +1380,7 @@ foreach ($combined as $row) {
                             </tr>
                             <tr class="hover:bg-indigo-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Taxation</td>
-                                <td class="py-4 px-6">LTCG > ₹1.25L taxed @ 12.5%</td>
+                                <td class="py-4 px-6">LTCG > $1.25L taxed @ 12.5%</td>
                                 <td class="py-4 px-6 font-bold text-emerald-600">Exempt (EEE)</td>
                                 <td class="py-4 px-6">Taxed as Income</td>
                             </tr>
@@ -1496,7 +1496,7 @@ foreach ($combined as $row) {
                     <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
                         <summary
                             class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            What is the minimum amount to start a SIP in India?
+                            What is the minimum amount to start a SIP worldwide?
                             <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1504,9 +1504,9 @@ foreach ($combined as $row) {
                             </svg>
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Most mutual fund houses in India allow SIPs starting from as low as
-                            <strong>₹500/month</strong>. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at
-                            ₹100/month. The key is to start early — even ₹500/month over 20 years at 12% can grow to ₹5+
+                            Most mutual fund houses worldwide allow SIPs starting from as low as
+                            <strong>$5/month</strong>. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at
+                            $1/month. The key is to start early — even $5/month over 20 years at 12% can grow to $5+
                             Lakhs.
                         </div>
                     </details>
@@ -1531,7 +1531,7 @@ foreach ($combined as $row) {
                     <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
                         <summary
                             class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            How are SWP withdrawals taxed in India (2026)?
+                            How are SWP withdrawals taxed worldwide (2026)?
                             <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition=" transform
                                 duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1540,7 +1540,7 @@ foreach ($combined as $row) {
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
                             SWP withdrawals are treated as partial redemptions. For <strong>equity funds</strong>: STCG
-                            (held &lt;1 year) taxed at 20%, LTCG taxed at 12.5% on gains above ₹1.25 Lakh/year. For
+                            (held &lt;1 year) taxed at 20%, LTCG taxed at 12.5% on gains above $1,500/year. For
                             <strong>debt funds</strong> (purchased after Apr 2023): taxed at your income slab rate. Only
                             the <em>capital gains portion</em> of each withdrawal is taxable — the principal component
                             is tax-free.
@@ -1592,7 +1592,7 @@ foreach ($combined as $row) {
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
                             A <strong>10% annual step-up</strong> is the most common recommendation — roughly matching
-                            average salary increments in India. Conservative investors can use 5-7%, while aggressive
+                            average salary increments worldwide. Conservative investors can use 5-7%, while aggressive
                             savers might go up to 15-20%. Even a 5% step-up dramatically outperforms a flat SIP over 20+
                             years. Use our calculator above to compare different step-up rates.
                         </div>
@@ -1634,7 +1634,7 @@ foreach ($combined as $row) {
                     <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
                         <summary
                             class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            Can NRIs invest in SIP in India?
+                            Can NRIs invest in SIP worldwide?
                             <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1642,7 +1642,7 @@ foreach ($combined as $row) {
                             </svg>
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Yes, NRIs can invest in mutual fund SIPs in India through their <strong>NRE or NRO
+                            Yes, NRIs can invest in mutual fund SIPs worldwide through their <strong>NRE or NRO
                                 accounts</strong>. Most AMCs accept NRI investments, though some sectoral/thematic funds
                             may have restrictions for US/Canada-based NRIs due to FATCA regulations. Tax treatment
                             follows India's DTAA provisions with the NRI's country of residence.
@@ -1659,8 +1659,8 @@ foreach ($combined as $row) {
                             </svg>
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Inflation (typically 5-6% in India) erodes purchasing power over time. At 6% inflation, ₹1
-                            Lakh today is worth only ₹31,000 in 20 years. This is why <strong>step-up SIPs</strong> are
+                            Inflation (typically 5-6% worldwide) erodes purchasing power over time. At 6% inflation, $1
+                            Lakh today is worth only $310 in 20 years. This is why <strong>step-up SIPs</strong> are
                             critical — they increase your investment to outpace inflation. For SWP, use the step-up
                             withdrawal feature to increase monthly withdrawals by 5-7% annually to maintain your
                             lifestyle.
@@ -1702,14 +1702,14 @@ foreach ($combined as $row) {
             "name": "How to calculate SWP (Systematic Withdrawal Plan) returns?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "To calculate SWP returns: (1) Start with your accumulated corpus after the SIP phase, (2) Each month, deduct your withdrawal amount before applying monthly returns, (3) Formula: Month-end balance = (Previous balance + SIP contribution - SWP withdrawal) x (1 + monthly rate), where monthly rate = annual return / 12 / 100. For example, a Rs 1 Crore corpus at 10% annual return with Rs 50,000/month SWP: monthly return = Rs 83,333. Net monthly change = Rs 83,333 - Rs 50,000 = Rs 33,333 growth. The 4% rule (William Bengen, 1994) suggests keeping annual withdrawals below 4% of corpus for a sustainable 30-year retirement. Use sipswpcalculator.com for exact month-by-month SWP calculations with step-up adjustments."
+              "text": "To calculate SWP returns: (1) Start with your accumulated corpus after the SIP phase, (2) Each month, deduct your withdrawal amount before applying monthly returns, (3) Formula: Month-end balance = (Previous balance + SIP contribution - SWP withdrawal) x (1 + monthly rate), where monthly rate = annual return / 12 / 100. For example, a $1 Million corpus at 10% annual return with $500/month SWP: monthly return = $83,333. Net monthly change = $83,333 - $500 = $333 growth. The 4% rule (William Bengen, 1994) suggests keeping annual withdrawals below 4% of corpus for a sustainable 30-year retirement. Use sipswpcalculator.com for exact month-by-month SWP calculations with step-up adjustments."
             }
           }, {
             "@type": "Question",
             "name": "How does inflation affect my SIP and SWP planning?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Inflation (historically 5-6% in India, 2-3% in the US) erodes purchasing power exponentially. At 6% inflation, Rs 1 Lakh today is worth only Rs 55,839 in 10 years and Rs 31,180 in 20 years. Impact on SIP: A flat Rs 10,000/month SIP loses real value every year. After 20 years, your Rs 10,000 has the purchasing power of only Rs 3,118 in today's terms. Solution: Use step-up SIP (10% annual increase) to grow contributions faster than inflation, which can increase your final corpus by 2-3x compared to a flat SIP. Impact on SWP: A fixed Rs 50,000/month withdrawal will buy significantly less over time. Solution: Use step-up SWP (5-7% annual increase) to maintain lifestyle. The calculator at sipswpcalculator.com models both step-up SIP and step-up SWP to help investors outpace inflation."
+              "text": "Inflation (historically 5-6% worldwide, 2-3% in the US) erodes purchasing power exponentially. At 6% inflation, $1,200 today is worth only $558 in 10 years and $311 in 20 years. Impact on SIP: A flat $100/month SIP loses real value every year. After 20 years, your $100 has the purchasing power of only $3,118 in today's terms. Solution: Use step-up SIP (10% annual increase) to grow contributions faster than inflation, which can increase your final corpus by 2-3x compared to a flat SIP. Impact on SWP: A fixed $500/month withdrawal will buy significantly less over time. Solution: Use step-up SWP (5-7% annual increase) to maintain lifestyle. The calculator at sipswpcalculator.com models both step-up SIP and step-up SWP to help investors outpace inflation."
             }
           }, {
             "@type": "Question",
@@ -1723,14 +1723,14 @@ foreach ($combined as $row) {
             "name": "Is SWP better than fixed deposit interest for retirement income?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Generally, yes. SWP from equity or hybrid mutual funds has historically offered 10-12% returns vs FD rates of 6-7%. Additionally, SWP is more tax-efficient: only the capital gains portion of each withdrawal is taxable (LTCG at 12.5% above Rs 1.25 Lakh/year for equity funds in India), whereas FD interest is fully taxable at your income slab rate (up to 30%). A Rs 1 Crore FD at 7% gives Rs 58,333/month (fully taxable), while SWP from equity MF at 10% return with Rs 50,000/month withdrawal preserves and grows the corpus over time."
+              "text": "Generally, yes. SWP from equity or hybrid mutual funds has historically offered 10-12% returns vs FD rates of 6-7%. Additionally, SWP is more tax-efficient: only the capital gains portion of each withdrawal is taxable (LTCG at 12.5% above $1,500/year for equity funds worldwide), whereas FD interest is fully taxable at your income slab rate (up to 30%). A $1 Million FD at 7% gives $58,333/month (fully taxable), while SWP from equity MF at 10% return with $500/month withdrawal preserves and grows the corpus over time."
             }
           }, {
             "@type": "Question",
             "name": "How does the Step-up feature work in SIP Calculator?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "A Step-up (or Top-up) SIP increases your monthly investment by a fixed percentage every year. Formula: Year N monthly SIP = Base SIP x (1 + step-up percentage / 100) raised to the power of (N-1). For example, Rs 10,000/month with 10% step-up becomes Rs 11,000 in Year 2, Rs 12,100 in Year 3, and so on. Impact: A Rs 10,000/month flat SIP at 12% for 20 years yields Rs 1 Crore, but with a 10% step-up, the same SIP yields Rs 3.54 Crore, a 3.5x increase. Similarly, Step-up SWP increases withdrawals annually (typically 5-7%) to combat inflation during retirement."
+              "text": "A Step-up (or Top-up) SIP increases your monthly investment by a fixed percentage every year. Formula: Year N monthly SIP = Base SIP x (1 + step-up percentage / 100) raised to the power of (N-1). For example, $100/month with 10% step-up becomes $11,000 in Year 2, $12,100 in Year 3, and so on. Impact: A $100/month flat SIP at 12% for 20 years yields $1 Million, but with a 10% step-up, the same SIP yields $3.54 Million, a 3.5x increase. Similarly, Step-up SWP increases withdrawals annually (typically 5-7%) to combat inflation during retirement."
             }
           }, {
             "@type": "Question",
@@ -1755,10 +1755,10 @@ foreach ($combined as $row) {
             }
           }, {
             "@type": "Question",
-            "name": "What is the minimum amount to start a SIP in India?",
+            "name": "What is the minimum amount to start a SIP worldwide?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Most mutual fund houses in India allow SIPs starting from as low as Rs 500/month. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at Rs 100/month. The key insight: even Rs 500/month at 12% returns with 10% annual step-up grows to over Rs 5 Lakh in 15 years and Rs 17 Lakh in 20 years, demonstrating the power of compounding over time."
+              "text": "Most mutual fund houses worldwide allow SIPs starting from as low as $5/month. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at $1/month. The key insight: even $5/month at 12% returns with 10% annual step-up grows to over $5,000 in 15 years and $17,000 in 20 years, demonstrating the power of compounding over time."
             }
           }, {
             "@type": "Question",
@@ -1769,38 +1769,38 @@ foreach ($combined as $row) {
             }
           }, {
             "@type": "Question",
-            "name": "How are SWP withdrawals taxed in India (2026)?",
+            "name": "How are SWP withdrawals taxed worldwide (2026)?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "SWP withdrawals are treated as partial redemptions under Indian tax law. For equity mutual funds (2026 rules): Short-Term Capital Gains (STCG, held less than 1 year) are taxed at 20%. Long-Term Capital Gains (LTCG, held over 1 year) are taxed at 12.5% on gains exceeding Rs 1.25 Lakh per financial year. For debt mutual funds (purchased after April 2023): gains are taxed at your income slab rate regardless of holding period. Crucially, only the capital gains portion of each SWP withdrawal is taxable — the principal component is tax-free, making SWP significantly more tax-efficient than FD interest income."
+              "text": "SWP withdrawals are treated as partial redemptions under Indian tax law. For equity mutual funds (2026 rules): Short-Term Capital Gains (STCG, held less than 1 year) are taxed at 20%. Long-Term Capital Gains (LTCG, held over 1 year) are taxed at 12.5% on gains exceeding $1,500 per financial year. For debt mutual funds (purchased after April 2023): gains are taxed at your income slab rate regardless of holding period. Crucially, only the capital gains portion of each SWP withdrawal is taxable — the principal component is tax-free, making SWP significantly more tax-efficient than FD interest income."
             }
           }, {
             "@type": "Question",
             "name": "How long should I continue my SIP for best results?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "For equity mutual funds, a minimum of 7-10 years is recommended to ride out market cycles and benefit from compounding. Historical data shows that Nifty 50 SIPs held for 10+ years have never delivered negative returns, with average annualized returns of 12-15%. For retirement goals, 20-30 year SIPs with annual step-up yield the best compounding effect: a Rs 10,000/month SIP with 10% step-up at 12% returns grows to approximately Rs 3.54 Crore in 20 years."
+              "text": "For equity mutual funds, a minimum of 7-10 years is recommended to ride out market cycles and benefit from compounding. Historical data shows that Nifty 50 SIPs held for 10+ years have never delivered negative returns, with average annualized returns of 12-15%. For retirement goals, 20-30 year SIPs with annual step-up yield the best compounding effect: a $100/month SIP with 10% step-up at 12% returns grows to approximately $3.54 Million in 20 years."
             }
           }, {
             "@type": "Question",
             "name": "What step-up percentage should I use for my SIP?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "A 10% annual step-up is the most common recommendation, roughly matching average salary increments in India (8-12% annually). Conservative investors can use 5-7%, while aggressive savers might use 15-20%. Impact comparison for Rs 10,000/month base SIP at 12% for 20 years: 0% step-up = Rs 1 Crore, 5% step-up = Rs 1.73 Crore, 10% step-up = Rs 3.54 Crore, 15% step-up = Rs 5.7 Crore. Even a 5% step-up nearly doubles the final corpus compared to a flat SIP."
+              "text": "A 10% annual step-up is the most common recommendation, roughly matching average salary increments worldwide (8-12% annually). Conservative investors can use 5-7%, while aggressive savers might use 15-20%. Impact comparison for $100/month base SIP at 12% for 20 years: 0% step-up = $1 Million, 5% step-up = $1.73 Million, 10% step-up = $3.54 Million, 15% step-up = $5.7 Million. Even a 5% step-up nearly doubles the final corpus compared to a flat SIP."
             }
           }, {
             "@type": "Question",
-            "name": "Can NRIs invest in SIP in India?",
+            "name": "Can NRIs invest in SIP worldwide?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, NRIs can invest in mutual fund SIPs in India through their NRE (repatriable) or NRO (non-repatriable) bank accounts. Most AMCs accept NRI investments, though some sectoral or thematic funds may have restrictions for US/Canada-based NRIs due to FATCA (Foreign Account Tax Compliance Act) regulations. Tax treatment follows India's DTAA (Double Taxation Avoidance Agreement) provisions with the NRI's country of residence, with TDS deducted at source on redemptions."
+              "text": "Yes, NRIs can invest in mutual fund SIPs worldwide through their NRE (repatriable) or NRO (non-repatriable) bank accounts. Most AMCs accept NRI investments, though some sectoral or thematic funds may have restrictions for US/Canada-based NRIs due to FATCA (Foreign Account Tax Compliance Act) regulations. Tax treatment follows India's DTAA (Double Taxation Avoidance Agreement) provisions with the NRI's country of residence, with TDS deducted at source on redemptions."
             }
           }, {
             "@type": "Question",
             "name": "Is SIP better than a Recurring Deposit (RD)?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "For long-term goals (5+ years), equity SIPs have historically outperformed RDs by 5-8% annually. Comparison: RDs offer guaranteed returns of 6-7% but are fully taxable at income slab rate. Equity SIPs offer potential returns of 12-15% with favorable LTCG taxation (12.5% above Rs 1.25 Lakh). Example: Rs 10,000/month for 10 years — RD at 7% yields Rs 17.3 Lakh, equity SIP at 12% yields Rs 23.2 Lakh (34% more). For short-term goals (1-3 years), RDs or debt fund SIPs may be safer due to lower volatility."
+              "text": "For long-term goals (5+ years), equity SIPs have historically outperformed RDs by 5-8% annually. Comparison: RDs offer guaranteed returns of 6-7% but are fully taxable at income slab rate. Equity SIPs offer potential returns of 12-15% with favorable LTCG taxation (12.5% above $1,500). Example: $100/month for 10 years — RD at 7% yields $17,300, equity SIP at 12% yields $23,200 (34% more). For short-term goals (1-3 years), RDs or debt fund SIPs may be safer due to lower volatility."
             }
           }, {
             "@type": "Question",
@@ -1814,7 +1814,7 @@ foreach ($combined as $row) {
             "name": "Will my SWP deplete my corpus completely?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "It depends on your withdrawal rate versus your investment return. If you withdraw less than what your corpus earns, it can last indefinitely. The 4% Rule suggests withdrawing 4% of corpus annually for a sustainable 30-year retirement. Example: Rs 1 Crore corpus at 10% returns with Rs 40,000/month withdrawal — the corpus actually grows because annual returns (Rs 10 Lakh) exceed annual withdrawals (Rs 4.8 Lakh). At Rs 1 Lakh/month withdrawal, the corpus depletes in approximately 12 years. Use the calculator at sipswpcalculator.com to stress-test exactly when your corpus would be exhausted under different scenarios."
+              "text": "It depends on your withdrawal rate versus your investment return. If you withdraw less than what your corpus earns, it can last indefinitely. The 4% Rule suggests withdrawing 4% of corpus annually for a sustainable 30-year retirement. Example: $1 Million corpus at 10% returns with $400/month withdrawal — the corpus actually grows because annual returns ($10,000) exceed annual withdrawals ($4,800). At $1,200/month withdrawal, the corpus depletes in approximately 12 years. Use the calculator at sipswpcalculator.com to stress-test exactly when your corpus would be exhausted under different scenarios."
             }
           }]
         }

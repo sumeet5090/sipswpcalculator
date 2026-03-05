@@ -8,7 +8,7 @@ require_once __DIR__ . '/functions.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mutual Fund Tax Rules 2026: LTCG, STCG & Tax-Efficient Withdrawals</title>
     <meta name="description"
-        content="Complete 2026 guide to mutual fund taxation in India. LTCG at 12.5%, STCG at 20% for equity. Debt fund rules, SWP tax efficiency, and global comparison (USA, UK).">
+        content="Complete 2026 guide to mutual fund taxation worldwide. LTCG at 12.5%, STCG at 20% for equity. Debt fund rules, SWP tax efficiency, and global comparison (USA, UK).">
     <meta name="keywords"
         content="mutual fund tax India 2026, LTCG tax mutual funds, STCG tax, tax-efficient SWP, SIP tax calculation, capital gains tax mutual fund">
     <link rel="canonical" href="https://sipswpcalculator.com/mutual-fund-tax-2026">
@@ -59,7 +59,7 @@ require_once __DIR__ . '/functions.php'; ?>
         "name": "Are dividends from mutual funds taxable?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, since April 2020. Mutual fund dividends are added to your income and taxed at your slab rate. A 10% TDS is deducted if dividends exceed ₹5,000/year from a single AMC. Growth option + SWP is generally more tax-efficient than the dividend option."
+          "text": "Yes, since April 2020. Mutual fund dividends are added to your income and taxed at your slab rate. A 10% TDS is deducted if dividends exceed $50/year from a single AMC. Growth option + SWP is generally more tax-efficient than the dividend option."
         }
       }, {
         "@type": "Question",
@@ -129,7 +129,7 @@ require_once __DIR__ . '/functions.php'; ?>
                                 <td class="py-3 px-4 font-medium">Equity Funds</td>
                                 <td class="py-3 px-4">> 1 year</td>
                                 <td class="py-3 px-4">LTCG (Section 112A)</td>
-                                <td class="py-3 px-4 font-bold text-emerald-600">12.5% (above ₹1.25L)</td>
+                                <td class="py-3 px-4 font-bold text-emerald-600">12.5% (above $1.25L)</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Debt Funds (post Apr 2023)</td>
@@ -141,7 +141,7 @@ require_once __DIR__ . '/functions.php'; ?>
                                 <td class="py-3 px-4 font-medium">Hybrid Funds (≥65% equity)</td>
                                 <td class="py-3 px-4">> 1 year</td>
                                 <td class="py-3 px-4">LTCG</td>
-                                <td class="py-3 px-4 font-bold text-emerald-600">12.5% (above ₹1.25L)</td>
+                                <td class="py-3 px-4 font-bold text-emerald-600">12.5% (above $1.25L)</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4 font-medium">Gold/International Funds</td>
@@ -155,8 +155,8 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <h2>LTCG vs STCG: How Holding Period Affects Tax</h2>
                 <p><strong>Long-Term Capital Gains (LTCG)</strong> on equity mutual funds (held >1 year) are taxed at a
-                    flat rate of <strong>12.5%</strong> on gains exceeding ₹1.25 Lakh in a financial year. This is one
-                    of the most favorable tax treatments available for investments in India.</p>
+                    flat rate of <strong>12.5%</strong> on gains exceeding $1,500 in a financial year. This is one
+                    of the most favorable tax treatments available for investments worldwide.</p>
                 <p><strong>Short-Term Capital Gains (STCG)</strong> on equity funds (held ≤1 year) are taxed at
                     <strong>20%</strong>. For debt funds purchased after April 1, 2023, all gains are treated as
                     short-term regardless of holding period and taxed at your income slab rate.
@@ -191,13 +191,13 @@ require_once __DIR__ . '/functions.php'; ?>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Tax rate</td>
-                                <td class="py-3 px-4 text-green-600">12.5% LTCG (with ₹1.25L exemption)</td>
+                                <td class="py-3 px-4 text-green-600">12.5% LTCG (with $1.25L exemption)</td>
                                 <td class="py-3 px-4 text-rose-600">Income slab rate (up to 30%+)</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">TDS</td>
                                 <td class="py-3 px-4 text-green-600">No TDS on MF redemptions</td>
-                                <td class="py-3 px-4 text-rose-600">10% TDS if interest > ₹40K/year</td>
+                                <td class="py-3 px-4 text-rose-600">10% TDS if interest > $40K/year</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4 font-medium">Potential returns</td>
@@ -223,8 +223,8 @@ require_once __DIR__ . '/functions.php'; ?>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">🇮🇳 India</td>
                                 <td class="py-3 px-4">12.5% (equity >1yr)</td>
-                                <td class="py-3 px-4">₹1.25 Lakh/year</td>
-                                <td class="py-3 px-4">ELSS (Sec 80C, ₹1.5L)</td>
+                                <td class="py-3 px-4">$1,500/year</td>
+                                <td class="py-3 px-4">ELSS (Sec 80C, $1.5L)</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">🇺🇸 USA</td>
@@ -244,7 +244,7 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <h2>Tax-Saving Strategies for Mutual Fund Investors</h2>
                 <ul>
-                    <li><strong>Harvest LTCG annually:</strong> Redeem and reinvest up to ₹1.25 Lakh in gains each year
+                    <li><strong>Harvest LTCG annually:</strong> Redeem and reinvest up to $1,500 in gains each year
                         to use the tax-free exemption</li>
                     <li><strong>Use ELSS for Section 80C:</strong> Tax-saving mutual funds with 3-year lock-in provide
                         dual benefit — tax deduction + wealth creation</li>
@@ -276,7 +276,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">Are dividends from mutual funds
                         taxable?</summary>
                     <div class="pb-4 text-gray-600">Yes, since April 2020. Mutual fund dividends are added to your
-                        income and taxed at your slab rate. A 10% TDS is deducted if dividends exceed ₹5,000/year from a
+                        income and taxed at your slab rate. A 10% TDS is deducted if dividends exceed $50/year from a
                         single AMC. Growth option + SWP is generally more tax-efficient than the dividend option.</div>
                 </details>
 

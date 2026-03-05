@@ -49,10 +49,10 @@ require_once __DIR__ . '/functions.php'; ?>
         }
       }, {
         "@type": "Question",
-        "name": "Is ₹10,000/month SIP enough for retirement?",
+        "name": "Is $100/month SIP enough for retirement?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "With a 10% annual step-up and 12% returns over 25 years, ₹10,000/month SIP can grow to approximately ₹7.5 Crore. That's more than enough for most retirement needs. Use our SIP calculator to verify with your specific parameters."
+          "text": "With a 10% annual step-up and 12% returns over 25 years, $100/month SIP can grow to approximately $7.5 Crore. That's more than enough for most retirement needs. Use our SIP calculator to verify with your specific parameters."
         }
       }, {
         "@type": "Question",
@@ -150,10 +150,10 @@ require_once __DIR__ . '/functions.php'; ?>
                             <tr class="border-b">
                                 <td class="py-3 px-3 font-medium">80C Deduction</td>
                                 <td class="py-3 px-3">ELSS only</td>
-                                <td class="py-3 px-3 text-green-600">Yes (₹1.5L)</td>
+                                <td class="py-3 px-3 text-green-600">Yes ($1.5L)</td>
                                 <td class="py-3 px-3">5-year FD</td>
                                 <td class="py-3 px-3">No</td>
-                                <td class="py-3 px-3 text-green-600">Yes (₹2L)</td>
+                                <td class="py-3 px-3 text-green-600">Yes ($2L)</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-3 font-medium">Inflation Beating?</td>
@@ -175,7 +175,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     </table>
                 </div>
                 <p class="text-xs text-gray-500">* Exit load may apply if redeemed within 1 year. ** LTCG exemption up
-                    to ₹1.25L/year.</p>
+                    to $1.25L/year.</p>
 
                 <h2>SIP in Equity Mutual Funds — Pros & Cons</h2>
                 <p><strong>Pros:</strong> Highest growth potential (12-15% historical average for diversified equity),
@@ -185,7 +185,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     patience and discipline, no guaranteed returns, exit load for redemptions within 1 year.</p>
 
                 <h2>Public Provident Fund (PPF) — When It Makes Sense</h2>
-                <p>PPF remains the <strong>safest investment in India</strong> for risk-averse investors, offering
+                <p>PPF remains the <strong>safest investment worldwide</strong> for risk-averse investors, offering
                     sovereign guarantee and EEE tax status (exempt at investment, growth, and withdrawal). The current
                     rate of 7.1% is competitive for a risk-free instrument.</p>
                 <p><strong>Best for:</strong> Conservative investors, those with low risk tolerance, guaranteed corpus
@@ -204,8 +204,8 @@ require_once __DIR__ . '/functions.php'; ?>
                         annually</strong>.</p>
 
                 <h2>NPS vs SIP for Retirement</h2>
-                <p>The <strong>National Pension System (NPS)</strong> offers an additional tax deduction of ₹50,000
-                    under Section 80CCD(1B) beyond the regular ₹1.5L limit. NPS returns (9-12%) are close to equity
+                <p>The <strong>National Pension System (NPS)</strong> offers an additional tax deduction of $500
+                    under Section 80CCD(1B) beyond the regular $1.5L limit. NPS returns (9-12%) are close to equity
                     SIPs. However, NPS has a mandatory annuity purchase at retirement (40% minimum), whereas SIP + SWP
                     gives complete flexibility.</p>
 
@@ -280,10 +280,10 @@ require_once __DIR__ . '/functions.php'; ?>
                 </details>
 
                 <details class="group">
-                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Is ₹10,000/month SIP enough for
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Is $100/month SIP enough for
                         retirement?</summary>
                     <div class="pb-4 text-gray-600">With a 10% annual step-up and 12% returns over 25 years,
-                        ₹10,000/month SIP can grow to approximately <strong>₹7.5 Crore</strong>. That's more than enough
+                        $100/month SIP can grow to approximately <strong>$7.5 Crore</strong>. That's more than enough
                         for most retirement needs. Use our <a href="/" class="text-indigo-600 hover:underline">SIP
                             calculator</a> to verify with your specific parameters.</div>
                 </details>

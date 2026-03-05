@@ -185,14 +185,14 @@ require_once __DIR__ . '/functions.php';
                             </svg>
                         </div>
                         <h4 class="text-lg font-bold text-indigo-700 mb-2">Scenario A: The Wealth Builder</h4>
-                        <p class="text-sm text-gray-500 mb-4">Invests ₹10,000/month for 20 Years @ 12%</p>
+                        <p class="text-sm text-gray-500 mb-4">Invests $100/month for 20 Years @ 12%</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">₹24,00,000</span></li>
+                                    class="font-bold">$24,00,000</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+₹75,91,479</span></li>
+                                    class="font-bold text-green-600">+$75,91,479</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700">₹99,91,479</span></li>
+                                    Value:</span> <span class="font-bold text-indigo-700">$99,91,479</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-4">Result: Your money multiplied ~4.1x</p>
                     </div>
@@ -207,15 +207,15 @@ require_once __DIR__ . '/functions.php';
                             </svg>
                         </div>
                         <h4 class="text-lg font-bold text-rose-600 mb-2">Scenario B: The Late Starter (Step-Up)</h4>
-                        <p class="text-sm text-gray-500 mb-4">Start ₹20,000/month, Step-up 10% yearly, 15 Years @ 12%
+                        <p class="text-sm text-gray-500 mb-4">Start $20,000/month, Step-up 10% yearly, 15 Years @ 12%
                         </p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">₹76,26,000</span></li>
+                                    class="font-bold">$76,26,000</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+₹85,56,000</span></li>
+                                    class="font-bold text-green-600">+$85,56,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-rose-700">₹1.61 Crores</span></li>
+                                    Value:</span> <span class="font-bold text-rose-700">$1.61 Crores</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-4">Result: Catch up by increasing contributions.</p>
                     </div>
@@ -255,7 +255,7 @@ require_once __DIR__ . '/functions.php';
                                         class="text-xs text-gray-500">(Holding < 12 months)</span>
                                 </td>
                                 <td class="px-6 py-4"><strong>12.5%</strong><br><span class="text-xs text-gray-500">(>
-                                        ₹1.25 Lakh profit)</span></td>
+                                        $1,500 profit)</span></td>
                             </tr>
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap"></td>
@@ -296,10 +296,10 @@ require_once __DIR__ . '/functions.php';
                 <h4 class="text-xl font-bold text-gray-800 mt-6 mb-2">1. The Step-Up Strategy</h4>
                 <p>
                     Income usually rises with experience. Your investments should too. A <strong>Top-up SIP</strong>
-                    involves increasing your SIP amount by a fixed percentage (e.g., 10%) or amount (e.g., ₹500) every
+                    involves increasing your SIP amount by a fixed percentage (e.g., 10%) or amount (e.g., $5) every
                     year.
                     <br>
-                    <strong>Impact:</strong> A 10% yearly step-up on a ₹10,000 SIP over 20 years can nearly
+                    <strong>Impact:</strong> A 10% yearly step-up on a $100 SIP over 20 years can nearly
                     <strong>double</strong> your final corpus compared to a flat SIP.
                 </p>
 

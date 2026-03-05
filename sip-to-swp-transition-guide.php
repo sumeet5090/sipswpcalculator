@@ -136,7 +136,7 @@ require_once __DIR__ . '/functions.php';
                 <ul>
                     <li><strong>Stop High-Risk SIPs:</strong> Redirect all new monthly SIP money into lower-volatility
                         assets: Debt Funds, Liquid Funds, or Arbitrage Funds.</li>
-                    <li><strong>Tax-Harvesting Shift:</strong> Every year, redeem up to ₹1.25 Lakh of Long Term Capital
+                    <li><strong>Tax-Harvesting Shift:</strong> Every year, redeem up to $1,500 of Long Term Capital
                         Gains (which is tax-free) from your equity funds and move that money into safer debt
                         instruments.</li>
                     <li><strong>Target Allocation:</strong> By the time you retire, your portfolio should roughly

@@ -25,7 +25,6 @@ function formatInr(float|int $num): string
 		}
 		$delimiter = $firstPart . $lastThree;
 	}
-
-	return "₹ " . $delimiter;
+	return "$ " . $delimiter;
 }
 ?>

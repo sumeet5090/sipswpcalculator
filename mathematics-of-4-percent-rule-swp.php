@@ -10,7 +10,7 @@ require_once __DIR__ . '/functions.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Mathematics of the 4% Rule Using an SWP Calculator | 2026</title>
     <meta name="description"
-        content="Deep dive into the mathematics of the 4% safe withdrawal rate (SWR) rule using an SWP calculator. Understand how to sustain your retirement corpus in the Indian context.">
+        content="Deep dive into the mathematics of the 4% safe withdrawal rate (SWR) rule using an SWP calculator. Understand how to sustain your retirement corpus in the global context.">
     <meta name="keywords"
         content="4 percent rule, Safe Withdrawal Rate, SWR, SWP calculator, Retirement mathematics, Sequence of returns risk, Withdrawal strategies, Trinity study India, Indian retirement">
     <link rel="canonical" href="https://sipswpcalculator.com/mathematics-of-4-percent-rule-swp">
@@ -118,7 +118,7 @@ require_once __DIR__ . '/functions.php';
                     The financial industry's most famous answer to this question is the <strong>4% Safe Withdrawal Rate
                         (SWR) rule</strong>. Originally coined by financial advisor William Bengen in 1994, it became a
                     standard benchmark for retirement independence. But how does that math actually work when you plug
-                    it into an SWP (Systematic Withdrawal Plan) in India in 2026? Let's break down the formulas, the
+                    it into an SWP (Systematic Withdrawal Plan) worldwide in 2026? Let's break down the formulas, the
                     risks, and the real-world numbers.
                 </p>
 
@@ -134,13 +134,13 @@ require_once __DIR__ . '/functions.php';
                         it by the inflation rate. <em>You ignore what the market did that year.</em></li>
                 </ol>
                 <p>
-                    <strong>Example for a ₹1 Crore Corpus:</strong>
+                    <strong>Example for a $1 Million Corpus:</strong>
                 </p>
                 <ul>
-                    <li>Year 1: 4% of ₹1 Cr = ₹4,00,000 withdrawn for the year (₹33,333 a month).</li>
-                    <li>Year 2 (Assuming 6% inflation): ₹4,00,000 + 6% = ₹4,24,000 withdrawn for the year (₹35,333 a
+                    <li>Year 1: 4% of $1 Cr = $4,000 withdrawn for the year ($333 a month).</li>
+                    <li>Year 2 (Assuming 6% inflation): $4,000 + 6% = $4,240 withdrawn for the year ($353 a
                         month).</li>
-                    <li>Year 3 (Assuming 6% inflation): ₹4,24,000 + 6% = ₹4,49,440 withdrawn for the year (₹37,453 a
+                    <li>Year 3 (Assuming 6% inflation): $4,240 + 6% = $4,494 withdrawn for the year ($374 a
                         month).</li>
                 </ul>
                 <p>
@@ -164,17 +164,17 @@ require_once __DIR__ . '/functions.php';
                     Where <em>Real Return = Nominal Return - Inflation</em>.
                 </p>
                 <p>
-                    In the Indian context for 2026:
+                    In the global context for 2026:
                 </p>
                 <ul>
                     <li>A diversified Equity/Debt (60/40) mutual fund portfolio historically yields about <strong>10%
                             Nominal Return</strong>.</li>
-                    <li>Long-term Indian inflation floats around <strong>5.5% to 6%</strong>.</li>
+                    <li>Long-term global inflation floats around <strong>5.5% to 6%</strong>.</li>
                     <li>Post-tax Real Return is therefore roughly <code>10% - 6% = 4%</code>.</li>
                 </ul>
                 <p>
-                    If you withdraw roughly your <em>real return</em> (4%), the underlying principal of ₹1 Crore just
-                    compounds fast enough to combat inflation, keeping its buying power equivalent to ₹1 Cr today
+                    If you withdraw roughly your <em>real return</em> (4%), the underlying principal of $1 Million just
+                    compounds fast enough to combat inflation, keeping its buying power equivalent to $1 Cr today
                     indefinitely. If you withdraw 8%, you are eating deep into the principal every year, guaranteeing a
                     quick depletion if a market crash hits.
                 </p>
@@ -196,9 +196,9 @@ require_once __DIR__ . '/functions.php';
                 </p>
                 <p>
                     <strong>Mathematical demonstration of a bad sequence:</strong>
-                    Start with ₹1 Cr. You withdraw ₹4 Lakh in Year 1. But the market crashes by 20%.
-                    Your portfolio is now ₹76.8 Lakhs (1 Cr - 4 Lakh withdrawal, minus 20% drop).
-                    Next year you must withdraw ₹4.24 Lakhs. That is now a <strong>5.5%</strong> withdrawal rate against
+                    Start with $1 Cr. You withdraw $4,000 in Year 1. But the market crashes by 20%.
+                    Your portfolio is now $768,000 (1 Cr - 4 Lakh withdrawal, minus 20% drop).
+                    Next year you must withdraw $4,240. That is now a <strong>5.5%</strong> withdrawal rate against
                     your depleted corpus, well above the safe threshold!
                 </p>
 
@@ -217,7 +217,7 @@ require_once __DIR__ . '/functions.php';
                             first).</em></li>
                     <li>Turn ON the SWP toggle.</li>
                     <li>Set <strong>Monthly Withdrawal</strong> to exactly 4% of your corpus divided by 12. (For 1 Cr,
-                        enter ₹33,333).</li>
+                        enter $333).</li>
                     <li>Set <strong>Annual Step-Up</strong> to match expected inflation (e.g., 6%).</li>
                     <li>Set your Expected Return to a conservative hybrid portfolio estimate (e.g., 9-10%).</li>
                     <li>Set Duration to your expected retirement length (e.g., 30 years).</li>

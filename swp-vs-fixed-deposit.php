@@ -34,7 +34,7 @@ require_once __DIR__ . '/functions.php';
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": "SWP vs Fixed Deposit 2026: Which Gives Better Retirement Income?",
-      "description": "Comprehensive 2026 comparison of Systematic Withdrawal Plans (SWP) from mutual funds vs Fixed Deposits for generating retirement income in India. Covers returns, taxation, flexibility, and inflation protection.",
+      "description": "Comprehensive 2026 comparison of Systematic Withdrawal Plans (SWP) from mutual funds vs Fixed Deposits for generating retirement income worldwide. Covers returns, taxation, flexibility, and inflation protection.",
       "author": {"@id": "https://sipswpcalculator.com/#author"},
       "publisher": {"@id": "https://sipswpcalculator.com/#organization"},
       "datePublished": "2026-03-02",
@@ -67,21 +67,21 @@ require_once __DIR__ . '/functions.php';
         "name": "Is SWP better than Fixed Deposit for retirement?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "For most retirees with a 10+ year horizon, yes. SWP from equity or hybrid mutual funds historically offers 10-12% returns vs FD rates of 6-7%. SWP is also more tax-efficient: only the capital gains portion is taxable (LTCG at 12.5% above Rs 1.25 Lakh/year), while FD interest is fully taxable at your income slab rate (up to 30%). However, FDs offer guaranteed returns and capital safety, making them suitable for very conservative investors or short-term needs."
+          "text": "For most retirees with a 10+ year horizon, yes. SWP from equity or hybrid mutual funds historically offers 10-12% returns vs FD rates of 6-7%. SWP is also more tax-efficient: only the capital gains portion is taxable (LTCG at 12.5% above $1,500/year), while FD interest is fully taxable at your income slab rate (up to 30%). However, FDs offer guaranteed returns and capital safety, making them suitable for very conservative investors or short-term needs."
         }
       }, {
         "@type": "Question",
-        "name": "How much monthly income can I get from Rs 1 Crore in SWP vs FD?",
+        "name": "How much monthly income can I get from $1 Million in SWP vs FD?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "From Rs 1 Crore: FD at 7% gives approximately Rs 58,333/month (fully taxable, corpus depletes over time). SWP from equity mutual fund at 10% average return with Rs 50,000/month withdrawal sustains the corpus for 25+ years because monthly returns (Rs 83,333) exceed withdrawals. After tax, SWP provides significantly higher effective income."
+          "text": "From $1 Million: FD at 7% gives approximately $58,333/month (fully taxable, corpus depletes over time). SWP from equity mutual fund at 10% average return with $500/month withdrawal sustains the corpus for 25+ years because monthly returns ($83,333) exceed withdrawals. After tax, SWP provides significantly higher effective income."
         }
       }, {
         "@type": "Question",
         "name": "What are the tax differences between SWP and FD in 2026?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "FD interest is fully taxable at your income tax slab rate (up to 30% + surcharge). TDS is deducted at 10% if interest exceeds Rs 40,000/year (Rs 50,000 for senior citizens). SWP from equity funds: only LTCG above Rs 1.25 Lakh/year is taxed at 12.5%. The principal component of each withdrawal is completely tax-free. This makes SWP up to 60% more tax-efficient than FD for retirees in the 30% tax bracket."
+          "text": "FD interest is fully taxable at your income tax slab rate (up to 30% + surcharge). TDS is deducted at 10% if interest exceeds $400/year ($500 for senior citizens). SWP from equity funds: only LTCG above $1,500/year is taxed at 12.5%. The principal component of each withdrawal is completely tax-free. This makes SWP up to 60% more tax-efficient than FD for retirees in the 30% tax bracket."
         }
       }]
     }
@@ -136,8 +136,8 @@ require_once __DIR__ . '/functions.php';
                         Deposits for retirement income in 2026.
                         SWP offers higher potential returns (10-12% vs 6-7%), superior tax efficiency (only capital
                         gains taxed at 12.5% vs full slab rate on FD interest),
-                        and inflation protection through equity exposure. A ₹1 Crore corpus via SWP at 10% return with
-                        ₹50,000/month withdrawal can last 25+ years,
+                        and inflation protection through equity exposure. A $1 Million corpus via SWP at 10% return with
+                        $500/month withdrawal can last 25+ years,
                         while the same amount in FD depletes faster due to lower returns and higher taxation. However,
                         FDs offer guaranteed capital safety suitable for
                         conservative investors. <strong>Best strategy:</strong> Use a combination — 70-80% in SWP for
@@ -173,7 +173,7 @@ require_once __DIR__ . '/functions.php';
                     guaranteed interest rate.
                     In 2026, major Indian banks offer FD rates of <strong>6.5-7.5%</strong> for general citizens and
                     <strong>7-8%</strong> for
-                    senior citizens. FDs are insured up to ₹5 Lakh per depositor per bank by DICGC, making them one of
+                    senior citizens. FDs are insured up to $5,000 per depositor per bank by DICGC, making them one of
                     the safest investment options.
                 </p>
                 <p>
@@ -210,7 +210,7 @@ require_once __DIR__ . '/functions.php';
                             </tr>
                             <tr class="bg-gray-50/50">
                                 <td class="px-6 py-4 font-medium">Tax on Income</td>
-                                <td class="px-6 py-4">LTCG: <strong>12.5%</strong> (above ₹1.25L/yr)</td>
+                                <td class="px-6 py-4">LTCG: <strong>12.5%</strong> (above $1.25L/yr)</td>
                                 <td class="px-6 py-4">Slab Rate: <strong>up to 30%</strong></td>
                             </tr>
                             <tr>
@@ -246,23 +246,23 @@ require_once __DIR__ . '/functions.php';
                 </div>
 
                 <!-- H2: Real Numbers Example -->
-                <h2 id="real-numbers-example" class="text-3xl font-bold mt-10 mb-4 text-gray-800">₹1 Crore Retirement
+                <h2 id="real-numbers-example" class="text-3xl font-bold mt-10 mb-4 text-gray-800">$1 Million Retirement
                     Corpus: SWP vs FD (Real Numbers)</h2>
 
-                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Scenario: ₹50,000/Month Withdrawal for 20 Years
+                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Scenario: $500/Month Withdrawal for 20 Years
                 </h3>
                 <div class="grid md:grid-cols-2 gap-8 my-8 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-emerald-100">
                         <h4 class="text-lg font-bold text-emerald-700 mb-2">SWP (Equity Hybrid Fund @ 10%)</h4>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Starting Corpus:</span> <span
-                                    class="font-bold">₹1,00,00,000</span></li>
+                                    class="font-bold">$1,000,000</span></li>
                             <li class="flex justify-between"><span>Monthly Withdrawal:</span> <span
-                                    class="font-bold">₹50,000</span></li>
+                                    class="font-bold">$500</span></li>
                             <li class="flex justify-between"><span>Total Withdrawn (20 yrs):</span> <span
-                                    class="font-bold text-emerald-600">₹1,20,00,000</span></li>
+                                    class="font-bold text-emerald-600">$1,200,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2"><span>Remaining
-                                    Corpus:</span> <span class="font-bold text-emerald-700">₹1,18,00,000+</span></li>
+                                    Corpus:</span> <span class="font-bold text-emerald-700">$1,18,00,000+</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-4">Corpus actually <strong>grows</strong> because returns
                             exceed withdrawals.</p>
@@ -271,11 +271,11 @@ require_once __DIR__ . '/functions.php';
                         <h4 class="text-lg font-bold text-blue-700 mb-2">Fixed Deposit @ 7%</h4>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Starting Corpus:</span> <span
-                                    class="font-bold">₹1,00,00,000</span></li>
+                                    class="font-bold">$1,000,000</span></li>
                             <li class="flex justify-between"><span>Monthly Withdrawal:</span> <span
-                                    class="font-bold">₹50,000</span></li>
+                                    class="font-bold">$500</span></li>
                             <li class="flex justify-between"><span>Total Withdrawn:</span> <span
-                                    class="font-bold text-blue-600">₹1,00,00,000</span></li>
+                                    class="font-bold text-blue-600">$1,000,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2"><span>Corpus Depleted
                                     In:</span> <span class="font-bold text-red-600">~24 Years</span></li>
                         </ul>
@@ -286,21 +286,21 @@ require_once __DIR__ . '/functions.php';
 
                 <!-- H2: Tax Comparison -->
                 <h2 id="tax-comparison-2026" class="text-3xl font-bold mt-10 mb-4 text-gray-800">Tax Comparison: SWP vs
-                    FD in India (2026 Rules)</h2>
+                    FD worldwide (2026 Rules)</h2>
 
                 <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Fixed Deposit Taxation</h3>
                 <ul>
                     <li>Interest is <strong>fully taxable</strong> at your income tax slab rate (5%, 20%, or 30%)</li>
-                    <li>TDS deducted at 10% if annual interest exceeds ₹40,000 (₹50,000 for senior citizens)</li>
+                    <li>TDS deducted at 10% if annual interest exceeds $400 ($500 for senior citizens)</li>
                     <li>No indexation benefit available</li>
-                    <li>For a ₹1 Crore FD at 7%, the ₹7 Lakh annual interest attracts ₹2.1 Lakh tax (30% slab)</li>
+                    <li>For a $1 Million FD at 7%, the $7,000 annual interest attracts $2,100 tax (30% slab)</li>
                 </ul>
 
                 <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">SWP Taxation (Equity Mutual Funds)</h3>
                 <ul>
                     <li>Each SWP withdrawal is treated as a <strong>partial redemption</strong></li>
                     <li>Only the <strong>capital gains portion</strong> is taxable — the principal is tax-free</li>
-                    <li>LTCG (holding &gt; 1 year): <strong>12.5%</strong> on gains above ₹1.25 Lakh/year</li>
+                    <li>LTCG (holding &gt; 1 year): <strong>12.5%</strong> on gains above $1,500/year</li>
                     <li>STCG (holding &lt; 1 year): <strong>20%</strong></li>
                     <li>For most retirees, the effective tax rate on SWP is only <strong>3-5%</strong> of the withdrawal
                         amount</li>
@@ -359,10 +359,10 @@ require_once __DIR__ . '/functions.php';
                                 for conservative investors.</dd>
                         </div>
                         <div>
-                            <dt class="font-bold text-lg text-gray-900">How much monthly income from ₹1 Crore: SWP vs
+                            <dt class="font-bold text-lg text-gray-900">How much monthly income from $1 Million: SWP vs
                                 FD?</dt>
-                            <dd class="mt-2 text-gray-600">FD at 7% gives ~₹58,333/month (fully taxable). SWP at 10%
-                                with ₹50,000/month withdrawal
+                            <dd class="mt-2 text-gray-600">FD at 7% gives ~$583/month (fully taxable). SWP at 10%
+                                with $500/month withdrawal
                                 sustains the corpus for 25+ years because returns exceed withdrawals. After tax, SWP
                                 provides significantly higher effective income.</dd>
                         </div>

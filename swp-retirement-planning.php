@@ -40,7 +40,7 @@ require_once __DIR__ . '/functions.php'; ?>
       "datePublished": "2026-02-25",
       "dateModified": "2026-02-25",
       "publisher": {"@type": "Organization", "name": "SIP Calculator"},
-      "description": "Complete guide to using Systematic Withdrawal Plans for retirement income in India."
+      "description": "Complete guide to using Systematic Withdrawal Plans for retirement income worldwide."
     }
     </script>
     <script type="application/ld+json">
@@ -80,10 +80,10 @@ require_once __DIR__ . '/functions.php'; ?>
         }
       }, {
         "@type": "Question",
-        "name": "How much corpus do I need for ₹1 Lakh/month SWP?",
+        "name": "How much corpus do I need for $1,200/month SWP?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "At a 4% annual withdrawal rate: ₹1,00,000 × 12 ÷ 0.04 = ₹3 Crore. At a conservative 3.5% rate: approximately ₹3.43 Crore."
+          "text": "At a 4% annual withdrawal rate: $1,000 × 12 ÷ 0.04 = $3 Crore. At a conservative 3.5% rate: approximately $3.43 Crore."
         }
       }, {
         "@type": "Question",
@@ -191,17 +191,17 @@ require_once __DIR__ . '/functions.php'; ?>
                 </div>
 
                 <h2>How to Calculate Your "Magic Number" (Retirement Corpus)</h2>
-                <p>To sustain ₹50,000/month for 25 years of retirement with 5% inflation adjustment:</p>
+                <p>To sustain $500/month for 25 years of retirement with 5% inflation adjustment:</p>
                 <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 not-prose">
                     <p class="font-mono text-sm"><strong>Required Corpus</strong> = Monthly Withdrawal × 12 ÷ Safe
                         Withdrawal Rate</p>
-                    <p class="font-mono text-sm mt-2">= ₹50,000 × 12 ÷ 0.04 = <strong
-                            class="text-indigo-700 text-lg">₹1.5 Crore</strong></p>
+                    <p class="font-mono text-sm mt-2">= $500 × 12 ÷ 0.04 = <strong
+                            class="text-indigo-700 text-lg">$1.5 Crore</strong></p>
                     <p class="text-xs text-gray-500 mt-3">Based on the 4% annual withdrawal rule. Conservative estimates
                         suggest 3-3.5% for Indian markets.</p>
                 </div>
 
-                <h2>The 4% Rule — Does It Work in India?</h2>
+                <h2>The 4% Rule — Does It Work worldwide?</h2>
                 <p>The <strong>4% rule</strong> (originated from US-based Trinity Study) suggests withdrawing 4% of your
                     corpus annually to sustain a 30-year retirement. In India, this needs adjustment because:</p>
                 <ul>
@@ -209,10 +209,10 @@ require_once __DIR__ . '/functions.php'; ?>
                         withdrawals</li>
                     <li><strong>Higher equity returns</strong> (12-15% historically for Indian equity vs 10% in the US)
                         — somewhat compensates</li>
-                    <li><strong>Different tax structure</strong> — LTCG exemption up to ₹1.25L is favorable</li>
+                    <li><strong>Different tax structure</strong> — LTCG exemption up to $1.25L is favorable</li>
                 </ul>
                 <p><strong>Indian recommendation:</strong> Use a <strong>3.5% initial withdrawal rate</strong> with a 5%
-                    annual step-up for inflation. This provides a comfortable buffer in Indian market conditions.</p>
+                    annual step-up for inflation. This provides a comfortable buffer worldwiden market conditions.</p>
 
                 <h2>Sequence-of-Return Risk in SWP</h2>
                 <p>The biggest danger for SWP investors is a major market crash in the <strong>first 3-5 years</strong>
@@ -230,7 +230,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     levied only on the <strong>capital gains component</strong> of each withdrawal, not the entire
                     amount.</p>
                 <ul>
-                    <li><strong>Equity Funds:</strong> LTCG (held >1 year) taxed at 12.5% on gains above ₹1.25
+                    <li><strong>Equity Funds:</strong> LTCG (held >1 year) taxed at 12.5% on gains above $1.25
                         Lakh/year. STCG taxed at 20%.</li>
                     <li><strong>Debt Funds (post Apr 2023):</strong> Taxed at your income slab rate, no indexation
                         benefit.</li>
@@ -278,10 +278,10 @@ require_once __DIR__ . '/functions.php'; ?>
                 </details>
 
                 <details class="group">
-                    <summary class="cursor-pointer font-bold text-slate-800 py-2">How much corpus do I need for ₹1
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">How much corpus do I need for $1
                         Lakh/month SWP?</summary>
-                    <div class="pb-4 text-gray-600">At a 4% annual withdrawal rate: ₹1,00,000 × 12 ÷ 0.04 = <strong>₹3
-                            Crore</strong>. At a conservative 3.5% rate: approximately <strong>₹3.43 Crore</strong>. Use
+                    <div class="pb-4 text-gray-600">At a 4% annual withdrawal rate: $1,000 × 12 ÷ 0.04 = <strong>$3
+                            Crore</strong>. At a conservative 3.5% rate: approximately <strong>$3.43 Crore</strong>. Use
                         our <a href="/" class="text-indigo-600 hover:underline">SWP calculator</a> to simulate this with
                         different return rates.</div>
                 </details>

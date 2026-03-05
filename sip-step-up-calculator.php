@@ -125,14 +125,14 @@ require_once __DIR__ . '/functions.php'; ?>
                 <h2>What is a Step-Up / Top-Up SIP?</h2>
                 <p>A <dfn><strong>Step-Up SIP</strong></dfn> (also called Top-Up SIP) is a variation of a regular SIP
                     where you <strong>automatically increase your monthly investment amount by a fixed percentage every
-                        year</strong>. For example, if you start with ₹10,000/month and set a 10% annual step-up, your
-                    SIP increases to ₹11,000 in Year 2, ₹12,100 in Year 3, and so on.</p>
+                        year</strong>. For example, if you start with $100/month and set a 10% annual step-up, your
+                    SIP increases to $11,000 in Year 2, $12,100 in Year 3, and so on.</p>
                 <p>This approach mirrors real life — as your salary grows, your investments grow proportionally. It's
                     the <strong>single most powerful strategy</strong> for maximizing long-term wealth creation through
                     mutual funds.</p>
 
                 <h2>Flat SIP vs Step-Up SIP: Side-by-Side Comparison</h2>
-                <p>The difference is dramatic. Here's a comparison assuming ₹10,000/month starting SIP at 12% annual
+                <p>The difference is dramatic. Here's a comparison assuming $100/month starting SIP at 12% annual
                     returns over 20 years:</p>
                 <div class="overflow-x-auto not-prose">
                     <table class="min-w-full text-sm">
@@ -147,15 +147,15 @@ require_once __DIR__ . '/functions.php'; ?>
                         <tbody>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Total Invested</td>
-                                <td class="py-3 px-4">₹24.00 L</td>
-                                <td class="py-3 px-4">₹68.73 L</td>
-                                <td class="py-3 px-4">+₹44.73 L</td>
+                                <td class="py-3 px-4">$24.00 L</td>
+                                <td class="py-3 px-4">$68.73 L</td>
+                                <td class="py-3 px-4">+$44.73 L</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Maturity Value</td>
-                                <td class="py-3 px-4">₹99.92 L</td>
-                                <td class="py-3 px-4 font-bold text-indigo-700">₹3.54 Cr</td>
-                                <td class="py-3 px-4 font-bold text-green-600">+₹2.54 Cr</td>
+                                <td class="py-3 px-4">$99.92 L</td>
+                                <td class="py-3 px-4 font-bold text-indigo-700">$3.54 Cr</td>
+                                <td class="py-3 px-4 font-bold text-green-600">+$2.54 Cr</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4 font-medium">Wealth Multiplier</td>
@@ -166,7 +166,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         </tbody>
                     </table>
                 </div>
-                <p class="text-sm text-gray-500 mt-2">A 10% step-up produces <strong>₹2.54 Crore more</strong> than a
+                <p class="text-sm text-gray-500 mt-2">A 10% step-up produces <strong>$2.54 Crore more</strong> than a
                     flat SIP — that's 3.5× the final corpus!</p>
 
                 <h2>The Math: Step-Up SIP Formula Explained</h2>
@@ -181,24 +181,24 @@ require_once __DIR__ . '/functions.php'; ?>
                 </div>
 
                 <h2>3 Worked Examples</h2>
-                <h3>Conservative: ₹5,000/month, 5% step-up, 20 years @ 12%</h3>
+                <h3>Conservative: $50/month, 5% step-up, 20 years @ 12%</h3>
                 <ul>
-                    <li>Total Invested: ₹19.84 L</li>
-                    <li>Maturity Value: <strong>₹1.09 Cr</strong></li>
-                    <li>vs Flat SIP: ₹49.96 L (+₹59 L gain from step-up alone)</li>
+                    <li>Total Invested: $19.84 L</li>
+                    <li>Maturity Value: <strong>$1.09 Cr</strong></li>
+                    <li>vs Flat SIP: $49.96 L (+$59 L gain from step-up alone)</li>
                 </ul>
 
-                <h3>Moderate: ₹10,000/month, 10% step-up, 20 years @ 12%</h3>
+                <h3>Moderate: $100/month, 10% step-up, 20 years @ 12%</h3>
                 <ul>
-                    <li>Total Invested: ₹68.73 L</li>
-                    <li>Maturity Value: <strong>₹3.54 Cr</strong></li>
-                    <li>vs Flat SIP: ₹99.92 L (+₹2.54 Cr gain from step-up alone)</li>
+                    <li>Total Invested: $68.73 L</li>
+                    <li>Maturity Value: <strong>$3.54 Cr</strong></li>
+                    <li>vs Flat SIP: $99.92 L (+$2.54 Cr gain from step-up alone)</li>
                 </ul>
 
-                <h3>Aggressive: ₹15,000/month, 15% step-up, 25 years @ 14%</h3>
+                <h3>Aggressive: $150/month, 15% step-up, 25 years @ 14%</h3>
                 <ul>
-                    <li>Total Invested: ₹2.94 Cr</li>
-                    <li>Maturity Value: <strong>₹24.8 Cr</strong></li>
+                    <li>Total Invested: $2.94 Cr</li>
+                    <li>Maturity Value: <strong>$24.8 Cr</strong></li>
                     <li>A truly life-changing number from disciplined step-up investing</li>
                 </ul>
 
@@ -230,7 +230,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">What is the ideal step-up percentage?
                     </summary>
                     <div class="pb-4 text-gray-600"><strong>10% annually</strong> is ideal for most salaried individuals
-                        in India. It roughly matches average salary increments. Conservative savers can use 5-7%,
+                        worldwide. It roughly matches average salary increments. Conservative savers can use 5-7%,
                         aggressive investors 15%.</div>
                 </details>
 

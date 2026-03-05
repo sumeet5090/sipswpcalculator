@@ -56,14 +56,14 @@ require_once __DIR__ . '/functions.php';
         "name": "What is SIP and how does it work?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "SIP (Systematic Investment Plan) is a method of investing a fixed amount regularly (usually monthly) in mutual funds. It works by automatically deducting a set amount from your bank account and purchasing mutual fund units at the current NAV (Net Asset Value). When NAVs are low, you get more units; when high, fewer units. This mechanism is called Rupee Cost Averaging, which reduces the impact of market volatility. Over time, compounding multiplies your wealth — a Rs 5,000/month SIP at 12% for 20 years grows to approximately Rs 50 Lakh from just Rs 12 Lakh invested."
+          "text": "SIP (Systematic Investment Plan) is a method of investing a fixed amount regularly (usually monthly) in mutual funds. It works by automatically deducting a set amount from your bank account and purchasing mutual fund units at the current NAV (Net Asset Value). When NAVs are low, you get more units; when high, fewer units. This mechanism is called Rupee Cost Averaging, which reduces the impact of market volatility. Over time, compounding multiplies your wealth — a $5,000/month SIP at 12% for 20 years grows to approximately $50 Lakh from just $12 Lakh invested."
         }
       }, {
         "@type": "Question",
-        "name": "What is the minimum amount to start a SIP in India?",
+        "name": "What is the minimum amount to start a SIP worldwide?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Most mutual fund houses in India allow SIPs starting from Rs 500 per month. Some AMCs like SBI Mutual Fund and Nippon India offer micro-SIPs at Rs 100 per month. You can start investing via any online platform like Groww, Zerodha Coin, Kuvera, or directly through the AMC website."
+          "text": "Most mutual fund houses worldwide allow SIPs starting from $5 per month. Some AMCs like SBI Mutual Fund and Nippon India offer micro-SIPs at $1 per month. You can start investing via any online platform like Groww, Zerodha Coin, Kuvera, or directly through the AMC website."
         }
       }, {
         "@type": "Question",
@@ -80,13 +80,13 @@ require_once __DIR__ . '/functions.php';
     {
       "@context": "https://schema.org",
       "@type": "HowTo",
-      "name": "How to Start a SIP in India (Step-by-Step)",
-      "description": "Complete step-by-step guide for beginners to start their first SIP in mutual funds in India.",
+      "name": "How to Start a SIP worldwide (Step-by-Step)",
+      "description": "Complete step-by-step guide for beginners to start their first SIP in mutual funds worldwide.",
       "totalTime": "PT30M",
       "step": [
         {"@type": "HowToStep", "position": 1, "name": "Complete KYC", "text": "Complete your KYC (Know Your Customer) online via CAMS or KFintech using your PAN card, Aadhaar, and a selfie. This one-time process takes 5-10 minutes."},
         {"@type": "HowToStep", "position": 2, "name": "Choose a Mutual Fund", "text": "Select a fund based on your risk profile. Beginners should start with large-cap index funds (like Nifty 50 Index Fund) or balanced advantage funds for lower volatility."},
-        {"@type": "HowToStep", "position": 3, "name": "Set Up SIP", "text": "Use an investment platform (Groww, Zerodha, Kuvera) or the AMC website. Set your monthly amount (start with Rs 500-5,000), SIP date (any date 1-28), and bank mandate (auto-debit)."},
+        {"@type": "HowToStep", "position": 3, "name": "Set Up SIP", "text": "Use an investment platform (Groww, Zerodha, Kuvera) or the AMC website. Set your monthly amount (start with $5-5,000), SIP date (any date 1-28), and bank mandate (auto-debit)."},
         {"@type": "HowToStep", "position": 4, "name": "Stay Invested for 7+ Years", "text": "The power of SIP comes from long-term compounding. Do not stop during market crashes — that is when SIP buys more units at lower prices, benefiting you most."}
       ]
     }
@@ -139,13 +139,13 @@ require_once __DIR__ . '/functions.php';
                     <p class="text-gray-700 text-sm leading-relaxed">
                         A <strong>Systematic Investment Plan (SIP)</strong> is a method of investing a fixed amount
                         monthly in mutual funds,
-                        starting from as low as ₹500/month. SIP works through <strong>Rupee Cost Averaging</strong>
+                        starting from as low as $5/month. SIP works through <strong>Rupee Cost Averaging</strong>
                         (buying more units when prices are low)
                         and <strong>compound interest</strong> to build wealth over time. To start: (1) Complete KYC
                         online, (2) Choose an index fund or large-cap fund,
-                        (3) Set up auto-debit SIP, (4) Stay invested for 7+ years. A ₹10,000/month SIP at 12% for 20
-                        years grows to approximately ₹1 Crore.
-                        With a 10% annual step-up, the same period yields ₹3.54 Crore. SIPs in Nifty 50 over 10+ years
+                        (3) Set up auto-debit SIP, (4) Stay invested for 7+ years. A $100/month SIP at 12% for 20
+                        years grows to approximately $1 Million.
+                        With a 10% annual step-up, the same period yields $3.54 Million. SIPs in Nifty 50 over 10+ years
                         have <strong>never given negative returns</strong> historically.
                     </p>
                 </div>
@@ -214,7 +214,7 @@ require_once __DIR__ . '/functions.php';
 
                 <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 3: Set Up Your SIP (10 Minutes)</h3>
                 <ul>
-                    <li><strong>Amount:</strong> Start with whatever you can afford — even ₹500/month. You can increase
+                    <li><strong>Amount:</strong> Start with whatever you can afford — even $5/month. You can increase
                         anytime.</li>
                     <li><strong>SIP Date:</strong> Choose any date between 1st and 28th. Most investors use salary
                         credit date + 2 days.</li>
@@ -238,28 +238,28 @@ require_once __DIR__ . '/functions.php';
 
                 <div class="grid md:grid-cols-2 gap-8 my-8 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h4 class="text-lg font-bold text-emerald-700 mb-2">₹5,000/month for 20 Years @ 12%</h4>
+                        <h4 class="text-lg font-bold text-emerald-700 mb-2">$50/month for 20 Years @ 12%</h4>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">₹12,00,000</span></li>
+                                    class="font-bold">$12,00,000</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+₹37,96,000</span></li>
+                                    class="font-bold text-green-600">+$37,96,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2"><span>Final Value:</span>
-                                <span class="font-bold text-emerald-700">₹49,96,000</span>
+                                <span class="font-bold text-emerald-700">$49,96,000</span>
                             </li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-4">Your money multiplied ~4.2x through compounding alone.</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h4 class="text-lg font-bold text-indigo-700 mb-2">₹10,000/month + 10% Step-Up for 20 Years @
+                        <h4 class="text-lg font-bold text-indigo-700 mb-2">$100/month + 10% Step-Up for 20 Years @
                             12%</h4>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">₹68,73,000</span></li>
+                                    class="font-bold">$68,73,000</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-600">+₹2,85,27,000</span></li>
+                                    class="font-bold text-green-600">+$2,85,27,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2"><span>Final Value:</span>
-                                <span class="font-bold text-indigo-700">₹3,54,00,000</span>
+                                <span class="font-bold text-indigo-700">$3,54,00,000</span>
                             </li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-4">Step-up SIP supercharges compounding — 3.5x more than flat
@@ -278,17 +278,17 @@ require_once __DIR__ . '/functions.php';
                 </p>
                 <p>
                     <strong>Formula:</strong> Year N monthly SIP = Base SIP × (1 + step-up%)^(N-1)<br>
-                    <strong>Example:</strong> ₹10,000 base with 10% step-up → Year 2: ₹11,000 → Year 3: ₹12,100 → Year
-                    5: ₹14,641
+                    <strong>Example:</strong> $100 base with 10% step-up → Year 2: $11,000 → Year 3: $12,100 → Year
+                    5: $14,641
                 </p>
                 <p>
-                    <strong>Impact comparison</strong> for ₹10,000/month at 12% for 20 years:
+                    <strong>Impact comparison</strong> for $100/month at 12% for 20 years:
                 </p>
                 <ul>
-                    <li>0% step-up: <strong>₹1 Crore</strong></li>
-                    <li>5% step-up: <strong>₹1.73 Crore</strong></li>
-                    <li>10% step-up: <strong>₹3.54 Crore</strong> (3.5× more!)</li>
-                    <li>15% step-up: <strong>₹5.7 Crore</strong></li>
+                    <li>0% step-up: <strong>$1 Million</strong></li>
+                    <li>5% step-up: <strong>$1.73 Million</strong></li>
+                    <li>10% step-up: <strong>$3.54 Million</strong> (3.5× more!)</li>
+                    <li>15% step-up: <strong>$5.7 Million</strong></li>
                 </ul>
 
                 <!-- H2: Common Mistakes -->
@@ -321,8 +321,8 @@ require_once __DIR__ . '/functions.php';
                         </div>
                         <div>
                             <dt class="font-bold text-lg text-gray-900">What is the minimum amount to start SIP?</dt>
-                            <dd class="mt-2 text-gray-600">₹500/month with most fund houses. Some like SBI MF allow
-                                ₹100/month. You can start with any amount and increase later.</dd>
+                            <dd class="mt-2 text-gray-600">$5/month with most fund houses. Some like SBI MF allow
+                                $1/month. You can start with any amount and increase later.</dd>
                         </div>
                         <div>
                             <dt class="font-bold text-lg text-gray-900">Is SIP safe for beginners?</dt>

@@ -145,7 +145,7 @@ require_once __DIR__ . '/functions.php';
                                 Investment</label>
                             <div class="relative">
                                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500"
-                                    id="ci-symbol">₹</span>
+                                    id="ci-symbol">$</span>
                                 <input type="number" id="ci-principal" value="100000"
                                     class="w-full bg-white border border-slate-200 rounded-lg pl-7 pr-3 py-3 text-sm font-bold text-indigo-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30">
                             </div>
@@ -191,13 +191,13 @@ require_once __DIR__ . '/functions.php';
                         <div class="bg-indigo-50 p-4 rounded-xl text-center border border-indigo-100">
                             <div class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest mb-1">Final
                                 Amount</div>
-                            <div id="ci-final" class="text-xl font-extrabold text-indigo-700 font-mono">₹2,15,892
+                            <div id="ci-final" class="text-xl font-extrabold text-indigo-700 font-mono">$2,15,892
                             </div>
                         </div>
                         <div class="bg-emerald-50 p-4 rounded-xl text-center border border-emerald-100">
                             <div class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Interest
                                 Earned</div>
-                            <div id="ci-interest" class="text-xl font-extrabold text-emerald-600 font-mono">₹1,15,892
+                            <div id="ci-interest" class="text-xl font-extrabold text-emerald-600 font-mono">$1,15,892
                             </div>
                         </div>
                         <div class="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
@@ -283,9 +283,9 @@ require_once __DIR__ . '/functions.php';
                             <td class="px-4 py-3 border border-slate-200">Linear (constant)</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 border border-slate-200 font-medium">₹1L at 10% for 20 years</td>
-                            <td class="px-4 py-3 border border-slate-200 text-emerald-700 font-bold">₹6,72,750</td>
-                            <td class="px-4 py-3 border border-slate-200">₹3,00,000</td>
+                            <td class="px-4 py-3 border border-slate-200 font-medium">$1L at 10% for 20 years</td>
+                            <td class="px-4 py-3 border border-slate-200 text-emerald-700 font-bold">$6,72,750</td>
+                            <td class="px-4 py-3 border border-slate-200">$3,00,000</td>
                         </tr>
                         <tr class="bg-slate-50/50">
                             <td class="px-4 py-3 border border-slate-200 font-medium">$10K at 8% for 30 years</td>
@@ -303,7 +303,7 @@ require_once __DIR__ . '/functions.php';
             </div>
 
             <h2>How Compounding Frequency Affects Your Returns</h2>
-            <p>The more frequently interest is compounded, the more you earn. Here's a comparison for a ₹1,00,000
+            <p>The more frequently interest is compounded, the more you earn. Here's a comparison for a $1,000
                 investment at 10% for 10 years:</p>
             <div class="not-prose overflow-x-auto mb-6">
                 <table class="w-full text-sm border-collapse">
@@ -317,31 +317,31 @@ require_once __DIR__ . '/functions.php';
                     <tbody>
                         <tr>
                             <td class="px-4 py-3 border border-slate-200">Annual (n=1)</td>
-                            <td class="px-4 py-3 border border-slate-200 text-right font-mono">₹2,59,374</td>
+                            <td class="px-4 py-3 border border-slate-200 text-right font-mono">$2,59,374</td>
                             <td class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600">
-                                ₹1,59,374</td>
+                                $1,59,374</td>
                         </tr>
                         <tr class="bg-slate-50/50">
                             <td class="px-4 py-3 border border-slate-200">Quarterly (n=4)</td>
-                            <td class="px-4 py-3 border border-slate-200 text-right font-mono">₹2,68,506</td>
+                            <td class="px-4 py-3 border border-slate-200 text-right font-mono">$2,68,506</td>
                             <td class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600">
-                                ₹1,68,506</td>
+                                $1,68,506</td>
                         </tr>
                         <tr>
                             <td class="px-4 py-3 border border-slate-200 font-medium text-indigo-700">Monthly (n=12)
                             </td>
                             <td
                                 class="px-4 py-3 border border-slate-200 text-right font-mono font-bold text-indigo-700">
-                                ₹2,70,704</td>
+                                $2,70,704</td>
                             <td
                                 class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600 font-bold">
-                                ₹1,70,704</td>
+                                $1,70,704</td>
                         </tr>
                         <tr class="bg-slate-50/50">
                             <td class="px-4 py-3 border border-slate-200">Daily (n=365)</td>
-                            <td class="px-4 py-3 border border-slate-200 text-right font-mono">₹2,71,791</td>
+                            <td class="px-4 py-3 border border-slate-200 text-right font-mono">$2,71,791</td>
                             <td class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600">
-                                ₹1,71,791</td>
+                                $1,71,791</td>
                         </tr>
                     </tbody>
                 </table>
@@ -381,7 +381,7 @@ require_once __DIR__ . '/functions.php';
                 <li><strong>Fixed Deposits (FDs):</strong> Banks compound quarterly. An 8% FD actually yields 8.24%
                     effective annual return.</li>
                 <li><strong>PPF (Public Provident Fund):</strong> Compounds annually at government-set rates (currently
-                    7.1% in India).</li>
+                    7.1% worldwide).</li>
                 <li><strong>Stock Market:</strong> Reinvested dividends compound over decades, which is why long-term
                     equity investors dramatically outperform short-term traders.</li>
             </ul>
@@ -438,8 +438,8 @@ require_once __DIR__ . '/functions.php';
 
             // Format
             const fmt = (num) => {
-                return new Intl.NumberFormat('en-IN', {
-                    style: 'currency', currency: 'INR', maximumFractionDigits: 0
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency', currency: 'USD', maximumFractionDigits: 0
                 }).format(num);
             };
 

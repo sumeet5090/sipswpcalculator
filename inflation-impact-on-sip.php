@@ -10,7 +10,7 @@ require_once __DIR__ . '/functions.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Math of Inflation: How It Affects Your SIP Returns (2026 Analysis)</title>
     <meta name="description"
-        content="How inflation erodes SIP returns with real math. At 6% inflation, ₹1 Lakh = ₹31,180 in 20 years. Learn step-up SIP strategy to beat inflation & protect purchasing power.">
+        content="How inflation erodes SIP returns with real math. At 6% inflation, $1,200 = $311 in 20 years. Learn step-up SIP strategy to beat inflation & protect purchasing power.">
     <meta name="keywords"
         content="inflation impact on SIP, SIP inflation adjustment, real returns SIP, inflation erodes SIP, step-up SIP inflation, how inflation affects mutual fund, SIP real returns calculator, inflation adjusted returns India, SIP purchasing power">
     <link rel="canonical" href="https://sipswpcalculator.com/inflation-impact-on-sip">
@@ -61,7 +61,7 @@ require_once __DIR__ . '/functions.php';
         "name": "How does inflation affect SIP returns?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Inflation reduces the real (purchasing power-adjusted) return of your SIP. If your SIP earns 12% nominal return and inflation is 6%, your real return is only about 5.66% using the Fisher equation: Real Return = ((1 + Nominal) / (1 + Inflation)) - 1. This means a Rs 1 Crore SIP corpus at 12% after 20 years is worth only about Rs 31 Lakh in today's purchasing power at 6% inflation. The solution is to use step-up SIP (10% annual increase) which grows your contributions faster than inflation."
+          "text": "Inflation reduces the real (purchasing power-adjusted) return of your SIP. If your SIP earns 12% nominal return and inflation is 6%, your real return is only about 5.66% using the Fisher equation: Real Return = ((1 + Nominal) / (1 + Inflation)) - 1. This means a $1 Million SIP corpus at 12% after 20 years is worth only about $31 Lakh in today's purchasing power at 6% inflation. The solution is to use step-up SIP (10% annual increase) which grows your contributions faster than inflation."
         }
       }, {
         "@type": "Question",
@@ -75,7 +75,7 @@ require_once __DIR__ . '/functions.php';
         "name": "How much should I increase my SIP to beat inflation?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Your annual SIP step-up should be at least equal to the inflation rate (5-6% in India) to maintain purchasing power. A 10% step-up is recommended because it accounts for both inflation (6%) and real income growth (4%). Impact: Rs 10,000/month flat SIP at 12% for 20 years yields Rs 1 Crore. The same SIP with 10% step-up yields Rs 3.54 Crore — enough to maintain purchasing power and still grow wealth in real terms."
+          "text": "Your annual SIP step-up should be at least equal to the inflation rate (5-6% worldwide) to maintain purchasing power. A 10% step-up is recommended because it accounts for both inflation (6%) and real income growth (4%). Impact: $100/month flat SIP at 12% for 20 years yields $1 Million. The same SIP with 10% step-up yields $3.54 Million — enough to maintain purchasing power and still grow wealth in real terms."
         }
       }]
     }
@@ -92,7 +92,7 @@ require_once __DIR__ . '/functions.php';
             <h1 class="text-4xl font-extrabold pb-2">
                 <span class="text-gradient">The Math of Inflation: How It Affects Your SIP</span>
             </h1>
-            <p class="text-lg text-gray-500 font-medium mt-2 mb-6">Why your ₹1 Crore SIP corpus may only be worth ₹31
+            <p class="text-lg text-gray-500 font-medium mt-2 mb-6">Why your $1 Million SIP corpus may only be worth $31
                 Lakh in real terms — and how to fix it.</p>
 
             <!-- EEAT Trust Bar -->
@@ -126,14 +126,14 @@ require_once __DIR__ . '/functions.php';
                 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 not-prose">
                     <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 Quick Summary: Inflation's Impact on SIP</h2>
                     <p class="text-gray-700 text-sm leading-relaxed">
-                        <strong>Inflation silently erodes SIP returns.</strong> At 6% inflation (India's average), ₹1
-                        Lakh today is worth only ₹55,839 in 10 years
-                        and ₹31,180 in 20 years. Even a 12% SIP return gives only <strong>5.66% real return</strong>
+                        <strong>Inflation silently erodes SIP returns.</strong> At 6% inflation (India's average), $1
+                        Lakh today is worth only $55,839 in 10 years
+                        and $311 in 20 years. Even a 12% SIP return gives only <strong>5.66% real return</strong>
                         after inflation adjustment using the Fisher equation:
-                        Real Return = ((1 + 0.12) / (1 + 0.06)) - 1 = 5.66%. A flat ₹10,000/month SIP for 20 years
-                        yields ₹1 Crore nominally but only ₹31 Lakh in
+                        Real Return = ((1 + 0.12) / (1 + 0.06)) - 1 = 5.66%. A flat $100/month SIP for 20 years
+                        yields $1 Million nominally but only $31 Lakh in
                         today's purchasing power. <strong>Solution:</strong> Use a 10% annual step-up SIP which yields
-                        ₹3.54 Crore — approximately ₹1.1 Crore in real terms,
+                        $3.54 Million — approximately $1.1 Crore in real terms,
                         effectively tripling your inflation-adjusted wealth compared to a flat SIP.
                     </p>
                 </div>
@@ -162,13 +162,13 @@ require_once __DIR__ . '/functions.php';
                 <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">The Purchasing Power Formula</h3>
                 <div
                     class="bg-gray-50 p-6 rounded-xl border border-gray-200 my-6 font-mono text-sm sm:text-base overflow-x-auto not-prose">
-                    <p class="font-bold text-indigo-700 mb-2">Future Value of ₹1 Today:</p>
+                    <p class="font-bold text-indigo-700 mb-2">Future Value of $1 Today:</p>
                     <p class="text-lg mb-4">Real Value = Nominal Value / (1 + inflation)<sup>years</sup></p>
                     <ul class="list-none space-y-2">
-                        <li><strong>Example:</strong> ₹1,00,000 at 6% inflation</li>
-                        <li>After 10 years: ₹1,00,000 / (1.06)<sup>10</sup> = <strong>₹55,839</strong></li>
-                        <li>After 20 years: ₹1,00,000 / (1.06)<sup>20</sup> = <strong>₹31,180</strong></li>
-                        <li>After 30 years: ₹1,00,000 / (1.06)<sup>30</sup> = <strong>₹17,411</strong></li>
+                        <li><strong>Example:</strong> $1,000 at 6% inflation</li>
+                        <li>After 10 years: $1,000 / (1.06)<sup>10</sup> = <strong>$55,839</strong></li>
+                        <li>After 20 years: $1,000 / (1.06)<sup>20</sup> = <strong>$311</strong></li>
+                        <li>After 30 years: $1,000 / (1.06)<sup>30</sup> = <strong>$17,411</strong></li>
                     </ul>
                 </div>
 
@@ -189,7 +189,7 @@ require_once __DIR__ . '/functions.php';
 
                 <!-- H2: Purchasing Power Table -->
                 <h2 id="purchasing-power-erosion" class="text-3xl font-bold mt-10 mb-6 text-gray-800">Purchasing Power
-                    Erosion: What ₹1 Lakh Becomes</h2>
+                    Erosion: What $1,200 Becomes</h2>
 
                 <div class="overflow-hidden border border-gray-200 rounded-xl mb-8 not-prose">
                     <table class="min-w-full divide-y divide-gray-200">
@@ -208,39 +208,39 @@ require_once __DIR__ . '/functions.php';
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr>
                                 <td class="px-6 py-4 font-medium">Today</td>
-                                <td class="px-6 py-4">₹1,00,000</td>
-                                <td class="px-6 py-4">₹1,00,000</td>
-                                <td class="px-6 py-4">₹1,00,000</td>
+                                <td class="px-6 py-4">$1,000</td>
+                                <td class="px-6 py-4">$1,000</td>
+                                <td class="px-6 py-4">$1,000</td>
                             </tr>
                             <tr class="bg-gray-50/50">
                                 <td class="px-6 py-4 font-medium">5 Years</td>
-                                <td class="px-6 py-4">₹82,193</td>
-                                <td class="px-6 py-4">₹74,726</td>
-                                <td class="px-6 py-4">₹68,058</td>
+                                <td class="px-6 py-4">$82,193</td>
+                                <td class="px-6 py-4">$74,726</td>
+                                <td class="px-6 py-4">$68,058</td>
                             </tr>
                             <tr>
                                 <td class="px-6 py-4 font-medium">10 Years</td>
-                                <td class="px-6 py-4">₹67,556</td>
-                                <td class="px-6 py-4 text-orange-600 font-bold">₹55,839</td>
-                                <td class="px-6 py-4">₹46,319</td>
+                                <td class="px-6 py-4">$67,556</td>
+                                <td class="px-6 py-4 text-orange-600 font-bold">$55,839</td>
+                                <td class="px-6 py-4">$46,319</td>
                             </tr>
                             <tr class="bg-gray-50/50">
                                 <td class="px-6 py-4 font-medium">15 Years</td>
-                                <td class="px-6 py-4">₹55,526</td>
-                                <td class="px-6 py-4">₹41,727</td>
-                                <td class="px-6 py-4">₹31,524</td>
+                                <td class="px-6 py-4">$55,526</td>
+                                <td class="px-6 py-4">$41,727</td>
+                                <td class="px-6 py-4">$31,524</td>
                             </tr>
                             <tr>
                                 <td class="px-6 py-4 font-medium">20 Years</td>
-                                <td class="px-6 py-4">₹45,639</td>
-                                <td class="px-6 py-4 text-red-600 font-bold">₹31,180</td>
-                                <td class="px-6 py-4 text-red-600 font-bold">₹21,455</td>
+                                <td class="px-6 py-4">$45,639</td>
+                                <td class="px-6 py-4 text-red-600 font-bold">$311</td>
+                                <td class="px-6 py-4 text-red-600 font-bold">$21,455</td>
                             </tr>
                             <tr class="bg-gray-50/50">
                                 <td class="px-6 py-4 font-medium">30 Years</td>
-                                <td class="px-6 py-4">₹30,832</td>
-                                <td class="px-6 py-4 text-red-600 font-bold">₹17,411</td>
-                                <td class="px-6 py-4 text-red-600 font-bold">₹9,938</td>
+                                <td class="px-6 py-4">$30,832</td>
+                                <td class="px-6 py-4 text-red-600 font-bold">$17,411</td>
+                                <td class="px-6 py-4 text-red-600 font-bold">$9,938</td>
                             </tr>
                         </tbody>
                     </table>
@@ -250,32 +250,32 @@ require_once __DIR__ . '/functions.php';
                 <h2 id="inflation-impact-on-sip-corpus" class="text-3xl font-bold mt-10 mb-4 text-gray-800">Inflation's
                     Impact on Your SIP Corpus: Flat vs Step-Up</h2>
 
-                <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Scenario: ₹10,000/month SIP at 12% for 20 Years
+                <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Scenario: $100/month SIP at 12% for 20 Years
                 </h3>
                 <div class="grid md:grid-cols-2 gap-8 my-8 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-red-100">
                         <h4 class="text-lg font-bold text-red-700 mb-2">❌ Flat SIP (0% Step-Up)</h4>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Nominal Corpus:</span> <span
-                                    class="font-bold">₹1,00,00,000</span></li>
+                                    class="font-bold">$1,000,000</span></li>
                             <li class="flex justify-between"><span>Real Value (6% inflation):</span> <span
-                                    class="font-bold text-red-600">₹31,18,000</span></li>
+                                    class="font-bold text-red-600">$31,18,000</span></li>
                             <li class="flex justify-between"><span>Purchasing Power Lost:</span> <span
                                     class="font-bold text-red-600">69%</span></li>
                         </ul>
-                        <p class="text-xs text-gray-500 mt-4">Your ₹1 Crore can only buy what ₹31 Lakh buys today.</p>
+                        <p class="text-xs text-gray-500 mt-4">Your $1 Million can only buy what $31 Lakh buys today.</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-emerald-100">
                         <h4 class="text-lg font-bold text-emerald-700 mb-2">✅ Step-Up SIP (10% Annual)</h4>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Nominal Corpus:</span> <span
-                                    class="font-bold">₹3,54,00,000</span></li>
+                                    class="font-bold">$3,54,00,000</span></li>
                             <li class="flex justify-between"><span>Real Value (6% inflation):</span> <span
-                                    class="font-bold text-emerald-600">₹1,10,37,000</span></li>
+                                    class="font-bold text-emerald-600">$1,10,37,000</span></li>
                             <li class="flex justify-between"><span>Real Growth Multiplier:</span> <span
                                     class="font-bold text-emerald-600">3.5x vs flat</span></li>
                         </ul>
-                        <p class="text-xs text-gray-500 mt-4">Still worth over ₹1 Crore in today's purchasing power!</p>
+                        <p class="text-xs text-gray-500 mt-4">Still worth over $1 Million in today's purchasing power!</p>
                     </div>
                 </div>
 
@@ -297,7 +297,7 @@ require_once __DIR__ . '/functions.php';
                     <li><strong>Aggressive: 15-20%</strong> — Maximizes corpus if your income supports it</li>
                 </ul>
 
-                <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Step-Up Impact Comparison (₹10,000/month, 12%, 20
+                <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Step-Up Impact Comparison ($100/month, 12%, 20
                     years)</h3>
                 <div class="overflow-hidden border border-gray-200 rounded-xl mb-8 not-prose">
                     <table class="min-w-full divide-y divide-gray-200">
@@ -315,26 +315,26 @@ require_once __DIR__ . '/functions.php';
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr>
                                 <td class="px-6 py-4 font-medium text-red-600">0% (Flat)</td>
-                                <td class="px-6 py-4">₹1.00 Cr</td>
-                                <td class="px-6 py-4 text-red-600">₹31.2 L</td>
+                                <td class="px-6 py-4">$1.00 Cr</td>
+                                <td class="px-6 py-4 text-red-600">$31.2 L</td>
                                 <td class="px-6 py-4">1x</td>
                             </tr>
                             <tr class="bg-gray-50/50">
                                 <td class="px-6 py-4 font-medium text-orange-600">5%</td>
-                                <td class="px-6 py-4">₹1.73 Cr</td>
-                                <td class="px-6 py-4">₹53.9 L</td>
+                                <td class="px-6 py-4">$1.73 Cr</td>
+                                <td class="px-6 py-4">$53.9 L</td>
                                 <td class="px-6 py-4">1.7x</td>
                             </tr>
                             <tr>
                                 <td class="px-6 py-4 font-medium text-emerald-600">10% ★</td>
-                                <td class="px-6 py-4">₹3.54 Cr</td>
-                                <td class="px-6 py-4 text-emerald-600 font-bold">₹1.10 Cr</td>
+                                <td class="px-6 py-4">$3.54 Cr</td>
+                                <td class="px-6 py-4 text-emerald-600 font-bold">$1.10 Cr</td>
                                 <td class="px-6 py-4 font-bold">3.5x</td>
                             </tr>
                             <tr class="bg-gray-50/50">
                                 <td class="px-6 py-4 font-medium text-indigo-600">15%</td>
-                                <td class="px-6 py-4">₹5.70 Cr</td>
-                                <td class="px-6 py-4">₹1.78 Cr</td>
+                                <td class="px-6 py-4">$5.70 Cr</td>
+                                <td class="px-6 py-4">$1.78 Cr</td>
                                 <td class="px-6 py-4">5.7x</td>
                             </tr>
                         </tbody>
@@ -345,13 +345,13 @@ require_once __DIR__ . '/functions.php';
                 <h2 id="inflation-impact-on-swp" class="text-3xl font-bold mt-10 mb-4 text-gray-800">Inflation's Impact
                     on SWP (Retirement Withdrawals)</h2>
                 <p>
-                    Inflation doesn't stop once you retire. A fixed ₹50,000/month SWP withdrawal will buy less every
+                    Inflation doesn't stop once you retire. A fixed $500/month SWP withdrawal will buy less every
                     year:
                 </p>
                 <ul>
-                    <li>Year 1: ₹50,000 buys ₹50,000 worth of goods</li>
-                    <li>Year 10: ₹50,000 buys only ₹27,920 worth (at 6% inflation)</li>
-                    <li>Year 20: ₹50,000 buys only ₹15,590 worth</li>
+                    <li>Year 1: $500 buys $500 worth of goods</li>
+                    <li>Year 10: $500 buys only $27,920 worth (at 6% inflation)</li>
+                    <li>Year 20: $500 buys only $15,590 worth</li>
                 </ul>
                 <p>
                     <strong>Solution:</strong> Use <strong>step-up SWP</strong> with 5-7% annual increase. Start with a
@@ -366,8 +366,8 @@ require_once __DIR__ . '/functions.php';
                     <li><strong>Use Step-Up SIP (10%+ annually)</strong> — This is the single most impactful strategy.
                         Your contributions grow faster than inflation.</li>
                     <li><strong>Stay in equity for the long term</strong> — Equity (12-15% returns) is the only asset
-                        class that consistently beats Indian inflation (6%). Debt and FDs fail after tax.</li>
-                    <li><strong>Plan goals in real terms</strong> — If you need ₹1 Crore in 20 years, plan for ₹3.2
+                        class that consistently beats global inflation (6%). Debt and FDs fail after tax.</li>
+                    <li><strong>Plan goals in real terms</strong> — If you need $1 Million in 20 years, plan for $3.2
                         Crore nominally (accounting for 6% inflation). Our <a href="/">Advanced SIP Calculator</a> helps
                         with this.</li>
                     <li><strong>Use step-up SWP in retirement</strong> — Increase withdrawals by 5-7% annually to
@@ -381,8 +381,8 @@ require_once __DIR__ . '/functions.php';
                         <div>
                             <dt class="font-bold text-lg text-gray-900">How does inflation affect SIP returns?</dt>
                             <dd class="mt-2 text-gray-600">Inflation reduces real returns. A 12% nominal SIP return at
-                                6% inflation gives only 5.66% real return (Fisher equation). A ₹1 Crore corpus after 20
-                                years is worth only ₹31 Lakh in today's purchasing power.</dd>
+                                6% inflation gives only 5.66% real return (Fisher equation). A $1 Million corpus after 20
+                                years is worth only $31 Lakh in today's purchasing power.</dd>
                         </div>
                         <div>
                             <dt class="font-bold text-lg text-gray-900">What is the real rate of return on SIP after
