@@ -28,16 +28,20 @@ if ($current_page == 'index.php' || $current_page == '')
     class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/80 backdrop-blur-md transition-all duration-300 shadow-sm">
     <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse group">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <!-- Echo Trend Compounding Logo -->
-                    <path stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M4 13l5-5 3.5 3.5 7.5-7.5" />
-                    <path stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M15 4h5v5" />
-                    <path stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50" d="M4 17l5-5 3.5 3.5 7.5-7.5" />
-                    <path stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="opacity-25" d="M4 21l5-5 3.5 3.5 7.5-7.5" />
-                </svg>
-            </div>
-            <span class="self-center text-xl font-extrabold whitespace-nowrap tracking-tight text-slate-800">SIP<span class="text-emerald-500 font-medium">Calculator</span></span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-10 h-10 rounded-xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105" role="img" aria-label="SIP SWP Calculator Logo">
+                <rect width="24" height="24" rx="6" fill="url(#logo-grad)" />
+                <defs>
+                    <linearGradient id="logo-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#059669" />
+                        <stop offset="100%" stop-color="#2dd4bf" />
+                    </linearGradient>
+                </defs>
+                <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M4 13l5-5 3.5 3.5 7.5-7.5" />
+                <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M15 4h5v5" />
+                <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.5" d="M4 17l5-5 3.5 3.5 7.5-7.5" />
+                <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.25" d="M4 21l5-5 3.5 3.5 7.5-7.5" />
+            </svg>
+            <span class="self-center text-xl font-extrabold whitespace-nowrap tracking-tight text-slate-800">SIP &amp; SWP <span class="text-emerald-500 font-medium">Calculator</span></span>
         </a>
 
         <!-- Desktop nav -->
