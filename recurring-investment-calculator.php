@@ -1237,7 +1237,7 @@ foreach ($combined as $row) {
         "name": "SIP & SWP Calculator",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://sipswpcalculator.com/assets/logo.png"
+          "url": "https://sipswpcalculator.com/assets/logo.svg"
         }
       },
       "mainEntityOfPage": {
