@@ -806,14 +806,14 @@ foreach ($combined as $row) {
                                                         Expected Return
                                                     </label>
                                                     <div class="relative">
-                                                        <input type="number" id="rate" step="0.1" name="rate"
+                                                        <input type="number" id="rate" step="0.5" name="rate"
                                                             class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
                                                             required min="0" max="30"
                                                             value="<?= htmlspecialchars((string) $rate) ?>">
                                                         <span
                                                             class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">%</span>
                                                     </div>
-                                                    <input type="range" id="rate_range" min="1" max="30" step="0.1"
+                                                    <input type="range" id="rate_range" min="1" max="30" step="0.5"
                                                         value="<?= htmlspecialchars((string) $rate) ?>"
                                                         aria-label="Expected return rate slider"
                                                         class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
