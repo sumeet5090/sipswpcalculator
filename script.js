@@ -9,6 +9,9 @@ const currencyConfig = {
 
 function updateCurrency(newCurrency) {
     currentCurrency = newCurrency;
+    
+    // Save user preference to localStorage
+    localStorage.setItem('user_currency', newCurrency);
 
     // Update all symbol spans in the form
     const spans = document.querySelectorAll('.currency-symbol');
@@ -34,6 +37,50 @@ function updateCurrency(newCurrency) {
     if (window.corpusChart) {
         window.corpusChart.update();
     }
+}
+
+function detectAndSetUserCurrency() {
+    // 1. Check if user already has a saved preference
+    const savedCurrency = localStorage.getItem('user_currency');
+    if (savedCurrency && currencyConfig[savedCurrency]) {
+        if (currentCurrency !== savedCurrency) {
+            updateCurrency(savedCurrency);
+        }
+        return;
+    }
+
+    // 2. Fetch from Cloudflare Trace (fast, free, non-blocking)
+    fetch('https://1.1.1.1/cdn-cgi/trace')
+        .then(res => res.text())
+        .then(data => {
+            const match = data.match(/loc=([A-Z]{2})/);
+            if (match && match[1]) {
+                const countryCode = match[1];
+                let detectedCurrency = 'INR'; // Fallback default
+
+                if (countryCode === 'US') {
+                    detectedCurrency = 'USD';
+                } else if (countryCode === 'GB') {
+                    detectedCurrency = 'GBP';
+                } else if (countryCode === 'IN') {
+                    detectedCurrency = 'INR';
+                } else if (['AT', 'BE', 'CY', 'EE', 'FI', 'FR', 'DE', 'GR', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'SK', 'SI', 'ES'].includes(countryCode)) {
+                    detectedCurrency = 'EUR';
+                }
+
+                // If the detected currency is different from current, update it
+                if (currentCurrency !== detectedCurrency) {
+                    updateCurrency(detectedCurrency);
+                } else {
+                    // Just save it so we don't fetch again
+                    localStorage.setItem('user_currency', detectedCurrency);
+                }
+            }
+        })
+        .catch(err => {
+            console.error('Auto-currency detection failed:', err);
+            // Silently fail and stick with default INR
+        });
 }
 
 // ── Tab switching ──────────────────────────────────────────────────────────
@@ -81,6 +128,7 @@ function switchFormTab(tab) {
 // Initialise tab on page load
 document.addEventListener('DOMContentLoaded', function () {
     switchFormTab('sip'); // default to SIP tab
+    detectAndSetUserCurrency();
 });
 
 function formatCurrency(value) {
