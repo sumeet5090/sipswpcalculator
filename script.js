@@ -477,6 +477,7 @@ function updateTable(data, enableSwp) {
         tr.innerHTML = `
             <td class="px-6 py-4 font-medium text-slate-700 whitespace-nowrap">${row.year}</td>
             <td class="px-6 py-4 text-right font-mono text-slate-600 whitespace-nowrap">${formatCurrency(row.begin_balance)}</td>
+            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap">${fmt(row.sip_monthly)}</td>
             <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap">${formatCurrency(row.annual_contribution)}</td>
             <td class="px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap">${formatCurrency(row.cumulative_invested)}</td>
             ${swpCols}

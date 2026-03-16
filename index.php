@@ -1051,6 +1051,9 @@ foreach ($combined as $row) {
                                             Start Corpus</th>
                                         <th scope="col"
                                             class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">
+                                            Monthly SIP</th>
+                                        <th scope="col"
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">
                                             Annual SIP</th>
                                         <th scope="col"
                                             class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
@@ -1077,6 +1080,9 @@ foreach ($combined as $row) {
                                             <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
                                             <td class="px-6 py-4 text-right font-mono">
                                                 <?= formatInr($row['begin_balance']) ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono">
+                                                <?= $row['sip_monthly'] !== null ? formatInr($row['sip_monthly']) : '-' ?>
                                             </td>
                                             <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono">
                                                 <?= formatInr($row['annual_contribution']) ?>
