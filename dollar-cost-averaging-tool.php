@@ -433,7 +433,7 @@ foreach ($combined as $row) {
       "url": "https://sipswpcalculator.com/",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://sipswpcalculator.com/assets/favicon.png",
+        "url": "https://sipswpcalculator.com/assets/favicon.svg",
         "width": 512,
         "height": 512
       },
@@ -536,7 +536,7 @@ foreach ($combined as $row) {
     <link rel="manifest" href="manifest.json">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 
     <!-- Preconnect to font & CDN origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
