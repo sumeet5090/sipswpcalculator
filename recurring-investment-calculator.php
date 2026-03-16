@@ -198,13 +198,13 @@ foreach ($combined as $row) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIP, DCA & Recurring Investment Calculator 2026 — SWP & Retirement Drawdown Planner</title>
+    <title>Recurring Investment Calculator 2026 | Plan Your Monthly Savings</title>
     <meta name="description"
-        content="Free SIP & DCA calculator with step-up compounding & SWP retirement drawdown planner. Visual charts, yearly breakdown for recurring investments — trusted globally.">
+        content="Calculate the future value of your recurring investments with our free online tool. Perfect for projecting long-term, monthly compounding savings globally.">
     <meta name="keywords"
-        content="SIP Calculator, SIP Calculator Online, SIP Return Calculator, Mutual Fund SIP Calculator, SWP Calculator, SWP Planner, Step-Up SIP Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP, Tax-Efficient Withdrawals, SIP Calculator India, SIP Calculator USA, SIP Calculator UK, Mutual Fund Return Calculator">
-    <link rel="canonical" href="https://sipswpcalculator.com/">
-    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/">
+        content="Recurring Investment Calculator, Monthly Savings Calculator, Investment Planner, Wealth Creation, Retirement Planning">
+    <link rel="canonical" href="https://sipswpcalculator.com/recurring-investment-calculator">
+    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/recurring-investment-calculator">
     <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
     <meta name="robots" content="index, follow">
 
