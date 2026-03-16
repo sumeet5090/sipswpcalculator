@@ -1061,6 +1061,10 @@ foreach ($combined as $row) {
                                         <th scope="col"
                                             class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
                                             <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                            Monthly SWP</th>
+                                        <th scope="col"
+                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
+                                            <?= !$enable_swp ? 'style="display:none"' : '' ?>>
                                             Annual SWP</th>
                                         <th scope="col"
                                             class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col"
@@ -1089,6 +1093,10 @@ foreach ($combined as $row) {
                                             </td>
                                             <td class="px-6 py-4 text-right text-slate-500 font-mono">
                                                 <?= formatInr($row['cumulative_invested']) ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
+                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
+                                                <?= $row['swp_monthly'] !== null ? formatInr($row['swp_monthly']) : '-' ?>
                                             </td>
                                             <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
                                                 <?= !$enable_swp ? 'style="display:none"' : '' ?>>

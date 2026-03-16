@@ -469,6 +469,7 @@ function updateTable(data, enableSwp) {
         let swpCols = '';
         if (enableSwp) {
             swpCols = `
+                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap">${fmt(row.swp_monthly)}</td>
                 <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap">${fmt(row.annual_withdrawal)}</td>
                 <td class="px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap">${fmt(row.cumulative_withdrawals)}</td>
             `;
