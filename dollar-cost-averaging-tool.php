@@ -682,12 +682,12 @@ foreach ($combined as $row) {
                 class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
                 role="complementary" aria-label="Quick Answer">
                 <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
-                <p class="text-base text-gray-700"><strong>How much will a $100/month SIP grow in 20 years?</strong>
+                <p class="text-base text-gray-700"><strong>How much will a <span class="currency-text">$</span>100/month SIP grow in 20 years?</strong>
                 </p>
-                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a $100/month
-                    SIP will grow to approximately <strong class="text-emerald-700">$3.54 Million</strong> over 20
+                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a <span class="currency-text">$</span>100/month
+                    SIP will grow to approximately <strong class="text-emerald-700"><span class="currency-text">$</span>3.54 Million</strong> over 20
                     years.
-                    Total invested: $68.73 Lakh. Total gains: $2.85 Crore.</p>
+                    Total invested: <span class="currency-text">$</span>68.73 Lakh. Total gains: <span class="currency-text">$</span>2.85 Crore.</p>
             </div>
             <script type="application/ld+json">
             {
@@ -733,22 +733,22 @@ foreach ($combined as $row) {
                                         <button type="button" data-currency="INR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
                                             onclick="updateCurrency('INR')">
-                                            ₹ INR
+                                            <span class="currency-text">₹</span> INR
                                         </button>
                                         <button type="button" data-currency="USD"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
                                             onclick="updateCurrency('USD')">
-                                            $ USD
+                                            <span class="currency-text">$</span> USD
                                         </button>
                                         <button type="button" data-currency="EUR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-r border-slate-200"
                                             onclick="updateCurrency('EUR')">
-                                            € EUR
+                                            <span class="currency-text">€</span> EUR
                                         </button>
                                         <button type="button" data-currency="GBP"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
                                             onclick="updateCurrency('GBP')">
-                                            £ GBP
+                                            <span class="currency-text">£</span> GBP
                                         </button>
                                     </div>
                                 </div>
@@ -1158,14 +1158,14 @@ foreach ($combined as $row) {
             <p>Attempting to deploy a large lump sum in this environment carries significant "timing risk." If the market correct sharply immediately following your investment, your portfolio can suffer heavy initial drawdowns that take years to recover. Dollar-Cost Averaging (DCA) offers a structural defense against this specific risk.</p>
 
             <h3>Understanding Dollar-Cost Averaging (DCA)</h3>
-            <p>At its core, Dollar-Cost Averaging is the practice of dividing an investment amount across periodic purchases of a target asset in an effort to reduce the impact of volatility. Rather than investing $12,000 all at once, an investor using a DCA strategy would invest $1,000 on the first day of every month for a year.</p>
+            <p>At its core, Dollar-Cost Averaging is the practice of dividing an investment amount across periodic purchases of a target asset in an effort to reduce the impact of volatility. Rather than investing <span class="currency-text">$</span>12,000 all at once, an investor using a DCA strategy would invest <span class="currency-text">$</span>1,000 on the first day of every month for a year.</p>
             <p>The mathematical advantage of DCA lies in regular interval purchasing. Because you are investing a fixed currency amount, that money buys more shares when prices are cheap, and fewer shares when prices are expensive. Let's look at an oversimplified example:</p>
             <ul>
-                <li><strong>Month 1:</strong> You invest $1,000. Share price is $100. You acquire 10 shares.</li>
-                <li><strong>Month 2:</strong> Market crashes. You invest $1,000. Share price is $50. You acquire 20 shares.</li>
-                <li><strong>Month 3:</strong> Market recovers. You invest $1,000. Share price is $100. You acquire 10 shares.</li>
+                <li><strong>Month 1:</strong> You invest <span class="currency-text">$</span>1,000. Share price is <span class="currency-text">$</span>100. You acquire 10 shares.</li>
+                <li><strong>Month 2:</strong> Market crashes. You invest <span class="currency-text">$</span>1,000. Share price is <span class="currency-text">$</span>50. You acquire 20 shares.</li>
+                <li><strong>Month 3:</strong> Market recovers. You invest <span class="currency-text">$</span>1,000. Share price is <span class="currency-text">$</span>100. You acquire 10 shares.</li>
             </ul>
-            <p>Total invested: $3,000. Total shares acquired: 40. Average cost per share: $75. Current value of portfolio: $4,000. Through DCA, a market crash actually accelerated your wealth accumulation because you continuously bought through the dip.</p>
+            <p>Total invested: <span class="currency-text">$</span>3,000. Total shares acquired: 40. Average cost per share: <span class="currency-text">$</span>75. Current value of portfolio: <span class="currency-text">$</span>4,000. Through DCA, a market crash actually accelerated your wealth accumulation because you continuously bought through the dip.</p>
 
             <div class="glass-card overflow-hidden my-8">
                 <table class="min-w-full">
@@ -1208,7 +1208,7 @@ foreach ($combined as $row) {
 
             <h3>How DCA Complements Long-Term Compounding</h3>
             <p>While DCA protects you in the short-to-medium term by smoothing out your entry prices, its true power is unlocked when combined with decades of market compounding. A robust DCA strategy allows you to build a massive base of units/shares over time.</p>
-            <p>To maximize this effect, modern investors utilize a "Step-Up DCA." This involves increasing your periodic investment amount annually to match or exceed the inflation rate. Using our advanced DCA calculator, projecting a $500 monthly investment over 20 years at an 8% return yields impressive results. However, adding just a 5% annual step-up to that monthly contribution drastically expands the final corpus, ensuring your purchasing power survives inflation.</p>
+            <p>To maximize this effect, modern investors utilize a "Step-Up DCA." This involves increasing your periodic investment amount annually to match or exceed the inflation rate. Using our advanced DCA calculator, projecting a <span class="currency-text">$</span>500 monthly investment over 20 years at an 8% return yields impressive results. However, adding just a 5% annual step-up to that monthly contribution drastically expands the final corpus, ensuring your purchasing power survives inflation.</p>
 
             <h3>When Not to Use DCA</h3>
             <p>It is important to acknowledge that mathematically, approximately two-thirds of the time, lump-sum investing slightly outperforms DCA purely because markets trend upward over long horizons. If you are sitting on a massive windfall (like an inheritance) and the market is in a secular, unshakeable bull run, deploying it all at once maximizes "time in the market."</p>

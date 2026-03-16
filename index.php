@@ -682,12 +682,12 @@ foreach ($combined as $row) {
                 class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
                 role="complementary" aria-label="Quick Answer">
                 <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
-                <p class="text-base text-gray-700"><strong>How much will a $100/month SIP grow in 20 years?</strong>
+                <p class="text-base text-gray-700"><strong>How much will a <span class="currency-text">$</span>100/month SIP grow in 20 years?</strong>
                 </p>
-                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a $100/month
-                    SIP will grow to approximately <strong class="text-emerald-700">$3.54 Million</strong> over 20
+                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a <span class="currency-text">$</span>100/month
+                    SIP will grow to approximately <strong class="text-emerald-700"><span class="currency-text">$</span>3.54 Million</strong> over 20
                     years.
-                    Total invested: $68.73 Lakh. Total gains: $2.85 Crore.</p>
+                    Total invested: <span class="currency-text">$</span>68.73 Lakh. Total gains: <span class="currency-text">$</span>2.85 Crore.</p>
             </div>
             <script type="application/ld+json">
             {
@@ -733,22 +733,22 @@ foreach ($combined as $row) {
                                         <button type="button" data-currency="INR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
                                             onclick="updateCurrency('INR')">
-                                            ₹ INR
+                                            <span class="currency-text">₹</span> INR
                                         </button>
                                         <button type="button" data-currency="USD"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
                                             onclick="updateCurrency('USD')">
-                                            $ USD
+                                            <span class="currency-text">$</span> USD
                                         </button>
                                         <button type="button" data-currency="EUR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-r border-slate-200"
                                             onclick="updateCurrency('EUR')">
-                                            € EUR
+                                            <span class="currency-text">€</span> EUR
                                         </button>
                                         <button type="button" data-currency="GBP"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
                                             onclick="updateCurrency('GBP')">
-                                            £ GBP
+                                            <span class="currency-text">£</span> GBP
                                         </button>
                                     </div>
                                 </div>
@@ -1171,7 +1171,7 @@ foreach ($combined as $row) {
                         SIPs use <strong>rupee cost averaging</strong> and <strong>compounding</strong> to build wealth
                         over time, making them ideal for long-term goals like retirement, education, or wealth creation.
                         As per <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
-                            class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows worldwide crossed $21,000
+                            class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows worldwide crossed <span class="currency-text">$</span>21,000
                         Crore/month in 2025.
                         <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Read our complete
                             SIP guide →</a>
@@ -1204,7 +1204,7 @@ foreach ($combined as $row) {
                         <li><span class="font-semibold text-green-700">Regular Income:</span> Create a predictable
                             pension-like cash flow from your mutual fund investments.</li>
                         <li><span class="font-semibold text-green-700">Tax-Efficient Withdrawals:</span> Only the
-                            capital gains portion is taxed (LTCG at 12.5% above $1,500 for equity funds).</li>
+                            capital gains portion is taxed (LTCG at 12.5% above <span class="currency-text">$</span>1,500 for equity funds).</li>
                         <li><span class="font-semibold text-green-700">Continued Growth:</span> Remaining corpus stays
                             invested and benefits from market growth, potentially outliving you.</li>
                     </ul>
@@ -1218,7 +1218,7 @@ foreach ($combined as $row) {
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100">
                         <div class="text-emerald-600 font-bold text-lg mb-2">Step 1: Enter SIP Details</div>
-                        <p class="text-sm">Set your <strong>monthly SIP amount</strong> ($5 to $10 Lakh), investment
+                        <p class="text-sm">Set your <strong>monthly SIP amount</strong> (<span class="currency-text">$</span>5 to <span class="currency-text">$</span>10 Lakh), investment
                             period (1-50 years), expected annual return rate, and optional <strong>annual step-up
                                 percentage</strong>.</p>
                     </div>
@@ -1276,56 +1276,56 @@ foreach ($combined as $row) {
                     Can You Earn?</h2>
                 <div class="grid md:grid-cols-3 gap-6 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-lg font-bold text-emerald-700 mb-2">$50/month for 15 Years</h3>
+                        <h3 class="text-lg font-bold text-emerald-700 mb-2"><span class="currency-text">$</span>50/month for 15 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">$19.09L</span></li>
+                                    class="font-bold"><span class="currency-text">$</span>19.09L</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+$21.41L</span></li>
+                                    class="font-bold text-green-700">+<span class="currency-text">$</span>21.41L</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700">$40.50L</span></li>
+                                    Value:</span> <span class="font-bold text-indigo-700"><span class="currency-text">$</span>40.50L</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-indigo-100 ring-2 ring-indigo-100">
                         <div class="text-xs font-bold text-indigo-600 mb-1">MOST POPULAR</div>
-                        <h3 class="text-lg font-bold text-indigo-700 mb-2">$100/month for 20 Years</h3>
+                        <h3 class="text-lg font-bold text-indigo-700 mb-2"><span class="currency-text">$</span>100/month for 20 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">$68.73L</span></li>
+                                    class="font-bold"><span class="currency-text">$</span>68.73L</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+$2.85Cr</span></li>
+                                    class="font-bold text-green-700">+<span class="currency-text">$</span>2.85Cr</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700">$3.54Cr</span></li>
+                                    Value:</span> <span class="font-bold text-indigo-700"><span class="currency-text">$</span>3.54Cr</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~5.1×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-lg font-bold text-rose-700 mb-2">$25,000/month for 30 Years</h3>
+                        <h3 class="text-lg font-bold text-rose-700 mb-2"><span class="currency-text">$</span>25,000/month for 30 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">$4.94Cr</span></li>
+                                    class="font-bold"><span class="currency-text">$</span>4.94Cr</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+$36.91Cr</span></li>
+                                    class="font-bold text-green-700">+<span class="currency-text">$</span>36.91Cr</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-rose-700">$41.85Cr</span></li>
+                                    Value:</span> <span class="font-bold text-rose-700"><span class="currency-text">$</span>41.85Cr</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~8.5×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-teal-100">
                         <div class="text-xs font-bold text-teal-600 mb-1">🌍 GLOBAL EXAMPLE</div>
-                        <h3 class="text-lg font-bold text-teal-700 mb-2">$500/month for 20 Years</h3>
+                        <h3 class="text-lg font-bold text-teal-700 mb-2"><span class="currency-text">$</span>500/month for 20 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 10% return, 5% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold">$198,396</span></li>
+                                    class="font-bold"><span class="currency-text">$</span>198,396</span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+$218,104</span></li>
+                                    class="font-bold text-green-700">+<span class="currency-text">$</span>218,104</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-teal-700">$416,500</span></li>
+                                    Value:</span> <span class="font-bold text-teal-700"><span class="currency-text">$</span>416,500</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1×</p>
                     </div>
@@ -1363,14 +1363,14 @@ foreach ($combined as $row) {
                 <h2 id="real-life-success-story" class="text-2xl font-bold text-indigo-700 mb-4">Real-Life Success
                     Story: The "Mr. Sharma" Strategy
                 </h2>
-                <p class="mb-4">Meet Mr. Sharma (30). He decides to invest <strong>$100/month</strong> in an
+                <p class="mb-4">Meet Mr. Sharma (30). He decides to invest <strong><span class="currency-text">$</span>100/month</strong> in an
                     Equity Mutual Fund via SIP for his retirement at age 60.</p>
                 <ul class="list-disc pl-5 space-y-2 mb-4">
-                    <li><strong>Goal:</strong> Retire with $5 Crores.</li>
+                    <li><strong>Goal:</strong> Retire with <span class="currency-text">$</span>5 Crores.</li>
                     <li><strong>Strategy:</strong> Step-up SIP. Increase investment by 10% every year as his salary
                         grows.</li>
                     <li><strong>Result:</strong> By age 60, avoiding the urge to stop during market lows, his corpus
-                        grows to $3.54 Million — and with SWP at $500/month, he earns a steady retirement income while
+                        grows to <span class="currency-text">$</span>3.54 Million — and with SWP at <span class="currency-text">$</span>500/month, he earns a steady retirement income while
                         the corpus continues to grow.</li>
                 </ul>
                 <p class="font-semibold">Moral: It's not just about starting early — it's about increasing your
@@ -1418,7 +1418,7 @@ foreach ($combined as $row) {
                             </tr>
                             <tr class="hover:bg-indigo-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Taxation</td>
-                                <td class="py-4 px-6">LTCG > $1.25L taxed @ 12.5%</td>
+                                <td class="py-4 px-6">LTCG > <span class="currency-text">$</span>1.25L taxed @ 12.5%</td>
                                 <td class="py-4 px-6 font-bold text-emerald-600">Exempt (EEE)</td>
                                 <td class="py-4 px-6">Taxed as Income</td>
                             </tr>
@@ -1543,8 +1543,8 @@ foreach ($combined as $row) {
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
                             Most mutual fund houses worldwide allow SIPs starting from as low as
-                            <strong>$5/month</strong>. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at
-                            $1/month. The key is to start early — even $5/month over 20 years at 12% can grow to $5+
+                            <strong><span class="currency-text">$</span>5/month</strong>. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at
+                            <span class="currency-text">$</span>1/month. The key is to start early — even <span class="currency-text">$</span>5/month over 20 years at 12% can grow to <span class="currency-text">$</span>5+
                             Lakhs.
                         </div>
                     </details>
@@ -1578,7 +1578,7 @@ foreach ($combined as $row) {
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
                             SWP withdrawals are treated as partial redemptions. For <strong>equity funds</strong>: STCG
-                            (held &lt;1 year) taxed at 20%, LTCG taxed at 12.5% on gains above $1,500/year. For
+                            (held &lt;1 year) taxed at 20%, LTCG taxed at 12.5% on gains above <span class="currency-text">$</span>1,500/year. For
                             <strong>debt funds</strong> (purchased after Apr 2023): taxed at your income slab rate. Only
                             the <em>capital gains portion</em> of each withdrawal is taxable — the principal component
                             is tax-free.
@@ -1697,8 +1697,8 @@ foreach ($combined as $row) {
                             </svg>
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Inflation (typically 5-6% worldwide) erodes purchasing power over time. At 6% inflation, $1
-                            Lakh today is worth only $310 in 20 years. This is why <strong>step-up SIPs</strong> are
+                            Inflation (typically 5-6% worldwide) erodes purchasing power over time. At 6% inflation, <span class="currency-text">$</span>1
+                            Lakh today is worth only <span class="currency-text">$</span>310 in 20 years. This is why <strong>step-up SIPs</strong> are
                             critical — they increase your investment to outpace inflation. For SWP, use the step-up
                             withdrawal feature to increase monthly withdrawals by 5-7% annually to maintain your
                             lifestyle.

@@ -216,7 +216,7 @@ require_once __DIR__ . '/functions.php';
                             <tr class="bg-gray-50/50">
                                 <td class="px-6 py-4 font-medium">Taxation (2026 Rules)</td>
                                 <td class="px-6 py-4"><strong>Highly Efficient.</strong> Only gains taxed (LTCG at 12.5%
-                                    above $1.25L). Principal withdrawal is tax-free.</td>
+                                    above <span class="currency-text">$</span>1.25L). Principal withdrawal is tax-free.</td>
                                 <td class="px-6 py-4"><strong>Inefficient.</strong> Full payout taxed at your income
                                     slab rate (up to 30%).</td>
                             </tr>
@@ -258,16 +258,16 @@ require_once __DIR__ . '/functions.php';
                     Taxation is where SWPs crush Annuities for anyone in a middle-to-high tax bracket.
                 </p>
                 <p>
-                    When you receive a $500 monthly annuity check, the government treats the entire amount as "Income
+                    When you receive a <span class="currency-text">$</span>500 monthly annuity check, the government treats the entire amount as "Income
                     from Other Sources." If your total taxable pension/income puts you in the 30% slab, you practically
-                    give back $150 of that check to taxes every single month. Your net yield drops from 6% to closer
+                    give back <span class="currency-text">$</span>150 of that check to taxes every single month. Your net yield drops from 6% to closer
                     to 4%.
                 </p>
                 <p>
-                    Conversely, when you execute an SWP of $500, it is considered a <em>partial redemption of
-                        units</em>. In the initial years, the vast majority of that $500 is your own principal being
+                    Conversely, when you execute an SWP of <span class="currency-text">$</span>500, it is considered a <em>partial redemption of
+                        units</em>. In the initial years, the vast majority of that <span class="currency-text">$</span>500 is your own principal being
                     returned to you (which attracts <strong>zero tax</strong>). Only the tiny profit portion is taxed at
-                    the Long Term Capital Gains (LTCG) rate of 12.5% (after ignoring the first $1.25 lakhs of gains
+                    the Long Term Capital Gains (LTCG) rate of 12.5% (after ignoring the first <span class="currency-text">$</span>1.25 lakhs of gains
                     completely). Consequently, the effective tax rate on an SWP withdrawal usually hovers between
                     <strong>1% to 4%</strong>.
                 </p>
@@ -276,12 +276,12 @@ require_once __DIR__ . '/functions.php';
                 <h2 id="inflation-problem" class="text-3xl font-bold mt-10 mb-4 text-gray-800">3. The Looming Threat of
                     Inflation</h2>
                 <p>
-                    Assume you need $500 a month to live comfortably today. Due to inflation at 6%, in 12 years you
-                    will need nearly $1,000 a month just to maintain the <em>exact same lifestyle</em>. In 24 years,
-                    you will need $2,00,000 a month.
+                    Assume you need <span class="currency-text">$</span>500 a month to live comfortably today. Due to inflation at 6%, in 12 years you
+                    will need nearly <span class="currency-text">$</span>1,000 a month just to maintain the <em>exact same lifestyle</em>. In 24 years,
+                    you will need <span class="currency-text">$</span>2,00,000 a month.
                 </p>
                 <p>
-                    A standard immediate annuity gives you a permanent, flat $500 lock-in. <strong>By year 15, your
+                    A standard immediate annuity gives you a permanent, flat <span class="currency-text">$</span>500 lock-in. <strong>By year 15, your
                         annuity is practically funding only half of your essential living costs.</strong>
                 </p>
                 <p>
@@ -295,9 +295,9 @@ require_once __DIR__ . '/functions.php';
 
                 <!-- H2: Real Numbers Example -->
                 <h2 id="real-numbers-example" class="text-3xl font-bold mt-10 mb-4 text-gray-800">4. Real Numbers
-                    Example: $1 Million Corpus</h2>
+                    Example: <span class="currency-text">$</span>1 Million Corpus</h2>
 
-                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Scenario: Retiree aged 60 with $1 Million.</h3>
+                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Scenario: Retiree aged 60 with <span class="currency-text">$</span>1 Million.</h3>
                 <div class="grid md:grid-cols-2 gap-8 my-8 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-emerald-100">
                         <h4 class="text-lg font-bold text-emerald-700 mb-2">Option A: SWP (Hybrid Fund)</h4>
@@ -305,11 +305,11 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between border-b pb-1"><span>Target Return:</span> <span
                                     class="font-bold">10% p.a.</span></li>
                             <li class="flex justify-between border-b pb-1"><span>Withdrawal via SWP:</span> <span
-                                    class="font-bold">$500/month</span></li>
+                                    class="font-bold"><span class="currency-text">$</span>500/month</span></li>
                             <li class="flex justify-between border-b pb-1"><span>Yearly Step-Up:</span> <span
                                     class="font-bold text-emerald-600">5% to combat inflation</span></li>
                             <li class="flex justify-between border-b pb-1"><span>Corpus at age 85:</span> <span
-                                    class="font-bold text-emerald-700">$2.8+ Million Remaining!</span></li>
+                                    class="font-bold text-emerald-700"><span class="currency-text">$</span>2.8+ Million Remaining!</span></li>
                             <li class="flex justify-between pt-1"><span>Legacy Left Behind:</span> <span
                                     class="font-bold text-emerald-700">Massive legacy</span></li>
                         </ul>
@@ -323,15 +323,15 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between border-b pb-1"><span>Annuity Rate (Yield):</span> <span
                                     class="font-bold">~6% p.a. (Fixed)</span></li>
                             <li class="flex justify-between border-b pb-1"><span>Withdrawal Payout:</span> <span
-                                    class="font-bold">$500/month</span></li>
+                                    class="font-bold"><span class="currency-text">$</span>500/month</span></li>
                             <li class="flex justify-between border-b pb-1"><span>Yearly Step-Up:</span> <span
                                     class="font-bold text-red-600">0% (Flat forever)</span></li>
                             <li class="flex justify-between border-b pb-1"><span>Corpus at age 85:</span> <span
-                                    class="font-bold text-blue-600">$1 Million (Original deposit)</span></li>
+                                    class="font-bold text-blue-600"><span class="currency-text">$</span>1 Million (Original deposit)</span></li>
                             <li class="flex justify-between pt-1"><span>Legacy Left Behind:</span> <span
-                                    class="font-bold text-red-500">$1 Million (devalued by 25yr inflation)</span></li>
+                                    class="font-bold text-red-500"><span class="currency-text">$</span>1 Million (devalued by 25yr inflation)</span></li>
                         </ul>
-                        <p class="text-xs text-gray-500 mt-4">ROPP stands for Return of Purchase Price. The $1 Million
+                        <p class="text-xs text-gray-500 mt-4">ROPP stands for Return of Purchase Price. The <span class="currency-text">$</span>1 Million
                             returned to heirs in 2051 will have less than 20% of the purchasing power it had in 2026.
                         </p>
                     </div>
@@ -383,7 +383,7 @@ require_once __DIR__ . '/functions.php';
                             between "principal" and "interest".<br><br><strong>SWP:</strong> Each withdrawal is a
                             partial redemption of mutual fund units. Only the <em>capital gain portion</em> is taxable.
                             In the initial years, 80-90% of each withdrawal is your own principal returning to you
-                            (completely tax-free). The gains portion is taxed at just 12.5% LTCG, and the first $1.25
+                            (completely tax-free). The gains portion is taxed at just 12.5% LTCG, and the first <span class="currency-text">$</span>1.25
                             Lakh of LTCG per year is fully exempt. Effective tax rate on SWP: <strong>1-4%</strong> vs
                             20-30% on annuity income.</div>
                     </details>
@@ -418,7 +418,7 @@ require_once __DIR__ . '/functions.php';
                         <div class="pb-4 text-gray-600">Joint-life annuities continue paying the surviving spouse after
                             the primary annuitant dies — but the trade-off is a <strong>20-30% lower initial
                                 payout</strong> compared to a single-life annuity. For example, if a single-life annuity
-                            pays $500/month, the same corpus as a joint-life annuity may pay only $400/month. With SWP,
+                            pays <span class="currency-text">$</span>500/month, the same corpus as a joint-life annuity may pay only <span class="currency-text">$</span>400/month. With SWP,
                             this is a non-issue: the remaining mutual fund corpus is simply transferred to the
                             nominee/surviving spouse via a simple transmission process, maintaining full flexibility and
                             compound growth potential for the surviving partner.</div>

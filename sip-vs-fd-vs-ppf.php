@@ -174,7 +174,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="py-4 px-4 font-bold text-gray-700">Taxation on Final Corpus</td>
                                 <td class="py-4 px-4 font-medium bg-indigo-50/30">12.5% LTCG <br><span
-                                        class="text-[10px] text-gray-500">(Above $1.25L)</span></td>
+                                        class="text-[10px] text-gray-500">(Above <span class="currency-text">$</span>1.25L)</span></td>
                                 <td class="py-4 px-4 font-bold text-emerald-600">0% (EEE)</td>
                                 <td class="py-4 px-4 font-medium text-rose-600">Taxed at Income Slab</td>
                                 <td class="py-4 px-4 font-medium">60% Tax Free <br><span
@@ -234,7 +234,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <p>The PPF is a government-backed, fixed-income scheme in India. It is considered the gold standard of
                     "safe money" for one primary reason: <strong>EEE Status</strong>.</p>
                 <ul class="space-y-2 mb-6">
-                    <li><strong>E (Exempt):</strong> The money you invest gives you a tax deduction up to $1.5 Lakhs.
+                    <li><strong>E (Exempt):</strong> The money you invest gives you a tax deduction up to <span class="currency-text">$</span>1.5 Lakhs.
                     </li>
                     <li><strong>E (Exempt):</strong> The 7.1% interest you earn every year is completely tax-free.</li>
                     <li><strong>E (Exempt):</strong> After 15 years, the entire accumulated maturity amount is withdrawn
@@ -405,10 +405,10 @@ require_once __DIR__ . '/functions.php'; ?>
                 </details>
 
                 <details class="group">
-                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Is $100/month SIP enough for
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Is <span class="currency-text">$</span>100/month SIP enough for
                         retirement?</summary>
                     <div class="pb-4 text-gray-600">With a 10% annual step-up and 12% returns over 25 years,
-                        $100/month SIP can grow to approximately <strong>$7.5 Crore</strong>. That's more than enough
+                        <span class="currency-text">$</span>100/month SIP can grow to approximately <strong><span class="currency-text">$</span>7.5 Crore</strong>. That's more than enough
                         for most retirement needs. Use our <a href="/" class="text-indigo-600 hover:underline">SIP
                             calculator</a> to verify with your specific parameters.</div>
                 </details>

@@ -136,7 +136,7 @@ require_once __DIR__ . '/functions.php';
                 <ul>
                     <li><strong>Stop High-Risk SIPs:</strong> Redirect all new monthly SIP money into lower-volatility
                         assets: Debt Funds, Liquid Funds, or Arbitrage Funds.</li>
-                    <li><strong>Tax-Harvesting Shift:</strong> Every year, redeem up to $1,500 of Long Term Capital
+                    <li><strong>Tax-Harvesting Shift:</strong> Every year, redeem up to <span class="currency-text">$</span>1,500 of Long Term Capital
                         Gains (which is tax-free) from your equity funds and move that money into safer debt
                         instruments.</li>
                     <li><strong>Target Allocation:</strong> By the time you retire, your portfolio should roughly
@@ -211,8 +211,8 @@ require_once __DIR__ . '/functions.php';
                         retirement?</summary>
                     <div class="pb-4 text-gray-600">If your entire corpus is in aggressive small-cap or mid-cap equity
                         on the day you retire, a 30-40% market crash (which statistically happens every 8-12 years)
-                        would immediately destroy decades of compounding. With 100% equity and a 40% crash, your $1M
-                        corpus drops to $600K. Your SWP now draws from a severely depleted pool, and the
+                        would immediately destroy decades of compounding. With 100% equity and a 40% crash, your <span class="currency-text">$</span>1M
+                        corpus drops to <span class="currency-text">$</span>600K. Your SWP now draws from a severely depleted pool, and the
                         <strong>sequence of returns risk</strong> creates a death spiral: you sell more units at lower
                         prices, accelerating depletion. The Glide Path approach prevents this by ensuring at least 2-3
                         years of expenses are in near-zero-volatility assets before you turn on the SWP tap.</div>
@@ -224,7 +224,7 @@ require_once __DIR__ . '/functions.php';
                     <div class="pb-4 text-gray-600">You don't "stop and start" on the same day. The transition is
                         gradual over 3-5 years. <strong>Phase 1 (T-5 to T-3 years):</strong> Continue SIPs but redirect
                         new SIPs to balanced/hybrid funds. <strong>Phase 2 (T-3 to T-1 years):</strong> Stop equity SIPs
-                        entirely. Start harvesting LTCG (up to $1.25L/year tax-free). Build Bucket 1 with 2-3 years of
+                        entirely. Start harvesting LTCG (up to <span class="currency-text">$</span>1.25L/year tax-free). Build Bucket 1 with 2-3 years of
                         expenses. <strong>Phase 3 (Retirement Day):</strong> Activate SWP from Bucket 1 only. Your
                         equity allocation should now be 50-60% (down from 80-90%), and your SWP source is a
                         low-volatility fund, not a pure equity fund.</div>
@@ -235,10 +235,10 @@ require_once __DIR__ . '/functions.php';
                         create a huge tax bill?</summary>
                     <div class="pb-4 text-gray-600">This is the most common fear — and it's a valid one. If you dump
                         everything at once, yes, a massive LTCG event triggers. The solution: <strong>tax harvesting
-                            over multiple financial years</strong>. Each year, redeem up to $1.25 Lakh in LTCG from
+                            over multiple financial years</strong>. Each year, redeem up to <span class="currency-text">$</span>1.25 Lakh in LTCG from
                         equity (completely tax-free). Reinvest the proceeds into your Bucket 1/2 (liquid/hybrid funds).
                         Over 3-5 years, you smoothly shift your asset allocation while paying <strong>zero
-                            taxes</strong> on up to $6.25 Lakh of capital gains. This is the intellectual advantage of
+                            taxes</strong> on up to <span class="currency-text">$</span>6.25 Lakh of capital gains. This is the intellectual advantage of
                         the transition guide — you must plan the tax drag, not just the asset allocation.</div>
                 </details>
 

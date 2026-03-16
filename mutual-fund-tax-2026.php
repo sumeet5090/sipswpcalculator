@@ -129,7 +129,7 @@ require_once __DIR__ . '/functions.php'; ?>
                                 <td class="py-3 px-4 font-medium">Equity Funds</td>
                                 <td class="py-3 px-4">> 1 year</td>
                                 <td class="py-3 px-4">LTCG (Section 112A)</td>
-                                <td class="py-3 px-4 font-bold text-emerald-600">12.5% (above $1.25L)</td>
+                                <td class="py-3 px-4 font-bold text-emerald-600">12.5% (above <span class="currency-text">$</span>1.25L)</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Debt Funds (post Apr 2023)</td>
@@ -141,7 +141,7 @@ require_once __DIR__ . '/functions.php'; ?>
                                 <td class="py-3 px-4 font-medium">Hybrid Funds (≥65% equity)</td>
                                 <td class="py-3 px-4">> 1 year</td>
                                 <td class="py-3 px-4">LTCG</td>
-                                <td class="py-3 px-4 font-bold text-emerald-600">12.5% (above $1.25L)</td>
+                                <td class="py-3 px-4 font-bold text-emerald-600">12.5% (above <span class="currency-text">$</span>1.25L)</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4 font-medium">Gold/International Funds</td>
@@ -155,7 +155,7 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <h2>LTCG vs STCG: How Holding Period Affects Tax</h2>
                 <p><strong>Long-Term Capital Gains (LTCG)</strong> on equity mutual funds (held >1 year) are taxed at a
-                    flat rate of <strong>12.5%</strong> on gains exceeding $1,500 in a financial year. This is one
+                    flat rate of <strong>12.5%</strong> on gains exceeding <span class="currency-text">$</span>1,500 in a financial year. This is one
                     of the most favorable tax treatments available for investments worldwide.</p>
                 <p><strong>Short-Term Capital Gains (STCG)</strong> on equity funds (held ≤1 year) are taxed at
                     <strong>20%</strong>. For debt funds purchased after April 1, 2023, all gains are treated as
@@ -191,13 +191,13 @@ require_once __DIR__ . '/functions.php'; ?>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">Tax rate</td>
-                                <td class="py-3 px-4 text-green-700">12.5% LTCG (with $1.25L exemption)</td>
+                                <td class="py-3 px-4 text-green-700">12.5% LTCG (with <span class="currency-text">$</span>1.25L exemption)</td>
                                 <td class="py-3 px-4 text-rose-600">Income slab rate (up to 30%+)</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">TDS</td>
                                 <td class="py-3 px-4 text-green-700">No TDS on MF redemptions</td>
-                                <td class="py-3 px-4 text-rose-600">10% TDS if interest > $40K/year</td>
+                                <td class="py-3 px-4 text-rose-600">10% TDS if interest > <span class="currency-text">$</span>40K/year</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4 font-medium">Potential returns</td>
@@ -223,20 +223,20 @@ require_once __DIR__ . '/functions.php'; ?>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">🇮🇳 India</td>
                                 <td class="py-3 px-4">12.5% (equity >1yr)</td>
-                                <td class="py-3 px-4">$1,500/year</td>
-                                <td class="py-3 px-4">ELSS (Sec 80C, $1.5L)</td>
+                                <td class="py-3 px-4"><span class="currency-text">$</span>1,500/year</td>
+                                <td class="py-3 px-4">ELSS (Sec 80C, <span class="currency-text">$</span>1.5L)</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4 font-medium">🇺🇸 USA</td>
                                 <td class="py-3 px-4">0/15/20% (income-based)</td>
-                                <td class="py-3 px-4">$44,625 for 0% bracket</td>
+                                <td class="py-3 px-4"><span class="currency-text">$</span>44,625 for 0% bracket</td>
                                 <td class="py-3 px-4">Roth IRA, 401(k)</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4 font-medium">🇬🇧 UK</td>
                                 <td class="py-3 px-4">10/20% (basic/higher rate)</td>
-                                <td class="py-3 px-4">£3,000/year CGT allowance</td>
-                                <td class="py-3 px-4">ISA (£20K/year, tax-free)</td>
+                                <td class="py-3 px-4"><span class="currency-text">£</span>3,000/year CGT allowance</td>
+                                <td class="py-3 px-4">ISA (<span class="currency-text">£</span>20K/year, tax-free)</td>
                             </tr>
                         </tbody>
                     </table>
@@ -244,28 +244,28 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <h2>Tax-Saving Strategies for Mutual Fund Investors</h2>
 
-                <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Strategy 1: Annual LTCG Harvesting ($1.25 Lakh
+                <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Strategy 1: Annual LTCG Harvesting (<span class="currency-text">$</span>1.25 Lakh
                     Exemption)</h3>
-                <p>Every financial year, you get a <strong>$1.25 Lakh tax-free exemption on equity LTCG</strong>. If you
+                <p>Every financial year, you get a <strong><span class="currency-text">$</span>1.25 Lakh tax-free exemption on equity LTCG</strong>. If you
                     don't use it, you lose it. The strategy: near the end of each financial year (January-March), redeem
-                    enough equity mutual fund units to book up to $1.25 Lakh in long-term gains, then immediately
+                    enough equity mutual fund units to book up to <span class="currency-text">$</span>1.25 Lakh in long-term gains, then immediately
                     reinvest the proceeds back into the same fund. You pay <strong>zero tax</strong> on the gains, and
                     your cost basis resets to the current (higher) NAV. This effectively eliminates a massive future tax
                     liability.</p>
                 <div class="bg-indigo-50 border border-indigo-200 p-5 rounded-xl my-6 text-sm not-prose">
                     <p class="font-bold text-indigo-800 mb-2">LTCG Harvesting Example</p>
-                    <p class="text-gray-700">You invested $5 Lakh in an equity fund. After 3 years, it is worth $8 Lakh
-                        (gain = $3 Lakh). If you redeem everything at once, you pay 12.5% on ($3L - $1.25L) = $21,875 in
+                    <p class="text-gray-700">You invested <span class="currency-text">$</span>5 Lakh in an equity fund. After 3 years, it is worth <span class="currency-text">$</span>8 Lakh
+                        (gain = <span class="currency-text">$</span>3 Lakh). If you redeem everything at once, you pay 12.5% on (<span class="currency-text">$</span>3L - <span class="currency-text">$</span>1.25L) = <span class="currency-text">$</span>21,875 in
                         tax.</p>
-                    <p class="text-gray-700 mt-2"><strong>Instead:</strong> Harvest $1.25L of gains in Year 1 (tax =
-                        $0), $1.25L in Year 2 (tax = $0), and the remaining $0.50L in Year 3 (tax = $0 because it is
-                        under the exemption). <strong>Total tax paid: $0</strong> instead of $21,875.</p>
+                    <p class="text-gray-700 mt-2"><strong>Instead:</strong> Harvest <span class="currency-text">$</span>1.25L of gains in Year 1 (tax =
+                        <span class="currency-text">$</span>0), <span class="currency-text">$</span>1.25L in Year 2 (tax = <span class="currency-text">$</span>0), and the remaining <span class="currency-text">$</span>0.50L in Year 3 (tax = <span class="currency-text">$</span>0 because it is
+                        under the exemption). <strong>Total tax paid: <span class="currency-text">$</span>0</strong> instead of <span class="currency-text">$</span>21,875.</p>
                 </div>
 
                 <h3 class="text-xl font-bold mt-8 mb-3 text-gray-800">Strategy 2: Use ELSS for Section 80C (Old Tax
                     Regime)</h3>
                 <p>If you are on the Old Tax Regime, <strong>Equity-Linked Savings Schemes (ELSS)</strong> provide a
-                    dual benefit: a tax deduction up to $1.5 Lakh under Section 80C, plus the equity fund growth. ELSS
+                    dual benefit: a tax deduction up to <span class="currency-text">$</span>1.5 Lakh under Section 80C, plus the equity fund growth. ELSS
                     has the shortest lock-in of any 80C instrument (3 years vs 5 years for FDs and 15 years for PPF).
                     After the lock-in, gains qualify for the favorable 12.5% LTCG treatment.</p>
 
@@ -290,7 +290,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <h3 class="text-xl font-bold mt-8 mb-3 text-gray-800">Strategy 5: Growth Option Over Dividend Option —
                     Always</h3>
                 <p>Since April 2020, mutual fund dividends are added to your taxable income and taxed at your slab rate
-                    (up to 30%). Additionally, a 10% TDS is deducted on dividends exceeding $5,000/year from a single
+                    (up to 30%). Additionally, a 10% TDS is deducted on dividends exceeding <span class="currency-text">$</span>5,000/year from a single
                     AMC. The <strong>Growth Option + SWP combination is always more tax-efficient</strong> than the
                     Dividend option because SWP taxation only hits the gain portion (not the entire withdrawal), and you
                     control the timing.</p>
@@ -326,7 +326,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     <div class="pb-4 text-gray-600">Yes, since April 2020 (post-DDT abolition), mutual fund dividends
                         are treated as normal income and added to your total taxable income. They are taxed at your
                         marginal slab rate (up to 30% + cess). A 10% TDS is also deducted if annual dividends from a
-                        single AMC exceed $5,000. <strong>This is why the Growth + SWP combination is universally
+                        single AMC exceed <span class="currency-text">$</span>5,000. <strong>This is why the Growth + SWP combination is universally
                             recommended over the Dividend option</strong> — it gives you control over taxation timing
                         and only the gain component is taxed, not the entire payout.</div>
                 </details>
@@ -351,7 +351,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         ETFs, etc.) are treated as <strong>non-equity funds</strong> for Indian tax purposes, regardless
                         of their equity allocation. This means: gains are taxed at your income slab rate if the holding
                         period is less than 2 years (STCG), and at <strong>12.5% without indexation</strong> if held
-                        longer than 2 years (LTCG). There is no $1.25 Lakh LTCG exemption for international funds. This
+                        longer than 2 years (LTCG). There is no <span class="currency-text">$</span>1.25 Lakh LTCG exemption for international funds. This
                         makes them significantly less tax-efficient than domestic equity funds for Indian residents.
                     </div>
                 </details>
@@ -363,8 +363,8 @@ require_once __DIR__ . '/functions.php'; ?>
                         <strong>grandfathering clause</strong> was provided to protect gains earned before January 31,
                         2018. Any gains accrued up to that date are completely tax-free. The cost of acquisition is
                         treated as the <strong>higher of</strong>: (a) your actual purchase price, or (b) the NAV on
-                        January 31, 2018. This means if you bought an equity fund at $100 NAV, and on Jan 31, 2018 it
-                        was $500, your cost basis is $500. Any gain after that is taxable at 12.5%. This clause remains
+                        January 31, 2018. This means if you bought an equity fund at <span class="currency-text">$</span>100 NAV, and on Jan 31, 2018 it
+                        was <span class="currency-text">$</span>500, your cost basis is <span class="currency-text">$</span>500. Any gain after that is taxable at 12.5%. This clause remains
                         relevant for long-term investors holding pre-2018 SIPs.
                     </div>
                 </details>

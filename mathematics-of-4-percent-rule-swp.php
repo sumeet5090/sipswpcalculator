@@ -134,13 +134,13 @@ require_once __DIR__ . '/functions.php';
                         it by the inflation rate. <em>You ignore what the market did that year.</em></li>
                 </ol>
                 <p>
-                    <strong>Example for a $1 Million Corpus:</strong>
+                    <strong>Example for a <span class="currency-text">$</span>1 Million Corpus:</strong>
                 </p>
                 <ul>
-                    <li>Year 1: 4% of $1 Cr = $4,000 withdrawn for the year ($333 a month).</li>
-                    <li>Year 2 (Assuming 6% inflation): $4,000 + 6% = $4,240 withdrawn for the year ($353 a
+                    <li>Year 1: 4% of <span class="currency-text">$</span>1 Cr = <span class="currency-text">$</span>4,000 withdrawn for the year (<span class="currency-text">$</span>333 a month).</li>
+                    <li>Year 2 (Assuming 6% inflation): <span class="currency-text">$</span>4,000 + 6% = <span class="currency-text">$</span>4,240 withdrawn for the year (<span class="currency-text">$</span>353 a
                         month).</li>
-                    <li>Year 3 (Assuming 6% inflation): $4,240 + 6% = $4,494 withdrawn for the year ($374 a
+                    <li>Year 3 (Assuming 6% inflation): <span class="currency-text">$</span>4,240 + 6% = <span class="currency-text">$</span>4,494 withdrawn for the year (<span class="currency-text">$</span>374 a
                         month).</li>
                 </ul>
                 <p>
@@ -173,8 +173,8 @@ require_once __DIR__ . '/functions.php';
                     <li>Post-tax Real Return is therefore roughly <code>10% - 6% = 4%</code>.</li>
                 </ul>
                 <p>
-                    If you withdraw roughly your <em>real return</em> (4%), the underlying principal of $1 Million just
-                    compounds fast enough to combat inflation, keeping its buying power equivalent to $1 Cr today
+                    If you withdraw roughly your <em>real return</em> (4%), the underlying principal of <span class="currency-text">$</span>1 Million just
+                    compounds fast enough to combat inflation, keeping its buying power equivalent to <span class="currency-text">$</span>1 Cr today
                     indefinitely. If you withdraw 8%, you are eating deep into the principal every year, guaranteeing a
                     quick depletion if a market crash hits.
                 </p>
@@ -196,9 +196,9 @@ require_once __DIR__ . '/functions.php';
                 </p>
                 <p>
                     <strong>Mathematical demonstration of a bad sequence:</strong>
-                    Start with $1 Cr. You withdraw $4,000 in Year 1. But the market crashes by 20%.
-                    Your portfolio is now $768,000 (1 Cr - 4 Lakh withdrawal, minus 20% drop).
-                    Next year you must withdraw $4,240. That is now a <strong>5.5%</strong> withdrawal rate against
+                    Start with <span class="currency-text">$</span>1 Cr. You withdraw <span class="currency-text">$</span>4,000 in Year 1. But the market crashes by 20%.
+                    Your portfolio is now <span class="currency-text">$</span>768,000 (1 Cr - 4 Lakh withdrawal, minus 20% drop).
+                    Next year you must withdraw <span class="currency-text">$</span>4,240. That is now a <strong>5.5%</strong> withdrawal rate against
                     your depleted corpus, well above the safe threshold!
                 </p>
 
@@ -217,7 +217,7 @@ require_once __DIR__ . '/functions.php';
                             first).</em></li>
                     <li>Turn ON the SWP toggle.</li>
                     <li>Set <strong>Monthly Withdrawal</strong> to exactly 4% of your corpus divided by 12. (For 1 Cr,
-                        enter $333).</li>
+                        enter <span class="currency-text">$</span>333).</li>
                     <li>Set <strong>Annual Step-Up</strong> to match expected inflation (e.g., 6%).</li>
                     <li>Set your Expected Return to a conservative hybrid portfolio estimate (e.g., 9-10%).</li>
                     <li>Set Duration to your expected retirement length (e.g., 30 years).</li>

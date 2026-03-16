@@ -682,12 +682,12 @@ foreach ($combined as $row) {
                 class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
                 role="complementary" aria-label="Quick Answer">
                 <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
-                <p class="text-base text-gray-700"><strong>How much will a $100/month SIP grow in 20 years?</strong>
+                <p class="text-base text-gray-700"><strong>How much will a <span class="currency-text">$</span>100/month SIP grow in 20 years?</strong>
                 </p>
-                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a $100/month
-                    SIP will grow to approximately <strong class="text-emerald-700">$3.54 Million</strong> over 20
+                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a <span class="currency-text">$</span>100/month
+                    SIP will grow to approximately <strong class="text-emerald-700"><span class="currency-text">$</span>3.54 Million</strong> over 20
                     years.
-                    Total invested: $68.73 Lakh. Total gains: $2.85 Crore.</p>
+                    Total invested: <span class="currency-text">$</span>68.73 Lakh. Total gains: <span class="currency-text">$</span>2.85 Crore.</p>
             </div>
             <script type="application/ld+json">
             {
@@ -733,22 +733,22 @@ foreach ($combined as $row) {
                                         <button type="button" data-currency="INR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
                                             onclick="updateCurrency('INR')">
-                                            ₹ INR
+                                            <span class="currency-text">₹</span> INR
                                         </button>
                                         <button type="button" data-currency="USD"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
                                             onclick="updateCurrency('USD')">
-                                            $ USD
+                                            <span class="currency-text">$</span> USD
                                         </button>
                                         <button type="button" data-currency="EUR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-r border-slate-200"
                                             onclick="updateCurrency('EUR')">
-                                            € EUR
+                                            <span class="currency-text">€</span> EUR
                                         </button>
                                         <button type="button" data-currency="GBP"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
                                             onclick="updateCurrency('GBP')">
-                                            £ GBP
+                                            <span class="currency-text">£</span> GBP
                                         </button>
                                     </div>
                                 </div>
@@ -1158,7 +1158,7 @@ foreach ($combined as $row) {
             <p>Predicting the precise moment when markets will turn is practically impossible, even for institutional professionals. Furthermore, missing just the 10 best trading days in a decade can halve an investor's overall return. A far more reliable and stress-free alternative is the <strong>Monthly Recurring Investment</strong> approach, widely referred to globally as Dollar-Cost Averaging (DCA) or Systematic Investment Plans (SIP) in specific regions like India.</p>
 
             <h3>How Recurring Investments Work</h3>
-            <p>A recurring investment plan is elegantly simple: you commit a fixed amount of money (e.g., $500) to a chosen investment (like a mutual fund or index fund) on a specific day of every month, regardless of what the market is doing.</p>
+            <p>A recurring investment plan is elegantly simple: you commit a fixed amount of money (e.g., <span class="currency-text">$</span>500) to a chosen investment (like a mutual fund or index fund) on a specific day of every month, regardless of what the market is doing.</p>
             <p>Because the investment amount is fixed, you automatically buy more shares or units when prices are low and fewer when prices are high. Over time, this lowers the average cost of your investments. Instead of worrying about a sudden market crash right after investing a lump sum, a recurring investment strategy naturally capitalizes on volatility.</p>
 
             <div class="glass-card overflow-hidden my-8">
@@ -1201,8 +1201,8 @@ foreach ($combined as $row) {
             <p>For recurring investments, time is the critical variable. When you use our recurring investment calculator, you'll immediately notice the exponential curve over long durations (typically 10-20+ years). In the initial years, your total corpus closely mirrors your total invested amount. But by year 15 or 20, the "total gains" portion dramatically eclipses your principal base. This is the mathematical magic of leaving your money fully invested through consecutive market cycles.</p>
 
             <h3>Supercharging Your Plan: The Step-Up Method</h3>
-            <p>While a standard monthly investment provides a solid foundation, modern wealth building requires defending against inflation. A fixed investment of $500 a month will buy significantly less purchasing power a decade from now.</p>
-            <p>The solution is the <strong>Step-up Plan</strong>. A step-up strategy involves increasing your monthly contribution by a fixed percentage (e.g., 5% or 10%) every year, ideally tying this hike to annual salary raises. This seemingly small adjustment has a massive impact on the maturity value. A $100 monthly investment over 20 years at a 10% annual return yields roughly $76,000. However, adding a 10% annual step-up to the exact same scenario catapults the final corpus closer to $210,000—a transformative difference driven entirely by financial discipline rather than riskier investments.</p>
+            <p>While a standard monthly investment provides a solid foundation, modern wealth building requires defending against inflation. A fixed investment of <span class="currency-text">$</span>500 a month will buy significantly less purchasing power a decade from now.</p>
+            <p>The solution is the <strong>Step-up Plan</strong>. A step-up strategy involves increasing your monthly contribution by a fixed percentage (e.g., 5% or 10%) every year, ideally tying this hike to annual salary raises. This seemingly small adjustment has a massive impact on the maturity value. A <span class="currency-text">$</span>100 monthly investment over 20 years at a 10% annual return yields roughly <span class="currency-text">$</span>76,000. However, adding a 10% annual step-up to the exact same scenario catapults the final corpus closer to <span class="currency-text">$</span>210,000—a transformative difference driven entirely by financial discipline rather than riskier investments.</p>
 
             <h3>Navigating Market Volatility</h3>
             <p>One of the hidden benefits of automated recurring investments is behavioral conditioning. Human emotions are terrible investors. When markets crash by 20%, instinct tells us to stop investing and hoard cash. When markets are raging at all-time highs, greed prompts us to invest heavily.</p>

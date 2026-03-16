@@ -40,19 +40,19 @@ function get_pdf_html(array $inputs): string
     <html lang='en'>
     <head>
         <meta charset='UTF-8'>
-        <title>Financial Report for {$client_name}</title>
+        <title>Financial Report for {<span class="currency-text">$</span>client_name}</title>
         <style>{$styles}</style>
     </head>
     <body>
         <div class='header'>";
 
-    if ($logo_base64) {
-        $html .= "<img src='{$logo_base64}' alt='Advisor Logo'>";
+    if (<span class="currency-text">$</span>logo_base64) {
+        <span class="currency-text">$</span>html .= "<img src='{$logo_base64}' alt='Advisor Logo'>";
     }
 
-    $html .= "
+    <span class="currency-text">$</span>html .= "
             <h1>Financial Projection Report</h1>
-            <p>Specially prepared for <strong>{$client_name}</strong> by <strong>{$advisor_name}</strong></p>
+            <p>Specially prepared for <strong>{<span class="currency-text">$</span>client_name}</strong> by <strong>{<span class="currency-text">$</span>advisor_name}</strong></p>
         </div>
 
         <div class='content'>
@@ -60,25 +60,25 @@ function get_pdf_html(array $inputs): string
             <table class='summary-table'>
                 <tr>
                     <th>Monthly Investment</th>
-                    <td>" . number_format((float) ($inputs['sip'] ?? 0)) . "</td>
+                    <td>" . number_format((float) (<span class="currency-text">$</span>inputs['sip'] ?? 0)) . "</td>
                     <th>Investment Period</th>
-                    <td>" . ($inputs['years'] ?? 0) . " Years</td>
+                    <td>" . (<span class="currency-text">$</span>inputs['years'] ?? 0) . " Years</td>
                 </tr>
                 <tr>
                     <th>Expected Return Rate</th>
-                    <td>" . ($inputs['rate'] ?? 0) . "% p.a.</td>
+                    <td>" . (<span class="currency-text">$</span>inputs['rate'] ?? 0) . "% p.a.</td>
                     <th>Annual Step-up</th>
-                    <td>" . ($inputs['stepup'] ?? 0) . "%</td>
+                    <td>" . (<span class="currency-text">$</span>inputs['stepup'] ?? 0) . "%</td>
                 </tr>
                  <tr>
                     <th>Monthly Withdrawal</th>
-                    <td>" . number_format((float) ($inputs['swp_withdrawal'] ?? 0)) . "</td>
+                    <td>" . number_format((float) (<span class="currency-text">$</span>inputs['swp_withdrawal'] ?? 0)) . "</td>
                     <th>Annual Withdrawal Increase</th>
-                    <td>" . ($inputs['swp_stepup'] ?? 0) . "%</td>
+                    <td>" . (<span class="currency-text">$</span>inputs['swp_stepup'] ?? 0) . "%</td>
                 </tr>
                 <tr>
                     <th>Withdrawal Period</th>
-                    <td colspan='3'>" . ($inputs['swp_years'] ?? 0) . " Years</td>
+                    <td colspan='3'>" . (<span class="currency-text">$</span>inputs['swp_years'] ?? 0) . " Years</td>
                 </tr>
             </table>
 
@@ -89,14 +89,14 @@ function get_pdf_html(array $inputs): string
 
             <h2>Yearly Breakdown</h2>
             <div class='results-table-container'>
-                {$table_html}
+                {<span class="currency-text">$</span>table_html}
             </div>";
 
-    if ($custom_disclaimer) {
-        $html .= "<div class='disclaimer'><h2>Disclaimer</h2><p>{$custom_disclaimer}</p></div>";
+    if (<span class="currency-text">$</span>custom_disclaimer) {
+        <span class="currency-text">$</span>html .= "<div class='disclaimer'><h2>Disclaimer</h2><p>{<span class="currency-text">$</span>custom_disclaimer}</p></div>";
     }
 
-    $html .= "
+    <span class="currency-text">$</span>html .= "
         </div>
         <div class='footer'>
             <p>This report was generated on " . date('F j, Y') . " using the <strong>Advanced SIP & SWP Calculator</strong> (https://sipswpcalculator.com).</p>
@@ -105,5 +105,5 @@ function get_pdf_html(array $inputs): string
     </body>
     </html>";
 
-    return $html;
+    return <span class="currency-text">$</span>html;
 }

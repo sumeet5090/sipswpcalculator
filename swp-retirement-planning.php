@@ -168,8 +168,8 @@ require_once __DIR__ . '/functions.php'; ?>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg> The Core Magic of SWP</p>
-                    <p class="text-sm mt-2">If you have $1 Million in a fund earning 12% annually ($120,000 growth), and
-                        you withdraw $60,000 a year via SWP, your principal corpus is not shrinking. You are living
+                    <p class="text-sm mt-2">If you have <span class="currency-text">$</span>1 Million in a fund earning 12% annually (<span class="currency-text">$</span>120,000 growth), and
+                        you withdraw <span class="currency-text">$</span>60,000 a year via SWP, your principal corpus is not shrinking. You are living
                         purely off half of the yield, leaving the rest to compound indefinitely to combat inflation.</p>
                 </div>
 
@@ -205,15 +205,15 @@ require_once __DIR__ . '/functions.php'; ?>
                                 <td class="py-4 px-4 text-emerald-600 font-medium bg-indigo-50/20">
                                     <strong>Dynamic.</strong> You can automate a 5% step-up every year to maintain
                                     purchasing power.</td>
-                                <td class="py-4 px-4 text-rose-600 font-medium"><strong>Static.</strong> The $2,000 you
-                                    get in Year 1 is the same $2,000 you get in Year 20 — worth roughly 40% less in real
+                                <td class="py-4 px-4 text-rose-600 font-medium"><strong>Static.</strong> The <span class="currency-text">$</span>2,000 you
+                                    get in Year 1 is the same <span class="currency-text">$</span>2,000 you get in Year 20 — worth roughly 40% less in real
                                     terms.</td>
                             </tr>
                             <tr class="hover:bg-slate-50 transition-colors">
                                 <td class="py-4 px-4 font-bold text-gray-700">Tax Treatment</td>
                                 <td class="py-4 px-4 text-emerald-600 font-medium bg-indigo-50/20"><strong>Highly
                                         Efficient.</strong> Only the profit portion of the withdrawal is taxed at 12.5%
-                                    LTCG. The first $1.25L of gains per year is fully exempt.</td>
+                                    LTCG. The first <span class="currency-text">$</span>1.25L of gains per year is fully exempt.</td>
                                 <td class="py-4 px-4 text-rose-600 font-medium"><strong>Punitive.</strong> The entire
                                     payout is added to your income and taxed at your maximum slab rate (up to 30%).</td>
                             </tr>
@@ -269,21 +269,21 @@ require_once __DIR__ . '/functions.php'; ?>
                     <ul class="space-y-4 mt-4 text-gray-800">
                         <li class="bg-white p-3 border border-gray-100 rounded-lg">
                             <span class="block text-xs text-gray-500 uppercase tracking-wider mb-1">Scenario A: You need
-                                $5,000 / month ($60,000 / year)</span>
-                            <span class="font-bold">Using 4.0% Rule:</span> $60,000 ÷ 0.04 = <strong
-                                class="text-emerald-600 text-xl">$1,500,000 (1.5 Million)</strong>
+                                <span class="currency-text">$</span>5,000 / month (<span class="currency-text">$</span>60,000 / year)</span>
+                            <span class="font-bold">Using 4.0% Rule:</span> <span class="currency-text">$</span>60,000 ÷ 0.04 = <strong
+                                class="text-emerald-600 text-xl"><span class="currency-text">$</span>1,500,000 (1.5 Million)</strong>
                         </li>
                         <li class="bg-white p-3 border border-gray-100 rounded-lg">
                             <span class="block text-xs text-gray-500 uppercase tracking-wider mb-1">Scenario B: Same
                                 need, more conservative approach</span>
-                            <span class="font-bold">Using 3.5% Rule:</span> $60,000 ÷ 0.035 = <strong
-                                class="text-indigo-600 text-xl">$1,714,286 (~1.71 Million)</strong>
+                            <span class="font-bold">Using 3.5% Rule:</span> <span class="currency-text">$</span>60,000 ÷ 0.035 = <strong
+                                class="text-indigo-600 text-xl"><span class="currency-text">$</span>1,714,286 (~1.71 Million)</strong>
                         </li>
                         <li class="bg-white p-3 border border-gray-100 rounded-lg">
                             <span class="block text-xs text-gray-500 uppercase tracking-wider mb-1">Scenario C: You need
-                                $2,000 / month ($24,000 / year)</span>
-                            <span class="font-bold">Using 4.0% Rule:</span> $24,000 ÷ 0.04 = <strong
-                                class="text-emerald-600 text-xl">$600,000</strong>
+                                <span class="currency-text">$</span>2,000 / month (<span class="currency-text">$</span>24,000 / year)</span>
+                            <span class="font-bold">Using 4.0% Rule:</span> <span class="currency-text">$</span>24,000 ÷ 0.04 = <strong
+                                class="text-emerald-600 text-xl"><span class="currency-text">$</span>600,000</strong>
                         </li>
                     </ul>
                     <p class="text-xs text-gray-500 mt-4 border-t border-gray-200 pt-3">Use our <a href="/"
@@ -297,8 +297,8 @@ require_once __DIR__ . '/functions.php'; ?>
                 <p>The single greatest threat to a retiree using an SWP is not low average returns, but <em>when</em>
                     those low returns happen. This is mathematically defined as <strong>Sequence of Return Risk
                         (SORR)</strong>.</p>
-                <p>Imagine you retire with $1 Million and execute a $40,000/year SWP. If the stock market crashes 30% in
-                    your <em>first</em> year of retirement (Corpus drops to $700K, then you withdraw $40K leaves $660K
+                <p>Imagine you retire with <span class="currency-text">$</span>1 Million and execute a <span class="currency-text">$</span>40,000/year SWP. If the stock market crashes 30% in
+                    your <em>first</em> year of retirement (Corpus drops to <span class="currency-text">$</span>700K, then you withdraw <span class="currency-text">$</span>40K leaves <span class="currency-text">$</span>660K
                     remaining), your portfolio sustains permanent, unrecoverable damage. It no longer has enough
                     critical mass to bounce back when the market eventually recovers. Compare this to someone who gets
                     the same 30% crash in Year 15 of retirement — by then their corpus has already doubled through
@@ -386,7 +386,7 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <h2>The SWP Tax Advantage Deep-Dive (2026 Tax Code)</h2>
                 <p>The mathematics of SWP taxation make it vastly superior to Fixed Deposits or annuities. When you
-                    withdraw $1,000 via SWP, you do <strong>not</strong> pay tax on $1,000. Each mutual fund unit you
+                    withdraw <span class="currency-text">$</span>1,000 via SWP, you do <strong>not</strong> pay tax on <span class="currency-text">$</span>1,000. Each mutual fund unit you
                     sell contains a "Principal" component (your original investment) and a "Gain" component (the
                     profit). <strong>You only pay tax on the Gain portion.</strong></p>
 
@@ -396,7 +396,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         incurs tax. This makes your effective tax rate near zero initially.</li>
                     <li><strong>Equity Fund Taxation:</strong> If your SWP is from an equity fund held for more than 1
                         year, the gains are classified as Long Term Capital Gains (LTCG). Under 2026 rules, the first
-                        $1.25 Lakh of LTCG per financial year is <strong>100% Tax-Exempt</strong>. Any gain above that
+                        <span class="currency-text">$</span>1.25 Lakh of LTCG per financial year is <strong>100% Tax-Exempt</strong>. Any gain above that
                         is taxed at a flat 12.5% — far lower than income tax slabs of 20-30%.</li>
                     <li><strong>Debt Fund Taxation (Post April 2023):</strong> If your SWP is from a debt fund, gains
                         are added to your income and taxed at your slab rate. No indexation benefit is available for new
@@ -442,17 +442,17 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">What happens to my SWP corpus when I die?</summary>
-                    <div class="pb-4 text-gray-600">This is one of the most powerful advantages of SWP over traditional pensions. Unlike annuity plans where payments stop upon your death (the insurance company keeps the remaining capital), with an SWP the <strong>entire remaining mutual fund corpus is transferred to your registered nominee or legal heirs</strong>. There is no capital erosion. If you started with $1 Million, withdrew $500K over 15 years, but the remaining corpus grew to $1.2 Million through market returns, your heirs inherit the full $1.2 Million. It is a liquid, inheritable asset — not a locked corporate promise.</div>
+                    <div class="pb-4 text-gray-600">This is one of the most powerful advantages of SWP over traditional pensions. Unlike annuity plans where payments stop upon your death (the insurance company keeps the remaining capital), with an SWP the <strong>entire remaining mutual fund corpus is transferred to your registered nominee or legal heirs</strong>. There is no capital erosion. If you started with <span class="currency-text">$</span>1 Million, withdrew <span class="currency-text">$</span>500K over 15 years, but the remaining corpus grew to <span class="currency-text">$</span>1.2 Million through market returns, your heirs inherit the full <span class="currency-text">$</span>1.2 Million. It is a liquid, inheritable asset — not a locked corporate promise.</div>
                 </details>
 
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">Can I increase my SWP withdrawal amount over time to match inflation?</summary>
-                    <div class="pb-4 text-gray-600">Absolutely. Most AMCs (Asset Management Companies) allow you to modify your SWP amount at any time via their online portal or app. The recommended strategy is a <strong>5-7% annual step-up</strong> in your withdrawal amount to keep pace with inflation. Our <a href="/" class="text-indigo-600 hover:underline">SWP Calculator</a> includes a dedicated step-up SWP feature that lets you model exactly how long your corpus will last with annual withdrawal increases. For example, withdrawing $5,000/month with a 5% annual increase from a $1.5M corpus earning 10% can sustain you for 30+ years.</div>
+                    <div class="pb-4 text-gray-600">Absolutely. Most AMCs (Asset Management Companies) allow you to modify your SWP amount at any time via their online portal or app. The recommended strategy is a <strong>5-7% annual step-up</strong> in your withdrawal amount to keep pace with inflation. Our <a href="/" class="text-indigo-600 hover:underline">SWP Calculator</a> includes a dedicated step-up SWP feature that lets you model exactly how long your corpus will last with annual withdrawal increases. For example, withdrawing <span class="currency-text">$</span>5,000/month with a 5% annual increase from a <span class="currency-text">$</span>1.5M corpus earning 10% can sustain you for 30+ years.</div>
                 </details>
 
                 <details class="group">
-                    <summary class="cursor-pointer font-bold text-slate-800 py-2">How much corpus do I need for $5,000/month SWP income?</summary>
-                    <div class="pb-4 text-gray-600">Using the Safe Withdrawal Rate formula: <strong>$5,000 × 12 ÷ 0.04 = $1,500,000</strong> (at 4% SWR) or <strong>$5,000 × 12 ÷ 0.035 = $1,714,286</strong> (at a more conservative 3.5% SWR). However, if you plan to increase withdrawals by 5% annually for inflation, you should target the higher number ($1.71M) for safety. Use our <a href="/" class="text-indigo-600 hover:underline">SWP calculator</a> to simulate this with different expected return rates (8%, 10%, 12%) to see the range of outcomes.</div>
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">How much corpus do I need for <span class="currency-text">$</span>5,000/month SWP income?</summary>
+                    <div class="pb-4 text-gray-600">Using the Safe Withdrawal Rate formula: <strong><span class="currency-text">$</span>5,000 × 12 ÷ 0.04 = <span class="currency-text">$</span>1,500,000</strong> (at 4% SWR) or <strong><span class="currency-text">$</span>5,000 × 12 ÷ 0.035 = <span class="currency-text">$</span>1,714,286</strong> (at a more conservative 3.5% SWR). However, if you plan to increase withdrawals by 5% annually for inflation, you should target the higher number (<span class="currency-text">$</span>1.71M) for safety. Use our <a href="/" class="text-indigo-600 hover:underline">SWP calculator</a> to simulate this with different expected return rates (8%, 10%, 12%) to see the range of outcomes.</div>
                 </details>
 
                 <details class="group">
@@ -472,7 +472,7 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">How do I account for healthcare costs which inflate faster than general inflation?</summary>
-                    <div class="pb-4 text-gray-600">Healthcare inflation typically runs at <strong>10-15% annually</strong> — significantly higher than the 5-6% general inflation rate. The recommended approach is to maintain a <strong>separate healthcare corpus</strong> outside of your SWP system. This healthcare corpus should be invested in a mix of health insurance premiums (for catastrophic coverage) plus a dedicated SIP/debt fund earmarked for out-of-pocket medical expenses. Do not rely on your primary SWP corpus to absorb unexpected ₹10-15 Lakh hospital bills.</div>
+                    <div class="pb-4 text-gray-600">Healthcare inflation typically runs at <strong>10-15% annually</strong> — significantly higher than the 5-6% general inflation rate. The recommended approach is to maintain a <strong>separate healthcare corpus</strong> outside of your SWP system. This healthcare corpus should be invested in a mix of health insurance premiums (for catastrophic coverage) plus a dedicated SIP/debt fund earmarked for out-of-pocket medical expenses. Do not rely on your primary SWP corpus to absorb unexpected <span class="currency-text">₹</span>10-15 Lakh hospital bills.</div>
                 </details>
 
                 <!-- Related Guides -->

@@ -136,8 +136,8 @@ require_once __DIR__ . '/functions.php';
                         Deposits for retirement income in 2026.
                         SWP offers higher potential returns (10-12% vs 6-7%), superior tax efficiency (only capital
                         gains taxed at 12.5% vs full slab rate on FD interest),
-                        and inflation protection through equity exposure. A $1 Million corpus via SWP at 10% return with
-                        $500/month withdrawal can last 25+ years,
+                        and inflation protection through equity exposure. A <span class="currency-text">$</span>1 Million corpus via SWP at 10% return with
+                        <span class="currency-text">$</span>500/month withdrawal can last 25+ years,
                         while the same amount in FD depletes faster due to lower returns and higher taxation. However,
                         FDs offer guaranteed capital safety suitable for
                         conservative investors. <strong>Best strategy:</strong> Use a combination — 70-80% in SWP for
@@ -173,7 +173,7 @@ require_once __DIR__ . '/functions.php';
                     guaranteed interest rate.
                     In 2026, major Indian banks offer FD rates of <strong>6.5-7.5%</strong> for general citizens and
                     <strong>7-8%</strong> for
-                    senior citizens. FDs are insured up to $5,000 per depositor per bank by DICGC, making them one of
+                    senior citizens. FDs are insured up to <span class="currency-text">$</span>5,000 per depositor per bank by DICGC, making them one of
                     the safest investment options.
                 </p>
                 <p>
@@ -210,7 +210,7 @@ require_once __DIR__ . '/functions.php';
                             </tr>
                             <tr class="bg-gray-50/50">
                                 <td class="px-6 py-4 font-medium">Tax on Income</td>
-                                <td class="px-6 py-4">LTCG: <strong>12.5%</strong> (above $1.25L/yr)</td>
+                                <td class="px-6 py-4">LTCG: <strong>12.5%</strong> (above <span class="currency-text">$</span>1.25L/yr)</td>
                                 <td class="px-6 py-4">Slab Rate: <strong>up to 30%</strong></td>
                             </tr>
                             <tr>
@@ -246,23 +246,23 @@ require_once __DIR__ . '/functions.php';
                 </div>
 
                 <!-- H2: Real Numbers Example -->
-                <h2 id="real-numbers-example" class="text-3xl font-bold mt-10 mb-4 text-gray-800">$1 Million Retirement
+                <h2 id="real-numbers-example" class="text-3xl font-bold mt-10 mb-4 text-gray-800"><span class="currency-text">$</span>1 Million Retirement
                     Corpus: SWP vs FD (Real Numbers)</h2>
 
-                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Scenario: $500/Month Withdrawal for 20 Years
+                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Scenario: <span class="currency-text">$</span>500/Month Withdrawal for 20 Years
                 </h3>
                 <div class="grid md:grid-cols-2 gap-8 my-8 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-emerald-100">
                         <h4 class="text-lg font-bold text-emerald-700 mb-2">SWP (Equity Hybrid Fund @ 10%)</h4>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Starting Corpus:</span> <span
-                                    class="font-bold">$1,000,000</span></li>
+                                    class="font-bold"><span class="currency-text">$</span>1,000,000</span></li>
                             <li class="flex justify-between"><span>Monthly Withdrawal:</span> <span
-                                    class="font-bold">$500</span></li>
+                                    class="font-bold"><span class="currency-text">$</span>500</span></li>
                             <li class="flex justify-between"><span>Total Withdrawn (20 yrs):</span> <span
-                                    class="font-bold text-emerald-600">$1,200,000</span></li>
+                                    class="font-bold text-emerald-600"><span class="currency-text">$</span>1,200,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2"><span>Remaining
-                                    Corpus:</span> <span class="font-bold text-emerald-700">$1,18,00,000+</span></li>
+                                    Corpus:</span> <span class="font-bold text-emerald-700"><span class="currency-text">$</span>1,18,00,000+</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-4">Corpus actually <strong>grows</strong> because returns
                             exceed withdrawals.</p>
@@ -271,11 +271,11 @@ require_once __DIR__ . '/functions.php';
                         <h4 class="text-lg font-bold text-blue-700 mb-2">Fixed Deposit @ 7%</h4>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Starting Corpus:</span> <span
-                                    class="font-bold">$1,000,000</span></li>
+                                    class="font-bold"><span class="currency-text">$</span>1,000,000</span></li>
                             <li class="flex justify-between"><span>Monthly Withdrawal:</span> <span
-                                    class="font-bold">$500</span></li>
+                                    class="font-bold"><span class="currency-text">$</span>500</span></li>
                             <li class="flex justify-between"><span>Total Withdrawn:</span> <span
-                                    class="font-bold text-blue-600">$1,000,000</span></li>
+                                    class="font-bold text-blue-600"><span class="currency-text">$</span>1,000,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2"><span>Corpus Depleted
                                     In:</span> <span class="font-bold text-red-600">~24 Years</span></li>
                         </ul>
@@ -291,16 +291,16 @@ require_once __DIR__ . '/functions.php';
                 <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Fixed Deposit Taxation</h3>
                 <ul>
                     <li>Interest is <strong>fully taxable</strong> at your income tax slab rate (5%, 20%, or 30%)</li>
-                    <li>TDS deducted at 10% if annual interest exceeds $400 ($500 for senior citizens)</li>
+                    <li>TDS deducted at 10% if annual interest exceeds <span class="currency-text">$</span>400 (<span class="currency-text">$</span>500 for senior citizens)</li>
                     <li>No indexation benefit available</li>
-                    <li>For a $1 Million FD at 7%, the $7,000 annual interest attracts $2,100 tax (30% slab)</li>
+                    <li>For a <span class="currency-text">$</span>1 Million FD at 7%, the <span class="currency-text">$</span>7,000 annual interest attracts <span class="currency-text">$</span>2,100 tax (30% slab)</li>
                 </ul>
 
                 <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">SWP Taxation (Equity Mutual Funds)</h3>
                 <ul>
                     <li>Each SWP withdrawal is treated as a <strong>partial redemption</strong></li>
                     <li>Only the <strong>capital gains portion</strong> is taxable — the principal is tax-free</li>
-                    <li>LTCG (holding &gt; 1 year): <strong>12.5%</strong> on gains above $1,500/year</li>
+                    <li>LTCG (holding &gt; 1 year): <strong>12.5%</strong> on gains above <span class="currency-text">$</span>1,500/year</li>
                     <li>STCG (holding &lt; 1 year): <strong>20%</strong></li>
                     <li>For most retirees, the effective tax rate on SWP is only <strong>3-5%</strong> of the withdrawal
                         amount</li>
@@ -394,7 +394,7 @@ require_once __DIR__ . '/functions.php';
                         <div class="pb-4 text-gray-600">For most retirees with a 10+ year horizon, <strong>yes, SWP is
                                 mathematically superior</strong>. SWP from equity or hybrid mutual funds historically
                             offers 10-12% returns vs FD rates of 6-7%. SWP is also dramatically more tax-efficient: only
-                            the capital gains portion is taxable (LTCG at 12.5% above $1.25 Lakh/year), while the entire
+                            the capital gains portion is taxable (LTCG at 12.5% above <span class="currency-text">$</span>1.25 Lakh/year), while the entire
                             FD interest is taxable at your income slab rate (up to 30%). However, FDs offer guaranteed
                             returns and capital safety, making them essential for your emergency buffer (the first 1-3
                             years of expenses). The answer is not either/or — it is <strong>both, deployed
@@ -403,13 +403,13 @@ require_once __DIR__ . '/functions.php';
 
                     <details class="group">
                         <summary class="cursor-pointer font-bold text-slate-800 py-2">How much monthly income can I get
-                            from $1 Million in SWP vs FD?</summary>
-                        <div class="pb-4 text-gray-600"><strong>FD Route:</strong> $1M at 7% generates ~$70,000/year or
-                            $5,833/month in interest. But after 30% tax, you keep only ~$4,083/month. The corpus stays
+                            from <span class="currency-text">$</span>1 Million in SWP vs FD?</summary>
+                        <div class="pb-4 text-gray-600"><strong>FD Route:</strong> <span class="currency-text">$</span>1M at 7% generates ~<span class="currency-text">$</span>70,000/year or
+                            <span class="currency-text">$</span>5,833/month in interest. But after 30% tax, you keep only ~<span class="currency-text">$</span>4,083/month. The corpus stays
                             flat (no growth), and inflation erodes your purchasing power by 6% annually. In 15 years,
-                            that $4,083 buys what $1,800 buys today.<br><br><strong>SWP Route:</strong> $1M in an equity
-                            hybrid fund earning 10% with a $5,000/month withdrawal ($60,000/year = 6% withdrawal rate)
-                            will deplete faster, so a <strong>safer $4,000/month withdrawal (4.8%)</strong> can sustain
+                            that <span class="currency-text">$</span>4,083 buys what <span class="currency-text">$</span>1,800 buys today.<br><br><strong>SWP Route:</strong> <span class="currency-text">$</span>1M in an equity
+                            hybrid fund earning 10% with a <span class="currency-text">$</span>5,000/month withdrawal (<span class="currency-text">$</span>60,000/year = 6% withdrawal rate)
+                            will deplete faster, so a <strong>safer <span class="currency-text">$</span>4,000/month withdrawal (4.8%)</strong> can sustain
                             the corpus for 25+ years. And crucially, because most of the withdrawal in early years is
                             principal (tax-free), your effective tax rate is near zero initially—far more cash in hand
                             than FD interest.</div>
@@ -421,10 +421,10 @@ require_once __DIR__ . '/functions.php';
                         <div class="pb-4 text-gray-600"><strong>FD Tax Reality:</strong> Every single rupee/dollar of
                             interest earned is added to your taxable income. If you are in the 30% bracket, a 7% FD
                             yields only 4.9% post-tax. TDS of 10% is automatically deducted if annual interest exceeds
-                            $400 ($500 for senior citizens).<br><br><strong>SWP Tax Reality:</strong> When you withdraw
-                            $10,000 via SWP, you do NOT pay tax on $10,000. Each unit sold has a cost basis. If you
-                            bought the unit for $80 and it is now worth $100, only the $20 gain is taxable. Further, the
-                            first $1.25 Lakh of Long-Term Capital Gains per financial year is <strong>completely
+                            <span class="currency-text">$</span>400 (<span class="currency-text">$</span>500 for senior citizens).<br><br><strong>SWP Tax Reality:</strong> When you withdraw
+                            <span class="currency-text">$</span>10,000 via SWP, you do NOT pay tax on <span class="currency-text">$</span>10,000. Each unit sold has a cost basis. If you
+                            bought the unit for <span class="currency-text">$</span>80 and it is now worth <span class="currency-text">$</span>100, only the <span class="currency-text">$</span>20 gain is taxable. Further, the
+                            first <span class="currency-text">$</span>1.25 Lakh of Long-Term Capital Gains per financial year is <strong>completely
                                 exempt</strong>. Gains above that are taxed at a flat 12.5%. For most retirees, the
                             effective tax on SWP is <strong>3-5% of the withdrawal amount</strong> vs 20-30% on FD
                             interest. This is a massive 6-8x tax efficiency advantage.</div>
@@ -447,7 +447,7 @@ require_once __DIR__ . '/functions.php';
                             rates? Does that change the equation?</summary>
                         <div class="pb-4 text-gray-600">Yes, most banks offer an additional 0.25-0.50% interest for
                             senior citizens (age 60+), bringing FD rates to 7.5-8%. Section 80TTB also provides a
-                            deduction of up to $50,000 on interest income for seniors. However, even with these
+                            deduction of up to <span class="currency-text">$</span>50,000 on interest income for seniors. However, even with these
                             benefits, a 7.5% FD yielding ~5.75% post-tax (20% bracket) still <strong>loses to inflation
                                 at 6%</strong>. The FD rate advantage for seniors narrows the gap but does not eliminate
                             it. SWP from a Balanced Advantage Fund earning 9-10% still provides superior real

@@ -139,13 +139,13 @@ require_once __DIR__ . '/functions.php';
                     <p class="text-gray-700 text-sm leading-relaxed">
                         A <strong>Systematic Investment Plan (SIP)</strong> is a method of investing a fixed amount
                         monthly in mutual funds,
-                        starting from as low as $5/month. SIP works through <strong>Rupee Cost Averaging</strong>
+                        starting from as low as <span class="currency-text">$</span>5/month. SIP works through <strong>Rupee Cost Averaging</strong>
                         (buying more units when prices are low)
                         and <strong>compound interest</strong> to build wealth over time. To start: (1) Complete KYC
                         online, (2) Choose an index fund or large-cap fund,
-                        (3) Set up auto-debit SIP, (4) Stay invested for 7+ years. A $100/month SIP at 12% for 20
-                        years grows to approximately $1 Million.
-                        With a 10% annual step-up, the same period yields $3.54 Million. SIPs in Nifty 50 over 10+ years
+                        (3) Set up auto-debit SIP, (4) Stay invested for 7+ years. A <span class="currency-text">$</span>100/month SIP at 12% for 20
+                        years grows to approximately <span class="currency-text">$</span>1 Million.
+                        With a 10% annual step-up, the same period yields <span class="currency-text">$</span>3.54 Million. SIPs in Nifty 50 over 10+ years
                         have <strong>never given negative returns</strong> historically.
                     </p>
                 </div>
@@ -206,16 +206,16 @@ require_once __DIR__ . '/functions.php';
                             <tr>
                                 <td class="px-4 py-3 border border-slate-200 text-left">January</td>
                                 <td class="px-4 py-3 border border-slate-200 text-right">Normal</td>
-                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$100</td>
-                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$10</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="currency-text">$</span>100</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="currency-text">$</span>10</td>
                                 <td class="px-4 py-3 border border-slate-200 text-right font-mono font-bold">10.00</td>
                             </tr>
                             <tr class="bg-red-50">
                                 <td class="px-4 py-3 border border-slate-200 text-left">February</td>
                                 <td class="px-4 py-3 border border-slate-200 text-right text-red-600 font-bold">Market
                                     Crash</td>
-                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$100</td>
-                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$5</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="currency-text">$</span>100</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="currency-text">$</span>5</td>
                                 <td
                                     class="px-4 py-3 border border-slate-200 text-right font-mono font-bold text-emerald-600">
                                     20.00</td>
@@ -224,8 +224,8 @@ require_once __DIR__ . '/functions.php';
                                 <td class="px-4 py-3 border border-slate-200 text-left">March</td>
                                 <td class="px-4 py-3 border border-slate-200 text-right text-emerald-600 font-bold">Bull
                                     Market</td>
-                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$100</td>
-                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$20</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="currency-text">$</span>100</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="currency-text">$</span>20</td>
                                 <td class="px-4 py-3 border border-slate-200 text-right font-mono font-bold">5.00</td>
                             </tr>
                         </tbody>
@@ -233,8 +233,8 @@ require_once __DIR__ . '/functions.php';
                             <tr>
                                 <td colspan="2" class="px-4 py-3 border border-slate-200 text-left">Totals (Average)
                                 </td>
-                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$300</td>
-                                <td class="px-4 py-3 border border-slate-200 text-right font-mono">$11.66 (Avg price)
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="currency-text">$</span>300</td>
+                                <td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="currency-text">$</span>11.66 (Avg price)
                                 </td>
                                 <td class="px-4 py-3 border border-slate-200 text-right font-mono">35.00 units</td>
                             </tr>
@@ -242,7 +242,7 @@ require_once __DIR__ . '/functions.php';
                     </table>
                 </div>
                 <p>
-                    <em>Notice what happened in February.</em> Because the market crashed, your strict $100 bought you
+                    <em>Notice what happened in February.</em> Because the market crashed, your strict <span class="currency-text">$</span>100 bought you
                     <strong>double the units</strong>.
                     When the market eventually recovers, those cheaply bought units are what generate massive wealth.
                     You don't need to know when the crash is coming; SIP handles it automatically.
@@ -300,7 +300,7 @@ require_once __DIR__ . '/functions.php';
 
                 <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Step 4: Set the Logistics (Date & Amount)</h3>
                 <ul>
-                    <li><strong>Amount:</strong> Start with whatever is comfortable — even $10 or $50 a month. It is
+                    <li><strong>Amount:</strong> Start with whatever is comfortable — even <span class="currency-text">$</span>10 or <span class="currency-text">$</span>50 a month. It is
                         about building the habit, not the initial size. You will use the Step-Up strategy later.</li>
                     <li><strong>SIP Date:</strong> Mathematically, the date of your SIP (1st vs 15th vs 28th) makes
                         <strong>almost zero difference</strong> over a 10-year horizon. Practically, set it for 2-3 days
@@ -330,36 +330,36 @@ require_once __DIR__ . '/functions.php';
                 <div class="grid md:grid-cols-2 gap-8 my-8 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-t-emerald-500">
                         <h4 class="text-lg font-bold text-gray-900 mb-2">Scenario A: The Flat SIP</h4>
-                        <p class="text-sm text-gray-500 mb-4">$500/month for 20 Years @ 12% annual return</p>
+                        <p class="text-sm text-gray-500 mb-4"><span class="currency-text">$</span>500/month for 20 Years @ 12% annual return</p>
                         <ul class="space-y-3 text-sm text-gray-700">
                             <li class="flex justify-between items-center"><span class="text-gray-500">Total
-                                    Invested:</span> <span class="font-bold text-gray-900 font-mono">$1,20,000</span>
+                                    Invested:</span> <span class="font-bold text-gray-900 font-mono"><span class="currency-text">$</span>1,20,000</span>
                             </li>
                             <li class="flex justify-between items-center"><span class="text-gray-500">Wealth Gained
                                     (Interest):</span> <span
-                                    class="font-bold text-emerald-600 font-mono">+$3,79,573</span></li>
+                                    class="font-bold text-emerald-600 font-mono">+<span class="currency-text">$</span>3,79,573</span></li>
                             <li class="flex justify-between items-center border-t border-gray-200 pt-3"><span
                                     class="font-bold text-gray-900">Final Portfolio Value:</span> <span
-                                    class="text-xl font-extrabold text-emerald-700 font-mono">$4,99,573</span></li>
+                                    class="text-xl font-extrabold text-emerald-700 font-mono"><span class="currency-text">$</span>4,99,573</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-4 leading-relaxed">Your money multiplied ~4.1x. The majority
                             of your final wealth isn't your money; it's the interest earned on your interest.</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-t-indigo-600">
                         <h4 class="text-lg font-bold text-gray-900 mb-2">Scenario B: The Step-Up SIP</h4>
-                        <p class="text-sm text-gray-500 mb-4">$500/month + <span
+                        <p class="text-sm text-gray-500 mb-4"><span class="currency-text">$</span>500/month + <span
                                 class="bg-indigo-100 text-indigo-800 px-1 rounded">10% Annual Increase</span> for 20
                             Years @ 12%</p>
                         <ul class="space-y-3 text-sm text-gray-700">
                             <li class="flex justify-between items-center"><span class="text-gray-500">Total
-                                    Invested:</span> <span class="font-bold text-gray-900 font-mono">$3,43,649</span>
+                                    Invested:</span> <span class="font-bold text-gray-900 font-mono"><span class="currency-text">$</span>3,43,649</span>
                             </li>
                             <li class="flex justify-between items-center"><span class="text-gray-500">Wealth Gained
                                     (Interest):</span> <span
-                                    class="font-bold text-emerald-600 font-mono">+$10,31,048</span></li>
+                                    class="font-bold text-emerald-600 font-mono">+<span class="currency-text">$</span>10,31,048</span></li>
                             <li class="flex justify-between items-center border-t border-gray-200 pt-3"><span
                                     class="font-bold text-gray-900">Final Portfolio Value:</span> <span
-                                    class="text-xl font-extrabold text-indigo-700 font-mono">$13,74,697</span></li>
+                                    class="text-xl font-extrabold text-indigo-700 font-mono"><span class="currency-text">$</span>13,74,697</span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-4 leading-relaxed">By simply increasing your SIP by 10% once
                             a year (aligning with salary hikes), your final corpus is <strong>2.7x larger</strong> than
@@ -375,7 +375,7 @@ require_once __DIR__ . '/functions.php';
                     balance?</h3>
                 <p>
                     The Mutual Fund AMC does not penalize you or cancel your folio. However, your <em>bank</em> might
-                    charge an ECS/NACH bounce fee (typically $2-$5).
+                    charge an ECS/NACH bounce fee (typically <span class="currency-text">$</span>2-<span class="currency-text">$</span>5).
                     If you miss 3 consecutive SIP installments, the AMC will typically auto-cancel the SIP mandate to
                     prevent you from accumulating bank charges.
                     Your existing invested money remains fully safe and continues to grow in the market. You can simply

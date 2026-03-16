@@ -92,7 +92,7 @@ require_once __DIR__ . '/functions.php';
             <h1 class="text-4xl font-extrabold pb-2">
                 <span class="text-gradient">The Math of Inflation: How It Affects Your SIP</span>
             </h1>
-            <p class="text-lg text-gray-500 font-medium mt-2 mb-6">Why your $1 Million SIP corpus may only be worth $31
+            <p class="text-lg text-gray-500 font-medium mt-2 mb-6">Why your <span class="currency-text">$</span>1 Million SIP corpus may only be worth <span class="currency-text">$</span>31
                 Lakh in real terms — and how to fix it.</p>
 
             <!-- EEAT Trust Bar -->
@@ -126,14 +126,14 @@ require_once __DIR__ . '/functions.php';
                 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 not-prose">
                     <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 Quick Summary: The Invisible Tax on SIPs</h2>
                     <p class="text-gray-700 text-sm leading-relaxed">
-                        <strong>Inflation silently erodes SIP returns.</strong> At 6% inflation, $1
-                        Lakh today is worth only $55,839 in 10 years
-                        and $311 in 20 years. Even a 12% SIP return gives only <strong>5.66% real return</strong>
+                        <strong>Inflation silently erodes SIP returns.</strong> At 6% inflation, <span class="currency-text">$</span>1
+                        Lakh today is worth only <span class="currency-text">$</span>55,839 in 10 years
+                        and <span class="currency-text">$</span>311 in 20 years. Even a 12% SIP return gives only <strong>5.66% real return</strong>
                         after inflation adjustment using the Fisher equation:
-                        Real Return = ((1 + 0.12) / (1 + 0.06)) - 1 = 5.66%. A flat $100/month SIP for 20 years
-                        yields $1 Million nominally but only $31 Lakh in
+                        Real Return = ((1 + 0.12) / (1 + 0.06)) - 1 = 5.66%. A flat <span class="currency-text">$</span>100/month SIP for 20 years
+                        yields <span class="currency-text">$</span>1 Million nominally but only <span class="currency-text">$</span>31 Lakh in
                         today's purchasing power. <strong>Solution:</strong> Use a 10% annual step-up SIP which yields
-                        $3.54 Million — effectively tripling your inflation-adjusted wealth compared to a flat SIP.
+                        <span class="currency-text">$</span>3.54 Million — effectively tripling your inflation-adjusted wealth compared to a flat SIP.
                         Standard debt funds and Fixed Deposits often yield <strong>negative real returns</strong>
                         post-tax.
                     </p>
@@ -153,7 +153,7 @@ require_once __DIR__ . '/functions.php';
                     highly impressive on paper with a
                     12% nominal return is far less impressive when you realize that <strong>half of that return is just
                         running in place to keep up with inflation</strong>.
-                    If a loaf of bread costs $2 today and $4 in ten years, your portfolio needs to double just to buy
+                    If a loaf of bread costs <span class="currency-text">$</span>2 today and <span class="currency-text">$</span>4 in ten years, your portfolio needs to double just to buy
                     the exact same loaf of bread.
                 </p>
 
@@ -170,16 +170,16 @@ require_once __DIR__ . '/functions.php';
                     <p class="text-lg mb-4 bg-white p-3 border border-gray-200 inline-block font-bold">Real Value =
                         Nominal Value / (1 + Inflation Rate)<sup>Years</sup></p>
                     <ul class="list-none space-y-3 mt-4 text-gray-700">
-                        <li class="border-b border-gray-200 pb-2"><strong>Example scenario:</strong> $10,000 at 6%
+                        <li class="border-b border-gray-200 pb-2"><strong>Example scenario:</strong> <span class="currency-text">$</span>10,000 at 6%
                             persistent inflation</li>
                         <li class="flex justify-between items-center text-red-600"><span class="font-bold">After 10
-                                years:</span> <span>$10,000 / (1.06)<sup>10</sup> = <strong>$5,584</strong> (44%
+                                years:</span> <span><span class="currency-text">$</span>10,000 / (1.06)<sup>10</sup> = <strong><span class="currency-text">$</span>5,584</strong> (44%
                                 loss)</span></li>
                         <li class="flex justify-between items-center text-red-700"><span class="font-bold">After 20
-                                years:</span> <span>$10,000 / (1.06)<sup>20</sup> = <strong>$3,118</strong> (68%
+                                years:</span> <span><span class="currency-text">$</span>10,000 / (1.06)<sup>20</sup> = <strong><span class="currency-text">$</span>3,118</strong> (68%
                                 loss)</span></li>
                         <li class="flex justify-between items-center text-red-800"><span class="font-bold">After 30
-                                years:</span> <span>$10,000 / (1.06)<sup>30</sup> = <strong>$1,741</strong> (82%
+                                years:</span> <span><span class="currency-text">$</span>10,000 / (1.06)<sup>30</sup> = <strong><span class="currency-text">$</span>1,741</strong> (82%
                                 loss)</span></li>
                     </ul>
                 </div>
@@ -216,16 +216,16 @@ require_once __DIR__ . '/functions.php';
                 <h2 id="inflation-impact-on-sip-corpus" class="text-3xl font-bold mt-10 mb-4 text-gray-800">The
                     Devastating Impact on a Flat SIP</h2>
 
-                <p>Let's map out what happens if you stubbornly stick to a flat $500/month SIP for 20 years without ever
+                <p>Let's map out what happens if you stubbornly stick to a flat <span class="currency-text">$</span>500/month SIP for 20 years without ever
                     increasing it, assuming a 12% return and 6% constant inflation.</p>
                 <div class="grid md:grid-cols-2 gap-8 my-8 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-red-500">
                         <h4 class="text-lg font-bold text-gray-900 mb-2">The Illusion (Nominal Reality)</h4>
                         <ul class="space-y-3 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Amount Invested:</span> <span
-                                    class="font-mono text-gray-900">$1,20,000</span></li>
+                                    class="font-mono text-gray-900"><span class="currency-text">$</span>1,20,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2"><span>Total Corpus:</span>
-                                <span class="font-bold text-emerald-600 font-mono text-lg">$4,99,573</span></li>
+                                <span class="font-bold text-emerald-600 font-mono text-lg"><span class="currency-text">$</span>4,99,573</span></li>
                         </ul>
                         <p class="text-sm text-gray-600 mt-4 leading-relaxed">You open your portfolio app 20 years from
                             now and see nearly half a million dollars. You feel wealthy. But it's an illusion.</p>
@@ -234,13 +234,13 @@ require_once __DIR__ . '/functions.php';
                         <h4 class="text-lg font-bold text-gray-900 mb-2">The Truth (Purchasing Power Reality)</h4>
                         <ul class="space-y-3 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Real Invested Value:</span> <span
-                                    class="font-mono text-gray-500">Much less than $120k</span></li>
+                                    class="font-mono text-gray-500">Much less than <span class="currency-text">$</span>120k</span></li>
                             <li class="flex justify-between border-t border-gray-200 pt-2"><span>Real Spending
                                     Power:</span> <span
-                                    class="font-bold text-red-600 font-mono text-lg">$1,55,768</span></li>
+                                    class="font-bold text-red-600 font-mono text-lg"><span class="currency-text">$</span>1,55,768</span></li>
                         </ul>
-                        <p class="text-sm text-gray-600 mt-4 leading-relaxed">Adjusted for 6% inflation, your $500,000
-                            buys exactly the same amount of goods that <strong>$155,768</strong> buys today. You made
+                        <p class="text-sm text-gray-600 mt-4 leading-relaxed">Adjusted for 6% inflation, your <span class="currency-text">$</span>500,000
+                            buys exactly the same amount of goods that <strong><span class="currency-text">$</span>155,768</strong> buys today. You made
                             profit, but far less than you thought.</p>
                     </div>
                 </div>
@@ -263,7 +263,7 @@ require_once __DIR__ . '/functions.php';
                     <em>before</em> you have the chance to spend it.
                 </p>
 
-                <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Step-Up Impact Comparison ($500/month, 12% return,
+                <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Step-Up Impact Comparison (<span class="currency-text">$</span>500/month, 12% return,
                     20 years)</h3>
                 <div class="overflow-x-auto border border-slate-200 rounded-xl mb-8 not-prose shadow-sm">
                     <table class="min-w-full divide-y divide-slate-200 text-sm">
@@ -275,32 +275,32 @@ require_once __DIR__ . '/functions.php';
                                     Final Portfolio (App Value)</th>
                                 <th
                                     class="px-6 py-4 text-right font-extrabold text-indigo-700 uppercase tracking-wider">
-                                    Real Spending Power (Today's $)</th>
+                                    Real Spending Power (Today's <span class="currency-text">$</span>)</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-slate-100">
                             <tr class="hover:bg-slate-50 transition-colors">
                                 <td class="px-6 py-4 font-bold text-slate-600">0% (Flat SIP)</td>
-                                <td class="px-6 py-4 text-right font-mono">$4,99,573</td>
-                                <td class="px-6 py-4 text-right font-mono font-bold text-slate-500">$1,55,768</td>
+                                <td class="px-6 py-4 text-right font-mono"><span class="currency-text">$</span>4,99,573</td>
+                                <td class="px-6 py-4 text-right font-mono font-bold text-slate-500"><span class="currency-text">$</span>1,55,768</td>
                             </tr>
                             <tr class="hover:bg-slate-50 transition-colors">
                                 <td class="px-6 py-4 font-bold text-slate-700">5% Annual Increase</td>
-                                <td class="px-6 py-4 text-right font-mono">$8,12,028</td>
-                                <td class="px-6 py-4 text-right font-mono font-bold text-indigo-500">$2,53,193</td>
+                                <td class="px-6 py-4 text-right font-mono"><span class="currency-text">$</span>8,12,028</td>
+                                <td class="px-6 py-4 text-right font-mono font-bold text-indigo-500"><span class="currency-text">$</span>2,53,193</td>
                             </tr>
                             <tr class="bg-indigo-50/50 hover:bg-indigo-50 transition-colors">
                                 <td class="px-6 py-4 font-bold text-indigo-800 flex items-center">10% Annual Increase
                                     <span
                                         class="ml-2 bg-indigo-200 text-indigo-800 text-[10px] px-2 py-0.5 rounded-full uppercase">Optimal</span>
                                 </td>
-                                <td class="px-6 py-4 text-right font-mono font-bold text-indigo-900">$13,74,697</td>
-                                <td class="px-6 py-4 text-right font-mono font-extrabold text-indigo-700">$4,28,633</td>
+                                <td class="px-6 py-4 text-right font-mono font-bold text-indigo-900"><span class="currency-text">$</span>13,74,697</td>
+                                <td class="px-6 py-4 text-right font-mono font-extrabold text-indigo-700"><span class="currency-text">$</span>4,28,633</td>
                             </tr>
                             <tr class="hover:bg-slate-50 transition-colors">
                                 <td class="px-6 py-4 font-bold text-slate-800">15% Annual Increase</td>
-                                <td class="px-6 py-4 text-right font-mono">$24,14,354</td>
-                                <td class="px-6 py-4 text-right font-mono font-bold text-indigo-900">$7,52,799</td>
+                                <td class="px-6 py-4 text-right font-mono"><span class="currency-text">$</span>24,14,354</td>
+                                <td class="px-6 py-4 text-right font-mono font-bold text-indigo-900"><span class="currency-text">$</span>7,52,799</td>
                             </tr>
                         </tbody>
                     </table>
@@ -319,8 +319,8 @@ require_once __DIR__ . '/functions.php';
                     <li><strong>Acknowledge the Lifestyle Creep Tax:</strong> Personal inflation is often higher than
                         government CPI inflation because we desire better phones, cars, and schools as we age. A 10%
                         step-up accounts for CPI (6%) + Lifestyle Creep (4%).</li>
-                    <li><strong>Calculate Goals backwards:</strong> If you calculate that you need $1 Million to retire
-                        today, you actually need approximately $3.2 Million to retire in 20 years. Always calculate your
+                    <li><strong>Calculate Goals backwards:</strong> If you calculate that you need <span class="currency-text">$</span>1 Million to retire
+                        today, you actually need approximately <span class="currency-text">$</span>3.2 Million to retire in 20 years. Always calculate your
                         target SIP amount backwards using a 6% inflated target corpus.</li>
                     <li><strong>The Equity Premium:</strong> Accept that stock volatility is the price you pay for the
                         "Equity Risk Premium" — the only proven gap large enough to outpace long-term inflation.</li>
@@ -344,7 +344,7 @@ require_once __DIR__ . '/functions.php';
                             <dt class="font-bold text-xl text-indigo-900 mb-2">What happens to an SWP (Systematic
                                 Withdrawal Plan) during retirement if I ignore inflation?</dt>
                             <dd class="text-gray-600 leading-relaxed">You will run out of money. If you retire and
-                                withdraw a flat $2,000 every month, by year 15 of retirement, that $2,000 will buy less
+                                withdraw a flat <span class="currency-text">$</span>2,000 every month, by year 15 of retirement, that <span class="currency-text">$</span>2,000 will buy less
                                 than half of what you need for groceries and medical bills. You must implement a Step-Up
                                 SWP, increasing your withdrawal rate by 5% annually, which requires a significantly
                                 larger starting corpus.</dd>

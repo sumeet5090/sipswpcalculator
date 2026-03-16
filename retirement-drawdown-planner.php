@@ -682,12 +682,12 @@ foreach ($combined as $row) {
                 class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
                 role="complementary" aria-label="Quick Answer">
                 <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
-                <p class="text-base text-gray-700"><strong>How much will a $100/month SIP grow in 20 years?</strong>
+                <p class="text-base text-gray-700"><strong>How much will a <span class="currency-text">$</span>100/month SIP grow in 20 years?</strong>
                 </p>
-                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a $100/month
-                    SIP will grow to approximately <strong class="text-emerald-700">$3.54 Million</strong> over 20
+                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a <span class="currency-text">$</span>100/month
+                    SIP will grow to approximately <strong class="text-emerald-700"><span class="currency-text">$</span>3.54 Million</strong> over 20
                     years.
-                    Total invested: $68.73 Lakh. Total gains: $2.85 Crore.</p>
+                    Total invested: <span class="currency-text">$</span>68.73 Lakh. Total gains: <span class="currency-text">$</span>2.85 Crore.</p>
             </div>
             <script type="application/ld+json">
             {
@@ -733,22 +733,22 @@ foreach ($combined as $row) {
                                         <button type="button" data-currency="INR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
                                             onclick="updateCurrency('INR')">
-                                            ₹ INR
+                                            <span class="currency-text">₹</span> INR
                                         </button>
                                         <button type="button" data-currency="USD"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
                                             onclick="updateCurrency('USD')">
-                                            $ USD
+                                            <span class="currency-text">$</span> USD
                                         </button>
                                         <button type="button" data-currency="EUR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-r border-slate-200"
                                             onclick="updateCurrency('EUR')">
-                                            € EUR
+                                            <span class="currency-text">€</span> EUR
                                         </button>
                                         <button type="button" data-currency="GBP"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
                                             onclick="updateCurrency('GBP')">
-                                            £ GBP
+                                            <span class="currency-text">£</span> GBP
                                         </button>
                                     </div>
                                 </div>
@@ -1158,7 +1158,7 @@ foreach ($combined as $row) {
 
             <h3>The Origins of the 4% Rule</h3>
             <p>In 1994, financial advisor William Bengen published a landmark study analyzing historical market data to determine a "safe" withdrawal rate. Studying decades of stock and bond returns, Bengen concluded that an investor with a 50/50 portfolio could withdraw 4% of their initial portfolio value in the first year of retirement, adjust that dollar amount annually for inflation, and practically ensure their money would last for 30 years. Thus, the <strong>4% Rule</strong> was born.</p>
-            <p>For example, with a starting portfolio of $1,000,000, the rule suggests withdrawing $40,000 in year one. If inflation is 3%, year two's withdrawal becomes $41,200, and so on. The beauty of this rule lies in its simplicity. It provided a clear, actionable baseline for millions of retirees worldwide.</p>
+            <p>For example, with a starting portfolio of <span class="currency-text">$</span>1,000,000, the rule suggests withdrawing <span class="currency-text">$</span>40,000 in year one. If inflation is 3%, year two's withdrawal becomes <span class="currency-text">$</span>41,200, and so on. The beauty of this rule lies in its simplicity. It provided a clear, actionable baseline for millions of retirees worldwide.</p>
 
             <h3>Why the 4% Rule May Be Outdated in 2026</h3>
             <p>While foundational, the rigid 4% rule faces significant headwinds in the current economic landscape:</p>

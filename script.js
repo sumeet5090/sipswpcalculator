@@ -13,8 +13,8 @@ function updateCurrency(newCurrency) {
     // Save user preference to localStorage
     localStorage.setItem('user_currency', newCurrency);
 
-    // Update all symbol spans in the form
-    const spans = document.querySelectorAll('.currency-symbol');
+    // Update all symbol spans in the form and site-wide text
+    const spans = document.querySelectorAll('.currency-symbol, .currency-text');
     spans.forEach(span => {
         span.textContent = currencyConfig[currentCurrency].symbol;
     });
