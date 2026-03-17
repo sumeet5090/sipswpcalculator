@@ -45,7 +45,7 @@ require_once __DIR__ . '/functions.php'; ?>
     style="background-image: var(--gradient-surface); background-attachment: fixed;">
     <?php include 'navbar.php'; ?>
 
-    <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <header class="relative mb-6 sm:mb-10 text-center">
             <div
                 class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-4">

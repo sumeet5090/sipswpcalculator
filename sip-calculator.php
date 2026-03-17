@@ -93,7 +93,7 @@ require_once __DIR__ . '/functions.php';
     style="background-image: var(--gradient-surface); background-attachment: fixed;">
     <?php include 'navbar.php'; ?>
 
-    <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 
         <header class="mb-12 text-center">
             <h1 class="text-4xl font-extrabold pb-2">
