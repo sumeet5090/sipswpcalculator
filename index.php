@@ -733,22 +733,22 @@ foreach ($combined as $row) {
                                         <button type="button" data-currency="INR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
                                             onclick="updateCurrency('INR')">
-                                            <span class="currency-text">₹</span> INR
+                                            <span>₹</span> INR
                                         </button>
                                         <button type="button" data-currency="USD"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
                                             onclick="updateCurrency('USD')">
-                                            <span class="currency-text">$</span> USD
+                                            <span>$</span> USD
                                         </button>
                                         <button type="button" data-currency="EUR"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-r border-slate-200"
                                             onclick="updateCurrency('EUR')">
-                                            <span class="currency-text">€</span> EUR
+                                            <span>€</span> EUR
                                         </button>
                                         <button type="button" data-currency="GBP"
                                             class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
                                             onclick="updateCurrency('GBP')">
-                                            <span class="currency-text">£</span> GBP
+                                            <span>£</span> GBP
                                         </button>
                                     </div>
                                 </div>
@@ -1279,11 +1279,11 @@ foreach ($combined as $row) {
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold"><span class="currency-text">$</span>19.09L</span></li>
+                                    class="font-bold"><span class="dynamic-amount" data-amount="1909000"></span></span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+<span class="currency-text">$</span>21.41L</span></li>
+                                    class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="2141000"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700"><span class="currency-text">$</span>40.50L</span></li>
+                                    Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount" data-amount="4050000"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1×</p>
                     </div>
@@ -1293,11 +1293,11 @@ foreach ($combined as $row) {
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold"><span class="currency-text">$</span>68.73L</span></li>
+                                    class="font-bold"><span class="dynamic-amount" data-amount="6873000"></span></span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+<span class="currency-text">$</span>2.85Cr</span></li>
+                                    class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="28500000"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700"><span class="currency-text">$</span>3.54Cr</span></li>
+                                    Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount" data-amount="35400000"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~5.1×</p>
                     </div>
@@ -1306,11 +1306,11 @@ foreach ($combined as $row) {
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold"><span class="currency-text">$</span>4.94Cr</span></li>
+                                    class="font-bold"><span class="dynamic-amount" data-amount="49400000"></span></span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+<span class="currency-text">$</span>36.91Cr</span></li>
+                                    class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="369099999"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-rose-700"><span class="currency-text">$</span>41.85Cr</span></li>
+                                    Value:</span> <span class="font-bold text-rose-700"><span class="dynamic-amount" data-amount="418500000"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~8.5×</p>
                     </div>
@@ -1320,11 +1320,11 @@ foreach ($combined as $row) {
                         <p class="text-xs text-gray-500 mb-3">@ 10% return, 5% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold"><span class="currency-text">$</span>198,396</span></li>
+                                    class="font-bold"><span class="dynamic-amount" data-amount="198396"></span></span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+<span class="currency-text">$</span>218,104</span></li>
+                                    class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="218104"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-teal-700"><span class="currency-text">$</span>416,500</span></li>
+                                    Value:</span> <span class="font-bold text-teal-700"><span class="dynamic-amount" data-amount="416500"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1×</p>
                     </div>

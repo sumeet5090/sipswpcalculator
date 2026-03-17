@@ -188,11 +188,11 @@ require_once __DIR__ . '/functions.php';
                         <p class="text-sm text-gray-500 mb-4">Invests <span class="currency-text">$</span>100/month for 20 Years @ 12%</p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold"><span class="currency-text">$</span>24,00,000</span></li>
+                                    class="font-bold"><span class="dynamic-amount" data-amount="2400000"></span></span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+<span class="currency-text">$</span>75,91,479</span></li>
+                                    class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="7591479"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700"><span class="currency-text">$</span>99,91,479</span></li>
+                                    Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount" data-amount="9991479"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-4">Result: Your money multiplied ~4.1x</p>
                     </div>
@@ -211,9 +211,9 @@ require_once __DIR__ . '/functions.php';
                         </p>
                         <ul class="space-y-2 text-sm text-gray-700">
                             <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold"><span class="currency-text">$</span>76,26,000</span></li>
+                                    class="font-bold"><span class="dynamic-amount" data-amount="7626000"></span></span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+<span class="currency-text">$</span>85,56,000</span></li>
+                                    class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="8556000"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
                                     Value:</span> <span class="font-bold text-rose-700"><span class="dynamic-amount" data-amount="16100000.000000002"></span></span></li>
                         </ul>
