@@ -702,13 +702,13 @@ foreach ($combined as $row) {
             }
             </script>
 
-            <section aria-labelledby="calculator-heading">
+            <section  id="calculator-section" class="scroll-mt-32" style="scroll-margin-top: 120px;" aria-labelledby="calculator-heading">
                 <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                     <!-- Left Column: Currency + Form -->
                     <div
-                        class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar">
+                        class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg: lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar" style="top: 120px;">
 
 
 
