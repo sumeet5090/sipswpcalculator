@@ -484,7 +484,7 @@ require_once __DIR__ . '/functions.php';
                                         d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
                                     </path>
                                 </svg></span>
-                            <a href="/" class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP
+                            <a href="/#calculator-heading" class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP
                                 Sustainability Calculator</a>
                             <span class="text-gray-600 ml-2 block sm:inline">— Model SWP vs FD scenarios with your exact
                                 corpus and withdrawal amounts.</span>
@@ -546,7 +546,7 @@ require_once __DIR__ . '/functions.php';
                     <h2 class="text-2xl font-bold mb-4 text-white">Calculate Your SWP Sustainability</h2>
                     <p class="mb-8 text-indigo-100">Use our free calculator to model SWP vs FD scenarios side-by-side.
                         See exactly how long your corpus will last and find your optimal withdrawal rate.</p>
-                    <a href="/"
+                    <a href="/#calculator-heading"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch SWP Calculator
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -245,7 +245,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">Can I combine step-up SIP with step-up
                         SWP?</summary>
-                    <div class="pb-4 text-gray-600">Yes! Our <a href="/" class="text-indigo-600 hover:underline">SIP &
+                    <div class="pb-4 text-gray-600">Yes! Our <a href="/#calculator-heading" class="text-indigo-600 hover:underline">SIP &
                             SWP calculator</a> supports both. You can model a 10% step-up SIP during accumulation and a
                         5% step-up SWP during retirement — all in one simulation.</div>
                 </details>
@@ -262,7 +262,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 not-prose">
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="/" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
+                        <li><a href="/#calculator-heading" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
                                 Calculator</a> — Model step-up SIP with live projections</li>
                         <li><a href="/sip-for-beginners" class="text-indigo-600 hover:underline font-medium">SIP for
                                 Beginners</a> — Complete guide to starting your first SIP</li>
@@ -282,7 +282,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     <h2 class="text-2xl font-bold mb-4 text-white">See Step-Up SIP in Action</h2>
                     <p class="mb-8 text-indigo-100">Use our free calculator to compare flat vs step-up SIP and see how a
                         small annual increase can triple your corpus.</p>
-                    <a href="/"
+                    <a href="/#calculator-heading"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch SIP Calculator
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

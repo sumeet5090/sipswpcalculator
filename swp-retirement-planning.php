@@ -286,7 +286,7 @@ require_once __DIR__ . '/functions.php'; ?>
                                 class="text-emerald-600 text-xl"><span class="currency-text">$</span>600,000</strong>
                         </li>
                     </ul>
-                    <p class="text-xs text-gray-500 mt-4 border-t border-gray-200 pt-3">Use our <a href="/"
+                    <p class="text-xs text-gray-500 mt-4 border-t border-gray-200 pt-3">Use our <a href="/#calculator-heading"
                             class="text-indigo-600 hover:underline font-bold">SWP Calculator</a> to model these
                         scenarios with your exact parameters, including step-up withdrawals and varying return rates.
                     </p>
@@ -412,7 +412,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <h2>Step-by-Step: Setting Up Your Retirement SWP</h2>
                 <ol class="space-y-4">
                     <li><strong>Step 1: Build your corpus</strong> via SIP during your working years (20-30 years is
-                        ideal). Use our <a href="/" class="text-indigo-600 hover:underline">SIP Calculator</a> to model
+                        ideal). Use our <a href="/#calculator-heading" class="text-indigo-600 hover:underline">SIP Calculator</a> to model
                         how much your monthly investment will grow. A 10% annual step-up in SIP is highly recommended to
                         reach your Magic Number faster.</li>
                     <li><strong>Step 2: Calculate your required monthly income</strong> — Factor in all post-retirement
@@ -447,12 +447,12 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">Can I increase my SWP withdrawal amount over time to match inflation?</summary>
-                    <div class="pb-4 text-gray-600">Absolutely. Most AMCs (Asset Management Companies) allow you to modify your SWP amount at any time via their online portal or app. The recommended strategy is a <strong>5-7% annual step-up</strong> in your withdrawal amount to keep pace with inflation. Our <a href="/" class="text-indigo-600 hover:underline">SWP Calculator</a> includes a dedicated step-up SWP feature that lets you model exactly how long your corpus will last with annual withdrawal increases. For example, withdrawing <span class="currency-text">$</span>5,000/month with a 5% annual increase from a <span class="currency-text">$</span>1.5M corpus earning 10% can sustain you for 30+ years.</div>
+                    <div class="pb-4 text-gray-600">Absolutely. Most AMCs (Asset Management Companies) allow you to modify your SWP amount at any time via their online portal or app. The recommended strategy is a <strong>5-7% annual step-up</strong> in your withdrawal amount to keep pace with inflation. Our <a href="/#calculator-heading" class="text-indigo-600 hover:underline">SWP Calculator</a> includes a dedicated step-up SWP feature that lets you model exactly how long your corpus will last with annual withdrawal increases. For example, withdrawing <span class="currency-text">$</span>5,000/month with a 5% annual increase from a <span class="currency-text">$</span>1.5M corpus earning 10% can sustain you for 30+ years.</div>
                 </details>
 
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">How much corpus do I need for <span class="currency-text">$</span>5,000/month SWP income?</summary>
-                    <div class="pb-4 text-gray-600">Using the Safe Withdrawal Rate formula: <strong><span class="currency-text">$</span>5,000 × 12 ÷ 0.04 = <span class="currency-text">$</span>1,500,000</strong> (at 4% SWR) or <strong><span class="currency-text">$</span>5,000 × 12 ÷ 0.035 = <span class="currency-text">$</span>1,714,286</strong> (at a more conservative 3.5% SWR). However, if you plan to increase withdrawals by 5% annually for inflation, you should target the higher number (<span class="currency-text">$</span>1.71M) for safety. Use our <a href="/" class="text-indigo-600 hover:underline">SWP calculator</a> to simulate this with different expected return rates (8%, 10%, 12%) to see the range of outcomes.</div>
+                    <div class="pb-4 text-gray-600">Using the Safe Withdrawal Rate formula: <strong><span class="currency-text">$</span>5,000 × 12 ÷ 0.04 = <span class="currency-text">$</span>1,500,000</strong> (at 4% SWR) or <strong><span class="currency-text">$</span>5,000 × 12 ÷ 0.035 = <span class="currency-text">$</span>1,714,286</strong> (at a more conservative 3.5% SWR). However, if you plan to increase withdrawals by 5% annually for inflation, you should target the higher number (<span class="currency-text">$</span>1.71M) for safety. Use our <a href="/#calculator-heading" class="text-indigo-600 hover:underline">SWP calculator</a> to simulate this with different expected return rates (8%, 10%, 12%) to see the range of outcomes.</div>
                 </details>
 
                 <details class="group">
@@ -481,7 +481,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     <ul class="space-y-4">
                         <li class="flex items-start">
                             <span class="bg-slate-200 text-slate-700 rounded-full p-1 mr-3 mt-0.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></span>
-                            <a href="/" class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP Sustainability Calculator</a> 
+                            <a href="/#calculator-heading" class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">SWP Sustainability Calculator</a> 
                             <span class="text-gray-600 ml-2 block sm:inline">— Model your exact retirement scenario with step-up withdrawals and varying return rates.</span>
                         </li>
                         <li class="flex items-start">
@@ -508,7 +508,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     <h2 class="text-2xl font-bold mb-4 text-white">Plan Your Retirement Income</h2>
                     <p class="mb-8 text-indigo-100">Use our free SWP calculator to see exactly how long your corpus will
                         last, model step-up withdrawals, and find your personal Magic Number.</p>
-                    <a href="/"
+                    <a href="/#calculator-heading"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch SWP Calculator
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

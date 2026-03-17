@@ -313,7 +313,7 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between pt-1"><span>Legacy Left Behind:</span> <span
                                     class="font-bold text-emerald-700">Massive legacy</span></li>
                         </ul>
-                        <p class="text-xs text-gray-500 mt-4">Calculated using our <a href="/"
+                        <p class="text-xs text-gray-500 mt-4">Calculated using our <a href="/#calculator-heading"
                                 class="text-indigo-600 hover:underline">SWP Calculator</a>. Because 10% returns
                             consistently outpace the withdrawal + step-up, the capital snowballs over 25 years.</p>
                     </div>
@@ -514,7 +514,7 @@ require_once __DIR__ . '/functions.php';
                     <h2 class="text-2xl font-bold mb-4 text-white">Visualize Your SWP Retirement Journey</h2>
                     <p class="mb-8 text-indigo-100">Use our free advanced calculator to simulate your exact SWP returns,
                         factor in annual inflation step-ups, and see a year-by-year survival analysis.</p>
-                    <a href="/"
+                    <a href="/#calculator-heading"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch SWP Calculator
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

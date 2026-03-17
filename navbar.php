@@ -27,7 +27,7 @@ if ($current_page == 'index.php' || $current_page == '')
 <nav
     class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/80 backdrop-blur-md transition-all duration-300 shadow-sm">
     <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
-        <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse group">
+        <a href="/#calculator-heading" class="flex items-center space-x-3 rtl:space-x-reverse group">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-10 h-10 rounded-xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105" role="img" aria-label="SIP SWP Calculator Logo">
                 <rect width="24" height="24" rx="6" fill="url(#logo-grad)" />
                 <defs>
@@ -46,7 +46,7 @@ if ($current_page == 'index.php' || $current_page == '')
 
         <!-- Desktop nav -->
         <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
-            <a href="/"
+            <a href="/#calculator-heading"
                 class="<?= $current_page === 'index.php' ? 'text-indigo-600 font-semibold' : 'text-slate-600 hover:text-indigo-600' ?> transition-colors">
                 Calculator
             </a>
@@ -130,7 +130,7 @@ if ($current_page == 'index.php' || $current_page == '')
     <!-- Mobile menu dropdown -->
     <div id="mobile-menu" class="sm:hidden hidden border-t border-slate-200 bg-white/95 backdrop-blur-md">
         <div class="px-4 py-3 space-y-1">
-            <a href="/"
+            <a href="/#calculator-heading"
                 class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'index.php' ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50' ?> transition-colors">
                 Calculator
             </a>

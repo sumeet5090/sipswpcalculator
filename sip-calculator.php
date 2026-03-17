@@ -367,7 +367,7 @@ require_once __DIR__ . '/functions.php';
                     <h2 class="text-2xl font-bold mb-4 text-white">Visualize Your 2026 Financial Goals</h2>
                     <p class="mb-8 text-indigo-100">Don't just read about it. Simulate your wealth creation journey with
                         our advanced, inflation-adjusted, step-up enabled calculator.</p>
-                    <a href="/"
+                    <a href="/#calculator-heading"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch SIP Calculator
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

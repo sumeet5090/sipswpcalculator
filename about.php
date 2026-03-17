@@ -269,7 +269,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <h2 class="text-3xl font-bold mb-4 text-white">Start Planning Your Financial Future</h2>
                 <p class="mb-8 text-indigo-100 max-w-2xl mx-auto text-lg">Our free SIP & SWP calculator helps you
                     visualize exactly how your investments grow and plan for a comfortable retirement.</p>
-                <a href="/"
+                <a href="/#calculator-heading"
                     class="inline-flex items-center px-8 py-4 bg-white text-indigo-600 font-bold rounded-xl shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200 text-lg">
                     Launch Calculator
                     <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
