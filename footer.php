@@ -9,7 +9,7 @@
         <div>
             <h3 class="font-bold text-lg mb-3 text-gray-800">Resources</h3>
             <ul class="space-y-2 text-sm">
-                <li><a href="/#calculator-heading" class="text-indigo-600 hover:underline">SIP & SWP Calculator</a></li>
+                <li><a href="/#calculator-section" class="text-indigo-600 hover:underline">SIP & SWP Calculator</a></li>
                 <li><a href="/sip-calculator" class="text-indigo-600 hover:underline">SIP Calculator Guide</a></li>
                 <li><a href="/sip-step-up-calculator" class="text-indigo-600 hover:underline">Step-Up SIP Guide</a></li>
                 <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline">SWP Retirement

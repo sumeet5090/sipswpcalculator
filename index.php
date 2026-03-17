@@ -702,7 +702,7 @@ foreach ($combined as $row) {
             }
             </script>
 
-            <section aria-labelledby="calculator-heading">
+            <section id="calculator-section" class="scroll-mt-24" aria-labelledby="calculator-heading">
                 <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -1704,7 +1704,7 @@ foreach ($combined as $row) {
                 </div>
             </div>
 
-            <p class="text-center mt-8">Use our <a href="/#calculator-heading" class="text-indigo-600 hover:underline font-medium">advanced
+            <p class="text-center mt-8">Use our <a href="/#calculator-section" class="text-indigo-600 hover:underline font-medium">advanced
                     SIP & SWP calculator</a> to model your investments and plan your
                 withdrawals to see how you can achieve your financial goals, whether it's building a retirement
                 corpus, funding your child's education, or creating a passive income stream.

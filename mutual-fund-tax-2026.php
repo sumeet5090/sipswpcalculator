@@ -447,7 +447,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     <h2 class="text-2xl font-bold mb-4 text-white">Optimize Your Mutual Fund Taxes</h2>
                     <p class="mb-8 text-indigo-100">Use our free calculator to model tax-efficient SIP & SWP strategies,
                         simulate LTCG harvesting, and maximize your post-tax returns.</p>
-                    <a href="/#calculator-heading"
+                    <a href="/#calculator-section"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch Calculator
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

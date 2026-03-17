@@ -209,7 +209,7 @@ require_once __DIR__ . '/functions.php';
                     You need to use a step-up SWP calculator.
                 </p>
                 <p>
-                    Our <a href="/#calculator-heading" class="text-indigo-600 hover:font-bold">Advanced SIP & SWP Calculator</a> simulates
+                    Our <a href="/#calculator-section" class="text-indigo-600 hover:font-bold">Advanced SIP & SWP Calculator</a> simulates
                     this exact monthly withdrawal friction. Here is how to configure it to test the 4% rule:
                 </p>
                 <ol>
@@ -294,7 +294,7 @@ require_once __DIR__ . '/functions.php';
                     <p class="mb-8 text-indigo-100">Stop guessing. Input your exact retirement corpus into our free
                         calculator and see month-by-month withdrawals plotted visually with step-up inflation modeling.
                     </p>
-                    <a href="/#calculator-heading"
+                    <a href="/#calculator-section"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Open SWP Calculator
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

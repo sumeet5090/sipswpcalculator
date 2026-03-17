@@ -426,7 +426,7 @@ require_once __DIR__ . '/functions.php';
                         <p class="mb-10 text-indigo-200 text-lg md:text-xl max-w-2xl mx-auto font-medium">Use our
                             institutional calculator to input your explicit step-up percentages and stress-test your
                             nominal returns against historical inflation rates globally.</p>
-                        <a href="/#calculator-heading"
+                        <a href="/#calculator-section"
                             class="inline-flex items-center px-10 py-4 bg-white text-indigo-800 font-extrabold text-lg rounded-xl shadow-xl hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-2xl hover:scale-105 transform transition-all duration-300 ring-4 ring-white/20">
                             Launch the Inflation Calculator
                             <svg class="w-6 h-6 ml-3 stroke-current" fill="none" viewBox="0 0 24 24">

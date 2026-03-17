@@ -224,7 +224,7 @@ require_once __DIR__ . '/functions.php';
                 the principal), compound interest grows exponentially over time — this is why Albert Einstein allegedly
                 called it the <em>"eighth wonder of the world."</em></p>
 
-            <p>Whether you're saving in a bank fixed deposit, investing in mutual funds through <a href="/#calculator-heading"
+            <p>Whether you're saving in a bank fixed deposit, investing in mutual funds through <a href="/#calculator-section"
                     class="text-indigo-600 hover:underline">SIPs</a>, or growing a retirement corpus, compound interest
                 is the engine that multiplies your wealth.</p>
 
@@ -375,7 +375,7 @@ require_once __DIR__ . '/functions.php';
             <h2>Compound Interest in Real-World Investments</h2>
             <p>Compound interest powers virtually every investment vehicle:</p>
             <ul>
-                <li><strong>Mutual Fund SIPs:</strong> Monthly investments compound over time. Use our <a href="/#calculator-heading"
+                <li><strong>Mutual Fund SIPs:</strong> Monthly investments compound over time. Use our <a href="/#calculator-section"
                         class="text-indigo-600 hover:underline">SIP Calculator</a> to see the effect of step-up
                     compounding.</li>
                 <li><strong>Fixed Deposits (FDs):</strong> Banks compound quarterly. An 8% FD actually yields 8.24%
@@ -408,7 +408,7 @@ require_once __DIR__ . '/functions.php';
                 <p class="mb-8 text-indigo-100">Compound interest is even more powerful when combined with regular
                     monthly investments (SIPs). Our free calculator models step-up SIP with built-in SWP retirement
                     planning.</p>
-                <a href="/#calculator-heading"
+                <a href="/#calculator-section"
                     class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                     Launch SIP Calculator
                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

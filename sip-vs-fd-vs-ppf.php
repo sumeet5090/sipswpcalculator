@@ -338,7 +338,7 @@ require_once __DIR__ . '/functions.php'; ?>
                                         d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z">
                                     </path>
                                 </svg></span>
-                            <a href="/#calculator-heading"
+                            <a href="/#calculator-section"
                                 class="text-indigo-600 hover:text-indigo-800 font-bold transition-colors">Advanced SIP
                                 Sandbox</a>
                             <span class="text-gray-600 ml-2 block sm:inline">— Model side-by-side asset comparisons
@@ -385,7 +385,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     <h2 class="text-2xl font-bold mb-4 text-white">Compare Your Investment Options</h2>
                     <p class="mb-8 text-indigo-100">Use our free calculator to model SIP returns with step-up
                         compounding and see how they compare to FD and PPF over time.</p>
-                    <a href="/#calculator-heading"
+                    <a href="/#calculator-section"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch SIP Calculator
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -409,7 +409,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         retirement?</summary>
                     <div class="pb-4 text-gray-600">With a 10% annual step-up and 12% returns over 25 years,
                         <span class="currency-text">$</span>100/month SIP can grow to approximately <strong><span class="dynamic-amount" data-amount="75000000"></span></strong>. That's more than enough
-                        for most retirement needs. Use our <a href="/#calculator-heading" class="text-indigo-600 hover:underline">SIP
+                        for most retirement needs. Use our <a href="/#calculator-section" class="text-indigo-600 hover:underline">SIP
                             calculator</a> to verify with your specific parameters.</div>
                 </details>
 

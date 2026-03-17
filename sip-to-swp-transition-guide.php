@@ -199,7 +199,7 @@ require_once __DIR__ . '/functions.php';
                     </li>
                 </ol>
                 <p>
-                    You can compute <em>both</em> simultaneously using our <a href="/#calculator-heading"
+                    You can compute <em>both</em> simultaneously using our <a href="/#calculator-section"
                         class="text-indigo-600 hover:font-bold">Advanced SIP & SWP Calculator</a>. It allows you to
                     model 20 years of SIP accumulation immediately followed by 30 years of SWP decumulation, charting
                     the entire 50-year lifecycle of your money on a single graph.
@@ -271,7 +271,7 @@ require_once __DIR__ . '/functions.php';
                     <h2 class="text-2xl font-bold mb-4 text-white">Visualize Your Lifelong Financial Journey</h2>
                     <p class="mb-8 text-indigo-100">Set your SIP accumulation phase and immediately attach an SWP
                         decumulation phase to see exactly how your money bridges the gap over 50 years.</p>
-                    <a href="/#calculator-heading"
+                    <a href="/#calculator-section"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch Full Lifecycle Calculator
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

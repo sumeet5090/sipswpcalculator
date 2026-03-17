@@ -259,7 +259,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 not-prose">
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="/#calculator-heading" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
+                        <li><a href="/#calculator-section" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
                                 Calculator</a> — Model SWP withdrawals with tax projections</li>
                         <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
                                 Retirement Planning</a> — Complete guide to retirement income via SWP</li>
@@ -278,7 +278,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     <h2 class="text-2xl font-bold mb-4 text-white">Calculate Your SWP Tax Liability</h2>
                     <p class="mb-8 text-indigo-100">Use our free calculator to simulate SWP withdrawals and estimate
                         your capital gains tax at different holding periods.</p>
-                    <a href="/#calculator-heading"
+                    <a href="/#calculator-section"
                         class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
                         Launch SWP Calculator
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
