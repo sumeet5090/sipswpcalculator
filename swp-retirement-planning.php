@@ -83,7 +83,7 @@ require_once __DIR__ . '/functions.php'; ?>
         "name": "How much corpus do I need for $1,200/month SWP?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "At a 4% annual withdrawal rate: $1,000 × 12 ÷ 0.04 = $3 Crore. At a conservative 3.5% rate: approximately $3.43 Crore."
+          "text": "At a 4% annual withdrawal rate: $1,000 × 12 ÷ 0.04 = <span class="dynamic-amount" data-amount="30000000"></span>. At a conservative 3.5% rate: approximately <span class="dynamic-amount" data-amount="34300000"></span>."
         }
       }, {
         "@type": "Question",
@@ -168,7 +168,7 @@ require_once __DIR__ . '/functions.php'; ?>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg> The Core Magic of SWP</p>
-                    <p class="text-sm mt-2">If you have <span class="currency-text">$</span>1 Million in a fund earning 12% annually (<span class="currency-text">$</span>120,000 growth), and
+                    <p class="text-sm mt-2">If you have <span class="dynamic-amount" data-amount="1000000"></span> in a fund earning 12% annually (<span class="currency-text">$</span>120,000 growth), and
                         you withdraw <span class="currency-text">$</span>60,000 a year via SWP, your principal corpus is not shrinking. You are living
                         purely off half of the yield, leaving the rest to compound indefinitely to combat inflation.</p>
                 </div>
@@ -297,7 +297,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <p>The single greatest threat to a retiree using an SWP is not low average returns, but <em>when</em>
                     those low returns happen. This is mathematically defined as <strong>Sequence of Return Risk
                         (SORR)</strong>.</p>
-                <p>Imagine you retire with <span class="currency-text">$</span>1 Million and execute a <span class="currency-text">$</span>40,000/year SWP. If the stock market crashes 30% in
+                <p>Imagine you retire with <span class="dynamic-amount" data-amount="1000000"></span> and execute a <span class="currency-text">$</span>40,000/year SWP. If the stock market crashes 30% in
                     your <em>first</em> year of retirement (Corpus drops to <span class="currency-text">$</span>700K, then you withdraw <span class="currency-text">$</span>40K leaves <span class="currency-text">$</span>660K
                     remaining), your portfolio sustains permanent, unrecoverable damage. It no longer has enough
                     critical mass to bounce back when the market eventually recovers. Compare this to someone who gets
@@ -396,7 +396,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         incurs tax. This makes your effective tax rate near zero initially.</li>
                     <li><strong>Equity Fund Taxation:</strong> If your SWP is from an equity fund held for more than 1
                         year, the gains are classified as Long Term Capital Gains (LTCG). Under 2026 rules, the first
-                        <span class="currency-text">$</span>1.25 Lakh of LTCG per financial year is <strong>100% Tax-Exempt</strong>. Any gain above that
+                        <span class="dynamic-amount" data-amount="125000"></span> of LTCG per financial year is <strong>100% Tax-Exempt</strong>. Any gain above that
                         is taxed at a flat 12.5% — far lower than income tax slabs of 20-30%.</li>
                     <li><strong>Debt Fund Taxation (Post April 2023):</strong> If your SWP is from a debt fund, gains
                         are added to your income and taxed at your slab rate. No indexation benefit is available for new
@@ -442,7 +442,7 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">What happens to my SWP corpus when I die?</summary>
-                    <div class="pb-4 text-gray-600">This is one of the most powerful advantages of SWP over traditional pensions. Unlike annuity plans where payments stop upon your death (the insurance company keeps the remaining capital), with an SWP the <strong>entire remaining mutual fund corpus is transferred to your registered nominee or legal heirs</strong>. There is no capital erosion. If you started with <span class="currency-text">$</span>1 Million, withdrew <span class="currency-text">$</span>500K over 15 years, but the remaining corpus grew to <span class="currency-text">$</span>1.2 Million through market returns, your heirs inherit the full <span class="currency-text">$</span>1.2 Million. It is a liquid, inheritable asset — not a locked corporate promise.</div>
+                    <div class="pb-4 text-gray-600">This is one of the most powerful advantages of SWP over traditional pensions. Unlike annuity plans where payments stop upon your death (the insurance company keeps the remaining capital), with an SWP the <strong>entire remaining mutual fund corpus is transferred to your registered nominee or legal heirs</strong>. There is no capital erosion. If you started with <span class="dynamic-amount" data-amount="1000000"></span>, withdrew <span class="currency-text">$</span>500K over 15 years, but the remaining corpus grew to <span class="dynamic-amount" data-amount="1200000"></span> through market returns, your heirs inherit the full <span class="dynamic-amount" data-amount="1200000"></span>. It is a liquid, inheritable asset — not a locked corporate promise.</div>
                 </details>
 
                 <details class="group">
@@ -472,7 +472,7 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <details class="group">
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">How do I account for healthcare costs which inflate faster than general inflation?</summary>
-                    <div class="pb-4 text-gray-600">Healthcare inflation typically runs at <strong>10-15% annually</strong> — significantly higher than the 5-6% general inflation rate. The recommended approach is to maintain a <strong>separate healthcare corpus</strong> outside of your SWP system. This healthcare corpus should be invested in a mix of health insurance premiums (for catastrophic coverage) plus a dedicated SIP/debt fund earmarked for out-of-pocket medical expenses. Do not rely on your primary SWP corpus to absorb unexpected <span class="currency-text">₹</span>10-15 Lakh hospital bills.</div>
+                    <div class="pb-4 text-gray-600">Healthcare inflation typically runs at <strong>10-15% annually</strong> — significantly higher than the 5-6% general inflation rate. The recommended approach is to maintain a <strong>separate healthcare corpus</strong> outside of your SWP system. This healthcare corpus should be invested in a mix of health insurance premiums (for catastrophic coverage) plus a dedicated SIP/debt fund earmarked for out-of-pocket medical expenses. Do not rely on your primary SWP corpus to absorb unexpected <span class="dynamic-amount" data-amount="1000000"></span>-<span class="dynamic-amount" data-amount="1500000"></span> hospital bills.</div>
                 </details>
 
                 <!-- Related Guides -->

@@ -215,7 +215,7 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
                                     class="font-bold text-green-700">+<span class="currency-text">$</span>85,56,000</span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-rose-700"><span class="currency-text">$</span>1.61 Crores</span></li>
+                                    Value:</span> <span class="font-bold text-rose-700"><span class="dynamic-amount" data-amount="16100000.000000002"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-4">Result: Catch up by increasing contributions.</p>
                     </div>

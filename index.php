@@ -360,7 +360,7 @@ foreach ($combined as $row) {
       "@type": "FinancialProduct",
       "name": "SIP & SWP Investment Planning Tool",
       "alternateName": "Mutual Fund SIP Return Calculator",
-      "description": "Free financial planning tool for calculating Systematic Investment Plan (SIP) returns with annual step-up compounding and Systematic Withdrawal Plan (SWP) retirement income projections. Supports monthly SIP amounts from $5 to $10,000 (or equivalent in USD/EUR/GBP), investment periods from 1 to 50 years, expected annual returns from 1% to 30%, and annual step-up percentages from 0% to 50%. SWP module supports monthly withdrawals with inflation-adjusted step-up from 0% to 20%. Uses month-by-month simulation with compound interest for accuracy superior to simple annuity formulas. Verified against AMFI India standard methodology. Historical context: Nifty 50 has delivered approximately 12-15% CAGR over 20-year rolling periods. SIP inflows worldwide exceeded $2.5 Billion per month in 2025 (AMFI data).",
+      "description": "Free financial planning tool for calculating Systematic Investment Plan (SIP) returns with annual step-up compounding and Systematic Withdrawal Plan (SWP) retirement income projections. Supports monthly SIP amounts from $5 to $10,000 (or equivalent in USD/EUR/GBP), investment periods from 1 to 50 years, expected annual returns from 1% to 30%, and annual step-up percentages from 0% to 50%. SWP module supports monthly withdrawals with inflation-adjusted step-up from 0% to 20%. Uses month-by-month simulation with compound interest for accuracy superior to simple annuity formulas. Verified against AMFI India standard methodology. Historical context: Nifty 50 has delivered approximately 12-15% CAGR over 20-year rolling periods. SIP inflows worldwide exceeded <span class="dynamic-amount" data-amount="2500000000"></span> per month in 2025 (AMFI data).",
       "url": "https://sipswpcalculator.com/",
       "provider": {
         "@id": "https://sipswpcalculator.com/#organization"
@@ -511,7 +511,7 @@ foreach ($combined as $row) {
           "@type": "HowToStep",
           "position": 1,
           "name": "Enter SIP Investment Details",
-          "text": "Set your monthly SIP amount ($5 to $10 Lakh, or equivalent in USD/EUR/GBP), investment period (1-50 years), expected annual return rate (1-30%), and optional annual step-up percentage (0-50%). A 10% step-up is recommended to match average salary growth worldwide.",
+          "text": "Set your monthly SIP amount ($5 to <span class="dynamic-amount" data-amount="1000000"></span>, or equivalent in USD/EUR/GBP), investment period (1-50 years), expected annual return rate (1-30%), and optional annual step-up percentage (0-50%). A 10% step-up is recommended to match average salary growth worldwide.",
           "url": "https://sipswpcalculator.com/#calculator-heading"
         },
         {
@@ -685,9 +685,9 @@ foreach ($combined as $row) {
                 <p class="text-base text-gray-700"><strong>How much will a <span class="currency-text">$</span>100/month SIP grow in 20 years?</strong>
                 </p>
                 <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a <span class="currency-text">$</span>100/month
-                    SIP will grow to approximately <strong class="text-emerald-700"><span class="currency-text">$</span>3.54 Million</strong> over 20
+                    SIP will grow to approximately <strong class="text-emerald-700"><span class="dynamic-amount" data-amount="3540000"></span></strong> over 20
                     years.
-                    Total invested: <span class="currency-text">$</span>68.73 Lakh. Total gains: <span class="currency-text">$</span>2.85 Crore.</p>
+                    Total invested: <span class="dynamic-amount" data-amount="6873000"></span>. Total gains: <span class="dynamic-amount" data-amount="28500000"></span>.</p>
             </div>
             <script type="application/ld+json">
             {
@@ -1171,8 +1171,7 @@ foreach ($combined as $row) {
                         SIPs use <strong>rupee cost averaging</strong> and <strong>compounding</strong> to build wealth
                         over time, making them ideal for long-term goals like retirement, education, or wealth creation.
                         As per <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
-                            class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows worldwide crossed <span class="currency-text">$</span>21,000
-                        Crore/month in 2025.
+                            class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows worldwide crossed <span class="dynamic-amount" data-amount="210000000000"></span>/month in 2025.
                         <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Read our complete
                             SIP guide →</a>
                     </p>
@@ -1218,7 +1217,7 @@ foreach ($combined as $row) {
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100">
                         <div class="text-emerald-600 font-bold text-lg mb-2">Step 1: Enter SIP Details</div>
-                        <p class="text-sm">Set your <strong>monthly SIP amount</strong> (<span class="currency-text">$</span>5 to <span class="currency-text">$</span>10 Lakh), investment
+                        <p class="text-sm">Set your <strong>monthly SIP amount</strong> (<span class="currency-text">$</span>5 to <span class="dynamic-amount" data-amount="1000000"></span>), investment
                             period (1-50 years), expected annual return rate, and optional <strong>annual step-up
                                 percentage</strong>.</p>
                     </div>
@@ -1366,11 +1365,11 @@ foreach ($combined as $row) {
                 <p class="mb-4">Meet Mr. Sharma (30). He decides to invest <strong><span class="currency-text">$</span>100/month</strong> in an
                     Equity Mutual Fund via SIP for his retirement at age 60.</p>
                 <ul class="list-disc pl-5 space-y-2 mb-4">
-                    <li><strong>Goal:</strong> Retire with <span class="currency-text">$</span>5 Crores.</li>
+                    <li><strong>Goal:</strong> Retire with <span class="dynamic-amount" data-amount="50000000"></span>.</li>
                     <li><strong>Strategy:</strong> Step-up SIP. Increase investment by 10% every year as his salary
                         grows.</li>
                     <li><strong>Result:</strong> By age 60, avoiding the urge to stop during market lows, his corpus
-                        grows to <span class="currency-text">$</span>3.54 Million — and with SWP at <span class="currency-text">$</span>500/month, he earns a steady retirement income while
+                        grows to <span class="dynamic-amount" data-amount="3540000"></span> — and with SWP at <span class="currency-text">$</span>500/month, he earns a steady retirement income while
                         the corpus continues to grow.</li>
                 </ul>
                 <p class="font-semibold">Moral: It's not just about starting early — it's about increasing your
@@ -1544,8 +1543,7 @@ foreach ($combined as $row) {
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
                             Most mutual fund houses worldwide allow SIPs starting from as low as
                             <strong><span class="currency-text">$</span>5/month</strong>. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at
-                            <span class="currency-text">$</span>1/month. The key is to start early — even <span class="currency-text">$</span>5/month over 20 years at 12% can grow to <span class="currency-text">$</span>5+
-                            Lakhs.
+                            <span class="currency-text">$</span>1/month. The key is to start early — even <span class="currency-text">$</span>5/month over 20 years at 12% can grow to <span class="dynamic-amount" data-amount="500000">+</span>.
                         </div>
                     </details>
                     <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
@@ -1697,8 +1695,7 @@ foreach ($combined as $row) {
                             </svg>
                         </summary>
                         <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Inflation (typically 5-6% worldwide) erodes purchasing power over time. At 6% inflation, <span class="currency-text">$</span>1
-                            Lakh today is worth only <span class="currency-text">$</span>310 in 20 years. This is why <strong>step-up SIPs</strong> are
+                            Inflation (typically 5-6% worldwide) erodes purchasing power over time. At 6% inflation, <span class="dynamic-amount" data-amount="100000"></span> today is worth only <span class="currency-text">$</span>310 in 20 years. This is why <strong>step-up SIPs</strong> are
                             critical — they increase your investment to outpace inflation. For SWP, use the step-up
                             withdrawal feature to increase monthly withdrawals by 5-7% annually to maintain your
                             lifestyle.
@@ -1740,7 +1737,7 @@ foreach ($combined as $row) {
             "name": "How to calculate SWP (Systematic Withdrawal Plan) returns?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "To calculate SWP returns: (1) Start with your accumulated corpus after the SIP phase, (2) Each month, deduct your withdrawal amount before applying monthly returns, (3) Formula: Month-end balance = (Previous balance + SIP contribution - SWP withdrawal) x (1 + monthly rate), where monthly rate = annual return / 12 / 100. For example, a $1 Million corpus at 10% annual return with $500/month SWP: monthly return = $83,333. Net monthly change = $83,333 - $500 = $333 growth. The 4% rule (William Bengen, 1994) suggests keeping annual withdrawals below 4% of corpus for a sustainable 30-year retirement. Use sipswpcalculator.com for exact month-by-month SWP calculations with step-up adjustments."
+              "text": "To calculate SWP returns: (1) Start with your accumulated corpus after the SIP phase, (2) Each month, deduct your withdrawal amount before applying monthly returns, (3) Formula: Month-end balance = (Previous balance + SIP contribution - SWP withdrawal) x (1 + monthly rate), where monthly rate = annual return / 12 / 100. For example, a <span class="dynamic-amount" data-amount="1000000"></span> corpus at 10% annual return with $500/month SWP: monthly return = $83,333. Net monthly change = $83,333 - $500 = $333 growth. The 4% rule (William Bengen, 1994) suggests keeping annual withdrawals below 4% of corpus for a sustainable 30-year retirement. Use sipswpcalculator.com for exact month-by-month SWP calculations with step-up adjustments."
             }
           }, {
             "@type": "Question",
@@ -1761,14 +1758,14 @@ foreach ($combined as $row) {
             "name": "Is SWP better than fixed deposit interest for retirement income?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Generally, yes. SWP from equity or hybrid mutual funds has historically offered 10-12% returns vs FD rates of 6-7%. Additionally, SWP is more tax-efficient: only the capital gains portion of each withdrawal is taxable (LTCG at 12.5% above $1,500/year for equity funds worldwide), whereas FD interest is fully taxable at your income slab rate (up to 30%). A $1 Million FD at 7% gives $58,333/month (fully taxable), while SWP from equity MF at 10% return with $500/month withdrawal preserves and grows the corpus over time."
+              "text": "Generally, yes. SWP from equity or hybrid mutual funds has historically offered 10-12% returns vs FD rates of 6-7%. Additionally, SWP is more tax-efficient: only the capital gains portion of each withdrawal is taxable (LTCG at 12.5% above $1,500/year for equity funds worldwide), whereas FD interest is fully taxable at your income slab rate (up to 30%). A <span class="dynamic-amount" data-amount="1000000"></span> FD at 7% gives $58,333/month (fully taxable), while SWP from equity MF at 10% return with $500/month withdrawal preserves and grows the corpus over time."
             }
           }, {
             "@type": "Question",
             "name": "How does the Step-up feature work in SIP Calculator?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "A Step-up (or Top-up) SIP increases your monthly investment by a fixed percentage every year. Formula: Year N monthly SIP = Base SIP x (1 + step-up percentage / 100) raised to the power of (N-1). For example, $100/month with 10% step-up becomes $11,000 in Year 2, $12,100 in Year 3, and so on. Impact: A $100/month flat SIP at 12% for 20 years yields $1 Million, but with a 10% step-up, the same SIP yields $3.54 Million, a 3.5x increase. Similarly, Step-up SWP increases withdrawals annually (typically 5-7%) to combat inflation during retirement."
+              "text": "A Step-up (or Top-up) SIP increases your monthly investment by a fixed percentage every year. Formula: Year N monthly SIP = Base SIP x (1 + step-up percentage / 100) raised to the power of (N-1). For example, $100/month with 10% step-up becomes $11,000 in Year 2, $12,100 in Year 3, and so on. Impact: A $100/month flat SIP at 12% for 20 years yields <span class="dynamic-amount" data-amount="1000000"></span>, but with a 10% step-up, the same SIP yields <span class="dynamic-amount" data-amount="3540000"></span>, a 3.5x increase. Similarly, Step-up SWP increases withdrawals annually (typically 5-7%) to combat inflation during retirement."
             }
           }, {
             "@type": "Question",
@@ -1817,14 +1814,14 @@ foreach ($combined as $row) {
             "name": "How long should I continue my SIP for best results?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "For equity mutual funds, a minimum of 7-10 years is recommended to ride out market cycles and benefit from compounding. Historical data shows that Nifty 50 SIPs held for 10+ years have never delivered negative returns, with average annualized returns of 12-15%. For retirement goals, 20-30 year SIPs with annual step-up yield the best compounding effect: a $100/month SIP with 10% step-up at 12% returns grows to approximately $3.54 Million in 20 years."
+              "text": "For equity mutual funds, a minimum of 7-10 years is recommended to ride out market cycles and benefit from compounding. Historical data shows that Nifty 50 SIPs held for 10+ years have never delivered negative returns, with average annualized returns of 12-15%. For retirement goals, 20-30 year SIPs with annual step-up yield the best compounding effect: a $100/month SIP with 10% step-up at 12% returns grows to approximately <span class="dynamic-amount" data-amount="3540000"></span> in 20 years."
             }
           }, {
             "@type": "Question",
             "name": "What step-up percentage should I use for my SIP?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "A 10% annual step-up is the most common recommendation, roughly matching average salary increments worldwide (8-12% annually). Conservative investors can use 5-7%, while aggressive savers might use 15-20%. Impact comparison for $100/month base SIP at 12% for 20 years: 0% step-up = $1 Million, 5% step-up = $1.73 Million, 10% step-up = $3.54 Million, 15% step-up = $5.7 Million. Even a 5% step-up nearly doubles the final corpus compared to a flat SIP."
+              "text": "A 10% annual step-up is the most common recommendation, roughly matching average salary increments worldwide (8-12% annually). Conservative investors can use 5-7%, while aggressive savers might use 15-20%. Impact comparison for $100/month base SIP at 12% for 20 years: 0% step-up = <span class="dynamic-amount" data-amount="1000000"></span>, 5% step-up = <span class="dynamic-amount" data-amount="1730000"></span>, 10% step-up = <span class="dynamic-amount" data-amount="3540000"></span>, 15% step-up = <span class="dynamic-amount" data-amount="5700000"></span>. Even a 5% step-up nearly doubles the final corpus compared to a flat SIP."
             }
           }, {
             "@type": "Question",
@@ -1852,7 +1849,7 @@ foreach ($combined as $row) {
             "name": "Will my SWP deplete my corpus completely?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "It depends on your withdrawal rate versus your investment return. If you withdraw less than what your corpus earns, it can last indefinitely. The 4% Rule suggests withdrawing 4% of corpus annually for a sustainable 30-year retirement. Example: $1 Million corpus at 10% returns with $400/month withdrawal — the corpus actually grows because annual returns ($10,000) exceed annual withdrawals ($4,800). At $1,200/month withdrawal, the corpus depletes in approximately 12 years. Use the calculator at sipswpcalculator.com to stress-test exactly when your corpus would be exhausted under different scenarios."
+              "text": "It depends on your withdrawal rate versus your investment return. If you withdraw less than what your corpus earns, it can last indefinitely. The 4% Rule suggests withdrawing 4% of corpus annually for a sustainable 30-year retirement. Example: <span class="dynamic-amount" data-amount="1000000"></span> corpus at 10% returns with $400/month withdrawal — the corpus actually grows because annual returns ($10,000) exceed annual withdrawals ($4,800). At $1,200/month withdrawal, the corpus depletes in approximately 12 years. Use the calculator at sipswpcalculator.com to stress-test exactly when your corpus would be exhausted under different scenarios."
             }
           }]
         }

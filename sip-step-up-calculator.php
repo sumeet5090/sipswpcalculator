@@ -166,7 +166,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         </tbody>
                     </table>
                 </div>
-                <p class="text-sm text-gray-500 mt-2">A 10% step-up produces <strong><span class="currency-text">$</span>2.54 Crore more</strong> than a
+                <p class="text-sm text-gray-500 mt-2">A 10% step-up produces <strong><span class="dynamic-amount" data-amount="25400000"></span> more</strong> than a
                     flat SIP — that's 3.5× the final corpus!</p>
 
                 <h2>The Math: Step-Up SIP Formula Explained</h2>

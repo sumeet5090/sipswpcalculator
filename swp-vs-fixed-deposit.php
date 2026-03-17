@@ -71,10 +71,10 @@ require_once __DIR__ . '/functions.php';
         }
       }, {
         "@type": "Question",
-        "name": "How much monthly income can I get from $1 Million in SWP vs FD?",
+        "name": "How much monthly income can I get from <span class="dynamic-amount" data-amount="1000000"></span> in SWP vs FD?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "From $1 Million: FD at 7% gives approximately $58,333/month (fully taxable, corpus depletes over time). SWP from equity mutual fund at 10% average return with $500/month withdrawal sustains the corpus for 25+ years because monthly returns ($83,333) exceed withdrawals. After tax, SWP provides significantly higher effective income."
+          "text": "From <span class="dynamic-amount" data-amount="1000000"></span>: FD at 7% gives approximately $58,333/month (fully taxable, corpus depletes over time). SWP from equity mutual fund at 10% average return with $500/month withdrawal sustains the corpus for 25+ years because monthly returns ($83,333) exceed withdrawals. After tax, SWP provides significantly higher effective income."
         }
       }, {
         "@type": "Question",
@@ -136,7 +136,7 @@ require_once __DIR__ . '/functions.php';
                         Deposits for retirement income in 2026.
                         SWP offers higher potential returns (10-12% vs 6-7%), superior tax efficiency (only capital
                         gains taxed at 12.5% vs full slab rate on FD interest),
-                        and inflation protection through equity exposure. A <span class="currency-text">$</span>1 Million corpus via SWP at 10% return with
+                        and inflation protection through equity exposure. A <span class="dynamic-amount" data-amount="1000000"></span> corpus via SWP at 10% return with
                         <span class="currency-text">$</span>500/month withdrawal can last 25+ years,
                         while the same amount in FD depletes faster due to lower returns and higher taxation. However,
                         FDs offer guaranteed capital safety suitable for
@@ -246,7 +246,7 @@ require_once __DIR__ . '/functions.php';
                 </div>
 
                 <!-- H2: Real Numbers Example -->
-                <h2 id="real-numbers-example" class="text-3xl font-bold mt-10 mb-4 text-gray-800"><span class="currency-text">$</span>1 Million Retirement
+                <h2 id="real-numbers-example" class="text-3xl font-bold mt-10 mb-4 text-gray-800"><span class="dynamic-amount" data-amount="1000000"></span> Retirement
                     Corpus: SWP vs FD (Real Numbers)</h2>
 
                 <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Scenario: <span class="currency-text">$</span>500/Month Withdrawal for 20 Years
@@ -293,7 +293,7 @@ require_once __DIR__ . '/functions.php';
                     <li>Interest is <strong>fully taxable</strong> at your income tax slab rate (5%, 20%, or 30%)</li>
                     <li>TDS deducted at 10% if annual interest exceeds <span class="currency-text">$</span>400 (<span class="currency-text">$</span>500 for senior citizens)</li>
                     <li>No indexation benefit available</li>
-                    <li>For a <span class="currency-text">$</span>1 Million FD at 7%, the <span class="currency-text">$</span>7,000 annual interest attracts <span class="currency-text">$</span>2,100 tax (30% slab)</li>
+                    <li>For a <span class="dynamic-amount" data-amount="1000000"></span> FD at 7%, the <span class="currency-text">$</span>7,000 annual interest attracts <span class="currency-text">$</span>2,100 tax (30% slab)</li>
                 </ul>
 
                 <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">SWP Taxation (Equity Mutual Funds)</h3>
@@ -394,7 +394,7 @@ require_once __DIR__ . '/functions.php';
                         <div class="pb-4 text-gray-600">For most retirees with a 10+ year horizon, <strong>yes, SWP is
                                 mathematically superior</strong>. SWP from equity or hybrid mutual funds historically
                             offers 10-12% returns vs FD rates of 6-7%. SWP is also dramatically more tax-efficient: only
-                            the capital gains portion is taxable (LTCG at 12.5% above <span class="currency-text">$</span>1.25 Lakh/year), while the entire
+                            the capital gains portion is taxable (LTCG at 12.5% above <span class="dynamic-amount" data-amount="125000"></span>/year), while the entire
                             FD interest is taxable at your income slab rate (up to 30%). However, FDs offer guaranteed
                             returns and capital safety, making them essential for your emergency buffer (the first 1-3
                             years of expenses). The answer is not either/or — it is <strong>both, deployed
@@ -403,7 +403,7 @@ require_once __DIR__ . '/functions.php';
 
                     <details class="group">
                         <summary class="cursor-pointer font-bold text-slate-800 py-2">How much monthly income can I get
-                            from <span class="currency-text">$</span>1 Million in SWP vs FD?</summary>
+                            from <span class="dynamic-amount" data-amount="1000000"></span> in SWP vs FD?</summary>
                         <div class="pb-4 text-gray-600"><strong>FD Route:</strong> <span class="currency-text">$</span>1M at 7% generates ~<span class="currency-text">$</span>70,000/year or
                             <span class="currency-text">$</span>5,833/month in interest. But after 30% tax, you keep only ~<span class="currency-text">$</span>4,083/month. The corpus stays
                             flat (no growth), and inflation erodes your purchasing power by 6% annually. In 15 years,
@@ -424,7 +424,7 @@ require_once __DIR__ . '/functions.php';
                             <span class="currency-text">$</span>400 (<span class="currency-text">$</span>500 for senior citizens).<br><br><strong>SWP Tax Reality:</strong> When you withdraw
                             <span class="currency-text">$</span>10,000 via SWP, you do NOT pay tax on <span class="currency-text">$</span>10,000. Each unit sold has a cost basis. If you
                             bought the unit for <span class="currency-text">$</span>80 and it is now worth <span class="currency-text">$</span>100, only the <span class="currency-text">$</span>20 gain is taxable. Further, the
-                            first <span class="currency-text">$</span>1.25 Lakh of Long-Term Capital Gains per financial year is <strong>completely
+                            first <span class="dynamic-amount" data-amount="125000"></span> of Long-Term Capital Gains per financial year is <strong>completely
                                 exempt</strong>. Gains above that are taxed at a flat 12.5%. For most retirees, the
                             effective tax on SWP is <strong>3-5% of the withdrawal amount</strong> vs 20-30% on FD
                             interest. This is a massive 6-8x tax efficiency advantage.</div>

@@ -267,7 +267,7 @@ require_once __DIR__ . '/functions.php';
                     Conversely, when you execute an SWP of <span class="currency-text">$</span>500, it is considered a <em>partial redemption of
                         units</em>. In the initial years, the vast majority of that <span class="currency-text">$</span>500 is your own principal being
                     returned to you (which attracts <strong>zero tax</strong>). Only the tiny profit portion is taxed at
-                    the Long Term Capital Gains (LTCG) rate of 12.5% (after ignoring the first <span class="currency-text">$</span>1.25 lakhs of gains
+                    the Long Term Capital Gains (LTCG) rate of 12.5% (after ignoring the first <span class="dynamic-amount" data-amount="125000"></span> of gains
                     completely). Consequently, the effective tax rate on an SWP withdrawal usually hovers between
                     <strong>1% to 4%</strong>.
                 </p>
@@ -295,9 +295,9 @@ require_once __DIR__ . '/functions.php';
 
                 <!-- H2: Real Numbers Example -->
                 <h2 id="real-numbers-example" class="text-3xl font-bold mt-10 mb-4 text-gray-800">4. Real Numbers
-                    Example: <span class="currency-text">$</span>1 Million Corpus</h2>
+                    Example: <span class="dynamic-amount" data-amount="1000000"></span> Corpus</h2>
 
-                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Scenario: Retiree aged 60 with <span class="currency-text">$</span>1 Million.</h3>
+                <h3 class="text-2xl font-bold mt-6 mb-3 text-gray-800">Scenario: Retiree aged 60 with <span class="dynamic-amount" data-amount="1000000"></span>.</h3>
                 <div class="grid md:grid-cols-2 gap-8 my-8 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-emerald-100">
                         <h4 class="text-lg font-bold text-emerald-700 mb-2">Option A: SWP (Hybrid Fund)</h4>
@@ -327,11 +327,11 @@ require_once __DIR__ . '/functions.php';
                             <li class="flex justify-between border-b pb-1"><span>Yearly Step-Up:</span> <span
                                     class="font-bold text-red-600">0% (Flat forever)</span></li>
                             <li class="flex justify-between border-b pb-1"><span>Corpus at age 85:</span> <span
-                                    class="font-bold text-blue-600"><span class="currency-text">$</span>1 Million (Original deposit)</span></li>
+                                    class="font-bold text-blue-600"><span class="dynamic-amount" data-amount="1000000"></span> (Original deposit)</span></li>
                             <li class="flex justify-between pt-1"><span>Legacy Left Behind:</span> <span
-                                    class="font-bold text-red-500"><span class="currency-text">$</span>1 Million (devalued by 25yr inflation)</span></li>
+                                    class="font-bold text-red-500"><span class="dynamic-amount" data-amount="1000000"></span> (devalued by 25yr inflation)</span></li>
                         </ul>
-                        <p class="text-xs text-gray-500 mt-4">ROPP stands for Return of Purchase Price. The <span class="currency-text">$</span>1 Million
+                        <p class="text-xs text-gray-500 mt-4">ROPP stands for Return of Purchase Price. The <span class="dynamic-amount" data-amount="1000000"></span>
                             returned to heirs in 2051 will have less than 20% of the purchasing power it had in 2026.
                         </p>
                     </div>
@@ -383,8 +383,7 @@ require_once __DIR__ . '/functions.php';
                             between "principal" and "interest".<br><br><strong>SWP:</strong> Each withdrawal is a
                             partial redemption of mutual fund units. Only the <em>capital gain portion</em> is taxable.
                             In the initial years, 80-90% of each withdrawal is your own principal returning to you
-                            (completely tax-free). The gains portion is taxed at just 12.5% LTCG, and the first <span class="currency-text">$</span>1.25
-                            Lakh of LTCG per year is fully exempt. Effective tax rate on SWP: <strong>1-4%</strong> vs
+                            (completely tax-free). The gains portion is taxed at just 12.5% LTCG, and the first <span class="dynamic-amount" data-amount="125000"></span> of LTCG per year is fully exempt. Effective tax rate on SWP: <strong>1-4%</strong> vs
                             20-30% on annuity income.</div>
                     </details>
 

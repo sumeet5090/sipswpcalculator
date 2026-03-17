@@ -235,10 +235,10 @@ require_once __DIR__ . '/functions.php';
                         create a huge tax bill?</summary>
                     <div class="pb-4 text-gray-600">This is the most common fear — and it's a valid one. If you dump
                         everything at once, yes, a massive LTCG event triggers. The solution: <strong>tax harvesting
-                            over multiple financial years</strong>. Each year, redeem up to <span class="currency-text">$</span>1.25 Lakh in LTCG from
+                            over multiple financial years</strong>. Each year, redeem up to <span class="dynamic-amount" data-amount="125000"></span> in LTCG from
                         equity (completely tax-free). Reinvest the proceeds into your Bucket 1/2 (liquid/hybrid funds).
                         Over 3-5 years, you smoothly shift your asset allocation while paying <strong>zero
-                            taxes</strong> on up to <span class="currency-text">$</span>6.25 Lakh of capital gains. This is the intellectual advantage of
+                            taxes</strong> on up to <span class="dynamic-amount" data-amount="625000"></span> of capital gains. This is the intellectual advantage of
                         the transition guide — you must plan the tax drag, not just the asset allocation.</div>
                 </details>
 

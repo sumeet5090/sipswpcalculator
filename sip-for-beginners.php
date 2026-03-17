@@ -56,7 +56,7 @@ require_once __DIR__ . '/functions.php';
         "name": "What is SIP and how does it work?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "SIP (Systematic Investment Plan) is a method of investing a fixed amount regularly (usually monthly) in mutual funds. It works by automatically deducting a set amount from your bank account and purchasing mutual fund units at the current NAV (Net Asset Value). When NAVs are low, you get more units; when high, fewer units. This mechanism is called Rupee Cost Averaging, which reduces the impact of market volatility. Over time, compounding multiplies your wealth — a $5,000/month SIP at 12% for 20 years grows to approximately $50 Lakh from just $12 Lakh invested."
+          "text": "SIP (Systematic Investment Plan) is a method of investing a fixed amount regularly (usually monthly) in mutual funds. It works by automatically deducting a set amount from your bank account and purchasing mutual fund units at the current NAV (Net Asset Value). When NAVs are low, you get more units; when high, fewer units. This mechanism is called Rupee Cost Averaging, which reduces the impact of market volatility. Over time, compounding multiplies your wealth — a $5,000/month SIP at 12% for 20 years grows to approximately <span class="dynamic-amount" data-amount="5000000"></span> from just <span class="dynamic-amount" data-amount="1200000"></span> invested."
         }
       }, {
         "@type": "Question",
@@ -144,8 +144,8 @@ require_once __DIR__ . '/functions.php';
                         and <strong>compound interest</strong> to build wealth over time. To start: (1) Complete KYC
                         online, (2) Choose an index fund or large-cap fund,
                         (3) Set up auto-debit SIP, (4) Stay invested for 7+ years. A <span class="currency-text">$</span>100/month SIP at 12% for 20
-                        years grows to approximately <span class="currency-text">$</span>1 Million.
-                        With a 10% annual step-up, the same period yields <span class="currency-text">$</span>3.54 Million. SIPs in Nifty 50 over 10+ years
+                        years grows to approximately <span class="dynamic-amount" data-amount="1000000"></span>.
+                        With a 10% annual step-up, the same period yields <span class="dynamic-amount" data-amount="3540000"></span>. SIPs in Nifty 50 over 10+ years
                         have <strong>never given negative returns</strong> historically.
                     </p>
                 </div>

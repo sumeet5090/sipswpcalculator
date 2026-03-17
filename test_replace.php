@@ -11,10 +11,10 @@ foreach ($files as $file) {
 
     // Common replacements
     $content = str_replace('₹1,00,00,000', '$1,000,000', $content);
-    $content = str_replace('₹1 Crore', '$1 Million', $content);
+    $content = str_replace('<span class="dynamic-amount" data-amount="10000000"></span>', '<span class="dynamic-amount" data-amount="1000000"></span>', $content);
     $content = str_replace('₹1,20,00,000', '$1,200,000', $content);
-    $content = str_replace('₹1.25 Lakh', '$1,500', $content);
-    $content = str_replace('₹1 Lakh', '$1,200', $content);
+    $content = str_replace('<span class="dynamic-amount" data-amount="125000"></span>', '$1,500', $content);
+    $content = str_replace('<span class="dynamic-amount" data-amount="100000"></span>', '$1,200', $content);
     $content = str_replace('₹50,000', '$500', $content);
     $content = str_replace('₹15,000', '$150', $content);
     $content = str_replace('₹10,000', '$100', $content);
@@ -31,10 +31,10 @@ foreach ($files as $file) {
     $content = str_replace('₹4,49,440', '$4,494', $content);
     $content = str_replace('₹58,333', '$583', $content);
     $content = str_replace('₹83,333', '$833', $content);
-    $content = str_replace('₹7 Lakh', '$7,000', $content);
-    $content = str_replace('₹2.1 Lakh', '$2,100', $content);
+    $content = str_replace('<span class="dynamic-amount" data-amount="700000"></span>', '$7,000', $content);
+    $content = str_replace('<span class="dynamic-amount" data-amount="210000"></span>', '$2,100', $content);
     $content = str_replace('₹2.8+ Crores', '$2.8+ Million', $content);
-    $content = str_replace('₹76.8 Lakhs', '$768,000', $content);
+    $content = str_replace('<span class="dynamic-amount" data-amount="7680000"></span>', '$768,000', $content);
 
     // Replace remaining generic Rs / ₹
     $content = preg_replace('/₹([0-9.,]+) Lakhs?/', '$$1,000', $content); // Basic approximation

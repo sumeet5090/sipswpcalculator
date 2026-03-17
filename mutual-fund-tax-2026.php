@@ -244,18 +244,18 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <h2>Tax-Saving Strategies for Mutual Fund Investors</h2>
 
-                <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Strategy 1: Annual LTCG Harvesting (<span class="currency-text">$</span>1.25 Lakh
+                <h3 class="text-xl font-bold mt-6 mb-3 text-gray-800">Strategy 1: Annual LTCG Harvesting (<span class="dynamic-amount" data-amount="125000"></span>
                     Exemption)</h3>
-                <p>Every financial year, you get a <strong><span class="currency-text">$</span>1.25 Lakh tax-free exemption on equity LTCG</strong>. If you
+                <p>Every financial year, you get a <strong><span class="dynamic-amount" data-amount="125000"></span> tax-free exemption on equity LTCG</strong>. If you
                     don't use it, you lose it. The strategy: near the end of each financial year (January-March), redeem
-                    enough equity mutual fund units to book up to <span class="currency-text">$</span>1.25 Lakh in long-term gains, then immediately
+                    enough equity mutual fund units to book up to <span class="dynamic-amount" data-amount="125000"></span> in long-term gains, then immediately
                     reinvest the proceeds back into the same fund. You pay <strong>zero tax</strong> on the gains, and
                     your cost basis resets to the current (higher) NAV. This effectively eliminates a massive future tax
                     liability.</p>
                 <div class="bg-indigo-50 border border-indigo-200 p-5 rounded-xl my-6 text-sm not-prose">
                     <p class="font-bold text-indigo-800 mb-2">LTCG Harvesting Example</p>
-                    <p class="text-gray-700">You invested <span class="currency-text">$</span>5 Lakh in an equity fund. After 3 years, it is worth <span class="currency-text">$</span>8 Lakh
-                        (gain = <span class="currency-text">$</span>3 Lakh). If you redeem everything at once, you pay 12.5% on (<span class="currency-text">$</span>3L - <span class="currency-text">$</span>1.25L) = <span class="currency-text">$</span>21,875 in
+                    <p class="text-gray-700">You invested <span class="dynamic-amount" data-amount="500000"></span> in an equity fund. After 3 years, it is worth <span class="dynamic-amount" data-amount="800000"></span>
+                        (gain = <span class="dynamic-amount" data-amount="300000"></span>). If you redeem everything at once, you pay 12.5% on (<span class="currency-text">$</span>3L - <span class="currency-text">$</span>1.25L) = <span class="currency-text">$</span>21,875 in
                         tax.</p>
                     <p class="text-gray-700 mt-2"><strong>Instead:</strong> Harvest <span class="currency-text">$</span>1.25L of gains in Year 1 (tax =
                         <span class="currency-text">$</span>0), <span class="currency-text">$</span>1.25L in Year 2 (tax = <span class="currency-text">$</span>0), and the remaining <span class="currency-text">$</span>0.50L in Year 3 (tax = <span class="currency-text">$</span>0 because it is
@@ -265,7 +265,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <h3 class="text-xl font-bold mt-8 mb-3 text-gray-800">Strategy 2: Use ELSS for Section 80C (Old Tax
                     Regime)</h3>
                 <p>If you are on the Old Tax Regime, <strong>Equity-Linked Savings Schemes (ELSS)</strong> provide a
-                    dual benefit: a tax deduction up to <span class="currency-text">$</span>1.5 Lakh under Section 80C, plus the equity fund growth. ELSS
+                    dual benefit: a tax deduction up to <span class="dynamic-amount" data-amount="150000"></span> under Section 80C, plus the equity fund growth. ELSS
                     has the shortest lock-in of any 80C instrument (3 years vs 5 years for FDs and 15 years for PPF).
                     After the lock-in, gains qualify for the favorable 12.5% LTCG treatment.</p>
 
@@ -351,7 +351,7 @@ require_once __DIR__ . '/functions.php'; ?>
                         ETFs, etc.) are treated as <strong>non-equity funds</strong> for Indian tax purposes, regardless
                         of their equity allocation. This means: gains are taxed at your income slab rate if the holding
                         period is less than 2 years (STCG), and at <strong>12.5% without indexation</strong> if held
-                        longer than 2 years (LTCG). There is no <span class="currency-text">$</span>1.25 Lakh LTCG exemption for international funds. This
+                        longer than 2 years (LTCG). There is no <span class="dynamic-amount" data-amount="125000"></span> LTCG exemption for international funds. This
                         makes them significantly less tax-efficient than domestic equity funds for Indian residents.
                     </div>
                 </details>

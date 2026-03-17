@@ -52,7 +52,7 @@ require_once __DIR__ . '/functions.php'; ?>
         "name": "Is $100/month SIP enough for retirement?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "With a 10% annual step-up and 12% returns over 25 years, $100/month SIP can grow to approximately $7.5 Crore. That's more than enough for most retirement needs. Use our SIP calculator to verify with your specific parameters."
+          "text": "With a 10% annual step-up and 12% returns over 25 years, $100/month SIP can grow to approximately <span class="dynamic-amount" data-amount="75000000"></span>. That's more than enough for most retirement needs. Use our SIP calculator to verify with your specific parameters."
         }
       }, {
         "@type": "Question",
@@ -234,7 +234,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 <p>The PPF is a government-backed, fixed-income scheme in India. It is considered the gold standard of
                     "safe money" for one primary reason: <strong>EEE Status</strong>.</p>
                 <ul class="space-y-2 mb-6">
-                    <li><strong>E (Exempt):</strong> The money you invest gives you a tax deduction up to <span class="currency-text">$</span>1.5 Lakhs.
+                    <li><strong>E (Exempt):</strong> The money you invest gives you a tax deduction up to <span class="dynamic-amount" data-amount="150000"></span>.
                     </li>
                     <li><strong>E (Exempt):</strong> The 7.1% interest you earn every year is completely tax-free.</li>
                     <li><strong>E (Exempt):</strong> After 15 years, the entire accumulated maturity amount is withdrawn
@@ -408,7 +408,7 @@ require_once __DIR__ . '/functions.php'; ?>
                     <summary class="cursor-pointer font-bold text-slate-800 py-2">Is <span class="currency-text">$</span>100/month SIP enough for
                         retirement?</summary>
                     <div class="pb-4 text-gray-600">With a 10% annual step-up and 12% returns over 25 years,
-                        <span class="currency-text">$</span>100/month SIP can grow to approximately <strong><span class="currency-text">$</span>7.5 Crore</strong>. That's more than enough
+                        <span class="currency-text">$</span>100/month SIP can grow to approximately <strong><span class="dynamic-amount" data-amount="75000000"></span></strong>. That's more than enough
                         for most retirement needs. Use our <a href="/" class="text-indigo-600 hover:underline">SIP
                             calculator</a> to verify with your specific parameters.</div>
                 </details>

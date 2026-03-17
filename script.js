@@ -19,6 +19,15 @@ function updateCurrency(newCurrency) {
         span.textContent = currencyConfig[currentCurrency].symbol;
     });
 
+    // Update dynamic amount spans
+    const dynamicSpans = document.querySelectorAll('.dynamic-amount');
+    dynamicSpans.forEach(span => {
+        const amount = parseFloat(span.dataset.amount);
+        if (!isNaN(amount)) {
+            span.textContent = formatDynamicAmount(amount);
+        }
+    });
+
     // Toggle active button styling
     document.querySelectorAll('.currency-btn').forEach(btn => {
         if (btn.dataset.currency === newCurrency) {
@@ -138,6 +147,21 @@ function formatCurrency(value) {
         currency: currentCurrency,
         maximumFractionDigits: 0
     }).format(value);
+}
+
+function formatDynamicAmount(amount) {
+    const symbol = currencyConfig[currentCurrency].symbol;
+    if (currentCurrency === 'INR') {
+        if (amount >= 10000000) return symbol + (amount / 10000000).toFixed(2).replace(/\.00$/, '') + ' Crore';
+        if (amount >= 100000) return symbol + (amount / 100000).toFixed(2).replace(/\.00$/, '') + ' Lakh';
+        if (amount >= 1000) return symbol + (amount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
+        return symbol + amount.toLocaleString('en-IN');
+    } else {
+        if (amount >= 1000000000) return symbol + (amount / 1000000000).toFixed(2).replace(/\.00$/, '') + ' Billion';
+        if (amount >= 1000000) return symbol + (amount / 1000000).toFixed(2).replace(/\.00$/, '') + ' Million';
+        if (amount >= 1000) return symbol + (amount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
+        return symbol + amount.toLocaleString('en-US');
+    }
 }
 
 // 2. Donut Chart Logic

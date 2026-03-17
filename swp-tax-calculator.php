@@ -116,7 +116,7 @@ require_once __DIR__ . '/functions.php'; ?>
 
                 <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 not-prose mt-4">
                     <p class="font-bold text-indigo-800 mb-2">Example: <span class="currency-text">$</span>500 monthly SWP withdrawal</p>
-                    <p class="text-sm text-gray-600">If you invested <span class="currency-text">$</span>10 Lakh and your corpus is now <span class="currency-text">$</span>15 Lakh:</p>
+                    <p class="text-sm text-gray-600">If you invested <span class="dynamic-amount" data-amount="1000000"></span> and your corpus is now <span class="dynamic-amount" data-amount="1500000"></span>:</p>
                     <ul class="text-sm text-gray-600 mt-2 space-y-1">
                         <li>• Capital gains ratio = (15L - 10L) / 15L = <strong>33.3%</strong></li>
                         <li>• Taxable portion per withdrawal = <span class="currency-text">$</span>500 × 33.3% = <strong><span class="currency-text">$</span>16,650</strong></li>
@@ -167,7 +167,7 @@ require_once __DIR__ . '/functions.php'; ?>
                 </div>
 
                 <h2>Worked Example: Monthly <span class="currency-text">$</span>500 SWP Tax Calculation</h2>
-                <p>Assume: <span class="currency-text">$</span>1 Million corpus in equity hybrid fund, held >1 year, 12% annual returns, <span class="currency-text">$</span>500/month SWP:
+                <p>Assume: <span class="dynamic-amount" data-amount="1000000"></span> corpus in equity hybrid fund, held >1 year, 12% annual returns, <span class="currency-text">$</span>500/month SWP:
                 </p>
                 <div class="overflow-x-auto not-prose">
                     <table class="min-w-full text-sm">

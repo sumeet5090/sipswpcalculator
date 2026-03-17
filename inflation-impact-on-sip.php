@@ -61,7 +61,7 @@ require_once __DIR__ . '/functions.php';
         "name": "How does inflation affect SIP returns?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Inflation reduces the real (purchasing power-adjusted) return of your SIP. If your SIP earns 12% nominal return and inflation is 6%, your real return is only about 5.66% using the Fisher equation: Real Return = ((1 + Nominal) / (1 + Inflation)) - 1. This means a $1 Million SIP corpus at 12% after 20 years is worth only about $31 Lakh in today's purchasing power at 6% inflation. The solution is to use step-up SIP (10% annual increase) which grows your contributions faster than inflation."
+          "text": "Inflation reduces the real (purchasing power-adjusted) return of your SIP. If your SIP earns 12% nominal return and inflation is 6%, your real return is only about 5.66% using the Fisher equation: Real Return = ((1 + Nominal) / (1 + Inflation)) - 1. This means a <span class="dynamic-amount" data-amount="1000000"></span> SIP corpus at 12% after 20 years is worth only about <span class="dynamic-amount" data-amount="3100000"></span> in today's purchasing power at 6% inflation. The solution is to use step-up SIP (10% annual increase) which grows your contributions faster than inflation."
         }
       }, {
         "@type": "Question",
@@ -75,7 +75,7 @@ require_once __DIR__ . '/functions.php';
         "name": "How much should I increase my SIP to beat inflation?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Your annual SIP step-up should be at least equal to the inflation rate (5-6% worldwide) to maintain purchasing power. A 10% step-up is recommended because it accounts for both inflation (6%) and real income growth (4%). Impact: $100/month flat SIP at 12% for 20 years yields $1 Million. The same SIP with 10% step-up yields $3.54 Million — enough to maintain purchasing power and still grow wealth in real terms."
+          "text": "Your annual SIP step-up should be at least equal to the inflation rate (5-6% worldwide) to maintain purchasing power. A 10% step-up is recommended because it accounts for both inflation (6%) and real income growth (4%). Impact: $100/month flat SIP at 12% for 20 years yields <span class="dynamic-amount" data-amount="1000000"></span>. The same SIP with 10% step-up yields <span class="dynamic-amount" data-amount="3540000"></span> — enough to maintain purchasing power and still grow wealth in real terms."
         }
       }]
     }
@@ -92,8 +92,7 @@ require_once __DIR__ . '/functions.php';
             <h1 class="text-4xl font-extrabold pb-2">
                 <span class="text-gradient">The Math of Inflation: How It Affects Your SIP</span>
             </h1>
-            <p class="text-lg text-gray-500 font-medium mt-2 mb-6">Why your <span class="currency-text">$</span>1 Million SIP corpus may only be worth <span class="currency-text">$</span>31
-                Lakh in real terms — and how to fix it.</p>
+            <p class="text-lg text-gray-500 font-medium mt-2 mb-6">Why your <span class="dynamic-amount" data-amount="1000000"></span> SIP corpus may only be worth <span class="dynamic-amount" data-amount="3100000"></span> in real terms — and how to fix it.</p>
 
             <!-- EEAT Trust Bar -->
             <div
@@ -126,14 +125,13 @@ require_once __DIR__ . '/functions.php';
                 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 not-prose">
                     <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 Quick Summary: The Invisible Tax on SIPs</h2>
                     <p class="text-gray-700 text-sm leading-relaxed">
-                        <strong>Inflation silently erodes SIP returns.</strong> At 6% inflation, <span class="currency-text">$</span>1
-                        Lakh today is worth only <span class="currency-text">$</span>55,839 in 10 years
+                        <strong>Inflation silently erodes SIP returns.</strong> At 6% inflation, <span class="dynamic-amount" data-amount="100000"></span> today is worth only <span class="currency-text">$</span>55,839 in 10 years
                         and <span class="currency-text">$</span>311 in 20 years. Even a 12% SIP return gives only <strong>5.66% real return</strong>
                         after inflation adjustment using the Fisher equation:
                         Real Return = ((1 + 0.12) / (1 + 0.06)) - 1 = 5.66%. A flat <span class="currency-text">$</span>100/month SIP for 20 years
-                        yields <span class="currency-text">$</span>1 Million nominally but only <span class="currency-text">$</span>31 Lakh in
+                        yields <span class="dynamic-amount" data-amount="1000000"></span> nominally but only <span class="dynamic-amount" data-amount="3100000"></span> in
                         today's purchasing power. <strong>Solution:</strong> Use a 10% annual step-up SIP which yields
-                        <span class="currency-text">$</span>3.54 Million — effectively tripling your inflation-adjusted wealth compared to a flat SIP.
+                        <span class="dynamic-amount" data-amount="3540000"></span> — effectively tripling your inflation-adjusted wealth compared to a flat SIP.
                         Standard debt funds and Fixed Deposits often yield <strong>negative real returns</strong>
                         post-tax.
                     </p>
@@ -319,8 +317,8 @@ require_once __DIR__ . '/functions.php';
                     <li><strong>Acknowledge the Lifestyle Creep Tax:</strong> Personal inflation is often higher than
                         government CPI inflation because we desire better phones, cars, and schools as we age. A 10%
                         step-up accounts for CPI (6%) + Lifestyle Creep (4%).</li>
-                    <li><strong>Calculate Goals backwards:</strong> If you calculate that you need <span class="currency-text">$</span>1 Million to retire
-                        today, you actually need approximately <span class="currency-text">$</span>3.2 Million to retire in 20 years. Always calculate your
+                    <li><strong>Calculate Goals backwards:</strong> If you calculate that you need <span class="dynamic-amount" data-amount="1000000"></span> to retire
+                        today, you actually need approximately <span class="dynamic-amount" data-amount="3200000"></span> to retire in 20 years. Always calculate your
                         target SIP amount backwards using a 6% inflated target corpus.</li>
                     <li><strong>The Equity Premium:</strong> Accept that stock volatility is the price you pay for the
                         "Equity Risk Premium" — the only proven gap large enough to outpace long-term inflation.</li>
