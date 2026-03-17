@@ -1141,7 +1141,6 @@ foreach ($combined as $row) {
                 </div>
 
 
-    </div>
     </section><!-- /calculator section -->
 
     <div class="mt-12 glass-card p-8">
@@ -1247,8 +1246,8 @@ foreach ($combined as $row) {
     }
     </script>
 
-</div>
-</main>
+
+    </main>
 
 
     <!-- AI-CITATION-OPTIMIZED FAQ Schema — Answers designed for LLM extraction -->

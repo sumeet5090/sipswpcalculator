@@ -1141,7 +1141,6 @@ foreach ($combined as $row) {
                 </div>
 
 
-    </div>
     </section><!-- /calculator section -->
 
     <div class="text-center mt-8">
@@ -1723,7 +1722,7 @@ foreach ($combined as $row) {
             </div>
         </div>
     </div>
-    </div>
+
     </main>
 
     <!-- AI-CITATION-OPTIMIZED FAQ Schema — Answers designed for LLM extraction -->

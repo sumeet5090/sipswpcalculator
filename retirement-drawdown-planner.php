@@ -1141,7 +1141,6 @@ foreach ($combined as $row) {
                 </div>
 
 
-    </div>
     </section><!-- /calculator section -->
     <div class="mt-12 glass-card p-8">
         <h2 id="sustainable-retirement-income" class="text-3xl font-bold text-center mb-6">The 4% Rule vs. Dynamic SWP: A Guide to Sustainable Retirement Income</h2>
@@ -1253,8 +1252,8 @@ foreach ($combined as $row) {
       }
     }
     </script>
-</div>
-</main>
+
+    </main>
 
     <!-- AI-CITATION-OPTIMIZED FAQ Schema — Answers designed for LLM extraction -->
     <script type="application/ld+json">
