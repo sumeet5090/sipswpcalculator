@@ -8,6 +8,9 @@ vendor/
 .vscode/
 .DS_Store
 
+# --- Database ---
+database/database.sqlite
+
 # --- Logs & Temps ---
 *.log
 *.tmp

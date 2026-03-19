@@ -1,0 +1,18 @@
+services:
+  web:
+    build: .
+    container_name: sipswp_local
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/vhost.conf:/etc/apache2/sites-available/000-default.conf
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+    networks:
+      - sipswp_net
+
+networks:
+  sipswp_net:
+    driver: bridge
