@@ -6,10 +6,12 @@ declare(strict_types=1);
  * 
  * Logs anonymous usage statistics without storing IP addresses or PII.
  */
-class AnonymizedInsightLogger {
+class AnonymizedInsightLogger
+{
     private PDO $pdo;
-    
-    public function __construct(string $dbPath = __DIR__ . '/../database/insights.sqlite') {
+
+    public function __construct(string $dbPath = __DIR__ . '/../database/database.sqlite')
+    {
         // Ensure database directory exists
         $dir = dirname($dbPath);
         if (!is_dir($dir)) {
@@ -20,11 +22,12 @@ class AnonymizedInsightLogger {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->initializeSchema();
     }
-    
+
     /**
      * Creates the required user_calculations schema if it doesn't exist.
      */
-    private function initializeSchema(): void {
+    private function initializeSchema(): void
+    {
         $schema = "
             CREATE TABLE IF NOT EXISTS user_calculations (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,7 +42,7 @@ class AnonymizedInsightLogger {
         ";
         $this->pdo->exec($schema);
     }
-    
+
     /**
      * Executes the non-blocking logging logic.
      * 
@@ -58,7 +61,8 @@ class AnonymizedInsightLogger {
         int $duration,
         float $stepUpPct = 0.0,
         ?string $currency = null
-    ): void {
+        ): void
+    {
         try {
             // Close the current output buffer and send response to client so logging is non-blocking.
             // This ensures LCP is not affected by database insert overhead.
@@ -68,7 +72,7 @@ class AnonymizedInsightLogger {
 
             // Pull Cloudflare country code from server headers (Privacy-First: No IPs are logged)
             $countryCode = $_SERVER['HTTP_CF_IPCOUNTRY'] ?? null;
-            
+
             // If currency is not explicitly passed, we could optionally default or look for it in headers/request
             if ($currency === null) {
                 $currency = $_REQUEST['currency'] ?? null;
@@ -79,17 +83,18 @@ class AnonymizedInsightLogger {
                 (calc_type, currency, amount, duration, step_up_pct, country_code)
                 VALUES (:calc_type, :currency, :amount, :duration, :step_up_pct, :country_code)
             ");
-            
+
             $stmt->execute([
-                ':calc_type'   => $calcType,
-                ':currency'    => $currency,
-                ':amount'      => $amount,
-                ':duration'    => $duration,
+                ':calc_type' => $calcType,
+                ':currency' => $currency,
+                ':amount' => $amount,
+                ':duration' => $duration,
                 ':step_up_pct' => $stepUpPct,
-                ':country_code'=> $countryCode,
+                ':country_code' => $countryCode,
             ]);
-            
-        } catch (\Throwable $e) {
+
+        }
+        catch (\Throwable $e) {
             // Silently fail to ensure user experience is never impacted by logging errors
             error_log("AnonymizedInsightLogger Error: " . $e->getMessage());
         }
