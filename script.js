@@ -409,15 +409,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
-
 // --- Core Calculation Logic ---
+let insightTimeout = null;
+
+function logDebouncedInsight(inputs) {
+    if (insightTimeout) clearTimeout(insightTimeout);
+    
+    // Evaluate after 1500ms of no slide movements
+    insightTimeout = setTimeout(() => {
+        const payload = {
+            calc_type: inputs.enable_swp ? 'SWP' : 'SIP',
+            amount: inputs.enable_swp ? inputs.swp_withdrawal : inputs.sip,
+            duration: inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years,
+            step_up_pct: inputs.enable_swp ? inputs.swp_stepup : inputs.stepup,
+            currency: currentCurrency
+        };
+        
+        fetch('log_insight.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            keepalive: true 
+        }).catch(err => {});
+    }, 1500); 
+}
+
 function calculateAndRender() {
     const inputs = getInputs();
     const data = calculateCorpus(inputs);
     updateChart(data, inputs.enable_swp);
     updateTable(data, inputs.enable_swp);
     updateSummaryMetrics(data);
+    
+    logDebouncedInsight(inputs);
 }
 
 function getInputs() {
