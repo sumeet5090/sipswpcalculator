@@ -26,9 +26,10 @@ $amount     = (float) $data['amount'];
 $duration   = (int) $data['duration'];
 $stepUpPct  = (float) ($data['step_up_pct'] ?? 0.0);
 $currency   = $data['currency'] ?? 'INR';
+$pdfDownloaded = !empty($data['pdf_downloaded']);
 
 // Execute the non-blocking log insert
-$logger->logCalculation($calcType, $amount, $duration, $stepUpPct, $currency);
+$logger->logCalculation($calcType, $amount, $duration, $stepUpPct, $currency, $pdfDownloaded);
 
 // Fast HTTP 204 No Content response
 http_response_code(204);

@@ -37,10 +37,16 @@ class AnonymizedInsightLogger
                 duration INTEGER,
                 step_up_pct REAL,
                 country_code TEXT,
+                pdf_downloaded INTEGER DEFAULT 0,
+                referrer TEXT,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         ";
         $this->pdo->exec($schema);
+
+        // Migration: add columns to existing tables (safe no-op if already present)
+        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN pdf_downloaded INTEGER DEFAULT 0"); } catch (\Throwable $e) {}
+        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN referrer TEXT"); } catch (\Throwable $e) {}
     }
 
     /**
@@ -60,7 +66,8 @@ class AnonymizedInsightLogger
         float $amount,
         int $duration,
         float $stepUpPct = 0.0,
-        ?string $currency = null
+        ?string $currency = null,
+        bool $pdfDownloaded = false
         ): void
     {
         try {
@@ -73,6 +80,9 @@ class AnonymizedInsightLogger
             // Pull Cloudflare country code from server headers (Privacy-First: No IPs are logged)
             $countryCode = $_SERVER['HTTP_CF_IPCOUNTRY'] ?? null;
 
+            // Capture HTTP Referrer for traffic-source analysis (truncated for privacy)
+            $referrer = isset($_SERVER['HTTP_REFERER']) ? substr($_SERVER['HTTP_REFERER'], 0, 512) : null;
+
             // If currency is not explicitly passed, we could optionally default or look for it in headers/request
             if ($currency === null) {
                 $currency = $_REQUEST['currency'] ?? null;
@@ -80,8 +90,8 @@ class AnonymizedInsightLogger
 
             $stmt = $this->pdo->prepare("
                 INSERT INTO user_calculations 
-                (calc_type, currency, amount, duration, step_up_pct, country_code)
-                VALUES (:calc_type, :currency, :amount, :duration, :step_up_pct, :country_code)
+                (calc_type, currency, amount, duration, step_up_pct, country_code, pdf_downloaded, referrer)
+                VALUES (:calc_type, :currency, :amount, :duration, :step_up_pct, :country_code, :pdf_downloaded, :referrer)
             ");
 
             $stmt->execute([
@@ -91,6 +101,8 @@ class AnonymizedInsightLogger
                 ':duration' => $duration,
                 ':step_up_pct' => $stepUpPct,
                 ':country_code' => $countryCode,
+                ':pdf_downloaded' => $pdfDownloaded ? 1 : 0,
+                ':referrer' => $referrer,
             ]);
 
         }

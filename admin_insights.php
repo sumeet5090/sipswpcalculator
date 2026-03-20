@@ -73,6 +73,24 @@ $totalAllTime = (int)$pdo->query("SELECT COUNT(*) FROM user_calculations")->fetc
 // -- KPI: Calculations by type ----
 $calcTypeBreakdown = $pdo->query("SELECT calc_type, COUNT(*) AS cnt FROM user_calculations GROUP BY calc_type ORDER BY cnt DESC")->fetchAll();
 
+// -- KPI: PDF Downloads & Conversion Rate ----
+$totalPdfDownloads = (int)$pdo->query("SELECT COUNT(*) FROM user_calculations WHERE pdf_downloaded = 1")->fetchColumn();
+$conversionRate = $totalAllTime > 0 ? round(($totalPdfDownloads / $totalAllTime) * 100, 1) : 0.0;
+
+// -- Table: Top 10 Referrers ----
+$topReferrers = $pdo->query("
+    SELECT
+        CASE
+            WHEN referrer IS NULL OR referrer = '' THEN '(direct / unknown)'
+            ELSE SUBSTR(referrer, 1, 80)
+        END AS source,
+        COUNT(*) AS cnt
+    FROM user_calculations
+    GROUP BY source
+    ORDER BY cnt DESC
+    LIMIT 10
+")->fetchAll();
+
 // -- Chart: Daily calculation volume (last 30 days) ----
 $dailyVolume = $pdo->query("
     SELECT DATE(created_at) AS day, COUNT(*) AS cnt
@@ -353,7 +371,7 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
         <!-- ── KPI Stat Cards ── -->
         <section>
             <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Overview</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-4">
                 <!-- 24h -->
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Last 24h</p>
@@ -417,6 +435,22 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
                         <?= number_format($avgDurationSWP, 1)?>
                     </p>
                     <p class="mt-1 text-xs text-gray-400">years</p>
+                </div>
+                <!-- PDF Downloads -->
+                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-3">
+                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">PDF Downloads</p>
+                    <p class="mt-2 text-3xl font-extrabold text-rose-600">
+                        <?= number_format($totalPdfDownloads)?>
+                    </p>
+                    <p class="mt-1 text-xs text-gray-400">reports generated</p>
+                </div>
+                <!-- Conversion Rate -->
+                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-4">
+                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Conversion Rate</p>
+                    <p class="mt-2 text-3xl font-extrabold text-violet-600">
+                        <?= number_format($conversionRate, 1)?>%
+                    </p>
+                    <p class="mt-1 text-xs text-gray-400">calc → PDF</p>
                 </div>
             </div>
         </section>
@@ -609,6 +643,64 @@ else: ?>
                                 <div class="w-full bg-gray-100 rounded-full h-2">
                                     <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-2 rounded-full transition-all"
                                         style="width: <?=(string)$pct?>%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php
+    endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php
+endif; ?>
+        </section>
+
+        <!-- ── Top 10 Referrers ── -->
+        <section class="chart-container">
+            <h3 class="text-sm font-semibold text-gray-700 mb-4">🔗 Top Traffic Sources <span
+                    class="text-gray-400 font-normal">(Referrers)</span></h3>
+            <?php if (empty($topReferrers)): ?>
+            <p class="text-sm text-gray-400 italic">No referrer data recorded yet.</p>
+            <?php
+else: ?>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-200">
+                            <th
+                                class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                #</th>
+                            <th
+                                class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                Source</th>
+                            <th
+                                class="text-right py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                Visits</th>
+                            <th
+                                class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider w-1/3">
+                                Share</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+    $maxRef = !empty($topReferrers) ? (int)$topReferrers[0]['cnt'] : 1;
+    foreach ($topReferrers as $i => $ref):
+        $refPct = round(((int)$ref['cnt'] / $maxRef) * 100);
+?>
+                        <tr class="table-row border-b border-gray-100 transition-colors">
+                            <td class="py-3 px-4 text-gray-400 font-mono text-xs">
+                                <?= (string)($i + 1)?>
+                            </td>
+                            <td class="py-3 px-4 font-medium text-gray-800 truncate max-w-xs" title="<?= htmlspecialchars($ref['source'])?>">
+                                <?= htmlspecialchars($ref['source'])?>
+                            </td>
+                            <td class="py-3 px-4 text-right font-mono text-gray-600">
+                                <?= number_format((int)$ref['cnt'])?>
+                            </td>
+                            <td class="py-3 px-4">
+                                <div class="w-full bg-gray-100 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-violet-500 to-purple-500 h-2 rounded-full transition-all"
+                                        style="width: <?= (string)$refPct?>%"></div>
                                 </div>
                             </td>
                         </tr>

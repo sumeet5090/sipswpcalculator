@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error('PDF generation failed.');
                 })
                 .then(blob => {
-                    // 3. Trigger download
+                    // 3. Trigger download instantly
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.style.display = 'none';
@@ -313,12 +313,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     a.download = `Financial_Report_for_${formData.get('clientName') || 'Client'}.pdf`;
                     document.body.appendChild(a);
                     a.click();
-                    window.URL.revokeObjectURL(url);
-
-                    // Reset button and close modal
+                    
+                    // 4. Immediate UI cleanup (Releases the user and resets state)
                     generatePdfBtn.disabled = false;
                     generatePdfBtn.textContent = 'Download PDF';
                     pdfModal.classList.add('hidden');
+                    a.remove(); 
+
+                    // 5. Background logging (Async, non-blocking)
+                    const inputs = getInputs();
+                    fetch('log_insight.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            calc_type: inputs.enable_swp ? 'SWP' : 'SIP',
+                            amount: inputs.enable_swp ? inputs.swp_withdrawal : inputs.sip,
+                            duration: inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years,
+                            step_up_pct: inputs.enable_swp ? inputs.swp_stepup : inputs.stepup,
+                            currency: currentCurrency,
+                            pdf_downloaded: true
+                        }),
+                        keepalive: true
+                    }).catch(() => {}); // silent — never block UX
+
+                    // 6. Housekeeping: Revoke URL after a small delay to allow browser to start download
+                    setTimeout(() => window.URL.revokeObjectURL(url), 100);
                 })
                 .catch(error => {
                     console.error('Error:', error);
