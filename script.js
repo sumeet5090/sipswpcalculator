@@ -276,7 +276,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 1. Collect all data
             const chartDataURL = window.corpusChart.toBase64Image();
-            const tableHtml = document.getElementById('results-table')?.innerHTML || 'No table data available.';
+            const resultsTable = document.getElementById('results-table');
+            const tableHtml = resultsTable ? resultsTable.outerHTML : '<table><tr><td>No data available.</td></tr></table>';
 
             const formData = new FormData(pdfForm);
 
@@ -288,6 +289,13 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('swp_withdrawal', document.getElementById('swp_withdrawal').value);
             formData.append('swp_stepup', document.getElementById('swp_stepup').value);
             formData.append('swp_years', document.getElementById('swp_years').value);
+
+            // Append summary metrics for Bank-Grade PDF
+            formData.append('currency_symbol', currencyConfig[currentCurrency].symbol);
+            formData.append('summary_invested', document.getElementById('summary-invested')?.textContent.trim() || '0');
+            formData.append('summary_interest', document.getElementById('summary-interest')?.textContent.trim() || '0');
+            formData.append('summary_withdrawn', document.getElementById('summary-withdrawn')?.textContent.trim() || '0');
+            formData.append('summary_corpus', document.getElementById('summary-corpus')?.textContent.trim() || '0');
 
             // Append chart and table data
             formData.append('chartData', chartDataURL);

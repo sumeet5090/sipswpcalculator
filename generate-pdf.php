@@ -62,6 +62,13 @@ try {
         'swp_stepup' => 0,
         'swp_years' => 0,
         'logo_base64' => null,
+        
+        // Summary Metrics for Bank Grade PDF
+        'currency_symbol' => mb_substr(strip_tags($_POST['currency_symbol'] ?? ''), 0, 10),
+        'summary_invested' => mb_substr(strip_tags($_POST['summary_invested'] ?? '0'), 0, 50),
+        'summary_interest' => mb_substr(strip_tags($_POST['summary_interest'] ?? '0'), 0, 50),
+        'summary_withdrawn' => mb_substr(strip_tags($_POST['summary_withdrawn'] ?? '0'), 0, 50),
+        'summary_corpus' => mb_substr(strip_tags($_POST['summary_corpus'] ?? '0'), 0, 50),
     ];
 
     // ── SECURITY: Validate chart data is a valid base64 data URI ──
