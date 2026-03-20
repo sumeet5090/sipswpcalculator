@@ -35,11 +35,20 @@ if (empty($_SESSION['admin_authenticated'])) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// 2. DATABASE CONNECTION (read-only)
+// 2. DATABASE CONNECTION & SCHEMA VALIDATION
 // ─────────────────────────────────────────────────────────────
+require_once __DIR__ . '/src/AnonymizedInsightLogger.php';
 $dbPath = __DIR__ . '/database/database.sqlite';
+
 if (!file_exists($dbPath)) {
     die('Database not found.');
+}
+
+// ── SCHEMA VALIDATION: Instantiate logger to ensure required columns exist ──
+try {
+    $logger = new AnonymizedInsightLogger($dbPath);
+} catch (\Throwable $e) {
+    error_log("Admin Insights Schema Validation Error: " . $e->getMessage());
 }
 
 $pdo = new PDO('sqlite:' . $dbPath, null, null, [
@@ -73,23 +82,34 @@ $totalAllTime = (int)$pdo->query("SELECT COUNT(*) FROM user_calculations")->fetc
 // -- KPI: Calculations by type ----
 $calcTypeBreakdown = $pdo->query("SELECT calc_type, COUNT(*) AS cnt FROM user_calculations GROUP BY calc_type ORDER BY cnt DESC")->fetchAll();
 
-// -- KPI: PDF Downloads & Conversion Rate ----
-$totalPdfDownloads = (int)$pdo->query("SELECT COUNT(*) FROM user_calculations WHERE pdf_downloaded = 1")->fetchColumn();
-$conversionRate = $totalAllTime > 0 ? round(($totalPdfDownloads / $totalAllTime) * 100, 1) : 0.0;
+// -- KPI: PDF Downloads & Conversion Rate (Hardened with try-catch) ----
+$totalPdfDownloads = 0;
+$conversionRate = 0.0;
+try {
+    $totalPdfDownloads = (int)$pdo->query("SELECT COUNT(*) FROM user_calculations WHERE pdf_downloaded = 1")->fetchColumn();
+    $conversionRate = $totalAllTime > 0 ? round(($totalPdfDownloads / $totalAllTime) * 100, 1) : 0.0;
+} catch (\Throwable $e) {
+    error_log("Query Error (pdf_downloaded): " . $e->getMessage());
+}
 
-// -- Table: Top 10 Referrers ----
-$topReferrers = $pdo->query("
-    SELECT
-        CASE
-            WHEN referrer IS NULL OR referrer = '' THEN '(direct / unknown)'
-            ELSE SUBSTR(referrer, 1, 80)
-        END AS source,
-        COUNT(*) AS cnt
-    FROM user_calculations
-    GROUP BY source
-    ORDER BY cnt DESC
-    LIMIT 10
-")->fetchAll();
+// -- Table: Top 10 Referrers (Hardened with try-catch) ----
+$topReferrers = [];
+try {
+    $topReferrers = $pdo->query("
+        SELECT
+            CASE
+                WHEN referrer IS NULL OR referrer = '' THEN '(direct / unknown)'
+                ELSE SUBSTR(referrer, 1, 80)
+            END AS source,
+            COUNT(*) AS cnt
+        FROM user_calculations
+        GROUP BY source
+        ORDER BY cnt DESC
+        LIMIT 10
+    ")->fetchAll();
+} catch (\Throwable $e) {
+    error_log("Query Error (referrer): " . $e->getMessage());
+}
 
 // -- Chart: Daily calculation volume (last 30 days) ----
 $dailyVolume = $pdo->query("
