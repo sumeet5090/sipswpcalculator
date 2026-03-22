@@ -73,6 +73,10 @@ function get_pdf_html(array $inputs): string
         .results-table-container tr:nth-child(even) td { background-color: #f8fafc; }
         .results-table-container td:first-child { text-align: left; font-weight: bold; color: #0f172a; }
         
+        /* Purchasing Power Box */
+        .purchasing-power { margin-top: 30px; padding: 15px; background-color: #fffbeb; border-left: 4px solid #fcd34d; font-size: 10px; color: #92400e; border-radius: 0 8px 8px 0; }
+        .purchasing-power strong { display: block; margin-bottom: 5px; font-size: 11px; text-transform: uppercase; color: #b45309; }
+        
         /* Footer & Disclaimer */
         .disclaimer { margin-top: 30px; padding: 15px; background-color: #fef2f2; border-left: 4px solid #ef4444; font-size: 9px; color: #7f1d1d; border-radius: 0 4px 4px 0; }
         .disclaimer strong { display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 10px; }
@@ -179,13 +183,28 @@ function get_pdf_html(array $inputs): string
             {$table_html}
         </div>";
 
-    if ($custom_disclaimer) {
+    // ── PURCHASING POWER LOGIC ──
+    if ($currency_sym === '₹' || $currency_sym === 'INR') {
         $html .= "
-        <div class='disclaimer'>
-            <strong>Important Disclaimer</strong>
-            " . nl2br($custom_disclaimer) . "
+        <div class='purchasing-power'>
+            <strong>The Reality of Future Costs</strong>
+            While your corpus grows, so does the cost of living. In India, education and healthcare inflation historically average around <strong>10% annually</strong>. Ensure your SIP step-up strategy outpaces this inflation to maintain your true purchasing power over the next decade.
+        </div>";
+    } elseif ($currency_sym === '$' || $currency_sym === 'USD' || $currency_sym === '€' || $currency_sym === '£') {
+        $html .= "
+        <div class='purchasing-power'>
+            <strong>The Reality of Future Costs</strong>
+            While your wealth compounds, inflation erodes purchasing power. Global healthcare and education costs historically rise at <strong>~7% annually</strong>. Consider implementing an annual Step-Up SIP strategy to ensure your final corpus exceeds the rising cost of living.
         </div>";
     }
+
+    $final_disclaimer = $custom_disclaimer ?: "Mutual fund investments are subject to market risks. Please read all scheme-related documents carefully before investing. Historical performance is not indicative of future results. The projections provided in this report are for illustrative purposes only and do not guarantee future returns.";
+
+    $html .= "
+    <div class='disclaimer'>
+        <strong>Important Disclaimer</strong>
+        " . nl2br($final_disclaimer) . "
+    </div>";
 
     $html .= "
         <div class='footer'>

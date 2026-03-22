@@ -1,32 +1,13 @@
 <?php declare(strict_types=1);
 require_once __DIR__ . '/functions.php'; ?>
-<!DOCTYPE html>
-<html lang="en">
+<?php
+$page_config = [
+    'title' => 'About Us | SIP & SWP Calculator',
+    'meta_desc' => 'Learn about the team behind SIP & SWP Calculator — a free step-up SIP planner and retirement income tool built by Sumeet Boga.',
+];
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | SIP & SWP Calculator</title>
-    <meta name="description"
-        content="Learn about the team behind SIP & SWP Calculator — a free step-up SIP planner and retirement income tool. Built by Sumeet Boga, Software Engineer & Finance Enthusiast.">
-    <link rel="canonical" href="https://sipswpcalculator.com/about">
-    <meta name="robots" content="index, follow">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sipswpcalculator.com/about">
-    <meta property="og:title" content="About Us | SIP & SWP Calculator">
-    <meta property="og:description"
-        content="Meet the team behind SIP & SWP Calculator — a free step-up SIP planner and retirement income tool built by Sumeet Boga.">
-    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
+ob_start();
+?>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -39,13 +20,12 @@ require_once __DIR__ . '/functions.php'; ?>
       "sameAs": ["https://www.linkedin.com/in/sumeet-boga/"]
     }
     </script>
-</head>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+$active_page = 'about.php';
+require_once __DIR__ . '/includes/layout-top.php';
+?>
 
-<body class="bg-gray-50 text-gray-800 font-sans antialiased"
-    style="background-image: var(--gradient-surface); background-attachment: fixed;">
-    <?php include 'navbar.php'; ?>
-
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <header class="relative mb-6 sm:mb-10 text-center">
             <div
                 class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-4">
@@ -280,7 +260,7 @@ require_once __DIR__ . '/functions.php'; ?>
             </div>
         </main>
 
-        <?php include 'footer.php'; ?>
+        <?php require_once __DIR__ . '/includes/footer.php'; ?>
     </div>
 </body>
 

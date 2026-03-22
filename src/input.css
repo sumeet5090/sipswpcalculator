@@ -2,6 +2,8 @@
 
 /* Tell Tailwind v4 where to scan for utility classes */
 @source "../*.php";
+@source "../includes/*.php";
+@source "../resource/*.php";
 @source "../navbar.php";
 @source "../footer.php";
 

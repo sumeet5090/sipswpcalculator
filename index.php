@@ -41,14 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Retrieve POST values with server-side validation & range clamping
-$sip = isset($_POST['sip']) ? clamp((float) $_POST['sip'], 500, 1000000) : (float) $default_sip;
-$years = isset($_POST['years']) ? (int) clamp((float) $_POST['years'], 1, 50) : $default_years;
-$rate = isset($_POST['rate']) ? clamp((float) $_POST['rate'], 1, 30) : (float) $default_rate;
-$stepup = isset($_POST['stepup']) ? clamp((float) $_POST['stepup'], 0, 50) : (float) $default_stepup;
-$enable_swp = isset($_POST['enable_swp']) ? (bool) $_POST['enable_swp'] : false;
-$swp_withdrawal = isset($_POST['swp_withdrawal']) ? clamp((float) $_POST['swp_withdrawal'], 0, 1000000) : (float) $default_swp_withdrawal;
-$swp_stepup = isset($_POST['swp_stepup']) ? clamp((float) $_POST['swp_stepup'], 0, 20) : (float) $default_swp_stepup;
-$swp_years_input = isset($_POST['swp_years']) ? (int) clamp((float) $_POST['swp_years'], 0, 50) : $default_swp_years;
+$sip = isset($_POST['sip']) ? clamp((float)$_POST['sip'], 500, 1000000) : (float)$default_sip;
+$years = isset($_POST['years']) ? (int)clamp((float)$_POST['years'], 1, 50) : $default_years;
+$rate = isset($_POST['rate']) ? clamp((float)$_POST['rate'], 1, 30) : (float)$default_rate;
+$stepup = isset($_POST['stepup']) ? clamp((float)$_POST['stepup'], 0, 50) : (float)$default_stepup;
+$enable_swp = isset($_POST['enable_swp']) ? (bool)$_POST['enable_swp'] : false;
+$swp_withdrawal = isset($_POST['swp_withdrawal']) ? clamp((float)$_POST['swp_withdrawal'], 0, 1000000) : (float)$default_swp_withdrawal;
+$swp_stepup = isset($_POST['swp_stepup']) ? clamp((float)$_POST['swp_stepup'], 0, 20) : (float)$default_swp_stepup;
+$swp_years_input = isset($_POST['swp_years']) ? (int)clamp((float)$_POST['swp_years'], 0, 50) : $default_swp_years;
 
 // ── SECURITY: Whitelist allowed actions ──
 $action = $_POST['action'] ?? '';
@@ -92,7 +92,8 @@ for ($y = 1; $y <= $simulation_years; $y++) {
             $desired_withdraw = $monthly_swp;
             $withdraw = ($desired_withdraw > $potential_balance) ? $potential_balance : $desired_withdraw;
             $withdraw = max(0.0, $withdraw);
-        } else {
+        }
+        else {
             $withdraw = 0.0;
         }
         $actual_year_withdrawn += $withdraw;
@@ -191,48 +192,28 @@ foreach ($combined as $row) {
     $combined_numbers[] = $row['combined_total'];
     $swp_numbers[] = $row['annual_withdrawal'] ?? 0.0;
 }
+
+$page_config = [
+    'title' => 'SIP, DCA & Recurring Investment Calculator 2026 — SWP & Retirement Drawdown Planner',
+    'meta_desc' => 'Free SIP & DCA calculator with step-up compounding & SWP retirement drawdown planner. Visual charts, yearly breakdown for recurring investments — trusted globally.',
+];
+
+ob_start();
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<meta name="keywords"
+    content="SIP Calculator, SIP Calculator Online, SIP Return Calculator, Mutual Fund SIP Calculator, SWP Calculator, SWP Planner, Step-Up SIP Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP, Tax-Efficient Withdrawals, SIP Calculator India, SIP Calculator USA, SIP Calculator UK, Mutual Fund Return Calculator">
+<link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/">
+<link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIP, DCA & Recurring Investment Calculator 2026 — SWP & Retirement Drawdown Planner</title>
-    <meta name="description"
-        content="Free SIP & DCA calculator with step-up compounding & SWP retirement drawdown planner. Visual charts, yearly breakdown for recurring investments — trusted globally.">
-    <meta name="keywords"
-        content="SIP Calculator, SIP Calculator Online, SIP Return Calculator, Mutual Fund SIP Calculator, SWP Calculator, SWP Planner, Step-Up SIP Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP, Tax-Efficient Withdrawals, SIP Calculator India, SIP Calculator USA, SIP Calculator UK, Mutual Fund Return Calculator">
-    <link rel="canonical" href="https://sipswpcalculator.com/">
-    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/">
-    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sipswpcalculator.com/">
-    <meta property="og:title" content="SIP Calculator 2026 — Free Step-Up SIP & SWP Planner">
-    <meta property="og:description"
-        content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export.">
-    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://sipswpcalculator.com/">
-    <meta property="twitter:title" content="SIP Calculator 2026 — Free Step-Up SIP & SWP Planner">
-    <meta property="twitter:description"
-        content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export.">
-    <meta property="twitter:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
-
-    <!-- ════════════════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════════════════════════════
          AI-CITATION-OPTIMIZED STRUCTURED DATA (JSON-LD)
          Designed for extraction by Gemini, Perplexity, ChatGPT, and
          traditional search engines. Uses @id graph linking, potentialAction,
          sameAs entity grounding, and information-dense descriptions.
          ════════════════════════════════════════════════════════════════════ -->
 
-    <!-- 1. SoftwareApplication — Primary Tool Identity -->
-    <script type="application/ld+json">
+<!-- 1. SoftwareApplication — Primary Tool Identity -->
+<script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@id": "https://sipswpcalculator.com/#calculator",
@@ -352,8 +333,8 @@ foreach ($combined as $row) {
     }
     </script>
 
-    <!-- 2. FinancialProduct — Detailed Investment Parameters -->
-    <script type="application/ld+json">
+<!-- 2. FinancialProduct — Detailed Investment Parameters -->
+<script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@id": "https://sipswpcalculator.com/#financialproduct",
@@ -388,8 +369,8 @@ foreach ($combined as $row) {
     }
     </script>
 
-    <!-- 3. WebSite — Site Identity with Search Action -->
-    <script type="application/ld+json">
+<!-- 3. WebSite — Site Identity with Search Action -->
+<script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@id": "https://sipswpcalculator.com/#website",
@@ -422,8 +403,8 @@ foreach ($combined as $row) {
     }
     </script>
 
-    <!-- 4. Organization — Publisher Identity with EEAT signals -->
-    <script type="application/ld+json">
+<!-- 4. Organization — Publisher Identity with EEAT signals -->
+<script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@id": "https://sipswpcalculator.com/#organization",
@@ -467,8 +448,8 @@ foreach ($combined as $row) {
     }
     </script>
 
-    <!-- 5. Person — Author/Expert Identity (EEAT) -->
-    <script type="application/ld+json">
+<!-- 5. Person — Author/Expert Identity (EEAT) -->
+<script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@id": "https://sipswpcalculator.com/#author",
@@ -494,8 +475,8 @@ foreach ($combined as $row) {
     }
     </script>
 
-    <!-- 6. HowTo — Detailed Calculator Usage Guide -->
-    <script type="application/ld+json">
+<!-- 6. HowTo — Detailed Calculator Usage Guide -->
+<script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@id": "https://sipswpcalculator.com/#howto",
@@ -532,164 +513,166 @@ foreach ($combined as $row) {
     }
     </script>
 
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
+<!-- PWA Manifest -->
+<link rel="manifest" href="manifest.json">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 
-    <!-- Preconnect to font & CDN origins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<!-- Preconnect to font & CDN origins -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
-    <!-- Critical above-the-fold CSS inlined for instant FCP -->
-    <style>
-        :root {
-            --gradient-primary: linear-gradient(135deg, #4f46e5, #4338ca);
-            --glass-bg: rgba(255, 255, 255, .9);
-            --glass-border: 1px solid rgba(255, 255, 255, .5);
-            --glass-shadow: 0 8px 32px 0 rgba(79, 81, 93, .1);
-            --color-bg: #f8fafc;
-            --color-text-primary: #0f172a;
-            --color-text-secondary: #64748b;
-            --color-border: #e2e8f0
-        }
+<!-- Critical above-the-fold CSS inlined for instant FCP -->
+<style>
+    :root {
+        --gradient-primary: linear-gradient(135deg, #4f46e5, #4338ca);
+        --glass-bg: rgba(255, 255, 255, .9);
+        --glass-border: 1px solid rgba(255, 255, 255, .5);
+        --glass-shadow: 0 8px 32px 0 rgba(79, 81, 93, .1);
+        --color-bg: #f8fafc;
+        --color-text-primary: #0f172a;
+        --color-text-secondary: #64748b;
+        --color-border: #e2e8f0
+    }
 
-        @font-face {
-            font-family: 'Plus Jakarta Sans Fallback';
-            src: local('Arial');
-            size-adjust: 107%;
-            ascent-override: 90%;
-            descent-override: 22%;
-            line-gap-override: 0%
-        }
+    @font-face {
+        font-family: 'Plus Jakarta Sans Fallback';
+        src: local('Arial');
+        size-adjust: 107%;
+        ascent-override: 90%;
+        descent-override: 22%;
+        line-gap-override: 0%
+    }
 
-        body {
-            background-color: var(--color-bg);
-            font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', 'Inter', Arial, sans-serif;
-            color: var(--color-text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased
-        }
+    body {
+        background-color: var(--color-bg);
+        font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', 'Inter', Arial, sans-serif;
+        color: var(--color-text-primary);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased
+    }
 
-        .navbar-glass {
-            background: rgba(255, 255, 255, .85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px)
-        }
+    .navbar-glass {
+        background: rgba(255, 255, 255, .85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px)
+    }
 
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            border-radius: 1rem;
-            position: relative
-        }
+    .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        border-radius: 1rem;
+        position: relative
+    }
 
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: var(--gradient-primary)
-        }
+    .text-gradient {
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-image: var(--gradient-primary)
+    }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            color: var(--color-text-primary)
-        }
-    </style>
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--color-text-primary)
+    }
+</style>
 
-    <!-- Google Fonts: preload + swap (has size-matching fallback in critical CSS above) -->
-    <link rel="preload"
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
-    </noscript>
+<!-- Google Fonts: preload + swap (has size-matching fallback in critical CSS above) -->
+<link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+</noscript>
 
-    <!-- Render-blocking CSS: loaded before first paint to prevent FOUC/CLS -->
-    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
-</head>
+<!-- Render-blocking CSS: loaded before first paint to prevent FOUC/CLS -->
+<link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css')?>">
+<link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css')?>">
+<script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+$active_page = 'index.php';
+ob_start();
+?>
 
-<body class="font-sans antialiased text-slate-800">
-    <?php include 'navbar.php'; ?>
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+<header class="relative mb-6 sm:mb-10 text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-4">
+        <span class="relative flex h-3 w-3">
+            <span class="absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
+        </span>
+        <span class="text-sm font-semibold text-indigo-700 tracking-wide uppercase">Free Financial Planning
+            Tool</span>
+    </div>
 
-        <header class="relative mb-6 sm:mb-10 text-center">
-            <div
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-4">
-                <span class="relative flex h-3 w-3">
-                    <span class="absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
-                </span>
-                <span class="text-sm font-semibold text-indigo-700 tracking-wide uppercase">Free Financial Planning
-                    Tool</span>
-            </div>
+    <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
+        <span class="text-gradient">SIP & SWP Calculator</span> <br>
+        <span class="text-gray-800">Visualise Your Wealth Journey</span>
+    </h1>
 
-            <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
-                <span class="text-gradient">SIP & SWP Calculator</span> <br>
-                <span class="text-gray-800">Visualise Your Wealth Journey</span>
-            </h1>
+    <!-- EEAT Trust Bar -->
+    <div
+        class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
+        <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
+            class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
+                class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32" height="32"
+                fetchpriority="high" decoding="async">
+            <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance
+                Enthusiast</span>
+        </a>
+        <span class="hidden sm:inline text-slate-300">|</span>
+        <div
+            class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Verified for Accuracy: February 2026
+        </div>
+    </div>
 
-            <!-- EEAT Trust Bar -->
-            <div
-                class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
-                <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
-                    class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
-                        class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32"
-                        height="32" fetchpriority="high" decoding="async">
-                    <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance
-                        Enthusiast</span>
-                </a>
-                <span class="hidden sm:inline text-slate-300">|</span>
-                <div
-                    class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    Verified for Accuracy: February 2026
-                </div>
-            </div>
-
-            <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
-                This free <dfn><strong class="text-indigo-600">SIP calculator</strong></dfn> helps you estimate
-                your <strong>mutual fund SIP returns</strong> with annual step-up (top-up) compounding.
-                A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan
-                tax-efficient withdrawals for a steady retirement income. Use this <strong>SIP return
-                    calculator</strong>
-                to visualize growth, compare scenarios, and download detailed PDF reports — free for investors
-                worldwide.
-            </p>
+    <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
+        This free <dfn><strong class="text-indigo-600">SIP calculator</strong></dfn> helps you estimate
+        your <strong>mutual fund SIP returns</strong> with annual step-up (top-up) compounding.
+        A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan
+        tax-efficient withdrawals for a steady retirement income. Use this <strong>SIP return
+            calculator</strong>
+        to visualize growth, compare scenarios, and download detailed PDF reports — free for investors
+        worldwide.
+    </p>
 
 
-        </header>
+</header>
 
-        <main>
-            <!-- Quick Answer Box for AI extraction / Featured Snippet -->
-            <div id="quick-answer"
-                class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
-                role="complementary" aria-label="Quick Answer">
-                <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
-                <p class="text-base text-gray-700"><strong>How much will a <span class="currency-text">$</span>100/month SIP grow in 20 years?</strong>
-                </p>
-                <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a <span class="currency-text">$</span>100/month
-                    SIP will grow to approximately <strong class="text-emerald-700"><span class="dynamic-amount" data-amount="3540000"></span></strong> over 20
-                    years.
-                    Total invested: <span class="dynamic-amount" data-amount="6873000"></span>. Total gains: <span class="dynamic-amount" data-amount="28500000"></span>.</p>
-            </div>
-            <script type="application/ld+json">
+<main>
+    <!-- Quick Answer Box for AI extraction / Featured Snippet -->
+    <div id="quick-answer" class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
+        role="complementary" aria-label="Quick Answer">
+        <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
+        <p class="text-base text-gray-700"><strong>How much will a <span class="currency-text">$</span>100/month SIP
+                grow in 20 years?</strong>
+        </p>
+        <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a <span
+                class="currency-text">$</span>100/month
+            SIP will grow to approximately <strong class="text-emerald-700"><span class="dynamic-amount"
+                    data-amount="3540000"></span></strong> over 20
+            years.
+            Total invested: <span class="dynamic-amount" data-amount="6873000"></span>. Total gains: <span
+                class="dynamic-amount" data-amount="28500000"></span>.</p>
+    </div>
+    <script type="application/ld+json">
             {
               "@context": "https://schema.org",
               "@type": "WebPage",
@@ -702,443 +685,536 @@ foreach ($combined as $row) {
             }
             </script>
 
-            <section id="calculator-section" class="scroll-mt-32" style="scroll-margin-top: 120px;" aria-labelledby="calculator-heading">
-                <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <section id="calculator-section" class="scroll-mt-32" style="scroll-margin-top: 120px;"
+        aria-labelledby="calculator-heading">
+        <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                    <!-- Left Column: Currency + Form -->
-                    <div
-                        class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar" style="top: 120px;">
+            <!-- Left Column: Currency + Form -->
+            <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar"
+                style="top: 120px;">
 
 
 
-                        <!-- Form Section -->
-                        <div class="glass-card p-4">
-                            <form method="post" novalidate id="calculator-form">
-                                <!-- SECURITY: CSRF Token for main form -->
-                                <input type="hidden" name="csrf_token"
-                                    value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                <!-- Form Section -->
+                <div class="glass-card p-4">
+                    <form method="post" novalidate id="calculator-form">
+                        <!-- SECURITY: CSRF Token for main form -->
+                        <input type="hidden" name="csrf_token"
+                            value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8')?>">
 
-                                <!-- SECURITY: Honeypot field (hidden from real users, catches bots) -->
-                                <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
-                                    <label for="website_url">Leave this field empty</label>
-                                    <input type="text" id="website_url" name="website_url" tabindex="-1"
-                                        autocomplete="off">
-                                </div>
+                        <!-- SECURITY: Honeypot field (hidden from real users, catches bots) -->
+                        <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+                            <label for="website_url">Leave this field empty</label>
+                            <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off">
+                        </div>
 
-                                <!-- Currency Selector -->
-                                <div class="flex justify-center mb-3">
-                                    <div class="inline-flex rounded-lg overflow-hidden border border-slate-200"
-                                        role="group" id="currency-group">
-                                        <button type="button" data-currency="INR"
-                                            class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
-                                            onclick="updateCurrency('INR')">
-                                            <span>₹</span> INR
-                                        </button>
-                                        <button type="button" data-currency="USD"
-                                            class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
-                                            onclick="updateCurrency('USD')">
-                                            <span>$</span> USD
-                                        </button>
-                                        <button type="button" data-currency="EUR"
-                                            class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-r border-slate-200"
-                                            onclick="updateCurrency('EUR')">
-                                            <span>€</span> EUR
-                                        </button>
-                                        <button type="button" data-currency="GBP"
-                                            class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
-                                            onclick="updateCurrency('GBP')">
-                                            <span>£</span> GBP
-                                        </button>
-                                    </div>
-                                </div>
+                        <!-- Currency Selector -->
+                        <div class="flex justify-center mb-3">
+                            <div class="inline-flex rounded-lg overflow-hidden border border-slate-200" role="group"
+                                id="currency-group">
+                                <button type="button" data-currency="INR"
+                                    class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
+                                    onclick="updateCurrency('INR')">
+                                    <span>₹</span> INR
+                                </button>
+                                <button type="button" data-currency="USD"
+                                    class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
+                                    onclick="updateCurrency('USD')">
+                                    <span>$</span> USD
+                                </button>
+                                <button type="button" data-currency="EUR"
+                                    class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-r border-slate-200"
+                                    onclick="updateCurrency('EUR')">
+                                    <span>€</span> EUR
+                                </button>
+                                <button type="button" data-currency="GBP"
+                                    class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
+                                    onclick="updateCurrency('GBP')">
+                                    <span>£</span> GBP
+                                </button>
+                            </div>
+                        </div>
 
-                                <!-- Tab Bar -->
-                                <div class="flex rounded-xl overflow-hidden border border-slate-200 mb-4"
-                                    role="tablist">
-                                    <button type="button" id="tab-sip" role="tab" aria-selected="true"
-                                        onclick="switchFormTab('sip')"
-                                        class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-emerald-500 text-white">
-                                        <span
-                                            class="flex items-center justify-center w-4 h-4 rounded-full bg-white/20 text-[9px]">1</span>
-                                        SIP Details
-                                    </button>
-                                    <button type="button" id="tab-swp" role="tab" aria-selected="false"
-                                        onclick="switchFormTab('swp')"
-                                        class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-500 hover:bg-rose-50 hover:text-rose-500">
-                                        <span
-                                            class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-[9px]">2</span>
-                                        SWP Details
-                                    </button>
-                                </div>
+                        <!-- Tab Bar -->
+                        <div class="flex rounded-xl overflow-hidden border border-slate-200 mb-4" role="tablist">
+                            <button type="button" id="tab-sip" role="tab" aria-selected="true"
+                                onclick="switchFormTab('sip')"
+                                class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-emerald-500 text-white">
+                                <span
+                                    class="flex items-center justify-center w-4 h-4 rounded-full bg-white/20 text-[9px]">1</span>
+                                SIP Details
+                            </button>
+                            <button type="button" id="tab-swp" role="tab" aria-selected="false"
+                                onclick="switchFormTab('swp')"
+                                class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-500 hover:bg-rose-50 hover:text-rose-500">
+                                <span
+                                    class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-100 text-[9px]">2</span>
+                                SWP Details
+                            </button>
+                        </div>
 
-                                <!-- SIP Panel -->
-                                <div id="panel-sip" role="tabpanel">
-                                    <div class="relative">
-                                        <div
-                                            class="mb-4 relative z-10 bg-[var(--glass-bg)] p-4 sm:p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
+                        <!-- SIP Panel -->
+                        <div id="panel-sip" role="tabpanel">
+                            <div class="relative">
+                                <div
+                                    class="mb-4 relative z-10 bg-[var(--glass-bg)] p-4 sm:p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
 
-                                            <div class="space-y-3">
-                                                <!-- Monthly + Duration -->
-                                                <!-- Monthly Investment -->
-                                                <div class="group">
-                                                    <label for="sip"
-                                                        class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
-                                                        Monthly SIP
-                                                    </label>
-                                                    <div class="relative">
-                                                        <span
-                                                            class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">₹</span>
-                                                        <input type="number" id="sip" name="sip"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                            required min="500" step="500" max="1000000"
-                                                            value="<?= htmlspecialchars((string) $sip) ?>">
-                                                    </div>
-                                                    <input type="range" id="sip_range" min="500" max="100000" step="500"
-                                                        value="<?= htmlspecialchars((string) $sip) ?>"
-                                                        aria-label="Monthly SIP amount slider"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                                </div>
-
-                                                <!-- Duration -->
-                                                <div class="group">
-                                                    <label for="years"
-                                                        class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
-                                                        Period (Yrs)
-                                                    </label>
-                                                    <div class="relative">
-                                                        <input type="number" id="years" name="years"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                            required min="1" max="50"
-                                                            value="<?= htmlspecialchars((string) $years) ?>">
-                                                        <span
-                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">Yrs</span>
-                                                    </div>
-                                                    <input type="range" id="years_range" min="1" max="50" step="1"
-                                                        value="<?= htmlspecialchars((string) $years) ?>"
-                                                        aria-label="Investment period slider"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                                </div>
-                                                <!-- Expected Return -->
-                                                <div class="group">
-                                                    <label for="rate"
-                                                        class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
-                                                        Expected Return
-                                                    </label>
-                                                    <div class="relative">
-                                                        <input type="number" id="rate" step="0.5" name="rate"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                            required min="0" max="30"
-                                                            value="<?= htmlspecialchars((string) $rate) ?>">
-                                                        <span
-                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">%</span>
-                                                    </div>
-                                                    <input type="range" id="rate_range" min="1" max="30" step="0.5"
-                                                        value="<?= htmlspecialchars((string) $rate) ?>"
-                                                        aria-label="Expected return rate slider"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                                </div>
-
-                                                <!-- Yearly Step-up -->
-                                                <div class="group">
-                                                    <label for="stepup"
-                                                        class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
-                                                        Annual Step-up
-                                                    </label>
-                                                    <div class="relative">
-                                                        <input type="number" id="stepup" step="1" name="stepup"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
-                                                            required min="0" max="100"
-                                                            value="<?= htmlspecialchars((string) $stepup) ?>">
-                                                        <span
-                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">%</span>
-                                                    </div>
-                                                    <input type="range" id="stepup_range" min="0" max="50" step="1"
-                                                        value="<?= htmlspecialchars((string) $stepup) ?>"
-                                                        aria-label="Annual step-up percentage slider"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- /panel-sip -->
-
-                                <!-- SWP Panel -->
-                                <div id="panel-swp" role="tabpanel" class="hidden">
-                                    <div class="relative">
-                                        <div
-                                            class="relative z-10 bg-[var(--glass-bg)] p-4 sm:p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
-                                            <div class="flex items-center justify-between mb-4">
+                                    <div class="space-y-3">
+                                        <!-- Monthly + Duration -->
+                                        <!-- Monthly Investment -->
+                                        <div class="group">
+                                            <label for="sip"
+                                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
+                                                Monthly SIP
+                                            </label>
+                                            <div class="relative">
                                                 <span
-                                                    class="text-xs font-bold text-rose-400 tracking-widest uppercase">SWP
-                                                    Config</span>
-                                                <label
-                                                    class="toggle-switch relative inline-flex items-center cursor-pointer">
-                                                    <input type="checkbox" id="enable_swp" name="enable_swp"
-                                                        onchange="toggleSwpFields()" class="sr-only peer"
-                                                        aria-label="Enable Systematic Withdrawal Plan (SWP)">
-                                                    <div
-                                                        class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
-                                                    </div>
-                                                </label>
+                                                    class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">₹</span>
+                                                <input type="number" id="sip" name="sip"
+                                                    class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                    required min="500" step="500" max="1000000"
+                                                    value="<?= htmlspecialchars((string)$sip)?>">
                                             </div>
+                                            <input type="range" id="sip_range" min="500" max="100000" step="500"
+                                                value="<?= htmlspecialchars((string)$sip)?>"
+                                                aria-label="Monthly SIP amount slider"
+                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                        </div>
 
-                                            <div id="swp-fields" class="space-y-4 transition-all duration-300">
-                                                <!-- Monthly Withdrawal -->
-                                                <div class="group">
-                                                    <label for="swp_withdrawal"
-                                                        class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
-                                                        Monthly SWP
-                                                    </label>
-                                                    <div class="relative">
-                                                        <span
-                                                            class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">₹</span>
-                                                        <input type="number" id="swp_withdrawal" step="500"
-                                                            name="swp_withdrawal"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
-                                                            required min="0" max="1000000"
-                                                            value="<?= htmlspecialchars((string) $swp_withdrawal) ?>">
-                                                    </div>
-                                                    <input type="range" id="swp_withdrawal_range" min="1000"
-                                                        max="200000" step="500"
-                                                        value="<?= htmlspecialchars((string) $swp_withdrawal) ?>"
-                                                        aria-label="Monthly SWP withdrawal slider"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                                        <!-- Duration -->
+                                        <div class="group">
+                                            <label for="years"
+                                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
+                                                Period (Yrs)
+                                            </label>
+                                            <div class="relative">
+                                                <input type="number" id="years" name="years"
+                                                    class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                    required min="1" max="50"
+                                                    value="<?= htmlspecialchars((string)$years)?>">
+                                                <span
+                                                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">Yrs</span>
+                                            </div>
+                                            <input type="range" id="years_range" min="1" max="50" step="1"
+                                                value="<?= htmlspecialchars((string)$years)?>"
+                                                aria-label="Investment period slider"
+                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                        </div>
+                                        <!-- Expected Return -->
+                                        <div class="group" style="position:relative;">
+                                            <div class="flex items-center justify-between mb-1.5">
+                                                <label for="rate"
+                                                    class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                                    Expected Return
+                                                </label>
+                                                <!-- Smart Nudge trigger -->
+                                                <button type="button" id="rate-nudge-btn"
+                                                    class="inline-flex items-center gap-1 text-[10px] font-semibold text-indigo-500 hover:text-indigo-700 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-400 rounded"
+                                                    aria-haspopup="true" aria-expanded="false"
+                                                    aria-controls="rate-nudge-popover">
+                                                    <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2.5"
+                                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                        </path>
+                                                    </svg>
+                                                    Not sure?
+                                                </button>
+                                            </div>
+                                            <div class="relative">
+                                                <input type="number" id="rate" step="0.5" name="rate"
+                                                    class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                    required min="0" max="30"
+                                                    value="<?= htmlspecialchars((string)$rate)?>">
+                                                <span
+                                                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">%</span>
+                                            </div>
+                                            <input type="range" id="rate_range" min="1" max="30" step="0.5"
+                                                value="<?= htmlspecialchars((string)$rate)?>"
+                                                aria-label="Expected return rate slider"
+                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+
+                                            <!-- Smart Nudge Popover -->
+                                            <div id="rate-nudge-popover" role="dialog"
+                                                aria-label="Typical mutual fund returns"
+                                                class="hidden absolute z-50 left-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200 p-4 text-left"
+                                                style="top: 100%;">
+                                                <div class="flex items-center justify-between mb-3">
+                                                    <p
+                                                        class="text-xs font-extrabold text-slate-700 uppercase tracking-wider">
+                                                        Typical Returns (Historical)</p>
+                                                    <button type="button" id="rate-nudge-close"
+                                                        class="text-slate-400 hover:text-slate-600 transition-colors"
+                                                        aria-label="Close">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                        </svg>
+                                                    </button>
                                                 </div>
-
-
-                                                <!-- Withdrawal Duration -->
-                                                <div class="group">
-                                                    <label for="swp_years"
-                                                        class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
-                                                        SWP Period
-                                                    </label>
-                                                    <div class="relative">
-                                                        <input type="number" id="swp_years" name="swp_years"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
-                                                            required min="1" max="50"
-                                                            value="<?= htmlspecialchars((string) $swp_years_input) ?>">
-                                                        <span
-                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">Yrs</span>
-                                                    </div>
-                                                    <input type="range" id="swp_years_range" min="1" max="50" step="1"
-                                                        value="<?= htmlspecialchars((string) $swp_years_input) ?>"
-                                                        aria-label="SWP period slider"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                                                <table class="w-full text-xs mb-3 border-separate border-spacing-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th
+                                                                class="text-left pb-1 text-slate-500 font-bold text-[10px] uppercase tracking-wide">
+                                                                Category</th>
+                                                            <th
+                                                                class="text-right pb-1 text-slate-500 font-bold text-[10px] uppercase tracking-wide">
+                                                                🇮🇳 INR</th>
+                                                            <th
+                                                                class="text-right pb-1 text-slate-500 font-bold text-[10px] uppercase tracking-wide">
+                                                                🇺🇸 USD</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-slate-100">
+                                                        <tr>
+                                                            <td class="py-1.5 text-slate-600">Index / Large Cap</td>
+                                                            <td class="py-1.5 text-right font-semibold text-indigo-600">
+                                                                11–13%</td>
+                                                            <td
+                                                                class="py-1.5 text-right font-semibold text-emerald-600">
+                                                                10–14%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="py-1.5 text-slate-600">Flexi / Multi Cap</td>
+                                                            <td class="py-1.5 text-right font-semibold text-indigo-600">
+                                                                12–15%</td>
+                                                            <td
+                                                                class="py-1.5 text-right font-semibold text-emerald-600">
+                                                                —</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="py-1.5 text-slate-600">Mid / Small Cap</td>
+                                                            <td class="py-1.5 text-right font-semibold text-indigo-600">
+                                                                14–18%</td>
+                                                            <td
+                                                                class="py-1.5 text-right font-semibold text-emerald-600">
+                                                                9–13%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="py-1.5 text-slate-600">Balanced / 60-40</td>
+                                                            <td class="py-1.5 text-right font-semibold text-indigo-600">
+                                                                9–12%</td>
+                                                            <td
+                                                                class="py-1.5 text-right font-semibold text-emerald-600">
+                                                                7–9%</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <p class="text-[10px] text-slate-400 mb-3 leading-relaxed">Past
+                                                    performance is not a guarantee of future results. 10-yr historical
+                                                    averages.</p>
+                                                <div class="flex items-center gap-2">
+                                                    <button type="button" id="use-india-rate"
+                                                        class="flex-1 py-1.5 text-[11px] font-bold bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 transition-colors">
+                                                        Use 12% (India)
+                                                    </button>
+                                                    <button type="button" id="use-us-rate"
+                                                        class="flex-1 py-1.5 text-[11px] font-bold bg-emerald-50 text-emerald-700 rounded-lg hover:bg-emerald-100 transition-colors">
+                                                        Use 10% (USA)
+                                                    </button>
                                                 </div>
-
-                                                <!-- Withdrawal Hike -->
-                                                <div class="group">
-                                                    <label for="swp_stepup"
-                                                        class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
-                                                        Yearly Hike
-                                                    </label>
-                                                    <div class="relative">
-                                                        <input type="number" id="swp_stepup" step="0.1"
-                                                            name="swp_stepup"
-                                                            class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
-                                                            required min="0" max="20"
-                                                            value="<?= htmlspecialchars((string) $swp_stepup) ?>">
-                                                        <span
-                                                            class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">%</span>
-                                                    </div>
-                                                    <input type="range" id="swp_stepup_range" min="0" max="20"
-                                                        step="0.5" value="<?= htmlspecialchars((string) $swp_stepup) ?>"
-                                                        aria-label="SWP yearly hike slider"
-                                                        class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
-                                                </div>
+                                                <a href="/resource/mf-returns-benchmarks.php"
+                                                    class="mt-3 flex items-center justify-center gap-1 text-[11px] text-indigo-500 hover:text-indigo-700 font-semibold transition-colors">
+                                                    Full benchmark guide →
+                                                </a>
                                             </div>
                                         </div>
+
+                                        <!-- Yearly Step-up -->
+                                        <div class="group">
+                                            <label for="stepup"
+                                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
+                                                Annual Step-up
+                                            </label>
+                                            <div class="relative">
+                                                <input type="number" id="stepup" step="1" name="stepup"
+                                                    class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                                    required min="0" max="100"
+                                                    value="<?= htmlspecialchars((string)$stepup)?>">
+                                                <span
+                                                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">%</span>
+                                            </div>
+                                            <input type="range" id="stepup_range" min="0" max="50" step="1"
+                                                value="<?= htmlspecialchars((string)$stepup)?>"
+                                                aria-label="Annual step-up percentage slider"
+                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                                        </div>
                                     </div>
-                                </div><!-- /panel-swp -->
-
-
-                            </form>
-                        </div>
-                    </div> <!-- /left column -->
-
-                    <div class="lg:col-span-2 space-y-4">
-                        <!-- Summary Cards -->
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <div class="glass-card p-3 sm:p-4 text-center">
-                                <div
-                                    class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
-                                    Total Invested</div>
-                                <div id="summary-invested"
-                                    class="text-lg sm:text-xl font-extrabold text-indigo-600 font-mono transition-numbers">
-                                    <?= formatInr(end($combined)['cumulative_invested'] ?? 0) ?>
                                 </div>
                             </div>
-                            <div class="glass-card p-3 sm:p-4 text-center">
-                                <div
-                                    class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
-                                    Total Gains</div>
-                                <div id="summary-interest"
-                                    class="text-lg sm:text-xl font-extrabold text-emerald-600 font-mono transition-numbers">
-                                    <?php
-                                    $lastRow = end($combined);
-                                    $totalGains = ($lastRow['combined_total'] + ($lastRow['cumulative_withdrawals'] ?? 0)) - ($lastRow['cumulative_invested'] ?? 0);
-                                    echo formatInr($totalGains);
-                                    ?>
-                                </div>
-                            </div>
-                            <div class="glass-card p-3 sm:p-4 text-center">
-                                <div
-                                    class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
-                                    Total Withdrawn</div>
-                                <div id="summary-withdrawn"
-                                    class="text-lg sm:text-xl font-extrabold text-rose-500 font-mono transition-numbers">
-                                    <?= formatInr(end($combined)['cumulative_withdrawals'] ?? 0) ?>
-                                </div>
-                            </div>
-                            <div class="glass-card p-3 sm:p-4 text-center border-2 border-indigo-100">
-                                <div
-                                    class="text-[10px] sm:text-xs font-bold text-indigo-600 uppercase tracking-widest mb-1">
-                                    Final Corpus</div>
-                                <div id="summary-corpus"
-                                    class="text-lg sm:text-xl font-extrabold text-slate-800 font-mono transition-numbers">
-                                    <?= formatInr(end($combined)['combined_total'] ?? 0) ?>
-                                </div>
-                            </div>
-                        </div>
+                        </div><!-- /panel-sip -->
 
-                        <!-- Chart Card -->
-                        <div
-                            class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-4 sm:p-6">
-                            <div class="h-[280px] sm:h-[350px] lg:h-[450px] w-full relative z-10">
-                                <canvas id="corpusChart" width="800" height="450"></canvas>
+                        <!-- SWP Panel -->
+                        <div id="panel-swp" role="tabpanel" class="hidden">
+                            <div class="relative">
+                                <div
+                                    class="relative z-10 bg-[var(--glass-bg)] p-4 sm:p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="text-xs font-bold text-rose-400 tracking-widest uppercase">SWP
+                                            Config</span>
+                                        <label class="toggle-switch relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="enable_swp" name="enable_swp"
+                                                onchange="toggleSwpFields()" class="sr-only peer"
+                                                aria-label="Enable Systematic Withdrawal Plan (SWP)">
+                                            <div
+                                                class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div id="swp-fields" class="space-y-4 transition-all duration-300">
+                                        <!-- Monthly Withdrawal -->
+                                        <div class="group">
+                                            <label for="swp_withdrawal"
+                                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
+                                                Monthly SWP
+                                            </label>
+                                            <div class="relative">
+                                                <span
+                                                    class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">₹</span>
+                                                <input type="number" id="swp_withdrawal" step="500"
+                                                    name="swp_withdrawal"
+                                                    class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                    required min="0" max="1000000"
+                                                    value="<?= htmlspecialchars((string)$swp_withdrawal)?>">
+                                            </div>
+                                            <input type="range" id="swp_withdrawal_range" min="1000" max="200000"
+                                                step="500" value="<?= htmlspecialchars((string)$swp_withdrawal)?>"
+                                                aria-label="Monthly SWP withdrawal slider"
+                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                                        </div>
+
+
+                                        <!-- Withdrawal Duration -->
+                                        <div class="group">
+                                            <label for="swp_years"
+                                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
+                                                SWP Period
+                                            </label>
+                                            <div class="relative">
+                                                <input type="number" id="swp_years" name="swp_years"
+                                                    class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-8 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                    required min="1" max="50"
+                                                    value="<?= htmlspecialchars((string)$swp_years_input)?>">
+                                                <span
+                                                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">Yrs</span>
+                                            </div>
+                                            <input type="range" id="swp_years_range" min="1" max="50" step="1"
+                                                value="<?= htmlspecialchars((string)$swp_years_input)?>"
+                                                aria-label="SWP period slider"
+                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                                        </div>
+
+                                        <!-- Withdrawal Hike -->
+                                        <div class="group">
+                                            <label for="swp_stepup"
+                                                class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
+                                                Yearly Hike
+                                            </label>
+                                            <div class="relative">
+                                                <input type="number" id="swp_stepup" step="0.1" name="swp_stepup"
+                                                    class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-slate-700 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                                    required min="0" max="20"
+                                                    value="<?= htmlspecialchars((string)$swp_stepup)?>">
+                                                <span
+                                                    class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">%</span>
+                                            </div>
+                                            <input type="range" id="swp_stepup_range" min="0" max="20" step="0.5"
+                                                value="<?= htmlspecialchars((string)$swp_stepup)?>"
+                                                aria-label="SWP yearly hike slider"
+                                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        </div><!-- /panel-swp -->
+
+
+                    </form>
+                </div>
+            </div> <!-- /left column -->
+
+            <div class="lg:col-span-2 space-y-4">
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="glass-card p-3 sm:p-4 text-center">
+                        <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
+                            Total Invested</div>
+                        <div id="summary-invested"
+                            class="text-lg sm:text-xl font-extrabold text-indigo-600 font-mono transition-numbers">
+                            <?= formatInr(end($combined)['cumulative_invested'] ?? 0)?>
                         </div>
                     </div>
-                </div><!-- /3-col grid -->
-
-
-
-                <!-- Full-width Yearly Breakdown -->
-                <div class="mt-8 space-y-4">
-                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                        <h2 id="yearly-breakdown" class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                </path>
-                            </svg>
-                            Yearly Breakdown
-                        </h2>
-                        <div class="flex gap-2">
-                            <button type="submit" name="action" value="download_csv" form="calculator-form"
-                                class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                                </svg>
-                                CSV
-                            </button>
-                            <button type="button" id="openPdfModalBtn" aria-haspopup="dialog" aria-expanded="false"
-                                aria-controls="pdfModal"
-                                class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all shadow-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                PDF
-                            </button>
-                            <button type="button" id="shareCalcBtn" aria-expanded="false"
-                                class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-indigo-600 border border-indigo-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all shadow-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                                </svg>
-                                <span id="shareBtnText">Share</span>
-                            </button>
+                    <div class="glass-card p-3 sm:p-4 text-center">
+                        <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
+                            Total Gains</div>
+                        <div id="summary-interest"
+                            class="text-lg sm:text-xl font-extrabold text-emerald-600 font-mono transition-numbers">
+                            <?php
+$lastRow = end($combined);
+$totalGains = ($lastRow['combined_total'] + ($lastRow['cumulative_withdrawals'] ?? 0)) - ($lastRow['cumulative_invested'] ?? 0);
+echo formatInr($totalGains);
+?>
                         </div>
                     </div>
-
-                    <div class="glass-card overflow-hidden border border-slate-200 shadow-sm">
-                        <div id="table-scroll-wrapper"
-                            class="max-h-[600px] overflow-y-auto overflow-x-auto custom-scrollbar">
-                            <table id="results-table" class="w-full text-sm text-left relative">
-                                <thead id="breakdown-head"
-                                    class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 sticky top-0 z-10">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-4 bg-slate-50/95 border-b border-slate-200">Year
-                                        </th>
-                                        <th scope="col"
-                                            class="px-6 py-4 bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
-                                            Start Corpus</th>
-                                        <th scope="col"
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">
-                                            Monthly SIP</th>
-                                        <th scope="col"
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">
-                                            Annual SIP</th>
-                                        <th scope="col"
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
-                                            Total Invested</th>
-                                        <th scope="col"
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
-                                            <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                            Monthly SWP</th>
-                                        <th scope="col"
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
-                                            <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                            Annual SWP</th>
-                                        <th scope="col"
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col"
-                                            <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                            Total Withdrawn</th>
-                                        <th scope="col"
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">
-                                            Interest</th>
-                                        <th scope="col"
-                                            class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">
-                                            End Corpus</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
-                                    <?php foreach ($combined as $row): ?>
-                                        <tr class="hover:bg-slate-50 transition-colors">
-                                            <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year'] ?></td>
-                                            <td class="px-6 py-4 text-right font-mono">
-                                                <?= formatInr($row['begin_balance']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono">
-                                                <?= $row['sip_monthly'] !== null ? formatInr($row['sip_monthly']) : '-' ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono">
-                                                <?= formatInr($row['annual_contribution']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-slate-500 font-mono">
-                                                <?= formatInr($row['cumulative_invested']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
-                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                                <?= $row['swp_monthly'] !== null ? formatInr($row['swp_monthly']) : '-' ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
-                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                                <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-' ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col"
-                                                <?= !$enable_swp ? 'style="display:none"' : '' ?>>
-                                                <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-' ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
-                                                <?= formatInr($row['interest']) ?>
-                                            </td>
-                                            <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
-                                                <?= formatInr($row['combined_total']) ?>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                    <div class="glass-card p-3 sm:p-4 text-center">
+                        <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
+                            Total Withdrawn</div>
+                        <div id="summary-withdrawn"
+                            class="text-lg sm:text-xl font-extrabold text-rose-500 font-mono transition-numbers">
+                            <?= formatInr(end($combined)['cumulative_withdrawals'] ?? 0)?>
+                        </div>
+                    </div>
+                    <div class="glass-card p-3 sm:p-4 text-center border-2 border-indigo-100">
+                        <div class="text-[10px] sm:text-xs font-bold text-indigo-600 uppercase tracking-widest mb-1">
+                            Final Corpus</div>
+                        <div id="summary-corpus"
+                            class="text-lg sm:text-xl font-extrabold text-slate-800 font-mono transition-numbers">
+                            <?= formatInr(end($combined)['combined_total'] ?? 0)?>
                         </div>
                     </div>
                 </div>
+
+                <!-- Chart Card -->
+                <div
+                    class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-4 sm:p-6">
+                    <div class="h-[280px] sm:h-[350px] lg:h-[450px] w-full relative z-10">
+                        <canvas id="corpusChart" width="800" height="450"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /3-col grid -->
+
+
+
+        <!-- Full-width Yearly Breakdown -->
+        <div class="mt-8 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <h2 id="yearly-breakdown" class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                    Yearly Breakdown
+                </h2>
+                <div class="flex gap-2">
+                    <button type="submit" name="action" value="download_csv" form="calculator-form"
+                        class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        CSV
+                    </button>
+                    <button type="button" id="openPdfModalBtn" aria-haspopup="dialog" aria-expanded="false"
+                        aria-controls="pdfModal"
+                        class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 transition-all shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        PDF
+                    </button>
+                    <button type="button" id="shareCalcBtn" aria-expanded="false"
+                        class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-indigo-600 border border-indigo-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                        </svg>
+                        <span id="shareBtnText">Share</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass-card overflow-hidden border border-slate-200 shadow-sm">
+                <div id="table-scroll-wrapper" class="max-h-[600px] overflow-y-auto overflow-x-auto custom-scrollbar">
+                    <table id="results-table" class="w-full text-sm text-left relative">
+                        <thead id="breakdown-head"
+                            class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 sticky top-0 z-10">
+                            <tr>
+                                <th scope="col" class="px-6 py-4 bg-slate-50/95 border-b border-slate-200">Year
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-4 bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
+                                    Start Corpus</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">
+                                    Monthly SIP</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">
+                                    Annual SIP</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">
+                                    Total Invested</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
+                                    <?=!$enable_swp ? 'style="display:none"' : ''?>>
+                                    Monthly SWP</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col"
+                                    <?=!$enable_swp ? 'style="display:none"' : ''?>>
+                                    Annual SWP</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col"
+                                    <?=!$enable_swp ? 'style="display:none"' : ''?>>
+                                    Total Withdrawn</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">
+                                    Interest</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">
+                                    End Corpus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
+                            <?php foreach ($combined as $row): ?>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-slate-700">
+                                    <?= $row['year']?>
+                                </td>
+                                <td class="px-6 py-4 text-right font-mono">
+                                    <?= formatInr($row['begin_balance'])?>
+                                </td>
+                                <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono">
+                                    <?= $row['sip_monthly'] !== null ? formatInr($row['sip_monthly']) : '-'?>
+                                </td>
+                                <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono">
+                                    <?= formatInr($row['annual_contribution'])?>
+                                </td>
+                                <td class="px-6 py-4 text-right text-slate-500 font-mono">
+                                    <?= formatInr($row['cumulative_invested'])?>
+                                </td>
+                                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
+                                    <?=!$enable_swp ? 'style="display:none"' : ''?>>
+                                    <?= $row['swp_monthly'] !== null ? formatInr($row['swp_monthly']) : '-'?>
+                                </td>
+                                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col"
+                                    <?=!$enable_swp ? 'style="display:none"' : ''?>>
+                                    <?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-'?>
+                                </td>
+                                <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col" <?=!$enable_swp
+        ? 'style="display:none"' : ''?>>
+                                    <?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-'?>
+                                </td>
+                                <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">
+                                    <?= formatInr($row['interest'])?>
+                                </td>
+                                <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">
+                                    <?= formatInr($row['combined_total'])?>
+                                </td>
+                            </tr>
+                            <?php
+endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
 
     </section><!-- /calculator section -->
@@ -1170,7 +1246,8 @@ foreach ($combined as $row) {
                         SIPs use <strong>rupee cost averaging</strong> and <strong>compounding</strong> to build wealth
                         over time, making them ideal for long-term goals like retirement, education, or wealth creation.
                         As per <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
-                            class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows worldwide crossed <span class="dynamic-amount" data-amount="210000000000"></span>/month in 2025.
+                            class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows worldwide crossed <span
+                            class="dynamic-amount" data-amount="210000000000"></span>/month in 2025.
                         <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Read our complete
                             SIP guide →</a>
                     </p>
@@ -1202,7 +1279,8 @@ foreach ($combined as $row) {
                         <li><span class="font-semibold text-green-700">Regular Income:</span> Create a predictable
                             pension-like cash flow from your mutual fund investments.</li>
                         <li><span class="font-semibold text-green-700">Tax-Efficient Withdrawals:</span> Only the
-                            capital gains portion is taxed (LTCG at 12.5% above <span class="currency-text">$</span>1,500 for equity funds).</li>
+                            capital gains portion is taxed (LTCG at 12.5% above <span
+                                class="currency-text">$</span>1,500 for equity funds).</li>
                         <li><span class="font-semibold text-green-700">Continued Growth:</span> Remaining corpus stays
                             invested and benefits from market growth, potentially outliving you.</li>
                     </ul>
@@ -1216,7 +1294,9 @@ foreach ($combined as $row) {
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100">
                         <div class="text-emerald-600 font-bold text-lg mb-2">Step 1: Enter SIP Details</div>
-                        <p class="text-sm">Set your <strong>monthly SIP amount</strong> (<span class="currency-text">$</span>5 to <span class="dynamic-amount" data-amount="1000000"></span>), investment
+                        <p class="text-sm">Set your <strong>monthly SIP amount</strong> (<span
+                                class="currency-text">$</span>5 to <span class="dynamic-amount"
+                                data-amount="1000000"></span>), investment
                             period (1-50 years), expected annual return rate, and optional <strong>annual step-up
                                 percentage</strong>.</p>
                     </div>
@@ -1274,56 +1354,68 @@ foreach ($combined as $row) {
                     Can You Earn?</h2>
                 <div class="grid md:grid-cols-3 gap-6 not-prose">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-lg font-bold text-emerald-700 mb-2"><span class="currency-text">$</span>50/month for 15 Years</h3>
+                        <h3 class="text-lg font-bold text-emerald-700 mb-2"><span class="currency-text">$</span>50/month
+                            for 15 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
-                            <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold"><span class="dynamic-amount" data-amount="1909000"></span></span></li>
+                            <li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span
+                                        class="dynamic-amount" data-amount="1909000"></span></span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="2141000"></span></span></li>
+                                    class="font-bold text-green-700">+<span class="dynamic-amount"
+                                        data-amount="2141000"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount" data-amount="4050000"></span></span></li>
+                                    Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount"
+                                        data-amount="4050000"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-indigo-100 ring-2 ring-indigo-100">
                         <div class="text-xs font-bold text-indigo-600 mb-1">MOST POPULAR</div>
-                        <h3 class="text-lg font-bold text-indigo-700 mb-2"><span class="currency-text">$</span>100/month for 20 Years</h3>
+                        <h3 class="text-lg font-bold text-indigo-700 mb-2"><span class="currency-text">$</span>100/month
+                            for 20 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
-                            <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold"><span class="dynamic-amount" data-amount="6873000"></span></span></li>
+                            <li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span
+                                        class="dynamic-amount" data-amount="6873000"></span></span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="28500000"></span></span></li>
+                                    class="font-bold text-green-700">+<span class="dynamic-amount"
+                                        data-amount="28500000"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount" data-amount="35400000"></span></span></li>
+                                    Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount"
+                                        data-amount="35400000"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~5.1×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-lg font-bold text-rose-700 mb-2"><span class="currency-text">$</span>25,000/month for 30 Years</h3>
+                        <h3 class="text-lg font-bold text-rose-700 mb-2"><span
+                                class="currency-text">$</span>25,000/month for 30 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
-                            <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold"><span class="dynamic-amount" data-amount="49400000"></span></span></li>
+                            <li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span
+                                        class="dynamic-amount" data-amount="49400000"></span></span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="369099999"></span></span></li>
+                                    class="font-bold text-green-700">+<span class="dynamic-amount"
+                                        data-amount="369099999"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-rose-700"><span class="dynamic-amount" data-amount="418500000"></span></span></li>
+                                    Value:</span> <span class="font-bold text-rose-700"><span class="dynamic-amount"
+                                        data-amount="418500000"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~8.5×</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-teal-100">
                         <div class="text-xs font-bold text-teal-600 mb-1">🌍 GLOBAL EXAMPLE</div>
-                        <h3 class="text-lg font-bold text-teal-700 mb-2"><span class="currency-text">$</span>500/month for 20 Years</h3>
+                        <h3 class="text-lg font-bold text-teal-700 mb-2"><span class="currency-text">$</span>500/month
+                            for 20 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 10% return, 5% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
-                            <li class="flex justify-between"><span>Total Invested:</span> <span
-                                    class="font-bold"><span class="dynamic-amount" data-amount="198396"></span></span></li>
+                            <li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span
+                                        class="dynamic-amount" data-amount="198396"></span></span></li>
                             <li class="flex justify-between"><span>Wealth Gained:</span> <span
-                                    class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="218104"></span></span></li>
+                                    class="font-bold text-green-700">+<span class="dynamic-amount"
+                                        data-amount="218104"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-teal-700"><span class="dynamic-amount" data-amount="416500"></span></span></li>
+                                    Value:</span> <span class="font-bold text-teal-700"><span class="dynamic-amount"
+                                        data-amount="416500"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1×</p>
                     </div>
@@ -1361,14 +1453,17 @@ foreach ($combined as $row) {
                 <h2 id="real-life-success-story" class="text-2xl font-bold text-indigo-700 mb-4">Real-Life Success
                     Story: The "Mr. Sharma" Strategy
                 </h2>
-                <p class="mb-4">Meet Mr. Sharma (30). He decides to invest <strong><span class="currency-text">$</span>100/month</strong> in an
+                <p class="mb-4">Meet Mr. Sharma (30). He decides to invest <strong><span
+                            class="currency-text">$</span>100/month</strong> in an
                     Equity Mutual Fund via SIP for his retirement at age 60.</p>
                 <ul class="list-disc pl-5 space-y-2 mb-4">
-                    <li><strong>Goal:</strong> Retire with <span class="dynamic-amount" data-amount="50000000"></span>.</li>
+                    <li><strong>Goal:</strong> Retire with <span class="dynamic-amount" data-amount="50000000"></span>.
+                    </li>
                     <li><strong>Strategy:</strong> Step-up SIP. Increase investment by 10% every year as his salary
                         grows.</li>
                     <li><strong>Result:</strong> By age 60, avoiding the urge to stop during market lows, his corpus
-                        grows to <span class="dynamic-amount" data-amount="3540000"></span> — and with SWP at <span class="currency-text">$</span>500/month, he earns a steady retirement income while
+                        grows to <span class="dynamic-amount" data-amount="3540000"></span> — and with SWP at <span
+                            class="currency-text">$</span>500/month, he earns a steady retirement income while
                         the corpus continues to grow.</li>
                 </ul>
                 <p class="font-semibold">Moral: It's not just about starting early — it's about increasing your
@@ -1416,7 +1511,8 @@ foreach ($combined as $row) {
                             </tr>
                             <tr class="hover:bg-indigo-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Taxation</td>
-                                <td class="py-4 px-6">LTCG > <span class="currency-text">$</span>1.25L taxed @ 12.5%</td>
+                                <td class="py-4 px-6">LTCG > <span class="currency-text">$</span>1.25L taxed @ 12.5%
+                                </td>
                                 <td class="py-4 px-6 font-bold text-emerald-600">Exempt (EEE)</td>
                                 <td class="py-4 px-6">Taxed as Income</td>
                             </tr>
@@ -1425,290 +1521,13 @@ foreach ($combined as $row) {
                 </div>
             </div>
 
-            <!-- FAQ Section -->
-            <div class="mt-12 border-t border-gray-200 pt-8">
-                <h2 id="faq" class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
-                <div class="space-y-3">
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            Can I start an SWP immediately after my SIP ends?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Yes, absolutely. This is a common strategy for retirement planning. You accumulate a corpus
-                            using SIP during your working years and then switch to SWP to generate a monthly
-                            pension-like income post-retirement. Our calculator specifically models this seamless
-                            transition.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            Is SWP better than a fixed deposit interest?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Generally, yes. SWP from equity or hybrid mutual funds has the potential to offer higher
-                            returns than fixed deposits over the long term. Additionally, SWP is more tax-efficient
-                            because you are only taxed on the capital gains portion of the withdrawal, whereas FD
-                            interest is fully taxable at your slab rate.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            How does the "Step-up" feature work?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            A "Step-up" SIP means you increase your monthly investment amount by a certain percentage
-                            every year (e.g., as your salary increases). This significantly boosts your final corpus.
-                            Similarly, a "Step-up" SWP means you increase your withdrawal amount annually to combat
-                            inflation.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            What is a safe withdrawal rate for SWP?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Financial experts often recommend the "4% rule," suggesting you withdraw 4% of your corpus
-                            annually. However, this depends on market conditions, your expected lifespan, and the
-                            sequence of investment returns you experience. A conservative approach is to stress-test
-                            your withdrawal rate against historical market downturns.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            Which is better: SIP or Lump Sum?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            In a rising market, Lump Sum often wins mathematically. However, SIP is psychologically
-                            easier and safer for volatile markets as it benefits from <strong>Dollar Cost
-                                Averaging</strong>, reducing the risk of investing a large amount at a market peak.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            Can I lose money in SIP?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Yes, in the short term. Since SIPs in equity mutual funds are market-linked, the value can
-                            fluctuate. However, historical data shows that over the long term (7-10+ years), the
-                            probability of negative returns in a diversified fund is negligible.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            What is the minimum amount to start a SIP worldwide?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Most mutual fund houses worldwide allow SIPs starting from as low as
-                            <strong><span class="currency-text">$</span>5/month</strong>. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at
-                            <span class="currency-text">$</span>1/month. The key is to start early — even <span class="currency-text">$</span>5/month over 20 years at 12% can grow to <span class="dynamic-amount" data-amount="500000">+</span>.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            How do I choose the right mutual fund for my SIP?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Consider: (1) <strong>Risk profile</strong> — large-cap for stability, small-cap for
-                            aggressive growth; (2) <strong>Expense ratio</strong> — lower is better, prefer direct
-                            plans; (3) <strong>Track record</strong> — check 5-7 year consistency, not just 1-year
-                            returns; (4) <strong>Fund manager experience</strong>. Use AMFI's mutual fund comparison
-                            tools for data.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            How are SWP withdrawals taxed worldwide (2026)?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition=" transform
-                                duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            SWP withdrawals are treated as partial redemptions. For <strong>equity funds</strong>: STCG
-                            (held &lt;1 year) taxed at 20%, LTCG taxed at 12.5% on gains above <span class="currency-text">$</span>1,500/year. For
-                            <strong>debt funds</strong> (purchased after Apr 2023): taxed at your income slab rate. Only
-                            the <em>capital gains portion</em> of each withdrawal is taxable — the principal component
-                            is tax-free.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            How long should I continue my SIP for best results?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            For equity mutual funds, <strong>7-10 years minimum</strong> is recommended to ride out
-                            market cycles and benefit from compounding. Historical data shows that Nifty 50 SIPs held
-                            for 10+ years have never delivered negative returns. For retirement goals, 20-30 year SIPs
-                            yield the best compounding effect.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            Is SIP better than a Recurring Deposit (RD)?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            For <strong>long-term goals (5+ years)</strong>, equity SIPs have historically outperformed
-                            RDs by 5-8% annually. RDs offer guaranteed returns (~6-7%) but are fully taxable. SIPs in
-                            equity funds offer higher growth potential with LTCG tax benefits, but carry market risk.
-                            For short-term goals (1-3 years), RDs or debt fund SIPs may be safer.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            What step-up percentage should I use for my SIP?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            A <strong>10% annual step-up</strong> is the most common recommendation — roughly matching
-                            average salary increments worldwide. Conservative investors can use 5-7%, while aggressive
-                            savers might go up to 15-20%. Even a 5% step-up dramatically outperforms a flat SIP over 20+
-                            years. Use our calculator above to compare different step-up rates.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            Can I stop or pause my SIP anytime?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Yes, SIPs are completely flexible. You can <strong>pause, stop, or modify</strong> your SIP
-                            at any time without penalties. Your existing invested units remain in the fund and continue
-                            growing. However, stopping during market downturns is the most common mistake — it means you
-                            miss buying units at lower prices, which is exactly when SIPs are most beneficial.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            Will my SWP deplete my corpus completely?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            It depends on your <strong>withdrawal rate vs. investment return</strong>. If you withdraw
-                            less than what your corpus earns, it can last indefinitely. The "4% rule" suggests
-                            withdrawing 4% annually to sustain a 30-year retirement. Use our calculator to stress-test
-                            different withdrawal amounts and see exactly when your corpus would run out.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            Can NRIs invest in SIP worldwide?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Yes, NRIs can invest in mutual fund SIPs worldwide through their <strong>NRE or NRO
-                                accounts</strong>. Most AMCs accept NRI investments, though some sectoral/thematic funds
-                            may have restrictions for US/Canada-based NRIs due to FATCA regulations. Tax treatment
-                            follows India's DTAA provisions with the NRI's country of residence.
-                        </div>
-                    </details>
-                    <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <summary
-                            class="flex items-center justify-between cursor-pointer px-6 py-4 font-bold text-slate-800 hover:text-indigo-600 transition-colors">
-                            How does inflation affect my SIP and SWP planning?
-                            <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform duration-200"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </summary>
-                        <div class="px-6 pb-5 text-gray-600 leading-relaxed">
-                            Inflation (typically 5-6% worldwide) erodes purchasing power over time. At 6% inflation, <span class="dynamic-amount" data-amount="100000"></span> today is worth only <span class="currency-text">$</span>310 in 20 years. This is why <strong>step-up SIPs</strong> are
-                            critical — they increase your investment to outpace inflation. For SWP, use the step-up
-                            withdrawal feature to increase monthly withdrawals by 5-7% annually to maintain your
-                            lifestyle.
-                        </div>
-                    </details>
-                </div>
-            </div>
-
-            <p class="text-center mt-8">Use our <a href="/#calculator-section" class="text-indigo-600 hover:underline font-medium">advanced
+            <p class="text-center mt-8">Use our <a href="/#calculator-section"
+                    class="text-indigo-600 hover:underline font-medium">advanced
                     SIP & SWP calculator</a> to model your investments and plan your
                 withdrawals to see how you can achieve your financial goals, whether it's building a retirement
                 corpus, funding your child's education, or creating a passive income stream.
-                <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Learn more about how SIPs
-                    work →</a>
+                <a href="/faq.php" class="text-indigo-600 hover:underline font-medium">Have more questions? Check our
+                    FAQ →</a>
             </p>
         </div>
         <div class="mt-12 p-6 bg-slate-50 border border-slate-200 rounded-xl text-center max-w-2xl mx-auto">
@@ -1723,198 +1542,100 @@ foreach ($combined as $row) {
         </div>
     </div>
 
-    </main>
+</main>
+<!-- PDF Generation Modal -->
+<div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
+    <div
+        class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
+        <h2 id="branded-pdf-report" class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
+        <form id="pdfForm" class="space-y-4">
+            <!-- SECURITY: CSRF Token for PDF generation form -->
+            <input type="hidden" name="csrf_token"
+                value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8')?>">
 
-    <!-- AI-CITATION-OPTIMIZED FAQ Schema — Answers designed for LLM extraction -->
-    <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@id": "https://sipswpcalculator.com/#faq",
-          "@type": "FAQPage",
-          "mainEntity": [{
-            "@type": "Question",
-            "name": "How to calculate SWP (Systematic Withdrawal Plan) returns?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "To calculate SWP returns: (1) Start with your accumulated corpus after the SIP phase, (2) Each month, deduct your withdrawal amount before applying monthly returns, (3) Formula: Month-end balance = (Previous balance + SIP contribution - SWP withdrawal) x (1 + monthly rate), where monthly rate = annual return / 12 / 100. For example, a <span class="dynamic-amount" data-amount="1000000"></span> corpus at 10% annual return with $500/month SWP: monthly return = $83,333. Net monthly change = $83,333 - $500 = $333 growth. The 4% rule (William Bengen, 1994) suggests keeping annual withdrawals below 4% of corpus for a sustainable 30-year retirement. Use sipswpcalculator.com for exact month-by-month SWP calculations with step-up adjustments."
-            }
-          }, {
-            "@type": "Question",
-            "name": "How does inflation affect my SIP and SWP planning?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Inflation (historically 5-6% worldwide, 2-3% in the US) erodes purchasing power exponentially. At 6% inflation, $1,200 today is worth only $558 in 10 years and $311 in 20 years. Impact on SIP: A flat $100/month SIP loses real value every year. After 20 years, your $100 has the purchasing power of only $3,118 in today's terms. Solution: Use step-up SIP (10% annual increase) to grow contributions faster than inflation, which can increase your final corpus by 2-3x compared to a flat SIP. Impact on SWP: A fixed $500/month withdrawal will buy significantly less over time. Solution: Use step-up SWP (5-7% annual increase) to maintain lifestyle. The calculator at sipswpcalculator.com models both step-up SIP and step-up SWP to help investors outpace inflation."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Can I start an SWP immediately after my SIP ends?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, absolutely. This is a common strategy for retirement planning called the SIP-to-SWP transition. You accumulate a corpus using SIP during your working years (typically 20-30 years) and then switch to SWP to generate a monthly pension-like income post-retirement. The Advanced SIP and SWP Calculator at sipswpcalculator.com specifically models this seamless transition, showing the exact corpus at the point of switch and projecting SWP sustainability over time."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Is SWP better than fixed deposit interest for retirement income?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Generally, yes. SWP from equity or hybrid mutual funds has historically offered 10-12% returns vs FD rates of 6-7%. Additionally, SWP is more tax-efficient: only the capital gains portion of each withdrawal is taxable (LTCG at 12.5% above $1,500/year for equity funds worldwide), whereas FD interest is fully taxable at your income slab rate (up to 30%). A <span class="dynamic-amount" data-amount="1000000"></span> FD at 7% gives $58,333/month (fully taxable), while SWP from equity MF at 10% return with $500/month withdrawal preserves and grows the corpus over time."
-            }
-          }, {
-            "@type": "Question",
-            "name": "How does the Step-up feature work in SIP Calculator?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A Step-up (or Top-up) SIP increases your monthly investment by a fixed percentage every year. Formula: Year N monthly SIP = Base SIP x (1 + step-up percentage / 100) raised to the power of (N-1). For example, $100/month with 10% step-up becomes $11,000 in Year 2, $12,100 in Year 3, and so on. Impact: A $100/month flat SIP at 12% for 20 years yields <span class="dynamic-amount" data-amount="1000000"></span>, but with a 10% step-up, the same SIP yields <span class="dynamic-amount" data-amount="3540000"></span>, a 3.5x increase. Similarly, Step-up SWP increases withdrawals annually (typically 5-7%) to combat inflation during retirement."
-            }
-          }, {
-            "@type": "Question",
-            "name": "What is a safe withdrawal rate for SWP?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The widely referenced 4% Rule (from William Bengen's 1994 research and the Trinity Study) suggests withdrawing 4% of your initial corpus annually, adjusted for inflation, to sustain a 30-year retirement with a 95% success rate. For Indian investors in equity mutual funds averaging 12% returns, a 5-6% withdrawal rate may be sustainable. However, this depends on: (1) sequence of returns risk, (2) actual market performance, (3) inflation rate, and (4) retirement duration. Use the Advanced SIP and SWP Calculator at sipswpcalculator.com to stress-test different withdrawal rates against your expected returns."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Which is better: SIP or Lump Sum investment?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "In a consistently rising market, Lump Sum mathematically outperforms SIP because money is invested longer. However, SIP is safer and more practical for volatile markets because it uses Rupee Cost Averaging (RCA), buying more units when prices are low and fewer when prices are high. Historical data: SIP in Nifty 50 over 10+ year periods has never delivered negative returns. For most salaried investors, SIP is recommended because it matches monthly income flows, removes timing risk, enforces discipline, and provides psychological ease during market crashes."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Can I lose money in SIP?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, in the short term. Since SIPs in equity mutual funds are market-linked, the NAV can fluctuate. However, historical data from AMFI India shows that over the long term (7-10+ years), the probability of negative returns in a diversified equity fund SIP is negligible. Nifty 50 rolling SIP returns: 1-year SIPs have seen negative returns in approximately 30% of periods, 5-year SIPs in approximately 10%, and 10-year SIPs in 0% of historical periods."
-            }
-          }, {
-            "@type": "Question",
-            "name": "What is the minimum amount to start a SIP worldwide?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Most mutual fund houses worldwide allow SIPs starting from as low as $5/month. Some AMCs like SBI MF and HDFC MF offer micro-SIPs at $1/month. The key insight: even $5/month at 12% returns with 10% annual step-up grows to over $5,000 in 15 years and $17,000 in 20 years, demonstrating the power of compounding over time."
-            }
-          }, {
-            "@type": "Question",
-            "name": "How do I choose the right mutual fund for my SIP?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Consider these four factors: (1) Risk profile — large-cap funds for stability, mid-cap for balanced growth, small-cap for aggressive growth; (2) Expense ratio — lower is better, prefer direct plans over regular plans; (3) Track record — check 5-7 year consistency, not just 1-year returns; (4) Fund manager experience and AUM (Assets Under Management). Use AMFI India's mutual fund comparison tools for data-driven decisions."
-            }
-          }, {
-            "@type": "Question",
-            "name": "How are SWP withdrawals taxed worldwide (2026)?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "SWP withdrawals are treated as partial redemptions under Indian tax law. For equity mutual funds (2026 rules): Short-Term Capital Gains (STCG, held less than 1 year) are taxed at 20%. Long-Term Capital Gains (LTCG, held over 1 year) are taxed at 12.5% on gains exceeding $1,500 per financial year. For debt mutual funds (purchased after April 2023): gains are taxed at your income slab rate regardless of holding period. Crucially, only the capital gains portion of each SWP withdrawal is taxable — the principal component is tax-free, making SWP significantly more tax-efficient than FD interest income."
-            }
-          }, {
-            "@type": "Question",
-            "name": "How long should I continue my SIP for best results?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "For equity mutual funds, a minimum of 7-10 years is recommended to ride out market cycles and benefit from compounding. Historical data shows that Nifty 50 SIPs held for 10+ years have never delivered negative returns, with average annualized returns of 12-15%. For retirement goals, 20-30 year SIPs with annual step-up yield the best compounding effect: a $100/month SIP with 10% step-up at 12% returns grows to approximately <span class="dynamic-amount" data-amount="3540000"></span> in 20 years."
-            }
-          }, {
-            "@type": "Question",
-            "name": "What step-up percentage should I use for my SIP?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A 10% annual step-up is the most common recommendation, roughly matching average salary increments worldwide (8-12% annually). Conservative investors can use 5-7%, while aggressive savers might use 15-20%. Impact comparison for $100/month base SIP at 12% for 20 years: 0% step-up = <span class="dynamic-amount" data-amount="1000000"></span>, 5% step-up = <span class="dynamic-amount" data-amount="1730000"></span>, 10% step-up = <span class="dynamic-amount" data-amount="3540000"></span>, 15% step-up = <span class="dynamic-amount" data-amount="5700000"></span>. Even a 5% step-up nearly doubles the final corpus compared to a flat SIP."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Can NRIs invest in SIP worldwide?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, NRIs can invest in mutual fund SIPs worldwide through their NRE (repatriable) or NRO (non-repatriable) bank accounts. Most AMCs accept NRI investments, though some sectoral or thematic funds may have restrictions for US/Canada-based NRIs due to FATCA (Foreign Account Tax Compliance Act) regulations. Tax treatment follows India's DTAA (Double Taxation Avoidance Agreement) provisions with the NRI's country of residence, with TDS deducted at source on redemptions."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Is SIP better than a Recurring Deposit (RD)?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "For long-term goals (5+ years), equity SIPs have historically outperformed RDs by 5-8% annually. Comparison: RDs offer guaranteed returns of 6-7% but are fully taxable at income slab rate. Equity SIPs offer potential returns of 12-15% with favorable LTCG taxation (12.5% above $1,500). Example: $100/month for 10 years — RD at 7% yields $17,300, equity SIP at 12% yields $23,200 (34% more). For short-term goals (1-3 years), RDs or debt fund SIPs may be safer due to lower volatility."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Can I stop or pause my SIP anytime?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, SIPs are completely flexible. You can pause, stop, or modify your SIP amount at any time without penalties or exit loads on existing investments (exit loads may apply only on redemption of units held less than 1 year). Your existing invested units remain in the fund and continue to grow with market returns. However, stopping during market downturns is the most common investor mistake — it means you miss buying units at lower prices through rupee cost averaging, which is exactly when SIPs are most beneficial."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Will my SWP deplete my corpus completely?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "It depends on your withdrawal rate versus your investment return. If you withdraw less than what your corpus earns, it can last indefinitely. The 4% Rule suggests withdrawing 4% of corpus annually for a sustainable 30-year retirement. Example: <span class="dynamic-amount" data-amount="1000000"></span> corpus at 10% returns with $400/month withdrawal — the corpus actually grows because annual returns ($10,000) exceed annual withdrawals ($4,800). At $1,200/month withdrawal, the corpus depletes in approximately 12 years. Use the calculator at sipswpcalculator.com to stress-test exactly when your corpus would be exhausted under different scenarios."
-            }
-          }]
+            <div>
+                <label for="clientName" class="block text-sm font-medium mb-1 text-gray-600">Client Name</label>
+                <input type="text" id="clientName" name="clientName" placeholder="e.g., John Doe"
+                    class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition">
+            </div>
+            <div>
+                <label for="advisorName" class="block text-sm font-medium mb-1 text-gray-600">Your Name / Company
+                    Name</label>
+                <input type="text" id="advisorName" name="advisorName" placeholder="e.g., Jane Smith Financials"
+                    class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition">
+            </div>
+            <div>
+                <label for="advisorLogo" class="block text-sm font-medium mb-1 text-gray-600">Your Logo</label>
+                <input type="file" id="advisorLogo" name="advisorLogo" accept="image/png, image/jpeg"
+                    class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100">
+            </div>
+            <div>
+                <label for="customDisclaimer" class="block text-sm font-medium mb-1 text-gray-600">Custom Disclaimer
+                    / Message</label>
+                <textarea id="customDisclaimer" name="customDisclaimer" rows="3"
+                    placeholder="e.g., This projection is based on the agreed-upon assumptions..."
+                    class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition"></textarea>
+            </div>
+            <div class="flex justify-end gap-4 pt-4">
+                <button type="button" id="closePdfModalBtn"
+                    class="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg transition">Cancel</button>
+                <button type="submit" id="generatePdfBtn"
+                    class="px-6 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg transition">Download
+                    PDF</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<script>
+    // Pass chart data to the external script
+    window.chartData = {
+        years: <?= json_encode(array_values($years_data))?>,
+        cumulative: <?= json_encode(array_values($cumulative_numbers))?>,
+        corpus: <?= json_encode(array_values($combined_numbers))?>,
+        swp: <?= json_encode(array_values($swp_numbers))?>
+    };
+</script>
+<script defer src="script.js?v=<?= filemtime(__DIR__ . '/script.js')?>"></script>
+
+<script>
+    // ── Smart Nudge: Rate Benchmark Popover ────────────────────────────────
+    (function () {
+        const btn = document.getElementById('rate-nudge-btn');
+        const popover = document.getElementById('rate-nudge-popover');
+        const closeBtn = document.getElementById('rate-nudge-close');
+        const rateInput = document.getElementById('rate');
+        const rateSlider = document.getElementById('rate_range');
+
+        if (!btn || !popover) return;
+
+        function openPopover() {
+            popover.classList.remove('hidden');
+            btn.setAttribute('aria-expanded', 'true');
         }
-        </script>
+        function closePopover() {
+            popover.classList.add('hidden');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+        function setRate(val) {
+            if (rateInput) { rateInput.value = val; rateInput.dispatchEvent(new Event('input', { bubbles: true })); }
+            if (rateSlider) { rateSlider.value = val; rateSlider.dispatchEvent(new Event('input', { bubbles: true })); }
+            closePopover();
+        }
 
-    <?php include 'footer.php'; ?>
+        btn.addEventListener('click', e => { e.stopPropagation(); popover.classList.contains('hidden') ? openPopover() : closePopover(); });
+        if (closeBtn) closeBtn.addEventListener('click', closePopover);
 
-    </div>
+        document.getElementById('use-india-rate')?.addEventListener('click', () => setRate(12));
+        document.getElementById('use-us-rate')?.addEventListener('click', () => setRate(10));
 
-    <!-- PDF Generation Modal -->
-    <div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
-        <div
-            class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
-            <h2 id="branded-pdf-report" class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
-            <form id="pdfForm" class="space-y-4">
-                <!-- SECURITY: CSRF Token for PDF generation form -->
-                <input type="hidden" name="csrf_token"
-                    value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
-
-                <div>
-                    <label for="clientName" class="block text-sm font-medium mb-1 text-gray-600">Client Name</label>
-                    <input type="text" id="clientName" name="clientName" placeholder="e.g., John Doe"
-                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition">
-                </div>
-                <div>
-                    <label for="advisorName" class="block text-sm font-medium mb-1 text-gray-600">Your Name / Company
-                        Name</label>
-                    <input type="text" id="advisorName" name="advisorName" placeholder="e.g., Jane Smith Financials"
-                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition">
-                </div>
-                <div>
-                    <label for="advisorLogo" class="block text-sm font-medium mb-1 text-gray-600">Your Logo</label>
-                    <input type="file" id="advisorLogo" name="advisorLogo" accept="image/png, image/jpeg"
-                        class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100">
-                </div>
-                <div>
-                    <label for="customDisclaimer" class="block text-sm font-medium mb-1 text-gray-600">Custom Disclaimer
-                        / Message</label>
-                    <textarea id="customDisclaimer" name="customDisclaimer" rows="3"
-                        placeholder="e.g., This projection is based on the agreed-upon assumptions..."
-                        class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition"></textarea>
-                </div>
-                <div class="flex justify-end gap-4 pt-4">
-                    <button type="button" id="closePdfModalBtn"
-                        class="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg transition">Cancel</button>
-                    <button type="submit" id="generatePdfBtn"
-                        class="px-6 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg transition">Download
-                        PDF</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <script>
-        // Pass chart data to the external script
-        window.chartData = {
-            years: <?php echo json_encode(array_values($years_data)); ?>,
-            cumulative: <?php echo json_encode(array_values($cumulative_numbers)); ?>,
-            corpus: <?php echo json_encode(array_values($combined_numbers)); ?>,
-            swp: <?php echo json_encode(array_values($swp_numbers)); ?>
-        };
-    </script>
-    <script defer src="script.js?v=<?= filemtime(__DIR__ . '/script.js') ?>"></script>
-
-</body>
-
-</html>
+        document.addEventListener('click', e => { if (!popover.contains(e.target) && e.target !== btn) closePopover(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopover(); });
+    })();
+</script>
+<?php
+$page_content = ob_get_clean();
+require_once __DIR__ . '/includes/layout.php';
+?>
