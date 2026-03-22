@@ -42,11 +42,12 @@ $nav_items = [
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
         <a href="/#calculator-section" class="flex items-center space-x-3 rtl:space-x-reverse group">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                class="w-10 h-10 rounded-xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
+                style="width: 40px; height: 40px;"
+                class="rounded-xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
                 role="img" aria-label="SIP SWP Calculator Logo">
-                <rect width="24" height="24" rx="6" fill="url(#logo-grad)" />
+                <rect width="24" height="24" rx="6" fill="url(#logo-grad-header)" />
                 <defs>
-                    <linearGradient id="logo-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <linearGradient id="logo-grad-header" x1="0%" y1="100%" x2="100%" y2="0%">
                         <stop offset="0%" stop-color="#059669" />
                         <stop offset="100%" stop-color="#2dd4bf" />
                     </linearGradient>
@@ -68,7 +69,7 @@ $nav_items = [
         <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
             <?php foreach ($nav_items as $item): ?>
             <a href="<?= $item['href']?>"
-                class="<?= $active_page === $item['id'] ? 'text-indigo-600 font-semibold' : 'text-slate-600 hover:text-indigo-600'?> transition-colors">
+                class="<?= $active_page === $item['id'] ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600'?> transition-colors">
                 <?= $item['label']?>
             </a>
             <?php
@@ -77,7 +78,7 @@ endforeach; ?>
 
         <!-- Mobile hamburger button -->
         <button id="mobile-menu-btn" type="button"
-            class="sm:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+            class="sm:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
             aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation menu">
             <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 aria-hidden="true">

@@ -14,12 +14,12 @@
 
 /* 1. Reset & Base */
 :root {
-    /* SaaS Premium Gradients */
-    --gradient-saas: linear-gradient(135deg, #0f172a 0%, #312e81 50%, #1e293b 100%);
-    --gradient-saas-card: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
+    /* SaaS Premium Gradients (Updated to Emerald/Teal) */
+    --gradient-saas: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #059669 100%);
+    --gradient-saas-card: linear-gradient(135deg, rgba(6, 78, 59, 0.9) 0%, rgba(5, 150, 105, 0.8) 100%);
     
-    /* Primary Brand Gradient - Refined */
-    --gradient-primary: linear-gradient(135deg, #4338ca 0%, #312e81 100%);
+    /* Primary Brand Gradient - Logo emerald #059669 */
+    --gradient-primary: linear-gradient(135deg, #059669 0%, #047857 100%);
 
     /* Accents */
     --color-acc-growth: #10b981;
@@ -41,8 +41,8 @@
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.05);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-    --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.15);
-    /* Indigo Glow */
+    --shadow-glow: 0 0 20px rgba(5, 150, 105, 0.15);
+    /* Emerald Glow */
 
     /* Glassmorphism */
     --glass-bg: rgba(255, 255, 255, 0.9);

@@ -7,13 +7,14 @@ $envPath = __DIR__ . '/.env';
 if (file_exists($envPath)) {
     $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($lines as $line) {
-        if (strpos(trim($line), '#') === 0 || !strpos($line, '=')) continue;
+        if (strpos(trim($line), '#') === 0 || !strpos($line, '='))
+            continue;
         $parts = explode('=', $line, 2);
         if (count($parts) === 2) {
             $name = trim($parts[0]);
             $value = trim($parts[1]);
             // Filter out possible quotes
-            $value = trim($value, '"\''); 
+            $value = trim($value, '"\'');
             putenv("$name=$value");
             $_ENV[$name] = $value;
             $_SERVER[$name] = $value;
@@ -61,7 +62,8 @@ if (!file_exists($dbPath)) {
 // ── SCHEMA VALIDATION: Instantiate logger to ensure required columns exist ──
 try {
     $logger = new AnonymizedInsightLogger($dbPath);
-} catch (\Throwable $e) {
+}
+catch (\Throwable $e) {
     error_log("Admin Insights Schema Validation Error: " . $e->getMessage());
 }
 
@@ -76,40 +78,66 @@ $pdo->exec("CREATE INDEX IF NOT EXISTS idx_calc_currency ON user_calculations(cu
 $pdo->exec("CREATE INDEX IF NOT EXISTS idx_calc_type ON user_calculations(calc_type)");
 
 // ─────────────────────────────────────────────────────────────
-// 3. DATA AGGREGATION QUERIES
+// 3. TIME RANGE FILTERING
 // ─────────────────────────────────────────────────────────────
+$time_ranges = [
+    '24h' => ['label' => '24 Hours', 'interval' => '-1 day', 'chart_days' => 1],
+    '48h' => ['label' => '48 Hours', 'interval' => '-2 days', 'chart_days' => 2],
+    '72h' => ['label' => '72 Hours', 'interval' => '-3 days', 'chart_days' => 3],
+    '1w' => ['label' => '1 Week', 'interval' => '-7 days', 'chart_days' => 7],
+    '1m' => ['label' => '1 Month', 'interval' => '-30 days', 'chart_days' => 30],
+    '6m' => ['label' => '6 Months', 'interval' => '-180 days', 'chart_days' => 180],
+    '1y' => ['label' => '1 Year', 'interval' => '-365 days', 'chart_days' => 365],
+];
 
-// -- KPI: Calculation counts by time window ----
-$counts = [];
-foreach (['24 hours' => '-1 day', '7 days' => '-7 days', '30 days' => '-30 days'] as $label => $interval) {
-    $stmt = $pdo->prepare("SELECT COUNT(*) AS cnt FROM user_calculations WHERE created_at >= datetime('now', :interval)");
-    $stmt->execute([':interval' => $interval]);
-    $counts[$label] = (int)$stmt->fetchColumn();
+$current_range_key = $_GET['range'] ?? '1m';
+if (!isset($time_ranges[$current_range_key])) {
+    $current_range_key = '1m';
 }
+$current_range = $time_ranges[$current_range_key];
+$current_interval = $current_range['interval'];
 
-// -- KPI: Average Step-Up % ----
-$avgStepUp = (float)$pdo->query("SELECT COALESCE(AVG(step_up_pct), 0) FROM user_calculations WHERE step_up_pct > 0")->fetchColumn();
+// ─────────────────────────────────────────────────────────────
+// 4. DATA AGGREGATION QUERIES (Filtered by selected range)
+// ─────────────────────────────────────────────────────────────
+$where_clause = "WHERE created_at >= datetime('now', :interval)";
+$params = [':interval' => $current_interval];
 
-// -- KPI: Total all-time ----
+// -- KPI: Total calculations in selected range ----
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause");
+$stmt->execute($params);
+$totalInRange = (int)$stmt->fetchColumn();
+
+// -- KPI: Average Step-Up % in range ----
+$stmt = $pdo->prepare("SELECT COALESCE(AVG(step_up_pct), 0) FROM user_calculations $where_clause AND step_up_pct > 0");
+$stmt->execute($params);
+$avgStepUp = (float)$stmt->fetchColumn();
+
+// -- KPI: Total all-time (unfiltered) ----
 $totalAllTime = (int)$pdo->query("SELECT COUNT(*) FROM user_calculations")->fetchColumn();
 
-// -- KPI: Calculations by type ----
-$calcTypeBreakdown = $pdo->query("SELECT calc_type, COUNT(*) AS cnt FROM user_calculations GROUP BY calc_type ORDER BY cnt DESC")->fetchAll();
+// -- KPI: Calculations by type in range ----
+$stmt = $pdo->prepare("SELECT calc_type, COUNT(*) AS cnt FROM user_calculations $where_clause GROUP BY calc_type ORDER BY cnt DESC");
+$stmt->execute($params);
+$calcTypeBreakdown = $stmt->fetchAll();
 
-// -- KPI: PDF Downloads & Conversion Rate (Hardened with try-catch) ----
+// -- KPI: PDF Downloads & Conversion Rate in range ----
 $totalPdfDownloads = 0;
 $conversionRate = 0.0;
 try {
-    $totalPdfDownloads = (int)$pdo->query("SELECT COUNT(*) FROM user_calculations WHERE pdf_downloaded = 1")->fetchColumn();
-    $conversionRate = $totalAllTime > 0 ? round(($totalPdfDownloads / $totalAllTime) * 100, 1) : 0.0;
-} catch (\Throwable $e) {
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND pdf_downloaded = 1");
+    $stmt->execute($params);
+    $totalPdfDownloads = (int)$stmt->fetchColumn();
+    $conversionRate = $totalInRange > 0 ? round(($totalPdfDownloads / $totalInRange) * 100, 1) : 0.0;
+}
+catch (\Throwable $e) {
     error_log("Query Error (pdf_downloaded): " . $e->getMessage());
 }
 
-// -- Table: Top 10 Referrers (Hardened with try-catch) ----
+// -- Table: Top 10 Referrers in range ----
 $topReferrers = [];
 try {
-    $topReferrers = $pdo->query("
+    $stmt = $pdo->prepare("
         SELECT
             CASE
                 WHEN referrer IS NULL OR referrer = '' THEN '(direct / unknown)'
@@ -117,53 +145,75 @@ try {
             END AS source,
             COUNT(*) AS cnt
         FROM user_calculations
+        $where_clause
         GROUP BY source
         ORDER BY cnt DESC
         LIMIT 10
-    ")->fetchAll();
-} catch (\Throwable $e) {
+    ");
+    $stmt->execute($params);
+    $topReferrers = $stmt->fetchAll();
+}
+catch (\Throwable $e) {
     error_log("Query Error (referrer): " . $e->getMessage());
 }
 
-// -- Chart: Daily calculation volume (last 30 days) ----
-$dailyVolume = $pdo->query("
+// -- Chart: Calculation volume in range ----
+$stmt = $pdo->prepare("
     SELECT DATE(created_at) AS day, COUNT(*) AS cnt
     FROM user_calculations
-    WHERE created_at >= datetime('now', '-30 days')
+    $where_clause
     GROUP BY DATE(created_at)
     ORDER BY day ASC
-")->fetchAll();
+");
+$stmt->execute($params);
+$dailyVolume = $stmt->fetchAll();
 
-// -- Chart: Currency distribution ----
-$currencyDist = $pdo->query("
+// -- Chart: Currency distribution in range ----
+$stmt = $pdo->prepare("
     SELECT UPPER(COALESCE(currency, 'UNKNOWN')) AS currency, COUNT(*) AS cnt
     FROM user_calculations
+    $where_clause
     GROUP BY UPPER(COALESCE(currency, 'UNKNOWN'))
     ORDER BY cnt DESC
-")->fetchAll();
+");
+$stmt->execute($params);
+$currencyDist = $stmt->fetchAll();
 
-// -- Table: Top 10 SWP target corpus amounts (with currency) ----
-$topCorpus = $pdo->query("
+// -- Table: Top 10 SWP target corpus amounts in range ----
+$stmt = $pdo->prepare("
     SELECT amount, UPPER(COALESCE(currency, 'INR')) AS currency, COUNT(*) AS frequency
     FROM user_calculations
-    WHERE calc_type = 'SWP' AND amount IS NOT NULL
+    $where_clause AND calc_type = 'SWP' AND amount IS NOT NULL
     GROUP BY amount, UPPER(COALESCE(currency, 'INR'))
     ORDER BY frequency DESC
     LIMIT 10
-")->fetchAll();
+");
+$stmt->execute($params);
+$topCorpus = $stmt->fetchAll();
 
-// -- KPI: Step-Up Adoption Rate (% of SIP calcs with step_up_pct > 0) ----
-$totalSIP = (int)$pdo->query("SELECT COUNT(*) FROM user_calculations WHERE calc_type = 'SIP'")->fetchColumn();
-$stepUpSIP = (int)$pdo->query("SELECT COUNT(*) FROM user_calculations WHERE calc_type = 'SIP' AND step_up_pct > 0")->fetchColumn();
+// -- KPI: Step-Up Adoption Rate in range ----
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND calc_type = 'SIP'");
+$stmt->execute($params);
+$totalSIP = (int)$stmt->fetchColumn();
+
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND calc_type = 'SIP' AND step_up_pct > 0");
+$stmt->execute($params);
+$stepUpSIP = (int)$stmt->fetchColumn();
+
 $flatSIP = $totalSIP - $stepUpSIP;
 $stepUpAdoptionRate = $totalSIP > 0 ? round(($stepUpSIP / $totalSIP) * 100, 1) : 0.0;
 
-// -- KPI: Average Plan Duration (SIP & SWP separately) ----
-$avgDurationSIP = (float)$pdo->query("SELECT COALESCE(AVG(duration), 0) FROM user_calculations WHERE calc_type = 'SIP'")->fetchColumn();
-$avgDurationSWP = (float)$pdo->query("SELECT COALESCE(AVG(duration), 0) FROM user_calculations WHERE calc_type = 'SWP'")->fetchColumn();
+// -- KPI: Average Plan Duration in range ----
+$stmt = $pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations $where_clause AND calc_type = 'SIP'");
+$stmt->execute($params);
+$avgDurationSIP = (float)$stmt->fetchColumn();
 
-// -- Chart: Duration Distribution (histogram buckets) ----
-$durationDist = $pdo->query("
+$stmt = $pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations $where_clause AND calc_type = 'SWP'");
+$stmt->execute($params);
+$avgDurationSWP = (float)$stmt->fetchColumn();
+
+// -- Chart: Duration Distribution (histogram buckets) in range ----
+$stmt = $pdo->prepare("
     SELECT
         CASE
             WHEN duration <= 1 THEN '1 yr'
@@ -175,13 +225,15 @@ $durationDist = $pdo->query("
         END AS bucket,
         COUNT(*) AS cnt
     FROM user_calculations
-    WHERE duration IS NOT NULL
+    $where_clause AND duration IS NOT NULL
     GROUP BY bucket
     ORDER BY MIN(duration) ASC
-")->fetchAll();
+");
+$stmt->execute($params);
+$durationDist = $stmt->fetchAll();
 
-// -- Corpus Buckets (INR: Lakhs scale, USD/others: K scale) ----
-$corpusBucketsINR = $pdo->query("
+// -- Corpus Buckets in range ----
+$stmt = $pdo->prepare("
     SELECT
         CASE
             WHEN amount < 1000000 THEN 'Under 10L'
@@ -191,12 +243,14 @@ $corpusBucketsINR = $pdo->query("
         END AS bucket,
         COUNT(*) AS cnt
     FROM user_calculations
-    WHERE calc_type = 'SWP' AND amount IS NOT NULL AND UPPER(COALESCE(currency,'INR')) = 'INR'
+    $where_clause AND calc_type = 'SWP' AND amount IS NOT NULL AND UPPER(COALESCE(currency,'INR')) = 'INR'
     GROUP BY bucket
     ORDER BY MIN(amount) ASC
-")->fetchAll();
+");
+$stmt->execute($params);
+$corpusBucketsINR = $stmt->fetchAll();
 
-$corpusBucketsUSD = $pdo->query("
+$stmt = $pdo->prepare("
     SELECT
         CASE
             WHEN amount < 10000 THEN 'Under 10K'
@@ -206,27 +260,31 @@ $corpusBucketsUSD = $pdo->query("
         END AS bucket,
         COUNT(*) AS cnt
     FROM user_calculations
-    WHERE calc_type = 'SWP' AND amount IS NOT NULL AND UPPER(COALESCE(currency,'INR')) != 'INR'
+    $where_clause AND calc_type = 'SWP' AND amount IS NOT NULL AND UPPER(COALESCE(currency,'INR')) != 'INR'
     GROUP BY bucket
     ORDER BY MIN(amount) ASC
-")->fetchAll();
+");
+$stmt->execute($params);
+$corpusBucketsUSD = $stmt->fetchAll();
 
-// -- Ambition Index: Universal investment goal buckets (all calc types) ----
-$ambitionBuckets = $pdo->query("
+// -- Ambition Index in range ----
+$stmt = $pdo->prepare("
     SELECT
         CASE
-            WHEN amount < 100000 THEN '\$0 – 100K'
-            WHEN amount < 500000 THEN '\$100K – 500K'
-            WHEN amount < 1000000 THEN '\$500K – 1M'
-            WHEN amount < 5000000 THEN '\$1M – 5M'
-            ELSE '\$5M+'
+            WHEN amount < 100000 THEN '$0 – 100K'
+            WHEN amount < 500000 THEN '$100K – 500K'
+            WHEN amount < 1000000 THEN '$500K – 1M'
+            WHEN amount < 5000000 THEN '$1M – 5M'
+            ELSE '$5M+'
         END AS goal_bucket,
         COUNT(*) AS cnt
     FROM user_calculations
-    WHERE amount IS NOT NULL
+    $where_clause AND amount IS NOT NULL
     GROUP BY goal_bucket
     ORDER BY MIN(amount) ASC
-")->fetchAll();
+");
+$stmt->execute($params);
+$ambitionBuckets = $stmt->fetchAll();
 
 // ─────────────────────────────────────────────────────────────
 // 4. PREPARE JSON FOR CHART.JS
@@ -370,14 +428,27 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div
-                    class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3 13h2v8H3zM9 8h2v13H9zM15 11h2v10h-2zM21 4h2v17h-2z" />
+                <a href="/" class="flex items-center space-x-3 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        class="w-10 h-10 rounded-xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
+                        role="img" aria-label="SIP SWP Calculator Logo">
+                        <rect width="24" height="24" rx="6" fill="url(#logo-grad-admin)" />
+                        <defs>
+                            <linearGradient id="logo-grad-admin" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#059669" />
+                                <stop offset="100%" stop-color="#2dd4bf" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                            stroke-linejoin="round" d="M4 13l5-5 3.5 3.5 7.5-7.5" />
+                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                            stroke-linejoin="round" d="M15 4h5v5" />
+                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-opacity="0.5" d="M4 17l5-5 3.5 3.5 7.5-7.5" />
+                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-opacity="0.25" d="M4 21l5-5 3.5 3.5 7.5-7.5" />
                     </svg>
-                </div>
+                </a>
                 <div>
                     <h1 class="text-lg font-bold text-gray-900 leading-tight">Admin Insights</h1>
                     <p class="text-xs text-gray-400 leading-tight">sipswpcalculator.com</p>
@@ -400,75 +471,60 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
         </div>
     </header>
 
+    <!-- ── Time Range Filter Tabs ── -->
+    <div class="bg-white border-b border-gray-200 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center overflow-x-auto no-scrollbar gap-1 py-2">
+                <?php foreach ($time_ranges as $key => $range):
+    $isActive = ($current_range_key === $key);
+    $btnClass = $isActive
+        ? 'bg-emerald-600 text-white shadow-md shadow-emerald-200'
+        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700';
+?>
+                <a href="?range=<?= $key?>"
+                    class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap <?= $btnClass?>">
+                    <?= htmlspecialchars($range['label'])?>
+                </a>
+                <?php
+endforeach; ?>
+            </div>
+        </div>
+    </div>
+
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
         <!-- ── KPI Stat Cards ── -->
         <section>
-            <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Overview</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-4">
-                <!-- 24h -->
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Overview:
+                    <?= htmlspecialchars($current_range['label'])?>
+                </h2>
+                <span class="text-xs text-gray-400">Showing data for the selected period</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <!-- Calculations in Range -->
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in">
-                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Last 24h</p>
+                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Calculations</p>
                     <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                        <?= number_format($counts['24 hours'])?>
+                        <?= number_format($totalInRange)?>
                     </p>
-                    <p class="mt-1 text-xs text-gray-400">calculations</p>
-                </div>
-                <!-- 7 days -->
-                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-1">
-                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Last 7 Days</p>
-                    <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                        <?= number_format($counts['7 days'])?>
-                    </p>
-                    <p class="mt-1 text-xs text-gray-400">calculations</p>
-                </div>
-                <!-- 30 days -->
-                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-2">
-                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Last 30 Days</p>
-                    <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                        <?= number_format($counts['30 days'])?>
-                    </p>
-                    <p class="mt-1 text-xs text-gray-400">calculations</p>
+                    <p class="mt-1 text-xs text-gray-400">in this period</p>
                 </div>
                 <!-- Avg Step-Up -->
-                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-3">
+                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-1">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg Step-Up %</p>
-                    <p class="mt-2 text-3xl font-extrabold text-blue-600">
+                    <p class="mt-2 text-3xl font-extrabold text-emerald-600">
                         <?= number_format($avgStepUp, 1)?>%
                     </p>
-                    <p class="mt-1 text-xs text-gray-400">across all users</p>
-                </div>
-                <!-- Total all-time -->
-                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-4">
-                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">All-Time Total</p>
-                    <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                        <?= number_format($totalAllTime)?>
-                    </p>
-                    <p class="mt-1 text-xs text-gray-400">calculations logged</p>
+                    <p class="mt-1 text-xs text-gray-400">period average</p>
                 </div>
                 <!-- Step-Up Adoption -->
-                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-3">
+                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-2">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Step-Up Adoption</p>
                     <p class="mt-2 text-3xl font-extrabold text-emerald-600">
                         <?= number_format($stepUpAdoptionRate, 1)?>%
                     </p>
                     <p class="mt-1 text-xs text-gray-400">of SIP users</p>
-                </div>
-                <!-- Avg SIP Duration -->
-                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-4">
-                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg SIP Duration</p>
-                    <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                        <?= number_format($avgDurationSIP, 1)?>
-                    </p>
-                    <p class="mt-1 text-xs text-gray-400">years</p>
-                </div>
-                <!-- Avg SWP Duration -->
-                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-4">
-                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg SWP Duration</p>
-                    <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                        <?= number_format($avgDurationSWP, 1)?>
-                    </p>
-                    <p class="mt-1 text-xs text-gray-400">years</p>
                 </div>
                 <!-- PDF Downloads -->
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-3">
@@ -485,6 +541,32 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
                         <?= number_format($conversionRate, 1)?>%
                     </p>
                     <p class="mt-1 text-xs text-gray-400">calc → PDF</p>
+                </div>
+
+                <!-- Secondary Row -->
+                <!-- Avg SIP Duration -->
+                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-1">
+                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg SIP Tenure</p>
+                    <p class="mt-2 text-3xl font-extrabold text-gray-900">
+                        <?= number_format($avgDurationSIP, 1)?>
+                    </p>
+                    <p class="mt-1 text-xs text-gray-400">years</p>
+                </div>
+                <!-- Avg SWP Duration -->
+                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-2">
+                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg SWP Tenure</p>
+                    <p class="mt-2 text-3xl font-extrabold text-gray-900">
+                        <?= number_format($avgDurationSWP, 1)?>
+                    </p>
+                    <p class="mt-1 text-xs text-gray-400">years</p>
+                </div>
+                <!-- Total calculations In Range (Duplicate for layout balance or use All-Time) -->
+                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-3">
+                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">All-Time Total</p>
+                    <p class="mt-2 text-3xl font-extrabold text-gray-900">
+                        <?= number_format($totalAllTime)?>
+                    </p>
+                    <p class="mt-1 text-xs text-gray-400">calculations total</p>
                 </div>
             </div>
         </section>
@@ -522,7 +604,9 @@ endif; ?>
             <!-- Line Chart: Volume Over Time -->
             <div class="chart-container">
                 <h3 class="text-sm font-semibold text-gray-700 mb-4">📈 Calculation Volume <span
-                        class="text-gray-400 font-normal">(last 30 days)</span></h3>
+                        class="text-gray-400 font-normal">(
+                        <?= htmlspecialchars($current_range['label'])?>)
+                    </span></h3>
                 <div style="position: relative; height: 280px; width: 100%;">
                     <canvas id="volumeChart"></canvas>
                 </div>
@@ -555,8 +639,14 @@ endif; ?>
                     <canvas id="stepUpDoughnut"></canvas>
                 </div>
                 <div class="flex justify-center gap-6 mt-4 text-xs text-gray-500">
-                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Step-Up (<?= (string)$stepUpSIP?>)</span>
-                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-gray-300 inline-block"></span> Flat (<?= (string)$flatSIP?>)</span>
+                    <span class="flex items-center gap-1.5"><span
+                            class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Step-Up (
+                        <?=(string)$stepUpSIP?>)
+                    </span>
+                    <span class="flex items-center gap-1.5"><span
+                            class="w-3 h-3 rounded-full bg-gray-300 inline-block"></span> Flat (
+                        <?=(string)$flatSIP?>)
+                    </span>
                 </div>
             </div>
 
@@ -586,12 +676,16 @@ else: ?>
 ?>
                     <div>
                         <div class="flex justify-between text-xs mb-1">
-                            <span class="font-medium text-gray-700"><?= htmlspecialchars($b['bucket'])?></span>
-                            <span class="text-gray-400"><?= number_format((int)$b['cnt'])?></span>
+                            <span class="font-medium text-gray-700">
+                                <?= htmlspecialchars($b['bucket'])?>
+                            </span>
+                            <span class="text-gray-400">
+                                <?= number_format((int)$b['cnt'])?>
+                            </span>
                         </div>
                         <div class="w-full bg-gray-100 rounded-full h-2.5">
                             <div class="bg-gradient-to-r from-orange-400 to-orange-500 h-2.5 rounded-full transition-all"
-                                style="width: <?= (string)$bPct?>%"></div>
+                                style="width: <?=(string)$bPct?>%"></div>
                         </div>
                     </div>
                     <?php
@@ -616,12 +710,16 @@ else: ?>
 ?>
                     <div>
                         <div class="flex justify-between text-xs mb-1">
-                            <span class="font-medium text-gray-700"><?= htmlspecialchars($b['bucket'])?></span>
-                            <span class="text-gray-400"><?= number_format((int)$b['cnt'])?></span>
+                            <span class="font-medium text-gray-700">
+                                <?= htmlspecialchars($b['bucket'])?>
+                            </span>
+                            <span class="text-gray-400">
+                                <?= number_format((int)$b['cnt'])?>
+                            </span>
                         </div>
                         <div class="w-full bg-gray-100 rounded-full h-2.5">
                             <div class="bg-gradient-to-r from-blue-400 to-blue-500 h-2.5 rounded-full transition-all"
-                                style="width: <?= (string)$bPct?>%"></div>
+                                style="width: <?=(string)$bPct?>%"></div>
                         </div>
                     </div>
                     <?php
@@ -668,7 +766,8 @@ else: ?>
                                 <?=(string)($i + 1)?>
                             </td>
                             <td class="py-3 px-4 font-semibold text-gray-800">
-                                <?= $currencySymbolMap[strtoupper($row['currency'] ?? 'INR')] ?? ''?><?= number_format((float)$row['amount'])?>
+                                <?= $currencySymbolMap[strtoupper($row['currency'] ?? 'INR')] ?? ''?>
+                                <?= number_format((float)$row['amount'])?>
                             </td>
                             <td class="py-3 px-4 text-right font-mono text-gray-600">
                                 <?= number_format((int)$row['frequency'])?>
@@ -723,9 +822,10 @@ else: ?>
 ?>
                         <tr class="table-row border-b border-gray-100 transition-colors">
                             <td class="py-3 px-4 text-gray-400 font-mono text-xs">
-                                <?= (string)($i + 1)?>
+                                <?=(string)($i + 1)?>
                             </td>
-                            <td class="py-3 px-4 font-medium text-gray-800 truncate max-w-xs" title="<?= htmlspecialchars($ref['source'])?>">
+                            <td class="py-3 px-4 font-medium text-gray-800 truncate max-w-xs"
+                                title="<?= htmlspecialchars($ref['source'])?>">
                                 <?= htmlspecialchars($ref['source'])?>
                             </td>
                             <td class="py-3 px-4 text-right font-mono text-gray-600">
@@ -734,7 +834,7 @@ else: ?>
                             <td class="py-3 px-4">
                                 <div class="w-full bg-gray-100 rounded-full h-2">
                                     <div class="bg-gradient-to-r from-violet-500 to-purple-500 h-2 rounded-full transition-all"
-                                        style="width: <?= (string)$refPct?>%"></div>
+                                        style="width: <?=(string)$refPct?>%"></div>
                                 </div>
                             </td>
                         </tr>
@@ -983,12 +1083,25 @@ function showLoginPage(string $error = ''): void
     <div class="w-full max-w-sm">
         <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
             <div class="flex justify-center mb-6">
-                <div
-                    class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/25">
-                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                <div class="group">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        class="w-14 h-14 rounded-2xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
+                        role="img" aria-label="SIP SWP Calculator Logo">
+                        <rect width="24" height="24" rx="6" fill="url(#logo-grad-admin-login)" />
+                        <defs>
+                            <linearGradient id="logo-grad-admin-login" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#059669" />
+                                <stop offset="100%" stop-color="#2dd4bf" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                            stroke-linejoin="round" d="M4 13l5-5 3.5 3.5 7.5-7.5" />
+                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                            stroke-linejoin="round" d="M15 4h5v5" />
+                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-opacity="0.5" d="M4 17l5-5 3.5 3.5 7.5-7.5" />
+                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-opacity="0.25" d="M4 21l5-5 3.5 3.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
@@ -1011,9 +1124,9 @@ function showLoginPage(string $error = ''): void
             <form method="POST" action="">
                 <label for="password" class="block text-sm font-medium text-gray-600 mb-1.5">Password</label>
                 <input type="password" id="password" name="password" required autofocus placeholder="••••••••••"
-                    class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow">
+                    class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow">
                 <button type="submit"
-                    class="mt-4 w-full py-2.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all shadow-lg shadow-blue-500/25">
+                    class="mt-4 w-full py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-sm font-semibold rounded-xl hover:from-emerald-700 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all shadow-lg shadow-emerald-500/25">
                     Unlock Dashboard
                 </button>
             </form>

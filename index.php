@@ -527,10 +527,10 @@ ob_start();
 <!-- Critical above-the-fold CSS inlined for instant FCP -->
 <style>
     :root {
-        --gradient-primary: linear-gradient(135deg, #4f46e5, #4338ca);
+        --gradient-primary: linear-gradient(135deg, #059669, #047857);
         --glass-bg: rgba(255, 255, 255, .9);
         --glass-border: 1px solid rgba(255, 255, 255, .5);
-        --glass-shadow: 0 8px 32px 0 rgba(79, 81, 93, .1);
+        --glass-shadow: 0 8px 32px 0 rgba(5, 150, 105, .1);
         --color-bg: #f8fafc;
         --color-text-primary: #0f172a;
         --color-text-secondary: #64748b;
@@ -607,12 +607,12 @@ ob_start();
 ?>
 
 <header class="relative mb-6 sm:mb-10 text-center">
-    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-4">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 mb-4">
         <span class="relative flex h-3 w-3">
-            <span class="absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
+            <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
         </span>
-        <span class="text-sm font-semibold text-indigo-700 tracking-wide uppercase">Free Financial Planning
+        <span class="text-sm font-semibold text-emerald-700 tracking-wide uppercase">Free Financial Planning
             Tool</span>
     </div>
 
@@ -644,7 +644,7 @@ ob_start();
     </div>
 
     <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
-        This free <dfn><strong class="text-indigo-600">SIP calculator</strong></dfn> helps you estimate
+        This free <dfn><strong class="text-emerald-600">SIP calculator</strong></dfn> helps you estimate
         your <strong>mutual fund SIP returns</strong> with annual step-up (top-up) compounding.
         A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan
         tax-efficient withdrawals for a steady retirement income. Use this <strong>SIP return
@@ -714,7 +714,7 @@ ob_start();
                             <div class="inline-flex rounded-lg overflow-hidden border border-slate-200" role="group"
                                 id="currency-group">
                                 <button type="button" data-currency="INR"
-                                    class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-indigo-600 text-white"
+                                    class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-emerald-600 text-white"
                                     onclick="updateCurrency('INR')">
                                     <span>₹</span> INR
                                 </button>
@@ -810,7 +810,7 @@ ob_start();
                                                 </label>
                                                 <!-- Smart Nudge trigger -->
                                                 <button type="button" id="rate-nudge-btn"
-                                                    class="inline-flex items-center gap-1 text-[10px] font-semibold text-indigo-500 hover:text-indigo-700 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-indigo-400 rounded"
+                                                    class="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-500 hover:text-emerald-700 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 rounded"
                                                     aria-haspopup="true" aria-expanded="false"
                                                     aria-controls="rate-nudge-popover">
                                                     <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor"
@@ -872,7 +872,7 @@ ob_start();
                                                     <tbody class="divide-y divide-slate-100">
                                                         <tr>
                                                             <td class="py-1.5 text-slate-600">Index / Large Cap</td>
-                                                            <td class="py-1.5 text-right font-semibold text-indigo-600">
+                                                            <td class="py-1.5 text-right font-semibold text-emerald-600">
                                                                 11–13%</td>
                                                             <td
                                                                 class="py-1.5 text-right font-semibold text-emerald-600">
@@ -880,7 +880,7 @@ ob_start();
                                                         </tr>
                                                         <tr>
                                                             <td class="py-1.5 text-slate-600">Flexi / Multi Cap</td>
-                                                            <td class="py-1.5 text-right font-semibold text-indigo-600">
+                                                            <td class="py-1.5 text-right font-semibold text-emerald-600">
                                                                 12–15%</td>
                                                             <td
                                                                 class="py-1.5 text-right font-semibold text-emerald-600">
@@ -888,7 +888,7 @@ ob_start();
                                                         </tr>
                                                         <tr>
                                                             <td class="py-1.5 text-slate-600">Mid / Small Cap</td>
-                                                            <td class="py-1.5 text-right font-semibold text-indigo-600">
+                                                            <td class="py-1.5 text-right font-semibold text-emerald-600">
                                                                 14–18%</td>
                                                             <td
                                                                 class="py-1.5 text-right font-semibold text-emerald-600">
@@ -896,7 +896,7 @@ ob_start();
                                                         </tr>
                                                         <tr>
                                                             <td class="py-1.5 text-slate-600">Balanced / 60-40</td>
-                                                            <td class="py-1.5 text-right font-semibold text-indigo-600">
+                                                            <td class="py-1.5 text-right font-semibold text-emerald-600">
                                                                 9–12%</td>
                                                             <td
                                                                 class="py-1.5 text-right font-semibold text-emerald-600">
@@ -909,7 +909,7 @@ ob_start();
                                                     averages.</p>
                                                 <div class="flex items-center gap-2">
                                                     <button type="button" id="use-india-rate"
-                                                        class="flex-1 py-1.5 text-[11px] font-bold bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 transition-colors">
+                                                        class="flex-1 py-1.5 text-[11px] font-bold bg-emerald-50 text-emerald-700 rounded-lg hover:bg-emerald-100 transition-colors">
                                                         Use 12% (India)
                                                     </button>
                                                     <button type="button" id="use-us-rate"
@@ -918,7 +918,7 @@ ob_start();
                                                     </button>
                                                 </div>
                                                 <a href="/resource/mf-returns-benchmarks.php"
-                                                    class="mt-3 flex items-center justify-center gap-1 text-[11px] text-indigo-500 hover:text-indigo-700 font-semibold transition-colors">
+                                                    class="mt-3 flex items-center justify-center gap-1 text-[11px] text-indigo-500 hover:text-emerald-700 font-semibold transition-colors">
                                                     Full benchmark guide →
                                                 </a>
                                             </div>
@@ -1045,7 +1045,7 @@ ob_start();
                         <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
                             Total Invested</div>
                         <div id="summary-invested"
-                            class="text-lg sm:text-xl font-extrabold text-indigo-600 font-mono transition-numbers">
+                            class="text-lg sm:text-xl font-extrabold text-emerald-600 font-mono transition-numbers">
                             <?= formatInr(end($combined)['cumulative_invested'] ?? 0)?>
                         </div>
                     </div>
@@ -1069,8 +1069,8 @@ echo formatInr($totalGains);
                             <?= formatInr(end($combined)['cumulative_withdrawals'] ?? 0)?>
                         </div>
                     </div>
-                    <div class="glass-card p-3 sm:p-4 text-center border-2 border-indigo-100">
-                        <div class="text-[10px] sm:text-xs font-bold text-indigo-600 uppercase tracking-widest mb-1">
+                    <div class="glass-card p-3 sm:p-4 text-center border-2 border-emerald-100">
+                        <div class="text-[10px] sm:text-xs font-bold text-emerald-600 uppercase tracking-widest mb-1">
                             Final Corpus</div>
                         <div id="summary-corpus"
                             class="text-lg sm:text-xl font-extrabold text-slate-800 font-mono transition-numbers">
@@ -1121,7 +1121,7 @@ echo formatInr($totalGains);
                         PDF
                     </button>
                     <button type="button" id="shareCalcBtn" aria-expanded="false"
-                        class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-indigo-600 border border-indigo-200 hover:bg-indigo-50 hover:border-indigo-300 transition-all shadow-sm">
+                        class="text-sm px-4 py-3 sm:py-2 flex items-center gap-2 rounded-lg font-semibold bg-white text-emerald-600 border border-indigo-200 hover:bg-emerald-50 hover:border-indigo-300 transition-all shadow-sm">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
@@ -1220,7 +1220,7 @@ endforeach; ?>
     </section><!-- /calculator section -->
 
     <div class="text-center mt-8">
-        <a href="/sip-calculator" class="text-indigo-600 hover:underline">
+        <a href="/sip-calculator" class="text-emerald-600 hover:underline">
             Learn more about SIPs and how to use our calculator
         </a>
     </div>
@@ -1238,7 +1238,7 @@ endforeach; ?>
             <!-- Standalone SIP Definition -->
             <div class="grid md:grid-cols-2 gap-8 mt-8">
                 <div itemscope itemtype="https://schema.org/DefinedTerm">
-                    <h3 class="text-2xl font-semibold mb-3 text-indigo-600" id="what-is-sip">What is a Systematic
+                    <h3 class="text-2xl font-semibold mb-3 text-emerald-600" id="what-is-sip">What is a Systematic
                         Investment Plan (SIP)?</h3>
                     <p itemprop="description">A <dfn><strong>Systematic Investment Plan (SIP)</strong></dfn> is a method
                         of
@@ -1246,9 +1246,9 @@ endforeach; ?>
                         SIPs use <strong>rupee cost averaging</strong> and <strong>compounding</strong> to build wealth
                         over time, making them ideal for long-term goals like retirement, education, or wealth creation.
                         As per <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
-                            class="text-indigo-600 hover:underline">AMFI</a> data, SIP inflows worldwide crossed <span
+                            class="text-emerald-600 hover:underline">AMFI</a> data, SIP inflows worldwide crossed <span
                             class="dynamic-amount" data-amount="210000000000"></span>/month in 2025.
-                        <a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">Read our complete
+                        <a href="/sip-calculator" class="text-emerald-600 hover:underline font-medium">Read our complete
                             SIP guide →</a>
                     </p>
                     <ul class="mt-4 space-y-2">
@@ -1306,8 +1306,8 @@ endforeach; ?>
                                 amount</strong>, withdrawal period, and yearly hike. The SWP phase begins automatically
                             after your SIP period ends.</p>
                     </div>
-                    <div class="bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
-                        <div class="text-indigo-600 font-bold text-lg mb-2">Step 3: Analyze Results</div>
+                    <div class="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100">
+                        <div class="text-emerald-600 font-bold text-lg mb-2">Step 3: Analyze Results</div>
                         <p class="text-sm">View the interactive <strong>growth chart</strong>, yearly breakdown table,
                             and summary cards. Export results as <strong>CSV</strong> or generate a branded <strong>PDF
                                 report</strong> for clients.</p>
@@ -1321,7 +1321,7 @@ endforeach; ?>
                 </h2>
                 <div
                     class="bg-gray-50 p-6 rounded-xl border border-gray-200 font-mono text-sm sm:text-base overflow-x-auto">
-                    <p class="font-bold text-indigo-700 mb-2">Future Value of SIP (Annuity Due):</p>
+                    <p class="font-bold text-emerald-700 mb-2">Future Value of SIP (Annuity Due):</p>
                     <p class="text-lg mb-4">FV = P × [ { (1 + i)<sup>n</sup> - 1 } / i ] × (1 + i)</p>
                     <dl class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                         <div>
@@ -1345,7 +1345,7 @@ endforeach; ?>
                 <p class="mt-4 text-sm text-gray-500">Our calculator uses month-by-month simulation with step-up
                     compounding, which is more accurate than the simple annuity formula for long-term projections.
                     Source: <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
-                        class="text-indigo-600 hover:underline">AMFI India</a> standard methodology.</p>
+                        class="text-emerald-600 hover:underline">AMFI India</a> standard methodology.</p>
             </div>
 
             <!-- Worked Examples -->
@@ -1364,14 +1364,14 @@ endforeach; ?>
                                     class="font-bold text-green-700">+<span class="dynamic-amount"
                                         data-amount="2141000"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount"
+                                    Value:</span> <span class="font-bold text-emerald-700"><span class="dynamic-amount"
                                         data-amount="4050000"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~2.1×</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-indigo-100 ring-2 ring-indigo-100">
-                        <div class="text-xs font-bold text-indigo-600 mb-1">MOST POPULAR</div>
-                        <h3 class="text-lg font-bold text-indigo-700 mb-2"><span class="currency-text">$</span>100/month
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-emerald-100 ring-2 ring-emerald-100">
+                        <div class="text-xs font-bold text-emerald-600 mb-1">MOST POPULAR</div>
+                        <h3 class="text-lg font-bold text-emerald-700 mb-2"><span class="currency-text">$</span>100/month
                             for 20 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
@@ -1381,7 +1381,7 @@ endforeach; ?>
                                     class="font-bold text-green-700">+<span class="dynamic-amount"
                                         data-amount="28500000"></span></span></li>
                             <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity
-                                    Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount"
+                                    Value:</span> <span class="font-bold text-emerald-700"><span class="dynamic-amount"
                                         data-amount="35400000"></span></span></li>
                         </ul>
                         <p class="text-xs text-gray-500 mt-3">Money multiplied ~5.1×</p>
@@ -1443,14 +1443,14 @@ endforeach; ?>
                         <li><strong class="text-amber-700">No Guaranteed Returns:</strong> Unlike PPF or FDs, mutual
                             fund returns are not guaranteed. Past performance does not guarantee future results. Always
                             consult a <a href="https://www.sebi.gov.in/" target="_blank" rel="noopener noreferrer"
-                                class="text-indigo-600 hover:underline">SEBI</a>-registered financial advisor.</li>
+                                class="text-emerald-600 hover:underline">SEBI</a>-registered financial advisor.</li>
                     </ul>
                 </div>
             </div>
 
             <!-- Mr. Sharma story (promoted from H3 to H2) -->
-            <div class="mt-12 bg-indigo-50/50 p-8 rounded-xl border border-indigo-100/50 backdrop-blur-sm">
-                <h2 id="real-life-success-story" class="text-2xl font-bold text-indigo-700 mb-4">Real-Life Success
+            <div class="mt-12 bg-emerald-50/50 p-8 rounded-xl border border-emerald-100/50 backdrop-blur-sm">
+                <h2 id="real-life-success-story" class="text-2xl font-bold text-emerald-700 mb-4">Real-Life Success
                     Story: The "Mr. Sharma" Strategy
                 </h2>
                 <p class="mb-4">Meet Mr. Sharma (30). He decides to invest <strong><span
@@ -1468,7 +1468,7 @@ endforeach; ?>
                 </ul>
                 <p class="font-semibold">Moral: It's not just about starting early — it's about increasing your
                     investment as you grow. <a href="/sip-step-up-calculator"
-                        class="text-indigo-600 hover:underline">Learn more about Step-Up SIP →</a></p>
+                        class="text-emerald-600 hover:underline">Learn more about Step-Up SIP →</a></p>
             </div>
 
             <div class="mt-12">
@@ -1483,7 +1483,7 @@ endforeach; ?>
                                 <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">Feature
                                 </th>
                                 <th
-                                    class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider text-indigo-600">
+                                    class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider text-emerald-600">
                                     SIP (Equity MF)</th>
                                 <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">PPF</th>
                                 <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">Fixed
@@ -1491,25 +1491,25 @@ endforeach; ?>
                             </tr>
                         </thead>
                         <tbody class="text-sm">
-                            <tr class="border-b hover:bg-indigo-50/30 transition-colors">
+                            <tr class="border-b hover:bg-emerald-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Expected Returns</td>
                                 <td class="py-4 px-6 font-bold text-green-700">12% - 15% (High)</td>
                                 <td class="py-4 px-6 text-gray-600">7.1% (Moderate)</td>
                                 <td class="py-4 px-6 text-gray-600">6% - 7% (Low)</td>
                             </tr>
-                            <tr class="border-b hover:bg-indigo-50/30 transition-colors">
+                            <tr class="border-b hover:bg-emerald-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Risk Profile</td>
                                 <td class="py-4 px-6 text-rose-500 font-medium">High (Market Linked)</td>
                                 <td class="py-4 px-6 text-emerald-600 font-medium">Risk-Free (Govt Backed)</td>
                                 <td class="py-4 px-6 text-emerald-600 font-medium">Low Risk</td>
                             </tr>
-                            <tr class="border-b hover:bg-indigo-50/30 transition-colors">
+                            <tr class="border-b hover:bg-emerald-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Liquidity</td>
                                 <td class="py-4 px-6">High (Exit Load < 1 yr)</td>
                                 <td class="py-4 px-6">Low (15 Year Lock-in)</td>
                                 <td class="py-4 px-6">High (Penalty applies)</td>
                             </tr>
-                            <tr class="hover:bg-indigo-50/30 transition-colors">
+                            <tr class="hover:bg-emerald-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Taxation</td>
                                 <td class="py-4 px-6">LTCG > <span class="currency-text">$</span>1.25L taxed @ 12.5%
                                 </td>
@@ -1522,11 +1522,11 @@ endforeach; ?>
             </div>
 
             <p class="text-center mt-8">Use our <a href="/#calculator-section"
-                    class="text-indigo-600 hover:underline font-medium">advanced
+                    class="text-emerald-600 hover:underline font-medium">advanced
                     SIP & SWP calculator</a> to model your investments and plan your
                 withdrawals to see how you can achieve your financial goals, whether it's building a retirement
                 corpus, funding your child's education, or creating a passive income stream.
-                <a href="/faq.php" class="text-indigo-600 hover:underline font-medium">Have more questions? Check our
+                <a href="/faq.php" class="text-emerald-600 hover:underline font-medium">Have more questions? Check our
                     FAQ →</a>
             </p>
         </div>
