@@ -80,27 +80,26 @@ ob_start();
 
 <!-- ── Hero Header ── -->
 <header class="text-center mb-12 sm:mb-16">
-    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-5">
-        <span class="relative flex h-2.5 w-2.5">
-            <span class="absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75 animate-ping"></span>
-            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-indigo-500"></span>
-        </span>
-        <span class="text-sm font-semibold text-indigo-700 tracking-wide uppercase">Knowledge Hub</span>
-    </div>
-
     <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight pb-2">
         <span class="text-gray-900">Resources &amp;</span> <span class="text-gradient">Financial Guides</span>
     </h1>
     <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
-        Expert insights, in-depth guides, and honest strategies to help you build wealth and plan a stress-free retirement.
+        Expert insights, in-depth guides, and honest strategies to help you build wealth and plan a stress-free
+        retirement.
     </p>
 
     <!-- Filter Bar -->
     <div class="flex flex-wrap justify-center gap-3 mt-10">
-        <button data-filter="all" class="filter-btn active px-6 py-2.5 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-bold shadow-sm hover:border-indigo-300 transition-all">All Guides</button>
-        <button data-filter="growth" class="filter-btn px-6 py-2.5 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-bold shadow-sm hover:border-indigo-300 transition-all">Wealth Growth</button>
-        <button data-filter="retirement" class="filter-btn px-6 py-2.5 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-bold shadow-sm hover:border-indigo-300 transition-all">Retirement</button>
-        <button data-filter="comparison" class="filter-btn px-6 py-2.5 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-bold shadow-sm hover:border-indigo-300 transition-all">Comparison</button>
+        <button data-filter="all"
+            class="filter-btn active px-6 py-2.5 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-bold shadow-sm hover:border-indigo-300 transition-all">All
+            Guides</button>
+        <button data-filter="growth"
+            class="filter-btn px-6 py-2.5 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-bold shadow-sm hover:border-indigo-300 transition-all">Wealth
+            Growth</button>
+        <button data-filter="retirement"
+            class="filter-btn px-6 py-2.5 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-bold shadow-sm hover:border-indigo-300 transition-all">Retirement</button>
+        <button data-filter="comparison"
+            class="filter-btn px-6 py-2.5 rounded-full border border-slate-200 bg-white text-slate-600 text-sm font-bold shadow-sm hover:border-indigo-300 transition-all">Comparison</button>
     </div>
 </header>
 
@@ -108,14 +107,16 @@ ob_start();
     <!-- Unified Grid -->
     <div id="blog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php foreach ($all_posts as $post):
-            $tc = $tag_colors[$post['tag_color']] ?? 'bg-slate-100 text-slate-600';
-            $stripe = $stripes[$post['tag_color']] ?? 'from-indigo-500 to-indigo-400';
-        ?>
-        <article class="blog-card glass-card flex flex-col border border-slate-100 rounded-2xl overflow-hidden" data-category="<?= $post['category']?>">
+    $tc = $tag_colors[$post['tag_color']] ?? 'bg-slate-100 text-slate-600';
+    $stripe = $stripes[$post['tag_color']] ?? 'from-indigo-500 to-indigo-400';
+?>
+        <article class="blog-card glass-card flex flex-col border border-slate-100 rounded-2xl overflow-hidden"
+            data-category="<?= $post['category']?>">
             <div class="h-1.5 w-full bg-gradient-to-r <?= $stripe?>"></div>
             <div class="flex flex-col flex-1 p-6">
                 <div class="mb-4">
-                    <span class="inline-block px-3 py-1 text-[10px] font-bold rounded-full <?= $tc?> uppercase tracking-wider mb-4">
+                    <span
+                        class="inline-block px-3 py-1 text-[10px] font-bold rounded-full <?= $tc?> uppercase tracking-wider mb-4">
                         <?= $post['tag']?>
                     </span>
                     <h3 class="text-xl font-extrabold text-gray-900 leading-tight mb-3 group-hover:text-indigo-600">
@@ -128,16 +129,20 @@ ob_start();
                     </p>
                 </div>
                 <div class="mt-auto pt-5 border-t border-slate-100">
-                    <a href="<?= $post['href']?>" class="inline-flex items-center gap-2 text-indigo-600 font-bold text-sm hover:text-indigo-800 transition-all group">
+                    <a href="<?= $post['href']?>"
+                        class="inline-flex items-center gap-2 text-indigo-600 font-bold text-sm hover:text-indigo-800 transition-all group">
                         Read Full Guide
-                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                         </svg>
                     </a>
                 </div>
             </div>
         </article>
-        <?php endforeach; ?>
+        <?php
+endforeach; ?>
     </div>
 </main>
 
