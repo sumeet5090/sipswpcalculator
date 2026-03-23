@@ -86,71 +86,48 @@ ob_start();
     </p>
 </header>
 
-<div class="max-w-4xl mx-auto pb-32 px-4">
-    <!-- Category Filter Chips -->
-    <div class="flex flex-wrap justify-center items-center gap-3 mb-16 px-4">
-        <button data-category="all"
-            class="category-chip px-8 py-3 rounded-full bg-emerald-600 text-white font-black text-sm uppercase tracking-widest shadow-xl shadow-emerald-500/20 transition-all hover:scale-105">
-            All Topics
-        </button>
-        <?php foreach ($faq_categories as $cat): ?>
-        <button data-category="<?= $cat['id']?>"
-            class="category-chip px-8 py-3 rounded-full bg-white border border-slate-200 text-slate-400 font-black text-sm uppercase tracking-widest transition-all hover:border-emerald-500 hover:text-emerald-600 hover:bg-emerald-50 shadow-sm">
-            <div class="flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?= $cat['icon']?>">
-                    </path>
-                </svg>
-                <?= $cat['label']?>
-            </div>
-        </button>
-        <?php
-endforeach; ?>
+<div class="max-w-3xl mx-auto pb-20 px-4">
+
+    <!-- Search Bar -->
+    <div style="position:relative; max-width:36rem; margin:0 auto 2rem;">
+        <svg style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); width:1.1rem; height:1.1rem; color:#94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="faqSearch" type="text" placeholder="Search questions..."
+            style="width:100%; padding:0.7rem 1rem 0.7rem 2.75rem; border:1.5px solid #e2e8f0; border-radius:0.75rem; background:#fff; font-size:0.875rem; color:#334155; outline:none; transition:border-color 0.2s, box-shadow 0.2s;"
+            onfocus="this.style.borderColor='#059669';this.style.boxShadow='0 0 0 3px rgba(5,150,105,0.12)'"
+            onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
     </div>
 
-    <!-- FAQ Accordion Container -->
-    <div id="faqAccordion" class="space-y-6">
+    <!-- Category Filter Chips -->
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:0.5rem; margin-bottom:2.5rem;">
+        <button data-category="all" class="category-chip active">All</button>
+        <?php foreach ($faq_categories as $cat): ?>
+        <button data-category="<?= $cat['id']?>" class="category-chip"><?= $cat['label']?></button>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div id="faqAccordion" class="faq-list">
         <?php foreach ($faqs as $index => $faq): ?>
-        <div class="faq-item group bg-white rounded-[32px] border-2 border-slate-50 shadow-sm hover:shadow-2xl hover:border-emerald-500/10 transition-all duration-300 overflow-hidden"
-            data-category="<?= $faq['category']?>" data-question="<?= strtolower($faq['q'])?>"
+        <div class="faq-item" data-category="<?= $faq['category']?>" data-question="<?= strtolower($faq['q'])?>"
             data-answer="<?= strtolower($faq['a'])?>">
 
-            <button
-                class="faq-trigger w-full flex items-center justify-between cursor-pointer px-10 py-8 text-left transition-colors"
-                onclick="toggleFaq(this)">
-                <span class="text-xl sm:text-2xl font-black text-slate-800 group-hover:text-emerald-700 leading-tight">
+            <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span class="faq-question">
                     <?= htmlspecialchars($faq['q'])?>
                 </span>
-                <div
-                    class="ml-6 w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 flex-shrink-0 faq-icon">
-                    <svg class="w-6 h-6 transition-transform duration-500" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" />
+                <span class="faq-icon-wrap">
+                    <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
-                </div>
+                </span>
             </button>
 
-            <div class="faq-content overflow-hidden transition-all duration-500 max-h-0 opacity-0">
-                <div class="px-10 pb-10">
-                    <div class="h-[2px] w-12 bg-emerald-500 mb-8 rounded-full"></div>
-                    <p class="text-xl text-slate-600 leading-relaxed font-medium">
-                        <?= $faq['a']?>
-                    </p>
-
-                    <div class="mt-10 flex items-center gap-4">
-                        <span
-                            class="px-3 py-1 rounded-lg bg-emerald-50 text-[10px] font-black text-emerald-600 uppercase tracking-widest border border-emerald-100">
-                            <?= strtoupper($faq['category'])?>
-                        </span>
-                        <div class="h-[1px] flex-grow bg-slate-50"></div>
-                        <button class="text-slate-300 hover:text-emerald-600 transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+            <div class="faq-answer">
+                <p>
+                    <?= $faq['a']?>
+                </p>
             </div>
         </div>
         <?php
@@ -159,44 +136,137 @@ endforeach; ?>
 </div>
 
 <style>
-    .faq-item.active {
-        border-color: rgba(5, 150, 105, 0.2);
-        box-shadow: 0 25px 50px -12px rgba(5, 150, 105, 0.15);
+    /* --- FAQ Accordion Styles --- */
+    .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
     }
 
-    .faq-item.active .faq-content {
-        max-height: 1000px;
+    .faq-item {
+        border-bottom: 1px solid #e2e8f0;
+        transition: background-color 0.2s ease;
+    }
+
+    .faq-item:first-child {
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .faq-trigger {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.25rem 0.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .faq-question {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1e293b;
+        line-height: 1.5;
+        transition: color 0.2s ease;
+    }
+
+    .faq-item:hover .faq-question,
+    .faq-item.active .faq-question {
+        color: #059669;
+    }
+
+    .faq-icon-wrap {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #f1f5f9;
+        transition: all 0.3s ease;
+    }
+
+    .faq-chevron {
+        width: 16px;
+        height: 16px;
+        color: #94a3b8;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .faq-item.active .faq-icon-wrap {
+        background: #059669;
+    }
+
+    .faq-item.active .faq-chevron {
+        transform: rotate(180deg);
+        color: #fff;
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease, opacity 0.25s ease;
+        opacity: 0;
+    }
+
+    .faq-item.active .faq-answer {
+        max-height: 500px;
         opacity: 1;
     }
 
-    .faq-item.active .faq-icon {
-        background-color: #059669;
-        color: white;
-        transform: rotate(45deg);
+    .faq-answer p {
+        padding: 0 0.5rem 1.25rem 0.5rem;
+        font-size: 0.938rem;
+        line-height: 1.75;
+        color: #475569;
     }
 
-    .faq-item.active .faq-trigger span {
-        color: #047857;
+    /* --- Category Chip Styles --- */
+    .category-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        appearance: none;
+        -webkit-appearance: none;
+        background-color: #ffffff !important;
+        color: #64748b !important;
+        border: 1.5px solid #cbd5e1 !important;
+        border-radius: 9999px;
+        padding: 0.375rem 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .category-chip:hover {
+        border-color: #059669 !important;
+        color: #059669 !important;
+        background-color: #ecfdf5 !important;
     }
 
     .category-chip.active {
-        background-color: #059669;
-        color: white;
-        border-color: #059669;
-        box-shadow: 0 10px 30px -5px rgba(5, 150, 105, 0.3);
+        background-color: #059669 !important;
+        color: #ffffff !important;
+        border-color: #059669 !important;
+        box-shadow: 0 2px 10px rgba(5, 150, 105, 0.3);
     }
 </style>
 
 <script>
     function toggleFaq(button) {
         const item = button.closest('.faq-item');
-        const isActive = item.classList.contains('active');
-
         // Close all others
-        document.querySelectorAll('.faq-item.active').forEach(activeItem => {
-            if (activeItem !== item) activeItem.classList.remove('active');
+        document.querySelectorAll('.faq-item.active').forEach(el => {
+            if (el !== item) el.classList.remove('active');
         });
-
         item.classList.toggle('active');
     }
 
@@ -208,19 +278,19 @@ endforeach; ?>
         let currentCategory = 'all';
 
         function filterFaqs() {
-            const query = searchInput.value.toLowerCase().trim();
+            const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
             let visibleCount = 0;
 
             faqItems.forEach(item => {
-                const q = item.getAttribute('data-question');
-                const a = item.getAttribute('data-answer');
+                const q = item.getAttribute('data-question') || '';
+                const a = item.getAttribute('data-answer') || '';
                 const cat = item.getAttribute('data-category');
 
-                const matchesSearch = q.includes(query) || a.includes(query);
+                const matchesSearch = !query || q.includes(query) || a.includes(query);
                 const matchesCategory = currentCategory === 'all' || cat === currentCategory;
 
                 if (matchesSearch && matchesCategory) {
-                    item.style.display = 'block';
+                    item.style.display = '';
                     visibleCount++;
                 } else {
                     item.style.display = 'none';
@@ -228,21 +298,15 @@ endforeach; ?>
                 }
             });
 
-            emptyState.classList.toggle('hidden', visibleCount > 0);
+            if (emptyState) emptyState.classList.toggle('hidden', visibleCount > 0);
         }
 
-        searchInput.addEventListener('input', filterFaqs);
+        if (searchInput) searchInput.addEventListener('input', filterFaqs);
 
         categoryChips.forEach(chip => {
             chip.addEventListener('click', function () {
-                categoryChips.forEach(c => {
-                    c.classList.remove('active', 'bg-emerald-600', 'text-white', 'shadow-xl', 'shadow-emerald-500/20');
-                    c.classList.add('bg-white', 'text-slate-400', 'border-slate-200');
-                });
-
-                this.classList.add('active', 'bg-emerald-600', 'text-white', 'shadow-xl', 'shadow-emerald-500/20');
-                this.classList.remove('text-slate-400', 'border-slate-200');
-
+                categoryChips.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
                 currentCategory = this.getAttribute('data-category');
                 filterFaqs();
             });
