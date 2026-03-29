@@ -9,11 +9,11 @@ if ($active_page === '' || $active_page === '/')
     $active_page = 'index.php';
 
 $nav_items = [
-    ['label' => 'Calculator', 'href' => '/#calculator-section', 'id' => 'index.php'],
+    ['label' => 'Show Calculator', 'href' => '/#calculator-section', 'id' => 'index.php'],
     ['label' => 'Resources', 'href' => '/resources.php', 'id' => 'resources.php'],
     ['label' => 'Glossary', 'href' => '/glossary.php', 'id' => 'glossary.php'],
     ['label' => 'FAQ', 'href' => '/faq.php', 'id' => 'faq.php'],
-    ['label' => 'About', 'href' => '/about', 'id' => 'about.php'],
+    ['label' => 'About Me', 'href' => '/about', 'id' => 'about.php'],
 ];
 ?>
 
@@ -40,9 +40,8 @@ $nav_items = [
 <nav
     class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/80 backdrop-blur-md transition-all duration-300 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
-        <a href="/#calculator-section" class="flex items-center space-x-3 rtl:space-x-reverse group">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                style="width: 40px; height: 40px;"
+        <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 40px; height: 40px;"
                 class="rounded-xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
                 role="img" aria-label="SIP SWP Calculator Logo">
                 <rect width="24" height="24" rx="6" fill="url(#logo-grad-header)" />
