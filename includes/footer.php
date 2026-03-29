@@ -14,16 +14,19 @@
         <div>
             <h3 class="font-bold text-lg mb-3 text-gray-800">Resources Hub</h3>
             <ul class="space-y-2 text-sm">
-                <li><a href="/resources.php" class="text-emerald-600 hover:underline">All Resources &amp; Guides</a></li>
+                <li><a href="/resources.php" class="text-emerald-600 hover:underline">All Resources &amp; Guides</a>
+                </li>
                 <li><a href="/glossary.php" class="text-emerald-600 hover:underline">Financial Glossary</a></li>
-                <li><a href="/faq.php" class="text-emerald-600 hover:underline">Frequently Asked Questions (FAQ)</a></li>
+                <li><a href="/faq.php" class="text-emerald-600 hover:underline">Frequently Asked Questions (FAQ)</a>
+                </li>
             </ul>
         </div>
         <div>
             <h3 class="font-bold text-lg mb-3 text-gray-800">Support & Legal</h3>
             <ul class="space-y-2 text-sm">
-                <li><a href="/about" class="text-emerald-600 hover:underline">About Us</a></li>
-                <li><a href="mailto:help@sipswpcalculator.com" class="text-emerald-600 hover:underline">Contact Us</a></li>
+                <li><a href="/about" class="text-emerald-600 hover:underline">About Me</a></li>
+                <li><a href="mailto:help@sipswpcalculator.com" class="text-emerald-600 hover:underline">Contact Us</a>
+                </li>
                 <li><a href="/privacy" class="text-emerald-600 hover:underline">Privacy Policy</a></li>
                 <li><a href="/terms" class="text-emerald-600 hover:underline">Terms of Service</a></li>
             </ul>
@@ -42,7 +45,9 @@
 
         <div class="text-center">
             <p class="text-xs text-slate-500 font-medium">Verified for Accuracy: March 2026</p>
-            <p class="text-xs mt-2">&copy; <?= date('Y') ?> SIP/SWP Calculator. All rights reserved.</p>
+            <p class="text-xs mt-2">&copy;
+                <?= date('Y')?> SIP/SWP Calculator. All rights reserved.
+            </p>
             <p class="text-xs mt-2">Built with care for global investors • <span class="text-emerald-600">No
                     tracking • No ads • Free forever</span></p>
         </div>

@@ -28,8 +28,7 @@ if ($current_page == 'index.php' || $current_page == '')
     class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/80 backdrop-blur-md transition-all duration-300 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
         <a href="/#calculator-section" class="flex items-center space-x-3 rtl:space-x-reverse group">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                style="width: 40px; height: 40px;"
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 40px; height: 40px;"
                 class="rounded-xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
                 role="img" aria-label="SIP SWP Calculator Logo">
                 <rect width="24" height="24" rx="6" fill="url(#logo-grad-navbar)" />
@@ -48,26 +47,27 @@ if ($current_page == 'index.php' || $current_page == '')
                 <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
                     stroke-opacity="0.25" d="M4 21l5-5 3.5 3.5 7.5-7.5" />
             </svg>
-            <span class="self-center text-xl font-extrabold whitespace-nowrap tracking-tight text-slate-800">SIP &amp; SWP <span class="text-emerald-500 font-medium">Calculator</span></span>
+            <span class="self-center text-xl font-extrabold whitespace-nowrap tracking-tight text-slate-800">SIP &amp;
+                SWP <span class="text-emerald-500 font-medium">Calculator</span></span>
         </a>
 
         <!-- Desktop nav -->
         <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
             <a href="/#calculator-section"
-                class="<?= $current_page === 'index.php' ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600' ?> transition-colors">
+                class="<?= $current_page === 'index.php' ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600'?> transition-colors">
                 Calculator
             </a>
             <a href="/resources.php"
-                class="<?= $current_page === 'resources.php' ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600' ?> transition-colors">
+                class="<?= $current_page === 'resources.php' ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600'?> transition-colors">
                 Resources
             </a>
             <a href="/glossary.php"
-                class="<?= $current_page === 'glossary.php' ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600' ?> transition-colors">
+                class="<?= $current_page === 'glossary.php' ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600'?> transition-colors">
                 Glossary
             </a>
             <a href="/about.php"
-                class="<?= $current_page === 'about.php' ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600' ?> transition-colors">
-                About
+                class="<?= $current_page === 'about.php' ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600'?> transition-colors">
+                About Me
             </a>
         </nav>
 
@@ -91,20 +91,20 @@ if ($current_page == 'index.php' || $current_page == '')
     <div id="mobile-menu" class="sm:hidden hidden border-t border-slate-200 bg-white/95 backdrop-blur-md">
         <div class="px-4 py-3 space-y-1">
             <a href="/#calculator-section"
-                class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'index.php' ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 hover:text-emerald-600 hover:bg-slate-50' ?> transition-colors">
+                class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'index.php' ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 hover:text-emerald-600 hover:bg-slate-50'?> transition-colors">
                 Calculator
             </a>
             <a href="/resources.php"
-                class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'resources.php' ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 hover:text-emerald-600 hover:bg-slate-50' ?> transition-colors">
+                class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'resources.php' ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 hover:text-emerald-600 hover:bg-slate-50'?> transition-colors">
                 Resources
             </a>
             <a href="/glossary.php"
-                class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'glossary.php' ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 hover:text-emerald-600 hover:bg-slate-50' ?> transition-colors">
+                class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'glossary.php' ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 hover:text-emerald-600 hover:bg-slate-50'?> transition-colors">
                 Glossary
             </a>
             <div class="border-t border-slate-100 my-1"></div>
             <a href="/about.php"
-                class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'about.php' ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 hover:text-emerald-600 hover:bg-slate-50' ?> transition-colors">About
+                class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'about.php' ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 hover:text-emerald-600 hover:bg-slate-50'?> transition-colors">About
                 Us</a>
         </div>
     </div>
