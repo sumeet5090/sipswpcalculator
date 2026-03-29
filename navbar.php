@@ -65,7 +65,7 @@ if ($current_page == 'index.php' || $current_page == '')
                 class="<?= $current_page === 'glossary.php' ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600' ?> transition-colors">
                 Glossary
             </a>
-            <a href="/about"
+            <a href="/about.php"
                 class="<?= $current_page === 'about.php' ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600' ?> transition-colors">
                 About
             </a>
@@ -103,7 +103,7 @@ if ($current_page == 'index.php' || $current_page == '')
                 Glossary
             </a>
             <div class="border-t border-slate-100 my-1"></div>
-            <a href="/about"
+            <a href="/about.php"
                 class="block px-3 py-3 rounded-lg text-base font-medium <?= $current_page === 'about.php' ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 hover:text-emerald-600 hover:bg-slate-50' ?> transition-colors">About
                 Us</a>
         </div>
