@@ -3,97 +3,63 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/functions.php';
 
+$page_config = [
+    'title' => 'SIP Guide 2026: Formula, Tax Rules, Step-Up Strategy & Examples',
+    'meta_desc' => 'Master SIPs: learn the compounding formula, 2026 LTCG/STCG tax rules (India, USA, UK), step-up strategy with worked examples. Free SIP calculator included.',
+    'canonical' => 'https://sipswpcalculator.com/sip-calculator',
+];
+
+ob_start();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIP Guide 2026: Formula, Tax Rules, Step-Up Strategy & Examples</title>
-    <meta name="description"
-        content="Master SIPs: learn the compounding formula, 2026 LTCG/STCG tax rules (India, USA, UK), step-up strategy with worked examples. Free SIP calculator included.">
-    <link rel="canonical" href="https://sipswpcalculator.com/sip-calculator">
-    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/sip-calculator">
-    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/sip-calculator">
-    <meta name="robots" content="index, follow">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://sipswpcalculator.com/sip-calculator">
-    <meta property="og:title" content="SIP Guide 2026: Formula, Tax Rules, Step-Up Strategy & Examples">
-    <meta property="og:description"
-        content="Master SIPs: learn the compounding formula, 2026 LTCG/STCG tax rules, step-up strategy with worked examples. Free SIP calculator included.">
-    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
-    <!-- Tailwind CSS (production build, purged) -->
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
-    <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Article","headline":"SIP Guide 2026: Formula, Tax Rules, Step-Up Strategy & Examples","author":{"@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about"},"datePublished":"2026-02-25","dateModified":"2026-02-25"}
-    </script>
-    <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sipswpcalculator.com/"},{"@type":"ListItem","position":2,"name":"SIP Calculator","item":"https://sipswpcalculator.com/sip-calculator"}]}
-    </script>
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "Can I lose money in a SIP?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, in the short term. Mutual funds are subject to market risks. However, over long periods (7+ years), the probability of negative returns in diversified equity funds historically drops to near zero."
-        }
-      }, {
-        "@type": "Question",
-        "name": "What is the \"Exit Load\"?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Most funds charge a fee (usually 1%) if you redeem units within 1 year of purchase. This is to discourage premature withdrawals. Ensure you factor this into calculations for short-term goals."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Is SIP interest taxable?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "SIPs don't earn \"interest\" but \"capital gains.\" These gains are taxed only upon redemption (selling). Refer to the global tax table above (e.g., India 12.5% LTCG)."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Can I pause my SIP?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, most Asset Management Companies (AMCs) allow you to \"Pause\" a SIP for 1-6 months without cancelling it. This is useful during temporary financial crunches."
-        }
-      }]
+<link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/sip-calculator">
+<link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/sip-calculator">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"SIP Guide 2026: Formula, Tax Rules, Step-Up Strategy & Examples","author":{"@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about"},"datePublished":"2026-02-25","dateModified":"2026-02-25"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sipswpcalculator.com/"},{"@type":"ListItem","position":2,"name":"SIP Calculator","item":"https://sipswpcalculator.com/sip-calculator"}]}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Can I lose money in a SIP?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, in the short term. Mutual funds are subject to market risks. However, over long periods (7+ years), the probability of negative returns in diversified equity funds historically drops to near zero."
     }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [{
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://sipswpcalculator.com/"
-      },{
-        "@type": "ListItem",
-        "position": 2,
-        "name": "SIP Guide",
-        "item": "https://sipswpcalculator.com/sip-calculator"
-      }]
+  }, {
+    "@type": "Question",
+    "name": "What is the \"Exit Load\"?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Most funds charge a fee (usually 1%) if you redeem units within 1 year of purchase. This is to discourage premature withdrawals. Ensure you factor this into calculations for short-term goals."
     }
-    </script>
-</head>
+  }, {
+    "@type": "Question",
+    "name": "Is SIP interest taxable?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "SIPs don't earn \"interest\" but \"capital gains.\" These gains are taxed only upon redemption (selling). Refer to the global tax table above (e.g., India 12.5% LTCG)."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Can I pause my SIP?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, most Asset Management Companies (AMCs) allow you to \"Pause\" a SIP for 1-6 months without cancelling it. This is useful during temporary financial crunches."
+    }
+  }]
+}
+</script>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+$active_page = 'sip-calculator.php';
 
-<body class="bg-gray-50 text-gray-800 font-sans antialiased"
-    style="background-image: var(--gradient-surface); background-attachment: fixed;">
-    <?php include 'navbar.php'; ?>
-
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+ob_start();
+?>
 
         <header class="mb-12 text-center">
             <h1 class="text-4xl font-extrabold pb-2">
@@ -380,10 +346,7 @@ require_once __DIR__ . '/functions.php';
             </article>
         </main>
 
-        <?php include 'footer.php'; ?>
-
-    </div>
-
-</body>
-
-</html>
+<?php
+$page_content = ob_get_clean();
+require_once __DIR__ . '/includes/layout.php';
+?>

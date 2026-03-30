@@ -1,96 +1,73 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . '/functions.php';
+
+$page_config = [
+    'title' => 'Compound Interest Calculator 2026 — Free Online CI Calculator',
+    'meta_desc' => 'Free compound interest calculator with yearly breakdown table. Calculate how your money grows with monthly, quarterly, or annual compounding. Visual charts and exportable results.',
+    'canonical' => 'https://sipswpcalculator.com/compound-interest-calculator',
+];
+
+ob_start();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compound Interest Calculator 2026 — Free Online CI Calculator</title>
-    <meta name="description"
-        content="Free compound interest calculator with yearly breakdown table. Calculate how your money grows with monthly, quarterly, or annual compounding. Visual charts and exportable results.">
-    <meta name="keywords"
-        content="compound interest calculator, CI calculator, compound interest formula, compound interest calculator online, compound interest calculator with monthly deposits, compound growth calculator, investment growth calculator">
-    <link rel="canonical" href="https://sipswpcalculator.com/compound-interest-calculator">
-    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/compound-interest-calculator">
-    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/compound-interest-calculator">
-    <meta name="robots" content="index, follow">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://sipswpcalculator.com/compound-interest-calculator">
-    <meta property="og:title" content="Compound Interest Calculator 2026 — Free Online CI Calculator">
-    <meta property="og:description"
-        content="Free compound interest calculator with yearly breakdown. Calculate how your money grows with compounding.">
-    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <!-- Structured Data: Article -->
-    <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Article","headline":"Compound Interest Calculator 2026 — Free Online CI Calculator","author":{"@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about"},"datePublished":"2026-02-27","dateModified":"2026-02-27"}
-    </script>
-    <!-- Structured Data: BreadcrumbList -->
-    <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sipswpcalculator.com/"},{"@type":"ListItem","position":2,"name":"Compound Interest Calculator","item":"https://sipswpcalculator.com/compound-interest-calculator"}]}
-    </script>
-    <!-- Structured Data: FAQPage -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "What is compound interest?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Compound interest is interest calculated on both the initial principal and the accumulated interest from previous periods. Unlike simple interest (calculated only on the principal), compound interest grows exponentially over time."
-        }
-      }, {
-        "@type": "Question",
-        "name": "What is the compound interest formula?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "A = P × (1 + r/n)^(n×t), where A = final amount, P = principal, r = annual interest rate (decimal), n = compounding frequency per year, t = time in years."
-        }
-      }, {
-        "@type": "Question",
-        "name": "How does compounding frequency affect returns?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "More frequent compounding produces higher returns. Monthly compounding earns more than quarterly, which earns more than annually. The difference becomes significant with larger principals and longer time periods."
-        }
-      }, {
-        "@type": "Question",
-        "name": "What is the Rule of 72?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The Rule of 72 is a quick way to estimate how long it takes to double your money. Divide 72 by your annual interest rate. For example, at 8% interest, your money doubles in approximately 72 ÷ 8 = 9 years."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Is compound interest the same as SIP returns?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "SIP returns involve compound interest plus regular contributions. A SIP adds new money each month, which then compounds. A compound interest calculator shows growth of a lump sum, while a SIP calculator shows growth of periodic investments."
-        }
-      }]
+<meta name="keywords"
+    content="compound interest calculator, CI calculator, compound interest formula, compound interest calculator online, compound interest calculator with monthly deposits, compound growth calculator, investment growth calculator">
+<link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/compound-interest-calculator">
+<link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/compound-interest-calculator">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Compound Interest Calculator 2026 — Free Online CI Calculator","author":{"@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about"},"datePublished":"2026-02-27","dateModified":"2026-02-27"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sipswpcalculator.com/"},{"@type":"ListItem","position":2,"name":"Compound Interest Calculator","item":"https://sipswpcalculator.com/compound-interest-calculator"}]}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is compound interest?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Compound interest is interest calculated on both the initial principal and the accumulated interest from previous periods. Unlike simple interest (calculated only on the principal), compound interest grows exponentially over time."
     }
-    </script>
-</head>
+  }, {
+    "@type": "Question",
+    "name": "What is the compound interest formula?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A = P × (1 + r/n)^(n×t), where A = final amount, P = principal, r = annual interest rate (decimal), n = compounding frequency per year, t = time in years."
+    }
+  }, {
+    "@type": "Question",
+    "name": "How does compounding frequency affect returns?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "More frequent compounding produces higher returns. Monthly compounding earns more than quarterly, which earns more than annually. The difference becomes significant with larger principals and longer time periods."
+    }
+  }, {
+    "@type": "Question",
+    "name": "What is the Rule of 72?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The Rule of 72 is a quick way to estimate how long it takes to double your money. Divide 72 by your annual interest rate. For example, at 8% interest, your money doubles in approximately 72 ÷ 8 = 9 years."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Is compound interest the same as SIP returns?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "SIP returns involve compound interest plus regular contributions. A SIP adds new money each month, which then compounds. A compound interest calculator shows growth of a lump sum, while a SIP calculator shows growth of periodic investments."
+    }
+  }]
+}
+</script>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+$active_page = 'compound-interest-calculator.php';
 
-<body class="bg-gray-50 text-gray-800 font-sans antialiased"
-    style="background-image: var(--gradient-surface); background-attachment: fixed;">
-    <?php include 'navbar.php'; ?>
-
-    <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+ob_start();
+?>
 
         <header class="relative mb-6 sm:mb-10 text-center">
             <div
@@ -419,46 +396,45 @@ require_once __DIR__ . '/functions.php';
             </div>
         </main>
 
-        <?php include 'footer.php'; ?>
-    </div>
+<script>
+    // Compound Interest Calculator Logic
+    function calculateCI() {
+        const P = parseFloat(document.getElementById('ci-principal').value) || 0;
+        const r = (parseFloat(document.getElementById('ci-rate').value) || 0) / 100;
+        const t = parseInt(document.getElementById('ci-years').value) || 0;
+        const n = parseInt(document.getElementById('ci-frequency').value) || 12;
 
-    <script>
-        // Compound Interest Calculator Logic
-        function calculateCI() {
-            const P = parseFloat(document.getElementById('ci-principal').value) || 0;
-            const r = (parseFloat(document.getElementById('ci-rate').value) || 0) / 100;
-            const t = parseInt(document.getElementById('ci-years').value) || 0;
-            const n = parseInt(document.getElementById('ci-frequency').value) || 12;
+        // A = P × (1 + r/n)^(n*t)
+        const A = P * Math.pow(1 + r / n, n * t);
+        const interest = A - P;
+        const effectiveRate = (Math.pow(1 + r / n, n) - 1) * 100;
+        const rule72Years = r > 0 ? (72 / (r * 100)).toFixed(1) : '∞';
 
-            // A = P × (1 + r/n)^(n*t)
-            const A = P * Math.pow(1 + r / n, n * t);
-            const interest = A - P;
-            const effectiveRate = (Math.pow(1 + r / n, n) - 1) * 100;
-            const rule72Years = r > 0 ? (72 / (r * 100)).toFixed(1) : '∞';
+        // Format
+        const fmt = (num) => {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency', currency: 'USD', maximumFractionDigits: 0
+            }).format(num);
+        };
 
-            // Format
-            const fmt = (num) => {
-                return new Intl.NumberFormat('en-US', {
-                    style: 'currency', currency: 'USD', maximumFractionDigits: 0
-                }).format(num);
-            };
+        document.getElementById('ci-final').textContent = fmt(A);
+        document.getElementById('ci-interest').textContent = fmt(interest);
+        document.getElementById('ci-effective').textContent = effectiveRate.toFixed(2) + '%';
+        document.getElementById('ci-rule72-rate').textContent = (r * 100).toFixed(1);
+        document.getElementById('ci-rule72-years').textContent = rule72Years;
+    }
 
-            document.getElementById('ci-final').textContent = fmt(A);
-            document.getElementById('ci-interest').textContent = fmt(interest);
-            document.getElementById('ci-effective').textContent = effectiveRate.toFixed(2) + '%';
-            document.getElementById('ci-rule72-rate').textContent = (r * 100).toFixed(1);
-            document.getElementById('ci-rule72-years').textContent = rule72Years;
-        }
+    // Auto-calculate on any input change
+    document.querySelectorAll('#ci-principal, #ci-rate, #ci-years, #ci-frequency').forEach(el => {
+        el.addEventListener('input', calculateCI);
+        el.addEventListener('change', calculateCI);
+    });
 
-        // Auto-calculate on any input change
-        document.querySelectorAll('#ci-principal, #ci-rate, #ci-years, #ci-frequency').forEach(el => {
-            el.addEventListener('input', calculateCI);
-            el.addEventListener('change', calculateCI);
-        });
+    // Initial calculation
+    calculateCI();
+</script>
 
-        // Initial calculation
-        calculateCI();
-    </script>
-</body>
-
-</html>
+<?php
+$page_content = ob_get_clean();
+require_once __DIR__ . '/includes/layout.php';
+?>

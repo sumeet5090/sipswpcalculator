@@ -192,21 +192,51 @@ foreach ($combined as $row) {
     $swp_numbers[] = $row['annual_withdrawal'] ?? 0.0;
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<?php
+$page_config = [
+    'title' => 'Recurring Investment Calculator 2026 | Plan Your Monthly Savings',
+    'meta_desc' => 'Calculate the future value of your recurring investments with our free online tool. Perfect for projecting long-term, monthly compounding savings globally.',
+    'canonical' => 'https://sipswpcalculator.com/recurring-investment-calculator',
+];
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recurring Investment Calculator 2026 | Plan Your Monthly Savings</title>
-    <meta name="description"
-        content="Calculate the future value of your recurring investments with our free online tool. Perfect for projecting long-term, monthly compounding savings globally.">
-    <meta name="keywords"
-        content="Recurring Investment Calculator, Monthly Savings Calculator, Investment Planner, Wealth Creation, Retirement Planning">
-    <link rel="canonical" href="https://sipswpcalculator.com/recurring-investment-calculator">
-    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/recurring-investment-calculator">
-    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
-    <meta name="robots" content="index, follow">
+ob_start();
+?>
+<meta name="keywords"
+    content="Recurring Investment Calculator, Monthly Savings Calculator, Investment Planner, Wealth Creation, Retirement Planning">
+<link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/recurring-investment-calculator">
+<link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
+<!-- 1. SoftwareApplication -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@id":"https://sipswpcalculator.com/#calculator","@type":"SoftwareApplication","name":"Advanced SIP & SWP Calculator","url":"https://sipswpcalculator.com/","applicationCategory":"FinanceApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":[{"@type":"Offer","price":"0","priceCurrency":"USD"},{"@type":"Offer","price":"0","priceCurrency":"INR"}],"description":"Advanced SIP & SWP Calculator with step-up compounding for mutual fund investment planning.","author":{"@id":"https://sipswpcalculator.com/#author"},"publisher":{"@id":"https://sipswpcalculator.com/#organization"}}
+</script>
+<!-- 2. Organization -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@id":"https://sipswpcalculator.com/#organization","@type":"Organization","name":"SIP & SWP Calculator","url":"https://sipswpcalculator.com/","logo":{"@type":"ImageObject","url":"https://sipswpcalculator.com/assets/favicon.svg"},"founder":{"@id":"https://sipswpcalculator.com/#author"},"contactPoint":{"@type":"ContactPoint","email":"help@sipswpcalculator.com","contactType":"customer service"}}
+</script>
+<!-- 3. Person -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@id":"https://sipswpcalculator.com/#author","@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about","image":"https://sipswpcalculator.com/assets/sumeet-boga-56.jpg","jobTitle":"Software Engineer & Finance Enthusiast","sameAs":["https://www.linkedin.com/in/sumeet-boga/"]}
+</script>
+<!-- PWA Manifest -->
+<link rel="manifest" href="manifest.json">
+<!-- Critical above-the-fold CSS -->
+<style>
+    :root{--gradient-primary:linear-gradient(135deg,#4f46e5,#4338ca);--glass-bg:rgba(255,255,255,.9);--glass-border:1px solid rgba(255,255,255,.5);--glass-shadow:0 8px 32px 0 rgba(79,81,93,.1);--color-bg:#f8fafc;--color-text-primary:#0f172a;--color-text-secondary:#64748b;--color-border:#e2e8f0}
+    @font-face{font-family:'Plus Jakarta Sans Fallback';src:local('Arial');size-adjust:107%;ascent-override:90%;descent-override:22%;line-gap-override:0%}
+    body{background-color:var(--color-bg);font-family:'Plus Jakarta Sans','Plus Jakarta Sans Fallback','Inter',Arial,sans-serif;color:var(--color-text-primary);line-height:1.6;-webkit-font-smoothing:antialiased}
+    .navbar-glass{background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+    .glass-card{background:var(--glass-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:var(--glass-border);box-shadow:var(--glass-shadow);border-radius:1rem;position:relative}
+    .text-gradient{background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-image:var(--gradient-primary)}
+    h1,h2,h3,h4,h5,h6{color:var(--color-text-primary)}
+</style>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"></noscript>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+$active_page = 'recurring-investment-calculator.php';
+
+ob_start();
+?>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -224,12 +254,8 @@ foreach ($combined as $row) {
         content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export.">
     <meta property="twitter:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
 
-    <!-- ════════════════════════════════════════════════════════════════════
-         AI-CITATION-OPTIMIZED STRUCTURED DATA (JSON-LD)
-         Designed for extraction by Gemini, Perplexity, ChatGPT, and
-         traditional search engines. Uses @id graph linking, potentialAction,
-         sameAs entity grounding, and information-dense descriptions.
-         ════════════════════════════════════════════════════════════════════ -->
+
+
 
     <!-- 1. SoftwareApplication — Primary Tool Identity -->
     <script type="application/ld+json">
@@ -531,100 +557,12 @@ foreach ($combined as $row) {
       ]
     }
     </script>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+$active_page = 'recurring-investment-calculator.php';
 
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-
-    <!-- Preconnect to font & CDN origins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-
-    <!-- Critical above-the-fold CSS inlined for instant FCP -->
-    <style>
-        :root {
-            --gradient-primary: linear-gradient(135deg, #4f46e5, #4338ca);
-            --glass-bg: rgba(255, 255, 255, .9);
-            --glass-border: 1px solid rgba(255, 255, 255, .5);
-            --glass-shadow: 0 8px 32px 0 rgba(79, 81, 93, .1);
-            --color-bg: #f8fafc;
-            --color-text-primary: #0f172a;
-            --color-text-secondary: #64748b;
-            --color-border: #e2e8f0
-        }
-
-        @font-face {
-            font-family: 'Plus Jakarta Sans Fallback';
-            src: local('Arial');
-            size-adjust: 107%;
-            ascent-override: 90%;
-            descent-override: 22%;
-            line-gap-override: 0%
-        }
-
-        body {
-            background-color: var(--color-bg);
-            font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', 'Inter', Arial, sans-serif;
-            color: var(--color-text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased
-        }
-
-        .navbar-glass {
-            background: rgba(255, 255, 255, .85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px)
-        }
-
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            border-radius: 1rem;
-            position: relative
-        }
-
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: var(--gradient-primary)
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            color: var(--color-text-primary)
-        }
-    </style>
-
-    <!-- Google Fonts: preload + swap (has size-matching fallback in critical CSS above) -->
-    <link rel="preload"
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
-    </noscript>
-
-    <!-- Render-blocking CSS: loaded before first paint to prevent FOUC/CLS -->
-    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
-</head>
-
-<body class="font-sans antialiased text-slate-800">
-    <?php include 'navbar.php'; ?>
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-
+ob_start();
+?>
         <header class="relative mb-6 sm:mb-10 text-center">
             <div
                 class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-4">
@@ -1379,9 +1317,6 @@ foreach ($combined as $row) {
         }
         </script>
 
-    <?php include 'footer.php'; ?>
-
-    </div>
 
     <!-- PDF Generation Modal -->
     <div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
@@ -1430,7 +1365,6 @@ foreach ($combined as $row) {
 
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <script>
-        // Pass chart data to the external script
         window.chartData = {
             years: <?php echo json_encode(array_values($years_data)); ?>,
             cumulative: <?php echo json_encode(array_values($cumulative_numbers)); ?>,
@@ -1440,6 +1374,7 @@ foreach ($combined as $row) {
     </script>
     <script defer src="script.js?v=<?= filemtime(__DIR__ . '/script.js') ?>"></script>
 
-</body>
-
-</html>
+<?php
+$page_content = ob_get_clean();
+require_once __DIR__ . '/includes/layout.php';
+?>

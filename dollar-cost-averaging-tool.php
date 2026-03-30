@@ -191,45 +191,127 @@ foreach ($combined as $row) {
     $combined_numbers[] = $row['combined_total'];
     $swp_numbers[] = $row['annual_withdrawal'] ?? 0.0;
 }
+
+$page_config = [
+    'title' => 'Dollar-Cost Averaging (DCA) Calculator 2026 | Investment Planner',
+    'meta_desc' => 'Use our free DCA calculator to project your wealth. See how regular, consistent monthly investments can help smooth out market volatility over time.',
+    'canonical' => 'https://sipswpcalculator.com/dollar-cost-averaging-tool',
+];
+
+ob_start();
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<meta name="keywords"
+    content="DCA Calculator, Dollar Cost Averaging Tool, Systematic Investment Plan, Investment Planner, Wealth Creation">
+<link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/dollar-cost-averaging-tool">
+<link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dollar-Cost Averaging (DCA) Calculator 2026 | Investment Planner</title>
-    <meta name="description"
-        content="Use our free DCA calculator to project your wealth. See how regular, consistent monthly investments can help smooth out market volatility over time.">
-    <meta name="keywords"
-        content="DCA Calculator, Dollar Cost Averaging Tool, Systematic Investment Plan, Investment Planner, Wealth Creation">
-    <link rel="canonical" href="https://sipswpcalculator.com/dollar-cost-averaging-tool">
-    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/dollar-cost-averaging-tool">
-    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
-    <meta name="robots" content="index, follow">
+<!-- 1. SoftwareApplication -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@id":"https://sipswpcalculator.com/#calculator","@type":"SoftwareApplication","name":"Advanced SIP & SWP Calculator","alternateName":["SIP Calculator","SWP Calculator","Step-Up SIP Calculator","Mutual Fund SIP Calculator","SIP Return Calculator","SWP Retirement Planner"],"url":"https://sipswpcalculator.com/","applicationCategory":"FinanceApplication","applicationSubCategory":"Investment Calculator","operatingSystem":"Web","availableOnDevice":["Desktop","Mobile","Tablet"],"inLanguage":["en"],"isAccessibleForFree":true,"offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},{"@type":"Offer","price":"0","priceCurrency":"EUR","availability":"https://schema.org/InStock"},{"@type":"Offer","price":"0","priceCurrency":"GBP","availability":"https://schema.org/InStock"},{"@type":"Offer","price":"0","priceCurrency":"INR","availability":"https://schema.org/InStock"}],"description":"Advanced SIP & SWP Calculator with step-up (top-up) compounding for mutual fund investment planning.","featureList":["Core Attribute: Step-up compounding (annual top-up 0-50%)","SWP Retirement Planner with step-up withdrawals","Month-by-month simulation","Interactive Chart.js growth visualization","Yearly breakdown table","Multi-currency support: INR, USD, EUR, GBP","CSV export","Branded PDF report generation","Shareable URL with pre-filled parameters"],"screenshot":"https://sipswpcalculator.com/assets/og-image-main.jpg","image":"https://sipswpcalculator.com/assets/og-image-main.jpg","datePublished":"2024-12-01","dateModified":"2026-03-02","softwareVersion":"3.0","author":{"@id":"https://sipswpcalculator.com/#author"},"publisher":{"@id":"https://sipswpcalculator.com/#organization"},"potentialAction":{"@type":"UseAction","name":"Calculate SIP & SWP Returns","target":{"@type":"EntryPoint","urlTemplate":"https://sipswpcalculator.com/?sip={sip}&years={years}&rate={rate}&stepup={stepup}","actionPlatform":["http://schema.org/DesktopWebPlatform","http://schema.org/MobileWebPlatform"],"inLanguage":"en"},"object":{"@type":"FinancialProduct","name":"Systematic Investment Plan (SIP)"}},"sameAs":["https://en.wikipedia.org/wiki/Systematic_investment_plan","https://www.wikidata.org/wiki/Q7662882"],"about":[{"@type":"DefinedTerm","name":"Systematic Investment Plan (SIP)","description":"A method of investing a fixed sum regularly in mutual funds.","sameAs":"https://en.wikipedia.org/wiki/Systematic_investment_plan"},{"@type":"DefinedTerm","name":"Systematic Withdrawal Plan (SWP)","description":"A facility for regular withdrawals from mutual fund investments.","sameAs":"https://en.wikipedia.org/wiki/Systematic_withdrawal_plan"},{"@type":"DefinedTerm","name":"Step-Up SIP","description":"A SIP variant where the monthly amount increases by a fixed percentage annually."},{"@type":"DefinedTerm","name":"4% Rule (Safe Withdrawal Rate)","description":"A retirement planning guideline for sustainable annual withdrawals.","sameAs":"https://en.wikipedia.org/wiki/Trinity_study"}],"citation":{"@type":"CreativeWork","name":"AMFI India — SIP Methodology","url":"https://www.amfiindia.com/","publisher":{"@type":"Organization","name":"Association of Mutual Funds worldwide (AMFI)"}}}
+</script>
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sipswpcalculator.com/">
-    <meta property="og:title" content="SIP Calculator 2026 — Free Step-Up SIP & SWP Planner">
-    <meta property="og:description"
-        content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export.">
-    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+<!-- 2. FinancialProduct -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@id":"https://sipswpcalculator.com/#financialproduct","@type":"FinancialProduct","name":"SIP & SWP Investment Planning Tool","alternateName":"Mutual Fund SIP Return Calculator","description":"Free financial planning tool for calculating SIP returns with step-up compounding and SWP retirement income projections.","url":"https://sipswpcalculator.com/","provider":{"@id":"https://sipswpcalculator.com/#organization"},"category":"Investment Planning Tool","feesAndCommissionsSpecification":"Completely free","areaServed":{"@type":"Place","name":"Worldwide"},"availableChannel":{"@type":"ServiceChannel","serviceUrl":"https://sipswpcalculator.com/","availableLanguage":"English"},"termsOfService":"https://sipswpcalculator.com/terms","currenciesAccepted":"INR, USD, EUR, GBP","sameAs":["https://en.wikipedia.org/wiki/Systematic_investment_plan","https://en.wikipedia.org/wiki/Systematic_withdrawal_plan"]}
+</script>
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://sipswpcalculator.com/">
-    <meta property="twitter:title" content="SIP Calculator 2026 — Free Step-Up SIP & SWP Planner">
-    <meta property="twitter:description"
-        content="Free SIP calculator with step-up compounding & SWP retirement planner. Visual charts, yearly breakdown, CSV & PDF export.">
-    <meta property="twitter:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
+<!-- 3. WebSite -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@id":"https://sipswpcalculator.com/#website","@type":"WebSite","name":"Advanced SIP & SWP Calculator","alternateName":"sipswpcalculator.com","url":"https://sipswpcalculator.com/","description":"Free online SIP calculator with step-up compounding and SWP retirement planner.","inLanguage":"en","publisher":{"@id":"https://sipswpcalculator.com/#organization"},"creator":{"@id":"https://sipswpcalculator.com/#author"},"datePublished":"2024-12-01","dateModified":"2026-03-02","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://sipswpcalculator.com/?sip={sip_amount}"},"query-input":"required name=sip_amount"}}
+</script>
 
-    <!-- ════════════════════════════════════════════════════════════════════
-         AI-CITATION-OPTIMIZED STRUCTURED DATA (JSON-LD)
-         Designed for extraction by Gemini, Perplexity, ChatGPT, and
-         traditional search engines. Uses @id graph linking, potentialAction,
-         sameAs entity grounding, and information-dense descriptions.
-         ════════════════════════════════════════════════════════════════════ -->
+<!-- 4. Organization -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@id":"https://sipswpcalculator.com/#organization","@type":"Organization","name":"SIP & SWP Calculator","legalName":"SIP SWP Calculator","url":"https://sipswpcalculator.com/","logo":{"@type":"ImageObject","url":"https://sipswpcalculator.com/assets/favicon.svg","width":512,"height":512},"description":"Publisher of free financial planning tools.","foundingDate":"2024-12-01","founder":{"@id":"https://sipswpcalculator.com/#author"},"contactPoint":{"@type":"ContactPoint","email":"help@sipswpcalculator.com","contactType":"customer service","availableLanguage":"English"},"sameAs":["https://www.linkedin.com/in/sumeet-boga/"]}
+</script>
+
+<!-- 5. Person -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@id":"https://sipswpcalculator.com/#author","@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about","image":"https://sipswpcalculator.com/assets/sumeet-boga-56.jpg","jobTitle":"Software Engineer & Finance Enthusiast","description":"Creator of the Advanced SIP & SWP Calculator.","sameAs":["https://www.linkedin.com/in/sumeet-boga/"],"worksFor":{"@id":"https://sipswpcalculator.com/#organization"}}
+</script>
+
+<!-- 6. HowTo -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@id":"https://sipswpcalculator.com/#howto","@type":"HowTo","name":"How to Calculate SIP Returns with Step-Up Compounding","description":"Step-by-step guide to using the Advanced SIP & SWP Calculator.","totalTime":"PT2M","tool":{"@id":"https://sipswpcalculator.com/#calculator"},"step":[{"@type":"HowToStep","position":1,"name":"Enter SIP Investment Details","text":"Set your monthly SIP amount, investment period, expected return rate, and step-up percentage.","url":"https://sipswpcalculator.com/#calculator-heading"},{"@type":"HowToStep","position":2,"name":"Configure SWP Retirement Withdrawals (Optional)","text":"Enable the SWP toggle to plan systematic withdrawals.","url":"https://sipswpcalculator.com/#calculator-heading"},{"@type":"HowToStep","position":3,"name":"Analyze Results and Export Reports","text":"View interactive growth chart, review yearly breakdown, export results.","url":"https://sipswpcalculator.com/#yearly-breakdown"}]}
+</script>
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="manifest.json">
+
+<!-- Critical above-the-fold CSS -->
+<style>
+    :root {
+        --gradient-primary: linear-gradient(135deg, #4f46e5, #4338ca);
+        --glass-bg: rgba(255, 255, 255, .9);
+        --glass-border: 1px solid rgba(255, 255, 255, .5);
+        --glass-shadow: 0 8px 32px 0 rgba(79, 81, 93, .1);
+        --color-bg: #f8fafc;
+        --color-text-primary: #0f172a;
+        --color-text-secondary: #64748b;
+        --color-border: #e2e8f0
+    }
+
+    @font-face {
+        font-family: 'Plus Jakarta Sans Fallback';
+        src: local('Arial');
+        size-adjust: 107%;
+        ascent-override: 90%;
+        descent-override: 22%;
+        line-gap-override: 0%
+    }
+
+    body {
+        background-color: var(--color-bg);
+        font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', 'Inter', Arial, sans-serif;
+        color: var(--color-text-primary);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased
+    }
+
+    .navbar-glass {
+        background: rgba(255, 255, 255, .85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px)
+    }
+
+    .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        border-radius: 1rem;
+        position: relative
+    }
+
+    .text-gradient {
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-image: var(--gradient-primary)
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--color-text-primary)
+    }
+</style>
+
+<!-- Google Fonts: preload + swap -->
+<link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+</noscript>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+$active_page = 'dollar-cost-averaging-tool.php';
+
+ob_start();
+?>
+
+
 
     <!-- 1. SoftwareApplication — Primary Tool Identity -->
     <script type="application/ld+json">
@@ -531,100 +613,12 @@ foreach ($combined as $row) {
       ]
     }
     </script>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+$active_page = 'dollar-cost-averaging-tool.php';
 
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-
-    <!-- Preconnect to font & CDN origins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-
-    <!-- Critical above-the-fold CSS inlined for instant FCP -->
-    <style>
-        :root {
-            --gradient-primary: linear-gradient(135deg, #4f46e5, #4338ca);
-            --glass-bg: rgba(255, 255, 255, .9);
-            --glass-border: 1px solid rgba(255, 255, 255, .5);
-            --glass-shadow: 0 8px 32px 0 rgba(79, 81, 93, .1);
-            --color-bg: #f8fafc;
-            --color-text-primary: #0f172a;
-            --color-text-secondary: #64748b;
-            --color-border: #e2e8f0
-        }
-
-        @font-face {
-            font-family: 'Plus Jakarta Sans Fallback';
-            src: local('Arial');
-            size-adjust: 107%;
-            ascent-override: 90%;
-            descent-override: 22%;
-            line-gap-override: 0%
-        }
-
-        body {
-            background-color: var(--color-bg);
-            font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', 'Inter', Arial, sans-serif;
-            color: var(--color-text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased
-        }
-
-        .navbar-glass {
-            background: rgba(255, 255, 255, .85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px)
-        }
-
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            border-radius: 1rem;
-            position: relative
-        }
-
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: var(--gradient-primary)
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            color: var(--color-text-primary)
-        }
-    </style>
-
-    <!-- Google Fonts: preload + swap (has size-matching fallback in critical CSS above) -->
-    <link rel="preload"
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
-    </noscript>
-
-    <!-- Render-blocking CSS: loaded before first paint to prevent FOUC/CLS -->
-    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
-</head>
-
-<body class="font-sans antialiased text-slate-800">
-    <?php include 'navbar.php'; ?>
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-
+ob_start();
+?>
         <header class="relative mb-6 sm:mb-10 text-center">
             <div
                 class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 mb-4">
@@ -1384,9 +1378,6 @@ foreach ($combined as $row) {
         }
         </script>
 
-    <?php include 'footer.php'; ?>
-
-    </div>
 
     <!-- PDF Generation Modal -->
     <div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
@@ -1432,7 +1423,6 @@ foreach ($combined as $row) {
         </div>
     </div>
 
-
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <script>
         // Pass chart data to the external script
@@ -1445,6 +1435,7 @@ foreach ($combined as $row) {
     </script>
     <script defer src="script.js?v=<?= filemtime(__DIR__ . '/script.js') ?>"></script>
 
-</body>
-
-</html>
+<?php
+$page_content = ob_get_clean();
+require_once __DIR__ . '/includes/layout.php';
+?>

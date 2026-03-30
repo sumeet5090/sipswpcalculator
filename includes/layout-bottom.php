@@ -23,7 +23,7 @@
         }
     });
 </script>
-<!-- </div>Closing Standard Container -->
+</div><!-- Closing Standard Container -->
 </body>
 
 </html>

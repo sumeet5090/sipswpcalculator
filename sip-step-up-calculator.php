@@ -1,96 +1,79 @@
-<?php declare(strict_types=1);
-require_once __DIR__ . '/functions.php'; ?>
-<!DOCTYPE html>
-<html lang="en">
+<?php
+declare(strict_types=1);
+require_once __DIR__ . '/functions.php';
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Step-Up SIP Calculator: How a 10% Annual Increase Doubles Your Corpus</title>
-    <meta name="description"
-        content="Learn how step-up (top-up) SIP works. Compare flat vs step-up SIP with worked examples. See why a 10% annual increase can double your corpus over 20 years.">
-    <meta name="keywords"
-        content="step-up SIP calculator, top-up SIP, SIP with annual increase, step-up vs flat SIP, SIP step-up strategy">
-    <link rel="canonical" href="https://sipswpcalculator.com/sip-step-up-calculator">
-    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/sip-step-up-calculator">
-    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/sip-step-up-calculator">
-    <meta name="robots" content="index, follow">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://sipswpcalculator.com/sip-step-up-calculator">
-    <meta property="og:title" content="Step-Up SIP Calculator: How a 10% Annual Increase Doubles Your Corpus">
-    <meta property="og:description"
-        content="Compare flat vs step-up SIP with worked examples. See why a 10% annual increase can double your corpus over 20 years.">
-    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+$page_config = [
+    'title' => 'Step-Up SIP Calculator: How a 10% Annual Increase Doubles Your Corpus',
+    'meta_desc' => 'Learn how step-up (top-up) SIP works. Compare flat vs step-up SIP with worked examples. See why a 10% annual increase can double your corpus over 20 years.',
+    'canonical' => 'https://sipswpcalculator.com/sip-step-up-calculator',
+];
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "Step-Up SIP Calculator: How a 10% Annual Increase Doubles Your Corpus",
-      "author": {"@type": "Person", "name": "Sumeet Boga", "url": "https://sipswpcalculator.com/about"},
-      "datePublished": "2026-02-25",
-      "dateModified": "2026-02-25"
+ob_start();
+?>
+<meta name="keywords"
+    content="step-up SIP calculator, top-up SIP, SIP with annual increase, step-up vs flat SIP, SIP step-up strategy">
+<link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/sip-step-up-calculator">
+<link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/sip-step-up-calculator">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Step-Up SIP Calculator: How a 10% Annual Increase Doubles Your Corpus",
+  "author": {"@type": "Person", "name": "Sumeet Boga", "url": "https://sipswpcalculator.com/about"},
+  "datePublished": "2026-02-25",
+  "dateModified": "2026-02-25"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org", "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sipswpcalculator.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Step-Up SIP Guide", "item": "https://sipswpcalculator.com/sip-step-up-calculator"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is the ideal step-up percentage?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "10% annually is ideal for most salaried individuals. It roughly matches average salary increments. Conservative savers can use 5-7%, aggressive investors 15%."
     }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org", "@type": "BreadcrumbList",
-      "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://sipswpcalculator.com/"},
-        {"@type": "ListItem", "position": 2, "name": "Step-Up SIP Guide", "item": "https://sipswpcalculator.com/sip-step-up-calculator"}
-      ]
+  }, {
+    "@type": "Question",
+    "name": "Do all AMCs support step-up SIP?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Most major AMCs offer automatic step-up/top-up SIP options. You set the percentage and frequency, and the AMC auto-increases your SIP amount each year."
     }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "What is the ideal step-up percentage?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "10% annually is ideal for most salaried individuals. It roughly matches average salary increments. Conservative savers can use 5-7%, aggressive investors 15%."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Do all AMCs support step-up SIP?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Most major AMCs offer automatic step-up/top-up SIP options. You set the percentage and frequency, and the AMC auto-increases your SIP amount each year."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Can I combine step-up SIP with step-up SWP?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes! Our SIP & SWP calculator supports both. You can model a 10% step-up SIP during accumulation and a 5% step-up SWP during retirement — all in one simulation."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Is step-up SIP better than lump sum top-ups?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Both work. Step-up SIPs are automatic and disciplined. Lump sum top-ups can be done alongside step-up SIPs. The key is to increase your total investment systematically."
-        }
-      }]
+  }, {
+    "@type": "Question",
+    "name": "Can I combine step-up SIP with step-up SWP?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes! Our SIP & SWP calculator supports both. You can model a 10% step-up SIP during accumulation and a 5% step-up SWP during retirement — all in one simulation."
     }
-    </script>
-</head>
+  }, {
+    "@type": "Question",
+    "name": "Is step-up SIP better than lump sum top-ups?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Both work. Step-up SIPs are automatic and disciplined. Lump sum top-ups can be done alongside step-up SIPs. The key is to increase your total investment systematically."
+    }
+  }]
+}
+</script>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+$active_page = 'sip-step-up-calculator.php';
 
-<body class="bg-gray-50 text-gray-800 font-sans antialiased"
-    style="background-image: var(--gradient-surface); background-attachment: fixed;">
-    <?php include 'navbar.php'; ?>
-    <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+ob_start();
+?>
         <header class="mb-12 text-center">
             <h1 class="text-4xl font-extrabold pb-2"><span class="text-gradient">Step-Up SIP Calculator Guide</span>
             </h1>
@@ -294,8 +277,7 @@ require_once __DIR__ . '/functions.php'; ?>
 
             </article>
         </main>
-        <?php include 'footer.php'; ?>
-    </div>
-</body>
-
-</html>
+<?php
+$page_content = ob_get_clean();
+require_once __DIR__ . '/includes/layout.php';
+?>

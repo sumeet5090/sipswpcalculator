@@ -1,82 +1,66 @@
-<?php declare(strict_types=1);
-require_once __DIR__ . '/functions.php'; ?>
-<!DOCTYPE html>
-<html lang="en">
+<?php
+declare(strict_types=1);
+require_once __DIR__ . '/functions.php';
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWP Tax Calculator India: Calculate Post-Tax Withdrawal Income</title>
-    <meta name="description"
-        content="Calculate the tax on your SWP withdrawals from mutual funds. Understand LTCG vs STCG, FIFO method, and how to maximize post-tax retirement income from SWP.">
-    <meta name="keywords"
-        content="SWP tax calculator, SWP tax India, post-tax SWP income, capital gains SWP withdrawal, mutual fund withdrawal tax">
-    <link rel="canonical" href="https://sipswpcalculator.com/swp-tax-calculator">
-    <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/swp-tax-calculator">
-    <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/swp-tax-calculator">
-    <meta name="robots" content="index, follow">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://sipswpcalculator.com/swp-tax-calculator">
-    <meta property="og:title" content="SWP Tax Calculator: Calculate Post-Tax Withdrawal Income">
-    <meta property="og:description"
-        content="Calculate the tax on SWP withdrawals. LTCG vs STCG, FIFO method, and strategies to maximize post-tax retirement income.">
-    <meta property="og:image" content="https://sipswpcalculator.com/assets/og-image-main.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css') ?>">
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Article","headline":"SWP Tax Calculator India","author":{"@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about"},"datePublished":"2026-02-25","dateModified":"2026-02-25"}
-    </script>
-    <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sipswpcalculator.com/"},{"@type":"ListItem","position":2,"name":"SWP Tax Calculator","item":"https://sipswpcalculator.com/swp-tax-calculator"}]}
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "Is SWP from mutual funds taxable?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, but only the capital gains portion is taxable, not the full withdrawal. The principal component is returned tax-free. This makes the effective tax rate on SWP much lower than on FD interest."
-        }
-      }, {
-        "@type": "Question",
-        "name": "How is the capital gains portion calculated?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Using the FIFO method: the earliest units are redeemed first. For each unit, capital gain = Redemption NAV - Purchase NAV. Your AMC provides this in the Capital Gains Statement."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Can I claim tax-loss harvesting with SWP?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. If some of your mutual fund units are at a loss, you can redeem them to book short-term capital losses, which can be set off against capital gains from SWP withdrawals. This can significantly reduce your overall tax liability."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Is there GST on mutual fund transactions?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "There's no GST on the investment or redemption amount. However, the fund's expense ratio includes GST on management fees (typically 0.5-2% annually). This is deducted from the fund's NAV, not billed separately."
-        }
-      }]
+$page_config = [
+    'title' => 'SWP Tax Calculator India: Calculate Post-Tax Withdrawal Income',
+    'meta_desc' => 'Calculate the tax on your SWP withdrawals from mutual funds. Understand LTCG vs STCG, FIFO method, and how to maximize post-tax retirement income from SWP.',
+    'canonical' => 'https://sipswpcalculator.com/swp-tax-calculator',
+];
+
+ob_start();
+?>
+<meta name="keywords"
+    content="SWP tax calculator, SWP tax India, post-tax SWP income, capital gains SWP withdrawal, mutual fund withdrawal tax">
+<link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/swp-tax-calculator">
+<link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/swp-tax-calculator">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"SWP Tax Calculator India","author":{"@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about"},"datePublished":"2026-02-25","dateModified":"2026-02-25"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sipswpcalculator.com/"},{"@type":"ListItem","position":2,"name":"SWP Tax Calculator","item":"https://sipswpcalculator.com/swp-tax-calculator"}]}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Is SWP from mutual funds taxable?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, but only the capital gains portion is taxable, not the full withdrawal. The principal component is returned tax-free. This makes the effective tax rate on SWP much lower than on FD interest."
     }
-    </script>
-</head>
+  }, {
+    "@type": "Question",
+    "name": "How is the capital gains portion calculated?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Using the FIFO method: the earliest units are redeemed first. For each unit, capital gain = Redemption NAV - Purchase NAV. Your AMC provides this in the Capital Gains Statement."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Can I claim tax-loss harvesting with SWP?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. If some of your mutual fund units are at a loss, you can redeem them to book short-term capital losses, which can be set off against capital gains from SWP withdrawals. This can significantly reduce your overall tax liability."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Is there GST on mutual fund transactions?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "There's no GST on the investment or redemption amount. However, the fund's expense ratio includes GST on management fees (typically 0.5-2% annually). This is deducted from the fund's NAV, not billed separately."
+    }
+  }]
+}
+</script>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+$active_page = 'swp-tax-calculator.php';
 
-<body class="bg-gray-50 text-gray-800 font-sans antialiased"
-    style="background-image: var(--gradient-surface); background-attachment: fixed;">
-    <?php include 'navbar.php'; ?>
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+ob_start();
+?>
         <header class="mb-12 text-center">
             <h1 class="text-4xl font-extrabold pb-2"><span class="text-gradient">SWP Tax Calculator India</span></h1>
             <p class="text-lg text-gray-500 font-medium mt-2 mb-6">Understand how your SWP withdrawals are taxed and
@@ -290,8 +274,7 @@ require_once __DIR__ . '/functions.php'; ?>
 
             </article>
         </main>
-        <?php include 'footer.php'; ?>
-    </div>
-</body>
-
-</html>
+<?php
+$page_content = ob_get_clean();
+require_once __DIR__ . '/includes/layout.php';
+?>

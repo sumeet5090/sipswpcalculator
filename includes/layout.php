@@ -86,7 +86,7 @@ endif; ?>
 
 <?php require_once __DIR__ . '/footer.php'; ?>
 
+<script src="/assets/js/toc.js" defer></script>
 <?php
 require_once __DIR__ . '/layout-bottom.php';
 ?>
-<script src="/assets/js/toc.js" defer></script>
