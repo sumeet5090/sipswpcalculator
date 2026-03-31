@@ -2,26 +2,6 @@
 declare(strict_types=1);
 session_start();
 
-// ── MANUALLY LOAD .ENV FOR SHARED HOSTING (Hostinger/LiteSpeed) ──
-$envPath = __DIR__ . '/.env';
-if (file_exists($envPath)) {
-    $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($lines as $line) {
-        if (strpos(trim($line), '#') === 0 || !strpos($line, '='))
-            continue;
-        $parts = explode('=', $line, 2);
-        if (count($parts) === 2) {
-            $name = trim($parts[0]);
-            $value = trim($parts[1]);
-            // Filter out possible quotes
-            $value = trim($value, '"\'');
-            putenv("$name=$value");
-            $_ENV[$name] = $value;
-            $_SERVER[$name] = $value;
-        }
-    }
-}
-
 $envPassword = getenv('ADMIN_INSIGHTS_PASSWORD');
 $ADMIN_PASSWORD = ($envPassword !== false && $envPassword !== '') ? $envPassword : 'sipswp_admin_2026!';
 
@@ -869,10 +849,10 @@ endif; ?>
         new Chart(document.getElementById('volumeChart'), {
             type: 'line',
             data: {
-                labels: <?= $volumeLabels?>,
+                labels: <?= $volumeLabels ?>,
                 datasets: [{
                     label: 'Calculations',
-                    data: <?= $volumeData?>,
+                    data: <?= $volumeData ?>,
                     borderColor: '#3b82f6',
                     backgroundColor: 'rgba(59,130,246,0.08)',
                     borderWidth: 2.5,
@@ -919,11 +899,11 @@ endif; ?>
         new Chart(document.getElementById('currencyChart'), {
             type: 'bar',
             data: {
-                labels: <?= $currencyLabels?>,
+                labels: <?= $currencyLabels ?>,
                 datasets: [{
                     label: 'Count',
-                    data: <?= $currencyData?>,
-                    backgroundColor: <?= $currencyColorsJson?>,
+                    data: <?= $currencyData ?>,
+                    backgroundColor: <?= $currencyColorsJson ?>,
                     borderRadius: 8,
                     borderSkipped: false,
                     maxBarThickness: 56,
@@ -950,10 +930,10 @@ endif; ?>
         new Chart(document.getElementById('ambitionChart'), {
             type: 'bar',
             data: {
-                labels: <?= $ambitionLabels?>,
+                labels: <?= $ambitionLabels ?>,
                 datasets: [{
                     label: 'Users',
-                    data: <?= $ambitionData?>,
+                    data: <?= $ambitionData ?>,
                     backgroundColor: [
                         'rgba(99, 102, 241, 0.75)',
                         'rgba(59, 130, 246, 0.75)',
@@ -991,7 +971,7 @@ endif; ?>
             data: {
                 labels: ['Step-Up SIP', 'Flat SIP'],
                 datasets: [{
-                    data: <?= $stepUpDoughnutData?>,
+                    data: <?= $stepUpDoughnutData ?>,
                     backgroundColor: ['rgba(16, 185, 129, 0.85)', 'rgba(209, 213, 219, 0.7)'],
                     borderWidth: 0,
                     hoverOffset: 8,
@@ -1020,10 +1000,10 @@ endif; ?>
         new Chart(document.getElementById('durationHistogram'), {
             type: 'bar',
             data: {
-                labels: <?= $durationLabels?>,
+                labels: <?= $durationLabels ?>,
                 datasets: [{
                     label: 'Calculations',
-                    data: <?= $durationData?>,
+                    data: <?= $durationData ?>,
                     backgroundColor: 'rgba(139, 92, 246, 0.7)',
                     borderRadius: 6,
                     borderSkipped: false,
