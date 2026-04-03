@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 /* Tell Tailwind v4 where to scan for utility classes */
-@source "../*.php";
-@source "../includes/*.php";
-@source "../resource/*.php";
-@source "../navbar.php";
-@source "../footer.php";
+@source "*.php";
+@source "includes/*.php";
+@source "resource/*.php";
+@source "Views/**/*.php";
+@source "layouts/*.php";
+@source "navbar.php";
+@source "footer.php";
 
 /* Custom theme: replicate the old tailwind.config from the CDN inline script */
 @theme {

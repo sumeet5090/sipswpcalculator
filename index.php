@@ -49,7 +49,6 @@ $pages = [
     '/faq' => 'faq',
     '/glossary' => 'glossary',
     '/privacy' => 'privacy',
-    '/resources' => 'resources',
     '/terms' => 'terms'
 ];
 
@@ -65,6 +64,7 @@ $router->get('/log_insight', 'AdminController@logInsight');
 $router->post('/log_insight', 'AdminController@logInsight');
 $router->redirect('/log_insight.php', '/log_insight');
 
+$router->get('/resources', 'BlogController@index');
 $router->get('/resource', 'BlogController@index');
 $router->get('/resource/{slug}', 'BlogController@show');
 
