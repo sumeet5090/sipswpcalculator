@@ -61,6 +61,9 @@ require_once __DIR__ . '/important-imports.php';
 
         <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
     <?php endif ?>
+    <script>
+        console.log("<?= 'ENVIRONMENT: ' . getenv('ENVIRONMENT') ?>");
+    </script>
 </head>
 
 <body class="<?= $body_class ?>" style="<?= $body_style ?>">
