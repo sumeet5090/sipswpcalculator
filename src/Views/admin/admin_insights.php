@@ -8,7 +8,7 @@ $ADMIN_PASSWORD = ($envPassword !== false && $envPassword !== '') ? $envPassword
 // Handle logout
 if (isset($_GET['logout'])) {
     session_destroy();
-    header('Location: admin_insights.php');
+    header('Location: /admin_insights');
     exit;
 }
 
@@ -32,11 +32,11 @@ if (empty($_SESSION['admin_authenticated'])) {
 // ─────────────────────────────────────────────────────────────
 // 2. DATABASE CONNECTION & SCHEMA VALIDATION
 // ─────────────────────────────────────────────────────────────
-require_once __DIR__ . '/src/AnonymizedInsightLogger.php';
-$dbPath = __DIR__ . '/database/database.sqlite';
+require_once __DIR__ . '/../../AnonymizedInsightLogger.php';
+$dbPath = __DIR__ . '/../../../database/database.sqlite';
 
 if (!file_exists($dbPath)) {
-    die('Database not found.');
+    die('Database not found at: ' . $dbPath);
 }
 
 // ── SCHEMA VALIDATION: Instantiate logger to ensure required columns exist ──
