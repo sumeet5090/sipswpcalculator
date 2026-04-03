@@ -1,0 +1,280 @@
+<?php
+declare(strict_types=1);
+require_once __DIR__ . '/../../../functions.php';
+
+$page_config = [
+    'title' => 'SWP Tax Calculator India: Calculate Post-Tax Withdrawal Income',
+    'meta_desc' => 'Calculate the tax on your SWP withdrawals from mutual funds. Understand LTCG vs STCG, FIFO method, and how to maximize post-tax retirement income from SWP.',
+    'canonical' => 'https://sipswpcalculator.com/swp-tax-calculator',
+];
+
+ob_start();
+?>
+<meta name="keywords"
+    content="SWP tax calculator, SWP tax India, post-tax SWP income, capital gains SWP withdrawal, mutual fund withdrawal tax">
+<link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/swp-tax-calculator">
+<link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/swp-tax-calculator">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"SWP Tax Calculator India","author":{"@type":"Person","name":"Sumeet Boga","url":"https://sipswpcalculator.com/about"},"datePublished":"2026-02-25","dateModified":"2026-02-25"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://sipswpcalculator.com/"},{"@type":"ListItem","position":2,"name":"SWP Tax Calculator","item":"https://sipswpcalculator.com/swp-tax-calculator"}]}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Is SWP from mutual funds taxable?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, but only the capital gains portion is taxable, not the full withdrawal. The principal component is returned tax-free. This makes the effective tax rate on SWP much lower than on FD interest."
+    }
+  }, {
+    "@type": "Question",
+    "name": "How is the capital gains portion calculated?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Using the FIFO method: the earliest units are redeemed first. For each unit, capital gain = Redemption NAV - Purchase NAV. Your AMC provides this in the Capital Gains Statement."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Can I claim tax-loss harvesting with SWP?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. If some of your mutual fund units are at a loss, you can redeem them to book short-term capital losses, which can be set off against capital gains from SWP withdrawals. This can significantly reduce your overall tax liability."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Is there GST on mutual fund transactions?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "There's no GST on the investment or redemption amount. However, the fund's expense ratio includes GST on management fees (typically 0.5-2% annually). This is deducted from the fund's NAV, not billed separately."
+    }
+  }]
+}
+</script>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+$active_page = 'swp-tax-calculator.php';
+
+ob_start();
+?>
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl font-extrabold pb-2"><span class="text-gradient">SWP Tax Calculator India</span></h1>
+            <p class="text-lg text-gray-500 font-medium mt-2 mb-6">Understand how your SWP withdrawals are taxed and
+                maximize post-tax income</p>
+            <div
+                class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
+                <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
+                    class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga"
+                        class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32"
+                        height="32">
+                    <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance
+                        Enthusiast</span>
+                </a>
+                <span class="hidden sm:inline text-slate-300">|</span>
+                <div
+                    class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Updated: March 2026
+                </div>
+            </div>
+        </header>
+        <main class="glass-card p-8 sm:p-12">
+            <article
+                class="prose prose-lg max-w-none text-gray-600 prose-headings:text-indigo-900 prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-strong:text-gray-800">
+
+                <h2>How SWP Withdrawals Are Taxed (FIFO Method)</h2>
+                <p>When you set up a Systematic Withdrawal Plan (SWP) from a mutual fund, each withdrawal is treated as
+                    a <strong>partial redemption</strong>. The Income Tax Department uses the <strong>First-In-First-Out
+                        (FIFO)</strong> method to determine which units are being sold.</p>
+                <p>Crucially, <strong>only the capital gains portion</strong> of each withdrawal is taxable — the
+                    principal (cost of acquisition) is returned tax-free. This makes SWP fundamentally different from FD
+                    interest, where the entire interest amount is taxable.</p>
+
+                <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 not-prose mt-4">
+                    <p class="font-bold text-indigo-800 mb-2">Example: <span class="currency-text">$</span>500 monthly SWP withdrawal</p>
+                    <p class="text-sm text-gray-600">If you invested <span class="dynamic-amount" data-amount="1000000"></span> and your corpus is now <span class="dynamic-amount" data-amount="1500000"></span>:</p>
+                    <ul class="text-sm text-gray-600 mt-2 space-y-1">
+                        <li>• Capital gains ratio = (15L - 10L) / 15L = <strong>33.3%</strong></li>
+                        <li>• Taxable portion per withdrawal = <span class="currency-text">$</span>500 × 33.3% = <strong><span class="currency-text">$</span>16,650</strong></li>
+                        <li>• Tax-free portion (principal) = <span class="currency-text">$</span>500 × 66.7% = <strong><span class="currency-text">$</span>33,350</strong></li>
+                        <li>• If LTCG applies: Tax = <span class="currency-text">$</span>16,650 × 12.5% = <strong><span class="currency-text">$</span>2,081/month</strong></li>
+                        <li>• <strong>Effective tax rate on <span class="currency-text">$</span>500 withdrawal = only 4.2%!</strong></li>
+                    </ul>
+                </div>
+
+                <h2>SWP from Equity vs Debt Funds</h2>
+                <div class="overflow-x-auto not-prose">
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-700 text-left">
+                                <th class="py-3 px-4 font-bold border-b">Parameter</th>
+                                <th class="py-3 px-4 font-bold border-b text-indigo-600">Equity Fund SWP</th>
+                                <th class="py-3 px-4 font-bold border-b">Debt Fund SWP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="py-3 px-4 font-medium">LTCG qualification</td>
+                                <td class="py-3 px-4">After 1 year holding</td>
+                                <td class="py-3 px-4">N/A (post Apr 2023)</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-3 px-4 font-medium">Tax rate on gains</td>
+                                <td class="py-3 px-4 text-green-700">12.5% LTCG / 20% STCG</td>
+                                <td class="py-3 px-4 text-rose-500">Income slab rate (always)</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-3 px-4 font-medium">Annual exemption</td>
+                                <td class="py-3 px-4 text-green-700"><span class="currency-text">$</span>1,500 LTCG</td>
+                                <td class="py-3 px-4">None</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-3 px-4 font-medium">TDS</td>
+                                <td class="py-3 px-4 text-green-700">No TDS</td>
+                                <td class="py-3 px-4 text-green-700">No TDS</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 font-medium">Best for</td>
+                                <td class="py-3 px-4 text-indigo-600 font-medium">Long-term retirement income</td>
+                                <td class="py-3 px-4">Short-term regular income</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Worked Example: Monthly <span class="currency-text">$</span>500 SWP Tax Calculation</h2>
+                <p>Assume: <span class="dynamic-amount" data-amount="1000000"></span> corpus in equity hybrid fund, held >1 year, 12% annual returns, <span class="currency-text">$</span>500/month SWP:
+                </p>
+                <div class="overflow-x-auto not-prose">
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-700 text-left">
+                                <th class="py-3 px-4 font-bold border-b">Year</th>
+                                <th class="py-3 px-4 font-bold border-b">Withdrawn</th>
+                                <th class="py-3 px-4 font-bold border-b">Capital Gains Portion</th>
+                                <th class="py-3 px-4 font-bold border-b">Tax (12.5% LTCG)*</th>
+                                <th class="py-3 px-4 font-bold border-b text-emerald-600">Post-Tax Income</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="py-3 px-4">Year 1</td>
+                                <td class="py-3 px-4"><span class="currency-text">$</span>6.00L</td>
+                                <td class="py-3 px-4">~<span class="currency-text">$</span>1.80L</td>
+                                <td class="py-3 px-4"><span class="currency-text">$</span>6,875</td>
+                                <td class="py-3 px-4 text-emerald-600 font-bold"><span class="currency-text">$</span>5.93L</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-3 px-4">Year 5</td>
+                                <td class="py-3 px-4"><span class="currency-text">$</span>6.00L</td>
+                                <td class="py-3 px-4">~<span class="currency-text">$</span>2.40L</td>
+                                <td class="py-3 px-4"><span class="currency-text">$</span>14,375</td>
+                                <td class="py-3 px-4 text-emerald-600 font-bold"><span class="currency-text">$</span>5.86L</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4">Year 10</td>
+                                <td class="py-3 px-4"><span class="currency-text">$</span>6.00L</td>
+                                <td class="py-3 px-4">~<span class="currency-text">$</span>3.20L</td>
+                                <td class="py-3 px-4"><span class="currency-text">$</span>24,375</td>
+                                <td class="py-3 px-4 text-emerald-600 font-bold"><span class="currency-text">$</span>5.76L</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-gray-500">* After <span class="currency-text">$</span>1.25L annual LTCG exemption. Effective tax rate ranges from
+                    ~1.1% to ~4.1% on total withdrawal — far lower than FD taxation.</p>
+
+                <h2>Strategies to Minimize SWP Tax</h2>
+                <ol>
+                    <li><strong>Wait for LTCG:</strong> Ensure all SIP units have crossed the 1-year mark before
+                        starting SWP. LTCG (12.5%) is much lower than STCG (20%).</li>
+                    <li><strong>Harvest the <span class="currency-text">$</span>1.25L exemption:</strong> If your annual SWP gains are under <span class="currency-text">$</span>1,500,
+                        you pay <strong>zero tax</strong> on equity fund withdrawals.</li>
+                    <li><strong>Split between spouses:</strong> If your spouse also has investments, split SWP across
+                        two accounts to double the <span class="currency-text">$</span>1.25L exemption.</li>
+                    <li><strong>Use hybrid funds:</strong> Equity-oriented hybrid funds (>65% equity) get the same tax
+                        treatment as pure equity funds but with lower volatility.</li>
+                    <li><strong>Strategic rebalancing:</strong> Periodically book gains within the exempt limit to
+                        "reset" your cost basis higher, reducing future tax liability.</li>
+                </ol>
+
+
+                <h2>Frequently Asked Questions</h2>
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Is SWP from mutual funds taxable?
+                    </summary>
+                    <div class="pb-4 text-gray-600">Yes, but only the <strong>capital gains portion</strong> is taxable,
+                        not the full withdrawal. The principal component is returned tax-free. This makes the effective
+                        tax rate on SWP much lower than on FD interest.</div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">How is the capital gains portion
+                        calculated?</summary>
+                    <div class="pb-4 text-gray-600">Using the FIFO method: the earliest units are redeemed first. For
+                        each unit, capital gain = Redemption NAV - Purchase NAV. Your AMC provides this in the Capital
+                        Gains Statement (available on their website or via CAMS/KFintech).</div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Can I claim tax-loss harvesting with
+                        SWP?</summary>
+                    <div class="pb-4 text-gray-600">Yes. If some of your mutual fund units are at a loss, you can redeem
+                        them to book short-term capital losses, which can be set off against capital gains from SWP
+                        withdrawals. This can significantly reduce your overall tax liability.</div>
+                </details>
+
+                <details class="group">
+                    <summary class="cursor-pointer font-bold text-slate-800 py-2">Is there GST on mutual fund
+                        transactions?</summary>
+                    <div class="pb-4 text-gray-600">There's no GST on the investment or redemption amount. However, the
+                        fund's expense ratio includes GST on management fees (typically 0.5-2% annually). This is
+                        deducted from the fund's NAV, not billed separately.</div>
+                </details>
+                <!-- Related Guides -->
+                <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100 not-prose">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/#calculator-section" class="text-indigo-600 hover:underline font-medium">Advanced SIP & SWP
+                                Calculator</a> — Model SWP withdrawals with tax projections</li>
+                        <li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP
+                                Retirement Planning</a> — Complete guide to retirement income via SWP</li>
+                        <li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual
+                                Fund Tax 2026</a> — LTCG, STCG & tax-efficient strategies</li>
+                        <li><a href="/swp-vs-fixed-deposit" class="text-indigo-600 hover:underline font-medium">SWP vs
+                                Fixed Deposit</a> — Tax efficiency comparison for retirement</li>
+                        <li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs
+                                PPF</a> — Compare tax treatment across investments</li>
+                    </ul>
+                </div>
+
+                <!-- CTA -->
+                <div
+                    class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
+                    <h2 class="text-2xl font-bold mb-4 text-white">Calculate Your SWP Tax Liability</h2>
+                    <p class="mb-8 text-indigo-100">Use our free calculator to simulate SWP withdrawals and estimate
+                        your capital gains tax at different holding periods.</p>
+                    <a href="/#calculator-section"
+                        class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
+                        Launch SWP Calculator
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                </div>
+
+            </article>
+        </main>
+<?php
+$page_content = ob_get_clean();
+require_once __DIR__ . '/../layouts/layout.php';
+?>

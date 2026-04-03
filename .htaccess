@@ -108,7 +108,7 @@ Header unset Server
   # Remove .php extension
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteRule ^([^\.]+)$ $1.php [NC,L]
+  RewriteRule ^(.*)$ index.php [QSA,L]
 
   # Block access to the database folder
   RewriteRule ^database/.*$ - [F,L]
