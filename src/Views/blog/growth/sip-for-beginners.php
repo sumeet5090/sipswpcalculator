@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/../../../functions.php';
+require_once __DIR__ . '/../../../../functions.php';
 
 // ── Data Only ──────────────────────────────────────────────────────────
 $page_config = [
@@ -61,4 +61,4 @@ $page_content = '
 ';
 
 // ── Render ──────────────────────────────────────────────────────────────
-require_once __DIR__ . '/../layouts/layout.php';
+require_once __DIR__ . '/../../layouts/layout.php';

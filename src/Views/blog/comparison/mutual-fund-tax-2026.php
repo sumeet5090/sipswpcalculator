@@ -70,5 +70,5 @@ ob_start();
 
 <?php
 $page_content = ob_get_clean();
-require_once __DIR__ . '/../layouts/layout.php';
+require_once __DIR__ . '/../../layouts/layout.php';
 ?>

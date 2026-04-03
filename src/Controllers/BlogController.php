@@ -11,7 +11,7 @@ class BlogController {
         $active_page = 'blog_post';
         // Cleanup slug in case it has extension
         $slug = str_replace('.php', '', $slug);
-        $file = __DIR__ . "/../Views/blog/{$slug}.php";
+        $file = __DIR__ . "/../Views/blog/{$category}/{$slug}.php";
         if (file_exists($file)) {
             require_once $file;
         } else {

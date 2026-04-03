@@ -42,4 +42,4 @@ $page_content = '
 ';
 
 // ── Render ──────────────────────────────────────────────────────────────
-require_once __DIR__ . '/../layouts/layout.php';
+require_once __DIR__ . '/../../layouts/layout.php';
