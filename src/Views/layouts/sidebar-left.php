@@ -7,49 +7,63 @@ $active_page = $active_page ?? basename($_SERVER['PHP_SELF']);
 if ($active_page === '' || $active_page === '/') $active_page = 'index.php';
 
 // Define the categorized structure of the knowledge base.
+// Define the categorized structure of the knowledge base with URL slugs.
 $categories = [
     'SIP Strategy & Growth' => [
-        'sip-for-beginners.php' => 'SIP for Beginners',
-        'inflation-impact-on-sip.php' => 'Inflation Impact on SIP',
-        'why-flat-sips-lose-money-stepup-sip-power.php' => 'Step-up SIP Power',
-        'reach-1-million-dollar-1-crore-rupees-in-18-years.php' => 'Reach $1 Million in 18 Years',
-        '20-year-wealth-blueprint-step-up-sip.php' => '20-Year Wealth Blueprint'
+        'url_prefix' => 'growth',
+        'links' => [
+            'sip-for-beginners' => 'SIP for Beginners',
+            'inflation-impact-on-sip' => 'Inflation Impact on SIP',
+            'reach-1-million-dollar-1-crore-rupees-in-18-years' => 'Reach $1 Million in 18 Years',
+            '20-year-wealth-blueprint-step-up-sip' => '20-Year Wealth Blueprint'
+        ]
     ],
     'SWP & Retirement' => [
-        'swp-retirement-planning.php' => 'SWP Retirement Planning',
-        'sip-to-swp-transition-guide.php' => 'SIP to SWP Transition',
-        'mathematics-of-4-percent-rule-swp.php' => 'Math of the 4% Rule',
-        'retirement-planning-4-percent-swp-rule.php' => '4% SWP Rule Explained',
-        'sip-vs-swp-wealth-creation-withdrawal-strategy.php' => 'SIP vs SWP Strategy'
+        'url_prefix' => 'retirement',
+        'links' => [
+            'swp-retirement-planning' => 'SWP Retirement Planning',
+            'retirement-planning-4-percent-swp-rule' => '4% SWP Rule Explained',
+            'sip-vs-swp-wealth-creation-withdrawal-strategy' => 'SIP vs SWP Strategy'
+        ]
     ],
     'Tax & Comparisons' => [
-        'mutual-fund-tax-2026.php' => 'Mutual Fund Tax 2026',
-        'sip-vs-fd-vs-ppf.php' => 'SIP vs FD vs PPF',
-        'swp-vs-fixed-deposit.php' => 'SWP vs Fixed Deposit',
-        'swp-vs-annuity-2026.php' => 'SWP vs Annuity',
-        'mf-returns-benchmarks.php' => 'MF Return Benchmarks'
+        'url_prefix' => 'comparison',
+        'links' => [
+            'mutual-fund-tax-2026' => 'Mutual Fund Tax 2026',
+            'sip-vs-fd-vs-ppf' => 'SIP vs FD vs PPF',
+            'swp-vs-fixed-deposit' => 'SWP vs Fixed Deposit',
+            'swp-vs-annuity-2026' => 'SWP vs Annuity',
+            'mf-returns-benchmarks' => 'MF Return Benchmarks'
+        ]
     ]
 ];
 
-// Determine the active category
-$active_category = null;
-$active_links = [];
+// Clean path for comparison (handling both /resource/slug and /resource/cat/slug)
+$path_parts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+$current_slug = end($path_parts);
+$current_slug = str_replace('.php', '', $current_slug);
 
-foreach ($categories as $cat_name => $links) {
-    if (array_key_exists($active_page, $links)) {
-        $active_category = $cat_name;
-        $active_links = $links;
+// Determine the active category
+$active_category_name = null;
+$active_links = [];
+$active_prefix = '';
+
+foreach ($categories as $cat_name => $data) {
+    if (array_key_exists($current_slug, $data['links'])) {
+        $active_category_name = $cat_name;
+        $active_links = $data['links'];
+        $active_prefix = $data['url_prefix'];
         break;
     }
 }
 
-// Fallback for non-blog pages (e.g., calculator, glossary, resources index)
-if (!$active_category) {
-    $active_category = 'Popular Guides';
+// Fallback for non-blog pages (using explicit category-aware paths)
+if (!$active_category_name) {
+    $active_category_name = 'Popular Guides';
     $active_links = [
-        'sip-for-beginners.php' => 'SIP for Beginners',
-        'swp-retirement-planning.php' => 'SWP Retirement Planning',
-        'mutual-fund-tax-2026.php' => 'Mutual Fund Tax Rules 2026'
+        'growth/sip-for-beginners' => 'SIP for Beginners',
+        'retirement/swp-retirement-planning' => 'SWP Retirement Planning',
+        'comparison/mutual-fund-tax-2026' => 'Mutual Fund Tax Rules 2026'
     ];
 }
 ?>
@@ -57,12 +71,18 @@ if (!$active_category) {
 <div class="flex flex-col gap-8">
     <nav aria-label="Related Posts Navigation">
         <h3 class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-3 px-3">
-            <?= htmlspecialchars($active_category) ?>
+            <?= htmlspecialchars($active_category_name) ?>
         </h3>
         <ul class="space-y-1 text-sm font-medium">
-            <?php foreach ($active_links as $file => $title): ?>
+            <?php foreach ($active_links as $path_or_slug => $title): ?>
+                <?php 
+                    // Handle both flat slugs (active cat) and full paths (fallback)
+                    $final_href = (strpos($path_or_slug, '/') !== false) 
+                        ? "/resource/{$path_or_slug}" 
+                        : "/resource/{$active_prefix}/{$path_or_slug}";
+                ?>
                 <li>
-                    <a href="/resource/<?= $file ?>" class="block px-3 py-1.5 <?= $active_page === $file ? 'text-emerald-700 bg-emerald-50 border-l-2 border-emerald-500' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-l-2 border-transparent' ?> transition-colors">
+                    <a href="<?= $final_href ?>" class="block px-3 py-1.5 <?= $current_slug === basename($path_or_slug) ? 'text-emerald-700 bg-emerald-50 border-l-2 border-emerald-500' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-l-2 border-transparent' ?> transition-colors">
                         <?= htmlspecialchars($title) ?>
                     </a>
                 </li>

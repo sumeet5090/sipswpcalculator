@@ -7,8 +7,9 @@ class BlogController {
         require_once __DIR__ . '/../Views/pages/resources.php';
     }
 
-    public function show($slug) {
+    public function show($category, $slug) {
         $active_page = 'blog_post';
+        // Cleanup slug in case it has extension
         $slug = str_replace('.php', '', $slug);
         $file = __DIR__ . "/../Views/blog/{$slug}.php";
         if (file_exists($file)) {

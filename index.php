@@ -66,7 +66,37 @@ $router->redirect('/log_insight.php', '/log_insight');
 
 $router->get('/resources', 'BlogController@index');
 $router->get('/resource', 'BlogController@index');
-$router->get('/resource/{slug}', 'BlogController@show');
+// Hierarchical Blog Route
+$router->get('/resource/{category}/{slug}', 'BlogController@show');
+
+// 301 Redirects for Legacy Flat URLs
+$blog_redirects = [
+    'sip-for-beginners' => 'growth',
+    '20-year-wealth-blueprint-step-up-sip' => 'growth',
+    'reach-1-million-dollar-1-crore-rupees-in-18-years' => 'growth',
+    'inflation-impact-on-sip' => 'growth',
+    'retirement-planning-4-percent-swp-rule' => 'retirement',
+    'sip-vs-swp-wealth-creation-withdrawal-strategy' => 'retirement',
+    'swp-retirement-planning' => 'retirement',
+    'sip-vs-fd-vs-ppf' => 'comparison',
+    'swp-vs-fixed-deposit' => 'comparison',
+    'swp-vs-annuity-2026' => 'comparison',
+    'mutual-fund-tax-2026' => 'comparison',
+    // Consolidated / Redundant Posts (Redirected to Cornerstone Guides)
+    'why-flat-sips-lose-money-stepup-sip-power' => 'growth/20-year-wealth-blueprint-step-up-sip',
+    'mathematics-of-4-percent-rule-swp' => 'retirement/retirement-planning-4-percent-swp-rule',
+    'sip-to-swp-transition-guide' => 'retirement/sip-vs-swp-wealth-creation-withdrawal-strategy'
+];
+
+foreach ($blog_redirects as $slug => $target) {
+    if (strpos($target, '/') !== false) {
+        // Direct mapping for consolidated posts
+        $router->redirect("/resource/{$slug}", "/resource/{$target}");
+    } else {
+        // Standard mapping for active posts
+        $router->redirect("/resource/{$slug}", "/resource/{$target}/{$slug}");
+    }
+}
 
 $stubs = [
     '/20-year-wealth-blueprint-step-up-sip' => '/resource/20-year-wealth-blueprint-step-up-sip',

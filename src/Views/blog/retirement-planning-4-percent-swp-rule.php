@@ -9,21 +9,52 @@ $cta = "Don\'t leave your retirement to chance. Plan your own 20-year journey—
 $page_content = '
 <p class="text-xl mb-6">The transition from building your wealth to spending it is the most critical phase of your financial life. The <a href="/resources#four-percent-rule" class="text-indigo-600 hover:underline">4% SWP Rule</a> is a time-tested strategy to ensure your money lasts as long as you do.</p>
 
-<h2 class="text-2xl font-bold mt-8 mb-4">What is the 4% Rule?</h2>
-<p class="mb-6">First derived from the "Trinity Study," the 4% rule suggests that if you withdraw 4% of your total retirement <a href="/resources#corpus" class="text-indigo-600 hover:underline">corpus</a> in the first year and adjust that amount for inflation thereafter, your portfolio has a high probability of lasting at least 30 years.</p>
+<div class="glass-card bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 mt-4" role="complementary">
+    <p class="text-sm font-bold text-emerald-800 mb-2">📋 The SWP Master Algorithm</p>
+    <p class="text-gray-700 text-sm leading-relaxed">
+        The math dictates a strict boundary: extract exactly 4% of your starting corpus annually, adjusting symmetrically for inflation. A 60/40 portfolio modeled under these constraints demonstrates a 95%+ success rate across a 30-year horizon. This is the baseline algorithm for a sustained <strong>Safe Withdrawal Rate (SWR)</strong>.
+    </p>
+</div>
 
-<h2 class="text-2xl font-bold mt-8 mb-4">Why a 4% SWP Strategy is Essential</h2>
-<ul class="list-disc pl-6 mb-6 space-y-4">
-    <li><strong>Mitigating Sequence-of-Returns Risk:</strong> Market volatility early in your retirement can dramatically deplete a portfolio. A steady withdrawal plan helps you navigate these fluctuations without panic selling.</li>
-    <li><strong>Automated Income:</strong> Just like a salary, an SWP provides a consistent monthly income, making it easier to manage your retirement lifestyle and budgeting.</li>
-    <li><strong>Inflation Protection:</strong> By setting a percentage-based withdrawal or a step-up withdrawal, you keep your purchasing power intact as prices rise over the decades.</li>
-</ul>
+<h2 id="real-yield" class="text-2xl font-bold mt-10 mb-4">The Real Yield Equation</h2>
+<p class="mb-6">An SWP is a liquidating algorithm. To ensure perpetual sustainability without destroying the principal, the portfolio must satisfy a rigid mathematical constraint:</p>
 
-<h2 class="text-2xl font-bold mt-8 mb-4">Implementing the 4% Rule with Your SIP Result</h2>
-<p class="mb-6">If your 20-year SIP journey results in a $1 million <a href="/resources#corpus" class="text-indigo-600 hover:underline">corpus</a>, the 4% rule would allow for an annual withdrawal of $40,000, or about <strong>$3,333 per month</strong>. Using an SWP, you can automate this withdrawal directly from your mutual fund holdings.</p>
+<div class="bg-slate-900 border border-slate-700 text-emerald-400 p-6 rounded-xl font-mono text-center my-8 shadow-xl">
+    Real Yield = Nominal CAGR - Inflation - Tax Drag ≥ Withdrawal Rate
+</div>
 
-<h2 class="text-2xl font-bold mt-8 mb-4">Conclusion</h2>
-<p class="mb-6">Retirement isn\'t about just having a large sum of money—it\'s about having a sustainable income. By combining a 20-year SIP phase with a disciplined SWP phase, you can ensure financial freedom. Use our simulator to model your 4% SWP today.</p>
+<h2 id="sor-risk" class="text-2xl font-bold mt-10 mb-4">Sequence-of-Returns Risk</h2>
+<p class="mb-6">Deterministic models assume a linear 10% annual progression. Institutional modeling requires Monte Carlo simulations because market vectors are volatile. <strong>Sequence-of-Returns Risk</strong> identifies the mathematical hazard of a negative variance occurring early in the withdrawal phase.</p>
+
+<div class="glass-card overflow-hidden my-8">
+    <table class="w-full text-sm text-left border-collapse">
+        <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+                <th class="p-4 font-semibold text-slate-700">Market Condition</th>
+                <th class="p-4 font-semibold text-slate-700">Nominal Return</th>
+                <th class="p-4 font-semibold text-slate-700">Inflation</th>
+                <th class="p-4 font-semibold text-slate-700">Status</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 bg-white/40">
+            <tr>
+                <td class="p-4 text-slate-700 font-medium">Standard Baseline</td>
+                <td class="p-4 text-slate-600">10.0%</td>
+                <td class="p-4 text-slate-600">3.0%</td>
+                <td class="p-4 text-emerald-700 font-medium"><span class="bg-emerald-100 px-2 py-0.5 rounded text-xs">Safe</span></td>
+            </tr>
+            <tr>
+                <td class="p-4 text-slate-700 font-medium">Stagflation Deficit</td>
+                <td class="p-4 text-slate-600">2.0%</td>
+                <td class="p-4 text-slate-600">8.0%</td>
+                <td class="p-4 text-rose-700 font-medium"><span class="bg-rose-100 px-2 py-0.5 rounded text-xs">High Risk</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2 id="conclusion" class="text-2xl font-bold mt-10 mb-4">Final Verdict</h2>
+<p class="mb-6">Planning for retirement is about having a sustainable income. By combining a 20-year SIP phase with a disciplined SWP phase, you can ensure financial freedom. Use our simulator to model your 4% SWP today and stress-test your sequence risk.</p>
 ';
 
 // ── Render ──────────────────────────────────────────────────────────────

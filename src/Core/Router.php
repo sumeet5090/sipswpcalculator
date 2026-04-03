@@ -18,6 +18,7 @@ class Router {
     }
 
     public function dispatch($uri, $method) {
+        // error_log("Dispatching: $method $uri");
         if (false !== $pos = strpos($uri, '?')) {
             $uri = substr($uri, 0, $pos);
         }
