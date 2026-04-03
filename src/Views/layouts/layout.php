@@ -13,12 +13,13 @@ require_once __DIR__ . '/layout-top.php';
 $is_home = ($active_page === 'index.php');
 $is_index = ($active_page === 'resources.php' || $active_page === 'faq.php' || $active_page === 'glossary.php');
 
-// A page is a blog post if the URI starts with /resource/
-$is_blog = (strpos($_SERVER['REQUEST_URI'], '/resource') === 0);
+// A page is a blog post (needs sidebars) if it starts with /resource/ and is NOT the index
+$is_resource_index = ($active_page === 'resources.php');
+$is_blog_post = (strpos($_SERVER['REQUEST_URI'], '/resource/') !== false);
 
 $page_content = $page_content ?? $content ?? '';
 ?>
-<?php if ($is_blog): ?>
+<?php if ($is_blog_post && !$is_resource_index): ?>
 <div class="doc-layout-grid relative">
     <aside class="doc-sidebar doc-sidebar-left pl-4 pr-6">
         <div class="sticky top-28 pt-4 pb-8">

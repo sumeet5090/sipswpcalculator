@@ -4,11 +4,11 @@ namespace Controllers;
 class BlogController {
     public function index() {
         $active_page = 'resources.php';
-        require_once __DIR__ . '/../Views/blog/index.php';
+        require_once __DIR__ . '/../Views/pages/resources.php';
     }
 
     public function show($slug) {
-        $active_page = 'resources.php';
+        $active_page = 'blog_post';
         $slug = str_replace('.php', '', $slug);
         $file = __DIR__ . "/../Views/blog/{$slug}.php";
         if (file_exists($file)) {
