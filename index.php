@@ -599,7 +599,6 @@ ob_start();
 <!-- Render-blocking CSS: loaded before first paint to prevent FOUC/CLS -->
 <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css')?>">
 <link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/dist/tailwind.min.css')?>">
-<script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
 <?php
 $page_config['additional_head'] = ob_get_clean();
 $active_page = 'index.php';
