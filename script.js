@@ -458,7 +458,7 @@ function logDebouncedInsight(inputs) {
             body: JSON.stringify(payload),
             keepalive: true 
         }).catch(err => {});
-    }, 1500); 
+    }, 10000); 
 }
 
 function calculateAndRender() {
