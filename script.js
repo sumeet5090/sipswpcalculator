@@ -9,7 +9,7 @@ const currencyConfig = {
 
 function updateCurrency(newCurrency) {
     currentCurrency = newCurrency;
-    
+
     // Save user preference to localStorage
     localStorage.setItem('user_currency', newCurrency);
 
@@ -321,12 +321,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     a.download = `Financial_Report_for_${formData.get('clientName') || 'Client'}.pdf`;
                     document.body.appendChild(a);
                     a.click();
-                    
+
                     // 4. Immediate UI cleanup (Releases the user and resets state)
                     generatePdfBtn.disabled = false;
                     generatePdfBtn.textContent = 'Download PDF';
                     pdfModal.classList.add('hidden');
-                    a.remove(); 
+                    a.remove();
 
                     // 5. Background logging (Async, non-blocking)
                     const inputs = getInputs();
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             pdf_downloaded: true
                         }),
                         keepalive: true
-                    }).catch(() => {}); // silent — never block UX
+                    }).catch(() => { }); // silent — never block UX
 
                     // 6. Housekeeping: Revoke URL after a small delay to allow browser to start download
                     setTimeout(() => window.URL.revokeObjectURL(url), 100);
@@ -441,7 +441,7 @@ let insightTimeout = null;
 
 function logDebouncedInsight(inputs) {
     if (insightTimeout) clearTimeout(insightTimeout);
-    
+
     // Evaluate after 1500ms of no slide movements
     insightTimeout = setTimeout(() => {
         const payload = {
@@ -451,14 +451,14 @@ function logDebouncedInsight(inputs) {
             step_up_pct: inputs.enable_swp ? inputs.swp_stepup : inputs.stepup,
             currency: currentCurrency
         };
-        
+
         fetch('log_insight.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
-            keepalive: true 
-        }).catch(err => {});
-    }, 10000); 
+            keepalive: true
+        }).catch(err => { });
+    }, 6000);
 }
 
 function calculateAndRender() {
@@ -467,7 +467,7 @@ function calculateAndRender() {
     updateChart(data, inputs.enable_swp);
     updateTable(data, inputs.enable_swp);
     updateSummaryMetrics(data);
-    
+
     logDebouncedInsight(inputs);
 }
 
