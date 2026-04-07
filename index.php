@@ -16,6 +16,10 @@ spl_autoload_register(function ($class) {
     }
 });
 
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
+
 require_once __DIR__ . '/functions.php';
 
 $router = new \Core\Router();
@@ -82,6 +86,7 @@ $blog_redirects = [
     'swp-vs-fixed-deposit' => 'comparison',
     'swp-vs-annuity-2026' => 'comparison',
     'mutual-fund-tax-2026' => 'comparison',
+    'mf-returns-benchmarks' => 'comparison',
     // Consolidated / Redundant Posts (Redirected to Cornerstone Guides)
     'why-flat-sips-lose-money-stepup-sip-power' => 'growth/20-year-wealth-blueprint-step-up-sip',
     'mathematics-of-4-percent-rule-swp' => 'retirement/retirement-planning-4-percent-swp-rule',

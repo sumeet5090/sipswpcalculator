@@ -33,9 +33,13 @@ $page_content = $page_content ?? $content ?? '';
 
             <article id="main-content" class="prose prose-slate max-w-none prose-headings:scroll-mt-28">
                 <header class="mb-8 pb-8 border-b border-slate-200">
-                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 mb-6">
+                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 mb-3">
                         <?= htmlspecialchars($page_config['title'] ?? $title ?? '')?>
                     </h1>
+
+                    <?php if (!empty($subtitle)): ?>
+                        <p class="text-lg text-slate-500 font-medium mb-6"><?= htmlspecialchars($subtitle) ?></p>
+                    <?php endif; ?>
 
                     <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500">
                         <div class="flex items-center gap-3">
@@ -50,8 +54,8 @@ $page_content = $page_content ?? $content ?? '';
 
                         <div class="flex items-center gap-3 ml-auto">
                             <time datetime="<?= date('Y-m-d')?>" class="hidden sm:block">
-                                Updated on
-                                <?= date('F j, Y')?>
+                                Last Updated:
+                                <?= htmlspecialchars($updated_date ?? date('F j, Y'))?>
                             </time>
                             <span class="hidden sm:block text-slate-300">•</span>
                             <span>8 min read</span>
