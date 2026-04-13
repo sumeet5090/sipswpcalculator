@@ -1,4 +1,5 @@
 // State
+let userHasInteracted = false;
 let currentCurrency = 'INR';
 const currencyConfig = {
     'INR': { locale: 'en-IN', symbol: '₹' },
@@ -230,10 +231,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Chart.js
     const ctx = document.getElementById('corpusChart');
     if (ctx && window.chartData && window.chartData.years.length > 0) {
-        const enableSwp = document.getElementById('enable_swp')?.checked || false;
-        const chartConfig = getChartConfig(window.chartData, enableSwp);
-        // Make the chart instance globally accessible
-        window.corpusChart = new Chart(ctx, chartConfig);
+        if (typeof Chart !== 'undefined') {
+            const enableSwp = document.getElementById('enable_swp')?.checked || false;
+            const chartConfig = getChartConfig(window.chartData, enableSwp);
+            // Make the chart instance globally accessible
+            window.corpusChart = new Chart(ctx, chartConfig);
+        } else {
+            console.error('Chart.js failed to load.');
+        }
     }
 
     // PDF Modal Logic
@@ -467,6 +472,14 @@ function calculateAndRender() {
     updateChart(data, inputs.enable_swp);
     updateTable(data, inputs.enable_swp);
     updateSummaryMetrics(data);
+
+    // UX Optimization: Dynamic browser titles for CTR/bookmarking
+    if (userHasInteracted && data.length > 0) {
+        const finalCorpus = data[data.length - 1].combined_total;
+        const years = inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years;
+        const formatted = formatDynamicAmount(finalCorpus);
+        document.title = `Result: ${formatted} in ${years} Years | SIP & SWP Calculator`;
+    }
 
     logDebouncedInsight(inputs);
 }
@@ -717,12 +730,14 @@ function setupRangeSliders() {
             // Range listener
             range.addEventListener('input', () => {
                 input.value = range.value;
+                userHasInteracted = true;
                 calculateAndRender(); // Trigger calculation
             });
 
             // Input listener
             input.addEventListener('input', () => {
                 range.value = input.value;
+                userHasInteracted = true;
                 calculateAndRender(); // Trigger calculation
             });
         }
