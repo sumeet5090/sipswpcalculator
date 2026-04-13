@@ -194,8 +194,8 @@ foreach ($combined as $row) {
 }
 
 $page_config = [
-    'title' => 'SIP, DCA & Recurring Investment Calculator 2026 — SWP & Retirement Drawdown Planner',
-    'meta_desc' => 'Free SIP & DCA calculator with step-up compounding & SWP retirement drawdown planner. Visual charts, yearly breakdown for recurring investments — trusted globally.',
+    'title' => 'SIP & SWP Calculator 2026: Compounding & Mutual Fund Returns in India',
+    'meta_desc' => 'Free SIP calculator and SWP retirement drawdown planner for India. Plan for LTCG taxes, inflation, and step-up compounding. Visual charts and yearly breakdowns.',
 ];
 
 ob_start();
@@ -616,7 +616,7 @@ ob_start();
     </div>
 
     <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
-        <span class="text-gradient">SIP & SWP Calculator</span> <br>
+        <span class="text-gradient">SIP & SWP Calculator India</span> <br>
         <span class="text-gray-800">Visualise Your Wealth Journey</span>
     </h1>
 
@@ -644,12 +644,9 @@ ob_start();
 
     <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
         This free <dfn><strong class="text-emerald-600">SIP calculator</strong></dfn> helps you estimate
-        your <strong>mutual fund SIP returns</strong> with annual step-up (top-up) compounding.
+        your <strong>mutual fund SIP returns in India</strong> with annual step-up (top-up) compounding.
         A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan
-        tax-efficient withdrawals for a steady retirement income. Use this <strong>SIP return
-            calculator</strong>
-        to visualize growth, compare scenarios, and download detailed PDF reports — free for investors
-        worldwide.
+        tax-efficient withdrawals for a steady retirement income, accounting for the <strong>new 12.5% LTCG tax rules</strong>. Use this tool equipped with AMFI & SEBI approved compounding formulas to visualize growth, compare scenarios, and download detailed PDF reports.
     </p>
 
 

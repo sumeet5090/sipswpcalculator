@@ -6,8 +6,8 @@ namespace Core;
 class MetaManager {
     private array $metaData = [
         'home' => [
-            'title' => 'SIP & SWP Calculator 2026: Compounding & Retirement Planner',
-            'meta_desc' => 'Free Systematic Investment Plan (SIP) and Systematic Withdrawal Plan (SWP) calculator with step-up compounding, inflation adjustments, and tax rules for 2026.',
+            'title' => 'SIP & SWP Calculator 2026: Mutual Fund Returns in India',
+            'meta_desc' => 'Free Systematic Investment Plan (SIP) and SWP calculator for India. Plan your retirement with step-up compounding, inflation adjustments, and 2026 tax rules (12.5% LTCG).',
             'canonical' => 'https://sipswpcalculator.com/',
         ],
         'sip-calculator' => [
