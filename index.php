@@ -104,21 +104,21 @@ foreach ($blog_redirects as $slug => $target) {
 }
 
 $stubs = [
-    '/20-year-wealth-blueprint-step-up-sip' => '/resource/20-year-wealth-blueprint-step-up-sip',
-    '/inflation-impact-on-sip' => '/resource/inflation-impact-on-sip',
-    '/mathematics-of-4-percent-rule-swp' => '/resource/mathematics-of-4-percent-rule-swp',
-    '/mf-returns-benchmarks' => '/resource/mf-returns-benchmarks',
-    '/mutual-fund-tax-2026' => '/resource/mutual-fund-tax-2026',
-    '/reach-1-million-dollar-1-crore-rupees-in-18-years' => '/resource/reach-1-million-dollar-1-crore-rupees-in-18-years',
-    '/retirement-planning-4-percent-swp-rule' => '/resource/retirement-planning-4-percent-swp-rule',
-    '/sip-for-beginners' => '/resource/sip-for-beginners',
-    '/sip-to-swp-transition-guide' => '/resource/sip-to-swp-transition-guide',
-    '/sip-vs-fd-vs-ppf' => '/resource/sip-vs-fd-vs-ppf',
-    '/sip-vs-swp-wealth-creation-withdrawal-strategy' => '/resource/sip-vs-swp-wealth-creation-withdrawal-strategy',
-    '/swp-retirement-planning' => '/resource/swp-retirement-planning',
-    '/swp-vs-annuity-2026' => '/resource/swp-vs-annuity-2026',
-    '/swp-vs-fixed-deposit' => '/resource/swp-vs-fixed-deposit',
-    '/why-flat-sips-lose-money-stepup-sip-power' => '/resource/why-flat-sips-lose-money-stepup-sip-power'
+    '/20-year-wealth-blueprint-step-up-sip' => '/resource/growth/20-year-wealth-blueprint-step-up-sip',
+    '/inflation-impact-on-sip' => '/resource/growth/inflation-impact-on-sip',
+    '/mathematics-of-4-percent-rule-swp' => '/resource/retirement/retirement-planning-4-percent-swp-rule',
+    '/mf-returns-benchmarks' => '/resource/comparison/mf-returns-benchmarks',
+    '/mutual-fund-tax-2026' => '/resource/comparison/mutual-fund-tax-2026',
+    '/reach-1-million-dollar-1-crore-rupees-in-18-years' => '/resource/growth/reach-1-million-dollar-1-crore-rupees-in-18-years',
+    '/retirement-planning-4-percent-swp-rule' => '/resource/retirement/retirement-planning-4-percent-swp-rule',
+    '/sip-for-beginners' => '/resource/growth/sip-for-beginners',
+    '/sip-to-swp-transition-guide' => '/resource/retirement/sip-vs-swp-wealth-creation-withdrawal-strategy',
+    '/sip-vs-fd-vs-ppf' => '/resource/comparison/sip-vs-fd-vs-ppf',
+    '/sip-vs-swp-wealth-creation-withdrawal-strategy' => '/resource/retirement/sip-vs-swp-wealth-creation-withdrawal-strategy',
+    '/swp-retirement-planning' => '/resource/retirement/swp-retirement-planning',
+    '/swp-vs-annuity-2026' => '/resource/comparison/swp-vs-annuity-2026',
+    '/swp-vs-fixed-deposit' => '/resource/comparison/swp-vs-fixed-deposit',
+    '/why-flat-sips-lose-money-stepup-sip-power' => '/resource/growth/20-year-wealth-blueprint-step-up-sip'
 ];
 
 foreach ($stubs as $old => $new) {

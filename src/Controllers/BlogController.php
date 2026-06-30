@@ -37,10 +37,10 @@ class BlogController {
 
         // Try to get specific meta, or generate dynamic meta from content
         $page_config = $this->metaManager->getMeta($slug);
-        if ($page_config['title'] === 'SIP & SWP Calculator 2026: Compounding & Retirement Planner') {
-            // Default meta was returned, so we use the title from Markdown front-matter
+        if (!empty($content['metadata']['title'])) {
+            // Markdown metadata is present, use it for dynamic SEO titles and meta descriptions
             $page_config = $this->metaManager->setDynamicMeta(
-                $content['metadata']['title'] ?: ucfirst(str_replace('-', ' ', $slug)),
+                $content['metadata']['title'],
                 $content['metadata']['subtitle'] ?: "Read our guide on " . str_replace('-', ' ', $slug)
             );
         }
