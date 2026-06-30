@@ -1,5 +1,5 @@
 <?php
-$dbPath = __DIR__ . '/database/database.sqlite';
+$dbPath = __DIR__ . '/../../../database/database.sqlite';
 
 try {
     $pdo = new PDO("sqlite:" . $dbPath);

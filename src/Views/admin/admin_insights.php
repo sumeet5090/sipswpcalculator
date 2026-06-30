@@ -192,6 +192,27 @@ $stmt = $pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations 
 $stmt->execute($params);
 $avgDurationSWP = (float)$stmt->fetchColumn();
 
+// -- KPI: Average Interest Rate in range ----
+$stmt = $pdo->prepare("SELECT COALESCE(AVG(interest_rate), 0) FROM user_calculations $where_clause AND interest_rate > 0");
+$stmt->execute($params);
+$avgInterestRate = (float)$stmt->fetchColumn();
+
+// -- KPI: SWP Adoption Rate in range ----
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND swp_enabled = 1");
+$stmt->execute($params);
+$totalSWPEnabled = (int)$stmt->fetchColumn();
+$swpAdoptionRate = $totalInRange > 0 ? round(($totalSWPEnabled / $totalInRange) * 100, 1) : 0.0;
+
+// -- KPI: Average SIP Amount in range ----
+$stmt = $pdo->prepare("SELECT COALESCE(AVG(sip_amount), 0) FROM user_calculations $where_clause AND sip_amount > 0");
+$stmt->execute($params);
+$avgSipAmount = (float)$stmt->fetchColumn();
+
+// -- KPI: Average SWP Withdrawal in range ----
+$stmt = $pdo->prepare("SELECT COALESCE(AVG(swp_withdrawal), 0) FROM user_calculations $where_clause AND swp_withdrawal > 0");
+$stmt->execute($params);
+$avgSwpWithdrawal = (float)$stmt->fetchColumn();
+
 // -- Chart: Duration Distribution (histogram buckets) in range ----
 $stmt = $pdo->prepare("
     SELECT
@@ -527,26 +548,42 @@ endforeach; ?>
                 <!-- Avg SIP Duration -->
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-1">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg SIP Tenure</p>
-                    <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                        <?= number_format($avgDurationSIP, 1)?>
+                    <p class="mt-2 text-3xl font-extrabold text-indigo-600">
+                        <?= number_format($avgDurationSIP, 1)?> <span class="text-xs font-normal text-gray-400">yrs</span>
                     </p>
-                    <p class="mt-1 text-xs text-gray-400">years</p>
+                    <p class="mt-1.5 text-xs text-gray-500 font-semibold truncate">Avg SIP: <?= $avgSipAmount > 0 ? number_format($avgSipAmount) : 'N/A' ?></p>
                 </div>
                 <!-- Avg SWP Duration -->
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-2">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg SWP Tenure</p>
-                    <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                        <?= number_format($avgDurationSWP, 1)?>
+                    <p class="mt-2 text-3xl font-extrabold text-indigo-600">
+                        <?= number_format($avgDurationSWP, 1)?> <span class="text-xs font-normal text-gray-400">yrs</span>
                     </p>
-                    <p class="mt-1 text-xs text-gray-400">years</p>
+                    <p class="mt-1.5 text-xs text-gray-500 font-semibold truncate">Avg SWP: <?= $avgSwpWithdrawal > 0 ? number_format($avgSwpWithdrawal) : 'N/A' ?></p>
                 </div>
-                <!-- Total calculations In Range (Duplicate for layout balance or use All-Time) -->
+                <!-- Avg Interest Rate -->
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-3">
+                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg Interest Rate</p>
+                    <p class="mt-2 text-3xl font-extrabold text-blue-600">
+                        <?= number_format($avgInterestRate, 1)?>%
+                    </p>
+                    <p class="mt-1.5 text-xs text-gray-400 truncate">user return rate</p>
+                </div>
+                <!-- SWP Adoption Rate -->
+                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-4">
+                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">SWP Activation</p>
+                    <p class="mt-2 text-3xl font-extrabold text-violet-600">
+                        <?= number_format($swpAdoptionRate, 1)?>%
+                    </p>
+                    <p class="mt-1.5 text-xs text-gray-400 truncate">combined planning</p>
+                </div>
+                <!-- All-Time Total -->
+                <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-5">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">All-Time Total</p>
                     <p class="mt-2 text-3xl font-extrabold text-gray-900">
                         <?= number_format($totalAllTime)?>
                     </p>
-                    <p class="mt-1 text-xs text-gray-400">calculations total</p>
+                    <p class="mt-1.5 text-xs text-gray-400 truncate">calculations total</p>
                 </div>
             </div>
         </section>

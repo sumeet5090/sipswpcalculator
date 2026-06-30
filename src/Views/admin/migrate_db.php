@@ -11,9 +11,9 @@ declare(strict_types=1);
 // 1. Basic security check (prevent accidental public execution if possible)
 // On production, you might want to add a password check or IP whitelist here.
 
-require_once __DIR__ . '/src/AnonymizedInsightLogger.php';
+require_once __DIR__ . '/../../AnonymizedInsightLogger.php';
 
-$dbPath = __DIR__ . '/database/database.sqlite';
+$dbPath = __DIR__ . '/../../../database/database.sqlite';
 
 echo "--- SIP/SWP Database Migration ---\n";
 

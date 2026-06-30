@@ -39,6 +39,14 @@ class AnonymizedInsightLogger
                 country_code TEXT,
                 pdf_downloaded INTEGER DEFAULT 0,
                 referrer TEXT,
+                interest_rate REAL,
+                sip_amount REAL,
+                sip_duration INTEGER,
+                sip_step_up REAL,
+                swp_enabled INTEGER DEFAULT 0,
+                swp_withdrawal REAL,
+                swp_duration INTEGER,
+                swp_step_up REAL,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         ";
@@ -47,6 +55,14 @@ class AnonymizedInsightLogger
         // Migration: add columns to existing tables (safe no-op if already present)
         try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN pdf_downloaded INTEGER DEFAULT 0"); } catch (\Throwable $e) {}
         try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN referrer TEXT"); } catch (\Throwable $e) {}
+        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN interest_rate REAL"); } catch (\Throwable $e) {}
+        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN sip_amount REAL"); } catch (\Throwable $e) {}
+        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN sip_duration INTEGER"); } catch (\Throwable $e) {}
+        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN sip_step_up REAL"); } catch (\Throwable $e) {}
+        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_enabled INTEGER DEFAULT 0"); } catch (\Throwable $e) {}
+        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_withdrawal REAL"); } catch (\Throwable $e) {}
+        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_duration INTEGER"); } catch (\Throwable $e) {}
+        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_step_up REAL"); } catch (\Throwable $e) {}
     }
 
     /**
@@ -67,7 +83,15 @@ class AnonymizedInsightLogger
         int $duration,
         float $stepUpPct = 0.0,
         ?string $currency = null,
-        bool $pdfDownloaded = false
+        bool $pdfDownloaded = false,
+        ?float $interestRate = null,
+        ?float $sipAmount = null,
+        ?int $sipDuration = null,
+        ?float $sipStepUp = null,
+        int $swpEnabled = 0,
+        ?float $swpWithdrawal = null,
+        ?int $swpDuration = null,
+        ?float $swpStepUp = null
         ): void
     {
         try {
@@ -90,8 +114,10 @@ class AnonymizedInsightLogger
 
             $stmt = $this->pdo->prepare("
                 INSERT INTO user_calculations 
-                (calc_type, currency, amount, duration, step_up_pct, country_code, pdf_downloaded, referrer)
-                VALUES (:calc_type, :currency, :amount, :duration, :step_up_pct, :country_code, :pdf_downloaded, :referrer)
+                (calc_type, currency, amount, duration, step_up_pct, country_code, pdf_downloaded, referrer,
+                 interest_rate, sip_amount, sip_duration, sip_step_up, swp_enabled, swp_withdrawal, swp_duration, swp_step_up)
+                VALUES (:calc_type, :currency, :amount, :duration, :step_up_pct, :country_code, :pdf_downloaded, :referrer,
+                 :interest_rate, :sip_amount, :sip_duration, :sip_step_up, :swp_enabled, :swp_withdrawal, :swp_duration, :swp_step_up)
             ");
 
             $stmt->execute([
@@ -103,6 +129,14 @@ class AnonymizedInsightLogger
                 ':country_code' => $countryCode,
                 ':pdf_downloaded' => $pdfDownloaded ? 1 : 0,
                 ':referrer' => $referrer,
+                ':interest_rate' => $interestRate,
+                ':sip_amount' => $sipAmount,
+                ':sip_duration' => $sipDuration,
+                ':sip_step_up' => $sipStepUp,
+                ':swp_enabled' => $swpEnabled,
+                ':swp_withdrawal' => $swpWithdrawal,
+                ':swp_duration' => $swpDuration,
+                ':swp_step_up' => $swpStepUp,
             ]);
 
         }
