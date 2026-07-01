@@ -194,8 +194,8 @@ foreach ($combined as $row) {
 }
 
 $page_config = [
-    'title' => 'SIP & SWP Calculator 2026: Compounding & Mutual Fund Returns in India',
-    'meta_desc' => 'Free SIP calculator and SWP retirement drawdown planner for India. Plan for LTCG taxes, inflation, and step-up compounding. Visual charts and yearly breakdowns.',
+    'title' => 'SIP & SWP Calculator 2026: Step-Up Compounding & Mutual Fund Returns',
+    'meta_desc' => 'Free SIP calculator and SWP retirement drawdown planner with step-up compounding. Plan for taxes, inflation, and visualize growth with interactive charts and yearly breakdowns. Supports INR, USD, EUR, GBP.',
 ];
 
 ob_start();
@@ -253,7 +253,7 @@ ob_start();
           "availability": "https://schema.org/InStock"
         }
       ],
-      "description": "Advanced SIP & SWP Calculator with step-up (top-up) compounding for mutual fund investment planning. Uses the future value of annuity due formula: FV = P × [((1+r)^n - 1) / r] × (1+r), where P = monthly investment, r = monthly rate of return, n = total months. Supports annual step-up from 0-50%, investment periods of 1-50 years, expected returns of 1-30%, and Systematic Withdrawal Plans (SWP) with the 4% safe withdrawal rule. Calculates month-by-month compounding with rupee cost averaging. Outputs interactive growth charts, yearly breakdown tables, CSV exports, and branded PDF reports. Trusted by investors for SIP calculations in INR (₹), USD ($), EUR (€), and GBP (£). Based on AMFI India standard methodology for mutual fund return projections.",
+      "description": "Advanced SIP & SWP Calculator with step-up (top-up) compounding for mutual fund investment planning. Uses the future value of annuity due formula: FV = P × [((1+r)^n - 1) / r] × (1+r), where P = monthly investment, r = monthly rate of return, n = total months. Supports annual step-up from 0-50%, investment periods of 1-50 years, expected returns of 1-30%, and Systematic Withdrawal Plans (SWP) with the 4% safe withdrawal rule. Calculates month-by-month compounding with dollar cost averaging. Outputs interactive growth charts, yearly breakdown tables, CSV exports, and branded PDF reports. Trusted by investors for SIP calculations in INR (₹), USD ($), EUR (€), and GBP (£). Based on standard mutual fund industry methodology for return projections.",
       "featureList": [
         "Core Attribute: Step-up compounding (annual top-up 0-50%)",
         "SWP Retirement Planner with step-up withdrawals",
@@ -300,7 +300,7 @@ ob_start();
         {
           "@type": "DefinedTerm",
           "name": "Systematic Investment Plan (SIP)",
-          "description": "A method of investing a fixed sum regularly in mutual funds, using rupee cost averaging and compounding to build wealth over time.",
+          "description": "A method of investing a fixed sum regularly in mutual funds, using dollar cost averaging and compounding to build wealth over time.",
           "sameAs": "https://en.wikipedia.org/wiki/Systematic_investment_plan"
         },
         {
@@ -323,11 +323,11 @@ ob_start();
       ],
       "citation": {
         "@type": "CreativeWork",
-        "name": "AMFI India — SIP Methodology and Mutual Fund Industry Data",
+        "name": "AMFI — SIP Methodology and Mutual Fund Industry Data",
         "url": "https://www.amfiindia.com/",
         "publisher": {
           "@type": "Organization",
-          "name": "Association of Mutual Funds worldwide (AMFI)"
+          "name": "Association of Mutual Funds (AMFI)"
         }
       }
     }
@@ -341,7 +341,7 @@ ob_start();
       "@type": "FinancialProduct",
       "name": "SIP & SWP Investment Planning Tool",
       "alternateName": "Mutual Fund SIP Return Calculator",
-      "description": "Free financial planning tool for calculating Systematic Investment Plan (SIP) returns with annual step-up compounding and Systematic Withdrawal Plan (SWP) retirement income projections. Supports monthly SIP amounts from $5 to $10,000 (or equivalent in USD/EUR/GBP), investment periods from 1 to 50 years, expected annual returns from 1% to 30%, and annual step-up percentages from 0% to 50%. SWP module supports monthly withdrawals with inflation-adjusted step-up from 0% to 20%. Uses month-by-month simulation with compound interest for accuracy superior to simple annuity formulas. Verified against AMFI India standard methodology. Historical context: Nifty 50 has delivered approximately 12-15% CAGR over 20-year rolling periods. SIP inflows worldwide exceeded <span class="dynamic-amount" data-amount="2500000000"></span> per month in 2025 (AMFI data).",
+      "description": "Free financial planning tool for calculating Systematic Investment Plan (SIP) returns with annual step-up compounding and Systematic Withdrawal Plan (SWP) retirement income projections. Supports monthly SIP amounts from $5 to $10,000 (or equivalent in USD/EUR/GBP), investment periods from 1 to 50 years, expected annual returns from 1% to 30%, and annual step-up percentages from 0% to 50%. SWP module supports monthly withdrawals with inflation-adjusted step-up from 0% to 20%. Uses month-by-month simulation with compound interest for accuracy superior to simple annuity formulas. Verified against standard mutual fund industry methodology. Diversified equity funds have historically delivered approximately 10-15% CAGR over 20-year rolling periods. SIP inflows globally have exceeded billions of dollars per month.",
       "url": "https://sipswpcalculator.com/",
       "provider": {
         "@id": "https://sipswpcalculator.com/#organization"
@@ -378,7 +378,7 @@ ob_start();
       "name": "Advanced SIP & SWP Calculator",
       "alternateName": "sipswpcalculator.com",
       "url": "https://sipswpcalculator.com/",
-      "description": "Free online SIP calculator with step-up compounding and SWP retirement planner. Uses month-by-month simulation based on AMFI India methodology. Features interactive charts, yearly breakdown tables, multi-currency support (INR/USD/EUR/GBP), CSV exports, and branded PDF reports. Trusted by investors and financial advisors worldwide.",
+      "description": "Free online SIP calculator with step-up compounding and SWP retirement planner. Uses month-by-month simulation based on standard mutual fund methodology. Features interactive charts, yearly breakdown tables, multi-currency support (INR/USD/EUR/GBP), CSV exports, and branded PDF reports. Trusted by investors and financial advisors worldwide.",
       "inLanguage": "en",
       "publisher": {
         "@id": "https://sipswpcalculator.com/#organization"
@@ -418,7 +418,7 @@ ob_start();
         "width": 512,
         "height": 512
       },
-      "description": "Publisher of free, open-access financial planning tools for SIP and SWP calculations. All formulas verified against AMFI India methodology and SEBI regulatory guidelines. Used by individual investors, financial advisors, and NRIs worldwide for mutual fund return projections.",
+      "description": "Publisher of free, open-access financial planning tools for SIP and SWP calculations. All formulas verified against standard mutual fund industry methodology. Used by individual investors, financial advisors, and global investors for mutual fund return projections.",
       "foundingDate": "2024-12-01",
       "founder": {
         "@id": "https://sipswpcalculator.com/#author"
@@ -438,12 +438,10 @@ ob_start();
         "Mutual Fund Investing",
         "Step-Up SIP Compounding",
         "Retirement Planning",
-        "Rupee Cost Averaging",
+        "Dollar Cost Averaging",
         "4% Safe Withdrawal Rate",
-        "Capital Gains Tax on Mutual Funds worldwide",
-        "LTCG Tax 2026",
-        "STCG Tax 2026",
-        "NRI Mutual Fund Investment"
+        "Capital Gains Tax on Mutual Funds",
+        "Global Mutual Fund Investment"
       ]
     }
     </script>
@@ -465,7 +463,7 @@ ob_start();
       "knowsAbout": [
         "Systematic Investment Plans",
         "Systematic Withdrawal Plans",
-        "Mutual Fund Taxation India",
+        "Mutual Fund Taxation",
         "Financial Calculator Development",
         "Retirement Income Planning"
       ],
@@ -616,7 +614,7 @@ ob_start();
     </div>
 
     <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
-        <span class="text-gradient">SIP & SWP Calculator India</span> <br>
+        <span class="text-gradient">SIP & SWP Calculator</span>
         <span class="text-gray-800">Visualise Your Wealth Journey</span>
     </h1>
 
@@ -638,15 +636,15 @@ ob_start();
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            Verified for Accuracy: February 2026
+            Verified for Accuracy: June 2026
         </div>
     </div>
 
     <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
         This free <dfn><strong class="text-emerald-600">SIP calculator</strong></dfn> helps you estimate
-        your <strong>mutual fund SIP returns in India</strong> with annual step-up (top-up) compounding.
+        your <strong>mutual fund returns</strong> with annual step-up (top-up) compounding.
         A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan
-        tax-efficient withdrawals for a steady retirement income, accounting for the <strong>new 12.5% LTCG tax rules</strong>. Use this tool equipped with AMFI & SEBI approved compounding formulas to visualize growth, compare scenarios, and download detailed PDF reports.
+        tax-efficient withdrawals for a steady retirement income. Supports <strong>INR, USD, EUR & GBP</strong> — use this tool to visualize growth, compare scenarios, and download detailed PDF reports.
     </p>
 
 
@@ -1227,7 +1225,7 @@ endforeach; ?>
         <div class="prose prose-lg max-w-none text-gray-600">
             <p>Understanding the tools at your disposal is the first step toward effective financial planning. Our
                 <strong>mutual fund SIP calculator</strong> is designed to demystify two of the most powerful tools
-                for Indian and global investors: the Systematic Investment Plan (SIP) and the Systematic Withdrawal Plan
+                for investors worldwide: the Systematic Investment Plan (SIP) and the Systematic Withdrawal Plan
                 (SWP).
             </p>
 
@@ -1239,17 +1237,15 @@ endforeach; ?>
                     <p itemprop="description">A <dfn><strong>Systematic Investment Plan (SIP)</strong></dfn> is a method
                         of
                         investing a fixed amount of money at regular intervals (monthly, quarterly) into mutual funds.
-                        SIPs use <strong>rupee cost averaging</strong> and <strong>compounding</strong> to build wealth
+                        SIPs use <strong>cost averaging</strong> and <strong>compounding</strong> to build wealth
                         over time, making them ideal for long-term goals like retirement, education, or wealth creation.
-                        As per <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
-                            class="text-emerald-600 hover:underline">AMFI</a> data, SIP inflows worldwide crossed <span
-                            class="dynamic-amount" data-amount="210000000000"></span>/month in 2025.
+                        SIP inflows globally have grown significantly, with monthly contributions exceeding billions of dollars across major markets.
                         <a href="/sip-calculator" class="text-emerald-600 hover:underline font-medium">Read our complete
                             SIP guide →</a>
                     </p>
                     <ul class="mt-4 space-y-2">
-                        <li><span class="font-semibold text-green-700">Rupee Cost Averaging:</span> Buy more units when
-                            NAV is low, fewer when it's high — reducing average cost automatically.</li>
+                        <li><span class="font-semibold text-green-700">Cost Averaging:</span> Buy more units when
+                            prices are low, fewer when they're high — reducing your average cost automatically.</li>
                         <li><span class="font-semibold text-green-700">Power of Compounding:</span> Reinvesting returns
                             generates earnings on earnings, leading to exponential growth over 10-20+ years.</li>
                         <li><span class="font-semibold text-green-700">Disciplined Investing:</span> Automates saving
@@ -1275,8 +1271,7 @@ endforeach; ?>
                         <li><span class="font-semibold text-green-700">Regular Income:</span> Create a predictable
                             pension-like cash flow from your mutual fund investments.</li>
                         <li><span class="font-semibold text-green-700">Tax-Efficient Withdrawals:</span> Only the
-                            capital gains portion is taxed (LTCG at 12.5% above <span
-                                class="currency-text">$</span>1,500 for equity funds).</li>
+                            capital gains portion is taxed, making SWP significantly more efficient than FD interest income.</li>
                         <li><span class="font-semibold text-green-700">Continued Growth:</span> Remaining corpus stays
                             invested and benefits from market growth, potentially outliving you.</li>
                     </ul>
@@ -1339,9 +1334,7 @@ endforeach; ?>
                     </dl>
                 </div>
                 <p class="mt-4 text-sm text-gray-500">Our calculator uses month-by-month simulation with step-up
-                    compounding, which is more accurate than the simple annuity formula for long-term projections.
-                    Source: <a href="https://www.amfiindia.com/" target="_blank" rel="noopener noreferrer"
-                        class="text-emerald-600 hover:underline">AMFI India</a> standard methodology.</p>
+                    compounding, which is more accurate than the simple annuity formula for long-term projections.</p>
             </div>
 
             <!-- Worked Examples -->
@@ -1436,10 +1429,9 @@ endforeach; ?>
                             against downturns.</li>
                         <li><strong class="text-amber-700">Inflation Risk:</strong> A 6-7% return on debt funds may not
                             beat inflation (5-6%). Equity SIPs historically outpace inflation over the long term.</li>
-                        <li><strong class="text-amber-700">No Guaranteed Returns:</strong> Unlike PPF or FDs, mutual
+                        <li><strong class="text-amber-700">No Guaranteed Returns:</strong> Unlike government bonds or term deposits, mutual
                             fund returns are not guaranteed. Past performance does not guarantee future results. Always
-                            consult a <a href="https://www.sebi.gov.in/" target="_blank" rel="noopener noreferrer"
-                                class="text-emerald-600 hover:underline">SEBI</a>-registered financial advisor.</li>
+                            consult a registered financial advisor before investing.</li>
                     </ul>
                 </div>
             </div>
@@ -1447,14 +1439,13 @@ endforeach; ?>
             <!-- Mr. Sharma story (promoted from H3 to H2) -->
             <div class="mt-12 bg-emerald-50/50 p-8 rounded-xl border border-emerald-100/50 backdrop-blur-sm">
                 <h2 id="real-life-success-story" class="text-2xl font-bold text-emerald-700 mb-4">Real-Life Success
-                    Story: The "Mr. Sharma" Strategy
+                    Story: The Power of Step-Up SIP
                 </h2>
-                <p class="mb-4">Meet Mr. Sharma (30). He decides to invest <strong><span
+                <p class="mb-4">Meet Alex (30). He decides to invest <strong><span
                             class="currency-text">$</span>100/month</strong> in an
                     Equity Mutual Fund via SIP for his retirement at age 60.</p>
                 <ul class="list-disc pl-5 space-y-2 mb-4">
-                    <li><strong>Goal:</strong> Retire with <span class="dynamic-amount" data-amount="50000000"></span>.
-                    </li>
+                    <li><strong>Goal:</strong> Retire with a substantial corpus.</li>
                     <li><strong>Strategy:</strong> Step-up SIP. Increase investment by 10% every year as his salary
                         grows.</li>
                     <li><strong>Result:</strong> By age 60, avoiding the urge to stop during market lows, his corpus
@@ -1468,11 +1459,11 @@ endforeach; ?>
             </div>
 
             <div class="mt-12">
-                <h2 id="investment-comparison" class="text-3xl font-bold text-center mb-6">SIP vs RD vs FD vs PPF: A
+                <h2 id="investment-comparison" class="text-3xl font-bold text-center mb-6">SIP vs Recurring Deposit vs Fixed Deposit: A
                     Comparison</h2>
                 <div class="glass-card overflow-hidden">
                     <table class="min-w-full">
-                        <caption class="sr-only">SIP vs PPF vs Fixed Deposit: Investment Comparison for Indian Investors
+                        <caption class="sr-only">SIP vs Fixed Deposit: Investment Comparison for Global Investors
                             (2026)</caption>
                         <thead>
                             <tr class="bg-gray-50 text-gray-700 text-left">
@@ -1481,7 +1472,8 @@ endforeach; ?>
                                 <th
                                     class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider text-emerald-600">
                                     SIP (Equity MF)</th>
-                                <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">PPF</th>
+                                <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">Recurring
+                                    Deposit (RD)</th>
                                 <th class="py-4 px-6 font-bold border-b text-xs uppercase tracking-wider">Fixed
                                     Deposit (FD)</th>
                             </tr>
@@ -1489,28 +1481,27 @@ endforeach; ?>
                         <tbody class="text-sm">
                             <tr class="border-b hover:bg-emerald-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Expected Returns</td>
-                                <td class="py-4 px-6 font-bold text-green-700">12% - 15% (High)</td>
-                                <td class="py-4 px-6 text-gray-600">7.1% (Moderate)</td>
-                                <td class="py-4 px-6 text-gray-600">6% - 7% (Low)</td>
+                                <td class="py-4 px-6 font-bold text-green-700">10% - 15% (High)</td>
+                                <td class="py-4 px-6 text-gray-600">5% - 7% (Moderate)</td>
+                                <td class="py-4 px-6 text-gray-600">4% - 7% (Low)</td>
                             </tr>
                             <tr class="border-b hover:bg-emerald-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Risk Profile</td>
                                 <td class="py-4 px-6 text-rose-500 font-medium">High (Market Linked)</td>
-                                <td class="py-4 px-6 text-emerald-600 font-medium">Risk-Free (Govt Backed)</td>
+                                <td class="py-4 px-6 text-emerald-600 font-medium">Low Risk (Bank Backed)</td>
                                 <td class="py-4 px-6 text-emerald-600 font-medium">Low Risk</td>
                             </tr>
                             <tr class="border-b hover:bg-emerald-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Liquidity</td>
                                 <td class="py-4 px-6">High (Exit Load < 1 yr)</td>
-                                <td class="py-4 px-6">Low (15 Year Lock-in)</td>
+                                <td class="py-4 px-6">Moderate (Lock-in period)</td>
                                 <td class="py-4 px-6">High (Penalty applies)</td>
                             </tr>
                             <tr class="hover:bg-emerald-50/30 transition-colors">
                                 <td class="py-4 px-6 font-medium text-gray-900">Taxation</td>
-                                <td class="py-4 px-6">LTCG > <span class="currency-text">$</span>1.25L taxed @ 12.5%
-                                </td>
-                                <td class="py-4 px-6 font-bold text-emerald-600">Exempt (EEE)</td>
-                                <td class="py-4 px-6">Taxed as Income</td>
+                                <td class="py-4 px-6">Capital Gains Tax (varies by country)</td>
+                                <td class="py-4 px-6">Interest Taxed as Income</td>
+                                <td class="py-4 px-6">Interest Taxed as Income</td>
                             </tr>
                         </tbody>
                     </table>

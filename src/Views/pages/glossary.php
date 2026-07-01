@@ -129,7 +129,7 @@ foreach ($glossary_terms as $term):
 
         <!-- Premium Glossary Card -->
         <article
-            class="glossary-card glass-card bg-white rounded-[40px] p-6 border-2 border-slate-50 shadow-sm hover:shadow-3xl hover:border-emerald-500/10 hover:-translate-y-4 transition-all duration-500 group relative flex flex-col h-full overflow-hidden"
+            class="glossary-card glass-card bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-3xl hover:border-emerald-500/10 hover:-translate-y-4 transition-all duration-500 group relative flex flex-col h-full overflow-hidden"
             data-term="<?= strtolower($term['q'])?>" data-desc="<?= strtolower($term['a'])?>">
 
             <div class="relative z-10 flex flex-col h-full">
@@ -194,6 +194,46 @@ endforeach; ?>
         const container = document.getElementById('glossaryContainer');
         const emptyState = document.getElementById('emptyState');
         const sectionHeaders = document.querySelectorAll('.section-header');
+        const letterLinks = document.querySelectorAll('.letter-link');
+
+        // ScrollSpy logic to highlight active A-Z letter
+        function updateActiveLetter() {
+            // If user is searching, don't show active scrollspy highlight
+            if (searchInput && searchInput.value.trim().length > 0) {
+                letterLinks.forEach(link => {
+                    link.classList.remove('bg-emerald-600', 'text-white');
+                    link.classList.add('text-slate-400');
+                });
+                return;
+            }
+
+            let activeLetter = '';
+            const scrollPos = window.scrollY || document.documentElement.scrollTop;
+
+            // Find the current section
+            sectionHeaders.forEach(header => {
+                const headerTop = header.offsetTop;
+                // Offset calculation (nav height + safety margin)
+                if (scrollPos >= headerTop - 180) {
+                    activeLetter = header.id.replace('letter-', '');
+                }
+            });
+
+            // Update classes
+            letterLinks.forEach(link => {
+                const target = link.getAttribute('href').replace('#letter-', '');
+                if (target === activeLetter) {
+                    link.classList.add('bg-emerald-600', 'text-white');
+                    link.classList.remove('text-slate-400');
+                } else {
+                    link.classList.remove('bg-emerald-600', 'text-white');
+                    link.classList.add('text-slate-400');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLetter);
+        updateActiveLetter(); // Initial run
 
         searchInput.addEventListener('input', function () {
             const query = this.value.toLowerCase().trim();
@@ -224,6 +264,8 @@ endforeach; ?>
                 container.style.display = 'grid';
                 emptyState.classList.add('hidden');
             }
+
+            updateActiveLetter();
         });
 
         // Staggered card animations

@@ -106,178 +106,201 @@ ob_start();
     </p>
 </header>
 
-<div class="max-w-3xl mx-auto pb-20 px-4 relative">
-
-    <!-- Search Bar -->
-    <div style="position:relative; max-width:36rem; margin:0 auto 2rem;">
-        <svg style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); width:1.1rem; height:1.1rem; color:#94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<!-- Search Bar -->
+<div class="relative max-w-xl mx-auto mb-8">
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+        <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
         </svg>
-        <input id="faqSearch" type="text" placeholder="Search questions..."
-            style="width:100%; padding:0.7rem 1rem 0.7rem 2.75rem; border:1.5px solid #e2e8f0; border-radius:0.75rem; background:#fff; font-size:0.875rem; color:#334155; outline:none; transition:border-color 0.2s, box-shadow 0.2s;"
-            onfocus="this.style.borderColor='#059669';this.style.boxShadow='0 0 0 3px rgba(5,150,105,0.12)'"
-            onblur="this.style.borderColor='#e2e8f0';this.style.boxShadow='none'">
     </div>
+    <input id="faqSearch" type="text" placeholder="Search questions..."
+        class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-sm transition-all text-sm font-medium">
+</div>
 
-    <!-- Category Filter Chips -->
-    <div style="display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:0.5rem; margin-bottom:2.5rem;">
-        <button data-category="all" class="category-chip active">All</button>
-        <?php foreach ($faq_categories as $cat): ?>
-        <button data-category="<?= $cat['id']?>" class="category-chip"><?= $cat['label']?></button>
-        <?php endforeach; ?>
+<!-- Category Filter Chips -->
+<div class="flex flex-wrap justify-center items-center gap-2.5 mb-12">
+    <button data-category="all" class="category-chip active">All</button>
+    <?php foreach ($faq_categories as $cat): ?>
+    <button data-category="<?= $cat['id']?>" class="category-chip"><?= $cat['label']?></button>
+    <?php endforeach; ?>
+</div>
+
+<!-- Empty State -->
+<div id="emptyState" class="hidden text-center py-20 animate-entry">
+    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-50 border border-slate-100 text-slate-400 mb-4">
+        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
     </div>
+    <h3 class="text-xl font-bold text-slate-800">No questions found</h3>
+    <p class="mt-2 text-slate-500 max-w-xs mx-auto text-sm leading-relaxed">We couldn't find any questions matching your search. Try another query.</p>
+</div>
 
-    <!-- FAQ Accordion -->
-    <div id="faqAccordion" class="faq-list">
-        <?php foreach ($faqs as $index => $faq): ?>
-        <div class="faq-item" data-category="<?= $faq['category']?>" data-question="<?= strtolower($faq['q'])?>"
-            data-answer="<?= strtolower($faq['a'])?>">
+<!-- FAQ Accordion -->
+<div id="faqAccordion" class="faq-list">
+    <?php foreach ($faqs as $index => $faq): ?>
+    <div class="faq-item" data-category="<?= $faq['category']?>" data-question="<?= strtolower($faq['q'])?>"
+        data-answer="<?= strtolower($faq['a'])?>">
 
-            <button class="faq-trigger" onclick="toggleFaq(this)">
-                <span class="faq-question">
-                    <?= htmlspecialchars($faq['q'])?>
-                </span>
-                <span class="faq-icon-wrap">
-                    <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </span>
-            </button>
+        <button class="faq-trigger" onclick="toggleFaq(this)">
+            <span class="faq-question">
+                <?= htmlspecialchars($faq['q'])?>
+            </span>
+            <span class="faq-icon-wrap">
+                <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+            </span>
+        </button>
 
-            <div class="faq-answer">
-                <p>
-                    <?= $faq['a']?>
-                </p>
-            </div>
+        <div class="faq-answer">
+            <p>
+                <?= $faq['a']?>
+            </p>
         </div>
-        <?php
-endforeach; ?>
     </div>
+    <?php
+endforeach; ?>
+</div>
 </div>
 
 <style>
-    /* --- FAQ Accordion Styles --- */
-    .faq-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-    }
+/* --- FAQ Accordion Styles --- */
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 
-    .faq-item {
-        border-bottom: 1px solid #e2e8f0;
-        transition: background-color 0.2s ease;
-    }
+.faq-item {
+    background-color: #ffffff;
+    border: 1.5px solid #f1f5f9;
+    border-radius: 24px;
+    padding: 0.5rem 1.25rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-    .faq-item:first-child {
-        border-top: 1px solid #e2e8f0;
-    }
+.faq-item:hover {
+    border-color: #e2e8f0;
+    box-shadow: 0 12px 30px -15px rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px);
+}
 
-    .faq-trigger {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: 1.25rem 0.5rem;
-        background: none;
-        border: none;
-        cursor: pointer;
-        text-align: left;
-    }
+.faq-item.active {
+    border-color: rgba(16, 185, 129, 0.2);
+    box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.08);
+}
 
-    .faq-question {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #1e293b;
-        line-height: 1.5;
-        transition: color 0.2s ease;
-    }
+.faq-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.25rem 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    outline: none;
+}
 
-    .faq-item:hover .faq-question,
-    .faq-item.active .faq-question {
-        color: #059669;
-    }
+.faq-question {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
 
-    .faq-icon-wrap {
-        flex-shrink: 0;
-        width: 28px;
-        height: 28px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: #f1f5f9;
-        transition: all 0.3s ease;
-    }
+.faq-item:hover .faq-question,
+.faq-item.active .faq-question {
+    color: #059669;
+}
 
-    .faq-chevron {
-        width: 16px;
-        height: 16px;
-        color: #94a3b8;
-        transition: transform 0.3s ease, color 0.3s ease;
-    }
+.faq-icon-wrap {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f1f5f9;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-    .faq-item.active .faq-icon-wrap {
-        background: #059669;
-    }
+.faq-chevron {
+    width: 14px;
+    height: 14px;
+    color: #64748b;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
 
-    .faq-item.active .faq-chevron {
-        transform: rotate(180deg);
-        color: #fff;
-    }
+.faq-item.active .faq-icon-wrap {
+    background: #10b981;
+}
 
-    .faq-answer {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.35s ease, opacity 0.25s ease;
-        opacity: 0;
-    }
+.faq-item.active .faq-chevron {
+    transform: rotate(180deg);
+    color: #ffffff;
+}
 
-    .faq-item.active .faq-answer {
-        max-height: 500px;
-        opacity: 1;
-    }
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    opacity: 0;
+}
 
-    .faq-answer p {
-        padding: 0 0.5rem 1.25rem 0.5rem;
-        font-size: 0.938rem;
-        line-height: 1.75;
-        color: #475569;
-    }
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    opacity: 1;
+}
 
-    /* --- Category Chip Styles --- */
-    .category-chip {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        appearance: none;
-        -webkit-appearance: none;
-        background-color: #ffffff !important;
-        color: #64748b !important;
-        border: 1.5px solid #cbd5e1 !important;
-        border-radius: 9999px;
-        padding: 0.375rem 1rem;
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-    }
+.faq-answer p {
+    padding: 0 0.5rem 1.25rem 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #64748b;
+    font-medium;
+}
 
-    .category-chip:hover {
-        border-color: #059669 !important;
-        color: #059669 !important;
-        background-color: #ecfdf5 !important;
-    }
+/* --- Category Chip Styles --- */
+.category-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #ffffff;
+    color: #64748b;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 9999px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    outline: none;
+}
 
-    .category-chip.active {
-        background-color: #059669 !important;
-        color: #ffffff !important;
-        border-color: #059669 !important;
-        box-shadow: 0 2px 10px rgba(5, 150, 105, 0.3);
-    }
+.category-chip:hover {
+    border-color: #10b981;
+    color: #047857;
+    background-color: #f0fdf4;
+}
+
+.category-chip.active {
+    background-color: #10b981;
+    color: #ffffff;
+    border-color: #10b981;
+    box-shadow: 0 10px 20px -10px rgba(16, 185, 129, 0.4);
+}
 </style>
 
 <script>
