@@ -65,8 +65,8 @@ Everything you need to know about Systematic Investment Plans — from your very
 <p>Albert Einstein reportedly called compound interest "the eighth wonder of the world." Here's why:</p>
 
 <ul>
-    <li><strong>Simple interest:</strong> You earn interest only on your original investment. <span class="dynamic-amount" data-amount-inr="100000" data-amount-usd="1000" data-amount-eur="1000" data-amount-gbp="1000"></span> at 12% = <span class="dynamic-amount" data-amount-inr="12000" data-amount-usd="120" data-amount-eur="120" data-amount-gbp="120"></span>/year, every year. After 20 years: <span class="dynamic-amount" data-amount-inr="340000" data-amount-usd="3400" data-amount-eur="3400" data-amount-gbp="3400"></span>.</li>
-    <li><strong>Compound interest:</strong> You earn interest on your original investment AND on all previous interest. After 20 years: <strong><span class="dynamic-amount" data-amount-inr="965000" data-amount-usd="9650" data-amount-eur="9650" data-amount-gbp="9650"></span></strong> — nearly 3x more than simple interest.</li>
+    <li><strong>Simple interest:</strong> You earn interest only on your original investment. <span class="dynamic-amount" data-amount-inr="100000"></span> at 12% = <span class="dynamic-amount" data-amount-inr="12000"></span>/year, every year. After 20 years: <span class="dynamic-amount" data-amount-inr="340000"></span>.</li>
+    <li><strong>Compound interest:</strong> You earn interest on your original investment AND on all previous interest. After 20 years: <strong><span class="dynamic-amount" data-amount-inr="965000"></span></strong> — nearly 3x more than simple interest.</li>
 </ul>
 
 <p>Now combine compounding with monthly SIP contributions, and the effect becomes explosive:</p>
@@ -82,15 +82,15 @@ Everything you need to know about Systematic Investment Plans — from your very
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-slate-100">
-            <tr><td class="px-5 py-4">Year 5</td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="600000" data-amount-usd="6000" data-amount-eur="6000" data-amount-gbp="6000"></span></td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="824856" data-amount-usd="8249" data-amount-eur="8249" data-amount-gbp="8249"></span></td><td class="px-5 py-4 text-right text-emerald-600">+<span class="dynamic-amount" data-amount-inr="224856" data-amount-usd="2249" data-amount-eur="2249" data-amount-gbp="2249"></span> (37%)</td></tr>
-            <tr class="bg-slate-50/30"><td class="px-5 py-4">Year 10</td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="1200000" data-amount-usd="12000" data-amount-eur="12000" data-amount-gbp="12000"></span></td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="2323391" data-amount-usd="23234" data-amount-eur="23234" data-amount-gbp="23234"></span></td><td class="px-5 py-4 text-right text-emerald-600">+<span class="dynamic-amount" data-amount-inr="1123391" data-amount-usd="11234" data-amount-eur="11234" data-amount-gbp="11234"></span> (94%)</td></tr>
-            <tr><td class="px-5 py-4">Year 15</td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="1800000" data-amount-usd="18000" data-amount-eur="18000" data-amount-gbp="18000"></span></td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="5045760" data-amount-usd="50458" data-amount-eur="50458" data-amount-gbp="50458"></span></td><td class="px-5 py-4 text-right font-bold text-emerald-600">+<span class="dynamic-amount" data-amount-inr="3245760" data-amount-usd="32458" data-amount-eur="32458" data-amount-gbp="32458"></span> (180%)</td></tr>
-            <tr class="bg-emerald-50/30"><td class="px-5 py-4 font-bold">Year 20</td><td class="px-5 py-4 text-right font-bold"><span class="dynamic-amount" data-amount-inr="2400000" data-amount-usd="24000" data-amount-eur="24000" data-amount-gbp="24000"></span></td><td class="px-5 py-4 text-right font-extrabold text-emerald-600"><span class="dynamic-amount" data-amount-inr="9991479" data-amount-usd="99915" data-amount-eur="99915" data-amount-gbp="99915"></span></td><td class="px-5 py-4 text-right font-bold text-emerald-600">+<span class="dynamic-amount" data-amount-inr="7591479" data-amount-usd="75915" data-amount-eur="75915" data-amount-gbp="75915"></span> (316%)</td></tr>
+            <tr><td class="px-5 py-4">Year 5</td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="600000"></span></td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="824856"></span></td><td class="px-5 py-4 text-right text-emerald-600">+<span class="dynamic-amount" data-amount-inr="224856"></span> (37%)</td></tr>
+            <tr class="bg-slate-50/30"><td class="px-5 py-4">Year 10</td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="1200000"></span></td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="2323391"></span></td><td class="px-5 py-4 text-right text-emerald-600">+<span class="dynamic-amount" data-amount-inr="1123391"></span> (94%)</td></tr>
+            <tr><td class="px-5 py-4">Year 15</td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="1800000"></span></td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="5045760"></span></td><td class="px-5 py-4 text-right font-bold text-emerald-600">+<span class="dynamic-amount" data-amount-inr="3245760"></span> (180%)</td></tr>
+            <tr class="bg-emerald-50/30"><td class="px-5 py-4 font-bold">Year 20</td><td class="px-5 py-4 text-right font-bold"><span class="dynamic-amount" data-amount-inr="2400000"></span></td><td class="px-5 py-4 text-right font-extrabold text-emerald-600"><span class="dynamic-amount" data-amount-inr="9991479"></span></td><td class="px-5 py-4 text-right font-bold text-emerald-600">+<span class="dynamic-amount" data-amount-inr="7591479"></span> (316%)</td></tr>
         </tbody>
     </table>
 </div>
 
-<p>Look at the pattern: in the first 5 years, compounding earned you <span class="dynamic-amount" data-amount-inr="225000" data-amount-usd="2250" data-amount-eur="2250" data-amount-gbp="2250"></span>. But in the last 5 years alone (Year 15 to 20), it earned you <strong><span class="dynamic-amount" data-amount-inr="4946000" data-amount-usd="49460" data-amount-eur="49460" data-amount-gbp="49460"></span></strong>. That's the magic — compounding accelerates over time. The longer you stay invested, the more spectacular the growth. This is why <strong>starting early is the single most important financial decision</strong> you'll ever make.</p>
+<p>Notice the pattern: in the first 5 years, compounding earned you <span class="dynamic-amount" data-amount-inr="225000"></span>. But in the last 5 years alone (Year 15 to 20), it earned you <strong><span class="dynamic-amount" data-amount-inr="4946000"></span></strong>. That's the magic — compounding accelerates over time. The longer you stay invested, the more spectacular the growth. This is why <strong>starting early is the single most important financial decision</strong> you'll ever make.</p>
 
 <h2 id="how-to-start">The 5-Step Action Plan: Starting Your First SIP</h2>
 
@@ -196,32 +196,31 @@ Everything you need to know about Systematic Investment Plans — from your very
 <h2 id="sip-myths">5 SIP Myths That Cost Investors Money</h2>
 
 <ol>
-    <li><strong>"SIP is only for small investors"</strong> — False. SIP is a strategy, not an amount. HNIs and institutional investors use SIP (called DCA — Dollar Cost Averaging) with lakhs per month. Warren Buffett recommends regular S&P 500 investing for most people.</li>
-    <li><strong>"I should stop SIP when markets are high"</strong> — False. You can't predict peaks. Historically, investors who stopped SIPs at "market highs" underperformed those who continued. Markets have always made new highs after every correction.</li>
-    <li><strong>"SIP guarantees returns"</strong> — False. SIP reduces risk through averaging, but equity markets can and do fall. SIP does NOT guarantee positive returns, especially over short periods (1-3 years). The guarantee is in the discipline, not the outcome.</li>
-    <li><strong>"SIP is only for small investors"</strong> — False. SIP is a strategy, not an amount. HNIs and institutional investors use SIP (called DCA — Dollar Cost Averaging) with large sums per month. Warren Buffett recommends regular S&P 500 investing for most people.</li>
-    <li><strong>"Market crash means I lose money"</strong> — Only if you panic and sell. A crash is a buying opportunity (discount).</li>
-    <li><strong>"₹500/month SIP is too small to matter"</strong> — False. <span class="dynamic-amount" data-amount-inr="500" data-amount-usd="50" data-amount-eur="50" data-amount-gbp="50"></span>/month at 12% for 30 years = <strong><span class="dynamic-amount" data-amount-inr="1765000" data-amount-usd="17650" data-amount-eur="17650" data-amount-gbp="17650"></span></strong>. Small amounts compound into large sums. The important thing is building the habit — you can always increase the amount later.</li>
+    <li><strong>"SIP is only for small investors"</strong> — False. SIP is a strategy, not an amount. Wealthy investors and institutions use systematic investing with lakhs per month. The strategy scales cleanly to any investment level.</li>
+    <li><strong>"I should stop SIP when markets are high"</strong> — False. You cannot reliably time market peaks. Continuing your SIP through peaks and valleys historically yields better returns than trying to sit out of the market.</li>
+    <li><strong>"SIP guarantees returns"</strong> — False. SIP reduces timing risk through cost averaging, but mutual funds are still subject to market volatility. Short-term returns can be negative.</li>
+    <li><strong>"Direct plans and regular plans give the same returns"</strong> — False. Regular plans include distributor commissions (0.5-1.5% annually) which are deducted from your NAV. Direct plans have zero commission, saving you lakhs over the long run.</li>
+    <li><strong>"Market crash means I lose money"</strong> — Only if you panic and redeem. A market crash is actually a discount buying opportunity for active SIP mandates.</li>
+    <li><strong>"₹500/month SIP is too small to matter"</strong> — False. A starting <span class="dynamic-amount" data-amount-inr="500"></span>/month SIP at 12% for 30 years grows to over <strong><span class="dynamic-amount" data-amount-inr="1765000"></span></strong>. Small contributions compound into very significant corpuses over time.</li>
 </ol>
 
-<h2 id="sip-by-country">SIP Equivalents Around the World</h2>
+<h2 id="sip-vs-alternatives">SIP vs Other Saving Instruments in India</h2>
 
 <div class="overflow-x-auto border border-slate-200 rounded-xl mb-8 not-prose shadow-sm">
     <table class="min-w-full divide-y divide-slate-200 text-sm border-collapse">
         <thead class="bg-slate-50">
             <tr>
-                <th class="px-5 py-4 text-left font-bold text-slate-800">Country</th>
-                <th class="px-5 py-4 text-left font-bold text-slate-800">SIP Equivalent</th>
-                <th class="px-5 py-4 text-left font-bold text-slate-800">Best Vehicle</th>
+                <th class="px-5 py-4 text-left font-bold text-slate-800">Instrument</th>
+                <th class="px-5 py-4 text-left font-bold text-slate-800">Return Rate (Approx.)</th>
+                <th class="px-5 py-4 text-left font-bold text-slate-800">Lock-in Period</th>
                 <th class="px-5 py-4 text-left font-bold text-slate-800">Tax Advantage</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-slate-100">
-            <tr><td class="px-5 py-4 font-bold">🇮🇳 India</td><td class="px-5 py-4">Mutual Fund SIP</td><td class="px-5 py-4">Nifty 50 Index Fund / ELSS</td><td class="px-5 py-4">80C deduction (ELSS), ₹1.25L LTCG exemption</td></tr>
-            <tr class="bg-slate-50/30"><td class="px-5 py-4 font-bold">🇺🇸 USA</td><td class="px-5 py-4">Automatic investing / DCA</td><td class="px-5 py-4">401(k) / Roth IRA</td><td class="px-5 py-4">Tax-deferred (401k) or tax-free growth (Roth)</td></tr>
-            <tr><td class="px-5 py-4 font-bold">🇬🇧 UK</td><td class="px-5 py-4">Regular investing</td><td class="px-5 py-4">Stocks & Shares ISA</td><td class="px-5 py-4">100% tax-free gains and dividends</td></tr>
-            <tr class="bg-slate-50/30"><td class="px-5 py-4 font-bold">🇪🇺 Germany</td><td class="px-5 py-4">ETF Sparplan</td><td class="px-5 py-4">MSCI World ETF</td><td class="px-5 py-4">€1,000 annual exemption</td></tr>
-            <tr><td class="px-5 py-4 font-bold">🇦🇺 Australia</td><td class="px-5 py-4">Regular super contributions</td><td class="px-5 py-4">Superannuation fund</td><td class="px-5 py-4">15% concessional tax rate</td></tr>
+            <tr><td class="px-5 py-4 font-bold">Mutual Fund SIP</td><td class="px-5 py-4">12% - 15% (Market-linked)</td><td class="px-5 py-4">None (Except ELSS - 3 yrs)</td><td class="px-5 py-4">₹1.25L annual LTCG exemption</td></tr>
+            <tr class="bg-slate-50/30"><td class="px-5 py-4 font-bold">Public Provident Fund (PPF)</td><td class="px-5 py-4">7.1% (Fixed)</td><td class="px-5 py-4">15 Years</td><td class="px-5 py-4">100% tax-free maturity (EEE)</td></tr>
+            <tr><td class="px-5 py-4 font-bold">National Pension System (NPS)</td><td class="px-5 py-4">9% - 12% (Market-linked)</td><td class="px-5 py-4">Till age 60</td><td class="px-5 py-4">Additional ₹50,000 Sec 80CCD(1B) deduction</td></tr>
+            <tr class="bg-slate-50/30"><td class="px-5 py-4 font-bold">Bank Recurring Deposit (RD)</td><td class="px-5 py-4">6.0% - 7.0% (Fixed)</td><td class="px-5 py-4">None (Pre-fixed term)</td><td class="px-5 py-4">Interest fully taxable at slab rate</td></tr>
         </tbody>
     </table>
 </div>
@@ -243,7 +242,7 @@ Everything you need to know about Systematic Investment Plans — from your very
 <h2 id="faq">Frequently Asked Questions</h2>
 
 <h3>What is the minimum amount to start SIP?</h3>
-<p>In India, most mutual funds allow SIP starting from <strong>₹500/month</strong>. Some funds accept as low as ₹100/month. In the US, many brokerages have no minimum (you can start with $1 via fractional shares). The key insight: start with whatever you can afford — even ₹500/month compounds into significant wealth over 20-30 years.</p>
+<p>In India, most mutual funds allow SIP starting from <strong>₹500/month</strong>. Some funds accept as low as ₹100/month. The key insight: start with whatever you can afford — even ₹500/month compounds into significant wealth over 20-30 years.</p>
 
 <h3>Is SIP better than lump sum investing?</h3>
 <p>It depends on your situation. Academic research shows that <strong>lump sum investing outperforms SIP about 65% of the time</strong> because money is in the market longer. However, SIP is better for most real-world investors because: (1) most people don't have large lump sums, they earn monthly salaries; (2) SIP removes the emotional stress of timing the market; and (3) SIP ensures you don't panic-invest or panic-sell based on market conditions.</p>
@@ -255,7 +254,7 @@ Everything you need to know about Systematic Investment Plans — from your very
 <p>Stop (or reduce) your SIP only when: (1) You've reached your financial goal; (2) You're within 2-3 years of needing the money (start shifting to safer instruments); or (3) You genuinely cannot afford it due to a financial emergency. <strong>Never stop SIP because "markets are down"</strong> — that's precisely when SIP is working hardest for you.</p>
 
 <h3>Which is better: SIP in direct plan or regular plan?</h3>
-<p><strong>Always choose the Direct Plan.</strong> Regular plans include distributor commissions (0.5-1.5% annually) embedded in a higher expense ratio. Over 20 years, this difference can cost you <span class="dynamic-amount" data-amount-inr="500000" data-amount-usd="5000" data-amount-eur="5000" data-amount-gbp="5000"></span> to <span class="dynamic-amount" data-amount-inr="1000000" data-amount-usd="10000" data-amount-eur="10000" data-amount-gbp="10000"></span> on a <span class="dynamic-amount" data-amount-inr="10000" data-amount-usd="100" data-amount-eur="100" data-amount-gbp="100"></span>/month SIP. Direct plans are available through apps like Groww, Kuvera, and Zerodha Coin.</p>
+<p><strong>Always choose the Direct Plan.</strong> Regular plans include distributor commissions (0.5-1.5% annually) embedded in a higher expense ratio. Over 20 years, this difference can cost you <span class="dynamic-amount" data-amount-inr="500000"></span> to <span class="dynamic-amount" data-amount-inr="1000000"></span> on a starting <span class="dynamic-amount" data-amount-inr="10000"></span>/month SIP. Direct plans are available through apps like Groww, Kuvera, and Zerodha Coin.</p>
 
 <h3>Should I do SIP in one fund or multiple funds?</h3>
 <p>For most beginners, <strong>one or two funds are sufficient</strong>. A single Nifty 50 Index Fund gives you exposure to 50 companies across all major sectors. Adding a Nifty Next 50 or a Flexi-Cap fund gives additional diversification. Avoid the mistake of investing in 8-10 funds — this actually reduces diversification benefit and makes tracking difficult.</p>

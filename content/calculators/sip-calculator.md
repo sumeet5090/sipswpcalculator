@@ -38,11 +38,11 @@ This adjustment is made because SIP payments are technically an "Annuity Due" (p
 </svg>
 </div>
 <h4 class="text-lg font-bold text-indigo-700 mb-2">Scenario A: The Wealth Builder</h4>
-<p class="text-sm text-gray-500 mb-4">Invests <span class="dynamic-amount" data-amount-inr="10000" data-amount-usd="100" data-amount-eur="100" data-amount-gbp="100"></span>/month for 20 Years @ 12%</p>
+<p class="text-sm text-gray-500 mb-4">Invests <span class="dynamic-amount" data-amount-inr="10000"></span>/month for 20 Years @ 12%</p>
 <ul class="space-y-2 text-sm text-gray-700">
-<li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="2400000" data-amount-usd="24000" data-amount-eur="24000" data-amount-gbp="24000"></span></span></li>
-<li class="flex justify-between"><span>Wealth Gained:</span> <span class="font-bold text-green-700">+<span class="dynamic-amount" data-amount-inr="7591479" data-amount-usd="75915" data-amount-eur="75915" data-amount-gbp="75915"></span></span></li>
-<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount" data-amount-inr="9991479" data-amount-usd="99915" data-amount-eur="99915" data-amount-gbp="99915"></span></span></li>
+<li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="2400000"></span></span></li>
+<li class="flex justify-between"><span>Wealth Gained:</span> <span class="font-bold text-green-700">+<span class="dynamic-amount" data-amount-inr="7591479"></span></span></li>
+<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount" data-amount-inr="9991479"></span></span></li>
 </ul>
 <p class="text-xs text-gray-500 mt-4">Result: Your money multiplied ~4.1x</p>
 </div>
@@ -55,72 +55,51 @@ This adjustment is made because SIP payments are technically an "Annuity Due" (p
 </svg>
 </div>
 <h4 class="text-lg font-bold text-rose-600 mb-2">Scenario B: The Late Starter (Step-Up)</h4>
-<p class="text-sm text-gray-500 mb-4">Start <span class="dynamic-amount" data-amount-inr="20000" data-amount-usd="200" data-amount-eur="200" data-amount-gbp="200"></span>/month, Step-up 10% yearly, 15 Years @ 12%</p>
+<p class="text-sm text-gray-500 mb-4">Start <span class="dynamic-amount" data-amount-inr="20000"></span>/month, Step-up 10% yearly, 15 Years @ 12%</p>
 <ul class="space-y-2 text-sm text-gray-700">
-<li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="7626000" data-amount-usd="76260" data-amount-eur="76260" data-amount-gbp="76260"></span></span></li>
-<li class="flex justify-between"><span>Wealth Gained:</span> <span class="font-bold text-green-700">+<span class="dynamic-amount" data-amount-inr="8556000" data-amount-usd="85560" data-amount-eur="85560" data-amount-gbp="85560"></span></span></li>
-<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity Value:</span> <span class="font-bold text-rose-700"><span class="dynamic-amount" data-amount-inr="16182000" data-amount-usd="161820" data-amount-eur="161820" data-amount-gbp="161820"></span></span></li>
+<li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="7626000"></span></span></li>
+<li class="flex justify-between"><span>Wealth Gained:</span> <span class="font-bold text-green-700">+<span class="dynamic-amount" data-amount-inr="8556000"></span></span></li>
+<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity Value:</span> <span class="font-bold text-rose-700"><span class="dynamic-amount" data-amount-inr="16182000"></span></span></li>
 </ul>
 <p class="text-xs text-gray-500 mt-4">Result: Catch up by increasing contributions.</p>
 </div>
 </div>
 
-### Global Tax Implications for 2026
+### Mutual Fund Tax Implications on SIPs in India
 
-Investment returns are rarely tax-free. As we approach FY 2026-27, understanding the tax landscape is vital for net-return calculations. Below are the specific rules for major regions.
+Investment returns are subject to capital gains tax in India. As we look at the current FY 2026-27 rules, understanding the holding periods and tax rates is vital for net-return calculations:
 
 <div class="overflow-hidden border border-gray-200 rounded-xl mb-8">
-<table class="min-w-full divide-y divide-gray-200">
+<table class="min-w-full divide-y divide-gray-200 text-sm">
 <thead class="bg-gray-50">
 <tr>
-<th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Region</th>
-<th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Asset Class</th>
-<th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Short Term (STCG)</th>
-<th scope="col" class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Long Term (LTCG)</th>
+<th scope="col" class="px-6 py-3 text-left font-bold text-gray-500 uppercase tracking-wider">Fund Category</th>
+<th scope="col" class="px-6 py-3 text-left font-bold text-gray-500 uppercase tracking-wider">Holding Period</th>
+<th scope="col" class="px-6 py-3 text-left font-bold text-gray-500 uppercase tracking-wider">Short Term (STCG)</th>
+<th scope="col" class="px-6 py-3 text-left font-bold text-gray-500 uppercase tracking-wider">Long Term (LTCG)</th>
 </tr>
 </thead>
 <tbody class="bg-white divide-y divide-gray-200">
-<!-- India -->
 <tr>
-<td class="px-6 py-4 whitespace-nowrap font-bold text-indigo-600">🇮🇳 India</td>
-<td class="px-6 py-4">Equity Funds</td>
-<td class="px-6 py-4"><strong>20%</strong><br><span class="text-xs text-gray-500">(Holding < 12 months)</span></td>
-<td class="px-6 py-4"><strong>12.5%</strong><br><span class="text-xs text-gray-500">(> <span class="currency-text">$</span>1,500 profit)</span></td>
+<td class="px-6 py-4 font-bold text-indigo-600">Equity Oriented Funds</td>
+<td class="px-6 py-4">12 months threshold</td>
+<td class="px-6 py-4"><strong>20%</strong><br><span class="text-xs text-gray-500">(Held <= 12 months)</span></td>
+<td class="px-6 py-4"><strong>12.5%</strong><br><span class="text-xs text-gray-500">(Gains above ₹1.25L/yr exempt)</span></td>
 </tr>
 <tr>
-<td class="px-6 py-4 whitespace-nowrap"></td>
-<td class="px-6 py-4">Debt Funds</td>
-<td class="px-6 py-4" colspan="2">Taxed at <strong>Income Tax Slab Rates</strong> (No Indexation)</td>
-</tr>
-<!-- USA -->
-<tr class="bg-gray-50/50">
-<td class="px-6 py-4 whitespace-nowrap font-bold text-blue-600">🇺🇸 USA</td>
-<td class="px-6 py-4">Mutual Funds</td>
-<td class="px-6 py-4">Ordinary Income Tax<br><span class="text-xs text-gray-500">(10% - 37%*)</span></td>
-<td class="px-6 py-4"><strong>0% / 15% / 20%</strong><br><span class="text-xs text-gray-500">(Based on income)</span></td>
-</tr>
-<!-- Europe (UK) -->
-<tr>
-<td class="px-6 py-4 whitespace-nowrap font-bold text-purple-600">🇪🇺 / 🇬🇧 UK</td>
-<td class="px-6 py-4">ISA / Regular</td>
-<td class="px-6 py-4" colspan="2">
-<strong>ISA:</strong> Tax-Free (<span class="currency-text">£</span>20k limit)<br>
-<strong>General:</strong> CGT Allowance dropped to <span class="currency-text">£</span>3,000<br>
-<em>Rates: 10% (Basic) / 20% (Higher)</em>
-</td>
+<td class="px-6 py-4 font-bold text-indigo-600">Debt Oriented Funds</td>
+<td class="px-6 py-4">N/A (Any holding period)</td>
+<td class="px-6 py-4" colspan="2">Taxed at investor's <strong>Income Tax Slab Rate</strong></td>
 </tr>
 </tbody>
 </table>
-<div class="px-6 py-3 bg-gray-50 border-t border-gray-200 text-xs text-gray-500">
-* Note: USA tax brackets in 2026 are subject to the expiration of the Tax Cuts and Jobs Act (TCJA), potentially reverting to higher pre-2018 levels (10-39.6%) unless extended by Congress.
-</div>
 </div>
 
 ### Advanced SIP Strategies Explained
 
 #### 1. The Step-Up Strategy
-Income usually rises with experience. Your investments should too. A **Top-up SIP** involves increasing your SIP amount by a fixed percentage (e.g., 10%) or amount (e.g., <span class="currency-text">$</span>5) every year.
-**Impact:** A 10% yearly step-up on a <span class="currency-text">$</span>100 SIP over 20 years can nearly **double** your final corpus compared to a flat SIP.
+Income usually rises with experience. Your investments should too. A **Step-Up SIP** (or Top-Up) involves increasing your SIP amount by a fixed percentage (e.g., 10%) or a fixed sum (e.g., ₹1,000) every year.
+**Impact:** A 10% yearly step-up on a starting ₹10,000/month SIP over 20 years can nearly **double** your final maturity value compared to a flat SIP.
 
 #### 2. The SWP Transition (Retirement)
 Accumulation is only half the journey. Upon retiring, you can switch from SIP to **Systematic Withdrawal Plan (SWP)**. You move your corpus to a lower-risk Hybrid or Debt fund and withdraw a fixed monthly amount. This generates steady cash flow while the remaining balance continues to grow, potentially outliving you.

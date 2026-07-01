@@ -149,7 +149,7 @@ A complete guide to the 4% Safe Withdrawal Rate — its origins, the math behind
 <p>Absolutely. Set up an SWP from your equity/hybrid mutual fund for 4% of your corpus in Year 1, divided into monthly payments. Increase the SWP amount by 5-6% every year (matching inflation). This is the practical implementation of the 4% rule using Indian mutual fund infrastructure. Our <a href="/retirement-drawdown-planner">Retirement Drawdown Planner</a> automates this calculation.</p>
 
 <h3>What is the "25x Rule"?</h3>
-<p>The 25x Rule is simply the inverse of the 4% Rule: you need <strong>25 times your annual expenses</strong> to retire safely. Need ₹6 lakh/year? Accumulate 25 × ₹6L = <strong>₹1.50 crore</strong>. Need $60,000/year? Accumulate 25 × $60K = <strong>$1.5 million</strong>. For the safer 3.5% rate, use the "28.6x Rule" (1 ÷ 0.035 = 28.57).</p>
+<p>The 25x Rule is simply the inverse of the 4% Rule: you need <strong>25 times your annual expenses</strong> to retire safely. Need ₹6 Lakh/year? Accumulate 25 × ₹6L = <strong>₹1.50 Crore</strong>. Need ₹12 Lakh/year? Accumulate 25 × ₹12L = <strong>₹3.00 Crores</strong>. For the safer 3.5% rate, use the "28.6x Rule" (1 ÷ 0.035 = 28.57).</p>
 
 <h3>What if my portfolio drops 40% in Year 1 of retirement?</h3>
 <p>This is the worst-case scenario (sequence-of-returns risk). If you have the <a href="/resource/retirement/swp-retirement-planning">3-Bucket Strategy</a> in place, your Bucket 1 (liquid/safe assets) covers 2-3 years of expenses without touching equity. You ride out the crash without selling a single equity unit. By the time you need Bucket 2 or 3, markets have historically recovered. If you don't have a bucket strategy, a 40% crash + 4% withdrawal can permanently impair your corpus.</p>
