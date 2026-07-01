@@ -35,6 +35,15 @@ class BlogController {
             return;
         }
 
+        $post_metadata = null;
+        $all_posts = \Core\BlogRepository::getAllPosts();
+        foreach ($all_posts as $post) {
+            if (basename($post['href']) === $slug) {
+                $post_metadata = $post;
+                break;
+            }
+        }
+
         // Try to get specific meta, or generate dynamic meta from content
         $page_config = $this->metaManager->getMeta($slug);
         if (!empty($content['metadata']['title'])) {

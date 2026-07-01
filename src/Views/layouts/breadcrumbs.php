@@ -6,8 +6,14 @@
  */
 $page_title = $page_config['title'] ?? ($title ?? 'Current Page');
 
-// Simplify title for breadcrumb if too long (optional enhancement)
-$breadcrumb_title = mb_strimwidth(explode('—', $page_title)[0] ?? $page_title, 0, 40, '...');
+// Simplify title for breadcrumb if too long (split by both — and |)
+$temp_title = explode('—', $page_title)[0] ?? $page_title;
+$temp_title = explode('|', $temp_title)[0] ?? $temp_title;
+$breadcrumb_title = mb_strimwidth($temp_title, 0, 40, '...');
+
+// Check page types
+$is_resource_index = ($active_page === 'resources.php');
+$is_blog_post = (strpos($_SERVER['REQUEST_URI'], '/resource/') !== false);
 ?>
 <nav aria-label="Breadcrumb" class="mb-6">
     <ol role="list" class="flex items-center space-x-2 text-sm text-slate-500">
@@ -22,7 +28,7 @@ $breadcrumb_title = mb_strimwidth(explode('—', $page_title)[0] ?? $page_title,
             </div>
         </li>
         
-        <?php if ($active_page !== 'index.php'): ?>
+        <?php if ($is_blog_post): ?>
         <li>
             <div class="flex items-center">
                 <svg class="h-4 w-4 flex-shrink-0 text-slate-300 mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -31,6 +37,9 @@ $breadcrumb_title = mb_strimwidth(explode('—', $page_title)[0] ?? $page_title,
                 <a href="/resources" class="hover:text-emerald-600 transition-colors">Resources</a>
             </div>
         </li>
+        <?php endif; ?>
+
+        <?php if ($active_page !== 'index.php'): ?>
         <li>
             <div class="flex items-center">
                 <svg class="h-4 w-4 flex-shrink-0 text-slate-300 mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">

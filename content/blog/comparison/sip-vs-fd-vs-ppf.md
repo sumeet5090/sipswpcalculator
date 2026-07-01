@@ -222,75 +222,153 @@ The complete guide to choosing between Equity SIP, Bank Fixed Deposit, and PPF �
 <p><strong>The verdict is stark:</strong> After 15 years, the SIP investor has <strong>₹19.77 lakh more</strong> than the FD investor — that's nearly the entire original investment amount gained through smarter allocation alone. Even after paying LTCG tax, SIP outperforms by a massive margin.</p>
 
 <div class="my-10 p-8 bg-white border-2 border-indigo-50 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] ring-1 ring-slate-900/5 not-prose relative overflow-hidden">
-    <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full blur-3xl -mr-10 -mt-10 opacity-60"></div>
-    <h3 class="text-2xl font-extrabold text-slate-800 mb-2 relative z-10">Play With The Numbers</h3>
-    <p class="text-sm text-slate-500 mb-6 font-medium relative z-10">Change the monthly investment and duration to see real-time comparisons.</p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 relative z-10">
-        <div class="group">
-            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2">Monthly Investment (₹)</label>
-            <div class="relative">
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
-                <input type="number" id="mini-calc-amount" value="10000" class="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-mono text-base font-bold text-slate-700 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">
-            </div>
-        </div>
-        <div class="group">
-            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2">Investment Period (Years)</label>
-             <div class="relative">
-                <input type="number" id="mini-calc-years" value="15" class="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl font-mono text-base font-bold text-slate-700 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">
-                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs uppercase tracking-widest">Yrs</span>
-            </div>
-        </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
-        <div class="p-5 bg-gradient-to-br from-indigo-50 to-white rounded-2xl border border-indigo-100 flex flex-col items-center justify-center transform transition-transform hover:scale-105">
-            <div class="text-[11px] font-black text-indigo-400 uppercase tracking-widest mb-1">SIP @ 12%</div>
-            <div class="text-2xl sm:text-3xl font-black text-indigo-700 tracking-tight" id="mini-calc-sip">₹50.46 L</div>
-        </div>
-        <div class="p-5 bg-gradient-to-br from-emerald-50 to-white rounded-2xl border border-emerald-100 flex flex-col items-center justify-center transform transition-transform hover:scale-105">
-            <div class="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">PPF @ 7.1%</div>
-            <div class="text-2xl sm:text-3xl font-black text-emerald-700 tracking-tight" id="mini-calc-ppf">₹31.81 L</div>
-        </div>
-        <div class="p-5 bg-gradient-to-br from-amber-50 to-white rounded-2xl border border-amber-100 flex flex-col items-center justify-center transform transition-transform hover:scale-105">
-            <div class="text-[11px] font-black text-amber-400 uppercase tracking-widest mb-1">FD @ 7.0%</div>
-            <div class="text-2xl sm:text-3xl font-black text-amber-700 tracking-tight" id="mini-calc-fd">₹30.55 L</div>
-        </div>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const amountInput = document.getElementById('mini-calc-amount');
-            const yearsInput = document.getElementById('mini-calc-years');
-            const sipOutput = document.getElementById('mini-calc-sip');
-            const ppfOutput = document.getElementById('mini-calc-ppf');
-            const fdOutput = document.getElementById('mini-calc-fd');
-            function calculateMini() {
-                const P = parseFloat(amountInput.value) || 0;
-                const years = parseFloat(yearsInput.value) || 0;
-                const n = years * 12;
-                const i_sip = 12 / 100 / 12;
-                const sipVal = P * ((Math.pow(1 + i_sip, n) - 1) / i_sip) * (1 + i_sip);
-                let ppfVal = 0;
-                const ppfRate = 7.1 / 100;
-                let fdVal = 0;
-                const fdRate = 6.45 / 100; 
-                for(let y = 1; y <= years; y++) {
-                    const yearlyPrincipal = P * 12;
-                    ppfVal += yearlyPrincipal + (ppfVal * ppfRate) + (P * ppfRate * (78/12));
-                    fdVal += yearlyPrincipal + (fdVal * fdRate) + (P * fdRate * (78/12));
-                }
-                function format(val) {
-                    if (val >= 10000000) return '₹' + (val / 10000000).toFixed(2) + ' Cr';
-                    if (val >= 100000) return '₹' + (val / 100000).toFixed(2) + ' L';
-                    return '₹' + Math.round(val).toLocaleString('en-IN');
-                }
-                sipOutput.textContent = format(sipVal);
-                ppfOutput.textContent = format(ppfVal);
-                fdOutput.textContent = format(fdVal);
-            }
-            amountInput.addEventListener('input', calculateMini);
-            yearsInput.addEventListener('input', calculateMini);
-            calculateMini();
-        });
-    </script>
+<div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full blur-3xl -mr-10 -mt-10 opacity-60"></div>
+<h3 class="text-2xl font-extrabold text-slate-800 mb-2 relative z-10">Play With The Numbers</h3>
+<p class="text-sm text-slate-500 mb-6 font-medium relative z-10">Change the monthly investment and duration to see real-time comparisons.</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 relative z-10">
+<div class="group">
+<label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2">Monthly Investment (₹)</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
+<input type="number" id="mini-calc-amount" value="10000" class="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-mono text-base font-bold text-slate-700 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">
+</div>
+</div>
+<div class="group">
+<label class="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2">Investment Period (Years)</label>
+<div class="relative">
+<input type="number" id="mini-calc-years" value="15" class="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl font-mono text-base font-bold text-slate-700 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all">
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs uppercase tracking-widest">Yrs</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10 mb-6">
+<div class="p-5 bg-gradient-to-br from-indigo-50 to-white rounded-2xl border border-indigo-100 flex flex-col items-center justify-center transform transition-transform hover:scale-105">
+<div class="text-[11px] font-black text-indigo-400 uppercase tracking-widest mb-1">SIP @ 12%</div>
+<div class="text-2xl sm:text-3xl font-black text-indigo-700 tracking-tight" id="mini-calc-sip">₹50.46 L</div>
+</div>
+<div class="p-5 bg-gradient-to-br from-emerald-50 to-white rounded-2xl border border-emerald-100 flex flex-col items-center justify-center transform transition-transform hover:scale-105">
+<div class="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">PPF @ 7.1%</div>
+<div class="text-2xl sm:text-3xl font-black text-emerald-700 tracking-tight" id="mini-calc-ppf">₹31.81 L</div>
+</div>
+<div class="p-5 bg-gradient-to-br from-amber-50 to-white rounded-2xl border border-amber-100 flex flex-col items-center justify-center transform transition-transform hover:scale-105">
+<div class="text-[11px] font-black text-amber-400 uppercase tracking-widest mb-1">FD @ 7.0%</div>
+<div class="text-2xl sm:text-3xl font-black text-amber-700 tracking-tight" id="mini-calc-fd">₹30.55 L</div>
+</div>
+</div>
+<div class="relative z-10 w-full h-64 mt-6">
+<canvas id="mini-calc-chart"></canvas>
+</div>
+<script>
+(function() {
+function initWidget() {
+const amountInput = document.getElementById('mini-calc-amount');
+const yearsInput = document.getElementById('mini-calc-years');
+const sipOutput = document.getElementById('mini-calc-sip');
+const ppfOutput = document.getElementById('mini-calc-ppf');
+const fdOutput = document.getElementById('mini-calc-fd');
+let chart = null;
+function format(val) {
+if (val >= 10000000) return '₹' + (val / 10000000).toFixed(2) + ' Cr';
+if (val >= 100000) return '₹' + (val / 100000).toFixed(2) + ' L';
+return '₹' + Math.round(val).toLocaleString('en-IN');
+}
+function calculateMini() {
+const P = parseFloat(amountInput.value) || 0;
+const years = parseFloat(yearsInput.value) || 0;
+const n = years * 12;
+const i_sip = 12 / 100 / 12;
+const sipVal = P * ((Math.pow(1 + i_sip, n) - 1) / i_sip) * (1 + i_sip);
+let ppfVal = 0;
+const ppfRate = 7.1 / 100;
+let fdVal = 0;
+const fdRate = 6.45 / 100;
+for(let y = 1; y <= years; y++) {
+const yearlyPrincipal = P * 12;
+ppfVal += yearlyPrincipal + (ppfVal * ppfRate) + (P * ppfRate * (78/12));
+fdVal += yearlyPrincipal + (fdVal * fdRate) + (P * fdRate * (78/12));
+}
+sipOutput.textContent = format(sipVal);
+ppfOutput.textContent = format(ppfVal);
+fdOutput.textContent = format(fdVal);
+if (chart) {
+chart.data.datasets[0].data = [Math.round(sipVal), Math.round(ppfVal), Math.round(fdVal)];
+chart.update();
+}
+}
+function setupChart() {
+const ctx = document.getElementById('mini-calc-chart').getContext('2d');
+chart = new Chart(ctx, {
+type: 'bar',
+data: {
+labels: ['SIP (12%)', 'PPF (7.1%)', 'FD (6.45%)'],
+datasets: [{
+label: 'Maturity Value',
+data: [0, 0, 0],
+backgroundColor: [
+'rgba(79, 70, 229, 0.8)',
+'rgba(16, 185, 129, 0.8)',
+'rgba(245, 158, 11, 0.8)'
+],
+borderRadius: 8,
+borderSkipped: false
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: { display: false },
+tooltip: {
+backgroundColor: '#1e293b',
+padding: 10,
+cornerRadius: 6,
+callbacks: {
+label: function(context) {
+return ' Value: ' + format(context.raw);
+}
+}
+}
+},
+scales: {
+y: {
+beginAtZero: true,
+grid: { color: '#f1f5f9' },
+ticks: {
+color: '#94a3b8',
+callback: function(value) {
+if (value >= 10000000) return (value / 10000000) + ' Cr';
+if (value >= 100000) return (value / 100000) + ' L';
+return value;
+}
+}
+},
+x: {
+grid: { display: false },
+ticks: { color: '#64748b', font: { weight: 600 } }
+}
+}
+}
+});
+calculateMini();
+}
+amountInput.addEventListener('input', calculateMini);
+yearsInput.addEventListener('input', calculateMini);
+if (typeof Chart === 'undefined') {
+const script = document.createElement('script');
+script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+script.onload = setupChart;
+document.head.appendChild(script);
+} else {
+setupChart();
+}
+}
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', initWidget);
+} else {
+initWidget();
+}
+})();
+</script>
 </div>
 
 <h2 id="sip-deep-dive">Equity SIP: The Wealth Accelerator</h2>
