@@ -119,9 +119,9 @@ $stubs = [
     '/swp-vs-annuity-2026' => '/resource/comparison/swp-vs-annuity-2026',
     '/swp-vs-fixed-deposit' => '/resource/comparison/swp-vs-fixed-deposit',
     '/why-flat-sips-lose-money-stepup-sip-power' => '/resource/growth/20-year-wealth-blueprint-step-up-sip',
-    '/earning-30k-at-25-investment-blueprint' => '/resource/growth/earning-moderate-income-in-20s-investment-blueprint',
-    '/earning-moderate-income-in-20s-investment-blueprint' => '/resource/growth/earning-moderate-income-in-20s-investment-blueprint',
-    '/resource/growth/earning-30k-at-25-investment-blueprint' => '/resource/growth/earning-moderate-income-in-20s-investment-blueprint'
+    '/earning-30k-at-25-investment-blueprint' => '/resource/growth/earning-30k-at-25-investment-blueprint',
+    '/earning-moderate-income-in-20s-investment-blueprint' => '/resource/growth/earning-30k-at-25-investment-blueprint',
+    '/resource/growth/earning-moderate-income-in-20s-investment-blueprint' => '/resource/growth/earning-30k-at-25-investment-blueprint'
 ];
 
 foreach ($stubs as $old => $new) {

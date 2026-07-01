@@ -194,15 +194,15 @@ foreach ($combined as $row) {
 }
 
 $page_config = [
-    'title' => 'SIP & SWP Calculator 2026: Step-Up Compounding & Mutual Fund Returns',
-    'meta_desc' => 'Free SIP calculator and SWP retirement drawdown planner with step-up compounding. Plan for taxes, inflation, and visualize growth with interactive charts and yearly breakdowns. Supports INR, USD, EUR, GBP.',
+    'title' => 'SIP & SWP Calculator 2026: Plan Mutual Fund Returns in India',
+    'meta_desc' => 'Free online Systematic Investment Plan (SIP) and SWP calculator. Plan your Indian mutual fund retirement wealth with step-up compounding and inflation adjustments.',
 ];
 
 ob_start();
 ?>
 <meta name="keywords"
-    content="SIP Calculator, SIP Calculator Online, SIP Return Calculator, Mutual Fund SIP Calculator, SWP Calculator, SWP Planner, Step-Up SIP Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP, Tax-Efficient Withdrawals, SIP Calculator India, SIP Calculator USA, SIP Calculator UK, Mutual Fund Return Calculator">
-<link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/">
+    content="SIP Calculator, SIP Calculator Online, SIP Return Calculator, Mutual Fund SIP Calculator, SWP Calculator, SWP Planner, Step-Up SIP Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP, Tax-Efficient Withdrawals, SIP Calculator India, Mutual Fund Return Calculator, Indian Mutual Funds">
+<link rel="alternate" hreflang="en-IN" href="https://sipswpcalculator.com/">
 <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
 
 <!-- ════════════════════════════════════════════════════════════════════
@@ -225,27 +225,9 @@ ob_start();
       "applicationSubCategory": "Investment Calculator",
       "operatingSystem": "Web",
       "availableOnDevice": ["Desktop", "Mobile", "Tablet"],
-      "inLanguage": ["en"],
+      "inLanguage": ["en-IN"],
       "isAccessibleForFree": true,
       "offers": [
-        {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock"
-        },
-        {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "EUR",
-          "availability": "https://schema.org/InStock"
-        },
-        {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "GBP",
-          "availability": "https://schema.org/InStock"
-        },
         {
           "@type": "Offer",
           "price": "0",
@@ -253,14 +235,14 @@ ob_start();
           "availability": "https://schema.org/InStock"
         }
       ],
-      "description": "Advanced SIP & SWP Calculator with step-up (top-up) compounding for mutual fund investment planning. Uses the future value of annuity due formula: FV = P × [((1+r)^n - 1) / r] × (1+r), where P = monthly investment, r = monthly rate of return, n = total months. Supports annual step-up from 0-50%, investment periods of 1-50 years, expected returns of 1-30%, and Systematic Withdrawal Plans (SWP) with the 4% safe withdrawal rule. Calculates month-by-month compounding with dollar cost averaging. Outputs interactive growth charts, yearly breakdown tables, CSV exports, and branded PDF reports. Trusted by investors for SIP calculations in INR (₹), USD ($), EUR (€), and GBP (£). Based on standard mutual fund industry methodology for return projections.",
+      "description": "Advanced SIP & SWP Calculator with step-up (top-up) compounding for Indian mutual fund investment planning. Uses the future value of annuity due formula: FV = P × [((1+r)^n - 1) / r] × (1+r), where P = monthly investment, r = monthly rate of return, n = total months. Supports annual step-up from 0-50%, expected returns of 1-30%, and Systematic Withdrawal Plans (SWP) with capital gains tax projections. Outputs interactive growth charts, yearly breakdown tables, CSV exports, and branded PDF reports.",
       "featureList": [
         "Core Attribute: Step-up compounding (annual top-up 0-50%)",
         "SWP Retirement Planner with step-up withdrawals",
         "Month-by-month simulation (more accurate than simple annuity)",
         "Interactive Chart.js growth visualization",
         "Yearly breakdown table with corpus, interest, and withdrawal tracking",
-        "Multi-currency support: INR, USD, EUR, GBP",
+        "Locked to INR (₹) formatting for Indian mutual funds",
         "CSV export with full yearly data",
         "Branded PDF report generation with custom logos",
         "Shareable URL with pre-filled parameters",
@@ -269,9 +251,9 @@ ob_start();
       "screenshot": "https://sipswpcalculator.com/assets/og-image-main.jpg",
       "image": "https://sipswpcalculator.com/assets/og-image-main.jpg",
       "datePublished": "2024-12-01",
-      "dateModified": "2026-03-02",
+      "dateModified": "2026-07-01",
       "softwareVersion": "3.0",
-      "releaseNotes": "Added step-up SWP withdrawals, multi-currency support (INR/USD/EUR/GBP), branded PDF reports, and SIP vs RD vs FD vs PPF comparison.",
+      "releaseNotes": "Locked default currency to INR (₹), updated Indian tax integrations, and optimized performance.",
       "author": {
         "@id": "https://sipswpcalculator.com/#author"
       },
@@ -703,32 +685,7 @@ ob_start();
                             <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off">
                         </div>
 
-                        <!-- Currency Selector -->
-                        <div class="flex justify-center mb-3">
-                            <div class="inline-flex rounded-lg overflow-hidden border border-slate-200" role="group"
-                                id="currency-group">
-                                <button type="button" data-currency="INR"
-                                    class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-emerald-600 text-white"
-                                    onclick="updateCurrency('INR')">
-                                    <span>₹</span> INR
-                                </button>
-                                <button type="button" data-currency="USD"
-                                    class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-x border-slate-200"
-                                    onclick="updateCurrency('USD')">
-                                    <span>$</span> USD
-                                </button>
-                                <button type="button" data-currency="EUR"
-                                    class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50 border-r border-slate-200"
-                                    onclick="updateCurrency('EUR')">
-                                    <span>€</span> EUR
-                                </button>
-                                <button type="button" data-currency="GBP"
-                                    class="currency-btn px-3 py-3 sm:py-1.5 text-xs font-semibold cursor-pointer transition-colors bg-white text-slate-500 hover:bg-slate-50"
-                                    onclick="updateCurrency('GBP')">
-                                    <span>£</span> GBP
-                                </button>
-                            </div>
-                        </div>
+                        <!-- Locked to INR -->
 
                         <!-- Tab Bar -->
                         <div class="flex rounded-xl overflow-hidden border border-slate-200 mb-4" role="tablist">
