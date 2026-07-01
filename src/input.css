@@ -11,7 +11,8 @@
 
 /* Custom theme: replicate the old tailwind.config from the CDN inline script */
 @theme {
-  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-heading: "Plus Jakarta Sans", sans-serif;
 
   --color-indigo-50: #eef2ff;
   --color-indigo-100: #e0e7ff;
