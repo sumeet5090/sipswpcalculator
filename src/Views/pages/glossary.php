@@ -38,18 +38,49 @@ sort($letters);
 
 ob_start();
 ?>
+<style>
+    .glow-blob {
+        filter: blur(80px);
+        opacity: 0.12;
+        transition: opacity 0.5s ease;
+    }
+</style>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+
+ob_start();
+?>
+
+<!-- Decorative Background Glows -->
+<div class="absolute top-10 left-1/4 w-96 h-96 bg-emerald-400 rounded-full glow-blob pointer-events-none"></div>
+<div class="absolute top-80 right-1/4 w-80 h-80 bg-teal-400 rounded-full glow-blob pointer-events-none"></div>
 
 <!-- Glossary Hero -->
-<header class="text-center mb-12 sm:mb-16">
-    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight pb-2">
-        Financial <span class="text-emerald-600">Encyclopedia</span>
+<header class="text-center mb-14 md:mb-20 pt-6">
+    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100/60 uppercase tracking-widest mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        Financial Terms
+    </span>
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight pb-3">
+        Financial <span class="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">Encyclopedia</span>
     </h1>
-    <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+    <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
         Master the terminology of wealth growth and retirement planning. Clear, simple definitions for every concept.
     </p>
 </header>
 
-<div class="max-w-7xl mx-auto pb-32 px-4">
+<div class="max-w-7xl mx-auto pb-32 px-4 relative">
+    <!-- Search Bar -->
+    <div class="relative max-w-xl mx-auto mb-10">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+        </div>
+        <input id="glossarySearch" type="text" placeholder="Search glossary terms or definitions..."
+            class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-sm transition-all text-sm font-medium">
+    </div>
+
     <!-- A-Z Navigation (No-Fail-Spacing with Padding) -->
     <nav class="sticky top-24 z-50 mb-16 py-4 flex justify-center">
         <div
@@ -63,6 +94,17 @@ ob_start();
 endforeach; ?>
         </div>
     </nav>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-20 animate-entry">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-50 border border-slate-100 text-slate-400 mb-4">
+            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <h3 class="text-xl font-bold text-slate-800">No terms found</h3>
+        <p class="mt-2 text-slate-500 max-w-xs mx-auto text-sm leading-relaxed">We couldn't find any terms matching your search. Try another query.</p>
+    </div>
 
     <!-- Glossary Content Grid -->
     <div id="glossaryContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -87,16 +129,19 @@ foreach ($glossary_terms as $term):
 
         <!-- Premium Glossary Card -->
         <article
-            class="blog-card glass-card bg-white rounded-[40px] p-6 border-2 border-slate-50 shadow-sm hover:shadow-3xl hover:border-emerald-500/10 hover:-translate-y-4 transition-all duration-500 group relative flex flex-col h-full overflow-hidden"
+            class="glossary-card glass-card bg-white rounded-[40px] p-6 border-2 border-slate-50 shadow-sm hover:shadow-3xl hover:border-emerald-500/10 hover:-translate-y-4 transition-all duration-500 group relative flex flex-col h-full overflow-hidden"
             data-term="<?= strtolower($term['q'])?>" data-desc="<?= strtolower($term['a'])?>">
 
             <div class="relative z-10 flex flex-col h-full">
+                <span class="inline-flex self-start px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-50 text-slate-500 border border-slate-100 uppercase tracking-wider mb-4">
+                    <?= htmlspecialchars($term['category']) ?>
+                </span>
                 <h3
                     class="text-2xl font-black text-slate-900 mb-6 leading-tight group-hover:text-emerald-700 transition-colors">
                     <?= htmlspecialchars($term['q'])?>
                 </h3>
 
-                <p class="text-sm leading-relaxed flex-grow">
+                <p class="text-sm leading-relaxed flex-grow text-slate-500 font-medium">
                     <?= $term['a']?>
                 </p>
             </div>

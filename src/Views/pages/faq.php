@@ -75,18 +75,38 @@ $faqs = [
 
 ob_start();
 ?>
+<style>
+    .glow-blob {
+        filter: blur(80px);
+        opacity: 0.12;
+        transition: opacity 0.5s ease;
+    }
+</style>
+<?php
+$page_config['additional_head'] = ob_get_clean();
+
+ob_start();
+?>
+
+<!-- Decorative Background Glows -->
+<div class="absolute top-10 left-1/4 w-96 h-96 bg-emerald-400 rounded-full glow-blob pointer-events-none"></div>
+<div class="absolute top-80 right-1/4 w-80 h-80 bg-teal-400 rounded-full glow-blob pointer-events-none"></div>
 
 <!-- FAQ Hero Section -->
-<header class="text-center mb-12 sm:mb-16">
-    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight pb-2">
-        Frequently Asked <span class="text-emerald-600">Questions</span>
+<header class="text-center mb-14 md:mb-20 pt-6">
+    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100/60 uppercase tracking-widest mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        Knowledge Base
+    </span>
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight pb-3">
+        Frequently Asked <span class="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">Questions</span>
     </h1>
-    <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+    <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
         Everything you need to know about SIP/SWP calculators, investment strategies, and retirement planning.
     </p>
 </header>
 
-<div class="max-w-3xl mx-auto pb-20 px-4">
+<div class="max-w-3xl mx-auto pb-20 px-4 relative">
 
     <!-- Search Bar -->
     <div style="position:relative; max-width:36rem; margin:0 auto 2rem;">

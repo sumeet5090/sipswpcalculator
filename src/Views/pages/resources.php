@@ -47,19 +47,33 @@ ob_start();
     .section-glow-emerald:hover { box-shadow: 0 0 30px -10px rgba(5, 150, 105, 0.15); }
     .section-glow-indigo:hover { box-shadow: 0 0 30px -10px rgba(79, 70, 229, 0.15); }
     .section-glow-amber:hover { box-shadow: 0 0 30px -10px rgba(245, 158, 11, 0.15); }
+
+    .glow-blob {
+        filter: blur(80px);
+        opacity: 0.12;
+        transition: opacity 0.5s ease;
+    }
 </style>
 
+<!-- Decorative Background Glows -->
+<div class="absolute top-10 left-1/4 w-96 h-96 bg-emerald-400 rounded-full glow-blob pointer-events-none"></div>
+<div class="absolute top-80 right-1/4 w-80 h-80 bg-teal-400 rounded-full glow-blob pointer-events-none"></div>
+
 <!-- Standard Header (Consistent with FAQ/Glossary) -->
-<header class="text-center mb-16 lg:mb-20 pt-8 lg:pt-12 animate-entry">
-    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight pb-2 text-slate-900">
-        Research & <span class="text-emerald-600">Resources</span>
+<header class="text-center mb-14 md:mb-20 pt-6 animate-entry">
+    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100/60 uppercase tracking-widest mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        Library &amp; Guides
+    </span>
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight pb-3">
+        Research &amp; <span class="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">Resources</span>
     </h1>
-    <p class="mt-4 text-lg lg:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
+    <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
         Expert insights, deep-dives on Systematic Investment Plans, retirement math, and honest instrument comparisons.
     </p>
 </header>
 
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start pb-32">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start pb-32 relative">
     <!-- Sidebar Navigation -->
     <aside class="lg:col-span-3 sticky top-28 hidden lg:block">
         <nav aria-label="Archive Categories">
