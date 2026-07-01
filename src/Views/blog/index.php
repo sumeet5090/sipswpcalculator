@@ -30,16 +30,16 @@ $page_content = '
     </a>
 
     <!-- Post 4 -->
-    <a href="/resource/reach-1-million-dollar-1-crore-rupees-in-18-years" class="group block p-6 rounded-2xl border border-slate-100 hover:border-indigo-100 hover:bg-indigo-50/30 transition-all shadow-sm">
-        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">How to Reach $1 Million / ₹1 Crore</h3>
-        <p class="text-slate-600 text-sm mb-4">A practical roadmap to hitting your first million in under two decades through mutual funds.</p>
+    <a href="/resource/reach-1-million-dollar-in-18-years" class="group block p-6 rounded-2xl border border-slate-100 hover:border-indigo-100 hover:bg-indigo-50/30 transition-all shadow-sm">
+        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">How to Reach $1 Million</h3>
+        <p class="text-slate-600 text-sm mb-4">A practical roadmap to hitting your first seven-figure milestone in under two decades through mutual funds.</p>
         <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider group-hover:translate-x-1 inline-flex items-center gap-1 transition-transform">Read Guide <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg></span>
     </a>
 
     <!-- Post 5 -->
-    <a href="/resource/why-flat-sips-lose-money-stepup-sip-power" class="group block p-6 rounded-2xl border border-slate-100 hover:border-indigo-100 hover:bg-indigo-50/30 transition-all shadow-sm md:col-span-2">
+    <a href="/resource/inflation-impact-on-sip" class="group block p-6 rounded-2xl border border-slate-100 hover:border-indigo-100 hover:bg-indigo-50/30 transition-all shadow-sm md:col-span-2">
         <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">Why Flat SIPs Are Costing You Millions</h3>
-        <p class="text-slate-600 text-sm mb-4">Break free from stagnant investing. Learn how annual step-ups can massively increase your long-term returns.</p>
+        <p class="text-slate-600 text-sm mb-4">Break free from stagnant investing. Learn how annual step-ups can massively increase your long-term returns and beat inflation.</p>
         <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider group-hover:translate-x-1 inline-flex items-center gap-1 transition-transform">Read Guide <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg></span>
     </a>
 </div>

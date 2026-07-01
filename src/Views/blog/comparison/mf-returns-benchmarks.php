@@ -2,7 +2,7 @@
 // ── Data Only ──────────────────────────────────────────────────────────
 $page_config = [
     'title' => 'Mutual Fund Returns Benchmarks: What Rate Should You Use?',
-    'meta_desc' => 'Not sure what expected return to enter in your SIP calculator? Use our India (INR) and US (USD) historical benchmark tables to pick a realistic, honest rate for your plan.',
+    'meta_desc' => 'Not sure what expected return to enter in your SIP calculator? Use our Emerging and Developed Market historical benchmark tables to pick a realistic, honest rate for your plan.',
 ];
 $cta      = 'Now that you know a realistic return to expect, model your exact SIP with our free calculator — and see how the step-up strategy compounds your wealth over time.';
 
@@ -19,8 +19,8 @@ $page_content = '
     </p>
 </div>
 
-<h2 id="india-benchmarks">India (INR) — Historical Return Benchmarks</h2>
-<p>The following data is sourced from AMFI India and reflects long-term category-average CAGR across complete market cycles (bull + bear periods).</p>
+<h2 id="emerging-benchmarks">Emerging Markets — Historical Return Benchmarks</h2>
+<p>The following data reflects long-term category-average CAGR across complete market cycles (bull + bear periods) in high-growth emerging economies.</p>
 
 <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8 shadow-sm">
 <table>
@@ -38,23 +38,23 @@ $page_content = '
 <tr><td><strong>Flexi Cap / Multi Cap</strong></td><td>12% – 15%</td><td>13% – 16%</td><td>Moderate–High</td><td>Diversified growth</td></tr>
 <tr><td><strong>Mid Cap Equity</strong></td><td>14% – 18%</td><td>15% – 19%</td><td>High</td><td>Aggressive growth, 15+ yr horizon</td></tr>
 <tr><td><strong>Small Cap Equity</strong></td><td>15% – 20%</td><td>16% – 22%</td><td>Very High</td><td>Long-term outperformance with high volatility</td></tr>
-<tr><td><strong>Index Fund (Nifty 50)</strong></td><td>11% – 13%</td><td>12% – 14%</td><td>Moderate</td><td>Low-cost, passive investing</td></tr>
+<tr><td><strong>Broad Market Index</strong></td><td>11% – 13%</td><td>12% – 14%</td><td>Moderate</td><td>Low-cost, passive investing</td></tr>
 <tr><td><strong>Balanced / Hybrid</strong></td><td>9% – 12%</td><td>10% – 13%</td><td>Low–Moderate</td><td>Conservative growth + stability</td></tr>
-<tr><td><strong>ELSS (Tax-Saver)</strong></td><td>12% – 15%</td><td>13% – 16%</td><td>Moderate–High</td><td>80C tax saving + wealth creation</td></tr>
+<tr><td><strong>Tax-Advantaged Funds</strong></td><td>12% – 15%</td><td>13% – 16%</td><td>Moderate–High</td><td>Tax saving + wealth creation</td></tr>
 </tbody>
 </table>
 </div>
 
-<h3 id="india-recommendation">What rate should INR investors use?</h3>
+<h3 id="emerging-recommendation">What rate should Emerging Market investors use?</h3>
 <ul>
-    <li><strong>Conservative planner:</strong> Use <strong>10–11%</strong> (large cap or index fund baseline). Your plan will hold up even in below-average decades.</li>
+    <li><strong>Conservative planner:</strong> Use <strong>10–11%</strong> (large cap or broad index baseline). Your plan will hold up even in below-average decades.</li>
     <li><strong>Moderate planner:</strong> Use <strong>12%</strong>. This is the sweet spot — achievable for a diversified flexi/multi-cap portfolio over 15+ years.</li>
     <li><strong>Aggressive planner (mid/small cap focus):</strong> Use <strong>14–15%</strong>. Realistic, but accept that 2–3 year drawdown periods will occur.</li>
     <li><strong>Never use 18%+ in a baseline plan.</strong> Some funds have achieved this, but it\'s exceptional — building your retirement plan around it is optimism, not planning.</li>
 </ul>
 
-<h2 id="us-benchmarks">United States (USD) — Historical Return Benchmarks</h2>
-<p>The following reflects historical data from S&amp;P 500 index funds, Morningstar category averages, and Vanguard/Fidelity long-run fund performance reports.</p>
+<h2 id="developed-benchmarks">Developed Markets — Historical Return Benchmarks</h2>
+<p>The following reflects historical data from broad index funds (like the S&amp;P 500) and long-run fund performance reports in developed economies.</p>
 
 <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8 shadow-sm">
 <table>
@@ -68,8 +68,8 @@ $page_content = '
 </tr>
 </thead>
 <tbody>
-<tr><td><strong>S&amp;P 500 Index Fund</strong></td><td>10% – 14%</td><td>9% – 11%</td><td>Moderate</td><td>Core passive portfolio</td></tr>
-<tr><td><strong>Total US Market Index</strong></td><td>10% – 14%</td><td>9% – 11%</td><td>Moderate</td><td>Broad diversification</td></tr>
+<tr><td><strong>Large Cap Index Fund</strong></td><td>10% – 14%</td><td>9% – 11%</td><td>Moderate</td><td>Core passive portfolio</td></tr>
+<tr><td><strong>Total Market Index</strong></td><td>10% – 14%</td><td>9% – 11%</td><td>Moderate</td><td>Broad diversification</td></tr>
 <tr><td><strong>Large Cap Growth</strong></td><td>12% – 16%</td><td>10% – 13%</td><td>Moderate–High</td><td>Tech-heavy growth tilt</td></tr>
 <tr><td><strong>Small Cap / Mid Cap</strong></td><td>9% – 13%</td><td>9% – 12%</td><td>High</td><td>Diversification + premium</td></tr>
 <tr><td><strong>International / Developed Markets</strong></td><td>5% – 8%</td><td>5% – 7%</td><td>Moderate–High</td><td>Geographic diversification</td></tr>
@@ -79,10 +79,10 @@ $page_content = '
 </table>
 </div>
 
-<h3 id="us-recommendation">What rate should USD investors use?</h3>
+<h3 id="developed-recommendation">What rate should Developed Market investors use?</h3>
 <ul>
-    <li><strong>Conservative planner:</strong> Use <strong>7–8%</strong>. This reflects a 60/40 portfolio or a full S&amp;P 500 index deflated for below-average decades.</li>
-    <li><strong>Moderate planner:</strong> Use <strong>10%</strong>. The S&amp;P 500 has delivered ~10.5% annually since 1957. It\'s the most cited long-run benchmark in US financial planning.</li>
+    <li><strong>Conservative planner:</strong> Use <strong>7–8%</strong>. This reflects a 60/40 portfolio or a broad index deflated for below-average decades.</li>
+    <li><strong>Moderate planner:</strong> Use <strong>10%</strong>. Large cap indexes (like the S&amp;P 500) have historically delivered ~10% annually over long periods.</li>
     <li><strong>Aggressive planner (growth tilt):</strong> Use <strong>11–12%</strong>. Large cap growth funds have historically beaten the index, but expect higher volatility and sequencing risk.</li>
     <li><strong>The Warren Buffett benchmark:</strong> Buffett himself suggests most investors assume a ~10% market return — and that\'s before fees. After a 0.05% index fund expense ratio, you\'re at ~9.95%. Round to 10%.</li>
 </ul>
@@ -93,32 +93,32 @@ $page_content = '
 <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8 shadow-sm">
 <table>
 <thead>
-<tr><th>Country</th><th>Avg. Long-Run Inflation</th><th>Nominal 12%</th><th>Real Return</th></tr>
+<tr><th>Market Type</th><th>Avg. Long-Run Inflation</th><th>Nominal 12%</th><th>Real Return</th></tr>
 </thead>
 <tbody>
-<tr><td>🇮🇳 India</td><td>~5–6%</td><td>12%</td><td>~6–7% real</td></tr>
-<tr><td>🇺🇸 USA</td><td>~2–3%</td><td>10%</td><td>~7–8% real</td></tr>
+<tr><td>Emerging Markets</td><td>~5–6%</td><td>12%</td><td>~6–7% real</td></tr>
+<tr><td>Developed Markets</td><td>~2–3%</td><td>10%</td><td>~7–8% real</td></tr>
 </tbody>
 </table>
 </div>
 
-<p>A ₹1 Crore corpus in 20 years is worth about ₹37–40 Lakhs in today\'s purchasing power (at 5% inflation). This is the main reason we strongly advocate a <a href="/resource/why-flat-sips-lose-money-stepup-sip-power">step-up SIP strategy</a> — your investment needs to grow faster than inflation, not just keep pace with it.</p>
+<p>A $1 Million corpus in 20 years is worth significantly less in today\'s purchasing power. This is the main reason we strongly advocate a <a href="/resource/inflation-impact-on-sip">step-up SIP strategy</a> — your investment needs to grow faster than inflation, not just keep pace with it.</p>
 
 <h2 id="gold-standard">The Planning Gold Standard</h2>
 <p>Based on the data above, here are the rates we recommend using in the SIP &amp; SWP Calculator for a <strong>responsible, grounded financial plan</strong>:</p>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 not-prose">
     <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5">
-        <div class="text-2xl mb-1">🇮🇳</div>
-        <h3 class="font-extrabold text-indigo-900 text-base mb-1">India (INR) Baseline</h3>
+        <div class="text-2xl mb-1">📈</div>
+        <h3 class="font-extrabold text-indigo-900 text-base mb-1">Emerging Markets Baseline</h3>
         <p class="text-4xl font-black text-indigo-600 mb-1">12%</p>
         <p class="text-xs text-indigo-700">Diversified large/flexi-cap mutual fund. Conservative use 10–11%.</p>
     </div>
     <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-5">
-        <div class="text-2xl mb-1">🇺🇸</div>
-        <h3 class="font-extrabold text-emerald-900 text-base mb-1">USA (USD) Baseline</h3>
+        <div class="text-2xl mb-1">🏛️</div>
+        <h3 class="font-extrabold text-emerald-900 text-base mb-1">Developed Markets Baseline</h3>
         <p class="text-4xl font-black text-emerald-600 mb-1">10%</p>
-        <p class="text-xs text-emerald-700">S&P 500 index fund long-run average. Conservative use 7–8%.</p>
+        <p class="text-xs text-emerald-700">Broad large-cap index fund long-run average. Conservative use 7–8%.</p>
     </div>
 </div>
 

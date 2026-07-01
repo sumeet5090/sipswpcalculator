@@ -41,8 +41,8 @@ ob_start();
             </tr>
             <tr class="bg-indigo-50/30">
                 <td class="px-6 py-4 font-bold text-slate-600">Tax on Income</td>
-                <td class="px-6 py-4 font-bold text-emerald-600">12.5% (LTCG)</td>
-                <td class="px-6 py-4 text-right font-bold text-rose-600">Slab Rate (up to 30%)</td>
+                <td class="px-6 py-4 font-bold text-emerald-600">Favorable (Capital Gains)</td>
+                <td class="px-6 py-4 text-right font-bold text-rose-600">High (Income Slab Rate)</td>
             </tr>
             <tr>
                 <td class="px-6 py-4 font-bold text-slate-600">Real Return*</td>
@@ -52,10 +52,10 @@ ob_start();
         </tbody>
     </table>
 </div>
-<p class="text-xs text-slate-400 mt-2 mb-8 italic text-right">*Net of 6% inflation and 30% tax slab.</p>
+<p class="text-xs text-slate-400 mt-2 mb-8 italic text-right">*Net of 6% inflation and estimated 30% income tax bracket.</p>
 
 <h2 id="taxation">The Tax Efficiency Gap</h2>
-<p>FD interest is fully taxable at your slab rate. If you earn $7,000 in interest, you might pay $2,100 in tax. In an SWP, you only pay tax on the <em>capital gain</em> portion of the withdrawal. In early years, most of your SWP withdrawal is your own principal (totally tax-free). This massive 6-8x tax advantage is why retirees prefer SWPs.</p>
+<p>FD interest is fully taxable at your regular income tax slab rate. If you earn $7,000 in interest, you might pay $2,100 in tax. In an SWP, you only pay tax on the <em>capital gain</em> portion of the withdrawal. In early years, most of your SWP withdrawal is your own principal (totally tax-free). This massive 6-8x tax advantage is why retirees prefer SWPs.</p>
 
 <h2 id="longevity">Longevity and the Wealth Engine</h2>
 <p>In an FD, the principal never grows. In 20 years, a $1M deposit is still $1M, but its purchasing power has been decimated by inflation. In an SWP from an equity hybrid fund, your $1M can grow even while you withdraw $5,000 every month. This makes it the only strategy that can mathematically outlive you.</p>

@@ -13,7 +13,7 @@ $page_content = '
 <div id="summary" class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-8 not-prose">
     <h2 class="text-lg font-bold text-indigo-800 mb-3">📋 Quick Summary: The Complete SIP Guide</h2>
     <p class="text-gray-700 text-sm leading-relaxed">
-        A <strong>Systematic Investment Plan (SIP)</strong> is a method of investing a fixed amount monthly in mutual funds, starting from as low as $5/month. SIP works through <strong>Rupee Cost Averaging</strong> (buying more units when prices are low) and <strong>compound interest</strong> to build wealth over time. To start: (1) Complete KYC online, (2) Choose an index fund or large-cap fund, (3) Set up auto-debit SIP, (4) Stay invested for 7+ years.
+        A <strong>Systematic Investment Plan (SIP)</strong> is a method of investing a fixed amount monthly in mutual funds, starting from as low as $5/month. SIP works through <strong>Cost Averaging</strong> (buying more units when prices are low) and <strong>compound interest</strong> to build wealth over time. To start: (1) Complete KYC online, (2) Choose an index fund or large-cap fund, (3) Set up auto-debit SIP, (4) Stay invested for 7+ years.
     </p>
 </div>
 
@@ -25,12 +25,12 @@ $page_content = '
     Think of a SIP like a recurring deposit (RD) at a bank, but with a massive upgrade. Your money is invested in the stock market through professionally managed mutual funds. This gives you the potential for <strong>significantly higher returns</strong> (historically 12-15% in equities).
 </p>
 
-<h2 id="how-sip-works">The Core Mechanics: Rupee Cost Averaging & Compounding</h2>
+<h2 id="how-sip-works">The Core Mechanics: Cost Averaging & Compounding</h2>
 <p>
-    The brilliance of a SIP lies in two mathematical principles: <strong>Rupee Cost Averaging (RCA)</strong> and <strong>Compounding</strong>.
+    The brilliance of a SIP lies in two mathematical principles: <strong>Cost Averaging</strong> and <strong>Compounding</strong>.
 </p>
 
-<h3>1. Rupee Cost Averaging</h3>
+<h3>1. Cost Averaging</h3>
 <p>
     SIP automates buying more units when prices are low and fewer when prices are high. This removes the stress of market timing and reduces the average cost per unit over time.
 </p>

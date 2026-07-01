@@ -4,7 +4,7 @@
  */
 $page_config = [
     'title' => 'Retirement Planning with SWP: The 2026 Masterclass',
-    'meta_desc' => 'Plan your retirement income using a Systematic Withdrawal Plan. Learn the 4% rule for India, the 3-Bucket Strategy, and how to neutralize Sequence of Return Risk.',
+    'meta_desc' => 'Plan your retirement income using a Systematic Withdrawal Plan. Learn the 4% rule, the 3-Bucket Strategy, and how to neutralize Sequence of Return Risk.',
 ];
 $cta = "Don't leave your retirement to chance. Use our simulator to stress-test your corpus against 30 years of inflation and market cycles.";
 

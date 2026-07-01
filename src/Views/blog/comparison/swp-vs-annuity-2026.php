@@ -36,8 +36,8 @@ ob_start();
         <tbody class="bg-white divide-y divide-slate-100">
             <tr>
                 <td class="px-6 py-4 font-bold text-slate-600">Tax Efficiency</td>
-                <td class="px-6 py-4 font-bold text-emerald-600">High (12.5% LTCG)</td>
-                <td class="px-6 py-4 text-right font-bold text-rose-600">Low (Slab Rate)</td>
+                <td class="px-6 py-4 font-bold text-emerald-600">High (Favorable Capital Gains)</td>
+                <td class="px-6 py-4 text-right font-bold text-rose-600">Low (Income Slab Rate)</td>
             </tr>
             <tr class="bg-indigo-50/30">
                 <td class="px-6 py-4 font-bold text-slate-600">Inflation Protection</td>
@@ -54,7 +54,7 @@ ob_start();
 </div>
 
 <h2 id="taxation">2. The Crucial Taxation Reality</h2>
-<p>Annuity payouts are taxed as salary/income at your highest slab (up to 30%). SWP withdrawals are taxed only on the <em>gain portion</em>, with the first $1,250 of equity gains being tax-free annually. This gap creates a massive difference in net spendable income over 25 years.</p>
+<p>Annuity payouts are typically taxed as regular income at your highest marginal rate (which can be 30% or more). SWP withdrawals are taxed only on the <em>capital gain portion</em>, which usually benefits from favorable long-term capital gains tax rates. Furthermore, early SWP withdrawals consist mostly of your own tax-free principal. This gap creates a massive difference in net spendable income over 25 years.</p>
 
 <h2 id="inflation">3. The Inflation Trap</h2>
 <p>A $500 monthly annuity check today will likely only buy $250 worth of goods in 12 years due to 6% inflation. Because an SWP allows for an <strong>annual step-up</strong> (e.g., increasing withdrawals by 5% every year), it is the only viable tool for a multi-decade retirement in a high-inflation environment.</p>

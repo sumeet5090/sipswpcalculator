@@ -16,7 +16,7 @@ $page_content = '
 <ul class="list-disc pl-6 mb-6 space-y-4">
     <li><strong>Compounding on Steroids:</strong> By increasing the principal amount every year, you significantly amplify the power of compounding. The additions made in the early years have two decades to grow exponentially.</li>
     <li><strong>Combatting Lifestyle Inflation:</strong> As your income grows, your expenses often grow with it. A step-up SIP automates the "pay yourself first" principle, ensuring your savings rate stays ahead of your spending.</li>
-    <li><strong>Meeting Long-Term Goals Faster:</strong> Whether it\'s a $1 million retirement nest egg or a ₹1 Crore education fund, stepping up your SIP can reduce the time taken to reach your goal by several years.</li>
+    <li><strong>Meeting Long-Term Goals Faster:</strong> Whether it\'s a $1 million retirement nest egg or a seven-figure education fund, stepping up your SIP can reduce the time taken to reach your goal by several years.</li>
 </ul>
 
 <h2 id="flat-sip-vulnerability" class="text-2xl font-bold mt-8 mb-4">The Hidden Cost of "Flat" Thinking</h2>

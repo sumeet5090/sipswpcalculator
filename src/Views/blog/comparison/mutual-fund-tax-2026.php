@@ -4,15 +4,15 @@
  */
 $page_config = [
     'title' => 'Mutual Fund Tax Rules 2026: LTCG, STCG & Tax-Efficient Withdrawals',
-    'meta_desc' => 'Complete 2026 guide to mutual fund taxation. LTCG at 12.5%, STCG at 20% for equity. Learn SWP tax efficiency, tax harvesting, and global comparisons.',
+    'meta_desc' => 'Complete guide to mutual fund taxation principles. Understand Long-Term Capital Gains (LTCG), Short-Term Capital Gains (STCG), SWP tax efficiency, and tax harvesting strategies.',
 ];
 $cta = "Don't let taxes eat your compounding. Use our calculator to model post-tax returns and simulate tax-harvesting strategies.";
 
 ob_start();
 ?>
 
-<h2>2026 Capital Gains Tax Summary (India)</h2>
-<p>Following the 2024-25 amendments, mutual fund taxation has been simplified. Here's what applies for FY 2026-27:</p>
+<h2>Global Capital Gains Tax Principles</h2>
+<p>While exact rates vary by country, mutual fund taxation generally follows a universal framework based on your holding period and the type of fund. Here is a standard global model:</p>
 
 <div class="overflow-x-auto border border-slate-200 rounded-xl mb-8 not-prose shadow-sm">
     <table class="min-w-full divide-y divide-slate-200 text-sm">
@@ -27,24 +27,24 @@ ob_start();
             <tr>
                 <td class="px-6 py-4 font-bold text-slate-800">Equity MFs</td>
                 <td class="px-6 py-4 text-slate-500">> 1 Year</td>
-                <td class="px-6 py-4 text-right font-bold text-emerald-600">12.5% (LTCG)</td>
+                <td class="px-6 py-4 text-right font-bold text-emerald-600">LTCG (Lower Rate)</td>
             </tr>
             <tr class="bg-slate-50/30">
                 <td class="px-6 py-4 font-bold text-slate-800">Equity MFs</td>
                 <td class="px-6 py-4 text-slate-500">≤ 1 Year</td>
-                <td class="px-6 py-4 text-right font-bold text-rose-600">20% (STCG)</td>
+                <td class="px-6 py-4 text-right font-bold text-rose-600">STCG (Higher Rate)</td>
             </tr>
             <tr>
-                <td class="px-6 py-4 font-bold text-slate-800">Debt Funds</td>
+                <td class="px-6 py-4 font-bold text-slate-800">Debt/Bond Funds</td>
                 <td class="px-6 py-4 text-slate-500">Any</td>
-                <td class="px-6 py-4 text-right font-bold text-slate-900">Slab Rate</td>
+                <td class="px-6 py-4 text-right font-bold text-slate-900">Income Slab Rate</td>
             </tr>
         </tbody>
     </table>
 </div>
 
 <h2 id="holding-period">LTCG vs STCG: The Holding Period Bridge</h2>
-<p><strong>Long-Term Capital Gains (LTCG)</strong> on equity funds are taxed at 12.5% on gains exceeding $1,500 annually. <strong>Short-Term Capital Gains (STCG)</strong> apply if held for less than 12 months, taxed at 20%.</p>
+<p><strong>Long-Term Capital Gains (LTCG)</strong> apply when you hold an equity fund for a longer duration (typically > 12 months). Governments incentivize long-term investing by taxing these gains at a significantly lower, preferential rate. <strong>Short-Term Capital Gains (STCG)</strong> apply to quick flips (under 12 months) and are often taxed at a much higher penalty rate.</p>
 
 <h2 id="fifo-method">The FIFO Method for SIPs</h2>
 <p>Each SIP installment is treated as a separate purchase. When you redeem, units are sold on a <strong>First-In-First-Out</strong> basis. This means your oldest (and likely most tax-efficient) units are liquidated first, which is highly beneficial for long-term SWP strategies.</p>
@@ -53,11 +53,11 @@ ob_start();
 <p>Compared to Fixed Deposits (FDs), SWPs are significantly more efficient:</p>
 <ul class="list-disc pl-6 space-y-2">
     <li><strong>FDs:</strong> Taxed on the <em>entire interest</em> at your marginal slab rate (up to 30%+).</li>
-    <li><strong>SWPs:</strong> Taxed only on the <em>capital gain portion</em> of the withdrawal, often at the 12.5% LTCG rate.</li>
+    <li><strong>SWPs:</strong> Taxed only on the <em>capital gain portion</em> of the withdrawal, typically at the favorable LTCG rate.</li>
 </ul>
 
-<h2 id="harvesting">Strategy: The $1,250 LTCG Harvest</h2>
-<p>Every year, you get a tax-free exemption on equity LTCG. By redeeming and immediately reinvesting up to $1,250 of gains annually, you effectively reset your cost basis and eliminate future tax liabilities for free.</p>
+<h2 id="harvesting">Strategy: The Annual Tax Harvest</h2>
+<p>Many jurisdictions offer a tax-free exemption limit on long-term capital gains every year. By strategically redeeming and immediately reinvesting up to this exemption limit annually, you effectively reset your cost basis and eliminate a portion of your future tax liabilities for free.</p>
 
 <div class="bg-slate-900 text-white p-10 rounded-3xl text-center my-14 not-prose border border-slate-800 shadow-2xl">
     <h3 class="text-2xl font-bold mb-4">Model Your Post-Tax Wealth</h3>

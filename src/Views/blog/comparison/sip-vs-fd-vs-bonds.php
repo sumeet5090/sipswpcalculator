@@ -1,10 +1,10 @@
 <?php
 /**
- * SIP vs FD vs PPF 2026: Which Investment Gives the Best Returns?
+ * SIP vs FD vs Government Bonds 2026: Which Investment Gives the Best Returns?
  */
 $page_config = [
-    'title' => 'SIP vs FD vs PPF: 2026 Comparison',
-    'meta_desc' => 'Compare SIP in mutual funds vs Fixed Deposits vs PPF for 2026. See returns, risk, taxation, and liquidity side-by-side to find the best investment for your goals.',
+    'title' => 'SIP vs FD vs Government Bonds: 2026 Comparison',
+    'meta_desc' => 'Compare SIP in mutual funds vs Fixed Deposits vs Government Bonds for 2026. See returns, risk, taxation, and liquidity side-by-side to find the best investment for your goals.',
 ];
 $cta = "Don't choose just one. Model a balanced 60/40 SIP-to-Debt strategy on our interactive compounding sandbox.";
 
@@ -22,10 +22,10 @@ ob_start();
         </h2>
         <div class="space-y-3 text-slate-700 text-justify leading-relaxed">
             <p><strong>For Long-Term Wealth (7+ Years):</strong> Equity SIPs are mathematically superior <span class="text-emerald-600 font-semibold">(12-15% returns)</span>.</p>
-            <p><strong>For Guaranteed Safety:</strong> PPF is the gold standard <span class="text-emerald-600 font-semibold">(7.1% tax-free)</span>.</p>
+            <p><strong>For Guaranteed Safety:</strong> Government Bonds are the gold standard <span class="text-emerald-600 font-semibold">(Moderate, safe returns)</span>.</p>
             <p><strong>For Liquidity (0-3 Years):</strong> FDs are required for emergencies, but lose real value after tax &amp; inflation <span class="text-rose-600 font-semibold">(-1.1% real return)</span>.</p>
             <div class="mt-4 pt-3 border-t border-indigo-200/50">
-                <p class="text-indigo-900"><strong>The Golden Rule:</strong> Optimize with a 70/30 or 60/40 mix of SIPs and PPF/Debt.</p>
+                <p class="text-indigo-900"><strong>The Golden Rule:</strong> Optimize with a 70/30 or 60/40 mix of SIPs and Bonds/Debt.</p>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@ ob_start();
                 <th class="px-6 py-5 text-left font-extrabold text-slate-900 tracking-tight border-l border-slate-100">
                     <div class="flex items-center gap-2">
                         <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                        PPF
+                        Govt Bonds
                     </div>
                 </th>
                 <th class="px-6 py-5 text-right font-extrabold text-slate-900 tracking-tight border-l border-slate-100">
@@ -61,8 +61,8 @@ ob_start();
         <tbody class="divide-y divide-slate-100/80">
             <tr class="hover:bg-slate-50/50 transition-colors">
                 <td class="px-6 py-5 font-semibold text-slate-700">Avg Returns</td>
-                <td class="px-6 py-5 font-bold text-emerald-600 bg-emerald-50/30 border-l border-slate-100">12% - 15%</td>
-                <td class="px-6 py-5 font-medium text-slate-700 border-l border-slate-100">7.1%</td>
+                <td class="px-6 py-5 font-bold text-emerald-600 bg-emerald-50/30 border-l border-slate-100">10% - 15%</td>
+                <td class="px-6 py-5 font-medium text-slate-700 border-l border-slate-100">4% - 7%</td>
                 <td class="px-6 py-5 text-right font-medium text-slate-700 border-l border-slate-100">6% - 7%</td>
             </tr>
             <tr class="bg-slate-50/50 hover:bg-slate-100/50 transition-colors">
@@ -76,11 +76,11 @@ ob_start();
             </tr>
             <tr class="hover:bg-slate-50/50 transition-colors">
                 <td class="px-6 py-5 font-semibold text-slate-700">Tax Status</td>
-                <td class="px-6 py-5 font-medium text-slate-600 border-l border-slate-100">12.5% LTCG</td>
+                <td class="px-6 py-5 font-medium text-slate-600 border-l border-slate-100">Capital Gains Tax</td>
                 <td class="px-6 py-5 font-bold text-emerald-600 border-l border-slate-100">
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-100/50 text-emerald-700 text-sm">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        Tax-Free (EEE)
+                        Tax Advantaged
                     </span>
                 </td>
                 <td class="px-6 py-5 text-right font-medium text-slate-600 border-l border-slate-100">Slab Rate</td>
@@ -94,9 +94,8 @@ ob_start();
 <p>Equity SIPs represent ownership in businesses. They are the only asset class known to persistently outpace inflation.
     However, they carry short-term volatility. Only invest in equity SIPs if your goal is 5-7+ years away.</p>
 
-<h2 id="ppf-breakdown">PPF: The Bedrock of Safety</h2>
-<p>PPF is a government-backed scheme with incredible tax benefits. While it won't make you rich, it provides a "Safe
-    Floor." If the stock market crashes 30% the year you retire, your PPF corpus remains untouched and guaranteed.</p>
+<h2 id="bonds-breakdown">Government Bonds: The Bedrock of Safety</h2>
+<p>Government Bonds and Treasury notes offer sovereign-backed safety and often come with tax benefits. While they won't make you rich, they provide a "Safe Floor." If the stock market crashes 30% the year you retire, your bond corpus remains untouched and guaranteed.</p>
 
 <h2 id="fd-breakdown">Bank FD: The Liquidity Trap</h2>
 <p>In the 30% tax bracket, a 7% FD yields only 4.9% post-tax. Against 6% inflation, you are losing 1.1% of your wealth
