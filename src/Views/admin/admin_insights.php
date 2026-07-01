@@ -17,8 +17,7 @@ $loginError = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
     if (hash_equals($ADMIN_PASSWORD, $_POST['password'])) {
         $_SESSION['admin_authenticated'] = true;
-    }
-    else {
+    } else {
         $loginError = 'Incorrect password. Access denied.';
     }
 }
@@ -42,8 +41,7 @@ if (!file_exists($dbPath)) {
 // ── SCHEMA VALIDATION: Instantiate logger to ensure required columns exist ──
 try {
     $logger = new AnonymizedInsightLogger($dbPath);
-}
-catch (\Throwable $e) {
+} catch (\Throwable $e) {
     error_log("Admin Insights Schema Validation Error: " . $e->getMessage());
 }
 
@@ -70,7 +68,7 @@ $time_ranges = [
     '1y' => ['label' => '1 Year', 'interval' => '-365 days', 'chart_days' => 365],
 ];
 
-$current_range_key = $_GET['range'] ?? '1m';
+$current_range_key = $_GET['range'] ?? '24h';
 if (!isset($time_ranges[$current_range_key])) {
     $current_range_key = '1m';
 }
@@ -86,15 +84,15 @@ $params = [':interval' => $current_interval];
 // -- KPI: Total calculations in selected range ----
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause");
 $stmt->execute($params);
-$totalInRange = (int)$stmt->fetchColumn();
+$totalInRange = (int) $stmt->fetchColumn();
 
 // -- KPI: Average Step-Up % in range ----
 $stmt = $pdo->prepare("SELECT COALESCE(AVG(step_up_pct), 0) FROM user_calculations $where_clause AND step_up_pct > 0");
 $stmt->execute($params);
-$avgStepUp = (float)$stmt->fetchColumn();
+$avgStepUp = (float) $stmt->fetchColumn();
 
 // -- KPI: Total all-time (unfiltered) ----
-$totalAllTime = (int)$pdo->query("SELECT COUNT(*) FROM user_calculations")->fetchColumn();
+$totalAllTime = (int) $pdo->query("SELECT COUNT(*) FROM user_calculations")->fetchColumn();
 
 // -- KPI: Calculations by type in range ----
 $stmt = $pdo->prepare("SELECT calc_type, COUNT(*) AS cnt FROM user_calculations $where_clause GROUP BY calc_type ORDER BY cnt DESC");
@@ -107,10 +105,9 @@ $conversionRate = 0.0;
 try {
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND pdf_downloaded = 1");
     $stmt->execute($params);
-    $totalPdfDownloads = (int)$stmt->fetchColumn();
+    $totalPdfDownloads = (int) $stmt->fetchColumn();
     $conversionRate = $totalInRange > 0 ? round(($totalPdfDownloads / $totalInRange) * 100, 1) : 0.0;
-}
-catch (\Throwable $e) {
+} catch (\Throwable $e) {
     error_log("Query Error (pdf_downloaded): " . $e->getMessage());
 }
 
@@ -132,8 +129,7 @@ try {
     ");
     $stmt->execute($params);
     $topReferrers = $stmt->fetchAll();
-}
-catch (\Throwable $e) {
+} catch (\Throwable $e) {
     error_log("Query Error (referrer): " . $e->getMessage());
 }
 
@@ -174,11 +170,11 @@ $topCorpus = $stmt->fetchAll();
 // -- KPI: Step-Up Adoption Rate in range ----
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND calc_type = 'SIP'");
 $stmt->execute($params);
-$totalSIP = (int)$stmt->fetchColumn();
+$totalSIP = (int) $stmt->fetchColumn();
 
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND calc_type = 'SIP' AND step_up_pct > 0");
 $stmt->execute($params);
-$stepUpSIP = (int)$stmt->fetchColumn();
+$stepUpSIP = (int) $stmt->fetchColumn();
 
 $flatSIP = $totalSIP - $stepUpSIP;
 $stepUpAdoptionRate = $totalSIP > 0 ? round(($stepUpSIP / $totalSIP) * 100, 1) : 0.0;
@@ -186,32 +182,32 @@ $stepUpAdoptionRate = $totalSIP > 0 ? round(($stepUpSIP / $totalSIP) * 100, 1) :
 // -- KPI: Average Plan Duration in range ----
 $stmt = $pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations $where_clause AND calc_type = 'SIP'");
 $stmt->execute($params);
-$avgDurationSIP = (float)$stmt->fetchColumn();
+$avgDurationSIP = (float) $stmt->fetchColumn();
 
 $stmt = $pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations $where_clause AND calc_type = 'SWP'");
 $stmt->execute($params);
-$avgDurationSWP = (float)$stmt->fetchColumn();
+$avgDurationSWP = (float) $stmt->fetchColumn();
 
 // -- KPI: Average Interest Rate in range ----
 $stmt = $pdo->prepare("SELECT COALESCE(AVG(interest_rate), 0) FROM user_calculations $where_clause AND interest_rate > 0");
 $stmt->execute($params);
-$avgInterestRate = (float)$stmt->fetchColumn();
+$avgInterestRate = (float) $stmt->fetchColumn();
 
 // -- KPI: SWP Adoption Rate in range ----
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND swp_enabled = 1");
 $stmt->execute($params);
-$totalSWPEnabled = (int)$stmt->fetchColumn();
+$totalSWPEnabled = (int) $stmt->fetchColumn();
 $swpAdoptionRate = $totalInRange > 0 ? round(($totalSWPEnabled / $totalInRange) * 100, 1) : 0.0;
 
 // -- KPI: Average SIP Amount in range ----
 $stmt = $pdo->prepare("SELECT COALESCE(AVG(sip_amount), 0) FROM user_calculations $where_clause AND sip_amount > 0");
 $stmt->execute($params);
-$avgSipAmount = (float)$stmt->fetchColumn();
+$avgSipAmount = (float) $stmt->fetchColumn();
 
 // -- KPI: Average SWP Withdrawal in range ----
 $stmt = $pdo->prepare("SELECT COALESCE(AVG(swp_withdrawal), 0) FROM user_calculations $where_clause AND swp_withdrawal > 0");
 $stmt->execute($params);
-$avgSwpWithdrawal = (float)$stmt->fetchColumn();
+$avgSwpWithdrawal = (float) $stmt->fetchColumn();
 
 // -- Chart: Duration Distribution (histogram buckets) in range ----
 $stmt = $pdo->prepare("
@@ -314,8 +310,13 @@ $currencyColorsJson = json_encode($currencyColors);
 
 // Currency symbol map (for dynamic display)
 $currencySymbolMap = [
-    'INR' => '₹', 'USD' => '$', 'GBP' => '£', 'EUR' => '€',
-    'AUD' => 'A$', 'CAD' => 'C$', 'UNKNOWN' => '',
+    'INR' => '₹',
+    'USD' => '$',
+    'GBP' => '£',
+    'EUR' => '€',
+    'AUD' => 'A$',
+    'CAD' => 'C$',
+    'UNKNOWN' => '',
 ];
 
 // Step-Up vs Flat SIP doughnut data
@@ -477,17 +478,17 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center overflow-x-auto no-scrollbar gap-1 py-2">
                 <?php foreach ($time_ranges as $key => $range):
-    $isActive = ($current_range_key === $key);
-    $btnClass = $isActive
-        ? 'bg-emerald-600 text-white shadow-md shadow-emerald-200'
-        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700';
-?>
-                <a href="?range=<?= $key?>"
-                    class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap <?= $btnClass?>">
-                    <?= htmlspecialchars($range['label'])?>
-                </a>
-                <?php
-endforeach; ?>
+                    $isActive = ($current_range_key === $key);
+                    $btnClass = $isActive
+                        ? 'bg-emerald-600 text-white shadow-md shadow-emerald-200'
+                        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700';
+                    ?>
+                    <a href="?range=<?= $key ?>"
+                        class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap <?= $btnClass ?>">
+                        <?= htmlspecialchars($range['label']) ?>
+                    </a>
+                    <?php
+                endforeach; ?>
             </div>
         </div>
     </div>
@@ -498,7 +499,7 @@ endforeach; ?>
         <section>
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Overview:
-                    <?= htmlspecialchars($current_range['label'])?>
+                    <?= htmlspecialchars($current_range['label']) ?>
                 </h2>
                 <span class="text-xs text-gray-400">Showing data for the selected period</span>
             </div>
@@ -507,7 +508,7 @@ endforeach; ?>
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Calculations</p>
                     <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                        <?= number_format($totalInRange)?>
+                        <?= number_format($totalInRange) ?>
                     </p>
                     <p class="mt-1 text-xs text-gray-400">in this period</p>
                 </div>
@@ -515,7 +516,7 @@ endforeach; ?>
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-1">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg Step-Up %</p>
                     <p class="mt-2 text-3xl font-extrabold text-emerald-600">
-                        <?= number_format($avgStepUp, 1)?>%
+                        <?= number_format($avgStepUp, 1) ?>%
                     </p>
                     <p class="mt-1 text-xs text-gray-400">period average</p>
                 </div>
@@ -523,7 +524,7 @@ endforeach; ?>
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-2">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Step-Up Adoption</p>
                     <p class="mt-2 text-3xl font-extrabold text-emerald-600">
-                        <?= number_format($stepUpAdoptionRate, 1)?>%
+                        <?= number_format($stepUpAdoptionRate, 1) ?>%
                     </p>
                     <p class="mt-1 text-xs text-gray-400">of SIP users</p>
                 </div>
@@ -531,7 +532,7 @@ endforeach; ?>
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-3">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">PDF Downloads</p>
                     <p class="mt-2 text-3xl font-extrabold text-rose-600">
-                        <?= number_format($totalPdfDownloads)?>
+                        <?= number_format($totalPdfDownloads) ?>
                     </p>
                     <p class="mt-1 text-xs text-gray-400">reports generated</p>
                 </div>
@@ -539,7 +540,7 @@ endforeach; ?>
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-4">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Conversion Rate</p>
                     <p class="mt-2 text-3xl font-extrabold text-violet-600">
-                        <?= number_format($conversionRate, 1)?>%
+                        <?= number_format($conversionRate, 1) ?>%
                     </p>
                     <p class="mt-1 text-xs text-gray-400">calc → PDF</p>
                 </div>
@@ -549,23 +550,27 @@ endforeach; ?>
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-1">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg SIP Tenure</p>
                     <p class="mt-2 text-3xl font-extrabold text-indigo-600">
-                        <?= number_format($avgDurationSIP, 1)?> <span class="text-xs font-normal text-gray-400">yrs</span>
+                        <?= number_format($avgDurationSIP, 1) ?> <span
+                            class="text-xs font-normal text-gray-400">yrs</span>
                     </p>
-                    <p class="mt-1.5 text-xs text-gray-500 font-semibold truncate">Avg SIP: <?= $avgSipAmount > 0 ? number_format($avgSipAmount) : 'N/A' ?></p>
+                    <p class="mt-1.5 text-xs text-gray-500 font-semibold truncate">Avg SIP:
+                        <?= $avgSipAmount > 0 ? number_format($avgSipAmount) : 'N/A' ?></p>
                 </div>
                 <!-- Avg SWP Duration -->
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-2">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg SWP Tenure</p>
                     <p class="mt-2 text-3xl font-extrabold text-indigo-600">
-                        <?= number_format($avgDurationSWP, 1)?> <span class="text-xs font-normal text-gray-400">yrs</span>
+                        <?= number_format($avgDurationSWP, 1) ?> <span
+                            class="text-xs font-normal text-gray-400">yrs</span>
                     </p>
-                    <p class="mt-1.5 text-xs text-gray-500 font-semibold truncate">Avg SWP: <?= $avgSwpWithdrawal > 0 ? number_format($avgSwpWithdrawal) : 'N/A' ?></p>
+                    <p class="mt-1.5 text-xs text-gray-500 font-semibold truncate">Avg SWP:
+                        <?= $avgSwpWithdrawal > 0 ? number_format($avgSwpWithdrawal) : 'N/A' ?></p>
                 </div>
                 <!-- Avg Interest Rate -->
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-3">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Avg Interest Rate</p>
                     <p class="mt-2 text-3xl font-extrabold text-blue-600">
-                        <?= number_format($avgInterestRate, 1)?>%
+                        <?= number_format($avgInterestRate, 1) ?>%
                     </p>
                     <p class="mt-1.5 text-xs text-gray-400 truncate">user return rate</p>
                 </div>
@@ -573,7 +578,7 @@ endforeach; ?>
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-4">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">SWP Activation</p>
                     <p class="mt-2 text-3xl font-extrabold text-violet-600">
-                        <?= number_format($swpAdoptionRate, 1)?>%
+                        <?= number_format($swpAdoptionRate, 1) ?>%
                     </p>
                     <p class="mt-1.5 text-xs text-gray-400 truncate">combined planning</p>
                 </div>
@@ -581,7 +586,7 @@ endforeach; ?>
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-5">
                     <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">All-Time Total</p>
                     <p class="mt-2 text-3xl font-extrabold text-gray-900">
-                        <?= number_format($totalAllTime)?>
+                        <?= number_format($totalAllTime) ?>
                     </p>
                     <p class="mt-1.5 text-xs text-gray-400 truncate">calculations total</p>
                 </div>
@@ -590,31 +595,31 @@ endforeach; ?>
 
         <!-- ── Calc Type Breakdown (pills) ── -->
         <?php if (!empty($calcTypeBreakdown)): ?>
-        <section>
-            <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">By Calculator Type</h2>
-            <div class="flex flex-wrap gap-3">
-                <?php
-    $pillColors = [
-        'SIP' => 'bg-blue-50 text-blue-700 border-blue-200',
-        'SWP' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
-        'DCA' => 'bg-amber-50 text-amber-700 border-amber-200',
-    ];
-    foreach ($calcTypeBreakdown as $row):
-        $color = $pillColors[$row['calc_type']] ?? 'bg-gray-50 text-gray-700 border-gray-200';
-?>
-                <div
-                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full border <?= $color?> text-sm font-semibold">
-                    <?= htmlspecialchars($row['calc_type'])?>
-                    <span class="bg-white/70 px-2 py-0.5 rounded-full text-xs font-bold">
-                        <?= number_format((int)$row['cnt'])?>
-                    </span>
+            <section>
+                <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">By Calculator Type</h2>
+                <div class="flex flex-wrap gap-3">
+                    <?php
+                    $pillColors = [
+                        'SIP' => 'bg-blue-50 text-blue-700 border-blue-200',
+                        'SWP' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                        'DCA' => 'bg-amber-50 text-amber-700 border-amber-200',
+                    ];
+                    foreach ($calcTypeBreakdown as $row):
+                        $color = $pillColors[$row['calc_type']] ?? 'bg-gray-50 text-gray-700 border-gray-200';
+                        ?>
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-2 rounded-full border <?= $color ?> text-sm font-semibold">
+                            <?= htmlspecialchars($row['calc_type']) ?>
+                            <span class="bg-white/70 px-2 py-0.5 rounded-full text-xs font-bold">
+                                <?= number_format((int) $row['cnt']) ?>
+                            </span>
+                        </div>
+                        <?php
+                    endforeach; ?>
                 </div>
-                <?php
-    endforeach; ?>
-            </div>
-        </section>
-        <?php
-endif; ?>
+            </section>
+            <?php
+        endif; ?>
 
         <!-- ── Charts ── -->
         <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -622,7 +627,7 @@ endif; ?>
             <div class="chart-container">
                 <h3 class="text-sm font-semibold text-gray-700 mb-4">📈 Calculation Volume <span
                         class="text-gray-400 font-normal">(
-                        <?= htmlspecialchars($current_range['label'])?>)
+                        <?= htmlspecialchars($current_range['label']) ?>)
                     </span></h3>
                 <div style="position: relative; height: 280px; width: 100%;">
                     <canvas id="volumeChart"></canvas>
@@ -658,11 +663,11 @@ endif; ?>
                 <div class="flex justify-center gap-6 mt-4 text-xs text-gray-500">
                     <span class="flex items-center gap-1.5"><span
                             class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Step-Up (
-                        <?=(string)$stepUpSIP?>)
+                        <?= (string) $stepUpSIP ?>)
                     </span>
                     <span class="flex items-center gap-1.5"><span
                             class="w-3 h-3 rounded-full bg-gray-300 inline-block"></span> Flat (
-                        <?=(string)$flatSIP?>)
+                        <?= (string) $flatSIP ?>)
                     </span>
                 </div>
             </div>
@@ -682,68 +687,68 @@ endif; ?>
             <div class="chart-container">
                 <h3 class="text-sm font-semibold text-gray-700 mb-4">🇮🇳 SWP Corpus Distribution (INR)</h3>
                 <?php if (empty($corpusBucketsINR)): ?>
-                <p class="text-sm text-gray-400 italic">No INR SWP data yet.</p>
-                <?php
-else: ?>
-                <div class="space-y-3">
+                    <p class="text-sm text-gray-400 italic">No INR SWP data yet.</p>
                     <?php
-    $maxBucketINR = max(array_column($corpusBucketsINR, 'cnt'));
-    foreach ($corpusBucketsINR as $b):
-        $bPct = $maxBucketINR > 0 ? round(((int)$b['cnt'] / $maxBucketINR) * 100) : 0;
-?>
-                    <div>
-                        <div class="flex justify-between text-xs mb-1">
-                            <span class="font-medium text-gray-700">
-                                <?= htmlspecialchars($b['bucket'])?>
-                            </span>
-                            <span class="text-gray-400">
-                                <?= number_format((int)$b['cnt'])?>
-                            </span>
-                        </div>
-                        <div class="w-full bg-gray-100 rounded-full h-2.5">
-                            <div class="bg-gradient-to-r from-orange-400 to-orange-500 h-2.5 rounded-full transition-all"
-                                style="width: <?=(string)$bPct?>%"></div>
-                        </div>
+                else: ?>
+                    <div class="space-y-3">
+                        <?php
+                        $maxBucketINR = max(array_column($corpusBucketsINR, 'cnt'));
+                        foreach ($corpusBucketsINR as $b):
+                            $bPct = $maxBucketINR > 0 ? round(((int) $b['cnt'] / $maxBucketINR) * 100) : 0;
+                            ?>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="font-medium text-gray-700">
+                                        <?= htmlspecialchars($b['bucket']) ?>
+                                    </span>
+                                    <span class="text-gray-400">
+                                        <?= number_format((int) $b['cnt']) ?>
+                                    </span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-2.5">
+                                    <div class="bg-gradient-to-r from-orange-400 to-orange-500 h-2.5 rounded-full transition-all"
+                                        style="width: <?= (string) $bPct ?>%"></div>
+                                </div>
+                            </div>
+                            <?php
+                        endforeach; ?>
                     </div>
                     <?php
-    endforeach; ?>
-                </div>
-                <?php
-endif; ?>
+                endif; ?>
             </div>
 
             <!-- USD/Other Corpus Buckets -->
             <div class="chart-container">
                 <h3 class="text-sm font-semibold text-gray-700 mb-4">🌍 SWP Corpus Distribution (USD & Others)</h3>
                 <?php if (empty($corpusBucketsUSD)): ?>
-                <p class="text-sm text-gray-400 italic">No non-INR SWP data yet.</p>
-                <?php
-else: ?>
-                <div class="space-y-3">
+                    <p class="text-sm text-gray-400 italic">No non-INR SWP data yet.</p>
                     <?php
-    $maxBucketUSD = max(array_column($corpusBucketsUSD, 'cnt'));
-    foreach ($corpusBucketsUSD as $b):
-        $bPct = $maxBucketUSD > 0 ? round(((int)$b['cnt'] / $maxBucketUSD) * 100) : 0;
-?>
-                    <div>
-                        <div class="flex justify-between text-xs mb-1">
-                            <span class="font-medium text-gray-700">
-                                <?= htmlspecialchars($b['bucket'])?>
-                            </span>
-                            <span class="text-gray-400">
-                                <?= number_format((int)$b['cnt'])?>
-                            </span>
-                        </div>
-                        <div class="w-full bg-gray-100 rounded-full h-2.5">
-                            <div class="bg-gradient-to-r from-blue-400 to-blue-500 h-2.5 rounded-full transition-all"
-                                style="width: <?=(string)$bPct?>%"></div>
-                        </div>
+                else: ?>
+                    <div class="space-y-3">
+                        <?php
+                        $maxBucketUSD = max(array_column($corpusBucketsUSD, 'cnt'));
+                        foreach ($corpusBucketsUSD as $b):
+                            $bPct = $maxBucketUSD > 0 ? round(((int) $b['cnt'] / $maxBucketUSD) * 100) : 0;
+                            ?>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="font-medium text-gray-700">
+                                        <?= htmlspecialchars($b['bucket']) ?>
+                                    </span>
+                                    <span class="text-gray-400">
+                                        <?= number_format((int) $b['cnt']) ?>
+                                    </span>
+                                </div>
+                                <div class="w-full bg-gray-100 rounded-full h-2.5">
+                                    <div class="bg-gradient-to-r from-blue-400 to-blue-500 h-2.5 rounded-full transition-all"
+                                        style="width: <?= (string) $bPct ?>%"></div>
+                                </div>
+                            </div>
+                            <?php
+                        endforeach; ?>
                     </div>
                     <?php
-    endforeach; ?>
-                </div>
-                <?php
-endif; ?>
+                endif; ?>
             </div>
         </section>
 
@@ -751,58 +756,58 @@ endif; ?>
         <section class="chart-container">
             <h3 class="text-sm font-semibold text-gray-700 mb-4">🏦 Top 10 SWP Target Corpus Amounts</h3>
             <?php if (empty($topCorpus)): ?>
-            <p class="text-sm text-gray-400 italic">No SWP calculations recorded yet.</p>
-            <?php
-else: ?>
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-                    <thead>
-                        <tr class="border-b border-gray-200">
-                            <th
-                                class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                                #</th>
-                            <th
-                                class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                                Target Corpus Amount</th>
-                            <th
-                                class="text-right py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                                Frequency</th>
-                            <th
-                                class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider w-1/3">
-                                Distribution</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-    $maxFreq = !empty($topCorpus) ? (int)$topCorpus[0]['frequency'] : 1;
-    foreach ($topCorpus as $i => $row):
-        $pct = round(((int)$row['frequency'] / $maxFreq) * 100);
-?>
-                        <tr class="table-row border-b border-gray-100 transition-colors">
-                            <td class="py-3 px-4 text-gray-400 font-mono text-xs">
-                                <?=(string)($i + 1)?>
-                            </td>
-                            <td class="py-3 px-4 font-semibold text-gray-800">
-                                <?= $currencySymbolMap[strtoupper($row['currency'] ?? 'INR')] ?? ''?>
-                                <?= number_format((float)$row['amount'])?>
-                            </td>
-                            <td class="py-3 px-4 text-right font-mono text-gray-600">
-                                <?= number_format((int)$row['frequency'])?>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="w-full bg-gray-100 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-2 rounded-full transition-all"
-                                        style="width: <?=(string)$pct?>%"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php
-    endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-            <?php
-endif; ?>
+                <p class="text-sm text-gray-400 italic">No SWP calculations recorded yet.</p>
+                <?php
+            else: ?>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th
+                                    class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    #</th>
+                                <th
+                                    class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    Target Corpus Amount</th>
+                                <th
+                                    class="text-right py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    Frequency</th>
+                                <th
+                                    class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider w-1/3">
+                                    Distribution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $maxFreq = !empty($topCorpus) ? (int) $topCorpus[0]['frequency'] : 1;
+                            foreach ($topCorpus as $i => $row):
+                                $pct = round(((int) $row['frequency'] / $maxFreq) * 100);
+                                ?>
+                                <tr class="table-row border-b border-gray-100 transition-colors">
+                                    <td class="py-3 px-4 text-gray-400 font-mono text-xs">
+                                        <?= (string) ($i + 1) ?>
+                                    </td>
+                                    <td class="py-3 px-4 font-semibold text-gray-800">
+                                        <?= $currencySymbolMap[strtoupper($row['currency'] ?? 'INR')] ?? '' ?>
+                                        <?= number_format((float) $row['amount']) ?>
+                                    </td>
+                                    <td class="py-3 px-4 text-right font-mono text-gray-600">
+                                        <?= number_format((int) $row['frequency']) ?>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="w-full bg-gray-100 rounded-full h-2">
+                                            <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-2 rounded-full transition-all"
+                                                style="width: <?= (string) $pct ?>%"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php
+                            endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php
+            endif; ?>
         </section>
 
         <!-- ── Top 10 Referrers ── -->
@@ -810,64 +815,64 @@ endif; ?>
             <h3 class="text-sm font-semibold text-gray-700 mb-4">🔗 Top Traffic Sources <span
                     class="text-gray-400 font-normal">(Referrers)</span></h3>
             <?php if (empty($topReferrers)): ?>
-            <p class="text-sm text-gray-400 italic">No referrer data recorded yet.</p>
-            <?php
-else: ?>
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-                    <thead>
-                        <tr class="border-b border-gray-200">
-                            <th
-                                class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                                #</th>
-                            <th
-                                class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                                Source</th>
-                            <th
-                                class="text-right py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                                Visits</th>
-                            <th
-                                class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider w-1/3">
-                                Share</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-    $maxRef = !empty($topReferrers) ? (int)$topReferrers[0]['cnt'] : 1;
-    foreach ($topReferrers as $i => $ref):
-        $refPct = round(((int)$ref['cnt'] / $maxRef) * 100);
-?>
-                        <tr class="table-row border-b border-gray-100 transition-colors">
-                            <td class="py-3 px-4 text-gray-400 font-mono text-xs">
-                                <?=(string)($i + 1)?>
-                            </td>
-                            <td class="py-3 px-4 font-medium text-gray-800 truncate max-w-xs"
-                                title="<?= htmlspecialchars($ref['source'])?>">
-                                <?= htmlspecialchars($ref['source'])?>
-                            </td>
-                            <td class="py-3 px-4 text-right font-mono text-gray-600">
-                                <?= number_format((int)$ref['cnt'])?>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="w-full bg-gray-100 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-violet-500 to-purple-500 h-2 rounded-full transition-all"
-                                        style="width: <?=(string)$refPct?>%"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php
-    endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-            <?php
-endif; ?>
+                <p class="text-sm text-gray-400 italic">No referrer data recorded yet.</p>
+                <?php
+            else: ?>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th
+                                    class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    #</th>
+                                <th
+                                    class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    Source</th>
+                                <th
+                                    class="text-right py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                    Visits</th>
+                                <th
+                                    class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider w-1/3">
+                                    Share</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $maxRef = !empty($topReferrers) ? (int) $topReferrers[0]['cnt'] : 1;
+                            foreach ($topReferrers as $i => $ref):
+                                $refPct = round(((int) $ref['cnt'] / $maxRef) * 100);
+                                ?>
+                                <tr class="table-row border-b border-gray-100 transition-colors">
+                                    <td class="py-3 px-4 text-gray-400 font-mono text-xs">
+                                        <?= (string) ($i + 1) ?>
+                                    </td>
+                                    <td class="py-3 px-4 font-medium text-gray-800 truncate max-w-xs"
+                                        title="<?= htmlspecialchars($ref['source']) ?>">
+                                        <?= htmlspecialchars($ref['source']) ?>
+                                    </td>
+                                    <td class="py-3 px-4 text-right font-mono text-gray-600">
+                                        <?= number_format((int) $ref['cnt']) ?>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="w-full bg-gray-100 rounded-full h-2">
+                                            <div class="bg-gradient-to-r from-violet-500 to-purple-500 h-2 rounded-full transition-all"
+                                                style="width: <?= (string) $refPct ?>%"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php
+                            endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php
+            endif; ?>
         </section>
 
         <!-- ── Footer ── -->
         <footer class="text-center text-xs text-gray-300 pb-8 pt-4">
             Dashboard generated at
-            <?= date('d M Y, H:i T')?> · Data from SQLite (read-only)
+            <?= date('d M Y, H:i T') ?> · Data from SQLite (read-only)
         </footer>
 
     </main>
@@ -1076,83 +1081,83 @@ endif; ?>
 // ─────────────────────────────────────────────────────────────
 function showLoginPage(string $error = ''): void
 {
-?>
-<!DOCTYPE html>
-<html lang="en">
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Admin Login — SIP SWP Calculator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-    </style>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="robots" content="noindex, nofollow">
+        <title>Admin Login — SIP SWP Calculator</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Inter', system-ui, sans-serif;
+            }
+        </style>
+    </head>
 
-<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-sm">
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-            <div class="flex justify-center mb-6">
-                <div class="group">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                        class="w-14 h-14 rounded-2xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
-                        role="img" aria-label="SIP SWP Calculator Logo">
-                        <rect width="24" height="24" rx="6" fill="url(#logo-grad-admin-login)" />
-                        <defs>
-                            <linearGradient id="logo-grad-admin-login" x1="0%" y1="100%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#059669" />
-                                <stop offset="100%" stop-color="#2dd4bf" />
-                            </linearGradient>
-                        </defs>
-                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
-                            stroke-linejoin="round" d="M4 13l5-5 3.5 3.5 7.5-7.5" />
-                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
-                            stroke-linejoin="round" d="M15 4h5v5" />
-                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-opacity="0.5" d="M4 17l5-5 3.5 3.5 7.5-7.5" />
-                        <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-opacity="0.25" d="M4 21l5-5 3.5 3.5 7.5-7.5" />
-                    </svg>
+    <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-sm">
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+                <div class="flex justify-center mb-6">
+                    <div class="group">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            class="w-14 h-14 rounded-2xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
+                            role="img" aria-label="SIP SWP Calculator Logo">
+                            <rect width="24" height="24" rx="6" fill="url(#logo-grad-admin-login)" />
+                            <defs>
+                                <linearGradient id="logo-grad-admin-login" x1="0%" y1="100%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#059669" />
+                                    <stop offset="100%" stop-color="#2dd4bf" />
+                                </linearGradient>
+                            </defs>
+                            <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                                stroke-linejoin="round" d="M4 13l5-5 3.5 3.5 7.5-7.5" />
+                            <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                                stroke-linejoin="round" d="M15 4h5v5" />
+                            <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-opacity="0.5" d="M4 17l5-5 3.5 3.5 7.5-7.5" />
+                            <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-opacity="0.25" d="M4 21l5-5 3.5 3.5 7.5-7.5" />
+                        </svg>
+                    </div>
                 </div>
-            </div>
-            <h1 class="text-xl font-bold text-gray-900 text-center">Admin Insights</h1>
-            <p class="text-sm text-gray-400 text-center mt-1 mb-6">Enter your password to continue</p>
+                <h1 class="text-xl font-bold text-gray-900 text-center">Admin Insights</h1>
+                <p class="text-sm text-gray-400 text-center mt-1 mb-6">Enter your password to continue</p>
 
-            <?php if ($error): ?>
-            <div
-                class="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg flex items-center gap-2">
-                <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                        clip-rule="evenodd" />
-                </svg>
-                <?= htmlspecialchars($error)?>
-            </div>
-            <?php
-    endif; ?>
+                <?php if ($error): ?>
+                    <div
+                        class="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg flex items-center gap-2">
+                        <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <?= htmlspecialchars($error) ?>
+                    </div>
+                    <?php
+                endif; ?>
 
-            <form method="POST" action="">
-                <label for="password" class="block text-sm font-medium text-gray-600 mb-1.5">Password</label>
-                <input type="password" id="password" name="password" required autofocus placeholder="••••••••••"
-                    class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow">
-                <button type="submit"
-                    class="mt-4 w-full py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-sm font-semibold rounded-xl hover:from-emerald-700 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all shadow-lg shadow-emerald-500/25">
-                    Unlock Dashboard
-                </button>
-            </form>
+                <form method="POST" action="">
+                    <label for="password" class="block text-sm font-medium text-gray-600 mb-1.5">Password</label>
+                    <input type="password" id="password" name="password" required autofocus placeholder="••••••••••"
+                        class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-shadow">
+                    <button type="submit"
+                        class="mt-4 w-full py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-sm font-semibold rounded-xl hover:from-emerald-700 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all shadow-lg shadow-emerald-500/25">
+                        Unlock Dashboard
+                    </button>
+                </form>
+            </div>
+            <p class="text-center text-xs text-gray-300 mt-6">sipswpcalculator.com · Private Admin</p>
         </div>
-        <p class="text-center text-xs text-gray-300 mt-6">sipswpcalculator.com · Private Admin</p>
-    </div>
-</body>
+    </body>
 
-</html>
-<?php
+    </html>
+    <?php
 }
 ?>
