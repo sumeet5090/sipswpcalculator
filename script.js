@@ -23,7 +23,9 @@ function updateCurrency(newCurrency) {
     // Update dynamic amount spans
     const dynamicSpans = document.querySelectorAll('.dynamic-amount');
     dynamicSpans.forEach(span => {
-        const amount = parseFloat(span.dataset.amount);
+        const curKey = 'amount' + currentCurrency.charAt(0).toUpperCase() + currentCurrency.slice(1).toLowerCase();
+        const specificAmount = span.dataset[curKey];
+        const amount = specificAmount !== undefined ? parseFloat(specificAmount) : parseFloat(span.dataset.amount);
         if (!isNaN(amount)) {
             span.textContent = formatDynamicAmount(amount);
         }
@@ -46,6 +48,10 @@ function updateCurrency(newCurrency) {
     // Force chart axis labels to refresh with new symbol
     if (window.corpusChart) {
         window.corpusChart.update();
+    }
+
+    if (typeof window.calculateCI === 'function') {
+        window.calculateCI();
     }
 }
 
@@ -99,6 +105,8 @@ function switchFormTab(tab) {
     const swpPanel = document.getElementById('panel-swp');
     const sipTab = document.getElementById('tab-sip');
     const swpTab = document.getElementById('tab-swp');
+
+    if (!sipPanel || !swpPanel || !sipTab || !swpTab) return;
 
     if (tab === 'sip') {
         // Show SIP panel
@@ -483,6 +491,7 @@ function logDebouncedInsight(inputs) {
 }
 
 function calculateAndRender() {
+    if (!document.getElementById('sip')) return;
     const inputs = getInputs();
     const data = calculateCorpus(inputs);
     updateChart(data, inputs.enable_swp);

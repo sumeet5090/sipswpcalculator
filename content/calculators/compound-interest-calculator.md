@@ -90,15 +90,15 @@ See exactly how your money grows with the power of compounding
         <tbody>
             <tr><td class="px-4 py-3 border border-slate-200 font-medium">Interest on</td><td class="px-4 py-3 border border-slate-200 text-emerald-700">Principal + accumulated interest</td><td class="px-4 py-3 border border-slate-200">Principal only</td></tr>
             <tr class="bg-slate-50/50"><td class="px-4 py-3 border border-slate-200 font-medium">Growth pattern</td><td class="px-4 py-3 border border-slate-200 text-emerald-700">Exponential (accelerating)</td><td class="px-4 py-3 border border-slate-200">Linear (constant)</td></tr>
-            <tr><td class="px-4 py-3 border border-slate-200 font-medium"><span class="currency-text">$</span>1L at 10% for 20 years</td><td class="px-4 py-3 border border-slate-200 text-emerald-700 font-bold"><span class="currency-text">$</span>6,72,750</td><td class="px-4 py-3 border border-slate-200"><span class="currency-text">$</span>3,00,000</td></tr>
-            <tr class="bg-slate-50/50"><td class="px-4 py-3 border border-slate-200 font-medium"><span class="currency-text">$</span>10K at 8% for 30 years</td><td class="px-4 py-3 border border-slate-200 text-emerald-700 font-bold"><span class="currency-text">$</span>100,627</td><td class="px-4 py-3 border border-slate-200"><span class="currency-text">$</span>34,000</td></tr>
+            <tr><td class="px-4 py-3 border border-slate-200 font-medium"><span class="dynamic-amount" data-amount-inr="1000000" data-amount-usd="10000" data-amount-eur="10000" data-amount-gbp="10000"></span> at 10% for 20 years</td><td class="px-4 py-3 border border-slate-200 text-emerald-700 font-bold"><span class="dynamic-amount" data-amount-inr="672750" data-amount-usd="67275" data-amount-eur="67275" data-amount-gbp="67275"></span></td><td class="px-4 py-3 border border-slate-200"><span class="dynamic-amount" data-amount-inr="300000" data-amount-usd="30000" data-amount-eur="30000" data-amount-gbp="30000"></span></td></tr>
+            <tr class="bg-slate-50/50"><td class="px-4 py-3 border border-slate-200 font-medium"><span class="dynamic-amount" data-amount-inr="100000" data-amount-usd="10000" data-amount-eur="10000" data-amount-gbp="10000"></span> at 8% for 30 years</td><td class="px-4 py-3 border border-slate-200 text-emerald-700 font-bold"><span class="dynamic-amount" data-amount-inr="1006270" data-amount-usd="100627" data-amount-eur="100627" data-amount-gbp="100627"></span></td><td class="px-4 py-3 border border-slate-200"><span class="dynamic-amount" data-amount-inr="340000" data-amount-usd="34000" data-amount-eur="34000" data-amount-gbp="34000"></span></td></tr>
             <tr><td class="px-4 py-3 border border-slate-200 font-medium">Best for</td><td class="px-4 py-3 border border-slate-200 text-emerald-700">Long-term investments, SIPs, mutual funds</td><td class="px-4 py-3 border border-slate-200">Short-term loans, car loans</td></tr>
         </tbody>
     </table>
 </div>
 
 <h2>How Compounding Frequency Affects Your Returns</h2>
-<p>The more frequently interest is compounded, the more you earn. Here's a comparison for a <span class="currency-text">$</span>1,000 investment at 10% for 10 years:</p>
+<p>The more frequently interest is compounded, the more you earn. Here's a comparison for a <span class="dynamic-amount" data-amount-inr="100000" data-amount-usd="1000" data-amount-eur="1000" data-amount-gbp="1000"></span> investment at 10% for 10 years:</p>
 <div class="not-prose overflow-x-auto mb-6">
     <table class="w-full text-sm border-collapse">
         <thead>
@@ -109,10 +109,10 @@ See exactly how your money grows with the power of compounding
             </tr>
         </thead>
         <tbody>
-            <tr><td class="px-4 py-3 border border-slate-200">Annual (n=1)</td><td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="currency-text">$</span>2,59,374</td><td class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600"><span class="currency-text">$</span>1,59,374</td></tr>
-            <tr class="bg-slate-50/50"><td class="px-4 py-3 border border-slate-200">Quarterly (n=4)</td><td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="currency-text">$</span>2,68,506</td><td class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600"><span class="currency-text">$</span>1,68,506</td></tr>
-            <tr><td class="px-4 py-3 border border-slate-200 font-medium text-indigo-700">Monthly (n=12)</td><td class="px-4 py-3 border border-slate-200 text-right font-mono font-bold text-indigo-700"><span class="currency-text">$</span>2,70,704</td><td class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600 font-bold"><span class="currency-text">$</span>1,70,704</td></tr>
-            <tr class="bg-slate-50/50"><td class="px-4 py-3 border border-slate-200">Daily (n=365)</td><td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="currency-text">$</span>2,71,791</td><td class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600"><span class="currency-text">$</span>1,71,791</td></tr>
+            <tr><td class="px-4 py-3 border border-slate-200">Annual (n=1)</td><td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="dynamic-amount" data-amount-inr="259374" data-amount-usd="2594" data-amount-eur="2594" data-amount-gbp="2594"></span></td><td class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600"><span class="dynamic-amount" data-amount-inr="159374" data-amount-usd="1594" data-amount-eur="1594" data-amount-gbp="1594"></span></td></tr>
+            <tr class="bg-slate-50/50"><td class="px-4 py-3 border border-slate-200">Quarterly (n=4)</td><td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="dynamic-amount" data-amount-inr="268506" data-amount-usd="2685" data-amount-eur="2685" data-amount-gbp="2685"></span></td><td class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600"><span class="dynamic-amount" data-amount-inr="168506" data-amount-usd="1685" data-amount-eur="1685" data-amount-gbp="1685"></span></td></tr>
+            <tr><td class="px-4 py-3 border border-slate-200 font-medium text-indigo-700">Monthly (n=12)</td><td class="px-4 py-3 border border-slate-200 text-right font-mono font-bold text-indigo-700"><span class="dynamic-amount" data-amount-inr="270704" data-amount-usd="2707" data-amount-eur="2707" data-amount-gbp="2707"></span></td><td class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600 font-bold"><span class="dynamic-amount" data-amount-inr="170704" data-amount-usd="1707" data-amount-eur="1707" data-amount-gbp="1707"></span></td></tr>
+            <tr class="bg-slate-50/50"><td class="px-4 py-3 border border-slate-200">Daily (n=365)</td><td class="px-4 py-3 border border-slate-200 text-right font-mono"><span class="dynamic-amount" data-amount-inr="271791" data-amount-usd="2718" data-amount-eur="2718" data-amount-gbp="2718"></span></td><td class="px-4 py-3 border border-slate-200 text-right font-mono text-emerald-600"><span class="dynamic-amount" data-amount-inr="171791" data-amount-usd="1718" data-amount-eur="1718" data-amount-gbp="1718"></span></td></tr>
         </tbody>
     </table>
 </div>
@@ -173,8 +173,10 @@ See exactly how your money grows with the power of compounding
         const rule72Years = r > 0 ? (72 / (r * 100)).toFixed(1) : '∞';
 
         const fmt = (num) => {
-            return new Intl.NumberFormat('en-US', {
-                style: 'currency', currency: 'USD', maximumFractionDigits: 0
+            const cur = window.currentCurrency || 'USD';
+            const conf = (window.currencyConfig && window.currencyConfig[cur]) || { locale: 'en-US', symbol: '$' };
+            return new Intl.NumberFormat(conf.locale, {
+                style: 'currency', currency: cur, maximumFractionDigits: 0
             }).format(num);
         };
 
@@ -184,6 +186,8 @@ See exactly how your money grows with the power of compounding
         document.getElementById('ci-rule72-rate').textContent = (r * 100).toFixed(1);
         document.getElementById('ci-rule72-years').textContent = rule72Years;
     }
+
+    window.calculateCI = calculateCI;
 
     document.querySelectorAll('#ci-principal, #ci-rate, #ci-years, #ci-frequency').forEach(el => {
         el.addEventListener('input', calculateCI);

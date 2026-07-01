@@ -9,14 +9,14 @@ When you set up a Systematic Withdrawal Plan (SWP) from a mutual fund, each with
 Crucially, <strong>only the capital gains portion</strong> of each withdrawal is taxable — the principal (cost of acquisition) is returned tax-free. This makes SWP fundamentally different from FD interest, where the entire interest amount is taxable.
 
 <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 not-prose mt-4">
-    <p class="font-bold text-indigo-800 mb-2">Example: <span class="currency-text">$</span>500 monthly SWP withdrawal</p>
-    <p class="text-sm text-gray-600">If you invested <span class="dynamic-amount" data-amount="1000000"></span> and your corpus is now <span class="dynamic-amount" data-amount="1500000"></span>:</p>
+    <p class="font-bold text-indigo-800 mb-2">Example: <span class="dynamic-amount" data-amount-inr="50000" data-amount-usd="500" data-amount-eur="500" data-amount-gbp="500"></span> monthly SWP withdrawal</p>
+    <p class="text-sm text-gray-600">If you invested <span class="dynamic-amount" data-amount-inr="1000000" data-amount-usd="100000" data-amount-eur="100000" data-amount-gbp="100000"></span> and your corpus is now <span class="dynamic-amount" data-amount-inr="1500000" data-amount-usd="150000" data-amount-eur="150000" data-amount-gbp="150000"></span>:</p>
     <ul class="text-sm text-gray-600 mt-2 space-y-1">
-        <li>• Capital gains ratio = (15L - 10L) / 15L = <strong>33.3%</strong></li>
-        <li>• Taxable portion per withdrawal = <span class="currency-text">$</span>500 × 33.3% = <strong><span class="currency-text">$</span>16,650</strong></li>
-        <li>• Tax-free portion (principal) = <span class="currency-text">$</span>500 × 66.7% = <strong><span class="currency-text">$</span>33,350</strong></li>
-        <li>• If LTCG applies: Tax = <span class="currency-text">$</span>16,650 × 12.5% = <strong><span class="currency-text">$</span>2,081/month</strong></li>
-        <li>• <strong>Effective tax rate on <span class="currency-text">$</span>500 withdrawal = only 4.2%!</strong></li>
+        <li>• Capital gains ratio = (Current - Invested) / Current = <strong>33.3%</strong></li>
+        <li>• Taxable portion per withdrawal = <span class="dynamic-amount" data-amount-inr="50000" data-amount-usd="500" data-amount-eur="500" data-amount-gbp="500"></span> × 33.3% = <strong><span class="dynamic-amount" data-amount-inr="16650" data-amount-usd="166.50" data-amount-eur="166.50" data-amount-gbp="166.50"></span></strong></li>
+        <li>• Tax-free portion (principal) = <span class="dynamic-amount" data-amount-inr="50000" data-amount-usd="500" data-amount-eur="500" data-amount-gbp="500"></span> × 66.7% = <strong><span class="dynamic-amount" data-amount-inr="33350" data-amount-usd="333.50" data-amount-eur="333.50" data-amount-gbp="333.50"></span></strong></li>
+        <li>• If LTCG applies: Tax = <span class="dynamic-amount" data-amount-inr="16650" data-amount-usd="166.50" data-amount-eur="166.50" data-amount-gbp="166.50"></span> × 12.5% = <strong><span class="dynamic-amount" data-amount-inr="2081" data-amount-usd="24.98" data-amount-eur="24.98" data-amount-gbp="24.98"></span>/month</strong></li>
+        <li>• <strong>Effective tax rate on withdrawal = only 4.2% – 5.0%!</strong></li>
     </ul>
 </div>
 
@@ -60,8 +60,8 @@ Crucially, <strong>only the capital gains portion</strong> of each withdrawal is
     </table>
 </div>
 
-## Worked Example: Monthly <span class="currency-text">$</span>500 SWP Tax Calculation
-Assume: <span class="dynamic-amount" data-amount="1000000"></span> corpus in equity hybrid fund, held >1 year, 12% annual returns, <span class="currency-text">$</span>500/month SWP:
+## Worked Example: Monthly <span class="dynamic-amount" data-amount-inr="50000" data-amount-usd="500" data-amount-eur="500" data-amount-gbp="500"></span> SWP Tax Calculation
+Assume: <span class="dynamic-amount" data-amount-inr="1000000" data-amount-usd="100000" data-amount-eur="100000" data-amount-gbp="100000"></span> corpus in equity hybrid fund, held >1 year, 12% annual returns, <span class="dynamic-amount" data-amount-inr="50000" data-amount-usd="500" data-amount-eur="500" data-amount-gbp="500"></span>/month SWP:
 
 <div class="overflow-x-auto not-prose">
     <table class="min-w-full text-sm">
@@ -70,31 +70,31 @@ Assume: <span class="dynamic-amount" data-amount="1000000"></span> corpus in equ
                 <th class="py-3 px-4 font-bold border-b">Year</th>
                 <th class="py-3 px-4 font-bold border-b">Withdrawn</th>
                 <th class="py-3 px-4 font-bold border-b">Capital Gains Portion</th>
-                <th class="py-3 px-4 font-bold border-b">Tax (12.5% LTCG)*</th>
+                <th class="py-3 px-4 font-bold border-b">Tax (12.5% / 15%)*</th>
                 <th class="py-3 px-4 font-bold border-b text-emerald-600">Post-Tax Income</th>
             </tr>
         </thead>
         <tbody>
             <tr class="border-b">
                 <td class="py-3 px-4">Year 1</td>
-                <td class="py-3 px-4"><span class="currency-text">$</span>6.00L</td>
-                <td class="py-3 px-4">~<span class="currency-text">$</span>1.80L</td>
-                <td class="py-3 px-4"><span class="currency-text">$</span>6,875</td>
-                <td class="py-3 px-4 text-emerald-600 font-bold"><span class="currency-text">$</span>5.93L</td>
+                <td class="py-3 px-4"><span class="dynamic-amount" data-amount-inr="600000" data-amount-usd="6000" data-amount-eur="6000" data-amount-gbp="6000"></span></td>
+                <td class="py-3 px-4">~<span class="dynamic-amount" data-amount-inr="180000" data-amount-usd="1800" data-amount-eur="1800" data-amount-gbp="1800"></span></td>
+                <td class="py-3 px-4"><span class="dynamic-amount" data-amount-inr="6875" data-amount-usd="270" data-amount-eur="270" data-amount-gbp="270"></span></td>
+                <td class="py-3 px-4 text-emerald-600 font-bold"><span class="dynamic-amount" data-amount-inr="593125" data-amount-usd="5730" data-amount-eur="5730" data-amount-gbp="5730"></span></td>
             </tr>
             <tr class="border-b">
                 <td class="py-3 px-4">Year 5</td>
-                <td class="py-3 px-4"><span class="currency-text">$</span>6.00L</td>
-                <td class="py-3 px-4">~<span class="currency-text">$</span>2.40L</td>
-                <td class="py-3 px-4"><span class="currency-text">$</span>14,375</td>
-                <td class="py-3 px-4 text-emerald-600 font-bold"><span class="currency-text">$</span>5.86L</td>
+                <td class="py-3 px-4"><span class="dynamic-amount" data-amount-inr="600000" data-amount-usd="6000" data-amount-eur="6000" data-amount-gbp="6000"></span></td>
+                <td class="py-3 px-4">~<span class="dynamic-amount" data-amount-inr="240000" data-amount-usd="2400" data-amount-eur="2400" data-amount-gbp="2400"></span></td>
+                <td class="py-3 px-4"><span class="dynamic-amount" data-amount-inr="14375" data-amount-usd="143" data-amount-eur="143" data-amount-gbp="143"></span></td>
+                <td class="py-3 px-4 text-emerald-600 font-bold"><span class="dynamic-amount" data-amount-inr="585625" data-amount-usd="5856" data-amount-eur="5856" data-amount-gbp="5856"></span></td>
             </tr>
             <tr>
                 <td class="py-3 px-4">Year 10</td>
-                <td class="py-3 px-4"><span class="currency-text">$</span>6.00L</td>
-                <td class="py-3 px-4">~<span class="currency-text">$</span>3.20L</td>
-                <td class="py-3 px-4"><span class="currency-text">$</span>24,375</td>
-                <td class="py-3 px-4 text-emerald-600 font-bold"><span class="currency-text">$</span>5.76L</td>
+                <td class="py-3 px-4"><span class="dynamic-amount" data-amount-inr="600000" data-amount-usd="6000" data-amount-eur="6000" data-amount-gbp="6000"></span></td>
+                <td class="py-3 px-4">~<span class="dynamic-amount" data-amount-inr="320000" data-amount-usd="3200" data-amount-eur="3200" data-amount-gbp="3200"></span></td>
+                <td class="py-3 px-4"><span class="dynamic-amount" data-amount-inr="24375" data-amount-usd="243" data-amount-eur="243" data-amount-gbp="243"></span></td>
+                <td class="py-3 px-4 text-emerald-600 font-bold"><span class="dynamic-amount" data-amount-inr="575625" data-amount-usd="5756" data-amount-eur="5756" data-amount-gbp="5756"></span></td>
             </tr>
         </tbody>
     </table>

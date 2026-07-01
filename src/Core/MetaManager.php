@@ -6,8 +6,8 @@ namespace Core;
 class MetaManager {
     private array $metaData = [
         'home' => [
-            'title' => 'SIP & SWP Calculator 2026: Mutual Fund Returns in India',
-            'meta_desc' => 'Free Systematic Investment Plan (SIP) and SWP calculator for India. Plan your retirement with step-up compounding, inflation adjustments, and 2026 tax rules (12.5% LTCG).',
+            'title' => 'SIP & SWP Calculator 2026: Plan Your Retirement Wealth',
+            'meta_desc' => 'Free Systematic Investment Plan (SIP) and SWP calculator. Plan your retirement with step-up compounding, inflation adjustments, and multi-currency support.',
             'canonical' => 'https://sipswpcalculator.com/',
         ],
         'sip-calculator' => [
@@ -21,11 +21,30 @@ class MetaManager {
             'canonical' => 'https://sipswpcalculator.com/sip-step-up-calculator',
         ],
         'swp-tax-calculator' => [
-            'title' => 'SWP Tax Calculator India 2026: Post-Tax Retirement Income',
-            'meta_desc' => 'Calculate post-tax monthly income from your Systematic Withdrawal Plan (SWP) using the latest 2026 India capital gains tax rules (12.5% LTCG).',
+            'title' => 'SWP Tax Calculator 2026: Post-Tax Retirement Income',
+            'meta_desc' => 'Calculate post-tax monthly income from your Systematic Withdrawal Plan (SWP) using capital gains tax rules for India, USA, and UK.',
             'canonical' => 'https://sipswpcalculator.com/swp-tax-calculator',
         ],
-        // Add more pages as needed
+        'compound-interest-calculator' => [
+            'title' => 'Compound Interest Calculator 2026: Plan Compound Returns',
+            'meta_desc' => 'Free online compound interest calculator with monthly, quarterly, and annual frequencies. Visualize your exponential savings growth over time.',
+            'canonical' => 'https://sipswpcalculator.com/compound-interest-calculator',
+        ],
+        'dollar-cost-averaging-tool' => [
+            'title' => 'Dollar-Cost Averaging (DCA) Calculator 2026: Smooth Volatility',
+            'meta_desc' => 'Calculate how regular recurring investments lower your average cost basis. Compare DCA vs. Lump Sum strategy with our free visual tool.',
+            'canonical' => 'https://sipswpcalculator.com/dollar-cost-averaging-tool',
+        ],
+        'recurring-investment-calculator' => [
+            'title' => 'Recurring Investment Calculator 2026: Monthly Savings Planner',
+            'meta_desc' => 'Calculate the future value of your recurring monthly savings. Plan your wealth accumulation with compounding and annual step-up top-ups.',
+            'canonical' => 'https://sipswpcalculator.com/recurring-investment-calculator',
+        ],
+        'retirement-drawdown-planner' => [
+            'title' => 'Retirement Drawdown Planner 2026: Safe Withdrawal Rate',
+            'meta_desc' => 'Determine how long your retirement savings will last. Model systematic withdrawals (SWP), inflation, and safe withdrawal rates (3-4% rule).',
+            'canonical' => 'https://sipswpcalculator.com/retirement-drawdown-planner',
+        ]
     ];
 
     public function getMeta(string $pageKey): array {

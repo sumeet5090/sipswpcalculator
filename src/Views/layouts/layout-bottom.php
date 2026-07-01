@@ -23,6 +23,7 @@
         }
     });
 </script>
+<script defer src="/script.js?v=<?= filemtime(__DIR__ . '/../../../script.js') ?>"></script>
 </div><!-- Closing Standard Container -->
 </body>
 

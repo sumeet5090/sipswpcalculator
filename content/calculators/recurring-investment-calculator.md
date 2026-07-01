@@ -9,8 +9,8 @@ Calculate the future value of your monthly savings with compounding
 
 <div id="quick-answer" class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto" role="complementary" aria-label="Quick Answer">
     <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
-    <p class="text-base text-gray-700"><strong>How much will a $100/month SIP grow in 20 years?</strong></p>
-    <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a $100/month SIP will grow to approximately <strong class="text-emerald-700">$35,400</strong> over 20 years. Total invested: $6,873. Total gains: $28,527.</p>
+    <p class="text-base text-gray-700"><strong>How much will a <span class="dynamic-amount" data-amount-inr="10000" data-amount-usd="100" data-amount-eur="100" data-amount-gbp="100"></span>/month SIP grow in 20 years?</strong></p>
+    <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a <span class="dynamic-amount" data-amount-inr="10000" data-amount-usd="100" data-amount-eur="100" data-amount-gbp="100"></span>/month SIP will grow to approximately <strong class="text-emerald-700"><span class="dynamic-amount" data-amount-inr="35400000" data-amount-usd="35400" data-amount-eur="35400" data-amount-gbp="35400"></span></strong> over 20 years. Total invested: <span class="dynamic-amount" data-amount-inr="6873000" data-amount-usd="6873" data-amount-eur="6873" data-amount-gbp="6873"></span>. Total gains: <span class="dynamic-amount" data-amount-inr="28527000" data-amount-usd="28527" data-amount-eur="28527" data-amount-gbp="28527"></span>.</p>
 </div>
 
 <h2 id="compounding-secrets-overview">Compounding Secrets: Why Monthly Recurring Investments Beat Market Timing</h2>

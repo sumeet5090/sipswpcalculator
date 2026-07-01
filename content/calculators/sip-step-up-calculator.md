@@ -5,13 +5,13 @@ How a small annual increase transforms your wealth
 
 ## What is a Step-Up / Top-Up SIP?
 
-A <dfn>**Step-Up SIP**</dfn> (also called Top-Up SIP) is a variation of a regular SIP where you **automatically increase your monthly investment amount by a fixed percentage every year**. For example, if you start with <span class="currency-text">$</span>100/month and set a 10% annual step-up, your SIP increases to <span class="currency-text">$</span>110 in Year 2, <span class="currency-text">$</span>121 in Year 3, and so on. (Note: The UI handles the calculation based on your currency).
+A <dfn>**Step-Up SIP**</dfn> (also called Top-Up SIP) is a variation of a regular SIP where you **automatically increase your monthly investment amount by a fixed percentage every year**. For example, if you start with <span class="dynamic-amount" data-amount-inr="10000" data-amount-usd="100" data-amount-eur="100" data-amount-gbp="100"></span>/month and set a 10% annual step-up, your SIP increases to <span class="dynamic-amount" data-amount-inr="11000" data-amount-usd="110" data-amount-eur="110" data-amount-gbp="110"></span> in Year 2, <span class="dynamic-amount" data-amount-inr="12100" data-amount-usd="121" data-amount-eur="121" data-amount-gbp="121"></span> in Year 3, and so on. (Note: The UI handles the calculation based on your currency).
 
 This approach mirrors real life — as your salary grows, your investments grow proportionally. It's the **single most powerful strategy** for maximizing long-term wealth creation through mutual funds.
 
 ## Flat SIP vs Step-Up SIP: Side-by-Side Comparison
 
-The difference is dramatic. Here's a comparison assuming <span class="currency-text">$</span>100/month starting SIP at 12% annual returns over 20 years:
+The difference is dramatic. Here's a comparison assuming <span class="dynamic-amount" data-amount-inr="10000" data-amount-usd="100" data-amount-eur="100" data-amount-gbp="100"></span>/month starting SIP at 12% annual returns over 20 years:
 
 <div class="overflow-x-auto not-prose">
 <table class="min-w-full text-sm">
@@ -26,17 +26,17 @@ The difference is dramatic. Here's a comparison assuming <span class="currency-t
 <tbody>
 <tr class="border-b">
 <td class="py-3 px-4 font-medium">Total Invested</td>
-<td class="py-3 px-4"><span class="currency-text">$</span>24.00 L</td>
-<td class="py-3 px-4"><span class="currency-text">$</span>68.73 L</td>
-<td class="py-3 px-4">+<span class="currency-text">$</span>44.73 L</td>
+<td class="py-3 px-4"><span class="dynamic-amount" data-amount-inr="2400000" data-amount-usd="24000" data-amount-eur="24000" data-amount-gbp="24000"></span></td>
+<td class="py-3 px-4"><span class="dynamic-amount" data-amount-inr="6873000" data-amount-usd="68730" data-amount-eur="68730" data-amount-gbp="68730"></span></td>
+<td class="py-3 px-4 font-bold text-green-700">+<span class="dynamic-amount" data-amount-inr="4473000" data-amount-usd="44730" data-amount-eur="44730" data-amount-gbp="44730"></span></td>
 </tr>
 <tr class="border-b">
 <td class="py-3 px-4 font-medium">Maturity Value</td>
-<td class="py-3 px-4"><span class="currency-text">$</span>99.92 L</td>
-<td class="py-3 px-4 font-bold text-indigo-700"><span class="currency-text">$</span>3.54 Cr</td>
-<td class="py-3 px-4 font-bold text-green-700">+<span class="currency-text">$</span>2.54 Cr</td>
+<td class="py-3 px-4"><span class="dynamic-amount" data-amount-inr="9992000" data-amount-usd="99920" data-amount-eur="99920" data-amount-gbp="99920"></span></td>
+<td class="py-3 px-4 font-bold text-indigo-700"><span class="dynamic-amount" data-amount-inr="35400000" data-amount-usd="354000" data-amount-eur="354000" data-amount-gbp="354000"></span></td>
+<td class="py-3 px-4 font-bold text-green-700">+<span class="dynamic-amount" data-amount-inr="25400000" data-amount-usd="254000" data-amount-eur="254000" data-amount-gbp="254000"></span></td>
 </tr>
-<tr>
+<tr class="border-b">
 <td class="py-3 px-4 font-medium">Wealth Multiplier</td>
 <td class="py-3 px-4">4.2×</td>
 <td class="py-3 px-4 font-bold text-indigo-700">5.1×</td>
@@ -46,7 +46,7 @@ The difference is dramatic. Here's a comparison assuming <span class="currency-t
 </table>
 </div>
 
-A 10% step-up produces **<span class="dynamic-amount" data-amount="25400000"></span> more** than a flat SIP — that's 3.5× the final corpus!
+A 10% step-up produces **<span class="dynamic-amount" data-amount-inr="25400000" data-amount-usd="254000" data-amount-eur="254000" data-amount-gbp="254000"></span> more** than a flat SIP — that's 3.5× the final corpus!
 
 ## The Math: Step-Up SIP Formula Explained
 

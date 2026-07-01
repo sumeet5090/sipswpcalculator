@@ -38,11 +38,11 @@ This adjustment is made because SIP payments are technically an "Annuity Due" (p
 </svg>
 </div>
 <h4 class="text-lg font-bold text-indigo-700 mb-2">Scenario A: The Wealth Builder</h4>
-<p class="text-sm text-gray-500 mb-4">Invests <span class="currency-text">$</span>100/month for 20 Years @ 12%</p>
+<p class="text-sm text-gray-500 mb-4">Invests <span class="dynamic-amount" data-amount-inr="10000" data-amount-usd="100" data-amount-eur="100" data-amount-gbp="100"></span>/month for 20 Years @ 12%</p>
 <ul class="space-y-2 text-sm text-gray-700">
-<li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span class="dynamic-amount" data-amount="2400000"></span></span></li>
-<li class="flex justify-between"><span>Wealth Gained:</span> <span class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="7591479"></span></span></li>
-<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount" data-amount="9991479"></span></span></li>
+<li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="2400000" data-amount-usd="24000" data-amount-eur="24000" data-amount-gbp="24000"></span></span></li>
+<li class="flex justify-between"><span>Wealth Gained:</span> <span class="font-bold text-green-700">+<span class="dynamic-amount" data-amount-inr="7591479" data-amount-usd="75915" data-amount-eur="75915" data-amount-gbp="75915"></span></span></li>
+<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity Value:</span> <span class="font-bold text-indigo-700"><span class="dynamic-amount" data-amount-inr="9991479" data-amount-usd="99915" data-amount-eur="99915" data-amount-gbp="99915"></span></span></li>
 </ul>
 <p class="text-xs text-gray-500 mt-4">Result: Your money multiplied ~4.1x</p>
 </div>
@@ -55,11 +55,11 @@ This adjustment is made because SIP payments are technically an "Annuity Due" (p
 </svg>
 </div>
 <h4 class="text-lg font-bold text-rose-600 mb-2">Scenario B: The Late Starter (Step-Up)</h4>
-<p class="text-sm text-gray-500 mb-4">Start <span class="currency-text">$</span>20,000/month, Step-up 10% yearly, 15 Years @ 12%</p>
+<p class="text-sm text-gray-500 mb-4">Start <span class="dynamic-amount" data-amount-inr="20000" data-amount-usd="200" data-amount-eur="200" data-amount-gbp="200"></span>/month, Step-up 10% yearly, 15 Years @ 12%</p>
 <ul class="space-y-2 text-sm text-gray-700">
-<li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span class="dynamic-amount" data-amount="7626000"></span></span></li>
-<li class="flex justify-between"><span>Wealth Gained:</span> <span class="font-bold text-green-700">+<span class="dynamic-amount" data-amount="8556000"></span></span></li>
-<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity Value:</span> <span class="font-bold text-rose-700"><span class="dynamic-amount" data-amount="16100000.000000002"></span></span></li>
+<li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="7626000" data-amount-usd="76260" data-amount-eur="76260" data-amount-gbp="76260"></span></span></li>
+<li class="flex justify-between"><span>Wealth Gained:</span> <span class="font-bold text-green-700">+<span class="dynamic-amount" data-amount-inr="8556000" data-amount-usd="85560" data-amount-eur="85560" data-amount-gbp="85560"></span></span></li>
+<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity Value:</span> <span class="font-bold text-rose-700"><span class="dynamic-amount" data-amount-inr="16182000" data-amount-usd="161820" data-amount-eur="161820" data-amount-gbp="161820"></span></span></li>
 </ul>
 <p class="text-xs text-gray-500 mt-4">Result: Catch up by increasing contributions.</p>
 </div>

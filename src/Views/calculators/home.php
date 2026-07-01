@@ -1585,7 +1585,6 @@ endforeach; ?>
         swp: <?= json_encode(array_values($swp_numbers))?>
     };
 </script>
-<script defer src="script.js?v=<?= filemtime(__DIR__ . '/../../../script.js')?>"></script>
 
 <script>
     // ── Smart Nudge: Rate Benchmark Popover ────────────────────────────────
