@@ -25,7 +25,7 @@ $default_swp_rate = 8;
 $lumpsum = $lumpsum ?? $default_lumpsum;
 $swp_rate = $swp_rate ?? $default_swp_rate;
 
-$page_config = [
+$page_config = $page_config ?? [
     'title' => 'SIP SWP Calculator 2026: Plan SIP to SWP Mutual Fund Income',
     'meta_desc' => 'Free online SIP SWP calculator. Plan your transition from SIP accumulation to SWP retirement income in India. Model lumpsums, annual step-ups, and inflation adjustments.',
 ];

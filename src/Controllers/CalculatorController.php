@@ -100,6 +100,8 @@ class CalculatorController
             exit();
         }
 
+        $page_config = $this->metaManager->getMeta('home');
+
         require_once __DIR__ . '/../Views/calculators/home.php';
     }
 
