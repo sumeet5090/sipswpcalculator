@@ -33,8 +33,12 @@ class CurrencyHelper
             
             $firstPart = '';
             $exploded = str_split($restUnits, 2);
-            foreach ($exploded as $value) {
-                $firstPart .= (int)$value . ",";
+            foreach ($exploded as $index => $value) {
+                if ($index === 0) {
+                    $firstPart .= (int)$value . ",";
+                } else {
+                    $firstPart .= $value . ",";
+                }
             }
             $delimiter = $firstPart . $lastThree;
         }

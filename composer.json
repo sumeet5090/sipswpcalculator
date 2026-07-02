@@ -2,5 +2,16 @@
     "require": {
         "dompdf/dompdf": "^2.0",
         "erusev/parsedown": "^1.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        },
+        "files": [
+            "functions.php"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^13.2"
     }
 }
