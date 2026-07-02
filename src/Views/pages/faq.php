@@ -16,64 +16,14 @@ $page_config = [
 
 $active_page = 'faq.php';
 
+$faqRepository = new \Core\FaqRepository();
+$faqs = $faqRepository->getAll();
+
 $faq_categories = [
     ['id' => 'basics', 'label' => 'Basics', 'icon' => 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'],
     ['id' => 'strategies', 'label' => 'Strategies', 'icon' => 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'],
     ['id' => 'tax', 'label' => 'Tax & Risk', 'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 16V7'],
     ['id' => 'selection', 'label' => 'Selection', 'icon' => 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z']
-];
-
-$faqs = [
-    [
-        'category' => 'strategies',
-        'q' => 'Can I start an SWP immediately after my SIP ends?',
-        'a' => 'Yes, absolutely. This is a common strategy for retirement planning. You accumulate a corpus using SIP during your working years and then switch to SWP to generate a monthly pension-like income post-retirement. Our calculator specifically models this seamless transition.'
-    ],
-    [
-        'category' => 'basics',
-        'q' => 'Is SWP better than a fixed deposit interest?',
-        'a' => 'Generally, yes. SWP from equity or hybrid mutual funds has the potential to offer higher returns than fixed deposits over the long term. Additionally, SWP is more tax-efficient because you are only taxed on the capital gains portion of the withdrawal, whereas FD interest is fully taxable at your income tax slab rate.'
-    ],
-    [
-        'category' => 'strategies',
-        'q' => 'How does the "Step-up" feature work?',
-        'a' => 'A "Step-up" SIP means you increase your monthly investment amount by a certain percentage every year (e.g., matching your salary hikes). This exponentially boosts your final corpus. Similarly, a "Step-up" SWP means you increase your withdrawal amount annually to maintain your lifestyle against inflation.'
-    ],
-    [
-        'category' => 'strategies',
-        'q' => 'What is a safe withdrawal rate for SWP?',
-        'a' => 'Financial experts often recommend the "4% rule," suggesting you withdraw 4% of your total corpus in the first year and adjust for inflation thereafter. However, a safer approach for longer retirements (30+ years) is often 3% to 3.5%, especially in volatile markets.'
-    ],
-    [
-        'category' => 'basics',
-        'q' => 'Which is better: SIP or Lump Sum?',
-        'a' => 'Lump sum is mathematically superior in a consistently rising market. However, SIP is significantly safer for most investors as it benefits from "Cost Averaging." It allows you to buy more units when prices are low, which protects you from the risk of timing the market incorrectly.'
-    ],
-    [
-        'category' => 'tax',
-        'q' => 'Can I lose money in SIP?',
-        'a' => 'In the short term, yes. Since SIPs are market-linked, your portfolio value can fluctuate. However, the probability of negative returns decreases sharply the longer you stay invested. Historical data suggests that for periods longer than 7-10 years, the risk of loss in a diversified index fund is historically near zero.'
-    ],
-    [
-        'category' => 'basics',
-        'q' => 'What is the minimum amount to start a SIP?',
-        'a' => 'Most mutual fund houses worldwide allow SIPs starting from as low as $5 to $10 per month. The key to wealth is not the size of the initial investment, but the consistency and duration of the compounding process.'
-    ],
-    [
-        'category' => 'selection',
-        'q' => 'How do I choose the right mutual fund for my SIP?',
-        'a' => 'Focus on three key factors: (1) Asset Allocation - Choose based on your risk tolerance; (2) Performance Consistency - Look at 5-10 year track records, not just last year; (3) Cost - Prefer Low Expense Ratio funds (Direct Index Funds) to maximize your returns.'
-    ],
-    [
-        'category' => 'tax',
-        'q' => 'How are SWP withdrawals taxed worldwide?',
-        'a' => 'SWP withdrawals are treated as partial redemptions of your investment. Only the "Capital Gain" portion of each withdrawal is taxable, while the principal component is tax-free. In many jurisdictions, Long-Term Capital Gains (LTCG) held for over a year are taxed at a much lower rate than regular income tax.'
-    ],
-    [
-        'category' => 'selection',
-        'q' => 'How long should I continue my SIP for best results?',
-        'a' => 'Compounding works best in the "late stage." You will likely see more growth in years 15-20 than you did in years 1-15. Therefore, we recommend staying invested for at least 10-15 years to truly harness the power of compounding and market growth.'
-    ]
 ];
 
 ob_start();
