@@ -8,8 +8,8 @@ class MetaManager
 {
     private array $metaData = [
         'home' => [
-            'title' => 'SIP & SWP Calculator 2026: Plan Mutual Fund Returns in India',
-            'meta_desc' => 'Free online Systematic Investment Plan (SIP) and SWP calculator. Plan your Indian mutual fund retirement wealth with step-up compounding and inflation adjustments.',
+            'title' => 'SIP SWP Calculator 2026: Plan SIP to SWP Mutual Fund Income',
+            'meta_desc' => 'Free online SIP SWP calculator. Plan your transition from SIP accumulation to SWP retirement income in India. Model lumpsums, annual step-ups, and inflation adjustments.',
             'canonical' => 'https://sipswpcalculator.com/',
         ],
         'sip-calculator' => [

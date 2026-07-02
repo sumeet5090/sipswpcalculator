@@ -25,17 +25,21 @@ class InvestmentCalculator
         $enableSwp = $inputs->isSwpEnabled();
         $swpWithdrawal = $inputs->getSwpWithdrawal();
         $swpStepup = $inputs->getSwpStepup();
+        $lumpsum = $inputs->getLumpsum();
+        $swpRate = $inputs->getSwpRate();
 
         $swpStartYear = $sipYears + 1;
         $simulationYears = $enableSwp ? ($sipYears + $swpYears) : $sipYears;
-        $monthlyRate = $rate / 100 / 12;
 
-        $netBalance = 0.0;
-        $cumulativeInvested = 0.0;
+        $netBalance = $lumpsum;
+        $cumulativeInvested = $lumpsum;
         $cumulativeWithdrawals = 0.0;
         $results = [];
 
         for ($y = 1; $y <= $simulationYears; $y++) {
+            $currentRate = ($y <= $sipYears) ? $rate : $swpRate;
+            $monthlyRate = $currentRate / 100 / 12;
+
             // Determine monthly SIP for this year
             $monthlySip = ($y <= $sipYears) ? round($inputs->getSip() * pow(1 + $stepup / 100, $y - 1), 2) : 0.0;
             $annualContribution = $monthlySip * 12.0;

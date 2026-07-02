@@ -10,17 +10,21 @@ export class MathEngine {
      * @returns {Array} List of yearly breakdown records.
      */
     static calculateCorpus(inp) {
-        const monthlyRate = inp.rate / 100 / 12;
         const swpStartYear = inp.years + 1;
         const totalYears = inp.enable_swp ? (inp.years + inp.swp_years) : inp.years;
+        const lumpsum = inp.lumpsum || 0;
+        const swpRate = inp.swp_rate || 8;
 
-        let netBalance = 0.0;
-        let cumulativeInvested = 0.0;
+        let netBalance = lumpsum;
+        let cumulativeInvested = lumpsum;
         let cumulativeWithdrawals = 0.0;
 
         const results = [];
 
         for (let y = 1; y <= totalYears; y++) {
+            const currentRate = (y <= inp.years) ? inp.rate : swpRate;
+            const monthlyRate = currentRate / 100 / 12;
+
             // Monthly SIP amount for this year
             let monthlySip = 0.0;
             if (y <= inp.years) {

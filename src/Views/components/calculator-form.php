@@ -41,6 +41,24 @@ declare(strict_types=1);
             <div class="relative">
                 <div class="mb-4 relative z-10 bg-[var(--glass-bg)] p-4 sm:p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
                     <div class="space-y-3">
+                        <!-- Initial Lumpsum -->
+                        <div class="group">
+                            <label for="lumpsum" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
+                                Initial Lumpsum (Optional)
+                            </label>
+                            <div class="relative">
+                                <span class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">₹</span>
+                                <input type="number" id="lumpsum" name="lumpsum"
+                                    class="w-full bg-white border border-slate-200 rounded-lg pl-6 pr-2.5 py-3 sm:py-1.5 text-sm font-bold text-emerald-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30 transition-colors"
+                                    required min="0" step="5000" max="10000000"
+                                    value="<?= htmlspecialchars((string)($lumpsum ?? 0))?>">
+                            </div>
+                            <input type="range" id="lumpsum_range" min="0" max="1000000" step="5000"
+                                value="<?= htmlspecialchars((string)($lumpsum ?? 0))?>"
+                                aria-label="Initial lumpsum investment slider"
+                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-emerald-500 mt-2">
+                        </div>
+
                         <!-- Monthly Investment -->
                         <div class="group">
                             <label for="sip" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
@@ -254,6 +272,24 @@ declare(strict_types=1);
                             <input type="range" id="swp_stepup_range" min="0" max="20" step="0.5"
                                 value="<?= htmlspecialchars((string)$swp_stepup)?>"
                                 aria-label="SWP yearly hike slider"
+                                class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
+                        </div>
+
+                        <!-- SWP Expected Return -->
+                        <div class="group">
+                            <label for="swp_rate" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
+                                SWP Expected Return
+                            </label>
+                            <div class="relative">
+                                <input type="number" id="swp_rate" step="0.5" name="swp_rate"
+                                    class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-3 sm:py-1.5 pr-6 text-sm font-bold text-rose-500 focus:outline-none focus:border-rose-400 focus:ring-1 focus:ring-rose-400/30 transition-colors"
+                                    required min="0.1" max="30"
+                                    value="<?= htmlspecialchars((string)($swp_rate ?? 8))?>">
+                                <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">%</span>
+                            </div>
+                            <input type="range" id="swp_rate_range" min="1" max="30" step="0.5"
+                                value="<?= htmlspecialchars((string)($swp_rate ?? 8))?>"
+                                aria-label="SWP expected return rate slider"
                                 class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer accent-rose-500 mt-2">
                         </div>
                     </div>

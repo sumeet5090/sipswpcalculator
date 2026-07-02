@@ -27,6 +27,8 @@ export class CalculatorApp {
             rateRange: () => document.getElementById('rate_range'),
             stepup: () => document.getElementById('stepup'),
             stepupRange: () => document.getElementById('stepup_range'),
+            lumpsum: () => document.getElementById('lumpsum'),
+            lumpsumRange: () => document.getElementById('lumpsum_range'),
             enableSwp: () => document.getElementById('enable_swp'),
             swpFields: () => document.getElementById('swp-fields'),
             swpWithdrawal: () => document.getElementById('swp_withdrawal'),
@@ -35,6 +37,8 @@ export class CalculatorApp {
             swpYearsRange: () => document.getElementById('swp_years_range'),
             swpStepup: () => document.getElementById('swp_stepup'),
             swpStepupRange: () => document.getElementById('swp_stepup_range'),
+            swpRate: () => document.getElementById('swp_rate'),
+            swpRateRange: () => document.getElementById('swp_rate_range'),
             tbody: () => document.getElementById('breakdown-body'),
             shareBtn: () => document.getElementById('shareCalcBtn'),
             shareBtnText: () => document.getElementById('shareBtnText'),
@@ -62,10 +66,12 @@ export class CalculatorApp {
             years: this.validator.validate('years', this.elements.years()?.value),
             rate: this.validator.validate('rate', this.elements.rate()?.value),
             stepup: this.validator.validate('stepup', this.elements.stepup()?.value),
+            lumpsum: this.validator.validate('lumpsum', this.elements.lumpsum()?.value),
             enable_swp: this.elements.enableSwp()?.checked || false,
             swp_withdrawal: this.validator.validate('swp_withdrawal', this.elements.swpWithdrawal()?.value),
             swp_years: this.validator.validate('swp_years', this.elements.swpYears()?.value),
-            swp_stepup: this.validator.validate('swp_stepup', this.elements.swpStepup()?.value)
+            swp_stepup: this.validator.validate('swp_stepup', this.elements.swpStepup()?.value),
+            swp_rate: this.validator.validate('swp_rate', this.elements.swpRate()?.value)
         };
     }
 
@@ -253,9 +259,11 @@ export class CalculatorApp {
         this.setupRangeSync('years', 'years_range');
         this.setupRangeSync('rate', 'rate_range');
         this.setupRangeSync('stepup', 'stepup_range');
+        this.setupRangeSync('lumpsum', 'lumpsum_range');
         this.setupRangeSync('swp_withdrawal', 'swp_withdrawal_range');
         this.setupRangeSync('swp_years', 'swp_years_range');
         this.setupRangeSync('swp_stepup', 'swp_stepup_range');
+        this.setupRangeSync('swp_rate', 'swp_rate_range');
 
         // ── SWP Toggle ──
         const swpToggle = this.elements.enableSwp();
@@ -377,9 +385,11 @@ export class CalculatorApp {
                 formData.append('years', this.elements.years().value);
                 formData.append('rate', this.elements.rate().value);
                 formData.append('stepup', this.elements.stepup().value);
+                formData.append('lumpsum', this.elements.lumpsum().value);
                 formData.append('swp_withdrawal', this.elements.swpWithdrawal().value);
                 formData.append('swp_stepup', this.elements.swpStepup().value);
                 formData.append('swp_years', this.elements.swpYears().value);
+                formData.append('swp_rate', this.elements.swpRate().value);
 
                 formData.append('currency_symbol', '₹');
                 formData.append('summary_invested', document.getElementById('summary-invested')?.textContent.trim() || '0');
@@ -433,7 +443,9 @@ export class CalculatorApp {
                             swp_enabled: inputs.enable_swp ? 1 : 0,
                             swp_withdrawal: inputs.swp_withdrawal,
                             swp_duration: inputs.swp_years,
-                            swp_step_up: inputs.swp_stepup
+                            swp_step_up: inputs.swp_stepup,
+                            lumpsum: inputs.lumpsum,
+                            swp_rate: inputs.swp_rate
                         }),
                         keepalive: true
                     }).catch(() => {});
@@ -461,12 +473,14 @@ export class CalculatorApp {
                 params.set('years', String(inputs.years));
                 params.set('rate', String(inputs.rate));
                 params.set('stepup', String(inputs.stepup));
+                params.set('lumpsum', String(inputs.lumpsum));
                 params.set('cur', 'INR');
                 if (inputs.enable_swp) {
                     params.set('swp_on', '1');
                     params.set('swp', String(inputs.swp_withdrawal));
                     params.set('swp_years', String(inputs.swp_years));
                     params.set('swp_stepup', String(inputs.swp_stepup));
+                    params.set('swp_rate', String(inputs.swp_rate));
                 }
                 const shareUrl = window.location.origin + '/?' + params.toString();
 
@@ -502,9 +516,10 @@ export class CalculatorApp {
 
         // ── Restore from URL query params ──
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('sip')) {
+        if (urlParams.has('sip') || urlParams.has('lumpsum')) {
             const paramMap = {
                 'sip': 'sip', 'years': 'years', 'rate': 'rate', 'stepup': 'stepup',
+                'lumpsum': 'lumpsum', 'swp_rate': 'swp_rate',
                 'swp': 'swp_withdrawal', 'swp_years': 'swp_years', 'swp_stepup': 'swp_stepup'
             };
             for (const [param, inputId] of Object.entries(paramMap)) {
@@ -564,5 +579,17 @@ export class CalculatorApp {
         } else {
             this.triggerCalculation();
         }
+
+        // Hydrate all static amounts
+        this.hydrateDynamicAmounts();
+    }
+
+    hydrateDynamicAmounts() {
+        document.querySelectorAll('.dynamic-amount').forEach(el => {
+            const amount = parseFloat(el.getAttribute('data-amount-inr') || el.getAttribute('data-amount'));
+            if (!isNaN(amount)) {
+                el.textContent = this.formatter.formatDynamic(amount);
+            }
+        });
     }
 }

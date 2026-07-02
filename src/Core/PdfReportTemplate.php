@@ -150,16 +150,20 @@ class PdfReportTemplate
             <h2>Investment Configuration</h2>
             <table class='input-table'>
                 <tr>
+                    <th>Initial Lumpsum:</th>
+                    <td>{$currency_sym}" . number_format((float) ($inputs['lumpsum'] ?? 0)) . "</td>
                     <th>Monthly SIP:</th>
                     <td>{$currency_sym}" . number_format((float) ($inputs['sip'] ?? 0)) . "</td>
-                    <th>SIP Period:</th>
-                    <td>" . ($inputs['years'] ?? 0) . " Years</td>
                 </tr>
                 <tr>
+                    <th>SIP Period:</th>
+                    <td>" . ($inputs['years'] ?? 0) . " Years</td>
                     <th>Expected Return:</th>
                     <td>" . ($inputs['rate'] ?? 0) . "% p.a.</td>
+                </tr>
+                <tr>
                     <th>Annual Step-up:</th>
-                    <td>" . ($inputs['stepup'] ?? 0) . "%</td>
+                    <td colspan='3'>" . ($inputs['stepup'] ?? 0) . "%</td>
                 </tr>";
 
         if ($has_swp) {
@@ -171,8 +175,10 @@ class PdfReportTemplate
                     <td>" . ($inputs['swp_years'] ?? 0) . " Years</td>
                 </tr>
                 <tr>
+                    <th>SWP Return Rate:</th>
+                    <td>" . ($inputs['swp_rate'] ?? 8) . "% p.a.</td>
                     <th>SWP Annual Hike:</th>
-                    <td colspan='3'>" . ($inputs['swp_stepup'] ?? 0) . "%</td>
+                    <td>" . ($inputs['swp_stepup'] ?? 0) . "%</td>
                 </tr>";
         }
 

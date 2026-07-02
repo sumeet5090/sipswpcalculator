@@ -18,6 +18,8 @@ class InvestmentInputs
     private float $swpWithdrawal;
     private float $swpStepup;
     private int $swpYears;
+    private float $lumpsum;
+    private float $swpRate;
 
     /**
      * Private constructor to enforce factory creation.
@@ -30,7 +32,9 @@ class InvestmentInputs
         bool $enableSwp,
         float $swpWithdrawal,
         float $swpStepup,
-        int $swpYears
+        int $swpYears,
+        float $lumpsum,
+        float $swpRate
     ) {
         $this->sip = $sip;
         $this->years = $years;
@@ -40,6 +44,8 @@ class InvestmentInputs
         $this->swpWithdrawal = $swpWithdrawal;
         $this->swpStepup = $swpStepup;
         $this->swpYears = $swpYears;
+        $this->lumpsum = $lumpsum;
+        $this->swpRate = $swpRate;
     }
 
     /**
@@ -60,6 +66,8 @@ class InvestmentInputs
         $swpWithdrawal = isset($data['swp_withdrawal']) ? self::clamp((float)$data['swp_withdrawal'], 0, 1000000) : 5000.0;
         $swpStepup = isset($data['swp_stepup']) ? self::clamp((float)$data['swp_stepup'], 0, 20) : 6.0;
         $swpYears = isset($data['swp_years']) ? (int)self::clamp((float)$data['swp_years'], 1, 50) : 20;
+        $lumpsum = isset($data['lumpsum']) ? self::clamp((float)$data['lumpsum'], 0, 10000000) : 0.0;
+        $swpRate = isset($data['swp_rate']) ? self::clamp((float)$data['swp_rate'], 0.1, 30) : 8.0;
 
         return new self(
             $sip,
@@ -69,7 +77,9 @@ class InvestmentInputs
             $enableSwp,
             $swpWithdrawal,
             $swpStepup,
-            $swpYears
+            $swpYears,
+            $lumpsum,
+            $swpRate
         );
     }
 
@@ -119,5 +129,15 @@ class InvestmentInputs
     public function getSwpYears(): int
     {
         return $this->swpYears;
+    }
+
+    public function getLumpsum(): float
+    {
+        return $this->lumpsum;
+    }
+
+    public function getSwpRate(): float
+    {
+        return $this->swpRate;
     }
 }

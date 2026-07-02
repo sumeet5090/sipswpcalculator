@@ -46,10 +46,12 @@ class CalculatorController
         $years = $inputs->getYears();
         $rate = $inputs->getRate();
         $stepup = $inputs->getStepup();
+        $lumpsum = $inputs->getLumpsum();
         $enable_swp = $inputs->isSwpEnabled();
         $swp_withdrawal = $inputs->getSwpWithdrawal();
         $swp_stepup = $inputs->getSwpStepup();
         $swp_years_input = $inputs->getSwpYears();
+        $swp_rate = $inputs->getSwpRate();
 
         // Extract list parameters for chart canvas injection
         $years_data = array_column($combined, 'year');
@@ -416,9 +418,11 @@ class CalculatorController
                 'years' => 0,
                 'rate' => 0,
                 'stepup' => 0,
+                'lumpsum' => 0,
                 'swp_withdrawal' => 0,
                 'swp_stepup' => 0,
                 'swp_years' => 0,
+                'swp_rate' => 8,
                 'logo_base64' => null,
 
                 // Summary Metrics
@@ -446,9 +450,11 @@ class CalculatorController
             $inputs['years'] = max(0, min(50, (int) ($_POST['years'] ?? 0)));
             $inputs['rate'] = max(0, min(50, (float) ($_POST['rate'] ?? 0)));
             $inputs['stepup'] = max(0, min(100, (float) ($_POST['stepup'] ?? 0)));
+            $inputs['lumpsum'] = max(0, min(10000000, (float) ($_POST['lumpsum'] ?? 0)));
             $inputs['swp_withdrawal'] = max(0, min(10000000, (float) ($_POST['swp_withdrawal'] ?? 0)));
             $inputs['swp_stepup'] = max(0, min(50, (float) ($_POST['swp_stepup'] ?? 0)));
             $inputs['swp_years'] = max(0, min(50, (int) ($_POST['swp_years'] ?? 0)));
+            $inputs['swp_rate'] = max(0.1, min(30, (float) ($_POST['swp_rate'] ?? 8)));
 
             if (isset($_FILES['advisorLogo']) && $_FILES['advisorLogo']['error'] === UPLOAD_ERR_OK) {
                 $tmp_name = $_FILES['advisorLogo']['tmp_name'];
