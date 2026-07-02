@@ -3,7 +3,27 @@ declare(strict_types=1);
 
 namespace Core;
 
+/**
+ * BlogRepository
+ * Dynamically queries and retrieves blog categories and post configurations.
+ */
 class BlogRepository {
+    private static array $postConfigs = [
+        'sip-for-beginners' => ['tag' => 'Beginner', 'tag_color' => 'emerald', 'featured' => true, 'date' => 'March 2026'],
+        '20-year-wealth-blueprint-step-up-sip' => ['tag' => 'Strategy', 'tag_color' => 'emerald', 'date' => 'February 2026'],
+        'reach-1-crore-rupees-via-sip' => ['tag' => 'Milestone', 'tag_color' => 'emerald', 'date' => 'January 2026'],
+        'inflation-impact-on-sip' => ['tag' => 'Inflation', 'tag_color' => 'emerald', 'date' => 'March 2026'],
+        'earning-30k-at-25-investment-blueprint' => ['tag' => 'Blueprint', 'tag_color' => 'emerald', 'date' => 'July 2026'],
+        'retirement-planning-4-percent-swp-rule' => ['tag' => 'Strategy', 'tag_color' => 'indigo', 'featured' => true, 'date' => 'March 2026'],
+        'sip-vs-swp-wealth-creation-withdrawal-strategy' => ['tag' => 'Lifecycle', 'tag_color' => 'indigo', 'date' => 'February 2026'],
+        'swp-retirement-planning' => ['tag' => 'Planning', 'tag_color' => 'indigo', 'date' => 'March 2026'],
+        'sip-vs-fd-vs-ppf' => ['tag' => 'Comparison', 'tag_color' => 'amber', 'featured' => true, 'date' => 'March 2026'],
+        'swp-vs-fixed-deposit' => ['tag' => 'Comparison', 'tag_color' => 'amber', 'date' => 'February 2026'],
+        'swp-vs-annuity-2026' => ['tag' => 'Comparison', 'tag_color' => 'amber', 'date' => 'January 2026'],
+        'mutual-fund-tax-2026' => ['tag' => 'Tax', 'tag_color' => 'amber', 'date' => 'March 2026'],
+        'mf-returns-benchmarks' => ['tag' => 'Benchmarks', 'tag_color' => 'amber', 'date' => 'January 2026'],
+    ];
+
     public static function getCategories(): array {
         return [
             'growth' => [
@@ -27,26 +47,58 @@ class BlogRepository {
         ];
     }
 
+    /**
+     * Parse and build blog list details dynamically from markdown files.
+     *
+     * @return array
+     */
     public static function getAllPosts(): array {
-        return [
-            // Growth Category (Emerald Accents)
-            ['category' => 'growth', 'id' => 'growth', 'tag' => 'Beginner', 'tag_color' => 'emerald', 'title' => 'SIP for Beginners: Complete Guide (2026)', 'desc' => 'Everything you need to know to start your first SIP today — KYC, fund selection, and the step-up strategy explained simply.', 'href' => '/resource/growth/sip-for-beginners', 'featured' => true, 'read_time' => '12 min', 'date' => 'March 2026'],
-            ['category' => 'growth', 'id' => 'growth', 'tag' => 'Strategy', 'tag_color' => 'emerald', 'title' => 'The 20-Year Wealth Blueprint', 'desc' => 'How a simple 10% annual step-up SIP can more than double your final corpus over two decades.', 'href' => '/resource/growth/20-year-wealth-blueprint-step-up-sip', 'read_time' => '8 min', 'date' => 'February 2026'],
-            ['category' => 'growth', 'id' => 'growth', 'tag' => 'Milestone', 'tag_color' => 'emerald', 'title' => 'How to Reach ₹1 Crore in 15 to 20 Years via SIP', 'desc' => 'Hitting the ₹1 Crore milestone is a matter of math and consistency. Model exactly what you need monthly.', 'href' => '/resource/growth/reach-1-crore-rupees-via-sip', 'read_time' => '10 min', 'date' => 'January 2026'],
-            ['category' => 'growth', 'id' => 'growth', 'tag' => 'Inflation', 'tag_color' => 'emerald', 'title' => 'The Silent Killer: Inflation Impact on SIP', 'desc' => 'Why flat SIPs guarantee your purchasing power erodes — and the step-up strategy that fights back.', 'href' => '/resource/growth/inflation-impact-on-sip', 'read_time' => '7 min', 'date' => 'March 2026'],
-            ['category' => 'growth', 'id' => 'growth', 'tag' => 'Blueprint', 'tag_color' => 'emerald', 'title' => 'Earning ₹30,000/Month at Age 25? Here is Your Wealth Creation Blueprint', 'desc' => 'A step-by-step financial plan to start investing for long-term compounding, allocate across SIPs, emergency funds, and leverage the power of starting early.', 'href' => '/resource/growth/earning-30k-at-25-investment-blueprint', 'read_time' => '10 min', 'date' => 'July 2026'],
+        $contentDir = __DIR__ . '/../../content/blog';
+        $contentManager = new ContentManager();
+        $posts = [];
 
-            // Retirement Category (Indigo Accents)
-            ['category' => 'retirement', 'id' => 'retirement', 'tag' => 'Strategy', 'tag_color' => 'indigo', 'title' => 'The 4% SWP Rule Explained', 'desc' => 'Structure your retirement withdrawals to ensure your money outlasts you. Master the 4% rule.', 'href' => '/resource/retirement/retirement-planning-4-percent-swp-rule', 'featured' => true, 'read_time' => '15 min', 'date' => 'March 2026'],
-            ['category' => 'retirement', 'id' => 'retirement', 'tag' => 'Lifecycle', 'tag_color' => 'indigo', 'title' => 'SIP vs. SWP: Build & Enjoy', 'desc' => 'The full lifecycle: how to transition from your SIP accumulation phase into a sustainable SWP income stream.', 'href' => '/resource/retirement/sip-vs-swp-wealth-creation-withdrawal-strategy', 'read_time' => '9 min', 'date' => 'February 2026'],
-            ['category' => 'retirement', 'id' => 'retirement', 'tag' => 'Planning', 'tag_color' => 'indigo', 'title' => 'SWP Retirement Planning Guide', 'desc' => 'A complete guide to using Systematic Withdrawal Plans to generate reliable monthly income in retirement.', 'href' => '/resource/retirement/swp-retirement-planning', 'read_time' => '13 min', 'date' => 'March 2026'],
+        foreach (['growth', 'retirement', 'comparison'] as $cat) {
+            $dir = $contentDir . '/' . $cat;
+            if (!is_dir($dir)) continue;
 
-            // Comparison Category (Amber Accents)
-            ['category' => 'comparison', 'id' => 'comparison', 'tag' => 'Comparison', 'tag_color' => 'amber', 'title' => 'SIP vs FD vs PPF: A Direct Comparison', 'desc' => 'Returns, risk, liquidity, and tax compared across major investment instruments. Choose the right path.', 'href' => '/resource/comparison/sip-vs-fd-vs-ppf', 'featured' => true, 'read_time' => '10 min', 'date' => 'March 2026'],
-            ['category' => 'comparison', 'id' => 'comparison', 'tag' => 'Comparison', 'tag_color' => 'amber', 'title' => 'SWP vs Fixed Deposit: Which Wins?', 'desc' => 'Head-to-head analysis of SWP from mutual funds vs. bank FDs for generating retirement income.', 'href' => '/resource/comparison/swp-vs-fixed-deposit', 'read_time' => '8 min', 'date' => 'February 2026'],
-            ['category' => 'comparison', 'id' => 'comparison', 'tag' => 'Comparison', 'tag_color' => 'amber', 'title' => 'SWP vs Annuity 2026', 'desc' => 'Should you buy an annuity or run an SWP? An honest, data-driven comparison for 2026.', 'href' => '/resource/comparison/swp-vs-annuity-2026', 'read_time' => '7 min', 'date' => 'January 2026'],
-            ['category' => 'comparison', 'id' => 'comparison', 'tag' => 'Tax', 'tag_color' => 'amber', 'title' => 'Mutual Fund Tax Guide 2026', 'desc' => 'LTCG, STCG, ELSS, and indexation — everything you need after the 2026 budget changes.', 'href' => '/resource/comparison/mutual-fund-tax-2026', 'read_time' => '11 min', 'date' => 'March 2026'],
-            ['category' => 'comparison', 'id' => 'comparison', 'tag' => 'Benchmarks', 'tag_color' => 'amber', 'title' => 'Mutual Fund Returns Benchmarks 2026', 'desc' => 'Historical benchmark tables for Indian mutual funds. Learn how to select a realistic return rate for your planning.', 'href' => '/resource/comparison/mf-returns-benchmarks', 'read_time' => '9 min', 'date' => 'January 2026'],
-        ];
+            $files = glob($dir . '/*.md');
+            if (!$files) continue;
+
+            foreach ($files as $file) {
+                $slug = basename($file, '.md');
+                $content = $contentManager->getParsedContent('/blog/' . $cat . '/' . $slug);
+                if (!$content) continue;
+
+                $config = self::$postConfigs[$slug] ?? [];
+                
+                // Calculate dynamic read time: count body words and divide by average reading speed (200 wpm)
+                $wordCount = str_word_count(strip_tags($content['html']));
+                $readTimeVal = (int)ceil($wordCount / 200);
+                $readTime = $readTimeVal . ' min';
+
+                $posts[] = [
+                    'category' => $cat,
+                    'id' => $cat,
+                    'tag' => $config['tag'] ?? 'Guide',
+                    'tag_color' => $config['tag_color'] ?? 'slate',
+                    'title' => $content['metadata']['title'] ?: ucfirst(str_replace('-', ' ', $slug)),
+                    'desc' => $content['metadata']['subtitle'] ?: '',
+                    'href' => "/resource/{$cat}/{$slug}",
+                    'featured' => $config['featured'] ?? false,
+                    'read_time' => $readTime,
+                    'date' => $config['date'] ?? 'March 2026'
+                ];
+            }
+        }
+
+        // Sort: Featured posts first, then sort remaining by date descending
+        usort($posts, function($a, $b) {
+            if ($a['featured'] !== $b['featured']) {
+                return $b['featured'] ? -1 : 1;
+            }
+            return strcmp($b['date'], $a['date']);
+        });
+
+        return $posts;
     }
 }
