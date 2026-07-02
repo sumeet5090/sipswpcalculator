@@ -62,19 +62,15 @@ ob_start();
 
 <?php include __DIR__ . '/../components/theme-glow-blobs.php'; ?>
 
-<!-- Glossary Hero -->
-<header class="text-center mb-14 md:mb-20 pt-6">
-    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100/60 uppercase tracking-widest mb-4">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        Financial Terms
-    </span>
-    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight pb-3">
-        Financial <span class="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">Encyclopedia</span>
-    </h1>
-    <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
-        Master the terminology of wealth growth and retirement planning. Clear, simple definitions for every concept.
-    </p>
-</header>
+<?php
+$hero = [
+    'badge' => 'Financial Terms',
+    'title_prefix' => 'Financial ',
+    'title_highlight' => 'Encyclopedia',
+    'description' => 'Master the terminology of wealth growth and retirement planning. Clear, simple definitions for every concept.'
+];
+include __DIR__ . '/../components/page-hero.php';
+?>
 
 <div class="max-w-7xl mx-auto pb-32 px-4 relative">
     <!-- Search Bar -->

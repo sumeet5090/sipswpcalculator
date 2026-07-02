@@ -60,19 +60,16 @@ ob_start();
 
 <?php include __DIR__ . '/../components/theme-glow-blobs.php'; ?>
 
-<!-- Standard Header (Consistent with FAQ/Glossary) -->
-<header class="text-center mb-14 md:mb-20 pt-6 animate-entry">
-    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100/60 uppercase tracking-widest mb-4">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        Library &amp; Guides
-    </span>
-    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight pb-3">
-        Research &amp; <span class="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">Resources</span>
-    </h1>
-    <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
-        Expert insights, deep-dives on Systematic Investment Plans, retirement math, and honest instrument comparisons.
-    </p>
-</header>
+<?php
+$hero = [
+    'badge' => 'Library & Guides',
+    'title_prefix' => 'Research & ',
+    'title_highlight' => 'Resources',
+    'description' => 'Expert insights, deep-dives on Systematic Investment Plans, retirement math, and honest instrument comparisons.',
+    'extra_class' => 'animate-entry'
+];
+include __DIR__ . '/../components/page-hero.php';
+?>
 
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start pb-32 relative">
     <!-- Sidebar Navigation -->
