@@ -27,6 +27,7 @@ $routesConfig = require_once __DIR__ . '/src/Core/Config/routes.php';
 $router = new \Core\Router();
 $router->get('/', 'CalculatorController@home');
 $router->post('/', 'CalculatorController@home');
+$router->post('/generate-pdf', 'CalculatorController@generatePdf');
 
 // Dynamic Calculators Registration
 foreach ($routesConfig['calculators'] as $calc) {

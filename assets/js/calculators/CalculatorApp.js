@@ -390,7 +390,7 @@ export class CalculatorApp {
                 formData.append('chartData', chartDataURL);
                 formData.append('tableHtml', tableHtml);
 
-                fetch('generate-pdf.php', {
+                fetch('/generate-pdf', {
                     method: 'POST',
                     body: formData
                 })
