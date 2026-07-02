@@ -1,9 +1,12 @@
 <?php
+
 /**
  * yearly-breakdown-table.php
  * Component for the tabular breakdown showing SIP/SWP milestones.
  */
+
 declare(strict_types=1);
+
 ?>
 <div class="mt-8 space-y-4">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
@@ -63,7 +66,7 @@ declare(strict_types=1);
                     </tr>
                 </thead>
                 <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
-                    <?php foreach ($combined as $row): ?>
+                    <?php foreach ($combined as $row) : ?>
                     <tr class="hover:bg-slate-50 transition-colors">
                         <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year']?></td>
                         <td class="px-6 py-4 text-right font-mono"><?= formatInr($row['begin_balance'])?></td>

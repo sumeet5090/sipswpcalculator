@@ -1,23 +1,29 @@
 <?php
+
 namespace Core;
 
-class Router {
+class Router
+{
     private $routes = [];
     private $redirects = [];
 
-    public function get($uri, $controllerAction) {
+    public function get($uri, $controllerAction)
+    {
         $this->routes['GET'][$uri] = $controllerAction;
     }
 
-    public function post($uri, $controllerAction) {
+    public function post($uri, $controllerAction)
+    {
         $this->routes['POST'][$uri] = $controllerAction;
     }
 
-    public function redirect($uri, $target) {
+    public function redirect($uri, $target)
+    {
         $this->redirects[$uri] = $target;
     }
 
-    public function dispatch($uri, $method) {
+    public function dispatch($uri, $method)
+    {
         error_log("Dispatching: $method $uri");
         if (false !== $pos = strpos($uri, '?')) {
             $uri = substr($uri, 0, $pos);
@@ -54,7 +60,8 @@ class Router {
         exit;
     }
 
-    private function callAction($controllerAction, $params = []) {
+    private function callAction($controllerAction, $params = [])
+    {
         $controllerName = "\\Controllers\\" . $controllerAction[0];
         $action = $controllerAction[1];
 
@@ -65,18 +72,19 @@ class Router {
                 return;
             }
         }
-        
+
         http_response_code(500);
         echo "500 Internal Server Error: Controller or Method not found ($controllerName@$action)";
         exit;
     }
 
-    public function getRoutes(): array {
+    public function getRoutes(): array
+    {
         return $this->routes;
     }
 
-    public function getRedirects(): array {
+    public function getRedirects(): array
+    {
         return $this->redirects;
     }
 }
-

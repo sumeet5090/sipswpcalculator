@@ -1,28 +1,32 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core;
 
-use \Parsedown;
+use Parsedown;
 
-class ContentManager {
+class ContentManager
+{
     private Parsedown $parsedown;
     private string $contentDir;
 
-    public function __construct(string $contentDir = __DIR__ . '/../../content') {
+    public function __construct(string $contentDir = __DIR__ . '/../../content')
+    {
         $this->parsedown = new Parsedown();
         $this->contentDir = $contentDir;
     }
 
-    public function getParsedContent(string $path): ?array {
+    public function getParsedContent(string $path): ?array
+    {
         $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
-        
+
         if (!file_exists($fullPath)) {
             return null;
         }
 
         $rawContent = file_get_contents($fullPath);
-        
+
         // Simple front-matter parsing (extracting title/subtitle if they exist at the top)
         // Format: # Title\nSubtitle\n---
         $lines = explode("\n", $rawContent);
@@ -30,7 +34,7 @@ class ContentManager {
         $subtitle = '';
         $contentStartLine = 0;
 
-        if (isset($lines[0]) && strpos($lines[0], '# ') === 0) {
+        if (str_starts_with($lines[0], '# ')) {
             $title = substr($lines[0], 2);
             $contentStartLine = 1;
             if (isset($lines[1]) && trim($lines[1]) !== '' && trim($lines[1]) !== '---') {

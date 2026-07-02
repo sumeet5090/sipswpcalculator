@@ -1,13 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core;
 
-class SchemaHelper {
+class SchemaHelper
+{
     /**
      * Generates BreadcrumbList Schema.org JSON-LD.
      */
-    public function getBreadcrumbs(array $items): string {
+    public function getBreadcrumbs(array $items): string
+    {
         $itemListElement = [];
         $position = 1;
         foreach ($items as $name => $item) {
@@ -29,7 +32,8 @@ class SchemaHelper {
     /**
      * Generates FAQPage Schema.org JSON-LD.
      */
-    public function getFAQ(array $faqs): string {
+    public function getFAQ(array $faqs): string
+    {
         $mainEntity = [];
         foreach ($faqs as $question => $answer) {
             $mainEntity[] = [
@@ -52,7 +56,8 @@ class SchemaHelper {
     /**
      * Generates Article Schema.org JSON-LD.
      */
-    public function getArticle(string $headline, string $datePublished, string $dateModified): string {
+    public function getArticle(string $headline, string $datePublished, string $dateModified): string
+    {
         return json_encode([
             "@context" => "https://schema.org",
             "@type" => "Article",

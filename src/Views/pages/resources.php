@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 require_once __DIR__ . '/../../../functions.php';
 $active_page = 'resources.php';
 
@@ -87,7 +89,7 @@ ob_start();
                 Explore Categories
             </h3>
             <ul class="space-y-2">
-                <?php foreach ($categories as $id => $cat): ?>
+                <?php foreach ($categories as $id => $cat) : ?>
                     <li>
                         <a href="#<?= $id ?>" class="archive-sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-600 border-l-4 border-transparent hover:bg-slate-50 hover:text-slate-900 transition-all">
                             <?= $cat['icon'] ?>
@@ -104,7 +106,7 @@ ob_start();
         <!-- Mobile Navigation (Horizontal Scroll) -->
         <div class="lg:hidden sticky top-16 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 -mx-4 px-4 py-3 mb-10">
             <nav class="flex gap-4 overflow-x-auto no-scrollbar whitespace-nowrap text-xs font-black text-slate-500 uppercase tracking-widest">
-                <?php foreach ($categories as $id => $cat): ?>
+                <?php foreach ($categories as $id => $cat) : ?>
                     <a href="#<?= $id ?>" class="archive-sidebar-link px-4 py-2 bg-slate-50 rounded-full border border-slate-200">
                         <?= $cat['title'] ?>
                     </a>
@@ -113,11 +115,11 @@ ob_start();
         </div>
 
         <div class="space-y-24 lg:space-y-40">
-            <?php 
+            <?php
             $delay = 0.1;
-            foreach ($categories as $cat_id => $cat): 
+            foreach ($categories as $cat_id => $cat) :
                 $accent_color = $cat['accent'];
-            ?>
+                ?>
                 <section id="<?= $cat_id ?>" class="scroll-mt-40 animate-entry" style="animation-delay: <?= $delay ?>s">
                 <!-- Section Header -->
                 <div class="flex items-center gap-4 lg:gap-6 mb-8 lg:mb-10 group">
@@ -132,11 +134,11 @@ ob_start();
 
                 <!-- Posts Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-                    <?php 
+                    <?php
                     $posts = $posts_by_cat[$cat_id] ?? [];
-                    foreach ($posts as $post): 
+                    foreach ($posts as $post) :
                         $is_featured = $post['featured'] ?? false;
-                    ?>
+                        ?>
                         <article class="group relative glass-card flex flex-col transition-all section-glow-<?= $accent_color ?> <?= $is_featured ? 'md:col-span-2 p-10 lg:p-14' : 'p-8' ?>">
                             <div class="flex flex-col h-full">
                                 <div class="flex items-center justify-between mb-6">
@@ -169,8 +171,8 @@ ob_start();
                     <?php endforeach; ?>
                 </div>
             </section>
-            <?php 
-            $delay += 0.1;
+                <?php
+                $delay += 0.1;
             endforeach; ?>
         </div>
     </main>

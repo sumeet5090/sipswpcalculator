@@ -1,12 +1,15 @@
 <?php
+
 /**
  * header.php
  * Centralized navigation component.
  * Expects $active_page to highlight current menu item.
  */
+
 $active_page = $active_page ?? basename($_SERVER['PHP_SELF']);
-if ($active_page === '' || $active_page === '/')
+if ($active_page === '' || $active_page === '/') {
     $active_page = 'index.php';
+}
 
 $nav_items = [
     ['label' => 'Show Calculator', 'href' => '/#calculator-section', 'id' => 'index.php'],
@@ -66,15 +69,15 @@ $nav_items = [
 
         <!-- Desktop nav -->
         <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
-            <?php foreach ($nav_items as $item): 
+            <?php foreach ($nav_items as $item) :
                 $is_active = ($active_page === $item['id']) || ($item['id'] === 'resources.php' && $active_page === 'blog_post');
-            ?>
+                ?>
             <a href="<?= $item['href']?>"
                 class="<?= $is_active ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600'?> transition-colors">
                 <?= $item['label']?>
             </a>
-            <?php
-endforeach; ?>
+                <?php
+            endforeach; ?>
         </nav>
 
         <!-- Mobile hamburger button -->
@@ -96,15 +99,15 @@ endforeach; ?>
     <!-- Mobile menu dropdown -->
     <div id="mobile-menu" class="sm:hidden hidden border-t border-slate-200 bg-white/95 backdrop-blur-md">
         <div class="px-4 py-3 space-y-1">
-            <?php foreach ($nav_items as $item): 
+            <?php foreach ($nav_items as $item) :
                 $is_active = ($active_page === $item['id']) || ($item['id'] === 'resources.php' && $active_page === 'blog_post');
-            ?>
+                ?>
             <a href="<?= $item['href']?>"
                 class="block px-3 py-3 rounded-lg text-base font-medium <?= $is_active ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50'?> transition-colors">
                 <?= $item['label']?>
             </a>
-            <?php
-endforeach; ?>
+                <?php
+            endforeach; ?>
         </div>
     </div>
 </nav>

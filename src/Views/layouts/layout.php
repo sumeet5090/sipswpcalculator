@@ -1,4 +1,5 @@
 <?php
+
 /**
  * layout.php
  * The main 12-column grid wrapper.
@@ -19,7 +20,7 @@ $is_blog_post = (strpos($_SERVER['REQUEST_URI'], '/resource/') !== false);
 
 $page_content = $page_content ?? $content ?? '';
 ?>
-<?php if ($is_blog_post && !$is_resource_index): 
+<?php if ($is_blog_post && !$is_resource_index) :
     // Determine category and accent styling dynamically
     $cat_slug = $category ?? ($post_metadata['category'] ?? 'growth');
     $cat_accent = 'emerald';
@@ -41,7 +42,7 @@ $page_content = $page_content ?? $content ?? '';
         $gradient_glow = 'from-amber-500 to-orange-500';
         $badge_classes = 'bg-amber-50 text-amber-700 border border-amber-100';
     }
-?>
+    ?>
 <div class="doc-layout-grid relative">
     <aside class="doc-sidebar doc-sidebar-left pl-4 pr-6">
         <div class="sticky top-28 pt-4 pb-8">
@@ -64,7 +65,7 @@ $page_content = $page_content ?? $content ?? '';
                             <?= $cat_icon ?>
                             <?= htmlspecialchars($cat_name) ?>
                         </span>
-                        <?php if (!empty($post_metadata['tag'])): ?>
+                        <?php if (!empty($post_metadata['tag'])) : ?>
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600 uppercase tracking-wider border border-slate-200/50">
                                 <?= htmlspecialchars($post_metadata['tag']) ?>
                             </span>
@@ -77,7 +78,7 @@ $page_content = $page_content ?? $content ?? '';
                     </h1>
 
                     <!-- Subtitle -->
-                    <?php if (!empty($subtitle)): ?>
+                    <?php if (!empty($subtitle)) : ?>
                         <p class="relative z-10 text-lg sm:text-xl text-slate-500 font-medium leading-relaxed mb-8 max-w-3xl"><?= htmlspecialchars($subtitle) ?></p>
                     <?php endif; ?>
 
@@ -119,18 +120,18 @@ $page_content = $page_content ?? $content ?? '';
     </aside>
 </div>
 
-<?php
-else: ?>
+    <?php
+else : ?>
 <!-- Home and Landing Pages are full width within the outer container -->
 <main class="w-full py-8">
-    <?php if (!$is_home): ?>
-    <?php require_once __DIR__ . '/breadcrumbs.php'; ?>
-    <?php
+    <?php if (!$is_home) : ?>
+        <?php require_once __DIR__ . '/breadcrumbs.php'; ?>
+        <?php
     endif; ?>
 
     <?= $page_content ?? ''?>
 </main>
-<?php
+    <?php
 endif; ?>
 
 <?php require_once __DIR__ . '/footer.php'; ?>

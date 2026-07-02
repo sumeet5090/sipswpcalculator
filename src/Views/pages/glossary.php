@@ -1,9 +1,12 @@
 <?php
+
 /**
  * glossary.php
  * Final Robust Redesign for the Financial Glossary.
  */
+
 declare(strict_types=1);
+
 require_once __DIR__ . '/../../../functions.php';
 
 $page_config = [
@@ -31,8 +34,9 @@ usort($glossary_terms, function ($a, $b) {
 $letters = [];
 foreach ($glossary_terms as $term) {
     $firstChar = strtoupper(substr($term['q'], 0, 1));
-    if (!in_array($firstChar, $letters))
+    if (!in_array($firstChar, $letters)) {
         $letters[] = $firstChar;
+    }
 }
 sort($letters);
 
@@ -102,13 +106,13 @@ ob_start();
     <nav class="sticky top-24 z-50 mb-16 py-4 flex justify-center">
         <div
             class="nav-pill flex flex-wrap justify-center items-center bg-white/95 backdrop-blur-xl border border-slate-200/60 rounded-full px-4 py-3 shadow-2xl shadow-emerald-500/10 gap-x-1 sm:gap-x-4">
-            <?php foreach ($letters as $letter): ?>
+            <?php foreach ($letters as $letter) : ?>
             <a href="#letter-<?= $letter?>"
                 class="letter-link min-w-[40px] h-10 sm:min-w-[48px] sm:h-12 flex items-center justify-center rounded-full text-lg sm:text-xl font-black text-slate-400 hover:text-white hover:bg-emerald-600 transition-all duration-300">
                 <?= $letter?>
             </a>
-            <?php
-endforeach; ?>
+                <?php
+            endforeach; ?>
         </div>
     </nav>
 
@@ -126,12 +130,12 @@ endforeach; ?>
     <!-- Glossary Content Grid -->
     <div id="glossaryContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php
-$currentLetter = '';
-foreach ($glossary_terms as $term):
-    $firstChar = strtoupper(substr($term['q'], 0, 1));
-    if ($firstChar !== $currentLetter):
-        $currentLetter = $firstChar;
-?>
+        $currentLetter = '';
+        foreach ($glossary_terms as $term) :
+            $firstChar = strtoupper(substr($term['q'], 0, 1));
+            if ($firstChar !== $currentLetter) :
+                $currentLetter = $firstChar;
+                ?>
         <!-- Mandatory Section Break -->
         <div id="letter-<?= $currentLetter?>" class="section-header col-span-full pt-16 pb-8">
             <div class="flex items-center gap-8">
@@ -141,8 +145,8 @@ foreach ($glossary_terms as $term):
                 <div class="h-[2px] w-full bg-slate-100 rounded-full flex-grow"></div>
             </div>
         </div>
-        <?php
-    endif; ?>
+                <?php
+            endif; ?>
 
         <!-- Premium Glossary Card -->
         <article
@@ -163,8 +167,8 @@ foreach ($glossary_terms as $term):
                 </p>
             </div>
         </article>
-        <?php
-endforeach; ?>
+                <?php
+        endforeach; ?>
     </div>
 </div>
 

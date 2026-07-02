@@ -1,9 +1,11 @@
 <?php
+
 /**
  * layout-top.php
  * HTML head and opening tags.
  * Expects $page_config array for SEO and metadata.
  */
+
 $page_config = $page_config ?? [];
 $title = $page_config['title'] ?? 'SIP & SWP Calculator';
 $meta_desc = $page_config['meta_desc'] ?? 'Free SIP & SWP calculator with step-up compounding.';
@@ -48,7 +50,7 @@ require_once __DIR__ . '/important-imports.php';
 
     <?= $additional_head ?>
 
-    <?php if (getenv('ENVIRONMENT') === 'production'): ?>
+    <?php if (getenv('ENVIRONMENT') === 'production') : ?>
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5PLFTW4E7"></script>
         <script>

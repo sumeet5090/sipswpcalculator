@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core;
@@ -40,8 +41,8 @@ class InvestmentCalculator
             $annualContribution = $monthlySip * 12.0;
 
             // Determine monthly SWP for this year
-            $monthlySwp = ($enableSwp && $y >= $swpStartYear) 
-                ? round($swpWithdrawal * pow(1 + $swpStepup / 100, $y - $swpStartYear), 2) 
+            $monthlySwp = ($enableSwp && $y >= $swpStartYear)
+                ? round($swpWithdrawal * pow(1 + $swpStepup / 100, $y - $swpStartYear), 2)
                 : 0.0;
 
             $actualYearWithdrawn = 0.0;
@@ -69,7 +70,7 @@ class InvestmentCalculator
 
             $annualWithdrawal = $actualYearWithdrawn;
             $interestEarned = $netBalance - ($yearBegin + $annualContribution - $annualWithdrawal);
-            
+
             $cumulativeInvested += $annualContribution;
             if ($enableSwp && $y >= $swpStartYear) {
                 $cumulativeWithdrawals += $annualWithdrawal;

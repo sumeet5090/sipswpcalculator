@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 /**
  * SIP/SWP Calculator - Database Migration Utility
- * 
+ *
  * Safely adds missing columns (pdf_downloaded, referrer) to the existing SQLite database.
  * Usage: Run via CLI `php migrate_db.php` or access via browser.
  */
@@ -24,19 +25,19 @@ if (!file_exists($dbPath)) {
 
 try {
     echo "Connecting to database...\n";
-    
+
     // The AnonymizedInsightLogger constructor automatically runs migrations
     $logger = new AnonymizedInsightLogger($dbPath);
-    
+
     echo "Schema validation triggered via Logger.\n";
-    
+
     // Double-verify columns exist (manual fallback check)
     $pdo = new PDO("sqlite:" . $dbPath);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+
     $cols = $pdo->query("PRAGMA table_info(user_calculations)")->fetchAll(PDO::FETCH_ASSOC);
     $existingCols = array_column($cols, 'name');
-    
+
     $required = ['pdf_downloaded', 'referrer'];
     foreach ($required as $col) {
         if (!in_array($col, $existingCols)) {
@@ -48,9 +49,8 @@ try {
             echo "Column '$col' verified: OK.\n";
         }
     }
-    
+
     echo "\nMigration COMPLETED successfully.\n";
-    
 } catch (\Throwable $e) {
     echo "\nFATAL ERROR during migration: " . $e->getMessage() . "\n";
     exit(1);

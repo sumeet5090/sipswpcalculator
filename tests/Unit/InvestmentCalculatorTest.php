@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit;
@@ -46,7 +47,7 @@ class InvestmentCalculatorTest extends TestCase
         $this->assertNull($year1['swp_monthly']);
         $this->assertNull($year1['annual_withdrawal']);
         $this->assertEquals(0.0, $year1['cumulative_withdrawals']);
-        
+
         // Exact year 1 ending balance checking (10000 compounded monthly at 1% for 12 months)
         // Expected ending balance = 128093 (approx)
         $this->assertEquals(128093.0, $year1['combined_total']);
@@ -140,7 +141,7 @@ class InvestmentCalculatorTest extends TestCase
 
     /**
      * Test Case 4: Portfolio Depletion (Edge Case)
-     * Asserts that when withdrawals exceed balance, the portfolio balance stops at 0, 
+     * Asserts that when withdrawals exceed balance, the portfolio balance stops at 0,
      * and actual withdrawals are capped at available funds.
      */
     public function testPortfolioDepletion(): void
@@ -224,7 +225,7 @@ class InvestmentCalculatorTest extends TestCase
 
         // 50 SIP + 50 SWP = 100 years
         $this->assertCount(100, $results);
-        
+
         $finalYear = end($results);
         $this->assertFinite($finalYear['combined_total']);
         $this->assertGreaterThan(0.0, $finalYear['combined_total']);

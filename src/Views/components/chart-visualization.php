@@ -1,8 +1,10 @@
 <?php
+
 /**
  * chart-visualization.php
  * Component for summary cards and Chart.js canvas wrapper.
  */
+
 declare(strict_types=1);
 
 $lastRow = end($combined) ?: [

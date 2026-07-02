@@ -1,9 +1,11 @@
 <?php
+
 /**
  * breadcrumbs.php
  * Dynamic breadcrumb navigation for the documentation layout.
  * Expects $page_config['title'] or $title, and $active_page.
  */
+
 $page_title = $page_config['title'] ?? ($title ?? 'Current Page');
 
 // Simplify title for breadcrumb if too long (split by both — and |)
@@ -28,7 +30,7 @@ $is_blog_post = (strpos($_SERVER['REQUEST_URI'], '/resource/') !== false);
             </div>
         </li>
         
-        <?php if ($is_blog_post): ?>
+        <?php if ($is_blog_post) : ?>
         <li>
             <div class="flex items-center">
                 <svg class="h-4 w-4 flex-shrink-0 text-slate-300 mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -39,7 +41,7 @@ $is_blog_post = (strpos($_SERVER['REQUEST_URI'], '/resource/') !== false);
         </li>
         <?php endif; ?>
 
-        <?php if ($active_page !== 'index.php'): ?>
+        <?php if ($active_page !== 'index.php') : ?>
         <li>
             <div class="flex items-center">
                 <svg class="h-4 w-4 flex-shrink-0 text-slate-300 mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">

@@ -1,12 +1,14 @@
 <?php
+
 // finalize_replace.php
 // Script to replace hardcoded INR symbols and Indian terminology with generic US equivalents
 
 $files = glob("*.php");
 
 foreach ($files as $file) {
-    if (in_array($file, ['functions.php', 'sitemap.xml', 'script.js', 'test_replace.php', 'finalize_replace.php', 'navbar.php', 'footer.php']))
+    if (in_array($file, ['functions.php', 'sitemap.xml', 'script.js', 'test_replace.php', 'finalize_replace.php', 'navbar.php', 'footer.php'])) {
         continue;
+    }
 
     $content = file_get_contents($file);
     $original = $content;
@@ -76,7 +78,7 @@ foreach ($files as $file) {
 
     $content = str_replace(array_keys($replacements), array_values($replacements), $content);
 
-    // 2. Catch remaining floating ₹xxx,xxx using generic regex, 
+    // 2. Catch remaining floating ₹xxx,xxx using generic regex,
     // replacing the comma style if needed.
     // e.g. ₹5,00,000 -> $5,000 (We'll just strip ₹ for $ and let commas be for now)
     $content = preg_replace('/₹([0-9.,]+)/', '$$1', $content);
@@ -93,4 +95,3 @@ foreach ($files as $file) {
         echo "Updated $file\n";
     }
 }
-?>

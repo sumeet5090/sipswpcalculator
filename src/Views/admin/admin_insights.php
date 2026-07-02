@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 session_start();
 
 $envPassword = getenv('ADMIN_INSIGHTS_PASSWORD');
@@ -467,7 +469,7 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
     <div class="bg-white border-b border-gray-200 sticky top-16 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center overflow-x-auto no-scrollbar gap-1 py-2">
-                <?php foreach ($time_ranges as $key => $range):
+                <?php foreach ($time_ranges as $key => $range) :
                     $isActive = ($current_range_key === $key);
                     $btnClass = $isActive
                         ? 'bg-emerald-600 text-white shadow-md shadow-emerald-200'
@@ -586,7 +588,7 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
         </section>
 
         <!-- ── Calc Type Breakdown (pills) ── -->
-        <?php if (!empty($calcTypeBreakdown)): ?>
+        <?php if (!empty($calcTypeBreakdown)) : ?>
             <section>
                 <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">By Calculator Type</h2>
                 <div class="flex flex-wrap gap-3">
@@ -596,7 +598,7 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
                         'SWP' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
                         'DCA' => 'bg-amber-50 text-amber-700 border-amber-200',
                     ];
-                    foreach ($calcTypeBreakdown as $row):
+                    foreach ($calcTypeBreakdown as $row) :
                         $color = $pillColors[$row['calc_type']] ?? 'bg-gray-50 text-gray-700 border-gray-200';
                         ?>
                         <div
@@ -678,14 +680,14 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
             <!-- INR Corpus Buckets -->
             <div class="chart-container">
                 <h3 class="text-sm font-semibold text-gray-700 mb-4">🇮🇳 SWP Corpus Distribution (INR)</h3>
-                <?php if (empty($corpusBucketsINR)): ?>
+                <?php if (empty($corpusBucketsINR)) : ?>
                     <p class="text-sm text-gray-400 italic">No INR SWP data yet.</p>
                     <?php
-                else: ?>
+                else : ?>
                     <div class="space-y-3">
                         <?php
                         $maxBucketINR = max(array_column($corpusBucketsINR, 'cnt'));
-                        foreach ($corpusBucketsINR as $b):
+                        foreach ($corpusBucketsINR as $b) :
                             $bPct = $maxBucketINR > 0 ? round(((int) $b['cnt'] / $maxBucketINR) * 100) : 0;
                             ?>
                             <div>
@@ -712,14 +714,14 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
             <!-- USD/Other Corpus Buckets -->
             <div class="chart-container">
                 <h3 class="text-sm font-semibold text-gray-700 mb-4">🌍 SWP Corpus Distribution (USD & Others)</h3>
-                <?php if (empty($corpusBucketsUSD)): ?>
+                <?php if (empty($corpusBucketsUSD)) : ?>
                     <p class="text-sm text-gray-400 italic">No non-INR SWP data yet.</p>
                     <?php
-                else: ?>
+                else : ?>
                     <div class="space-y-3">
                         <?php
                         $maxBucketUSD = max(array_column($corpusBucketsUSD, 'cnt'));
-                        foreach ($corpusBucketsUSD as $b):
+                        foreach ($corpusBucketsUSD as $b) :
                             $bPct = $maxBucketUSD > 0 ? round(((int) $b['cnt'] / $maxBucketUSD) * 100) : 0;
                             ?>
                             <div>
@@ -747,10 +749,10 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
         <!-- ── Top 10 SWP Target Corpus ── -->
         <section class="chart-container">
             <h3 class="text-sm font-semibold text-gray-700 mb-4">🏦 Top 10 SWP Target Corpus Amounts</h3>
-            <?php if (empty($topCorpus)): ?>
+            <?php if (empty($topCorpus)) : ?>
                 <p class="text-sm text-gray-400 italic">No SWP calculations recorded yet.</p>
                 <?php
-            else: ?>
+            else : ?>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
                         <thead>
@@ -772,7 +774,7 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
                         <tbody>
                             <?php
                             $maxFreq = !empty($topCorpus) ? (int) $topCorpus[0]['frequency'] : 1;
-                            foreach ($topCorpus as $i => $row):
+                            foreach ($topCorpus as $i => $row) :
                                 $pct = round(((int) $row['frequency'] / $maxFreq) * 100);
                                 ?>
                                 <tr class="table-row border-b border-gray-100 transition-colors">
@@ -806,10 +808,10 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
         <section class="chart-container">
             <h3 class="text-sm font-semibold text-gray-700 mb-4">🔗 Top Traffic Sources <span
                     class="text-gray-400 font-normal">(Referrers)</span></h3>
-            <?php if (empty($topReferrers)): ?>
+            <?php if (empty($topReferrers)) : ?>
                 <p class="text-sm text-gray-400 italic">No referrer data recorded yet.</p>
                 <?php
-            else: ?>
+            else : ?>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
                         <thead>
@@ -831,7 +833,7 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
                         <tbody>
                             <?php
                             $maxRef = !empty($topReferrers) ? (int) $topReferrers[0]['cnt'] : 1;
-                            foreach ($topReferrers as $i => $ref):
+                            foreach ($topReferrers as $i => $ref) :
                                 $refPct = round(((int) $ref['cnt'] / $maxRef) * 100);
                                 ?>
                                 <tr class="table-row border-b border-gray-100 transition-colors">
@@ -1122,7 +1124,7 @@ function showLoginPage(string $error = ''): void
                 <h1 class="text-xl font-bold text-gray-900 text-center">Admin Insights</h1>
                 <p class="text-sm text-gray-400 text-center mt-1 mb-6">Enter your password to continue</p>
 
-                <?php if ($error): ?>
+                <?php if ($error) : ?>
                     <div
                         class="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg flex items-center gap-2">
                         <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">

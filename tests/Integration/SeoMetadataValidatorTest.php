@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Integration;
@@ -28,7 +29,7 @@ class SeoMetadataValidatorTest extends TestCase
         // Wait up to 1 second for the server to bind and start responding
         $maxRetries = 10;
         $started = false;
-        
+
         for ($i = 0; $i < $maxRetries; $i++) {
             $socket = @fsockopen('127.0.0.1', 9000, $errno, $errstr, 0.1);
             if ($socket) {
@@ -81,7 +82,7 @@ class SeoMetadataValidatorTest extends TestCase
         // Dynamic blog posts
         require_once __DIR__ . '/../../vendor/autoload.php';
         require_once __DIR__ . '/../../functions.php';
-        
+
         $allPosts = \Core\BlogRepository::getAllPosts();
         foreach ($allPosts as $post) {
             $paths[$post['href']] = [$post['href']];
@@ -97,14 +98,14 @@ class SeoMetadataValidatorTest extends TestCase
     public function testPageSeoMetadata(string $path): void
     {
         $url = 'http://127.0.0.1:9000' . $path;
-        
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         $html = curl_exec($ch);
         $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        
+
         if ($html === false || $html === '') {
             $this->fail("Failed to query path '$path'. Server did not return a valid response.");
         }
@@ -160,7 +161,9 @@ class SeoMetadataValidatorTest extends TestCase
             $descriptions->length,
             "SEO Rule Violation: Page '$path' must contain exactly one meta description tag."
         );
-        $descContent = trim($descriptions->item(0)->getAttribute('content'));
+        $descNode = $descriptions->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $descNode);
+        $descContent = trim($descNode->getAttribute('content'));
         $this->assertNotEmpty($descContent, "SEO Rule Violation: Meta description tag on page '$path' has empty content.");
         $this->assertGreaterThanOrEqual(
             40,
@@ -180,7 +183,9 @@ class SeoMetadataValidatorTest extends TestCase
             $canonicals->length,
             "SEO Rule Violation: Page '$path' must contain exactly one canonical tag."
         );
-        $canonicalHref = trim($canonicals->item(0)->getAttribute('href'));
+        $canonicalNode = $canonicals->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $canonicalNode);
+        $canonicalHref = trim($canonicalNode->getAttribute('href'));
         $this->assertNotEmpty($canonicalHref, "SEO Rule Violation: Canonical link href is empty on page '$path'.");
         $this->assertStringStartsWith(
             'https://sipswpcalculator.com',
@@ -191,17 +196,23 @@ class SeoMetadataValidatorTest extends TestCase
         // 5. OpenGraph tag Validation
         $ogTitles = $xpath->query('//meta[@property="og:title"]');
         $this->assertGreaterThanOrEqual(1, $ogTitles->length, "SEO Rule Violation: Missing meta og:title on page '$path'.");
-        $this->assertNotEmpty(trim($ogTitles->item(0)->getAttribute('content')), "SEO Rule Violation: og:title is empty on page '$path'.");
+        $ogTitleNode = $ogTitles->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $ogTitleNode);
+        $this->assertNotEmpty(trim($ogTitleNode->getAttribute('content')), "SEO Rule Violation: og:title is empty on page '$path'.");
 
         $ogDescriptions = $xpath->query('//meta[@property="og:description"]');
         $this->assertGreaterThanOrEqual(1, $ogDescriptions->length, "SEO Rule Violation: Missing meta og:description on page '$path'.");
-        $this->assertNotEmpty(trim($ogDescriptions->item(0)->getAttribute('content')), "SEO Rule Violation: og:description is empty on page '$path'.");
+        $ogDescNode = $ogDescriptions->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $ogDescNode);
+        $this->assertNotEmpty(trim($ogDescNode->getAttribute('content')), "SEO Rule Violation: og:description is empty on page '$path'.");
 
         $ogUrls = $xpath->query('//meta[@property="og:url"]');
         $this->assertGreaterThanOrEqual(1, $ogUrls->length, "SEO Rule Violation: Missing meta og:url on page '$path'.");
+        $ogUrlNode = $ogUrls->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $ogUrlNode);
         $this->assertEquals(
             $canonicalHref,
-            trim($ogUrls->item(0)->getAttribute('content')),
+            trim($ogUrlNode->getAttribute('content')),
             "SEO Rule Violation: og:url does not match canonical URL on page '$path'."
         );
 
@@ -216,7 +227,7 @@ class SeoMetadataValidatorTest extends TestCase
         foreach ($schemas as $schemaNode) {
             $json = trim($schemaNode->textContent);
             $this->assertJson($json, "JSON-LD Validation Error: Invalid JSON syntax on page '$path'.");
-            
+
             $data = json_decode($json, true);
             $this->assertArrayHasKey('@context', $data, "JSON-LD Validation Error: Missing '@context' key on page '$path'.");
             $this->assertEquals(

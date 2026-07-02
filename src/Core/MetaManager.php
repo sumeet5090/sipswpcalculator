@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core;
 
-class MetaManager {
+class MetaManager
+{
     private array $metaData = [
         'home' => [
             'title' => 'SIP & SWP Calculator 2026: Plan Mutual Fund Returns in India',
@@ -47,17 +49,19 @@ class MetaManager {
         ]
     ];
 
-    public function getMeta(string $pageKey): array {
+    public function getMeta(string $pageKey): array
+    {
         $meta = $this->metaData[$pageKey] ?? $this->metaData['home'];
-        
+
         // Ensure some defaults if not set
         $meta['og_title'] = $meta['og_title'] ?? $meta['title'];
         $meta['og_desc'] = $meta['og_desc'] ?? $meta['meta_desc'];
-        
+
         return $meta;
     }
 
-    public function setDynamicMeta(string $title, string $desc, ?string $canonical = null): array {
+    public function setDynamicMeta(string $title, string $desc, ?string $canonical = null): array
+    {
         return [
             'title' => $title,
             'meta_desc' => $desc,

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Integration;
@@ -15,7 +16,7 @@ class RouterIntegrityTest extends TestCase
     {
         $this->routesConfig = require __DIR__ . '/../../src/Core/Config/routes.php';
         $this->router = new Router();
-        
+
         // Register routes exactly as index.php does
         $this->router->get('/', 'CalculatorController@home');
         $this->router->post('/', 'CalculatorController@home');
@@ -28,7 +29,7 @@ class RouterIntegrityTest extends TestCase
             foreach ($slugParts as $part) {
                 $methodName .= ucfirst($part);
             }
-            
+
             $this->router->get($calc, "CalculatorController@{$methodName}");
             $this->router->post($calc, "CalculatorController@{$methodName}");
             $this->router->redirect($calc . '.php', $calc);
@@ -74,27 +75,27 @@ class RouterIntegrityTest extends TestCase
     private function resolvesToGetRoute(string $path): bool
     {
         $routes = $this->router->getRoutes()['GET'] ?? [];
-        
+
         if (false !== $pos = strpos($path, '?')) {
             $path = substr($path, 0, $pos);
         }
-        
+
         if (isset($routes[$path])) {
             return true;
         }
-        
+
         $path = rtrim($path, '/');
         if (isset($routes[$path])) {
             return true;
         }
-        
+
         foreach ($routes as $route => $action) {
             $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_\.-]+)', $route);
             if (preg_match('#^' . $pattern . '$#', $path)) {
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -133,7 +134,7 @@ class RouterIntegrityTest extends TestCase
             $visited = [];
             $current = $source;
             $chain = [];
-            
+
             while (isset($redirects[$current])) {
                 if (in_array($current, $visited, true)) {
                     $chain[] = $current;
@@ -144,8 +145,8 @@ class RouterIntegrityTest extends TestCase
                 $current = $redirects[$current];
             }
         }
-        
-        $this->assertTrue(true);
+
+        $this->expectNotToPerformAssertions();
     }
 
     /**
@@ -169,16 +170,16 @@ class RouterIntegrityTest extends TestCase
     {
         $sitemapPath = __DIR__ . '/../../sitemap.xml';
         $this->assertFileExists($sitemapPath, 'sitemap.xml is missing from root');
-        
+
         $xml = simplexml_load_file($sitemapPath);
         $this->assertNotFalse($xml, 'sitemap.xml is not valid XML');
-        
+
         $sitemapPaths = [];
         foreach ($xml->url as $url) {
             $loc = (string)$url->loc;
             $path = parse_url($loc, PHP_URL_PATH) ?: '/';
             $sitemapPaths[] = $path;
-            
+
             $this->assertTrue(
                 $this->resolvesToGetRoute($path),
                 "Sitemap URL '$loc' (path '$path') does not resolve to a valid GET route."
@@ -204,8 +205,8 @@ class RouterIntegrityTest extends TestCase
             }
 
             $this->assertContains(
-                $route, 
-                $sitemapPaths, 
+                $route,
+                $sitemapPaths,
                 "Public route '$route' is defined in routes.php but is missing from sitemap.xml."
             );
         }
@@ -218,7 +219,7 @@ class RouterIntegrityTest extends TestCase
     {
         $robotsPath = __DIR__ . '/../../robots.txt';
         $this->assertFileExists($robotsPath);
-        
+
         $content = file_get_contents($robotsPath);
         $this->assertMatchesRegularExpression(
             '/Sitemap:\s*https:\/\/sipswpcalculator\.com\/sitemap\.xml/i',
@@ -233,24 +234,24 @@ class RouterIntegrityTest extends TestCase
     public function testBlogRepositoryMatchesMarkdownFiles(): void
     {
         $allPosts = \Core\BlogRepository::getAllPosts();
-        $repoSlugs = array_map(function($post) {
+        $repoSlugs = array_map(function ($post) {
             return basename($post['href']);
         }, $allPosts);
 
         $contentDir = __DIR__ . '/../../content/blog';
         $categories = ['growth', 'retirement', 'comparison'];
-        
+
         foreach ($categories as $cat) {
             $dir = $contentDir . '/' . $cat;
             if (!is_dir($dir)) {
                 continue;
             }
-            
+
             $files = glob($dir . '/*.md');
             if (!$files) {
                 continue;
             }
-            
+
             foreach ($files as $file) {
                 $slug = basename($file, '.md');
                 $this->assertContains(
@@ -258,7 +259,7 @@ class RouterIntegrityTest extends TestCase
                     $repoSlugs,
                     "Blog post markdown file '$slug.md' in '$cat' is missing from BlogRepositoryConfigs or has parsing issues."
                 );
-                
+
                 $postUrl = "/resource/{$cat}/{$slug}";
                 $this->assertTrue(
                     $this->resolvesToGetRoute($postUrl),

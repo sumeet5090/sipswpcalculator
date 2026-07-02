@@ -1,28 +1,36 @@
 <?php
+
 namespace Controllers;
 
-class PageController {
-    public function about() {
+class PageController
+{
+    public function about()
+    {
         require_once __DIR__ . '/../Views/pages/about.php';
     }
 
-    public function faq() {
+    public function faq()
+    {
         require_once __DIR__ . '/../Views/pages/faq.php';
     }
 
-    public function glossary() {
+    public function glossary()
+    {
         require_once __DIR__ . '/../Views/pages/glossary.php';
     }
 
-    public function privacy() {
+    public function privacy()
+    {
         require_once __DIR__ . '/../Views/pages/privacy.php';
     }
 
-    public function resources() {
+    public function resources()
+    {
         require_once __DIR__ . '/../Views/pages/resources.php';
     }
 
-    public function terms() {
+    public function terms()
+    {
         require_once __DIR__ . '/../Views/pages/terms.php';
     }
 }

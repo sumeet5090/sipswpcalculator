@@ -1,10 +1,14 @@
 <?php
+
 /**
  * sidebar-left.php
  * Contextual sidebar for related category posts.
  */
+
 $active_page = $active_page ?? basename($_SERVER['PHP_SELF']);
-if ($active_page === '' || $active_page === '/') $active_page = 'index.php';
+if ($active_page === '' || $active_page === '/') {
+    $active_page = 'index.php';
+}
 
 // Define the categorized structure of the knowledge base.
 // Define the categorized structure of the knowledge base with URL slugs.
@@ -74,11 +78,11 @@ if (!$active_category_name) {
             <?= htmlspecialchars($active_category_name) ?>
         </h3>
         <ul class="space-y-1 text-sm font-medium">
-            <?php foreach ($active_links as $path_or_slug => $title): ?>
-                <?php 
+            <?php foreach ($active_links as $path_or_slug => $title) : ?>
+                <?php
                     // Handle both flat slugs (active cat) and full paths (fallback)
-                    $final_href = (strpos($path_or_slug, '/') !== false) 
-                        ? "/resource/{$path_or_slug}" 
+                    $final_href = (strpos($path_or_slug, '/') !== false)
+                        ? "/resource/{$path_or_slug}"
                         : "/resource/{$active_prefix}/{$path_or_slug}";
                 ?>
                 <li>

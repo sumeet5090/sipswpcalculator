@@ -1,8 +1,10 @@
 <?php
+
 /**
  * layout-bottom.php
  * Closing tags and global scripts.
  */
+
 ?>
 
 <script>
@@ -24,8 +26,8 @@
     });
 </script>
 <script type="module" src="/script.js?v=<?= filemtime(__DIR__ . '/../../../script.js') ?>"></script>
-<?php if (!empty($page_config['scripts'])): ?>
-    <?php foreach ($page_config['scripts'] as $script): ?>
+<?php if (!empty($page_config['scripts'])) : ?>
+    <?php foreach ($page_config['scripts'] as $script) : ?>
         <script src="<?= htmlspecialchars($script) ?>?v=<?= filemtime(__DIR__ . '/../../../' . ltrim($script, '/')) ?>" defer></script>
     <?php endforeach; ?>
 <?php endif; ?>

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 // ── SECURITY: Start session for CSRF protection ──

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 return [
@@ -65,7 +66,6 @@ return [
         '/resource/growth/reach-1-million-dollar-1-crore-rupees-in-18-years' => '/resource/growth/reach-1-crore-rupees-via-sip',
         '/resource/growth/why-flat-sips-lose-money-stepup-sip-power' => '/resource/growth/20-year-wealth-blueprint-step-up-sip',
         '/resource/retirement/mathematics-of-4-percent-rule-swp' => '/resource/retirement/retirement-planning-4-percent-swp-rule',
-        '/resource/retirement/sip-to-swp-transition-guide' => '/resource/retirement/sip-vs-swp-wealth-creation-withdrawal-strategy',
-        '/resource/growth/earning-moderate-income-in-20s-investment-blueprint' => '/resource/growth/earning-30k-at-25-investment-blueprint'
+        '/resource/retirement/sip-to-swp-transition-guide' => '/resource/retirement/sip-vs-swp-wealth-creation-withdrawal-strategy'
     ]
 ];

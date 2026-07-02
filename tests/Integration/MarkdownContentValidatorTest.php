@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Integration;
@@ -40,7 +41,7 @@ class MarkdownContentValidatorTest extends TestCase
     }
 
     /**
-     * Verifies frontmatter structure, heading constraints, relative links, 
+     * Verifies frontmatter structure, heading constraints, relative links,
      * local image presence, and repository alignment for all content.
      */
     #[DataProvider('markdownFilesProvider')]
@@ -63,7 +64,7 @@ class MarkdownContentValidatorTest extends TestCase
         );
         $title = trim(substr($lines[0], 2));
         $this->assertNotEmpty($title, "H1 title heading in '$fileName' must not be empty.");
-        
+
         // Assert title conforms to search engine optimal limits (typically under 85 characters)
         $this->assertLessThanOrEqual(
             85,
@@ -134,10 +135,10 @@ class MarkdownContentValidatorTest extends TestCase
         if ($type === 'blog') {
             $slug = basename($filePath, '.md');
             $allPosts = BlogRepository::getAllPosts();
-            
+
             $found = false;
             $postMetadata = null;
-            
+
             foreach ($allPosts as $post) {
                 if ($post['category'] === $category && basename($post['href']) === $slug) {
                     $found = true;

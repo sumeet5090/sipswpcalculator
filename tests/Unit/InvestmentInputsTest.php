@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit;
@@ -14,7 +15,7 @@ class InvestmentInputsTest extends TestCase
     public function testDefaultInputs(): void
     {
         $inputs = InvestmentInputs::fromRequest([]);
-        
+
         $this->assertEquals(10000.0, $inputs->getSip());
         $this->assertEquals(20, $inputs->getYears());
         $this->assertEquals(12.0, $inputs->getRate());
@@ -40,9 +41,9 @@ class InvestmentInputsTest extends TestCase
             'swp_stepup' => 5.0,
             'swp_years' => 25
         ];
-        
+
         $inputs = InvestmentInputs::fromRequest($data);
-        
+
         $this->assertEquals(25000.0, $inputs->getSip());
         $this->assertEquals(15, $inputs->getYears());
         $this->assertEquals(13.5, $inputs->getRate());
@@ -67,9 +68,9 @@ class InvestmentInputsTest extends TestCase
             'swp_stepup' => 35.0,    // Max is 20
             'swp_years' => 90        // Max is 50
         ];
-        
+
         $inputs = InvestmentInputs::fromRequest($data);
-        
+
         $this->assertEquals(1000000.0, $inputs->getSip());
         $this->assertEquals(50, $inputs->getYears());
         $this->assertEquals(30.0, $inputs->getRate());
@@ -93,9 +94,9 @@ class InvestmentInputsTest extends TestCase
             'swp_stepup' => -2.0,   // Min is 0
             'swp_years' => -5       // Min is 1
         ];
-        
+
         $inputs = InvestmentInputs::fromRequest($data);
-        
+
         $this->assertEquals(500.0, $inputs->getSip());
         $this->assertEquals(1, $inputs->getYears());
         $this->assertEquals(0.1, $inputs->getRate());
@@ -120,9 +121,9 @@ class InvestmentInputsTest extends TestCase
             'swp_stepup' => '4.5',
             'swp_years' => '18'
         ];
-        
+
         $inputs = InvestmentInputs::fromRequest($data);
-        
+
         $this->assertEquals(15000.0, $inputs->getSip());
         $this->assertEquals(12, $inputs->getYears());
         $this->assertEquals(14.25, $inputs->getRate());

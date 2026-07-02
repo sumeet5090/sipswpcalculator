@@ -1,11 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 /**
  * Privacy-First Anonymized Insight Logger
- * 
+ *
  * Logs anonymous usage statistics without storing IP addresses or PII.
  */
+// phpcs:ignore PSR1.Classes.ClassDeclaration.MissingNamespace
 class AnonymizedInsightLogger
 {
     private PDO $pdo;
@@ -53,24 +55,54 @@ class AnonymizedInsightLogger
         $this->pdo->exec($schema);
 
         // Migration: add columns to existing tables (safe no-op if already present)
-        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN pdf_downloaded INTEGER DEFAULT 0"); } catch (\Throwable $e) {}
-        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN referrer TEXT"); } catch (\Throwable $e) {}
-        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN interest_rate REAL"); } catch (\Throwable $e) {}
-        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN sip_amount REAL"); } catch (\Throwable $e) {}
-        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN sip_duration INTEGER"); } catch (\Throwable $e) {}
-        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN sip_step_up REAL"); } catch (\Throwable $e) {}
-        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_enabled INTEGER DEFAULT 0"); } catch (\Throwable $e) {}
-        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_withdrawal REAL"); } catch (\Throwable $e) {}
-        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_duration INTEGER"); } catch (\Throwable $e) {}
-        try { $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_step_up REAL"); } catch (\Throwable $e) {}
+        try {
+            $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN pdf_downloaded INTEGER DEFAULT 0");
+        } catch (\Throwable $e) {
+        }
+        try {
+            $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN referrer TEXT");
+        } catch (\Throwable $e) {
+        }
+        try {
+            $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN interest_rate REAL");
+        } catch (\Throwable $e) {
+        }
+        try {
+            $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN sip_amount REAL");
+        } catch (\Throwable $e) {
+        }
+        try {
+            $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN sip_duration INTEGER");
+        } catch (\Throwable $e) {
+        }
+        try {
+            $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN sip_step_up REAL");
+        } catch (\Throwable $e) {
+        }
+        try {
+            $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_enabled INTEGER DEFAULT 0");
+        } catch (\Throwable $e) {
+        }
+        try {
+            $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_withdrawal REAL");
+        } catch (\Throwable $e) {
+        }
+        try {
+            $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_duration INTEGER");
+        } catch (\Throwable $e) {
+        }
+        try {
+            $this->pdo->exec("ALTER TABLE user_calculations ADD COLUMN swp_step_up REAL");
+        } catch (\Throwable $e) {
+        }
     }
 
     /**
      * Executes the non-blocking logging logic.
-     * 
+     *
      * CRITICAL: Must be called after the calculation results are displayed to the user
      * to avoid slowing down initial page load (0.7s LCP constraint).
-     * 
+     *
      * @param string $calcType    Type of calculation: 'SIP', 'SWP', or 'DCA'
      * @param float  $amount      The primary investment or withdrawal amount
      * @param int    $duration    The duration in years
@@ -92,8 +124,7 @@ class AnonymizedInsightLogger
         ?float $swpWithdrawal = null,
         ?int $swpDuration = null,
         ?float $swpStepUp = null
-        ): void
-    {
+    ): void {
         try {
             // Close the current output buffer and send response to client so logging is non-blocking.
             // This ensures LCP is not affected by database insert overhead.
@@ -138,9 +169,7 @@ class AnonymizedInsightLogger
                 ':swp_duration' => $swpDuration,
                 ':swp_step_up' => $swpStepUp,
             ]);
-
-        }
-        catch (\Throwable $e) {
+        } catch (\Throwable $e) {
             // Silently fail to ensure user experience is never impacted by logging errors
             error_log("AnonymizedInsightLogger Error: " . $e->getMessage());
         }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core;
@@ -7,7 +8,8 @@ namespace Core;
  * BlogRepository
  * Dynamically queries and retrieves blog categories and post configurations.
  */
-class BlogRepository {
+class BlogRepository
+{
     private static array $postConfigs = [
         'sip-for-beginners' => ['tag' => 'Beginner', 'tag_color' => 'emerald', 'featured' => true, 'date' => 'March 2026'],
         '20-year-wealth-blueprint-step-up-sip' => ['tag' => 'Strategy', 'tag_color' => 'emerald', 'date' => 'February 2026'],
@@ -24,7 +26,8 @@ class BlogRepository {
         'mf-returns-benchmarks' => ['tag' => 'Benchmarks', 'tag_color' => 'amber', 'date' => 'January 2026'],
     ];
 
-    public static function getCategories(): array {
+    public static function getCategories(): array
+    {
         return [
             'growth' => [
                 'title' => 'Wealth Growth',
@@ -52,25 +55,32 @@ class BlogRepository {
      *
      * @return array
      */
-    public static function getAllPosts(): array {
+    public static function getAllPosts(): array
+    {
         $contentDir = __DIR__ . '/../../content/blog';
         $contentManager = new ContentManager();
         $posts = [];
 
         foreach (['growth', 'retirement', 'comparison'] as $cat) {
             $dir = $contentDir . '/' . $cat;
-            if (!is_dir($dir)) continue;
+            if (!is_dir($dir)) {
+                continue;
+            }
 
             $files = glob($dir . '/*.md');
-            if (!$files) continue;
+            if (!$files) {
+                continue;
+            }
 
             foreach ($files as $file) {
                 $slug = basename($file, '.md');
                 $content = $contentManager->getParsedContent('/blog/' . $cat . '/' . $slug);
-                if (!$content) continue;
+                if (!$content) {
+                    continue;
+                }
 
                 $config = self::$postConfigs[$slug] ?? [];
-                
+
                 // Calculate dynamic read time: count body words and divide by average reading speed (200 wpm)
                 $wordCount = str_word_count(strip_tags($content['html']));
                 $readTimeVal = (int)ceil($wordCount / 200);
@@ -92,7 +102,7 @@ class BlogRepository {
         }
 
         // Sort: Featured posts first, then sort remaining by date descending
-        usort($posts, function($a, $b) {
+        usort($posts, function ($a, $b) {
             if ($a['featured'] !== $b['featured']) {
                 return $b['featured'] ? -1 : 1;
             }

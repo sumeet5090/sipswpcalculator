@@ -1,4 +1,5 @@
 <?php
+
 // ── Data Only ──────────────────────────────────────────────────────────
 $title = "Financial Planning Blog - SIP & SWP Insights";
 $meta_desc = "Master your financial journey with our expert guides on SIP, SWP, the 4% rule, and wealth-building strategies for a stress-free retirement.";

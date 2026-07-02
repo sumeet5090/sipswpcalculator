@@ -1,34 +1,39 @@
 <?php
+
 namespace Controllers;
 
 use Core\ContentManager;
 use Core\MetaManager;
 use Core\SchemaHelper;
 
-class BlogController {
+class BlogController
+{
     private ContentManager $contentManager;
     private MetaManager $metaManager;
     private SchemaHelper $schemaHelper;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->contentManager = new ContentManager();
         $this->metaManager = new MetaManager();
         $this->schemaHelper = new SchemaHelper();
     }
 
-    public function index() {
+    public function index()
+    {
         $active_page = 'resources.php';
         require_once __DIR__ . '/../Views/pages/resources.php';
     }
 
-    public function show($category, $slug) {
+    public function show($category, $slug)
+    {
         $active_page = 'blog_post';
         // Cleanup slug in case it has extension
         $slug = str_replace('.php', '', $slug);
-        
+
         $path = "/blog/{$category}/{$slug}";
         $content = $this->contentManager->getParsedContent($path);
-        
+
         if (!$content) {
             http_response_code(404);
             echo "404 Blog Post Not Found";
@@ -53,7 +58,7 @@ class BlogController {
                 $content['metadata']['subtitle'] ?: "Read our guide on " . str_replace('-', ' ', $slug)
             );
         }
-        
+
         // Generate breadcrumbs schema
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',

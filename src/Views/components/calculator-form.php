@@ -1,9 +1,12 @@
 <?php
+
 /**
  * calculator-form.php
  * Component for the SIP and SWP parameters inputs form.
  */
+
 declare(strict_types=1);
+
 ?>
 <div class="glass-card p-4">
     <form method="post" novalidate id="calculator-form">

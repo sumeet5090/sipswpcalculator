@@ -1,9 +1,12 @@
 <?php
+
 /**
  * faq.php
  * Premium Revamp for the FAQ page.
  */
+
 declare(strict_types=1);
+
 require_once __DIR__ . '/../../../functions.php';
 
 $page_config = [
@@ -120,7 +123,7 @@ ob_start();
 <!-- Category Filter Chips -->
 <div class="flex flex-wrap justify-center items-center gap-2.5 mb-12">
     <button data-category="all" class="category-chip active">All</button>
-    <?php foreach ($faq_categories as $cat): ?>
+    <?php foreach ($faq_categories as $cat) : ?>
     <button data-category="<?= $cat['id']?>" class="category-chip"><?= $cat['label']?></button>
     <?php endforeach; ?>
 </div>
@@ -138,7 +141,7 @@ ob_start();
 
 <!-- FAQ Accordion -->
 <div id="faqAccordion" class="faq-list">
-    <?php foreach ($faqs as $index => $faq): ?>
+    <?php foreach ($faqs as $index => $faq) : ?>
     <div class="faq-item" data-category="<?= $faq['category']?>" data-question="<?= strtolower($faq['q'])?>"
         data-answer="<?= strtolower($faq['a'])?>">
 
@@ -159,8 +162,8 @@ ob_start();
             </p>
         </div>
     </div>
-    <?php
-endforeach; ?>
+        <?php
+    endforeach; ?>
 </div>
 </div>
 
@@ -364,19 +367,19 @@ endforeach; ?>
   "@type": "FAQPage",
   "mainEntity": [
     <?php
-$schemaEntries = [];
-foreach ($faqs as $faq) {
-    $schemaEntries[] = json_encode([
+    $schemaEntries = [];
+    foreach ($faqs as $faq) {
+        $schemaEntries[] = json_encode([
         "@type" => "Question",
         "name" => $faq['q'],
         "acceptedAnswer" => [
             "@type" => "Answer",
             "text" => strip_tags($faq['a'])
         ]
-    ]);
-}
-echo implode(",\n    ", $schemaEntries);
-?>
+        ]);
+    }
+    echo implode(",\n    ", $schemaEntries);
+    ?>
   ]
 }
 </script>

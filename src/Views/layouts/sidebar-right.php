@@ -1,8 +1,10 @@
 <?php
+
 /**
  * sidebar-right.php
  * Sticky sidebar for "On This Page" Table of Contents.
  */
+
 ?>
 <div class="flex flex-col gap-8">
     <nav aria-label="Table of Contents">

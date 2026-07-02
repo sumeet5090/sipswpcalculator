@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core;
@@ -30,7 +31,7 @@ class CurrencyHelper
             $lastThree = substr($money, -3);
             $restUnits = substr($money, 0, -3);
             $restUnits = (strlen($restUnits) % 2 == 1) ? "0" . $restUnits : $restUnits;
-            
+
             $firstPart = '';
             $exploded = str_split($restUnits, 2);
             foreach ($exploded as $index => $value) {
@@ -42,7 +43,7 @@ class CurrencyHelper
             }
             $delimiter = $firstPart . $lastThree;
         }
-        
+
         return "₹ " . $delimiter;
     }
 }

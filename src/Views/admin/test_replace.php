@@ -1,10 +1,12 @@
 <?php
+
 // Script to safely replace hardcoded INR symbols in HTML text nodes
 $files = glob("*.php");
 
 foreach ($files as $file) {
-    if (in_array($file, ['functions.php', 'sitemap.xml', 'script.js']))
+    if (in_array($file, ['functions.php', 'sitemap.xml', 'script.js'])) {
         continue;
+    }
 
     $content = file_get_contents($file);
     $original = $content;
@@ -46,4 +48,3 @@ foreach ($files as $file) {
         echo "Would update $file (found changes)\n";
     }
 }
-?>

@@ -1,22 +1,26 @@
 <?php
+
 namespace Controllers;
 
 use Core\ContentManager;
 use Core\MetaManager;
 use Core\SchemaHelper;
 
-class CalculatorController {
+class CalculatorController
+{
     private ContentManager $contentManager;
     private MetaManager $metaManager;
     private SchemaHelper $schemaHelper;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->contentManager = new ContentManager();
         $this->metaManager = new MetaManager();
         $this->schemaHelper = new SchemaHelper();
     }
-    
-    public function home() {
+
+    public function home()
+    {
         // CSRF & Honeypot Checks
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['website_url'])) {
@@ -51,7 +55,7 @@ class CalculatorController {
         $years_data = array_column($combined, 'year');
         $cumulative_numbers = array_column($combined, 'cumulative_invested');
         $combined_numbers = array_column($combined, 'combined_total');
-        $swp_numbers = array_map(function($val) {
+        $swp_numbers = array_map(function ($val) {
             return $val ?? 0.0;
         }, array_column($combined, 'annual_withdrawal'));
 
@@ -61,7 +65,7 @@ class CalculatorController {
             header('Content-Type: text/csv; charset=utf-8');
             header('Content-Disposition: attachment; filename=SIP_SWP_Yearly_Report.csv');
             $output = fopen('php://output', 'w');
-            
+
             $headers = ['Year', 'Begin Balance (₹)', 'Monthly SIP (₹)', 'Annual Contribution (₹)', 'Cumulative Invested (₹)'];
             if ($enable_swp) {
                 $headers[] = 'Monthly SWP (₹)';
@@ -70,9 +74,9 @@ class CalculatorController {
             }
             $headers[] = 'Interest Earned (₹)';
             $headers[] = 'End Balance (₹)';
-            
+
             fputcsv($output, $headers);
-            
+
             foreach ($combined as $row) {
                 $csvRow = [
                     $row['year'],
@@ -97,9 +101,10 @@ class CalculatorController {
         require_once __DIR__ . '/../Views/calculators/home.php';
     }
 
-    public function compoundInterestCalculator() {
+    public function compoundInterestCalculator()
+    {
         $content = $this->contentManager->getParsedContent('/calculators/compound-interest-calculator');
-        
+
         if (!$content) {
             http_response_code(404);
             echo "404 Compound Interest Guide Not Found";
@@ -107,7 +112,7 @@ class CalculatorController {
         }
 
         $page_config = $this->metaManager->getMeta('compound-interest-calculator');
-        
+
         // Generate breadcrumbs schema
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
@@ -137,9 +142,10 @@ class CalculatorController {
         require_once __DIR__ . '/../Views/layouts/generic-post.php';
     }
 
-    public function dollarCostAveragingTool() {
+    public function dollarCostAveragingTool()
+    {
         $content = $this->contentManager->getParsedContent('/calculators/dollar-cost-averaging-tool');
-        
+
         if (!$content) {
             http_response_code(404);
             echo "404 DCA Tool Guide Not Found";
@@ -147,7 +153,7 @@ class CalculatorController {
         }
 
         $page_config = $this->metaManager->getMeta('dollar-cost-averaging-tool');
-        
+
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Dollar-Cost Averaging Tool' => '/dollar-cost-averaging-tool'
@@ -173,9 +179,10 @@ class CalculatorController {
         require_once __DIR__ . '/../Views/layouts/generic-post.php';
     }
 
-    public function recurringInvestmentCalculator() {
+    public function recurringInvestmentCalculator()
+    {
         $content = $this->contentManager->getParsedContent('/calculators/recurring-investment-calculator');
-        
+
         if (!$content) {
             http_response_code(404);
             echo "404 Recurring Investment Guide Not Found";
@@ -183,7 +190,7 @@ class CalculatorController {
         }
 
         $page_config = $this->metaManager->getMeta('recurring-investment-calculator');
-        
+
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Recurring Investment Calculator' => '/recurring-investment-calculator'
@@ -209,9 +216,10 @@ class CalculatorController {
         require_once __DIR__ . '/../Views/layouts/generic-post.php';
     }
 
-    public function retirementDrawdownPlanner() {
+    public function retirementDrawdownPlanner()
+    {
         $content = $this->contentManager->getParsedContent('/calculators/retirement-drawdown-planner');
-        
+
         if (!$content) {
             http_response_code(404);
             echo "404 Drawdown Planner Guide Not Found";
@@ -219,7 +227,7 @@ class CalculatorController {
         }
 
         $page_config = $this->metaManager->getMeta('retirement-drawdown-planner');
-        
+
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Retirement Drawdown Planner' => '/retirement-drawdown-planner'
@@ -245,9 +253,10 @@ class CalculatorController {
         require_once __DIR__ . '/../Views/layouts/generic-post.php';
     }
 
-    public function sipCalculator() {
+    public function sipCalculator()
+    {
         $content = $this->contentManager->getParsedContent('/calculators/sip-calculator');
-        
+
         if (!$content) {
             http_response_code(404);
             echo "404 SIP Guide Not Found";
@@ -255,7 +264,7 @@ class CalculatorController {
         }
 
         $page_config = $this->metaManager->getMeta('sip-calculator');
-        
+
         // Generate breadcrumbs schema
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
@@ -283,9 +292,10 @@ class CalculatorController {
         require_once __DIR__ . '/../Views/layouts/generic-post.php';
     }
 
-    public function sipStepUpCalculator() {
+    public function sipStepUpCalculator()
+    {
         $content = $this->contentManager->getParsedContent('/calculators/sip-step-up-calculator');
-        
+
         if (!$content) {
             http_response_code(404);
             echo "404 Step-Up Guide Not Found";
@@ -293,7 +303,7 @@ class CalculatorController {
         }
 
         $page_config = $this->metaManager->getMeta('sip-step-up-calculator');
-        
+
         // Generate breadcrumbs schema
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
@@ -321,9 +331,10 @@ class CalculatorController {
         require_once __DIR__ . '/../Views/layouts/generic-post.php';
     }
 
-    public function swpTaxCalculator() {
+    public function swpTaxCalculator()
+    {
         $content = $this->contentManager->getParsedContent('/calculators/swp-tax-calculator');
-        
+
         if (!$content) {
             http_response_code(404);
             echo "404 SWP Tax Guide Not Found";
@@ -331,7 +342,7 @@ class CalculatorController {
         }
 
         $page_config = $this->metaManager->getMeta('swp-tax-calculator');
-        
+
         // Generate breadcrumbs schema
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
@@ -359,7 +370,8 @@ class CalculatorController {
         require_once __DIR__ . '/../Views/layouts/generic-post.php';
     }
 
-    public function generatePdf() {
+    public function generatePdf()
+    {
         // ── SECURITY: Only allow POST requests ──
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
@@ -408,7 +420,7 @@ class CalculatorController {
                 'swp_stepup' => 0,
                 'swp_years' => 0,
                 'logo_base64' => null,
-                
+
                 // Summary Metrics
                 'currency_symbol' => mb_substr(strip_tags($_POST['currency_symbol'] ?? ''), 0, 10),
                 'summary_invested' => mb_substr(strip_tags($_POST['summary_invested'] ?? '0'), 0, 50),
