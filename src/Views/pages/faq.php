@@ -28,22 +28,8 @@ $faq_categories = [
 
 ob_start();
 ?>
-<style>
-    .glow-blob {
-        filter: blur(80px);
-        opacity: 0.12;
-        transition: opacity 0.5s ease;
-    }
-</style>
-<?php
-$page_config['additional_head'] = ob_get_clean();
 
-ob_start();
-?>
-
-<!-- Decorative Background Glows -->
-<div class="absolute top-10 left-1/4 w-96 h-96 bg-emerald-400 rounded-full glow-blob pointer-events-none"></div>
-<div class="absolute top-80 right-1/4 w-80 h-80 bg-teal-400 rounded-full glow-blob pointer-events-none"></div>
+<?php include __DIR__ . '/../components/theme-glow-blobs.php'; ?>
 
 <!-- FAQ Hero Section -->
 <header class="text-center mb-14 md:mb-20 pt-6">

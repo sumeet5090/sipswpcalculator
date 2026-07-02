@@ -56,16 +56,9 @@ ob_start();
     .section-glow-indigo:hover { box-shadow: 0 0 30px -10px rgba(79, 70, 229, 0.15); }
     .section-glow-amber:hover { box-shadow: 0 0 30px -10px rgba(245, 158, 11, 0.15); }
 
-    .glow-blob {
-        filter: blur(80px);
-        opacity: 0.12;
-        transition: opacity 0.5s ease;
-    }
 </style>
 
-<!-- Decorative Background Glows -->
-<div class="absolute top-10 left-1/4 w-96 h-96 bg-emerald-400 rounded-full glow-blob pointer-events-none"></div>
-<div class="absolute top-80 right-1/4 w-80 h-80 bg-teal-400 rounded-full glow-blob pointer-events-none"></div>
+<?php include __DIR__ . '/../components/theme-glow-blobs.php'; ?>
 
 <!-- Standard Header (Consistent with FAQ/Glossary) -->
 <header class="text-center mb-14 md:mb-20 pt-6 animate-entry">

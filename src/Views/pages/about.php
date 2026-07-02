@@ -25,11 +25,6 @@ ob_start();
 </script>
 <style>
     /* Premium layout animations and custom decorative assets */
-    .glow-blob {
-        filter: blur(80px);
-        opacity: 0.12;
-        transition: opacity 0.5s ease;
-    }
     .profile-card:hover .profile-ring {
         transform: scale(1.05) rotate(5deg);
         border-color: var(--color-acc-growth);
@@ -59,9 +54,7 @@ $active_page = 'about.php';
 ob_start();
 ?>
 
-<!-- Decorative Background Glows -->
-<div class="absolute top-10 left-1/4 w-96 h-96 bg-emerald-400 rounded-full glow-blob pointer-events-none"></div>
-<div class="absolute top-80 right-1/4 w-80 h-80 bg-teal-400 rounded-full glow-blob pointer-events-none"></div>
+<?php include __DIR__ . '/../components/theme-glow-blobs.php'; ?>
 
 <div class="max-w-5xl mx-auto px-4 sm:px-6 pb-20 relative">
     
