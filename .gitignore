@@ -12,6 +12,7 @@ stage/
 
 # --- Database ---
 database/database.sqlite
+database/database.sqlite-*
 
 # --- Logs & Temps ---
 *.log
@@ -39,3 +40,8 @@ __pycache__/
 # If you want to ignore all other .exes but KEEP tailwind:
 *.exe
 # !tailwindcss.exe
+
+# --- Testing Cache ---
+.phpunit.cache/
+.phpunit.result.cache
+.phpstan.cache/
