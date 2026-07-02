@@ -21,6 +21,12 @@ $page_config = [
     'meta_desc' => 'A curated archive of financial wisdom covering wealth creation via SIP, retirement via SWP, and in-depth instrument comparisons.',
 ];
 
+$schemaHelper = new \Core\SchemaHelper();
+$page_config['additional_head'] = '<script type="application/ld+json">' . $schemaHelper->getBreadcrumbs([
+    'Home' => '/',
+    'Resources' => '/resources'
+]) . '</script>';
+
 ob_start();
 ?>
 <style>

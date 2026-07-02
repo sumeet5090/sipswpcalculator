@@ -36,6 +36,23 @@ foreach ($glossary_terms as $term) {
 }
 sort($letters);
 
+$schemaHelper = new \Core\SchemaHelper();
+$breadcrumbs = $schemaHelper->getBreadcrumbs([
+    'Home' => '/',
+    'Glossary' => '/glossary'
+]);
+
+$faqData = [];
+foreach ($glossary_terms as $term) {
+    $faqData[$term['q']] = $term['a'];
+}
+$faq = $schemaHelper->getFAQ($faqData);
+
+$page_config['additional_head'] = '
+    <script type="application/ld+json">' . $breadcrumbs . '</script>
+    <script type="application/ld+json">' . $faq . '</script>
+';
+
 ob_start();
 ?>
 <style>
@@ -46,7 +63,7 @@ ob_start();
     }
 </style>
 <?php
-$page_config['additional_head'] = ob_get_clean();
+$page_config['additional_head'] .= ob_get_clean();
 
 ob_start();
 ?>

@@ -8,11 +8,15 @@ $page_config = [
     'canonical' => 'https://sipswpcalculator.com/privacy',
 ];
 
-ob_start();
-?>
-<meta name="robots" content="noindex, follow">
-<?php
-$page_config['additional_head'] = ob_get_clean();
+$schemaHelper = new \Core\SchemaHelper();
+$breadcrumbs = $schemaHelper->getBreadcrumbs([
+    'Home' => '/',
+    'Privacy Policy' => '/privacy'
+]);
+$page_config['additional_head'] = '
+    <meta name="robots" content="noindex, follow">
+    <script type="application/ld+json">' . $breadcrumbs . '</script>
+';
 $active_page = 'privacy.php';
 
 ob_start();
