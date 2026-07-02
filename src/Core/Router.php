@@ -70,4 +70,13 @@ class Router {
         echo "500 Internal Server Error: Controller or Method not found ($controllerName@$action)";
         exit;
     }
+
+    public function getRoutes(): array {
+        return $this->routes;
+    }
+
+    public function getRedirects(): array {
+        return $this->redirects;
+    }
 }
+
