@@ -1,39 +1,43 @@
 /**
  * CurrencyHelper.js
  * Manages currency formatting according to Indian standards (Lakhs/Crores).
+ * Refactored as an Object-Oriented class.
  */
-
-const locale = 'en-IN';
-const currency = 'INR';
-const symbol = '₹';
-
-/**
- * Format numeric value to INR currency string.
- * @param {number} value 
- * @returns {string}
- */
-export function formatCurrency(value) {
-    return new Intl.NumberFormat(locale, {
-        style: 'currency',
-        currency: currency,
-        maximumFractionDigits: 0
-    }).format(value);
-}
-
-/**
- * Format dynamic large amounts with appropriate Lakh/Crore suffix.
- * @param {number} amount 
- * @returns {string}
- */
-export function formatDynamicAmount(amount) {
-    if (amount >= 10000000) {
-        return symbol + (amount / 10000000).toFixed(2).replace(/\.00$/, '') + ' Crore';
+export class CurrencyFormatter {
+    constructor(locale = 'en-IN', currency = 'INR', symbol = '₹') {
+        this.locale = locale;
+        this.currency = currency;
+        this.symbol = symbol;
     }
-    if (amount >= 100000) {
-        return symbol + (amount / 100000).toFixed(2).replace(/\.00$/, '') + ' Lakh';
+
+    /**
+     * Format numeric value to currency string.
+     * @param {number} value 
+     * @returns {string}
+     */
+    format(value) {
+        return new Intl.NumberFormat(this.locale, {
+            style: 'currency',
+            currency: this.currency,
+            maximumFractionDigits: 0
+        }).format(value);
     }
-    if (amount >= 1000) {
-        return symbol + (amount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
+
+    /**
+     * Format dynamic large amounts with appropriate Lakh/Crore suffix.
+     * @param {number} amount 
+     * @returns {string}
+     */
+    formatDynamic(amount) {
+        if (amount >= 10000000) {
+            return this.symbol + (amount / 10000000).toFixed(2).replace(/\.00$/, '') + ' Crore';
+        }
+        if (amount >= 100000) {
+            return this.symbol + (amount / 100000).toFixed(2).replace(/\.00$/, '') + ' Lakh';
+        }
+        if (amount >= 1000) {
+            return this.symbol + (amount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
+        }
+        return this.symbol + amount.toLocaleString(this.locale);
     }
-    return symbol + amount.toLocaleString(locale);
 }
