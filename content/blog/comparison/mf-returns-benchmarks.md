@@ -1,5 +1,5 @@
 # Mutual Fund Returns Benchmarks 2026: What Rate Should You Use in Your Calculator?
-Historical benchmark tables for India (INR), USA (USD), UK (GBP) & EU (EUR) — so you can pick a realistic, honest rate for your financial plan
+Historical benchmark tables for India (INR) — so you can pick a realistic, honest rate for your financial plan
 
 ---
 

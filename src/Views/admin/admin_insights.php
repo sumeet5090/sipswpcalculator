@@ -295,11 +295,6 @@ $currencyData = json_encode(array_map('intval', array_column($currencyDist, 'cnt
 // Currency color palette
 $currencyColorMap = [
     'INR' => 'rgba(255, 153, 51, 0.85)',
-    'USD' => 'rgba(37, 99, 235, 0.85)',
-    'GBP' => 'rgba(139, 92, 246, 0.85)',
-    'EUR' => 'rgba(16, 185, 129, 0.85)',
-    'AUD' => 'rgba(245, 158, 11, 0.85)',
-    'CAD' => 'rgba(239, 68, 68, 0.85)',
     'UNKNOWN' => 'rgba(156, 163, 175, 0.7)',
 ];
 $currencyColors = [];
@@ -311,11 +306,6 @@ $currencyColorsJson = json_encode($currencyColors);
 // Currency symbol map (for dynamic display)
 $currencySymbolMap = [
     'INR' => '₹',
-    'USD' => '$',
-    'GBP' => '£',
-    'EUR' => '€',
-    'AUD' => 'A$',
-    'CAD' => 'C$',
     'UNKNOWN' => '',
 ];
 
@@ -554,7 +544,8 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
                             class="text-xs font-normal text-gray-400">yrs</span>
                     </p>
                     <p class="mt-1.5 text-xs text-gray-500 font-semibold truncate">Avg SIP:
-                        <?= $avgSipAmount > 0 ? number_format($avgSipAmount) : 'N/A' ?></p>
+                        <?= $avgSipAmount > 0 ? number_format($avgSipAmount) : 'N/A' ?>
+                    </p>
                 </div>
                 <!-- Avg SWP Duration -->
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-2">
@@ -564,7 +555,8 @@ $ambitionData = json_encode(array_map('intval', array_column($ambitionBuckets, '
                             class="text-xs font-normal text-gray-400">yrs</span>
                     </p>
                     <p class="mt-1.5 text-xs text-gray-500 font-semibold truncate">Avg SWP:
-                        <?= $avgSwpWithdrawal > 0 ? number_format($avgSwpWithdrawal) : 'N/A' ?></p>
+                        <?= $avgSwpWithdrawal > 0 ? number_format($avgSwpWithdrawal) : 'N/A' ?>
+                    </p>
                 </div>
                 <!-- Avg Interest Rate -->
                 <div class="stat-card rounded-xl border border-gray-200 p-5 opacity-0 animate-in animate-in-delay-3">

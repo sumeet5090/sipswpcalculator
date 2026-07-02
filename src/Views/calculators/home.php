@@ -41,14 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Retrieve POST values with server-side validation & range clamping
-$sip = isset($_POST['sip']) ? clamp((float)$_POST['sip'], 500, 1000000) : (float)$default_sip;
-$years = isset($_POST['years']) ? (int)clamp((float)$_POST['years'], 1, 50) : $default_years;
-$rate = isset($_POST['rate']) ? clamp((float)$_POST['rate'], 1, 30) : (float)$default_rate;
-$stepup = isset($_POST['stepup']) ? clamp((float)$_POST['stepup'], 0, 50) : (float)$default_stepup;
-$enable_swp = isset($_POST['enable_swp']) ? (bool)$_POST['enable_swp'] : false;
-$swp_withdrawal = isset($_POST['swp_withdrawal']) ? clamp((float)$_POST['swp_withdrawal'], 0, 1000000) : (float)$default_swp_withdrawal;
-$swp_stepup = isset($_POST['swp_stepup']) ? clamp((float)$_POST['swp_stepup'], 0, 20) : (float)$default_swp_stepup;
-$swp_years_input = isset($_POST['swp_years']) ? (int)clamp((float)$_POST['swp_years'], 0, 50) : $default_swp_years;
+$sip = isset($_POST['sip']) ? clamp((float) $_POST['sip'], 500, 1000000) : (float) $default_sip;
+$years = isset($_POST['years']) ? (int) clamp((float) $_POST['years'], 1, 50) : $default_years;
+$rate = isset($_POST['rate']) ? clamp((float) $_POST['rate'], 1, 30) : (float) $default_rate;
+$stepup = isset($_POST['stepup']) ? clamp((float) $_POST['stepup'], 0, 50) : (float) $default_stepup;
+$enable_swp = isset($_POST['enable_swp']) ? (bool) $_POST['enable_swp'] : false;
+$swp_withdrawal = isset($_POST['swp_withdrawal']) ? clamp((float) $_POST['swp_withdrawal'], 0, 1000000) : (float) $default_swp_withdrawal;
+$swp_stepup = isset($_POST['swp_stepup']) ? clamp((float) $_POST['swp_stepup'], 0, 20) : (float) $default_swp_stepup;
+$swp_years_input = isset($_POST['swp_years']) ? (int) clamp((float) $_POST['swp_years'], 0, 50) : $default_swp_years;
 
 // ── SECURITY: Whitelist allowed actions ──
 $action = $_POST['action'] ?? '';
@@ -92,8 +92,7 @@ for ($y = 1; $y <= $simulation_years; $y++) {
             $desired_withdraw = $monthly_swp;
             $withdraw = ($desired_withdraw > $potential_balance) ? $potential_balance : $desired_withdraw;
             $withdraw = max(0.0, $withdraw);
-        }
-        else {
+        } else {
             $withdraw = 0.0;
         }
         $actual_year_withdrawn += $withdraw;
@@ -323,7 +322,7 @@ ob_start();
       "@type": "FinancialProduct",
       "name": "SIP & SWP Investment Planning Tool",
       "alternateName": "Mutual Fund SIP Return Calculator",
-      "description": "Free financial planning tool for calculating Systematic Investment Plan (SIP) returns with annual step-up compounding and Systematic Withdrawal Plan (SWP) retirement income projections. Supports monthly SIP amounts from $5 to $10,000 (or equivalent in USD/EUR/GBP), investment periods from 1 to 50 years, expected annual returns from 1% to 30%, and annual step-up percentages from 0% to 50%. SWP module supports monthly withdrawals with inflation-adjusted step-up from 0% to 20%. Uses month-by-month simulation with compound interest for accuracy superior to simple annuity formulas. Verified against standard mutual fund industry methodology. Diversified equity funds have historically delivered approximately 10-15% CAGR over 20-year rolling periods. SIP inflows globally have exceeded billions of dollars per month.",
+      "description": "Free financial planning tool for calculating Systematic Investment Plan (SIP) returns with annual step-up compounding and Systematic Withdrawal Plan (SWP) retirement income projections. Supports monthly SIP amounts from ₹1 to ₹10,000,00, investment periods from 1 to 50 years, expected annual returns from 1% to 70%, and annual step-up percentages from 0% to 50%. SWP module supports monthly withdrawals with inflation-adjusted step-up from 0% to 20%. Uses month-by-month simulation with compound interest for accuracy superior to simple annuity formulas. Verified against standard mutual fund industry methodology. Diversified equity funds have historically delivered approximately 10-15% CAGR over 20-year rolling periods. SIP inflows globally have exceeded billions of dollars per month.",
       "url": "https://sipswpcalculator.com/",
       "provider": {
         "@id": "https://sipswpcalculator.com/#organization"
@@ -343,7 +342,7 @@ ob_start();
       "broker": {
         "@id": "https://sipswpcalculator.com/#author"
       },
-      "currenciesAccepted": "INR, USD, EUR, GBP",
+      "currenciesAccepted": "INR",
       "sameAs": [
         "https://en.wikipedia.org/wiki/Systematic_investment_plan",
         "https://en.wikipedia.org/wiki/Systematic_withdrawal_plan"
@@ -360,7 +359,7 @@ ob_start();
       "name": "Advanced SIP & SWP Calculator",
       "alternateName": "sipswpcalculator.com",
       "url": "https://sipswpcalculator.com/",
-      "description": "Free online SIP calculator with step-up compounding and SWP retirement planner. Uses month-by-month simulation based on standard mutual fund methodology. Features interactive charts, yearly breakdown tables, multi-currency support (INR/USD/EUR/GBP), CSV exports, and branded PDF reports. Trusted by investors and financial advisors worldwide.",
+      "description": "Free online SIP calculator with step-up compounding and SWP retirement planner. Uses month-by-month simulation based on standard mutual fund methodology. Features interactive charts, yearly breakdown tables, CSV exports, and branded PDF reports. Trusted by investors and financial advisors worldwide.",
       "inLanguage": "en",
       "publisher": {
         "@id": "https://sipswpcalculator.com/#organization"
@@ -472,7 +471,7 @@ ob_start();
           "@type": "HowToStep",
           "position": 1,
           "name": "Enter SIP Investment Details",
-          "text": "Set your monthly SIP amount ($5 to <span class="dynamic-amount" data-amount="1000000"></span>, or equivalent in USD/EUR/GBP), investment period (1-50 years), expected annual return rate (1-30%), and optional annual step-up percentage (0-50%). A 10% step-up is recommended to match average salary growth worldwide.",
+          "text": "Set your monthly SIP amount (₹1 to ₹10,000,00), investment period (1-50 years), expected annual return rate (1-30%), and optional annual step-up percentage (0-50%). A 10% step-up is recommended to match average salary growth worldwide.",
           "url": "https://sipswpcalculator.com/#calculator-heading"
         },
         {
@@ -577,8 +576,8 @@ ob_start();
 </noscript>
 
 <!-- Render-blocking CSS: loaded before first paint to prevent FOUC/CLS -->
-<link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/../../../styles.css')?>">
-<link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/../../../dist/tailwind.min.css')?>">
+<link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/../../../styles.css') ?>">
+<link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/../../../dist/tailwind.min.css') ?>">
 <?php
 $page_config['additional_head'] = ob_get_clean();
 $active_page = 'index.php';
@@ -626,7 +625,8 @@ ob_start();
         This free <dfn><strong class="text-emerald-600">SIP calculator</strong></dfn> helps you estimate
         your <strong>mutual fund returns</strong> with annual step-up (top-up) compounding.
         A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan
-        tax-efficient withdrawals for a steady retirement income. Supports <strong>INR, USD, EUR & GBP</strong> — use this tool to visualize growth, compare scenarios, and download detailed PDF reports.
+        tax-efficient withdrawals for a steady retirement income. Use this tool to visualize growth, compare scenarios,
+        and download detailed PDF reports.
     </p>
 
 
@@ -638,7 +638,11 @@ ob_start();
         role="complementary" aria-label="Quick Answer">
         <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
         <p class="text-base text-gray-700"><strong>How much will a ₹10,000/month SIP grow in 20 years?</strong></p>
-        <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month SIP will grow to approximately <strong class="text-emerald-700"><span class="dynamic-amount" data-amount-inr="35400000"></span></strong> over 20 years. Total invested: <span class="dynamic-amount" data-amount-inr="6873000"></span>. Total gains: <span class="dynamic-amount" data-amount-inr="28527000"></span>.</p>
+        <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month SIP will
+            grow to approximately <strong class="text-emerald-700"><span class="dynamic-amount"
+                    data-amount-inr="35400000"></span></strong> over 20 years. Total invested: <span
+                class="dynamic-amount" data-amount-inr="6873000"></span>. Total gains: <span class="dynamic-amount"
+                data-amount-inr="28527000"></span>.</p>
     </div>
     <script type="application/ld+json">
     {
@@ -699,7 +703,8 @@ ob_start();
                         investing a fixed amount of money at regular intervals (monthly, quarterly) into mutual funds.
                         SIPs use <strong>cost averaging</strong> and <strong>compounding</strong> to build wealth
                         over time, making them ideal for long-term goals like retirement, education, or wealth creation.
-                        SIP inflows globally have grown significantly, with monthly contributions exceeding billions of dollars across major markets.
+                        SIP inflows globally have grown significantly, with monthly contributions exceeding billions of
+                        dollars across major markets.
                         <a href="/sip-calculator" class="text-emerald-600 hover:underline font-medium">Read our complete
                             SIP guide →</a>
                     </p>
@@ -731,7 +736,8 @@ ob_start();
                         <li><span class="font-semibold text-green-700">Regular Income:</span> Create a predictable
                             pension-like cash flow from your mutual fund investments.</li>
                         <li><span class="font-semibold text-green-700">Tax-Efficient Withdrawals:</span> Only the
-                            capital gains portion is taxed, making SWP significantly more efficient than FD interest income.</li>
+                            capital gains portion is taxed, making SWP significantly more efficient than FD interest
+                            income.</li>
                         <li><span class="font-semibold text-green-700">Continued Growth:</span> Remaining corpus stays
                             invested and benefits from market growth, potentially outliving you.</li>
                     </ul>
@@ -820,7 +826,8 @@ ob_start();
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-emerald-100 ring-2 ring-emerald-100">
                         <div class="text-xs font-bold text-emerald-600 mb-1">MOST POPULAR</div>
-                        <h3 class="text-lg font-bold text-emerald-700 mb-2"><span class="currency-text">$</span>100/month
+                        <h3 class="text-lg font-bold text-emerald-700 mb-2"><span
+                                class="currency-text">$</span>100/month
                             for 20 Years</h3>
                         <p class="text-xs text-gray-500 mb-3">@ 12% return, 10% annual step-up</p>
                         <ul class="space-y-2 text-sm text-gray-700">
@@ -889,7 +896,8 @@ ob_start();
                             against downturns.</li>
                         <li><strong class="text-amber-700">Inflation Risk:</strong> A 6-7% return on debt funds may not
                             beat inflation (5-6%). Equity SIPs historically outpace inflation over the long term.</li>
-                        <li><strong class="text-amber-700">No Guaranteed Returns:</strong> Unlike government bonds or term deposits, mutual
+                        <li><strong class="text-amber-700">No Guaranteed Returns:</strong> Unlike government bonds or
+                            term deposits, mutual
                             fund returns are not guaranteed. Past performance does not guarantee future results. Always
                             consult a registered financial advisor before investing.</li>
                     </ul>
@@ -919,7 +927,8 @@ ob_start();
             </div>
 
             <div class="mt-12">
-                <h2 id="investment-comparison" class="text-3xl font-bold text-center mb-6">SIP vs Recurring Deposit vs Fixed Deposit: A
+                <h2 id="investment-comparison" class="text-3xl font-bold text-center mb-6">SIP vs Recurring Deposit vs
+                    Fixed Deposit: A
                     Comparison</h2>
                 <div class="glass-card overflow-hidden">
                     <table class="min-w-full">
@@ -998,7 +1007,7 @@ ob_start();
         <form id="pdfForm" class="space-y-4">
             <!-- SECURITY: CSRF Token for PDF generation form -->
             <input type="hidden" name="csrf_token"
-                value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8')?>">
+                value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
 
             <div>
                 <label for="clientName" class="block text-sm font-medium mb-1 text-gray-600">Client Name</label>

@@ -4,7 +4,7 @@ Calculate the future value of your monthly savings with compounding
 ---
 
 <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
-    This free <dfn><strong class="text-indigo-600">SIP calculator</strong></dfn> helps you estimate your <strong>mutual fund SIP returns</strong> with annual step-up (top-up) compounding. A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan tax-efficient withdrawals for a steady retirement income.
+    This free <dfn><strong class="text-indigo-600">SIP calculator</strong></dfn> helps you estimate your <strong>mutual fund SIP returns</strong> with annual step-up compounding. A <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> lets you plan tax-efficient withdrawals for a steady retirement income.
 </p>
 
 <div id="quick-answer" class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto" role="complementary" aria-label="Quick Answer">
