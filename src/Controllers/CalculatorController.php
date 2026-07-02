@@ -51,6 +51,8 @@ class CalculatorController {
             <script type="application/ld+json">' . $article_schema . '</script>
         ';
 
+        $page_config['scripts'] = ['/assets/js/calculators/compound-interest.js'];
+
         $content_html = $content['html'];
         $content_metadata = $content['metadata'];
         $active_page = 'compound-interest-calculator.php';
