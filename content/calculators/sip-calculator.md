@@ -1,5 +1,5 @@
 # Systematic Investment Plan (SIP) Guide
-Mastering Systematic Investment Plans
+Mastering Systematic Investment Plans: Learn how SIPs compound wealth over time.
 
 ---
 

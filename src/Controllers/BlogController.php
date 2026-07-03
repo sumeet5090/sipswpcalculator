@@ -1,37 +1,55 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Controllers;
 
 use Core\ContentManager;
 use Core\MetaManager;
 use Core\SchemaHelper;
+use Core\BlogRepository;
+use Core\View;
 
+/**
+ * BlogController
+ * Handles displaying blog lists and guides content.
+ */
 class BlogController
 {
     private ContentManager $contentManager;
     private MetaManager $metaManager;
     private SchemaHelper $schemaHelper;
+    private BlogRepository $blogRepository;
 
-    public function __construct()
-    {
-        $this->contentManager = new ContentManager();
-        $this->metaManager = new MetaManager();
-        $this->schemaHelper = new SchemaHelper();
+    public function __construct(
+        ContentManager $contentManager,
+        MetaManager $metaManager,
+        SchemaHelper $schemaHelper,
+        BlogRepository $blogRepository
+    ) {
+        $this->contentManager = $contentManager;
+        $this->metaManager = $metaManager;
+        $this->schemaHelper = $schemaHelper;
+        $this->blogRepository = $blogRepository;
     }
 
-    public function index()
+    public function index(): void
     {
-        $active_page = 'resources.php';
-        require_once __DIR__ . '/../Views/pages/resources.php';
+        $all_posts = $this->blogRepository->getAllPosts();
+        $categories = $this->blogRepository->getCategories();
+
+        View::render('pages/resources', [
+            'active_page' => 'resources.php',
+            'all_posts'   => $all_posts,
+            'categories'  => $categories,
+        ]);
     }
 
-    public function show($category, $slug)
+    public function show(string $category, string $slug): void
     {
-        $active_page = 'blog_post';
-        // Cleanup slug in case it has extension
         $slug = str_replace('.php', '', $slug);
-
         $path = "/blog/{$category}/{$slug}";
+
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
@@ -41,7 +59,7 @@ class BlogController
         }
 
         $post_metadata = null;
-        $all_posts = \Core\BlogRepository::getAllPosts();
+        $all_posts = $this->blogRepository->getAllPosts();
         foreach ($all_posts as $post) {
             if (basename($post['href']) === $slug) {
                 $post_metadata = $post;
@@ -49,17 +67,14 @@ class BlogController
             }
         }
 
-        // Try to get specific meta, or generate dynamic meta from content
         $page_config = $this->metaManager->getMeta($slug);
         if (!empty($content['metadata']['title'])) {
-            // Markdown metadata is present, use it for dynamic SEO titles and meta descriptions
             $page_config = $this->metaManager->setDynamicMeta(
                 $content['metadata']['title'],
                 $content['metadata']['subtitle'] ?: "Read our guide on " . str_replace('-', ' ', $slug)
             );
         }
 
-        // Generate breadcrumbs schema
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Resources' => '/resources',
@@ -67,10 +82,9 @@ class BlogController
             $content['metadata']['title'] ?: ucfirst(str_replace('-', ' ', $slug)) => "/resource/{$category}/{$slug}"
         ]);
 
-        // Generate Article schema
         $article_schema = $this->schemaHelper->getArticle(
             $page_config['title'],
-            '2026-03-01', // Example dates, ideally would come from markdown front-matter
+            '2026-03-01',
             date('Y-m-d')
         );
 
@@ -79,9 +93,13 @@ class BlogController
             <script type="application/ld+json">' . $article_schema . '</script>
         ';
 
-        $content_html = $content['html'];
-        $content_metadata = $content['metadata'];
-
-        require_once __DIR__ . '/../Views/layouts/generic-post.php';
+        View::render('layouts/generic-post', [
+            'content_html'     => $content['html'],
+            'content_metadata' => $content['metadata'],
+            'page_config'      => $page_config,
+            'post_metadata'    => $post_metadata,
+            'category'         => $category,
+            'active_page'      => 'blog_post',
+        ]);
     }
 }

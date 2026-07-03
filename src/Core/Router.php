@@ -66,10 +66,16 @@ class Router
         $action = $controllerAction[1];
 
         if (class_exists($controllerName)) {
-            $controller = new $controllerName();
-            if (method_exists($controller, $action)) {
-                call_user_func_array([$controller, $action], $params);
-                return;
+            try {
+                $controller = Container::getInstance()->get($controllerName);
+                if (method_exists($controller, $action)) {
+                    call_user_func_array([$controller, $action], $params);
+                    return;
+                }
+            } catch (\Throwable $e) {
+                http_response_code(500);
+                echo "500 Internal Server Error: " . $e->getMessage();
+                exit;
             }
         }
 

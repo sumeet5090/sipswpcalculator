@@ -67,7 +67,7 @@ class SeoMetadataValidatorTest extends TestCase
         $paths['/'] = ['/'];
 
         // Calculators
-        foreach ($routesConfig['calculators'] as $calc) {
+        foreach (array_keys($routesConfig['calculators']) as $calc) {
             $paths[$calc] = [$calc];
         }
 
@@ -81,7 +81,6 @@ class SeoMetadataValidatorTest extends TestCase
 
         // Dynamic blog posts
         require_once __DIR__ . '/../../vendor/autoload.php';
-        require_once __DIR__ . '/../../functions.php';
 
         $allPosts = \Core\BlogRepository::getAllPosts();
         foreach ($allPosts as $post) {

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../../../functions.php'; ?>
-<?php
 $page_config = [
     'title' => 'About Me & Project Journey | SIP & SWP Calculator',
     'meta_desc' => 'Discover the story behind SIP & SWP Calculator — a premium, ad-free step-up compounding & retirement planning tool engineered by Sumeet Boga.',

@@ -2,14 +2,7 @@
 
 declare(strict_types=1);
 
-// ── SECURITY: Start session for CSRF protection ──
-session_start();
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
 
-// Include the helper functions
-require_once __DIR__ . '/../../../functions.php';
 
 // Default values.
 $default_sip = 10000;

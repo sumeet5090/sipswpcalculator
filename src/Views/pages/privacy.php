@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../../../functions.php';
-
 $page_config = [
     'title' => 'Privacy Policy | SIP & SWP Calculator',
     'meta_desc' => 'Privacy policy for the SIP & SWP Calculator. We respect your privacy and do not collect personal financial data.',

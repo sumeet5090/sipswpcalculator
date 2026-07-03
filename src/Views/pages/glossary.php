@@ -7,8 +7,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../../../functions.php';
-
 $page_config = [
     'title' => 'Financial Glossary | SIP & SWP Calculator - Investing Terms Explained',
     'meta_desc' => 'Understand complex financial jargon with our simple, plain-English glossary. Terms covered: XIRR, SWP, SIP, Expense Ratio, 4% Rule, and more.',

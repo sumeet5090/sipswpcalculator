@@ -7,8 +7,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../../../functions.php';
-
 $page_config = [
     'title' => 'FAQ | SIP & SWP Calculator - Financial Planning Questions',
     'meta_desc' => 'Expert answers to your most pressing questions about Systematic Investment Plans (SIP), Systematic Withdrawal Plans (SWP), retirement planning, and taxation.',

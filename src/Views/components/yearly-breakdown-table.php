@@ -69,15 +69,15 @@ declare(strict_types=1);
                     <?php foreach ($combined as $row) : ?>
                     <tr class="hover:bg-slate-50 transition-colors">
                         <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year']?></td>
-                        <td class="px-6 py-4 text-right font-mono"><?= formatInr($row['begin_balance'])?></td>
-                        <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono"><?= $row['sip_monthly'] !== null ? formatInr($row['sip_monthly']) : '-'?></td>
-                        <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono"><?= formatInr($row['annual_contribution'])?></td>
-                        <td class="px-6 py-4 text-right text-slate-500 font-mono"><?= formatInr($row['cumulative_invested'])?></td>
-                        <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>><?= $row['swp_monthly'] !== null ? formatInr($row['swp_monthly']) : '-'?></td>
-                        <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>><?= $row['annual_withdrawal'] !== null ? formatInr($row['annual_withdrawal']) : '-'?></td>
-                        <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>><?= $row['cumulative_withdrawals'] ? formatInr($row['cumulative_withdrawals']) : '-'?></td>
-                        <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono"><?= formatInr($row['interest'])?></td>
-                        <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono"><?= formatInr($row['combined_total'])?></td>
+                        <td class="px-6 py-4 text-right font-mono"><?= \Core\CurrencyHelper::formatInr($row['begin_balance'])?></td>
+                        <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono"><?= $row['sip_monthly'] !== null ? \Core\CurrencyHelper::formatInr($row['sip_monthly']) : '-'?></td>
+                        <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono"><?= \Core\CurrencyHelper::formatInr($row['annual_contribution'])?></td>
+                        <td class="px-6 py-4 text-right text-slate-500 font-mono"><?= \Core\CurrencyHelper::formatInr($row['cumulative_invested'])?></td>
+                        <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>><?= $row['swp_monthly'] !== null ? \Core\CurrencyHelper::formatInr($row['swp_monthly']) : '-'?></td>
+                        <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>><?= $row['annual_withdrawal'] !== null ? \Core\CurrencyHelper::formatInr($row['annual_withdrawal']) : '-'?></td>
+                        <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>><?= $row['cumulative_withdrawals'] ? \Core\CurrencyHelper::formatInr($row['cumulative_withdrawals']) : '-'?></td>
+                        <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono"><?= \Core\CurrencyHelper::formatInr($row['interest'])?></td>
+                        <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono"><?= \Core\CurrencyHelper::formatInr($row['combined_total'])?></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

@@ -1,26 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Controllers;
 
 use Core\ContentManager;
 use Core\MetaManager;
 use Core\SchemaHelper;
+use Core\InvestmentInputs;
+use Core\InvestmentCalculator;
+use Core\View;
+use Services\GuideRenderer;
 
+/**
+ * CalculatorController
+ * Handles financial compounding simulations, guide renderings, and PDF generator dispatches.
+ */
 class CalculatorController
 {
-    private ContentManager $contentManager;
     private MetaManager $metaManager;
-    private SchemaHelper $schemaHelper;
+    private GuideRenderer $guideRenderer;
 
-    public function __construct()
-    {
-        $this->contentManager = new ContentManager();
-        $this->metaManager = new MetaManager();
-        $this->schemaHelper = new SchemaHelper();
+    public function __construct(
+        MetaManager $metaManager,
+        GuideRenderer $guideRenderer
+    ) {
+        $this->metaManager = $metaManager;
+        $this->guideRenderer = $guideRenderer;
     }
 
-    public function home()
+    public function home(): void
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+
         // CSRF & Honeypot Checks
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($_POST['website_url'])) {
@@ -34,14 +51,14 @@ class CalculatorController
             }
         }
 
-        // Instantiate DTO
-        $inputs = \Core\InvestmentInputs::fromRequest($_POST);
+        // Instantiate Input DTO
+        $inputs = InvestmentInputs::fromRequest($_POST);
 
-        // Instantiate Engine
-        $calculator = new \Core\InvestmentCalculator();
+        // Instantiate and run calculation engine
+        $calculator = new InvestmentCalculator();
         $combined = $calculator->calculate($inputs);
 
-        // Map variables for backward compatibility with modular view components
+        // Map variables for view scope
         $sip = $inputs->getSip();
         $years = $inputs->getYears();
         $rate = $inputs->getRate();
@@ -102,287 +119,55 @@ class CalculatorController
 
         $page_config = $this->metaManager->getMeta('home');
 
-        require_once __DIR__ . '/../Views/calculators/home.php';
+        View::render('calculators/home', [
+            'active_page'         => 'index.php',
+            'sip'                 => $sip,
+            'years'               => $years,
+            'rate'                => $rate,
+            'stepup'              => $stepup,
+            'lumpsum'             => $lumpsum,
+            'enable_swp'          => $enable_swp,
+            'swp_withdrawal'      => $swp_withdrawal,
+            'swp_stepup'          => $swp_stepup,
+            'swp_years_input'     => $swp_years_input,
+            'swp_rate'            => $swp_rate,
+            'years_data'          => $years_data,
+            'cumulative_numbers'  => $cumulative_numbers,
+            'combined_numbers'    => $combined_numbers,
+            'swp_numbers'         => $swp_numbers,
+            'combined'            => $combined,
+            'page_config'         => $page_config,
+        ]);
     }
 
-    public function compoundInterestCalculator()
+    /**
+     * Single dynamic action replacing 7 duplicate endpoints via Strategy Pattern.
+     */
+    public function renderGuide(): void
     {
-        $content = $this->contentManager->getParsedContent('/calculators/compound-interest-calculator');
+        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $slug = ltrim($uri, '/');
 
-        if (!$content) {
+        // Look up categories and config
+        $routesConfig = require __DIR__ . '/../Core/Config/routes.php';
+        $calcConfig = $routesConfig['calculators']['/' . $slug] ?? null;
+
+        if (!$calcConfig) {
             http_response_code(404);
-            echo "404 Compound Interest Guide Not Found";
+            echo "404 Calculator Route Not Found";
             return;
         }
 
-        $page_config = $this->metaManager->getMeta('compound-interest-calculator');
-
-        // Generate breadcrumbs schema
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            'Compound Interest Calculator' => '/compound-interest-calculator'
-        ]);
-
-        // Generate Article schema
-        $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'],
-            '2026-02-27',
-            '2026-02-27'
-        );
-
-        $page_config['additional_head'] = '
-            <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/compound-interest-calculator">
-            <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/compound-interest-calculator">
-            <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
-            <script type="application/ld+json">' . $article_schema . '</script>
-        ';
-
-        $page_config['scripts'] = ['/assets/js/calculators/compound-interest.js'];
-
-        $content_html = $content['html'];
-        $content_metadata = $content['metadata'];
-        $active_page = 'compound-interest-calculator.php';
-
-        require_once __DIR__ . '/../Views/layouts/generic-post.php';
+        $this->guideRenderer->render($slug, $calcConfig['category'], $calcConfig['date']);
     }
 
-    public function dollarCostAveragingTool()
+    public function generatePdf(): void
     {
-        $content = $this->contentManager->getParsedContent('/calculators/dollar-cost-averaging-tool');
-
-        if (!$content) {
-            http_response_code(404);
-            echo "404 DCA Tool Guide Not Found";
-            return;
-        }
-
-        $page_config = $this->metaManager->getMeta('dollar-cost-averaging-tool');
-
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            'Dollar-Cost Averaging Tool' => '/dollar-cost-averaging-tool'
-        ]);
-
-        $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'],
-            '2026-03-02',
-            '2026-03-02'
-        );
-
-        $page_config['additional_head'] = '
-            <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/dollar-cost-averaging-tool">
-            <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/dollar-cost-averaging-tool">
-            <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
-            <script type="application/ld+json">' . $article_schema . '</script>
-        ';
-
-        $content_html = $content['html'];
-        $content_metadata = $content['metadata'];
-        $active_page = 'dollar-cost-averaging-tool.php';
-
-        require_once __DIR__ . '/../Views/layouts/generic-post.php';
-    }
-
-    public function recurringInvestmentCalculator()
-    {
-        $content = $this->contentManager->getParsedContent('/calculators/recurring-investment-calculator');
-
-        if (!$content) {
-            http_response_code(404);
-            echo "404 Recurring Investment Guide Not Found";
-            return;
-        }
-
-        $page_config = $this->metaManager->getMeta('recurring-investment-calculator');
-
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            'Recurring Investment Calculator' => '/recurring-investment-calculator'
-        ]);
-
-        $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'],
-            '2026-03-02',
-            '2026-03-02'
-        );
-
-        $page_config['additional_head'] = '
-            <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/recurring-investment-calculator">
-            <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/recurring-investment-calculator">
-            <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
-            <script type="application/ld+json">' . $article_schema . '</script>
-        ';
-
-        $content_html = $content['html'];
-        $content_metadata = $content['metadata'];
-        $active_page = 'recurring-investment-calculator.php';
-
-        require_once __DIR__ . '/../Views/layouts/generic-post.php';
-    }
-
-    public function retirementDrawdownPlanner()
-    {
-        $content = $this->contentManager->getParsedContent('/calculators/retirement-drawdown-planner');
-
-        if (!$content) {
-            http_response_code(404);
-            echo "404 Drawdown Planner Guide Not Found";
-            return;
-        }
-
-        $page_config = $this->metaManager->getMeta('retirement-drawdown-planner');
-
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            'Retirement Drawdown Planner' => '/retirement-drawdown-planner'
-        ]);
-
-        $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'],
-            '2026-03-02',
-            '2026-03-02'
-        );
-
-        $page_config['additional_head'] = '
-            <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/retirement-drawdown-planner">
-            <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/retirement-drawdown-planner">
-            <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
-            <script type="application/ld+json">' . $article_schema . '</script>
-        ';
-
-        $content_html = $content['html'];
-        $content_metadata = $content['metadata'];
-        $active_page = 'retirement-drawdown-planner.php';
-
-        require_once __DIR__ . '/../Views/layouts/generic-post.php';
-    }
-
-    public function sipCalculator()
-    {
-        $content = $this->contentManager->getParsedContent('/calculators/sip-calculator');
-
-        if (!$content) {
-            http_response_code(404);
-            echo "404 SIP Guide Not Found";
-            return;
-        }
-
-        $page_config = $this->metaManager->getMeta('sip-calculator');
-
-        // Generate breadcrumbs schema
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            'SIP Calculator' => '/sip-calculator'
-        ]);
-
-        // Generate Article schema
-        $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'],
-            '2026-02-25',
-            '2026-02-25'
-        );
-
-        $page_config['additional_head'] = '
-            <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/sip-calculator">
-            <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/sip-calculator">
-            <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
-            <script type="application/ld+json">' . $article_schema . '</script>
-        ';
-
-        $content_html = $content['html'];
-        $content_metadata = $content['metadata'];
-        $active_page = 'sip-calculator.php';
-
-        require_once __DIR__ . '/../Views/layouts/generic-post.php';
-    }
-
-    public function sipStepUpCalculator()
-    {
-        $content = $this->contentManager->getParsedContent('/calculators/sip-step-up-calculator');
-
-        if (!$content) {
-            http_response_code(404);
-            echo "404 Step-Up Guide Not Found";
-            return;
-        }
-
-        $page_config = $this->metaManager->getMeta('sip-step-up-calculator');
-
-        // Generate breadcrumbs schema
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            'Step-Up SIP Guide' => '/sip-step-up-calculator'
-        ]);
-
-        // Generate Article schema
-        $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'],
-            '2026-02-25',
-            '2026-02-25'
-        );
-
-        $page_config['additional_head'] = '
-            <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/sip-step-up-calculator">
-            <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/sip-step-up-calculator">
-            <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
-            <script type="application/ld+json">' . $article_schema . '</script>
-        ';
-
-        $content_html = $content['html'];
-        $content_metadata = $content['metadata'];
-        $active_page = 'sip-step-up-calculator.php';
-
-        require_once __DIR__ . '/../Views/layouts/generic-post.php';
-    }
-
-    public function swpTaxCalculator()
-    {
-        $content = $this->contentManager->getParsedContent('/calculators/swp-tax-calculator');
-
-        if (!$content) {
-            http_response_code(404);
-            echo "404 SWP Tax Guide Not Found";
-            return;
-        }
-
-        $page_config = $this->metaManager->getMeta('swp-tax-calculator');
-
-        // Generate breadcrumbs schema
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            'SWP Tax Calculator' => '/swp-tax-calculator'
-        ]);
-
-        // Generate Article schema
-        $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'],
-            '2026-02-25',
-            '2026-02-25'
-        );
-
-        $page_config['additional_head'] = '
-            <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/swp-tax-calculator">
-            <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/swp-tax-calculator">
-            <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
-            <script type="application/ld+json">' . $article_schema . '</script>
-        ';
-
-        $content_html = $content['html'];
-        $content_metadata = $content['metadata'];
-        $active_page = 'swp-tax-calculator.php';
-
-        require_once __DIR__ . '/../Views/layouts/generic-post.php';
-    }
-
-    public function generatePdf()
-    {
-        // ── SECURITY: Only allow POST requests ──
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
             die('Method Not Allowed');
         }
 
-        // ── SECURITY: CSRF token validation ──
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -392,7 +177,7 @@ class CalculatorController
             die('Forbidden: Invalid security token. Please reload the page and try again.');
         }
 
-        // ── SECURITY: Rate limiting (max 10 PDFs per minute per IP) ──
+        // Rate limiting checks
         $rate_limit_dir = sys_get_temp_dir() . '/sipswp_rate_limits/';
         if (!is_dir($rate_limit_dir)) {
             @mkdir($rate_limit_dir, 0700, true);
@@ -411,28 +196,28 @@ class CalculatorController
 
         try {
             $inputs = [
-                'client_name' => mb_substr(strip_tags($_POST['clientName'] ?? 'N/A'), 0, 100),
-                'advisor_name' => mb_substr(strip_tags($_POST['advisorName'] ?? 'N/A'), 0, 100),
+                'client_name'       => mb_substr(strip_tags($_POST['clientName'] ?? 'N/A'), 0, 100),
+                'advisor_name'      => mb_substr(strip_tags($_POST['advisorName'] ?? 'N/A'), 0, 100),
                 'custom_disclaimer' => mb_substr(strip_tags($_POST['customDisclaimer'] ?? ''), 0, 1000),
-                'chart_base64' => '',
-                'table_html' => '',
-                'sip' => 0,
-                'years' => 0,
-                'rate' => 0,
-                'stepup' => 0,
-                'lumpsum' => 0,
-                'swp_withdrawal' => 0,
-                'swp_stepup' => 0,
-                'swp_years' => 0,
-                'swp_rate' => 8,
-                'logo_base64' => null,
+                'chart_base64'      => '',
+                'table_html'        => '',
+                'sip'               => 0,
+                'years'             => 0,
+                'rate'              => 0,
+                'stepup'            => 0,
+                'lumpsum'           => 0,
+                'swp_withdrawal'    => 0,
+                'swp_stepup'        => 0,
+                'swp_years'         => 0,
+                'swp_rate'          => 8,
+                'logo_base64'       => null,
 
                 // Summary Metrics
-                'currency_symbol' => mb_substr(strip_tags($_POST['currency_symbol'] ?? ''), 0, 10),
-                'summary_invested' => mb_substr(strip_tags($_POST['summary_invested'] ?? '0'), 0, 50),
-                'summary_interest' => mb_substr(strip_tags($_POST['summary_interest'] ?? '0'), 0, 50),
+                'currency_symbol'   => mb_substr(strip_tags($_POST['currency_symbol'] ?? ''), 0, 10),
+                'summary_invested'  => mb_substr(strip_tags($_POST['summary_invested'] ?? '0'), 0, 50),
+                'summary_interest'  => mb_substr(strip_tags($_POST['summary_interest'] ?? '0'), 0, 50),
                 'summary_withdrawn' => mb_substr(strip_tags($_POST['summary_withdrawn'] ?? '0'), 0, 50),
-                'summary_corpus' => mb_substr(strip_tags($_POST['summary_corpus'] ?? '0'), 0, 50),
+                'summary_corpus'    => mb_substr(strip_tags($_POST['summary_corpus'] ?? '0'), 0, 50),
             ];
 
             $chart_raw = $_POST['chartData'] ?? '';
@@ -485,7 +270,7 @@ class CalculatorController
                 $inputs['logo_base64'] = 'data:' . $safe_mime . ';base64,' . base64_encode($data);
             }
 
-            // Generate HTML using the OOP template service
+            // Generate HTML using PDF template service
             $html = \Core\PdfReportTemplate::render($inputs);
 
             $options = new \Dompdf\Options();

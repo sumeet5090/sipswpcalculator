@@ -1,36 +1,44 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Controllers;
 
+use Core\View;
+
+/**
+ * PageController
+ * Handles simple static page rendering.
+ */
 class PageController
 {
-    public function about()
+    public function about(): void
     {
-        require_once __DIR__ . '/../Views/pages/about.php';
+        View::render('pages/about');
     }
 
-    public function faq()
+    public function faq(): void
     {
-        require_once __DIR__ . '/../Views/pages/faq.php';
+        View::render('pages/faq');
     }
 
-    public function glossary()
+    public function glossary(): void
     {
-        require_once __DIR__ . '/../Views/pages/glossary.php';
+        View::render('pages/glossary');
     }
 
-    public function privacy()
+    public function privacy(): void
     {
-        require_once __DIR__ . '/../Views/pages/privacy.php';
+        View::render('pages/privacy');
     }
 
-    public function resources()
+    public function resources(): void
     {
-        require_once __DIR__ . '/../Views/pages/resources.php';
+        View::render('pages/resources');
     }
 
-    public function terms()
+    public function terms(): void
     {
-        require_once __DIR__ . '/../Views/pages/terms.php';
+        View::render('pages/terms');
     }
 }

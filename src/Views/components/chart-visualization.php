@@ -28,7 +28,7 @@ $swp_numbers_val = isset($swp_numbers) ? array_values($swp_numbers) : [];
                 Total Invested
             </div>
             <div id="summary-invested" class="text-lg sm:text-xl font-extrabold text-emerald-600 font-mono transition-numbers">
-                <?= formatInr($lastRow['cumulative_invested']) ?>
+                <?= \Core\CurrencyHelper::formatInr($lastRow['cumulative_invested']) ?>
             </div>
         </div>
         <div class="glass-card p-3 sm:p-4 text-center">
@@ -36,7 +36,7 @@ $swp_numbers_val = isset($swp_numbers) ? array_values($swp_numbers) : [];
                 Total Gains
             </div>
             <div id="summary-interest" class="text-lg sm:text-xl font-extrabold text-emerald-600 font-mono transition-numbers">
-                <?= formatInr($totalGains) ?>
+                <?= \Core\CurrencyHelper::formatInr($totalGains) ?>
             </div>
         </div>
         <div class="glass-card p-3 sm:p-4 text-center">
@@ -44,7 +44,7 @@ $swp_numbers_val = isset($swp_numbers) ? array_values($swp_numbers) : [];
                 Total Withdrawn
             </div>
             <div id="summary-withdrawn" class="text-lg sm:text-xl font-extrabold text-rose-500 font-mono transition-numbers">
-                <?= formatInr($lastRow['cumulative_withdrawals'] ?? 0) ?>
+                <?= \Core\CurrencyHelper::formatInr($lastRow['cumulative_withdrawals'] ?? 0) ?>
             </div>
         </div>
         <div class="glass-card p-3 sm:p-4 text-center border-2 border-emerald-100">
@@ -52,7 +52,7 @@ $swp_numbers_val = isset($swp_numbers) ? array_values($swp_numbers) : [];
                 Final Corpus
             </div>
             <div id="summary-corpus" class="text-lg sm:text-xl font-extrabold text-slate-800 font-mono transition-numbers">
-                <?= formatInr($lastRow['combined_total']) ?>
+                <?= \Core\CurrencyHelper::formatInr($lastRow['combined_total']) ?>
             </div>
         </div>
     </div>

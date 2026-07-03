@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../../../functions.php';
-
 $page_config = [
     'title' => 'Terms of Service | SIP & SWP Calculator',
     'meta_desc' => 'Terms of Service for the SIP & SWP Calculator. Please read these terms carefully before using our financial tools.',

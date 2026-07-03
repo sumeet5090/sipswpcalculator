@@ -23,21 +23,15 @@ class RouterIntegrityTest extends TestCase
         $this->router->post('/generate-pdf', 'CalculatorController@generatePdf');
 
         // Dynamic Calculators Registration
-        foreach ($this->routesConfig['calculators'] as $calc) {
-            $slugParts = explode('-', ltrim($calc, '/'));
-            $methodName = array_shift($slugParts);
-            foreach ($slugParts as $part) {
-                $methodName .= ucfirst($part);
-            }
-
-            $this->router->get($calc, "CalculatorController@{$methodName}");
-            $this->router->post($calc, "CalculatorController@{$methodName}");
+        foreach ($this->routesConfig['calculators'] as $calc => $config) {
+            $this->router->get($calc, $config['action']);
+            $this->router->post($calc, $config['action']);
             $this->router->redirect($calc . '.php', $calc);
         }
 
         // Dynamic Pages Registration
-        foreach ($this->routesConfig['pages'] as $uri => $method) {
-            $this->router->get($uri, "PageController@{$method}");
+        foreach ($this->routesConfig['pages'] as $uri => $action) {
+            $this->router->get($uri, $action);
             $this->router->redirect($uri . '.php', $uri);
         }
 

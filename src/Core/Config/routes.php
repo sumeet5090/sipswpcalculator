@@ -4,20 +4,48 @@ declare(strict_types=1);
 
 return [
     'calculators' => [
-        '/compound-interest-calculator',
-        '/dollar-cost-averaging-tool',
-        '/recurring-investment-calculator',
-        '/retirement-drawdown-planner',
-        '/sip-calculator',
-        '/sip-step-up-calculator',
-        '/swp-tax-calculator'
+        '/compound-interest-calculator' => [
+            'action'   => 'CalculatorController@renderGuide',
+            'category' => 'growth',
+            'date'     => '2026-02-27'
+        ],
+        '/dollar-cost-averaging-tool' => [
+            'action'   => 'CalculatorController@renderGuide',
+            'category' => 'growth',
+            'date'     => '2026-03-02'
+        ],
+        '/recurring-investment-calculator' => [
+            'action'   => 'CalculatorController@renderGuide',
+            'category' => 'growth',
+            'date'     => '2026-03-02'
+        ],
+        '/retirement-drawdown-planner' => [
+            'action'   => 'CalculatorController@renderGuide',
+            'category' => 'retirement',
+            'date'     => '2026-03-02'
+        ],
+        '/sip-calculator' => [
+            'action'   => 'CalculatorController@renderGuide',
+            'category' => 'growth',
+            'date'     => '2026-02-25'
+        ],
+        '/sip-step-up-calculator' => [
+            'action'   => 'CalculatorController@renderGuide',
+            'category' => 'growth',
+            'date'     => '2026-02-27'
+        ],
+        '/swp-tax-calculator' => [
+            'action'   => 'CalculatorController@renderGuide',
+            'category' => 'retirement',
+            'date'     => '2026-03-02'
+        ]
     ],
     'pages' => [
-        '/about' => 'about',
-        '/faq' => 'faq',
-        '/glossary' => 'glossary',
-        '/privacy' => 'privacy',
-        '/terms' => 'terms'
+        '/about'    => 'PageController@about',
+        '/faq'      => 'PageController@faq',
+        '/glossary' => 'PageController@glossary',
+        '/privacy'  => 'PageController@privacy',
+        '/terms'    => 'PageController@terms'
     ],
     'blog_redirects' => [
         'sip-for-beginners' => 'growth',
