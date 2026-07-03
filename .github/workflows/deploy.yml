@@ -1,0 +1,50 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.5'
+        tools: composer:v2
+
+    - name: Validate composer.json
+      run: composer validate --strict || true
+
+    - name: Install Composer Dependencies
+      run: composer install --no-dev --optimize-autoloader --prefer-dist --no-progress
+
+    - name: Sync to Production via FTP
+      if: github.ref == 'refs/heads/main'
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: /public_html/
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/.github/**
+          **/.agents/**
+          tests/**
+          docker/**
+          Dockerfile
+          docker-compose.yml
+          package.json
+          package-lock.json
+          README.md
+          phpcs.xml
+          phpstan.neon
+          phpunit.xml
