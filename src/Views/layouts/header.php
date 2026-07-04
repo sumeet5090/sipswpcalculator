@@ -12,7 +12,20 @@ if ($active_page === '' || $active_page === '/') {
 }
 
 $nav_items = [
-    ['label' => 'Show Calculator', 'href' => '/#calculator-section', 'id' => 'index.php'],
+    [
+        'label' => 'Calculators', 
+        'href' => '#', 
+        'id' => 'calculators',
+        'sub_items' => [
+            ['label' => 'SIP Calculator', 'href' => '/sip-calculator'],
+            ['label' => 'SWP Calculator', 'href' => '/swp-calculator'],
+            ['label' => 'Step-Up SIP Calculator', 'href' => '/sip-step-up-calculator'],
+            ['label' => 'SWP Tax Calculator', 'href' => '/swp-tax-calculator'],
+            ['label' => 'Compound Interest', 'href' => '/compound-interest-calculator'],
+            ['label' => 'Retirement Planner', 'href' => '/retirement-drawdown-planner'],
+            ['label' => 'Lumpsum Calculator', 'href' => '/lumpsum-calculator'],
+        ]
+    ],
     ['label' => 'Resources', 'href' => '/resources', 'id' => 'resources.php'],
     ['label' => 'Glossary', 'href' => '/glossary', 'id' => 'glossary.php'],
     ['label' => 'FAQ', 'href' => '/faq', 'id' => 'faq.php'],
@@ -71,12 +84,27 @@ $nav_items = [
         <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
             <?php foreach ($nav_items as $item) :
                 $is_active = ($active_page === $item['id']) || ($item['id'] === 'resources.php' && $active_page === 'blog_post');
-                ?>
-            <a href="<?= $item['href']?>"
-                class="<?= $is_active ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600'?> transition-colors">
-                <?= $item['label']?>
-            </a>
-                <?php
+                
+                if (isset($item['sub_items'])) : ?>
+                    <div class="relative nav-dropdown py-2">
+                        <button class="<?= $is_active ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600'?> transition-colors inline-flex items-center gap-1">
+                            <?= $item['label'] ?>
+                            <svg class="w-4 h-4 nav-chevron transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none nav-dropdown-menu">
+                            <div class="py-1">
+                                <?php foreach ($item['sub_items'] as $sub) : ?>
+                                    <a href="<?= $sub['href'] ?>" class="block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600"><?= $sub['label'] ?></a>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php else : ?>
+                    <a href="<?= $item['href']?>"
+                        class="<?= $is_active ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600'?> transition-colors">
+                        <?= $item['label']?>
+                    </a>
+                <?php endif;
             endforeach; ?>
         </nav>
 
@@ -101,12 +129,21 @@ $nav_items = [
         <div class="px-4 py-3 space-y-1">
             <?php foreach ($nav_items as $item) :
                 $is_active = ($active_page === $item['id']) || ($item['id'] === 'resources.php' && $active_page === 'blog_post');
-                ?>
-            <a href="<?= $item['href']?>"
-                class="block px-3 py-3 rounded-lg text-base font-medium <?= $is_active ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50'?> transition-colors">
-                <?= $item['label']?>
-            </a>
-                <?php
+                if (isset($item['sub_items'])) : ?>
+                    <div class="text-slate-500 font-semibold px-3 py-2 text-xs uppercase tracking-wider"><?= $item['label'] ?></div>
+                    <div class="pl-4 space-y-1">
+                        <?php foreach ($item['sub_items'] as $sub) : ?>
+                            <a href="<?= $sub['href']?>" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 transition-colors">
+                                <?= $sub['label']?>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else : ?>
+                    <a href="<?= $item['href']?>"
+                        class="block px-3 py-3 rounded-lg text-base font-medium <?= $is_active ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50'?> transition-colors">
+                        <?= $item['label']?>
+                    </a>
+                <?php endif;
             endforeach; ?>
         </div>
     </div>

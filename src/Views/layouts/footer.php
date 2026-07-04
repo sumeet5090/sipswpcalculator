@@ -7,31 +7,45 @@
 
 ?>
 <footer class="mt-16 text-sm text-gray-600 glass-card p-10">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
         <div>
-            <h3 class="font-bold text-lg mb-3 text-gray-800">About Calculator</h3>
-            <p class="leading-relaxed">A powerful, free tool designed to help investors visualize and plan their
-                SIP and SWP strategies with precision and ease.</p>
+            <h3 class="font-bold text-lg mb-3 text-gray-800">Top Calculators</h3>
+            <ul class="space-y-2 text-sm">
+                <li><a href="/sip-calculator" class="text-emerald-600 hover:underline">SIP Calculator</a></li>
+                <li><a href="/swp-calculator" class="text-emerald-600 hover:underline">SWP Calculator</a></li>
+                <li><a href="/sip-step-up-calculator" class="text-emerald-600 hover:underline">Step-Up SIP Calculator</a></li>
+                <li><a href="/swp-tax-calculator" class="text-emerald-600 hover:underline">SWP Tax Calculator</a></li>
+                <li><a href="/compound-interest-calculator" class="text-emerald-600 hover:underline">Compound Interest</a></li>
+                <li><a href="/retirement-drawdown-planner" class="text-emerald-600 hover:underline">Retirement Planner</a></li>
+                <li><a href="/lumpsum-calculator" class="text-emerald-600 hover:underline">Lumpsum Calculator</a></li>
+                <li><a href="/mutual-fund-calculator" class="text-emerald-600 hover:underline">Mutual Fund Hub</a></li>
+            </ul>
         </div>
         <div>
-            <h3 class="font-bold text-lg mb-3 text-gray-800">Resources Hub</h3>
+            <h3 class="font-bold text-lg mb-3 text-gray-800">Popular Guides</h3>
             <ul class="space-y-2 text-sm">
-                <li><a href="/resources" class="text-emerald-600 hover:underline">All Resources &amp; Guides</a>
-                </li>
-                <li><a href="/glossary" class="text-emerald-600 hover:underline">Financial Glossary</a></li>
-                <li><a href="/faq" class="text-emerald-600 hover:underline">Frequently Asked Questions (FAQ)</a>
-                </li>
+                <li><a href="/resource/growth/sip-for-beginners" class="text-emerald-600 hover:underline">SIP for Beginners</a></li>
+                <li><a href="/resource/retirement/swp-retirement-planning" class="text-emerald-600 hover:underline">SWP Retirement Planning</a></li>
+                <li><a href="/resource/comparison/sip-vs-lumpsum" class="text-emerald-600 hover:underline">SIP vs Lumpsum</a></li>
+                <li><a href="/resource/comparison/sip-vs-fd-vs-ppf" class="text-emerald-600 hover:underline">SIP vs FD vs PPF</a></li>
+                <li><a href="/resource/retirement/retirement-planning-4-percent-swp-rule" class="text-emerald-600 hover:underline">The 4% SWP Rule</a></li>
+                <li><a href="/resources" class="text-emerald-600 hover:underline mt-2 inline-block font-semibold">View All Resources &rarr;</a></li>
             </ul>
         </div>
         <div>
             <h3 class="font-bold text-lg mb-3 text-gray-800">Support & Legal</h3>
             <ul class="space-y-2 text-sm">
                 <li><a href="/about" class="text-emerald-600 hover:underline">About Me</a></li>
-                <li><a href="mailto:help@sipswpcalculator.com" class="text-emerald-600 hover:underline">Contact Us</a>
-                </li>
+                <li><a href="/glossary" class="text-emerald-600 hover:underline">Financial Glossary</a></li>
+                <li><a href="/faq" class="text-emerald-600 hover:underline">FAQ</a></li>
+                <li><a href="mailto:help@sipswpcalculator.com" class="text-emerald-600 hover:underline">Contact Us</a></li>
                 <li><a href="/privacy" class="text-emerald-600 hover:underline">Privacy Policy</a></li>
                 <li><a href="/terms" class="text-emerald-600 hover:underline">Terms of Service</a></li>
             </ul>
+        </div>
+        <div>
+            <h3 class="font-bold text-lg mb-3 text-gray-800">About Calculator</h3>
+            <p class="leading-relaxed">A powerful, free tool designed to help investors visualize and plan their SIP and SWP strategies with precision and ease.</p>
         </div>
     </div>
 
