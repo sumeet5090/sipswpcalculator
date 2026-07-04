@@ -25,7 +25,7 @@
         }
     });
 </script>
-<script type="module" src="/script.js?v=<?= filemtime(__DIR__ . '/../../../script.js') ?>"></script>
+<script type="module" src="<?= \Core\ViteHelper::asset('resources/js/app.js') ?>"></script>
 <?php if (!empty($page_config['scripts'])) : ?>
     <?php foreach ($page_config['scripts'] as $script) : ?>
         <script src="<?= htmlspecialchars($script) ?>?v=<?= filemtime(__DIR__ . '/../../../' . ltrim($script, '/')) ?>" defer></script>

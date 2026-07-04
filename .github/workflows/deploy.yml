@@ -25,6 +25,17 @@ jobs:
     - name: Install Composer Dependencies
       run: composer install --no-dev --optimize-autoloader --prefer-dist --no-progress
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Node Dependencies
+      run: npm ci
+
+    - name: Build Frontend Assets
+      run: npm run build
+
     - name: Sync to Production via FTP
       if: github.ref == 'refs/heads/main'
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -47,6 +58,8 @@ jobs:
           **/docker-compose.yml
           **/package.json
           **/package-lock.json
+          **/node_modules/**
+          **/resources/**
           **/.env
           **/README.md
           **/phpcs.xml

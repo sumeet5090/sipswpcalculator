@@ -26,11 +26,16 @@ class View
             self::$twig->addGlobal('env', getenv('ENVIRONMENT'));
             self::$twig->addGlobal('request', \Core\Http\Request::createFromGlobals());
             self::$twig->addFilter(new \Twig\TwigFilter('formatInr', function ($amount) {
-                return \Core\CurrencyHelper::formatInr((float)$amount);
+                return \Core\CurrencyHelper::formatInr((float) $amount);
             }));
             self::$twig->addFilter(new \Twig\TwigFilter('array_values', function ($array) {
                 return is_array($array) ? array_values($array) : $array;
             }));
+
+            // Vite Integration
+            self::$twig->addFunction(new \Twig\TwigFunction('vite_asset', ['\Core\ViteHelper', 'asset']));
+            self::$twig->addFunction(new \Twig\TwigFunction('vite_client', ['\Core\ViteHelper', 'client'], ['is_safe' => ['html']]));
+            self::$twig->addFunction(new \Twig\TwigFunction('vite_css', ['\Core\ViteHelper', 'css'], ['is_safe' => ['html']]));
         }
         return self::$twig;
     }

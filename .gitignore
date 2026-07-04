@@ -22,7 +22,8 @@ database/database.sqlite-*
 GEMINI.md
 
 # --- Build Artifacts ---
-# We KEEP /dist/ because it contains production CSS 
+# Ignored because GitHub Actions builds the frontend assets now
+/dist/
 /build/
 
 # --- Binaries ---

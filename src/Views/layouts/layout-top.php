@@ -45,8 +45,8 @@ require_once __DIR__ . '/important-imports.php';
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="/styles.css?v=<?= filemtime(__DIR__ . '/../../../styles.css') ?>">
-    <link rel="stylesheet" href="/dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/../../../dist/tailwind.min.css') ?>">
+    <?= \Core\ViteHelper::client() ?>
+    <?= \Core\ViteHelper::css('resources/js/app.js') ?>
 
     <?= $additional_head ?>
 
