@@ -99,6 +99,9 @@ class App
             $this->router->redirect($uri . '.php', $uri);
         }
 
+        // Dynamic Sitemap
+        $this->router->get('/sitemap.xml', 'SitemapController@index');
+
         // Admin / Insight Routing
         $this->router->get('/admin_insights', 'AdminController@insights');
         $this->router->post('/admin_insights', 'AdminController@insights');
