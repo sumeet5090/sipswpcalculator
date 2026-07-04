@@ -3,6 +3,14 @@ Allow: /
 Disallow: /dist/
 Disallow: /node_modules/
 Disallow: /src/
-Disallow: /generate-pdf.php
+Disallow: /generate-pdf
+Disallow: /admin_insights
+Disallow: /log_insight
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
 
 Sitemap: https://sipswpcalculator.com/sitemap.xml

@@ -28,6 +28,9 @@ require_once __DIR__ . '/important-imports.php';
         <?= htmlspecialchars($title) ?>
     </title>
     <meta name="description" content="<?= htmlspecialchars($meta_desc) ?>">
+    <?php if (isset($page_config['keywords']) && !empty($page_config['keywords'])): ?>
+    <meta name="keywords" content="<?= htmlspecialchars($page_config['keywords']) ?>">
+    <?php endif; ?>
     <link rel="canonical" href="<?= htmlspecialchars($canonical) ?>">
     <meta name="robots" content="index, follow">
 
@@ -45,7 +48,7 @@ require_once __DIR__ . '/important-imports.php';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <?= \Core\ViteHelper::client() ?>
@@ -66,9 +69,11 @@ require_once __DIR__ . '/important-imports.php';
 
         <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
     <?php endif ?>
+    <?php if (getenv('ENVIRONMENT') !== 'production'): ?>
     <script>
         console.log("<?= 'ENVIRONMENT: ' . getenv('ENVIRONMENT') ?>");
     </script>
+    <?php endif; ?>
 </head>
 
 <body class="<?= $body_class ?>" style="<?= $body_style ?>">
