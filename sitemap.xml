@@ -19,11 +19,18 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://sipswpcalculator.com/sip-step-up-calculator</loc>
-    <lastmod>2026-07-01</lastmod>
+    <loc>https://sipswpcalculator.com/mutual-fund-calculator</loc>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://sipswpcalculator.com/lumpsum-calculator</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <url>
     <loc>https://sipswpcalculator.com/swp-tax-calculator</loc>
     <lastmod>2026-07-01</lastmod>
@@ -75,6 +82,12 @@
   <url>
     <loc>https://sipswpcalculator.com/resource/comparison/swp-vs-fixed-deposit</loc>
     <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sipswpcalculator.com/resource/comparison/sip-vs-lumpsum</loc>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

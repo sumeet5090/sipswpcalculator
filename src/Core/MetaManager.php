@@ -19,17 +19,24 @@ class MetaManager
             'keywords' => 'sip calculator, sip return calculator, mutual fund sip, sip calculation formula, sip tax rules',
             'canonical' => 'https://sipswpcalculator.com/sip-calculator',
         ],
-        'sip-step-up-calculator' => [
-            'title' => 'SIP Step-Up Calculator India 2026: Power of Increasing Contributions',
-            'meta_desc' => 'Calculate how a 5-10% annual step-up in your mutual fund SIP can double your wealth. Compare flat vs. step-up SIPs with our advanced 2026 tool.',
-            'keywords' => 'step up sip calculator, sip top up, increasing sip, step up calculator india',
-            'canonical' => 'https://sipswpcalculator.com/sip-step-up-calculator',
-        ],
+
         'swp-calculator' => [
             'title' => 'SWP Calculator India 2026: Free Systematic Withdrawal Plan Tool',
             'meta_desc' => 'Free SWP calculator for Indian mutual funds. Calculate post-tax monthly retirement income with step-up withdrawals. Compare SWP vs FD. Plan your retirement corpus drawdown.',
-            'keywords' => 'swp calculator, systematic withdrawal plan, swp calculator india, retirement withdrawal calculator',
+            'keywords' => 'swp calculator, systematic withdrawal plan calculator, swp mutual fund, mutual fund withdrawal, retirement calculator',
             'canonical' => 'https://sipswpcalculator.com/swp-calculator',
+        ],
+        'mutual-fund-calculator' => [
+            'title' => 'Mutual Fund Calculator India 2026: SIP, SWP & Lumpsum Returns',
+            'meta_desc' => 'Calculate your mutual fund returns with our comprehensive 2026 mutual fund calculator. Plan SIPs, Lumpsum investments, and SWP withdrawals in one place.',
+            'keywords' => 'mutual fund calculator, mutual fund return calculator, sip lumpsum calculator',
+            'canonical' => 'https://sipswpcalculator.com/mutual-fund-calculator',
+        ],
+        'lumpsum-calculator' => [
+            'title' => 'Lumpsum Calculator India 2026: Mutual Fund One-Time Investment Returns',
+            'meta_desc' => 'Free lumpsum mutual fund calculator. Calculate the future value of your one-time investments with compounding interest over long horizons.',
+            'keywords' => 'lumpsum calculator, lumpsum mutual fund return, one time investment calculator',
+            'canonical' => 'https://sipswpcalculator.com/lumpsum-calculator',
         ],
         'swp-tax-calculator' => [
             'title' => 'SWP Tax Calculator India 2026: Post-Tax Mutual Fund Income Planner',
