@@ -34,6 +34,11 @@ return [
             'category' => 'growth',
             'date'     => '2026-02-27'
         ],
+        '/swp-calculator' => [
+            'action'   => 'RenderGuideAction',
+            'category' => 'retirement',
+            'date'     => '2026-07-05'
+        ],
         '/swp-tax-calculator' => [
             'action'   => 'RenderGuideAction',
             'category' => 'retirement',

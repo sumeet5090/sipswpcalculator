@@ -8,13 +8,13 @@ class MetaManager
 {
     private array $metaData = [
         'home' => [
-            'title' => 'SIP SWP Calculator 2026: Plan SIP to SWP Mutual Fund Income',
-            'meta_desc' => 'Free online SIP SWP calculator. Plan your transition from SIP accumulation to SWP retirement income in India. Model lumpsums, annual step-ups, and inflation adjustments.',
+            'title' => 'SIP SWP Calculator India 2026: Free Online Mutual Fund Planner',
+            'meta_desc' => 'Free SIP SWP calculator India. Plan mutual fund investments with step-up SIP, lumpsum, and SWP retirement income. Calculate returns, compare scenarios, and export PDF reports.',
             'canonical' => 'https://sipswpcalculator.com/',
         ],
         'sip-calculator' => [
-            'title' => 'SIP Calculator & Guide 2026: Mutual Fund Returns, Formula & Tax Rules',
-            'meta_desc' => 'Master SIPs: learn the compounding formula, 2026 LTCG/STCG mutual fund tax rules in India, step-up strategy with worked examples. Free SIP calculator included.',
+            'title' => 'SIP Calculator India 2026: Free Mutual Fund Return Calculator & Guide',
+            'meta_desc' => 'Free SIP calculator with step-up compounding for Indian mutual funds. Calculate returns using the FV annuity formula. Includes 2026 LTCG/STCG tax rules and worked examples.',
             'canonical' => 'https://sipswpcalculator.com/sip-calculator',
         ],
         'sip-step-up-calculator' => [
@@ -22,9 +22,14 @@ class MetaManager
             'meta_desc' => 'Calculate how a 5-10% annual step-up in your mutual fund SIP can double your wealth. Compare flat vs. step-up SIPs with our advanced 2026 tool.',
             'canonical' => 'https://sipswpcalculator.com/sip-step-up-calculator',
         ],
+        'swp-calculator' => [
+            'title' => 'SWP Calculator India 2026: Free Systematic Withdrawal Plan Tool',
+            'meta_desc' => 'Free SWP calculator for Indian mutual funds. Calculate post-tax monthly retirement income with step-up withdrawals. Compare SWP vs FD. Plan your retirement corpus drawdown.',
+            'canonical' => 'https://sipswpcalculator.com/swp-calculator',
+        ],
         'swp-tax-calculator' => [
-            'title' => 'SWP Tax Calculator 2026: Post-Tax Indian Mutual Fund Income',
-            'meta_desc' => 'Calculate post-tax monthly income from your Systematic Withdrawal Plan (SWP) using 2026 capital gains tax (LTCG/STCG) rules for Indian mutual funds.',
+            'title' => 'SWP Tax Calculator India 2026: Post-Tax Mutual Fund Income Planner',
+            'meta_desc' => 'Free SWP tax calculator. Calculate post-tax monthly income from your Systematic Withdrawal Plan using 2026 capital gains tax (LTCG 12.5%, STCG 20%) rules for Indian mutual funds.',
             'canonical' => 'https://sipswpcalculator.com/swp-tax-calculator',
         ],
         'compound-interest-calculator' => [

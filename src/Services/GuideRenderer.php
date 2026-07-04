@@ -69,7 +69,7 @@ class GuideRenderer
         );
 
         $page_config['additional_head'] = '
-            <link rel="alternate" hreflang="en" href="https://sipswpcalculator.com/' . $slug . '">
+            <link rel="alternate" hreflang="en-IN" href="https://sipswpcalculator.com/' . $slug . '">
             <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/' . $slug . '">
             <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
             <script type="application/ld+json">' . $article_schema . '</script>

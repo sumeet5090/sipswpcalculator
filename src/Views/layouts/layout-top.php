@@ -19,7 +19,7 @@ $body_style = $page_config['body_style'] ?? 'background-image: var(--gradient-su
 require_once __DIR__ . '/important-imports.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 
 <head>
     <meta charset="UTF-8">
@@ -30,6 +30,9 @@ require_once __DIR__ . '/important-imports.php';
     <meta name="description" content="<?= htmlspecialchars($meta_desc) ?>">
     <link rel="canonical" href="<?= htmlspecialchars($canonical) ?>">
     <meta name="robots" content="index, follow">
+
+    <link rel="alternate" hreflang="en-IN" href="<?= htmlspecialchars($canonical) ?>">
+    <link rel="alternate" hreflang="x-default" href="<?= htmlspecialchars($canonical) ?>">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?= htmlspecialchars($canonical) ?>">
