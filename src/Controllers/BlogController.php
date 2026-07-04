@@ -88,15 +88,29 @@ class BlogController
             $content['metadata']['title'] ?: ucfirst(str_replace('-', ' ', $slug)) => "/resource/{$category}/{$slug}"
         ]);
 
+        $url = 'https://sipswpcalculator.com/resource/' . $category . '/' . $slug;
+        $description = $page_config['meta_desc'] ?? $page_config['title'] ?? '';
+        $imageUrl = $page_config['og_image'] ?? 'https://sipswpcalculator.com/assets/og-image-main.jpg';
+
         $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'],
+            $page_config['title'] ?? '',
+            $description,
+            $url,
+            $imageUrl,
             '2026-03-01',
             date('Y-m-d')
+        );
+
+        $webpage_schema = $this->schemaHelper->getWebPage(
+            $page_config['title'] ?? '',
+            $description,
+            $url
         );
 
         $page_config['additional_head'] = '
             <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
             <script type="application/ld+json">' . $article_schema . '</script>
+            <script type="application/ld+json">' . $webpage_schema . '</script>
         ';
 
         View::render('layouts/generic-post', [

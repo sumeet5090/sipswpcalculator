@@ -56,19 +56,51 @@ class SchemaHelper
     /**
      * Generates Article Schema.org JSON-LD.
      */
-    public function getArticle(string $headline, string $datePublished, string $dateModified): string
+    public function getArticle(string $headline, string $description, string $url, string $imageUrl, string $datePublished, string $dateModified): string
     {
         return json_encode([
             "@context" => "https://schema.org",
             "@type" => "Article",
+            "mainEntityOfPage" => [
+                "@type" => "WebPage",
+                "@id" => $url,
+            ],
             "headline" => $headline,
+            "description" => $description,
+            "image" => $imageUrl,
             "author" => [
                 "@type" => "Person",
                 "name" => "Sumeet Boga",
                 "url" => "https://sipswpcalculator.com/about",
             ],
+            "publisher" => [
+                "@type" => "Organization",
+                "name" => "SIP SWP Calculator",
+                "logo" => [
+                    "@type" => "ImageObject",
+                    "url" => "https://sipswpcalculator.com/assets/favicon.png"
+                ]
+            ],
             "datePublished" => $datePublished,
             "dateModified" => $dateModified,
+        ], JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * Generates WebPage Schema.org JSON-LD.
+     */
+    public function getWebPage(string $title, string $description, string $url): string
+    {
+        return json_encode([
+            "@context" => "https://schema.org",
+            "@type" => "WebPage",
+            "name" => $title,
+            "description" => $description,
+            "url" => $url,
+            "speakable" => [
+                "@type" => "SpeakableSpecification",
+                "cssSelector" => ["h1", ".markdown-content p:first-of-type"]
+            ]
         ], JSON_UNESCAPED_SLASHES);
     }
 }

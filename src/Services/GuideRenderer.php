@@ -61,11 +61,25 @@ class GuideRenderer
             $page_config['title'] ?? ucfirst(str_replace('-', ' ', $slug)) => '/' . $slug
         ]);
 
+        $url = 'https://sipswpcalculator.com/' . $slug;
+        $description = $page_config['meta_desc'] ?? $page_config['title'] ?? '';
+        $imageUrl = $page_config['og_image'] ?? 'https://sipswpcalculator.com/assets/og-image-main.jpg';
+
         // Generate Article schema
         $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'],
+            $page_config['title'] ?? '',
+            $description,
+            $url,
+            $imageUrl,
             $publishedDate,
             $publishedDate
+        );
+
+        // Generate WebPage schema
+        $webpage_schema = $this->schemaHelper->getWebPage(
+            $page_config['title'] ?? '',
+            $description,
+            $url
         );
 
         $page_config['additional_head'] = '
@@ -73,6 +87,7 @@ class GuideRenderer
             <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/' . $slug . '">
             <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
             <script type="application/ld+json">' . $article_schema . '</script>
+            <script type="application/ld+json">' . $webpage_schema . '</script>
         ';
 
         // Add custom JS script if it matches specific naming/file templates
