@@ -1,14 +1,6 @@
-<?php
+{% extends 'layouts/base.twig' %}
 
-declare(strict_types=1);
-
-$page_config = [
-    'title' => 'About Me & Project Journey | SIP & SWP Calculator',
-    'meta_desc' => 'Discover the story behind SIP & SWP Calculator — a premium, ad-free step-up compounding & retirement planning tool engineered by Sumeet Boga.',
-];
-
-ob_start();
-?>
+{% block head %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -46,26 +38,21 @@ ob_start();
         box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.15);
     }
 </style>
-<?php
-$page_config['additional_head'] = ob_get_clean();
-$active_page = 'about.php';
-ob_start();
-?>
+{% endblock %}
 
-<?php include __DIR__ . '/../components/theme-glow-blobs.php'; ?>
+{% block content %}
+{% include 'components/theme-glow-blobs.twig' %}
 
 <div class="max-w-5xl mx-auto px-4 sm:px-6 pb-20 relative">
     
-    <?php
-    $hero = [
-        'badge' => 'Meet the Builder',
-        'title_prefix' => 'About ',
-        'title_highlight' => 'Me',
-        'title_suffix' => ' & The Project',
-        'description' => 'The engineering journey behind a transparent, ad-free financial planning suite built for smart investors.'
-    ];
-    include __DIR__ . '/../components/page-hero.php';
-    ?>
+    {% set hero = {
+        'badge': 'Meet the Builder',
+        'title_prefix': 'About ',
+        'title_highlight': 'Me',
+        'title_suffix': ' & The Project',
+        'description': 'The engineering journey behind a transparent, ad-free financial planning suite built for smart investors.'
+    } %}
+    {% include 'components/page-hero.twig' %}
 
     <!-- Creator Bio Card & Introduction -->
     <section class="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch mb-16">
@@ -331,8 +318,4 @@ ob_start();
     </section>
 
 </div>
-
-<?php
-$page_content = ob_get_clean();
-require_once __DIR__ . '/../layouts/layout.php';
-?>
+{% endblock %}

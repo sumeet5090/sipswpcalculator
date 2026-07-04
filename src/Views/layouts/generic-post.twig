@@ -1,0 +1,17 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+<div class="markdown-content">
+    <header class="mb-8 border-b border-slate-100 pb-6">
+        {% set title = content_metadata.title|default(page_config.title|default('Financial Guide')) %}
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 mb-4 leading-tight">
+            {{ title }}
+        </h1>
+        {% if content_metadata.subtitle is defined and content_metadata.subtitle is not empty %}
+            <p class="text-lg sm:text-xl text-slate-500 font-medium leading-relaxed">{{ content_metadata.subtitle }}</p>
+        {% endif %}
+    </header>
+    
+    {{ content_html|raw }}
+</div>
+{% endblock %}

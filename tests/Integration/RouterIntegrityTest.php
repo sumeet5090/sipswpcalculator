@@ -18,9 +18,9 @@ class RouterIntegrityTest extends TestCase
         $this->router = new Router();
 
         // Register routes exactly as index.php does
-        $this->router->get('/', 'CalculatorController@home');
-        $this->router->post('/', 'CalculatorController@home');
-        $this->router->post('/generate-pdf', 'CalculatorController@generatePdf');
+        $this->router->get('/', 'RenderHomeAction');
+        $this->router->post('/', 'RenderHomeAction');
+        $this->router->post('/generate-pdf', 'GeneratePdfAction');
 
         // Dynamic Calculators Registration
         foreach ($this->routesConfig['calculators'] as $calc => $config) {
@@ -103,7 +103,7 @@ class RouterIntegrityTest extends TestCase
             foreach ($mappings as $uri => $actionStr) {
                 $parts = explode('@', $actionStr);
                 $controllerClass = "\\Controllers\\" . $parts[0];
-                $action = $parts[1];
+                $action = $parts[1] ?? '__invoke';
 
                 $this->assertTrue(
                     class_exists($controllerClass),

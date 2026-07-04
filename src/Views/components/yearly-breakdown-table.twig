@@ -1,13 +1,3 @@
-<?php
-
-/**
- * yearly-breakdown-table.php
- * Component for the tabular breakdown showing SIP/SWP milestones.
- */
-
-declare(strict_types=1);
-
-?>
 <div class="mt-8 space-y-4">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
         <h2 id="yearly-breakdown" class="text-xl font-bold text-slate-800 flex items-center gap-2">
@@ -58,28 +48,28 @@ declare(strict_types=1);
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Monthly SIP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Annual SIP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">Total Invested</th>
-                        <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>>Monthly SWP</th>
-                        <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>>Annual SWP</th>
-                        <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>>Total Withdrawn</th>
+                        <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Monthly SWP</th>
+                        <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Annual SWP</th>
+                        <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Total Withdrawn</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Interest</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">End Corpus</th>
                     </tr>
                 </thead>
                 <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600">
-                    <?php foreach ($combined as $row) : ?>
+                    {% for row in combined %}
                     <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="px-6 py-4 font-medium text-slate-700"><?= $row['year']?></td>
-                        <td class="px-6 py-4 text-right font-mono"><?= \Core\CurrencyHelper::formatInr($row['begin_balance'])?></td>
-                        <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono"><?= $row['sip_monthly'] !== null ? \Core\CurrencyHelper::formatInr($row['sip_monthly']) : '-'?></td>
-                        <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono"><?= \Core\CurrencyHelper::formatInr($row['annual_contribution'])?></td>
-                        <td class="px-6 py-4 text-right text-slate-500 font-mono"><?= \Core\CurrencyHelper::formatInr($row['cumulative_invested'])?></td>
-                        <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>><?= $row['swp_monthly'] !== null ? \Core\CurrencyHelper::formatInr($row['swp_monthly']) : '-'?></td>
-                        <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>><?= $row['annual_withdrawal'] !== null ? \Core\CurrencyHelper::formatInr($row['annual_withdrawal']) : '-'?></td>
-                        <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col" <?=!$enable_swp ? 'style="display:none"' : ''?>><?= $row['cumulative_withdrawals'] ? \Core\CurrencyHelper::formatInr($row['cumulative_withdrawals']) : '-'?></td>
-                        <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono"><?= \Core\CurrencyHelper::formatInr($row['interest'])?></td>
-                        <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono"><?= \Core\CurrencyHelper::formatInr($row['combined_total'])?></td>
+                        <td class="px-6 py-4 font-medium text-slate-700">{{ row.year }}</td>
+                        <td class="px-6 py-4 text-right font-mono">{{ row.begin_balance|formatInr }}</td>
+                        <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono">{{ row.sip_monthly is not null ? row.sip_monthly|formatInr : '-' }}</td>
+                        <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono">{{ row.annual_contribution|formatInr }}</td>
+                        <td class="px-6 py-4 text-right text-slate-500 font-mono">{{ row.cumulative_invested|formatInr }}</td>
+                        <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>{{ row.swp_monthly is not null ? row.swp_monthly|formatInr : '-' }}</td>
+                        <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>{{ row.annual_withdrawal is not null ? row.annual_withdrawal|formatInr : '-' }}</td>
+                        <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>{{ row.cumulative_withdrawals ? row.cumulative_withdrawals|formatInr : '-' }}</td>
+                        <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">{{ row.interest|formatInr }}</td>
+                        <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">{{ row.combined_total|formatInr }}</td>
                     </tr>
-                    <?php endforeach; ?>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

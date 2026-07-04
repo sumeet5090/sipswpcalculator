@@ -82,9 +82,9 @@ class App
     private function registerRoutes(): void
     {
         // Core landing pages
-        $this->router->get('/', 'CalculatorController@home');
-        $this->router->post('/', 'CalculatorController@home');
-        $this->router->post('/generate-pdf', 'CalculatorController@generatePdf');
+        $this->router->get('/', 'RenderHomeAction');
+        $this->router->post('/', 'RenderHomeAction');
+        $this->router->post('/generate-pdf', 'GeneratePdfAction');
 
         // Dynamic Calculators Registration
         foreach ($this->routesConfig['calculators'] as $calc => $config) {

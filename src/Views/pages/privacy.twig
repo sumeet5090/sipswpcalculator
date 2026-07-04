@@ -1,30 +1,21 @@
-<?php
+{% extends 'layouts/base.twig' %}
 
-declare(strict_types=1);
+{% set page_config = {
+    'title': 'Privacy Policy | SIP & SWP Calculator',
+    'meta_desc': 'Privacy policy for the SIP & SWP Calculator. We respect your privacy and do not collect personal financial data.',
+    'canonical': 'https://sipswpcalculator.com/privacy'
+} %}
 
-$page_config = [
-    'title' => 'Privacy Policy | SIP & SWP Calculator',
-    'meta_desc' => 'Privacy policy for the SIP & SWP Calculator. We respect your privacy and do not collect personal financial data.',
-    'canonical' => 'https://sipswpcalculator.com/privacy',
-];
+{% set active_page = 'privacy.php' %}
 
-$schemaHelper = new \Core\SchemaHelper();
-$breadcrumbs = $schemaHelper->getBreadcrumbs([
-    'Home' => '/',
-    'Privacy Policy' => '/privacy'
-]);
-$page_config['additional_head'] = '
+{% block head %}
     <meta name="robots" content="noindex, follow">
-    <script type="application/ld+json">' . $breadcrumbs . '</script>
-';
-$active_page = 'privacy.php';
+    <script type="application/ld+json">{{ breadcrumbs|raw }}</script>
+{% endblock %}
 
-ob_start();
-?>
-
+{% block content %}
 <header class="relative mb-6 sm:mb-10 text-center">
-    <div
-        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4">
         <span class="text-sm font-semibold text-slate-600 tracking-wide uppercase">Legal Document</span>
     </div>
 
@@ -70,8 +61,4 @@ ob_start();
         </div>
     </article>
 </main>
-
-<?php
-$page_content = ob_get_clean();
-require_once __DIR__ . '/../layouts/layout.php';
-?>
+{% endblock %}

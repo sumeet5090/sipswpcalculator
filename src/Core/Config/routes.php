@@ -5,37 +5,37 @@ declare(strict_types=1);
 return [
     'calculators' => [
         '/compound-interest-calculator' => [
-            'action'   => 'CalculatorController@renderGuide',
+            'action'   => 'RenderGuideAction',
             'category' => 'growth',
             'date'     => '2026-02-27'
         ],
         '/dollar-cost-averaging-tool' => [
-            'action'   => 'CalculatorController@renderGuide',
+            'action'   => 'RenderGuideAction',
             'category' => 'growth',
             'date'     => '2026-03-02'
         ],
         '/recurring-investment-calculator' => [
-            'action'   => 'CalculatorController@renderGuide',
+            'action'   => 'RenderGuideAction',
             'category' => 'growth',
             'date'     => '2026-03-02'
         ],
         '/retirement-drawdown-planner' => [
-            'action'   => 'CalculatorController@renderGuide',
+            'action'   => 'RenderGuideAction',
             'category' => 'retirement',
             'date'     => '2026-03-02'
         ],
         '/sip-calculator' => [
-            'action'   => 'CalculatorController@renderGuide',
+            'action'   => 'RenderGuideAction',
             'category' => 'growth',
             'date'     => '2026-02-25'
         ],
         '/sip-step-up-calculator' => [
-            'action'   => 'CalculatorController@renderGuide',
+            'action'   => 'RenderGuideAction',
             'category' => 'growth',
             'date'     => '2026-02-27'
         ],
         '/swp-tax-calculator' => [
-            'action'   => 'CalculatorController@renderGuide',
+            'action'   => 'RenderGuideAction',
             'category' => 'retirement',
             'date'     => '2026-03-02'
         ]

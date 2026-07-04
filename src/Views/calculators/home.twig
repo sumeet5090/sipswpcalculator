@@ -1,56 +1,27 @@
-<?php
+{% extends 'layouts/base.twig' %}
 
-declare(strict_types=1);
-
-
-
-// Default values.
-$default_sip = 10000;
-$default_years = 20;
-$default_rate = 12;
-$default_stepup = 10;
-$default_swp_withdrawal = 50000;
-$default_swp_stepup = 5;
-$default_swp_years = 10;
-$default_lumpsum = 0;
-$default_swp_rate = 8;
-
-$lumpsum = $lumpsum ?? $default_lumpsum;
-$swp_rate = $swp_rate ?? $default_swp_rate;
-
-$page_config = $page_config ?? [
-    'title' => 'SIP SWP Calculator 2026: Plan SIP to SWP Mutual Fund Income',
-    'meta_desc' => 'Free online SIP SWP calculator. Plan your transition from SIP accumulation to SWP retirement income in India. Model lumpsums, annual step-ups, and inflation adjustments.',
-];
-
-ob_start();
-?>
+{% block head %}
 <meta name="keywords"
     content="SIP SWP Calculator, SIP to SWP Calculator, SIP and SWP Calculator, Mutual Fund SIP SWP Calculator, SWP Calculator, SWP Planner, Step-Up SIP Calculator, Investment Planner, Wealth Creation, Retirement Planning, SIP vs SWP, Tax-Efficient Withdrawals, SIP Calculator India, Mutual Fund Return Calculator, Indian Mutual Funds">
 <link rel="alternate" hreflang="en-IN" href="https://sipswpcalculator.com/">
 <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
 
-<?php
-$faqRepository = new \Core\FaqRepository();
-$homeFaqs = $faqRepository->getByTag('home');
-$faqSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'FAQPage',
-    'mainEntity' => array_map(function ($faq) {
-        return [
-            '@type' => 'Question',
-            'name' => $faq['q'],
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => $faq['a']
-            ]
-        ];
-    }, $homeFaqs)
-];
-?>
+{% set faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': homeFaqs|map(faq => {
+        '@type': 'Question',
+        'name': faq.q,
+        'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': faq.a
+        }
+    })
+} %}
+
 <!-- FAQPage Schema for capturing rich snippets in Google Search -->
 <script type="application/ld+json">
-<?= json_encode($faqSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
+{{ faqSchema|json_encode(constant('JSON_UNESCAPED_UNICODE') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_PRETTY_PRINT'))|raw }}
 </script>
 
 <!-- ════════════════════════════════════════════════════════════════════
@@ -161,7 +132,7 @@ $faqSchema = [
         }
       }
     }
-    </script>
+</script>
 
 <!-- 2. FinancialProduct — Detailed Investment Parameters -->
 <script type="application/ld+json">
@@ -197,7 +168,7 @@ $faqSchema = [
         "https://en.wikipedia.org/wiki/Systematic_withdrawal_plan"
       ]
     }
-    </script>
+</script>
 
 <!-- 3. WebSite — Site Identity with Search Action -->
 <script type="application/ld+json">
@@ -231,7 +202,7 @@ $faqSchema = [
         "query-input": "required name=sip_amount"
       }
     }
-    </script>
+</script>
 
 <!-- 4. Organization — Publisher Identity with EEAT signals -->
 <script type="application/ld+json">
@@ -274,7 +245,7 @@ $faqSchema = [
         "Global Mutual Fund Investment"
       ]
     }
-    </script>
+</script>
 
 <!-- 5. Person — Author/Expert Identity (EEAT) -->
 <script type="application/ld+json">
@@ -301,7 +272,7 @@ $faqSchema = [
         "@id": "https://sipswpcalculator.com/#organization"
       }
     }
-    </script>
+</script>
 
 <!-- 6. HowTo — Detailed Calculator Usage Guide -->
 <script type="application/ld+json">
@@ -339,7 +310,7 @@ $faqSchema = [
         }
       ]
     }
-    </script>
+</script>
 
 <!-- PWA Manifest -->
 <link rel="manifest" href="manifest.json">
@@ -425,22 +396,18 @@ $faqSchema = [
 </noscript>
 
 <!-- Render-blocking CSS: loaded before first paint to prevent FOUC/CLS -->
-<link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/../../../styles.css') ?>">
-<link rel="stylesheet" href="dist/tailwind.min.css?v=<?= filemtime(__DIR__ . '/../../../dist/tailwind.min.css') ?>">
-<?php
-$page_config['additional_head'] = ob_get_clean();
-$active_page = 'index.php';
-ob_start();
-?>
+<link rel="stylesheet" href="styles.css?v={{ date().timestamp }}">
+<link rel="stylesheet" href="dist/tailwind.min.css?v={{ date().timestamp }}">
+{% endblock %}
 
+{% block content %}
 <header class="relative mb-6 sm:mb-10 text-center">
     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 mb-4">
         <span class="relative flex h-3 w-3">
             <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
         </span>
-        <span class="text-sm font-semibold text-emerald-700 tracking-wide uppercase">Free Financial Planning
-            Tool</span>
+        <span class="text-sm font-semibold text-emerald-700 tracking-wide uppercase">Free Financial Planning Tool</span>
     </div>
 
     <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
@@ -449,22 +416,18 @@ ob_start();
     </h1>
 
     <!-- EEAT Trust Bar -->
-    <div
-        class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
         <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
             class="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
                 class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32" height="32"
                 fetchpriority="high" decoding="async">
-            <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance
-                Enthusiast</span>
+            <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance Enthusiast</span>
         </a>
         <span class="hidden sm:inline text-slate-300">|</span>
-        <div
-            class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
+        <div class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             Verified for Accuracy: June 2026
         </div>
@@ -475,79 +438,64 @@ ob_start();
         your <strong>mutual fund returns</strong> with annual step-up (top-up) compounding and plan
         tax-efficient withdrawals via a <dfn><strong class="text-rose-500">Systematic Withdrawal Plan (SWP)</strong></dfn> for a steady retirement income. Use this tool to visualize your accumulation and withdrawal phases, compare scenarios, and download detailed reports.
     </p>
-
-
 </header>
 
-<main>
-    <!-- Quick Answer Box for AI extraction / Featured Snippet -->
-    <div id="quick-answer" class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
-        role="complementary" aria-label="Quick Answer">
-        <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
-        <p class="text-base text-gray-700"><strong>How much will a ₹10,000/month SIP grow in 20 years?</strong></p>
-        <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month SIP will
-            grow to approximately <strong class="text-emerald-700"><span class="dynamic-amount"
-                    data-amount-inr="35400000"></span></strong> over 20 years. Total invested: <span
-                class="dynamic-amount" data-amount-inr="6873000"></span>. Total gains: <span class="dynamic-amount"
-                data-amount-inr="28527000"></span>.</p>
-    </div>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "SIP Calculator 2026",
-      "speakable": {
-        "@type": "SpeakableSpecification",
-        "cssSelector": ["#quick-answer"]
-      },
-      "url": "https://sipswpcalculator.com/"
-    }
-    </script>
+<!-- Quick Answer Box for AI extraction / Featured Snippet -->
+<div id="quick-answer" class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
+    role="complementary" aria-label="Quick Answer">
+    <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
+    <p class="text-base text-gray-700"><strong>How much will a ₹10,000/month SIP grow in 20 years?</strong></p>
+    <p class="text-sm text-gray-600 mt-1">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month SIP will
+        grow to approximately <strong class="text-emerald-700"><span class="dynamic-amount"
+                data-amount-inr="35400000"></span></strong> over 20 years. Total invested: <span
+            class="dynamic-amount" data-amount-inr="6873000"></span>. Total gains: <span class="dynamic-amount"
+            data-amount-inr="28527000"></span>.</p>
+</div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "SIP Calculator 2026",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": ["#quick-answer"]
+  },
+  "url": "https://sipswpcalculator.com/"
+}
+</script>
 
-    <section id="calculator-section" class="scroll-mt-32" style="scroll-margin-top: 120px;"
-        aria-labelledby="calculator-heading">
-        <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<section id="calculator-section" class="scroll-mt-32" style="scroll-margin-top: 120px;"
+    aria-labelledby="calculator-heading">
+    <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-            <!-- Left Column: Form -->
-            <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar"
-                style="top: 120px;">
-                <?php include __DIR__ . '/../components/calculator-form.php'; ?>
-            </div> <!-- /left column -->
+        <!-- Left Column: Form -->
+        <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar"
+            style="top: 120px;">
+            {% include 'components/calculator-form.twig' %}
+        </div> <!-- /left column -->
 
-            <div class="lg:col-span-2 space-y-4">
-                <?php include __DIR__ . '/../components/chart-visualization.php'; ?>
-            </div>
-        </div><!-- /3-col grid -->
-
-        <!-- Full-width Yearly Breakdown -->
-        <?php include __DIR__ . '/../components/yearly-breakdown-table.php'; ?>
-    </section><!-- /calculator section -->
-
-    <div class="mt-12 glass-card p-8">
-        <?php include __DIR__ . '/../components/home-guide-content.php'; ?>
-        <div class="mt-12 p-6 bg-slate-50 border border-slate-200 rounded-xl text-center max-w-2xl mx-auto">
-            <p class="font-bold text-slate-800 text-lg mb-2">Cite This Calculator</p>
-            <p class="text-slate-600 text-sm mb-4">Writing an article, blog post, or research paper? You can cite this
-                tool using the following format.</p>
-            <div
-                class="bg-white p-4 border border-slate-200 rounded-lg text-left text-sm text-slate-700 font-mono overflow-x-auto select-all">
-                Boga, S. (2026). Advanced SIP & SWP Calculator. sipswpcalculator.com. Retrieved from
-                https://sipswpcalculator.com/
-            </div>
+        <div class="lg:col-span-2 space-y-4">
+            {% include 'components/chart-visualization.twig' %}
         </div>
-    </div>
+    </div><!-- /3-col grid -->
 
-</main>
+    <!-- Full-width Yearly Breakdown -->
+    {% include 'components/yearly-breakdown-table.twig' %}
+</section><!-- /calculator section -->
+
+{% include 'components/home-guide-content.twig' %}
+{% endblock %}
+
+{% block modals %}
 <!-- PDF Generation Modal -->
 <div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
-    <div
-        class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
         <h2 id="branded-pdf-report" class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
         <form id="pdfForm" class="space-y-4">
             <!-- SECURITY: CSRF Token for PDF generation form -->
             <input type="hidden" name="csrf_token"
-                value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                value="{{ app.session.csrf_token|default('')|escape('html_attr') }}">
 
             <div>
                 <label for="clientName" class="block text-sm font-medium mb-1 text-gray-600">Client Name</label>
@@ -555,8 +503,7 @@ ob_start();
                     class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition">
             </div>
             <div>
-                <label for="advisorName" class="block text-sm font-medium mb-1 text-gray-600">Your Name / Company
-                    Name</label>
+                <label for="advisorName" class="block text-sm font-medium mb-1 text-gray-600">Your Name / Company Name</label>
                 <input type="text" id="advisorName" name="advisorName" placeholder="e.g., Jane Smith Financials"
                     class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition">
             </div>
@@ -566,8 +513,7 @@ ob_start();
                     class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100">
             </div>
             <div>
-                <label for="customDisclaimer" class="block text-sm font-medium mb-1 text-gray-600">Custom Disclaimer
-                    / Message</label>
+                <label for="customDisclaimer" class="block text-sm font-medium mb-1 text-gray-600">Custom Disclaimer / Message</label>
                 <textarea id="customDisclaimer" name="customDisclaimer" rows="3"
                     placeholder="e.g., This projection is based on the agreed-upon assumptions..."
                     class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition"></textarea>
@@ -576,16 +522,13 @@ ob_start();
                 <button type="button" id="closePdfModalBtn"
                     class="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg transition">Cancel</button>
                 <button type="submit" id="generatePdfBtn"
-                    class="px-6 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg transition">Download
-                    PDF</button>
+                    class="px-6 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg transition">Download PDF</button>
             </div>
         </form>
     </div>
 </div>
+{% endblock %}
 
-
+{% block scripts %}
 <script defer src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-<?php
-$page_content = ob_get_clean();
-require_once __DIR__ . '/../layouts/layout.php';
-?>
+{% endblock %}

@@ -38,10 +38,16 @@ class BlogController
         $all_posts = $this->blogRepository->getAllPosts();
         $categories = $this->blogRepository->getCategories();
 
+        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
+            'Home' => '/',
+            'Resources' => '/resources'
+        ]);
+
         View::render('pages/resources', [
             'active_page' => 'resources.php',
             'all_posts'   => $all_posts,
             'categories'  => $categories,
+            'breadcrumbs' => $breadcrumbs_schema,
         ]);
     }
 

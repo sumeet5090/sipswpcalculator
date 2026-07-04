@@ -1,27 +1,19 @@
-<?php
+{% extends 'layouts/base.twig' %}
 
-declare(strict_types=1);
+{% set page_config = {
+    'title': 'Terms of Service | SIP & SWP Calculator',
+    'meta_desc': 'Terms of Service for the SIP & SWP Calculator. Please read these terms carefully before using our financial tools.',
+    'canonical': 'https://sipswpcalculator.com/terms'
+} %}
 
-$page_config = [
-    'title' => 'Terms of Service | SIP & SWP Calculator',
-    'meta_desc' => 'Terms of Service for the SIP & SWP Calculator. Please read these terms carefully before using our financial tools.',
-    'canonical' => 'https://sipswpcalculator.com/terms',
-];
+{% set active_page = 'terms.php' %}
 
-$schemaHelper = new \Core\SchemaHelper();
-$breadcrumbs = $schemaHelper->getBreadcrumbs([
-    'Home' => '/',
-    'Terms of Service' => '/terms'
-]);
-$page_config['additional_head'] = '
+{% block head %}
     <meta name="robots" content="noindex, follow">
-    <script type="application/ld+json">' . $breadcrumbs . '</script>
-';
-$active_page = 'terms.php';
+    <script type="application/ld+json">{{ breadcrumbs|raw }}</script>
+{% endblock %}
 
-ob_start();
-?>
-
+{% block content %}
 <header class="relative mb-6 sm:mb-10 text-center">
     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4">
         <span class="text-sm font-semibold text-slate-600 tracking-wide uppercase">Legal Document</span>
@@ -71,8 +63,4 @@ ob_start();
 <div class="mt-8 pt-6 border-t border-gray-200 text-center">
     <a href="/#calculator-section" class="text-indigo-600 hover:underline font-medium">← Return to Calculator</a>
 </div>
-
-<?php
-$page_content = ob_get_clean();
-require_once __DIR__ . '/../layouts/layout.php';
-?>
+{% endblock %}
