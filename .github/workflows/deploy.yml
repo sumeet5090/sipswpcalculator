@@ -34,20 +34,21 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         server-dir: /domains/sipswpcalculator.com/public_html/
         exclude: |
-          **/.env
           **/.git*
           **/.git*/**
           **/.github/**
           **/.agents/**
-          **/.phpunit.cache/**
           **/.DS_Store/**
-          tests/**
-          docker/**
-          Dockerfile
-          docker-compose.yml
-          package.json
-          package-lock.json
-          README.md
-          phpcs.xml
-          phpstan.neon
+          **/.phpunit.cache/**
+          **/.vscode/**
+          **/tests/**
+          **/docker/**
+          **/Dockerfile
+          **/docker-compose.yml
+          **/package.json
+          **/package-lock.json
+          **/.env
+          **/README.md
+          **/phpcs.xml
+          **/phpstan.neon
           phpunit.xml
