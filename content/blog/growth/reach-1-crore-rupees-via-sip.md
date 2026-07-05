@@ -117,11 +117,12 @@ Do not redeem your equity mutual fund units during brief market corrections (e.g
 
 ---
 
-<div class="my-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-3xl text-white shadow-xl text-center not-prose">
-    <h2 class="text-2xl font-extrabold mb-4 text-white">Simulate Your Compounding Goal</h2>
-    <p class="mb-8 text-indigo-100 max-w-xl mx-auto">Model your path to ₹1 Crore or ₹10 Crores. Adjust return rates, tenure, and step-ups to match your actual monthly savings capacity.</p>
-    <a href="/#calculator-section" class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-xl shadow-lg hover:bg-slate-50 transform hover:-translate-y-1 transition-all duration-200">
-        Start Compounding Now
-        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-    </a>
+<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-100 shadow-xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 sm:p-10 text-center text-white">
+  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">Simulate Your Compounding Goal</h2>
+  <p class="text-emerald-100 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">Model your path to ₹1 Crore or ₹10 Crores. Adjust return rates, tenure, and step-ups to match your actual monthly savings capacity.</p>
+  <a href="/#calculator-section"
+     class="inline-flex items-center gap-2 px-8 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-all duration-200 text-sm sm:text-base">
+    Open SIP &amp; SWP Planner
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+  </a>
 </div>

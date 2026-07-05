@@ -538,19 +538,18 @@ initWidget();
 <h3>Which is better: SIP in large cap or SIP in mid cap fund?</h3>
 <p>Large cap SIPs are less volatile (12-14% returns) and better for 7-10 year goals. Mid cap SIPs offer higher returns (15-18%) but with significantly more volatility — only suitable for 12+ year horizons. For most investors, a <strong>flexi-cap or multi-cap fund</strong> provides the best balance by automatically allocating across large, mid, and small caps based on market conditions. See our <a href="/resource/comparison/mf-returns-benchmarks">Returns Benchmarks Guide</a> for detailed data.</p>
 
-<div class="bg-slate-900 text-white p-12 rounded-3xl text-center my-14 not-prose border border-slate-800 shadow-2xl overflow-hidden relative">
-    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, #4f46e5 1px, transparent 0); background-size: 24px 24px;"></div>
-    <div class="relative z-10">
-        <h3 class="text-3xl font-extrabold mb-4 text-white">See How Your ₹10,000/Month SIP Grows</h3>
-        <p class="mb-10 text-slate-400 text-lg max-w-2xl mx-auto">Use our institutional-grade SIP calculator with step-up compounding to project your wealth at 10%, 12%, or 15% returns — and compare scenarios side-by-side.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/#calculator-section" class="inline-flex items-center gap-3 px-10 py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:shadow-indigo-500/30 hover:bg-indigo-500 transition-all">
-                Launch SIP Calculator
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-            </a>
-            <a href="/resource/comparison/mutual-fund-tax-2026" class="inline-flex items-center gap-3 px-10 py-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all">
-                Read: Tax Rules 2026 →
-            </a>
-        </div>
-    </div>
+<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-100 shadow-xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 sm:p-10 text-center text-white">
+  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">See How Your ₹10,000/Month SIP Grows</h2>
+  <p class="text-emerald-100 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">Project your wealth at 10%, 12%, or 15% returns with step-up compounding — and compare scenarios with our free calculator.</p>
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+    <a href="/#calculator-section"
+       class="inline-flex items-center gap-2 px-8 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-all duration-200 text-sm sm:text-base">
+      Open SIP &amp; SWP Planner
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+    </a>
+    <a href="/resource/comparison/mutual-fund-tax-2026"
+       class="inline-flex items-center gap-2 px-8 py-3 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-200 text-sm sm:text-base">
+      Read: Tax Rules 2026 →
+    </a>
+  </div>
 </div>

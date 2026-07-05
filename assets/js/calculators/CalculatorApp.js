@@ -8,6 +8,7 @@ import { CurrencyFormatter } from './CurrencyHelper.js';
 import { InputValidator } from './InputValidator.js';
 import { ChartManager } from './ChartManager.js';
 import { AnalyticsService } from './AnalyticsLogger.js';
+import { SliderManager } from './SliderManager.js';
 
 export class CalculatorApp {
     constructor() {
@@ -16,6 +17,13 @@ export class CalculatorApp {
         this.chartManager = new ChartManager(this.formatter);
         this.analytics = new AnalyticsService();
         this.userHasInteracted = false;
+        this.sliderManager = new SliderManager(
+            () => {
+                this.userHasInteracted = true;
+                this.triggerCalculation();
+            },
+            this.validator
+        );
 
         // Cache selectors
         this.elements = {
@@ -52,7 +60,9 @@ export class CalculatorApp {
             closePdfModalBtn: () => document.getElementById('closePdfModalBtn'),
             pdfForm: () => document.getElementById('pdfForm'),
             generatePdfBtn: () => document.getElementById('generatePdfBtn'),
-            canvas: () => document.getElementById('corpusChart')
+            canvas: () => document.getElementById('corpusChart'),
+            corpus: () => document.getElementById('corpus'),
+            corpusRange: () => document.getElementById('corpus_range'),
         };
     }
 
@@ -61,15 +71,24 @@ export class CalculatorApp {
      * @returns {object} validated input parameters
      */
     getInputs() {
+        const mode = document.getElementById('calculator-app')?.dataset?.mode ?? 'sip';
+        const isSwpMode = (mode === 'swp');
+
+        // In SWP-only mode, `corpus` is the user-facing field; it maps to `lumpsum`
+        // internally so MathEngine receives a consistent starting-balance parameter.
+        const lumpsumVal = isSwpMode
+            ? this.validator.validate('corpus', this.elements.corpus()?.value)
+            : this.validator.validate('lumpsum', this.elements.lumpsum()?.value);
+
         return {
-            sip: this.validator.validate('sip', this.elements.sip()?.value),
-            years: this.validator.validate('years', this.elements.years()?.value),
-            rate: this.validator.validate('rate', this.elements.rate()?.value),
-            stepup: this.validator.validate('stepup', this.elements.stepup()?.value),
-            lumpsum: this.validator.validate('lumpsum', this.elements.lumpsum()?.value),
-            enable_swp: this.elements.enableSwp()?.checked || false,
+            sip:            this.validator.validate('sip', this.elements.sip()?.value),
+            years:          this.validator.validate('years', this.elements.years()?.value),
+            rate:           this.validator.validate('rate', this.elements.rate()?.value),
+            stepup:         this.validator.validate('stepup', this.elements.stepup()?.value),
+            lumpsum:        lumpsumVal,
+            enable_swp:     this.elements.enableSwp()?.checked || isSwpMode,
             swp_withdrawal: this.validator.validate('swp_withdrawal', this.elements.swpWithdrawal()?.value),
-            swp_years: this.validator.validate('swp_years', this.elements.swpYears()?.value),
+            swp_years:      this.validator.validate('swp_years', this.elements.swpYears()?.value),
             swp_stepup: this.validator.validate('swp_stepup', this.elements.swpStepup()?.value),
             swp_rate: this.validator.validate('swp_rate', this.elements.swpRate()?.value)
         };
@@ -83,26 +102,6 @@ export class CalculatorApp {
         eventBus.publish('input:changed', inputs);
     }
 
-    /**
-     * Sync input boxes and range sliders.
-     */
-    setupRangeSync(inputId, rangeId) {
-        const input = document.getElementById(inputId);
-        const range = document.getElementById(rangeId);
-        if (!input || !range) return;
-
-        range.addEventListener('input', () => {
-            input.value = range.value;
-            this.userHasInteracted = true;
-            this.triggerCalculation();
-        });
-
-        input.addEventListener('input', () => {
-            range.value = input.value;
-            this.userHasInteracted = true;
-            this.triggerCalculation();
-        });
-    }
 
     /**
      * Adapt text font size inside metrics tiles on screen resize.
@@ -254,16 +253,19 @@ export class CalculatorApp {
      * Initialize app lifecycle.
      */
     init() {
-        // ── Synchronize Slider pairs ──
-        this.setupRangeSync('sip', 'sip_range');
-        this.setupRangeSync('years', 'years_range');
-        this.setupRangeSync('rate', 'rate_range');
-        this.setupRangeSync('stepup', 'stepup_range');
-        this.setupRangeSync('lumpsum', 'lumpsum_range');
-        this.setupRangeSync('swp_withdrawal', 'swp_withdrawal_range');
-        this.setupRangeSync('swp_years', 'swp_years_range');
-        this.setupRangeSync('swp_stepup', 'swp_stepup_range');
-        this.setupRangeSync('swp_rate', 'swp_rate_range');
+        // ── Synchronize Slider pairs via SliderManager ──
+        this.sliderManager.syncAll({
+            'sip':            'sip_range',
+            'years':          'years_range',
+            'rate':           'rate_range',
+            'stepup':         'stepup_range',
+            'lumpsum':        'lumpsum_range',
+            'corpus':         'corpus_range',
+            'swp_withdrawal': 'swp_withdrawal_range',
+            'swp_years':      'swp_years_range',
+            'swp_stepup':     'swp_stepup_range',
+            'swp_rate':       'swp_rate_range',
+        });
 
         // ── SWP Toggle ──
         const swpToggle = this.elements.enableSwp();

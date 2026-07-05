@@ -1,6 +1,9 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
-<div class="glass-card p-4">
+<div id="calculator-app"
+     data-mode="sip"
+     data-config="{{ calc_config|json_encode|escape('html_attr') }}"
+     class="glass-card p-4">
     <form method="post" novalidate id="calculator-form">
         <!-- SECURITY: CSRF Token for main form -->
         <input type="hidden" name="csrf_token"
@@ -51,8 +54,9 @@
                         <span class="text-xs font-bold text-rose-400 tracking-widest uppercase">SWP Config</span>
                         <label class="toggle-switch relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="enable_swp" name="enable_swp"
-                                onchange="toggleSwpFields()" class="sr-only peer"
-                                aria-label="Enable Systematic Withdrawal Plan (SWP)">
+                                class="sr-only peer"
+                                aria-label="Enable Systematic Withdrawal Plan (SWP)"
+                                {% if enable_swp %}checked{% endif %}>
                             <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
                             </div>
                         </label>

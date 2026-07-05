@@ -1,0 +1,19 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+{#
+  corpus-field.twig
+  Dedicated starting corpus input for the SWP-only calculator.
+  Semantically distinct from lumpsum-fields.twig:
+    - lumpsum = optional one-time contribution alongside SIP (accumulation phase)
+    - corpus  = total wealth to start monthly withdrawals from (withdrawal phase)
+#}
+{{ inputs.renderInputRangePair({
+    'id': 'corpus',
+    'label': calc_config.corpus.label,
+    'min': calc_config.corpus.min,
+    'max': calc_config.corpus.max,
+    'slider_max': calc_config.corpus.slider_max,
+    'step': calc_config.corpus.step,
+    'value': corpus|default(calc_config.corpus.default),
+    'prefix': '₹',
+    'theme': 'rose'
+}) }}

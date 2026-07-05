@@ -21,11 +21,11 @@
     {% set textClass = config.input_text_color|default(inputColorClass) %}
     {% set labelHtml = config.label_html|default(null) %}
     
-    <div class="group">
+    <div class="group" data-field-id="{{ id }}">
         {% if labelHtml %}
             {{ labelHtml|raw }}
         {% else %}
-            <label for="{{ id }}" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">
+            <label for="{{ id }}" id="{{ id }}_label" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">
                 {{ label }}
             </label>
         {% endif %}
@@ -36,14 +36,21 @@
             <input type="number" id="{{ id }}" name="{{ name }}"
                 class="w-full bg-white border border-slate-200 rounded-lg {{ prefix ? 'pl-6' : 'px-2.5' }} {{ suffix ? 'pr-8' : 'pr-2.5' }} py-3 sm:py-1.5 text-sm font-bold {{ textClass }} focus:outline-none transition-colors"
                 required min="{{ min }}" step="{{ step }}" max="{{ max }}"
-                value="{{ value }}">
+                value="{{ value }}"
+                aria-describedby="{{ id }}_error">
             {% if suffix %}
                 <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">{{ suffix }}</span>
             {% endif %}
         </div>
+        {# Inline validation error — shown by JS when value is out of bounds #}
+        <p id="{{ id }}_error" role="alert" aria-live="polite"
+           class="hidden text-[10px] font-semibold text-rose-500 mt-0.5 field-error"></p>
         <input type="range" id="{{ id }}_range" min="{{ min }}" max="{{ sliderMax }}" step="{{ sliderStep }}"
             value="{{ value }}"
-            aria-label="{{ label }} slider"
+            aria-labelledby="{{ id }}_label"
+            aria-valuenow="{{ value }}"
+            aria-valuemin="{{ min }}"
+            aria-valuemax="{{ sliderMax }}"
             class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer {{ rangeColorClass }} mt-2">
     </div>
 {% endmacro %}

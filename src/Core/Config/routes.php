@@ -28,12 +28,6 @@ return [
             'type'         => 'calculator',
             'date'         => '2026-07-05'
         ],
-        '/recurring-investment-calculator' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'growth',
-            'type'         => 'calculator',
-            'date'         => '2026-03-02'
-        ],
         '/retirement-drawdown-planner' => [
             'action'       => 'RenderGuideAction',
             'seo_category' => 'retirement',
@@ -87,7 +81,8 @@ return [
         'sip-to-swp-transition-guide' => 'retirement/sip-vs-swp-wealth-creation-withdrawal-strategy'
     ],
     'stubs' => [
-        '/sip-step-up-calculator' => '/sip-calculator',
+        '/sip-step-up-calculator'    => '/sip-calculator',
+        '/recurring-investment-calculator' => '/sip-calculator',
         '/20-year-wealth-blueprint-step-up-sip' => '/resource/growth/20-year-wealth-blueprint-step-up-sip',
         '/inflation-impact-on-sip' => '/resource/growth/inflation-impact-on-sip',
         '/mathematics-of-4-percent-rule-swp' => '/resource/retirement/retirement-planning-4-percent-swp-rule',
