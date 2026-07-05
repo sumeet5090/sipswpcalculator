@@ -38,16 +38,22 @@ class BlogController
         $all_posts = $this->blogRepository->getAllPosts();
         $categories = $this->blogRepository->getCategories();
 
+        $posts_by_cat = [];
+        foreach ($all_posts as $post) {
+            $posts_by_cat[$post['category']][] = $post;
+        }
+
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Resources' => '/resources'
         ]);
 
         View::render('pages/resources', [
-            'active_page' => 'resources.php',
-            'all_posts'   => $all_posts,
-            'categories'  => $categories,
-            'breadcrumbs' => $breadcrumbs_schema,
+            'active_page'  => 'resources.php',
+            'all_posts'    => $all_posts,
+            'posts_by_cat' => $posts_by_cat,
+            'categories'   => $categories,
+            'breadcrumbs'  => $breadcrumbs_schema,
         ]);
     }
 
@@ -88,15 +94,29 @@ class BlogController
             $content['metadata']['title'] ?: ucfirst(str_replace('-', ' ', $slug)) => "/resource/{$category}/{$slug}"
         ]);
 
+        $url = 'https://sipswpcalculator.com/resource/' . $category . '/' . $slug;
+        $description = $page_config['meta_desc'] ?? $page_config['title'] ?? '';
+        $imageUrl = $page_config['og_image'] ?? 'https://sipswpcalculator.com/assets/og-image-main.jpg';
+
         $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'],
+            $page_config['title'] ?? '',
+            $description,
+            $url,
+            $imageUrl,
             '2026-03-01',
             date('Y-m-d')
+        );
+
+        $webpage_schema = $this->schemaHelper->getWebPage(
+            $page_config['title'] ?? '',
+            $description,
+            $url
         );
 
         $page_config['additional_head'] = '
             <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
             <script type="application/ld+json">' . $article_schema . '</script>
+            <script type="application/ld+json">' . $webpage_schema . '</script>
         ';
 
         View::render('layouts/generic-post', [

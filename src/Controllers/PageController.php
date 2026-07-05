@@ -37,16 +37,7 @@ class PageController
 
     public function glossary(): void
     {
-        $glossary_terms = [
-            ['id' => 'sip', 'category' => 'Investment Basics', 'q' => 'Systematic Investment Plan (SIP)', 'a' => 'A method of investing a fixed sum regularly in a mutual fund, rather than a one-time lump sum. It benefits from rupee-cost averaging.'],
-            ['id' => 'corpus', 'category' => 'Investment Basics', 'q' => 'Investment Corpus', 'a' => 'Your total wealth pool — the sum of all your original investments plus market gains accrued over time.'],
-            ['id' => 'expense-ratio', 'category' => 'Investment Basics', 'q' => 'Expense Ratio', 'a' => 'The annual fee charged by a mutual fund to cover management and administration costs. Lower is usually better.'],
-            ['id' => 'xirr', 'category' => 'Advanced Metrics', 'q' => 'XIRR (Extended Internal Rate of Return)', 'a' => 'An accurate measure of returns for uneven cash flows like SIPs, accounting for the timing of every installment.'],
-            ['id' => 'cagr', 'category' => 'Advanced Metrics', 'q' => 'CAGR (Compound Annual Growth Rate)', 'a' => 'The mean annual growth rate of an investment over a specified period longer than one year.'],
-            ['id' => 'swp', 'category' => 'Retirement & Withdrawal', 'q' => 'Systematic Withdrawal Plan (SWP)', 'a' => 'A facility to withdraw a fixed amount regularly from a mutual fund, highly tax-efficient for retirement income.'],
-            ['id' => 'swr', 'category' => 'Retirement & Withdrawal', 'q' => 'Safe Withdrawal Rate (SWR)', 'a' => 'The maximum percentage of your portfolio withdrawn annually without a high risk of exhausting funds.'],
-            ['id' => 'four-percent-rule', 'category' => 'Retirement & Withdrawal', 'q' => 'The 4% Rule', 'a' => 'A guideline suggesting that if you withdraw 4% of your total corpus in the first year and adjust for inflation, the funds may last 30+ years.']
-        ];
+        $glossary_terms = require __DIR__ . '/../Core/Config/glossary.php';
 
         usort($glossary_terms, function ($a, $b) {
             return strcmp($a['q'], $b['q']);

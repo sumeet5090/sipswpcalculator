@@ -14,6 +14,16 @@ return [
             'category' => 'growth',
             'date'     => '2026-03-02'
         ],
+        '/lumpsum-calculator' => [
+            'action'   => 'RenderGuideAction',
+            'category' => 'growth',
+            'date'     => '2026-07-05'
+        ],
+        '/mutual-fund-calculator' => [
+            'action'   => 'RenderGuideAction',
+            'category' => 'growth',
+            'date'     => '2026-07-05'
+        ],
         '/recurring-investment-calculator' => [
             'action'   => 'RenderGuideAction',
             'category' => 'growth',
@@ -29,10 +39,10 @@ return [
             'category' => 'growth',
             'date'     => '2026-02-25'
         ],
-        '/sip-step-up-calculator' => [
+        '/swp-calculator' => [
             'action'   => 'RenderGuideAction',
-            'category' => 'growth',
-            'date'     => '2026-02-27'
+            'category' => 'retirement',
+            'date'     => '2026-07-05'
         ],
         '/swp-tax-calculator' => [
             'action'   => 'RenderGuideAction',
@@ -68,6 +78,7 @@ return [
         'sip-to-swp-transition-guide' => 'retirement/sip-vs-swp-wealth-creation-withdrawal-strategy'
     ],
     'stubs' => [
+        '/sip-step-up-calculator' => '/sip-calculator',
         '/20-year-wealth-blueprint-step-up-sip' => '/resource/growth/20-year-wealth-blueprint-step-up-sip',
         '/inflation-impact-on-sip' => '/resource/growth/inflation-impact-on-sip',
         '/mathematics-of-4-percent-rule-swp' => '/resource/retirement/retirement-planning-4-percent-swp-rule',

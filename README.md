@@ -222,11 +222,10 @@ composer install --no-dev --optimize-autoloader
 
 ### `index.php` (Main Calculator)
 The core of the application. Handles:
-- Form input processing with defaults for first load
-- SIP compound interest calculation: `FV = P × [{(1+r)^n - 1} / r] × (1+r)`
-- SWP drawdown simulation with optional step-up
-- Yearly breakdown data generation for tables and charts
-- JSON-LD structured data (SoftwareApplication, FAQPage schemas)
+- **Standalone Converged Calculator:** Combined SIP, SWP, Lumpsum, and Step-Up calculation logic via a powerful `MathEngine.js` for instant feedback.
+- **Standalone SEO Guide Pages:** Dedicated Markdown guides for `/sip-calculator`, `/swp-calculator`, and more, targeting high-volume keywords.
+- **Dynamic Meta & Schema Generation:** `GuideRenderer.php` automatically injects `BreadcrumbList`, `Article` (with publisher and OG Image), and `WebPage` (with speakable) JSON-LD structured data.
+- **PDF Export Engine:** Server-side PDF snapshotting for user reports.
 
 ### `script.js` (Client-Side Logic)
 - Initializes Chart.js with data from `window.chartData` (set by PHP)

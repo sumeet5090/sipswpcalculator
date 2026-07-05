@@ -162,11 +162,14 @@ class RouterIntegrityTest extends TestCase
      */
     public function testSitemapIntegrity(): void
     {
-        $sitemapPath = __DIR__ . '/../../sitemap.xml';
-        $this->assertFileExists($sitemapPath, 'sitemap.xml is missing from root');
+        ob_start();
+        $controller = new \Controllers\SitemapController();
+        $response = $controller->index();
+        $response->send();
+        $xmlContent = ob_get_clean();
 
-        $xml = simplexml_load_file($sitemapPath);
-        $this->assertNotFalse($xml, 'sitemap.xml is not valid XML');
+        $xml = simplexml_load_string($xmlContent);
+        $this->assertNotFalse($xml, 'Dynamic sitemap is not valid XML');
 
         $sitemapPaths = [];
         foreach ($xml->url as $url) {

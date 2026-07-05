@@ -24,6 +24,7 @@ class BlogRepository
         'swp-vs-annuity-2026' => ['tag' => 'Comparison', 'tag_color' => 'amber', 'date' => 'January 2026'],
         'mutual-fund-tax-2026' => ['tag' => 'Tax', 'tag_color' => 'amber', 'date' => 'March 2026'],
         'mf-returns-benchmarks' => ['tag' => 'Benchmarks', 'tag_color' => 'amber', 'date' => 'January 2026'],
+        'sip-vs-lumpsum' => ['tag' => 'Comparison', 'tag_color' => 'amber', 'featured' => true, 'date' => 'July 2026'],
     ];
 
     public static function getCategories(): array

@@ -1,15 +1,21 @@
 {
   "name": "SIP & SWP Calculator",
   "short_name": "SIP Calc",
-  "start_url": "/default.php",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#007bff",
+  "background_color": "#f8fafc",
+  "theme_color": "#059669",
+  "description": "Free SIP & SWP calculator for Indian mutual fund investment planning with step-up compounding.",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/4149/4149678.png",
+      "src": "/assets/favicon.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ]
 }

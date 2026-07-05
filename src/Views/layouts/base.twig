@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page_config.title|default('SIP & SWP Calculator') }}</title>
     <meta name="description" content="{{ page_config.meta_desc|default('Free SIP & SWP calculator with step-up compounding.') }}">
+    {% if page_config.keywords is defined %}
+    <meta name="keywords" content="{{ page_config.keywords }}">
+    {% endif %}
     
     {% set current_uri = request.server('REQUEST_URI', '/') %}
-    <link rel="canonical" href="{{ page_config.canonical|default('https://sipswpcalculator.com' ~ current_uri) }}">
+    {% set canonical_url = page_config.canonical|default('https://sipswpcalculator.com' ~ current_uri) %}
+    <link rel="canonical" href="{{ canonical_url }}">
     <meta name="robots" content="index, follow">
+
+    <link rel="alternate" hreflang="en-IN" href="{{ canonical_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ page_config.canonical|default('https://sipswpcalculator.com' ~ current_uri) }}">
@@ -20,7 +27,7 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     {{ vite_client() }}
     {{ vite_css('resources/js/app.js') }}
