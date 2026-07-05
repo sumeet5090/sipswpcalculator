@@ -27,14 +27,18 @@ Adhere to the following protocols for all development, design, and implementatio
 * **Context Management:** Monitor the volume of data and the length of the conversation trail. If the conversation reaches a critical threshold or if the code complexity exceeds what a smaller model can reliably parse, immediately flag this to the user.
 * **Model-Centric Modularity:** Prioritize high modularity and extreme componentization. If a task requires complexity that risks model failure, suggest a refactor into smaller, isolated components first.
 * **Documentation Maintenance:** At the end of every successful task or implementation, update the `README.md` file to reflect any changes, new features, or architectural adjustments made. Keep the documentation as clean and current as the code itself.
+* **"Trace the Data Flow" Protocol:** Before modifying any routing or rendering strategy, strictly trace the parameters back to their origin (e.g., `routes.php`) to understand their actual runtime values. Do not assume their intent based solely on variable names.
 
 ### 6. Communication & Efficiency Protocol
 * **Zero-Padding Policy:** Avoid conversational filler, apologies, or clarifying your understanding of the context. Provide technical output directly.
 * **Explicit Context Anchoring:** The user should provide explicit file targets and constraints in the prompt. If a requirement is still ambiguous, the agent must not guess, but instead state: "Constraint check: [Topic]. Please confirm my assumption."
 * **State Compression:** If the conversation exceeds 20 turns, stop and summarize the project state into a concise context block before proceeding.
+* **Local Curl Verification:** Before declaring a task complete, mandate running a `curl` command on the local PHP server for any specific routes modified. Grep for expected DOM elements or JSON payloads to definitively verify the rendering success.
 
 ### 7. Architectural & Technical Decisions
 * **Calculator Computation Paradigm:** Never replace the web frontend's native `MathEngine.js` computations with AJAX/API calls. The instant, zero-latency feedback loop on slider manipulation is a core product experience. The calculation parity between PHP and JS is strictly enforced via `tests/parity_check.php`, mitigating dual-maintenance risks. API endpoints for calculations should only be developed as headless services for external consumption (e.g., mobile apps).
+* **Principle of Least Astonishment (POLA):** Ensure components and variables behave in a way that least surprises the next developer (or AI). If a variable's natural assumption is structural (e.g., `category = calculator`), do not overload it to mean semantic domains (e.g., `category = growth`). Refactor the codebase to match the natural assumption rather than writing workarounds.
+* **Explicit is Better Than Implicit:** Avoid magic behavior like conditionally building URLs based on the presence of a slash, or inferring types from loose string matching. Data structures and configurations must be explicit and decoupled.
 ### 8. Architectural Planning & Pre-Implementation Discussions
 * **Exhaustive Planning:** Prior to implementing any non-trivial feature or architecture change, engage the user in a rigorous pre-implementation discussion within the `implementation_plan.md` artifact.
 * **Edge Cases & Friction Identification:** Proactively identify and present all potential edge cases, UX friction points, and technical limitations (e.g., SEO implications, DOM bloat, schema conflicts) *before* writing code.

@@ -34,89 +34,10 @@
                 <div class="mb-4 relative z-10 bg-[var(--glass-bg)] p-4 sm:p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
                     <div class="space-y-3">
                         <!-- Initial Lumpsum -->
-                        {{ inputs.renderInputRangePair({
-                            'id': 'lumpsum',
-                            'label': 'Initial Lumpsum (Optional)',
-                            'min': 0,
-                            'max': 10000000,
-                            'slider_max': 1000000,
-                            'step': 5000,
-                            'value': lumpsum|default(0),
-                            'prefix': '₹',
-                            'theme': 'emerald'
-                        }) }}
+                        {% include 'components/forms/lumpsum-fields.twig' %}
 
-                        <!-- Monthly Investment -->
-                        {{ inputs.renderInputRangePair({
-                            'id': 'sip',
-                            'label': 'Monthly SIP',
-                            'min': 500,
-                            'max': 1000000,
-                            'slider_max': 100000,
-                            'step': 500,
-                            'value': sip,
-                            'prefix': '₹',
-                            'theme': 'emerald'
-                        }) }}
-
-                        <!-- Period (Yrs) -->
-                        {{ inputs.renderInputRangePair({
-                            'id': 'years',
-                            'label': 'Period (Yrs)',
-                            'min': 1,
-                            'max': 50,
-                            'step': 1,
-                            'value': years,
-                            'suffix': 'Yrs',
-                            'theme': 'emerald',
-                            'input_text_color': 'text-slate-700 focus:border-emerald-500 focus:ring-emerald-500/30 focus:ring-1'
-                        }) }}
-
-                        <!-- Expected Return -->
-                        {% set rateLabelHtml %}
-                        <div class="flex items-center justify-between mb-1.5">
-                            <label for="rate" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                                Expected Return
-                            </label>
-                            <!-- Smart Nudge trigger -->
-                            <button type="button" id="rate-nudge-btn"
-                                class="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-500 hover:text-emerald-700 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 rounded"
-                                aria-haspopup="true" aria-expanded="false"
-                                aria-controls="rate-nudge-popover">
-                                <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                Not sure?
-                            </button>
-                        </div>
-                        {% endset %}
-
-                        {{ inputs.renderInputRangePair({
-                            'id': 'rate',
-                            'label': 'Expected Return',
-                            'label_html': rateLabelHtml,
-                            'min': 0,
-                            'max': 30,
-                            'step': 0.5,
-                            'value': rate,
-                            'suffix': '%',
-                            'theme': 'emerald',
-                            'input_text_color': 'text-slate-700 focus:border-emerald-500 focus:ring-emerald-500/30 focus:ring-1'
-                        }) }}
-
-                        <!-- Yearly Step-up -->
-                        {{ inputs.renderInputRangePair({
-                            'id': 'stepup',
-                            'label': 'Annual Step-up',
-                            'min': 0,
-                            'max': 100,
-                            'slider_max': 50,
-                            'step': 1,
-                            'value': stepup,
-                            'suffix': '%',
-                            'theme': 'emerald'
-                        }) }}
+                        <!-- SIP Fields -->
+                        {% include 'components/forms/sip-fields.twig' %}
                     </div>
                 </div>
             </div>
@@ -138,57 +59,8 @@
                     </div>
 
                     <div id="swp-fields" class="space-y-4 transition-all duration-300">
-                        <!-- Monthly Withdrawal -->
-                        {{ inputs.renderInputRangePair({
-                            'id': 'swp_withdrawal',
-                            'label': 'Monthly SWP',
-                            'min': 0,
-                            'max': 1000000,
-                            'slider_max': 200000,
-                            'step': 500,
-                            'value': swp_withdrawal,
-                            'prefix': '₹',
-                            'theme': 'rose'
-                        }) }}
-
-                        <!-- Withdrawal Duration -->
-                        {{ inputs.renderInputRangePair({
-                            'id': 'swp_years',
-                            'label': 'SWP Period',
-                            'min': 1,
-                            'max': 50,
-                            'step': 1,
-                            'value': swp_years_input,
-                            'suffix': 'Yrs',
-                            'theme': 'rose',
-                            'input_text_color': 'text-slate-700 focus:border-rose-400 focus:ring-rose-400/30 focus:ring-1'
-                        }) }}
-
-                        <!-- Withdrawal Hike -->
-                        {{ inputs.renderInputRangePair({
-                            'id': 'swp_stepup',
-                            'label': 'Yearly Hike',
-                            'min': 0,
-                            'max': 20,
-                            'step': 0.1,
-                            'slider_step': 0.5,
-                            'value': swp_stepup,
-                            'suffix': '%',
-                            'theme': 'rose',
-                            'input_text_color': 'text-slate-700 focus:border-rose-400 focus:ring-rose-400/30 focus:ring-1'
-                        }) }}
-
-                        <!-- SWP Expected Return -->
-                        {{ inputs.renderInputRangePair({
-                            'id': 'swp_rate',
-                            'label': 'SWP Expected Return',
-                            'min': 0.1,
-                            'max': 30,
-                            'step': 0.5,
-                            'value': swp_rate|default(8),
-                            'suffix': '%',
-                            'theme': 'rose'
-                        }) }}
+                        <!-- SWP Fields -->
+                        {% include 'components/forms/swp-fields.twig' %}
                     </div>
                 </div>
             </div>

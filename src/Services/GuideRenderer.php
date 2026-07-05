@@ -33,10 +33,11 @@ class GuideRenderer
      * Parse and render an educational guide template in a standard strategy flow.
      *
      * @param string $slug Guide URL path slug (e.g. 'sip-calculator')
-     * @param string $category Category folder name (e.g. 'growth', 'retirement', 'comparison')
+     * @param string $seo_category Category folder name (e.g. 'growth', 'retirement', 'comparison')
      * @param string $publishedDate Meta publication date
+     * @param string $type The structural type of the page (e.g. 'calculator', 'guide')
      */
-    public function render(string $slug, string $category, string $publishedDate): void
+    public function render(string $slug, string $seo_category, string $publishedDate, string $type = 'guide'): void
     {
         $path = "/calculators/{$slug}";
         $content = $this->contentManager->getParsedContent($path);
@@ -82,12 +83,32 @@ class GuideRenderer
             $url
         );
 
+        $additional_schemas = '';
+        $calculator_type = 'all';
+
+        if ($type === 'calculator') {
+            $calcTitle = $page_config['title'] ?? 'Mutual Fund Calculator';
+            $software_schema = $this->schemaHelper->getSoftwareApplication(
+                $calcTitle,
+                $description,
+                $url
+            );
+            $additional_schemas .= '<script type="application/ld+json">' . $software_schema . '</script>';
+
+            if (strpos($slug, 'sip') !== false && strpos($slug, 'swp') === false) {
+                $calculator_type = 'sip';
+            } elseif (strpos($slug, 'swp') !== false) {
+                $calculator_type = 'swp';
+            }
+        }
+
         $page_config['additional_head'] = '
             <link rel="alternate" hreflang="en-IN" href="https://sipswpcalculator.com/' . $slug . '">
             <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/' . $slug . '">
             <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
             <script type="application/ld+json">' . $article_schema . '</script>
             <script type="application/ld+json">' . $webpage_schema . '</script>
+            ' . $additional_schemas . '
         ';
 
         // Add custom JS script if it matches specific naming/file templates
@@ -101,12 +122,15 @@ class GuideRenderer
         $content_metadata = $content['metadata'];
         $active_page = $slug . '.php';
 
-        View::render('layouts/generic-post', [
+        $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
+
+        View::render($layout, [
             'content_html'     => $content_html,
             'content_metadata' => $content_metadata,
             'page_config'      => $page_config,
             'active_page'      => $active_page,
-            'category'         => $category,
+            'category'         => $seo_category,
+            'calculator_type'  => $calculator_type
         ]);
     }
 }

@@ -117,11 +117,7 @@ class App
 
         // Dynamic Blog Redirects
         foreach ($this->routesConfig['blog_redirects'] as $slug => $target) {
-            if (strpos($target, '/') !== false) {
-                $this->router->redirect("/resource/{$slug}", "/resource/{$target}");
-            } else {
-                $this->router->redirect("/resource/{$slug}", "/resource/{$target}/{$slug}");
-            }
+            $this->router->redirect("/resource/{$slug}", "/resource/{$target}");
         }
 
         // Dynamic Stubs Redirects
