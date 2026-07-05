@@ -48,9 +48,11 @@
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Monthly SIP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Annual SIP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">Total Invested</th>
+                        {% if calculator_type != 'sip' %}
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Monthly SWP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Annual SWP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Total Withdrawn</th>
+                        {% endif %}
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Interest</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">End Corpus</th>
                     </tr>
@@ -63,9 +65,11 @@
                         <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono">{{ row.sip_monthly is not null ? row.sip_monthly|formatInr : '-' }}</td>
                         <td class="px-6 py-4 text-right text-emerald-700 font-medium font-mono">{{ row.annual_contribution|formatInr }}</td>
                         <td class="px-6 py-4 text-right text-slate-500 font-mono">{{ row.cumulative_invested|formatInr }}</td>
+                        {% if calculator_type != 'sip' %}
                         <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>{{ row.swp_monthly is not null ? row.swp_monthly|formatInr : '-' }}</td>
                         <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>{{ row.annual_withdrawal is not null ? row.annual_withdrawal|formatInr : '-' }}</td>
                         <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>{{ row.cumulative_withdrawals ? row.cumulative_withdrawals|formatInr : '-' }}</td>
+                        {% endif %}
                         <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">{{ row.interest|formatInr }}</td>
                         <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">{{ row.combined_total|formatInr }}</td>
                     </tr>

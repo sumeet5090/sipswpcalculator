@@ -1,0 +1,177 @@
+{% extends 'layouts/base.twig' %}
+
+{% block head %}
+{{ page_config.additional_head|raw }}
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+
+<!-- Preconnect to font & CDN origins -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+<!-- Critical above-the-fold CSS inlined for instant FCP -->
+<style>
+    :root {
+        --gradient-primary: linear-gradient(135deg, #059669, #047857);
+        --glass-bg: rgba(255, 255, 255, .9);
+        --glass-border: 1px solid rgba(255, 255, 255, .5);
+        --glass-shadow: 0 8px 32px 0 rgba(5, 150, 105, .1);
+        --color-bg: #f8fafc;
+        --color-text-primary: #0f172a;
+        --color-text-secondary: #64748b;
+        --color-border: #e2e8f0
+    }
+
+    @font-face {
+        font-family: 'Plus Jakarta Sans Fallback';
+        src: local('Arial');
+        size-adjust: 107%;
+        ascent-override: 90%;
+        descent-override: 22%;
+        line-gap-override: 0%
+    }
+
+    body {
+        background-color: var(--color-bg);
+        font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', 'Inter', Arial, sans-serif;
+        color: var(--color-text-primary);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased
+    }
+
+    .navbar-glass {
+        background: rgba(255, 255, 255, .85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px)
+    }
+
+    .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        border-radius: 1rem;
+        position: relative
+    }
+
+    .text-gradient {
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-image: var(--gradient-primary)
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<header class="relative mb-6 sm:mb-10 text-center border-b border-slate-100 pb-6">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 mb-4">
+        <span class="relative flex h-3 w-3">
+            <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+        </span>
+        <span class="text-sm font-semibold text-emerald-700 tracking-wide uppercase">Free Financial Tool</span>
+    </div>
+
+    <h1 class="text-3xl sm:text-5xl font-extrabold pb-3 tracking-tight text-slate-900">
+        {{ page_config.title }}
+    </h1>
+    {% if page_config.meta_desc %}
+        <p class="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
+            {{ page_config.meta_desc }}
+        </p>
+    {% endif %}
+</header>
+
+<section id="calculator-section" class="scroll-mt-32" style="scroll-margin-top: 120px;" aria-labelledby="calculator-heading">
+    <h2 class="sr-only" id="calculator-heading">Calculate Your Returns</h2>
+    
+    <div id="calculator-app" data-mode="{{ calculator_type }}" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column: Form -->
+        <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar"
+            style="top: 120px;">
+            <div class="glass-card p-4 sm:p-5">
+                <form id="calculator-form" class="space-y-6" onsubmit="event.preventDefault();">
+                    <input type="hidden" id="enable_swp" name="enable_swp" value="{{ calculator_type == 'swp' or calculator_type == 'all' ? '1' : '0' }}">
+                    <div class="space-y-4">
+                        {% if calculator_type == 'sip' or calculator_type == 'all' %}
+                            <div class="mb-2">
+                                <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">SIP Details</span>
+                            </div>
+                            {% include 'components/forms/lumpsum-fields.twig' %}
+                            {% include 'components/forms/sip-fields.twig' %}
+                        {% endif %}
+                        
+                        {% if calculator_type == 'swp' %}
+                            <div class="mb-2">
+                                <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">SWP Details</span>
+                            </div>
+                            {% include 'components/forms/lumpsum-fields.twig' %}
+                            <div id="swp-fields">
+                                {% include 'components/forms/swp-fields.twig' %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2 space-y-4">
+            {% include 'components/chart-visualization.twig' %}
+        </div>
+    </div>
+
+    <!-- Full-width Yearly Breakdown -->
+    <div class="mt-8">
+        {% include 'components/yearly-breakdown-table.twig' %}
+    </div>
+</section>
+
+<!-- Markdown Educational Guide -->
+<article class="markdown-content mt-16 max-w-4xl mx-auto border-t border-slate-200 pt-10">
+    {{ content_html|raw }}
+</article>
+
+{% endblock %}
+
+{% block modals %}
+<div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
+        <form id="pdfForm" class="space-y-4">
+            <input type="hidden" name="csrf_token" value="{{ app.session.csrf_token|default('')|escape('html_attr') }}">
+            <div>
+                <label for="clientName" class="block text-sm font-medium mb-1 text-gray-600">Client Name</label>
+                <input type="text" id="clientName" name="clientName" placeholder="e.g., John Doe"
+                    class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-emerald-500 transition">
+            </div>
+            <div>
+                <label for="advisorName" class="block text-sm font-medium mb-1 text-gray-600">Your Name / Company</label>
+                <input type="text" id="advisorName" name="advisorName" placeholder="e.g., Jane Smith Financials"
+                    class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-emerald-500 transition">
+            </div>
+            <div class="flex justify-end gap-4 pt-4">
+                <button type="button" id="closePdfModalBtn"
+                    class="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg transition">Cancel</button>
+                <button type="submit" id="generatePdfBtn"
+                    class="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition">Download</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+{% if page_config.scripts %}
+    {% for script in page_config.scripts %}
+        <script type="module" src="{{ script }}"></script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

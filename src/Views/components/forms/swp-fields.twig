@@ -1,0 +1,52 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+<!-- Monthly Withdrawal -->
+{{ inputs.renderInputRangePair({
+    'id': 'swp_withdrawal',
+    'label': 'Monthly SWP',
+    'min': 0,
+    'max': 1000000,
+    'slider_max': 200000,
+    'step': 500,
+    'value': swp_withdrawal,
+    'prefix': '₹',
+    'theme': 'rose'
+}) }}
+
+<!-- Withdrawal Duration -->
+{{ inputs.renderInputRangePair({
+    'id': 'swp_years',
+    'label': 'SWP Period',
+    'min': 1,
+    'max': 50,
+    'step': 1,
+    'value': swp_years_input,
+    'suffix': 'Yrs',
+    'theme': 'rose',
+    'input_text_color': 'text-slate-700 focus:border-rose-400 focus:ring-rose-400/30 focus:ring-1'
+}) }}
+
+<!-- Withdrawal Hike -->
+{{ inputs.renderInputRangePair({
+    'id': 'swp_stepup',
+    'label': 'Yearly Hike',
+    'min': 0,
+    'max': 20,
+    'step': 0.1,
+    'slider_step': 0.5,
+    'value': swp_stepup,
+    'suffix': '%',
+    'theme': 'rose',
+    'input_text_color': 'text-slate-700 focus:border-rose-400 focus:ring-rose-400/30 focus:ring-1'
+}) }}
+
+<!-- SWP Expected Return -->
+{{ inputs.renderInputRangePair({
+    'id': 'swp_rate',
+    'label': 'SWP Expected Return',
+    'min': 0.1,
+    'max': 30,
+    'step': 0.5,
+    'value': swp_rate|default(8),
+    'suffix': '%',
+    'theme': 'rose'
+}) }}

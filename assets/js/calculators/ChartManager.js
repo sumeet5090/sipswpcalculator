@@ -36,12 +36,17 @@ export class ChartManager {
         const corpus = results.map(r => r.combined_total);
         const swp = results.map(r => r.annual_withdrawal);
 
+        const calcApp = document.getElementById('calculator-app');
+        const mode = calcApp ? (calcApp.dataset.mode || 'all') : 'all';
+
         if (this.chartInstance) {
             this.chartInstance.data.labels = years;
             this.chartInstance.data.datasets[0].data = cumulative;
             this.chartInstance.data.datasets[1].data = corpus;
-            this.chartInstance.data.datasets[2].data = swp;
-            this.chartInstance.data.datasets[2].hidden = !enableSwp;
+            if (this.chartInstance.data.datasets.length > 2) {
+                this.chartInstance.data.datasets[2].data = swp;
+                this.chartInstance.data.datasets[2].hidden = !enableSwp;
+            }
             this.chartInstance.update();
             return;
         }
@@ -58,55 +63,60 @@ export class ChartManager {
         const gridColor = 'rgba(0, 0, 0, 0.05)';
         const textColor = '#64748b';
 
+        const datasets = [
+            {
+                label: 'Total Invested',
+                data: cumulative,
+                borderColor: '#6366f1',
+                backgroundColor: gradientInvested,
+                borderWidth: 2,
+                tension: 0.4,
+                fill: 'origin',
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: '#6366f1',
+                pointRadius: 0,
+                pointHoverRadius: 6,
+            },
+            {
+                label: 'Wealth Gained',
+                data: corpus,
+                borderColor: '#10b981',
+                backgroundColor: gradientCorpus,
+                borderWidth: 3,
+                tension: 0.4,
+                fill: 0,
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: '#10b981',
+                pointBorderWidth: 2,
+                pointRadius: 0,
+                pointHoverRadius: 8,
+                pointHoverBorderWidth: 3,
+            }
+        ];
+
+        if (mode !== 'sip') {
+            datasets.push({
+                label: 'Annual Withdrawal',
+                data: swp,
+                borderColor: '#f43f5e',
+                backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                tension: 0.4,
+                fill: false,
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: '#f43f5e',
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                hidden: !enableSwp,
+            });
+        }
+
         const config = {
             type: 'line',
             data: {
                 labels: years,
-                datasets: [
-                    {
-                        label: 'Total Invested',
-                        data: cumulative,
-                        borderColor: '#6366f1',
-                        backgroundColor: gradientInvested,
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: 'origin',
-                        pointBackgroundColor: '#ffffff',
-                        pointBorderColor: '#6366f1',
-                        pointRadius: 0,
-                        pointHoverRadius: 6,
-                    },
-                    {
-                        label: 'Wealth Gained',
-                        data: corpus,
-                        borderColor: '#10b981',
-                        backgroundColor: gradientCorpus,
-                        borderWidth: 3,
-                        tension: 0.4,
-                        fill: 0,
-                        pointBackgroundColor: '#ffffff',
-                        pointBorderColor: '#10b981',
-                        pointBorderWidth: 2,
-                        pointRadius: 0,
-                        pointHoverRadius: 8,
-                        pointHoverBorderWidth: 3,
-                    },
-                    {
-                        label: 'Annual Withdrawal',
-                        data: swp,
-                        borderColor: '#f43f5e',
-                        backgroundColor: 'rgba(244, 63, 94, 0.1)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        tension: 0.4,
-                        fill: false,
-                        pointBackgroundColor: '#ffffff',
-                        pointBorderColor: '#f43f5e',
-                        pointRadius: 0,
-                        pointHoverRadius: 6,
-                        hidden: !enableSwp,
-                    }
-                ]
+                datasets: datasets
             },
             options: {
                 responsive: true,

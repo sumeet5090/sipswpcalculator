@@ -103,4 +103,25 @@ class SchemaHelper
             ]
         ], JSON_UNESCAPED_SLASHES);
     }
+
+    /**
+     * Generates SoftwareApplication Schema.org JSON-LD for calculators.
+     */
+    public function getSoftwareApplication(string $name, string $description, string $url, string $category = "FinanceApplication"): string
+    {
+        return json_encode([
+            "@context" => "https://schema.org",
+            "@type" => "SoftwareApplication",
+            "name" => $name,
+            "description" => $description,
+            "url" => $url,
+            "applicationCategory" => $category,
+            "operatingSystem" => "Web",
+            "offers" => [
+                "@type" => "Offer",
+                "price" => "0",
+                "priceCurrency" => "INR"
+            ]
+        ], JSON_UNESCAPED_SLASHES);
+    }
 }

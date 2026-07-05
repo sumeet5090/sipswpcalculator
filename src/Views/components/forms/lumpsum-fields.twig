@@ -1,0 +1,13 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+<!-- Initial Lumpsum -->
+{{ inputs.renderInputRangePair({
+    'id': 'lumpsum',
+    'label': 'Initial Lumpsum (Optional)',
+    'min': 0,
+    'max': 10000000,
+    'slider_max': 1000000,
+    'step': 5000,
+    'value': lumpsum|default(0),
+    'prefix': '₹',
+    'theme': 'emerald'
+}) }}
