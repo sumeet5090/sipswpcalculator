@@ -114,6 +114,9 @@ class RenderHomeAction
         $faqRepository = new \Core\FaqRepository();
         $homeFaqs = $faqRepository->getByTag('home');
 
+        // Load central config and pass to view for dynamic field bounds/defaults.
+        $calcConfig = require __DIR__ . '/../Core/Config/calculator_defaults.php';
+
         View::render('calculators/home', [
             'active_page'         => 'index.php',
             'sip'                 => $sip,
@@ -133,6 +136,8 @@ class RenderHomeAction
             'combined'            => $combined,
             'page_config'         => $page_config,
             'homeFaqs'            => $homeFaqs,
+            'calc_config'         => $calcConfig,
+            'show_lumpsum'        => true,
         ]);
     }
 }

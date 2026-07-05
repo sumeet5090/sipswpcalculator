@@ -1,13 +1,15 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
-<!-- Initial Lumpsum -->
+<!-- Initial Lumpsum — only rendered when show_lumpsum is true -->
+{% if show_lumpsum %}
 {{ inputs.renderInputRangePair({
     'id': 'lumpsum',
-    'label': 'Initial Lumpsum (Optional)',
-    'min': 0,
-    'max': 10000000,
-    'slider_max': 1000000,
-    'step': 5000,
+    'label': calc_config.lumpsum.label,
+    'min': calc_config.lumpsum.min,
+    'max': calc_config.lumpsum.max,
+    'slider_max': calc_config.lumpsum.slider_max,
+    'step': calc_config.lumpsum.step,
     'value': lumpsum|default(0),
     'prefix': '₹',
     'theme': 'emerald'
 }) }}
+{% endif %}

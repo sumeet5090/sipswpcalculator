@@ -8,6 +8,7 @@ import { CurrencyFormatter } from './CurrencyHelper.js';
 import { InputValidator } from './InputValidator.js';
 import { ChartManager } from './ChartManager.js';
 import { AnalyticsService } from './AnalyticsLogger.js';
+import { SliderManager } from './SliderManager.js';
 
 export class CalculatorApp {
     constructor() {
@@ -16,6 +17,13 @@ export class CalculatorApp {
         this.chartManager = new ChartManager(this.formatter);
         this.analytics = new AnalyticsService();
         this.userHasInteracted = false;
+        this.sliderManager = new SliderManager(
+            () => {
+                this.userHasInteracted = true;
+                this.triggerCalculation();
+            },
+            this.validator
+        );
 
         // Cache selectors
         this.elements = {
@@ -83,26 +91,6 @@ export class CalculatorApp {
         eventBus.publish('input:changed', inputs);
     }
 
-    /**
-     * Sync input boxes and range sliders.
-     */
-    setupRangeSync(inputId, rangeId) {
-        const input = document.getElementById(inputId);
-        const range = document.getElementById(rangeId);
-        if (!input || !range) return;
-
-        range.addEventListener('input', () => {
-            input.value = range.value;
-            this.userHasInteracted = true;
-            this.triggerCalculation();
-        });
-
-        input.addEventListener('input', () => {
-            range.value = input.value;
-            this.userHasInteracted = true;
-            this.triggerCalculation();
-        });
-    }
 
     /**
      * Adapt text font size inside metrics tiles on screen resize.
@@ -254,16 +242,18 @@ export class CalculatorApp {
      * Initialize app lifecycle.
      */
     init() {
-        // ── Synchronize Slider pairs ──
-        this.setupRangeSync('sip', 'sip_range');
-        this.setupRangeSync('years', 'years_range');
-        this.setupRangeSync('rate', 'rate_range');
-        this.setupRangeSync('stepup', 'stepup_range');
-        this.setupRangeSync('lumpsum', 'lumpsum_range');
-        this.setupRangeSync('swp_withdrawal', 'swp_withdrawal_range');
-        this.setupRangeSync('swp_years', 'swp_years_range');
-        this.setupRangeSync('swp_stepup', 'swp_stepup_range');
-        this.setupRangeSync('swp_rate', 'swp_rate_range');
+        // ── Synchronize Slider pairs via SliderManager ──
+        this.sliderManager.syncAll({
+            'sip':            'sip_range',
+            'years':          'years_range',
+            'rate':           'rate_range',
+            'stepup':         'stepup_range',
+            'lumpsum':        'lumpsum_range',
+            'swp_withdrawal': 'swp_withdrawal_range',
+            'swp_years':      'swp_years_range',
+            'swp_stepup':     'swp_stepup_range',
+            'swp_rate':       'swp_rate_range',
+        });
 
         // ── SWP Toggle ──
         const swpToggle = this.elements.enableSwp();

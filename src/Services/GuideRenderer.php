@@ -122,6 +122,20 @@ class GuideRenderer
         $content_metadata = $content['metadata'];
         $active_page = $slug . '.php';
 
+        // Load central calc config for field bounds/defaults in Twig templates.
+        $calcConfig = require __DIR__ . '/../Core/Config/calculator_defaults.php';
+
+        // Extract default field values from config so guide pages render with hardcoded initial state.
+        $sip             = (float)$calcConfig['sip']['default'];
+        $years           = (int)$calcConfig['years']['default'];
+        $rate            = (float)$calcConfig['rate']['default'];
+        $stepup          = (float)$calcConfig['stepup']['default'];
+        $lumpsum         = (float)$calcConfig['lumpsum']['default'];
+        $swp_withdrawal  = (float)$calcConfig['swp_withdrawal']['default'];
+        $swp_years_input = (int)$calcConfig['swp_years']['default'];
+        $swp_stepup      = (float)$calcConfig['swp_stepup']['default'];
+        $swp_rate        = (float)$calcConfig['swp_rate']['default'];
+
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
 
         View::render($layout, [
@@ -130,7 +144,18 @@ class GuideRenderer
             'page_config'      => $page_config,
             'active_page'      => $active_page,
             'category'         => $seo_category,
-            'calculator_type'  => $calculator_type
+            'calculator_type'  => $calculator_type,
+            'calc_config'      => $calcConfig,
+            'show_lumpsum'     => false,
+            'sip'              => $sip,
+            'years'            => $years,
+            'rate'             => $rate,
+            'stepup'           => $stepup,
+            'lumpsum'          => $lumpsum,
+            'swp_withdrawal'   => $swp_withdrawal,
+            'swp_years_input'  => $swp_years_input,
+            'swp_stepup'       => $swp_stepup,
+            'swp_rate'         => $swp_rate,
         ]);
     }
 }

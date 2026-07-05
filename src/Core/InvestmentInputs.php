@@ -50,24 +50,53 @@ class InvestmentInputs
 
     /**
      * Create sanitized inputs from request POST/GET payload.
+     * Bounds and defaults are read from the central calculator_defaults.php config.
      *
      * @param array $data Typically $_POST or $_GET payload
      * @return self
      */
     public static function fromRequest(array $data): self
     {
-        // CSRF/Honeypot check is orchestrated at the Controller level.
-        // We parse and apply constraints logic here.
-        $sip = isset($data['sip']) ? self::clamp((float)$data['sip'], 500, 1000000) : 10000.0;
-        $years = isset($data['years']) ? (int)self::clamp((float)$data['years'], 1, 50) : 20;
-        $rate = isset($data['rate']) ? self::clamp((float)$data['rate'], 0.1, 30) : 12.0;
-        $stepup = isset($data['stepup']) ? self::clamp((float)$data['stepup'], 0, 50) : 10.0;
-        $enableSwp = isset($data['enable_swp']) ? (bool)$data['enable_swp'] : false;
-        $swpWithdrawal = isset($data['swp_withdrawal']) ? self::clamp((float)$data['swp_withdrawal'], 0, 1000000) : 5000.0;
-        $swpStepup = isset($data['swp_stepup']) ? self::clamp((float)$data['swp_stepup'], 0, 20) : 6.0;
-        $swpYears = isset($data['swp_years']) ? (int)self::clamp((float)$data['swp_years'], 1, 50) : 20;
-        $lumpsum = isset($data['lumpsum']) ? self::clamp((float)$data['lumpsum'], 0, 10000000) : 0.0;
-        $swpRate = isset($data['swp_rate']) ? self::clamp((float)$data['swp_rate'], 0.1, 30) : 8.0;
+        // Load the single source of truth for all bounds and defaults.
+        $cfg = require __DIR__ . '/Config/calculator_defaults.php';
+
+        $sip           = isset($data['sip'])
+            ? self::clamp((float)$data['sip'], $cfg['sip']['min'], $cfg['sip']['max'])
+            : (float)$cfg['sip']['default'];
+
+        $years         = isset($data['years'])
+            ? (int)self::clamp((float)$data['years'], $cfg['years']['min'], $cfg['years']['max'])
+            : (int)$cfg['years']['default'];
+
+        $rate          = isset($data['rate'])
+            ? self::clamp((float)$data['rate'], $cfg['rate']['min'], $cfg['rate']['max'])
+            : (float)$cfg['rate']['default'];
+
+        $stepup        = isset($data['stepup'])
+            ? self::clamp((float)$data['stepup'], $cfg['stepup']['min'], $cfg['stepup']['max'])
+            : (float)$cfg['stepup']['default'];
+
+        $enableSwp     = isset($data['enable_swp']) && (bool)$data['enable_swp'];
+
+        $swpWithdrawal = isset($data['swp_withdrawal'])
+            ? self::clamp((float)$data['swp_withdrawal'], $cfg['swp_withdrawal']['min'], $cfg['swp_withdrawal']['max'])
+            : (float)$cfg['swp_withdrawal']['default'];
+
+        $swpStepup     = isset($data['swp_stepup'])
+            ? self::clamp((float)$data['swp_stepup'], $cfg['swp_stepup']['min'], $cfg['swp_stepup']['max'])
+            : (float)$cfg['swp_stepup']['default'];
+
+        $swpYears      = isset($data['swp_years'])
+            ? (int)self::clamp((float)$data['swp_years'], $cfg['swp_years']['min'], $cfg['swp_years']['max'])
+            : (int)$cfg['swp_years']['default'];
+
+        $lumpsum       = isset($data['lumpsum'])
+            ? self::clamp((float)$data['lumpsum'], $cfg['lumpsum']['min'], $cfg['lumpsum']['max'])
+            : (float)$cfg['lumpsum']['default'];
+
+        $swpRate       = isset($data['swp_rate'])
+            ? self::clamp((float)$data['swp_rate'], $cfg['swp_rate']['min'], $cfg['swp_rate']['max'])
+            : (float)$cfg['swp_rate']['default'];
 
         return new self(
             $sip,

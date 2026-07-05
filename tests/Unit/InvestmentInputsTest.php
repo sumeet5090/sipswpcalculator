@@ -21,8 +21,8 @@ class InvestmentInputsTest extends TestCase
         $this->assertEquals(12.0, $inputs->getRate());
         $this->assertEquals(10.0, $inputs->getStepup());
         $this->assertFalse($inputs->isSwpEnabled());
-        $this->assertEquals(5000.0, $inputs->getSwpWithdrawal());
-        $this->assertEquals(6.0, $inputs->getSwpStepup());
+        $this->assertEquals(25000.0, $inputs->getSwpWithdrawal()); // Updated: reflects urban India retirement (was 5000)
+        $this->assertEquals(5.0, $inputs->getSwpStepup());         // Updated: aligned with RBI inflation target (was 6.0)
         $this->assertEquals(20, $inputs->getSwpYears());
         $this->assertEquals(0.0, $inputs->getLumpsum());
         $this->assertEquals(8.0, $inputs->getSwpRate());

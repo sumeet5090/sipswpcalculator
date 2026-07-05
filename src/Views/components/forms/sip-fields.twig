@@ -2,11 +2,11 @@
 <!-- Monthly Investment -->
 {{ inputs.renderInputRangePair({
     'id': 'sip',
-    'label': 'Monthly SIP',
-    'min': 500,
-    'max': 1000000,
-    'slider_max': 100000,
-    'step': 500,
+    'label': calc_config.sip.label,
+    'min': calc_config.sip.min,
+    'max': calc_config.sip.max,
+    'slider_max': calc_config.sip.slider_max,
+    'step': calc_config.sip.step,
     'value': sip,
     'prefix': '₹',
     'theme': 'emerald'
@@ -15,10 +15,11 @@
 <!-- Period (Yrs) -->
 {{ inputs.renderInputRangePair({
     'id': 'years',
-    'label': 'Period (Yrs)',
-    'min': 1,
-    'max': 50,
-    'step': 1,
+    'label': calc_config.years.label,
+    'min': calc_config.years.min,
+    'max': calc_config.years.max,
+    'slider_max': calc_config.years.slider_max,
+    'step': calc_config.years.step,
     'value': years,
     'suffix': 'Yrs',
     'theme': 'emerald',
@@ -47,11 +48,12 @@
 
 {{ inputs.renderInputRangePair({
     'id': 'rate',
-    'label': 'Expected Return',
+    'label': calc_config.rate.label,
     'label_html': rateLabelHtml,
-    'min': 0,
-    'max': 30,
-    'step': 0.5,
+    'min': calc_config.rate.min,
+    'max': calc_config.rate.max,
+    'slider_max': calc_config.rate.slider_max,
+    'step': calc_config.rate.step,
     'value': rate,
     'suffix': '%',
     'theme': 'emerald',
@@ -61,11 +63,11 @@
 <!-- Yearly Step-up -->
 {{ inputs.renderInputRangePair({
     'id': 'stepup',
-    'label': 'Annual Step-up',
-    'min': 0,
-    'max': 100,
-    'slider_max': 50,
-    'step': 1,
+    'label': calc_config.stepup.label,
+    'min': calc_config.stepup.min,
+    'max': calc_config.stepup.max,
+    'slider_max': calc_config.stepup.slider_max,
+    'step': calc_config.stepup.step,
     'value': stepup,
     'suffix': '%',
     'theme': 'emerald'
