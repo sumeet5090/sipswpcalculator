@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Services;
 
 use Core\ContentManager;
+use Core\InvestmentCalculator;
+use Core\InvestmentInputs;
 use Core\MetaManager;
 use Core\SchemaHelper;
 use Core\View;
@@ -122,40 +124,66 @@ class GuideRenderer
         $content_metadata = $content['metadata'];
         $active_page = $slug . '.php';
 
-        // Load central calc config for field bounds/defaults in Twig templates.
+        // Load central calc config — single source of truth for all field bounds/defaults.
         $calcConfig = require __DIR__ . '/../Core/Config/calculator_defaults.php';
 
-        // Extract default field values from config so guide pages render with hardcoded initial state.
-        $sip             = (float)$calcConfig['sip']['default'];
-        $years           = (int)$calcConfig['years']['default'];
-        $rate            = (float)$calcConfig['rate']['default'];
-        $stepup          = (float)$calcConfig['stepup']['default'];
-        $lumpsum         = (float)$calcConfig['lumpsum']['default'];
-        $swp_withdrawal  = (float)$calcConfig['swp_withdrawal']['default'];
-        $swp_years_input = (int)$calcConfig['swp_years']['default'];
-        $swp_stepup      = (float)$calcConfig['swp_stepup']['default'];
-        $swp_rate        = (float)$calcConfig['swp_rate']['default'];
+        // Build InvestmentInputs from defaults and run the calculator so the chart
+        // and table are pre-populated on first load (no user interaction required).
+        $inputs = ($calculator_type === 'swp')
+            ? InvestmentInputs::fromSwpRequest([])
+            : InvestmentInputs::fromRequest([]);
+
+        $calculator = new InvestmentCalculator();
+        $combined = $calculator->calculate($inputs);
+
+        // Extract chart-ready data arrays from the pre-calculated result.
+        $years_data         = array_column($combined, 'year');
+        $cumulative_numbers = array_column($combined, 'cumulative_invested');
+        $combined_numbers   = array_column($combined, 'combined_total');
+        $swp_numbers        = array_map(fn ($v) => $v ?? 0.0, array_column($combined, 'annual_withdrawal'));
+
+        // Extract per-field defaults for form pre-population.
+        $sip             = $inputs->getSip();
+        $years           = $inputs->getYears();
+        $rate            = $inputs->getRate();
+        $stepup          = $inputs->getStepup();
+        $lumpsum         = $inputs->getLumpsum();
+        $corpus          = ($calculator_type === 'swp') ? $inputs->getLumpsum() : 0.0;
+        $swp_withdrawal  = $inputs->getSwpWithdrawal();
+        $swp_years_input = $inputs->getSwpYears();
+        $swp_stepup      = $inputs->getSwpStepup();
+        $swp_rate        = $inputs->getSwpRate();
+
+        // Lumpsum shown only on home page (RenderHomeAction).
+        // SWP page uses dedicated corpus field; SIP-only pages hide lumpsum entirely.
+        $show_lumpsum = false;
 
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
 
         View::render($layout, [
-            'content_html'     => $content_html,
-            'content_metadata' => $content_metadata,
-            'page_config'      => $page_config,
-            'active_page'      => $active_page,
-            'category'         => $seo_category,
-            'calculator_type'  => $calculator_type,
-            'calc_config'      => $calcConfig,
-            'show_lumpsum'     => false,
-            'sip'              => $sip,
-            'years'            => $years,
-            'rate'             => $rate,
-            'stepup'           => $stepup,
-            'lumpsum'          => $lumpsum,
-            'swp_withdrawal'   => $swp_withdrawal,
-            'swp_years_input'  => $swp_years_input,
-            'swp_stepup'       => $swp_stepup,
-            'swp_rate'         => $swp_rate,
+            'content_html'        => $content_html,
+            'content_metadata'    => $content_metadata,
+            'page_config'         => $page_config,
+            'active_page'         => $active_page,
+            'category'            => $seo_category,
+            'calculator_type'     => $calculator_type,
+            'calc_config'         => $calcConfig,
+            'show_lumpsum'        => $show_lumpsum,
+            'combined'            => $combined,
+            'years_data'          => $years_data,
+            'cumulative_numbers'  => $cumulative_numbers,
+            'combined_numbers'    => $combined_numbers,
+            'swp_numbers'         => $swp_numbers,
+            'sip'                 => $sip,
+            'years'               => $years,
+            'rate'                => $rate,
+            'stepup'              => $stepup,
+            'lumpsum'             => $lumpsum,
+            'corpus'              => $corpus,
+            'swp_withdrawal'      => $swp_withdrawal,
+            'swp_years_input'     => $swp_years_input,
+            'swp_stepup'          => $swp_stepup,
+            'swp_rate'            => $swp_rate,
         ]);
     }
 }

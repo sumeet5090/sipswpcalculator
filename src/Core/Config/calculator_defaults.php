@@ -114,4 +114,18 @@ return [
         'label'      => 'SWP Expected Return',
         'suffix'     => '%',
     ],
+
+    // ── SWP Corpus (Starting Balance — SWP-only calculator) ───────────
+    // Semantically distinct from 'lumpsum':
+    //   lumpsum = optional one-time investment alongside SIP (accumulation phase)
+    //   corpus  = total accumulated wealth to start SWP withdrawals from (withdrawal phase)
+    'corpus' => [
+        'default'    => 5000000,
+        'min'        => 10000,
+        'max'        => 100000000,
+        'slider_max' => 10000000,
+        'step'       => 50000,
+        'label'      => 'Starting Corpus',
+        'prefix'     => '₹',
+    ],
 ];

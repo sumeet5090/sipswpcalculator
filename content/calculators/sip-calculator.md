@@ -129,13 +129,12 @@ Yes, most Asset Management Companies (AMCs) allow you to "Pause" a SIP for 1-6 m
 </ul>
 </div>
 
-<div class="mt-12 p-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl text-white shadow-xl text-center not-prose">
-<h2 class="text-2xl font-bold mb-4 text-white">Visualize Your 2026 Financial Goals</h2>
-<p class="mb-8 text-indigo-100">Don't just read about it. Simulate your wealth creation journey with our advanced, inflation-adjusted, step-up enabled calculator.</p>
-<a href="/#calculator-section" class="inline-flex items-center px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-50 transform hover:-translate-y-1 transition-all duration-200">
-Launch SIP Calculator
-<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-</svg>
-</a>
+<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-100 shadow-xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 sm:p-10 text-center text-white">
+  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">Put It Into Action</h2>
+  <p class="text-emerald-100 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">Don't just read about it — simulate your exact SIP with step-up, add a lumpsum, and see your full wealth projection with interactive charts.</p>
+  <a href="/#calculator-section"
+     class="inline-flex items-center gap-2 px-8 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-all duration-200 text-sm sm:text-base">
+    Open SIP &amp; SWP Planner
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+  </a>
 </div>

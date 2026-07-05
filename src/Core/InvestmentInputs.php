@@ -113,6 +113,55 @@ class InvestmentInputs
     }
 
     /**
+     * Named constructor for the SWP-only calculator.
+     *
+     * Maps the HTTP `corpus` field → internal `lumpsum` domain concept.
+     * SWP is always enabled; SIP accumulation fields default to zero/minimal values.
+     * This is the industry-standard Named Constructor pattern: one input shape → one factory.
+     *
+     * @param array $data POST/GET payload from the SWP calculator form
+     * @return self
+     */
+    public static function fromSwpRequest(array $data): self
+    {
+        $cfg = require __DIR__ . '/Config/calculator_defaults.php';
+
+        // `corpus` is the SWP-specific field — maps to internal `lumpsum` (starting balance).
+        $corpus = isset($data['corpus'])
+            ? self::clamp((float)$data['corpus'], $cfg['corpus']['min'], $cfg['corpus']['max'])
+            : (float)$cfg['corpus']['default'];
+
+        $swpWithdrawal = isset($data['swp_withdrawal'])
+            ? self::clamp((float)$data['swp_withdrawal'], $cfg['swp_withdrawal']['min'], $cfg['swp_withdrawal']['max'])
+            : (float)$cfg['swp_withdrawal']['default'];
+
+        $swpStepup = isset($data['swp_stepup'])
+            ? self::clamp((float)$data['swp_stepup'], $cfg['swp_stepup']['min'], $cfg['swp_stepup']['max'])
+            : (float)$cfg['swp_stepup']['default'];
+
+        $swpYears = isset($data['swp_years'])
+            ? (int)self::clamp((float)$data['swp_years'], $cfg['swp_years']['min'], $cfg['swp_years']['max'])
+            : (int)$cfg['swp_years']['default'];
+
+        $swpRate = isset($data['swp_rate'])
+            ? self::clamp((float)$data['swp_rate'], $cfg['swp_rate']['min'], $cfg['swp_rate']['max'])
+            : (float)$cfg['swp_rate']['default'];
+
+        return new self(
+            sip: 0.0,
+            years: 1,
+            rate: (float)$cfg['rate']['default'],
+            stepup: 0.0,
+            enableSwp: true,
+            swpWithdrawal: $swpWithdrawal,
+            swpStepup: $swpStepup,
+            swpYears: $swpYears,
+            lumpsum: $corpus,         // corpus maps to lumpsum as starting balance
+            swpRate: $swpRate
+        );
+    }
+
+    /**
      * Clamp a numeric value to constraints.
      */
     private static function clamp(float $val, float $min, float $max): float
