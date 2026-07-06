@@ -76,6 +76,14 @@ class DatabaseMigrator
             }
         }
 
+        // 3. Ensure database indexes exist for performance (idempotent)
+        if (!$silent) {
+            echo "Creating database indexes...\n";
+        }
+        $pdo->exec("CREATE INDEX IF NOT EXISTS idx_calc_created_at ON user_calculations(created_at)");
+        $pdo->exec("CREATE INDEX IF NOT EXISTS idx_calc_currency ON user_calculations(currency)");
+        $pdo->exec("CREATE INDEX IF NOT EXISTS idx_calc_type ON user_calculations(calc_type)");
+
         echo "--- SQLite Migration Completed Successfully ---\n";
     }
 }
