@@ -1,0 +1,204 @@
+{% extends 'admin/layouts/admin.twig' %}
+
+{% block content %}
+<div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Dashboard Overview</h1>
+    
+    <div class="flex flex-wrap gap-2">
+        {% for key, range in time_ranges %}
+            <a href="?range={{ key }}" 
+               class="px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 border 
+               {% if current_range_key == key %}
+                   bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-600/15
+               {% else %}
+                   bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-slate-950
+               {% endif %}">
+                {{ range.label }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- KPI Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    {% include 'admin/components/stat_card.twig' with {
+        title: 'Total Calculations',
+        value: totalCalculations
+    } %}
+    
+    {% include 'admin/components/stat_card.twig' with {
+        title: 'Avg Step-Up',
+        value: avgStepUpPct ~ '%',
+        subtitle: 'Of all SIPs with step-up > 0'
+    } %}
+    
+    {% include 'admin/components/stat_card.twig' with {
+        title: 'Step-Up SIPs',
+        value: stepUpSIP
+    } %}
+    
+    {% include 'admin/components/stat_card.twig' with {
+        title: 'Flat SIPs',
+        value: flatSIP
+    } %}
+</div>
+
+<!-- Charts Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    {% include 'admin/components/chart_card.twig' with {
+        title: 'Daily Volume (' ~ current_range.label ~ ')',
+        description: 'Calculations run over time. Helps monitor overall site engagement.',
+        canvas_id: 'volumeChart'
+    } %}
+    
+    {% include 'admin/components/chart_card.twig' with {
+        title: 'Currency Distribution',
+        description: 'Calculations split by currency. Highlights geographical user segments.',
+        canvas_id: 'currencyChart'
+    } %}
+    
+    {% include 'admin/components/chart_card.twig' with {
+        title: 'SIP Type Breakdown',
+        description: 'Step-Up vs Flat SIP ratio. Shows user preference for active vs flat growth planning.',
+        canvas_id: 'stepUpChart'
+    } %}
+    
+    {% include 'admin/components/chart_card.twig' with {
+        title: 'Duration Distribution',
+        description: 'Compounding span. Higher projection years suggest users with long-term goals.',
+        canvas_id: 'durationChart'
+    } %}
+    
+    {% include 'admin/components/chart_card.twig' with {
+        title: 'Wealth Goals (Ambition)',
+        description: 'Calculated target sizes. Gauges user financial ambition categories.',
+        canvas_id: 'ambitionChart'
+    } %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    Chart.defaults.color = '#64748b'; // Slate 500
+    Chart.defaults.borderColor = 'rgba(226, 232, 240, 0.8)'; // Slate 200
+    Chart.defaults.font.family = 'Plus Jakarta Sans, Inter, system-ui, sans-serif';
+
+    const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: { color: '#475569', padding: 20, font: { weight: '600' } }
+            }
+        }
+    };
+
+    // 1. Volume Line Chart
+    new Chart(document.getElementById('volumeChart'), {
+        type: 'line',
+        data: {
+            labels: {{ volumeLabels|raw }},
+            datasets: [{
+                label: 'Calculations',
+                data: {{ volumeData|raw }},
+                borderColor: '#059669', // Emerald 600
+                backgroundColor: 'rgba(5, 150, 105, 0.05)',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#059669'
+            }]
+        },
+        options: {
+            ...commonOptions,
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(226, 232, 240, 0.8)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Currency Bar Chart
+    new Chart(document.getElementById('currencyChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ currencyLabels|raw }},
+            datasets: [{
+                label: 'Usage by Currency',
+                data: {{ currencyData|raw }},
+                backgroundColor: {{ currencyColorsJson|raw }},
+                borderRadius: 6
+            }]
+        },
+        options: {
+            ...commonOptions,
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(226, 232, 240, 0.8)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 3. SIP Type Doughnut Chart
+    new Chart(document.getElementById('stepUpChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Step-Up SIP', 'Flat SIP'],
+            datasets: [{
+                data: {{ stepUpDoughnutData|raw }},
+                backgroundColor: ['#10b981', '#14b8a6'], // Emerald 500 & Teal 500
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            ...commonOptions,
+            cutout: '70%'
+        }
+    });
+
+    // 4. Duration Histogram
+    new Chart(document.getElementById('durationChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ durationLabels|raw }},
+            datasets: [{
+                label: 'Frequency',
+                data: {{ durationData|raw }},
+                backgroundColor: '#047857', // Emerald 700
+                borderRadius: 6
+            }]
+        },
+        options: {
+            ...commonOptions,
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(226, 232, 240, 0.8)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 5. Ambition Index Bar Chart
+    new Chart(document.getElementById('ambitionChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ ambitionLabels|raw }},
+            datasets: [{
+                label: 'Calculations',
+                data: {{ ambitionData|raw }},
+                backgroundColor: '#0f766e', // Teal 700
+                borderRadius: 6
+            }]
+        },
+        options: {
+            ...commonOptions,
+            indexAxis: 'y',
+            scales: {
+                x: { beginAtZero: true, grid: { color: 'rgba(226, 232, 240, 0.8)' } },
+                y: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+{% endblock %}

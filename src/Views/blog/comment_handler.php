@@ -17,19 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $dbPath = $_ENV['DB_PATH'] ?? getenv('DB_PATH') ?: __DIR__ . '/../../../database/database.sqlite';
-    try {
-        $dir = dirname($dbPath);
-        if (!file_exists($dir)) {
-            @mkdir($dir, 0775, true);
-        }
-        if (!file_exists($dbPath)) {
-            @touch($dbPath);
-            @chmod($dbPath, 0664);
-        }
+    require_once __DIR__ . '/../../../vendor/autoload.php';
 
-        $pdo = new PDO("sqlite:" . $dbPath);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+        $pdo = \Core\DatabaseManager::getConnection();
 
         $stmt = $pdo->prepare("INSERT INTO comments (post_id, author_name, comment_body) VALUES (:post_id, :author_name, :comment_body)");
         $stmt->execute([
