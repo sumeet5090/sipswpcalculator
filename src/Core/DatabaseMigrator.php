@@ -22,14 +22,18 @@ class DatabaseMigrator
     /**
      * Run all migrations in a CLI context.
      */
-    public function migrate(): void
+    public function migrate(bool $silent = false): void
     {
-        echo "--- Starting SQLite Database Migration ---\n";
+        if (!$silent) {
+            echo "--- Starting SQLite Database Migration ---\n";
+        }
 
         $pdo = $this->pdo;
 
         // 1. Create base table if not exists
-        echo "Verifying 'user_calculations' table...\n";
+        if (!$silent) {
+            echo "Verifying 'user_calculations' table...\n";
+        }
         $pdo->exec("
             CREATE TABLE IF NOT EXISTS user_calculations (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -61,10 +65,14 @@ class DatabaseMigrator
 
         foreach ($migrations as $col => $typeDefinition) {
             if (!in_array($col, $existingCols)) {
-                echo "Adding missing column '{$col}' ({$typeDefinition})...\n";
+                if (!$silent) {
+                    echo "Adding missing column '{$col}' ({$typeDefinition})...\n";
+                }
                 $pdo->exec("ALTER TABLE user_calculations ADD COLUMN {$col} {$typeDefinition}");
             } else {
-                echo "Column '{$col}' exists: OK.\n";
+                if (!$silent) {
+                    echo "Column '{$col}' exists: OK.\n";
+                }
             }
         }
 

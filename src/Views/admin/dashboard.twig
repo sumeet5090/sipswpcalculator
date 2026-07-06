@@ -2,20 +2,35 @@
 
 {% block content %}
 <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-    <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Dashboard Overview</h1>
+    <div>
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Dashboard Overview</h1>
+        <p class="text-slate-500 text-sm mt-1">Real-time usage statistics and telemetry metrics</p>
+    </div>
     
-    <div class="flex flex-wrap gap-2">
-        {% for key, range in time_ranges %}
-            <a href="?range={{ key }}" 
-               class="px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 border 
-               {% if current_range_key == key %}
-                   bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-600/15
-               {% else %}
-                   bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-slate-950
-               {% endif %}">
-                {{ range.label }}
-            </a>
-        {% endfor %}
+    <div class="flex flex-wrap items-center gap-3">
+        <!-- Range Filters -->
+        <div class="flex gap-2">
+            {% for key, range in time_ranges %}
+                <a href="?range={{ key }}" 
+                   class="px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 border 
+                   {% if current_range_key == key %}
+                       bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-600/15
+                   {% else %}
+                       bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-slate-950
+                   {% endif %}">
+                    {{ range.label }}
+                </a>
+            {% endfor %}
+        </div>
+
+        <!-- Run Migrations Trigger -->
+        <button id="btn-run-migrations" 
+                class="flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-white text-slate-700 hover:text-emerald-700 border border-slate-200 rounded-xl hover:bg-emerald-50 transition-all duration-300 shadow-sm cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4" />
+            </svg>
+            Update Database Schema
+        </button>
     </div>
 </div>
 
@@ -200,5 +215,35 @@
             }
         }
     });
+
+    // 6. Run Migrations AJAX Trigger
+    const migrateBtn = document.getElementById('btn-run-migrations');
+    if (migrateBtn) {
+        migrateBtn.addEventListener('click', function () {
+            if (!confirm('Are you sure you want to update the database schema?')) {
+                return;
+            }
+            
+            migrateBtn.disabled = true;
+            const originalText = migrateBtn.innerHTML;
+            migrateBtn.innerHTML = 'Updating...';
+
+            fetch('/admin_insights/migrate')
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message || 'Action completed.');
+                    if (data.status === 'success') {
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    alert('Error running database upgrade: ' + error.message);
+                })
+                .finally(() => {
+                    migrateBtn.disabled = false;
+                    migrateBtn.innerHTML = originalText;
+                });
+        });
+    }
 </script>
 {% endblock %}
