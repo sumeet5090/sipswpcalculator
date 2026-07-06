@@ -205,6 +205,20 @@ composer install --no-dev --optimize-autoloader
 - [ ] `.htaccess` HTTPS redirect is active
 - [ ] `sitemap.xml` has no 404 URLs
 - [ ] Apache `mod_rewrite`, `mod_deflate`, and `mod_expires` are enabled
+- [ ] Database directory permissions (if using SQLite) are writable by the web server
+
+### Environment Variables
+
+The application supports loading configuration via a `.env` file at the root directory.
+
+| Variable | Description | Default |
+|---|---|---|
+| `ENVIRONMENT` | Application mode (e.g. `development`, `production`). | `development` |
+| `DB_PATH` | Absolute path to the SQLite database file. | `__DIR__ / database/database.sqlite` |
+| `ADMIN_INSIGHTS_PASSWORD` | Password to access the `/admin_insights` dashboard. | `sipswp_admin_2026!` |
+
+> **Important:** The directory and file defined by `DB_PATH` must be writable by the web server user (e.g., `www-data` or `nobody`) in production to allow recording calculations and user comments.
+
 
 ### Performance Notes
 

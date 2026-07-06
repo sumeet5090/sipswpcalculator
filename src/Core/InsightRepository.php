@@ -14,8 +14,21 @@ class InsightRepository
 {
     private PDO $pdo;
 
-    public function __construct(string $dbPath = __DIR__ . '/../../database/database.sqlite')
+    public function __construct(?string $dbPath = null)
     {
+        if ($dbPath === null) {
+            $dbPath = $_ENV['DB_PATH'] ?? getenv('DB_PATH') ?: __DIR__ . '/../../database/database.sqlite';
+        }
+
+        $dir = dirname($dbPath);
+        if (!file_exists($dir)) {
+            @mkdir($dir, 0775, true);
+        }
+        if (!file_exists($dbPath)) {
+            @touch($dbPath);
+            @chmod($dbPath, 0664);
+        }
+
         $this->pdo = new PDO('sqlite:' . $dbPath, null, null, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

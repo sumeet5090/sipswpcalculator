@@ -1,8 +1,16 @@
 <?php
 
-$dbPath = __DIR__ . '/../../../database/database.sqlite';
+$dbPath = $_ENV['DB_PATH'] ?? getenv('DB_PATH') ?: __DIR__ . '/../../../database/database.sqlite';
 
 try {
+    $dir = dirname($dbPath);
+    if (!file_exists($dir)) {
+        @mkdir($dir, 0775, true);
+    }
+    if (!file_exists($dbPath)) {
+        @touch($dbPath);
+        @chmod($dbPath, 0664);
+    }
     $pdo = new PDO("sqlite:" . $dbPath);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
