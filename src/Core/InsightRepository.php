@@ -17,11 +17,6 @@ class InsightRepository
     public function __construct(?PDO $pdo = null)
     {
         $this->pdo = $pdo ?? DatabaseManager::getConnection();
-
-        // Ensure database indexes exist for performance (idempotent)
-        $this->pdo->exec("CREATE INDEX IF NOT EXISTS idx_calc_created_at ON user_calculations(created_at)");
-        $this->pdo->exec("CREATE INDEX IF NOT EXISTS idx_calc_currency ON user_calculations(currency)");
-        $this->pdo->exec("CREATE INDEX IF NOT EXISTS idx_calc_type ON user_calculations(calc_type)");
     }
 
     /**
