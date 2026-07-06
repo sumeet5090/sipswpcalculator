@@ -6,6 +6,8 @@ namespace Controllers;
 
 use Core\InsightRepository;
 use Core\AnonymizedInsightLogger;
+use Core\AdminAuthService;
+use Core\AdminDashboardPresenter;
 use Core\View;
 
 /**
@@ -16,27 +18,26 @@ class AdminController
 {
     private InsightRepository $insightRepository;
     private AnonymizedInsightLogger $insightLogger;
+    private AdminAuthService $authService;
+    private AdminDashboardPresenter $presenter;
 
     public function __construct(
         InsightRepository $insightRepository,
-        AnonymizedInsightLogger $insightLogger
+        AnonymizedInsightLogger $insightLogger,
+        AdminAuthService $authService,
+        AdminDashboardPresenter $presenter
     ) {
         $this->insightRepository = $insightRepository;
         $this->insightLogger = $insightLogger;
+        $this->authService = $authService;
+        $this->presenter = $presenter;
     }
 
     public function insights(): void
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        $envPassword = getenv('ADMIN_INSIGHTS_PASSWORD');
-        $adminPassword = ($envPassword !== false && $envPassword !== '') ? $envPassword : 'sipswp_admin_2026!';
-
         // 1. Handle Logout
         if (isset($_GET['logout'])) {
-            session_destroy();
+            $this->authService->logout();
             header('Location: /admin_insights');
             exit;
         }
@@ -44,15 +45,16 @@ class AdminController
         // 2. Handle Login Attempt
         $loginError = '';
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
-            if (hash_equals($adminPassword, $_POST['password'])) {
-                $_SESSION['admin_authenticated'] = true;
+            if ($this->authService->login($_POST['password'])) {
+                header('Location: /admin_insights');
+                exit;
             } else {
                 $loginError = 'Incorrect password. Access denied.';
             }
         }
 
         // 3. Authenticate Check
-        if (empty($_SESSION['admin_authenticated'])) {
+        if (!$this->authService->isAuthenticated()) {
             View::render('admin/login', [
                 'error' => $loginError
             ]);
@@ -76,17 +78,18 @@ class AdminController
         }
         $current_range = $time_ranges[$current_range_key];
 
-        // 5. Gather statistics from the Repository
+        // 5. Gather statistics from the Repository and format for View
         $stats = $this->insightRepository->getDashboardData($current_range['interval']);
+        $viewModels = $this->presenter->formatForView($stats);
 
         // Merge view scope payload
         $payload = array_merge([
             'current_range_key' => $current_range_key,
             'time_ranges'       => $time_ranges,
             'current_range'     => $current_range,
-        ], $stats);
+        ], $viewModels);
 
-        View::render('admin/admin_insights', $payload);
+        View::render('admin/dashboard', $payload);
     }
 
     public function logInsight(): void

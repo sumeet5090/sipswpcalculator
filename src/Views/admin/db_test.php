@@ -1,18 +1,9 @@
 <?php
 
-$dbPath = $_ENV['DB_PATH'] ?? getenv('DB_PATH') ?: __DIR__ . '/../../../database/database.sqlite';
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
 try {
-    $dir = dirname($dbPath);
-    if (!file_exists($dir)) {
-        @mkdir($dir, 0775, true);
-    }
-    if (!file_exists($dbPath)) {
-        @touch($dbPath);
-        @chmod($dbPath, 0664);
-    }
-    $pdo = new PDO("sqlite:" . $dbPath);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo = \Core\DatabaseManager::getConnection();
 
     // Create a dummy table
     $pdo->exec("CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY, val TEXT)");

@@ -13,8 +13,8 @@ if (php_sapi_name() !== 'cli') {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$dbPath = $_ENV['DB_PATH'] ?? getenv('DB_PATH') ?: __DIR__ . '/database/database.sqlite';
-$migrator = new \Core\DatabaseMigrator($dbPath);
+$pdo = \Core\DatabaseManager::getConnection();
+$migrator = new \Core\DatabaseMigrator($pdo);
 
 try {
     $migrator->migrate();

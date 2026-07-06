@@ -12,11 +12,11 @@ use PDO;
  */
 class DatabaseMigrator
 {
-    private string $dbPath;
+    private PDO $pdo;
 
-    public function __construct(string $dbPath)
+    public function __construct(PDO $pdo)
     {
-        $this->dbPath = $dbPath;
+        $this->pdo = $pdo;
     }
 
     /**
@@ -26,15 +26,7 @@ class DatabaseMigrator
     {
         echo "--- Starting SQLite Database Migration ---\n";
 
-        $dir = dirname($this->dbPath);
-        if (!is_dir($dir)) {
-            echo "Creating database directory: {$dir}...\n";
-            mkdir($dir, 0755, true);
-        }
-
-        echo "Connecting to SQLite database: {$this->dbPath}...\n";
-        $pdo = new PDO("sqlite:" . $this->dbPath);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo = $this->pdo;
 
         // 1. Create base table if not exists
         echo "Verifying 'user_calculations' table...\n";

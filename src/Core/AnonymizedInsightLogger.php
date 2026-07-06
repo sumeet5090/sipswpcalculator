@@ -15,23 +15,9 @@ class AnonymizedInsightLogger
 {
     private PDO $pdo;
 
-    public function __construct(?string $dbPath = null)
+    public function __construct(?PDO $pdo = null)
     {
-        if ($dbPath === null) {
-            $dbPath = $_ENV['DB_PATH'] ?? getenv('DB_PATH') ?: __DIR__ . '/../../database/database.sqlite';
-        }
-
-        $dir = dirname($dbPath);
-        if (!file_exists($dir)) {
-            @mkdir($dir, 0775, true);
-        }
-        if (!file_exists($dbPath)) {
-            @touch($dbPath);
-            @chmod($dbPath, 0664);
-        }
-
-        $this->pdo = new PDO("sqlite:" . $dbPath);
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->pdo = $pdo ?? DatabaseManager::getConnection();
     }
 
     /**
