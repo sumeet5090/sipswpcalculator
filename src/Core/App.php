@@ -106,6 +106,7 @@ class App
         $this->router->get('/admin_insights', 'AdminController@insights');
         $this->router->post('/admin_insights', 'AdminController@insights');
         $this->router->redirect('/admin_insights.php', '/admin_insights');
+        $this->router->get('/admin_insights/migrate', 'AdminController@runMigrations');
         $this->router->get('/log_insight', 'AdminController@logInsight');
         $this->router->post('/log_insight', 'AdminController@logInsight');
         $this->router->redirect('/log_insight.php', '/log_insight');

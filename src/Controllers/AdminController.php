@@ -8,6 +8,8 @@ use Core\InsightRepository;
 use Core\AnonymizedInsightLogger;
 use Core\AdminAuthService;
 use Core\AdminDashboardPresenter;
+use Core\DatabaseManager;
+use Core\DatabaseMigrator;
 use Core\View;
 
 /**
@@ -142,5 +144,33 @@ class AdminController
 
         http_response_code(204);
         exit;
+    }
+
+    /**
+     * Explicitly run migrations (admin authentication required).
+     */
+    public function runMigrations(): void
+    {
+        if (!$this->authService->isAuthenticated()) {
+            http_response_code(403);
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            exit;
+        }
+
+        try {
+            $pdo = DatabaseManager::getConnection();
+            $migrator = new DatabaseMigrator($pdo);
+            $migrator->migrate(true); // Silent mode
+
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'success', 'message' => 'Database migrations completed successfully.']);
+            exit;
+        } catch (\Throwable $e) {
+            http_response_code(500);
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'Migration failed: ' . $e->getMessage()]);
+            exit;
+        }
     }
 }
