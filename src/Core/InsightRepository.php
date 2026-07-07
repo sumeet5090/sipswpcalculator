@@ -233,8 +233,8 @@ class InsightRepository
         $ambitionBuckets = $stmt->fetchAll();
 
         return [
-            'totalInRange'       => $totalInRange,
-            'avgStepUp'          => $avgStepUp,
+            'totalCalculations'  => $totalInRange,
+            'avgStepUpPct'       => $avgStepUp,
             'totalAllTime'       => $totalAllTime,
             'calcTypeBreakdown'  => $calcTypeBreakdown,
             'totalPdfDownloads'  => $totalPdfDownloads,
