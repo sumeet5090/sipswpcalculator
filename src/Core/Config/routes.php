@@ -4,36 +4,6 @@ declare(strict_types=1);
 
 return [
     'calculators' => [
-        '/compound-interest-calculator' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'growth',
-            'type'         => 'calculator',
-            'date'         => '2026-02-27'
-        ],
-        '/dollar-cost-averaging-tool' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'growth',
-            'type'         => 'calculator',
-            'date'         => '2026-03-02'
-        ],
-        '/lumpsum-calculator' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'growth',
-            'type'         => 'calculator',
-            'date'         => '2026-07-05'
-        ],
-        '/mutual-fund-calculator' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'growth',
-            'type'         => 'calculator',
-            'date'         => '2026-07-05'
-        ],
-        '/retirement-drawdown-planner' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'retirement',
-            'type'         => 'calculator',
-            'date'         => '2026-03-02'
-        ],
         '/sip-calculator' => [
             'action'       => 'RenderGuideAction',
             'seo_category' => 'growth',
@@ -45,12 +15,6 @@ return [
             'seo_category' => 'retirement',
             'type'         => 'calculator',
             'date'         => '2026-07-05'
-        ],
-        '/swp-tax-calculator' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'retirement',
-            'type'         => 'calculator',
-            'date'         => '2026-03-02'
         ]
     ],
     'pages' => [
@@ -81,6 +45,12 @@ return [
         'sip-to-swp-transition-guide' => 'retirement/sip-vs-swp-wealth-creation-withdrawal-strategy'
     ],
     'stubs' => [
+        '/compound-interest-calculator'    => '/sip-calculator',
+        '/dollar-cost-averaging-tool'      => '/sip-calculator',
+        '/lumpsum-calculator'              => '/sip-calculator',
+        '/mutual-fund-calculator'          => '/sip-calculator',
+        '/retirement-drawdown-planner'     => '/swp-calculator',
+        '/swp-tax-calculator'              => '/swp-calculator',
         '/sip-step-up-calculator'    => '/sip-calculator',
         '/recurring-investment-calculator' => '/sip-calculator',
         '/20-year-wealth-blueprint-step-up-sip' => '/resource/growth/20-year-wealth-blueprint-step-up-sip',

@@ -121,11 +121,9 @@ Yes, most Asset Management Companies (AMCs) allow you to "Pause" a SIP for 1-6 m
 <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
 <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
 <ul class="space-y-2 text-sm">
-<li><a href="/sip-step-up-calculator" class="text-indigo-600 hover:underline font-medium">Step-Up SIP Guide</a> — How a 10% annual increase doubles your corpus</li>
-<li><a href="/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP Retirement Planning</a> — Generate steady retirement income from your mutual fund corpus</li>
-<li><a href="/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual Fund Tax Rules 2026</a> — LTCG, STCG & tax-efficient withdrawal strategies</li>
-<li><a href="/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs PPF</a> — Which investment gives the best returns for your goal?</li>
-<li><a href="/swp-tax-calculator" class="text-indigo-600 hover:underline font-medium">SWP Tax Calculator India</a> — Calculate post-tax income from SWP withdrawals</li>
+<li><a href="/resource/retirement/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP Retirement Planning</a> — Generate steady retirement income from your mutual fund corpus</li>
+<li><a href="/resource/comparison/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual Fund Tax Rules 2026</a> — LTCG, STCG & tax-efficient withdrawal strategies</li>
+<li><a href="/resource/comparison/sip-vs-fd-vs-bonds" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs Bonds</a> — Which investment gives the best returns for your goal?</li>
 </ul>
 </div>
 
