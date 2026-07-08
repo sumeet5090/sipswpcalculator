@@ -111,13 +111,13 @@ class InvestmentInputsTest extends TestCase
 
         $this->assertEquals(500.0, $inputs->getSip());
         $this->assertEquals(1, $inputs->getYears());
-        $this->assertEquals(0.1, $inputs->getRate());
+        $this->assertEquals(1.0, $inputs->getRate());
         $this->assertEquals(0.0, $inputs->getStepup());
         $this->assertEquals(0.0, $inputs->getSwpWithdrawal());
         $this->assertEquals(0.0, $inputs->getSwpStepup());
         $this->assertEquals(1, $inputs->getSwpYears());
         $this->assertEquals(0.0, $inputs->getLumpsum());
-        $this->assertEquals(0.1, $inputs->getSwpRate());
+        $this->assertEquals(1.0, $inputs->getSwpRate());
     }
 
     /**
