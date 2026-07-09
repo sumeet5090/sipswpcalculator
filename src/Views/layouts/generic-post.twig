@@ -1,6 +1,7 @@
 {% extends 'layouts/base.twig' %}
 
 {% block content %}
+{% include 'components/theme-glow-blobs.twig' %}
 <div class="markdown-content">
     <header class="mb-8 border-b border-slate-100 pb-6">
         {% set title = content_metadata.title|default(page_config.title|default('Financial Guide')) %}
