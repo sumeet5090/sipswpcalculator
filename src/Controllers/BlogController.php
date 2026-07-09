@@ -126,6 +126,7 @@ class BlogController
             'post_metadata'    => $post_metadata,
             'category'         => $category,
             'active_page'      => 'blog_post',
+            'all_posts'        => $all_posts,
         ]);
     }
 }
