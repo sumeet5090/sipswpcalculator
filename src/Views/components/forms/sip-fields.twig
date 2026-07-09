@@ -1,5 +1,34 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
-<!-- Monthly Investment -->
+
+<!-- Mode Toggle -->
+<div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+    <div>
+        <label class="text-sm font-bold text-slate-700">Goal Seek Mode</label>
+        <p class="text-xs text-slate-500">Calculate required SIP for a target corpus</p>
+    </div>
+    <label class="toggle-switch relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" id="goal_seek_mode" class="sr-only peer" aria-label="Enable Goal Seek Mode">
+        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+    </label>
+</div>
+
+<!-- Target Corpus (Goal Seek Mode) -->
+<div id="target_corpus_container" style="display: none;">
+{{ inputs.renderInputRangePair({
+    'id': 'target_corpus',
+    'label': 'Target Corpus',
+    'min': 100000,
+    'max': 1000000000,
+    'slider_max': 50000000,
+    'step': 100000,
+    'value': 10000000,
+    'prefix': '₹',
+    'theme': 'emerald'
+}) }}
+</div>
+
+<!-- Monthly Investment (Normal Mode) -->
+<div id="sip_container">
 {{ inputs.renderInputRangePair({
     'id': 'sip',
     'label': calc_config.sip.label,
@@ -11,6 +40,7 @@
     'prefix': '₹',
     'theme': 'emerald'
 }) }}
+</div>
 
 <!-- Period (Yrs) -->
 {{ inputs.renderInputRangePair({
@@ -69,6 +99,19 @@
     'slider_max': calc_config.stepup.slider_max,
     'step': calc_config.stepup.step,
     'value': stepup,
+    'suffix': '%',
+    'theme': 'emerald'
+}) }}
+
+<!-- Expected Inflation -->
+{{ inputs.renderInputRangePair({
+    'id': 'inflation',
+    'label': calc_config.inflation.label|default('Expected Inflation'),
+    'min': calc_config.inflation.min|default(0),
+    'max': calc_config.inflation.max|default(15),
+    'slider_max': calc_config.inflation.slider_max|default(12),
+    'step': calc_config.inflation.step|default(0.5),
+    'value': inflation|default(6),
     'suffix': '%',
     'theme': 'emerald'
 }) }}

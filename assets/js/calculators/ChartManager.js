@@ -39,6 +39,7 @@ export class ChartManager {
         const calcApp = document.querySelector('[data-js="calculator-app"]');
         const mode = calcApp ? (calcApp.dataset.mode || 'all') : 'all';
         const showPostTax = document.getElementById('show_post_tax')?.checked || false;
+        const showWealthMap = document.getElementById('show_wealth_map')?.checked || false;
 
         // Calculate Milestones (accounting for tax if toggle is active)
         const milestones = [];
@@ -130,12 +131,28 @@ export class ChartManager {
 
             if (this.chartInstance.data.datasets.length > 2) {
                 this.chartInstance.data.datasets[2].data = postTaxCorpus;
-                this.chartInstance.data.datasets[2].hidden = !showPostTax;
+                this.chartInstance.data.datasets[2].hidden = !showPostTax || showWealthMap;
             }
             if (this.chartInstance.data.datasets.length > 3) {
                 this.chartInstance.data.datasets[3].data = swp;
                 this.chartInstance.data.datasets[3].hidden = !enableSwp;
             }
+            
+            // Toggle stacking for Wealth Map
+            this.chartInstance.options.scales.y.stacked = showWealthMap;
+            
+            if (showWealthMap) {
+                // In wealth map mode, dataset 1 (growth) should just be the interest part
+                const interestOnly = corpus.map((c, i) => c - cumulative[i]);
+                this.chartInstance.data.datasets[1].data = interestOnly;
+                this.chartInstance.data.datasets[1].fill = true;
+                this.chartInstance.data.datasets[1].label = 'Interest Earned';
+            } else {
+                this.chartInstance.data.datasets[1].data = corpus;
+                this.chartInstance.data.datasets[1].fill = 0;
+                this.chartInstance.data.datasets[1].label = 'Pre-Tax Growth';
+            }
+
             this.chartInstance.update();
             this.renderMilestoneGrid(milestones);
             return;
@@ -172,13 +189,13 @@ export class ChartManager {
                 pointHoverRadius: 6,
             },
             {
-                label: 'Pre-Tax Growth',
-                data: corpus,
+                label: showWealthMap ? 'Interest Earned' : 'Pre-Tax Growth',
+                data: showWealthMap ? corpus.map((c, i) => c - cumulative[i]) : corpus,
                 borderColor: '#10b981',
                 backgroundColor: gradientCorpus,
                 borderWidth: 3,
                 tension: 0.4,
-                fill: 0,
+                fill: showWealthMap ? true : 0,
                 pointBackgroundColor: pointBgColors,
                 pointBorderColor: pointBorderColors,
                 pointBorderWidth: pointBorderWidths,
@@ -199,7 +216,7 @@ export class ChartManager {
                 pointBorderColor: '#8b5cf6',
                 pointRadius: 0,
                 pointHoverRadius: 6,
-                hidden: !showPostTax,
+                hidden: !showPostTax || showWealthMap,
             }
         ];
 
@@ -309,6 +326,7 @@ export class ChartManager {
                         }
                     },
                     y: {
+                        stacked: showWealthMap,
                         grid: {
                             color: gridColor,
                             borderDash: [5, 5]

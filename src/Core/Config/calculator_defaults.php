@@ -64,6 +64,16 @@ return [
         'suffix'     => '%',
     ],
 
+    'inflation' => [
+        'default'    => 6,
+        'min'        => 0,
+        'max'        => 15,
+        'slider_max' => 12,
+        'step'       => 0.1,
+        'label'      => 'Expected Inflation',
+        'suffix'     => '%',
+    ],
+
     'lumpsum' => [
         'default'    => 0,
         'min'        => 0,

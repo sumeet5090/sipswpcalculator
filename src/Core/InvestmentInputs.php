@@ -20,6 +20,7 @@ class InvestmentInputs
     private int $swpYears;
     private float $lumpsum;
     private float $swpRate;
+    private float $inflation;
 
     /**
      * Private constructor to enforce factory creation.
@@ -34,7 +35,8 @@ class InvestmentInputs
         float $swpStepup,
         int $swpYears,
         float $lumpsum,
-        float $swpRate
+        float $swpRate,
+        float $inflation
     ) {
         $this->sip = $sip;
         $this->years = $years;
@@ -46,6 +48,7 @@ class InvestmentInputs
         $this->swpYears = $swpYears;
         $this->lumpsum = $lumpsum;
         $this->swpRate = $swpRate;
+        $this->inflation = $inflation;
     }
 
     /**
@@ -98,6 +101,10 @@ class InvestmentInputs
             ? self::clamp((float)$data['swp_rate'], $cfg['swp_rate']['min'], $cfg['swp_rate']['max'])
             : (float)$cfg['swp_rate']['default'];
 
+        $inflation       = isset($data['inflation'])
+            ? self::clamp((float)$data['inflation'], $cfg['inflation']['min'], $cfg['inflation']['max'])
+            : (float)$cfg['inflation']['default'];
+
         return new self(
             $sip,
             $years,
@@ -108,7 +115,8 @@ class InvestmentInputs
             $swpStepup,
             $swpYears,
             $lumpsum,
-            $swpRate
+            $swpRate,
+            $inflation
         );
     }
 
@@ -147,6 +155,10 @@ class InvestmentInputs
             ? self::clamp((float)$data['swp_rate'], $cfg['swp_rate']['min'], $cfg['swp_rate']['max'])
             : (float)$cfg['swp_rate']['default'];
 
+        $inflation = isset($data['inflation'])
+            ? self::clamp((float)$data['inflation'], $cfg['inflation']['min'], $cfg['inflation']['max'])
+            : (float)$cfg['inflation']['default'];
+
         return new self(
             sip: 0.0,
             years: 1,
@@ -157,7 +169,8 @@ class InvestmentInputs
             swpStepup: $swpStepup,
             swpYears: $swpYears,
             lumpsum: $corpus,         // corpus maps to lumpsum as starting balance
-            swpRate: $swpRate
+            swpRate: $swpRate,
+            inflation: $inflation
         );
     }
 
@@ -217,5 +230,10 @@ class InvestmentInputs
     public function getSwpRate(): float
     {
         return $this->swpRate;
+    }
+
+    public function getInflation(): float
+    {
+        return $this->inflation;
     }
 }

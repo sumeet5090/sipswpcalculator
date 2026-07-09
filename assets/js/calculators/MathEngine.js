@@ -62,6 +62,12 @@ export class MathEngine {
             }
 
             let interestEarned = netBalance - (yearBegin + annualContribution - annualWithdrawal);
+            
+            // Tax Calculation (LTCG 12.5% on gains exceeding 1.25 Lakh)
+            let preTaxGains = netBalance + cumulativeWithdrawals - cumulativeInvested;
+            let taxableGains = Math.max(0, preTaxGains - 125000);
+            let ltcgTax = taxableGains * 0.125;
+            let postTaxCorpus = Math.max(0, netBalance - ltcgTax);
 
             results.push({
                 year: y,
@@ -73,10 +79,81 @@ export class MathEngine {
                 annual_withdrawal: (inp.enable_swp && y >= swpStartYear) ? annualWithdrawal : null,
                 cumulative_withdrawals: (inp.enable_swp && y >= swpStartYear) ? cumulativeWithdrawals : 0,
                 interest: Math.round(interestEarned),
-                combined_total: Math.round(netBalance)
+                combined_total: Math.round(netBalance),
+                ltcg_tax: Math.round(ltcgTax),
+                post_tax_total: Math.round(postTaxCorpus)
             });
         }
 
         return results;
+    }
+
+    /**
+     * Calculate the cost of delaying the investment by 1 year.
+     * Assumes a fixed retirement age, so delaying by 1 year means investing for 1 less year.
+     * @param {object} inp - Inputs
+     * @returns {number} The difference in the final combined_total
+     */
+    static calculateDelayCost(inp) {
+        if (inp.years <= 1) return 0;
+        const currentResults = this.calculateCorpus(inp);
+        const delayedInp = { ...inp, years: inp.years - 1 };
+        const delayedResults = this.calculateCorpus(delayedInp);
+        
+        const currentFinal = currentResults[currentResults.length - 1].combined_total;
+        const delayedFinal = delayedResults[delayedResults.length - 1].combined_total;
+        
+        return Math.max(0, currentFinal - delayedFinal);
+    }
+
+    /**
+     * Adjust the final corpus for inflation to show purchasing power parity.
+     * @param {number} finalCorpus 
+     * @param {number} totalYears 
+     * @param {number} inflationRate 
+     * @returns {number} 
+     */
+    static calculateInflationDiscount(finalCorpus, totalYears, inflationRate) {
+        if (inflationRate <= 0) return finalCorpus;
+        return finalCorpus / Math.pow(1 + (inflationRate / 100), totalYears);
+    }
+
+    /**
+     * Binary Search to find the required starting SIP to reach a target corpus.
+     * @param {object} inp - Inputs
+     * @param {number} targetCorpus - The desired final corpus
+     * @returns {number} The required monthly SIP amount
+     */
+    static calculateRequiredSip(inp, targetCorpus) {
+        if (targetCorpus <= 0) return 0;
+        
+        const zeroSipResults = this.calculateCorpus({ ...inp, sip: 0 });
+        if (zeroSipResults[zeroSipResults.length - 1].combined_total >= targetCorpus) {
+            return 0;
+        }
+        
+        let low = 0;
+        let high = targetCorpus;
+        let bestSip = 0;
+        
+        // Cap iterations to 40 for max 5ms execution time (zero-latency)
+        for (let i = 0; i < 40; i++) {
+            const mid = (low + high) / 2;
+            const testInp = { ...inp, sip: mid };
+            const results = this.calculateCorpus(testInp);
+            const finalCorpus = results[results.length - 1].combined_total;
+            
+            if (Math.abs(finalCorpus - targetCorpus) < 1) {
+                bestSip = mid;
+                break;
+            } else if (finalCorpus < targetCorpus) {
+                low = mid;
+            } else {
+                high = mid;
+            }
+            bestSip = mid;
+        }
+        
+        return Math.round(bestSip);
     }
 }

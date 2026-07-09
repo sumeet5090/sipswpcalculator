@@ -54,6 +54,7 @@
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Total Withdrawn</th>
                         {% endif %}
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Interest</th>
+                        <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap tax-col" style="display:none">LTCG Tax</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">End Corpus</th>
                     </tr>
                 </thead>
@@ -71,7 +72,8 @@
                         <td class="px-6 py-4 text-right text-slate-500 font-mono swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>{{ row.cumulative_withdrawals ? row.cumulative_withdrawals|formatInr : '-' }}</td>
                         {% endif %}
                         <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono">{{ row.interest|formatInr }}</td>
-                        <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono">{{ row.combined_total|formatInr }}</td>
+                        <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono tax-col" style="display:none">{{ row.ltcg_tax|formatInr }}</td>
+                        <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono end-corpus-col">{{ row.combined_total|formatInr }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
