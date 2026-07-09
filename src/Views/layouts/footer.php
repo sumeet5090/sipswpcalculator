@@ -13,12 +13,6 @@
             <ul class="space-y-2 text-sm">
                 <li><a href="/sip-calculator" class="text-emerald-600 hover:underline">SIP Calculator</a></li>
                 <li><a href="/swp-calculator" class="text-emerald-600 hover:underline">SWP Calculator</a></li>
-                <li><a href="/sip-step-up-calculator" class="text-emerald-600 hover:underline">Step-Up SIP Calculator</a></li>
-                <li><a href="/swp-tax-calculator" class="text-emerald-600 hover:underline">SWP Tax Calculator</a></li>
-                <li><a href="/compound-interest-calculator" class="text-emerald-600 hover:underline">Compound Interest</a></li>
-                <li><a href="/retirement-drawdown-planner" class="text-emerald-600 hover:underline">Retirement Planner</a></li>
-                <li><a href="/lumpsum-calculator" class="text-emerald-600 hover:underline">Lumpsum Calculator</a></li>
-                <li><a href="/mutual-fund-calculator" class="text-emerald-600 hover:underline">Mutual Fund Hub</a></li>
             </ul>
         </div>
         <div>

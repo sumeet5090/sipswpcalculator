@@ -1,6 +1,7 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
-<div id="calculator-app"
+<div id="{{ container_id|default('calculator-app') }}"
+     data-js="calculator-app"
      data-mode="sip"
      data-config="{{ calc_config|json_encode|escape('html_attr') }}"
      class="glass-card p-4">

@@ -36,18 +36,125 @@ export class ChartManager {
         const corpus = results.map(r => r.combined_total);
         const swp = results.map(r => r.annual_withdrawal);
 
-        const calcApp = document.getElementById('calculator-app');
+        const calcApp = document.querySelector('[data-js="calculator-app"]');
         const mode = calcApp ? (calcApp.dataset.mode || 'all') : 'all';
+        const showPostTax = document.getElementById('show_post_tax')?.checked || false;
+        const showWealthMap = document.getElementById('show_wealth_map')?.checked || false;
+
+        // Calculate Milestones (accounting for tax if toggle is active)
+        const milestones = [];
+        const targets = [
+            { label: '₹50 Lakhs', value: 5000000, reached: false, icon: '🌟' },
+            { label: '₹1 Crore', value: 10000000, reached: false, icon: '🏆' },
+            { label: '₹5 Crores', value: 50000000, reached: false, icon: '👑' },
+            { label: '₹10 Crores', value: 100000000, reached: false, icon: '💎' },
+            { label: '₹25 Crores', value: 250000000, reached: false, icon: '🌠' },
+            { label: '₹50 Crores', value: 500000000, reached: false, icon: '🚀' },
+            { label: '₹75 Crores', value: 750000000, reached: false, icon: '🪐' },
+            { label: '₹100 Crores', value: 1000000000, reached: false, icon: '🌌' },
+            { label: '₹200 Crores', value: 2000000000, reached: false, icon: '🌠' },
+            { label: '₹500 Crores', value: 5000000000, reached: false, icon: '💫' }
+        ];
+        let swpCovered = false;
+
+        for (let i = 0; i < results.length; i++) {
+            const row = results[i];
+            
+            // Calculate post-tax corpus for this year
+            const gains = (row.combined_total + row.cumulative_withdrawals) - row.cumulative_invested;
+            const taxableGains = Math.max(0, gains - 125000);
+            const tax = taxableGains * 0.125;
+            const postTaxVal = Math.max(0, row.combined_total - tax);
+
+            const activeCorpusValue = showPostTax ? postTaxVal : row.combined_total;
+
+            // Check wealth milestones against the active corpus value
+            for (const target of targets) {
+                if (!target.reached && activeCorpusValue >= target.value) {
+                    target.reached = true;
+                    milestones.push({
+                        type: 'wealth',
+                        label: target.label,
+                        year: row.year,
+                        icon: target.icon,
+                        value: activeCorpusValue,
+                        index: i
+                    });
+                }
+            }
+
+            // Check SWP Safety (10 years of withdrawals covered)
+            if (enableSwp && !swpCovered && row.annual_withdrawal > 0) {
+                const tenYearsWithdrawal = row.annual_withdrawal * 10;
+                if (activeCorpusValue >= tenYearsWithdrawal) {
+                    swpCovered = true;
+                    milestones.push({
+                        type: 'security',
+                        label: 'SWP Security (10 Yrs)',
+                        description: `Corpus (${this.formatter.formatDynamic(activeCorpusValue)}) covers 10 years of SWP withdrawals (Requires ${this.formatter.formatDynamic(tenYearsWithdrawal)})!`,
+                        year: row.year,
+                        icon: '🛡️',
+                        value: activeCorpusValue,
+                        index: i
+                    });
+                }
+            }
+        }
+
+        this.currentMilestones = milestones;
+
+        // Calculate post-tax wealth array for the chart
+        const postTaxCorpus = results.map(r => {
+            const gains = (r.combined_total + r.cumulative_withdrawals) - r.cumulative_invested;
+            const taxableGains = Math.max(0, gains - 125000);
+            const tax = taxableGains * 0.125;
+            return Math.max(0, r.combined_total - tax);
+        });
+
+        // Custom point styles for milestones
+        const milestoneIndices = milestones.map(m => m.index);
+        const pointRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 6 : 0);
+        const pointHoverRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 10 : 8);
+        const pointBgColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? '#fbbf24' : '#10b981');
+        const pointBorderColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? '#ffffff' : '#10b981');
+        const pointBorderWidths = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 3 : 2);
 
         if (this.chartInstance) {
             this.chartInstance.data.labels = years;
             this.chartInstance.data.datasets[0].data = cumulative;
             this.chartInstance.data.datasets[1].data = corpus;
+            this.chartInstance.data.datasets[1].pointRadius = pointRadii;
+            this.chartInstance.data.datasets[1].pointHoverRadius = pointHoverRadii;
+            this.chartInstance.data.datasets[1].pointBackgroundColor = pointBgColors;
+            this.chartInstance.data.datasets[1].pointBorderColor = pointBorderColors;
+            this.chartInstance.data.datasets[1].pointBorderWidth = pointBorderWidths;
+
             if (this.chartInstance.data.datasets.length > 2) {
-                this.chartInstance.data.datasets[2].data = swp;
-                this.chartInstance.data.datasets[2].hidden = !enableSwp;
+                this.chartInstance.data.datasets[2].data = postTaxCorpus;
+                this.chartInstance.data.datasets[2].hidden = !showPostTax || showWealthMap;
             }
+            if (this.chartInstance.data.datasets.length > 3) {
+                this.chartInstance.data.datasets[3].data = swp;
+                this.chartInstance.data.datasets[3].hidden = !enableSwp;
+            }
+            
+            // Toggle stacking for Wealth Map
+            this.chartInstance.options.scales.y.stacked = showWealthMap;
+            
+            if (showWealthMap) {
+                // In wealth map mode, dataset 1 (growth) should just be the interest part
+                const interestOnly = corpus.map((c, i) => c - cumulative[i]);
+                this.chartInstance.data.datasets[1].data = interestOnly;
+                this.chartInstance.data.datasets[1].fill = true;
+                this.chartInstance.data.datasets[1].label = 'Interest Earned';
+            } else {
+                this.chartInstance.data.datasets[1].data = corpus;
+                this.chartInstance.data.datasets[1].fill = 0;
+                this.chartInstance.data.datasets[1].label = 'Pre-Tax Growth';
+            }
+
             this.chartInstance.update();
+            this.renderMilestoneGrid(milestones);
             return;
         }
 
@@ -58,6 +165,10 @@ export class ChartManager {
         const gradientCorpus = ctx.createLinearGradient(0, 0, 0, 400);
         gradientCorpus.addColorStop(0, 'rgba(16, 185, 129, 0.4)');
         gradientCorpus.addColorStop(1, 'rgba(16, 185, 129, 0.05)');
+
+        const gradientPostTax = ctx.createLinearGradient(0, 0, 0, 400);
+        gradientPostTax.addColorStop(0, 'rgba(139, 92, 246, 0.2)');
+        gradientPostTax.addColorStop(1, 'rgba(139, 92, 246, 0.0)');
 
         const fontFamily = "'Plus Jakarta Sans', sans-serif";
         const gridColor = 'rgba(0, 0, 0, 0.05)';
@@ -78,19 +189,34 @@ export class ChartManager {
                 pointHoverRadius: 6,
             },
             {
-                label: 'Wealth Gained',
-                data: corpus,
+                label: showWealthMap ? 'Interest Earned' : 'Pre-Tax Growth',
+                data: showWealthMap ? corpus.map((c, i) => c - cumulative[i]) : corpus,
                 borderColor: '#10b981',
                 backgroundColor: gradientCorpus,
                 borderWidth: 3,
                 tension: 0.4,
-                fill: 0,
-                pointBackgroundColor: '#ffffff',
-                pointBorderColor: '#10b981',
-                pointBorderWidth: 2,
-                pointRadius: 0,
-                pointHoverRadius: 8,
+                fill: showWealthMap ? true : 0,
+                pointBackgroundColor: pointBgColors,
+                pointBorderColor: pointBorderColors,
+                pointBorderWidth: pointBorderWidths,
+                pointRadius: pointRadii,
+                pointHoverRadius: pointHoverRadii,
                 pointHoverBorderWidth: 3,
+            },
+            {
+                label: 'Post-Tax Wealth',
+                data: postTaxCorpus,
+                borderColor: '#8b5cf6',
+                backgroundColor: gradientPostTax,
+                borderWidth: 2,
+                borderDash: [3, 3],
+                tension: 0.4,
+                fill: 'origin',
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: '#8b5cf6',
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                hidden: !showPostTax || showWealthMap,
             }
         ];
 
@@ -173,6 +299,14 @@ export class ChartManager {
                                     label += this.formatter.format(context.parsed.y);
                                 }
                                 return label;
+                            },
+                            afterBody: (tooltipItems) => {
+                                const index = tooltipItems[0].dataIndex;
+                                const reached = (this.currentMilestones || []).filter(m => m.index === index);
+                                if (reached.length > 0) {
+                                    return reached.map(m => `\n${m.icon} ${m.label} Reached!`).join('');
+                                }
+                                return '';
                             }
                         }
                     }
@@ -192,6 +326,7 @@ export class ChartManager {
                         }
                     },
                     y: {
+                        stacked: showWealthMap,
                         grid: {
                             color: gridColor,
                             borderDash: [5, 5]
@@ -212,6 +347,41 @@ export class ChartManager {
         };
 
         this.chartInstance = new window.Chart(ctx, config);
+        this.renderMilestoneGrid(milestones);
+    }
+
+    /**
+     * Render the milestone timeline grid below the chart.
+     * @param {Array} milestones 
+     */
+    renderMilestoneGrid(milestones) {
+        const container = document.getElementById('milestones-container');
+        if (!container) return;
+
+        if (milestones.length === 0) {
+            container.innerHTML = '';
+            container.classList.add('hidden');
+            return;
+        }
+
+        container.classList.remove('hidden');
+        container.innerHTML = milestones.map(m => {
+            const description = m.type === 'security'
+                ? m.description
+                : `Crossed in Year ${m.year} with ${this.formatter.formatDynamic(m.value)}`;
+
+            return `
+                <div class="glass-card p-4 flex items-start gap-3 border border-slate-100/85 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-amber-50 text-xl shrink-0">
+                        ${m.icon}
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800">${m.label}</h4>
+                        <p class="text-xs text-slate-500 mt-1">${description}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
     }
 
     /**

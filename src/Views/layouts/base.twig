@@ -48,7 +48,7 @@
     
     {% block head %}{% endblock %}
 </head>
-<body class="{{ page_config.body_class|default('bg-gray-50 text-gray-800 font-sans antialiased') }}" style="{{ page_config.body_style|default('background-image: var(--gradient-surface); background-attachment: fixed;') }}">
+<body class="{{ page_config.body_class|default('bg-gray-50 text-gray-800 font-sans antialiased') }} overflow-x-hidden" style="{{ page_config.body_style|default('background-image: var(--gradient-surface); background-attachment: fixed;') }}">
     
     {% include 'layouts/header.twig' %}
     

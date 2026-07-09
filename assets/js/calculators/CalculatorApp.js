@@ -37,6 +37,13 @@ export class CalculatorApp {
             stepupRange: () => document.getElementById('stepup_range'),
             lumpsum: () => document.getElementById('lumpsum'),
             lumpsumRange: () => document.getElementById('lumpsum_range'),
+            inflation: () => document.getElementById('inflation'),
+            inflationRange: () => document.getElementById('inflation_range'),
+            goalSeekMode: () => document.getElementById('goal_seek_mode'),
+            targetCorpus: () => document.getElementById('target_corpus'),
+            targetCorpusRange: () => document.getElementById('target_corpus_range'),
+            sipContainer: () => document.getElementById('sip_container'),
+            targetCorpusContainer: () => document.getElementById('target_corpus_container'),
             enableSwp: () => document.getElementById('enable_swp'),
             swpFields: () => document.getElementById('swp-fields'),
             swpWithdrawal: () => document.getElementById('swp_withdrawal'),
@@ -71,7 +78,7 @@ export class CalculatorApp {
      * @returns {object} validated input parameters
      */
     getInputs() {
-        const mode = document.getElementById('calculator-app')?.dataset?.mode ?? 'sip';
+        const mode = document.querySelector('[data-js="calculator-app"]')?.dataset?.mode ?? 'sip';
         const isSwpMode = (mode === 'swp');
 
         // In SWP-only mode, `corpus` is the user-facing field; it maps to `lumpsum`
@@ -85,6 +92,7 @@ export class CalculatorApp {
             years:          this.validator.validate('years', this.elements.years()?.value),
             rate:           this.validator.validate('rate', this.elements.rate()?.value),
             stepup:         this.validator.validate('stepup', this.elements.stepup()?.value),
+            inflation:      this.validator.validate('inflation', this.elements.inflation()?.value),
             lumpsum:        lumpsumVal,
             enable_swp:     this.elements.enableSwp()?.checked || isSwpMode,
             swp_withdrawal: this.validator.validate('swp_withdrawal', this.elements.swpWithdrawal()?.value),
@@ -99,6 +107,22 @@ export class CalculatorApp {
      */
     triggerCalculation() {
         const inputs = this.getInputs();
+        
+        // Handle Goal Seek Mode
+        const goalSeekToggle = this.elements.goalSeekMode();
+        if (goalSeekToggle && goalSeekToggle.checked) {
+            const targetCorpus = this.validator.validate('target_corpus', this.elements.targetCorpus()?.value || 10000000);
+            // We temporarily set sip to 0 to calculate the required sip
+            const requiredSip = MathEngine.calculateRequiredSip(inputs, targetCorpus);
+            inputs.sip = requiredSip;
+            
+            // Update the SIP UI element so the user sees the result, but don't trigger another calculation
+            const sipEl = this.elements.sip();
+            const sipRangeEl = this.elements.sipRange();
+            if (sipEl && sipEl.value != requiredSip) sipEl.value = requiredSip;
+            if (sipRangeEl && sipRangeEl.value != requiredSip) sipRangeEl.value = requiredSip;
+        }
+
         eventBus.publish('input:changed', inputs);
     }
 
@@ -156,10 +180,23 @@ export class CalculatorApp {
             let swpCols = '';
             if (enableSwp) {
                 swpCols = `
-                    <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap">${fmt(row.swp_monthly)}</td>
-                    <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap">${fmt(row.annual_withdrawal)}</td>
-                    <td class="px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap">${fmt(row.cumulative_withdrawals)}</td>
+                    <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col">${fmt(row.swp_monthly)}</td>
+                    <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col">${fmt(row.annual_withdrawal)}</td>
+                    <td class="px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap swp-col">${fmt(row.cumulative_withdrawals)}</td>
                 `;
+            }
+            
+            const showPostTax = document.getElementById('show_post_tax')?.checked || false;
+            let taxCols = '';
+            let finalCorpus = row.combined_total;
+            if (showPostTax) {
+                taxCols = `<td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap tax-col">${fmt(row.ltcg_tax)}</td>`;
+                finalCorpus = row.post_tax_total;
+            }
+
+            const inputs = this.getInputs();
+            if (inputs.inflation > 0) {
+                finalCorpus = MathEngine.calculateInflationDiscount(finalCorpus, inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years, inputs.inflation);
             }
 
             tr.innerHTML = `
@@ -170,7 +207,8 @@ export class CalculatorApp {
                 <td class="px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap">${this.formatter.format(row.cumulative_invested)}</td>
                 ${swpCols}
                 <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap">${this.formatter.format(row.interest)}</td>
-                <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono whitespace-nowrap">${this.formatter.format(row.combined_total)}</td>
+                ${taxCols}
+                <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono whitespace-nowrap end-corpus-col">${this.formatter.format(finalCorpus)}</td>
             `;
 
             fragment.appendChild(tr);
@@ -188,9 +226,52 @@ export class CalculatorApp {
 
         const lastRow = data[data.length - 1];
         const totalInvested = lastRow.cumulative_invested;
-        const finalCorpus = lastRow.combined_total;
+        const preTaxCorpus = lastRow.combined_total;
         const totalWithdrawn = lastRow.cumulative_withdrawals || 0;
-        const totalGains = (finalCorpus + totalWithdrawn) - totalInvested;
+        const preTaxGains = (preTaxCorpus + totalWithdrawn) - totalInvested;
+
+        const showPostTax = document.getElementById('show_post_tax')?.checked || false;
+        
+        let finalCorpus = preTaxCorpus;
+        let finalGains = preTaxGains;
+        
+        const inputs = this.getInputs();
+        
+        // Calculate delay cost
+        const delayCost = MathEngine.calculateDelayCost(inputs);
+        const delayCostEl = document.getElementById('delay-cost-amount');
+        const delayCostBanner = document.getElementById('delay-cost-banner');
+        
+        if (delayCost > 0) {
+            if (delayCostBanner) delayCostBanner.style.display = 'flex';
+            if (delayCostEl) delayCostEl.textContent = this.formatter.format(delayCost);
+        } else {
+            if (delayCostBanner) delayCostBanner.style.display = 'none';
+        }
+
+        if (showPostTax) {
+            const taxableGains = Math.max(0, preTaxGains - 125000);
+            const ltcgTax = taxableGains * 0.125;
+            finalCorpus = Math.max(0, preTaxCorpus - ltcgTax);
+            finalGains = Math.max(0, preTaxGains - ltcgTax);
+
+            const interestTitle = document.getElementById('title-interest');
+            const corpusTitle = document.getElementById('title-corpus');
+            if (interestTitle) interestTitle.textContent = 'Total Gains (Post-Tax)';
+            if (corpusTitle) corpusTitle.textContent = 'Final Corpus (Post-Tax)';
+        } else {
+            const interestTitle = document.getElementById('title-interest');
+            const corpusTitle = document.getElementById('title-corpus');
+            if (interestTitle) interestTitle.textContent = 'Total Gains';
+            if (corpusTitle) corpusTitle.textContent = 'Final Corpus';
+        }
+        
+        // Apply inflation discounting
+        if (inputs.inflation > 0) {
+            finalCorpus = MathEngine.calculateInflationDiscount(finalCorpus, inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years, inputs.inflation);
+            const corpusTitle = document.getElementById('title-corpus');
+            if (corpusTitle) corpusTitle.textContent += ' (Inflation Adjusted)';
+        }
 
         const setVal = (id, val) => {
             const el = document.getElementById(id);
@@ -198,7 +279,7 @@ export class CalculatorApp {
         };
 
         setVal('summary-invested', totalInvested);
-        setVal('summary-interest', totalGains);
+        setVal('summary-interest', finalGains);
         setVal('summary-withdrawn', totalWithdrawn);
         setVal('summary-corpus', finalCorpus);
 
@@ -259,18 +340,50 @@ export class CalculatorApp {
             'years':          'years_range',
             'rate':           'rate_range',
             'stepup':         'stepup_range',
+            'inflation':      'inflation_range',
             'lumpsum':        'lumpsum_range',
             'corpus':         'corpus_range',
+            'target_corpus':  'target_corpus_range',
             'swp_withdrawal': 'swp_withdrawal_range',
             'swp_years':      'swp_years_range',
             'swp_stepup':     'swp_stepup_range',
             'swp_rate':       'swp_rate_range',
         });
 
+        // ── Goal Seek Toggle ──
+        const goalSeekToggle = this.elements.goalSeekMode();
+        if (goalSeekToggle) {
+            goalSeekToggle.addEventListener('change', () => {
+                const isGoalSeek = goalSeekToggle.checked;
+                this.elements.sipContainer().style.opacity = isGoalSeek ? '0.5' : '1';
+                this.elements.sipContainer().style.pointerEvents = isGoalSeek ? 'none' : 'auto';
+                this.elements.targetCorpusContainer().style.display = isGoalSeek ? 'block' : 'none';
+                this.triggerCalculation();
+            });
+        }
+
         // ── SWP Toggle ──
         const swpToggle = this.elements.enableSwp();
         if (swpToggle) {
             swpToggle.addEventListener('change', () => this.syncSwpToggleState());
+        }
+
+        // ── Post-Tax Toggle ──
+        const postTaxToggle = document.getElementById('show_post_tax');
+        if (postTaxToggle) {
+            postTaxToggle.addEventListener('change', () => {
+                const taxCols = document.querySelectorAll('.tax-col');
+                taxCols.forEach(el => {
+                    el.style.display = postTaxToggle.checked ? '' : 'none';
+                });
+                this.triggerCalculation();
+            });
+        }
+
+        // ── Wealth Map Toggle ──
+        const wealthMapToggle = document.getElementById('show_wealth_map');
+        if (wealthMapToggle) {
+            wealthMapToggle.addEventListener('change', () => this.triggerCalculation());
         }
 
         // ── Tabs controller ──

@@ -19,11 +19,6 @@ $nav_items = [
         'sub_items' => [
             ['label' => 'SIP Calculator', 'href' => '/sip-calculator'],
             ['label' => 'SWP Calculator', 'href' => '/swp-calculator'],
-            ['label' => 'Step-Up SIP Calculator', 'href' => '/sip-step-up-calculator'],
-            ['label' => 'SWP Tax Calculator', 'href' => '/swp-tax-calculator'],
-            ['label' => 'Compound Interest', 'href' => '/compound-interest-calculator'],
-            ['label' => 'Retirement Planner', 'href' => '/retirement-drawdown-planner'],
-            ['label' => 'Lumpsum Calculator', 'href' => '/lumpsum-calculator'],
         ]
     ],
     ['label' => 'Resources', 'href' => '/resources', 'id' => 'resources.php'],

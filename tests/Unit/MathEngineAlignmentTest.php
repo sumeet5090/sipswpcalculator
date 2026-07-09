@@ -168,7 +168,7 @@ class MathEngineAlignmentTest extends TestCase
                 [
                     'sip' => 100, // Clamped to 500
                     'years' => 0, // Clamped to 1
-                    'rate' => -5, // Clamped to 0.1
+                    'rate' => -5, // Clamped to 1
                     'stepup' => -5,
                     'lumpsum' => -100
                 ]

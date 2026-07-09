@@ -27,7 +27,9 @@ export class SliderManager {
         const range = document.getElementById(rangeId);
         if (!input || !range) return;
 
-        this.pairs.push({ input, range, fieldId: inputId });
+        const defaultSliderMax = parseFloat(range.getAttribute('max')) || 100000;
+
+        this.pairs.push({ input, range, fieldId: inputId, defaultSliderMax });
 
         range.addEventListener('input', () => {
             input.value = range.value;
@@ -52,6 +54,13 @@ export class SliderManager {
                 }
             } else {
                 this._clearError(inputId);
+            }
+
+            // Dynamically scale slider max if validated exceeds default slider max
+            if (validated > defaultSliderMax) {
+                range.max = validated;
+            } else {
+                range.max = defaultSliderMax;
             }
 
             range.value = validated;

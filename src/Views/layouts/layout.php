@@ -44,6 +44,10 @@ $page_content = $page_content ?? $content ?? '';
     }
     ?>
 <div class="doc-layout-grid relative">
+    <!-- Decorative Background Glows -->
+    <div class="absolute top-10 left-1/4 w-96 h-96 bg-emerald-400 rounded-full glow-blob pointer-events-none"></div>
+    <div class="absolute top-80 right-1/4 w-80 h-80 bg-teal-400 rounded-full glow-blob pointer-events-none"></div>
+
     <aside class="doc-sidebar doc-sidebar-left pl-4 pr-6">
         <div class="sticky top-28 pt-4 pb-8">
             <?php require_once __DIR__ . '/sidebar-left.php'; ?>

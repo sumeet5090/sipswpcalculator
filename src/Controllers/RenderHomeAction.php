@@ -61,6 +61,7 @@ class RenderHomeAction
         $swp_stepup = $inputs->getSwpStepup();
         $swp_years_input = $inputs->getSwpYears();
         $swp_rate = $inputs->getSwpRate();
+        $inflation = $inputs->getInflation();
 
         // Extract list parameters for chart canvas injection
         $years_data = array_column($combined, 'year');
@@ -129,6 +130,7 @@ class RenderHomeAction
             'swp_stepup'          => $swp_stepup,
             'swp_years_input'     => $swp_years_input,
             'swp_rate'            => $swp_rate,
+            'inflation'           => $inflation,
             'years_data'          => $years_data,
             'cumulative_numbers'  => $cumulative_numbers,
             'combined_numbers'    => $combined_numbers,

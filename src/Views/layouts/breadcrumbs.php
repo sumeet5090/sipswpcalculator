@@ -21,12 +21,7 @@ $is_blog_post = (strpos($_SERVER['REQUEST_URI'], '/resource/') !== false);
 $current_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '';
 $calculator_paths = [
     '/sip-calculator', 
-    '/swp-calculator', 
-    '/sip-step-up-calculator', 
-    '/swp-tax-calculator', 
-    '/compound-interest-calculator', 
-    '/retirement-drawdown-planner',
-    '/lumpsum-calculator'
+    '/swp-calculator'
 ];
 $is_calculator = in_array($current_path, $calculator_paths);
 ?>
@@ -58,7 +53,7 @@ $is_calculator = in_array($current_path, $calculator_paths);
                 <svg class="h-4 w-4 flex-shrink-0 text-slate-300 mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                 </svg>
-                <a href="/mutual-fund-calculator" class="hover:text-emerald-600 transition-colors">Calculators</a>
+                <a href="/sip-calculator" class="hover:text-emerald-600 transition-colors">Calculators</a>
             </div>
         </li>
         <?php endif; ?>

@@ -1,3 +1,5 @@
+import defaultsConfig from './calculator_defaults.json';
+
 /**
  * InputValidator.js
  * Centralized boundaries, constraints, and validation rules.
@@ -17,7 +19,7 @@ export class InputValidator {
         }
 
         // Read from the single source of truth serialized into the DOM by PHP.
-        const appEl = document.getElementById('calculator-app');
+        const appEl = document.querySelector('[data-js="calculator-app"]');
         if (appEl && appEl.dataset.config) {
             try {
                 const cfg = JSON.parse(appEl.dataset.config);
@@ -28,19 +30,8 @@ export class InputValidator {
             }
         }
 
-        // Static fallback — mirrors calculator_defaults.php values.
-        this.constraints = {
-            sip:            { min: 500,      max: 1000000,   default: 10000  },
-            years:          { min: 1,        max: 50,        default: 20     },
-            rate:           { min: 0.1,      max: 30,        default: 12     },
-            stepup:         { min: 0,        max: 50,        default: 10     },
-            swp_withdrawal: { min: 0,        max: 1000000,   default: 25000  },
-            swp_years:      { min: 1,        max: 50,        default: 20     },
-            swp_stepup:     { min: 0,        max: 20,        default: 5      },
-            lumpsum:        { min: 0,        max: 10000000,  default: 0      },
-            swp_rate:       { min: 0.1,      max: 30,        default: 8      },
-            corpus:         { min: 10000,    max: 100000000, default: 5000000 },
-        };
+        // Static fallback — read from compiled calculator_defaults.json
+        this.constraints = this._mapConfig(defaultsConfig);
     }
 
     /**

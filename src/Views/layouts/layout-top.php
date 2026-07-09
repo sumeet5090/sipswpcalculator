@@ -76,7 +76,7 @@ require_once __DIR__ . '/important-imports.php';
     <?php endif; ?>
 </head>
 
-<body class="<?= $body_class ?>" style="<?= $body_style ?>">
+<body class="<?= $body_class ?> overflow-x-hidden" style="<?= $body_style ?>">
     <?php require_once __DIR__ . '/header.php'; ?>
     <!-- spacer to prevent content from being hidden behind fixed header -->
     <div class="h-16"></div>
