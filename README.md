@@ -226,7 +226,9 @@ The core of the application. Handles:
 - **PDF Export Engine:** Server-side PDF snapshotting for user reports.
 
 ### `script.js` (Client-Side Logic)
-- Initializes Chart.js with data from `window.chartData` (set by PHP)
+- Bootstraps the modular object-oriented controller classes (`CalculatorApp.js`, `ChartManager.js`, `SliderManager.js`, etc.)
+- Dynamic Milestones: Calculates and highlights key retail milestones (e.g. ₹50 Lakhs, ₹1 Crore, ₹5 Crores, and SWP Security cover) directly on the Chart.js timeline and displays interactive badge grids.
+- Post-Tax Toggle: Estimates and overlays Indian Mutual Fund LTCG tax rules (12.5% tax on capital gains exceeding ₹1.25 Lakhs) directly into the chart projection and summary metrics.
 - SWP toggle: shows/hides SWP form fields, chart lines, and table columns
 - CSV export with dynamic filename
 - PDF modal: collects branding info, sends AJAX to `generate-pdf.php`

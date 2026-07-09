@@ -188,9 +188,31 @@ export class CalculatorApp {
 
         const lastRow = data[data.length - 1];
         const totalInvested = lastRow.cumulative_invested;
-        const finalCorpus = lastRow.combined_total;
+        const preTaxCorpus = lastRow.combined_total;
         const totalWithdrawn = lastRow.cumulative_withdrawals || 0;
-        const totalGains = (finalCorpus + totalWithdrawn) - totalInvested;
+        const preTaxGains = (preTaxCorpus + totalWithdrawn) - totalInvested;
+
+        const showPostTax = document.getElementById('show_post_tax')?.checked || false;
+        
+        let finalCorpus = preTaxCorpus;
+        let finalGains = preTaxGains;
+
+        if (showPostTax) {
+            const taxableGains = Math.max(0, preTaxGains - 125000);
+            const ltcgTax = taxableGains * 0.125;
+            finalCorpus = Math.max(0, preTaxCorpus - ltcgTax);
+            finalGains = Math.max(0, preTaxGains - ltcgTax);
+
+            const interestTitle = document.getElementById('title-interest');
+            const corpusTitle = document.getElementById('title-corpus');
+            if (interestTitle) interestTitle.textContent = 'Total Gains (Post-Tax)';
+            if (corpusTitle) corpusTitle.textContent = 'Final Corpus (Post-Tax)';
+        } else {
+            const interestTitle = document.getElementById('title-interest');
+            const corpusTitle = document.getElementById('title-corpus');
+            if (interestTitle) interestTitle.textContent = 'Total Gains';
+            if (corpusTitle) corpusTitle.textContent = 'Final Corpus';
+        }
 
         const setVal = (id, val) => {
             const el = document.getElementById(id);
@@ -198,7 +220,7 @@ export class CalculatorApp {
         };
 
         setVal('summary-invested', totalInvested);
-        setVal('summary-interest', totalGains);
+        setVal('summary-interest', finalGains);
         setVal('summary-withdrawn', totalWithdrawn);
         setVal('summary-corpus', finalCorpus);
 
@@ -271,6 +293,12 @@ export class CalculatorApp {
         const swpToggle = this.elements.enableSwp();
         if (swpToggle) {
             swpToggle.addEventListener('change', () => this.syncSwpToggleState());
+        }
+
+        // ── Post-Tax Toggle ──
+        const postTaxToggle = document.getElementById('show_post_tax');
+        if (postTaxToggle) {
+            postTaxToggle.addEventListener('change', () => this.triggerCalculation());
         }
 
         // ── Tabs controller ──
