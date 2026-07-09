@@ -21,7 +21,9 @@
         "phpstan": "phpstan analyse --memory-limit=-1",
         "phpcs": "phpcs",
         "phpcbf": "phpcbf",
+        "compile-config": "@php scripts/compile-config.php",
         "check-all": [
+            "@compile-config",
             "@phpstan",
             "@phpcs",
             "@test"

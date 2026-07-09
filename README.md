@@ -131,41 +131,25 @@ This watches all `.php` files for Tailwind class changes and instantly rebuilds 
 
 ---
 
-## CSS Build System
+## Build System
 
-### How Tailwind Is Configured
-
-The project uses **Tailwind CSS v4** with the standalone CLI. The configuration lives in a single file:
-
-**`src/input.css`**
-```css
-@import "tailwindcss";            /* Load the full Tailwind framework */
-@source "../*.php";               /* Scan all PHP files for utility classes */
-@theme {                          /* Custom design tokens */
-  --font-sans: "Plus Jakarta Sans", sans-serif;
-  --color-indigo-50: #eef2ff;
-  --color-indigo-600: #4f46e5;
-  /* ... */
-}
-```
+### Configuration Compiler
+To prevent configuration drift, calculator validation bounds and default values are defined in `src/Core/Config/calculator_defaults.php`. During the build process, a compiler script automatically converts this PHP configuration to `assets/js/calculators/calculator_defaults.json`. This JSON is loaded directly by the ES6 JavaScript files at runtime/bundling.
 
 ### Build Commands
 
 | Command | Purpose | Output |
 |---|---|---|
-| `npm run css:build` | **Production build** — minified, purged | `dist/tailwind.min.css` |
-| `npm run css:watch` | **Dev mode** — auto-rebuilds on file save | `dist/tailwind.min.css` |
+| `npm run compile-config` | Compile PHP configuration to JSON | `assets/js/calculators/calculator_defaults.json` |
+| `npm run dev` | Run Vite development server | Serves assets locally |
+| `npm run build` | Compile configuration and bundle assets | `dist/*` |
 
 ### When to Rebuild
 
-You **must** rebuild CSS when you:
-- Add a new Tailwind class to any `.php` file (e.g., `bg-red-500`)
-- Remove a Tailwind class (to shrink the output)
-- Change the `@theme` tokens in `src/input.css`
-
-You do **not** need to rebuild when you:
-- Edit `styles.css` (loaded separately, not processed by Tailwind)
-- Change PHP logic, JavaScript, or content text
+You **must** rebuild or run the compilation when you:
+- Modify bounds or defaults in `src/Core/Config/calculator_defaults.php`
+- Add new frontend dependencies or modify asset layouts
+- Make changes to theme variables or classes scanned by Tailwind
 
 ### Cache Busting
 
