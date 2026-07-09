@@ -19,7 +19,7 @@ export class InputValidator {
         }
 
         // Read from the single source of truth serialized into the DOM by PHP.
-        const appEl = document.getElementById('calculator-app');
+        const appEl = document.querySelector('[data-js="calculator-app"]');
         if (appEl && appEl.dataset.config) {
             try {
                 const cfg = JSON.parse(appEl.dataset.config);

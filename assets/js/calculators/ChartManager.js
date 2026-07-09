@@ -36,7 +36,7 @@ export class ChartManager {
         const corpus = results.map(r => r.combined_total);
         const swp = results.map(r => r.annual_withdrawal);
 
-        const calcApp = document.getElementById('calculator-app');
+        const calcApp = document.querySelector('[data-js="calculator-app"]');
         const mode = calcApp ? (calcApp.dataset.mode || 'all') : 'all';
         const showPostTax = document.getElementById('show_post_tax')?.checked || false;
 

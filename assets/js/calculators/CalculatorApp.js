@@ -71,7 +71,7 @@ export class CalculatorApp {
      * @returns {object} validated input parameters
      */
     getInputs() {
-        const mode = document.getElementById('calculator-app')?.dataset?.mode ?? 'sip';
+        const mode = document.querySelector('[data-js="calculator-app"]')?.dataset?.mode ?? 'sip';
         const isSwpMode = (mode === 'swp');
 
         // In SWP-only mode, `corpus` is the user-facing field; it maps to `lumpsum`

@@ -409,7 +409,7 @@
     </div>
 
     <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
-        <span class="text-gradient block mb-2">Free SIP & SWP Calculator India</span>
+        <span class="text-gradient block mb-2">Free SIP & SWP Calculator India with Step-Up</span>
         <span class="text-gray-800 text-2xl sm:text-4xl md:text-5xl block">Mutual Fund Investment Planner 2026</span>
     </h1>
 
@@ -470,7 +470,7 @@
         <!-- Left Column: Form -->
         <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar"
             style="top: 120px;">
-            {% include 'components/calculator-form.twig' %}
+            {% include 'components/calculator-form.twig' with {'container_id': 'homepage-calc'} %}
         </div> <!-- /left column -->
 
         <div class="lg:col-span-2 space-y-4">

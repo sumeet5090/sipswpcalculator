@@ -8,7 +8,7 @@ class MetaManager
 {
     private array $metaData = [
         'home' => [
-            'title' => 'SIP SWP Calculator India 2026: Free Online Mutual Fund Planner',
+            'title' => 'SIP SWP Calculator with Step-Up India 2026: Mutual Fund Planner',
             'meta_desc' => 'Free SIP SWP calculator India. Plan mutual fund investments with step-up SIP, lumpsum, and SWP retirement income. Calculate returns, compare scenarios, and export PDF reports.',
             'keywords' => 'sip swp calculator, mutual fund calculator, step up sip, swp calculator india, lumpsum calculator',
             'canonical' => 'https://sipswpcalculator.com/',
