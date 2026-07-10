@@ -20,7 +20,7 @@ Adhere to the following protocols for all development, design, and implementatio
 
 ### 4. Product Mission & Vision
 * **Core Mission:** Provide a reliable, high-accuracy SIP and SWP calculator backed by precise data. Supplement this with high-value, actionable resources on Indian finance.
-* **Product Vision:** Establish this platform as the leading free Indian mutual fund investment planner. The calculators are the anchor; all peripheral features must support or enhance this core utility.
+* **Product Vision:** Establish this platform as the leading Indian mutual fund investment planner. The calculators are the anchor; all peripheral features must support or enhance this core utility.
 
 ### 5. Workflow & Context Governance
 * **Approval Gate:** Always outline your implementation plan and obtain explicit user approval before beginning any coding or design task.

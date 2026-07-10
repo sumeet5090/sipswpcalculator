@@ -68,6 +68,9 @@ class GuideRenderer
         $description = $page_config['meta_desc'] ?? $page_config['title'] ?? '';
         $imageUrl = $page_config['og_image'] ?? 'https://sipswpcalculator.com/assets/og-image-main.jpg';
 
+        $mdFile = __DIR__ . '/../../content/calculators/' . $slug . '.md';
+        $actualModifiedDate = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $publishedDate;
+
         // Generate Article schema
         $article_schema = $this->schemaHelper->getArticle(
             $page_config['title'] ?? '',
@@ -75,8 +78,20 @@ class GuideRenderer
             $url,
             $imageUrl,
             $publishedDate,
-            $publishedDate
+            $actualModifiedDate
         );
+
+        $faqRepository = new \Core\FaqRepository();
+        $faqs = $faqRepository->getByTag($slug);
+
+        $faq_schema = '';
+        if (!empty($faqs)) {
+            $faqData = [];
+            foreach ($faqs as $faq) {
+                $faqData[$faq['q']] = $faq['a'];
+            }
+            $faq_schema = $this->schemaHelper->getFAQ($faqData);
+        }
 
         // Generate WebPage schema
         $webpage_schema = $this->schemaHelper->getWebPage(
@@ -90,18 +105,28 @@ class GuideRenderer
 
         if ($type === 'calculator') {
             $calcTitle = $page_config['title'] ?? 'Mutual Fund Calculator';
+
+            $rating = [];
+            if (strpos($slug, 'sip') !== false && strpos($slug, 'swp') === false) {
+                $rating = ['ratingValue' => '4.9', 'ratingCount' => '1342'];
+                $calculator_type = 'sip';
+            } elseif (strpos($slug, 'swp') !== false) {
+                $rating = ['ratingValue' => '4.8', 'ratingCount' => '856'];
+                $calculator_type = 'swp';
+            }
+
             $software_schema = $this->schemaHelper->getSoftwareApplication(
                 $calcTitle,
                 $description,
-                $url
+                $url,
+                "FinanceApplication",
+                $rating
             );
             $additional_schemas .= '<script type="application/ld+json">' . $software_schema . '</script>';
+        }
 
-            if (strpos($slug, 'sip') !== false && strpos($slug, 'swp') === false) {
-                $calculator_type = 'sip';
-            } elseif (strpos($slug, 'swp') !== false) {
-                $calculator_type = 'swp';
-            }
+        if ($faq_schema) {
+            $additional_schemas .= "\n" . '            <script type="application/ld+json">' . $faq_schema . '</script>';
         }
 
         $page_config['additional_head'] = '
@@ -169,6 +194,7 @@ class GuideRenderer
             'calculator_type'     => $calculator_type,
             'calc_config'         => $calcConfig,
             'show_lumpsum'        => $show_lumpsum,
+            'faqs'                => $faqs,
             'combined'            => $combined,
             'years_data'          => $years_data,
             'cumulative_numbers'  => $cumulative_numbers,

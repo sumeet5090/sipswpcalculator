@@ -107,9 +107,9 @@ class SchemaHelper
     /**
      * Generates SoftwareApplication Schema.org JSON-LD for calculators.
      */
-    public function getSoftwareApplication(string $name, string $description, string $url, string $category = "FinanceApplication"): string
+    public function getSoftwareApplication(string $name, string $description, string $url, string $category = "FinanceApplication", array $rating = []): string
     {
-        return json_encode([
+        $schema = [
             "@context" => "https://schema.org",
             "@type" => "SoftwareApplication",
             "name" => $name,
@@ -122,6 +122,18 @@ class SchemaHelper
                 "price" => "0",
                 "priceCurrency" => "INR"
             ]
-        ], JSON_UNESCAPED_SLASHES);
+        ];
+
+        if (!empty($rating) && isset($rating['ratingValue'], $rating['ratingCount'])) {
+            $schema['aggregateRating'] = [
+                "@type" => "AggregateRating",
+                "ratingValue" => $rating['ratingValue'],
+                "ratingCount" => $rating['ratingCount'],
+                "bestRating" => "5",
+                "worstRating" => "1"
+            ];
+        }
+
+        return json_encode($schema, JSON_UNESCAPED_SLASHES);
     }
 }
