@@ -33,7 +33,7 @@
         </div>
 
         <!-- SIP Panel -->
-        <div id="panel-sip" role="tabpanel">
+        <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip">
             <div class="relative">
                 <div class="mb-4 relative z-10 bg-[var(--glass-bg)] p-4 sm:p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
                     <div class="space-y-3">
@@ -48,7 +48,7 @@
         </div><!-- /panel-sip -->
 
         <!-- SWP Panel -->
-        <div id="panel-swp" role="tabpanel" class="hidden">
+        <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="hidden">
             <div class="relative">
                 <div class="relative z-10 bg-[var(--glass-bg)] p-4 sm:p-5 rounded-3xl border border-[var(--glass-border)] shadow-xl backdrop-blur-xl">
                     <div class="flex items-center justify-between mb-4">
@@ -58,7 +58,7 @@
                                 class="sr-only peer"
                                 aria-label="Enable Systematic Withdrawal Plan (SWP)"
                                 {% if enable_swp %}checked{% endif %}>
-                            <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
+                            <div class="w-9 h-5 bg-slate-200 peer-focus-visible:ring-2 peer-focus-visible:ring-rose-400 peer-focus-visible:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500">
                             </div>
                         </label>
                     </div>

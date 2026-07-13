@@ -468,16 +468,26 @@ export class CalculatorApp {
         if (openPdfBtn && pdfModal) {
             openPdfBtn.addEventListener('click', () => {
                 if (!this.chartManager.getChartInstance()) {
-                    alert('Please calculate the results first before generating a report.');
+                    const btn = this.elements.openPdfModalBtn();
+                    if (btn) {
+                        const origText = btn.querySelector('svg + span, span')?.textContent || 'PDF';
+                        btn.classList.add('border-rose-300', 'text-rose-600');
+                        const span = btn.querySelector('svg + span, span') || btn;
+                        span.textContent = 'Calculate first!';
+                        setTimeout(() => {
+                            btn.classList.remove('border-rose-300', 'text-rose-600');
+                            span.textContent = origText;
+                        }, 2500);
+                    }
                     return;
                 }
-                pdfModal.classList.remove('hidden');
+                pdfModal.showModal();
             });
             if (closePdfBtn) {
-                closePdfBtn.addEventListener('click', () => pdfModal.classList.add('hidden'));
+                closePdfBtn.addEventListener('click', () => pdfModal.close());
             }
             pdfModal.addEventListener('click', e => {
-                if (e.target === pdfModal) pdfModal.classList.add('hidden');
+                if (e.target === pdfModal) pdfModal.close();
             });
         }
 
@@ -536,7 +546,7 @@ export class CalculatorApp {
                         generatePdfBtn.disabled = false;
                         generatePdfBtn.textContent = 'Download PDF';
                     }
-                    pdfModal.classList.add('hidden');
+                    pdfModal.close();
                     a.remove();
 
                     // Log PDF telemetry
@@ -568,8 +578,7 @@ export class CalculatorApp {
                     setTimeout(() => window.URL.revokeObjectURL(url), 100);
                 })
                 .catch(err => {
-                    console.error(err);
-                    alert('An error occurred while generating the PDF.');
+                    console.error('PDF generation failed:', err.message);
                     if (generatePdfBtn) {
                         generatePdfBtn.disabled = false;
                         generatePdfBtn.textContent = 'Download PDF';

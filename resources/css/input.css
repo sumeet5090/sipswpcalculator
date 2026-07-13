@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 /* Tell Tailwind v4 where to scan for utility classes */
-@source "Views/**/*.php";
-@source "Core/**/*.php";
-@source "Controllers/**/*.php";
+@source "../../src/Views/**/*.twig";
+@source "../../src/Views/**/*.php";
+@source "../../src/Core/**/*.php";
+@source "../../src/Controllers/**/*.php";
 
 /* Custom theme: replicate the old tailwind.config from the CDN inline script */
 @theme {
