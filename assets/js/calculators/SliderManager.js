@@ -15,6 +15,7 @@ export class SliderManager {
         this.triggerFn = triggerFn;
         this.validator = validator;
         this.pairs = [];
+        this._inputDebounceTimer = null;
     }
 
     /**
@@ -65,7 +66,10 @@ export class SliderManager {
 
             range.value = validated;
             this._updateAria(range, validated);
-            this.triggerFn();
+
+            // Debounce text input to prevent jank during rapid typing
+            clearTimeout(this._inputDebounceTimer);
+            this._inputDebounceTimer = setTimeout(() => this.triggerFn(), 150);
         });
     }
 

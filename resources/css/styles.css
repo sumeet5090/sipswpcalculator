@@ -203,10 +203,7 @@ h6 {
     color: #64748b !important;
 }
 
-/* For Disclaimer */
-.text-slate-400 {
-    color: var(--color-text-secondary) !important;
-}
+
 
 /* WCAG contrast-safe green and emerald variants */
 .text-green-700 {
@@ -217,28 +214,13 @@ h6 {
     color: oklch(50.8% .118 165.612);
 }
 
-/* Input Fields */
-input[type="number"],
-select {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid var(--color-border);
-    color: var(--color-text-primary);
-    border-radius: 0.5rem;
-    padding: 0.25rem 0.5rem;
-    transition: all 0.2s;
-}
 
-input[type="number"]:focus,
-select:focus {
-    border-color: var(--color-acc-growth);
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-}
 
 /* 3. Components */
 
 /* Elegant Card */
 .glass-card {
+    position: relative;
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -392,15 +374,6 @@ label {
     color: #1e293b;
 }
 
-.btn-accent {
-    background: var(--gradient-accent);
-    color: white;
-    box-shadow: 0 4px 6px -1px rgba(244, 63, 94, 0.3);
-}
-
-.btn-accent:hover {
-    box-shadow: 0 10px 15px -3px rgba(244, 63, 94, 0.4);
-}
 
 /* Table */
 .table-container {
@@ -458,14 +431,6 @@ tr:hover td {
     animation: gradient-flow 5s ease infinite;
 }
 
-.text-gradient-accent {
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-image: var(--gradient-accent);
-    background-size: 200% auto;
-    animation: gradient-flow 5s ease infinite;
-}
 
 /* Animations */
 @keyframes gradient-flow {
@@ -519,20 +484,7 @@ tr:hover td {
     transform: translateY(-1px);
 }
 
-/* Card Shine Effect */
-.glass-card {
-    position: relative;
-    /* overflow: hidden; */
-    /* For the shine - Disabled to prevent clipping
-    /* ... existing props ... */
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: var(--glass-border);
-    box-shadow: var(--glass-shadow);
-    border-radius: 1rem;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
-}
+
 
 /* 
 .glass-card::after {
@@ -1019,7 +971,7 @@ input[type=range]::-moz-range-track {
 }
 
 .text-slate-400 {
-    color: #94a3b8 !important;
+    color: #64748b !important; /* Slate 500 — 4.73:1 contrast on white (WCAG AA) */
 }
 
 /* ── Immersive Article Reading Interface ── */
@@ -1135,11 +1087,11 @@ input[type=range]::-moz-range-track {
 }
 
 .prose tr:nth-child(even) {
-    background-color: #f8fafc/30 !important;
+    background-color: rgba(248, 250, 252, 0.3) !important;
 }
 
 .prose tr:hover td {
-    background-color: #f1f5f9/40 !important;
+    background-color: rgba(241, 245, 249, 0.4) !important;
 }
 
 /* Global decorative glowing blur background blobs */
@@ -1147,4 +1099,16 @@ input[type=range]::-moz-range-track {
     filter: blur(80px);
     opacity: 0.12;
     transition: opacity 0.5s ease;
+}
+
+/* ── Accessibility: Respect user motion preferences (WCAG 2.2) ── */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }

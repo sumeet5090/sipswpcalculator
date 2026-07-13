@@ -322,76 +322,8 @@
 <!-- PWA Manifest -->
 <link rel="manifest" href="manifest.json">
 
-<!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-
-<!-- Preconnect to font & CDN origins -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Preconnect to Chart.js CDN -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-
-<!-- Critical above-the-fold CSS inlined for instant FCP -->
-<style>
-    :root {
-        --gradient-primary: linear-gradient(135deg, #059669, #047857);
-        --glass-bg: rgba(255, 255, 255, .9);
-        --glass-border: 1px solid rgba(255, 255, 255, .5);
-        --glass-shadow: 0 8px 32px 0 rgba(5, 150, 105, .1);
-        --color-bg: #f8fafc;
-        --color-text-primary: #0f172a;
-        --color-text-secondary: #64748b;
-        --color-border: #e2e8f0
-    }
-
-    @font-face {
-        font-family: 'Plus Jakarta Sans Fallback';
-        src: local('Arial');
-        size-adjust: 107%;
-        ascent-override: 90%;
-        descent-override: 22%;
-        line-gap-override: 0%
-    }
-
-    body {
-        background-color: var(--color-bg);
-        font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', 'Inter', Arial, sans-serif;
-        color: var(--color-text-primary);
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased
-    }
-
-    .navbar-glass {
-        background: rgba(255, 255, 255, .85);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px)
-    }
-
-    .glass-card {
-        background: var(--glass-bg);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: var(--glass-border);
-        box-shadow: var(--glass-shadow);
-        border-radius: 1rem;
-        position: relative
-    }
-
-    .text-gradient {
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-image: var(--gradient-primary)
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        color: var(--color-text-primary)
-    }
-</style>
 
 
 
@@ -490,9 +422,8 @@
 {% endblock %}
 
 {% block modals %}
-<!-- PDF Generation Modal -->
-<div id="pdfModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
-    <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
+<!-- PDF Generation Modal (native <dialog> for built-in focus trapping & Escape key) -->
+<dialog id="pdfModal" class="rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto backdrop:bg-black/70 backdrop:backdrop-blur-sm" aria-labelledby="branded-pdf-report">
         <h2 id="branded-pdf-report" class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
         <form id="pdfForm" class="space-y-4">
             <!-- SECURITY: CSRF Token for PDF generation form -->
@@ -527,8 +458,7 @@
                     class="px-6 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg transition">Download PDF</button>
             </div>
         </form>
-    </div>
-</div>
+</dialog>
 {% endblock %}
 
 {% block scripts %}
