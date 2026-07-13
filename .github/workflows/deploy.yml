@@ -36,44 +36,74 @@ jobs:
     - name: Build Frontend Assets
       run: npm run build
 
-    - name: Sync to Production via FTP
+    - name: Setup SSH
       if: github.ref == 'refs/heads/main'
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      uses: webfactory/ssh-agent@v0.9.0
       with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /domains/sipswpcalculator.com/public_html/
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/.github/**
-          **/.agents/**
-          **/.DS_Store/**
-          **/.phpunit.cache/**
-          **/.vscode/**
-          **/tests/**
-          **/docker/**
-          **/Dockerfile
-          **/docker-compose.yml
-          **/package.json
-          **/package-lock.json
-          **/node_modules/**
-          **/resources/**
-          **/.env
-          **/README.md
-          **/phpcs.xml
-          **/phpstan.neon
-          phpunit.xml
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Run Database Migrations
+    - name: Add Host to Known Hosts
       if: github.ref == 'refs/heads/main'
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        port: 65002
-        script: |
-          cd domains/sipswpcalculator.com/public_html
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -p 65002 -H ${{ secrets.FTP_SERVER }} >> ~/.ssh/known_hosts
+
+    - name: Deploy to Server (Atomic Symlink)
+      if: github.ref == 'refs/heads/main'
+      env:
+        SERVER: ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}
+        PORT: 65002
+      run: |
+        TIMESTAMP=$(date +%Y%m%d%H%M%S)
+        RELEASE_DIR="domains/sipswpcalculator.com/releases/$TIMESTAMP"
+        
+        # 1. Create release directory
+        ssh -p $PORT $SERVER "mkdir -p $RELEASE_DIR"
+        
+        # 2. Rsync files to the new release directory
+        rsync -avz --delete \
+          --exclude='.git*' \
+          --exclude='.github/' \
+          --exclude='.agents/' \
+          --exclude='.DS_Store' \
+          --exclude='.phpunit.cache/' \
+          --exclude='.vscode/' \
+          --exclude='tests/' \
+          --exclude='docker/' \
+          --exclude='Dockerfile' \
+          --exclude='docker-compose.yml' \
+          --exclude='package.json' \
+          --exclude='package-lock.json' \
+          --exclude='node_modules/' \
+          --exclude='resources/' \
+          --exclude='.env' \
+          --exclude='README.md' \
+          --exclude='phpcs.xml' \
+          --exclude='phpstan.neon' \
+          --exclude='phpunit.xml' \
+          -e "ssh -p $PORT" \
+          ./ $SERVER:$RELEASE_DIR/
+        
+        # 3. Swap the symlink and clean up old releases
+        ssh -p $PORT $SERVER << EOF
+          cd domains/sipswpcalculator.com
+          
+          # First time setup: if public_html is a directory and NOT a symlink
+          if [ -d "public_html" ] && [ ! -L "public_html" ]; then
+            echo "Transitioning public_html from directory to symlink..."
+            mv public_html public_html_backup_\$(date +%s)
+            ln -sfn releases/$TIMESTAMP public_html
+          else
+            # Atomic symlink swap
+            ln -sfn releases/$TIMESTAMP public_html_new
+            mv -Tf public_html_new public_html
+          fi
+          
+          # Run database migrations
+          cd public_html
           php scripts/migrate.php
+          cd ..
+          
+          # Clean up old releases (keep latest 3)
+          ls -1dt releases/* | tail -n +4 | xargs -d '\n' rm -rf -- || true
+        EOF
