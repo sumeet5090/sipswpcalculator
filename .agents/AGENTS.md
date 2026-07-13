@@ -49,3 +49,6 @@ Adhere to the following protocols for all development, design, and implementatio
 * **The "Pause and Escalate" Rule:** If you encounter a complex error (e.g., a 500 error or a broken layout) and the fix is not immediately obvious (like a simple syntax error), DO NOT invent architectural workarounds (e.g., implicitly running database schema updates on page load). Pause, state the error clearly, and ask the user to escalate back to the Senior Model for architectural review.
 * **Debugging Protocol:** Never use `echo`, `print_r()`, or `var_dump()` inside Controllers or core classes to debug. This corrupts JSON API responses and Twig rendering, leading to cascading failures. Always use `error_log()` and check the terminal output.
 * **Vite & Twig Awareness:** Always remember that CSS/JS is bundled via Vite. If creating a new Twig layout, you *must* ensure the Vite client and `app.js` module scripts are included, otherwise styles will break.
+
+### 10. Environment Security & Modifications
+* **No Direct Production SSH Modifications:** Under absolutely NO circumstances should you connect to a production or staging server via SSH to execute database schema alterations (e.g., `ALTER TABLE`), modify production files directly, or perform "quick fixes". All changes MUST be committed via Git and deployed through the standard CI/CD pipeline. No exceptions.
