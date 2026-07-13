@@ -11,7 +11,7 @@ class ViteHelper
      */
     public static function asset(string $entry): string
     {
-        $isProduction = getenv('ENVIRONMENT') === 'production';
+        $isProduction = ($_ENV['ENVIRONMENT'] ?? 'development') === 'production';
 
         if (!$isProduction) {
             // During development, serve from the Vite dev server
@@ -49,7 +49,7 @@ class ViteHelper
      */
     public static function client(): string
     {
-        $isProduction = getenv('ENVIRONMENT') === 'production';
+        $isProduction = ($_ENV['ENVIRONMENT'] ?? 'development') === 'production';
         if ($isProduction) {
             return '';
         }
@@ -61,7 +61,7 @@ class ViteHelper
      */
     public static function css(string $entry): string
     {
-        $isProduction = getenv('ENVIRONMENT') === 'production';
+        $isProduction = ($_ENV['ENVIRONMENT'] ?? 'development') === 'production';
         if (!$isProduction) {
             return ''; // CSS is injected via JS in dev mode
         }

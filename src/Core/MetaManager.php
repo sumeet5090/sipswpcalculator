@@ -9,20 +9,20 @@ class MetaManager
     private array $metaData = [
         'home' => [
             'title' => 'SIP SWP Calculator with Step-Up India 2026: Mutual Fund Planner',
-            'meta_desc' => 'Free SIP SWP calculator India. Plan mutual fund investments with step-up SIP, lumpsum, and SWP retirement income. Calculate returns, compare scenarios, and export PDF reports.',
+            'meta_desc' => 'SIP SWP calculator India. Plan mutual fund investments with step-up SIP, lumpsum, and SWP retirement income. Calculate returns, compare scenarios, and export PDF reports.',
             'keywords' => 'sip swp calculator, mutual fund calculator, step up sip, swp calculator india, lumpsum calculator',
             'canonical' => 'https://sipswpcalculator.com/',
         ],
         'sip-calculator' => [
-            'title' => 'SIP Calculator India 2026: Free Mutual Fund Return Calculator & Guide',
-            'meta_desc' => 'Free SIP calculator with step-up compounding for Indian mutual funds. Calculate returns using the FV annuity formula. Includes 2026 LTCG/STCG tax rules and worked examples.',
+            'title' => 'SIP Calculator India 2026: Mutual Fund Return Calculator & Guide',
+            'meta_desc' => 'SIP calculator with step-up compounding for Indian mutual funds. Calculate returns using the FV annuity formula. Includes 2026 LTCG/STCG tax rules and worked examples.',
             'keywords' => 'sip calculator, sip return calculator, mutual fund sip, sip calculation formula, sip tax rules',
             'canonical' => 'https://sipswpcalculator.com/sip-calculator',
         ],
 
         'swp-calculator' => [
-            'title' => 'SWP Calculator India 2026: Free Systematic Withdrawal Plan Tool',
-            'meta_desc' => 'Free SWP calculator for Indian mutual funds. Calculate post-tax monthly retirement income with step-up withdrawals. Compare SWP vs FD. Plan your retirement corpus drawdown.',
+            'title' => 'SWP Calculator India 2026: Systematic Withdrawal Plan Tool',
+            'meta_desc' => 'SWP calculator for Indian mutual funds. Calculate post-tax monthly retirement income with step-up withdrawals. Compare SWP vs FD. Plan your retirement corpus drawdown.',
             'keywords' => 'swp calculator, systematic withdrawal plan calculator, swp mutual fund, mutual fund withdrawal, retirement calculator',
             'canonical' => 'https://sipswpcalculator.com/swp-calculator',
         ]
