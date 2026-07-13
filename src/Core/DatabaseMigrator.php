@@ -8,19 +8,21 @@ use PDO;
 
 /**
  * DatabaseMigrator
- * Dedicated object to perform SQLite migrations (create tables, add missing schema columns).
+ * Dedicated object to perform SQLite migrations via timestamped migration files.
  */
 class DatabaseMigrator
 {
     private PDO $pdo;
+    private string $migrationsPath;
 
-    public function __construct(PDO $pdo)
+    public function __construct(PDO $pdo, ?string $migrationsPath = null)
     {
         $this->pdo = $pdo;
+        $this->migrationsPath = $migrationsPath ?? __DIR__ . '/../../database/migrations';
     }
 
     /**
-     * Run all migrations in a CLI context.
+     * Run all pending migrations.
      */
     public function migrate(bool $silent = false): void
     {
@@ -28,63 +30,71 @@ class DatabaseMigrator
             echo "--- Starting SQLite Database Migration ---\n";
         }
 
-        $pdo = $this->pdo;
-
-        // 1. Create base table if not exists
-        if (!$silent) {
-            echo "Verifying 'user_calculations' table...\n";
-        }
-        $pdo->exec("
-            CREATE TABLE IF NOT EXISTS user_calculations (
+        // 1. Ensure schema_migrations table exists
+        $this->pdo->exec("
+            CREATE TABLE IF NOT EXISTS schema_migrations (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                calc_type TEXT NOT NULL,
-                amount REAL NOT NULL,
-                duration INTEGER NOT NULL,
-                step_up_pct REAL DEFAULT 0.0,
-                currency TEXT DEFAULT 'INR',
-                created_at TEXT DEFAULT CURRENT_TIMESTAMP
+                migration TEXT NOT NULL UNIQUE,
+                executed_at TEXT DEFAULT CURRENT_TIMESTAMP
             )
         ");
 
-        // 2. Perform table column existence validations & add missing columns
-        $cols = $pdo->query("PRAGMA table_info(user_calculations)")->fetchAll(PDO::FETCH_ASSOC);
-        $existingCols = array_column($cols, 'name');
+        // 2. Get already executed migrations
+        $stmt = $this->pdo->query("SELECT migration FROM schema_migrations");
+        $executed = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-        $migrations = [
-            'country_code'   => 'TEXT',
-            'pdf_downloaded' => 'INTEGER DEFAULT 0',
-            'referrer'       => 'TEXT',
-            'interest_rate'  => 'REAL',
-            'sip_amount'     => 'REAL',
-            'sip_duration'   => 'INTEGER',
-            'sip_step_up'    => 'REAL',
-            'swp_enabled'    => 'INTEGER DEFAULT 0',
-            'swp_withdrawal' => 'REAL',
-            'swp_duration'   => 'INTEGER',
-            'swp_step_up'    => 'REAL'
-        ];
+        // 3. Scan migrations directory
+        if (!is_dir($this->migrationsPath)) {
+            if (!$silent) {
+                echo "Migrations directory not found: {$this->migrationsPath}\n";
+            }
+            return;
+        }
 
-        foreach ($migrations as $col => $typeDefinition) {
-            if (!in_array($col, $existingCols)) {
+        $files = glob($this->migrationsPath . '/*.php');
+        sort($files);
+
+        $executedCount = 0;
+
+        foreach ($files as $file) {
+            $migrationName = basename($file);
+
+            if (!in_array($migrationName, $executed)) {
                 if (!$silent) {
-                    echo "Adding missing column '{$col}' ({$typeDefinition})...\n";
+                    echo "Migrating: {$migrationName}\n";
                 }
-                $pdo->exec("ALTER TABLE user_calculations ADD COLUMN {$col} {$typeDefinition}");
-            } else {
-                if (!$silent) {
-                    echo "Column '{$col}' exists: OK.\n";
+
+                $migration = require $file;
+
+                try {
+                    $this->pdo->beginTransaction();
+                    $migration->up($this->pdo, $silent);
+
+                    $stmt = $this->pdo->prepare("INSERT INTO schema_migrations (migration) VALUES (:migration)");
+                    $stmt->execute([':migration' => $migrationName]);
+
+                    $this->pdo->commit();
+                    $executedCount++;
+
+                    if (!$silent) {
+                        echo "Migrated:  {$migrationName}\n";
+                    }
+                } catch (\Throwable $e) {
+                    $this->pdo->rollBack();
+                    if (!$silent) {
+                        echo "Migration Failed: {$migrationName} - " . $e->getMessage() . "\n";
+                    }
+                    throw $e;
                 }
             }
         }
 
-        // 3. Ensure database indexes exist for performance (idempotent)
-        if (!$silent) {
-            echo "Creating database indexes...\n";
+        if ($executedCount === 0 && !$silent) {
+            echo "Nothing to migrate.\n";
         }
-        $pdo->exec("CREATE INDEX IF NOT EXISTS idx_calc_created_at ON user_calculations(created_at)");
-        $pdo->exec("CREATE INDEX IF NOT EXISTS idx_calc_currency ON user_calculations(currency)");
-        $pdo->exec("CREATE INDEX IF NOT EXISTS idx_calc_type ON user_calculations(calc_type)");
 
-        echo "--- SQLite Migration Completed Successfully ---\n";
+        if (!$silent) {
+            echo "--- SQLite Migration Completed Successfully ---\n";
+        }
     }
 }

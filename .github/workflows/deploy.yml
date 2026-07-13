@@ -65,3 +65,15 @@ jobs:
           **/phpcs.xml
           **/phpstan.neon
           phpunit.xml
+
+    - name: Run Database Migrations
+      if: github.ref == 'refs/heads/main'
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        port: 65002
+        script: |
+          cd domains/sipswpcalculator.com/public_html
+          php scripts/migrate.php
