@@ -51,6 +51,7 @@ class DatabaseMigrator
         $existingCols = array_column($cols, 'name');
 
         $migrations = [
+            'country_code'   => 'TEXT',
             'pdf_downloaded' => 'INTEGER DEFAULT 0',
             'referrer'       => 'TEXT',
             'interest_rate'  => 'REAL',
