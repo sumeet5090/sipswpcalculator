@@ -56,7 +56,7 @@ require_once __DIR__ . '/important-imports.php';
 
     <?= $additional_head ?>
 
-    <?php if (getenv('ENVIRONMENT') === 'production') : ?>
+    <?php if (($_ENV['ENVIRONMENT'] ?? 'development') === 'production') : ?>
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5PLFTW4E7"></script>
         <script>
@@ -69,9 +69,9 @@ require_once __DIR__ . '/important-imports.php';
 
         <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
     <?php endif ?>
-    <?php if (getenv('ENVIRONMENT') !== 'production'): ?>
+    <?php if (($_ENV['ENVIRONMENT'] ?? 'development') !== 'production'): ?>
     <script>
-        console.log("<?= 'ENVIRONMENT: ' . getenv('ENVIRONMENT') ?>");
+        console.log("<?= 'ENVIRONMENT: ' . ($_ENV['ENVIRONMENT'] ?? 'development') ?>");
     </script>
     <?php endif; ?>
 </head>

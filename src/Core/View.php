@@ -23,7 +23,7 @@ class View
                 'cache' => false,
                 'debug' => true,
             ]);
-            self::$twig->addGlobal('env', getenv('ENVIRONMENT'));
+            self::$twig->addGlobal('env', $_ENV['ENVIRONMENT'] ?? 'development');
             self::$twig->addGlobal('request', \Core\Http\Request::createFromGlobals());
             self::$twig->addFilter(new \Twig\TwigFilter('formatInr', function ($amount) {
                 return \Core\CurrencyHelper::formatInr((float) $amount);
