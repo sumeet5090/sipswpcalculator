@@ -46,7 +46,8 @@ jobs:
       if: github.ref == 'refs/heads/main'
       run: |
         mkdir -p ~/.ssh
-        ssh-keyscan -p 65002 -H ${{ secrets.FTP_SERVER }} >> ~/.ssh/known_hosts
+        echo "${{ secrets.KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
 
     - name: Deploy to Server (Atomic Symlink)
       if: github.ref == 'refs/heads/main'
