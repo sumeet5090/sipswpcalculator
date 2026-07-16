@@ -165,31 +165,29 @@ This means browsers only re-download files when the actual file content changes 
 
 ## Production Deployment
 
-### Step-by-Step
+### Automated CI/CD Pipeline (GitHub Actions)
 
-```bash
-# 1. Build production CSS
-npm run css:build
+Deployments are entirely automated via GitHub Actions on every push to the `main` branch. The pipeline utilizes a strict **Zero-Downtime Atomic Deployment** architecture.
 
-# 2. Install PHP dependencies (if not already)
-composer install --no-dev --optimize-autoloader
+#### How the Pipeline Works:
+1. **Build:** The runner installs PHP dependencies (`composer install --no-dev`), Node dependencies, and compiles the production CSS (`npm run build`).
+2. **Secure Sync:** It connects securely to the server using `shimataro/ssh-key-action` (strict host key verification) and uses `rsync` to upload only the changed files into an isolated, timestamped release directory (e.g., `releases/20260716180000/`).
+3. **Atomic Swap:** Once the upload is fully complete, an SSH command instantly swaps the `public_html` symlink from the old release to the new one. Users never experience a broken site mid-deployment.
+4. **Post-Deploy:** Database migrations run automatically, and older releases are pruned (keeping only the last 3 for instant rollback capability).
 
-# 3. Upload all files to your web server
-#    Make sure dist/tailwind.min.css is included!
+### Deployment Prerequisites
 
-# 4. Verify .htaccess is active (Apache mod_rewrite must be enabled)
-```
+To deploy automatically, you must configure the following **GitHub Secrets**:
+- `FTP_SERVER`: The server IP or domain (e.g., `145.79.212.58` or `sipswpcalculator.com`)
+- `FTP_USERNAME`: The SSH/FTP username (e.g., `u12345678`)
+- `SSH_PRIVATE_KEY`: Your private Ed25519 or RSA key authorized on the server.
+- `KNOWN_HOSTS`: The exact server cryptographic fingerprints (generated via `ssh-keyscan`) to prevent Man-In-The-Middle (MITM) attacks.
 
 ### Production Checklist
-
-- [ ] `npm run css:build` — CSS is freshly compiled and minified
-- [ ] `dist/tailwind.min.css` is committed and deployed
 - [ ] No `cdn.tailwindcss.com` references in any PHP file
-- [ ] `composer install --no-dev` — only production PHP deps
 - [ ] `.htaccess` HTTPS redirect is active
-- [ ] `sitemap.xml` has no 404 URLs
 - [ ] Apache `mod_rewrite`, `mod_deflate`, and `mod_expires` are enabled
-- [ ] Database directory permissions (if using SQLite) are writable by the web server
+- [ ] Server `public_html` is correctly converted to a symlink (handled automatically on first run)
 
 ### Environment Variables
 
