@@ -90,6 +90,14 @@ jobs:
             LATEST_RELEASE=$(ls -1dt releases/* | head -n 1 | awk -F'/' '{print $2}')
             echo "Deploying release: $LATEST_RELEASE"
 
+            # Ensure a shared .env file exists
+            if [ ! -f ".env" ]; then
+              echo "ENVIRONMENT=production" > .env
+            fi
+
+            # Symlink the shared .env into the new release
+            ln -sfn "../../.env" "releases/$LATEST_RELEASE/.env"
+
             # First time setup: if public_html is a directory and NOT a symlink
             if [ -d "public_html" ] && [ ! -L "public_html" ]; then
               echo "Transitioning public_html from directory to symlink..."
