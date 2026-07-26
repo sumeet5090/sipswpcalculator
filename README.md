@@ -131,10 +131,12 @@ To deploy automatically, you must configure the following **GitHub Secrets**:
 ## SEO & Structured Data
 
 The site includes several modern SEO optimizations built into the core services:
-- **Schema markup:** `BreadcrumbList`, `Article`, `WebPage` generated dynamically.
+- **Schema markup:** `SoftwareApplication`, `FinancialProduct`, `FAQPage`, `BreadcrumbList`, `Article`, `WebPage` generated dynamically.
+- **Combo Keyword Optimization:** Front-loaded titles, metadata, and structured data targeted specifically for combined SIP + SWP calculator search queries ("SIP and SWP Calculator Together").
+- **Internal Linking Engine:** Reusable `related-resources.twig` component generating cross-category links between calculators and guides for optimal PageRank flow.
 - **Open Graph / Twitter cards** for social sharing.
 - **Canonical URLs** and dynamic meta title/description rendering per route.
-- **XML Sitemap** and **robots.txt**.
+- **Dynamic XML Sitemap** (`/sitemap.xml`) and **robots.txt**.
 
 ---
 

@@ -159,6 +159,14 @@
 </section>
 {% endif %}
 
+{# Related Resources — internal linking from calculator pages to blog content #}
+<div class="max-w-4xl mx-auto">
+    {% include 'components/related-resources.twig' with {
+        all_posts: all_posts,
+        category: category
+    } %}
+</div>
+
 {% endblock %}
 
 {% block modals %}
