@@ -26,29 +26,39 @@
     'input_text_color': 'text-slate-700 focus:border-rose-400 focus:ring-rose-400/30 focus:ring-1'
 }) }}
 
-<!-- Withdrawal Hike -->
-{{ inputs.renderInputRangePair({
-    'id': 'swp_stepup',
-    'label': calc_config.swp_stepup.label,
-    'min': calc_config.swp_stepup.min,
-    'max': calc_config.swp_stepup.max,
-    'slider_max': calc_config.swp_stepup.slider_max,
-    'step': calc_config.swp_stepup.step,
-    'value': swp_stepup,
-    'suffix': '%',
-    'theme': 'rose',
-    'input_text_color': 'text-slate-700 focus:border-rose-400 focus:ring-rose-400/30 focus:ring-1'
-}) }}
+<details class="group mt-4 border-t border-slate-100 pt-3" id="swp-advanced-details">
+    <summary class="flex items-center justify-between text-[10px] font-bold text-slate-400 hover:text-slate-600 uppercase tracking-widest cursor-pointer select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-rose-400 rounded py-1.5 transition-colors">
+        <span>Advanced Settings</span>
+        <svg class="w-3.5 h-3.5 transition-transform duration-200 group-open:rotate-180 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+        </svg>
+    </summary>
+    <div class="space-y-4 mt-3 pt-1">
+        <!-- Withdrawal Hike -->
+        {{ inputs.renderInputRangePair({
+            'id': 'swp_stepup',
+            'label': calc_config.swp_stepup.label,
+            'min': calc_config.swp_stepup.min,
+            'max': calc_config.swp_stepup.max,
+            'slider_max': calc_config.swp_stepup.slider_max,
+            'step': calc_config.swp_stepup.step,
+            'value': swp_stepup,
+            'suffix': '%',
+            'theme': 'rose',
+            'input_text_color': 'text-slate-700 focus:border-rose-400 focus:ring-rose-400/30 focus:ring-1'
+        }) }}
 
-<!-- SWP Expected Return -->
-{{ inputs.renderInputRangePair({
-    'id': 'swp_rate',
-    'label': calc_config.swp_rate.label,
-    'min': calc_config.swp_rate.min,
-    'max': calc_config.swp_rate.max,
-    'slider_max': calc_config.swp_rate.slider_max,
-    'step': calc_config.swp_rate.step,
-    'value': swp_rate,
-    'suffix': '%',
-    'theme': 'rose'
-}) }}
+        <!-- SWP Expected Return -->
+        {{ inputs.renderInputRangePair({
+            'id': 'swp_rate',
+            'label': calc_config.swp_rate.label,
+            'min': calc_config.swp_rate.min,
+            'max': calc_config.swp_rate.max,
+            'slider_max': calc_config.swp_rate.slider_max,
+            'step': calc_config.swp_rate.step,
+            'value': swp_rate,
+            'suffix': '%',
+            'theme': 'rose'
+        }) }}
+    </div>
+</details>

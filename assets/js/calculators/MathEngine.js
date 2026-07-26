@@ -156,4 +156,42 @@ export class MathEngine {
         
         return Math.round(bestSip);
     }
+
+    /**
+     * Binary Search to find the required initial corpus to sustain a specific SWP plan.
+     * @param {object} inp - SWP inputs
+     * @returns {number} The required starting corpus at the beginning of the SWP phase
+     */
+    static calculateRequiredStartingCorpusForSwp(inp) {
+        if (!inp.enable_swp || inp.swp_withdrawal <= 0 || inp.swp_years <= 0) return 0;
+        
+        let low = 0;
+        let high = inp.swp_withdrawal * 12 * inp.swp_years * 3; // safe upper bound
+        let bestCorpus = 0;
+        
+        for (let i = 0; i < 40; i++) {
+            const mid = (low + high) / 2;
+            const testInp = {
+                ...inp,
+                sip: 0,
+                years: 0,
+                lumpsum: mid
+            };
+            const results = this.calculateCorpus(testInp);
+            const finalBalance = results[results.length - 1].combined_total;
+            
+            if (Math.abs(finalBalance) < 1) {
+                bestCorpus = mid;
+                break;
+            } else if (finalBalance <= 0) {
+                // If it ran out, we need more starting corpus
+                low = mid;
+            } else {
+                // If we ended with a surplus, we can start with less
+                high = mid;
+            }
+            bestCorpus = mid;
+        }
+        return Math.round(bestCorpus);
+    }
 }

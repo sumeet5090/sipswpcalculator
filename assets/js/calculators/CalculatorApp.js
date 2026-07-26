@@ -17,6 +17,7 @@ export class CalculatorApp {
         this.chartManager = new ChartManager(this.formatter);
         this.analytics = new AnalyticsService();
         this.userHasInteracted = false;
+        this.activeGoalMode = 'grow';
         this.sliderManager = new SliderManager(
             () => {
                 this.userHasInteracted = true;
@@ -39,7 +40,8 @@ export class CalculatorApp {
             lumpsumRange: () => document.getElementById('lumpsum_range'),
             inflation: () => document.getElementById('inflation'),
             inflationRange: () => document.getElementById('inflation_range'),
-            goalSeekMode: () => document.getElementById('goal_seek_mode'),
+            goalGrow: () => document.getElementById('goal-grow'),
+            goalTarget: () => document.getElementById('goal-target'),
             targetCorpus: () => document.getElementById('target_corpus'),
             targetCorpusRange: () => document.getElementById('target_corpus_range'),
             sipContainer: () => document.getElementById('sip_container'),
@@ -109,18 +111,21 @@ export class CalculatorApp {
         const inputs = this.getInputs();
         
         // Handle Goal Seek Mode
-        const goalSeekToggle = this.elements.goalSeekMode();
-        if (goalSeekToggle && goalSeekToggle.checked) {
+        if (this.activeGoalMode === 'target') {
             const targetCorpus = this.validator.validate('target_corpus', this.elements.targetCorpus()?.value || 10000000);
-            // We temporarily set sip to 0 to calculate the required sip
             const requiredSip = MathEngine.calculateRequiredSip(inputs, targetCorpus);
             inputs.sip = requiredSip;
             
-            // Update the SIP UI element so the user sees the result, but don't trigger another calculation
             const sipEl = this.elements.sip();
             const sipRangeEl = this.elements.sipRange();
-            if (sipEl && sipEl.value != requiredSip) sipEl.value = requiredSip;
-            if (sipRangeEl && sipRangeEl.value != requiredSip) sipRangeEl.value = requiredSip;
+            if (sipEl && sipEl.value != requiredSip) {
+                sipEl.value = requiredSip;
+                sipEl.setAttribute('aria-valuenow', requiredSip);
+            }
+            if (sipRangeEl && sipRangeEl.value != requiredSip) {
+                sipRangeEl.value = requiredSip;
+                sipRangeEl.setAttribute('aria-valuenow', requiredSip);
+            }
         }
 
         eventBus.publish('input:changed', inputs);
@@ -311,6 +316,62 @@ export class CalculatorApp {
         this.triggerCalculation();
     }
 
+    /**
+     * Update Segmented Control UI styles and configure layout constraints based on goal mode.
+     * @param {string} mode - 'grow' or 'target'
+     */
+    setGoalMode(mode) {
+        if (mode === this.activeGoalMode) return;
+        this.activeGoalMode = mode;
+
+        const growBtn = this.elements.goalGrow();
+        const targetBtn = this.elements.goalTarget();
+        const sipContainer = this.elements.sipContainer();
+        const targetCorpusContainer = this.elements.targetCorpusContainer();
+
+        const activeClass = ['bg-white', 'text-emerald-600', 'shadow-sm', 'border', 'border-slate-200/20'];
+        const inactiveClass = ['text-slate-500', 'hover:text-slate-700'];
+
+        if (mode === 'grow') {
+            if (growBtn) {
+                growBtn.classList.add(...activeClass);
+                growBtn.classList.remove(...inactiveClass);
+                growBtn.setAttribute('aria-checked', 'true');
+            }
+            if (targetBtn) {
+                targetBtn.classList.remove(...activeClass);
+                targetBtn.classList.add(...inactiveClass);
+                targetBtn.setAttribute('aria-checked', 'false');
+            }
+            if (sipContainer) {
+                sipContainer.style.opacity = '1';
+                sipContainer.style.pointerEvents = 'auto';
+            }
+            if (targetCorpusContainer) {
+                targetCorpusContainer.style.display = 'none';
+            }
+        } else {
+            if (targetBtn) {
+                targetBtn.classList.add(...activeClass);
+                targetBtn.classList.remove(...inactiveClass);
+                targetBtn.setAttribute('aria-checked', 'true');
+            }
+            if (growBtn) {
+                growBtn.classList.remove(...activeClass);
+                growBtn.classList.add(...inactiveClass);
+                growBtn.setAttribute('aria-checked', 'false');
+            }
+            if (sipContainer) {
+                sipContainer.style.opacity = '0.65';
+                sipContainer.style.pointerEvents = 'none';
+            }
+            if (targetCorpusContainer) {
+                targetCorpusContainer.style.display = 'block';
+            }
+        }
+        this.triggerCalculation();
+    }
+
     setSmartNudgeRate(val) {
         const rateEl = this.elements.rate();
         const rateRangeEl = this.elements.rateRange();
@@ -350,17 +411,66 @@ export class CalculatorApp {
             'swp_rate':       'swp_rate_range',
         });
 
-        // ── Goal Seek Toggle ──
-        const goalSeekToggle = this.elements.goalSeekMode();
-        if (goalSeekToggle) {
-            goalSeekToggle.addEventListener('change', () => {
-                const isGoalSeek = goalSeekToggle.checked;
-                this.elements.sipContainer().style.opacity = isGoalSeek ? '0.5' : '1';
-                this.elements.sipContainer().style.pointerEvents = isGoalSeek ? 'none' : 'auto';
-                this.elements.targetCorpusContainer().style.display = isGoalSeek ? 'block' : 'none';
-                this.triggerCalculation();
-            });
+        // ── Goal Mode Segmented Controls ──
+        const growBtn = this.elements.goalGrow();
+        const targetBtn = this.elements.goalTarget();
+        if (growBtn) {
+            growBtn.addEventListener('click', () => this.setGoalMode('grow'));
         }
+        if (targetBtn) {
+            targetBtn.addEventListener('click', () => this.setGoalMode('target'));
+        }
+
+        // ── Auto-Switch to Grow Mode when user directly interacts with SIP inputs ──
+        const sipInput = this.elements.sip();
+        const sipRange = this.elements.sipRange();
+        const autoSwitchToGrow = () => {
+            if (this.activeGoalMode === 'target') {
+                this.setGoalMode('grow');
+            }
+        };
+        if (sipInput) sipInput.addEventListener('input', autoSwitchToGrow);
+        if (sipRange) sipRange.addEventListener('input', autoSwitchToGrow);
+
+        // ── Auto-Calculate SWP Target Corpus and feed it back to SIP target ──
+        const swpWithdrawal = this.elements.swpWithdrawal();
+        const swpWithdrawalRange = this.elements.swpWithdrawalRange();
+        const swpYears = this.elements.swpYears();
+        const swpYearsRange = this.elements.swpYearsRange();
+        const handleSwpInput = () => {
+            const inputs = this.getInputs();
+            if (inputs.enable_swp && inputs.swp_withdrawal > 0 && inputs.swp_years > 0) {
+                const reqCorpus = MathEngine.calculateRequiredStartingCorpusForSwp(inputs);
+                if (reqCorpus > 0) {
+                    const targetEl = this.elements.targetCorpus();
+                    const targetRangeEl = this.elements.targetCorpusRange();
+                    
+                    if (targetEl) {
+                        targetEl.value = reqCorpus;
+                        targetEl.setAttribute('aria-valuenow', reqCorpus);
+                    }
+                    if (targetRangeEl) {
+                        const defaultMax = parseFloat(targetRangeEl.getAttribute('max')) || 50000000;
+                        if (reqCorpus > defaultMax) {
+                            targetRangeEl.max = reqCorpus;
+                        } else {
+                            targetRangeEl.max = defaultMax;
+                        }
+                        targetRangeEl.value = reqCorpus;
+                        targetRangeEl.setAttribute('aria-valuenow', reqCorpus);
+                    }
+                    
+                    if (this.activeGoalMode !== 'target') {
+                        this.setGoalMode('target');
+                    }
+                }
+            }
+        };
+
+        if (swpWithdrawal) swpWithdrawal.addEventListener('input', handleSwpInput);
+        if (swpWithdrawalRange) swpWithdrawalRange.addEventListener('input', handleSwpInput);
+        if (swpYears) swpYears.addEventListener('input', handleSwpInput);
+        if (swpYearsRange) swpYearsRange.addEventListener('input', handleSwpInput);
 
         // ── SWP Toggle ──
         const swpToggle = this.elements.enableSwp();

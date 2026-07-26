@@ -1,6 +1,6 @@
 # SIP & SWP Calculator
 
-A production-grade, server-rendered financial calculator for Systematic Investment Plans (SIP) and Systematic Withdrawal Plans (SWP). Built with PHP (MVC), Twig, Vite, Tailwind CSS v4, and Chart.js.
+A production-grade, server-rendered financial calculator for Systematic Investment Plans (SIP) and Systematic Withdrawal Plans (SWP). Features a fully bi-directional calculation engine (back-calculates Monthly SIP required to hit a Target Corpus or sustain a target SWP retirement plan), progressive disclosure of advanced inputs, and viewport-aware responsive scaling. Built with PHP (MVC), Twig, Vite, Tailwind CSS v4, and Chart.js.
 
 **Live:** [sipswpcalculator.com](https://sipswpcalculator.com)
 
