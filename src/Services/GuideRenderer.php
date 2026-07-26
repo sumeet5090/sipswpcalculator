@@ -185,6 +185,9 @@ class GuideRenderer
 
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
 
+        // Fetch all posts for related resources / internal linking
+        $all_posts = \Core\BlogRepository::getAllPosts();
+
         View::render($layout, [
             'content_html'        => $content_html,
             'content_metadata'    => $content_metadata,
@@ -210,6 +213,7 @@ class GuideRenderer
             'swp_years_input'     => $swp_years_input,
             'swp_stepup'          => $swp_stepup,
             'swp_rate'            => $swp_rate,
+            'all_posts'           => $all_posts,
         ]);
     }
 }

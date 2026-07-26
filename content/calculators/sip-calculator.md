@@ -1,5 +1,5 @@
-# Systematic Investment Plan (SIP) Guide
-Mastering Systematic Investment Plans: Learn how SIPs compound wealth over time.
+# SIP Calculator India 2026: Step-Up Mutual Fund Return Calculator & Guide
+Free SIP calculator with step-up (top-up) compounding for Indian mutual funds. Calculate SIP returns, view interactive charts, and export PDF reports.
 
 ---
 

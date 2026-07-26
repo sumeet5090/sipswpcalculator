@@ -1,0 +1,87 @@
+{# Related Resources Component
+   Displays a calculator CTA and cross-category related posts to strengthen internal linking.
+   Expected variables:
+     - all_posts: array of all blog posts (from BlogRepository::getAllPosts)
+     - category: current post's category slug (growth, retirement, comparison)
+     - current_href: current post's href (optional, to exclude self)
+#}
+
+{% set current_href = current_href|default(request.server('REQUEST_URI', '/')) %}
+
+{# Calculator CTA — links every blog post back to the core product #}
+<section class="mt-12 mb-8" aria-label="Try the Calculator">
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-700 p-8 sm:p-10 text-white shadow-lg">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div>
+                <h3 class="text-xl sm:text-2xl font-extrabold mb-2">Plan Your Investment Journey</h3>
+                <p class="text-emerald-100 text-sm sm:text-base max-w-xl leading-relaxed">
+                    Use our <strong class="text-white">combined SIP and SWP calculator</strong> to model your wealth accumulation and retirement withdrawal — all in one place with step-up compounding.
+                </p>
+            </div>
+            <a href="/"
+                class="inline-flex items-center gap-2 px-6 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-md hover:shadow-lg hover:bg-emerald-50 transition-all flex-shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+                Open Calculator
+            </a>
+        </div>
+    </div>
+</section>
+
+{# Related Resources — cross-category posts for internal link equity #}
+{% if all_posts is defined and all_posts is not empty %}
+    {% set related = [] %}
+    {% for post in all_posts %}
+        {# Pick posts from OTHER categories, excluding the current post #}
+        {% if post.category != category and post.href != current_href and related|length < 3 %}
+            {% set related = related|merge([post]) %}
+        {% endif %}
+    {% endfor %}
+
+    {# If we didn't get 3 from other categories, fill with same-category posts #}
+    {% if related|length < 3 %}
+        {% for post in all_posts %}
+            {% if post.href != current_href and post not in related and related|length < 3 %}
+                {% set related = related|merge([post]) %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if related|length > 0 %}
+    <section class="mt-8 mb-12" aria-label="Related Resources">
+        <h3 class="text-lg font-extrabold text-slate-800 mb-5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+            </svg>
+            Continue Reading
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {% for post in related %}
+                {% set accent = 'emerald' %}
+                {% if post.category == 'retirement' %}
+                    {% set accent = 'indigo' %}
+                {% elseif post.category == 'comparison' %}
+                    {% set accent = 'amber' %}
+                {% endif %}
+
+                <a href="{{ post.href }}"
+                    class="group block p-5 rounded-xl border border-slate-200/80 bg-white hover:shadow-md hover:border-{{ accent }}-200 transition-all duration-200">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-{{ accent }}-50 text-{{ accent }}-700 border border-{{ accent }}-100 mb-3">
+                        {{ post.tag|default('Guide') }}
+                    </span>
+                    <h4 class="text-sm font-bold text-slate-800 group-hover:text-{{ accent }}-700 transition-colors leading-snug mb-2 line-clamp-2">
+                        {{ post.title }}
+                    </h4>
+                    <p class="text-xs text-slate-400 flex items-center gap-2">
+                        <span>{{ post.read_time|default('5 min') }} read</span>
+                        <span>&middot;</span>
+                        <span>{{ post.date|default('2026') }}</span>
+                    </p>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+{% endif %}
