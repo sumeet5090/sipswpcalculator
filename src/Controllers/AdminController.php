@@ -127,9 +127,14 @@ class AdminController
         $finalCorpus      = isset($data['final_corpus'])      ? (float) $data['final_corpus']      : null;
         $totalInvested    = isset($data['total_invested'])    ? (float) $data['total_invested']    : null;
         $wealthMultiplier = isset($data['wealth_multiplier']) ? (float) $data['wealth_multiplier'] : null;
-        $goalMode         = isset($data['goal_mode'])         ? (string) $data['goal_mode']        : null;
-        $deviceType       = isset($data['device_type'])       ? (string) $data['device_type']      : null;
-        $tableViewed      = !empty($data['table_viewed'])     ? 1 : 0;
+        $goalMode          = isset($data['goal_mode'])           ? (string) $data['goal_mode']          : null;
+        $deviceType        = isset($data['device_type'])         ? (string) $data['device_type']        : null;
+        $tableViewed       = !empty($data['table_viewed'])       ? 1 : 0;
+        $pdfHasCustomName  = !empty($data['pdf_has_custom_name'])  ? 1 : 0;
+        $inflationEnabled  = !empty($data['inflation_enabled'])    ? 1 : 0;
+        $interactionCount  = isset($data['interaction_count'])   ? (int) $data['interaction_count']     : 1;
+        $presetClicked     = isset($data['preset_clicked'])      ? (string) $data['preset_clicked']    : 'none';
+        $exitAction        = isset($data['exit_action'])         ? (string) $data['exit_action']       : 'calc_only';
 
         $this->insightLogger->logCalculation(
             $calcType,
@@ -151,7 +156,12 @@ class AdminController
             $wealthMultiplier,
             $goalMode,
             $deviceType,
-            $tableViewed
+            $tableViewed,
+            $pdfHasCustomName,
+            $inflationEnabled,
+            $interactionCount,
+            $presetClicked,
+            $exitAction
         );
 
         http_response_code(204);

@@ -279,6 +279,35 @@ class InsightRepository
             error_log("InsightRepository Query Error (wealth_multiplier): " . $e->getMessage());
         }
 
+        $b2bAdvisorRate = 0.0;
+        try {
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND pdf_has_custom_name = 1");
+            $stmt->execute($params);
+            $b2bCount = (int) $stmt->fetchColumn();
+            $b2bAdvisorRate = $totalPdfDownloads > 0 ? round(($b2bCount / $totalPdfDownloads) * 100, 1) : 0.0;
+        } catch (\Throwable $e) {
+            error_log("InsightRepository Query Error (pdf_has_custom_name): " . $e->getMessage());
+        }
+
+        $inflationRate = 0.0;
+        try {
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND inflation_enabled = 1");
+            $stmt->execute($params);
+            $inflationCount = (int) $stmt->fetchColumn();
+            $inflationRate = $totalInRange > 0 ? round(($inflationCount / $totalInRange) * 100, 1) : 0.0;
+        } catch (\Throwable $e) {
+            error_log("InsightRepository Query Error (inflation_enabled): " . $e->getMessage());
+        }
+
+        $avgIterations = 1.0;
+        try {
+            $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interaction_count), 1) FROM user_calculations $where_clause AND interaction_count > 0");
+            $stmt->execute($params);
+            $avgIterations = round((float) $stmt->fetchColumn(), 1);
+        } catch (\Throwable $e) {
+            error_log("InsightRepository Query Error (interaction_count): " . $e->getMessage());
+        }
+
         return [
             'totalCalculations'   => $totalInRange,
             'avgStepUpPct'        => $avgStepUp,
@@ -309,7 +338,10 @@ class InsightRepository
             'goalModeDist'        => $goalModeDist,
             'tableViewEngagement' => $tableViewEngagement,
             'avgFinalCorpus'      => $avgFinalCorpus,
-            'avgWealthMultiplier' => $avgWealthMultiplier
+            'avgWealthMultiplier' => $avgWealthMultiplier,
+            'b2bAdvisorRate'      => $b2bAdvisorRate,
+            'inflationRate'       => $inflationRate,
+            'avgIterations'       => $avgIterations
         ];
     }
 }

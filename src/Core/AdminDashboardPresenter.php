@@ -43,6 +43,9 @@ class AdminDashboardPresenter
             'tableViewEngagement' => number_format((float) ($stats['tableViewEngagement'] ?? 0), 1),
             'avgFinalCorpus'      => (float) ($stats['avgFinalCorpus'] ?? 0),
             'avgWealthMultiplier' => number_format((float) ($stats['avgWealthMultiplier'] ?? 0), 2),
+            'b2bAdvisorRate'      => number_format((float) ($stats['b2bAdvisorRate'] ?? 0), 1),
+            'inflationRate'       => number_format((float) ($stats['inflationRate'] ?? 0), 1),
+            'avgIterations'       => number_format((float) ($stats['avgIterations'] ?? 1.0), 1),
 
             // Chart.js JSON Payloads
             'volumeLabels'       => json_encode(array_column($dailyVolume, 'day')),

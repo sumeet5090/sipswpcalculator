@@ -17,10 +17,12 @@ export class CalculatorApp {
         this.chartManager = new ChartManager(this.formatter);
         this.analytics = new AnalyticsService();
         this.userHasInteracted = false;
+        this.interactionCount = 0;
         this.activeGoalMode = 'grow';
         this.sliderManager = new SliderManager(
             () => {
                 this.userHasInteracted = true;
+                this.interactionCount++;
                 this.triggerCalculation();
             },
             this.validator
@@ -661,6 +663,9 @@ export class CalculatorApp {
 
                     // Log PDF telemetry
                     const inputs = this.getInputs();
+                    const advisorNameStr = (formData.get('advisorName') || '').toString().trim();
+                    const pdfHasCustomName = advisorNameStr.length > 0 ? 1 : 0;
+
                     fetch('/log_insight', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -671,6 +676,8 @@ export class CalculatorApp {
                             step_up_pct: inputs.enable_swp ? inputs.swp_stepup : inputs.stepup,
                             currency: 'INR',
                             pdf_downloaded: true,
+                            pdf_has_custom_name: pdfHasCustomName,
+                            exit_action: 'pdf_download',
                             interest_rate: inputs.rate,
                             sip_amount: inputs.sip,
                             sip_duration: inputs.years,
@@ -680,7 +687,8 @@ export class CalculatorApp {
                             swp_duration: inputs.swp_years,
                             swp_step_up: inputs.swp_stepup,
                             lumpsum: inputs.lumpsum,
-                            swp_rate: inputs.swp_rate
+                            swp_rate: inputs.swp_rate,
+                            interaction_count: this.interactionCount
                         }),
                         keepalive: true
                     }).catch(() => {});
@@ -784,7 +792,7 @@ export class CalculatorApp {
             this.updateTable(results, inputs.enable_swp);
             this.chartManager.updateChart(results, inputs.enable_swp);
             if (this.userHasInteracted) {
-                this.analytics.logInsight(inputs, results, this.activeGoalMode);
+                this.analytics.logInsight(inputs, results, this.activeGoalMode, { interaction_count: this.interactionCount });
             }
         });
 

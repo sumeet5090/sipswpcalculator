@@ -14,8 +14,9 @@ export class AnalyticsService {
      * @param {object} inputs 
      * @param {array} results 
      * @param {string} activeGoalMode 
+     * @param {object} extraSignals 
      */
-    logInsight(inputs, results = [], activeGoalMode = 'grow') {
+    logInsight(inputs, results = [], activeGoalMode = 'grow', extraSignals = {}) {
         if (this.insightTimeout) {
             clearTimeout(this.insightTimeout);
         }
@@ -55,7 +56,12 @@ export class AnalyticsService {
                 wealth_multiplier: wealthMultiplier,
                 goal_mode: activeGoalMode || 'grow',
                 device_type: deviceType,
-                table_viewed: tableViewed
+                table_viewed: tableViewed,
+                pdf_has_custom_name: extraSignals.pdf_has_custom_name ? 1 : 0,
+                inflation_enabled: inputs.inflation > 0 ? 1 : (extraSignals.inflation_enabled ? 1 : 0),
+                interaction_count: extraSignals.interaction_count || 1,
+                preset_clicked: extraSignals.preset_clicked || 'none',
+                exit_action: extraSignals.exit_action || 'calc_only'
             };
 
             fetch('/log_insight', {

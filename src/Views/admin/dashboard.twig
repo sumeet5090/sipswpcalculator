@@ -34,8 +34,8 @@
     </div>
 </div>
 
-<!-- KPI Stats Row -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- KPI Stats Row 1 -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
     {% include 'admin/components/stat_card.twig' with {
         title: 'Total Calculations',
         value: totalCalculations
@@ -57,6 +57,27 @@
         title: 'Avg Return Multiplier',
         value: avgWealthMultiplier ~ 'x',
         subtitle: 'End Corpus / Total Invested'
+    } %}
+</div>
+
+<!-- KPI Stats Row 2 (Advanced Privacy & B2B Signals) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    {% include 'admin/components/stat_card.twig' with {
+        title: 'B2B Advisor Rate',
+        value: b2bAdvisorRate ~ '%',
+        subtitle: 'PDF reports with custom branding'
+    } %}
+    
+    {% include 'admin/components/stat_card.twig' with {
+        title: 'Inflation Adjusted',
+        value: inflationRate ~ '%',
+        subtitle: 'Calculations considering inflation'
+    } %}
+    
+    {% include 'admin/components/stat_card.twig' with {
+        title: 'Avg Scenario Iterations',
+        value: avgIterations,
+        subtitle: 'Input adjustments per session'
     } %}
 </div>
 
