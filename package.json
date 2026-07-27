@@ -2,8 +2,10 @@
   "type": "module",
   "scripts": {
     "compile-config": "php scripts/compile-config.php",
-    "dev": "npm run compile-config && vite",
-    "build": "npm run compile-config && vite build"
+    "predev": "php scripts/compile-config.php",
+    "prebuild": "php scripts/compile-config.php",
+    "dev": "vite",
+    "build": "vite build"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.2",

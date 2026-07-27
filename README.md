@@ -90,13 +90,13 @@ php -S localhost:8080 index.php
 
 ### 4. Start Vite (Development Mode)
 
-While developing, run the Vite server to instantly compile Tailwind CSS and bundle JS assets with Hot Module Replacement (HMR):
+While developing, run the Vite server to instantly compile Tailwind CSS and bundle JS assets with Hot Module Replacement (HMR). The `npm run dev` script automatically compiles the central calculator configuration (`src/Core/Config/calculator_defaults.php`) into JavaScript fallbacks before starting Vite:
 
 ```bash
 npm run dev
 ```
 
-> **Tip:** Keep this terminal open while you code. Vite will watch all your `.twig` and `.php` files and update assets instantly when you save.
+> **Tip:** Keep this terminal open while you code. Vite will watch all your `.twig` and `.php` files and update assets instantly when you save. `calculator_defaults.php` is the single source of truth for calculator bounds and is automatically compiled to `calculator_defaults.json` (untracked build artifact) during `dev` and `build` lifecycles.
 
 ---
 
