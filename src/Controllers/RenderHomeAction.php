@@ -88,7 +88,7 @@ class RenderHomeAction
             $headers[] = 'Interest Earned (₹)';
             $headers[] = 'End Balance (₹)';
 
-            fputcsv($output, $headers);
+            fputcsv($output, $headers, ',', '"', '\\');
 
             foreach ($combined as $row) {
                 $csvRow = [
@@ -105,7 +105,7 @@ class RenderHomeAction
                 }
                 $csvRow[] = $row['interest'];
                 $csvRow[] = $row['combined_total'];
-                fputcsv($output, $csvRow);
+                fputcsv($output, $csvRow, ',', '"', '\\');
             }
             fclose($output);
             exit();

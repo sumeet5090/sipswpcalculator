@@ -174,7 +174,7 @@
     <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
         <form id="pdfForm" class="space-y-4">
-            <input type="hidden" name="csrf_token" value="{{ app.session.csrf_token|default('')|escape('html_attr') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token|default(app.session.csrf_token|default(''))|escape('html_attr') }}">
             <div>
                 <label for="clientName" class="block text-sm font-medium mb-1 text-gray-600">Client Name</label>
                 <input type="text" id="clientName" name="clientName" placeholder="e.g., John Doe"
@@ -184,6 +184,11 @@
                 <label for="advisorName" class="block text-sm font-medium mb-1 text-gray-600">Your Name / Company</label>
                 <input type="text" id="advisorName" name="advisorName" placeholder="e.g., Jane Smith Financials"
                     class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-emerald-500 transition">
+            </div>
+            <div>
+                <label for="customDisclaimer" class="block text-sm font-medium mb-1 text-gray-600">Custom Notes / Disclaimer (Optional)</label>
+                <textarea id="customDisclaimer" name="customDisclaimer" rows="2" placeholder="e.g., Return projections assume 12% equity CAGR."
+                    class="w-full px-4 py-2 rounded-lg bg-gray-100 border-gray-300 focus:ring-2 focus:ring-emerald-500 transition text-sm"></textarea>
             </div>
             <div class="flex justify-end gap-4 pt-4">
                 <button type="button" id="closePdfModalBtn"

@@ -25,6 +25,16 @@ class View
             ]);
             self::$twig->addGlobal('env', $_ENV['ENVIRONMENT'] ?? 'development');
             self::$twig->addGlobal('request', \Core\Http\Request::createFromGlobals());
+
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            if (empty($_SESSION['csrf_token'])) {
+                $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+            }
+            self::$twig->addGlobal('csrf_token', $_SESSION['csrf_token']);
+            self::$twig->addGlobal('app', ['session' => ['csrf_token' => $_SESSION['csrf_token']]]);
+
             self::$twig->addFilter(new \Twig\TwigFilter('formatInr', function ($amount) {
                 return \Core\CurrencyHelper::formatInr((float) $amount);
             }));
@@ -53,6 +63,17 @@ class View
      */
     public static function renderToString(string $view, array $data = []): string
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+
+        $twig = self::getTwig();
+        $twig->addGlobal('csrf_token', $_SESSION['csrf_token']);
+        $twig->addGlobal('app', ['session' => ['csrf_token' => $_SESSION['csrf_token']]]);
+
         // Support extensionless view names, defaulting to .twig
         if (!str_ends_with($view, '.twig') && !str_ends_with($view, '.php')) {
             $view .= '.twig';
@@ -65,7 +86,7 @@ class View
         }
 
         try {
-            return self::getTwig()->render($view, $data);
+            return $twig->render($view, $data);
         } catch (\Exception $e) {
             http_response_code(500);
             return "500 Internal Server Error: Twig rendering failed. " . $e->getMessage();

@@ -44,6 +44,10 @@ class GeneratePdfAction
         $rate_data[] = $now;
         file_put_contents($rate_file, json_encode($rate_data));
 
+        // Turn off error display during PDF generation so vendor deprecation warnings never corrupt binary stream
+        $orig_display_errors = ini_get('display_errors');
+        @ini_set('display_errors', '0');
+
         try {
             $inputs = [
                 'client_name'       => mb_substr(strip_tags($post['clientName'] ?? 'N/A'), 0, 100),
@@ -68,10 +72,12 @@ class GeneratePdfAction
                 'summary_interest'  => mb_substr(strip_tags($post['summary_interest'] ?? '0'), 0, 50),
                 'summary_withdrawn' => mb_substr(strip_tags($post['summary_withdrawn'] ?? '0'), 0, 50),
                 'summary_corpus'    => mb_substr(strip_tags($post['summary_corpus'] ?? '0'), 0, 50),
+                'raw_invested'      => (float) ($post['raw_invested'] ?? 0),
+                'raw_corpus'        => (float) ($post['raw_corpus'] ?? 0),
             ];
 
-            $chart_raw = $post['chartData'] ?? '';
-            if ($chart_raw !== '' && preg_match('/^data:image\/(png|jpeg|gif|webp);base64,[A-Za-z0-9+\/=]+$/', $chart_raw)) {
+            $chart_raw = trim($post['chartData'] ?? '');
+            if ($chart_raw !== '' && preg_match('/^data:image\/(png|jpeg|gif|webp);base64,/i', $chart_raw)) {
                 $inputs['chart_base64'] = $chart_raw;
             }
 
@@ -126,20 +132,36 @@ class GeneratePdfAction
             $options = new \Dompdf\Options();
             $options->set('isRemoteEnabled', false);
             $options->set('defaultFont', 'Helvetica');
-            $options->set('isPhpEnabled', false);
+            $options->set('isPhpEnabled', true);
             $options->set('isJavascriptEnabled', false);
 
+            ob_start();
             $dompdf = new \Dompdf\Dompdf($options);
             $dompdf->loadHtml($html);
             $dompdf->setPaper('A4', 'portrait');
             $dompdf->render();
+            $pdf_binary = $dompdf->output();
 
-            $safe_client_name = preg_replace('/[^a-zA-Z0-9_\- ]/', '', $inputs['client_name']);
-            $dompdf->stream(
-                "Financial_Report_for_{$safe_client_name}.pdf",
-                ["Attachment" => 1]
-            );
+            $raw_name = trim($inputs['client_name']);
+            $clean_name = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $raw_name) ?: 'Client';
+            $clean_name = preg_replace('/_+/', '_', $clean_name);
+            $filename = "Financial_Report_for_{$clean_name}.pdf";
+
+            while (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            header('Content-Length: ' . strlen($pdf_binary));
+            header('Cache-Control: private, max-age=0, must-revalidate');
+            header('Pragma: public');
+
+            echo $pdf_binary;
+            @ini_set('display_errors', (string) $orig_display_errors);
+            exit();
         } catch (\Exception $e) {
+            @ini_set('display_errors', (string) $orig_display_errors);
             http_response_code(500);
             error_log('PDF Generation Error: ' . $e->getMessage());
             die('An error occurred during PDF generation. Please try again.');

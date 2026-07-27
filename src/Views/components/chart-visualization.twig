@@ -27,35 +27,35 @@
 
     <!-- Summary Cards -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div class="glass-card p-3 sm:p-4 text-center">
-            <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
+        <div class="glass-card p-2.5 sm:p-4 text-center overflow-hidden">
+            <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1 truncate">
                 Total Invested
             </div>
-            <div id="summary-invested" class="text-lg sm:text-xl font-extrabold text-emerald-600 font-mono transition-numbers">
+            <div id="summary-invested" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-emerald-600 font-mono transition-numbers truncate">
                 {{ lastRow.cumulative_invested|formatInr }}
             </div>
         </div>
-        <div class="glass-card p-3 sm:p-4 text-center">
-            <div id="title-interest" class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
+        <div class="glass-card p-2.5 sm:p-4 text-center overflow-hidden">
+            <div id="title-interest" class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1 truncate">
                 Total Gains
             </div>
-            <div id="summary-interest" class="text-lg sm:text-xl font-extrabold text-emerald-600 font-mono transition-numbers">
+            <div id="summary-interest" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-emerald-600 font-mono transition-numbers truncate">
                 {{ totalGains|formatInr }}
             </div>
         </div>
-        <div class="glass-card p-3 sm:p-4 text-center">
-            <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
+        <div class="glass-card p-2.5 sm:p-4 text-center overflow-hidden">
+            <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1 truncate">
                 Total Withdrawn
             </div>
-            <div id="summary-withdrawn" class="text-lg sm:text-xl font-extrabold text-rose-500 font-mono transition-numbers">
+            <div id="summary-withdrawn" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-rose-500 font-mono transition-numbers truncate">
                 {{ lastRow.cumulative_withdrawals|default(0)|formatInr }}
             </div>
         </div>
-        <div class="glass-card p-3 sm:p-4 text-center border-2 border-emerald-100">
-            <div id="title-corpus" class="text-[10px] sm:text-xs font-bold text-emerald-600 uppercase tracking-widest mb-1">
+        <div class="glass-card p-2.5 sm:p-4 text-center border-2 border-emerald-100 overflow-hidden">
+            <div id="title-corpus" class="text-[10px] sm:text-xs font-bold text-emerald-600 uppercase tracking-widest mb-1 truncate">
                 Final Corpus
             </div>
-            <div id="summary-corpus" class="text-lg sm:text-xl font-extrabold text-slate-800 font-mono transition-numbers">
+            <div id="summary-corpus" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-slate-800 font-mono transition-numbers truncate">
                 {{ lastRow.combined_total|formatInr }}
             </div>
         </div>

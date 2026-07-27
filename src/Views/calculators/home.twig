@@ -432,7 +432,7 @@
         <form id="pdfForm" class="space-y-4">
             <!-- SECURITY: CSRF Token for PDF generation form -->
             <input type="hidden" name="csrf_token"
-                value="{{ app.session.csrf_token|default('')|escape('html_attr') }}">
+                value="{{ csrf_token|default(app.session.csrf_token|default(''))|escape('html_attr') }}">
 
             <div>
                 <label for="clientName" class="block text-sm font-medium mb-1 text-gray-600">Client Name</label>

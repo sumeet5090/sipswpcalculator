@@ -40,7 +40,18 @@ class AnonymizedInsightLogger
         int $swpEnabled = 0,
         ?float $swpWithdrawal = null,
         ?int $swpDuration = null,
-        ?float $swpStepUp = null
+        ?float $swpStepUp = null,
+        ?float $finalCorpus = null,
+        ?float $totalInvested = null,
+        ?float $wealthMultiplier = null,
+        ?string $goalMode = null,
+        ?string $deviceType = null,
+        int $tableViewed = 0,
+        int $pdfHasCustomName = 0,
+        int $inflationEnabled = 0,
+        int $interactionCount = 1,
+        ?string $presetClicked = 'none',
+        ?string $exitAction = 'calc_only'
     ): void {
         try {
             // Close the current output buffer and send response to client so logging is non-blocking.
@@ -62,9 +73,13 @@ class AnonymizedInsightLogger
             $stmt = $this->pdo->prepare("
                 INSERT INTO user_calculations 
                 (calc_type, currency, amount, duration, step_up_pct, country_code, pdf_downloaded, referrer,
-                 interest_rate, sip_amount, sip_duration, sip_step_up, swp_enabled, swp_withdrawal, swp_duration, swp_step_up)
+                 interest_rate, sip_amount, sip_duration, sip_step_up, swp_enabled, swp_withdrawal, swp_duration, swp_step_up,
+                 final_corpus, total_invested, wealth_multiplier, goal_mode, device_type, table_viewed,
+                 pdf_has_custom_name, inflation_enabled, interaction_count, preset_clicked, exit_action)
                 VALUES (:calc_type, :currency, :amount, :duration, :step_up_pct, :country_code, :pdf_downloaded, :referrer,
-                 :interest_rate, :sip_amount, :sip_duration, :sip_step_up, :swp_enabled, :swp_withdrawal, :swp_duration, :swp_step_up)
+                 :interest_rate, :sip_amount, :sip_duration, :sip_step_up, :swp_enabled, :swp_withdrawal, :swp_duration, :swp_step_up,
+                 :final_corpus, :total_invested, :wealth_multiplier, :goal_mode, :device_type, :table_viewed,
+                 :pdf_has_custom_name, :inflation_enabled, :interaction_count, :preset_clicked, :exit_action)
             ");
 
             $stmt->execute([
@@ -84,6 +99,17 @@ class AnonymizedInsightLogger
                 ':swp_withdrawal' => $swpWithdrawal,
                 ':swp_duration' => $swpDuration,
                 ':swp_step_up' => $swpStepUp,
+                ':final_corpus' => $finalCorpus,
+                ':total_invested' => $totalInvested,
+                ':wealth_multiplier' => $wealthMultiplier,
+                ':goal_mode' => $goalMode,
+                ':device_type' => $deviceType,
+                ':table_viewed' => $tableViewed,
+                ':pdf_has_custom_name' => $pdfHasCustomName,
+                ':inflation_enabled' => $inflationEnabled,
+                ':interaction_count' => $interactionCount,
+                ':preset_clicked' => $presetClicked ?? 'none',
+                ':exit_action' => $exitAction ?? 'calc_only',
             ]);
         } catch (\Throwable $e) {
             // Silently fail to ensure user experience is never impacted by logging errors
