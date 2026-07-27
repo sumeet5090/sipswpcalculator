@@ -339,7 +339,6 @@ class PdfReportTemplate
         $years = max(1, (int) ($inputs['years'] ?? 20));
 
         $milestoneTargets = [
-            1000000 => 'First ₹10 Lakhs',
             10000000 => 'First ₹1 Crore',
             50000000 => 'First ₹5 Crores',
             100000000 => 'First ₹10 Crores',
