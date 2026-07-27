@@ -784,7 +784,7 @@ export class CalculatorApp {
             this.updateTable(results, inputs.enable_swp);
             this.chartManager.updateChart(results, inputs.enable_swp);
             if (this.userHasInteracted) {
-                this.analytics.logInsight(inputs);
+                this.analytics.logInsight(inputs, results, this.activeGoalMode);
             }
         });
 

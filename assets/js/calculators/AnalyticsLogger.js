@@ -12,14 +12,30 @@ export class AnalyticsService {
     /**
      * Log user calculations in a debounced fashion to prevent network spamming.
      * @param {object} inputs 
+     * @param {array} results 
+     * @param {string} activeGoalMode 
      */
-    logInsight(inputs) {
+    logInsight(inputs, results = [], activeGoalMode = 'grow') {
         if (this.insightTimeout) {
             clearTimeout(this.insightTimeout);
         }
 
         // Post to database endpoint after debounceMs of user input inactivity
         this.insightTimeout = setTimeout(() => {
+            const lastRow = (Array.isArray(results) && results.length > 0) ? results[results.length - 1] : null;
+            const finalCorpus = lastRow ? (lastRow.combined_total || 0) : null;
+            const totalInvested = lastRow ? (lastRow.cumulative_invested || 0) : null;
+            const wealthMultiplier = (finalCorpus !== null && totalInvested && totalInvested > 0)
+                ? parseFloat((finalCorpus / totalInvested).toFixed(2))
+                : null;
+
+            const breakdownEl = document.getElementById('yearly-breakdown-section') || document.getElementById('breakdown-body');
+            const tableViewed = breakdownEl
+                ? (breakdownEl.getBoundingClientRect().top < (window.innerHeight || document.documentElement.clientHeight) ? 1 : 0)
+                : 0;
+
+            const deviceType = (window.innerWidth < 768) ? 'mobile' : 'desktop';
+
             const payload = {
                 calc_type: inputs.enable_swp ? 'SWP' : 'SIP',
                 amount: inputs.enable_swp ? inputs.swp_withdrawal : inputs.sip,
@@ -33,7 +49,13 @@ export class AnalyticsService {
                 swp_enabled: inputs.enable_swp ? 1 : 0,
                 swp_withdrawal: inputs.swp_withdrawal,
                 swp_duration: inputs.swp_years,
-                swp_step_up: inputs.swp_stepup
+                swp_step_up: inputs.swp_stepup,
+                final_corpus: finalCorpus,
+                total_invested: totalInvested,
+                wealth_multiplier: wealthMultiplier,
+                goal_mode: activeGoalMode || 'grow',
+                device_type: deviceType,
+                table_viewed: tableViewed
             };
 
             fetch('/log_insight', {

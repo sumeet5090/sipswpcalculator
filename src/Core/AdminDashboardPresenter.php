@@ -36,10 +36,13 @@ class AdminDashboardPresenter
 
         return [
             // KPI Scalars
-            'totalCalculations' => $stats['totalCalculations'] ?? 0,
-            'avgStepUpPct'      => number_format((float) ($stats['avgStepUpPct'] ?? 0), 1),
-            'stepUpSIP'         => $stats['stepUpSIP'] ?? 0,
-            'flatSIP'           => $stats['flatSIP'] ?? 0,
+            'totalCalculations'   => $stats['totalCalculations'] ?? 0,
+            'avgStepUpPct'        => number_format((float) ($stats['avgStepUpPct'] ?? 0), 1),
+            'stepUpSIP'           => $stats['stepUpSIP'] ?? 0,
+            'flatSIP'             => $stats['flatSIP'] ?? 0,
+            'tableViewEngagement' => number_format((float) ($stats['tableViewEngagement'] ?? 0), 1),
+            'avgFinalCorpus'      => (float) ($stats['avgFinalCorpus'] ?? 0),
+            'avgWealthMultiplier' => number_format((float) ($stats['avgWealthMultiplier'] ?? 0), 2),
 
             // Chart.js JSON Payloads
             'volumeLabels'       => json_encode(array_column($dailyVolume, 'day')),
@@ -56,6 +59,12 @@ class AdminDashboardPresenter
 
             'ambitionLabels'     => json_encode(array_column($ambitionBuckets, 'goal_bucket')),
             'ambitionData'       => json_encode(array_map('intval', array_column($ambitionBuckets, 'cnt'))),
+
+            'deviceLabels'       => json_encode(array_map('ucfirst', array_column($stats['deviceDist'] ?? [], 'device'))),
+            'deviceData'         => json_encode(array_map('intval', array_column($stats['deviceDist'] ?? [], 'cnt'))),
+
+            'goalModeLabels'     => json_encode(array_map('ucfirst', array_column($stats['goalModeDist'] ?? [], 'mode'))),
+            'goalModeData'       => json_encode(array_map('intval', array_column($stats['goalModeDist'] ?? [], 'cnt'))),
         ];
     }
 }

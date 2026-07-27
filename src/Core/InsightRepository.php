@@ -232,32 +232,84 @@ class InsightRepository
         $stmt->execute($params);
         $ambitionBuckets = $stmt->fetchAll();
 
+        // 19. Deep Privacy Metrics (Device, Goal Mode, Table Engagement, Multipliers)
+        $deviceDist = [];
+        try {
+            $stmt = $this->pdo->prepare("SELECT COALESCE(device_type, 'desktop') AS device, COUNT(*) AS cnt FROM user_calculations $where_clause GROUP BY device ORDER BY cnt DESC");
+            $stmt->execute($params);
+            $deviceDist = $stmt->fetchAll();
+        } catch (\Throwable $e) {
+            error_log("InsightRepository Query Error (device_type): " . $e->getMessage());
+        }
+
+        $goalModeDist = [];
+        try {
+            $stmt = $this->pdo->prepare("SELECT COALESCE(goal_mode, 'grow') AS mode, COUNT(*) AS cnt FROM user_calculations $where_clause GROUP BY mode ORDER BY cnt DESC");
+            $stmt->execute($params);
+            $goalModeDist = $stmt->fetchAll();
+        } catch (\Throwable $e) {
+            error_log("InsightRepository Query Error (goal_mode): " . $e->getMessage());
+        }
+
+        $tableViewEngagement = 0.0;
+        try {
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND table_viewed = 1");
+            $stmt->execute($params);
+            $tableViewedCount = (int) $stmt->fetchColumn();
+            $tableViewEngagement = $totalInRange > 0 ? round(($tableViewedCount / $totalInRange) * 100, 1) : 0.0;
+        } catch (\Throwable $e) {
+            error_log("InsightRepository Query Error (table_viewed): " . $e->getMessage());
+        }
+
+        $avgFinalCorpus = 0.0;
+        try {
+            $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(final_corpus), 0) FROM user_calculations $where_clause AND final_corpus > 0");
+            $stmt->execute($params);
+            $avgFinalCorpus = (float) $stmt->fetchColumn();
+        } catch (\Throwable $e) {
+            error_log("InsightRepository Query Error (final_corpus): " . $e->getMessage());
+        }
+
+        $avgWealthMultiplier = 0.0;
+        try {
+            $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(wealth_multiplier), 0) FROM user_calculations $where_clause AND wealth_multiplier > 0");
+            $stmt->execute($params);
+            $avgWealthMultiplier = (float) $stmt->fetchColumn();
+        } catch (\Throwable $e) {
+            error_log("InsightRepository Query Error (wealth_multiplier): " . $e->getMessage());
+        }
+
         return [
-            'totalCalculations'  => $totalInRange,
-            'avgStepUpPct'       => $avgStepUp,
-            'totalAllTime'       => $totalAllTime,
-            'calcTypeBreakdown'  => $calcTypeBreakdown,
-            'totalPdfDownloads'  => $totalPdfDownloads,
-            'conversionRate'     => $conversionRate,
-            'topReferrers'       => $topReferrers,
-            'dailyVolume'        => $dailyVolume,
-            'currencyDist'       => $currencyDist,
-            'topCorpus'          => $topCorpus,
-            'totalSIP'           => $totalSIP,
-            'stepUpSIP'          => $stepUpSIP,
-            'flatSIP'            => $flatSIP,
-            'stepUpAdoptionRate' => $stepUpAdoptionRate,
-            'avgDurationSIP'     => $avgDurationSIP,
-            'avgDurationSWP'     => $avgDurationSWP,
-            'avgInterestRate'    => $avgInterestRate,
-            'totalSWPEnabled'    => $totalSWPEnabled,
-            'swpAdoptionRate'    => $swpAdoptionRate,
-            'avgSipAmount'       => $avgSipAmount,
-            'avgSwpWithdrawal'   => $avgSwpWithdrawal,
-            'durationDist'       => $durationDist,
-            'corpusBucketsINR'   => $corpusBucketsINR,
-            'corpusBucketsUSD'   => $corpusBucketsUSD,
-            'ambitionBuckets'    => $ambitionBuckets
+            'totalCalculations'   => $totalInRange,
+            'avgStepUpPct'        => $avgStepUp,
+            'totalAllTime'        => $totalAllTime,
+            'calcTypeBreakdown'   => $calcTypeBreakdown,
+            'totalPdfDownloads'   => $totalPdfDownloads,
+            'conversionRate'      => $conversionRate,
+            'topReferrers'        => $topReferrers,
+            'dailyVolume'         => $dailyVolume,
+            'currencyDist'        => $currencyDist,
+            'topCorpus'           => $topCorpus,
+            'totalSIP'            => $totalSIP,
+            'stepUpSIP'           => $stepUpSIP,
+            'flatSIP'             => $flatSIP,
+            'stepUpAdoptionRate'  => $stepUpAdoptionRate,
+            'avgDurationSIP'      => $avgDurationSIP,
+            'avgDurationSWP'      => $avgDurationSWP,
+            'avgInterestRate'     => $avgInterestRate,
+            'totalSWPEnabled'     => $totalSWPEnabled,
+            'swpAdoptionRate'     => $swpAdoptionRate,
+            'avgSipAmount'        => $avgSipAmount,
+            'avgSwpWithdrawal'    => $avgSwpWithdrawal,
+            'durationDist'        => $durationDist,
+            'corpusBucketsINR'    => $corpusBucketsINR,
+            'corpusBucketsUSD'    => $corpusBucketsUSD,
+            'ambitionBuckets'     => $ambitionBuckets,
+            'deviceDist'          => $deviceDist,
+            'goalModeDist'        => $goalModeDist,
+            'tableViewEngagement' => $tableViewEngagement,
+            'avgFinalCorpus'      => $avgFinalCorpus,
+            'avgWealthMultiplier' => $avgWealthMultiplier
         ];
     }
 }
