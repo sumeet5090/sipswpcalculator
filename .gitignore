@@ -24,6 +24,7 @@ GEMINI.md
 # Ignored because GitHub Actions builds the frontend assets now
 /dist/
 /build/
+assets/js/calculators/calculator_defaults.json
 
 # --- Binaries ---
 # We ignore general binaries but KEEP our Tailwind compiler 
