@@ -44,7 +44,6 @@ export class ChartManager {
         // Calculate Milestones (accounting for tax if toggle is active)
         const milestones = [];
         const targets = [
-            { label: '₹50 Lakhs', value: 5000000, reached: false, icon: '🌟' },
             { label: '₹1 Crore', value: 10000000, reached: false, icon: '🏆' },
             { label: '₹5 Crores', value: 50000000, reached: false, icon: '👑' },
             { label: '₹10 Crores', value: 100000000, reached: false, icon: '💎' },
@@ -59,7 +58,7 @@ export class ChartManager {
 
         for (let i = 0; i < results.length; i++) {
             const row = results[i];
-            
+
             // Calculate post-tax corpus for this year
             const gains = (row.combined_total + row.cumulative_withdrawals) - row.cumulative_invested;
             const taxableGains = Math.max(0, gains - 125000);
@@ -137,10 +136,10 @@ export class ChartManager {
                 this.chartInstance.data.datasets[3].data = swp;
                 this.chartInstance.data.datasets[3].hidden = !enableSwp;
             }
-            
+
             // Toggle stacking for Wealth Map
             this.chartInstance.options.scales.y.stacked = showWealthMap;
-            
+
             if (showWealthMap) {
                 // In wealth map mode, dataset 1 (growth) should just be the interest part
                 const interestOnly = corpus.map((c, i) => c - cumulative[i]);
@@ -320,7 +319,9 @@ export class ChartManager {
                         ticks: {
                             color: textColor,
                             font: {
-                                family: fontFamily
+                                family: fontFamily,
+                                size: 11,
+                                weight: 500
                             },
                             maxRotation: 0
                         }
@@ -334,7 +335,9 @@ export class ChartManager {
                         ticks: {
                             color: textColor,
                             font: {
-                                family: fontFamily
+                                family: fontFamily,
+                                size: 11,
+                                weight: 500
                             },
                             callback: (value) => {
                                 return this.formatAxisTick(value);

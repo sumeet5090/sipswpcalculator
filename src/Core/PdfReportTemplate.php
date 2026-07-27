@@ -20,22 +20,22 @@ class PdfReportTemplate
     public static function render(array $inputs): string
     {
         $logo_base64 = $inputs['logo_base64'] ?? null;
-        $client_name = htmlspecialchars((string)($inputs['client_name'] ?? 'Valued Client'));
-        $advisor_name = htmlspecialchars((string)($inputs['advisor_name'] ?? 'Your Financial Advisor'));
-        $chart_base64 = (string)($inputs['chart_base64'] ?? '');
-        $table_html = (string)($inputs['table_html'] ?? '');
-        $custom_disclaimer = htmlspecialchars((string)($inputs['custom_disclaimer'] ?? ''));
+        $client_name = htmlspecialchars((string) ($inputs['client_name'] ?? 'Valued Client'));
+        $advisor_name = htmlspecialchars((string) ($inputs['advisor_name'] ?? 'Your Financial Advisor'));
+        $chart_base64 = (string) ($inputs['chart_base64'] ?? '');
+        $table_html = (string) ($inputs['table_html'] ?? '');
+        $custom_disclaimer = htmlspecialchars((string) ($inputs['custom_disclaimer'] ?? ''));
 
         // Raw numerical values for exact math calculations
-        $raw_invested = (float)($inputs['raw_invested'] ?? 0);
-        $raw_corpus = (float)($inputs['raw_corpus'] ?? 0);
+        $raw_invested = (float) ($inputs['raw_invested'] ?? 0);
+        $raw_corpus = (float) ($inputs['raw_corpus'] ?? 0);
 
         // Formatted display strings
-        $summary_invested = (string)($inputs['summary_invested'] ?? '0');
-        $summary_interest = (string)($inputs['summary_interest'] ?? '0');
-        $summary_withdrawn = (string)($inputs['summary_withdrawn'] ?? '0');
-        $summary_corpus = (string)($inputs['summary_corpus'] ?? '0');
-        $currency_sym = (string)($inputs['currency_symbol'] ?? '₹');
+        $summary_invested = (string) ($inputs['summary_invested'] ?? '0');
+        $summary_interest = (string) ($inputs['summary_interest'] ?? '0');
+        $summary_withdrawn = (string) ($inputs['summary_withdrawn'] ?? '0');
+        $summary_corpus = (string) ($inputs['summary_corpus'] ?? '0');
+        $currency_sym = (string) ($inputs['currency_symbol'] ?? '₹');
 
         // Calculate Wealth Multiplier accurately
         $multiplier = '1.00x';
@@ -48,8 +48,8 @@ class PdfReportTemplate
         }
 
         $proposal_id = 'SWP-' . strtoupper(substr(md5($client_name . date('Y-m-d')), 0, 8));
-        $has_swp = ((int)($inputs['swp_years'] ?? 0) > 0 || (float)($inputs['swp_withdrawal'] ?? 0) > 0);
-        $years_count = max(1, (int)($inputs['years'] ?? 20));
+        $has_swp = ((int) ($inputs['swp_years'] ?? 0) > 0 || (float) ($inputs['swp_withdrawal'] ?? 0) > 0);
+        $years_count = max(1, (int) ($inputs['years'] ?? 20));
 
         // Dynamic table padding based on row count
         $table_padding = ($years_count > 25) ? '3px 6px' : '5px 8px';
@@ -106,16 +106,16 @@ class PdfReportTemplate
             .phase-badge.swp { background: #ffe4e6; color: #9f1239; }
 
             /* Trajectory Chart Box */
-            .chart-box { text-align: center; margin: 10px 0 14px 0; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; background: #ffffff; page-break-inside: avoid; width: 100%; box-sizing: border-box; }
-            .chart-box img { width: 100%; height: auto; max-height: 240px; display: block; object-fit: contain; }
+            .chart-box { text-align: center; margin: 6px 0 8px 0; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px; background: #ffffff; page-break-inside: avoid; width: 100%; box-sizing: border-box; }
+            .chart-box img { width: 100%; height: auto; max-height: 475px; display: block; margin: 0 auto; object-fit: contain; }
 
-            /* Wealth Milestones Grid */
-            .milestones-container { margin: 10px 0 14px 0; page-break-inside: avoid; }
-            .milestones-table { width: 100%; border-collapse: separate; border-spacing: 6px 0; }
-            .milestone-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #059669; padding: 8px 8px; border-radius: 6px; text-align: center; }
-            .milestone-badge { font-size: 7.5px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.6px; color: #15803d; margin-bottom: 2px; display: block; }
-            .milestone-val { font-size: 11.5px; font-weight: bold; color: #0f172a; margin: 0; white-space: nowrap; }
-            .milestone-sub { font-size: 8px; color: #475569; margin-top: 2px; }
+            /* Wealth Milestones Grid (Single Line Grid) */
+            .milestones-container { margin: 8px 0 0 0; page-break-inside: avoid; }
+            .milestones-table { width: 100%; border-collapse: separate; border-spacing: 6px 0; table-layout: fixed; }
+            .milestone-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #059669; padding: 6px 6px; border-radius: 6px; text-align: center; vertical-align: top; }
+            .milestone-badge { font-size: 7.5px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; color: #15803d; margin-bottom: 2px; display: block; white-space: nowrap; }
+            .milestone-val { font-size: 11px; font-weight: bold; color: #0f172a; margin: 0; white-space: nowrap; }
+            .milestone-sub { font-size: 7.5px; color: #475569; margin-top: 2px; white-space: nowrap; }
 
             /* Year Breakdown Table (Page 2) */
             .results-table-container { margin-top: 10px; }
@@ -226,12 +226,12 @@ class PdfReportTemplate
                     </tr>
                     <tr>
                         <th>Initial Lumpsum:</th>
-                        <td>{$currency_sym}&nbsp;" . number_format((float)($inputs['lumpsum'] ?? 0)) . "</td>
-                        " . ($has_swp ? "<th>Monthly SWP:</th><td>{$currency_sym}&nbsp;" . number_format((float)($inputs['swp_withdrawal'] ?? 0)) . "</td>" : "<th>Expected Return:</th><td>" . ($inputs['rate'] ?? 0) . "% p.a.</td>") . "
+                        <td>{$currency_sym}&nbsp;" . number_format((float) ($inputs['lumpsum'] ?? 0)) . "</td>
+                        " . ($has_swp ? "<th>Monthly SWP:</th><td>{$currency_sym}&nbsp;" . number_format((float) ($inputs['swp_withdrawal'] ?? 0)) . "</td>" : "<th>Expected Return:</th><td>" . ($inputs['rate'] ?? 0) . "% p.a.</td>") . "
                     </tr>
                     <tr>
                         <th>Monthly SIP:</th>
-                        <td>{$currency_sym}&nbsp;" . number_format((float)($inputs['sip'] ?? 0)) . "</td>
+                        <td>{$currency_sym}&nbsp;" . number_format((float) ($inputs['sip'] ?? 0)) . "</td>
                         " . ($has_swp ? "<th>SWP Period:</th><td>" . ($inputs['swp_years'] ?? 0) . " Years</td>" : "<th>Annual Step-Up:</th><td>" . ($inputs['stepup'] ?? 0) . "%</td>") . "
                     </tr>
                     <tr>
@@ -256,9 +256,10 @@ class PdfReportTemplate
             </div>";
         }
 
-        // Calculate and render Key Wealth Milestones on Page 1
+        // Calculate and render Key Wealth Milestones on Page 1 (Single Horizontal Line Grid)
         $milestones = self::generateMilestones($inputs);
         if (!empty($milestones)) {
+            $col_width = floor(100 / max(1, count($milestones))) . '%';
             $html .= "
             <!-- Key Wealth Milestones -->
             <div class='section-heading'>Key Wealth Milestones</div>
@@ -267,7 +268,7 @@ class PdfReportTemplate
                     <tr>";
             foreach ($milestones as $m) {
                 $html .= "
-                        <td class='milestone-card'>
+                        <td class='milestone-card' style='width: {$col_width};'>
                             <span class='milestone-badge'>{$m['badge']}</span>
                             <div class='milestone-val'>{$m['target_formatted']}</div>
                             <div class='milestone-sub'>Achieved in <strong>Year {$m['year']}</strong></div>
@@ -331,22 +332,22 @@ class PdfReportTemplate
      */
     private static function generateMilestones(array $inputs): array
     {
-        $sip = (float)($inputs['sip'] ?? 0);
-        $lumpsum = (float)($inputs['lumpsum'] ?? 0);
-        $rate = (float)($inputs['rate'] ?? 12) / 100 / 12;
-        $stepup = (float)($inputs['stepup'] ?? 0) / 100;
-        $years = max(1, (int)($inputs['years'] ?? 20));
+        $sip = (float) ($inputs['sip'] ?? 0);
+        $lumpsum = (float) ($inputs['lumpsum'] ?? 0);
+        $rate = (float) ($inputs['rate'] ?? 12) / 100 / 12;
+        $stepup = (float) ($inputs['stepup'] ?? 0) / 100;
+        $years = max(1, (int) ($inputs['years'] ?? 20));
 
         $milestoneTargets = [
-            1000000       => 'First ₹10 Lakhs',
-            10000000      => 'First ₹1 Crore',
-            50000000      => 'First ₹5 Crores',
-            100000000     => 'First ₹10 Crores',
-            500000000     => 'First ₹50 Crores',
-            1000000000    => 'First ₹100 Crores',
-            5000000000    => 'First ₹500 Crores',
-            10000000000   => 'First ₹1,000 Crores',
-            100000000000  => 'First ₹10,000 Crores',
+            1000000 => 'First ₹10 Lakhs',
+            10000000 => 'First ₹1 Crore',
+            50000000 => 'First ₹5 Crores',
+            100000000 => 'First ₹10 Crores',
+            500000000 => 'First ₹50 Crores',
+            1000000000 => 'First ₹100 Crores',
+            5000000000 => 'First ₹500 Crores',
+            10000000000 => 'First ₹1,000 Crores',
+            100000000000 => 'First ₹10,000 Crores',
         ];
 
         $found = [];
