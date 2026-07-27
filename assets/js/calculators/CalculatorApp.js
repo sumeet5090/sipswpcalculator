@@ -18,6 +18,7 @@ export class CalculatorApp {
         this.analytics = new AnalyticsService();
         this.userHasInteracted = false;
         this.interactionCount = 0;
+        this.latestResults = [];
         this.activeGoalMode = 'grow';
         this.sliderManager = new SliderManager(
             () => {
@@ -577,6 +578,24 @@ export class CalculatorApp {
         const closePdfBtn = this.elements.closePdfModalBtn();
         const pdfForm = this.elements.pdfForm();
 
+        const openModalFn = (el) => {
+            if (!el) return;
+            if (typeof el.showModal === 'function') {
+                el.showModal();
+            } else {
+                el.classList.remove('hidden');
+            }
+        };
+
+        const closeModalFn = (el) => {
+            if (!el) return;
+            if (typeof el.close === 'function') {
+                el.close();
+            } else {
+                el.classList.add('hidden');
+            }
+        };
+
         if (openPdfBtn && pdfModal) {
             openPdfBtn.addEventListener('click', () => {
                 if (!this.chartManager.getChartInstance()) {
@@ -593,13 +612,13 @@ export class CalculatorApp {
                     }
                     return;
                 }
-                pdfModal.showModal();
+                openModalFn(pdfModal);
             });
             if (closePdfBtn) {
-                closePdfBtn.addEventListener('click', () => pdfModal.close());
+                closePdfBtn.addEventListener('click', () => closeModalFn(pdfModal));
             }
             pdfModal.addEventListener('click', e => {
-                if (e.target === pdfModal) pdfModal.close();
+                if (e.target === pdfModal) closeModalFn(pdfModal);
             });
         }
 
@@ -613,7 +632,14 @@ export class CalculatorApp {
                 }
 
                 const chartInst = this.chartManager.getChartInstance();
-                const chartDataURL = chartInst ? chartInst.toBase64Image() : '';
+                let chartDataURL = '';
+                if (chartInst && chartInst.canvas) {
+                    try {
+                        chartDataURL = chartInst.canvas.toDataURL('image/png');
+                    } catch (e) {
+                        chartDataURL = '';
+                    }
+                }
                 const resultsTable = document.getElementById('results-table');
                 const tableHtml = resultsTable ? resultsTable.outerHTML : '<table><tr><td>No data available.</td></tr></table>';
 
@@ -634,6 +660,12 @@ export class CalculatorApp {
                 formData.append('summary_withdrawn', document.getElementById('summary-withdrawn')?.textContent.trim() || '0');
                 formData.append('summary_corpus', document.getElementById('summary-corpus')?.textContent.trim() || '0');
 
+                const lastRow = (Array.isArray(this.latestResults) && this.latestResults.length > 0)
+                    ? this.latestResults[this.latestResults.length - 1]
+                    : null;
+                formData.append('raw_invested', lastRow ? (lastRow.cumulative_invested || 0) : 0);
+                formData.append('raw_corpus', lastRow ? (lastRow.combined_total || 0) : 0);
+
                 formData.append('chartData', chartDataURL);
                 formData.append('tableHtml', tableHtml);
 
@@ -646,11 +678,12 @@ export class CalculatorApp {
                     throw new Error('PDF generation failed.');
                 })
                 .then(blob => {
+                    const clientNameClean = (formData.get('clientName') || 'Client').toString().trim().replace(/[^a-zA-Z0-9_\-]/g, '_').replace(/_+/g, '_') || 'Client';
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.style.display = 'none';
                     a.href = url;
-                    a.download = `Financial_Report_for_${formData.get('clientName') || 'Client'}.pdf`;
+                    a.download = `Financial_Report_for_${clientNameClean}.pdf`;
                     document.body.appendChild(a);
                     a.click();
 
@@ -658,7 +691,7 @@ export class CalculatorApp {
                         generatePdfBtn.disabled = false;
                         generatePdfBtn.textContent = 'Download PDF';
                     }
-                    pdfModal.close();
+                    closeModalFn(pdfModal);
                     a.remove();
 
                     // Log PDF telemetry
@@ -788,6 +821,7 @@ export class CalculatorApp {
         });
 
         eventBus.subscribe('data:ready', ({ inputs, results }) => {
+            this.latestResults = results;
             this.updateSummaryMetrics(results);
             this.updateTable(results, inputs.enable_swp);
             this.chartManager.updateChart(results, inputs.enable_swp);

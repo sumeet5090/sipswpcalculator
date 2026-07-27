@@ -8,7 +8,7 @@
     <form method="post" novalidate id="calculator-form">
         <!-- SECURITY: CSRF Token for main form -->
         <input type="hidden" name="csrf_token"
-            value="{{ app.session.csrf_token|default('')|escape('html_attr') }}">
+            value="{{ csrf_token|default(app.session.csrf_token|default(''))|escape('html_attr') }}">
 
         <!-- SECURITY: Honeypot field (hidden from real users, catches bots) -->
         <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">

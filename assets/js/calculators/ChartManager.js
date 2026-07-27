@@ -189,7 +189,7 @@ export class ChartManager {
                 pointHoverRadius: 6,
             },
             {
-                label: showWealthMap ? 'Interest Earned' : 'Pre-Tax Growth',
+                label: showWealthMap ? 'Interest Earned' : 'Pre-Tax Corpus',
                 data: showWealthMap ? corpus.map((c, i) => c - cumulative[i]) : corpus,
                 borderColor: '#10b981',
                 backgroundColor: gradientCorpus,
@@ -204,7 +204,7 @@ export class ChartManager {
                 pointHoverBorderWidth: 3,
             },
             {
-                label: 'Post-Tax Wealth',
+                label: 'Post-Tax Corpus',
                 data: postTaxCorpus,
                 borderColor: '#8b5cf6',
                 backgroundColor: gradientPostTax,
@@ -258,17 +258,17 @@ export class ChartManager {
                 plugins: {
                     legend: {
                         position: 'top',
-                        align: 'end',
+                        align: 'center',
                         labels: {
                             usePointStyle: true,
-                            boxWidth: 8,
+                            boxWidth: 6,
                             color: textColor,
                             font: {
                                 family: fontFamily,
-                                size: 12,
+                                size: 10.5,
                                 weight: 600
                             },
-                            padding: 20
+                            padding: 16
                         }
                     },
                     tooltip: {
