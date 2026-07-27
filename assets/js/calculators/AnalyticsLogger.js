@@ -4,7 +4,7 @@
  * Refactored as an Object-Oriented class.
  */
 export class AnalyticsService {
-    constructor(debounceMs = 1500) {
+    constructor(debounceMs = 3000) {
         this.debounceMs = debounceMs;
         this.insightTimeout = null;
     }
