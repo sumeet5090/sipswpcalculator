@@ -9,9 +9,13 @@ import { InputValidator } from './InputValidator.js';
 import { ChartManager } from './ChartManager.js';
 import { AnalyticsService } from './AnalyticsLogger.js';
 import { SliderManager } from './SliderManager.js';
+import { DOMAdapter } from '../adapters/DOMAdapter.js';
+import { GrowStrategy } from './strategies/GrowStrategy.js';
+import { TargetCorpusStrategy } from './strategies/TargetCorpusStrategy.js';
 
 export class CalculatorApp {
     constructor() {
+        this.dom = new DOMAdapter();
         this.formatter = new CurrencyFormatter();
         this.validator = new InputValidator();
         this.chartManager = new ChartManager(this.formatter);
@@ -20,6 +24,13 @@ export class CalculatorApp {
         this.interactionCount = 0;
         this.latestResults = [];
         this.activeGoalMode = 'grow';
+        
+        // Strategy instances
+        this.strategies = {
+            'grow': new GrowStrategy(this.dom, this.validator),
+            'target': new TargetCorpusStrategy(this.dom, this.validator)
+        };
+        
         this.sliderManager = new SliderManager(
             () => {
                 this.userHasInteracted = true;
@@ -28,54 +39,6 @@ export class CalculatorApp {
             },
             this.validator
         );
-
-        // Cache selectors
-        this.elements = {
-            sip: () => document.getElementById('sip'),
-            sipRange: () => document.getElementById('sip_range'),
-            years: () => document.getElementById('years'),
-            yearsRange: () => document.getElementById('years_range'),
-            rate: () => document.getElementById('rate'),
-            rateRange: () => document.getElementById('rate_range'),
-            stepup: () => document.getElementById('stepup'),
-            stepupRange: () => document.getElementById('stepup_range'),
-            lumpsum: () => document.getElementById('lumpsum'),
-            lumpsumRange: () => document.getElementById('lumpsum_range'),
-            inflation: () => document.getElementById('inflation'),
-            inflationRange: () => document.getElementById('inflation_range'),
-            goalGrow: () => document.getElementById('goal-grow'),
-            goalTarget: () => document.getElementById('goal-target'),
-            targetCorpus: () => document.getElementById('target_corpus'),
-            targetCorpusRange: () => document.getElementById('target_corpus_range'),
-            sipContainer: () => document.getElementById('sip_container'),
-            targetCorpusContainer: () => document.getElementById('target_corpus_container'),
-            enableSwp: () => document.getElementById('enable_swp'),
-            swpFields: () => document.getElementById('swp-fields'),
-            swpWithdrawal: () => document.getElementById('swp_withdrawal'),
-            swpWithdrawalRange: () => document.getElementById('swp_withdrawal_range'),
-            swpYears: () => document.getElementById('swp_years'),
-            swpYearsRange: () => document.getElementById('swp_years_range'),
-            swpStepup: () => document.getElementById('swp_stepup'),
-            swpStepupRange: () => document.getElementById('swp_stepup_range'),
-            swpRate: () => document.getElementById('swp_rate'),
-            swpRateRange: () => document.getElementById('swp_rate_range'),
-            tbody: () => document.getElementById('breakdown-body'),
-            shareBtn: () => document.getElementById('shareCalcBtn'),
-            shareBtnText: () => document.getElementById('shareBtnText'),
-            rateNudgeBtn: () => document.getElementById('rate-nudge-btn'),
-            rateNudgePopover: () => document.getElementById('rate-nudge-popover'),
-            rateNudgeClose: () => document.getElementById('rate-nudge-close'),
-            useIndiaRate: () => document.getElementById('use-india-rate'),
-            useUsRate: () => document.getElementById('use-us-rate'),
-            pdfModal: () => document.getElementById('pdfModal'),
-            openPdfModalBtn: () => document.getElementById('openPdfModalBtn'),
-            closePdfModalBtn: () => document.getElementById('closePdfModalBtn'),
-            pdfForm: () => document.getElementById('pdfForm'),
-            generatePdfBtn: () => document.getElementById('generatePdfBtn'),
-            canvas: () => document.getElementById('corpusChart'),
-            corpus: () => document.getElementById('corpus'),
-            corpusRange: () => document.getElementById('corpus_range'),
-        };
     }
 
     /**
@@ -89,21 +52,21 @@ export class CalculatorApp {
         // In SWP-only mode, `corpus` is the user-facing field; it maps to `lumpsum`
         // internally so MathEngine receives a consistent starting-balance parameter.
         const lumpsumVal = isSwpMode
-            ? this.validator.validate('corpus', this.elements.corpus()?.value)
-            : this.validator.validate('lumpsum', this.elements.lumpsum()?.value);
+            ? this.validator.validate('corpus', this.dom.getValue('corpus'))
+            : this.validator.validate('lumpsum', this.dom.getValue('lumpsum'));
 
         return {
-            sip:            this.validator.validate('sip', this.elements.sip()?.value),
-            years:          this.validator.validate('years', this.elements.years()?.value),
-            rate:           this.validator.validate('rate', this.elements.rate()?.value),
-            stepup:         this.validator.validate('stepup', this.elements.stepup()?.value),
-            inflation:      this.validator.validate('inflation', this.elements.inflation()?.value),
+            sip:            this.validator.validate('sip', this.dom.getValue('sip')),
+            years:          this.validator.validate('years', this.dom.getValue('years')),
+            rate:           this.validator.validate('rate', this.dom.getValue('rate')),
+            stepup:         this.validator.validate('stepup', this.dom.getValue('stepup')),
+            inflation:      this.validator.validate('inflation', this.dom.getValue('inflation')),
             lumpsum:        lumpsumVal,
-            enable_swp:     this.elements.enableSwp()?.checked || isSwpMode,
-            swp_withdrawal: this.validator.validate('swp_withdrawal', this.elements.swpWithdrawal()?.value),
-            swp_years:      this.validator.validate('swp_years', this.elements.swpYears()?.value),
-            swp_stepup: this.validator.validate('swp_stepup', this.elements.swpStepup()?.value),
-            swp_rate: this.validator.validate('swp_rate', this.elements.swpRate()?.value)
+            enable_swp:     this.dom.getElement('enable_swp')?.checked || isSwpMode,
+            swp_withdrawal: this.validator.validate('swp_withdrawal', this.dom.getValue('swp_withdrawal')),
+            swp_years:      this.validator.validate('swp_years', this.dom.getValue('swp_years')),
+            swp_stepup:     this.validator.validate('swp_stepup', this.dom.getValue('swp_stepup')),
+            swp_rate:       this.validator.validate('swp_rate', this.dom.getValue('swp_rate'))
         };
     }
 
@@ -111,29 +74,16 @@ export class CalculatorApp {
      * Publish inputs to calculation event queue.
      */
     triggerCalculation() {
-        const inputs = this.getInputs();
+        let inputs = this.getInputs();
         
-        // Handle Goal Seek Mode
-        if (this.activeGoalMode === 'target') {
-            const targetCorpus = this.validator.validate('target_corpus', this.elements.targetCorpus()?.value || 10000000);
-            const requiredSip = MathEngine.calculateRequiredSip(inputs, targetCorpus);
-            inputs.sip = requiredSip;
-            
-            const sipEl = this.elements.sip();
-            const sipRangeEl = this.elements.sipRange();
-            if (sipEl && sipEl.value != requiredSip) {
-                sipEl.value = requiredSip;
-                sipEl.setAttribute('aria-valuenow', requiredSip);
-            }
-            if (sipRangeEl && sipRangeEl.value != requiredSip) {
-                sipRangeEl.value = requiredSip;
-                sipRangeEl.setAttribute('aria-valuenow', requiredSip);
-            }
+        // Execute Strategy based on goal mode
+        const strategy = this.strategies[this.activeGoalMode];
+        if (strategy) {
+            inputs = strategy.execute(inputs);
         }
 
         eventBus.publish('input:changed', inputs);
     }
-
 
     /**
      * Adapt text font size inside metrics tiles on screen resize.
@@ -174,7 +124,7 @@ export class CalculatorApp {
      * Draw years breakdown logs.
      */
     updateTable(data, enableSwp) {
-        const tbody = this.elements.tbody();
+        const tbody = this.dom.getElement('breakdown-body');
         if (!tbody) return;
 
         const fragment = document.createDocumentFragment();
@@ -298,8 +248,8 @@ export class CalculatorApp {
      * Show/Hide SWP withdrawal configurations.
      */
     syncSwpToggleState() {
-        const isChecked = this.elements.enableSwp()?.checked || false;
-        const fields = this.elements.swpFields();
+        const isChecked = this.dom.getElement('enable_swp')?.checked || false;
+        const fields = this.dom.getElement('swp-fields');
         if (!fields) return;
 
         document.querySelectorAll('.swp-col').forEach(el => {
@@ -327,10 +277,10 @@ export class CalculatorApp {
         if (mode === this.activeGoalMode) return;
         this.activeGoalMode = mode;
 
-        const growBtn = this.elements.goalGrow();
-        const targetBtn = this.elements.goalTarget();
-        const sipContainer = this.elements.sipContainer();
-        const targetCorpusContainer = this.elements.targetCorpusContainer();
+        const growBtn = this.dom.getElement('goal-grow');
+        const targetBtn = this.dom.getElement('goal-target');
+        const sipContainer = this.dom.getElement('sip_container');
+        const targetCorpusContainer = this.dom.getElement('target_corpus_container');
 
         const activeClass = ['bg-white', 'text-emerald-600', 'shadow-sm', 'border', 'border-slate-200/20'];
         const inactiveClass = ['text-slate-500', 'hover:text-slate-700'];
@@ -376,21 +326,15 @@ export class CalculatorApp {
     }
 
     setSmartNudgeRate(val) {
-        const rateEl = this.elements.rate();
-        const rateRangeEl = this.elements.rateRange();
-        const popover = this.elements.rateNudgePopover();
-
-        if (rateEl) {
-            rateEl.value = val;
-            rateEl.dispatchEvent(new Event('input', { bubbles: true }));
-        }
-        if (rateRangeEl) {
-            rateRangeEl.value = val;
-            rateRangeEl.dispatchEvent(new Event('input', { bubbles: true }));
-        }
+        this.dom.setValue('rate', val);
+        this.dom.getElement('rate')?.dispatchEvent(new Event('input', { bubbles: true }));
+        this.dom.setValue('rate_range', val);
+        this.dom.getElement('rate_range')?.dispatchEvent(new Event('input', { bubbles: true }));
+        
+        const popover = this.dom.getElement('rate-nudge-popover');
         if (popover) {
             popover.classList.add('hidden');
-            this.elements.rateNudgeBtn()?.setAttribute('aria-expanded', 'false');
+            this.dom.getElement('rate-nudge-btn')?.setAttribute('aria-expanded', 'false');
         }
     }
 
@@ -398,6 +342,11 @@ export class CalculatorApp {
      * Initialize app lifecycle.
      */
     init() {
+        const appContainer = document.getElementById('calculator-app');
+        if (appContainer && appContainer.dataset.mode === 'target_corpus') {
+            this.activeGoalMode = 'target';
+        }
+
         // ── Synchronize Slider pairs via SliderManager ──
         this.sliderManager.syncAll({
             'sip':            'sip_range',
@@ -415,8 +364,8 @@ export class CalculatorApp {
         });
 
         // ── Goal Mode Segmented Controls ──
-        const growBtn = this.elements.goalGrow();
-        const targetBtn = this.elements.goalTarget();
+        const growBtn = this.dom.getElement('goal-grow');
+        const targetBtn = this.dom.getElement('goal-target');
         if (growBtn) {
             growBtn.addEventListener('click', () => this.setGoalMode('grow'));
         }
@@ -425,8 +374,8 @@ export class CalculatorApp {
         }
 
         // ── Auto-Switch to Grow Mode when user directly interacts with SIP inputs ──
-        const sipInput = this.elements.sip();
-        const sipRange = this.elements.sipRange();
+        const sipInput = this.dom.getElement('sip');
+        const sipRange = this.dom.getElement('sip_range');
         const autoSwitchToGrow = () => {
             if (this.activeGoalMode === 'target') {
                 this.setGoalMode('grow');
@@ -436,22 +385,18 @@ export class CalculatorApp {
         if (sipRange) sipRange.addEventListener('input', autoSwitchToGrow);
 
         // ── Auto-Calculate SWP Target Corpus and feed it back to SIP target ──
-        const swpWithdrawal = this.elements.swpWithdrawal();
-        const swpWithdrawalRange = this.elements.swpWithdrawalRange();
-        const swpYears = this.elements.swpYears();
-        const swpYearsRange = this.elements.swpYearsRange();
+        const swpWithdrawal = this.dom.getElement('swp_withdrawal');
+        const swpWithdrawalRange = this.dom.getElement('swp_withdrawal_range');
+        const swpYears = this.dom.getElement('swp_years');
+        const swpYearsRange = this.dom.getElement('swp_years_range');
         const handleSwpInput = () => {
             const inputs = this.getInputs();
             if (inputs.enable_swp && inputs.swp_withdrawal > 0 && inputs.swp_years > 0) {
                 const reqCorpus = MathEngine.calculateRequiredStartingCorpusForSwp(inputs);
                 if (reqCorpus > 0) {
-                    const targetEl = this.elements.targetCorpus();
-                    const targetRangeEl = this.elements.targetCorpusRange();
+                    this.dom.setValue('target_corpus', reqCorpus);
                     
-                    if (targetEl) {
-                        targetEl.value = reqCorpus;
-                        targetEl.setAttribute('aria-valuenow', reqCorpus);
-                    }
+                    const targetRangeEl = this.dom.getElement('target_corpus_range');
                     if (targetRangeEl) {
                         const defaultMax = parseFloat(targetRangeEl.getAttribute('max')) || 50000000;
                         if (reqCorpus > defaultMax) {
@@ -459,8 +404,7 @@ export class CalculatorApp {
                         } else {
                             targetRangeEl.max = defaultMax;
                         }
-                        targetRangeEl.value = reqCorpus;
-                        targetRangeEl.setAttribute('aria-valuenow', reqCorpus);
+                        this.dom.setValue('target_corpus_range', reqCorpus);
                     }
                     
                     if (this.activeGoalMode !== 'target') {
@@ -476,7 +420,7 @@ export class CalculatorApp {
         if (swpYearsRange) swpYearsRange.addEventListener('input', handleSwpInput);
 
         // ── SWP Toggle ──
-        const swpToggle = this.elements.enableSwp();
+        const swpToggle = this.dom.getElement('enable_swp');
         if (swpToggle) {
             swpToggle.addEventListener('change', () => this.syncSwpToggleState());
         }
@@ -533,14 +477,14 @@ export class CalculatorApp {
                 sipTab.querySelector('span').classList.add('bg-slate-100');
                 sipTab.querySelector('span').classList.remove('bg-white/20');
                 swpTab.setAttribute('aria-selected', 'true');
-                sipTab.setAttribute('aria-selected', 'false');
+                swpTab.setAttribute('aria-selected', 'false');
             }
         };
 
         // ──smart rate nudge popovers ──
-        const nudgeBtn = this.elements.rateNudgeBtn();
-        const nudgePopover = this.elements.rateNudgePopover();
-        const nudgeClose = this.elements.rateNudgeClose();
+        const nudgeBtn = this.dom.getElement('rate-nudge-btn');
+        const nudgePopover = this.dom.getElement('rate-nudge-popover');
+        const nudgeClose = this.dom.getElement('rate-nudge-close');
 
         if (nudgeBtn && nudgePopover) {
             nudgeBtn.addEventListener('click', e => {
@@ -555,8 +499,8 @@ export class CalculatorApp {
                     nudgeBtn.setAttribute('aria-expanded', 'false');
                 });
             }
-            this.elements.useIndiaRate()?.addEventListener('click', () => this.setSmartNudgeRate(12));
-            this.elements.useUsRate()?.addEventListener('click', () => this.setSmartNudgeRate(15));
+            this.dom.getElement('use-india-rate')?.addEventListener('click', () => this.setSmartNudgeRate(12));
+            this.dom.getElement('use-us-rate')?.addEventListener('click', () => this.setSmartNudgeRate(15));
 
             document.addEventListener('click', e => {
                 if (!nudgePopover.contains(e.target) && e.target !== nudgeBtn) {
@@ -573,10 +517,10 @@ export class CalculatorApp {
         }
 
         // ── PDF export actions modal ──
-        const pdfModal = this.elements.pdfModal();
-        const openPdfBtn = this.elements.openPdfModalBtn();
-        const closePdfBtn = this.elements.closePdfModalBtn();
-        const pdfForm = this.elements.pdfForm();
+        const pdfModal = this.dom.getElement('pdfModal');
+        const openPdfBtn = this.dom.getElement('openPdfModalBtn');
+        const closePdfBtn = this.dom.getElement('closePdfModalBtn');
+        const pdfForm = this.dom.getElement('pdfForm');
 
         const openModalFn = (el) => {
             if (!el) return;
@@ -599,7 +543,7 @@ export class CalculatorApp {
         if (openPdfBtn && pdfModal) {
             openPdfBtn.addEventListener('click', () => {
                 if (!this.chartManager.getChartInstance()) {
-                    const btn = this.elements.openPdfModalBtn();
+                    const btn = this.dom.getElement('openPdfModalBtn');
                     if (btn) {
                         const origText = btn.querySelector('svg + span, span')?.textContent || 'PDF';
                         btn.classList.add('border-rose-300', 'text-rose-600');
@@ -625,7 +569,7 @@ export class CalculatorApp {
         if (pdfForm) {
             pdfForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const generatePdfBtn = this.elements.generatePdfBtn();
+                const generatePdfBtn = this.dom.getElement('generatePdfBtn');
                 if (generatePdfBtn) {
                     generatePdfBtn.disabled = true;
                     generatePdfBtn.textContent = 'Generating...';
@@ -644,15 +588,15 @@ export class CalculatorApp {
                 const tableHtml = resultsTable ? resultsTable.outerHTML : '<table><tr><td>No data available.</td></tr></table>';
 
                 const formData = new FormData(pdfForm);
-                formData.append('sip', this.elements.sip().value);
-                formData.append('years', this.elements.years().value);
-                formData.append('rate', this.elements.rate().value);
-                formData.append('stepup', this.elements.stepup().value);
-                formData.append('lumpsum', this.elements.lumpsum().value);
-                formData.append('swp_withdrawal', this.elements.swpWithdrawal().value);
-                formData.append('swp_stepup', this.elements.swpStepup().value);
-                formData.append('swp_years', this.elements.swpYears().value);
-                formData.append('swp_rate', this.elements.swpRate().value);
+                formData.append('sip', this.dom.getValue('sip') || 0);
+                formData.append('years', this.dom.getValue('years') || 0);
+                formData.append('rate', this.dom.getValue('rate') || 0);
+                formData.append('stepup', this.dom.getValue('stepup') || 0);
+                formData.append('lumpsum', this.dom.getValue('lumpsum') || 0);
+                formData.append('swp_withdrawal', this.dom.getValue('swp_withdrawal') || 0);
+                formData.append('swp_stepup', this.dom.getValue('swp_stepup') || 0);
+                formData.append('swp_years', this.dom.getValue('swp_years') || 0);
+                formData.append('swp_rate', this.dom.getValue('swp_rate') || 0);
 
                 formData.append('currency_symbol', '₹');
                 formData.append('summary_invested', document.getElementById('summary-invested')?.textContent.trim() || '0');
@@ -739,7 +683,7 @@ export class CalculatorApp {
         }
 
         // ── Clipboard Sharing links ──
-        const shareBtn = this.elements.shareBtn();
+        const shareBtn = this.dom.getElement('shareCalcBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
                 const inputs = this.getInputs();
@@ -757,10 +701,10 @@ export class CalculatorApp {
                     params.set('swp_stepup', String(inputs.swp_stepup));
                     params.set('swp_rate', String(inputs.swp_rate));
                 }
-                const shareUrl = window.location.origin + '/?' + params.toString();
+                const shareUrl = window.location.origin + window.location.pathname + '?' + params.toString();
 
                 navigator.clipboard.writeText(shareUrl).then(() => {
-                    const btnText = this.elements.shareBtnText();
+                    const btnText = this.dom.getElement('shareBtnText');
                     if (btnText) btnText.textContent = 'Copied!';
                     shareBtn.classList.remove('text-emerald-600', 'border-indigo-200');
                     shareBtn.classList.add('text-emerald-700', 'border-emerald-300', 'bg-emerald-50');
@@ -793,79 +737,72 @@ export class CalculatorApp {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('sip') || urlParams.has('lumpsum')) {
             const paramMap = {
-                'sip': 'sip', 'years': 'years', 'rate': 'rate', 'stepup': 'stepup',
-                'lumpsum': 'lumpsum', 'swp_rate': 'swp_rate',
-                'swp': 'swp_withdrawal', 'swp_years': 'swp_years', 'swp_stepup': 'swp_stepup'
+                'sip': 'sip',
+                'years': 'years',
+                'rate': 'rate',
+                'stepup': 'stepup',
+                'lumpsum': 'lumpsum',
+                'swp': 'swp_withdrawal',
+                'swp_years': 'swp_years',
+                'swp_stepup': 'swp_stepup',
+                'swp_rate': 'swp_rate'
             };
-            for (const [param, inputId] of Object.entries(paramMap)) {
-                if (urlParams.has(param)) {
-                    const el = document.getElementById(inputId);
-                    if (el) el.value = urlParams.get(param);
-                    const rangeEl = document.getElementById(inputId + '_range');
-                    if (rangeEl) rangeEl.value = urlParams.get(param);
+            for (const [key, id] of Object.entries(paramMap)) {
+                if (urlParams.has(key)) {
+                    this.dom.setValue(id, urlParams.get(key));
+                    this.dom.setValue(id + '_range', urlParams.get(key));
                 }
             }
-            if (urlParams.get('swp_on') === '1') {
-                const toggle = this.elements.enableSwp();
-                if (toggle) {
-                    toggle.checked = true;
+            if (urlParams.has('swp_on') && urlParams.get('swp_on') === '1') {
+                const swpToggle = this.dom.getElement('enable_swp');
+                if (swpToggle) {
+                    swpToggle.checked = true;
                     this.syncSwpToggleState();
                 }
             }
         }
 
-        // ── EventBus Subscriptions ──
+        // Setup event bus listeners
         eventBus.subscribe('input:changed', (inputs) => {
-            const results = MathEngine.calculateCorpus(inputs);
-            eventBus.publish('data:ready', { inputs, results });
-        });
+            if (!this.userHasInteracted) return;
 
-        eventBus.subscribe('data:ready', ({ inputs, results }) => {
-            this.latestResults = results;
-            this.updateSummaryMetrics(results);
-            this.updateTable(results, inputs.enable_swp);
-            this.chartManager.updateChart(results, inputs.enable_swp);
-            if (this.userHasInteracted) {
-                this.analytics.logInsight(inputs, results, this.activeGoalMode, { interaction_count: this.interactionCount });
+            const combined = MathEngine.calculate(inputs);
+            this.latestResults = combined;
+            this.updateTable(combined, inputs.enable_swp);
+            this.updateSummaryMetrics(combined);
+
+            if (document.getElementById('show_wealth_map')?.checked) {
+                this.chartManager.updateWaterfallChart(combined, inputs);
+            } else {
+                this.chartManager.updateChart(combined, inputs.enable_swp);
             }
         });
 
-        // ── Initial render check ──
-        const canvas = this.elements.canvas();
-        if (canvas && canvas.dataset.years) {
-            try {
-                const initialYears = JSON.parse(canvas.dataset.years).map(y => `Yr ${y}`);
-                const initialCumulative = JSON.parse(canvas.dataset.cumulative);
-                const initialCorpus = JSON.parse(canvas.dataset.corpus);
-                const initialSwp = JSON.parse(canvas.dataset.swp);
-
-                const mockResults = initialYears.map((y, idx) => ({
-                    year: idx + 1,
-                    cumulative_invested: initialCumulative[idx],
-                    combined_total: initialCorpus[idx],
-                    annual_withdrawal: initialSwp[idx] || 0
-                }));
-
-                const inputs = this.getInputs();
-                this.chartManager.updateChart(mockResults, inputs.enable_swp);
-            } catch (e) {
-                console.error('Failed to parse canvas initial data attribute:', e);
-                this.triggerCalculation();
+        // Initial render logic
+        const existingData = window.__INITIAL_DATA__ || [];
+        if (existingData.length > 0) {
+            this.latestResults = existingData;
+            
+            // Check if SWP is inherently enabled in the template defaults
+            let swpEnabledOnLoad = false;
+            const urlSwpOn = (new URLSearchParams(window.location.search)).get('swp_on') === '1';
+            const swpToggle = this.dom.getElement('enable_swp');
+            if (swpToggle && (swpToggle.checked || urlSwpOn)) {
+                swpEnabledOnLoad = true;
+                if (urlSwpOn) swpToggle.checked = true;
+                this.syncSwpToggleState();
+            } else if (document.querySelector('[data-js="calculator-app"]')?.dataset?.mode === 'swp') {
+                swpEnabledOnLoad = true;
             }
-        } else {
-            this.triggerCalculation();
+
+            this.updateTable(existingData, swpEnabledOnLoad);
+            this.updateSummaryMetrics(existingData);
+
+            if (document.getElementById('show_wealth_map')?.checked) {
+                this.chartManager.updateWaterfallChart(existingData, this.getInputs());
+            } else {
+                this.chartManager.updateChart(existingData, swpEnabledOnLoad);
+            }
         }
-
-        // Hydrate all static amounts
-        this.hydrateDynamicAmounts();
-    }
-
-    hydrateDynamicAmounts() {
-        document.querySelectorAll('.dynamic-amount').forEach(el => {
-            const amount = parseFloat(el.getAttribute('data-amount-inr') || el.getAttribute('data-amount'));
-            if (!isNaN(amount)) {
-                el.textContent = this.formatter.formatDynamic(amount);
-            }
-        });
     }
 }

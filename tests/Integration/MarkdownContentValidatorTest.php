@@ -54,43 +54,29 @@ class MarkdownContentValidatorTest extends TestCase
         $content = file_get_contents($filePath);
         $this->assertNotEmpty($content, "Markdown file '$fileName' must not be empty.");
 
-        $lines = explode("\n", $content);
+        $contentManager = new \Core\ContentManager();
+        $basePath = str_replace(realpath(__DIR__ . '/../../content'), '', realpath($filePath));
+        // Strip .md
+        $basePath = substr($basePath, 0, -3);
+        $parsed = $contentManager->getParsedContent($basePath);
 
-        // 1. Heading Heading 1 Validation
-        $this->assertStringStartsWith(
-            '# ',
-            $lines[0],
-            "Markdown file '$fileName' must start with an H1 heading beginning with '# '."
-        );
-        $title = trim(substr($lines[0], 2));
-        $this->assertNotEmpty($title, "H1 title heading in '$fileName' must not be empty.");
+        $this->assertNotNull($parsed, "ContentManager could not parse file '$fileName'.");
+        $this->assertArrayHasKey('metadata', $parsed, "Parsed content missing metadata array.");
+
+        $meta = $parsed['metadata'];
+        $title = $meta['title'] ?? '';
+
+        $this->assertNotEmpty($title, "Title in metadata of '$fileName' must not be empty.");
 
         // Assert title conforms to search engine optimal limits (typically under 85 characters)
         $this->assertLessThanOrEqual(
             85,
             strlen($title),
-            "Heading title '$title' in '$fileName' is too long for SEO. (Length: " . strlen($title) . ", max: 85)"
+            "Metadata title '$title' in '$fileName' is too long for SEO. (Length: " . strlen($title) . ", max: 85)"
         );
 
-        // 2. Validate Frontmatter Separator (---) Position (look up to line 5 / index 4)
-        $separatorIndex = -1;
-        for ($i = 1; $i <= 4; $i++) {
-            if (isset($lines[$i]) && trim($lines[$i]) === '---') {
-                $separatorIndex = $i;
-                break;
-            }
-        }
-
-        $this->assertGreaterThan(
-            0,
-            $separatorIndex,
-            "Markdown file '$fileName' is missing frontmatter separator line '---' in the first 5 lines."
-        );
-
-        // 3. Subtitle Validation (if separator is found after line 2, line 2 must be the subtitle description)
-        if ($separatorIndex > 1) {
-            $subtitle = trim($lines[1]);
-            $this->assertNotEmpty($subtitle, "Subtitle description on line 2 of '$fileName' must not be empty.");
+        $subtitle = $meta['subtitle'] ?? '';
+        if (!empty($subtitle)) {
             $this->assertLessThanOrEqual(
                 200,
                 strlen($subtitle),
@@ -99,9 +85,8 @@ class MarkdownContentValidatorTest extends TestCase
         }
 
         // 4. Body Content Presence
-        $bodyLines = array_slice($lines, $separatorIndex + 1);
-        $body = trim(implode("\n", $bodyLines));
-        $this->assertNotEmpty($body, "Markdown file '$fileName' has no content in the body section.");
+        $body = $parsed['html'];
+        $this->assertNotEmpty($body, "Markdown file '$fileName' has no HTML content in the body section.");
 
         // 5. Relative Markdown Link Check (detects links pointing to .md files which will break routes)
         // RegEx matches standard relative markdown links ending in .md, e.g. [Anchor](guide.md)

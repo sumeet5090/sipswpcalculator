@@ -1,5 +1,12 @@
-# SWP vs Annuity 2026: Which Is Better for Retirement Income?
-The complete guide to choosing between Mutual Fund SWP and Annuity Plans — with worked examples, tax analysis, and the optimal hybrid strategy
+---
+title: "SWP vs Annuity 2026: Which Is Better for Retirement Income?"
+subtitle: "The complete guide to choosing between Mutual Fund SWP and Annuity Plans — with worked examples, tax analysis, and the optimal hybrid strategy"
+tag: "Comparison"
+tag_color: "amber"
+featured: false
+date: "January 2026"
+canonical: "https://sipswpcalculator.com/resource/comparison/swp-vs-annuity-2026"
+---
 
 ---
 

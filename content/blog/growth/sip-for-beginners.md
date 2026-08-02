@@ -1,5 +1,12 @@
-# SIP for Beginners 2026: The Complete Step-by-Step Guide to Start Investing
-Everything you need to know about Systematic Investment Plans — from your very first ₹500 to building a crore-plus corpus
+---
+title: "SIP for Beginners 2026: The Complete Step-by-Step Guide to Start Investing"
+subtitle: "Everything you need to know about Systematic Investment Plans — from your very first ₹500 to building a crore-plus corpus"
+tag: "Beginner"
+tag_color: "emerald"
+featured: true
+date: "March 2026"
+canonical: "https://sipswpcalculator.com/resource/growth/sip-for-beginners"
+---
 
 ---
 

@@ -1,0 +1,47 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+
+<!-- Hidden inputs to satisfy MathEngine JS -->
+<input type="hidden" id="sip" name="sip" value="0">
+<input type="hidden" id="stepup" name="stepup" value="0">
+<input type="hidden" id="lumpsum" name="lumpsum" value="0">
+
+<div class="space-y-4">
+    <!-- Target Corpus -->
+    {{ inputs.renderInputRangePair({
+        'id': 'target_corpus',
+        'label': 'Target Goal Amount (Corpus)',
+        'min': 1000000,
+        'max': 100000000,
+        'slider_max': 50000000,
+        'step': 500000,
+        'value': 10000000,
+        'prefix': '₹',
+        'theme': 'emerald'
+    }) }}
+
+    <!-- Period (Yrs) -->
+    {{ inputs.renderInputRangePair({
+        'id': 'years',
+        'label': 'Time to Goal (Years)',
+        'min': 1,
+        'max': 40,
+        'slider_max': 40,
+        'step': 1,
+        'value': 10,
+        'suffix': ' Yrs',
+        'theme': 'emerald'
+    }) }}
+
+    <!-- Expected Return Rate (%) -->
+    {{ inputs.renderInputRangePair({
+        'id': 'rate',
+        'label': 'Expected Return Rate (p.a)',
+        'min': 1,
+        'max': 30,
+        'slider_max': 20,
+        'step': 0.5,
+        'value': 12,
+        'suffix': '%',
+        'theme': 'emerald'
+    }) }}
+</div>

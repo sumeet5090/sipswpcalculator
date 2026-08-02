@@ -1,5 +1,13 @@
-# Lumpsum Calculator India 2026: Mutual Fund Returns Calculator
-Free lumpsum calculator for Indian mutual funds. Calculate returns on your one-time investments with inflation-adjusted compounding and interactive growth charts.
+---
+title: "Lumpsum Calculator India 2026: Mutual Fund Returns Calculator"
+subtitle: "Free lumpsum calculator for Indian mutual funds. Calculate returns on your one-time investments with inflation-adjusted compounding and interactive growth charts."
+meta_desc: "Free lumpsum calculator for Indian mutual funds. Calculate returns on your one-time investments with inflation-adjusted compounding and interactive growth charts."
+keywords: "lumpsum calculator, one time investment calculator, mutual fund lumpsum, fd vs mutual fund lumpsum, lumpsum return calculator"
+canonical: "https://sipswpcalculator.com/lumpsum-calculator"
+seo_category: "growth"
+type: "calculator"
+date: "2026-08-01"
+---
 
 ---
 

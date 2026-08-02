@@ -6,12 +6,11 @@ Whether you are a human developer or an AI Agent jumping into this codebase, **y
 
 ---
 
-## 1. The Dual Rendering Engine (PHP + Twig)
-This project uses a hybrid rendering approach. 
-- **Raw PHP (`src/Views/layouts/layout.php`)**: Handles the legacy, hyper-optimized markdown wrapper (`generic-post.php`) used for parsing guides and blog content.
-- **Twig (`src/Views/layouts/base.twig`)**: Handles modern, highly-componentized views like the Homepage (`home.twig`) and dynamic resource archives (`resources.twig`).
+## 1. The Twig Rendering Engine
+This project uses a 100% **Twig**-based rendering architecture.
+- **Twig (`src/Views/`)**: Handles all UI rendering, from dynamic pages (`home.twig`) to content wrappers (`layouts/generic-post.twig`).
 
-**Rule:** When adding site-wide structural changes (like editing the header, footer, or navigation), you **must** mirror your changes across *both* the `.php` layouts and `.twig` layouts to ensure visual and structural parity across the entire platform.
+**Rule:** When adding site-wide structural changes (like editing the header, footer, or navigation), you must update the centralized Twig components (e.g. `layouts/header.twig`, `layouts/footer.twig`).
 
 ---
 

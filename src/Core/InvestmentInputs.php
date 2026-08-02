@@ -52,8 +52,23 @@ class InvestmentInputs
     }
 
     /**
+     * Helper to load the JSON defaults.
+     */
+    private static function loadDefaults(): array
+    {
+        $jsonPath = __DIR__ . '/../../content/calculator_defaults.json';
+        if (file_exists($jsonPath)) {
+            $decoded = json_decode(file_get_contents($jsonPath), true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                return $decoded;
+            }
+        }
+        throw new \Exception("calculator_defaults.json is missing or invalid.");
+    }
+
+    /**
      * Create sanitized inputs from request POST/GET payload.
-     * Bounds and defaults are read from the central calculator_defaults.php config.
+     * Bounds and defaults are read from the central calculator_defaults.json config.
      *
      * @param array $data Typically $_POST or $_GET payload
      * @return self
@@ -61,7 +76,7 @@ class InvestmentInputs
     public static function fromRequest(array $data): self
     {
         // Load the single source of truth for all bounds and defaults.
-        $cfg = require __DIR__ . '/Config/calculator_defaults.php';
+        $cfg = self::loadDefaults();
 
         $sip           = isset($data['sip'])
             ? self::clamp((float)$data['sip'], $cfg['sip']['min'], $cfg['sip']['max'])
@@ -132,7 +147,7 @@ class InvestmentInputs
      */
     public static function fromSwpRequest(array $data): self
     {
-        $cfg = require __DIR__ . '/Config/calculator_defaults.php';
+        $cfg = self::loadDefaults();
 
         // `corpus` is the SWP-specific field — maps to internal `lumpsum` (starting balance).
         $corpus = isset($data['corpus'])
@@ -160,17 +175,17 @@ class InvestmentInputs
             : (float)$cfg['inflation']['default'];
 
         return new self(
-            sip: 0.0,
-            years: 1,
-            rate: (float)$cfg['rate']['default'],
-            stepup: 0.0,
-            enableSwp: true,
-            swpWithdrawal: $swpWithdrawal,
-            swpStepup: $swpStepup,
-            swpYears: $swpYears,
-            lumpsum: $corpus,         // corpus maps to lumpsum as starting balance
-            swpRate: $swpRate,
-            inflation: $inflation
+            0.0,
+            1,
+            (float)$cfg['rate']['default'],
+            0.0,
+            true,
+            $swpWithdrawal,
+            $swpStepup,
+            $swpYears,
+            $corpus,         // corpus maps to lumpsum as starting balance
+            $swpRate,
+            $inflation
         );
     }
 

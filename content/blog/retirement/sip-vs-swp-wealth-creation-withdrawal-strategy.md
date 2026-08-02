@@ -1,5 +1,12 @@
-# SIP vs SWP: Building and Enjoying Your Corpus — The Complete Lifecycle Strategy
-How to smoothly transition from the accumulation phase (SIP) to the distribution phase (SWP) — with the Retirement Red Zone, Bucket Strategy, and a full 50-year lifecycle worked example
+---
+title: "SIP vs SWP: Building and Enjoying Your Corpus — The Complete Lifecycle Strategy"
+subtitle: "How to smoothly transition from the accumulation phase (SIP) to the distribution phase (SWP) — with the Retirement Red Zone, Bucket Strategy, and a full 50-year lifecycle worked example"
+tag: "Lifecycle"
+tag_color: "indigo"
+featured: false
+date: "February 2026"
+canonical: "https://sipswpcalculator.com/resource/retirement/sip-vs-swp-wealth-creation-withdrawal-strategy"
+---
 
 ---
 

@@ -66,12 +66,16 @@ class App
             return new AnonymizedInsightLogger();
         });
 
+        $this->container->singleton(\Core\Factories\SchemaFactory::class, function (Container $c) {
+            return new \Core\Factories\SchemaFactory($c->get(SchemaHelper::class));
+        });
+
         // Bind the Strategy GuideRenderer
         $this->container->singleton(\Services\GuideRenderer::class, function (Container $c) {
             return new \Services\GuideRenderer(
                 $c->get(ContentManager::class),
                 $c->get(MetaManager::class),
-                $c->get(SchemaHelper::class)
+                $c->get(\Core\Factories\SchemaFactory::class)
             );
         });
     }
@@ -116,15 +120,23 @@ class App
         $this->router->get('/resource', 'BlogController@index');
         $this->router->get('/resource/{category}/{slug}', 'BlogController@show');
 
-        // Dynamic Blog Redirects
-        foreach ($this->routesConfig['blog_redirects'] as $slug => $target) {
-            $this->router->redirect("/resource/{$slug}", "/resource/{$target}");
-        }
+        // Load Dynamic Redirects from JSON
+        $redirectsPath = __DIR__ . '/../../content/redirects.json';
+        if (file_exists($redirectsPath)) {
+            $redirectsData = json_decode(file_get_contents($redirectsPath), true);
 
-        // Dynamic Stubs Redirects
-        foreach ($this->routesConfig['stubs'] as $old => $new) {
-            $this->router->redirect($old, $new);
-            $this->router->redirect($old . '.php', $new);
+            if (isset($redirectsData['blog_redirects']) && is_array($redirectsData['blog_redirects'])) {
+                foreach ($redirectsData['blog_redirects'] as $slug => $target) {
+                    $this->router->redirect("/resource/{$slug}", "/resource/{$target}");
+                }
+            }
+
+            if (isset($redirectsData['stubs']) && is_array($redirectsData['stubs'])) {
+                foreach ($redirectsData['stubs'] as $old => $new) {
+                    $this->router->redirect($old, $new);
+                    $this->router->redirect($old . '.php', $new);
+                }
+            }
         }
     }
 }

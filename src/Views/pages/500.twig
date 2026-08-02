@@ -1,0 +1,25 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+<main class="flex-grow flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
+    <div class="max-w-max mx-auto text-center">
+        <p class="text-4xl font-extrabold text-red-600 sm:text-5xl">500</p>
+        <div class="sm:ml-6">
+            <div class="sm:border-l sm:border-slate-200 sm:pl-6">
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl">Server Error</h1>
+                <p class="mt-2 text-base text-slate-500">Something went wrong on our end. Please try again later.</p>
+                {% if error %}
+                <div class="mt-4 text-left bg-red-50 text-red-700 p-4 rounded-md text-xs font-mono overflow-x-auto">
+                    {{ error }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="mt-10 flex justify-center space-x-3 sm:border-l sm:border-transparent sm:pl-6">
+                <a href="/" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors">
+                    Go back home
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

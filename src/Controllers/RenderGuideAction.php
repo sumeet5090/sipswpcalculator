@@ -27,16 +27,10 @@ class RenderGuideAction
         $calcConfig = $routesConfig['calculators']['/' . $slug] ?? null;
 
         if (!$calcConfig) {
-            http_response_code(404);
-            echo "404 Calculator Route Not Found";
+            \Controllers\ErrorController::handle404();
             return;
         }
 
-        $this->guideRenderer->render(
-            $slug,
-            $calcConfig['seo_category'],
-            $calcConfig['date'],
-            $calcConfig['type']
-        );
+        $this->guideRenderer->render($slug);
     }
 }

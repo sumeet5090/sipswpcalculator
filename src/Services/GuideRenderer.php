@@ -19,122 +19,58 @@ class GuideRenderer
 {
     private ContentManager $contentManager;
     private MetaManager $metaManager;
-    private SchemaHelper $schemaHelper;
+    private \Core\Factories\SchemaFactory $schemaFactory;
 
     public function __construct(
         ContentManager $contentManager,
         MetaManager $metaManager,
-        SchemaHelper $schemaHelper
+        \Core\Factories\SchemaFactory $schemaFactory
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
-        $this->schemaHelper = $schemaHelper;
+        $this->schemaFactory = $schemaFactory;
     }
 
     /**
      * Parse and render an educational guide template in a standard strategy flow.
      *
      * @param string $slug Guide URL path slug (e.g. 'sip-calculator')
-     * @param string $seo_category Category folder name (e.g. 'growth', 'retirement', 'comparison')
-     * @param string $publishedDate Meta publication date
-     * @param string $type The structural type of the page (e.g. 'calculator', 'guide')
      */
-    public function render(string $slug, string $seo_category, string $publishedDate, string $type = 'guide'): void
+    public function render(string $slug): void
     {
         $path = "/calculators/{$slug}";
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            http_response_code(404);
-            echo "404 Guide Not Found";
+            \Controllers\ErrorController::handle404();
             return;
         }
 
-        $page_config = $this->metaManager->getMeta($slug);
-        if (!empty($content['metadata']['title'])) {
-            $page_config = $this->metaManager->setDynamicMeta(
-                $content['metadata']['title'],
-                $content['metadata']['subtitle'] ?: "Read our guide on " . str_replace('-', ' ', $slug)
-            );
+        $meta = $content['metadata'];
+        $seo_category = $meta['seo_category'] ?? 'growth';
+        $type = $meta['type'] ?? 'guide';
+        $publishedDate = $meta['date'] ?? '2026-08-01';
+
+        $page_config = $this->metaManager->buildFromMetadata($meta, $slug);
+
+        $strategy = \Core\Strategies\StrategyFactory::create($slug);
+        $calculator_type = 'all';
+
+        if ($type === 'calculator') {
+            $calculator_type = $strategy->getType();
         }
-
-        // Generate breadcrumbs schema
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            $page_config['title'] ?? ucfirst(str_replace('-', ' ', $slug)) => '/' . $slug
-        ]);
-
-        $url = 'https://sipswpcalculator.com/' . $slug;
-        $description = $page_config['meta_desc'] ?? $page_config['title'] ?? '';
-        $imageUrl = $page_config['og_image'] ?? 'https://sipswpcalculator.com/assets/og-image-main.jpg';
-
-        $mdFile = __DIR__ . '/../../content/calculators/' . $slug . '.md';
-        $actualModifiedDate = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $publishedDate;
-
-        // Generate Article schema
-        $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'] ?? '',
-            $description,
-            $url,
-            $imageUrl,
-            $publishedDate,
-            $actualModifiedDate
-        );
 
         $faqRepository = new \Core\FaqRepository();
         $faqs = $faqRepository->getByTag($slug);
 
-        $faq_schema = '';
-        if (!empty($faqs)) {
-            $faqData = [];
-            foreach ($faqs as $faq) {
-                $faqData[$faq['q']] = $faq['a'];
-            }
-            $faq_schema = $this->schemaHelper->getFAQ($faqData);
-        }
-
-        // Generate WebPage schema
-        $webpage_schema = $this->schemaHelper->getWebPage(
-            $page_config['title'] ?? '',
-            $description,
-            $url
+        $page_config['additional_head'] = $this->schemaFactory->generateForPage(
+            $slug,
+            $type,
+            $page_config,
+            $publishedDate,
+            $faqs,
+            $strategy
         );
-
-        $additional_schemas = '';
-        $calculator_type = 'all';
-
-        if ($type === 'calculator') {
-            $calcTitle = $page_config['title'] ?? 'Mutual Fund Calculator';
-
-            if (strpos($slug, 'lumpsum') !== false) {
-                $calculator_type = 'lumpsum';
-            } elseif (strpos($slug, 'retirement') !== false) {
-                $calculator_type = 'all'; // Render combo form
-            } elseif (strpos($slug, 'sip') !== false && strpos($slug, 'swp') === false) {
-                $calculator_type = 'sip';
-            } elseif (strpos($slug, 'swp') !== false) {
-                $calculator_type = 'swp';
-            }
-
-            $software_schema = $this->schemaHelper->getSoftwareApplication(
-                $calcTitle,
-                $description,
-                $url,
-                "FinanceApplication"
-            );
-            $additional_schemas .= '<script type="application/ld+json">' . $software_schema . '</script>';
-        }
-
-        if ($faq_schema) {
-            $additional_schemas .= "\n" . '            <script type="application/ld+json">' . $faq_schema . '</script>';
-        }
-
-        $page_config['additional_head'] = '
-            <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
-            <script type="application/ld+json">' . $article_schema . '</script>
-            <script type="application/ld+json">' . $webpage_schema . '</script>
-            ' . $additional_schemas . '
-        ';
 
         // Add custom JS script if it matches specific naming/file templates
         $possibleJsPath = '/assets/js/calculators/' . $slug . '.js';
@@ -148,13 +84,12 @@ class GuideRenderer
         $active_page = $slug . '.php';
 
         // Load central calc config — single source of truth for all field bounds/defaults.
-        $calcConfig = require __DIR__ . '/../Core/Config/calculator_defaults.php';
+        $calcConfigPath = __DIR__ . '/../../content/calculator_defaults.json';
+        $calcConfig = file_exists($calcConfigPath) ? json_decode(file_get_contents($calcConfigPath), true) : [];
 
         // Build InvestmentInputs from defaults and run the calculator so the chart
         // and table are pre-populated on first load (no user interaction required).
-        $inputs = ($calculator_type === 'swp')
-            ? InvestmentInputs::fromSwpRequest([])
-            : InvestmentInputs::fromRequest([]);
+        $inputs = $strategy->getInitialInputs();
 
         $calculator = new InvestmentCalculator();
         $combined = $calculator->calculate($inputs);
@@ -171,7 +106,7 @@ class GuideRenderer
         $rate            = $inputs->getRate();
         $stepup          = $inputs->getStepup();
         $lumpsum         = $inputs->getLumpsum();
-        $corpus          = ($calculator_type === 'swp') ? $inputs->getLumpsum() : 0.0;
+        $corpus          = $strategy->getCorpus($inputs);
         $swp_withdrawal  = $inputs->getSwpWithdrawal();
         $swp_years_input = $inputs->getSwpYears();
         $swp_stepup      = $inputs->getSwpStepup();

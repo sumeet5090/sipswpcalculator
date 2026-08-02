@@ -1,5 +1,13 @@
-# SWP Calculator India 2026: Free Systematic Withdrawal Plan Calculator
-Plan tax-efficient monthly retirement income from your mutual fund corpus. Use our free SWP calculator with step-up withdrawals, interactive charts, and yearly breakdown tables.
+---
+title: "SWP Calculator India 2026: Free Systematic Withdrawal Plan Calculator"
+subtitle: "Plan tax-efficient monthly retirement income from your mutual fund corpus. Use our free SWP calculator with step-up withdrawals, interactive charts, and yearly breakdown tables."
+meta_desc: "Free SWP calculator for Indian mutual funds. Calculate post-tax monthly retirement income with step-up withdrawals. Plan your corpus drawdown with interactive charts and yearly tables."
+keywords: "swp calculator, systematic withdrawal plan calculator, swp mutual fund, mutual fund withdrawal, retirement calculator"
+canonical: "https://sipswpcalculator.com/swp-calculator"
+seo_category: "retirement"
+type: "calculator"
+date: "2026-07-05"
+---
 
 ---
 

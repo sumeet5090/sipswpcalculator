@@ -1,5 +1,12 @@
-# Mutual Fund Tax Rules 2026: The Complete LTCG, STCG & Tax-Efficient Withdrawal Guide
-Your definitive guide to mutual fund taxation in India and globally — with worked examples, strategies, and common mistakes to avoid
+---
+title: "Mutual Fund Tax Rules 2026: The Complete LTCG, STCG & Tax-Efficient Withdrawal Guide"
+subtitle: "Your definitive guide to mutual fund taxation in India and globally — with worked examples, strategies, and common mistakes to avoid"
+tag: "Tax"
+tag_color: "amber"
+featured: false
+date: "March 2026"
+canonical: "https://sipswpcalculator.com/resource/comparison/mutual-fund-tax-2026"
+---
 
 ---
 

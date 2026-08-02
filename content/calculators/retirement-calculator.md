@@ -1,5 +1,13 @@
-# Retirement Calculator India 2026: Complete Pension & Drawdown Planner
-Free retirement calculator for India. Plan your accumulation phase (SIP) and drawdown phase (SWP). See exactly how long your money will last using the 4% rule.
+---
+title: "Retirement Calculator India 2026: Complete Pension & Drawdown Planner"
+subtitle: "Free retirement calculator for India. Plan your accumulation phase (SIP) and drawdown phase (SWP). See exactly how long your money will last using the 4% rule."
+meta_desc: "Free retirement calculator for India. Plan your accumulation phase (SIP) and drawdown phase (SWP). See exactly how long your money will last using the 4% rule."
+keywords: "retirement calculator india, pension calculator, swp retirement calculator, 4 percent rule calculator, retirement corpus calculator"
+canonical: "https://sipswpcalculator.com/retirement-calculator"
+seo_category: "retirement"
+type: "calculator"
+date: "2026-08-01"
+---
 
 ---
 

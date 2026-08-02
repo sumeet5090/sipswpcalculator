@@ -10,7 +10,21 @@ class FaqRepository
 
     public function __construct()
     {
-        $this->faqs = require __DIR__ . '/Config/faqs.php';
+        $jsonPath = __DIR__ . '/../../content/faqs.json';
+        if (!file_exists($jsonPath)) {
+            $this->faqs = [];
+            return;
+        }
+
+        $jsonContent = file_get_contents($jsonPath);
+        $decoded = json_decode($jsonContent, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log("Failed to parse content/faqs.json: " . json_last_error_msg());
+            $this->faqs = [];
+        } else {
+            $this->faqs = $decoded ?? [];
+        }
     }
 
     /**

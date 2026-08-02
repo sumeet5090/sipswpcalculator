@@ -1,5 +1,12 @@
-# How to Reach ₹1 Crore in 15 to 20 Years via SIP
-The exact monthly SIP amounts, return rates, and step-up strategies needed to hit the ₹1 Crore, ₹5 Crores, and ₹10 Crores milestones with Indian Mutual Funds
+---
+title: "How to Reach ₹1 Crore in 15 to 20 Years via SIP"
+subtitle: "The exact monthly SIP amounts, return rates, and step-up strategies needed to hit the ₹1 Crore, ₹5 Crores, and ₹10 Crores milestones with Indian Mutual Funds"
+tag: "Milestone"
+tag_color: "emerald"
+featured: false
+date: "January 2026"
+canonical: "https://sipswpcalculator.com/resource/growth/reach-1-crore-rupees-via-sip"
+---
 
 ---
 

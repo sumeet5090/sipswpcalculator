@@ -27,33 +27,69 @@ class ContentManager
 
         $rawContent = file_get_contents($fullPath);
 
-        // Simple front-matter parsing (extracting title/subtitle if they exist at the top)
-        // Format: # Title\nSubtitle\n---
-        $lines = explode("\n", $rawContent);
-        $title = '';
-        $subtitle = '';
-        $contentStartLine = 0;
+        $metadata = [];
+        $body = $rawContent;
 
-        if (str_starts_with($lines[0], '# ')) {
-            $title = substr($lines[0], 2);
-            $contentStartLine = 1;
-            if (isset($lines[1]) && trim($lines[1]) !== '' && trim($lines[1]) !== '---') {
-                $subtitle = $lines[1];
-                $contentStartLine = 2;
+        // Matches front-matter block starting and ending with ---
+        if (preg_match('/\A\s*---\r?\n(.*?)\r?\n---\r?\n(.*)/s', $rawContent, $matches)) {
+            $frontMatter = $matches[1];
+            $body = ltrim($matches[2]);
+
+            // Parse simple key-value pairs
+            $lines = explode("\n", $frontMatter);
+            foreach ($lines as $line) {
+                $line = trim($line);
+                if (empty($line) || str_starts_with($line, '#')) {
+                    continue; // Skip empty lines and comments
+                }
+
+                $parts = explode(':', $line, 2);
+                if (count($parts) === 2) {
+                    $key = trim($parts[0]);
+                    $value = trim($parts[1]);
+
+                    // Strip wrapping quotes if present
+                    if (preg_match('/^["\'](.*)["\']$/', $value, $valMatches)) {
+                        $value = $valMatches[1];
+                    }
+
+                    // Cast booleans
+                    if ($value === 'true') {
+                        $value = true;
+                    } elseif ($value === 'false') {
+                        $value = false;
+                    }
+
+                    $metadata[$key] = $value;
+                }
             }
-            if (isset($lines[$contentStartLine]) && trim($lines[$contentStartLine]) === '---') {
-                $contentStartLine++;
+        } else {
+            // Legacy fallback if no front-matter is used
+            $lines = explode("\n", $rawContent);
+            $title = '';
+            $subtitle = '';
+            $contentStartLine = 0;
+
+            if (str_starts_with($lines[0], '# ')) {
+                $title = substr($lines[0], 2);
+                $contentStartLine = 1;
+                if (isset($lines[1]) && trim($lines[1]) !== '' && trim($lines[1]) !== '---') {
+                    $subtitle = trim($lines[1]);
+                    $contentStartLine = 2;
+                }
+                if (isset($lines[$contentStartLine]) && trim($lines[$contentStartLine]) === '---') {
+                    $contentStartLine++;
+                }
+                $metadata['title'] = trim($title);
+                $metadata['subtitle'] = $subtitle;
+                $body = implode("\n", array_slice($lines, $contentStartLine));
             }
         }
 
-        $body = implode("\n", array_slice($lines, $contentStartLine));
         $html = $this->parsedown->text($body);
 
         return [
-            'metadata' => [
-                'title' => $title,
-                'subtitle' => $subtitle,
-            ],
+            'metadata' => $metadata,
             'html' => $html
         ];
     }

@@ -1,5 +1,12 @@
-# The Math of Inflation: How It Silently Destroys Your SIP Returns (2026 Analysis)
-A mathematical deep-dive into inflation's impact on investment purchasing power — with the Fisher Equation, worked examples, and the step-up SIP antidote
+---
+title: "The Math of Inflation: How It Silently Destroys Your SIP Returns (2026 Analysis)"
+subtitle: "A mathematical deep-dive into inflation\'s impact on investment purchasing power — with the Fisher Equation, worked examples, and the step-up SIP antidote"
+tag: "Inflation"
+tag_color: "emerald"
+featured: false
+date: "March 2026"
+canonical: "https://sipswpcalculator.com/resource/growth/inflation-impact-on-sip"
+---
 
 ---
 
