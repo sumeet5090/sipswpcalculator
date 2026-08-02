@@ -37,7 +37,19 @@ class PageController
 
     public function glossary(): void
     {
-        $glossary_terms = require __DIR__ . '/../Core/Config/glossary.php';
+        $jsonPath = __DIR__ . '/../../content/glossary.json';
+        $glossary_terms = [];
+
+        if (file_exists($jsonPath)) {
+            $jsonContent = file_get_contents($jsonPath);
+            $decoded = json_decode($jsonContent, true);
+
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                $glossary_terms = $decoded;
+            } else {
+                error_log("Failed to parse content/glossary.json: " . json_last_error_msg());
+            }
+        }
 
         usort($glossary_terms, function ($a, $b) {
             return strcmp($a['q'], $b['q']);
