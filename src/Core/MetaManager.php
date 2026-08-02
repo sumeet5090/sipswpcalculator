@@ -46,6 +46,13 @@ class MetaManager
             'meta_desc' => 'Free retirement calculator for India. Plan your accumulation phase (SIP) and drawdown phase (SWP). See exactly how long your money will last using the 4% rule.',
             'keywords' => 'retirement calculator india, pension calculator, swp retirement calculator, 4 percent rule calculator, retirement corpus calculator',
             'canonical' => 'https://sipswpcalculator.com/retirement-calculator',
+        ],
+
+        'my-first-crore-calculator' => [
+            'title' => 'My First Crore Calculator India 2026: Time & SIP Required',
+            'meta_desc' => 'Free Goal Planning Calculator. Calculate exactly how much monthly SIP you need to reach ₹1 Crore in 5, 10, or 15 years.',
+            'keywords' => 'my first crore calculator, 1 crore sip calculator, goal planning calculator, target corpus calculator, how to make 1 crore',
+            'canonical' => 'https://sipswpcalculator.com/my-first-crore-calculator',
         ]
     ];
 

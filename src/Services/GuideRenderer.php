@@ -108,6 +108,8 @@ class GuideRenderer
 
             if (strpos($slug, 'lumpsum') !== false) {
                 $calculator_type = 'lumpsum';
+            } elseif (strpos($slug, 'crore') !== false) {
+                $calculator_type = 'target_corpus';
             } elseif (strpos($slug, 'retirement') !== false) {
                 $calculator_type = 'all'; // Render combo form
             } elseif (strpos($slug, 'sip') !== false && strpos($slug, 'swp') === false) {

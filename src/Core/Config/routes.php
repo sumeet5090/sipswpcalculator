@@ -33,6 +33,12 @@ return [
             'seo_category' => 'retirement',
             'type'         => 'calculator',
             'date'         => '2026-08-01'
+        ],
+        '/my-first-crore-calculator' => [
+            'action'       => 'RenderGuideAction',
+            'seo_category' => 'growth',
+            'type'         => 'calculator',
+            'date'         => '2026-08-03'
         ]
     ],
     'pages' => [

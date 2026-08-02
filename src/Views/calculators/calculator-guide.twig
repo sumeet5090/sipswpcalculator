@@ -157,6 +157,13 @@
                                 {% include 'components/forms/lumpsum-only-fields.twig' %}
                             {% endif %}
 
+                            {% if calculator_type == 'target_corpus' %}
+                                <div class="mb-2">
+                                    <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">Target Goal Details</span>
+                                </div>
+                                {% include 'components/forms/target-corpus-fields.twig' %}
+                            {% endif %}
+
                             {% if calculator_type == 'swp' %}
                                 <div class="mb-2">
                                     <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">Your Corpus</span>

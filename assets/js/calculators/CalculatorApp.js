@@ -398,6 +398,11 @@ export class CalculatorApp {
      * Initialize app lifecycle.
      */
     init() {
+        const appContainer = document.getElementById('calculator-app');
+        if (appContainer && appContainer.dataset.mode === 'target_corpus') {
+            this.activeGoalMode = 'target';
+        }
+
         // ── Synchronize Slider pairs via SliderManager ──
         this.sliderManager.syncAll({
             'sip':            'sip_range',
