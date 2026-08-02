@@ -66,12 +66,16 @@ class App
             return new AnonymizedInsightLogger();
         });
 
+        $this->container->singleton(\Core\Factories\SchemaFactory::class, function (Container $c) {
+            return new \Core\Factories\SchemaFactory($c->get(SchemaHelper::class));
+        });
+
         // Bind the Strategy GuideRenderer
         $this->container->singleton(\Services\GuideRenderer::class, function (Container $c) {
             return new \Services\GuideRenderer(
                 $c->get(ContentManager::class),
                 $c->get(MetaManager::class),
-                $c->get(SchemaHelper::class)
+                $c->get(\Core\Factories\SchemaFactory::class)
             );
         });
     }

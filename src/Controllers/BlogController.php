@@ -20,17 +20,25 @@ class BlogController
     private MetaManager $metaManager;
     private SchemaHelper $schemaHelper;
     private BlogRepository $blogRepository;
+    private \Core\Factories\SchemaFactory $schemaFactory;
 
     public function __construct(
         ContentManager $contentManager,
         MetaManager $metaManager,
         SchemaHelper $schemaHelper,
-        BlogRepository $blogRepository
+        BlogRepository $blogRepository,
+        ?\Core\Factories\SchemaFactory $schemaFactory = null
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
         $this->schemaHelper = $schemaHelper;
         $this->blogRepository = $blogRepository;
+
+        if ($schemaFactory === null) {
+            $this->schemaFactory = new \Core\Factories\SchemaFactory($schemaHelper);
+        } else {
+            $this->schemaFactory = $schemaFactory;
+        }
     }
 
     public function index(): void
@@ -87,16 +95,12 @@ class BlogController
             );
         }
 
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
+        $breadcrumbs = [
             'Home' => '/',
             'Resources' => '/resources',
             ucfirst($category) => "/resource/{$category}",
             $content['metadata']['title'] ?: ucfirst(str_replace('-', ' ', $slug)) => "/resource/{$category}/{$slug}"
-        ]);
-
-        $url = 'https://sipswpcalculator.com/resource/' . $category . '/' . $slug;
-        $description = $page_config['meta_desc'] ?? $page_config['title'] ?? '';
-        $imageUrl = $page_config['og_image'] ?? 'https://sipswpcalculator.com/assets/og-image-main.jpg';
+        ];
 
         // Derive real datePublished from post config (e.g., "March 2026" → "2026-03-01")
         $datePublished = '2026-03-01';
@@ -113,26 +117,16 @@ class BlogController
             ? date('Y-m-d', filemtime($mdFile))
             : $datePublished;
 
-        $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'] ?? '',
-            $description,
-            $url,
-            $imageUrl,
+        $page_config['additional_head'] = $this->schemaFactory->generateForPage(
+            $category . '/' . $slug,
+            'blog',
+            $page_config,
             $datePublished,
-            $dateModified
+            [],
+            null,
+            $breadcrumbs,
+            'https://sipswpcalculator.com/resource/' . $category . '/' . $slug
         );
-
-        $webpage_schema = $this->schemaHelper->getWebPage(
-            $page_config['title'] ?? '',
-            $description,
-            $url
-        );
-
-        $page_config['additional_head'] = '
-            <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
-            <script type="application/ld+json">' . $article_schema . '</script>
-            <script type="application/ld+json">' . $webpage_schema . '</script>
-        ';
 
         View::render('layouts/generic-post', [
             'content_html'     => $content['html'],

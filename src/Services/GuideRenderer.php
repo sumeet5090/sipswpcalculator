@@ -19,16 +19,16 @@ class GuideRenderer
 {
     private ContentManager $contentManager;
     private MetaManager $metaManager;
-    private SchemaHelper $schemaHelper;
+    private \Core\Factories\SchemaFactory $schemaFactory;
 
     public function __construct(
         ContentManager $contentManager,
         MetaManager $metaManager,
-        SchemaHelper $schemaHelper
+        \Core\Factories\SchemaFactory $schemaFactory
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
-        $this->schemaHelper = $schemaHelper;
+        $this->schemaFactory = $schemaFactory;
     }
 
     /**
@@ -58,76 +58,24 @@ class GuideRenderer
             );
         }
 
-        // Generate breadcrumbs schema
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            $page_config['title'] ?? ucfirst(str_replace('-', ' ', $slug)) => '/' . $slug
-        ]);
-
-        $url = 'https://sipswpcalculator.com/' . $slug;
-        $description = $page_config['meta_desc'] ?? $page_config['title'] ?? '';
-        $imageUrl = $page_config['og_image'] ?? 'https://sipswpcalculator.com/assets/og-image-main.jpg';
-
-        $mdFile = __DIR__ . '/../../content/calculators/' . $slug . '.md';
-        $actualModifiedDate = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $publishedDate;
-
-        // Generate Article schema
-        $article_schema = $this->schemaHelper->getArticle(
-            $page_config['title'] ?? '',
-            $description,
-            $url,
-            $imageUrl,
-            $publishedDate,
-            $actualModifiedDate
-        );
-
-        $faqRepository = new \Core\FaqRepository();
-        $faqs = $faqRepository->getByTag($slug);
-
-        $faq_schema = '';
-        if (!empty($faqs)) {
-            $faqData = [];
-            foreach ($faqs as $faq) {
-                $faqData[$faq['q']] = $faq['a'];
-            }
-            $faq_schema = $this->schemaHelper->getFAQ($faqData);
-        }
-
-        // Generate WebPage schema
-        $webpage_schema = $this->schemaHelper->getWebPage(
-            $page_config['title'] ?? '',
-            $description,
-            $url
-        );
-
-        $additional_schemas = '';
         $strategy = \Core\Strategies\StrategyFactory::create($slug);
         $calculator_type = 'all';
 
         if ($type === 'calculator') {
-            $calcTitle = $page_config['title'] ?? 'Mutual Fund Calculator';
-
             $calculator_type = $strategy->getType();
-
-            $software_schema = $this->schemaHelper->getSoftwareApplication(
-                $calcTitle,
-                $description,
-                $url,
-                "FinanceApplication"
-            );
-            $additional_schemas .= '<script type="application/ld+json">' . $software_schema . '</script>';
         }
 
-        if ($faq_schema) {
-            $additional_schemas .= "\n" . '            <script type="application/ld+json">' . $faq_schema . '</script>';
-        }
+        $faqRepository = new \Core\FaqRepository();
+        $faqs = $faqRepository->getByTag($slug);
 
-        $page_config['additional_head'] = '
-            <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
-            <script type="application/ld+json">' . $article_schema . '</script>
-            <script type="application/ld+json">' . $webpage_schema . '</script>
-            ' . $additional_schemas . '
-        ';
+        $page_config['additional_head'] = $this->schemaFactory->generateForPage(
+            $slug,
+            $type,
+            $page_config,
+            $publishedDate,
+            $faqs,
+            $strategy
+        );
 
         // Add custom JS script if it matches specific naming/file templates
         $possibleJsPath = '/assets/js/calculators/' . $slug . '.js';
