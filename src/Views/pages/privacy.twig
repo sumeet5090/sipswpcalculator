@@ -3,13 +3,13 @@
 {% set page_config = {
     'title': 'Privacy Policy | SIP & SWP Calculator',
     'meta_desc': 'Privacy policy for the SIP & SWP Calculator. We respect your privacy and do not collect personal financial data.',
-    'canonical': 'https://sipswpcalculator.com/privacy'
+    'canonical': 'https://sipswpcalculator.com/privacy',
+    'robots': 'noindex, follow'
 } %}
 
 {% set active_page = 'privacy.php' %}
 
 {% block head %}
-    <meta name="robots" content="noindex, follow">
     <script type="application/ld+json">{{ breadcrumbs|raw }}</script>
 {% endblock %}
 

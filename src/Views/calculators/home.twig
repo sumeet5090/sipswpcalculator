@@ -1,10 +1,6 @@
 {% extends 'layouts/base.twig' %}
 
 {% block head %}
-<meta name="keywords"
-    content="SIP and SWP Calculator Together, SIP SWP Combo Calculator, SIP SWP Combined Calculator, SIP to SWP Calculator, Step-Up SIP Calculator, SWP Calculator India, Mutual Fund SIP SWP Calculator, SWP Planner, Investment Planner, Retirement Planning, SIP Calculator India, Mutual Fund Return Calculator">
-<link rel="alternate" hreflang="en-IN" href="https://sipswpcalculator.com/">
-<link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/">
 
 {% set faqSchema = {
     '@context': 'https://schema.org',
@@ -46,13 +42,6 @@
       "availableOnDevice": ["Desktop", "Mobile", "Tablet"],
       "inLanguage": ["en-IN"],
       "isAccessibleForFree": true,
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "ratingCount": "1247",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
       "offers": [
         {
           "@type": "Offer",
@@ -77,7 +66,7 @@
       "screenshot": "https://sipswpcalculator.com/assets/og-image-main.jpg",
       "image": "https://sipswpcalculator.com/assets/og-image-main.jpg",
       "datePublished": "2024-12-01",
-      "dateModified": "{{ 'now'|date('Y-m-d') }}",
+      "dateModified": "2026-08-02",
       "softwareVersion": "3.0",
       "releaseNotes": "Locked default currency to INR (₹), updated Indian tax integrations, and optimized performance.",
       "author": {
@@ -363,7 +352,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            Verified for Accuracy: June 2026
+            Verified for Accuracy: {{ "now"|date("F Y") }}
         </div>
     </div>
 

@@ -106,12 +106,13 @@ class GuideRenderer
         if ($type === 'calculator') {
             $calcTitle = $page_config['title'] ?? 'Mutual Fund Calculator';
 
-            $rating = [];
-            if (strpos($slug, 'sip') !== false && strpos($slug, 'swp') === false) {
-                $rating = ['ratingValue' => '4.9', 'ratingCount' => '1342'];
+            if (strpos($slug, 'lumpsum') !== false) {
+                $calculator_type = 'lumpsum';
+            } elseif (strpos($slug, 'retirement') !== false) {
+                $calculator_type = 'all'; // Render combo form
+            } elseif (strpos($slug, 'sip') !== false && strpos($slug, 'swp') === false) {
                 $calculator_type = 'sip';
             } elseif (strpos($slug, 'swp') !== false) {
-                $rating = ['ratingValue' => '4.8', 'ratingCount' => '856'];
                 $calculator_type = 'swp';
             }
 
@@ -119,8 +120,7 @@ class GuideRenderer
                 $calcTitle,
                 $description,
                 $url,
-                "FinanceApplication",
-                $rating
+                "FinanceApplication"
             );
             $additional_schemas .= '<script type="application/ld+json">' . $software_schema . '</script>';
         }
@@ -130,8 +130,6 @@ class GuideRenderer
         }
 
         $page_config['additional_head'] = '
-            <link rel="alternate" hreflang="en-IN" href="https://sipswpcalculator.com/' . $slug . '">
-            <link rel="alternate" hreflang="x-default" href="https://sipswpcalculator.com/' . $slug . '">
             <script type="application/ld+json">' . $breadcrumbs_schema . '</script>
             <script type="application/ld+json">' . $article_schema . '</script>
             <script type="application/ld+json">' . $webpage_schema . '</script>

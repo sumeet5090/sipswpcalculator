@@ -98,13 +98,28 @@ class BlogController
         $description = $page_config['meta_desc'] ?? $page_config['title'] ?? '';
         $imageUrl = $page_config['og_image'] ?? 'https://sipswpcalculator.com/assets/og-image-main.jpg';
 
+        // Derive real datePublished from post config (e.g., "March 2026" → "2026-03-01")
+        $datePublished = '2026-03-01';
+        if ($post_metadata && !empty($post_metadata['date'])) {
+            $parsed = \DateTimeImmutable::createFromFormat('F Y', $post_metadata['date']);
+            if ($parsed) {
+                $datePublished = $parsed->format('Y-m-01');
+            }
+        }
+
+        // Derive real dateModified from markdown file mtime
+        $mdFile = __DIR__ . '/../../content/blog/' . $category . '/' . $slug . '.md';
+        $dateModified = file_exists($mdFile)
+            ? date('Y-m-d', filemtime($mdFile))
+            : $datePublished;
+
         $article_schema = $this->schemaHelper->getArticle(
             $page_config['title'] ?? '',
             $description,
             $url,
             $imageUrl,
-            '2026-03-01',
-            date('Y-m-d')
+            $datePublished,
+            $dateModified
         );
 
         $webpage_schema = $this->schemaHelper->getWebPage(
@@ -127,6 +142,8 @@ class BlogController
             'category'         => $category,
             'active_page'      => 'blog_post',
             'all_posts'        => $all_posts,
+            'date_published'   => $datePublished,
+            'date_modified'    => $dateModified,
         ]);
     }
 }
