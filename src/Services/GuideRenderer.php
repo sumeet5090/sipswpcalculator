@@ -35,11 +35,8 @@ class GuideRenderer
      * Parse and render an educational guide template in a standard strategy flow.
      *
      * @param string $slug Guide URL path slug (e.g. 'sip-calculator')
-     * @param string $seo_category Category folder name (e.g. 'growth', 'retirement', 'comparison')
-     * @param string $publishedDate Meta publication date
-     * @param string $type The structural type of the page (e.g. 'calculator', 'guide')
      */
-    public function render(string $slug, string $seo_category, string $publishedDate, string $type = 'guide'): void
+    public function render(string $slug): void
     {
         $path = "/calculators/{$slug}";
         $content = $this->contentManager->getParsedContent($path);
@@ -50,13 +47,12 @@ class GuideRenderer
             return;
         }
 
-        $page_config = $this->metaManager->getMeta($slug);
-        if (!empty($content['metadata']['title'])) {
-            $page_config = $this->metaManager->setDynamicMeta(
-                $content['metadata']['title'],
-                $content['metadata']['subtitle'] ?: "Read our guide on " . str_replace('-', ' ', $slug)
-            );
-        }
+        $meta = $content['metadata'];
+        $seo_category = $meta['seo_category'] ?? 'growth';
+        $type = $meta['type'] ?? 'guide';
+        $publishedDate = $meta['date'] ?? '2026-08-01';
+
+        $page_config = $this->metaManager->buildFromMetadata($meta, $slug);
 
         $strategy = \Core\Strategies\StrategyFactory::create($slug);
         $calculator_type = 'all';

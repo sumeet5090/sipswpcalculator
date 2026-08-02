@@ -1,5 +1,12 @@
-# 20-Year Step-Up SIP Wealth Blueprint: Beat Inflation & Build Wealth
-How increasing your monthly investment by just 10% every year can transform ₹10,000/month into ₹2.4 crore — the most powerful wealth strategy nobody talks about
+---
+title: "20-Year Step-Up SIP Wealth Blueprint: Beat Inflation & Build Wealth"
+subtitle: "How increasing your monthly investment by just 10% every year can transform ₹10,000/month into ₹2.4 crore — the most powerful wealth strategy nobody talks about"
+tag: "Strategy"
+tag_color: "emerald"
+featured: false
+date: "February 2026"
+canonical: "https://sipswpcalculator.com/resource/growth/20-year-wealth-blueprint-step-up-sip"
+---
 
 ---
 

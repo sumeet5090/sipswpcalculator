@@ -1,5 +1,12 @@
-# The 4% SWP Rule Explained: How to Make Your Retirement Money Last Forever
-A complete guide to the 4% Safe Withdrawal Rate — its origins, the math behind it, when to use 3.5% instead, and how to stress-test your plan against sequence-of-returns risk
+---
+title: "The 4% SWP Rule Explained: How to Make Your Retirement Money Last Forever"
+subtitle: "A complete guide to the 4% Safe Withdrawal Rate — its origins, the math behind it, when to use 3.5% instead, and how to stress-test your plan against sequence-of-returns risk"
+tag: "Strategy"
+tag_color: "indigo"
+featured: true
+date: "March 2026"
+canonical: "https://sipswpcalculator.com/resource/retirement/retirement-planning-4-percent-swp-rule"
+---
 
 ---
 

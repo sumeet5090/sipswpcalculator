@@ -1,5 +1,12 @@
-# Retirement Planning with SWP 2026: The Complete Masterclass
-How to build a sustainable retirement income using Systematic Withdrawal Plans — with the Magic Number formula, 3-Bucket Strategy, and year-by-year worked examples
+---
+title: "Retirement Planning with SWP 2026: The Complete Masterclass"
+subtitle: "How to build a sustainable retirement income using Systematic Withdrawal Plans — with the Magic Number formula, 3-Bucket Strategy, and year-by-year worked examples"
+tag: "Planning"
+tag_color: "indigo"
+featured: false
+date: "March 2026"
+canonical: "https://sipswpcalculator.com/resource/retirement/swp-retirement-planning"
+---
 
 ---
 

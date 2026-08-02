@@ -32,11 +32,6 @@ class RenderGuideAction
             return;
         }
 
-        $this->guideRenderer->render(
-            $slug,
-            $calcConfig['seo_category'],
-            $calcConfig['date'],
-            $calcConfig['type']
-        );
+        $this->guideRenderer->render($slug);
     }
 }

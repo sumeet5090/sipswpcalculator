@@ -1,5 +1,12 @@
-# SWP vs Fixed Deposit 2026: Which Gives Better Retirement Income?
-The definitive side-by-side comparison of Systematic Withdrawal Plans and Fixed Deposits — with real numbers, tax math, and a clear verdict
+---
+title: "SWP vs Fixed Deposit 2026: Which Gives Better Retirement Income?"
+subtitle: "The definitive side-by-side comparison of Systematic Withdrawal Plans and Fixed Deposits — with real numbers, tax math, and a clear verdict"
+tag: "Comparison"
+tag_color: "amber"
+featured: false
+date: "February 2026"
+canonical: "https://sipswpcalculator.com/resource/comparison/swp-vs-fixed-deposit"
+---
 
 ---
 

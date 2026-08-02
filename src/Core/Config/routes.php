@@ -4,42 +4,12 @@ declare(strict_types=1);
 
 return [
     'calculators' => [
-        '/sip-calculator' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'growth',
-            'type'         => 'calculator',
-            'date'         => '2026-02-25'
-        ],
-        '/swp-calculator' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'retirement',
-            'type'         => 'calculator',
-            'date'         => '2026-07-05'
-        ],
-        '/sip-step-up-calculator' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'growth',
-            'type'         => 'calculator',
-            'date'         => '2026-08-01'
-        ],
-        '/lumpsum-calculator' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'growth',
-            'type'         => 'calculator',
-            'date'         => '2026-08-01'
-        ],
-        '/retirement-calculator' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'retirement',
-            'type'         => 'calculator',
-            'date'         => '2026-08-01'
-        ],
-        '/my-first-crore-calculator' => [
-            'action'       => 'RenderGuideAction',
-            'seo_category' => 'growth',
-            'type'         => 'calculator',
-            'date'         => '2026-08-03'
-        ]
+        '/sip-calculator' => ['action' => 'RenderGuideAction'],
+        '/swp-calculator' => ['action' => 'RenderGuideAction'],
+        '/sip-step-up-calculator' => ['action' => 'RenderGuideAction'],
+        '/lumpsum-calculator' => ['action' => 'RenderGuideAction'],
+        '/retirement-calculator' => ['action' => 'RenderGuideAction'],
+        '/my-first-crore-calculator' => ['action' => 'RenderGuideAction']
     ],
     'pages' => [
         '/about'    => 'PageController@about',

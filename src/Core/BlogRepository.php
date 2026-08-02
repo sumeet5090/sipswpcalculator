@@ -10,23 +10,6 @@ namespace Core;
  */
 class BlogRepository
 {
-    private static array $postConfigs = [
-        'sip-for-beginners' => ['tag' => 'Beginner', 'tag_color' => 'emerald', 'featured' => true, 'date' => 'March 2026'],
-        '20-year-wealth-blueprint-step-up-sip' => ['tag' => 'Strategy', 'tag_color' => 'emerald', 'date' => 'February 2026'],
-        'reach-1-crore-rupees-via-sip' => ['tag' => 'Milestone', 'tag_color' => 'emerald', 'date' => 'January 2026'],
-        'inflation-impact-on-sip' => ['tag' => 'Inflation', 'tag_color' => 'emerald', 'date' => 'March 2026'],
-        'earning-30k-at-25-investment-blueprint' => ['tag' => 'Blueprint', 'tag_color' => 'emerald', 'date' => 'July 2026'],
-        'retirement-planning-4-percent-swp-rule' => ['tag' => 'Strategy', 'tag_color' => 'indigo', 'featured' => true, 'date' => 'March 2026'],
-        'sip-vs-swp-wealth-creation-withdrawal-strategy' => ['tag' => 'Lifecycle', 'tag_color' => 'indigo', 'date' => 'February 2026'],
-        'swp-retirement-planning' => ['tag' => 'Planning', 'tag_color' => 'indigo', 'date' => 'March 2026'],
-        'sip-vs-fd-vs-ppf' => ['tag' => 'Comparison', 'tag_color' => 'amber', 'featured' => true, 'date' => 'March 2026'],
-        'swp-vs-fixed-deposit' => ['tag' => 'Comparison', 'tag_color' => 'amber', 'date' => 'February 2026'],
-        'swp-vs-annuity-2026' => ['tag' => 'Comparison', 'tag_color' => 'amber', 'date' => 'January 2026'],
-        'mutual-fund-tax-2026' => ['tag' => 'Tax', 'tag_color' => 'amber', 'date' => 'March 2026'],
-        'mf-returns-benchmarks' => ['tag' => 'Benchmarks', 'tag_color' => 'amber', 'date' => 'January 2026'],
-        'sip-vs-lumpsum' => ['tag' => 'Comparison', 'tag_color' => 'amber', 'featured' => true, 'date' => 'July 2026'],
-    ];
-
     public static function getCategories(): array
     {
         return [
@@ -80,7 +63,7 @@ class BlogRepository
                     continue;
                 }
 
-                $config = self::$postConfigs[$slug] ?? [];
+                $meta = $content['metadata'];
 
                 // Calculate dynamic read time: count body words and divide by average reading speed (200 wpm)
                 $wordCount = str_word_count(strip_tags($content['html']));
@@ -90,14 +73,14 @@ class BlogRepository
                 $posts[] = [
                     'category' => $cat,
                     'id' => $cat,
-                    'tag' => $config['tag'] ?? 'Guide',
-                    'tag_color' => $config['tag_color'] ?? 'slate',
-                    'title' => $content['metadata']['title'] ?: ucfirst(str_replace('-', ' ', $slug)),
-                    'desc' => $content['metadata']['subtitle'] ?: '',
+                    'tag' => $meta['tag'] ?? 'Guide',
+                    'tag_color' => $meta['tag_color'] ?? 'slate',
+                    'title' => !empty($meta['title']) ? $meta['title'] : ucfirst(str_replace('-', ' ', $slug)),
+                    'desc' => $meta['subtitle'] ?? '',
                     'href' => "/resource/{$cat}/{$slug}",
-                    'featured' => $config['featured'] ?? false,
+                    'featured' => $meta['featured'] ?? false,
                     'read_time' => $readTime,
-                    'date' => $config['date'] ?? 'March 2026'
+                    'date' => $meta['date'] ?? 'March 2026'
                 ];
             }
         }

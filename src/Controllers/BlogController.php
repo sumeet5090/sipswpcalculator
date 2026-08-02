@@ -87,13 +87,7 @@ class BlogController
             }
         }
 
-        $page_config = $this->metaManager->getMeta($slug);
-        if (!empty($content['metadata']['title'])) {
-            $page_config = $this->metaManager->setDynamicMeta(
-                $content['metadata']['title'],
-                $content['metadata']['subtitle'] ?: "Read our guide on " . str_replace('-', ' ', $slug)
-            );
-        }
+        $page_config = $this->metaManager->buildFromMetadata($content['metadata'], $slug);
 
         $breadcrumbs = [
             'Home' => '/',

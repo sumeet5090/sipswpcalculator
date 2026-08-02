@@ -1,5 +1,13 @@
-# Step-Up SIP Calculator India 2026: Annual Increase SIP Planner
-Free Step-up SIP calculator. Calculate how increasing your SIP amount annually by 5%, 10%, or 20% impacts your long-term wealth creation. Beat inflation easily.
+---
+title: "Step-Up SIP Calculator India 2026: Annual Increase SIP Planner"
+subtitle: "Free Step-up SIP calculator. Calculate how increasing your SIP amount annually by 5%, 10%, or 20% impacts your long-term wealth creation. Beat inflation easily."
+meta_desc: "Free Step-up SIP calculator. Calculate how increasing your SIP amount annually by 5%, 10%, or 20% impacts your long-term wealth creation. Beat inflation easily."
+keywords: "step up sip calculator, top up sip calculator, increasing sip calculator, stepup sip, mutual fund step up"
+canonical: "https://sipswpcalculator.com/sip-step-up-calculator"
+seo_category: "growth"
+type: "calculator"
+date: "2026-08-01"
+---
 
 ---
 

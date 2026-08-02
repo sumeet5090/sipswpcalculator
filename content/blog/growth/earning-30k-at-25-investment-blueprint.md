@@ -1,5 +1,12 @@
-# Earning ₹30,000/Month at Age 25? Here is Your Wealth Creation Blueprint
-A step-by-step financial plan to start investing for long-term compounding, allocate across SIPs, emergency funds, and leverage the power of starting early in India.
+---
+title: "Earning ₹30,000/Month at Age 25? Here is Your Wealth Creation Blueprint"
+subtitle: "A step-by-step financial plan to start investing for long-term compounding, allocate across SIPs, emergency funds, and leverage the power of starting early in India."
+tag: "Blueprint"
+tag_color: "emerald"
+featured: false
+date: "July 2026"
+canonical: "https://sipswpcalculator.com/resource/growth/earning-30k-at-25-investment-blueprint"
+---
 
 ---
 

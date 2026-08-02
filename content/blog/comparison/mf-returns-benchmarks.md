@@ -1,5 +1,12 @@
-# Mutual Fund Returns Benchmarks 2026: What Rate Should You Use in Your Calculator?
-Historical benchmark tables for India (INR) — so you can pick a realistic, honest rate for your financial plan
+---
+title: "Mutual Fund Returns Benchmarks 2026: What Rate Should You Use in Your Calculator?"
+subtitle: "Historical benchmark tables for India (INR) — so you can pick a realistic, honest rate for your financial plan"
+tag: "Benchmarks"
+tag_color: "amber"
+featured: false
+date: "January 2026"
+canonical: "https://sipswpcalculator.com/resource/comparison/mf-returns-benchmarks"
+---
 
 ---
 
