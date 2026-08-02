@@ -116,7 +116,8 @@ class RenderHomeAction
         $homeFaqs = $faqRepository->getByTag('home');
 
         // Load central config and pass to view for dynamic field bounds/defaults.
-        $calcConfig = require __DIR__ . '/../Core/Config/calculator_defaults.php';
+        $calcConfigPath = __DIR__ . '/../../content/calculator_defaults.json';
+        $calcConfig = file_exists($calcConfigPath) ? json_decode(file_get_contents($calcConfigPath), true) : [];
 
         View::render('calculators/home', [
             'active_page'         => 'index.php',

@@ -1,4 +1,4 @@
-import defaultsConfig from './calculator_defaults.json';
+import defaultsConfig from '../../../content/calculator_defaults.json';
 
 /**
  * InputValidator.js

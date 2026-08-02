@@ -84,7 +84,8 @@ class GuideRenderer
         $active_page = $slug . '.php';
 
         // Load central calc config — single source of truth for all field bounds/defaults.
-        $calcConfig = require __DIR__ . '/../Core/Config/calculator_defaults.php';
+        $calcConfigPath = __DIR__ . '/../../content/calculator_defaults.json';
+        $calcConfig = file_exists($calcConfigPath) ? json_decode(file_get_contents($calcConfigPath), true) : [];
 
         // Build InvestmentInputs from defaults and run the calculator so the chart
         // and table are pre-populated on first load (no user interaction required).
