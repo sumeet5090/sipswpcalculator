@@ -101,22 +101,13 @@ class GuideRenderer
         );
 
         $additional_schemas = '';
+        $strategy = \Core\Strategies\StrategyFactory::create($slug);
         $calculator_type = 'all';
 
         if ($type === 'calculator') {
             $calcTitle = $page_config['title'] ?? 'Mutual Fund Calculator';
 
-            if (strpos($slug, 'lumpsum') !== false) {
-                $calculator_type = 'lumpsum';
-            } elseif (strpos($slug, 'crore') !== false) {
-                $calculator_type = 'target_corpus';
-            } elseif (strpos($slug, 'retirement') !== false) {
-                $calculator_type = 'all'; // Render combo form
-            } elseif (strpos($slug, 'sip') !== false && strpos($slug, 'swp') === false) {
-                $calculator_type = 'sip';
-            } elseif (strpos($slug, 'swp') !== false) {
-                $calculator_type = 'swp';
-            }
+            $calculator_type = $strategy->getType();
 
             $software_schema = $this->schemaHelper->getSoftwareApplication(
                 $calcTitle,
@@ -154,9 +145,7 @@ class GuideRenderer
 
         // Build InvestmentInputs from defaults and run the calculator so the chart
         // and table are pre-populated on first load (no user interaction required).
-        $inputs = ($calculator_type === 'swp')
-            ? InvestmentInputs::fromSwpRequest([])
-            : InvestmentInputs::fromRequest([]);
+        $inputs = $strategy->getInitialInputs();
 
         $calculator = new InvestmentCalculator();
         $combined = $calculator->calculate($inputs);
@@ -173,7 +162,7 @@ class GuideRenderer
         $rate            = $inputs->getRate();
         $stepup          = $inputs->getStepup();
         $lumpsum         = $inputs->getLumpsum();
-        $corpus          = ($calculator_type === 'swp') ? $inputs->getLumpsum() : 0.0;
+        $corpus          = $strategy->getCorpus($inputs);
         $swp_withdrawal  = $inputs->getSwpWithdrawal();
         $swp_years_input = $inputs->getSwpYears();
         $swp_stepup      = $inputs->getSwpStepup();
