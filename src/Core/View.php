@@ -88,8 +88,7 @@ class View
         try {
             return $twig->render($view, $data);
         } catch (\Exception $e) {
-            http_response_code(500);
-            return "500 Internal Server Error: Twig rendering failed. " . $e->getMessage();
+            throw new \RuntimeException("Twig rendering failed: " . $e->getMessage(), 0, $e);
         }
     }
 
@@ -101,9 +100,7 @@ class View
         if (file_exists($path)) {
             require $path;
         } else {
-            http_response_code(500);
-            echo "500 Internal Server Error: View template [{$view}] not found.";
-            exit;
+            throw new \RuntimeException("View template [{$view}] not found.");
         }
     }
 }
