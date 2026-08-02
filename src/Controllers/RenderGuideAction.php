@@ -27,8 +27,7 @@ class RenderGuideAction
         $calcConfig = $routesConfig['calculators']['/' . $slug] ?? null;
 
         if (!$calcConfig) {
-            http_response_code(404);
-            echo "404 Calculator Route Not Found";
+            \Controllers\ErrorController::handle404();
             return;
         }
 

@@ -42,8 +42,7 @@ class GuideRenderer
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            http_response_code(404);
-            echo "404 Guide Not Found";
+            \Controllers\ErrorController::handle404();
             return;
         }
 

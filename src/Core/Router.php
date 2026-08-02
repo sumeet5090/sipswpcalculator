@@ -55,9 +55,7 @@ class Router
             }
         }
 
-        http_response_code(404);
-        echo "404 Not Found";
-        exit;
+        \Controllers\ErrorController::handle404();
     }
 
     private function callAction($controllerAction, $params = [])
@@ -99,15 +97,11 @@ class Router
                     return;
                 }
             } catch (\Throwable $e) {
-                http_response_code(500);
-                echo "500 Internal Server Error: " . $e->getMessage();
-                exit;
+                \Controllers\ErrorController::handle500($e);
             }
         }
 
-        http_response_code(500);
-        echo "500 Internal Server Error: Controller or Method not found ($controllerName@$action)";
-        exit;
+        \Controllers\ErrorController::handle500(new \Exception("Controller or Method not found ($controllerName@$action)"));
     }
 
     public function getRoutes(): array

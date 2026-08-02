@@ -73,8 +73,7 @@ class BlogController
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            http_response_code(404);
-            echo "404 Blog Post Not Found";
+            \Controllers\ErrorController::handle404();
             return;
         }
 

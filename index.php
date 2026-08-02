@@ -23,5 +23,15 @@ if (file_exists($envFile)) {
     }
 }
 
-$app = new \Core\App();
-$app->run();
+try {
+    $app = new \Core\App();
+    $app->run();
+} catch (\Throwable $e) {
+    // If the autoloader or App container fails, this is our absolute last line of defense.
+    if (class_exists('\Controllers\ErrorController')) {
+        \Controllers\ErrorController::handle500($e);
+    } else {
+        http_response_code(500);
+        echo "Fatal Error: " . $e->getMessage();
+    }
+}
