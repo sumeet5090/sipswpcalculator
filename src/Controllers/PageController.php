@@ -82,6 +82,10 @@ class PageController
 
         View::render('pages/privacy', [
             'breadcrumbs' => $breadcrumbs,
+            'page_config' => [
+                'title' => 'Privacy Policy',
+                'robots' => 'noindex, follow'
+            ]
         ]);
     }
 
@@ -118,6 +122,10 @@ class PageController
 
         View::render('pages/terms', [
             'breadcrumbs' => $breadcrumbs,
+            'page_config' => [
+                'title' => 'Terms of Service',
+                'robots' => 'noindex, follow'
+            ]
         ]);
     }
 }
