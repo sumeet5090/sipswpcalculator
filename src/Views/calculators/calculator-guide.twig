@@ -103,28 +103,74 @@
             style="top: 120px;">
             <div class="glass-card p-4 sm:p-5">
                 <form id="calculator-form" class="space-y-6" onsubmit="event.preventDefault();">
-                    <input type="hidden" id="enable_swp" name="enable_swp" value="{{ calculator_type == 'swp' or calculator_type == 'all' ? '1' : '0' }}">
-                    <div class="space-y-4">
-                        {% if calculator_type == 'sip' or calculator_type == 'all' %}
-                            <div class="mb-2">
-                                <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">SIP Details</span>
+                    {% if calculator_type == 'all' %}
+                        <!-- Combo Form (SIP + SWP Tabs) -->
+                        <div class="flex rounded-xl overflow-hidden border border-slate-200 mb-4" role="tablist">
+                            <button type="button" id="tab-sip" role="tab" aria-selected="true"
+                                onclick="switchFormTab('sip')"
+                                class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-emerald-500 text-white">
+                                SIP Details
+                            </button>
+                            <button type="button" id="tab-swp" role="tab" aria-selected="false"
+                                onclick="switchFormTab('swp')"
+                                class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-500 hover:bg-rose-50 hover:text-rose-500">
+                                SWP Details
+                            </button>
+                        </div>
+                        
+                        <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip">
+                            <div class="space-y-4">
+                                {% include 'components/forms/lumpsum-fields.twig' %}
+                                {% include 'components/forms/sip-fields.twig' %}
                             </div>
-                            {% include 'components/forms/sip-fields.twig' %}
-                        {% endif %}
+                        </div>
+                        
+                        <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="hidden">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-xs font-bold text-rose-400 tracking-widest uppercase">Enable SWP</span>
+                                    <label class="toggle-switch relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="enable_swp" name="enable_swp" class="sr-only peer" checked>
+                                        <div class="w-9 h-5 bg-slate-200 peer-focus-visible:ring-2 peer-focus-visible:ring-rose-400 peer-focus-visible:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500"></div>
+                                    </label>
+                                </div>
+                                <div id="swp-fields">
+                                    {% include 'components/forms/swp-fields.twig' %}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <!-- Single Calculator Forms -->
+                        <input type="hidden" id="enable_swp" name="enable_swp" value="{{ calculator_type == 'swp' ? '1' : '0' }}">
+                        <div class="space-y-4">
+                            {% if calculator_type == 'sip' %}
+                                <div class="mb-2">
+                                    <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">SIP Details</span>
+                                </div>
+                                {% include 'components/forms/sip-fields.twig' %}
+                            {% endif %}
 
-                        {% if calculator_type == 'swp' %}
-                            <div class="mb-2">
-                                <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">Your Corpus</span>
-                            </div>
-                            {% include 'components/forms/corpus-field.twig' %}
-                            <div class="mb-2 mt-4">
-                                <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">SWP Details</span>
-                            </div>
-                            <div id="swp-fields">
-                                {% include 'components/forms/swp-fields.twig' %}
-                            </div>
-                        {% endif %}
-                    </div>
+                            {% if calculator_type == 'lumpsum' %}
+                                <div class="mb-2">
+                                    <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">Lumpsum Details</span>
+                                </div>
+                                {% include 'components/forms/lumpsum-only-fields.twig' %}
+                            {% endif %}
+
+                            {% if calculator_type == 'swp' %}
+                                <div class="mb-2">
+                                    <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">Your Corpus</span>
+                                </div>
+                                {% include 'components/forms/corpus-field.twig' %}
+                                <div class="mb-2 mt-4">
+                                    <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">SWP Details</span>
+                                </div>
+                                <div id="swp-fields">
+                                    {% include 'components/forms/swp-fields.twig' %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </form>
             </div>
         </div>

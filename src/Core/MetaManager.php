@@ -25,6 +25,27 @@ class MetaManager
             'meta_desc' => 'Free SWP calculator for Indian mutual funds. Calculate post-tax monthly retirement income with step-up withdrawals. Plan your retirement corpus drawdown with interactive charts and yearly breakdown tables.',
             'keywords' => 'swp calculator, systematic withdrawal plan calculator, swp mutual fund, mutual fund withdrawal, retirement calculator',
             'canonical' => 'https://sipswpcalculator.com/swp-calculator',
+        ],
+
+        'lumpsum-calculator' => [
+            'title' => 'Lumpsum Calculator India 2026: Mutual Fund Returns Calculator',
+            'meta_desc' => 'Free lumpsum calculator for Indian mutual funds. Calculate returns on your one-time investments with inflation-adjusted compounding and interactive growth charts.',
+            'keywords' => 'lumpsum calculator, one time investment calculator, mutual fund lumpsum, fd vs mutual fund lumpsum, lumpsum return calculator',
+            'canonical' => 'https://sipswpcalculator.com/lumpsum-calculator',
+        ],
+
+        'sip-step-up-calculator' => [
+            'title' => 'Step-Up SIP Calculator India 2026: Annual Increase SIP Planner',
+            'meta_desc' => 'Free Step-up SIP calculator. Calculate how increasing your SIP amount annually by 5%, 10%, or 20% impacts your long-term wealth creation. Beat inflation easily.',
+            'keywords' => 'step up sip calculator, top up sip calculator, increasing sip calculator, stepup sip, mutual fund step up',
+            'canonical' => 'https://sipswpcalculator.com/sip-step-up-calculator',
+        ],
+
+        'retirement-calculator' => [
+            'title' => 'Retirement Calculator India 2026: Complete Pension & Drawdown Planner',
+            'meta_desc' => 'Free retirement calculator for India. Plan your accumulation phase (SIP) and drawdown phase (SWP). See exactly how long your money will last using the 4% rule.',
+            'keywords' => 'retirement calculator india, pension calculator, swp retirement calculator, 4 percent rule calculator, retirement corpus calculator',
+            'canonical' => 'https://sipswpcalculator.com/retirement-calculator',
         ]
     ];
 

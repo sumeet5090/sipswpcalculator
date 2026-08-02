@@ -106,7 +106,11 @@ class GuideRenderer
         if ($type === 'calculator') {
             $calcTitle = $page_config['title'] ?? 'Mutual Fund Calculator';
 
-            if (strpos($slug, 'sip') !== false && strpos($slug, 'swp') === false) {
+            if (strpos($slug, 'lumpsum') !== false) {
+                $calculator_type = 'lumpsum';
+            } elseif (strpos($slug, 'retirement') !== false) {
+                $calculator_type = 'all'; // Render combo form
+            } elseif (strpos($slug, 'sip') !== false && strpos($slug, 'swp') === false) {
                 $calculator_type = 'sip';
             } elseif (strpos($slug, 'swp') !== false) {
                 $calculator_type = 'swp';

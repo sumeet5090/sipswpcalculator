@@ -15,6 +15,24 @@ return [
             'seo_category' => 'retirement',
             'type'         => 'calculator',
             'date'         => '2026-07-05'
+        ],
+        '/sip-step-up-calculator' => [
+            'action'       => 'RenderGuideAction',
+            'seo_category' => 'growth',
+            'type'         => 'calculator',
+            'date'         => '2026-08-01'
+        ],
+        '/lumpsum-calculator' => [
+            'action'       => 'RenderGuideAction',
+            'seo_category' => 'growth',
+            'type'         => 'calculator',
+            'date'         => '2026-08-01'
+        ],
+        '/retirement-calculator' => [
+            'action'       => 'RenderGuideAction',
+            'seo_category' => 'retirement',
+            'type'         => 'calculator',
+            'date'         => '2026-08-01'
         ]
     ],
     'pages' => [
@@ -47,11 +65,9 @@ return [
     'stubs' => [
         '/compound-interest-calculator'    => '/sip-calculator',
         '/dollar-cost-averaging-tool'      => '/sip-calculator',
-        '/lumpsum-calculator'              => '/sip-calculator',
         '/mutual-fund-calculator'          => '/sip-calculator',
         '/retirement-drawdown-planner'     => '/swp-calculator',
         '/swp-tax-calculator'              => '/swp-calculator',
-        '/sip-step-up-calculator'    => '/sip-calculator',
         '/recurring-investment-calculator' => '/sip-calculator',
         '/20-year-wealth-blueprint-step-up-sip' => '/resource/growth/20-year-wealth-blueprint-step-up-sip',
         '/inflation-impact-on-sip' => '/resource/growth/inflation-impact-on-sip',
