@@ -142,6 +142,8 @@ class BlogController
             'category'         => $category,
             'active_page'      => 'blog_post',
             'all_posts'        => $all_posts,
+            'date_published'   => $datePublished,
+            'date_modified'    => $dateModified,
         ]);
     }
 }

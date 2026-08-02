@@ -3,13 +3,13 @@
 {% set page_config = {
     'title': 'Terms of Service | SIP & SWP Calculator',
     'meta_desc': 'Terms of Service for the SIP & SWP Calculator. Please read these terms carefully before using our financial tools.',
-    'canonical': 'https://sipswpcalculator.com/terms'
+    'canonical': 'https://sipswpcalculator.com/terms',
+    'robots': 'noindex, follow'
 } %}
 
 {% set active_page = 'terms.php' %}
 
 {% block head %}
-    <meta name="robots" content="noindex, follow">
     <script type="application/ld+json">{{ breadcrumbs|raw }}</script>
 {% endblock %}
 

@@ -13,7 +13,7 @@
     {% set current_uri = request.server('REQUEST_URI', '/') %}
     {% set canonical_url = page_config.canonical|default('https://sipswpcalculator.com' ~ current_uri) %}
     <link rel="canonical" href="{{ canonical_url }}">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="{{ page_config.robots|default('index, follow') }}">
 
     <link rel="alternate" hreflang="en-IN" href="{{ canonical_url }}">
     <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">

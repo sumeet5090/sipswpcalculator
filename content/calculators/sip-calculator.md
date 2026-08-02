@@ -124,6 +124,8 @@ Yes, most Asset Management Companies (AMCs) allow you to "Pause" a SIP for 1-6 m
 <li><a href="/resource/retirement/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP Retirement Planning</a> — Generate steady retirement income from your mutual fund corpus</li>
 <li><a href="/resource/comparison/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual Fund Tax Rules 2026</a> — LTCG, STCG & tax-efficient withdrawal strategies</li>
 <li><a href="/resource/comparison/sip-vs-fd-vs-bonds" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs Bonds</a> — Which investment gives the best returns for your goal?</li>
+<li><a href="/swp-calculator" class="text-indigo-600 hover:underline font-medium">SWP Calculator Guide</a> — Master your retirement withdrawals</li>
+<li><a href="/" class="text-indigo-600 hover:underline font-medium">SIP & SWP Combined Planner</a> — Model your full accumulation-to-income journey</li>
 </ul>
 </div>
 

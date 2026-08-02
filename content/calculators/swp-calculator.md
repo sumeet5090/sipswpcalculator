@@ -227,6 +227,7 @@ This is called "Sequence of Returns Risk." If markets fall early in your SWP pha
 <li><a href="/resource/retirement/retirement-planning-4-percent-swp-rule" class="text-indigo-600 hover:underline font-medium">The 4% Rule Explained</a> — Is it still valid for Indian retirees?</li>
 <li><a href="/resource/comparison/swp-vs-fixed-deposit" class="text-indigo-600 hover:underline font-medium">SWP vs Fixed Deposit</a> — Which is better for retirement income?</li>
 <li><a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">SIP Calculator Guide</a> — Master SIP compounding with step-up strategy</li>
+<li><a href="/" class="text-indigo-600 hover:underline font-medium">SIP & SWP Combined Planner</a> — Model your full accumulation-to-income journey</li>
 </ul>
 </div>
 
