@@ -22,11 +22,15 @@ class InsightRepository
     /**
      * Get all KPI aggregates and datasets for a specified time range interval.
      *
-     * @param string $interval SQLite interval string (e.g. '-1 day', '-7 days', etc.)
+     * @param array $range Range configuration containing interval, unit, and cte_start
      * @return array
      */
-    public function getDashboardData(string $interval): array
+    public function getDashboardData(array $range): array
     {
+        $interval = $range['interval'] ?? '-30 days';
+        $unit = $range['unit'] ?? 'day';
+        $cteStart = $range['cte_start'] ?? '-29 days';
+
         $where_clause = "WHERE created_at >= datetime('now', :interval)";
         $params = [':interval' => $interval];
 
@@ -82,15 +86,46 @@ class InsightRepository
             error_log("InsightRepository Query Error (referrer): " . $e->getMessage());
         }
 
-        // 7. Chart: Daily volume
-        $stmt = $this->pdo->prepare("
-            SELECT DATE(created_at) AS day, COUNT(*) AS cnt
-            FROM user_calculations
-            $where_clause
-            GROUP BY DATE(created_at)
-            ORDER BY day ASC
-        ");
-        $stmt->execute($params);
+        // 7. Chart: Daily/Hourly volume using recursive CTE for zero-filling
+        if ($unit === 'hour') {
+            $stmt = $this->pdo->prepare("
+                WITH RECURSIVE hours(tp) AS (
+                    SELECT strftime('%Y-%m-%d %H:00', 'now', :cte_start)
+                    UNION ALL
+                    SELECT strftime('%Y-%m-%d %H:00', tp, '+1 hour')
+                    FROM hours
+                    WHERE tp < strftime('%Y-%m-%d %H:00', 'now')
+                )
+                SELECT h.tp AS day, COUNT(u.id) AS cnt
+                FROM hours h
+                LEFT JOIN user_calculations u ON u.created_at >= datetime('now', :interval) AND strftime('%Y-%m-%d %H:00', u.created_at) = h.tp
+                GROUP BY h.tp
+                ORDER BY h.tp ASC
+            ");
+            $stmt->execute([
+                ':cte_start' => $cteStart,
+                ':interval' => $interval
+            ]);
+        } else {
+            $stmt = $this->pdo->prepare("
+                WITH RECURSIVE days(dp) AS (
+                    SELECT DATE('now', :cte_start)
+                    UNION ALL
+                    SELECT DATE(dp, '+1 day')
+                    FROM days
+                    WHERE dp < DATE('now')
+                )
+                SELECT d.dp AS day, COUNT(u.id) AS cnt
+                FROM days d
+                LEFT JOIN user_calculations u ON u.created_at >= datetime('now', :interval) AND DATE(u.created_at) = d.dp
+                GROUP BY d.dp
+                ORDER BY d.dp ASC
+            ");
+            $stmt->execute([
+                ':cte_start' => $cteStart,
+                ':interval' => $interval
+            ]);
+        }
         $dailyVolume = $stmt->fetchAll();
 
         // 8. Chart: Currency distribution
