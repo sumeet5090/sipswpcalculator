@@ -90,15 +90,27 @@ You can serve the application locally using PHP's built-in server or XAMPP.
 php -S localhost:8080 index.php
 ```
 
-### 4. Start Vite (Development Mode)
+### 4. Database Initialization
 
-While developing, run the Vite server to instantly compile Tailwind CSS and bundle JS assets with Hot Module Replacement (HMR). The `npm run dev` script automatically compiles the central calculator configuration (`src/Core/Config/calculator_defaults.php`) into JavaScript fallbacks before starting Vite:
+To set up your local SQLite database and run the initial schema migrations:
 
 ```bash
-npm run dev
+php bin/migrate
 ```
 
-> **Tip:** Keep this terminal open while you code. Vite will watch all your `.twig` and `.php` files and update assets instantly when you save. `calculator_defaults.php` is the single source of truth for calculator bounds and is automatically compiled to `calculator_defaults.json` (untracked build artifact) during `dev` and `build` lifecycles.
+This CLI migrator executes all outstanding PHP schema migrations. You can also trigger database upgrades in the browser at `/admin_insights/migrate` once logged in.
+
+---
+
+## Technical Details & Testing
+
+### Calculator Configuration Source of Truth
+`content/calculator_defaults.json` is the single source of truth for all calculator bounds, minimum/maximum limits, and default field values. Both the PHP backend (`InvestmentInputs.php`, controllers, strategies) and the JavaScript frontend (`InputValidator.js`) read this JSON directly. There are no build scripts or compilation steps needed.
+
+### PHPUnit Database Isolation
+To ensure test runs do not pollute your development database (`database/database.sqlite`), PHPUnit is configured with a dedicated testing database.
+- PHPUnit uses `tests/bootstrap.php` which automatically creates and runs migrations on `database/database.test.sqlite` before the suite runs.
+- The test database is completely isolated and is automatically deleted upon shutdown when PHPUnit completes execution.
 
 ---
 
