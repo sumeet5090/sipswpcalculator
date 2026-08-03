@@ -65,13 +65,13 @@ class AdminController
 
         // 4. Time Range Filter Config
         $time_ranges = [
-            '24h' => ['label' => '24 Hours',   'interval' => '-1 day',   'chart_days' => 1],
-            '48h' => ['label' => '48 Hours',   'interval' => '-2 days',  'chart_days' => 2],
-            '72h' => ['label' => '72 Hours',   'interval' => '-3 days',  'chart_days' => 3],
-            '1w'  => ['label' => '1 Week',     'interval' => '-7 days',  'chart_days' => 7],
-            '1m'  => ['label' => '1 Month',    'interval' => '-30 days', 'chart_days' => 30],
-            '6m'  => ['label' => '6 Months',   'interval' => '-180 days','chart_days' => 180],
-            '1y'  => ['label' => '1 Year',     'interval' => '-365 days','chart_days' => 365],
+            '24h' => ['label' => '24 Hours',   'interval' => '-1 day',   'unit' => 'hour', 'cte_start' => '-23 hours'],
+            '48h' => ['label' => '48 Hours',   'interval' => '-2 days',  'unit' => 'hour', 'cte_start' => '-47 hours'],
+            '72h' => ['label' => '72 Hours',   'interval' => '-3 days',  'unit' => 'hour', 'cte_start' => '-71 hours'],
+            '1w'  => ['label' => '1 Week',     'interval' => '-7 days',  'unit' => 'day',  'cte_start' => '-6 days'],
+            '1m'  => ['label' => '1 Month',    'interval' => '-30 days', 'unit' => 'day',  'cte_start' => '-29 days'],
+            '6m'  => ['label' => '6 Months',   'interval' => '-180 days','unit' => 'day',  'cte_start' => '-179 days'],
+            '1y'  => ['label' => '1 Year',     'interval' => '-365 days','unit' => 'day',  'cte_start' => '-364 days'],
         ];
 
         $current_range_key = $_GET['range'] ?? '24h';
@@ -81,7 +81,7 @@ class AdminController
         $current_range = $time_ranges[$current_range_key];
 
         // 5. Gather statistics from the Repository and format for View
-        $stats = $this->insightRepository->getDashboardData($current_range['interval']);
+        $stats = $this->insightRepository->getDashboardData($current_range);
         $viewModels = $this->presenter->formatForView($stats);
 
         // Merge view scope payload
