@@ -51,7 +51,7 @@ class MetaManager
             'title' => $title,
             'meta_desc' => $desc,
             'keywords' => '',
-            'canonical' => $canonical ?? $this->siteConfig->getUrl($_SERVER['REQUEST_URI'] ?? '/'),
+            'canonical' => $canonical ?? $this->siteConfig->getUrl('/'),
             'og_title' => $title,
             'og_desc' => $desc,
         ];

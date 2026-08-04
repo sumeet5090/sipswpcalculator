@@ -13,6 +13,7 @@ use Core\MetaManager;
 use Core\View;
 use Services\ConfigService;
 use Services\CsvExportService;
+use Services\SessionManager;
 
 class RenderHomeAction
 {
@@ -21,29 +22,27 @@ class RenderHomeAction
     private CsvExportService $csvExportService;
     private FaqRepository $faqRepository;
     private InvestmentCalculator $calculator;
+    private SessionManager $sessionManager;
 
     public function __construct(
         MetaManager $metaManager,
         ConfigService $configService,
         CsvExportService $csvExportService,
         FaqRepository $faqRepository,
-        InvestmentCalculator $calculator
+        InvestmentCalculator $calculator,
+        SessionManager $sessionManager
     ) {
         $this->metaManager = $metaManager;
         $this->configService = $configService;
         $this->csvExportService = $csvExportService;
         $this->faqRepository = $faqRepository;
         $this->calculator = $calculator;
+        $this->sessionManager = $sessionManager;
     }
 
     public function __invoke(Request $request): Response
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
+        $this->sessionManager->getCsrfToken();
 
         // CSRF & Honeypot Checks for POST requests
         if ($request->getMethod() === 'POST') {
@@ -51,8 +50,8 @@ class RenderHomeAction
             if (!empty($post['website_url'])) {
                 return new Response('Forbidden: Automated request detected.', 403);
             }
-            $token = $post['csrf_token'] ?? '';
-            if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
+            $token = (string) ($post['csrf_token'] ?? '');
+            if (!$this->sessionManager->verifyCsrfToken($token)) {
                 return new Response('Forbidden: Invalid security token. Please reload the page and try again.', 403);
             }
         }

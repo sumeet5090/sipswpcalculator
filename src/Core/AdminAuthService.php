@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Core;
 
 use Core\Exceptions\AuthenticationException;
+use Services\SessionManager;
 
 /**
  * AdminAuthService
@@ -12,11 +13,11 @@ use Core\Exceptions\AuthenticationException;
  */
 class AdminAuthService
 {
-    /**
-     * Start the session if not already started.
-     */
-    public function __construct()
+    private SessionManager $sessionManager;
+
+    public function __construct(SessionManager $sessionManager)
     {
+        $this->sessionManager = $sessionManager;
     }
 
     /**
@@ -24,7 +25,7 @@ class AdminAuthService
      */
     public function isAuthenticated(): bool
     {
-        return !empty($_SESSION['admin_authenticated']);
+        return $this->sessionManager->has('admin_authenticated');
     }
 
     /**
@@ -40,7 +41,7 @@ class AdminAuthService
         }
 
         if (hash_equals($envPassword, $password)) {
-            $_SESSION['admin_authenticated'] = true;
+            $this->sessionManager->set('admin_authenticated', true);
             return;
         }
 
@@ -52,6 +53,6 @@ class AdminAuthService
      */
     public function logout(): void
     {
-        session_destroy();
+        $this->sessionManager->destroy();
     }
 }

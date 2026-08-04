@@ -8,14 +8,17 @@ use Core\Http\Request;
 use Core\Http\Response;
 use Core\Exceptions\RateLimitExceededException;
 use Services\RateLimiter;
+use Services\SessionManager;
 
 class GeneratePdfAction
 {
     private RateLimiter $rateLimiter;
+    private SessionManager $sessionManager;
 
-    public function __construct(?RateLimiter $rateLimiter = null)
+    public function __construct(RateLimiter $rateLimiter, SessionManager $sessionManager)
     {
-        $this->rateLimiter = $rateLimiter ?? new RateLimiter();
+        $this->rateLimiter = $rateLimiter;
+        $this->sessionManager = $sessionManager;
     }
 
     public function __invoke(Request $request): Response
@@ -24,13 +27,9 @@ class GeneratePdfAction
             return new Response('Method Not Allowed', 405);
         }
 
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $post = $request->getParsedBody();
-        $token = $post['csrf_token'] ?? '';
-        if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
+        $token = (string) ($post['csrf_token'] ?? '');
+        if (!$this->sessionManager->verifyCsrfToken($token)) {
             return new Response('Forbidden: Invalid security token. Please reload the page and try again.', 403);
         }
 
@@ -41,10 +40,6 @@ class GeneratePdfAction
         } catch (RateLimitExceededException $e) {
             return new Response('Too many requests. Please wait a minute before generating another PDF.', 429);
         }
-
-        // Turn off error display during PDF generation so vendor deprecation warnings never corrupt binary stream
-        $orig_display_errors = ini_get('display_errors');
-        @ini_set('display_errors', '0');
 
         try {
             $inputs = [
@@ -149,8 +144,6 @@ class GeneratePdfAction
                 ob_end_clean();
             }
 
-            @ini_set('display_errors', (string) $orig_display_errors);
-
             return new Response($pdf_binary, 200, [
                 'Content-Type' => 'application/pdf',
                 'Content-Disposition' => 'attachment; filename="' . $filename . '"',
@@ -159,7 +152,6 @@ class GeneratePdfAction
                 'Pragma' => 'public',
             ]);
         } catch (\Exception $e) {
-            @ini_set('display_errors', (string) $orig_display_errors);
             error_log('PDF Generation Error: ' . $e->getMessage());
             return new Response('An error occurred during PDF generation. Please try again.', 500);
         }

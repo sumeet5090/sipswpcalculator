@@ -59,12 +59,9 @@ class View
      */
     public static function render(string $view, array $data = []): string
     {
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
-
-        $data['csrf_token'] = $data['csrf_token'] ?? $_SESSION['csrf_token'];
-        $data['app'] = $data['app'] ?? ['session' => ['csrf_token' => $_SESSION['csrf_token']]];
+        $csrfToken = $data['csrf_token'] ?? (new \Services\SessionManager())->getCsrfToken();
+        $data['csrf_token'] = $csrfToken;
+        $data['app'] = $data['app'] ?? ['session' => ['csrf_token' => $csrfToken]];
 
         $twig = self::getTwig();
 

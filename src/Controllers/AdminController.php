@@ -25,22 +25,22 @@ class AdminController
     private AnonymizedInsightLogger $insightLogger;
     private AdminAuthService $authService;
     private AdminDashboardPresenter $presenter;
-    private \PDO $pdo;
     private \Services\RateLimiter $rateLimiter;
+    private DatabaseMigrator $migrator;
 
     public function __construct(
         InsightRepository $insightRepository,
         AnonymizedInsightLogger $insightLogger,
         AdminAuthService $authService,
         AdminDashboardPresenter $presenter,
-        \PDO $pdo,
+        DatabaseMigrator $migrator,
         ?\Services\RateLimiter $rateLimiter = null
     ) {
         $this->insightRepository = $insightRepository;
         $this->insightLogger = $insightLogger;
         $this->authService = $authService;
         $this->presenter = $presenter;
-        $this->pdo = $pdo;
+        $this->migrator = $migrator;
         $this->rateLimiter = $rateLimiter ?? new \Services\RateLimiter();
     }
 
@@ -132,7 +132,7 @@ class AdminController
         }
 
         $payload = InsightPayload::fromArray($data);
-        $this->insightLogger->logCalculation($payload);
+        $this->insightLogger->logCalculation($payload, $request);
 
         return new Response('', 204);
     }
@@ -147,8 +147,7 @@ class AdminController
         }
 
         try {
-            $migrator = new DatabaseMigrator($this->pdo);
-            $migrator->migrate(true); // Silent mode
+            $this->migrator->migrate(true); // Silent mode
 
             return Response::json(['status' => 'success', 'message' => 'Database migrations completed successfully.']);
         } catch (\Throwable $e) {

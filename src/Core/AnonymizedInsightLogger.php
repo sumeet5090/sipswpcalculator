@@ -26,21 +26,13 @@ class AnonymizedInsightLogger
      * CRITICAL: Must be called after the calculation results are displayed to the user
      * to avoid slowing down initial page load (0.7s LCP constraint).
      */
-    public function logCalculation(InsightPayload $payload): void
+    public function logCalculation(InsightPayload $payload, ?Http\Request $request = null): void
     {
         try {
-            // Close the current output buffer and send response to client so logging is non-blocking.
-            if (function_exists('fastcgi_finish_request')) {
-                fastcgi_finish_request();
-            }
-
-            // Pull Cloudflare country code from server headers (Privacy-First: No IPs are logged)
-            $countryCode = $_SERVER['HTTP_CF_IPCOUNTRY'] ?? null;
-
-            // Capture HTTP Referrer for traffic-source analysis (truncated for privacy)
-            $referrer = isset($_SERVER['HTTP_REFERER']) ? substr($_SERVER['HTTP_REFERER'], 0, 512) : null;
-
-            $currency = $payload->currency ?? ($_REQUEST['currency'] ?? 'INR');
+            $countryCode = $request ? $request->server('HTTP_CF_IPCOUNTRY') : null;
+            $rawReferrer = $request ? $request->server('HTTP_REFERER') : null;
+            $referrer = is_string($rawReferrer) ? substr($rawReferrer, 0, 512) : null;
+            $currency = $payload->currency ?? ($request ? (string) $request->get('currency', 'INR') : 'INR');
 
             $stmt = $this->pdo->prepare("
                 INSERT INTO user_calculations 
