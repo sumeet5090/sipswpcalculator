@@ -7,41 +7,14 @@ namespace Tests\Integration;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-class HtmlMarkupValidatorTest extends TestCase
+class HtmlMarkupValidatorTest extends IntegrationTestCase
 {
-    private static int $serverPid = 0;
-
     /**
      * Start local PHP development server in the background on port 9005.
      */
     public static function setUpBeforeClass(): void
     {
-        $command = sprintf(
-            'php -S 127.0.0.1:9005 %s > /dev/null 2>&1 & echo $!',
-            escapeshellarg(__DIR__ . '/../../index.php')
-        );
-
-        $output = [];
-        exec($command, $output);
-        self::$serverPid = (int)($output[0] ?? 0);
-
-        // Wait up to 1 second for the server to start responding
-        $maxRetries = 10;
-        $started = false;
-
-        for ($i = 0; $i < $maxRetries; $i++) {
-            $socket = @fsockopen('127.0.0.1', 9005, $errno, $errstr, 0.1);
-            if ($socket) {
-                fclose($socket);
-                $started = true;
-                break;
-            }
-            usleep(100000); // 100ms
-        }
-
-        if (!$started) {
-            throw new \RuntimeException('Failed to start local PHP development server on 127.0.0.1:9005');
-        }
+        self::startLocalServer(9005);
     }
 
     /**
@@ -49,9 +22,7 @@ class HtmlMarkupValidatorTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        if (self::$serverPid > 0) {
-            exec('kill -9 ' . self::$serverPid . ' 2>/dev/null');
-        }
+        self::stopLocalServer();
     }
 
     /**

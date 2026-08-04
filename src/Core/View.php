@@ -19,7 +19,7 @@ class View
     {
         if (self::$twig === null) {
             $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../Views');
-            $env = $_ENV['ENVIRONMENT'] ?? getenv('ENVIRONMENT') ?: 'development';
+            $env = Env::get('ENVIRONMENT', 'development');
             $isProd = ($env === 'production');
 
             $cachePath = false;

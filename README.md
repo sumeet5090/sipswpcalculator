@@ -114,16 +114,17 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 - **TypeScript's Role:** Instantly upon page load, `CalculatorApp.ts` computes the initial state using `MathEngine.ts` and surgically hydrates the DOM. As the user interacts with sliders, TypeScript entirely controls the DOM recalculation and rendering without any network/AJAX overhead.
 
 ### Architecture & Service Decoupling
+- **Env Wrapper (`Core\Env`):** Centralizes environment variable resolution, guaranteeing that OS-level CLI/testing environment overrides (`getenv`) take precedence over `.env` defaults.
 - **SiteConfig (`Core\SiteConfig`):** Provides environment-aware domain resolution (`APP_URL`) across controllers, view helpers, and Schema.org generators.
 - **ConfigService (`Services\ConfigService`):** Loads and caches JSON configuration defaults across controller/service requests.
 - **CsvExportService (`Services\CsvExportService`):** Encapsulates CSV report generation and output delivery, decoupling export logic from `RenderHomeAction`.
 - **Dependency Injection & Repositories:** Controllers (`RenderHomeAction`, `PageController`, `SitemapController`, `BlogController`, `AdminController`) and repositories (`BlogRepository`, `FaqRepository`, `InsightRepository`) use constructor injection managed by `Core\Container` via Reflection auto-wiring.
 - **Session Lifecycle & Pure Twig Templates:** Session initialization is strictly centralized in `App::run()`, and template rendering is 100% handled via Twig with legacy PHP view rendering eliminated.
 
-### PHPUnit Database Isolation
-To ensure test runs do not pollute your development database (`database/database.sqlite`), PHPUnit is configured with a dedicated testing database.
-- PHPUnit uses `tests/bootstrap.php` which automatically creates and runs migrations on `database/database.test.sqlite` before the suite runs.
-- The test database is completely isolated and is automatically deleted upon shutdown when PHPUnit completes execution.
+### PHPUnit Database & Test Server Isolation
+To ensure test runs do not pollute your development environment, PHPUnit is configured with dedicated isolation primitives:
+- **Test Database Isolation:** PHPUnit uses `tests/bootstrap.php` which automatically creates and runs migrations on `database/database.test.sqlite` before the suite runs. The test database is automatically unlinked upon shutdown.
+- **Integration Test Server Abstraction (`IntegrationTestCase`):** Background local PHP servers (`php -S`) required for end-to-end integration tests are managed by `Tests\Integration\IntegrationTestCase`, automating port binding, OS environment forwarding, and process termination.
 
 ---
 

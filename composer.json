@@ -12,6 +12,11 @@
             "Services\\": "src/Services/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "require-dev": {
         "phpunit/phpunit": "^13.2",
         "phpstan/phpstan": "^2.2",
