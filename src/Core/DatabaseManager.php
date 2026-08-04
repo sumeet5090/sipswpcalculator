@@ -23,7 +23,9 @@ class DatabaseManager
     public static function getPath(): string
     {
         if (self::$dbPath === null) {
-            self::$dbPath = $_ENV['DB_PATH'] ?? getenv('DB_PATH') ?: __DIR__ . '/../../database/database.sqlite';
+            /** @var string $path */
+            $path = Env::get('DB_PATH', __DIR__ . '/../../database/database.sqlite');
+            self::$dbPath = $path;
         }
 
         return self::$dbPath;

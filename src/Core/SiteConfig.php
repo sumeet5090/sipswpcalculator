@@ -14,8 +14,8 @@ class SiteConfig
 
     public function __construct(?string $baseUrl = null)
     {
-        $envUrl = getenv('APP_URL');
-        $url = $baseUrl ?? ($envUrl !== false ? $envUrl : ($_ENV['APP_URL'] ?? null)) ?? 'https://sipswpcalculator.com';
+        /** @var string $url */
+        $url = $baseUrl ?? Env::get('APP_URL', 'https://sipswpcalculator.com');
         $this->baseUrl = rtrim($url, '/');
     }
 

@@ -30,7 +30,7 @@ class AdminAuthService
      */
     public function login(string $password): bool
     {
-        $envPassword = $_ENV['ADMIN_INSIGHTS_PASSWORD'] ?? getenv('ADMIN_INSIGHTS_PASSWORD');
+        $envPassword = Env::get('ADMIN_INSIGHTS_PASSWORD');
         if (!is_string($envPassword) || $envPassword === '') {
             throw new \RuntimeException('ADMIN_INSIGHTS_PASSWORD environment variable is missing or empty.');
         }

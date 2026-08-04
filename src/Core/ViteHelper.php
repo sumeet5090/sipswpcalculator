@@ -18,7 +18,7 @@ class ViteHelper
             return self::$devServerActive;
         }
 
-        $env = $_ENV['ENVIRONMENT'] ?? getenv('ENVIRONMENT') ?: 'development';
+        $env = Env::get('ENVIRONMENT', 'development');
         if ($env === 'production') {
             self::$devServerActive = false;
             return false;
