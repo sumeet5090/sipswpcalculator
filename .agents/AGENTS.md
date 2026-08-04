@@ -52,3 +52,16 @@ Adhere to the following protocols for all development, design, and implementatio
 
 ### 10. Environment Security & Modifications
 * **No Direct Production SSH Modifications:** Under absolutely NO circumstances should you connect to a production or staging server via SSH to execute database schema alterations (e.g., `ALTER TABLE`), modify production files directly, or perform "quick fixes". All changes MUST be committed via Git and deployed through the standard CI/CD pipeline. No exceptions.
+
+### 11. Core Software Engineering Principles
+To ensure maintainability, scalability, and stability, all code must adhere to the following core mental models and design guidelines:
+
+* **Robustness Principle (Postel’s Law):** "Be conservative in what you do, be liberal in what you accept from others." Be strict with data you send (e.g., API responses) and forgiving with data you receive (e.g., webhook listeners, user input).
+* **The Pit of Success:** Design architectures, APIs, and primitives so that the path of least resistance is also the correct, most secure, and most performant path. It should be physically harder for a junior developer or AI model to do the wrong thing than it is to do the right thing.
+* **Chesterton’s Fence:** Do not modify or destroy existing code, configuration, or infrastructure until you fully understand its original purpose. Investigate historical context before refactoring seemingly useless code.
+* **Hollywood Principle:** "Don't call us, we'll call you." Use dependency injection or event-driven models instead of low-level components polling high-level ones.
+* **The Boy Scout Rule:** Always leave the codebase cleaner than you found it. If you spot unused variables or bad indentation while adding a feature, clean it up in the same commit.
+* **Command-Query Separation (CQS):** A function should either perform an action (Command) or return data (Query), but never both simultaneously. Avoid side effects in data retrieval functions.
+* **KISS (Keep It Simple, Stupid):** Avoid over-engineering. Prefer simple functions over complex abstractions if the simple approach satisfies the requirement.
+* **YAGNI (You Aren't Gonna Need It):** Build exactly what satisfies the current specifications. Do not build features or abstractions based on the assumption they might be needed in the future.
+* **DRY (Don't Repeat Yourself):** Ensure business logic has a single, unambiguous representation. Abstract duplicated logic into shared helpers.
