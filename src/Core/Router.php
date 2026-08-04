@@ -6,11 +6,18 @@ namespace Core;
 
 use Core\Http\Request;
 use Core\Http\Response;
+use Psr\Container\ContainerInterface;
 
 class Router
 {
     private array $routes = [];
     private array $redirects = [];
+    private ContainerInterface $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
 
     public function get(string $uri, string|array $controllerAction): void
     {
@@ -86,7 +93,7 @@ class Router
 
         if (class_exists($controllerName)) {
             try {
-                $controller = Container::getInstance()->get($controllerName);
+                $controller = $this->container->get($controllerName);
                 if (method_exists($controller, $action)) {
                     $request = $request ?? Request::createFromGlobals();
 

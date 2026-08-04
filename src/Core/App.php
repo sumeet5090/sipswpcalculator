@@ -27,7 +27,7 @@ class App
     public function __construct()
     {
         $this->container = Container::getInstance();
-        $this->router = new Router();
+        $this->router = new Router($this->container);
         $this->routesConfig = require __DIR__ . '/Config/routes.php';
     }
 
@@ -66,8 +66,57 @@ class App
             return new \Services\CsvExportService();
         });
 
-        $this->container->singleton(ContentManager::class, function () {
-            return new ContentManager();
+        $this->container->singleton(\Services\SessionManager::class, function () {
+            return new \Services\SessionManager();
+        });
+
+        $this->container->singleton(\Services\RateLimiter::class, function () {
+            return new \Services\RateLimiter();
+        });
+
+        $this->container->singleton(\Parsedown::class, function () {
+            return new \Parsedown();
+        });
+
+        $this->container->singleton(ContentManager::class, function (Container $c) {
+            return new ContentManager($c->get(\Parsedown::class));
+        });
+
+        $this->container->singleton(DatabaseMigrator::class, function (Container $c) {
+            return new DatabaseMigrator($c->get(\PDO::class));
+        });
+
+        $this->container->singleton(AdminAuthService::class, function (Container $c) {
+            return new AdminAuthService($c->get(\Services\SessionManager::class));
+        });
+
+        $this->container->singleton(\Controllers\AdminController::class, function (Container $c) {
+            return new \Controllers\AdminController(
+                $c->get(InsightRepository::class),
+                $c->get(AnonymizedInsightLogger::class),
+                $c->get(AdminAuthService::class),
+                new AdminDashboardPresenter(),
+                $c->get(DatabaseMigrator::class),
+                $c->get(\Services\RateLimiter::class)
+            );
+        });
+
+        $this->container->singleton(\Controllers\RenderHomeAction::class, function (Container $c) {
+            return new \Controllers\RenderHomeAction(
+                $c->get(MetaManager::class),
+                $c->get(\Services\ConfigService::class),
+                $c->get(\Services\CsvExportService::class),
+                $c->get(FaqRepository::class),
+                new InvestmentCalculator(),
+                $c->get(\Services\SessionManager::class)
+            );
+        });
+
+        $this->container->singleton(\Controllers\GeneratePdfAction::class, function (Container $c) {
+            return new \Controllers\GeneratePdfAction(
+                $c->get(\Services\RateLimiter::class),
+                $c->get(\Services\SessionManager::class)
+            );
         });
 
         $this->container->singleton(MetaManager::class, function (Container $c) {
@@ -86,12 +135,16 @@ class App
             return new BlogRepository($c->get(ContentManager::class));
         });
 
-        $this->container->singleton(InsightRepository::class, function () {
-            return new InsightRepository();
+        $this->container->singleton(\PDO::class, function () {
+            return DatabaseManager::getConnection();
         });
 
-        $this->container->singleton(AnonymizedInsightLogger::class, function () {
-            return new AnonymizedInsightLogger();
+        $this->container->singleton(InsightRepository::class, function (Container $c) {
+            return new InsightRepository($c->get(\PDO::class));
+        });
+
+        $this->container->singleton(AnonymizedInsightLogger::class, function (Container $c) {
+            return new AnonymizedInsightLogger($c->get(\PDO::class));
         });
 
         $this->container->singleton(\Core\Factories\SchemaFactory::class, function (Container $c) {

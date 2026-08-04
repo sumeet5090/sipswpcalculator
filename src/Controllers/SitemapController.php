@@ -15,12 +15,12 @@ class SitemapController
     private array $routesConfig;
 
     public function __construct(
-        ?BlogRepository $blogRepository = null,
-        ?SiteConfig $siteConfig = null,
+        BlogRepository $blogRepository,
+        SiteConfig $siteConfig,
         ?array $routesConfig = null
     ) {
-        $this->blogRepository = $blogRepository ?? new BlogRepository();
-        $this->siteConfig = $siteConfig ?? new SiteConfig();
+        $this->blogRepository = $blogRepository;
+        $this->siteConfig = $siteConfig;
         $this->routesConfig = $routesConfig ?? require __DIR__ . '/../Core/Config/routes.php';
     }
 

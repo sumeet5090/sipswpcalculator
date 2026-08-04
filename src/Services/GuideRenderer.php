@@ -30,16 +30,16 @@ class GuideRenderer
         ContentManager $contentManager,
         MetaManager $metaManager,
         SchemaFactory $schemaFactory,
-        ?FaqRepository $faqRepository = null,
-        ?BlogRepository $blogRepository = null,
-        ?ConfigService $configService = null
+        FaqRepository $faqRepository,
+        BlogRepository $blogRepository,
+        ConfigService $configService
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
         $this->schemaFactory = $schemaFactory;
-        $this->faqRepository = $faqRepository ?? new FaqRepository();
-        $this->blogRepository = $blogRepository ?? new BlogRepository($contentManager);
-        $this->configService = $configService ?? new ConfigService();
+        $this->faqRepository = $faqRepository;
+        $this->blogRepository = $blogRepository;
+        $this->configService = $configService;
     }
 
     /**

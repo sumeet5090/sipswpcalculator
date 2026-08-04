@@ -13,10 +13,10 @@ class SchemaFactory
     private SchemaHelper $schemaHelper;
     private SiteConfig $siteConfig;
 
-    public function __construct(SchemaHelper $schemaHelper, ?SiteConfig $siteConfig = null)
+    public function __construct(SchemaHelper $schemaHelper, SiteConfig $siteConfig)
     {
         $this->schemaHelper = $schemaHelper;
-        $this->siteConfig = $siteConfig ?? new SiteConfig();
+        $this->siteConfig = $siteConfig;
     }
 
     /**

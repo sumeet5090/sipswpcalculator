@@ -25,17 +25,23 @@ class AdminController
     private AnonymizedInsightLogger $insightLogger;
     private AdminAuthService $authService;
     private AdminDashboardPresenter $presenter;
+    private \Services\RateLimiter $rateLimiter;
+    private DatabaseMigrator $migrator;
 
     public function __construct(
         InsightRepository $insightRepository,
         AnonymizedInsightLogger $insightLogger,
         AdminAuthService $authService,
-        AdminDashboardPresenter $presenter
+        AdminDashboardPresenter $presenter,
+        DatabaseMigrator $migrator,
+        ?\Services\RateLimiter $rateLimiter = null
     ) {
         $this->insightRepository = $insightRepository;
         $this->insightLogger = $insightLogger;
         $this->authService = $authService;
         $this->presenter = $presenter;
+        $this->migrator = $migrator;
+        $this->rateLimiter = $rateLimiter ?? new \Services\RateLimiter();
     }
 
     public function insights(Request $request): Response
@@ -50,8 +56,13 @@ class AdminController
         $loginError = '';
         if ($request->isPost()) {
             $password = $request->post('password');
-            if (is_string($password) && $this->authService->login($password)) {
-                return Response::redirect('/admin_insights');
+            if (is_string($password)) {
+                try {
+                    $this->authService->login($password);
+                    return Response::redirect('/admin_insights');
+                } catch (\Core\Exceptions\AuthenticationException $e) {
+                    $loginError = 'Incorrect password. Access denied.';
+                }
             } else {
                 $loginError = 'Incorrect password. Access denied.';
             }
@@ -102,33 +113,11 @@ class AdminController
         }
 
         // Rate limiting check (max 30 requests per minute per IP)
-        $rate_limit_dir = sys_get_temp_dir() . '/sipswp_log_limits/';
-        if (!is_dir($rate_limit_dir)) {
-            @mkdir($rate_limit_dir, 0700, true);
-        }
-        $ip_hash = hash('sha256', (string) $request->server('REMOTE_ADDR', 'unknown'));
-        $rate_file = $rate_limit_dir . $ip_hash . '.json';
-        $fp = @fopen($rate_file, 'c+');
-        if ($fp && flock($fp, LOCK_EX)) {
-            $content = stream_get_contents($fp);
-            $rate_data = !empty($content) ? json_decode($content, true) : [];
-            if (!is_array($rate_data)) {
-                $rate_data = [];
-            }
-            $now = time();
-            $rate_data = array_filter($rate_data, fn($t) => ($now - $t) < 60);
-            if (count($rate_data) >= 30) {
-                flock($fp, LOCK_UN);
-                fclose($fp);
-                return new Response('Rate limit exceeded', 429);
-            }
-            $rate_data[] = $now;
-            ftruncate($fp, 0);
-            rewind($fp);
-            fwrite($fp, json_encode(array_values($rate_data)));
-            fflush($fp);
-            flock($fp, LOCK_UN);
-            fclose($fp);
+        try {
+            $ip = (string) $request->server('REMOTE_ADDR', 'unknown');
+            $this->rateLimiter->checkLimit($ip, 'sipswp_log_limits', 30, 60);
+        } catch (\Core\Exceptions\RateLimitExceededException $e) {
+            return new Response('Rate limit exceeded', 429);
         }
 
         $inputJSON = file_get_contents('php://input');
@@ -143,7 +132,7 @@ class AdminController
         }
 
         $payload = InsightPayload::fromArray($data);
-        $this->insightLogger->logCalculation($payload);
+        $this->insightLogger->logCalculation($payload, $request);
 
         return new Response('', 204);
     }
@@ -158,9 +147,7 @@ class AdminController
         }
 
         try {
-            $pdo = DatabaseManager::getConnection();
-            $migrator = new DatabaseMigrator($pdo);
-            $migrator->migrate(true); // Silent mode
+            $this->migrator->migrate(true); // Silent mode
 
             return Response::json(['status' => 'success', 'message' => 'Database migrations completed successfully.']);
         } catch (\Throwable $e) {
