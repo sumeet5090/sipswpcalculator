@@ -108,10 +108,17 @@ This CLI migrator executes all outstanding PHP schema migrations. You can also t
 ### Calculator Configuration Source of Truth
 `content/calculator_defaults.json` is the single source of truth for all calculator bounds, minimum/maximum limits, and default field values. The backend accesses this via `Services\ConfigService` (registered as a singleton in the DI container), avoiding redundant file reads. The TypeScript frontend (`InputValidator.ts`) reads this JSON from a `<script type="application/json" id="calculator-app-state">` Data Island element injected into the HTML.
 
+### Rendering Strategy (Client Owns the Component)
+To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic ("The Two Masters Problem"), this repository implements the **"Client Owns the Component"** pattern:
+- **PHP's Role:** PHP (`Twig`) serves only the SEO meta-data, base layout, and *empty skeleton containers* for the interactive calculator elements (like the table body and summary metric cards).
+- **TypeScript's Role:** Instantly upon page load, `CalculatorApp.ts` computes the initial state using `MathEngine.ts` and surgically hydrates the DOM. As the user interacts with sliders, TypeScript entirely controls the DOM recalculation and rendering without any network/AJAX overhead.
+
 ### Architecture & Service Decoupling
+- **SiteConfig (`Core\SiteConfig`):** Provides environment-aware domain resolution (`APP_URL`) across controllers, view helpers, and Schema.org generators.
 - **ConfigService (`Services\ConfigService`):** Loads and caches JSON configuration defaults across controller/service requests.
 - **CsvExportService (`Services\CsvExportService`):** Encapsulates CSV report generation and output delivery, decoupling export logic from `RenderHomeAction`.
-- **Dependency Injection & Repositories:** Controllers (`RenderHomeAction`, `PageController`, `SitemapController`) and repositories (`BlogRepository`, `FaqRepository`) use constructor injection managed by `Core\Container` via Reflection auto-wiring.
+- **Dependency Injection & Repositories:** Controllers (`RenderHomeAction`, `PageController`, `SitemapController`, `BlogController`, `AdminController`) and repositories (`BlogRepository`, `FaqRepository`, `InsightRepository`) use constructor injection managed by `Core\Container` via Reflection auto-wiring.
+- **Session Lifecycle & Pure Twig Templates:** Session initialization is strictly centralized in `App::run()`, and template rendering is 100% handled via Twig with legacy PHP view rendering eliminated.
 
 ### PHPUnit Database Isolation
 To ensure test runs do not pollute your development database (`database/database.sqlite`), PHPUnit is configured with a dedicated testing database.

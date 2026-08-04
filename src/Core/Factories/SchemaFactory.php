@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace Core\Factories;
 
 use Core\SchemaHelper;
+use Core\SiteConfig;
 use Core\Strategies\CalculatorStrategyInterface;
 
 class SchemaFactory
 {
     private SchemaHelper $schemaHelper;
+    private SiteConfig $siteConfig;
 
-    public function __construct(SchemaHelper $schemaHelper)
+    public function __construct(SchemaHelper $schemaHelper, ?SiteConfig $siteConfig = null)
     {
         $this->schemaHelper = $schemaHelper;
+        $this->siteConfig = $siteConfig ?? new SiteConfig();
     }
 
     /**
@@ -29,10 +32,10 @@ class SchemaFactory
         array $customBreadcrumbs = [],
         string $customUrl = ''
     ): string {
-        $url = $customUrl ?: 'https://sipswpcalculator.com/' . ltrim($slug, '/');
+        $url = $customUrl ?: $this->siteConfig->getUrl('/' . ltrim($slug, '/'));
         $title = $page_config['title'] ?? ucfirst(str_replace('-', ' ', basename($slug)));
         $description = $page_config['meta_desc'] ?? $title;
-        $imageUrl = $page_config['og_image'] ?? 'https://sipswpcalculator.com/assets/og-image-main.jpg';
+        $imageUrl = $page_config['og_image'] ?? $this->siteConfig->getUrl('/assets/og-image-main.jpg');
 
         $mdFile = '';
         if ($type === 'blog') {

@@ -8,22 +8,22 @@ class FaqRepository
 {
     private array $faqs;
 
-    public function __construct()
+    public function __construct(?string $jsonPath = null)
     {
-        $jsonPath = __DIR__ . '/../../content/faqs.json';
-        if (!file_exists($jsonPath)) {
+        $path = $jsonPath ?? __DIR__ . '/../../content/faqs.json';
+        if (!file_exists($path)) {
             $this->faqs = [];
             return;
         }
 
-        $jsonContent = file_get_contents($jsonPath);
+        $jsonContent = file_get_contents($path);
         $decoded = json_decode($jsonContent, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            error_log("Failed to parse content/faqs.json: " . json_last_error_msg());
+            error_log("Failed to parse FAQs JSON: " . json_last_error_msg());
             $this->faqs = [];
         } else {
-            $this->faqs = $decoded ?? [];
+            $this->faqs = is_array($decoded) ? $decoded : [];
         }
     }
 

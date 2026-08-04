@@ -19,21 +19,26 @@ class View
     {
         if (self::$twig === null) {
             $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../Views');
-            self::$twig = new \Twig\Environment($loader, [
-                'cache' => false,
-                'debug' => true,
-            ]);
-            self::$twig->addGlobal('env', $_ENV['ENVIRONMENT'] ?? 'development');
-            self::$twig->addGlobal('request', \Core\Http\Request::createFromGlobals());
+            $env = $_ENV['ENVIRONMENT'] ?? getenv('ENVIRONMENT') ?: 'development';
+            $isProd = ($env === 'production');
 
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
+            $cachePath = false;
+            if ($isProd) {
+                $cacheDir = __DIR__ . '/../../var/cache/twig';
+                if (!file_exists($cacheDir)) {
+                    @mkdir($cacheDir, 0775, true);
+                }
+                $cachePath = $cacheDir;
             }
-            if (empty($_SESSION['csrf_token'])) {
-                $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-            }
-            self::$twig->addGlobal('csrf_token', $_SESSION['csrf_token']);
-            self::$twig->addGlobal('app', ['session' => ['csrf_token' => $_SESSION['csrf_token']]]);
+
+            self::$twig = new \Twig\Environment($loader, [
+                'cache' => $cachePath,
+                'debug' => !$isProd,
+            ]);
+
+            self::$twig->addGlobal('env', $env);
+            self::$twig->addGlobal('request', \Core\Http\Request::createFromGlobals());
+            self::$twig->addGlobal('site_url', (new SiteConfig())->getBaseUrl());
 
             self::$twig->addFilter(new \Twig\TwigFilter('formatInr', function ($amount) {
                 return \Core\CurrencyHelper::formatInr((float) $amount);
@@ -51,7 +56,7 @@ class View
     }
 
     /**
-     * Render a template file and echo it (legacy compatibility).
+     * Render a template file and echo it.
      */
     public static function render(string $view, array $data = []): void
     {
@@ -63,44 +68,24 @@ class View
      */
     public static function renderToString(string $view, array $data = []): string
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
         if (empty($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
 
+        $data['csrf_token'] = $data['csrf_token'] ?? $_SESSION['csrf_token'];
+        $data['app'] = $data['app'] ?? ['session' => ['csrf_token' => $_SESSION['csrf_token']]];
+
         $twig = self::getTwig();
-        $twig->addGlobal('csrf_token', $_SESSION['csrf_token']);
-        $twig->addGlobal('app', ['session' => ['csrf_token' => $_SESSION['csrf_token']]]);
 
         // Support extensionless view names, defaulting to .twig
-        if (!str_ends_with($view, '.twig') && !str_ends_with($view, '.php')) {
+        if (!str_ends_with($view, '.twig')) {
             $view .= '.twig';
-        }
-
-        if (str_ends_with($view, '.php')) {
-            ob_start();
-            self::renderPhp($view, $data);
-            return ob_get_clean();
         }
 
         try {
             return $twig->render($view, $data);
         } catch (\Exception $e) {
             throw new \RuntimeException("Twig rendering failed: " . $e->getMessage(), 0, $e);
-        }
-    }
-
-    private static function renderPhp(string $view, array $data = []): void
-    {
-        extract($data);
-
-        $path = __DIR__ . '/../Views/' . ltrim($view, '/');
-        if (file_exists($path)) {
-            require $path;
-        } else {
-            throw new \RuntimeException("View template [{$view}] not found.");
         }
     }
 }

@@ -18,7 +18,7 @@ class SeoMetadataValidatorTest extends TestCase
     {
         // Start built-in PHP web server pointing to the root index.php
         $command = sprintf(
-            'php -S 127.0.0.1:9000 %s > /dev/null 2>&1 & echo $!',
+            'APP_URL=https://sipswpcalculator.com php -S 127.0.0.1:9000 %s > /dev/null 2>&1 & echo $!',
             escapeshellarg(__DIR__ . '/../../index.php')
         );
 

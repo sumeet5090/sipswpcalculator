@@ -6,6 +6,7 @@ namespace Controllers;
 
 use Core\InsightRepository;
 use Core\AnonymizedInsightLogger;
+use Core\InsightPayload;
 use Core\AdminAuthService;
 use Core\AdminDashboardPresenter;
 use Core\DatabaseManager;
@@ -101,68 +102,52 @@ class AdminController
             die('Method Not Allowed');
         }
 
+        // Rate limiting check (max 30 requests per minute per IP)
+        $rate_limit_dir = sys_get_temp_dir() . '/sipswp_log_limits/';
+        if (!is_dir($rate_limit_dir)) {
+            @mkdir($rate_limit_dir, 0700, true);
+        }
+        $ip_hash = hash('sha256', $_SERVER['REMOTE_ADDR'] ?? 'unknown');
+        $rate_file = $rate_limit_dir . $ip_hash . '.json';
+        $fp = @fopen($rate_file, 'c+');
+        if ($fp && flock($fp, LOCK_EX)) {
+            $content = stream_get_contents($fp);
+            $rate_data = !empty($content) ? json_decode($content, true) : [];
+            if (!is_array($rate_data)) {
+                $rate_data = [];
+            }
+            $now = time();
+            $rate_data = array_filter($rate_data, fn($t) => ($now - $t) < 60);
+            if (count($rate_data) >= 30) {
+                flock($fp, LOCK_UN);
+                fclose($fp);
+                http_response_code(429);
+                die('Rate limit exceeded');
+            }
+            $rate_data[] = $now;
+            ftruncate($fp, 0);
+            rewind($fp);
+            fwrite($fp, json_encode(array_values($rate_data)));
+            fflush($fp);
+            flock($fp, LOCK_UN);
+            fclose($fp);
+        }
+
         $inputJSON = file_get_contents('php://input');
+        if (strlen($inputJSON) > 65536) { // 64KB limit
+            http_response_code(413);
+            die('Payload Too Large');
+        }
+
         $data = json_decode($inputJSON, true);
 
-        if (!isset($data['calc_type'], $data['amount'], $data['duration'])) {
+        if (!is_array($data) || !isset($data['calc_type'], $data['amount'], $data['duration'])) {
             http_response_code(400);
             die('Invalid payload');
         }
 
-        $calcType      = $data['calc_type'];
-        $amount        = (float) $data['amount'];
-        $duration      = (int) $data['duration'];
-        $stepUpPct     = (float) ($data['step_up_pct'] ?? 0.0);
-        $currency      = $data['currency'] ?? 'INR';
-        $pdfDownloaded = !empty($data['pdf_downloaded']);
-
-        $interestRate     = isset($data['interest_rate'])     ? (float) $data['interest_rate']     : null;
-        $sipAmount        = isset($data['sip_amount'])        ? (float) $data['sip_amount']        : null;
-        $sipDuration      = isset($data['sip_duration'])      ? (int) $data['sip_duration']        : null;
-        $sipStepUp        = isset($data['sip_step_up'])       ? (float) $data['sip_step_up']       : null;
-        $swpEnabled       = !empty($data['swp_enabled'])      ? 1 : 0;
-        $swpWithdrawal    = isset($data['swp_withdrawal'])    ? (float) $data['swp_withdrawal']    : null;
-        $swpDuration      = isset($data['swp_duration'])      ? (int) $data['swp_duration']        : null;
-        $swpStepUp        = isset($data['swp_step_up'])       ? (float) $data['swp_step_up']       : null;
-        $finalCorpus      = isset($data['final_corpus'])      ? (float) $data['final_corpus']      : null;
-        $totalInvested    = isset($data['total_invested'])    ? (float) $data['total_invested']    : null;
-        $wealthMultiplier = isset($data['wealth_multiplier']) ? (float) $data['wealth_multiplier'] : null;
-        $goalMode          = isset($data['goal_mode'])           ? (string) $data['goal_mode']          : null;
-        $deviceType        = isset($data['device_type'])         ? (string) $data['device_type']        : null;
-        $tableViewed       = !empty($data['table_viewed'])       ? 1 : 0;
-        $pdfHasCustomName  = !empty($data['pdf_has_custom_name'])  ? 1 : 0;
-        $inflationEnabled  = !empty($data['inflation_enabled'])    ? 1 : 0;
-        $interactionCount  = isset($data['interaction_count'])   ? (int) $data['interaction_count']     : 1;
-        $presetClicked     = isset($data['preset_clicked'])      ? (string) $data['preset_clicked']    : 'none';
-        $exitAction        = isset($data['exit_action'])         ? (string) $data['exit_action']       : 'calc_only';
-
-        $this->insightLogger->logCalculation(
-            $calcType,
-            $amount,
-            $duration,
-            $stepUpPct,
-            $currency,
-            $pdfDownloaded,
-            $interestRate,
-            $sipAmount,
-            $sipDuration,
-            $sipStepUp,
-            $swpEnabled,
-            $swpWithdrawal,
-            $swpDuration,
-            $swpStepUp,
-            $finalCorpus,
-            $totalInvested,
-            $wealthMultiplier,
-            $goalMode,
-            $deviceType,
-            $tableViewed,
-            $pdfHasCustomName,
-            $inflationEnabled,
-            $interactionCount,
-            $presetClicked,
-            $exitAction
-        );
+        $payload = InsightPayload::fromArray($data);
+        $this->insightLogger->logCalculation($payload);
 
         http_response_code(204);
         exit;

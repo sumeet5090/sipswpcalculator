@@ -24,9 +24,9 @@ class PageController
         ?BlogRepository $blogRepository = null,
         ?SchemaHelper $schemaHelper = null
     ) {
-        $this->faqRepository = $faqRepository ?? \Core\Container::getInstance()->get(FaqRepository::class);
-        $this->blogRepository = $blogRepository ?? \Core\Container::getInstance()->get(BlogRepository::class);
-        $this->schemaHelper = $schemaHelper ?? \Core\Container::getInstance()->get(SchemaHelper::class);
+        $this->faqRepository = $faqRepository ?? new FaqRepository();
+        $this->blogRepository = $blogRepository ?? new BlogRepository();
+        $this->schemaHelper = $schemaHelper ?? new SchemaHelper();
     }
 
     public function about(): void

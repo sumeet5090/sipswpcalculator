@@ -1,16 +1,3 @@
-{% set lastRow = combined|last|default({
-    'cumulative_invested': 0,
-    'combined_total': 0,
-    'cumulative_withdrawals': 0
-}) %}
-
-{% set totalGains = (lastRow.combined_total + (lastRow.cumulative_withdrawals|default(0))) - (lastRow.cumulative_invested|default(0)) %}
-
-{% set years_data_val = years_data is defined ? years_data|array_values : [] %}
-{% set cumulative_numbers_val = cumulative_numbers is defined ? cumulative_numbers|array_values : [] %}
-{% set combined_numbers_val = combined_numbers is defined ? combined_numbers|array_values : [] %}
-{% set swp_numbers_val = swp_numbers is defined ? swp_numbers|array_values : [] %}
-
 <div class="space-y-4">
     <!-- Delay Cost Banner -->
     <div id="delay-cost-banner" style="display: none;" class="bg-rose-50 border border-rose-200 rounded-xl p-4 flex items-center justify-between shadow-sm animate-pulse">
@@ -32,7 +19,7 @@
                 Total Invested
             </div>
             <div id="summary-invested" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-emerald-600 font-mono transition-numbers truncate">
-                {{ lastRow.cumulative_invested|formatInr }}
+                ₹ --
             </div>
         </div>
         <div class="glass-card p-2.5 sm:p-4 text-center overflow-hidden">
@@ -40,7 +27,7 @@
                 Total Gains
             </div>
             <div id="summary-interest" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-emerald-600 font-mono transition-numbers truncate">
-                {{ totalGains|formatInr }}
+                ₹ --
             </div>
         </div>
         <div class="glass-card p-2.5 sm:p-4 text-center overflow-hidden">
@@ -48,7 +35,7 @@
                 Total Withdrawn
             </div>
             <div id="summary-withdrawn" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-rose-500 font-mono transition-numbers truncate">
-                {{ lastRow.cumulative_withdrawals|default(0)|formatInr }}
+                ₹ --
             </div>
         </div>
         <div class="glass-card p-2.5 sm:p-4 text-center border-2 border-emerald-100 overflow-hidden">
@@ -56,7 +43,7 @@
                 Final Corpus
             </div>
             <div id="summary-corpus" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-slate-800 font-mono transition-numbers truncate">
-                {{ lastRow.combined_total|formatInr }}
+                ₹ --
             </div>
         </div>
     </div>
@@ -81,11 +68,7 @@
             </div>
         </div>
         <div class="h-[280px] sm:h-[350px] lg:h-[calc(100vh-340px)] min-h-[300px] max-h-[480px] w-full relative z-10">
-            <canvas id="corpusChart" width="800" height="450"
-                data-years="{{ years_data_val|json_encode|escape('html_attr') }}"
-                data-cumulative="{{ cumulative_numbers_val|json_encode|escape('html_attr') }}"
-                data-corpus="{{ combined_numbers_val|json_encode|escape('html_attr') }}"
-                data-swp="{{ swp_numbers_val|json_encode|escape('html_attr') }}"></canvas>
+            <canvas id="corpusChart" width="800" height="450"></canvas>
         </div>
     </div>
 

@@ -8,6 +8,8 @@ use Core\ContentManager;
 use Core\MetaManager;
 use Core\SchemaHelper;
 use Core\BlogRepository;
+use Core\SiteConfig;
+use Core\Factories\SchemaFactory;
 use Core\View;
 
 /**
@@ -20,25 +22,23 @@ class BlogController
     private MetaManager $metaManager;
     private SchemaHelper $schemaHelper;
     private BlogRepository $blogRepository;
-    private \Core\Factories\SchemaFactory $schemaFactory;
+    private SchemaFactory $schemaFactory;
+    private SiteConfig $siteConfig;
 
     public function __construct(
         ContentManager $contentManager,
         MetaManager $metaManager,
         SchemaHelper $schemaHelper,
         BlogRepository $blogRepository,
-        ?\Core\Factories\SchemaFactory $schemaFactory = null
+        ?SchemaFactory $schemaFactory = null,
+        ?SiteConfig $siteConfig = null
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
         $this->schemaHelper = $schemaHelper;
         $this->blogRepository = $blogRepository;
-
-        if ($schemaFactory === null) {
-            $this->schemaFactory = new \Core\Factories\SchemaFactory($schemaHelper);
-        } else {
-            $this->schemaFactory = $schemaFactory;
-        }
+        $this->schemaFactory = $schemaFactory ?? new SchemaFactory($schemaHelper, $siteConfig);
+        $this->siteConfig = $siteConfig ?? new SiteConfig();
     }
 
     public function index(): void
@@ -77,14 +77,8 @@ class BlogController
             return;
         }
 
-        $post_metadata = null;
+        $post_metadata = $this->blogRepository->getPostBySlug($category, $slug);
         $all_posts = $this->blogRepository->getAllPosts();
-        foreach ($all_posts as $post) {
-            if (basename($post['href']) === $slug) {
-                $post_metadata = $post;
-                break;
-            }
-        }
 
         $page_config = $this->metaManager->buildFromMetadata($content['metadata'], $slug);
 
@@ -118,7 +112,7 @@ class BlogController
             [],
             null,
             $breadcrumbs,
-            'https://sipswpcalculator.com/resource/' . $category . '/' . $slug
+            $this->siteConfig->getUrl('/resource/' . $category . '/' . $slug)
         );
 
         View::render('layouts/generic-post', [

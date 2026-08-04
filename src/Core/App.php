@@ -27,6 +27,10 @@ class App
      */
     public function run(): void
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         $this->registerDependencies();
         $this->registerRoutes();
 
@@ -42,6 +46,10 @@ class App
     private function registerDependencies(): void
     {
         // Bind managers and helpers as Singletons
+        $this->container->singleton(SiteConfig::class, function () {
+            return new SiteConfig();
+        });
+
         $this->container->singleton(\Services\ConfigService::class, function () {
             return new \Services\ConfigService();
         });
@@ -54,16 +62,20 @@ class App
             return new ContentManager();
         });
 
-        $this->container->singleton(MetaManager::class, function () {
-            return new MetaManager();
+        $this->container->singleton(MetaManager::class, function (Container $c) {
+            return new MetaManager($c->get(SiteConfig::class));
         });
 
-        $this->container->singleton(SchemaHelper::class, function () {
-            return new SchemaHelper();
+        $this->container->singleton(SchemaHelper::class, function (Container $c) {
+            return new SchemaHelper($c->get(SiteConfig::class));
         });
 
-        $this->container->singleton(BlogRepository::class, function () {
-            return new BlogRepository();
+        $this->container->singleton(FaqRepository::class, function () {
+            return new FaqRepository();
+        });
+
+        $this->container->singleton(BlogRepository::class, function (Container $c) {
+            return new BlogRepository($c->get(ContentManager::class));
         });
 
         $this->container->singleton(InsightRepository::class, function () {
@@ -75,7 +87,31 @@ class App
         });
 
         $this->container->singleton(\Core\Factories\SchemaFactory::class, function (Container $c) {
-            return new \Core\Factories\SchemaFactory($c->get(SchemaHelper::class));
+            return new \Core\Factories\SchemaFactory(
+                $c->get(SchemaHelper::class),
+                $c->get(SiteConfig::class)
+            );
+        });
+
+        // Bind Controllers needing explicit DI
+        $routesConfig = $this->routesConfig;
+        $this->container->singleton(\Controllers\SitemapController::class, function (Container $c) use ($routesConfig) {
+            return new \Controllers\SitemapController(
+                $c->get(BlogRepository::class),
+                $c->get(SiteConfig::class),
+                $routesConfig
+            );
+        });
+
+        $this->container->singleton(\Controllers\BlogController::class, function (Container $c) {
+            return new \Controllers\BlogController(
+                $c->get(ContentManager::class),
+                $c->get(MetaManager::class),
+                $c->get(SchemaHelper::class),
+                $c->get(BlogRepository::class),
+                $c->get(\Core\Factories\SchemaFactory::class),
+                $c->get(SiteConfig::class)
+            );
         });
 
         // Bind the Strategy GuideRenderer
@@ -83,7 +119,10 @@ class App
             return new \Services\GuideRenderer(
                 $c->get(ContentManager::class),
                 $c->get(MetaManager::class),
-                $c->get(\Core\Factories\SchemaFactory::class)
+                $c->get(\Core\Factories\SchemaFactory::class),
+                $c->get(FaqRepository::class),
+                $c->get(BlogRepository::class),
+                $c->get(\Services\ConfigService::class)
             );
         });
     }
@@ -131,18 +170,23 @@ class App
         // Load Dynamic Redirects from JSON
         $redirectsPath = __DIR__ . '/../../content/redirects.json';
         if (file_exists($redirectsPath)) {
-            $redirectsData = json_decode(file_get_contents($redirectsPath), true);
+            $rawJson = file_get_contents($redirectsPath);
+            $redirectsData = json_decode($rawJson, true);
 
-            if (isset($redirectsData['blog_redirects']) && is_array($redirectsData['blog_redirects'])) {
-                foreach ($redirectsData['blog_redirects'] as $slug => $target) {
-                    $this->router->redirect("/resource/{$slug}", "/resource/{$target}");
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                error_log("Failed to parse content/redirects.json: " . json_last_error_msg());
+            } elseif (is_array($redirectsData)) {
+                if (isset($redirectsData['blog_redirects']) && is_array($redirectsData['blog_redirects'])) {
+                    foreach ($redirectsData['blog_redirects'] as $slug => $target) {
+                        $this->router->redirect("/resource/{$slug}", "/resource/{$target}");
+                    }
                 }
-            }
 
-            if (isset($redirectsData['stubs']) && is_array($redirectsData['stubs'])) {
-                foreach ($redirectsData['stubs'] as $old => $new) {
-                    $this->router->redirect($old, $new);
-                    $this->router->redirect($old . '.php', $new);
+                if (isset($redirectsData['stubs']) && is_array($redirectsData['stubs'])) {
+                    foreach ($redirectsData['stubs'] as $old => $new) {
+                        $this->router->redirect($old, $new);
+                        $this->router->redirect($old . '.php', $new);
+                    }
                 }
             }
         }

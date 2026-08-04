@@ -60,16 +60,13 @@ class RenderHomeAction
 
         // Instantiate Input DTO via ConfigService
         $inputs = InvestmentInputs::fromRequest($request->getParsedBody(), $this->configService);
-
-        // Run calculation engine
-        $combined = $this->calculator->calculate($inputs);
-
         $enable_swp = $inputs->isSwpEnabled();
 
         // Handle CSV export action via dedicated service
         $post = $request->getParsedBody();
         $action = $post['action'] ?? '';
         if ($action === 'download_csv') {
+            $combined = $this->calculator->calculate($inputs);
             $this->csvExportService->export($combined, $enable_swp);
             return;
         }
@@ -77,6 +74,11 @@ class RenderHomeAction
         $page_config = $this->metaManager->getMeta('home');
         $homeFaqs = $this->faqRepository->getByTag('home');
         $calcConfig = $this->configService->getCalculatorDefaults();
+
+        $homeTemplatePath = __DIR__ . '/../Views/calculators/home.twig';
+        $siteModified = file_exists($homeTemplatePath)
+            ? date('Y-m-d', filemtime($homeTemplatePath))
+            : date('Y-m-d');
 
         View::render('calculators/home', [
             'active_page'         => 'index.php',
@@ -91,11 +93,12 @@ class RenderHomeAction
             'swp_years_input'     => $inputs->getSwpYears(),
             'swp_rate'            => $inputs->getSwpRate(),
             'inflation'           => $inputs->getInflation(),
-            'combined'            => $combined,
+            'combined'            => [],
             'page_config'         => $page_config,
             'homeFaqs'            => $homeFaqs,
             'calc_config'         => $calcConfig,
             'show_lumpsum'        => true,
+            'site_modified'       => $siteModified,
         ]);
     }
 }

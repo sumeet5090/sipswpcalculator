@@ -32,17 +32,32 @@ class GeneratePdfAction
         if (!is_dir($rate_limit_dir)) {
             @mkdir($rate_limit_dir, 0700, true);
         }
-        $ip_hash = md5($_SERVER['REMOTE_ADDR'] ?? 'unknown');
+        $ip_hash = hash('sha256', $_SERVER['REMOTE_ADDR'] ?? 'unknown');
         $rate_file = $rate_limit_dir . $ip_hash . '.json';
-        $rate_data = file_exists($rate_file) ? json_decode(file_get_contents($rate_file), true) : [];
-        $now = time();
-        $rate_data = array_filter($rate_data, fn($t) => ($now - $t) < 60);
-        if (count($rate_data) >= 10) {
-            http_response_code(429);
-            die('Too many requests. Please wait a minute before generating another PDF.');
+        $fp = @fopen($rate_file, 'c+');
+        $rate_data = [];
+        if ($fp && flock($fp, LOCK_EX)) {
+            $content = stream_get_contents($fp);
+            $rate_data = !empty($content) ? json_decode($content, true) : [];
+            if (!is_array($rate_data)) {
+                $rate_data = [];
+            }
+            $now = time();
+            $rate_data = array_filter($rate_data, fn($t) => ($now - $t) < 60);
+            if (count($rate_data) >= 10) {
+                flock($fp, LOCK_UN);
+                fclose($fp);
+                http_response_code(429);
+                die('Too many requests. Please wait a minute before generating another PDF.');
+            }
+            $rate_data[] = $now;
+            ftruncate($fp, 0);
+            rewind($fp);
+            fwrite($fp, json_encode(array_values($rate_data)));
+            fflush($fp);
+            flock($fp, LOCK_UN);
+            fclose($fp);
         }
-        $rate_data[] = $now;
-        file_put_contents($rate_file, json_encode($rate_data));
 
         // Turn off error display during PDF generation so vendor deprecation warnings never corrupt binary stream
         $orig_display_errors = ini_get('display_errors');
@@ -132,7 +147,7 @@ class GeneratePdfAction
             $options = new \Dompdf\Options();
             $options->set('isRemoteEnabled', false);
             $options->set('defaultFont', 'Helvetica');
-            $options->set('isPhpEnabled', true);
+            $options->set('isPhpEnabled', false);
             $options->set('isJavascriptEnabled', false);
 
             ob_start();
