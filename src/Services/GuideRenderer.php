@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Services;
 
+use Core\BlogRepository;
 use Core\ContentManager;
+use Core\Factories\SchemaFactory;
+use Core\FaqRepository;
 use Core\InvestmentCalculator;
-use Core\InvestmentInputs;
 use Core\MetaManager;
-use Core\SchemaHelper;
 use Core\View;
 
 /**
@@ -19,16 +20,28 @@ class GuideRenderer
 {
     private ContentManager $contentManager;
     private MetaManager $metaManager;
-    private \Core\Factories\SchemaFactory $schemaFactory;
+    private SchemaFactory $schemaFactory;
+    private FaqRepository $faqRepository;
+    private BlogRepository $blogRepository;
+    private ConfigService $configService;
+    private InvestmentCalculator $calculator;
 
     public function __construct(
         ContentManager $contentManager,
         MetaManager $metaManager,
-        \Core\Factories\SchemaFactory $schemaFactory
+        SchemaFactory $schemaFactory,
+        ?FaqRepository $faqRepository = null,
+        ?BlogRepository $blogRepository = null,
+        ?ConfigService $configService = null,
+        ?InvestmentCalculator $calculator = null
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
         $this->schemaFactory = $schemaFactory;
+        $this->faqRepository = $faqRepository ?? \Core\Container::getInstance()->get(FaqRepository::class);
+        $this->blogRepository = $blogRepository ?? \Core\Container::getInstance()->get(BlogRepository::class);
+        $this->configService = $configService ?? \Core\Container::getInstance()->get(ConfigService::class);
+        $this->calculator = $calculator ?? \Core\Container::getInstance()->get(InvestmentCalculator::class);
     }
 
     /**
@@ -60,8 +73,7 @@ class GuideRenderer
             $calculator_type = $strategy->getType();
         }
 
-        $faqRepository = new \Core\FaqRepository();
-        $faqs = $faqRepository->getByTag($slug);
+        $faqs = $this->faqRepository->getByTag($slug);
 
         $page_config['additional_head'] = $this->schemaFactory->generateForPage(
             $slug,
@@ -83,22 +95,12 @@ class GuideRenderer
         $content_metadata = $content['metadata'];
         $active_page = $slug . '.php';
 
-        // Load central calc config — single source of truth for all field bounds/defaults.
-        $calcConfigPath = __DIR__ . '/../../content/calculator_defaults.json';
-        $calcConfig = file_exists($calcConfigPath) ? json_decode(file_get_contents($calcConfigPath), true) : [];
+        // Load central calc config via ConfigService
+        $calcConfig = $this->configService->getCalculatorDefaults();
 
-        // Build InvestmentInputs from defaults and run the calculator so the chart
-        // and table are pre-populated on first load (no user interaction required).
+        // Build InvestmentInputs from defaults and run the calculator
         $inputs = $strategy->getInitialInputs();
-
-        $calculator = new InvestmentCalculator();
-        $combined = $calculator->calculate($inputs);
-
-        // Extract chart-ready data arrays from the pre-calculated result.
-        $years_data         = array_column($combined, 'year');
-        $cumulative_numbers = array_column($combined, 'cumulative_invested');
-        $combined_numbers   = array_column($combined, 'combined_total');
-        $swp_numbers        = array_map(fn ($v) => $v ?? 0.0, array_column($combined, 'annual_withdrawal'));
+        $combined = $this->calculator->calculate($inputs);
 
         // Extract per-field defaults for form pre-population.
         $sip             = $inputs->getSip();
@@ -112,14 +114,12 @@ class GuideRenderer
         $swp_stepup      = $inputs->getSwpStepup();
         $swp_rate        = $inputs->getSwpRate();
 
-        // Lumpsum shown only on home page (RenderHomeAction).
-        // SWP page uses dedicated corpus field; SIP-only pages hide lumpsum entirely.
         $show_lumpsum = false;
 
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
 
-        // Fetch all posts for related resources / internal linking
-        $all_posts = \Core\BlogRepository::getAllPosts();
+        // Fetch all posts for related resources / internal linking via injected BlogRepository
+        $all_posts = $this->blogRepository->getAllPosts();
 
         View::render($layout, [
             'content_html'        => $content_html,
@@ -132,10 +132,6 @@ class GuideRenderer
             'show_lumpsum'        => $show_lumpsum,
             'faqs'                => $faqs,
             'combined'            => $combined,
-            'years_data'          => $years_data,
-            'cumulative_numbers'  => $cumulative_numbers,
-            'combined_numbers'    => $combined_numbers,
-            'swp_numbers'         => $swp_numbers,
             'sip'                 => $sip,
             'years'               => $years,
             'rate'                => $rate,

@@ -238,7 +238,7 @@ class RouterIntegrityTest extends TestCase
      */
     public function testBlogRepositoryMatchesMarkdownFiles(): void
     {
-        $allPosts = \Core\BlogRepository::getAllPosts();
+        $allPosts = (new \Core\BlogRepository())->getAllPosts();
         $repoSlugs = array_map(function ($post) {
             return basename($post['href']);
         }, $allPosts);

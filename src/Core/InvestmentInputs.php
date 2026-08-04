@@ -52,18 +52,14 @@ class InvestmentInputs
     }
 
     /**
-     * Helper to load the JSON defaults.
+     * Helper to load the JSON defaults via ConfigService or Container.
      */
-    private static function loadDefaults(): array
+    private static function loadDefaults(?\Services\ConfigService $config = null): array
     {
-        $jsonPath = __DIR__ . '/../../content/calculator_defaults.json';
-        if (file_exists($jsonPath)) {
-            $decoded = json_decode(file_get_contents($jsonPath), true);
-            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                return $decoded;
-            }
+        if ($config !== null) {
+            return $config->getCalculatorDefaults();
         }
-        throw new \Exception("calculator_defaults.json is missing or invalid.");
+        return Container::getInstance()->get(\Services\ConfigService::class)->getCalculatorDefaults();
     }
 
     /**
@@ -71,12 +67,13 @@ class InvestmentInputs
      * Bounds and defaults are read from the central calculator_defaults.json config.
      *
      * @param array $data Typically $_POST or $_GET payload
+     * @param \Services\ConfigService|null $config Optional ConfigService instance
      * @return self
      */
-    public static function fromRequest(array $data): self
+    public static function fromRequest(array $data, ?\Services\ConfigService $config = null): self
     {
         // Load the single source of truth for all bounds and defaults.
-        $cfg = self::loadDefaults();
+        $cfg = self::loadDefaults($config);
 
         $sip           = isset($data['sip'])
             ? self::clamp((float)$data['sip'], $cfg['sip']['min'], $cfg['sip']['max'])
@@ -143,11 +140,12 @@ class InvestmentInputs
      * This is the industry-standard Named Constructor pattern: one input shape → one factory.
      *
      * @param array $data POST/GET payload from the SWP calculator form
+     * @param \Services\ConfigService|null $config Optional ConfigService instance
      * @return self
      */
-    public static function fromSwpRequest(array $data): self
+    public static function fromSwpRequest(array $data, ?\Services\ConfigService $config = null): self
     {
-        $cfg = self::loadDefaults();
+        $cfg = self::loadDefaults($config);
 
         // `corpus` is the SWP-specific field — maps to internal `lumpsum` (starting balance).
         $corpus = isset($data['corpus'])

@@ -10,7 +10,14 @@ namespace Core;
  */
 class BlogRepository
 {
-    public static function getCategories(): array
+    private ContentManager $contentManager;
+
+    public function __construct(?ContentManager $contentManager = null)
+    {
+        $this->contentManager = $contentManager ?? Container::getInstance()->get(ContentManager::class);
+    }
+
+    public function getCategories(): array
     {
         $jsonPath = __DIR__ . '/../../content/categories.json';
         if (!file_exists($jsonPath)) {
@@ -33,10 +40,9 @@ class BlogRepository
      *
      * @return array
      */
-    public static function getAllPosts(): array
+    public function getAllPosts(): array
     {
         $contentDir = __DIR__ . '/../../content/blog';
-        $contentManager = new ContentManager();
         $posts = [];
 
         foreach (['growth', 'retirement', 'comparison'] as $cat) {
@@ -52,7 +58,7 @@ class BlogRepository
 
             foreach ($files as $file) {
                 $slug = basename($file, '.md');
-                $content = $contentManager->getParsedContent('/blog/' . $cat . '/' . $slug);
+                $content = $this->contentManager->getParsedContent('/blog/' . $cat . '/' . $slug);
                 if (!$content) {
                     continue;
                 }

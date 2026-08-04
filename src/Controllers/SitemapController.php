@@ -9,6 +9,13 @@ use Core\Http\Response;
 
 class SitemapController
 {
+    private BlogRepository $blogRepository;
+
+    public function __construct(?BlogRepository $blogRepository = null)
+    {
+        $this->blogRepository = $blogRepository ?? \Core\Container::getInstance()->get(BlogRepository::class);
+    }
+
     public function index(): Response
     {
         $routesConfig = require __DIR__ . '/../Core/Config/routes.php';
@@ -40,7 +47,7 @@ class SitemapController
         }
 
         // 3. Blog Posts
-        $posts = BlogRepository::getAllPosts();
+        $posts = $this->blogRepository->getAllPosts();
         foreach ($posts as $post) {
             $mdFile = __DIR__ . '/../../content/blog/' . $post['category'] . '/' . basename($post['href']) . '.md';
             $lastmod = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : date('Y-m-d', strtotime($post['date']));

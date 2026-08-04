@@ -4,14 +4,31 @@ declare(strict_types=1);
 
 namespace Controllers;
 
+use Core\BlogRepository;
+use Core\FaqRepository;
+use Core\SchemaHelper;
 use Core\View;
 
 /**
  * PageController
- * Handles simple static page rendering.
+ * Handles simple static page rendering using injected repositories and helpers.
  */
 class PageController
 {
+    private FaqRepository $faqRepository;
+    private BlogRepository $blogRepository;
+    private SchemaHelper $schemaHelper;
+
+    public function __construct(
+        ?FaqRepository $faqRepository = null,
+        ?BlogRepository $blogRepository = null,
+        ?SchemaHelper $schemaHelper = null
+    ) {
+        $this->faqRepository = $faqRepository ?? \Core\Container::getInstance()->get(FaqRepository::class);
+        $this->blogRepository = $blogRepository ?? \Core\Container::getInstance()->get(BlogRepository::class);
+        $this->schemaHelper = $schemaHelper ?? \Core\Container::getInstance()->get(SchemaHelper::class);
+    }
+
     public function about(): void
     {
         View::render('pages/about');
@@ -19,8 +36,7 @@ class PageController
 
     public function faq(): void
     {
-        $faqRepository = new \Core\FaqRepository();
-        $faqs = $faqRepository->getAll();
+        $faqs = $this->faqRepository->getAll();
 
         $faq_categories = [
             ['id' => 'basics', 'label' => 'Basics', 'icon' => 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'],
@@ -64,8 +80,7 @@ class PageController
         }
         sort($letters);
 
-        $schemaHelper = new \Core\SchemaHelper();
-        $breadcrumbs = $schemaHelper->getBreadcrumbs([
+        $breadcrumbs = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Glossary' => '/glossary'
         ]);
@@ -74,7 +89,7 @@ class PageController
         foreach ($glossary_terms as $term) {
             $faqData[$term['q']] = $term['a'];
         }
-        $faq = $schemaHelper->getFAQ($faqData);
+        $faq = $this->schemaHelper->getFAQ($faqData);
 
         View::render('pages/glossary', [
             'glossary_terms' => $glossary_terms,
@@ -86,8 +101,7 @@ class PageController
 
     public function privacy(): void
     {
-        $schemaHelper = new \Core\SchemaHelper();
-        $breadcrumbs = $schemaHelper->getBreadcrumbs([
+        $breadcrumbs = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Privacy Policy' => '/privacy'
         ]);
@@ -103,16 +117,15 @@ class PageController
 
     public function resources(): void
     {
-        $all_posts = \Core\BlogRepository::getAllPosts();
-        $categories = \Core\BlogRepository::getCategories();
+        $all_posts = $this->blogRepository->getAllPosts();
+        $categories = $this->blogRepository->getCategories();
 
         $posts_by_cat = [];
         foreach ($all_posts as $post) {
             $posts_by_cat[$post['category']][] = $post;
         }
 
-        $schemaHelper = new \Core\SchemaHelper();
-        $breadcrumbs = $schemaHelper->getBreadcrumbs([
+        $breadcrumbs = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Resources' => '/resources'
         ]);
@@ -126,8 +139,7 @@ class PageController
 
     public function terms(): void
     {
-        $schemaHelper = new \Core\SchemaHelper();
-        $breadcrumbs = $schemaHelper->getBreadcrumbs([
+        $breadcrumbs = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Terms of Service' => '/terms'
         ]);
