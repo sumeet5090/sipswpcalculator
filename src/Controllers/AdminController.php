@@ -147,9 +147,12 @@ class AdminController
         }
 
         try {
-            $this->migrator->migrate(true); // Silent mode
+            $executed = $this->migrator->migrate();
+            $msg = count($executed) > 0
+                ? 'Migrated successfully: ' . implode(', ', $executed)
+                : 'Nothing to migrate.';
 
-            return Response::json(['status' => 'success', 'message' => 'Database migrations completed successfully.']);
+            return Response::json(['status' => 'success', 'message' => $msg]);
         } catch (\Throwable $e) {
             return Response::json(['status' => 'error', 'message' => 'Migration failed: ' . $e->getMessage()], 500);
         }

@@ -119,7 +119,7 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 - **Immutable HTTP Pipeline:** Controllers strictly return `Core\Http\Response` objects (e.g. via `Response::html()`), separating view compilation from response emitting. `index.php` instantiates a single `Request` object top-down.
 - **SiteConfig (`Core\SiteConfig`):** Provides environment-aware domain resolution (`APP_URL`) across controllers, view helpers, and Schema.org generators.
 - **ConfigService (`Services\ConfigService`):** Loads and caches JSON configuration defaults across controller/service requests.
-- **CsvExportService (`Services\CsvExportService`):** Encapsulates CSV report generation and output delivery, decoupling export logic from `RenderHomeAction`.
+- **CsvExportService (`Services\CsvExportService`):** Pure service generating CSV string data from calculation arrays, returning `Response::csv()` instances cleanly without direct output or process termination.
 - **SessionManager (`Services\SessionManager`):** Encapsulates `$_SESSION` lifecycle management, CSRF token generation, and token verification, eliminating direct superglobal access across services and view engines.
 - **RateLimiter Service (`Services\RateLimiter`):** Centralizes IP-based file rate limiting across endpoints (`GeneratePdfAction`, `AdminController`), enforcing CQS via `checkLimit()` and `RateLimitExceededException`.
 - **PSR-11 Container & Strict DI:** `Core\Container` implements `Psr\Container\ContainerInterface` with `has()` and PSR-11 exception primitives (`NotFoundException`, `ContainerException`). Constructors strictly require dependencies without fallback instantiations, eliminating internal coupling.

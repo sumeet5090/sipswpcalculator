@@ -36,16 +36,24 @@ class App
      */
     public function run(?Request $request = null): void
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $request = $request ?? Request::createFromGlobals();
 
         $this->registerDependencies();
         $this->registerRoutes();
 
-        $this->router->dispatch($request);
+        /** @var \Services\SessionManager $sessionManager */
+        $sessionManager = $this->container->get(\Services\SessionManager::class);
+        $sessionManager->start();
+
+        try {
+            $response = $this->router->dispatch($request);
+        } catch (\Core\Exceptions\RouteNotFoundException $e) {
+            $response = \Controllers\ErrorController::handle404();
+        } catch (\Throwable $e) {
+            $response = \Controllers\ErrorController::handle500($e);
+        }
+
+        $response->send();
     }
 
     /**

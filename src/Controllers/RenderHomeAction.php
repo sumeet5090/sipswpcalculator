@@ -65,8 +65,8 @@ class RenderHomeAction
         $action = $post['action'] ?? '';
         if ($action === 'download_csv') {
             $combined = $this->calculator->calculate($inputs);
-            $this->csvExportService->export($combined, $enable_swp);
-            return new Response('', 200);
+            $csvContent = $this->csvExportService->generate($combined, $enable_swp);
+            return Response::csv($csvContent, 'SIP_SWP_Yearly_Report.csv');
         }
 
         $page_config = $this->metaManager->getMeta('home');

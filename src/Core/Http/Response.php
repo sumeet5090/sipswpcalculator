@@ -50,4 +50,15 @@ class Response
 
         return new self($html, $statusCode, $headers);
     }
+
+    public static function csv(string $csvContent, string $filename = 'export.csv', int $statusCode = 200): self
+    {
+        return new self($csvContent, $statusCode, [
+            'Content-Type' => 'text/csv; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Length' => (string) strlen($csvContent),
+            'Cache-Control' => 'no-cache, must-revalidate',
+            'Pragma' => 'no-cache',
+        ]);
+    }
 }

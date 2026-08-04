@@ -11,16 +11,14 @@ namespace Services;
 class CsvExportService
 {
     /**
-     * Generate and output the CSV file directly to php://output stream and terminate request.
+     * Generate raw CSV content for investment schedule data.
      *
      * @param array $combined Results array from InvestmentCalculator
      * @param bool $enableSwp Whether SWP withdrawal columns should be included
      */
-    public function export(array $combined, bool $enableSwp): void
+    public function generate(array $combined, bool $enableSwp): string
     {
-        header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=SIP_SWP_Yearly_Report.csv');
-        $output = fopen('php://output', 'w');
+        $resource = fopen('php://temp', 'r+');
 
         $headers = ['Year', 'Begin Balance (₹)', 'Monthly SIP (₹)', 'Annual Contribution (₹)', 'Cumulative Invested (₹)'];
         if ($enableSwp) {
@@ -31,7 +29,7 @@ class CsvExportService
         $headers[] = 'Interest Earned (₹)';
         $headers[] = 'End Balance (₹)';
 
-        fputcsv($output, $headers, ',', '"', '\\');
+        fputcsv($resource, $headers, ',', '"', '\\');
 
         foreach ($combined as $row) {
             $csvRow = [
@@ -48,9 +46,13 @@ class CsvExportService
             }
             $csvRow[] = $row['interest'];
             $csvRow[] = $row['combined_total'];
-            fputcsv($output, $csvRow, ',', '"', '\\');
+            fputcsv($resource, $csvRow, ',', '"', '\\');
         }
-        fclose($output);
-        exit();
+
+        rewind($resource);
+        $csvContent = stream_get_contents($resource);
+        fclose($resource);
+
+        return is_string($csvContent) ? $csvContent : '';
     }
 }
