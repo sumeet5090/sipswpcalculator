@@ -9,7 +9,7 @@ use Twig\Loader\FilesystemLoader;
 
 /**
  * View
- * Handles presentation rendering using Twig (and legacy PHP during transition).
+ * Handles presentation rendering using Twig.
  */
 class View
 {
@@ -18,7 +18,7 @@ class View
     private static function getTwig(): Environment
     {
         if (self::$twig === null) {
-            $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../Views');
+            $loader = new FilesystemLoader(__DIR__ . '/../Views');
             $env = Env::get('ENVIRONMENT', 'development');
             $isProd = ($env === 'production');
 
@@ -31,13 +31,12 @@ class View
                 $cachePath = $cacheDir;
             }
 
-            self::$twig = new \Twig\Environment($loader, [
+            self::$twig = new Environment($loader, [
                 'cache' => $cachePath,
                 'debug' => !$isProd,
             ]);
 
             self::$twig->addGlobal('env', $env);
-            self::$twig->addGlobal('request', \Core\Http\Request::createFromGlobals());
             self::$twig->addGlobal('site_url', (new SiteConfig())->getBaseUrl());
 
             self::$twig->addFilter(new \Twig\TwigFilter('formatInr', function ($amount) {
@@ -56,17 +55,9 @@ class View
     }
 
     /**
-     * Render a template file and echo it.
-     */
-    public static function render(string $view, array $data = []): void
-    {
-        echo self::renderToString($view, $data);
-    }
-
-    /**
      * Render a template file and return the string content.
      */
-    public static function renderToString(string $view, array $data = []): string
+    public static function render(string $view, array $data = []): string
     {
         if (empty($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -87,5 +78,14 @@ class View
         } catch (\Exception $e) {
             throw new \RuntimeException("Twig rendering failed: " . $e->getMessage(), 0, $e);
         }
+    }
+
+    /**
+     * Alias for render for backward compatibility.
+     * @deprecated Use View::render() directly.
+     */
+    public static function renderToString(string $view, array $data = []): string
+    {
+        return self::render($view, $data);
     }
 }

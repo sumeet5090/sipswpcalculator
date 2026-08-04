@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Services;
 
+use Controllers\ErrorController;
 use Core\BlogRepository;
 use Core\ContentManager;
 use Core\Factories\SchemaFactory;
 use Core\FaqRepository;
+use Core\Http\Response;
 use Core\MetaManager;
 use Core\View;
 
@@ -45,14 +47,13 @@ class GuideRenderer
      *
      * @param string $slug Guide URL path slug (e.g. 'sip-calculator')
      */
-    public function render(string $slug): void
+    public function render(string $slug): Response
     {
         $path = "/calculators/{$slug}";
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            \Controllers\ErrorController::handle404();
-            return;
+            return ErrorController::handle404();
         }
 
         $meta = $content['metadata'];
@@ -116,7 +117,7 @@ class GuideRenderer
         // Fetch all posts for related resources / internal linking via injected BlogRepository
         $all_posts = $this->blogRepository->getAllPosts();
 
-        View::render($layout, [
+        return Response::html(View::render($layout, [
             'content_html'        => $content_html,
             'content_metadata'    => $content_metadata,
             'page_config'         => $page_config,
@@ -138,6 +139,6 @@ class GuideRenderer
             'swp_stepup'          => $swp_stepup,
             'swp_rate'            => $swp_rate,
             'all_posts'           => $all_posts,
-        ]);
+        ]));
     }
 }

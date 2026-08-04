@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Controllers;
 
+use Core\BlogRepository;
 use Core\ContentManager;
+use Core\Factories\SchemaFactory;
+use Core\Http\Response;
 use Core\MetaManager;
 use Core\SchemaHelper;
-use Core\BlogRepository;
 use Core\SiteConfig;
-use Core\Factories\SchemaFactory;
 use Core\View;
 
 /**
@@ -41,7 +42,7 @@ class BlogController
         $this->siteConfig = $siteConfig ?? new SiteConfig();
     }
 
-    public function index(): void
+    public function index(): Response
     {
         $all_posts = $this->blogRepository->getAllPosts();
         $categories = $this->blogRepository->getCategories();
@@ -56,16 +57,16 @@ class BlogController
             'Resources' => '/resources'
         ]);
 
-        View::render('pages/resources', [
+        return Response::html(View::render('pages/resources', [
             'active_page'  => 'resources.php',
             'all_posts'    => $all_posts,
             'posts_by_cat' => $posts_by_cat,
             'categories'   => $categories,
             'breadcrumbs'  => $breadcrumbs_schema,
-        ]);
+        ]));
     }
 
-    public function show(string $category, string $slug): void
+    public function show(string $category, string $slug): Response
     {
         $slug = str_replace('.php', '', $slug);
         $path = "/blog/{$category}/{$slug}";
@@ -73,8 +74,7 @@ class BlogController
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            \Controllers\ErrorController::handle404();
-            return;
+            return ErrorController::handle404();
         }
 
         $post_metadata = $this->blogRepository->getPostBySlug($category, $slug);
@@ -115,7 +115,7 @@ class BlogController
             $this->siteConfig->getUrl('/resource/' . $category . '/' . $slug)
         );
 
-        View::render('layouts/generic-post', [
+        return Response::html(View::render('layouts/generic-post', [
             'content_html'     => $content['html'],
             'content_metadata' => $content['metadata'],
             'page_config'      => $page_config,
@@ -125,6 +125,6 @@ class BlogController
             'all_posts'        => $all_posts,
             'date_published'   => $datePublished,
             'date_modified'    => $dateModified,
-        ]);
+        ]));
     }
 }

@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Controllers\AdminController;
+use Controllers\BlogController;
+use Controllers\GeneratePdfAction;
+use Controllers\PageController;
+use Controllers\RenderGuideAction;
+use Controllers\RenderHomeAction;
+use Controllers\SitemapController;
+use Core\Http\Request;
+
 /**
  * App
  * The application kernel class (Front Controller/Bootstrapper).
@@ -25,19 +34,18 @@ class App
     /**
      * Run the application bootstrap and request lifecycle.
      */
-    public function run(): void
+    public function run(?Request $request = null): void
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
+        $request = $request ?? Request::createFromGlobals();
+
         $this->registerDependencies();
         $this->registerRoutes();
 
-        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $method = $_SERVER['REQUEST_METHOD'];
-
-        $this->router->dispatch($uri, $method);
+        $this->router->dispatch($request);
     }
 
     /**
@@ -95,16 +103,16 @@ class App
 
         // Bind Controllers needing explicit DI
         $routesConfig = $this->routesConfig;
-        $this->container->singleton(\Controllers\SitemapController::class, function (Container $c) use ($routesConfig) {
-            return new \Controllers\SitemapController(
+        $this->container->singleton(SitemapController::class, function (Container $c) use ($routesConfig) {
+            return new SitemapController(
                 $c->get(BlogRepository::class),
                 $c->get(SiteConfig::class),
                 $routesConfig
             );
         });
 
-        $this->container->singleton(\Controllers\BlogController::class, function (Container $c) {
-            return new \Controllers\BlogController(
+        $this->container->singleton(BlogController::class, function (Container $c) {
+            return new BlogController(
                 $c->get(ContentManager::class),
                 $c->get(MetaManager::class),
                 $c->get(SchemaHelper::class),
@@ -133,9 +141,9 @@ class App
     private function registerRoutes(): void
     {
         // Core landing pages
-        $this->router->get('/', 'RenderHomeAction');
-        $this->router->post('/', 'RenderHomeAction');
-        $this->router->post('/generate-pdf', 'GeneratePdfAction');
+        $this->router->get('/', [RenderHomeAction::class, '__invoke']);
+        $this->router->post('/', [RenderHomeAction::class, '__invoke']);
+        $this->router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke']);
 
         // Dynamic Calculators Registration
         foreach ($this->routesConfig['calculators'] as $calc => $config) {
@@ -151,21 +159,21 @@ class App
         }
 
         // Dynamic Sitemap
-        $this->router->get('/sitemap.xml', 'SitemapController@index');
+        $this->router->get('/sitemap.xml', [SitemapController::class, 'index']);
 
         // Admin / Insight Routing
-        $this->router->get('/admin_insights', 'AdminController@insights');
-        $this->router->post('/admin_insights', 'AdminController@insights');
+        $this->router->get('/admin_insights', [AdminController::class, 'insights']);
+        $this->router->post('/admin_insights', [AdminController::class, 'insights']);
         $this->router->redirect('/admin_insights.php', '/admin_insights');
-        $this->router->get('/admin_insights/migrate', 'AdminController@runMigrations');
-        $this->router->get('/log_insight', 'AdminController@logInsight');
-        $this->router->post('/log_insight', 'AdminController@logInsight');
+        $this->router->get('/admin_insights/migrate', [AdminController::class, 'runMigrations']);
+        $this->router->get('/log_insight', [AdminController::class, 'logInsight']);
+        $this->router->post('/log_insight', [AdminController::class, 'logInsight']);
         $this->router->redirect('/log_insight.php', '/log_insight');
 
         // Blog / Resources Routing
-        $this->router->get('/resources', 'BlogController@index');
-        $this->router->get('/resource', 'BlogController@index');
-        $this->router->get('/resource/{category}/{slug}', 'BlogController@show');
+        $this->router->get('/resources', [BlogController::class, 'index']);
+        $this->router->get('/resource', [BlogController::class, 'index']);
+        $this->router->get('/resource/{category}/{slug}', [BlogController::class, 'show']);
 
         // Load Dynamic Redirects from JSON
         $redirectsPath = __DIR__ . '/../../content/redirects.json';

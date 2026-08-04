@@ -115,6 +115,8 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 
 ### Architecture & Service Decoupling
 - **Env Wrapper (`Core\Env`):** Centralizes environment variable resolution, guaranteeing that OS-level CLI/testing environment overrides (`getenv`) take precedence over `.env` defaults.
+- **Strongly-Typed Callable Routing:** Routes in `routes.php` and `App.php` use class-string callable tuples (e.g. `[PageController::class, 'about']`), eliminating brittle string-based route definitions and enabling compile-time / static analysis verification.
+- **Immutable HTTP Pipeline:** Controllers strictly return `Core\Http\Response` objects (e.g. via `Response::html()`), separating view compilation from response emitting. `index.php` instantiates a single `Request` object top-down.
 - **SiteConfig (`Core\SiteConfig`):** Provides environment-aware domain resolution (`APP_URL`) across controllers, view helpers, and Schema.org generators.
 - **ConfigService (`Services\ConfigService`):** Loads and caches JSON configuration defaults across controller/service requests.
 - **CsvExportService (`Services\CsvExportService`):** Encapsulates CSV report generation and output delivery, decoupling export logic from `RenderHomeAction`.

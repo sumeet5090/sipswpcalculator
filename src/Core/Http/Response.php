@@ -41,4 +41,13 @@ class Response
     {
         return new self('', $statusCode, ['Location' => $url]);
     }
+
+    public static function html(string $html, int $statusCode = 200, array $headers = []): self
+    {
+        if (!isset($headers['Content-Type'])) {
+            $headers['Content-Type'] = 'text/html; charset=utf-8';
+        }
+
+        return new self($html, $statusCode, $headers);
+    }
 }

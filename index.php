@@ -14,8 +14,9 @@ $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
 try {
+    $request = \Core\Http\Request::createFromGlobals();
     $app = new \Core\App();
-    $app->run();
+    $app->run($request);
 } catch (\Throwable $e) {
     // If the autoloader or App container fails, this is our absolute last line of defense.
     if (class_exists('\Controllers\ErrorController')) {

@@ -6,6 +6,7 @@ namespace Controllers;
 
 use Core\BlogRepository;
 use Core\FaqRepository;
+use Core\Http\Response;
 use Core\SchemaHelper;
 use Core\View;
 
@@ -29,12 +30,12 @@ class PageController
         $this->schemaHelper = $schemaHelper ?? new SchemaHelper();
     }
 
-    public function about(): void
+    public function about(): Response
     {
-        View::render('pages/about');
+        return Response::html(View::render('pages/about'));
     }
 
-    public function faq(): void
+    public function faq(): Response
     {
         $faqs = $this->faqRepository->getAll();
 
@@ -45,13 +46,13 @@ class PageController
             ['id' => 'selection', 'label' => 'Selection', 'icon' => 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z']
         ];
 
-        View::render('pages/faq', [
+        return Response::html(View::render('pages/faq', [
             'faqs' => $faqs,
             'faq_categories' => $faq_categories,
-        ]);
+        ]));
     }
 
-    public function glossary(): void
+    public function glossary(): Response
     {
         $jsonPath = __DIR__ . '/../../content/glossary.json';
         $glossary_terms = [];
@@ -91,31 +92,31 @@ class PageController
         }
         $faq = $this->schemaHelper->getFAQ($faqData);
 
-        View::render('pages/glossary', [
+        return Response::html(View::render('pages/glossary', [
             'glossary_terms' => $glossary_terms,
             'letters' => $letters,
             'breadcrumbs' => $breadcrumbs,
             'faq_schema' => $faq,
-        ]);
+        ]));
     }
 
-    public function privacy(): void
+    public function privacy(): Response
     {
         $breadcrumbs = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Privacy Policy' => '/privacy'
         ]);
 
-        View::render('pages/privacy', [
+        return Response::html(View::render('pages/privacy', [
             'breadcrumbs' => $breadcrumbs,
             'page_config' => [
                 'title' => 'Privacy Policy',
                 'robots' => 'noindex, follow'
             ]
-        ]);
+        ]));
     }
 
-    public function resources(): void
+    public function resources(): Response
     {
         $all_posts = $this->blogRepository->getAllPosts();
         $categories = $this->blogRepository->getCategories();
@@ -130,26 +131,26 @@ class PageController
             'Resources' => '/resources'
         ]);
 
-        View::render('pages/resources', [
+        return Response::html(View::render('pages/resources', [
             'categories' => $categories,
             'posts_by_cat' => $posts_by_cat,
             'breadcrumbs' => $breadcrumbs,
-        ]);
+        ]));
     }
 
-    public function terms(): void
+    public function terms(): Response
     {
         $breadcrumbs = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Terms of Service' => '/terms'
         ]);
 
-        View::render('pages/terms', [
+        return Response::html(View::render('pages/terms', [
             'breadcrumbs' => $breadcrumbs,
             'page_config' => [
                 'title' => 'Terms of Service',
                 'robots' => 'noindex, follow'
             ]
-        ]);
+        ]));
     }
 }

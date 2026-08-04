@@ -9,11 +9,10 @@ use Core\Http\Response;
 
 class GeneratePdfAction
 {
-    public function __invoke(Request $request): void
+    public function __invoke(Request $request): Response
     {
         if ($request->getMethod() !== 'POST') {
-            http_response_code(405);
-            die('Method Not Allowed');
+            return new Response('Method Not Allowed', 405);
         }
 
         if (session_status() === PHP_SESSION_NONE) {
@@ -23,8 +22,7 @@ class GeneratePdfAction
         $post = $request->getParsedBody();
         $token = $post['csrf_token'] ?? '';
         if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
-            http_response_code(403);
-            die('Forbidden: Invalid security token. Please reload the page and try again.');
+            return new Response('Forbidden: Invalid security token. Please reload the page and try again.', 403);
         }
 
         // Rate limiting checks
@@ -32,10 +30,9 @@ class GeneratePdfAction
         if (!is_dir($rate_limit_dir)) {
             @mkdir($rate_limit_dir, 0700, true);
         }
-        $ip_hash = hash('sha256', $_SERVER['REMOTE_ADDR'] ?? 'unknown');
+        $ip_hash = hash('sha256', (string) $request->server('REMOTE_ADDR', 'unknown'));
         $rate_file = $rate_limit_dir . $ip_hash . '.json';
         $fp = @fopen($rate_file, 'c+');
-        $rate_data = [];
         if ($fp && flock($fp, LOCK_EX)) {
             $content = stream_get_contents($fp);
             $rate_data = !empty($content) ? json_decode($content, true) : [];
@@ -47,8 +44,7 @@ class GeneratePdfAction
             if (count($rate_data) >= 10) {
                 flock($fp, LOCK_UN);
                 fclose($fp);
-                http_response_code(429);
-                die('Too many requests. Please wait a minute before generating another PDF.');
+                return new Response('Too many requests. Please wait a minute before generating another PDF.', 429);
             }
             $rate_data[] = $now;
             ftruncate($fp, 0);
@@ -166,20 +162,19 @@ class GeneratePdfAction
                 ob_end_clean();
             }
 
-            header('Content-Type: application/pdf');
-            header('Content-Disposition: attachment; filename="' . $filename . '"');
-            header('Content-Length: ' . strlen($pdf_binary));
-            header('Cache-Control: private, max-age=0, must-revalidate');
-            header('Pragma: public');
-
-            echo $pdf_binary;
             @ini_set('display_errors', (string) $orig_display_errors);
-            exit();
+
+            return new Response($pdf_binary, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                'Content-Length' => (string) strlen($pdf_binary),
+                'Cache-Control' => 'private, max-age=0, must-revalidate',
+                'Pragma' => 'public',
+            ]);
         } catch (\Exception $e) {
             @ini_set('display_errors', (string) $orig_display_errors);
-            http_response_code(500);
             error_log('PDF Generation Error: ' . $e->getMessage());
-            die('An error occurred during PDF generation. Please try again.');
+            return new Response('An error occurred during PDF generation. Please try again.', 500);
         }
     }
 }
