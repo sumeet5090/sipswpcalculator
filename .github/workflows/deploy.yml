@@ -98,6 +98,9 @@ jobs:
             # Symlink the shared .env into the new release
             ln -sfn "../../.env" "releases/$LATEST_RELEASE/.env"
 
+            # Create cache directory for Twig in the release
+            mkdir -p "releases/$LATEST_RELEASE/var/cache/twig"
+
             # First time setup: if public_html is a directory and NOT a symlink
             if [ -d "public_html" ] && [ ! -L "public_html" ]; then
               echo "Transitioning public_html from directory to symlink..."

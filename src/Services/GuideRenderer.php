@@ -35,9 +35,9 @@ class GuideRenderer
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
         $this->schemaFactory = $schemaFactory;
-        $this->faqRepository = $faqRepository ?? \Core\Container::getInstance()->get(FaqRepository::class);
-        $this->blogRepository = $blogRepository ?? \Core\Container::getInstance()->get(BlogRepository::class);
-        $this->configService = $configService ?? \Core\Container::getInstance()->get(ConfigService::class);
+        $this->faqRepository = $faqRepository ?? new FaqRepository();
+        $this->blogRepository = $blogRepository ?? new BlogRepository($contentManager);
+        $this->configService = $configService ?? new ConfigService();
     }
 
     /**

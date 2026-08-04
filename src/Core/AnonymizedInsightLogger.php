@@ -26,33 +26,8 @@ class AnonymizedInsightLogger
      * CRITICAL: Must be called after the calculation results are displayed to the user
      * to avoid slowing down initial page load (0.7s LCP constraint).
      */
-    public function logCalculation(
-        string $calcType,
-        float $amount,
-        int $duration,
-        float $stepUpPct = 0.0,
-        ?string $currency = null,
-        bool $pdfDownloaded = false,
-        ?float $interestRate = null,
-        ?float $sipAmount = null,
-        ?int $sipDuration = null,
-        ?float $sipStepUp = null,
-        int $swpEnabled = 0,
-        ?float $swpWithdrawal = null,
-        ?int $swpDuration = null,
-        ?float $swpStepUp = null,
-        ?float $finalCorpus = null,
-        ?float $totalInvested = null,
-        ?float $wealthMultiplier = null,
-        ?string $goalMode = null,
-        ?string $deviceType = null,
-        int $tableViewed = 0,
-        int $pdfHasCustomName = 0,
-        int $inflationEnabled = 0,
-        int $interactionCount = 1,
-        ?string $presetClicked = 'none',
-        ?string $exitAction = 'calc_only'
-    ): void {
+    public function logCalculation(InsightPayload $payload): void
+    {
         try {
             // Close the current output buffer and send response to client so logging is non-blocking.
             if (function_exists('fastcgi_finish_request')) {
@@ -65,10 +40,7 @@ class AnonymizedInsightLogger
             // Capture HTTP Referrer for traffic-source analysis (truncated for privacy)
             $referrer = isset($_SERVER['HTTP_REFERER']) ? substr($_SERVER['HTTP_REFERER'], 0, 512) : null;
 
-            // If currency is not explicitly passed, check requests
-            if ($currency === null) {
-                $currency = $_REQUEST['currency'] ?? null;
-            }
+            $currency = $payload->currency ?? ($_REQUEST['currency'] ?? 'INR');
 
             $stmt = $this->pdo->prepare("
                 INSERT INTO user_calculations 
@@ -83,33 +55,33 @@ class AnonymizedInsightLogger
             ");
 
             $stmt->execute([
-                ':calc_type' => $calcType,
+                ':calc_type' => $payload->calcType,
                 ':currency' => $currency,
-                ':amount' => $amount,
-                ':duration' => $duration,
-                ':step_up_pct' => $stepUpPct,
+                ':amount' => $payload->amount,
+                ':duration' => $payload->duration,
+                ':step_up_pct' => $payload->stepUpPct,
                 ':country_code' => $countryCode,
-                ':pdf_downloaded' => $pdfDownloaded ? 1 : 0,
+                ':pdf_downloaded' => $payload->pdfDownloaded ? 1 : 0,
                 ':referrer' => $referrer,
-                ':interest_rate' => $interestRate,
-                ':sip_amount' => $sipAmount,
-                ':sip_duration' => $sipDuration,
-                ':sip_step_up' => $sipStepUp,
-                ':swp_enabled' => $swpEnabled,
-                ':swp_withdrawal' => $swpWithdrawal,
-                ':swp_duration' => $swpDuration,
-                ':swp_step_up' => $swpStepUp,
-                ':final_corpus' => $finalCorpus,
-                ':total_invested' => $totalInvested,
-                ':wealth_multiplier' => $wealthMultiplier,
-                ':goal_mode' => $goalMode,
-                ':device_type' => $deviceType,
-                ':table_viewed' => $tableViewed,
-                ':pdf_has_custom_name' => $pdfHasCustomName,
-                ':inflation_enabled' => $inflationEnabled,
-                ':interaction_count' => $interactionCount,
-                ':preset_clicked' => $presetClicked ?? 'none',
-                ':exit_action' => $exitAction ?? 'calc_only',
+                ':interest_rate' => $payload->interestRate,
+                ':sip_amount' => $payload->sipAmount,
+                ':sip_duration' => $payload->sipDuration,
+                ':sip_step_up' => $payload->sipStepUp,
+                ':swp_enabled' => $payload->swpEnabled,
+                ':swp_withdrawal' => $payload->swpWithdrawal,
+                ':swp_duration' => $payload->swpDuration,
+                ':swp_step_up' => $payload->swpStepUp,
+                ':final_corpus' => $payload->finalCorpus,
+                ':total_invested' => $payload->totalInvested,
+                ':wealth_multiplier' => $payload->wealthMultiplier,
+                ':goal_mode' => $payload->goalMode,
+                ':device_type' => $payload->deviceType,
+                ':table_viewed' => $payload->tableViewed,
+                ':pdf_has_custom_name' => $payload->pdfHasCustomName,
+                ':inflation_enabled' => $payload->inflationEnabled,
+                ':interaction_count' => $payload->interactionCount,
+                ':preset_clicked' => $payload->presetClicked,
+                ':exit_action' => $payload->exitAction,
             ]);
         } catch (\Throwable $e) {
             // Silently fail to ensure user experience is never impacted by logging errors

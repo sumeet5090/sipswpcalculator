@@ -14,7 +14,7 @@ class BlogRepository
 
     public function __construct(?ContentManager $contentManager = null)
     {
-        $this->contentManager = $contentManager ?? Container::getInstance()->get(ContentManager::class);
+        $this->contentManager = $contentManager ?? new ContentManager();
     }
 
     public function getCategories(): array
@@ -45,7 +45,12 @@ class BlogRepository
         $contentDir = __DIR__ . '/../../content/blog';
         $posts = [];
 
-        foreach (['growth', 'retirement', 'comparison'] as $cat) {
+        $categoryList = array_filter(array_map(fn($c) => $c['id'] ?? $c['slug'] ?? '', $this->getCategories()));
+        if (empty($categoryList)) {
+            $categoryList = ['growth', 'retirement', 'comparison'];
+        }
+
+        foreach ($categoryList as $cat) {
             $dir = $contentDir . '/' . $cat;
             if (!is_dir($dir)) {
                 continue;
@@ -88,9 +93,11 @@ class BlogRepository
         // Sort: Featured posts first, then sort remaining by date descending
         usort($posts, function ($a, $b) {
             if ($a['featured'] !== $b['featured']) {
-                return $b['featured'] ? -1 : 1;
+                return $b['featured'] ? 1 : -1;
             }
-            return strcmp($b['date'], $a['date']);
+            $dateA = \DateTimeImmutable::createFromFormat('F Y', $a['date']) ?: new \DateTimeImmutable('1970-01-01');
+            $dateB = \DateTimeImmutable::createFromFormat('F Y', $b['date']) ?: new \DateTimeImmutable('1970-01-01');
+            return $dateB <=> $dateA;
         });
 
         return $posts;

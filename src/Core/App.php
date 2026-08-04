@@ -62,8 +62,12 @@ class App
             return new SchemaHelper();
         });
 
-        $this->container->singleton(BlogRepository::class, function () {
-            return new BlogRepository();
+        $this->container->singleton(FaqRepository::class, function () {
+            return new FaqRepository();
+        });
+
+        $this->container->singleton(BlogRepository::class, function (Container $c) {
+            return new BlogRepository($c->get(ContentManager::class));
         });
 
         $this->container->singleton(InsightRepository::class, function () {
@@ -83,7 +87,10 @@ class App
             return new \Services\GuideRenderer(
                 $c->get(ContentManager::class),
                 $c->get(MetaManager::class),
-                $c->get(\Core\Factories\SchemaFactory::class)
+                $c->get(\Core\Factories\SchemaFactory::class),
+                $c->get(FaqRepository::class),
+                $c->get(BlogRepository::class),
+                $c->get(\Services\ConfigService::class)
             );
         });
     }

@@ -1,28 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Core;
 
 class Router
 {
-    private $routes = [];
-    private $redirects = [];
+    private array $routes = [];
+    private array $redirects = [];
 
-    public function get($uri, $controllerAction)
+    public function get(string $uri, string $controllerAction): void
     {
         $this->routes['GET'][$uri] = $controllerAction;
     }
 
-    public function post($uri, $controllerAction)
+    public function post(string $uri, string $controllerAction): void
     {
         $this->routes['POST'][$uri] = $controllerAction;
     }
 
-    public function redirect($uri, $target)
+    public function redirect(string $uri, string $target): void
     {
         $this->redirects[$uri] = $target;
     }
 
-    public function dispatch($uri, $method)
+    public function dispatch(string $uri, string $method): void
     {
         error_log("Dispatching: $method $uri");
         if (false !== $pos = strpos($uri, '?')) {
@@ -46,21 +48,23 @@ class Router
             return;
         }
 
-        foreach ($this->routes[$method] as $route => $action) {
-            $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_\.-]+)', $route);
-            if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
-                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
-                $this->callAction(explode('@', $action), $params);
-                return;
+        if (isset($this->routes[$method]) && is_array($this->routes[$method])) {
+            foreach ($this->routes[$method] as $route => $action) {
+                $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_\.-]+)', $route);
+                if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
+                    $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                    $this->callAction(explode('@', $action), $params);
+                    return;
+                }
             }
         }
 
         \Controllers\ErrorController::handle404();
     }
 
-    private function callAction($controllerAction, $params = [])
+    private function callAction(array $controllerAction, array $params = []): void
     {
-        if (is_array($controllerAction) && count($controllerAction) === 2) {
+        if (count($controllerAction) === 2) {
             $controllerName = "\\Controllers\\" . $controllerAction[0];
             $action = $controllerAction[1];
         } else {

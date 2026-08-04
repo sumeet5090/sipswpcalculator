@@ -33,10 +33,12 @@ class AdminAuthService
      */
     public function login(string $password): bool
     {
-        $envPassword = getenv('ADMIN_INSIGHTS_PASSWORD');
-        $adminPassword = ($envPassword !== false && $envPassword !== '') ? $envPassword : 'sipswp_admin_2026!';
+        $envPassword = $_ENV['ADMIN_INSIGHTS_PASSWORD'] ?? getenv('ADMIN_INSIGHTS_PASSWORD');
+        if (!is_string($envPassword) || $envPassword === '') {
+            throw new \RuntimeException('ADMIN_INSIGHTS_PASSWORD environment variable is missing or empty.');
+        }
 
-        if (hash_equals($adminPassword, $password)) {
+        if (hash_equals($envPassword, $password)) {
             $_SESSION['admin_authenticated'] = true;
             return true;
         }
