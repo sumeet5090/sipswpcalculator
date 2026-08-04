@@ -36,7 +36,7 @@ class MathEngineAlignmentTest extends TestCase
             'swp_rate' => $inputs['swp_rate'] ?? 8.0,
         ];
 
-        $script = $jsCode . "\nconsole.log(JSON.stringify(MathEngine.calculateCorpus(" . json_encode($jsInputs) . ")));";
+        $script = $jsCode . "\nconsole.log(JSON.stringify(MathEngine.calculate(" . json_encode($jsInputs) . ")));";
 
         $descriptorspec = [
             0 => ["pipe", "r"],
