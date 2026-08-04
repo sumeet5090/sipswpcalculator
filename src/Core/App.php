@@ -42,6 +42,14 @@ class App
     private function registerDependencies(): void
     {
         // Bind managers and helpers as Singletons
+        $this->container->singleton(\Services\ConfigService::class, function () {
+            return new \Services\ConfigService();
+        });
+
+        $this->container->singleton(\Services\CsvExportService::class, function () {
+            return new \Services\CsvExportService();
+        });
+
         $this->container->singleton(ContentManager::class, function () {
             return new ContentManager();
         });

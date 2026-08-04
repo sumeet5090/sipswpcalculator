@@ -4,20 +4,35 @@ declare(strict_types=1);
 
 namespace Controllers;
 
+use Core\FaqRepository;
 use Core\Http\Request;
-use Core\Http\Response;
-use Core\InvestmentInputs;
 use Core\InvestmentCalculator;
+use Core\InvestmentInputs;
 use Core\MetaManager;
 use Core\View;
+use Services\ConfigService;
+use Services\CsvExportService;
 
 class RenderHomeAction
 {
     private MetaManager $metaManager;
+    private ConfigService $configService;
+    private CsvExportService $csvExportService;
+    private FaqRepository $faqRepository;
+    private InvestmentCalculator $calculator;
 
-    public function __construct(MetaManager $metaManager)
-    {
+    public function __construct(
+        MetaManager $metaManager,
+        ConfigService $configService,
+        CsvExportService $csvExportService,
+        FaqRepository $faqRepository,
+        InvestmentCalculator $calculator
+    ) {
         $this->metaManager = $metaManager;
+        $this->configService = $configService;
+        $this->csvExportService = $csvExportService;
+        $this->faqRepository = $faqRepository;
+        $this->calculator = $calculator;
     }
 
     public function __invoke(Request $request): void
@@ -29,7 +44,7 @@ class RenderHomeAction
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
 
-        // CSRF & Honeypot Checks for POST requests (if form was submitted via POST without ajax)
+        // CSRF & Honeypot Checks for POST requests
         if ($request->getMethod() === 'POST') {
             $post = $request->getParsedBody();
             if (!empty($post['website_url'])) {
@@ -43,99 +58,39 @@ class RenderHomeAction
             }
         }
 
-        // Instantiate Input DTO
-        $inputs = InvestmentInputs::fromRequest($request->getParsedBody());
+        // Instantiate Input DTO via ConfigService
+        $inputs = InvestmentInputs::fromRequest($request->getParsedBody(), $this->configService);
 
-        // Instantiate and run calculation engine
-        $calculator = new InvestmentCalculator();
-        $combined = $calculator->calculate($inputs);
+        // Run calculation engine
+        $combined = $this->calculator->calculate($inputs);
 
-        // Map variables for view scope
-        $sip = $inputs->getSip();
-        $years = $inputs->getYears();
-        $rate = $inputs->getRate();
-        $stepup = $inputs->getStepup();
-        $lumpsum = $inputs->getLumpsum();
         $enable_swp = $inputs->isSwpEnabled();
-        $swp_withdrawal = $inputs->getSwpWithdrawal();
-        $swp_stepup = $inputs->getSwpStepup();
-        $swp_years_input = $inputs->getSwpYears();
-        $swp_rate = $inputs->getSwpRate();
-        $inflation = $inputs->getInflation();
 
-        // Extract list parameters for chart canvas injection
-        $years_data = array_column($combined, 'year');
-        $cumulative_numbers = array_column($combined, 'cumulative_invested');
-        $combined_numbers = array_column($combined, 'combined_total');
-        $swp_numbers = array_map(function ($val) {
-            return $val ?? 0.0;
-        }, array_column($combined, 'annual_withdrawal'));
-
-        // Handle CSV export action
+        // Handle CSV export action via dedicated service
         $post = $request->getParsedBody();
         $action = $post['action'] ?? '';
         if ($action === 'download_csv') {
-            header('Content-Type: text/csv; charset=utf-8');
-            header('Content-Disposition: attachment; filename=SIP_SWP_Yearly_Report.csv');
-            $output = fopen('php://output', 'w');
-
-            $headers = ['Year', 'Begin Balance (₹)', 'Monthly SIP (₹)', 'Annual Contribution (₹)', 'Cumulative Invested (₹)'];
-            if ($enable_swp) {
-                $headers[] = 'Monthly SWP (₹)';
-                $headers[] = 'Annual Withdrawal (₹)';
-                $headers[] = 'Cumulative Withdrawals (₹)';
-            }
-            $headers[] = 'Interest Earned (₹)';
-            $headers[] = 'End Balance (₹)';
-
-            fputcsv($output, $headers, ',', '"', '\\');
-
-            foreach ($combined as $row) {
-                $csvRow = [
-                    $row['year'],
-                    $row['begin_balance'],
-                    $row['sip_monthly'] !== null ? $row['sip_monthly'] : 0,
-                    $row['annual_contribution'],
-                    $row['cumulative_invested']
-                ];
-                if ($enable_swp) {
-                    $csvRow[] = $row['swp_monthly'] !== null ? $row['swp_monthly'] : 0;
-                    $csvRow[] = $row['annual_withdrawal'] !== null ? $row['annual_withdrawal'] : 0;
-                    $csvRow[] = $row['cumulative_withdrawals'];
-                }
-                $csvRow[] = $row['interest'];
-                $csvRow[] = $row['combined_total'];
-                fputcsv($output, $csvRow, ',', '"', '\\');
-            }
-            fclose($output);
-            exit();
+            $this->csvExportService->export($combined, $enable_swp);
+            return;
         }
 
         $page_config = $this->metaManager->getMeta('home');
-        $faqRepository = new \Core\FaqRepository();
-        $homeFaqs = $faqRepository->getByTag('home');
-
-        // Load central config and pass to view for dynamic field bounds/defaults.
-        $calcConfigPath = __DIR__ . '/../../content/calculator_defaults.json';
-        $calcConfig = file_exists($calcConfigPath) ? json_decode(file_get_contents($calcConfigPath), true) : [];
+        $homeFaqs = $this->faqRepository->getByTag('home');
+        $calcConfig = $this->configService->getCalculatorDefaults();
 
         View::render('calculators/home', [
             'active_page'         => 'index.php',
-            'sip'                 => $sip,
-            'years'               => $years,
-            'rate'                => $rate,
-            'stepup'              => $stepup,
-            'lumpsum'             => $lumpsum,
+            'sip'                 => $inputs->getSip(),
+            'years'               => $inputs->getYears(),
+            'rate'                => $inputs->getRate(),
+            'stepup'              => $inputs->getStepup(),
+            'lumpsum'             => $inputs->getLumpsum(),
             'enable_swp'          => $enable_swp,
-            'swp_withdrawal'      => $swp_withdrawal,
-            'swp_stepup'          => $swp_stepup,
-            'swp_years_input'     => $swp_years_input,
-            'swp_rate'            => $swp_rate,
-            'inflation'           => $inflation,
-            'years_data'          => $years_data,
-            'cumulative_numbers'  => $cumulative_numbers,
-            'combined_numbers'    => $combined_numbers,
-            'swp_numbers'         => $swp_numbers,
+            'swp_withdrawal'      => $inputs->getSwpWithdrawal(),
+            'swp_stepup'          => $inputs->getSwpStepup(),
+            'swp_years_input'     => $inputs->getSwpYears(),
+            'swp_rate'            => $inputs->getSwpRate(),
+            'inflation'           => $inputs->getInflation(),
             'combined'            => $combined,
             'page_config'         => $page_config,
             'homeFaqs'            => $homeFaqs,
