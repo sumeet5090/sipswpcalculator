@@ -1,15 +1,15 @@
+import { InvestmentInputs, YearResult } from '../types';
+
 /**
- * MathEngine.js
+ * MathEngine.ts
  * Core mathematical engine for compounding and Systematic Withdrawal Plan projections.
  * Refactored as an Object-Oriented class.
  */
 export class MathEngine {
     /**
      * Perform month-by-month compounding simulation.
-     * @param {object} inp - Inputs containing sip, years, rate, stepup, enable_swp, swp_withdrawal, swp_years, swp_stepup.
-     * @returns {Array} List of yearly breakdown records.
      */
-    static calculate(inp) {
+    static calculate(inp: InvestmentInputs): YearResult[] {
         const swpStartYear = inp.years + 1;
         const totalYears = inp.enable_swp ? (inp.years + inp.swp_years) : inp.years;
         const lumpsum = inp.lumpsum || 0;
@@ -19,7 +19,7 @@ export class MathEngine {
         let cumulativeInvested = lumpsum;
         let cumulativeWithdrawals = 0.0;
 
-        const results = [];
+        const results: YearResult[] = [];
 
         for (let y = 1; y <= totalYears; y++) {
             const currentRate = (y <= inp.years) ? inp.rate : swpRate;
@@ -90,14 +90,11 @@ export class MathEngine {
 
     /**
      * Calculate the cost of delaying the investment by 1 year.
-     * Assumes a fixed retirement age, so delaying by 1 year means investing for 1 less year.
-     * @param {object} inp - Inputs
-     * @returns {number} The difference in the final combined_total
      */
-    static calculateDelayCost(inp) {
+    static calculateDelayCost(inp: InvestmentInputs): number {
         if (inp.years <= 1) return 0;
         const currentResults = this.calculate(inp);
-        const delayedInp = { ...inp, years: inp.years - 1 };
+        const delayedInp: InvestmentInputs = { ...inp, years: inp.years - 1 };
         const delayedResults = this.calculate(delayedInp);
         
         const currentFinal = currentResults[currentResults.length - 1].combined_total;
@@ -108,23 +105,16 @@ export class MathEngine {
 
     /**
      * Adjust the final corpus for inflation to show purchasing power parity.
-     * @param {number} finalCorpus 
-     * @param {number} totalYears 
-     * @param {number} inflationRate 
-     * @returns {number} 
      */
-    static calculateInflationDiscount(finalCorpus, totalYears, inflationRate) {
+    static calculateInflationDiscount(finalCorpus: number, totalYears: number, inflationRate: number): number {
         if (inflationRate <= 0) return finalCorpus;
         return finalCorpus / Math.pow(1 + (inflationRate / 100), totalYears);
     }
 
     /**
      * Binary Search to find the required starting SIP to reach a target corpus.
-     * @param {object} inp - Inputs
-     * @param {number} targetCorpus - The desired final corpus
-     * @returns {number} The required monthly SIP amount
      */
-    static calculateRequiredSip(inp, targetCorpus) {
+    static calculateRequiredSip(inp: InvestmentInputs, targetCorpus: number): number {
         if (targetCorpus <= 0) return 0;
         
         const zeroSipResults = this.calculate({ ...inp, sip: 0 });
@@ -139,7 +129,7 @@ export class MathEngine {
         // Cap iterations to 40 for max 5ms execution time (zero-latency)
         for (let i = 0; i < 40; i++) {
             const mid = (low + high) / 2;
-            const testInp = { ...inp, sip: mid };
+            const testInp: InvestmentInputs = { ...inp, sip: mid };
             const results = this.calculate(testInp);
             const finalCorpus = results[results.length - 1].combined_total;
             
@@ -159,10 +149,8 @@ export class MathEngine {
 
     /**
      * Binary Search to find the required initial corpus to sustain a specific SWP plan.
-     * @param {object} inp - SWP inputs
-     * @returns {number} The required starting corpus at the beginning of the SWP phase
      */
-    static calculateRequiredStartingCorpusForSwp(inp) {
+    static calculateRequiredStartingCorpusForSwp(inp: InvestmentInputs): number {
         if (!inp.enable_swp || inp.swp_withdrawal <= 0 || inp.swp_years <= 0) return 0;
         
         let low = 0;
@@ -171,7 +159,7 @@ export class MathEngine {
         
         for (let i = 0; i < 40; i++) {
             const mid = (low + high) / 2;
-            const testInp = {
+            const testInp: InvestmentInputs = {
                 ...inp,
                 sip: 0,
                 years: 0,

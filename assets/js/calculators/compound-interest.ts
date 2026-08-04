@@ -1,15 +1,15 @@
 /**
- * compound-interest.js
+ * compound-interest.ts
  * Isolated scripting logic for the Compound Interest Calculator view.
  */
 (function() {
     'use strict';
 
-    function calculateCI() {
-        const principalInput = document.getElementById('ci-principal');
-        const rateInput = document.getElementById('ci-rate');
-        const yearsInput = document.getElementById('ci-years');
-        const frequencySelect = document.getElementById('ci-frequency');
+    function calculateCI(): void {
+        const principalInput = document.getElementById('ci-principal') as HTMLInputElement | null;
+        const rateInput = document.getElementById('ci-rate') as HTMLInputElement | null;
+        const yearsInput = document.getElementById('ci-years') as HTMLInputElement | null;
+        const frequencySelect = document.getElementById('ci-frequency') as HTMLSelectElement | null;
 
         if (!principalInput || !rateInput || !yearsInput || !frequencySelect) {
             return;
@@ -25,7 +25,7 @@
         const effectiveRate = (Math.pow(1 + r / n, n) - 1) * 100;
         const rule72Years = r > 0 ? (72 / (r * 100)).toFixed(1) : '∞';
 
-        const fmt = (num) => {
+        const fmt = (num: number): string => {
             return new Intl.NumberFormat('en-IN', {
                 style: 'currency',
                 currency: 'INR',

@@ -1,18 +1,16 @@
 /**
- * EventBus.js
+ * EventBus.ts
  * A simple publish-subscribe message broker to decouple UI events, calculations, and visualizers.
  */
+type EventCallback = (data: any) => void;
+
 class EventBus {
-    constructor() {
-        this.listeners = {};
-    }
+    private listeners: Record<string, EventCallback[]> = {};
 
     /**
      * Subscribe to an event topic.
-     * @param {string} topic 
-     * @param {function} callback 
      */
-    subscribe(topic, callback) {
+    subscribe(topic: string, callback: EventCallback): () => void {
         if (!this.listeners[topic]) {
             this.listeners[topic] = [];
         }
@@ -20,16 +18,16 @@ class EventBus {
         
         // Return unsubscribe function
         return () => {
-            this.listeners[topic] = this.listeners[topic].filter(cb => cb !== callback);
+            if (this.listeners[topic]) {
+                this.listeners[topic] = this.listeners[topic].filter(cb => cb !== callback);
+            }
         };
     }
 
     /**
      * Publish an event to all subscribers.
-     * @param {string} topic 
-     * @param {any} data 
      */
-    publish(topic, data) {
+    publish(topic: string, data?: any): void {
         if (!this.listeners[topic]) return;
         this.listeners[topic].forEach(callback => {
             try {

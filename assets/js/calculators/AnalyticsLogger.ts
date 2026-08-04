@@ -1,22 +1,27 @@
+import { InvestmentInputs, YearResult } from '../types';
+
 /**
- * AnalyticsLogger.js
+ * AnalyticsLogger.ts
  * Manages debounced user planning behavior logging.
  * Refactored as an Object-Oriented class.
  */
 export class AnalyticsService {
-    constructor(debounceMs = 3000) {
+    private debounceMs: number;
+    private insightTimeout: any = null;
+
+    constructor(debounceMs: number = 3000) {
         this.debounceMs = debounceMs;
-        this.insightTimeout = null;
     }
 
     /**
      * Log user calculations in a debounced fashion to prevent network spamming.
-     * @param {object} inputs 
-     * @param {array} results 
-     * @param {string} activeGoalMode 
-     * @param {object} extraSignals 
      */
-    logInsight(inputs, results = [], activeGoalMode = 'grow', extraSignals = {}) {
+    logInsight(
+        inputs: InvestmentInputs,
+        results: YearResult[] = [],
+        activeGoalMode: string = 'grow',
+        extraSignals: Record<string, any> = {}
+    ): void {
         if (this.insightTimeout) {
             clearTimeout(this.insightTimeout);
         }

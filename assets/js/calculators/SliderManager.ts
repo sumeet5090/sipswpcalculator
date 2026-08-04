@@ -1,34 +1,37 @@
+import { InputValidator } from './InputValidator';
+
+interface SliderPair {
+    input: HTMLInputElement;
+    range: HTMLInputElement;
+    fieldId: string;
+    defaultSliderMax: number;
+}
+
 /**
- * SliderManager.js
+ * SliderManager.ts
  * Encapsulates all range slider ↔ input synchronization logic.
- * Follows Single Responsibility Principle: SliderManager only knows how
- * to keep a range slider and a text input in sync, update ARIA state,
- * and surface inline validation errors. Calculation triggering is
- * delegated to the provided triggerFn callback.
+ * Follows Single Responsibility Principle.
  */
 export class SliderManager {
-    /**
-     * @param {function} triggerFn - Callback invoked after any value change.
-     * @param {InputValidator} validator - Validator instance for constraint checking.
-     */
-    constructor(triggerFn, validator) {
+    private triggerFn: () => void;
+    public validator: InputValidator;
+    private pairs: SliderPair[] = [];
+    private _inputDebounceTimer: any = null;
+
+    constructor(triggerFn: () => void, validator: InputValidator) {
         this.triggerFn = triggerFn;
         this.validator = validator;
-        this.pairs = [];
-        this._inputDebounceTimer = null;
     }
 
     /**
      * Register and wire a single input ↔ range pair.
-     * @param {string} inputId - ID of the <input type="number"> element.
-     * @param {string} rangeId - ID of the <input type="range"> element.
      */
-    sync(inputId, rangeId) {
-        const input = document.getElementById(inputId);
-        const range = document.getElementById(rangeId);
+    sync(inputId: string, rangeId: string): void {
+        const input = document.getElementById(inputId) as HTMLInputElement | null;
+        const range = document.getElementById(rangeId) as HTMLInputElement | null;
         if (!input || !range) return;
 
-        const defaultSliderMax = parseFloat(range.getAttribute('max')) || 100000;
+        const defaultSliderMax = parseFloat(range.getAttribute('max') || '100000');
 
         this.pairs.push({ input, range, fieldId: inputId, defaultSliderMax });
 
@@ -46,7 +49,7 @@ export class SliderManager {
 
             // Show inline error if out of bounds (and user has typed something)
             if (!isNaN(rawVal) && rawVal !== validated) {
-                const limits = this.validator.constraints[fieldName];
+                const limits = (this.validator as any).constraints[fieldName];
                 if (limits) {
                     const msg = rawVal < limits.min
                         ? `Minimum is ${limits.min}`
@@ -59,12 +62,12 @@ export class SliderManager {
 
             // Dynamically scale slider max if validated exceeds default slider max
             if (validated > defaultSliderMax) {
-                range.max = validated;
+                range.max = String(validated);
             } else {
-                range.max = defaultSliderMax;
+                range.max = String(defaultSliderMax);
             }
 
-            range.value = validated;
+            range.value = String(validated);
             this._updateAria(range, validated);
 
             // Debounce text input to prevent jank during rapid typing
@@ -74,31 +77,19 @@ export class SliderManager {
     }
 
     /**
-     * Sync all registered pairs from a config object (e.g., read from data-config).
-     * Only syncs pairs that exist in the DOM — safe to call on any page.
-     * @param {object} pairMap - Map of { inputId: rangeId }
+     * Sync all registered pairs from a config object.
      */
-    syncAll(pairMap) {
+    syncAll(pairMap: Record<string, string>): void {
         for (const [inputId, rangeId] of Object.entries(pairMap)) {
             this.sync(inputId, rangeId);
         }
     }
 
-    /**
-     * Update aria-valuenow on a range element.
-     * @param {HTMLInputElement} rangeEl
-     * @param {number|string} val
-     */
-    _updateAria(rangeEl, val) {
+    private _updateAria(rangeEl: HTMLInputElement, val: number | string): void {
         rangeEl.setAttribute('aria-valuenow', String(val));
     }
 
-    /**
-     * Show an inline validation error message below the field.
-     * @param {string} fieldId
-     * @param {string} message
-     */
-    _showError(fieldId, message) {
+    private _showError(fieldId: string, message: string): void {
         const errorEl = document.getElementById(`${fieldId}_error`);
         if (!errorEl) return;
         errorEl.textContent = message;
@@ -110,11 +101,7 @@ export class SliderManager {
         }
     }
 
-    /**
-     * Clear an inline validation error message.
-     * @param {string} fieldId
-     */
-    _clearError(fieldId) {
+    private _clearError(fieldId: string): void {
         const errorEl = document.getElementById(`${fieldId}_error`);
         if (!errorEl) return;
         errorEl.textContent = '';

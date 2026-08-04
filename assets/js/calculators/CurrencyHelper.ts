@@ -1,10 +1,14 @@
 /**
- * CurrencyHelper.js
+ * CurrencyHelper.ts
  * Manages currency formatting according to Indian standards (Lakhs/Crores).
  * Refactored as an Object-Oriented class.
  */
 export class CurrencyFormatter {
-    constructor(locale = 'en-IN', currency = 'INR', symbol = '₹') {
+    private locale: string;
+    private currency: string;
+    private symbol: string;
+
+    constructor(locale: string = 'en-IN', currency: string = 'INR', symbol: string = '₹') {
         this.locale = locale;
         this.currency = currency;
         this.symbol = symbol;
@@ -12,10 +16,8 @@ export class CurrencyFormatter {
 
     /**
      * Format numeric value to currency string.
-     * @param {number} value 
-     * @returns {string}
      */
-    format(value) {
+    format(value: number): string {
         return new Intl.NumberFormat(this.locale, {
             style: 'currency',
             currency: this.currency,
@@ -25,10 +27,8 @@ export class CurrencyFormatter {
 
     /**
      * Format dynamic large amounts with appropriate Lakh/Crore suffix.
-     * @param {number} amount 
-     * @returns {string}
      */
-    formatDynamic(amount) {
+    formatDynamic(amount: number): string {
         if (amount >= 10000000) {
             return this.symbol + (amount / 10000000).toFixed(2).replace(/\.00$/, '') + ' Crore';
         }
