@@ -9,7 +9,7 @@ export class MathEngine {
      * @param {object} inp - Inputs containing sip, years, rate, stepup, enable_swp, swp_withdrawal, swp_years, swp_stepup.
      * @returns {Array} List of yearly breakdown records.
      */
-    static calculateCorpus(inp) {
+    static calculate(inp) {
         const swpStartYear = inp.years + 1;
         const totalYears = inp.enable_swp ? (inp.years + inp.swp_years) : inp.years;
         const lumpsum = inp.lumpsum || 0;
@@ -96,9 +96,9 @@ export class MathEngine {
      */
     static calculateDelayCost(inp) {
         if (inp.years <= 1) return 0;
-        const currentResults = this.calculateCorpus(inp);
+        const currentResults = this.calculate(inp);
         const delayedInp = { ...inp, years: inp.years - 1 };
-        const delayedResults = this.calculateCorpus(delayedInp);
+        const delayedResults = this.calculate(delayedInp);
         
         const currentFinal = currentResults[currentResults.length - 1].combined_total;
         const delayedFinal = delayedResults[delayedResults.length - 1].combined_total;
@@ -127,7 +127,7 @@ export class MathEngine {
     static calculateRequiredSip(inp, targetCorpus) {
         if (targetCorpus <= 0) return 0;
         
-        const zeroSipResults = this.calculateCorpus({ ...inp, sip: 0 });
+        const zeroSipResults = this.calculate({ ...inp, sip: 0 });
         if (zeroSipResults[zeroSipResults.length - 1].combined_total >= targetCorpus) {
             return 0;
         }
@@ -140,7 +140,7 @@ export class MathEngine {
         for (let i = 0; i < 40; i++) {
             const mid = (low + high) / 2;
             const testInp = { ...inp, sip: mid };
-            const results = this.calculateCorpus(testInp);
+            const results = this.calculate(testInp);
             const finalCorpus = results[results.length - 1].combined_total;
             
             if (Math.abs(finalCorpus - targetCorpus) < 1) {
@@ -177,7 +177,7 @@ export class MathEngine {
                 years: 0,
                 lumpsum: mid
             };
-            const results = this.calculateCorpus(testInp);
+            const results = this.calculate(testInp);
             const finalBalance = results[results.length - 1].combined_total;
             
             if (Math.abs(finalBalance) < 1) {

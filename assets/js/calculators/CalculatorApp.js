@@ -122,6 +122,7 @@ export class CalculatorApp {
 
     /**
      * Draw years breakdown logs.
+     * @param {boolean} enableSwp 
      */
     updateTable(data, enableSwp) {
         const tbody = this.dom.getElement('breakdown-body');
@@ -135,22 +136,21 @@ export class CalculatorApp {
 
             const fmt = (v) => v !== null ? this.formatter.format(v) : '-';
 
-            let swpCols = '';
-            if (enableSwp) {
-                swpCols = `
-                    <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col">${fmt(row.swp_monthly)}</td>
-                    <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col">${fmt(row.annual_withdrawal)}</td>
-                    <td class="px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap swp-col">${fmt(row.cumulative_withdrawals)}</td>
-                `;
-            }
+            const swpDisplay = enableSwp ? '' : 'style="display:none"';
+            let swpCols = `
+                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col" ${swpDisplay}>${fmt(row.swp_monthly)}</td>
+                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col" ${swpDisplay}>${fmt(row.annual_withdrawal)}</td>
+                <td class="px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap swp-col" ${swpDisplay}>${fmt(row.cumulative_withdrawals)}</td>
+            `;
             
             const showPostTax = document.getElementById('show_post_tax')?.checked || false;
-            let taxCols = '';
             let finalCorpus = row.combined_total;
             if (showPostTax) {
-                taxCols = `<td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap tax-col">${fmt(row.ltcg_tax)}</td>`;
                 finalCorpus = row.post_tax_total;
             }
+            
+            const taxDisplay = showPostTax ? '' : 'style="display:none"';
+            let taxCols = `<td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap tax-col" ${taxDisplay}>${this.formatter.format(row.ltcg_tax)}</td>`;
 
             const inputs = this.getInputs();
             if (inputs.inflation > 0) {
@@ -168,7 +168,6 @@ export class CalculatorApp {
                 ${taxCols}
                 <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono whitespace-nowrap end-corpus-col">${this.formatter.format(finalCorpus)}</td>
             `;
-
             fragment.appendChild(tr);
         });
 
@@ -779,27 +778,40 @@ export class CalculatorApp {
         });
 
         // Initial render logic
-        const existingData = window.__INITIAL_DATA__ || [];
+        // 1. Check if SWP is inherently enabled in the template defaults or URL
+        let swpEnabledOnLoad = false;
+        const urlSwpOn = (new URLSearchParams(window.location.search)).get('swp_on') === '1';
+        const initialSwpToggle = this.dom.getElement('enable_swp');
+        if (initialSwpToggle && (initialSwpToggle.checked || urlSwpOn)) {
+            swpEnabledOnLoad = true;
+            if (urlSwpOn) initialSwpToggle.checked = true;
+            this.syncSwpToggleState();
+        } else if (document.querySelector('[data-js="calculator-app"]')?.dataset?.mode === 'swp') {
+            swpEnabledOnLoad = true;
+            if (initialSwpToggle) {
+                initialSwpToggle.checked = true;
+                this.syncSwpToggleState();
+            }
+        }
+
+        // 2. Fetch current DOM inputs and calculate initial data
+        const initialInputs = this.getInputs();
+        let existingData = [];
+        try {
+            existingData = MathEngine.calculate(initialInputs);
+        } catch (e) {
+            console.error("Initial JS Calculation Failed:", e);
+        }
+
+        // 3. Render the UI
         if (existingData.length > 0) {
             this.latestResults = existingData;
             
-            // Check if SWP is inherently enabled in the template defaults
-            let swpEnabledOnLoad = false;
-            const urlSwpOn = (new URLSearchParams(window.location.search)).get('swp_on') === '1';
-            const swpToggle = this.dom.getElement('enable_swp');
-            if (swpToggle && (swpToggle.checked || urlSwpOn)) {
-                swpEnabledOnLoad = true;
-                if (urlSwpOn) swpToggle.checked = true;
-                this.syncSwpToggleState();
-            } else if (document.querySelector('[data-js="calculator-app"]')?.dataset?.mode === 'swp') {
-                swpEnabledOnLoad = true;
-            }
-
             this.updateTable(existingData, swpEnabledOnLoad);
             this.updateSummaryMetrics(existingData);
 
             if (document.getElementById('show_wealth_map')?.checked) {
-                this.chartManager.updateWaterfallChart(existingData, this.getInputs());
+                this.chartManager.updateWaterfallChart(existingData, initialInputs);
             } else {
                 this.chartManager.updateChart(existingData, swpEnabledOnLoad);
             }
