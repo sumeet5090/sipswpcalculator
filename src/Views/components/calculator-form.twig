@@ -1,9 +1,12 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
+<script type="application/json" id="calculator-app-state">
+    {{ calc_config|json_encode|raw }}
+</script>
+
 <div id="{{ container_id|default('calculator-app') }}"
      data-js="calculator-app"
      data-mode="sip"
-     data-config="{{ calc_config|json_encode|escape('html_attr') }}"
      class="glass-card p-4">
     <form method="post" novalidate id="calculator-form">
         <!-- SECURITY: CSRF Token for main form -->

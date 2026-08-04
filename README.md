@@ -106,7 +106,7 @@ This CLI migrator executes all outstanding PHP schema migrations. You can also t
 ## Technical Details & Testing
 
 ### Calculator Configuration Source of Truth
-`content/calculator_defaults.json` is the single source of truth for all calculator bounds, minimum/maximum limits, and default field values. The backend accesses this via `Services\ConfigService` (registered as a singleton in the DI container), avoiding redundant file reads. The JavaScript frontend (`InputValidator.js`) reads this JSON directly.
+`content/calculator_defaults.json` is the single source of truth for all calculator bounds, minimum/maximum limits, and default field values. The backend accesses this via `Services\ConfigService` (registered as a singleton in the DI container), avoiding redundant file reads. The TypeScript frontend (`InputValidator.ts`) reads this JSON from a `<script type="application/json" id="calculator-app-state">` Data Island element injected into the HTML.
 
 ### Architecture & Service Decoupling
 - **ConfigService (`Services\ConfigService`):** Loads and caches JSON configuration defaults across controller/service requests.

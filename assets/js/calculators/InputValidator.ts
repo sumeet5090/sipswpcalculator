@@ -9,16 +9,15 @@ export interface FieldConstraint {
 /**
  * InputValidator.ts
  * Centralized boundaries, constraints, and validation rules.
- * Constraints are read from the data-config attribute on #calculator-app
- * (injected by the PHP backend from calculator_defaults.json).
- * A static fallback is used if the attribute is absent (e.g., in tests).
+ * Constraints are read from the #calculator-app-state Data Island script tag
+ * if present, falling back to compiled-in defaults.
  */
 export class InputValidator {
     private constraints: Record<string, FieldConstraint>;
 
     /**
      * @param constraints Override constraints (used in unit tests).
-     *   If null, constraints are read from the DOM's data-config attribute.
+     *   If null, constraints are read from the #calculator-app-state Data Island script tag.
      */
     constructor(constraints: Record<string, FieldConstraint> | null = null) {
         if (constraints) {
@@ -26,15 +25,15 @@ export class InputValidator {
             return;
         }
 
-        // Read from the single source of truth serialized into the DOM by PHP.
-        const appEl = document.querySelector<HTMLElement>('[data-js="calculator-app"]');
-        if (appEl && appEl.dataset.config) {
+        // Read from the single source of truth (Data Island) serialized into the DOM by PHP.
+        const stateEl = document.getElementById('calculator-app-state');
+        if (stateEl && stateEl.textContent) {
             try {
-                const cfg = JSON.parse(appEl.dataset.config);
+                const cfg = JSON.parse(stateEl.textContent);
                 this.constraints = this._mapConfig(cfg);
                 return;
             } catch (e) {
-                console.warn('InputValidator: Failed to parse data-config. Using fallback.', e);
+                console.warn('InputValidator: Failed to parse calculator-app-state Data Island. Using fallback.', e);
             }
         }
 
