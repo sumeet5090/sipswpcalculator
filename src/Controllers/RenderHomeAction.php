@@ -75,6 +75,11 @@ class RenderHomeAction
         $homeFaqs = $this->faqRepository->getByTag('home');
         $calcConfig = $this->configService->getCalculatorDefaults();
 
+        $homeTemplatePath = __DIR__ . '/../Views/calculators/home.twig';
+        $siteModified = file_exists($homeTemplatePath)
+            ? date('Y-m-d', filemtime($homeTemplatePath))
+            : date('Y-m-d');
+
         View::render('calculators/home', [
             'active_page'         => 'index.php',
             'sip'                 => $inputs->getSip(),
@@ -93,6 +98,7 @@ class RenderHomeAction
             'homeFaqs'            => $homeFaqs,
             'calc_config'         => $calcConfig,
             'show_lumpsum'        => true,
+            'site_modified'       => $siteModified,
         ]);
     }
 }
