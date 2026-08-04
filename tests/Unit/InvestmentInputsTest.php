@@ -14,7 +14,8 @@ class InvestmentInputsTest extends TestCase
      */
     public function testDefaultInputs(): void
     {
-        $inputs = InvestmentInputs::fromRequest([]);
+        $config = new \Services\ConfigService();
+        $inputs = InvestmentInputs::fromRequest([], $config);
 
         $this->assertEquals(10000.0, $inputs->getSip());
         $this->assertEquals(20, $inputs->getYears());
@@ -46,7 +47,7 @@ class InvestmentInputsTest extends TestCase
             'swp_rate' => 7.5
         ];
 
-        $inputs = InvestmentInputs::fromRequest($data);
+        $inputs = InvestmentInputs::fromRequest($data, new \Services\ConfigService());
 
         $this->assertEquals(25000.0, $inputs->getSip());
         $this->assertEquals(15, $inputs->getYears());
@@ -77,7 +78,7 @@ class InvestmentInputsTest extends TestCase
             'swp_rate' => 45.0       // Max is 30
         ];
 
-        $inputs = InvestmentInputs::fromRequest($data);
+        $inputs = InvestmentInputs::fromRequest($data, new \Services\ConfigService());
 
         $this->assertEquals(1000000.0, $inputs->getSip());
         $this->assertEquals(50, $inputs->getYears());
@@ -107,7 +108,7 @@ class InvestmentInputsTest extends TestCase
             'swp_rate' => -2.0       // Min is 0.1
         ];
 
-        $inputs = InvestmentInputs::fromRequest($data);
+        $inputs = InvestmentInputs::fromRequest($data, new \Services\ConfigService());
 
         $this->assertEquals(500.0, $inputs->getSip());
         $this->assertEquals(1, $inputs->getYears());
@@ -138,7 +139,7 @@ class InvestmentInputsTest extends TestCase
             'swp_rate' => '6.75'
         ];
 
-        $inputs = InvestmentInputs::fromRequest($data);
+        $inputs = InvestmentInputs::fromRequest($data, new \Services\ConfigService());
 
         $this->assertEquals(15000.0, $inputs->getSip());
         $this->assertEquals(12, $inputs->getYears());

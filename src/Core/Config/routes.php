@@ -7,12 +7,12 @@ use Controllers\RenderGuideAction;
 
 return [
     'calculators' => [
-        '/sip-calculator' => ['action' => [RenderGuideAction::class, '__invoke']],
-        '/swp-calculator' => ['action' => [RenderGuideAction::class, '__invoke']],
-        '/sip-step-up-calculator' => ['action' => [RenderGuideAction::class, '__invoke']],
-        '/lumpsum-calculator' => ['action' => [RenderGuideAction::class, '__invoke']],
-        '/retirement-calculator' => ['action' => [RenderGuideAction::class, '__invoke']],
-        '/my-first-crore-calculator' => ['action' => [RenderGuideAction::class, '__invoke']]
+        '/sip-calculator'            => [RenderGuideAction::class, '__invoke'],
+        '/swp-calculator'            => [RenderGuideAction::class, '__invoke'],
+        '/sip-step-up-calculator'    => [RenderGuideAction::class, '__invoke'],
+        '/lumpsum-calculator'        => [RenderGuideAction::class, '__invoke'],
+        '/retirement-calculator'     => [RenderGuideAction::class, '__invoke'],
+        '/my-first-crore-calculator' => [RenderGuideAction::class, '__invoke']
     ],
     'pages' => [
         '/about'    => [PageController::class, 'about'],

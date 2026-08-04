@@ -48,9 +48,13 @@ class App
         try {
             $response = $this->router->dispatch($request);
         } catch (\Core\Exceptions\RouteNotFoundException $e) {
-            $response = \Controllers\ErrorController::handle404();
+            /** @var ViewRenderer $viewRenderer */
+            $viewRenderer = $this->container->get(ViewRenderer::class);
+            $response = \Controllers\ErrorController::handle404($viewRenderer);
         } catch (\Throwable $e) {
-            $response = \Controllers\ErrorController::handle500($e);
+            /** @var ViewRenderer $viewRenderer */
+            $viewRenderer = $this->container->get(ViewRenderer::class);
+            $response = \Controllers\ErrorController::handle500($e, $viewRenderer);
         }
 
         $response->send();
@@ -63,7 +67,11 @@ class App
     {
         // Bind managers and helpers as Singletons
         $this->container->singleton(SiteConfig::class, function () {
-            return new SiteConfig();
+            return new SiteConfig((string) Env::get('APP_URL', 'https://sipswpcalculator.com'));
+        });
+
+        $this->container->singleton(ViteHelper::class, function () {
+            return new ViteHelper((string) Env::get('ENVIRONMENT', 'development'));
         });
 
         $this->container->singleton(\Services\ConfigService::class, function () {
@@ -82,6 +90,15 @@ class App
             return new \Services\RateLimiter();
         });
 
+        $this->container->singleton(ViewRenderer::class, function (Container $c) {
+            return new ViewRenderer(
+                $c->get(\Services\SessionManager::class),
+                (string) Env::get('ENVIRONMENT', 'development'),
+                (string) Env::get('APP_URL', 'https://sipswpcalculator.com'),
+                $c->get(ViteHelper::class)
+            );
+        });
+
         $this->container->singleton(\Parsedown::class, function () {
             return new \Parsedown();
         });
@@ -95,7 +112,16 @@ class App
         });
 
         $this->container->singleton(AdminAuthService::class, function (Container $c) {
-            return new AdminAuthService($c->get(\Services\SessionManager::class));
+            return new AdminAuthService(
+                $c->get(\Services\SessionManager::class),
+                (string) Env::get('ADMIN_INSIGHTS_PASSWORD', '')
+            );
+        });
+
+        $this->container->singleton(\Core\Strategies\StrategyFactory::class, function (Container $c) {
+            return new \Core\Strategies\StrategyFactory(
+                $c->get(\Services\ConfigService::class)
+            );
         });
 
         $this->container->singleton(\Controllers\AdminController::class, function (Container $c) {
@@ -105,7 +131,8 @@ class App
                 $c->get(AdminAuthService::class),
                 new AdminDashboardPresenter(),
                 $c->get(DatabaseMigrator::class),
-                $c->get(\Services\RateLimiter::class)
+                $c->get(\Services\RateLimiter::class),
+                $c->get(ViewRenderer::class)
             );
         });
 
@@ -116,7 +143,8 @@ class App
                 $c->get(\Services\CsvExportService::class),
                 $c->get(FaqRepository::class),
                 new InvestmentCalculator(),
-                $c->get(\Services\SessionManager::class)
+                $c->get(\Services\SessionManager::class),
+                $c->get(ViewRenderer::class)
             );
         });
 
@@ -179,7 +207,17 @@ class App
                 $c->get(SchemaHelper::class),
                 $c->get(BlogRepository::class),
                 $c->get(\Core\Factories\SchemaFactory::class),
-                $c->get(SiteConfig::class)
+                $c->get(SiteConfig::class),
+                $c->get(ViewRenderer::class)
+            );
+        });
+
+        $this->container->singleton(PageController::class, function (Container $c) {
+            return new PageController(
+                $c->get(FaqRepository::class),
+                $c->get(BlogRepository::class),
+                $c->get(SchemaHelper::class),
+                $c->get(ViewRenderer::class)
             );
         });
 
@@ -191,7 +229,8 @@ class App
                 $c->get(\Core\Factories\SchemaFactory::class),
                 $c->get(FaqRepository::class),
                 $c->get(BlogRepository::class),
-                $c->get(\Services\ConfigService::class)
+                $c->get(\Core\Strategies\StrategyFactory::class),
+                $c->get(ViewRenderer::class)
             );
         });
     }
@@ -207,9 +246,9 @@ class App
         $this->router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke']);
 
         // Dynamic Calculators Registration
-        foreach ($this->routesConfig['calculators'] as $calc => $config) {
-            $this->router->get($calc, $config['action']);
-            $this->router->post($calc, $config['action']);
+        foreach ($this->routesConfig['calculators'] as $calc => $action) {
+            $this->router->get($calc, $action);
+            $this->router->post($calc, $action);
             $this->router->redirect($calc . '.php', $calc);
         }
 

@@ -1,4 +1,4 @@
-import { MathEngine } from '../assets/js/calculators/MathEngine.js';
+import { MathEngine } from '../assets/js/calculators/MathEngine.ts';
 
 try {
     // Read input parameters JSON from command line arguments

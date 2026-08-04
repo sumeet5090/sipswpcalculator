@@ -28,9 +28,9 @@ class RouterIntegrityTest extends TestCase
         $this->router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke']);
 
         // Dynamic Calculators Registration
-        foreach ($this->routesConfig['calculators'] as $calc => $config) {
-            $this->router->get($calc, $config['action']);
-            $this->router->post($calc, $config['action']);
+        foreach ($this->routesConfig['calculators'] as $calc => $action) {
+            $this->router->get($calc, $action);
+            $this->router->post($calc, $action);
             $this->router->redirect($calc . '.php', $calc);
         }
 

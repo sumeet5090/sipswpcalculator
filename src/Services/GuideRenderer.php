@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Services;
 
 use Controllers\ErrorController;
-use Core\BlogRepository;
 use Core\ContentManager;
 use Core\Factories\SchemaFactory;
 use Core\FaqRepository;
+use Core\BlogRepository;
 use Core\Http\Response;
 use Core\MetaManager;
-use Core\View;
+use Core\Strategies\StrategyFactory;
+use Core\ViewRenderer;
 
 /**
  * GuideRenderer
@@ -24,7 +25,8 @@ class GuideRenderer
     private SchemaFactory $schemaFactory;
     private FaqRepository $faqRepository;
     private BlogRepository $blogRepository;
-    private ConfigService $configService;
+    private StrategyFactory $strategyFactory;
+    private ViewRenderer $viewRenderer;
 
     public function __construct(
         ContentManager $contentManager,
@@ -32,14 +34,16 @@ class GuideRenderer
         SchemaFactory $schemaFactory,
         FaqRepository $faqRepository,
         BlogRepository $blogRepository,
-        ConfigService $configService
+        StrategyFactory $strategyFactory,
+        ViewRenderer $viewRenderer
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
         $this->schemaFactory = $schemaFactory;
         $this->faqRepository = $faqRepository;
         $this->blogRepository = $blogRepository;
-        $this->configService = $configService;
+        $this->strategyFactory = $strategyFactory;
+        $this->viewRenderer = $viewRenderer;
     }
 
     /**
@@ -63,7 +67,7 @@ class GuideRenderer
 
         $page_config = $this->metaManager->buildFromMetadata($meta, $slug);
 
-        $strategy = \Core\Strategies\StrategyFactory::create($slug);
+        $strategy = $this->strategyFactory->create($slug);
         $calculator_type = 'all';
 
         if ($type === 'calculator') {
@@ -74,50 +78,44 @@ class GuideRenderer
 
         $page_config['additional_head'] = $this->schemaFactory->generateForPage(
             $slug,
-            $type,
+            $seo_category,
             $page_config,
             $publishedDate,
             $faqs,
             $strategy
         );
 
-        // Add custom JS script if it matches specific naming/file templates
-        $possibleJsPath = '/assets/js/calculators/' . $slug . '.js';
-        $fullJsPath = __DIR__ . '/../../' . $possibleJsPath;
-        if (file_exists($fullJsPath)) {
-            $page_config['scripts'] = [$possibleJsPath];
-        }
+        $initialInputs = $strategy->getInitialInputs();
+        $sip           = $initialInputs->getSip();
+        $years         = $initialInputs->getYears();
+        $rate          = $initialInputs->getRate();
+        $stepup        = $initialInputs->getStepup();
+        $lumpsum       = $initialInputs->getLumpsum();
 
-        $content_html = $content['html'];
-        $content_metadata = $content['metadata'];
-        $active_page = $slug . '.php';
+        $calcConfig = [
+            'type'        => $calculator_type,
+            'sip'         => $sip,
+            'years'       => $years,
+            'rate'        => $rate,
+            'stepup'      => $stepup,
+            'lumpsum'     => $lumpsum,
+            'corpus'      => $lumpsum,
+            'swp'         => $initialInputs->getSwpWithdrawal(),
+            'swp_stepup'  => $initialInputs->getSwpStepup(),
+            'swp_rate'    => $initialInputs->getSwpRate(),
+            'inflation'   => $initialInputs->getInflation(),
+        ];
 
-        // Load central calc config via ConfigService
-        $calcConfig = $this->configService->getCalculatorDefaults();
-
-        // Build InvestmentInputs from defaults
-        $inputs = $strategy->getInitialInputs();
-
-        // Extract per-field defaults for form pre-population.
-        $sip             = $inputs->getSip();
-        $years           = $inputs->getYears();
-        $rate            = $inputs->getRate();
-        $stepup          = $inputs->getStepup();
-        $lumpsum         = $inputs->getLumpsum();
-        $corpus          = $strategy->getCorpus($inputs);
-        $swp_withdrawal  = $inputs->getSwpWithdrawal();
-        $swp_years_input = $inputs->getSwpYears();
-        $swp_stepup      = $inputs->getSwpStepup();
-        $swp_rate        = $inputs->getSwpRate();
-
-        $show_lumpsum = false;
-
+        $content_html = $content['body'];
+        $content_metadata = $meta;
+        $active_page = $slug;
+        $show_lumpsum = ($calculator_type === 'lumpsum');
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
 
         // Fetch all posts for related resources / internal linking via injected BlogRepository
         $all_posts = $this->blogRepository->getAllPosts();
 
-        return Response::html(View::render($layout, [
+        return Response::html($this->viewRenderer->render($layout, [
             'content_html'        => $content_html,
             'content_metadata'    => $content_metadata,
             'page_config'         => $page_config,
@@ -133,11 +131,11 @@ class GuideRenderer
             'rate'                => $rate,
             'stepup'              => $stepup,
             'lumpsum'             => $lumpsum,
-            'corpus'              => $corpus,
-            'swp_withdrawal'      => $swp_withdrawal,
-            'swp_years_input'     => $swp_years_input,
-            'swp_stepup'          => $swp_stepup,
-            'swp_rate'            => $swp_rate,
+            'corpus'              => $lumpsum,
+            'swp_withdrawal'      => $initialInputs->getSwpWithdrawal(),
+            'swp_stepup'          => $initialInputs->getSwpStepup(),
+            'swp_rate'            => $initialInputs->getSwpRate(),
+            'inflation'           => $initialInputs->getInflation(),
             'all_posts'           => $all_posts,
         ]));
     }

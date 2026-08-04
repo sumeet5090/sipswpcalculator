@@ -54,10 +54,9 @@ class InvestmentInputs
     /**
      * Helper to load the JSON defaults via ConfigService or Container.
      */
-    private static function loadDefaults(?\Services\ConfigService $config = null): array
+    private static function loadDefaults(\Services\ConfigService $config): array
     {
-        $configService = $config ?? new \Services\ConfigService();
-        return $configService->getCalculatorDefaults();
+        return $config->getCalculatorDefaults();
     }
 
     /**
@@ -65,10 +64,10 @@ class InvestmentInputs
      * Bounds and defaults are read from the central calculator_defaults.json config.
      *
      * @param array $data Typically $_POST or $_GET payload
-     * @param \Services\ConfigService|null $config Optional ConfigService instance
+     * @param \Services\ConfigService $config ConfigService instance
      * @return self
      */
-    public static function fromRequest(array $data, ?\Services\ConfigService $config = null): self
+    public static function fromRequest(array $data, \Services\ConfigService $config): self
     {
         // Load the single source of truth for all bounds and defaults.
         $cfg = self::loadDefaults($config);
@@ -138,10 +137,10 @@ class InvestmentInputs
      * This is the industry-standard Named Constructor pattern: one input shape → one factory.
      *
      * @param array $data POST/GET payload from the SWP calculator form
-     * @param \Services\ConfigService|null $config Optional ConfigService instance
+     * @param \Services\ConfigService $config ConfigService instance
      * @return self
      */
-    public static function fromSwpRequest(array $data, ?\Services\ConfigService $config = null): self
+    public static function fromSwpRequest(array $data, \Services\ConfigService $config): self
     {
         $cfg = self::loadDefaults($config);
 
