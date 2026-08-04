@@ -16,10 +16,11 @@ class MathEngineAlignmentTest extends TestCase
      */
     private function runJsCalculation(array $inputs): array
     {
-        $jsPath = __DIR__ . '/../../assets/js/calculators/MathEngine.js';
-        $this->assertFileExists($jsPath, "MathEngine.js file not found at $jsPath");
+        $jsPath = __DIR__ . '/../../assets/js/calculators/MathEngine.ts';
+        $this->assertFileExists($jsPath, "MathEngine.ts file not found at $jsPath");
 
         $jsCode = file_get_contents($jsPath);
+        $jsCode = preg_replace('/import\s+.*;/', '', $jsCode);
         $jsCode = str_replace('export class MathEngine', 'class MathEngine', $jsCode);
 
         // Normalize parameter naming expected by MathEngine.js
@@ -44,7 +45,7 @@ class MathEngineAlignmentTest extends TestCase
             2 => ["pipe", "w"]
         ];
 
-        $process = proc_open("node", $descriptorspec, $pipes);
+        $process = proc_open("node --experimental-strip-types", $descriptorspec, $pipes);
         if (!is_resource($process)) {
             $this->fail("Failed to execute Node.js process");
         }

@@ -1,25 +1,33 @@
 import defaultsConfig from '../../../content/calculator_defaults.json';
 
+export interface FieldConstraint {
+    min: number;
+    max: number;
+    default: number;
+}
+
 /**
- * InputValidator.js
+ * InputValidator.ts
  * Centralized boundaries, constraints, and validation rules.
  * Constraints are read from the data-config attribute on #calculator-app
- * (injected by the PHP backend from calculator_defaults.php).
+ * (injected by the PHP backend from calculator_defaults.json).
  * A static fallback is used if the attribute is absent (e.g., in tests).
  */
 export class InputValidator {
+    private constraints: Record<string, FieldConstraint>;
+
     /**
-     * @param {object|null} constraints - Override constraints (used in unit tests).
+     * @param constraints Override constraints (used in unit tests).
      *   If null, constraints are read from the DOM's data-config attribute.
      */
-    constructor(constraints = null) {
+    constructor(constraints: Record<string, FieldConstraint> | null = null) {
         if (constraints) {
             this.constraints = constraints;
             return;
         }
 
         // Read from the single source of truth serialized into the DOM by PHP.
-        const appEl = document.querySelector('[data-js="calculator-app"]');
+        const appEl = document.querySelector<HTMLElement>('[data-js="calculator-app"]');
         if (appEl && appEl.dataset.config) {
             try {
                 const cfg = JSON.parse(appEl.dataset.config);
@@ -31,21 +39,19 @@ export class InputValidator {
         }
 
         // Static fallback — read from compiled calculator_defaults.json
-        this.constraints = this._mapConfig(defaultsConfig);
+        this.constraints = this._mapConfig(defaultsConfig as any);
     }
 
     /**
      * Map the PHP config structure to the flat constraints object format.
-     * @param {object} cfg - Parsed data-config JSON
-     * @returns {object}
      */
-    _mapConfig(cfg) {
-        const result = {};
+    private _mapConfig(cfg: Record<string, any>): Record<string, FieldConstraint> {
+        const result: Record<string, FieldConstraint> = {};
         for (const [key, val] of Object.entries(cfg)) {
             result[key] = {
-                min:     val.min,
-                max:     val.max,
-                default: val.default,
+                min:     Number(val.min),
+                max:     Number(val.max),
+                default: Number(val.default),
             };
         }
         return result;
@@ -53,15 +59,13 @@ export class InputValidator {
 
     /**
      * Sanitize and validate a specific field against its limits.
-     * @param {string} field
-     * @param {number|string} val
-     * @returns {number} Sanitized value within bounds, or default if NaN.
+     * @returns Sanitized value within bounds, or default if NaN.
      */
-    validate(field, val) {
+    validate(field: string, val: number | string): number {
         const limits = this.constraints[field];
-        if (!limits) return parseFloat(val) || 0;
+        if (!limits) return parseFloat(String(val)) || 0;
 
-        let parsed = parseFloat(val);
+        let parsed = parseFloat(String(val));
         if (isNaN(parsed)) {
             return limits.default;
         }

@@ -1,19 +1,38 @@
+import { CurrencyFormatter } from './CurrencyHelper';
+import { YearResult } from '../types';
+
+declare global {
+    interface Window {
+        Chart: any;
+    }
+}
+
+export interface Milestone {
+    type: 'wealth' | 'security';
+    label: string;
+    description?: string;
+    year: number;
+    icon: string;
+    value: number;
+    index: number;
+}
+
 /**
- * ChartManager.js
+ * ChartManager.ts
  * Handles instantiation and updates of the Chart.js visualization.
  * Refactored as an Object-Oriented class.
  */
 export class ChartManager {
-    /**
-     * @param {CurrencyFormatter} formatter 
-     */
-    constructor(formatter) {
+    private formatter: CurrencyFormatter;
+    private chartInstance: any = null;
+    private currentMilestones: Milestone[] = [];
+
+    constructor(formatter: CurrencyFormatter) {
         this.formatter = formatter;
-        this.chartInstance = null;
     }
 
-    formatAxisTick(value) {
-        const symbol = this.formatter.symbol;
+    formatAxisTick(value: number): string {
+        const symbol = (this.formatter as any).symbol || '₹';
         if (value >= 10000000) return symbol + (value / 10000000).toFixed(1) + 'Cr';
         if (value >= 100000) return symbol + (value / 100000).toFixed(1) + 'L';
         if (value >= 1000) return symbol + (value / 1000).toFixed(1) + 'k';
@@ -22,27 +41,26 @@ export class ChartManager {
 
     /**
      * Initialize or update the chart.
-     * @param {Array} results - Computed results array from MathEngine.
-     * @param {boolean} enableSwp - If SWP is active.
      */
-    updateChart(results, enableSwp = true) {
-        const ctxEl = document.getElementById('corpusChart');
+    updateChart(results: YearResult[], enableSwp: boolean = true): void {
+        const ctxEl = document.getElementById('corpusChart') as HTMLCanvasElement | null;
         if (!ctxEl) return;
 
         const ctx = ctxEl.getContext('2d');
+        if (!ctx) return;
 
         const years = results.map(r => `Yr ${r.year}`);
         const cumulative = results.map(r => r.cumulative_invested);
         const corpus = results.map(r => r.combined_total);
-        const swp = results.map(r => r.annual_withdrawal);
+        const swp = results.map(r => r.annual_withdrawal ?? 0);
 
-        const calcApp = document.querySelector('[data-js="calculator-app"]');
+        const calcApp = document.querySelector<HTMLElement>('[data-js="calculator-app"]');
         const mode = calcApp ? (calcApp.dataset.mode || 'all') : 'all';
-        const showPostTax = document.getElementById('show_post_tax')?.checked || false;
-        const showWealthMap = document.getElementById('show_wealth_map')?.checked || false;
+        const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
+        const showWealthMap = (document.getElementById('show_wealth_map') as HTMLInputElement | null)?.checked || false;
 
-        // Calculate Milestones (accounting for tax if toggle is active)
-        const milestones = [];
+        // Calculate Milestones
+        const milestones: Milestone[] = [];
         const targets = [
             { label: '₹1 Crore', value: 10000000, reached: false, icon: '🏆' },
             { label: '₹5 Crores', value: 50000000, reached: false, icon: '👑' },
@@ -59,15 +77,13 @@ export class ChartManager {
         for (let i = 0; i < results.length; i++) {
             const row = results[i];
 
-            // Calculate post-tax corpus for this year
-            const gains = (row.combined_total + row.cumulative_withdrawals) - row.cumulative_invested;
+            const gains = (row.combined_total + (row.cumulative_withdrawals || 0)) - row.cumulative_invested;
             const taxableGains = Math.max(0, gains - 125000);
             const tax = taxableGains * 0.125;
             const postTaxVal = Math.max(0, row.combined_total - tax);
 
             const activeCorpusValue = showPostTax ? postTaxVal : row.combined_total;
 
-            // Check wealth milestones against the active corpus value
             for (const target of targets) {
                 if (!target.reached && activeCorpusValue >= target.value) {
                     target.reached = true;
@@ -82,9 +98,8 @@ export class ChartManager {
                 }
             }
 
-            // Check SWP Safety (10 years of withdrawals covered)
-            if (enableSwp && !swpCovered && row.annual_withdrawal > 0) {
-                const tenYearsWithdrawal = row.annual_withdrawal * 10;
+            if (enableSwp && !swpCovered && (row.annual_withdrawal ?? 0) > 0) {
+                const tenYearsWithdrawal = (row.annual_withdrawal ?? 0) * 10;
                 if (activeCorpusValue >= tenYearsWithdrawal) {
                     swpCovered = true;
                     milestones.push({
@@ -102,15 +117,13 @@ export class ChartManager {
 
         this.currentMilestones = milestones;
 
-        // Calculate post-tax wealth array for the chart
         const postTaxCorpus = results.map(r => {
-            const gains = (r.combined_total + r.cumulative_withdrawals) - r.cumulative_invested;
+            const gains = (r.combined_total + (r.cumulative_withdrawals || 0)) - r.cumulative_invested;
             const taxableGains = Math.max(0, gains - 125000);
             const tax = taxableGains * 0.125;
             return Math.max(0, r.combined_total - tax);
         });
 
-        // Custom point styles for milestones
         const milestoneIndices = milestones.map(m => m.index);
         const pointRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 6 : 0);
         const pointHoverRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 10 : 8);
@@ -137,11 +150,9 @@ export class ChartManager {
                 this.chartInstance.data.datasets[3].hidden = !enableSwp;
             }
 
-            // Toggle stacking for Wealth Map
             this.chartInstance.options.scales.y.stacked = showWealthMap;
 
             if (showWealthMap) {
-                // In wealth map mode, dataset 1 (growth) should just be the interest part
                 const interestOnly = corpus.map((c, i) => c - cumulative[i]);
                 this.chartInstance.data.datasets[1].data = interestOnly;
                 this.chartInstance.data.datasets[1].fill = true;
@@ -173,7 +184,7 @@ export class ChartManager {
         const gridColor = 'rgba(0, 0, 0, 0.05)';
         const textColor = '#64748b';
 
-        const datasets = [
+        const datasets: any[] = [
             {
                 label: 'Total Invested',
                 data: cumulative,
@@ -289,7 +300,7 @@ export class ChartManager {
                         boxPadding: 4,
                         usePointStyle: true,
                         callbacks: {
-                            label: (context) => {
+                            label: (context: any) => {
                                 let label = context.dataset.label || '';
                                 if (label) {
                                     label += ': ';
@@ -299,7 +310,7 @@ export class ChartManager {
                                 }
                                 return label;
                             },
-                            afterBody: (tooltipItems) => {
+                            afterBody: (tooltipItems: any[]) => {
                                 const index = tooltipItems[0].dataIndex;
                                 const reached = (this.currentMilestones || []).filter(m => m.index === index);
                                 if (reached.length > 0) {
@@ -339,7 +350,7 @@ export class ChartManager {
                                 size: 11,
                                 weight: 500
                             },
-                            callback: (value) => {
+                            callback: (value: number) => {
                                 return this.formatAxisTick(value);
                             }
                         },
@@ -353,11 +364,7 @@ export class ChartManager {
         this.renderMilestoneGrid(milestones);
     }
 
-    /**
-     * Render the milestone timeline grid below the chart.
-     * @param {Array} milestones 
-     */
-    renderMilestoneGrid(milestones) {
+    renderMilestoneGrid(milestones: Milestone[]): void {
         const container = document.getElementById('milestones-container');
         if (!container) return;
 
@@ -387,11 +394,7 @@ export class ChartManager {
         }).join('');
     }
 
-    /**
-     * Get reference of active Chart instance.
-     * @returns {Chart|null}
-     */
-    getChartInstance() {
+    getChartInstance(): any {
         return this.chartInstance;
     }
 }

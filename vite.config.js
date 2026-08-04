@@ -13,7 +13,7 @@ export default defineConfig({
     rollupOptions: {
       // Overwrite default .html entry
       input: {
-        app: resolve(__dirname, 'resources/js/app.js'),
+        app: resolve(__dirname, 'resources/js/app.ts'),
       },
     },
   },

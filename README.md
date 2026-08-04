@@ -46,7 +46,8 @@ sipswpcalculator/
 |---|---|---|
 | **Server/Routing** | PHP 8.x (MVC) on Apache | Route handling, business logic, form processing |
 | **Templating** | Twig 3.x | Secure, modular server-side HTML rendering |
-| **Asset Bundling** | Vite 5.x | High-performance JS/CSS compiling and Hot Module Replacement (HMR) |
+| **Frontend Logic** | TypeScript 5.x | Strictly-typed OOP calculation engines, DOM adapters, and strategies |
+| **Asset Bundling** | Vite 5.x | High-performance TS/CSS compiling and Hot Module Replacement (HMR) |
 | **Styling** | Tailwind CSS v4 | Utility-first CSS framework |
 | **Charts** | Chart.js 3.7 | Interactive financial projection graphs |
 | **PDF Generation** | DomPDF 2.x | Branded PDF report generation |

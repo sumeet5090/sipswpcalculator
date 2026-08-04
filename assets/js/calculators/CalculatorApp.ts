@@ -1,19 +1,39 @@
 /**
- * CalculatorApp.js
+ * CalculatorApp.ts
  * Main frontend application controller class.
  */
-import { eventBus } from '../utils/EventBus.js';
-import { MathEngine } from './MathEngine.js';
-import { CurrencyFormatter } from './CurrencyHelper.js';
-import { InputValidator } from './InputValidator.js';
-import { ChartManager } from './ChartManager.js';
-import { AnalyticsService } from './AnalyticsLogger.js';
-import { SliderManager } from './SliderManager.js';
-import { DOMAdapter } from '../adapters/DOMAdapter.js';
-import { GrowStrategy } from './strategies/GrowStrategy.js';
-import { TargetCorpusStrategy } from './strategies/TargetCorpusStrategy.js';
+import { eventBus } from '../utils/EventBus';
+import { MathEngine } from './MathEngine';
+import { CurrencyFormatter } from './CurrencyHelper';
+import { InputValidator } from './InputValidator';
+import { ChartManager } from './ChartManager';
+import { AnalyticsService } from './AnalyticsLogger';
+import { SliderManager } from './SliderManager';
+import { DOMAdapter } from '../adapters/DOMAdapter';
+import { GrowStrategy } from './strategies/GrowStrategy';
+import { TargetCorpusStrategy } from './strategies/TargetCorpusStrategy';
+import { CalculatorStrategy } from './strategies/CalculatorStrategy';
+import { InvestmentInputs, YearResult } from '../types';
+
+declare global {
+    interface Window {
+        switchFormTab?: (tab: string) => void;
+    }
+}
 
 export class CalculatorApp {
+    private dom: DOMAdapter;
+    private formatter: CurrencyFormatter;
+    private validator: InputValidator;
+    private chartManager: ChartManager;
+    private analytics: AnalyticsService;
+    private userHasInteracted: boolean;
+    private interactionCount: number;
+    private latestResults: YearResult[];
+    private activeGoalMode: string;
+    private strategies: Record<string, CalculatorStrategy>;
+    private sliderManager: SliderManager;
+
     constructor() {
         this.dom = new DOMAdapter();
         this.formatter = new CurrencyFormatter();
@@ -43,37 +63,34 @@ export class CalculatorApp {
 
     /**
      * Gather form input parameters and run validation constraints.
-     * @returns {object} validated input parameters
      */
-    getInputs() {
-        const mode = document.querySelector('[data-js="calculator-app"]')?.dataset?.mode ?? 'sip';
+    getInputs(): InvestmentInputs {
+        const mode = document.querySelector<HTMLElement>('[data-js="calculator-app"]')?.dataset?.mode ?? 'sip';
         const isSwpMode = (mode === 'swp');
 
-        // In SWP-only mode, `corpus` is the user-facing field; it maps to `lumpsum`
-        // internally so MathEngine receives a consistent starting-balance parameter.
         const lumpsumVal = isSwpMode
-            ? this.validator.validate('corpus', this.dom.getValue('corpus'))
-            : this.validator.validate('lumpsum', this.dom.getValue('lumpsum'));
+            ? this.validator.validate('corpus', this.dom.getValue('corpus') || 0)
+            : this.validator.validate('lumpsum', this.dom.getValue('lumpsum') || 0);
 
         return {
-            sip:            this.validator.validate('sip', this.dom.getValue('sip')),
-            years:          this.validator.validate('years', this.dom.getValue('years')),
-            rate:           this.validator.validate('rate', this.dom.getValue('rate')),
-            stepup:         this.validator.validate('stepup', this.dom.getValue('stepup')),
-            inflation:      this.validator.validate('inflation', this.dom.getValue('inflation')),
+            sip:            this.validator.validate('sip', this.dom.getValue('sip') || 0),
+            years:          this.validator.validate('years', this.dom.getValue('years') || 0),
+            rate:           this.validator.validate('rate', this.dom.getValue('rate') || 0),
+            stepup:         this.validator.validate('stepup', this.dom.getValue('stepup') || 0),
+            inflation:      this.validator.validate('inflation', this.dom.getValue('inflation') || 0),
             lumpsum:        lumpsumVal,
-            enable_swp:     this.dom.getElement('enable_swp')?.checked || isSwpMode,
-            swp_withdrawal: this.validator.validate('swp_withdrawal', this.dom.getValue('swp_withdrawal')),
-            swp_years:      this.validator.validate('swp_years', this.dom.getValue('swp_years')),
-            swp_stepup:     this.validator.validate('swp_stepup', this.dom.getValue('swp_stepup')),
-            swp_rate:       this.validator.validate('swp_rate', this.dom.getValue('swp_rate'))
+            enable_swp:     (this.dom.getElement<HTMLInputElement>('enable_swp')?.checked) || isSwpMode,
+            swp_withdrawal: this.validator.validate('swp_withdrawal', this.dom.getValue('swp_withdrawal') || 0),
+            swp_years:      this.validator.validate('swp_years', this.dom.getValue('swp_years') || 0),
+            swp_stepup:     this.validator.validate('swp_stepup', this.dom.getValue('swp_stepup') || 0),
+            swp_rate:       this.validator.validate('swp_rate', this.dom.getValue('swp_rate') || 0)
         };
     }
 
     /**
      * Publish inputs to calculation event queue.
      */
-    triggerCalculation() {
+    triggerCalculation(): void {
         let inputs = this.getInputs();
         
         // Execute Strategy based on goal mode
@@ -88,9 +105,9 @@ export class CalculatorApp {
     /**
      * Adapt text font size inside metrics tiles on screen resize.
      */
-    fitSummaryCards() {
+    fitSummaryCards(): void {
         const ids = ['summary-invested', 'summary-interest', 'summary-withdrawn', 'summary-corpus'];
-        const cardElms = ids.map(id => document.getElementById(id)).filter(Boolean);
+        const cardElms = ids.map(id => document.getElementById(id)).filter((el): el is HTMLElement => el !== null);
         if (cardElms.length === 0) return;
 
         cardElms.forEach(el => {
@@ -105,11 +122,12 @@ export class CalculatorApp {
 
         const results = cardElms.map(el => {
             const parent = el.parentElement;
+            if (!parent) return null;
             const cs = getComputedStyle(parent);
             const availableW = parent.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
             const textW = el.scrollWidth;
-            return { el, basePx: parseFloat(el.dataset.baseFont), availableW, textW };
-        });
+            return { el, basePx: parseFloat(el.dataset.baseFont || '16'), availableW, textW };
+        }).filter((item): item is NonNullable<typeof item> => item !== null);
 
         results.forEach(({ el, basePx, availableW, textW }) => {
             if (textW > availableW && availableW > 0) {
@@ -122,9 +140,8 @@ export class CalculatorApp {
 
     /**
      * Draw years breakdown logs.
-     * @param {boolean} enableSwp 
      */
-    updateTable(data, enableSwp) {
+    updateTable(data: YearResult[], enableSwp: boolean): void {
         const tbody = this.dom.getElement('breakdown-body');
         if (!tbody) return;
 
@@ -134,7 +151,7 @@ export class CalculatorApp {
             const tr = document.createElement('tr');
             tr.className = "hover:bg-slate-50 border-b border-slate-100 transition-colors";
 
-            const fmt = (v) => v !== null ? this.formatter.format(v) : '-';
+            const fmt = (v: number | null | undefined) => (v !== null && v !== undefined) ? this.formatter.format(v) : '-';
 
             const swpDisplay = enableSwp ? '' : 'style="display:none"';
             let swpCols = `
@@ -143,14 +160,21 @@ export class CalculatorApp {
                 <td class="px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap swp-col" ${swpDisplay}>${fmt(row.cumulative_withdrawals)}</td>
             `;
             
-            const showPostTax = document.getElementById('show_post_tax')?.checked || false;
+            const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
             let finalCorpus = row.combined_total;
+            let ltcgTax = 0;
+            
+            // Derive LTCG tax if needed
+            const gains = (row.combined_total + (row.cumulative_withdrawals || 0)) - row.cumulative_invested;
+            const taxableGains = Math.max(0, gains - 125000);
+            ltcgTax = taxableGains * 0.125;
+
             if (showPostTax) {
-                finalCorpus = row.post_tax_total;
+                finalCorpus = Math.max(0, row.combined_total - ltcgTax);
             }
             
             const taxDisplay = showPostTax ? '' : 'style="display:none"';
-            let taxCols = `<td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap tax-col" ${taxDisplay}>${this.formatter.format(row.ltcg_tax)}</td>`;
+            let taxCols = `<td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap tax-col" ${taxDisplay}>${this.formatter.format(Math.round(ltcgTax))}</td>`;
 
             const inputs = this.getInputs();
             if (inputs.inflation > 0) {
@@ -178,7 +202,7 @@ export class CalculatorApp {
     /**
      * Update summary stats block.
      */
-    updateSummaryMetrics(data) {
+    updateSummaryMetrics(data: YearResult[]): void {
         if (!data || data.length === 0) return;
 
         const lastRow = data[data.length - 1];
@@ -187,7 +211,7 @@ export class CalculatorApp {
         const totalWithdrawn = lastRow.cumulative_withdrawals || 0;
         const preTaxGains = (preTaxCorpus + totalWithdrawn) - totalInvested;
 
-        const showPostTax = document.getElementById('show_post_tax')?.checked || false;
+        const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
         
         let finalCorpus = preTaxCorpus;
         let finalGains = preTaxGains;
@@ -230,7 +254,7 @@ export class CalculatorApp {
             if (corpusTitle) corpusTitle.textContent += ' (Inflation Adjusted)';
         }
 
-        const setVal = (id, val) => {
+        const setVal = (id: string, val: number) => {
             const el = document.getElementById(id);
             if (el) el.textContent = this.formatter.format(val);
         };
@@ -246,12 +270,12 @@ export class CalculatorApp {
     /**
      * Show/Hide SWP withdrawal configurations.
      */
-    syncSwpToggleState() {
-        const isChecked = this.dom.getElement('enable_swp')?.checked || false;
+    syncSwpToggleState(): void {
+        const isChecked = this.dom.getElement<HTMLInputElement>('enable_swp')?.checked || false;
         const fields = this.dom.getElement('swp-fields');
         if (!fields) return;
 
-        document.querySelectorAll('.swp-col').forEach(el => {
+        document.querySelectorAll<HTMLElement>('.swp-col').forEach(el => {
             el.style.display = isChecked ? '' : 'none';
         });
 
@@ -270,9 +294,8 @@ export class CalculatorApp {
 
     /**
      * Update Segmented Control UI styles and configure layout constraints based on goal mode.
-     * @param {string} mode - 'grow' or 'target'
      */
-    setGoalMode(mode) {
+    setGoalMode(mode: string): void {
         if (mode === this.activeGoalMode) return;
         this.activeGoalMode = mode;
 
@@ -324,7 +347,7 @@ export class CalculatorApp {
         this.triggerCalculation();
     }
 
-    setSmartNudgeRate(val) {
+    setSmartNudgeRate(val: number): void {
         this.dom.setValue('rate', val);
         this.dom.getElement('rate')?.dispatchEvent(new Event('input', { bubbles: true }));
         this.dom.setValue('rate_range', val);
@@ -340,7 +363,7 @@ export class CalculatorApp {
     /**
      * Initialize app lifecycle.
      */
-    init() {
+    init(): void {
         const appContainer = document.getElementById('calculator-app');
         if (appContainer && appContainer.dataset.mode === 'target_corpus') {
             this.activeGoalMode = 'target';
@@ -395,13 +418,13 @@ export class CalculatorApp {
                 if (reqCorpus > 0) {
                     this.dom.setValue('target_corpus', reqCorpus);
                     
-                    const targetRangeEl = this.dom.getElement('target_corpus_range');
+                    const targetRangeEl = this.dom.getElement<HTMLInputElement>('target_corpus_range');
                     if (targetRangeEl) {
-                        const defaultMax = parseFloat(targetRangeEl.getAttribute('max')) || 50000000;
+                        const defaultMax = parseFloat(targetRangeEl.getAttribute('max') || '50000000');
                         if (reqCorpus > defaultMax) {
-                            targetRangeEl.max = reqCorpus;
+                            targetRangeEl.max = String(reqCorpus);
                         } else {
-                            targetRangeEl.max = defaultMax;
+                            targetRangeEl.max = String(defaultMax);
                         }
                         this.dom.setValue('target_corpus_range', reqCorpus);
                     }
@@ -419,16 +442,16 @@ export class CalculatorApp {
         if (swpYearsRange) swpYearsRange.addEventListener('input', handleSwpInput);
 
         // ── SWP Toggle ──
-        const swpToggle = this.dom.getElement('enable_swp');
+        const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
         if (swpToggle) {
             swpToggle.addEventListener('change', () => this.syncSwpToggleState());
         }
 
         // ── Post-Tax Toggle ──
-        const postTaxToggle = document.getElementById('show_post_tax');
+        const postTaxToggle = document.getElementById('show_post_tax') as HTMLInputElement | null;
         if (postTaxToggle) {
             postTaxToggle.addEventListener('change', () => {
-                const taxCols = document.querySelectorAll('.tax-col');
+                const taxCols = document.querySelectorAll<HTMLElement>('.tax-col');
                 taxCols.forEach(el => {
                     el.style.display = postTaxToggle.checked ? '' : 'none';
                 });
@@ -443,7 +466,7 @@ export class CalculatorApp {
         }
 
         // ── Tabs controller ──
-        window.switchFormTab = (tab) => {
+        window.switchFormTab = (tab: string) => {
             const sipPanel = document.getElementById('panel-sip');
             const swpPanel = document.getElementById('panel-swp');
             const sipTab = document.getElementById('tab-sip');
@@ -451,17 +474,24 @@ export class CalculatorApp {
 
             if (!sipPanel || !swpPanel || !sipTab || !swpTab) return;
 
+            const sipSpan = sipTab.querySelector('span');
+            const swpSpan = swpTab.querySelector('span');
+
             if (tab === 'sip') {
                 sipPanel.classList.remove('hidden');
                 swpPanel.classList.add('hidden');
                 sipTab.classList.add('bg-emerald-500', 'text-white');
                 sipTab.classList.remove('bg-white', 'text-slate-500');
-                sipTab.querySelector('span').classList.add('bg-white/20');
-                sipTab.querySelector('span').classList.remove('bg-slate-100');
+                if (sipSpan) {
+                    sipSpan.classList.add('bg-white/20');
+                    sipSpan.classList.remove('bg-slate-100');
+                }
                 swpTab.classList.add('bg-white', 'text-slate-500');
                 swpTab.classList.remove('bg-rose-500', 'text-white');
-                swpTab.querySelector('span').classList.add('bg-slate-100');
-                swpTab.querySelector('span').classList.remove('bg-white/20');
+                if (swpSpan) {
+                    swpSpan.classList.add('bg-slate-100');
+                    swpSpan.classList.remove('bg-white/20');
+                }
                 sipTab.setAttribute('aria-selected', 'true');
                 swpTab.setAttribute('aria-selected', 'false');
             } else {
@@ -469,18 +499,22 @@ export class CalculatorApp {
                 sipPanel.classList.add('hidden');
                 swpTab.classList.add('bg-rose-500', 'text-white');
                 swpTab.classList.remove('bg-white', 'text-slate-500');
-                swpTab.querySelector('span').classList.add('bg-white/20');
-                swpTab.querySelector('span').classList.remove('bg-slate-100');
+                if (swpSpan) {
+                    swpSpan.classList.add('bg-white/20');
+                    swpSpan.classList.remove('bg-slate-100');
+                }
                 sipTab.classList.add('bg-white', 'text-slate-500');
                 sipTab.classList.remove('bg-emerald-500', 'text-white');
-                sipTab.querySelector('span').classList.add('bg-slate-100');
-                sipTab.querySelector('span').classList.remove('bg-white/20');
+                if (sipSpan) {
+                    sipSpan.classList.add('bg-slate-100');
+                    sipSpan.classList.remove('bg-white/20');
+                }
                 swpTab.setAttribute('aria-selected', 'true');
                 swpTab.setAttribute('aria-selected', 'false');
             }
         };
 
-        // ──smart rate nudge popovers ──
+        // ── Smart rate nudge popovers ──
         const nudgeBtn = this.dom.getElement('rate-nudge-btn');
         const nudgePopover = this.dom.getElement('rate-nudge-popover');
         const nudgeClose = this.dom.getElement('rate-nudge-close');
@@ -501,13 +535,13 @@ export class CalculatorApp {
             this.dom.getElement('use-india-rate')?.addEventListener('click', () => this.setSmartNudgeRate(12));
             this.dom.getElement('use-us-rate')?.addEventListener('click', () => this.setSmartNudgeRate(15));
 
-            document.addEventListener('click', e => {
-                if (!nudgePopover.contains(e.target) && e.target !== nudgeBtn) {
+            document.addEventListener('click', (e: Event) => {
+                if (!nudgePopover.contains(e.target as Node) && e.target !== nudgeBtn) {
                     nudgePopover.classList.add('hidden');
                     nudgeBtn.setAttribute('aria-expanded', 'false');
                 }
             });
-            document.addEventListener('keydown', e => {
+            document.addEventListener('keydown', (e: KeyboardEvent) => {
                 if (e.key === 'Escape') {
                     nudgePopover.classList.add('hidden');
                     nudgeBtn.setAttribute('aria-expanded', 'false');
@@ -516,12 +550,12 @@ export class CalculatorApp {
         }
 
         // ── PDF export actions modal ──
-        const pdfModal = this.dom.getElement('pdfModal');
+        const pdfModal = this.dom.getElement<HTMLDialogElement>('pdfModal');
         const openPdfBtn = this.dom.getElement('openPdfModalBtn');
         const closePdfBtn = this.dom.getElement('closePdfModalBtn');
-        const pdfForm = this.dom.getElement('pdfForm');
+        const pdfForm = this.dom.getElement<HTMLFormElement>('pdfForm');
 
-        const openModalFn = (el) => {
+        const openModalFn = (el: any) => {
             if (!el) return;
             if (typeof el.showModal === 'function') {
                 el.showModal();
@@ -530,7 +564,7 @@ export class CalculatorApp {
             }
         };
 
-        const closeModalFn = (el) => {
+        const closeModalFn = (el: any) => {
             if (!el) return;
             if (typeof el.close === 'function') {
                 el.close();
@@ -560,7 +594,7 @@ export class CalculatorApp {
             if (closePdfBtn) {
                 closePdfBtn.addEventListener('click', () => closeModalFn(pdfModal));
             }
-            pdfModal.addEventListener('click', e => {
+            pdfModal.addEventListener('click', (e: Event) => {
                 if (e.target === pdfModal) closeModalFn(pdfModal);
             });
         }
@@ -568,7 +602,7 @@ export class CalculatorApp {
         if (pdfForm) {
             pdfForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const generatePdfBtn = this.dom.getElement('generatePdfBtn');
+                const generatePdfBtn = this.dom.getElement<HTMLButtonElement>('generatePdfBtn');
                 if (generatePdfBtn) {
                     generatePdfBtn.disabled = true;
                     generatePdfBtn.textContent = 'Generating...';
@@ -587,27 +621,27 @@ export class CalculatorApp {
                 const tableHtml = resultsTable ? resultsTable.outerHTML : '<table><tr><td>No data available.</td></tr></table>';
 
                 const formData = new FormData(pdfForm);
-                formData.append('sip', this.dom.getValue('sip') || 0);
-                formData.append('years', this.dom.getValue('years') || 0);
-                formData.append('rate', this.dom.getValue('rate') || 0);
-                formData.append('stepup', this.dom.getValue('stepup') || 0);
-                formData.append('lumpsum', this.dom.getValue('lumpsum') || 0);
-                formData.append('swp_withdrawal', this.dom.getValue('swp_withdrawal') || 0);
-                formData.append('swp_stepup', this.dom.getValue('swp_stepup') || 0);
-                formData.append('swp_years', this.dom.getValue('swp_years') || 0);
-                formData.append('swp_rate', this.dom.getValue('swp_rate') || 0);
+                formData.append('sip', String(this.dom.getValue('sip') || 0));
+                formData.append('years', String(this.dom.getValue('years') || 0));
+                formData.append('rate', String(this.dom.getValue('rate') || 0));
+                formData.append('stepup', String(this.dom.getValue('stepup') || 0));
+                formData.append('lumpsum', String(this.dom.getValue('lumpsum') || 0));
+                formData.append('swp_withdrawal', String(this.dom.getValue('swp_withdrawal') || 0));
+                formData.append('swp_stepup', String(this.dom.getValue('swp_stepup') || 0));
+                formData.append('swp_years', String(this.dom.getValue('swp_years') || 0));
+                formData.append('swp_rate', String(this.dom.getValue('swp_rate') || 0));
 
                 formData.append('currency_symbol', '₹');
-                formData.append('summary_invested', document.getElementById('summary-invested')?.textContent.trim() || '0');
-                formData.append('summary_interest', document.getElementById('summary-interest')?.textContent.trim() || '0');
-                formData.append('summary_withdrawn', document.getElementById('summary-withdrawn')?.textContent.trim() || '0');
-                formData.append('summary_corpus', document.getElementById('summary-corpus')?.textContent.trim() || '0');
+                formData.append('summary_invested', document.getElementById('summary-invested')?.textContent?.trim() || '0');
+                formData.append('summary_interest', document.getElementById('summary-interest')?.textContent?.trim() || '0');
+                formData.append('summary_withdrawn', document.getElementById('summary-withdrawn')?.textContent?.trim() || '0');
+                formData.append('summary_corpus', document.getElementById('summary-corpus')?.textContent?.trim() || '0');
 
                 const lastRow = (Array.isArray(this.latestResults) && this.latestResults.length > 0)
                     ? this.latestResults[this.latestResults.length - 1]
                     : null;
-                formData.append('raw_invested', lastRow ? (lastRow.cumulative_invested || 0) : 0);
-                formData.append('raw_corpus', lastRow ? (lastRow.combined_total || 0) : 0);
+                formData.append('raw_invested', String(lastRow ? (lastRow.cumulative_invested || 0) : 0));
+                formData.append('raw_corpus', String(lastRow ? (lastRow.combined_total || 0) : 0));
 
                 formData.append('chartData', chartDataURL);
                 formData.append('tableHtml', tableHtml);
@@ -719,7 +753,7 @@ export class CalculatorApp {
         }
 
         // ── Resize handlers ──
-        let resizeTimer;
+        let resizeTimer: any;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
@@ -735,7 +769,7 @@ export class CalculatorApp {
         // ── Restore from URL query params ──
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('sip') || urlParams.has('lumpsum')) {
-            const paramMap = {
+            const paramMap: Record<string, string> = {
                 'sip': 'sip',
                 'years': 'years',
                 'rate': 'rate',
@@ -748,12 +782,13 @@ export class CalculatorApp {
             };
             for (const [key, id] of Object.entries(paramMap)) {
                 if (urlParams.has(key)) {
-                    this.dom.setValue(id, urlParams.get(key));
-                    this.dom.setValue(id + '_range', urlParams.get(key));
+                    const val = urlParams.get(key) || '';
+                    this.dom.setValue(id, val);
+                    this.dom.setValue(id + '_range', val);
                 }
             }
             if (urlParams.has('swp_on') && urlParams.get('swp_on') === '1') {
-                const swpToggle = this.dom.getElement('enable_swp');
+                const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
                 if (swpToggle) {
                     swpToggle.checked = true;
                     this.syncSwpToggleState();
@@ -762,7 +797,7 @@ export class CalculatorApp {
         }
 
         // Setup event bus listeners
-        eventBus.subscribe('input:changed', (inputs) => {
+        eventBus.subscribe('input:changed', (inputs: InvestmentInputs) => {
             if (!this.userHasInteracted) return;
 
             const combined = MathEngine.calculate(inputs);
@@ -770,23 +805,19 @@ export class CalculatorApp {
             this.updateTable(combined, inputs.enable_swp);
             this.updateSummaryMetrics(combined);
 
-            if (document.getElementById('show_wealth_map')?.checked) {
-                this.chartManager.updateWaterfallChart(combined, inputs);
-            } else {
-                this.chartManager.updateChart(combined, inputs.enable_swp);
-            }
+            this.chartManager.updateChart(combined, inputs.enable_swp);
+            this.analytics.logInsight(inputs, combined, this.activeGoalMode);
         });
 
         // Initial render logic
-        // 1. Check if SWP is inherently enabled in the template defaults or URL
         let swpEnabledOnLoad = false;
         const urlSwpOn = (new URLSearchParams(window.location.search)).get('swp_on') === '1';
-        const initialSwpToggle = this.dom.getElement('enable_swp');
+        const initialSwpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
         if (initialSwpToggle && (initialSwpToggle.checked || urlSwpOn)) {
             swpEnabledOnLoad = true;
             if (urlSwpOn) initialSwpToggle.checked = true;
             this.syncSwpToggleState();
-        } else if (document.querySelector('[data-js="calculator-app"]')?.dataset?.mode === 'swp') {
+        } else if (document.querySelector<HTMLElement>('[data-js="calculator-app"]')?.dataset?.mode === 'swp') {
             swpEnabledOnLoad = true;
             if (initialSwpToggle) {
                 initialSwpToggle.checked = true;
@@ -794,27 +825,21 @@ export class CalculatorApp {
             }
         }
 
-        // 2. Fetch current DOM inputs and calculate initial data
         const initialInputs = this.getInputs();
-        let existingData = [];
+        let existingData: YearResult[] = [];
         try {
             existingData = MathEngine.calculate(initialInputs);
         } catch (e) {
             console.error("Initial JS Calculation Failed:", e);
         }
 
-        // 3. Render the UI
         if (existingData.length > 0) {
             this.latestResults = existingData;
             
             this.updateTable(existingData, swpEnabledOnLoad);
             this.updateSummaryMetrics(existingData);
 
-            if (document.getElementById('show_wealth_map')?.checked) {
-                this.chartManager.updateWaterfallChart(existingData, initialInputs);
-            } else {
-                this.chartManager.updateChart(existingData, swpEnabledOnLoad);
-            }
+            this.chartManager.updateChart(existingData, swpEnabledOnLoad);
         }
     }
 }
