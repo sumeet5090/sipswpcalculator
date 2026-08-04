@@ -41,10 +41,14 @@ class DatabaseManager
 
             $dir = dirname($path);
             if (!file_exists($dir)) {
-                @mkdir($dir, 0775, true);
+                if (!mkdir($dir, 0775, true) && !is_dir($dir)) {
+                    throw new \RuntimeException("Failed to create database directory: {$dir}");
+                }
             }
             if (!file_exists($path)) {
-                @touch($path);
+                if (touch($path) === false) {
+                    throw new \RuntimeException("Failed to create database file: {$path}");
+                }
                 @chmod($path, 0664);
             }
 

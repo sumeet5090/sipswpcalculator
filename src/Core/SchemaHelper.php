@@ -6,6 +6,13 @@ namespace Core;
 
 class SchemaHelper
 {
+    private SiteConfig $siteConfig;
+
+    public function __construct(?SiteConfig $siteConfig = null)
+    {
+        $this->siteConfig = $siteConfig ?? new SiteConfig();
+    }
+
     /**
      * Generates BreadcrumbList Schema.org JSON-LD.
      */
@@ -18,7 +25,7 @@ class SchemaHelper
                 "@type" => "ListItem",
                 "position" => $position++,
                 "name" => $name,
-                "item" => "https://sipswpcalculator.com" . $item,
+                "item" => $this->siteConfig->getUrl($item),
             ];
         }
 
@@ -71,14 +78,14 @@ class SchemaHelper
             "author" => [
                 "@type" => "Person",
                 "name" => "Sumeet Boga",
-                "url" => "https://sipswpcalculator.com/about",
+                "url" => $this->siteConfig->getUrl('/about'),
             ],
             "publisher" => [
                 "@type" => "Organization",
                 "name" => "SIP SWP Calculator",
                 "logo" => [
                     "@type" => "ImageObject",
-                    "url" => "https://sipswpcalculator.com/assets/favicon.png"
+                    "url" => $this->siteConfig->getUrl('/assets/favicon.png')
                 ]
             ],
             "datePublished" => $datePublished,

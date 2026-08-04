@@ -38,6 +38,7 @@ class View
 
             self::$twig->addGlobal('env', $env);
             self::$twig->addGlobal('request', \Core\Http\Request::createFromGlobals());
+            self::$twig->addGlobal('site_url', (new SiteConfig())->getBaseUrl());
 
             self::$twig->addFilter(new \Twig\TwigFilter('formatInr', function ($amount) {
                 return \Core\CurrencyHelper::formatInr((float) $amount);
@@ -55,7 +56,7 @@ class View
     }
 
     /**
-     * Render a template file and echo it (legacy compatibility).
+     * Render a template file and echo it.
      */
     public static function render(string $view, array $data = []): void
     {
@@ -67,9 +68,6 @@ class View
      */
     public static function renderToString(string $view, array $data = []): string
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
         if (empty($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
@@ -80,32 +78,14 @@ class View
         $twig = self::getTwig();
 
         // Support extensionless view names, defaulting to .twig
-        if (!str_ends_with($view, '.twig') && !str_ends_with($view, '.php')) {
+        if (!str_ends_with($view, '.twig')) {
             $view .= '.twig';
-        }
-
-        if (str_ends_with($view, '.php')) {
-            ob_start();
-            self::renderPhp($view, $data);
-            return ob_get_clean();
         }
 
         try {
             return $twig->render($view, $data);
         } catch (\Exception $e) {
             throw new \RuntimeException("Twig rendering failed: " . $e->getMessage(), 0, $e);
-        }
-    }
-
-    private static function renderPhp(string $view, array $data = []): void
-    {
-        extract($data);
-
-        $path = __DIR__ . '/../Views/' . ltrim($view, '/');
-        if (file_exists($path)) {
-            require $path;
-        } else {
-            throw new \RuntimeException("View template [{$view}] not found.");
         }
     }
 }

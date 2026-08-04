@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Core;
 
 class ViteHelper
 {
-    private static $manifest = null;
+    private static ?array $manifest = null;
     private static ?bool $devServerActive = null;
 
     /**

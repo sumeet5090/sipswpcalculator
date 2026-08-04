@@ -6,20 +6,28 @@ namespace Controllers;
 
 use Core\BlogRepository;
 use Core\Http\Response;
+use Core\SiteConfig;
 
 class SitemapController
 {
     private BlogRepository $blogRepository;
+    private SiteConfig $siteConfig;
+    private array $routesConfig;
 
-    public function __construct(?BlogRepository $blogRepository = null)
-    {
-        $this->blogRepository = $blogRepository ?? \Core\Container::getInstance()->get(BlogRepository::class);
+    public function __construct(
+        ?BlogRepository $blogRepository = null,
+        ?SiteConfig $siteConfig = null,
+        ?array $routesConfig = null
+    ) {
+        $this->blogRepository = $blogRepository ?? new BlogRepository();
+        $this->siteConfig = $siteConfig ?? new SiteConfig();
+        $this->routesConfig = $routesConfig ?? require __DIR__ . '/../Core/Config/routes.php';
     }
 
     public function index(): Response
     {
-        $routesConfig = require __DIR__ . '/../Core/Config/routes.php';
-        $baseUrl = 'https://sipswpcalculator.com';
+        $routesConfig = $this->routesConfig;
+        $baseUrl = $this->siteConfig->getBaseUrl();
 
         $urls = [];
 

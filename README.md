@@ -114,9 +114,11 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 - **TypeScript's Role:** Instantly upon page load, `CalculatorApp.ts` computes the initial state using `MathEngine.ts` and surgically hydrates the DOM. As the user interacts with sliders, TypeScript entirely controls the DOM recalculation and rendering without any network/AJAX overhead.
 
 ### Architecture & Service Decoupling
+- **SiteConfig (`Core\SiteConfig`):** Provides environment-aware domain resolution (`APP_URL`) across controllers, view helpers, and Schema.org generators.
 - **ConfigService (`Services\ConfigService`):** Loads and caches JSON configuration defaults across controller/service requests.
 - **CsvExportService (`Services\CsvExportService`):** Encapsulates CSV report generation and output delivery, decoupling export logic from `RenderHomeAction`.
-- **Dependency Injection & Repositories:** Controllers (`RenderHomeAction`, `PageController`, `SitemapController`) and repositories (`BlogRepository`, `FaqRepository`) use constructor injection managed by `Core\Container` via Reflection auto-wiring.
+- **Dependency Injection & Repositories:** Controllers (`RenderHomeAction`, `PageController`, `SitemapController`, `BlogController`, `AdminController`) and repositories (`BlogRepository`, `FaqRepository`, `InsightRepository`) use constructor injection managed by `Core\Container` via Reflection auto-wiring.
+- **Session Lifecycle & Pure Twig Templates:** Session initialization is strictly centralized in `App::run()`, and template rendering is 100% handled via Twig with legacy PHP view rendering eliminated.
 
 ### PHPUnit Database Isolation
 To ensure test runs do not pollute your development database (`database/database.sqlite`), PHPUnit is configured with a dedicated testing database.

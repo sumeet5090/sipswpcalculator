@@ -36,7 +36,7 @@ class Container
     /**
      * Bind a key (interface/class name) to a resolver callback or value.
      */
-    public function bind(string $key, $resolver): void
+    public function bind(string $key, callable|object|string $resolver): void
     {
         $this->bindings[$key] = $resolver;
     }
@@ -44,7 +44,7 @@ class Container
     /**
      * Bind a key as a singleton instance.
      */
-    public function singleton(string $key, $resolver): void
+    public function singleton(string $key, callable|object|string $resolver): void
     {
         $this->bindings[$key] = function (self $container) use ($resolver, $key) {
             if (!isset($container->instances[$key])) {
@@ -57,7 +57,7 @@ class Container
     /**
      * Retrieve and resolve a class instance.
      */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         if (isset($this->instances[$key])) {
             return $this->instances[$key];
@@ -79,7 +79,7 @@ class Container
     /**
      * Automatically resolve dependencies via Reflection.
      */
-    public function resolve(string $class)
+    public function resolve(string $class): object
     {
         if (!class_exists($class)) {
             throw new \Exception("Class {$class} does not exist.");

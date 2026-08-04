@@ -102,4 +102,35 @@ class BlogRepository
 
         return $posts;
     }
+
+    /**
+     * Retrieve metadata for a single blog post by category and slug without scanning all files.
+     */
+    public function getPostBySlug(string $category, string $slug): ?array
+    {
+        $path = '/blog/' . $category . '/' . $slug;
+        $content = $this->contentManager->getParsedContent($path);
+
+        if (!$content) {
+            return null;
+        }
+
+        $meta = $content['metadata'];
+        $wordCount = str_word_count(strip_tags($content['html']));
+        $readTimeVal = (int) ceil($wordCount / 200);
+        $readTime = $readTimeVal . ' min';
+
+        return [
+            'category' => $category,
+            'id' => $category,
+            'tag' => $meta['tag'] ?? 'Guide',
+            'tag_color' => $meta['tag_color'] ?? 'slate',
+            'title' => !empty($meta['title']) ? $meta['title'] : ucfirst(str_replace('-', ' ', $slug)),
+            'desc' => $meta['subtitle'] ?? '',
+            'href' => "/resource/{$category}/{$slug}",
+            'featured' => $meta['featured'] ?? false,
+            'read_time' => $readTime,
+            'date' => $meta['date'] ?? 'March 2026'
+        ];
+    }
 }

@@ -8,7 +8,7 @@ namespace Core;
  * InsightPayload
  * Data Transfer Object for anonymized calculation analytics payload.
  */
-class InsightPayload
+readonly class InsightPayload
 {
     public function __construct(
         public readonly string $calcType,

@@ -27,6 +27,15 @@ class InsightRepository
      */
     public function getDashboardData(array $range): array
     {
+        $cacheKey = md5(json_encode($range));
+        $cacheFile = sys_get_temp_dir() . '/sipswp_dash_' . $cacheKey . '.json';
+        if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < 60) {
+            $cached = json_decode(file_get_contents($cacheFile), true);
+            if (is_array($cached)) {
+                return $cached;
+            }
+        }
+
         $interval = $range['interval'] ?? '-30 days';
         $unit = $range['unit'] ?? 'day';
         $cteStart = $range['cte_start'] ?? '-29 days';
@@ -343,7 +352,7 @@ class InsightRepository
             error_log("InsightRepository Query Error (interaction_count): " . $e->getMessage());
         }
 
-        return [
+        $result = [
             'totalCalculations'   => $totalInRange,
             'avgStepUpPct'        => $avgStepUp,
             'totalAllTime'        => $totalAllTime,
@@ -378,5 +387,8 @@ class InsightRepository
             'inflationRate'       => $inflationRate,
             'avgIterations'       => $avgIterations
         ];
+
+        @file_put_contents($cacheFile, json_encode($result));
+        return $result;
     }
 }

@@ -56,10 +56,8 @@ class InvestmentInputs
      */
     private static function loadDefaults(?\Services\ConfigService $config = null): array
     {
-        if ($config !== null) {
-            return $config->getCalculatorDefaults();
-        }
-        return Container::getInstance()->get(\Services\ConfigService::class)->getCalculatorDefaults();
+        $configService = $config ?? new \Services\ConfigService();
+        return $configService->getCalculatorDefaults();
     }
 
     /**
