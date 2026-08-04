@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Core\InsightRepository;
-use Core\AnonymizedInsightLogger;
-use Core\InsightPayload;
 use Core\AdminAuthService;
 use Core\AdminDashboardPresenter;
+use Core\AnonymizedInsightLogger;
 use Core\DatabaseManager;
 use Core\DatabaseMigrator;
+use Core\Http\Request;
+use Core\Http\Response;
+use Core\InsightPayload;
+use Core\InsightRepository;
 use Core\View;
 
 /**
@@ -36,21 +38,20 @@ class AdminController
         $this->presenter = $presenter;
     }
 
-    public function insights(): void
+    public function insights(Request $request): Response
     {
         // 1. Handle Logout
-        if (isset($_GET['logout'])) {
+        if ($request->get('logout') !== null) {
             $this->authService->logout();
-            header('Location: /admin_insights');
-            exit;
+            return Response::redirect('/admin_insights');
         }
 
         // 2. Handle Login Attempt
         $loginError = '';
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
-            if ($this->authService->login($_POST['password'])) {
-                header('Location: /admin_insights');
-                exit;
+        if ($request->isPost()) {
+            $password = $request->post('password');
+            if (is_string($password) && $this->authService->login($password)) {
+                return Response::redirect('/admin_insights');
             } else {
                 $loginError = 'Incorrect password. Access denied.';
             }
@@ -58,10 +59,9 @@ class AdminController
 
         // 3. Authenticate Check
         if (!$this->authService->isAuthenticated()) {
-            View::render('admin/login', [
+            return Response::html(View::render('admin/login', [
                 'error' => $loginError
-            ]);
-            return;
+            ]));
         }
 
         // 4. Time Range Filter Config
@@ -75,7 +75,7 @@ class AdminController
             '1y'  => ['label' => '1 Year',     'interval' => '-365 days','unit' => 'day',  'cte_start' => '-364 days'],
         ];
 
-        $current_range_key = $_GET['range'] ?? '24h';
+        $current_range_key = (string) $request->get('range', '24h');
         if (!isset($time_ranges[$current_range_key])) {
             $current_range_key = '1m';
         }
@@ -92,14 +92,13 @@ class AdminController
             'current_range'     => $current_range,
         ], $viewModels);
 
-        View::render('admin/dashboard', $payload);
+        return Response::html(View::render('admin/dashboard', $payload));
     }
 
-    public function logInsight(): void
+    public function logInsight(Request $request): Response
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            http_response_code(405);
-            die('Method Not Allowed');
+        if (!$request->isPost()) {
+            return new Response('Method Not Allowed', 405);
         }
 
         // Rate limiting check (max 30 requests per minute per IP)
@@ -107,7 +106,7 @@ class AdminController
         if (!is_dir($rate_limit_dir)) {
             @mkdir($rate_limit_dir, 0700, true);
         }
-        $ip_hash = hash('sha256', $_SERVER['REMOTE_ADDR'] ?? 'unknown');
+        $ip_hash = hash('sha256', (string) $request->server('REMOTE_ADDR', 'unknown'));
         $rate_file = $rate_limit_dir . $ip_hash . '.json';
         $fp = @fopen($rate_file, 'c+');
         if ($fp && flock($fp, LOCK_EX)) {
@@ -121,8 +120,7 @@ class AdminController
             if (count($rate_data) >= 30) {
                 flock($fp, LOCK_UN);
                 fclose($fp);
-                http_response_code(429);
-                die('Rate limit exceeded');
+                return new Response('Rate limit exceeded', 429);
             }
             $rate_data[] = $now;
             ftruncate($fp, 0);
@@ -135,34 +133,28 @@ class AdminController
 
         $inputJSON = file_get_contents('php://input');
         if (strlen($inputJSON) > 65536) { // 64KB limit
-            http_response_code(413);
-            die('Payload Too Large');
+            return new Response('Payload Too Large', 413);
         }
 
         $data = json_decode($inputJSON, true);
 
         if (!is_array($data) || !isset($data['calc_type'], $data['amount'], $data['duration'])) {
-            http_response_code(400);
-            die('Invalid payload');
+            return new Response('Invalid payload', 400);
         }
 
         $payload = InsightPayload::fromArray($data);
         $this->insightLogger->logCalculation($payload);
 
-        http_response_code(204);
-        exit;
+        return new Response('', 204);
     }
 
     /**
      * Explicitly run migrations (admin authentication required).
      */
-    public function runMigrations(): void
+    public function runMigrations(): Response
     {
         if (!$this->authService->isAuthenticated()) {
-            http_response_code(403);
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
-            exit;
+            return Response::json(['status' => 'error', 'message' => 'Unauthorized'], 403);
         }
 
         try {
@@ -170,14 +162,9 @@ class AdminController
             $migrator = new DatabaseMigrator($pdo);
             $migrator->migrate(true); // Silent mode
 
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'success', 'message' => 'Database migrations completed successfully.']);
-            exit;
+            return Response::json(['status' => 'success', 'message' => 'Database migrations completed successfully.']);
         } catch (\Throwable $e) {
-            http_response_code(500);
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'Migration failed: ' . $e->getMessage()]);
-            exit;
+            return Response::json(['status' => 'error', 'message' => 'Migration failed: ' . $e->getMessage()], 500);
         }
     }
 }

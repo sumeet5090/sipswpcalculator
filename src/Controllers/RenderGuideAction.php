@@ -17,9 +17,9 @@ class RenderGuideAction
         $this->guideRenderer = $guideRenderer;
     }
 
-    public function __invoke(Request $request): void
+    public function __invoke(Request $request): Response
     {
-        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $uri = $request->getUri();
         $slug = ltrim($uri, '/');
 
         // Look up categories and config
@@ -27,10 +27,9 @@ class RenderGuideAction
         $calcConfig = $routesConfig['calculators']['/' . $slug] ?? null;
 
         if (!$calcConfig) {
-            \Controllers\ErrorController::handle404();
-            return;
+            return ErrorController::handle404();
         }
 
-        $this->guideRenderer->render($slug);
+        return $this->guideRenderer->render($slug);
     }
 }

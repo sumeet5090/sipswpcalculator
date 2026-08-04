@@ -6,6 +6,7 @@ namespace Controllers;
 
 use Core\FaqRepository;
 use Core\Http\Request;
+use Core\Http\Response;
 use Core\InvestmentCalculator;
 use Core\InvestmentInputs;
 use Core\MetaManager;
@@ -35,7 +36,7 @@ class RenderHomeAction
         $this->calculator = $calculator;
     }
 
-    public function __invoke(Request $request): void
+    public function __invoke(Request $request): Response
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -48,13 +49,11 @@ class RenderHomeAction
         if ($request->getMethod() === 'POST') {
             $post = $request->getParsedBody();
             if (!empty($post['website_url'])) {
-                http_response_code(403);
-                die('Forbidden: Automated request detected.');
+                return new Response('Forbidden: Automated request detected.', 403);
             }
             $token = $post['csrf_token'] ?? '';
             if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
-                http_response_code(403);
-                die('Forbidden: Invalid security token. Please reload the page and try again.');
+                return new Response('Forbidden: Invalid security token. Please reload the page and try again.', 403);
             }
         }
 
@@ -68,7 +67,7 @@ class RenderHomeAction
         if ($action === 'download_csv') {
             $combined = $this->calculator->calculate($inputs);
             $this->csvExportService->export($combined, $enable_swp);
-            return;
+            return new Response('', 200);
         }
 
         $page_config = $this->metaManager->getMeta('home');
@@ -80,7 +79,7 @@ class RenderHomeAction
             ? date('Y-m-d', filemtime($homeTemplatePath))
             : date('Y-m-d');
 
-        View::render('calculators/home', [
+        return Response::html(View::render('calculators/home', [
             'active_page'         => 'index.php',
             'sip'                 => $inputs->getSip(),
             'years'               => $inputs->getYears(),
@@ -99,6 +98,6 @@ class RenderHomeAction
             'calc_config'         => $calcConfig,
             'show_lumpsum'        => true,
             'site_modified'       => $siteModified,
-        ]);
+        ]));
     }
 }

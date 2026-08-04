@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use PHPUnit\Framework\TestCase;
+use Controllers\AdminController;
+use Controllers\BlogController;
+use Controllers\GeneratePdfAction;
+use Controllers\PageController;
+use Controllers\RenderHomeAction;
 use Core\Router;
+use PHPUnit\Framework\TestCase;
 
 class RouterIntegrityTest extends TestCase
 {
@@ -17,10 +22,10 @@ class RouterIntegrityTest extends TestCase
         $this->routesConfig = require __DIR__ . '/../../src/Core/Config/routes.php';
         $this->router = new Router();
 
-        // Register routes exactly as index.php does
-        $this->router->get('/', 'RenderHomeAction');
-        $this->router->post('/', 'RenderHomeAction');
-        $this->router->post('/generate-pdf', 'GeneratePdfAction');
+        // Register routes exactly as App.php / index.php does
+        $this->router->get('/', [RenderHomeAction::class, '__invoke']);
+        $this->router->post('/', [RenderHomeAction::class, '__invoke']);
+        $this->router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke']);
 
         // Dynamic Calculators Registration
         foreach ($this->routesConfig['calculators'] as $calc => $config) {
@@ -36,16 +41,16 @@ class RouterIntegrityTest extends TestCase
         }
 
         // Admin / Insight Routing
-        $this->router->get('/admin_insights', 'AdminController@insights');
-        $this->router->post('/admin_insights', 'AdminController@insights');
+        $this->router->get('/admin_insights', [AdminController::class, 'insights']);
+        $this->router->post('/admin_insights', [AdminController::class, 'insights']);
         $this->router->redirect('/admin_insights.php', '/admin_insights');
-        $this->router->get('/log_insight', 'AdminController@logInsight');
-        $this->router->post('/log_insight', 'AdminController@logInsight');
+        $this->router->get('/log_insight', [AdminController::class, 'logInsight']);
+        $this->router->post('/log_insight', [AdminController::class, 'logInsight']);
         $this->router->redirect('/log_insight.php', '/log_insight');
 
-        $this->router->get('/resources', 'BlogController@index');
-        $this->router->get('/resource', 'BlogController@index');
-        $this->router->get('/resource/{category}/{slug}', 'BlogController@show');
+        $this->router->get('/resources', [BlogController::class, 'index']);
+        $this->router->get('/resource', [BlogController::class, 'index']);
+        $this->router->get('/resource/{category}/{slug}', [BlogController::class, 'show']);
 
         // Load Dynamic Redirects from JSON
         $redirectsPath = __DIR__ . '/../../content/redirects.json';
@@ -108,18 +113,30 @@ class RouterIntegrityTest extends TestCase
     {
         $routes = $this->router->getRoutes();
         foreach ($routes as $method => $mappings) {
-            foreach ($mappings as $uri => $actionStr) {
-                $parts = explode('@', $actionStr);
-                $controllerClass = "\\Controllers\\" . $parts[0];
-                $action = $parts[1] ?? '__invoke';
+            foreach ($mappings as $uri => $action) {
+                if (is_array($action)) {
+                    $controllerClass = $action[0];
+                    $actionMethod = $action[1] ?? '__invoke';
+                } else {
+                    $parts = explode('@', $action);
+                    $controllerClass = $parts[0];
+                    $actionMethod = $parts[1] ?? '__invoke';
+                }
+
+                if (!str_starts_with($controllerClass, '\\')) {
+                    $controllerClass = '\\' . ltrim($controllerClass, '\\');
+                }
+                if (!str_starts_with($controllerClass, '\\Controllers\\')) {
+                    $controllerClass = '\\Controllers\\' . ltrim($controllerClass, '\\');
+                }
 
                 $this->assertTrue(
                     class_exists($controllerClass),
                     "Controller class '$controllerClass' does not exist for route '$uri' ($method)"
                 );
                 $this->assertTrue(
-                    method_exists($controllerClass, $action),
-                    "Action method '$action' does not exist in controller '$controllerClass' for route '$uri' ($method)"
+                    method_exists($controllerClass, $actionMethod),
+                    "Action method '$actionMethod' does not exist in controller '$controllerClass' for route '$uri' ($method)"
                 );
             }
         }
