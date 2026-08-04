@@ -15,7 +15,7 @@ class SwpStrategy extends BaseStrategy
 
     public function getInitialInputs(): InvestmentInputs
     {
-        return InvestmentInputs::fromSwpRequest([]);
+        return InvestmentInputs::fromSwpRequest([], $this->configService);
     }
 
     public function getCorpus(InvestmentInputs $inputs): float

@@ -13,7 +13,7 @@ $_ENV['DB_PATH'] = $testDb;
 try {
     $pdo = \Core\DatabaseManager::getConnection();
     $migrator = new \Core\DatabaseMigrator($pdo);
-    $migrator->migrate(true); // Silent mode
+    $migrator->migrate();
 } catch (\Throwable $e) {
     fwrite(STDERR, "PHPUnit Bootstrap: Failed to migrate test database: " . $e->getMessage() . "\n");
     exit(1);

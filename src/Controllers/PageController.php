@@ -8,7 +8,7 @@ use Core\BlogRepository;
 use Core\FaqRepository;
 use Core\Http\Response;
 use Core\SchemaHelper;
-use Core\View;
+use Core\ViewRenderer;
 
 /**
  * PageController
@@ -19,20 +19,23 @@ class PageController
     private FaqRepository $faqRepository;
     private BlogRepository $blogRepository;
     private SchemaHelper $schemaHelper;
+    private ViewRenderer $viewRenderer;
 
     public function __construct(
         FaqRepository $faqRepository,
         BlogRepository $blogRepository,
-        SchemaHelper $schemaHelper
+        SchemaHelper $schemaHelper,
+        ViewRenderer $viewRenderer
     ) {
         $this->faqRepository = $faqRepository;
         $this->blogRepository = $blogRepository;
         $this->schemaHelper = $schemaHelper;
+        $this->viewRenderer = $viewRenderer;
     }
 
     public function about(): Response
     {
-        return Response::html(View::render('pages/about'));
+        return Response::html($this->viewRenderer->render('pages/about'));
     }
 
     public function faq(): Response
@@ -46,7 +49,7 @@ class PageController
             ['id' => 'selection', 'label' => 'Selection', 'icon' => 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z']
         ];
 
-        return Response::html(View::render('pages/faq', [
+        return Response::html($this->viewRenderer->render('pages/faq', [
             'faqs' => $faqs,
             'faq_categories' => $faq_categories,
         ]));
@@ -92,7 +95,7 @@ class PageController
         }
         $faq = $this->schemaHelper->getFAQ($faqData);
 
-        return Response::html(View::render('pages/glossary', [
+        return Response::html($this->viewRenderer->render('pages/glossary', [
             'glossary_terms' => $glossary_terms,
             'letters' => $letters,
             'breadcrumbs' => $breadcrumbs,
@@ -107,7 +110,7 @@ class PageController
             'Privacy Policy' => '/privacy'
         ]);
 
-        return Response::html(View::render('pages/privacy', [
+        return Response::html($this->viewRenderer->render('pages/privacy', [
             'breadcrumbs' => $breadcrumbs,
             'page_config' => [
                 'title' => 'Privacy Policy',
@@ -131,7 +134,7 @@ class PageController
             'Resources' => '/resources'
         ]);
 
-        return Response::html(View::render('pages/resources', [
+        return Response::html($this->viewRenderer->render('pages/resources', [
             'categories' => $categories,
             'posts_by_cat' => $posts_by_cat,
             'breadcrumbs' => $breadcrumbs,
@@ -145,7 +148,7 @@ class PageController
             'Terms of Service' => '/terms'
         ]);
 
-        return Response::html(View::render('pages/terms', [
+        return Response::html($this->viewRenderer->render('pages/terms', [
             'breadcrumbs' => $breadcrumbs,
             'page_config' => [
                 'title' => 'Terms of Service',

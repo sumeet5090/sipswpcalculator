@@ -14,10 +14,12 @@ use Services\SessionManager;
 class AdminAuthService
 {
     private SessionManager $sessionManager;
+    private string $adminPassword;
 
-    public function __construct(SessionManager $sessionManager)
+    public function __construct(SessionManager $sessionManager, string $adminPassword = '')
     {
         $this->sessionManager = $sessionManager;
+        $this->adminPassword = $adminPassword;
     }
 
     /**
@@ -35,12 +37,11 @@ class AdminAuthService
      */
     public function login(string $password): void
     {
-        $envPassword = Env::get('ADMIN_INSIGHTS_PASSWORD');
-        if (!is_string($envPassword) || $envPassword === '') {
+        if ($this->adminPassword === '') {
             throw new \RuntimeException('ADMIN_INSIGHTS_PASSWORD environment variable is missing or empty.');
         }
 
-        if (hash_equals($envPassword, $password)) {
+        if (hash_equals($this->adminPassword, $password)) {
             $this->sessionManager->set('admin_authenticated', true);
             return;
         }

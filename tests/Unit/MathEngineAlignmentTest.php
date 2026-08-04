@@ -79,7 +79,7 @@ class MathEngineAlignmentTest extends TestCase
     public function testMathAlignment(array $inputsData): void
     {
         // 1. Run PHP math engine
-        $inputs = InvestmentInputs::fromRequest($inputsData);
+        $inputs = InvestmentInputs::fromRequest($inputsData, new \Services\ConfigService());
         $calculator = new InvestmentCalculator();
         $phpResults = $calculator->calculate($inputs);
 

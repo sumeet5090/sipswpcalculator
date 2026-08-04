@@ -12,11 +12,9 @@ class SiteConfig
 {
     private string $baseUrl;
 
-    public function __construct(?string $baseUrl = null)
+    public function __construct(string $baseUrl = 'https://sipswpcalculator.com')
     {
-        /** @var string $url */
-        $url = $baseUrl ?? Env::get('APP_URL', 'https://sipswpcalculator.com');
-        $this->baseUrl = rtrim($url, '/');
+        $this->baseUrl = rtrim($baseUrl, '/');
     }
 
     public function getBaseUrl(): string

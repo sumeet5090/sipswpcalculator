@@ -1,4 +1,4 @@
-import { InvestmentInputs, YearResult } from '../types';
+import type { InvestmentInputs, YearResult } from '../types/index.ts';
 
 /**
  * MathEngine.ts

@@ -23,14 +23,11 @@ class DatabaseMigrator
 
     /**
      * Run all pending migrations.
+     *
+     * @return array<string> Names of newly executed migration files.
      */
-    public function migrate(bool $silent = false): void
+    public function migrate(): array
     {
-        if (!$silent) {
-            echo "--- Starting SQLite Database Migration ---\n";
-        }
-
-        // 1. Ensure schema_migrations table exists
         $this->pdo->exec("
             CREATE TABLE IF NOT EXISTS schema_migrations (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,62 +36,40 @@ class DatabaseMigrator
             )
         ");
 
-        // 2. Get already executed migrations
         $stmt = $this->pdo->query("SELECT migration FROM schema_migrations");
         $executed = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-        // 3. Scan migrations directory
         if (!is_dir($this->migrationsPath)) {
-            if (!$silent) {
-                echo "Migrations directory not found: {$this->migrationsPath}\n";
-            }
-            return;
+            return [];
         }
 
         $files = glob($this->migrationsPath . '/*.php');
         sort($files);
 
-        $executedCount = 0;
+        $executedMigrations = [];
 
         foreach ($files as $file) {
             $migrationName = basename($file);
 
-            if (!in_array($migrationName, $executed)) {
-                if (!$silent) {
-                    echo "Migrating: {$migrationName}\n";
-                }
-
+            if (!in_array($migrationName, $executed, true)) {
                 $migration = require $file;
 
                 try {
                     $this->pdo->beginTransaction();
-                    $migration->up($this->pdo, $silent);
+                    $migration->up($this->pdo, true);
 
                     $stmt = $this->pdo->prepare("INSERT INTO schema_migrations (migration) VALUES (:migration)");
                     $stmt->execute([':migration' => $migrationName]);
 
                     $this->pdo->commit();
-                    $executedCount++;
-
-                    if (!$silent) {
-                        echo "Migrated:  {$migrationName}\n";
-                    }
+                    $executedMigrations[] = $migrationName;
                 } catch (\Throwable $e) {
                     $this->pdo->rollBack();
-                    if (!$silent) {
-                        echo "Migration Failed: {$migrationName} - " . $e->getMessage() . "\n";
-                    }
                     throw $e;
                 }
             }
         }
 
-        if ($executedCount === 0 && !$silent) {
-            echo "Nothing to migrate.\n";
-        }
-
-        if (!$silent) {
-            echo "--- SQLite Migration Completed Successfully ---\n";
-        }
+        return $executedMigrations;
     }
 }

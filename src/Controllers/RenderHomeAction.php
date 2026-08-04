@@ -10,7 +10,7 @@ use Core\Http\Response;
 use Core\InvestmentCalculator;
 use Core\InvestmentInputs;
 use Core\MetaManager;
-use Core\View;
+use Core\ViewRenderer;
 use Services\ConfigService;
 use Services\CsvExportService;
 use Services\SessionManager;
@@ -23,6 +23,7 @@ class RenderHomeAction
     private FaqRepository $faqRepository;
     private InvestmentCalculator $calculator;
     private SessionManager $sessionManager;
+    private ViewRenderer $viewRenderer;
 
     public function __construct(
         MetaManager $metaManager,
@@ -30,7 +31,8 @@ class RenderHomeAction
         CsvExportService $csvExportService,
         FaqRepository $faqRepository,
         InvestmentCalculator $calculator,
-        SessionManager $sessionManager
+        SessionManager $sessionManager,
+        ViewRenderer $viewRenderer
     ) {
         $this->metaManager = $metaManager;
         $this->configService = $configService;
@@ -38,6 +40,7 @@ class RenderHomeAction
         $this->faqRepository = $faqRepository;
         $this->calculator = $calculator;
         $this->sessionManager = $sessionManager;
+        $this->viewRenderer = $viewRenderer;
     }
 
     public function __invoke(Request $request): Response
@@ -65,8 +68,8 @@ class RenderHomeAction
         $action = $post['action'] ?? '';
         if ($action === 'download_csv') {
             $combined = $this->calculator->calculate($inputs);
-            $this->csvExportService->export($combined, $enable_swp);
-            return new Response('', 200);
+            $csvContent = $this->csvExportService->generate($combined, $enable_swp);
+            return Response::csv($csvContent, 'SIP_SWP_Yearly_Report.csv');
         }
 
         $page_config = $this->metaManager->getMeta('home');
@@ -78,7 +81,7 @@ class RenderHomeAction
             ? date('Y-m-d', filemtime($homeTemplatePath))
             : date('Y-m-d');
 
-        return Response::html(View::render('calculators/home', [
+        return Response::html($this->viewRenderer->render('calculators/home', [
             'active_page'         => 'index.php',
             'sip'                 => $inputs->getSip(),
             'years'               => $inputs->getYears(),

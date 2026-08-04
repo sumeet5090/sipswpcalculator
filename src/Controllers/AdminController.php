@@ -7,13 +7,13 @@ namespace Controllers;
 use Core\AdminAuthService;
 use Core\AdminDashboardPresenter;
 use Core\AnonymizedInsightLogger;
-use Core\DatabaseManager;
 use Core\DatabaseMigrator;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\InsightPayload;
 use Core\InsightRepository;
-use Core\View;
+use Core\ViewRenderer;
+use Services\RateLimiter;
 
 /**
  * AdminController
@@ -25,8 +25,9 @@ class AdminController
     private AnonymizedInsightLogger $insightLogger;
     private AdminAuthService $authService;
     private AdminDashboardPresenter $presenter;
-    private \Services\RateLimiter $rateLimiter;
+    private RateLimiter $rateLimiter;
     private DatabaseMigrator $migrator;
+    private ViewRenderer $viewRenderer;
 
     public function __construct(
         InsightRepository $insightRepository,
@@ -34,14 +35,16 @@ class AdminController
         AdminAuthService $authService,
         AdminDashboardPresenter $presenter,
         DatabaseMigrator $migrator,
-        ?\Services\RateLimiter $rateLimiter = null
+        RateLimiter $rateLimiter,
+        ViewRenderer $viewRenderer
     ) {
         $this->insightRepository = $insightRepository;
         $this->insightLogger = $insightLogger;
         $this->authService = $authService;
         $this->presenter = $presenter;
         $this->migrator = $migrator;
-        $this->rateLimiter = $rateLimiter ?? new \Services\RateLimiter();
+        $this->rateLimiter = $rateLimiter;
+        $this->viewRenderer = $viewRenderer;
     }
 
     public function insights(Request $request): Response
@@ -70,7 +73,7 @@ class AdminController
 
         // 3. Authenticate Check
         if (!$this->authService->isAuthenticated()) {
-            return Response::html(View::render('admin/login', [
+            return Response::html($this->viewRenderer->render('admin/login', [
                 'error' => $loginError
             ]));
         }
@@ -103,7 +106,7 @@ class AdminController
             'current_range'     => $current_range,
         ], $viewModels);
 
-        return Response::html(View::render('admin/dashboard', $payload));
+        return Response::html($this->viewRenderer->render('admin/dashboard', $payload));
     }
 
     public function logInsight(Request $request): Response
@@ -147,9 +150,12 @@ class AdminController
         }
 
         try {
-            $this->migrator->migrate(true); // Silent mode
+            $executed = $this->migrator->migrate();
+            $msg = count($executed) > 0
+                ? 'Migrated successfully: ' . implode(', ', $executed)
+                : 'Nothing to migrate.';
 
-            return Response::json(['status' => 'success', 'message' => 'Database migrations completed successfully.']);
+            return Response::json(['status' => 'success', 'message' => $msg]);
         } catch (\Throwable $e) {
             return Response::json(['status' => 'error', 'message' => 'Migration failed: ' . $e->getMessage()], 500);
         }

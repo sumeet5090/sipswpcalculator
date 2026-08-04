@@ -11,7 +11,7 @@ use Core\Http\Response;
 use Core\MetaManager;
 use Core\SchemaHelper;
 use Core\SiteConfig;
-use Core\View;
+use Core\ViewRenderer;
 
 /**
  * BlogController
@@ -25,6 +25,7 @@ class BlogController
     private BlogRepository $blogRepository;
     private SchemaFactory $schemaFactory;
     private SiteConfig $siteConfig;
+    private ViewRenderer $viewRenderer;
 
     public function __construct(
         ContentManager $contentManager,
@@ -32,7 +33,8 @@ class BlogController
         SchemaHelper $schemaHelper,
         BlogRepository $blogRepository,
         SchemaFactory $schemaFactory,
-        SiteConfig $siteConfig
+        SiteConfig $siteConfig,
+        ViewRenderer $viewRenderer
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
@@ -40,6 +42,7 @@ class BlogController
         $this->blogRepository = $blogRepository;
         $this->schemaFactory = $schemaFactory;
         $this->siteConfig = $siteConfig;
+        $this->viewRenderer = $viewRenderer;
     }
 
     public function index(): Response
@@ -57,7 +60,7 @@ class BlogController
             'Resources' => '/resources'
         ]);
 
-        return Response::html(View::render('pages/resources', [
+        return Response::html($this->viewRenderer->render('pages/resources', [
             'active_page'  => 'resources.php',
             'all_posts'    => $all_posts,
             'posts_by_cat' => $posts_by_cat,
@@ -115,7 +118,7 @@ class BlogController
             $this->siteConfig->getUrl('/resource/' . $category . '/' . $slug)
         );
 
-        return Response::html(View::render('layouts/generic-post', [
+        return Response::html($this->viewRenderer->render('layouts/generic-post', [
             'content_html'     => $content['html'],
             'content_metadata' => $content['metadata'],
             'page_config'      => $page_config,

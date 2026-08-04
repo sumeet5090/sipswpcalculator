@@ -34,7 +34,7 @@ class Router
         $this->redirects[$uri] = $target;
     }
 
-    public function dispatch(?Request $request = null): void
+    public function dispatch(?Request $request = null): Response
     {
         $request = $request ?? Request::createFromGlobals();
         $uri = $request->getUri();
@@ -43,20 +43,17 @@ class Router
         error_log("Dispatching: $method $uri");
 
         if (array_key_exists($uri, $this->redirects)) {
-            header('Location: ' . $this->redirects[$uri], true, 301);
-            exit;
+            return Response::redirect($this->redirects[$uri], 301);
         }
 
         if ($uri === '/' && isset($this->routes[$method]['/'])) {
-            $this->callAction($this->routes[$method]['/'], [], $request);
-            return;
+            return $this->callAction($this->routes[$method]['/'], [], $request);
         }
 
         $uri = rtrim($uri, '/');
 
         if (isset($this->routes[$method][$uri])) {
-            $this->callAction($this->routes[$method][$uri], [], $request);
-            return;
+            return $this->callAction($this->routes[$method][$uri], [], $request);
         }
 
         if (isset($this->routes[$method]) && is_array($this->routes[$method])) {
@@ -64,16 +61,15 @@ class Router
                 $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_\.-]+)', $route);
                 if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
                     $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
-                    $this->callAction($action, $params, $request);
-                    return;
+                    return $this->callAction($action, $params, $request);
                 }
             }
         }
 
-        \Controllers\ErrorController::handle404();
+        throw new \Core\Exceptions\RouteNotFoundException("No route found for URI: {$uri}");
     }
 
-    private function callAction(string|array $controllerAction, array $params = [], ?Request $request = null): void
+    private function callAction(string|array $controllerAction, array $params = [], ?Request $request = null): Response
     {
         if (is_array($controllerAction)) {
             $controllerName = $controllerAction[0];
@@ -92,39 +88,35 @@ class Router
         }
 
         if (class_exists($controllerName)) {
-            try {
-                $controller = $this->container->get($controllerName);
-                if (method_exists($controller, $action)) {
-                    $request = $request ?? Request::createFromGlobals();
+            $controller = $this->container->get($controllerName);
+            if (method_exists($controller, $action)) {
+                $request = $request ?? Request::createFromGlobals();
 
-                    $reflection = new \ReflectionMethod($controller, $action);
-                    $args = [];
-                    foreach ($reflection->getParameters() as $param) {
-                        $name = $param->getName();
-                        $type = $param->getType();
-                        if ($type instanceof \ReflectionNamedType && !$type->isBuiltin() && $type->getName() === Request::class) {
-                            $args[] = $request;
-                        } elseif (array_key_exists($name, $params)) {
-                            $args[] = $params[$name];
-                        } elseif ($param->isDefaultValueAvailable()) {
-                            $args[] = $param->getDefaultValue();
-                        } else {
-                            $args[] = null;
-                        }
+                $reflection = new \ReflectionMethod($controller, $action);
+                $args = [];
+                foreach ($reflection->getParameters() as $param) {
+                    $name = $param->getName();
+                    $type = $param->getType();
+                    if ($type instanceof \ReflectionNamedType && !$type->isBuiltin() && $type->getName() === Request::class) {
+                        $args[] = $request;
+                    } elseif (array_key_exists($name, $params)) {
+                        $args[] = $params[$name];
+                    } elseif ($param->isDefaultValueAvailable()) {
+                        $args[] = $param->getDefaultValue();
+                    } else {
+                        $args[] = null;
                     }
-
-                    $response = call_user_func_array([$controller, $action], $args);
-                    if ($response instanceof Response) {
-                        $response->send();
-                    }
-                    return;
                 }
-            } catch (\Throwable $e) {
-                \Controllers\ErrorController::handle500($e);
+
+                $response = call_user_func_array([$controller, $action], $args);
+                if ($response instanceof Response) {
+                    return $response;
+                }
+                return new Response((string) $response, 200);
             }
         }
 
-        \Controllers\ErrorController::handle500(new \Exception("Controller or Method not found ($controllerName@$action)"));
+        throw new \Core\Exceptions\RouteNotFoundException("Controller or Method not found ({$controllerName}@{$action})");
     }
 
     public function getRoutes(): array
