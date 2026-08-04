@@ -20,7 +20,7 @@ class RouterIntegrityTest extends TestCase
     protected function setUp(): void
     {
         $this->routesConfig = require __DIR__ . '/../../src/Core/Config/routes.php';
-        $this->router = new Router();
+        $this->router = new Router(\Core\Container::getInstance());
 
         // Register routes exactly as App.php / index.php does
         $this->router->get('/', [RenderHomeAction::class, '__invoke']);
@@ -188,7 +188,7 @@ class RouterIntegrityTest extends TestCase
     public function testSitemapIntegrity(): void
     {
         ob_start();
-        $controller = new \Controllers\SitemapController();
+        $controller = \Core\Container::getInstance()->get(\Controllers\SitemapController::class);
         $response = $controller->index();
         $response->send();
         $xmlContent = ob_get_clean();
@@ -255,7 +255,7 @@ class RouterIntegrityTest extends TestCase
      */
     public function testBlogRepositoryMatchesMarkdownFiles(): void
     {
-        $allPosts = (new \Core\BlogRepository())->getAllPosts();
+        $allPosts = (new \Core\BlogRepository(new \Core\ContentManager()))->getAllPosts();
         $repoSlugs = array_map(function ($post) {
             return basename($post['href']);
         }, $allPosts);

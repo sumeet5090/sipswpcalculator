@@ -12,9 +12,9 @@ class BlogRepository
 {
     private ContentManager $contentManager;
 
-    public function __construct(?ContentManager $contentManager = null)
+    public function __construct(ContentManager $contentManager)
     {
-        $this->contentManager = $contentManager ?? new ContentManager();
+        $this->contentManager = $contentManager;
     }
 
     public function getCategories(): array

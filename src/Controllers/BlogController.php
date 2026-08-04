@@ -31,15 +31,15 @@ class BlogController
         MetaManager $metaManager,
         SchemaHelper $schemaHelper,
         BlogRepository $blogRepository,
-        ?SchemaFactory $schemaFactory = null,
-        ?SiteConfig $siteConfig = null
+        SchemaFactory $schemaFactory,
+        SiteConfig $siteConfig
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
         $this->schemaHelper = $schemaHelper;
         $this->blogRepository = $blogRepository;
-        $this->schemaFactory = $schemaFactory ?? new SchemaFactory($schemaHelper, $siteConfig);
-        $this->siteConfig = $siteConfig ?? new SiteConfig();
+        $this->schemaFactory = $schemaFactory;
+        $this->siteConfig = $siteConfig;
     }
 
     public function index(): Response

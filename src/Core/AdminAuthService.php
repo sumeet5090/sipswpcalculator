@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Core\Exceptions\AuthenticationException;
+
 /**
  * AdminAuthService
  * Handles authentication and session management for the admin dashboard.
@@ -27,8 +29,10 @@ class AdminAuthService
 
     /**
      * Attempt to log in with the provided password.
+     *
+     * @throws AuthenticationException
      */
-    public function login(string $password): bool
+    public function login(string $password): void
     {
         $envPassword = Env::get('ADMIN_INSIGHTS_PASSWORD');
         if (!is_string($envPassword) || $envPassword === '') {
@@ -37,10 +41,10 @@ class AdminAuthService
 
         if (hash_equals($envPassword, $password)) {
             $_SESSION['admin_authenticated'] = true;
-            return true;
+            return;
         }
 
-        return false;
+        throw new AuthenticationException('Invalid password provided.');
     }
 
     /**

@@ -8,9 +8,9 @@ class SchemaHelper
 {
     private SiteConfig $siteConfig;
 
-    public function __construct(?SiteConfig $siteConfig = null)
+    public function __construct(SiteConfig $siteConfig)
     {
-        $this->siteConfig = $siteConfig ?? new SiteConfig();
+        $this->siteConfig = $siteConfig;
     }
 
     /**

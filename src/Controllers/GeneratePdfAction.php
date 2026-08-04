@@ -6,9 +6,18 @@ namespace Controllers;
 
 use Core\Http\Request;
 use Core\Http\Response;
+use Core\Exceptions\RateLimitExceededException;
+use Services\RateLimiter;
 
 class GeneratePdfAction
 {
+    private RateLimiter $rateLimiter;
+
+    public function __construct(?RateLimiter $rateLimiter = null)
+    {
+        $this->rateLimiter = $rateLimiter ?? new RateLimiter();
+    }
+
     public function __invoke(Request $request): Response
     {
         if ($request->getMethod() !== 'POST') {
@@ -25,34 +34,12 @@ class GeneratePdfAction
             return new Response('Forbidden: Invalid security token. Please reload the page and try again.', 403);
         }
 
-        // Rate limiting checks
-        $rate_limit_dir = sys_get_temp_dir() . '/sipswp_rate_limits/';
-        if (!is_dir($rate_limit_dir)) {
-            @mkdir($rate_limit_dir, 0700, true);
-        }
-        $ip_hash = hash('sha256', (string) $request->server('REMOTE_ADDR', 'unknown'));
-        $rate_file = $rate_limit_dir . $ip_hash . '.json';
-        $fp = @fopen($rate_file, 'c+');
-        if ($fp && flock($fp, LOCK_EX)) {
-            $content = stream_get_contents($fp);
-            $rate_data = !empty($content) ? json_decode($content, true) : [];
-            if (!is_array($rate_data)) {
-                $rate_data = [];
-            }
-            $now = time();
-            $rate_data = array_filter($rate_data, fn($t) => ($now - $t) < 60);
-            if (count($rate_data) >= 10) {
-                flock($fp, LOCK_UN);
-                fclose($fp);
-                return new Response('Too many requests. Please wait a minute before generating another PDF.', 429);
-            }
-            $rate_data[] = $now;
-            ftruncate($fp, 0);
-            rewind($fp);
-            fwrite($fp, json_encode(array_values($rate_data)));
-            fflush($fp);
-            flock($fp, LOCK_UN);
-            fclose($fp);
+        // Rate limiting check
+        try {
+            $ip = (string) $request->server('REMOTE_ADDR', 'unknown');
+            $this->rateLimiter->checkLimit($ip, 'sipswp_rate_limits', 10, 60);
+        } catch (RateLimitExceededException $e) {
+            return new Response('Too many requests. Please wait a minute before generating another PDF.', 429);
         }
 
         // Turn off error display during PDF generation so vendor deprecation warnings never corrupt binary stream

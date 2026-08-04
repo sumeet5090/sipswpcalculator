@@ -27,7 +27,7 @@ class App
     public function __construct()
     {
         $this->container = Container::getInstance();
-        $this->router = new Router();
+        $this->router = new Router($this->container);
         $this->routesConfig = require __DIR__ . '/Config/routes.php';
     }
 

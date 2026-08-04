@@ -21,13 +21,13 @@ class PageController
     private SchemaHelper $schemaHelper;
 
     public function __construct(
-        ?FaqRepository $faqRepository = null,
-        ?BlogRepository $blogRepository = null,
-        ?SchemaHelper $schemaHelper = null
+        FaqRepository $faqRepository,
+        BlogRepository $blogRepository,
+        SchemaHelper $schemaHelper
     ) {
-        $this->faqRepository = $faqRepository ?? new FaqRepository();
-        $this->blogRepository = $blogRepository ?? new BlogRepository();
-        $this->schemaHelper = $schemaHelper ?? new SchemaHelper();
+        $this->faqRepository = $faqRepository;
+        $this->blogRepository = $blogRepository;
+        $this->schemaHelper = $schemaHelper;
     }
 
     public function about(): Response

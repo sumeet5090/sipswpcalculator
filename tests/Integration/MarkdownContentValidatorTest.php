@@ -119,7 +119,7 @@ class MarkdownContentValidatorTest extends TestCase
         // 7. Verify Alignment with BlogRepository (Blog posts only)
         if ($type === 'blog') {
             $slug = basename($filePath, '.md');
-            $allPosts = (new BlogRepository())->getAllPosts();
+            $allPosts = (new BlogRepository(new \Core\ContentManager()))->getAllPosts();
 
             $found = false;
             $postMetadata = null;

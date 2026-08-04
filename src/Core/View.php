@@ -37,7 +37,7 @@ class View
             ]);
 
             self::$twig->addGlobal('env', $env);
-            self::$twig->addGlobal('site_url', (new SiteConfig())->getBaseUrl());
+            self::$twig->addGlobal('site_url', rtrim((string) Env::get('APP_URL', 'https://sipswpcalculator.com'), '/'));
 
             self::$twig->addFilter(new \Twig\TwigFilter('formatInr', function ($amount) {
                 return \Core\CurrencyHelper::formatInr((float) $amount);
