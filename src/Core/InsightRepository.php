@@ -14,9 +14,9 @@ class InsightRepository
 {
     private PDO $pdo;
 
-    public function __construct(?PDO $pdo = null)
+    public function __construct(PDO $pdo)
     {
-        $this->pdo = $pdo ?? DatabaseManager::getConnection();
+        $this->pdo = $pdo;
     }
 
     /**

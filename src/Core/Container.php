@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Core\Exceptions\ContainerException;
+use Core\Exceptions\NotFoundException;
+use Psr\Container\ContainerInterface;
+
 /**
  * Container
  * A lightweight Dependency Injection Container with auto-wiring reflection resolution.
+ * Implements PSR-11 ContainerInterface.
  */
-class Container
+class Container implements ContainerInterface
 {
     private array $bindings = [];
     private array $instances = [];
@@ -55,16 +60,27 @@ class Container
     }
 
     /**
-     * Retrieve and resolve a class instance.
+     * Check if the container has a binding or instance for the given identifier.
      */
-    public function get(string $key): mixed
+    public function has(string $id): bool
     {
-        if (isset($this->instances[$key])) {
-            return $this->instances[$key];
+        return isset($this->instances[$id]) || isset($this->bindings[$id]) || class_exists($id);
+    }
+
+    /**
+     * Retrieve and resolve a class instance by its identifier.
+     *
+     * @throws NotFoundException if entry is not found
+     * @throws ContainerException if error while retrieving the entry
+     */
+    public function get(string $id): mixed
+    {
+        if (isset($this->instances[$id])) {
+            return $this->instances[$id];
         }
 
-        if (isset($this->bindings[$key])) {
-            $resolver = $this->bindings[$key];
+        if (isset($this->bindings[$id])) {
+            $resolver = $this->bindings[$id];
             if (is_callable($resolver)) {
                 $resolved = $resolver($this);
             } else {
@@ -73,54 +89,63 @@ class Container
             return $resolved;
         }
 
-        return $this->resolve($key);
+        return $this->resolve($id);
     }
 
     /**
      * Automatically resolve dependencies via Reflection.
+     *
+     * @throws NotFoundException if class does not exist
+     * @throws ContainerException if class cannot be instantiated or dependencies cannot be resolved
      */
     public function resolve(string $class): object
     {
         if (!class_exists($class)) {
-            throw new \Exception("Class {$class} does not exist.");
+            throw new NotFoundException("Class {$class} does not exist.");
         }
 
-        $reflector = new \ReflectionClass($class);
+        try {
+            $reflector = new \ReflectionClass($class);
 
-        if (!$reflector->isInstantiable()) {
-            throw new \Exception("Class {$class} is not instantiable.");
-        }
+            if (!$reflector->isInstantiable()) {
+                throw new ContainerException("Class {$class} is not instantiable.");
+            }
 
-        $constructor = $reflector->getConstructor();
+            $constructor = $reflector->getConstructor();
 
-        if ($constructor === null) {
-            return new $class();
-        }
+            if ($constructor === null) {
+                return new $class();
+            }
 
-        $parameters = $constructor->getParameters();
-        $dependencies = [];
+            $parameters = $constructor->getParameters();
+            $dependencies = [];
 
-        foreach ($parameters as $parameter) {
-            $type = $parameter->getType();
-            if ($type === null) {
-                if ($parameter->isDefaultValueAvailable()) {
-                    $dependencies[] = $parameter->getDefaultValue();
-                } else {
-                    throw new \Exception("Cannot resolve parameter '{$parameter->getName()}' in class {$class} (no type hint).");
-                }
-            } else {
-                if ($type instanceof \ReflectionNamedType && !$type->isBuiltin()) {
-                    $dependencies[] = $this->get($type->getName());
-                } else {
+            foreach ($parameters as $parameter) {
+                $type = $parameter->getType();
+                if ($type === null) {
                     if ($parameter->isDefaultValueAvailable()) {
                         $dependencies[] = $parameter->getDefaultValue();
                     } else {
-                        throw new \Exception("Cannot resolve primitive parameter '{$parameter->getName()}' in class {$class}.");
+                        throw new ContainerException("Cannot resolve parameter '{$parameter->getName()}' in class {$class} (no type hint).");
+                    }
+                } else {
+                    if ($type instanceof \ReflectionNamedType && !$type->isBuiltin()) {
+                        $dependencies[] = $this->get($type->getName());
+                    } else {
+                        if ($parameter->isDefaultValueAvailable()) {
+                            $dependencies[] = $parameter->getDefaultValue();
+                        } else {
+                            throw new ContainerException("Cannot resolve primitive parameter '{$parameter->getName()}' in class {$class}.");
+                        }
                     }
                 }
             }
-        }
 
-        return $reflector->newInstanceArgs($dependencies);
+            return $reflector->newInstanceArgs($dependencies);
+        } catch (NotFoundException | ContainerException $e) {
+            throw $e;
+        } catch (\Throwable $e) {
+            throw new ContainerException("Failed to resolve class {$class}: " . $e->getMessage(), 0, $e);
+        }
     }
 }

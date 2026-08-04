@@ -86,12 +86,16 @@ class App
             return new BlogRepository($c->get(ContentManager::class));
         });
 
-        $this->container->singleton(InsightRepository::class, function () {
-            return new InsightRepository();
+        $this->container->singleton(\PDO::class, function () {
+            return DatabaseManager::getConnection();
         });
 
-        $this->container->singleton(AnonymizedInsightLogger::class, function () {
-            return new AnonymizedInsightLogger();
+        $this->container->singleton(InsightRepository::class, function (Container $c) {
+            return new InsightRepository($c->get(\PDO::class));
+        });
+
+        $this->container->singleton(AnonymizedInsightLogger::class, function (Container $c) {
+            return new AnonymizedInsightLogger($c->get(\PDO::class));
         });
 
         $this->container->singleton(\Core\Factories\SchemaFactory::class, function (Container $c) {

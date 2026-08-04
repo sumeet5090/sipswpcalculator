@@ -25,17 +25,20 @@ class AdminController
     private AnonymizedInsightLogger $insightLogger;
     private AdminAuthService $authService;
     private AdminDashboardPresenter $presenter;
+    private \PDO $pdo;
 
     public function __construct(
         InsightRepository $insightRepository,
         AnonymizedInsightLogger $insightLogger,
         AdminAuthService $authService,
-        AdminDashboardPresenter $presenter
+        AdminDashboardPresenter $presenter,
+        \PDO $pdo
     ) {
         $this->insightRepository = $insightRepository;
         $this->insightLogger = $insightLogger;
         $this->authService = $authService;
         $this->presenter = $presenter;
+        $this->pdo = $pdo;
     }
 
     public function insights(Request $request): Response
@@ -158,8 +161,7 @@ class AdminController
         }
 
         try {
-            $pdo = DatabaseManager::getConnection();
-            $migrator = new DatabaseMigrator($pdo);
+            $migrator = new DatabaseMigrator($this->pdo);
             $migrator->migrate(true); // Silent mode
 
             return Response::json(['status' => 'success', 'message' => 'Database migrations completed successfully.']);
