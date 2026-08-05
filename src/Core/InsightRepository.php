@@ -32,7 +32,7 @@ class InsightRepository
         $overview = $this->getOverviewMetrics($whereClause, $params);
         $volume = $this->getVolumeSeries($unit, $cteStart, $interval);
         $distributions = $this->getDistributionMetrics($whereClause, $params);
-        $engagement = $this->getEngagementMetrics($whereClause, $params, $overview['totalInRange'], $overview['totalPdfDownloads']);
+        $engagement = $this->getEngagementMetrics($whereClause, $params, $overview['totalCalculations'], $overview['totalPdfDownloads']);
 
         return array_merge($overview, [
             'dailyVolume' => $volume,

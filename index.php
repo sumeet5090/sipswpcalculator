@@ -20,7 +20,8 @@ try {
 } catch (\Throwable $e) {
     // If the autoloader or App container fails, this is our absolute last line of defense.
     if (class_exists('\Controllers\ErrorController')) {
-        \Controllers\ErrorController::handle500($e);
+        $response = \Controllers\ErrorController::handle500($e);
+        $response->send();
     } else {
         http_response_code(500);
         echo "Fatal Error: " . $e->getMessage();
