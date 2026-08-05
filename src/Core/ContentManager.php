@@ -11,9 +11,9 @@ class ContentManager
     private Parsedown $parsedown;
     private string $contentDir;
 
-    public function __construct(?Parsedown $parsedown = null, string $contentDir = __DIR__ . '/../../content')
+    public function __construct(Parsedown $parsedown, string $contentDir = __DIR__ . '/../../content')
     {
-        $this->parsedown = $parsedown ?? new Parsedown();
+        $this->parsedown = $parsedown;
         $this->contentDir = $contentDir;
     }
 

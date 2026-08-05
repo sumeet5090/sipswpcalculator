@@ -9,17 +9,19 @@ class Request
     private array $get;
     private array $post;
     private array $server;
+    private array $files;
 
-    public function __construct(array $get = [], array $post = [], array $server = [])
+    public function __construct(array $get = [], array $post = [], array $server = [], array $files = [])
     {
         $this->get = $get;
         $this->post = $post;
         $this->server = $server;
+        $this->files = $files;
     }
 
     public static function createFromGlobals(): self
     {
-        return new self($_GET, $_POST, $_SERVER);
+        return new self($_GET, $_POST, $_SERVER, $_FILES);
     }
 
     public function getMethod(): string
@@ -50,6 +52,11 @@ class Request
     public function server(string $key, mixed $default = null): mixed
     {
         return $this->server[$key] ?? $default;
+    }
+
+    public function files(string $key): ?array
+    {
+        return $this->files[$key] ?? null;
     }
 
     public function isPost(): bool

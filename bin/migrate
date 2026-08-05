@@ -20,9 +20,10 @@ if (file_exists($envFile)) {
 }
 
 try {
-    $pdo = \Core\DatabaseManager::getConnection();
-    $migrator = new \Core\DatabaseMigrator($pdo);
-    $migrator->migrate(false);
+    $app = new \Core\App();
+    $container = $app->boot();
+    $migrator = $container->get(\Core\DatabaseMigrator::class);
+    $migrator->migrate();
     exit(0);
 } catch (\Throwable $e) {
     fwrite(STDERR, "Migration Failed: " . $e->getMessage() . "\n");

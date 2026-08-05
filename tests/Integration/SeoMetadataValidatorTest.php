@@ -52,7 +52,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
         // Dynamic blog posts
         require_once __DIR__ . '/../../vendor/autoload.php';
 
-        $allPosts = (new \Core\BlogRepository(new \Core\ContentManager()))->getAllPosts();
+        $allPosts = (new \Core\BlogRepository(new \Core\ContentManager(new \Parsedown())))->getAllPosts();
         foreach ($allPosts as $post) {
             $paths[$post['href']] = [$post['href']];
         }

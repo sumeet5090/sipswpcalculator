@@ -17,11 +17,11 @@ class SitemapController
     public function __construct(
         BlogRepository $blogRepository,
         SiteConfig $siteConfig,
-        ?array $routesConfig = null
+        array $routesConfig
     ) {
         $this->blogRepository = $blogRepository;
         $this->siteConfig = $siteConfig;
-        $this->routesConfig = $routesConfig ?? require __DIR__ . '/../Core/Config/routes.php';
+        $this->routesConfig = $routesConfig;
     }
 
     public function index(): Response
@@ -40,9 +40,9 @@ class SitemapController
         ];
 
         // 2. Calculators
-        foreach ($routesConfig['calculators'] as $path => $config) {
+        foreach (array_keys($routesConfig['calculators']) as $path) {
             $mdFile = __DIR__ . '/../../content/calculators' . $path . '.md';
-            $lastmod = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $config['date'];
+            $lastmod = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : date('Y-m-d');
 
             $priority = in_array($path, ['/sip-calculator', '/swp-calculator']) ? '0.9' : '0.8';
 

@@ -16,14 +16,14 @@ class ConfigService
     {
         $jsonPath = $customConfigPath ?? __DIR__ . '/../../content/calculator_defaults.json';
         if (!file_exists($jsonPath)) {
-            throw new \Exception("Configuration file missing at: {$jsonPath}");
+            throw new \RuntimeException("Configuration file missing at: {$jsonPath}");
         }
 
         $content = file_get_contents($jsonPath);
         $decoded = json_decode($content, true);
 
         if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
-            throw new \Exception("Failed to parse configuration file: " . json_last_error_msg());
+            throw new \RuntimeException("Failed to parse configuration file: " . json_last_error_msg());
         }
 
         $this->calculatorDefaults = $decoded;
