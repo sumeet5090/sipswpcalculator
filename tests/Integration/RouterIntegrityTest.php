@@ -15,65 +15,13 @@ use PHPUnit\Framework\TestCase;
 class RouterIntegrityTest extends TestCase
 {
     private Router $router;
-    private array $routesConfig;
+    private \Core\Container $container;
 
     protected function setUp(): void
     {
-        $this->routesConfig = require __DIR__ . '/../../src/Core/Config/routes.php';
-        $this->router = new Router(\Core\Container::getInstance());
-
-        // Register routes exactly as App.php / index.php does
-        $this->router->get('/', [RenderHomeAction::class, '__invoke']);
-        $this->router->post('/', [RenderHomeAction::class, '__invoke']);
-        $this->router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke']);
-
-        // Dynamic Calculators Registration
-        foreach ($this->routesConfig['calculators'] as $calc => $action) {
-            $this->router->get($calc, $action);
-            $this->router->post($calc, $action);
-            $this->router->redirect($calc . '.php', $calc);
-        }
-
-        // Dynamic Pages Registration
-        foreach ($this->routesConfig['pages'] as $uri => $action) {
-            $this->router->get($uri, $action);
-            $this->router->redirect($uri . '.php', $uri);
-        }
-
-        // Admin / Insight Routing
-        $this->router->get('/admin_insights', [AdminController::class, 'insights']);
-        $this->router->post('/admin_insights', [AdminController::class, 'insights']);
-        $this->router->redirect('/admin_insights.php', '/admin_insights');
-        $this->router->get('/log_insight', [AdminController::class, 'logInsight']);
-        $this->router->post('/log_insight', [AdminController::class, 'logInsight']);
-        $this->router->redirect('/log_insight.php', '/log_insight');
-
-        $this->router->get('/resources', [BlogController::class, 'index']);
-        $this->router->get('/resource', [BlogController::class, 'index']);
-        $this->router->get('/resource/{category}/{slug}', [BlogController::class, 'show']);
-
-        // Load Dynamic Redirects from JSON
-        $redirectsPath = __DIR__ . '/../../content/redirects.json';
-        if (file_exists($redirectsPath)) {
-            $redirectsData = json_decode(file_get_contents($redirectsPath), true);
-
-            if (isset($redirectsData['blog_redirects'])) {
-                foreach ($redirectsData['blog_redirects'] as $slug => $target) {
-                    if (strpos($target, '/') !== false) {
-                        $this->router->redirect("/resource/{$slug}", "/resource/{$target}");
-                    } else {
-                        $this->router->redirect("/resource/{$slug}", "/resource/{$target}/{$slug}");
-                    }
-                }
-            }
-
-            if (isset($redirectsData['stubs'])) {
-                foreach ($redirectsData['stubs'] as $old => $new) {
-                    $this->router->redirect($old, $new);
-                    $this->router->redirect($old . '.php', $new);
-                }
-            }
-        }
+        $app = new \Core\App();
+        $this->container = $app->boot();
+        $this->router = $app->getRouter();
     }
 
     /**
@@ -188,7 +136,7 @@ class RouterIntegrityTest extends TestCase
     public function testSitemapIntegrity(): void
     {
         ob_start();
-        $controller = \Core\Container::getInstance()->get(\Controllers\SitemapController::class);
+        $controller = $this->container->get(\Controllers\SitemapController::class);
         $response = $controller->index();
         $response->send();
         $xmlContent = ob_get_clean();
@@ -211,7 +159,9 @@ class RouterIntegrityTest extends TestCase
         $routes = $this->router->getRoutes()['GET'] ?? [];
         $ignoredRoutes = [
             '/admin_insights',
+            '/admin_insights/migrate',
             '/log_insight',
+            '/sitemap.xml',
             '/resource', // Generic fallback redirect/canonical checks
             '/resource/{category}/{slug}' // General parameter matching
         ];
@@ -255,7 +205,9 @@ class RouterIntegrityTest extends TestCase
      */
     public function testBlogRepositoryMatchesMarkdownFiles(): void
     {
-        $allPosts = (new \Core\BlogRepository(new \Core\ContentManager()))->getAllPosts();
+        /** @var \Core\BlogRepository $blogRepository */
+        $blogRepository = $this->container->get(\Core\BlogRepository::class);
+        $allPosts = $blogRepository->getAllPosts();
         $repoSlugs = array_map(function ($post) {
             return basename($post['href']);
         }, $allPosts);

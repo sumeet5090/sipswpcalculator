@@ -57,7 +57,7 @@ class GuideRenderer
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            return ErrorController::handle404();
+            return ErrorController::handle404($this->viewRenderer);
         }
 
         $meta = $content['metadata'];
@@ -106,7 +106,7 @@ class GuideRenderer
             'inflation'   => $initialInputs->getInflation(),
         ];
 
-        $content_html = $content['body'];
+        $content_html = $content['html'];
         $content_metadata = $meta;
         $active_page = $slug;
         $show_lumpsum = ($calculator_type === 'lumpsum');

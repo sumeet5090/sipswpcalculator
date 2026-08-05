@@ -19,9 +19,9 @@ class ViewRenderer
 
     public function __construct(
         SessionManager $sessionManager,
+        ViteHelper $viteHelper,
         string $env = 'development',
-        string $appUrl = 'https://sipswpcalculator.com',
-        ?ViteHelper $viteHelper = null
+        string $appUrl = 'https://sipswpcalculator.com'
     ) {
         $this->sessionManager = $sessionManager;
         $isProd = ($env === 'production');
@@ -52,7 +52,7 @@ class ViewRenderer
             return is_array($array) ? array_values($array) : $array;
         }));
 
-        $vite = $viteHelper ?? new ViteHelper($env);
+        $vite = $viteHelper;
         $this->twig->addFunction(new \Twig\TwigFunction('vite_asset', [$vite, 'asset']));
         $this->twig->addFunction(new \Twig\TwigFunction('vite_client', [$vite, 'client'], ['is_safe' => ['html']]));
         $this->twig->addFunction(new \Twig\TwigFunction('vite_css', [$vite, 'css'], ['is_safe' => ['html']]));

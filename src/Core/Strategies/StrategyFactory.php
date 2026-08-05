@@ -8,6 +8,15 @@ use Services\ConfigService;
 
 class StrategyFactory
 {
+    private const STRATEGY_MAP = [
+        'sip-calculator'            => SipStrategy::class,
+        'swp-calculator'            => SwpStrategy::class,
+        'sip-step-up-calculator'    => SipStrategy::class,
+        'lumpsum-calculator'        => LumpsumStrategy::class,
+        'retirement-calculator'     => ComboStrategy::class,
+        'my-first-crore-calculator' => TargetCorpusStrategy::class,
+    ];
+
     private ConfigService $configService;
 
     public function __construct(ConfigService $configService)
@@ -17,27 +26,9 @@ class StrategyFactory
 
     public function create(string $slug): CalculatorStrategyInterface
     {
-        if (strpos($slug, 'lumpsum') !== false) {
-            return new LumpsumStrategy($this->configService);
-        }
+        $key = ltrim($slug, '/');
+        $strategyClass = self::STRATEGY_MAP[$key] ?? SipStrategy::class;
 
-        if (strpos($slug, 'crore') !== false) {
-            return new TargetCorpusStrategy($this->configService);
-        }
-
-        if (strpos($slug, 'retirement') !== false) {
-            return new ComboStrategy($this->configService);
-        }
-
-        if (strpos($slug, 'sip') !== false && strpos($slug, 'swp') === false) {
-            return new SipStrategy($this->configService);
-        }
-
-        if (strpos($slug, 'swp') !== false) {
-            return new SwpStrategy($this->configService);
-        }
-
-        // Default fallback to SIP
-        return new SipStrategy($this->configService);
+        return new $strategyClass($this->configService);
     }
 }

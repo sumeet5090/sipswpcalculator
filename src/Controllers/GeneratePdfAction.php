@@ -92,9 +92,10 @@ class GeneratePdfAction
             $inputs['swp_years'] = max(0, min(50, (int) ($post['swp_years'] ?? 0)));
             $inputs['swp_rate'] = max(0.1, min(30, (float) ($post['swp_rate'] ?? 8)));
 
-            if (isset($_FILES['advisorLogo']) && $_FILES['advisorLogo']['error'] === UPLOAD_ERR_OK) {
-                $tmp_name = $_FILES['advisorLogo']['tmp_name'];
-                $file_size = $_FILES['advisorLogo']['size'];
+            $logoFile = $request->files('advisorLogo');
+            if ($logoFile !== null && ($logoFile['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
+                $tmp_name = $logoFile['tmp_name'];
+                $file_size = $logoFile['size'];
 
                 if ($file_size > 2 * 1024 * 1024) {
                     throw new \RuntimeException('Logo file too large. Maximum 2MB allowed.');

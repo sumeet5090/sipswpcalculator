@@ -11,7 +11,18 @@ $_ENV['DB_PATH'] = $testDb;
 
 // Run migrations on the test database before running tests
 try {
-    $pdo = \Core\DatabaseManager::getConnection();
+    $dbPath = getenv('DB_PATH') ?: __DIR__ . '/../database/database.test.sqlite';
+    $dir = dirname($dbPath);
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0775, true);
+    }
+    if (!file_exists($dbPath)) {
+        @touch($dbPath);
+    }
+    $pdo = new \PDO('sqlite:' . $dbPath, null, null, [
+        \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+        \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+    ]);
     $migrator = new \Core\DatabaseMigrator($pdo);
     $migrator->migrate();
 } catch (\Throwable $e) {

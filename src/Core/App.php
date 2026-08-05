@@ -26,9 +26,29 @@ class App
 
     public function __construct()
     {
-        $this->container = Container::getInstance();
+        $this->container = new Container();
         $this->router = new Router($this->container);
         $this->routesConfig = require __DIR__ . '/Config/routes.php';
+    }
+
+    /**
+     * Bootstrap dependencies and routes without dispatching.
+     */
+    public function boot(): Container
+    {
+        $this->registerDependencies();
+        $this->registerRoutes();
+        return $this->container;
+    }
+
+    public function getContainer(): Container
+    {
+        return $this->container;
+    }
+
+    public function getRouter(): Router
+    {
+        return $this->router;
     }
 
     /**
@@ -38,8 +58,7 @@ class App
     {
         $request = $request ?? Request::createFromGlobals();
 
-        $this->registerDependencies();
-        $this->registerRoutes();
+        $this->boot();
 
         /** @var \Services\SessionManager $sessionManager */
         $sessionManager = $this->container->get(\Services\SessionManager::class);
@@ -93,9 +112,9 @@ class App
         $this->container->singleton(ViewRenderer::class, function (Container $c) {
             return new ViewRenderer(
                 $c->get(\Services\SessionManager::class),
+                $c->get(ViteHelper::class),
                 (string) Env::get('ENVIRONMENT', 'development'),
-                (string) Env::get('APP_URL', 'https://sipswpcalculator.com'),
-                $c->get(ViteHelper::class)
+                (string) Env::get('APP_URL', 'https://sipswpcalculator.com')
             );
         });
 
@@ -129,7 +148,7 @@ class App
                 $c->get(InsightRepository::class),
                 $c->get(AnonymizedInsightLogger::class),
                 $c->get(AdminAuthService::class),
-                new AdminDashboardPresenter(),
+                $c->get(AdminDashboardPresenter::class),
                 $c->get(DatabaseMigrator::class),
                 $c->get(\Services\RateLimiter::class),
                 $c->get(ViewRenderer::class)
@@ -142,7 +161,7 @@ class App
                 $c->get(\Services\ConfigService::class),
                 $c->get(\Services\CsvExportService::class),
                 $c->get(FaqRepository::class),
-                new InvestmentCalculator(),
+                $c->get(InvestmentCalculator::class),
                 $c->get(\Services\SessionManager::class),
                 $c->get(ViewRenderer::class)
             );
@@ -172,7 +191,18 @@ class App
         });
 
         $this->container->singleton(\PDO::class, function () {
-            return DatabaseManager::getConnection();
+            $dbPath = (string) Env::get('DB_PATH', __DIR__ . '/../../database/database.sqlite');
+            $dir = dirname($dbPath);
+            if (!file_exists($dir) && !mkdir($dir, 0775, true) && !is_dir($dir)) {
+                throw new \RuntimeException("Failed to create database directory: {$dir}");
+            }
+            if (!file_exists($dbPath) && touch($dbPath) === false) {
+                throw new \RuntimeException("Failed to create database file: {$dbPath}");
+            }
+            return new \PDO('sqlite:' . $dbPath, null, null, [
+                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+            ]);
         });
 
         $this->container->singleton(InsightRepository::class, function (Container $c) {

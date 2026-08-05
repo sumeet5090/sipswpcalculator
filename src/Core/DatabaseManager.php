@@ -8,7 +8,7 @@ use PDO;
 
 /**
  * DatabaseManager
- * Centralized service to establish SQLite database connection, resolve paths, and ensure directory/file exist.
+ * @deprecated Database connection creation is now handled at the DI boundary in App.php.
  */
 class DatabaseManager
 {

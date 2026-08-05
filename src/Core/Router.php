@@ -40,8 +40,6 @@ class Router
         $uri = $request->getUri();
         $method = $request->getMethod();
 
-        error_log("Dispatching: $method $uri");
-
         if (array_key_exists($uri, $this->redirects)) {
             return Response::redirect($this->redirects[$uri], 301);
         }

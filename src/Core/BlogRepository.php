@@ -45,10 +45,12 @@ class BlogRepository
         $contentDir = __DIR__ . '/../../content/blog';
         $posts = [];
 
-        $categoryList = array_filter(array_map(fn($c) => $c['id'] ?? $c['slug'] ?? '', $this->getCategories()));
-        if (empty($categoryList)) {
-            $categoryList = ['growth', 'retirement', 'comparison'];
+        $categories = $this->getCategories();
+        $categoryList = [];
+        foreach ($categories as $key => $cat) {
+            $categoryList[] = is_string($key) && !is_numeric($key) ? $key : ($cat['id'] ?? $cat['slug'] ?? '');
         }
+        $categoryList = array_filter($categoryList);
 
         foreach ($categoryList as $cat) {
             $dir = $contentDir . '/' . $cat;

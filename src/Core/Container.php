@@ -17,32 +17,13 @@ class Container implements ContainerInterface
 {
     private array $bindings = [];
     private array $instances = [];
-    private static ?Container $instance = null;
-
-    /**
-     * Get the globally registered container instance (Singleton behavior for the container itself).
-     */
-    public static function getInstance(): self
-    {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-
-    /**
-     * Set the global container instance.
-     */
-    public static function setInstance(?Container $container): void
-    {
-        self::$instance = $container;
-    }
 
     /**
      * Bind a key (interface/class name) to a resolver callback or value.
      */
     public function bind(string $key, callable|object|string $resolver): void
     {
+        $key = ltrim($key, '\\');
         $this->bindings[$key] = $resolver;
     }
 
@@ -51,6 +32,7 @@ class Container implements ContainerInterface
      */
     public function singleton(string $key, callable|object|string $resolver): void
     {
+        $key = ltrim($key, '\\');
         $this->bindings[$key] = function (self $container) use ($resolver, $key) {
             if (!isset($container->instances[$key])) {
                 $container->instances[$key] = is_callable($resolver) ? $resolver($container) : $resolver;
@@ -64,6 +46,7 @@ class Container implements ContainerInterface
      */
     public function has(string $id): bool
     {
+        $id = ltrim($id, '\\');
         return isset($this->instances[$id]) || isset($this->bindings[$id]) || class_exists($id);
     }
 
@@ -75,6 +58,7 @@ class Container implements ContainerInterface
      */
     public function get(string $id): mixed
     {
+        $id = ltrim($id, '\\');
         if (isset($this->instances[$id])) {
             return $this->instances[$id];
         }
@@ -100,6 +84,7 @@ class Container implements ContainerInterface
      */
     public function resolve(string $class): object
     {
+        $class = ltrim($class, '\\');
         if (!class_exists($class)) {
             throw new NotFoundException("Class {$class} does not exist.");
         }

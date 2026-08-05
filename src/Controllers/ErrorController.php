@@ -24,12 +24,22 @@ class ErrorController
         return Response::html($html, 404);
     }
 
+    /**
+     * @param \Throwable $e
+     * @param ViewRenderer|null $viewRenderer
+     * @return Response
+     *
+     * NOTE: Env::get('ENVIRONMENT') is intentionally called here.
+     * This method serves as the last-resort exception handler, invoked before or
+     * after DI resolution fails. Injecting $env via constructor is not possible
+     * for a static fallback handler. This is a documented architectural exception.
+     */
     public static function handle500(\Throwable $e, ?ViewRenderer $viewRenderer = null): Response
     {
         error_log("Global 500 Error: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine());
 
-        $debug = Env::get('ENVIRONMENT', 'development') === 'development';
-        $errorMessage = $debug ? $e->getMessage() : 'An unexpected error occurred.';
+        $isDebug = (Env::get('ENVIRONMENT', 'production') === 'development');
+        $errorMessage = $isDebug ? $e->getMessage() : 'An unexpected error occurred.';
 
         $html = $viewRenderer
             ? $viewRenderer->render('pages/500', [

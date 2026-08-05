@@ -22,14 +22,6 @@ class RenderGuideAction
         $uri = $request->getUri();
         $slug = ltrim($uri, '/');
 
-        // Look up categories and config
-        $routesConfig = require __DIR__ . '/../Core/Config/routes.php';
-        $calcConfig = $routesConfig['calculators']['/' . $slug] ?? null;
-
-        if (!$calcConfig) {
-            return ErrorController::handle404();
-        }
-
         return $this->guideRenderer->render($slug);
     }
 }

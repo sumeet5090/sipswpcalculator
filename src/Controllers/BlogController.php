@@ -77,7 +77,7 @@ class BlogController
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            return ErrorController::handle404();
+            return ErrorController::handle404($this->viewRenderer);
         }
 
         $post_metadata = $this->blogRepository->getPostBySlug($category, $slug);
