@@ -101,11 +101,8 @@ class BlogController
             }
         }
 
-        // Derive real dateModified from markdown file mtime
-        $mdFile = __DIR__ . '/../../content/blog/' . $category . '/' . $slug . '.md';
-        $dateModified = file_exists($mdFile)
-            ? date('Y-m-d', filemtime($mdFile))
-            : $datePublished;
+        // Derive real dateModified from markdown file mtime via repository
+        $dateModified = $this->blogRepository->getPostModifiedDate($category, $slug, $datePublished);
 
         $page_config['additional_head'] = $this->schemaFactory->generateForPage(
             $category . '/' . $slug,
@@ -113,7 +110,6 @@ class BlogController
             $page_config,
             $datePublished,
             [],
-            null,
             $breadcrumbs,
             $this->siteConfig->getUrl('/resource/' . $category . '/' . $slug)
         );

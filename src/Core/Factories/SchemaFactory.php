@@ -6,7 +6,6 @@ namespace Core\Factories;
 
 use Core\SchemaHelper;
 use Core\SiteConfig;
-use Core\Strategies\CalculatorStrategyInterface;
 
 class SchemaFactory
 {
@@ -28,7 +27,6 @@ class SchemaFactory
         array $page_config,
         string $publishedDate,
         array $faqs = [],
-        ?CalculatorStrategyInterface $strategy = null,
         array $customBreadcrumbs = [],
         string $customUrl = ''
     ): string {

@@ -76,10 +76,7 @@ class RenderHomeAction
         $homeFaqs = $this->faqRepository->getByTag('home');
         $calcConfig = $this->configService->getCalculatorDefaults();
 
-        $homeTemplatePath = __DIR__ . '/../Views/calculators/home.twig';
-        $siteModified = file_exists($homeTemplatePath)
-            ? date('Y-m-d', filemtime($homeTemplatePath))
-            : date('Y-m-d');
+        $siteModified = $this->viewRenderer->getTemplateModifiedDate('calculators/home');
 
         return Response::html($this->viewRenderer->render('calculators/home', [
             'active_page'         => 'index.php',

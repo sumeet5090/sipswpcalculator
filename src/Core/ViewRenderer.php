@@ -78,4 +78,17 @@ class ViewRenderer
             throw new \RuntimeException("Twig rendering failed: " . $e->getMessage(), 0, $e);
         }
     }
+
+    /**
+     * Get the modification date of a view template file.
+     */
+    public function getTemplateModifiedDate(string $view, ?string $fallbackDate = null): string
+    {
+        if (!str_ends_with($view, '.twig')) {
+            $view .= '.twig';
+        }
+        $filePath = __DIR__ . '/../Views/' . ltrim($view, '/');
+        $fallback = $fallbackDate ?? date('Y-m-d');
+        return file_exists($filePath) ? date('Y-m-d', filemtime($filePath)) : $fallback;
+    }
 }

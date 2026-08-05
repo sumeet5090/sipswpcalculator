@@ -72,10 +72,7 @@ class BlogRepository
 
                 $meta = $content['metadata'];
 
-                // Calculate dynamic read time: count body words and divide by average reading speed (200 wpm)
-                $wordCount = str_word_count(strip_tags($content['html']));
-                $readTimeVal = (int)ceil($wordCount / 200);
-                $readTime = $readTimeVal . ' min';
+                $readTime = $this->calculateReadTime($content['html']);
 
                 $posts[] = [
                     'category' => $cat,
@@ -118,9 +115,7 @@ class BlogRepository
         }
 
         $meta = $content['metadata'];
-        $wordCount = str_word_count(strip_tags($content['html']));
-        $readTimeVal = (int) ceil($wordCount / 200);
-        $readTime = $readTimeVal . ' min';
+        $readTime = $this->calculateReadTime($content['html']);
 
         return [
             'category' => $category,
@@ -134,5 +129,24 @@ class BlogRepository
             'read_time' => $readTime,
             'date' => $meta['date'] ?? 'March 2026'
         ];
+    }
+
+    /**
+     * Calculate dynamic read time string based on HTML content word count.
+     */
+    private function calculateReadTime(string $htmlContent): string
+    {
+        $wordCount = str_word_count(strip_tags($htmlContent));
+        $readTimeVal = (int) ceil($wordCount / 200);
+        return $readTimeVal . ' min';
+    }
+
+    /**
+     * Get the last modification date of a blog post file.
+     */
+    public function getPostModifiedDate(string $category, string $slug, string $fallbackDate = '2026-03-01'): string
+    {
+        $mdFile = __DIR__ . '/../../content/blog/' . $category . '/' . $slug . '.md';
+        return file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $fallbackDate;
     }
 }

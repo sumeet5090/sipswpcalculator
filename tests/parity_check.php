@@ -81,7 +81,7 @@ foreach ($testCases as $index => $inputs) {
         'swp_years'      => $inputs['swp_years'],
         'lumpsum'        => $inputs['lumpsum'],
         'swp_rate'       => $inputs['swp_rate']
-    ], new \Services\ConfigService());
+    ], new \Services\ConfigService(__DIR__ . '/../content/calculator_defaults.json'));
 
     $phpCalc = new \Core\InvestmentCalculator();
     $phpResults = $phpCalc->calculate($dto);
@@ -137,7 +137,9 @@ foreach ($testCases as $index => $inputs) {
             'annual_withdrawal',
             'cumulative_withdrawals',
             'interest',
-            'combined_total'
+            'combined_total',
+            'ltcg_tax',
+            'post_tax_total'
         ];
 
         foreach ($fields as $field) {

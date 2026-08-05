@@ -10,27 +10,31 @@ namespace Services;
  */
 class ConfigService
 {
-    private array $calculatorDefaults;
+    private ?array $calculatorDefaults = null;
+    private string $configPath;
 
-    public function __construct(?string $customConfigPath = null)
+    public function __construct(string $configPath)
     {
-        $jsonPath = $customConfigPath ?? __DIR__ . '/../../content/calculator_defaults.json';
-        if (!file_exists($jsonPath)) {
-            throw new \RuntimeException("Configuration file missing at: {$jsonPath}");
-        }
-
-        $content = file_get_contents($jsonPath);
-        $decoded = json_decode($content, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
-            throw new \RuntimeException("Failed to parse configuration file: " . json_last_error_msg());
-        }
-
-        $this->calculatorDefaults = $decoded;
+        $this->configPath = $configPath;
     }
 
     public function getCalculatorDefaults(): array
     {
+        if ($this->calculatorDefaults === null) {
+            if (!file_exists($this->configPath)) {
+                throw new \RuntimeException("Configuration file missing at: {$this->configPath}");
+            }
+
+            $content = file_get_contents($this->configPath);
+            $decoded = json_decode($content, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
+                throw new \RuntimeException("Failed to parse configuration file: " . json_last_error_msg());
+            }
+
+            $this->calculatorDefaults = $decoded;
+        }
+
         return $this->calculatorDefaults;
     }
 }

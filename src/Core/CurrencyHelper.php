@@ -30,7 +30,7 @@ class CurrencyHelper
         } else {
             $lastThree = substr($money, -3);
             $restUnits = substr($money, 0, -3);
-            $restUnits = (strlen($restUnits) % 2 == 1) ? "0" . $restUnits : $restUnits;
+            $restUnits = (strlen($restUnits) % 2 === 1) ? "0" . $restUnits : $restUnits;
 
             $firstPart = '';
             $exploded = str_split($restUnits, 2);

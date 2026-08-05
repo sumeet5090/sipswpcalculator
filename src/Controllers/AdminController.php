@@ -79,15 +79,7 @@ class AdminController
         }
 
         // 4. Time Range Filter Config
-        $time_ranges = [
-            '24h' => ['label' => '24 Hours',   'interval' => '-1 day',   'unit' => 'hour', 'cte_start' => '-23 hours'],
-            '48h' => ['label' => '48 Hours',   'interval' => '-2 days',  'unit' => 'hour', 'cte_start' => '-47 hours'],
-            '72h' => ['label' => '72 Hours',   'interval' => '-3 days',  'unit' => 'hour', 'cte_start' => '-71 hours'],
-            '1w'  => ['label' => '1 Week',     'interval' => '-7 days',  'unit' => 'day',  'cte_start' => '-6 days'],
-            '1m'  => ['label' => '1 Month',    'interval' => '-30 days', 'unit' => 'day',  'cte_start' => '-29 days'],
-            '6m'  => ['label' => '6 Months',   'interval' => '-180 days','unit' => 'day',  'cte_start' => '-179 days'],
-            '1y'  => ['label' => '1 Year',     'interval' => '-365 days','unit' => 'day',  'cte_start' => '-364 days'],
-        ];
+        $time_ranges = $this->getTimeRanges();
 
         $current_range_key = (string) $request->get('range', '24h');
         if (!isset($time_ranges[$current_range_key])) {
@@ -123,14 +115,14 @@ class AdminController
             return new Response('Rate limit exceeded', 429);
         }
 
-        $inputJSON = file_get_contents('php://input');
-        if (strlen($inputJSON) > 65536) { // 64KB limit
+        $rawBody = $request->getRawBody();
+        if (strlen($rawBody) > 65536) { // 64KB limit
             return new Response('Payload Too Large', 413);
         }
 
-        $data = json_decode($inputJSON, true);
+        $data = $request->getJsonBody();
 
-        if (!is_array($data) || !isset($data['calc_type'], $data['amount'], $data['duration'])) {
+        if ($data === null || !isset($data['calc_type'], $data['amount'], $data['duration'])) {
             return new Response('Invalid payload', 400);
         }
 
@@ -159,5 +151,18 @@ class AdminController
         } catch (\Throwable $e) {
             return Response::json(['status' => 'error', 'message' => 'Migration failed: ' . $e->getMessage()], 500);
         }
+    }
+
+    private function getTimeRanges(): array
+    {
+        return [
+            '24h' => ['label' => '24 Hours',   'interval' => '-1 day',   'unit' => 'hour', 'cte_start' => '-23 hours'],
+            '48h' => ['label' => '48 Hours',   'interval' => '-2 days',  'unit' => 'hour', 'cte_start' => '-47 hours'],
+            '72h' => ['label' => '72 Hours',   'interval' => '-3 days',  'unit' => 'hour', 'cte_start' => '-71 hours'],
+            '1w'  => ['label' => '1 Week',     'interval' => '-7 days',  'unit' => 'day',  'cte_start' => '-6 days'],
+            '1m'  => ['label' => '1 Month',    'interval' => '-30 days', 'unit' => 'day',  'cte_start' => '-29 days'],
+            '6m'  => ['label' => '6 Months',   'interval' => '-180 days','unit' => 'day',  'cte_start' => '-179 days'],
+            '1y'  => ['label' => '1 Year',     'interval' => '-365 days','unit' => 'day',  'cte_start' => '-364 days'],
+        ];
     }
 }

@@ -9,12 +9,17 @@ use Core\InvestmentInputs;
 
 class InvestmentInputsTest extends TestCase
 {
+    private function getConfig(): \Services\ConfigService
+    {
+        return new \Services\ConfigService(__DIR__ . '/../../content/calculator_defaults.json');
+    }
+
     /**
      * Test instantiation from request with empty data defaults.
      */
     public function testDefaultInputs(): void
     {
-        $config = new \Services\ConfigService();
+        $config = $this->getConfig();
         $inputs = InvestmentInputs::fromRequest([], $config);
 
         $this->assertEquals(10000.0, $inputs->getSip());
@@ -47,7 +52,7 @@ class InvestmentInputsTest extends TestCase
             'swp_rate' => 7.5
         ];
 
-        $inputs = InvestmentInputs::fromRequest($data, new \Services\ConfigService());
+        $inputs = InvestmentInputs::fromRequest($data, $this->getConfig());
 
         $this->assertEquals(25000.0, $inputs->getSip());
         $this->assertEquals(15, $inputs->getYears());
@@ -78,7 +83,7 @@ class InvestmentInputsTest extends TestCase
             'swp_rate' => 45.0       // Max is 30
         ];
 
-        $inputs = InvestmentInputs::fromRequest($data, new \Services\ConfigService());
+        $inputs = InvestmentInputs::fromRequest($data, $this->getConfig());
 
         $this->assertEquals(1000000.0, $inputs->getSip());
         $this->assertEquals(50, $inputs->getYears());
@@ -108,7 +113,7 @@ class InvestmentInputsTest extends TestCase
             'swp_rate' => -2.0       // Min is 0.1
         ];
 
-        $inputs = InvestmentInputs::fromRequest($data, new \Services\ConfigService());
+        $inputs = InvestmentInputs::fromRequest($data, $this->getConfig());
 
         $this->assertEquals(500.0, $inputs->getSip());
         $this->assertEquals(1, $inputs->getYears());
@@ -139,7 +144,7 @@ class InvestmentInputsTest extends TestCase
             'swp_rate' => '6.75'
         ];
 
-        $inputs = InvestmentInputs::fromRequest($data, new \Services\ConfigService());
+        $inputs = InvestmentInputs::fromRequest($data, $this->getConfig());
 
         $this->assertEquals(15000.0, $inputs->getSip());
         $this->assertEquals(12, $inputs->getYears());

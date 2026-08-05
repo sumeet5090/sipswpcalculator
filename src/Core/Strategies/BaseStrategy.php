@@ -20,9 +20,4 @@ abstract class BaseStrategy implements CalculatorStrategyInterface
     {
         return InvestmentInputs::fromRequest([], $this->configService);
     }
-
-    public function getCorpus(InvestmentInputs $inputs): float
-    {
-        return 0.0;
-    }
 }

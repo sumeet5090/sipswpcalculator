@@ -9,7 +9,7 @@
             "swp-calculator"
         ],
         "q": "What is the difference between SIP and SWP?",
-        "a": "A Systematic Investment Plan (SIP) is a method to invest a fixed amount regularly into mutual funds for wealth accumulation. A Systematic Withdrawal Plan (SWP) is the opposite: it allows you to withdraw a fixed amount regularly from your accumulated mutual fund corpus to generate a steady income stream, typically during retirement."
+        "a": "A Systematic Investment Plan (SIP) is a method to invest a fixed amount regularly into mutual funds for wealth accumulation during your working years. A Systematic Withdrawal Plan (SWP) is the reverse mechanism: it allows you to redeem a fixed amount regularly from your accumulated mutual fund corpus to generate a predictable monthly income stream, typically during retirement."
     },
     {
         "id": "basics-swp-vs-fd",
@@ -20,18 +20,69 @@
             "swp-calculator"
         ],
         "q": "Is SWP better than a Fixed Deposit (FD) for regular income?",
-        "a": "Yes, SWPs are generally much more tax-efficient than FDs in India. FD interest is taxed fully at your income tax slab rate every year. In contrast, SWP withdrawals are not taxed as interest; only the capital gains portion of the withdrawn amount is subject to tax (LTCG at 12.5% or STCG at 20% for equity), which results in a significantly higher post-tax yield."
+        "a": "Yes, SWPs are generally far more tax-efficient than Bank Fixed Deposits in India. Entire FD interest payouts are taxed annually at your marginal income tax slab rate (up to 30%+ surcharge). In contrast, SWP withdrawals are treated as capital redemptions where only the capital gains portion of the withdrawn sum is taxed (LTCG at 12.5% above ₹1.25 Lakh exemption for equity funds). This delivers significantly higher net post-tax cash flows."
     },
     {
-        "id": "strategies-swp-rate",
-        "category": "strategies",
+        "id": "basics-sip-vs-lumpsum",
+        "category": "basics",
         "tags": [
             "home",
             "faq-page",
-            "swp-calculator"
+            "sip-calculator",
+            "lumpsum-calculator"
         ],
-        "q": "Why should I use a separate Expected Return Rate for the SWP phase?",
-        "a": "During the SIP (accumulation) phase, you typically invest in equity mutual funds for higher growth (expecting 12-15% returns). However, during the SWP (withdrawal) phase, capital preservation is key to avoid sequence-of-returns risk. Most advisors recommend moving the corpus to safer hybrid, arbitrage, or debt schemes that typically return 7-9% p.a. Setting a separate SWP return rate gives you a much more realistic retirement projection."
+        "q": "Which is better: SIP or Lump Sum investment?",
+        "a": "Lump sum investing generates higher mathematical returns during strong, uninterrupted bull markets. However, SIPs are significantly safer for retail investors because they leverage Rupee Cost Averaging. SIPs automatically buy more units when market prices drop and fewer units when prices rise, protecting you from the psychological risk of poor market timing."
+    },
+    {
+        "id": "basics-min-sip-amount",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "sip-calculator"
+        ],
+        "q": "What is the minimum amount required to start a SIP in India?",
+        "a": "Most Asset Management Companies (AMCs) in India allow investors to start a SIP with as little as ₹500 or ₹100 per month. The key to long-term wealth creation is not the starting installment size, but the discipline of regular contributions and compounding duration."
+    },
+    {
+        "id": "basics-direct-vs-regular",
+        "category": "basics",
+        "tags": [
+            "home",
+            "faq-page",
+            "sip-calculator"
+        ],
+        "q": "What is the difference between Direct Plan and Regular Plan mutual funds?",
+        "a": "Direct Plans are purchased directly from the AMC or digital platforms without distributor commissions, resulting in a lower Total Expense Ratio (TER) and higher NAV. Regular Plans are bought through brokers or distributors who earn an ongoing commission (0.5%–1.5% p.a.) deducted from the fund's assets. Direct plans compound into 10%–15% more wealth over 20+ years."
+    },
+    {
+        "id": "basics-nav-cut-off-time",
+        "category": "basics",
+        "tags": [
+            "faq-page"
+        ],
+        "q": "How does the NAV cut-off time work for purchase and redemption in India?",
+        "a": "Per SEBI regulations, the standard cut-off time for liquid and debt schemes as well as equity schemes is 3:00 PM on business days. If your purchase payment or redemption request is processed before 3:00 PM, you receive the same day's closing NAV. Applications received after 3:00 PM get the next business day's closing NAV."
+    },
+    {
+        "id": "basics-swp-10-lakh",
+        "category": "basics",
+        "tags": [
+            "swp-calculator",
+            "retirement-calculator"
+        ],
+        "q": "How much monthly SWP income can I safely withdraw from a ₹10 Lakh corpus?",
+        "a": "Following the standard 4% safe withdrawal guideline, a safe SWP rate on a ₹10 Lakh corpus is approximately ₹40,000 per year (or about ₹3,333 per month). If you withdraw higher amounts (e.g., ₹8,000/month or 9.6% p.a.), you face a substantial risk of depleting your capital prematurely during market downturns."
+    },
+    {
+        "id": "basics-sip-and-swp-together",
+        "category": "basics",
+        "tags": [
+            "swp-calculator",
+            "sip-calculator"
+        ],
+        "q": "Can I execute a SIP and an SWP simultaneously?",
+        "a": "Yes, but it is best practice to execute them in separate fund schemes. For instance, you can run a monthly SIP in an equity mutual fund for long-term goal growth while simultaneously running an SWP from a debt or hybrid fund to meet current lifestyle expenses. Operating SIP and SWP within the same scheme creates unnecessary tax triggers and potential exit loads."
     },
     {
         "id": "strategies-stepup",
@@ -42,18 +93,19 @@
             "sip-calculator"
         ],
         "q": "How does an annual Step-Up SIP impact wealth creation?",
-        "a": "An annual step-up (increasing your monthly SIP by a fixed percentage like 10% every year) matches your salary growth and accelerates wealth compounding. Over 20 years, a 10% step-up SIP can more than double your final retirement corpus compared to a flat SIP."
+        "a": "A Step-Up (Top-Up) SIP automatically increases your monthly investment by a fixed percentage (e.g., 10% annually) to match salary increments. Over a 20-year investment horizon, a 10% annual Step-Up SIP can double your total accumulated retirement corpus compared to a flat SIP."
     },
     {
-        "id": "tax-swp-taxation-india",
-        "category": "tax",
+        "id": "strategies-swp-rate",
+        "category": "strategies",
         "tags": [
             "home",
             "faq-page",
-            "swp-calculator"
+            "swp-calculator",
+            "retirement-calculator"
         ],
-        "q": "Are SWP withdrawals taxable in India?",
-        "a": "Yes, but only on the capital gains portion of the withdrawal, not the principal. For equity mutual funds, long-term capital gains (LTCG) above ₹1.25 Lakh per financial year are taxed at 12.5% (holding period > 12 months), while short-term capital gains (STCG) are taxed at 20%. Debt fund withdrawals are taxed at standard income slab rates."
+        "q": "Why should I set a separate Expected Return Rate for the SWP phase?",
+        "a": "During the accumulation (SIP) phase, investors aggressively target equity growth (expecting 12%–15% p.a.). However, during the withdrawal (SWP) phase, capital preservation is vital to avoid sequence-of-returns risk. Wealth advisors recommend moving retirement capital into conservative hybrid, arbitrage, or debt funds returning 7%–9% p.a. Setting a lower SWP return rate ensures realistic income projections."
     },
     {
         "id": "strategies-immediate-swp",
@@ -61,38 +113,119 @@
         "tags": [
             "faq-page",
             "swp-calculator",
-            "sip-calculator"
+            "sip-calculator",
+            "retirement-calculator"
         ],
-        "q": "Can I start an SWP immediately after my SIP ends?",
-        "a": "Yes, absolutely. This is a common strategy for retirement planning. You accumulate a corpus using SIP during your working years and then switch to SWP to generate a monthly pension-like income post-retirement. Our calculator specifically models this seamless transition."
+        "q": "Can I transition from a SIP to an SWP upon retirement?",
+        "a": "Yes, this is the cornerstone of goal-based retirement planning. You systematically build capital via SIP during your working years, and upon retirement, switch the accumulated corpus into conservative yield funds to start an automated monthly SWP pension."
     },
     {
         "id": "strategies-stepup-detail",
         "category": "strategies",
         "tags": [
-            "faq-page"
+            "faq-page",
+            "sip-calculator",
+            "swp-calculator"
         ],
-        "q": "How does the \"Step-up\" feature work?",
-        "a": "A \"Step-up\" SIP means you increase your monthly investment amount by a certain percentage every year (e.g., matching your salary hikes). This exponentially boosts your final corpus. Similarly, a \"Step-up\" SWP means you increase your withdrawal amount annually to maintain your lifestyle against inflation."
+        "q": "How do Step-up SIP and Step-up SWP work?",
+        "a": "A Step-Up SIP increases your monthly contribution annually to match rising income. Conversely, a Step-Up SWP increases your monthly income withdrawal annually (e.g., by 6%–7%) to protect your purchasing power against lifestyle inflation."
     },
     {
-        "id": "strategies-safe-withdrawal",
+        "id": "strategies-rupee-cost-averaging",
         "category": "strategies",
         "tags": [
             "faq-page",
-            "swp-calculator"
+            "sip-calculator"
         ],
-        "q": "What is the 4% rule for SWP?",
-        "a": "The 4% rule (a safe withdrawal rate) suggests you can withdraw 4% of your total corpus in the first year of retirement and adjust it for inflation annually, and your money should last for 30+ years. For example, on a ₹1 Crore corpus, you would withdraw ₹4 Lakhs in the first year (or about ₹33,333/month). Our calculator lets you test this strategy with Indian inflation rates."
+        "q": "What is Rupee Cost Averaging and how does it protect SIP investors?",
+        "a": "Rupee Cost Averaging is an inherent benefit of fixed monthly SIPs. When market prices (NAV) fall, your fixed monthly installment automatically purchases more fund units. When NAV rises, you buy fewer units. Over time, this lowers your average cost per unit without requiring market timing."
     },
     {
-        "id": "basics-sip-vs-lumpsum",
-        "category": "basics",
+        "id": "strategies-stp-working",
+        "category": "strategies",
+        "tags": [
+            "faq-page",
+            "lumpsum-calculator"
+        ],
+        "q": "What is a Systematic Transfer Plan (STP) and when should I use it?",
+        "a": "An STP allows you to park a lump-sum amount in a safe liquid or debt fund and automatically transfer a fixed amount into an equity fund at regular intervals. This mitigates market timing risk on large windfalls, corporate bonuses, or property sale proceeds."
+    },
+    {
+        "id": "strategies-perpetual-sip",
+        "category": "strategies",
+        "tags": [
+            "faq-page",
+            "sip-calculator"
+        ],
+        "q": "What is a Perpetual SIP vs a fixed-tenure SIP?",
+        "a": "A Perpetual SIP is registered without selecting an explicit end date, running continuously until you submit a cancellation request. A fixed-tenure SIP automatically stops after a chosen duration (e.g., 5 or 10 years). Advisors recommend Perpetual SIPs to avoid unwanted breaks in compounding."
+    },
+    {
+        "id": "tax-swp-taxation-india",
+        "category": "tax",
+        "tags": [
+            "home",
+            "faq-page",
+            "swp-calculator",
+            "retirement-calculator"
+        ],
+        "q": "How are SWP withdrawals taxed under current Indian tax laws?",
+        "a": "SWP withdrawals from equity mutual funds are taxed only on the capital gains component of each installment. Long-Term Capital Gains (LTCG) above ₹1.25 Lakh per financial year are taxed at 12.5% (for holdings > 12 months). Short-Term Capital Gains (STCG) for holdings <= 12 months are taxed at 20%. For debt funds bought after April 1, 2023, gains are added to taxable income and taxed at your marginal slab rate."
+    },
+    {
+        "id": "tax-ltcg-exemption-limit",
+        "category": "tax",
+        "tags": [
+            "home",
+            "faq-page"
+        ],
+        "q": "How does the ₹1.25 Lakh annual LTCG tax exemption work in India?",
+        "a": "Under Section 112A of the Income Tax Act, aggregate long-term capital gains earned from equity shares and equity mutual funds up to ₹1.25 Lakh in a financial year are completely tax-free. Tax at 12.5% applies only on the net gains exceeding ₹1.25 Lakh."
+    },
+    {
+        "id": "tax-stcg-rate-equity",
+        "category": "tax",
         "tags": [
             "faq-page"
         ],
-        "q": "Which is better: SIP or Lump Sum?",
-        "a": "Lump sum is mathematically superior in a consistently rising market. However, SIP is significantly safer for most investors as it benefits from \"Cost Averaging.\" It allows you to buy more units when prices are low, which protects you from the risk of timing the market incorrectly."
+        "q": "What is the Short-Term Capital Gains (STCG) tax rate on equity mutual funds?",
+        "a": "Short-term capital gains realized on equity mutual funds (held for 12 months or less) are taxed at a flat rate of 20% (plus applicable surcharge and cess)."
+    },
+    {
+        "id": "tax-debt-fund-2023-rule",
+        "category": "tax",
+        "tags": [
+            "faq-page"
+        ],
+        "q": "How are Debt Mutual Funds taxed after the Finance Act 2023 changes?",
+        "a": "For specified debt mutual funds (with equity exposure not exceeding 35%) acquired on or after April 1, 2023, indexation benefits are removed. All gains, regardless of holding duration, are treated as short-term capital gains and taxed at the investor's marginal income tax slab rate."
+    },
+    {
+        "id": "tax-stamp-duty-mutual-funds",
+        "category": "tax",
+        "tags": [
+            "faq-page"
+        ],
+        "q": "What is Stamp Duty on mutual funds in India?",
+        "a": "A statutory stamp duty of 0.005% is levied on all mutual fund unit purchases, including lump sums, SIP installments, STP inward transfers, and dividend reinvestments."
+    },
+    {
+        "id": "tax-capital-loss-setoff",
+        "category": "tax",
+        "tags": [
+            "faq-page"
+        ],
+        "q": "Can capital losses from mutual funds be set off against capital gains?",
+        "a": "Yes. Short-Term Capital Losses (STCL) can be set off against both STCG and LTCG. Long-Term Capital Losses (LTCL) can only be set off against LTCG. Unadjusted losses can be carried forward for up to 8 assessment years provided your ITR is filed on time."
+    },
+    {
+        "id": "tax-idcw-taxation",
+        "category": "tax",
+        "tags": [
+            "faq-page"
+        ],
+        "q": "Are IDCW (Dividend) payouts from mutual funds taxable in India?",
+        "a": "Yes. Dividend payouts under the IDCW option are added to your total income and taxed at your applicable income tax slab rate. Additionally, AMCs deduct 10% TDS if aggregate dividend payouts exceed ₹5,000 in a financial year."
     },
     {
         "id": "tax-lose-money-sip",
@@ -101,27 +234,73 @@
             "faq-page",
             "sip-calculator"
         ],
-        "q": "Can I lose money in SIP?",
-        "a": "In the short term, yes. Since SIPs are market-linked, your portfolio value can fluctuate. However, the probability of negative returns decreases sharply the longer you stay invested. Historical data suggests that for periods longer than 7-10 years, the risk of loss in a diversified index fund is historically near zero."
+        "q": "Can an investor lose money in mutual fund SIPs?",
+        "a": "In short timeframes (1–3 years), equity market fluctuations can temporarily cause negative returns. However, holding diversified equity index or flexi-cap funds over 7–10+ years historically reduces the probability of negative returns to near zero."
     },
     {
-        "id": "basics-min-sip-amount",
-        "category": "basics",
+        "id": "retirement-4-percent-rule",
+        "category": "retirement",
+        "tags": [
+            "home",
+            "faq-page",
+            "swp-calculator",
+            "retirement-calculator"
+        ],
+        "q": "What is the 4% Rule and does it work in the Indian context?",
+        "a": "The 4% rule states that withdrawing 4% of your initial retirement portfolio in year one, adjusted annually for inflation, sustains wealth for 30+ years. In India, due to higher inflation (5%–6%), advisors recommend a initial withdrawal rate of 3.5%–4.0% combined with a hybrid asset allocation (50% equity / 50% debt)."
+    },
+    {
+        "id": "retirement-srr-explanation",
+        "category": "retirement",
         "tags": [
             "faq-page",
-            "sip-calculator"
+            "swp-calculator",
+            "retirement-calculator"
         ],
-        "q": "What is the minimum amount to start a SIP?",
-        "a": "Most mutual fund houses in India allow SIPs starting from as low as ₹500 per month. The key to wealth is not the size of the initial investment, but the consistency and duration of the compounding process."
+        "q": "What is Sequence of Returns Risk (SRR) in retirement planning?",
+        "a": "Sequence of Returns Risk is the hazard of experiencing severe market downturns during the initial years of retirement withdrawals. Selling equity units at depressed prices permanently depletes corpus longevity. It is mitigated by keeping 3–5 years of withdrawal capital in liquid/debt funds."
+    },
+    {
+        "id": "retirement-swp-vs-annuity",
+        "category": "retirement",
+        "tags": [
+            "faq-page",
+            "swp-calculator",
+            "retirement-calculator"
+        ],
+        "q": "Why is an SWP more tax-efficient than an Annuity plan post-retirement?",
+        "a": "Annuity payouts from pension plans are 100% taxable as regular income at slab rates, and the principal corpus remains locked. SWPs allow full capital control, higher flexibility, and taxation restricted solely to capital gains."
+    },
+    {
+        "id": "retirement-bucket-strategy",
+        "category": "retirement",
+        "tags": [
+            "faq-page",
+            "retirement-calculator"
+        ],
+        "q": "What is the Bucket Strategy for retirement asset allocation?",
+        "a": "The Bucket Strategy divides retirement capital into three distinct buckets: Bucket 1 (Cash/Liquid funds for 1-3 years of living expenses), Bucket 2 (Debt/Hybrid funds for 4-7 years), and Bucket 3 (Equity funds for long-term compounding beyond 8 years)."
+    },
+    {
+        "id": "retirement-corpus-duration",
+        "category": "retirement",
+        "tags": [
+            "faq-page",
+            "swp-calculator",
+            "retirement-calculator"
+        ],
+        "q": "How long will a ₹1 Crore retirement corpus last with an 8% annual SWP?",
+        "a": "If your portfolio yields 8% p.a. and you withdraw 8% annually without inflation adjustment, the corpus theoretically lasts indefinitely. However, if withdrawals step up by 6% annually for inflation, an 8% initial withdrawal rate will exhaust a ₹1 Crore corpus in roughly 15–18 years."
     },
     {
         "id": "selection-fund-criteria",
         "category": "selection",
         "tags": [
-            "faq-page"
+            "faq-page",
+            "sip-calculator"
         ],
-        "q": "How do I choose the right mutual fund for my SIP?",
-        "a": "Focus on three key factors: (1) Asset Allocation - Choose based on your risk tolerance; (2) Performance Consistency - Look at 5-10 year track records, not just last year; (3) Cost - Prefer Low Expense Ratio funds (Direct Index Funds) to maximize your returns."
+        "q": "How do I select the right mutual fund for long-term SIPs?",
+        "a": "Evaluate three critical parameters: (1) Performance Consistency over 5–10 years against benchmark indices; (2) Expense Ratio — prefer Direct Index Funds or low-TER active funds; and (3) Fund Manager stability and scheme AUM size."
     },
     {
         "id": "selection-sip-duration",
@@ -130,26 +309,52 @@
             "faq-page",
             "sip-calculator"
         ],
-        "q": "How long should I continue my SIP for best results?",
-        "a": "Compounding works best in the \"late stage.\" You will likely see more growth in years 15-20 than you did in years 1-15. Therefore, we recommend staying invested for at least 10-15 years to truly harness the power of compounding and market growth."
+        "q": "How long should I stay invested in a SIP for optimal returns?",
+        "a": "The true power of compounding accelerates during the final years of an investment cycle. Staying invested for at least 10 to 15 years allows wealth to grow exponentially while smoothing out short-term market cycles."
     },
     {
-        "id": "basics-swp-10-lakh",
-        "category": "basics",
+        "id": "selection-market-cap-categories",
+        "category": "selection",
         "tags": [
-            "swp-calculator"
+            "faq-page"
         ],
-        "q": "How much SWP can I get for 10 lakh?",
-        "a": "Following the 4% rule, a safe SWP withdrawal from a ₹10 Lakh corpus would be ₹40,000 per year, or about ₹3,333 per month. If you withdraw more (e.g., ₹8,000/month), you run a higher risk of depleting your capital prematurely, depending on the fund's returns."
+        "q": "What is the difference between Large Cap, Mid Cap, Small Cap, and Flexi Cap funds?",
+        "a": "Per SEBI guidelines: Large Cap funds invest at least 80% in top 100 stocks (stable, lower risk). Mid Cap funds invest 65%+ in 101st-250th stocks (moderate risk, higher growth). Small Cap funds invest 65%+ in stocks 251st onwards (high volatility, maximum growth potential). Flexi Cap funds invest across all market caps dynamically."
     },
     {
-        "id": "basics-sip-and-swp-together",
-        "category": "strategies",
+        "id": "selection-baf-explanation",
+        "category": "selection",
         "tags": [
-            "swp-calculator",
-            "sip-calculator"
+            "faq-page"
         ],
-        "q": "Can I do SIP and SWP together?",
-        "a": "Yes, you can run a SIP and an SWP simultaneously, but it's usually better to separate them into different funds. For example, you can have a SIP in an equity fund for long-term growth while running an SWP from a debt or hybrid fund for current income. Doing both in the same fund can trigger unnecessary capital gains taxes and exit loads."
+        "q": "What is a Balanced Advantage Fund (BAF) and when should I invest?",
+        "a": "BAFs (Dynamic Asset Allocation funds) automatically adjust equity exposure between 30% and 80% using valuation models (P/E, P/B, market sentiment). They are ideal for risk-averse investors seeking equity growth with downside protection."
+    },
+    {
+        "id": "selection-risk-metrics",
+        "category": "selection",
+        "tags": [
+            "faq-page"
+        ],
+        "q": "How do Sharpe Ratio, Sortino Ratio, and Alpha evaluate mutual fund risk?",
+        "a": "Alpha measures excess return generated over a benchmark index. Sharpe Ratio measures excess return per unit of total volatility. Sortino Ratio measures return relative strictly to downside risk. Higher values across all three metrics indicate superior risk-adjusted fund management."
+    },
+    {
+        "id": "selection-portfolio-overlap",
+        "category": "selection",
+        "tags": [
+            "faq-page"
+        ],
+        "q": "What is Portfolio Overlap and why should I check it before adding funds?",
+        "a": "Portfolio Overlap measures the percentage of identical stock holdings shared between two mutual funds. Holding multiple funds with high overlap (e.g., > 60%) creates false diversification and redundant stock exposure."
+    },
+    {
+        "id": "selection-index-vs-active",
+        "category": "selection",
+        "tags": [
+            "faq-page"
+        ],
+        "q": "Are low-cost Index Funds better than Actively Managed Equity Funds in India?",
+        "a": "In the Large Cap category, low-cost Nifty 50 and Sensex Index Funds consistently beat 75%+ of active fund managers post-expenses. In Mid Cap and Small Cap categories, active fund managers still generate positive Alpha over benchmark indices."
     }
 ]

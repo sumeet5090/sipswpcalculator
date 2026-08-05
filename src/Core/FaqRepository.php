@@ -6,17 +6,26 @@ namespace Core;
 
 class FaqRepository
 {
-    private array $faqs;
+    private ?array $faqs = null;
+    private string $jsonPath;
 
-    public function __construct(?string $jsonPath = null)
+    public function __construct(string $jsonPath)
     {
-        $path = $jsonPath ?? __DIR__ . '/../../content/faqs.json';
-        if (!file_exists($path)) {
+        $this->jsonPath = $jsonPath;
+    }
+
+    private function load(): void
+    {
+        if ($this->faqs !== null) {
+            return;
+        }
+
+        if (!file_exists($this->jsonPath)) {
             $this->faqs = [];
             return;
         }
 
-        $jsonContent = file_get_contents($path);
+        $jsonContent = file_get_contents($this->jsonPath);
         $decoded = json_decode($jsonContent, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -28,10 +37,25 @@ class FaqRepository
     }
 
     /**
+     * Get default FAQ categories metadata.
+     */
+    public function getFaqCategories(): array
+    {
+        return [
+            ['id' => 'basics', 'label' => 'Basics'],
+            ['id' => 'strategies', 'label' => 'Strategies'],
+            ['id' => 'tax', 'label' => 'Tax & Risk'],
+            ['id' => 'selection', 'label' => 'Selection'],
+            ['id' => 'retirement', 'label' => 'Retirement Planning'],
+        ];
+    }
+
+    /**
      * Get all FAQs.
      */
     public function getAll(): array
     {
+        $this->load();
         return $this->faqs;
     }
 
@@ -40,6 +64,7 @@ class FaqRepository
      */
     public function getByTag(string $tag): array
     {
+        $this->load();
         return array_values(array_filter($this->faqs, function (array $faq) use ($tag) {
             return in_array($tag, $faq['tags'] ?? [], true);
         }));
@@ -50,6 +75,7 @@ class FaqRepository
      */
     public function getByCategory(string $category): array
     {
+        $this->load();
         return array_values(array_filter($this->faqs, function (array $faq) use ($category) {
             return ($faq['category'] ?? '') === $category;
         }));

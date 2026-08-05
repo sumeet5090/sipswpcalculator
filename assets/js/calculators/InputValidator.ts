@@ -32,8 +32,8 @@ export class InputValidator {
                 const cfg = JSON.parse(stateEl.textContent);
                 this.constraints = this._mapConfig(cfg);
                 return;
-            } catch (e) {
-                console.warn('InputValidator: Failed to parse calculator-app-state Data Island. Using fallback.', e);
+            } catch {
+                // Fallback to static defaultsConfig silently
             }
         }
 

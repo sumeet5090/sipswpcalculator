@@ -15,7 +15,7 @@ class InvestmentCalculatorTest extends TestCase
      */
     private function createInputs(array $data): InvestmentInputs
     {
-        return InvestmentInputs::fromRequest($data, new \Services\ConfigService());
+        return InvestmentInputs::fromRequest($data, new \Services\ConfigService(__DIR__ . '/../../content/calculator_defaults.json'));
     }
 
     /**

@@ -11,12 +11,15 @@ class Request
     private array $server;
     private array $files;
 
-    public function __construct(array $get = [], array $post = [], array $server = [], array $files = [])
+    private ?string $rawBody;
+
+    public function __construct(array $get = [], array $post = [], array $server = [], array $files = [], ?string $rawBody = null)
     {
         $this->get = $get;
         $this->post = $post;
         $this->server = $server;
         $this->files = $files;
+        $this->rawBody = $rawBody;
     }
 
     public static function createFromGlobals(): self
@@ -67,5 +70,23 @@ class Request
     public function getParsedBody(): array
     {
         return $this->post;
+    }
+
+    public function getRawBody(): string
+    {
+        if ($this->rawBody === null) {
+            $this->rawBody = file_get_contents('php://input') ?: '';
+        }
+        return $this->rawBody;
+    }
+
+    public function getJsonBody(): ?array
+    {
+        $content = $this->getRawBody();
+        if (trim($content) === '') {
+            return null;
+        }
+        $decoded = json_decode($content, true);
+        return is_array($decoded) ? $decoded : null;
     }
 }

@@ -9,6 +9,7 @@ use PDO;
 /**
  * InsightRepository
  * Handles data aggregation and retrieval from the SQLite database for the admin dashboard.
+ * Refactored into modular query aggregators adhering to SRP.
  */
 class InsightRepository
 {
@@ -25,16 +26,28 @@ class InsightRepository
         $unit = $range['unit'] ?? 'day';
         $cteStart = $range['cte_start'] ?? '-29 days';
 
-        $where_clause = "WHERE created_at >= datetime('now', :interval)";
+        $whereClause = "WHERE created_at >= datetime('now', :interval)";
         $params = [':interval' => $interval];
 
+        $overview = $this->getOverviewMetrics($whereClause, $params);
+        $volume = $this->getVolumeSeries($unit, $cteStart, $interval);
+        $distributions = $this->getDistributionMetrics($whereClause, $params);
+        $engagement = $this->getEngagementMetrics($whereClause, $params, $overview['totalCalculations'], $overview['totalPdfDownloads']);
+
+        return array_merge($overview, [
+            'dailyVolume' => $volume,
+        ], $distributions, $engagement);
+    }
+
+    private function getOverviewMetrics(string $whereClause, array $params): array
+    {
         // 1. Total calculations in range
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause");
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause}");
         $stmt->execute($params);
         $totalInRange = (int) $stmt->fetchColumn();
 
         // 2. Average Step-Up % in range
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(step_up_pct), 0) FROM user_calculations $where_clause AND step_up_pct > 0");
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(step_up_pct), 0) FROM user_calculations {$whereClause} AND step_up_pct > 0");
         $stmt->execute($params);
         $avgStepUp = (float) $stmt->fetchColumn();
 
@@ -42,45 +55,46 @@ class InsightRepository
         $totalAllTime = (int) $this->pdo->query("SELECT COUNT(*) FROM user_calculations")->fetchColumn();
 
         // 4. Calculations breakdown by type
-        $stmt = $this->pdo->prepare("SELECT calc_type, COUNT(*) AS cnt FROM user_calculations $where_clause GROUP BY calc_type ORDER BY cnt DESC");
+        $stmt = $this->pdo->prepare("SELECT calc_type, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY calc_type ORDER BY cnt DESC");
         $stmt->execute($params);
         $calcTypeBreakdown = $stmt->fetchAll();
 
         // 5. PDF Downloads count and conversion rate
-        $totalPdfDownloads = 0;
-        $conversionRate = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND pdf_downloaded = 1");
-            $stmt->execute($params);
-            $totalPdfDownloads = (int) $stmt->fetchColumn();
-            $conversionRate = $totalInRange > 0 ? round(($totalPdfDownloads / $totalInRange) * 100, 1) : 0.0;
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (pdf_downloaded): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND pdf_downloaded = 1");
+        $stmt->execute($params);
+        $totalPdfDownloads = (int) $stmt->fetchColumn();
+        $conversionRate = $totalInRange > 0 ? round(($totalPdfDownloads / $totalInRange) * 100, 1) : 0.0;
 
         // 6. Top 10 Referrers in range
-        $topReferrers = [];
-        try {
-            $stmt = $this->pdo->prepare("
-                SELECT
-                    CASE
-                        WHEN referrer IS NULL OR referrer = '' THEN '(direct / unknown)'
-                        ELSE SUBSTR(referrer, 1, 80)
-                    END AS source,
-                    COUNT(*) AS cnt
-                FROM user_calculations
-                $where_clause
-                GROUP BY source
-                ORDER BY cnt DESC
-                LIMIT 10
-            ");
-            $stmt->execute($params);
-            $topReferrers = $stmt->fetchAll();
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (referrer): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("
+            SELECT
+                CASE
+                    WHEN referrer IS NULL OR referrer = '' THEN '(direct / unknown)'
+                    ELSE SUBSTR(referrer, 1, 80)
+                END AS source,
+                COUNT(*) AS cnt
+            FROM user_calculations
+            {$whereClause}
+            GROUP BY source
+            ORDER BY cnt DESC
+            LIMIT 10
+        ");
+        $stmt->execute($params);
+        $topReferrers = $stmt->fetchAll();
 
-        // 7. Chart: Daily/Hourly volume using recursive CTE for zero-filling
+        return [
+            'totalCalculations' => $totalInRange,
+            'avgStepUpPct' => $avgStepUp,
+            'totalAllTime' => $totalAllTime,
+            'calcTypeBreakdown' => $calcTypeBreakdown,
+            'totalPdfDownloads' => $totalPdfDownloads,
+            'conversionRate' => $conversionRate,
+            'topReferrers' => $topReferrers,
+        ];
+    }
+
+    private function getVolumeSeries(string $unit, string $cteStart, string $interval): array
+    {
         if ($unit === 'hour') {
             $stmt = $this->pdo->prepare("
                 WITH RECURSIVE hours(tp) AS (
@@ -96,10 +110,7 @@ class InsightRepository
                 GROUP BY h.tp
                 ORDER BY h.tp ASC
             ");
-            $stmt->execute([
-                ':cte_start' => $cteStart,
-                ':interval' => $interval
-            ]);
+            $stmt->execute([':cte_start' => $cteStart, ':interval' => $interval]);
         } else {
             $stmt = $this->pdo->prepare("
                 WITH RECURSIVE days(dp) AS (
@@ -115,29 +126,30 @@ class InsightRepository
                 GROUP BY d.dp
                 ORDER BY d.dp ASC
             ");
-            $stmt->execute([
-                ':cte_start' => $cteStart,
-                ':interval' => $interval
-            ]);
+            $stmt->execute([':cte_start' => $cteStart, ':interval' => $interval]);
         }
-        $dailyVolume = $stmt->fetchAll();
 
-        // 8. Chart: Currency distribution
+        return $stmt->fetchAll();
+    }
+
+    private function getDistributionMetrics(string $whereClause, array $params): array
+    {
+        // Currency distribution
         $stmt = $this->pdo->prepare("
             SELECT UPPER(COALESCE(currency, 'UNKNOWN')) AS currency, COUNT(*) AS cnt
             FROM user_calculations
-            $where_clause
+            {$whereClause}
             GROUP BY UPPER(COALESCE(currency, 'UNKNOWN'))
             ORDER BY cnt DESC
         ");
         $stmt->execute($params);
         $currencyDist = $stmt->fetchAll();
 
-        // 9. Table: Top 10 SWP target corpus amounts
+        // Top 10 SWP target corpus amounts
         $stmt = $this->pdo->prepare("
             SELECT amount, UPPER(COALESCE(currency, 'INR')) AS currency, COUNT(*) AS frequency
             FROM user_calculations
-            $where_clause AND calc_type = 'SWP' AND amount IS NOT NULL
+            {$whereClause} AND calc_type = 'SWP' AND amount IS NOT NULL
             GROUP BY amount, UPPER(COALESCE(currency, 'INR'))
             ORDER BY frequency DESC
             LIMIT 10
@@ -145,48 +157,45 @@ class InsightRepository
         $stmt->execute($params);
         $topCorpus = $stmt->fetchAll();
 
-        // 10. Step-Up Adoption Rate metrics
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND calc_type = 'SIP'");
+        // SIP Step-Up metrics
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND calc_type = 'SIP'");
         $stmt->execute($params);
         $totalSIP = (int) $stmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND calc_type = 'SIP' AND step_up_pct > 0");
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND calc_type = 'SIP' AND step_up_pct > 0");
         $stmt->execute($params);
         $stepUpSIP = (int) $stmt->fetchColumn();
 
         $flatSIP = $totalSIP - $stepUpSIP;
         $stepUpAdoptionRate = $totalSIP > 0 ? round(($stepUpSIP / $totalSIP) * 100, 1) : 0.0;
 
-        // 11. Average Duration metrics
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations $where_clause AND calc_type = 'SIP'");
+        // Average Durations & Rates
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations {$whereClause} AND calc_type = 'SIP'");
         $stmt->execute($params);
         $avgDurationSIP = (float) $stmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations $where_clause AND calc_type = 'SWP'");
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations {$whereClause} AND calc_type = 'SWP'");
         $stmt->execute($params);
         $avgDurationSWP = (float) $stmt->fetchColumn();
 
-        // 12. Average Interest Rate
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interest_rate), 0) FROM user_calculations $where_clause AND interest_rate > 0");
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interest_rate), 0) FROM user_calculations {$whereClause} AND interest_rate > 0");
         $stmt->execute($params);
         $avgInterestRate = (float) $stmt->fetchColumn();
 
-        // 13. SWP Adoption Rate metrics
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND swp_enabled = 1");
+        // SWP Adoption
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND swp_enabled = 1");
         $stmt->execute($params);
         $totalSWPEnabled = (int) $stmt->fetchColumn();
-        $swpAdoptionRate = $totalInRange > 0 ? round(($totalSWPEnabled / $totalInRange) * 100, 1) : 0.0;
 
-        // 14. Average SIP and SWP Amounts
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(sip_amount), 0) FROM user_calculations $where_clause AND sip_amount > 0");
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(sip_amount), 0) FROM user_calculations {$whereClause} AND sip_amount > 0");
         $stmt->execute($params);
         $avgSipAmount = (float) $stmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(swp_withdrawal), 0) FROM user_calculations $where_clause AND swp_withdrawal > 0");
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(swp_withdrawal), 0) FROM user_calculations {$whereClause} AND swp_withdrawal > 0");
         $stmt->execute($params);
         $avgSwpWithdrawal = (float) $stmt->fetchColumn();
 
-        // 15. Chart: Duration distribution buckets
+        // Duration distribution buckets
         $stmt = $this->pdo->prepare("
             SELECT
                 CASE
@@ -199,14 +208,14 @@ class InsightRepository
                 END AS bucket,
                 COUNT(*) AS cnt
             FROM user_calculations
-            $where_clause AND duration IS NOT NULL
+            {$whereClause} AND duration IS NOT NULL
             GROUP BY bucket
             ORDER BY MIN(duration) ASC
         ");
         $stmt->execute($params);
         $durationDist = $stmt->fetchAll();
 
-        // 16. Chart: Corpus Buckets (INR)
+        // Corpus Buckets (INR)
         $stmt = $this->pdo->prepare("
             SELECT
                 CASE
@@ -217,14 +226,14 @@ class InsightRepository
                 END AS bucket,
                 COUNT(*) AS cnt
             FROM user_calculations
-            $where_clause AND calc_type = 'SWP' AND amount IS NOT NULL AND UPPER(COALESCE(currency,'INR')) = 'INR'
+            {$whereClause} AND calc_type = 'SWP' AND amount IS NOT NULL AND UPPER(COALESCE(currency,'INR')) = 'INR'
             GROUP BY bucket
             ORDER BY MIN(amount) ASC
         ");
         $stmt->execute($params);
         $corpusBucketsINR = $stmt->fetchAll();
 
-        // 17. Chart: Corpus Buckets (USD/Others)
+        // Corpus Buckets (USD/Others)
         $stmt = $this->pdo->prepare("
             SELECT
                 CASE
@@ -235,14 +244,14 @@ class InsightRepository
                 END AS bucket,
                 COUNT(*) AS cnt
             FROM user_calculations
-            $where_clause AND calc_type = 'SWP' AND amount IS NOT NULL AND UPPER(COALESCE(currency,'INR')) != 'INR'
+            {$whereClause} AND calc_type = 'SWP' AND amount IS NOT NULL AND UPPER(COALESCE(currency,'INR')) != 'INR'
             GROUP BY bucket
             ORDER BY MIN(amount) ASC
         ");
         $stmt->execute($params);
         $corpusBucketsUSD = $stmt->fetchAll();
 
-        // 18. Chart: Ambition Index buckets
+        // Ambition Index buckets
         $stmt = $this->pdo->prepare("
             SELECT
                 CASE
@@ -254,125 +263,87 @@ class InsightRepository
                 END AS goal_bucket,
                 COUNT(*) AS cnt
             FROM user_calculations
-            $where_clause AND amount IS NOT NULL
+            {$whereClause} AND amount IS NOT NULL
             GROUP BY goal_bucket
             ORDER BY MIN(amount) ASC
         ");
         $stmt->execute($params);
         $ambitionBuckets = $stmt->fetchAll();
 
-        // 19. Deep Privacy Metrics (Device, Goal Mode, Table Engagement, Multipliers)
-        $deviceDist = [];
-        try {
-            $stmt = $this->pdo->prepare("SELECT COALESCE(device_type, 'desktop') AS device, COUNT(*) AS cnt FROM user_calculations $where_clause GROUP BY device ORDER BY cnt DESC");
-            $stmt->execute($params);
-            $deviceDist = $stmt->fetchAll();
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (device_type): " . $e->getMessage());
-        }
-
-        $goalModeDist = [];
-        try {
-            $stmt = $this->pdo->prepare("SELECT COALESCE(goal_mode, 'grow') AS mode, COUNT(*) AS cnt FROM user_calculations $where_clause GROUP BY mode ORDER BY cnt DESC");
-            $stmt->execute($params);
-            $goalModeDist = $stmt->fetchAll();
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (goal_mode): " . $e->getMessage());
-        }
-
-        $tableViewEngagement = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND table_viewed = 1");
-            $stmt->execute($params);
-            $tableViewedCount = (int) $stmt->fetchColumn();
-            $tableViewEngagement = $totalInRange > 0 ? round(($tableViewedCount / $totalInRange) * 100, 1) : 0.0;
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (table_viewed): " . $e->getMessage());
-        }
-
-        $avgFinalCorpus = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(final_corpus), 0) FROM user_calculations $where_clause AND final_corpus > 0");
-            $stmt->execute($params);
-            $avgFinalCorpus = (float) $stmt->fetchColumn();
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (final_corpus): " . $e->getMessage());
-        }
-
-        $avgWealthMultiplier = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(wealth_multiplier), 0) FROM user_calculations $where_clause AND wealth_multiplier > 0");
-            $stmt->execute($params);
-            $avgWealthMultiplier = (float) $stmt->fetchColumn();
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (wealth_multiplier): " . $e->getMessage());
-        }
-
-        $b2bAdvisorRate = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND pdf_has_custom_name = 1");
-            $stmt->execute($params);
-            $b2bCount = (int) $stmt->fetchColumn();
-            $b2bAdvisorRate = $totalPdfDownloads > 0 ? round(($b2bCount / $totalPdfDownloads) * 100, 1) : 0.0;
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (pdf_has_custom_name): " . $e->getMessage());
-        }
-
-        $inflationRate = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND inflation_enabled = 1");
-            $stmt->execute($params);
-            $inflationCount = (int) $stmt->fetchColumn();
-            $inflationRate = $totalInRange > 0 ? round(($inflationCount / $totalInRange) * 100, 1) : 0.0;
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (inflation_enabled): " . $e->getMessage());
-        }
-
-        $avgIterations = 1.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interaction_count), 1) FROM user_calculations $where_clause AND interaction_count > 0");
-            $stmt->execute($params);
-            $avgIterations = round((float) $stmt->fetchColumn(), 1);
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (interaction_count): " . $e->getMessage());
-        }
-
-        $result = [
-            'totalCalculations'   => $totalInRange,
-            'avgStepUpPct'        => $avgStepUp,
-            'totalAllTime'        => $totalAllTime,
-            'calcTypeBreakdown'   => $calcTypeBreakdown,
-            'totalPdfDownloads'   => $totalPdfDownloads,
-            'conversionRate'      => $conversionRate,
-            'topReferrers'        => $topReferrers,
-            'dailyVolume'         => $dailyVolume,
-            'currencyDist'        => $currencyDist,
-            'topCorpus'           => $topCorpus,
-            'totalSIP'            => $totalSIP,
-            'stepUpSIP'           => $stepUpSIP,
-            'flatSIP'             => $flatSIP,
-            'stepUpAdoptionRate'  => $stepUpAdoptionRate,
-            'avgDurationSIP'      => $avgDurationSIP,
-            'avgDurationSWP'      => $avgDurationSWP,
-            'avgInterestRate'     => $avgInterestRate,
-            'totalSWPEnabled'     => $totalSWPEnabled,
-            'swpAdoptionRate'     => $swpAdoptionRate,
-            'avgSipAmount'        => $avgSipAmount,
-            'avgSwpWithdrawal'    => $avgSwpWithdrawal,
-            'durationDist'        => $durationDist,
-            'corpusBucketsINR'    => $corpusBucketsINR,
-            'corpusBucketsUSD'    => $corpusBucketsUSD,
-            'ambitionBuckets'     => $ambitionBuckets,
-            'deviceDist'          => $deviceDist,
-            'goalModeDist'        => $goalModeDist,
-            'tableViewEngagement' => $tableViewEngagement,
-            'avgFinalCorpus'      => $avgFinalCorpus,
-            'avgWealthMultiplier' => $avgWealthMultiplier,
-            'b2bAdvisorRate'      => $b2bAdvisorRate,
-            'inflationRate'       => $inflationRate,
-            'avgIterations'       => $avgIterations
+        return [
+            'currencyDist' => $currencyDist,
+            'topCorpus' => $topCorpus,
+            'totalSIP' => $totalSIP,
+            'stepUpSIP' => $stepUpSIP,
+            'flatSIP' => $flatSIP,
+            'stepUpAdoptionRate' => $stepUpAdoptionRate,
+            'avgDurationSIP' => $avgDurationSIP,
+            'avgDurationSWP' => $avgDurationSWP,
+            'avgInterestRate' => $avgInterestRate,
+            'totalSWPEnabled' => $totalSWPEnabled,
+            'avgSipAmount' => $avgSipAmount,
+            'avgSwpWithdrawal' => $avgSwpWithdrawal,
+            'durationDist' => $durationDist,
+            'corpusBucketsINR' => $corpusBucketsINR,
+            'corpusBucketsUSD' => $corpusBucketsUSD,
+            'ambitionBuckets' => $ambitionBuckets,
         ];
+    }
 
-        return $result;
+    private function getEngagementMetrics(string $whereClause, array $params, int $totalInRange, int $totalPdfDownloads): array
+    {
+        $swpAdoptionRate = $totalInRange > 0 ? round(($params[':interval'] ? 0 : 0) /* recalculate if needed */, 1) : 0.0;
+
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND swp_enabled = 1");
+        $stmt->execute($params);
+        $totalSWPEnabled = (int) $stmt->fetchColumn();
+        $swpAdoptionRate = $totalInRange > 0 ? round(($totalSWPEnabled / $totalInRange) * 100, 1) : 0.0;
+
+        $stmt = $this->pdo->prepare("SELECT COALESCE(device_type, 'desktop') AS device, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY device ORDER BY cnt DESC");
+        $stmt->execute($params);
+        $deviceDist = $stmt->fetchAll();
+
+        $stmt = $this->pdo->prepare("SELECT COALESCE(goal_mode, 'grow') AS mode, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY mode ORDER BY cnt DESC");
+        $stmt->execute($params);
+        $goalModeDist = $stmt->fetchAll();
+
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND table_viewed = 1");
+        $stmt->execute($params);
+        $tableViewedCount = (int) $stmt->fetchColumn();
+        $tableViewEngagement = $totalInRange > 0 ? round(($tableViewedCount / $totalInRange) * 100, 1) : 0.0;
+
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(final_corpus), 0) FROM user_calculations {$whereClause} AND final_corpus > 0");
+        $stmt->execute($params);
+        $avgFinalCorpus = (float) $stmt->fetchColumn();
+
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(wealth_multiplier), 0) FROM user_calculations {$whereClause} AND wealth_multiplier > 0");
+        $stmt->execute($params);
+        $avgWealthMultiplier = (float) $stmt->fetchColumn();
+
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND pdf_has_custom_name = 1");
+        $stmt->execute($params);
+        $b2bCount = (int) $stmt->fetchColumn();
+        $b2bAdvisorRate = $totalPdfDownloads > 0 ? round(($b2bCount / $totalPdfDownloads) * 100, 1) : 0.0;
+
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND inflation_enabled = 1");
+        $stmt->execute($params);
+        $inflationCount = (int) $stmt->fetchColumn();
+        $inflationRate = $totalInRange > 0 ? round(($inflationCount / $totalInRange) * 100, 1) : 0.0;
+
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interaction_count), 1) FROM user_calculations {$whereClause} AND interaction_count > 0");
+        $stmt->execute($params);
+        $avgIterations = round((float) $stmt->fetchColumn(), 1);
+
+        return [
+            'swpAdoptionRate' => $swpAdoptionRate,
+            'deviceDist' => $deviceDist,
+            'goalModeDist' => $goalModeDist,
+            'tableViewEngagement' => $tableViewEngagement,
+            'avgFinalCorpus' => $avgFinalCorpus,
+            'avgWealthMultiplier' => $avgWealthMultiplier,
+            'b2bAdvisorRate' => $b2bAdvisorRate,
+            'inflationRate' => $inflationRate,
+            'avgIterations' => $avgIterations,
+        ];
     }
 }

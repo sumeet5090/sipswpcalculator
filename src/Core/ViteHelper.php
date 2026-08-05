@@ -9,14 +9,18 @@ class ViteHelper
     private ?array $manifest = null;
     private ?bool $devServerActive = null;
     private string $environment;
+    private string $devHost;
+    private int $devPort;
 
-    public function __construct(string $environment = 'development')
+    public function __construct(string $environment = 'development', string $devHost = '127.0.0.1', int $devPort = 5173)
     {
         $this->environment = $environment;
+        $this->devHost = $devHost;
+        $this->devPort = $devPort;
     }
 
     /**
-     * Check if Vite dev server is running on port 5173.
+     * Check if Vite dev server is running on configured host and port.
      */
     private function isDevServerRunning(): bool
     {
@@ -29,8 +33,8 @@ class ViteHelper
             return false;
         }
 
-        // Fast socket check to see if port 5173 is open
-        $connection = @fsockopen('127.0.0.1', 5173, $errno, $errstr, 0.05);
+        // Fast socket check to see if dev server port is open
+        $connection = @fsockopen($this->devHost, $this->devPort, $errno, $errstr, 0.05);
         if (is_resource($connection)) {
             fclose($connection);
             $this->devServerActive = true;
@@ -47,7 +51,7 @@ class ViteHelper
     public function asset(string $entry): string
     {
         if ($this->isDevServerRunning()) {
-            return "http://localhost:5173/" . ltrim($entry, '/');
+            return "http://{$this->devHost}:{$this->devPort}/" . ltrim($entry, '/');
         }
 
         $this->loadManifest();
@@ -68,7 +72,7 @@ class ViteHelper
         if (!$this->isDevServerRunning()) {
             return '';
         }
-        return '<script type="module" src="http://localhost:5173/@vite/client"></script>';
+        return "<script type=\"module\" src=\"http://{$this->devHost}:{$this->devPort}/@vite/client\"></script>";
     }
 
     /**

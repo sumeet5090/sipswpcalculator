@@ -12,6 +12,13 @@ use Core\Exceptions\RateLimitExceededException;
  */
 class RateLimiter
 {
+    private string $baseStorageDir;
+
+    public function __construct(?string $baseStorageDir = null)
+    {
+        $this->baseStorageDir = $baseStorageDir ?? sys_get_temp_dir();
+    }
+
     /**
      * Check if request count exceeds rate limit for a given IP and action prefix.
      *
@@ -19,16 +26,16 @@ class RateLimiter
      */
     public function checkLimit(string $ip, string $prefix, int $maxRequests, int $windowSeconds = 60): void
     {
-        $rateLimitDir = sys_get_temp_dir() . '/' . trim($prefix, '/') . '/';
-        if (!is_dir($rateLimitDir)) {
-            @mkdir($rateLimitDir, 0700, true);
+        $rateLimitDir = rtrim($this->baseStorageDir, '/\\') . '/' . trim($prefix, '/') . '/';
+        if (!is_dir($rateLimitDir) && !mkdir($rateLimitDir, 0700, true) && !is_dir($rateLimitDir)) {
+            return; // Gracefully bypass if filesystem directory creation fails
         }
 
         $ipHash = hash('sha256', $ip);
         $rateFile = $rateLimitDir . $ipHash . '.json';
-        $fp = @fopen($rateFile, 'c+');
+        $fp = fopen($rateFile, 'c+');
 
-        if ($fp && flock($fp, LOCK_EX)) {
+        if ($fp !== false && flock($fp, LOCK_EX)) {
             $content = stream_get_contents($fp);
             $rateData = !empty($content) ? json_decode($content, true) : [];
             if (!is_array($rateData)) {

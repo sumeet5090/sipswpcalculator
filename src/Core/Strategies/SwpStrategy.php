@@ -17,9 +17,4 @@ class SwpStrategy extends BaseStrategy
     {
         return InvestmentInputs::fromSwpRequest([], $this->configService);
     }
-
-    public function getCorpus(InvestmentInputs $inputs): float
-    {
-        return $inputs->getLumpsum();
-    }
 }
