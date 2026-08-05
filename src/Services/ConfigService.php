@@ -12,14 +12,13 @@ class ConfigService
 {
     private array $calculatorDefaults;
 
-    public function __construct(?string $customConfigPath = null)
+    public function __construct(string $configPath)
     {
-        $jsonPath = $customConfigPath ?? __DIR__ . '/../../content/calculator_defaults.json';
-        if (!file_exists($jsonPath)) {
-            throw new \RuntimeException("Configuration file missing at: {$jsonPath}");
+        if (!file_exists($configPath)) {
+            throw new \RuntimeException("Configuration file missing at: {$configPath}");
         }
 
-        $content = file_get_contents($jsonPath);
+        $content = file_get_contents($configPath);
         $decoded = json_decode($content, true);
 
         if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {

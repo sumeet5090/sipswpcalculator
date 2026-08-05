@@ -307,17 +307,6 @@ class PdfReportTemplate
             <div class='doc-footer'>
                 Generated securely via SIP & SWP Planner (https://sipswpcalculator.com) | Proposal Ref: {$proposal_id}
             </div>
-
-            <!-- Dompdf Dynamic Page Numbering Script -->
-            <script type='php'>
-                if (isset(\$pdf)) {
-                    \$text = 'Page ' . \$PAGE_NUM . ' of ' . \$PAGE_COUNT;
-                    \$font = \$fontMetrics->get_font('Helvetica', 'normal');
-                    \$size = 8;
-                    \$color = array(0.58, 0.64, 0.72);
-                    \$pdf->page_text(495, 815, \$text, \$font, \$size, \$color);
-                }
-            </script>
         </body>
         </html>";
 

@@ -54,7 +54,7 @@ class MarkdownContentValidatorTest extends TestCase
         $content = file_get_contents($filePath);
         $this->assertNotEmpty($content, "Markdown file '$fileName' must not be empty.");
 
-        $contentManager = new \Core\ContentManager(new \Parsedown());
+        $contentManager = new \Core\ContentManager(new \Parsedown(), __DIR__ . '/../../content');
         $basePath = str_replace(realpath(__DIR__ . '/../../content'), '', realpath($filePath));
         // Strip .md
         $basePath = substr($basePath, 0, -3);
@@ -119,7 +119,7 @@ class MarkdownContentValidatorTest extends TestCase
         // 7. Verify Alignment with BlogRepository (Blog posts only)
         if ($type === 'blog') {
             $slug = basename($filePath, '.md');
-            $allPosts = (new BlogRepository(new \Core\ContentManager(new \Parsedown())))->getAllPosts();
+            $allPosts = (new BlogRepository(new \Core\ContentManager(new \Parsedown(), __DIR__ . '/../../content')))->getAllPosts();
 
             $found = false;
             $postMetadata = null;

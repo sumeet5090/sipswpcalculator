@@ -47,38 +47,27 @@ class InsightRepository
         $calcTypeBreakdown = $stmt->fetchAll();
 
         // 5. PDF Downloads count and conversion rate
-        $totalPdfDownloads = 0;
-        $conversionRate = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND pdf_downloaded = 1");
-            $stmt->execute($params);
-            $totalPdfDownloads = (int) $stmt->fetchColumn();
-            $conversionRate = $totalInRange > 0 ? round(($totalPdfDownloads / $totalInRange) * 100, 1) : 0.0;
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (pdf_downloaded): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND pdf_downloaded = 1");
+        $stmt->execute($params);
+        $totalPdfDownloads = (int) $stmt->fetchColumn();
+        $conversionRate = $totalInRange > 0 ? round(($totalPdfDownloads / $totalInRange) * 100, 1) : 0.0;
 
         // 6. Top 10 Referrers in range
-        $topReferrers = [];
-        try {
-            $stmt = $this->pdo->prepare("
-                SELECT
-                    CASE
-                        WHEN referrer IS NULL OR referrer = '' THEN '(direct / unknown)'
-                        ELSE SUBSTR(referrer, 1, 80)
-                    END AS source,
-                    COUNT(*) AS cnt
-                FROM user_calculations
-                $where_clause
-                GROUP BY source
-                ORDER BY cnt DESC
-                LIMIT 10
-            ");
-            $stmt->execute($params);
-            $topReferrers = $stmt->fetchAll();
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (referrer): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("
+            SELECT
+                CASE
+                    WHEN referrer IS NULL OR referrer = '' THEN '(direct / unknown)'
+                    ELSE SUBSTR(referrer, 1, 80)
+                END AS source,
+                COUNT(*) AS cnt
+            FROM user_calculations
+            $where_clause
+            GROUP BY source
+            ORDER BY cnt DESC
+            LIMIT 10
+        ");
+        $stmt->execute($params);
+        $topReferrers = $stmt->fetchAll();
 
         // 7. Chart: Daily/Hourly volume using recursive CTE for zero-filling
         if ($unit === 'hour') {
@@ -262,80 +251,40 @@ class InsightRepository
         $ambitionBuckets = $stmt->fetchAll();
 
         // 19. Deep Privacy Metrics (Device, Goal Mode, Table Engagement, Multipliers)
-        $deviceDist = [];
-        try {
-            $stmt = $this->pdo->prepare("SELECT COALESCE(device_type, 'desktop') AS device, COUNT(*) AS cnt FROM user_calculations $where_clause GROUP BY device ORDER BY cnt DESC");
-            $stmt->execute($params);
-            $deviceDist = $stmt->fetchAll();
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (device_type): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("SELECT COALESCE(device_type, 'desktop') AS device, COUNT(*) AS cnt FROM user_calculations $where_clause GROUP BY device ORDER BY cnt DESC");
+        $stmt->execute($params);
+        $deviceDist = $stmt->fetchAll();
 
-        $goalModeDist = [];
-        try {
-            $stmt = $this->pdo->prepare("SELECT COALESCE(goal_mode, 'grow') AS mode, COUNT(*) AS cnt FROM user_calculations $where_clause GROUP BY mode ORDER BY cnt DESC");
-            $stmt->execute($params);
-            $goalModeDist = $stmt->fetchAll();
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (goal_mode): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("SELECT COALESCE(goal_mode, 'grow') AS mode, COUNT(*) AS cnt FROM user_calculations $where_clause GROUP BY mode ORDER BY cnt DESC");
+        $stmt->execute($params);
+        $goalModeDist = $stmt->fetchAll();
 
-        $tableViewEngagement = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND table_viewed = 1");
-            $stmt->execute($params);
-            $tableViewedCount = (int) $stmt->fetchColumn();
-            $tableViewEngagement = $totalInRange > 0 ? round(($tableViewedCount / $totalInRange) * 100, 1) : 0.0;
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (table_viewed): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND table_viewed = 1");
+        $stmt->execute($params);
+        $tableViewedCount = (int) $stmt->fetchColumn();
+        $tableViewEngagement = $totalInRange > 0 ? round(($tableViewedCount / $totalInRange) * 100, 1) : 0.0;
 
-        $avgFinalCorpus = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(final_corpus), 0) FROM user_calculations $where_clause AND final_corpus > 0");
-            $stmt->execute($params);
-            $avgFinalCorpus = (float) $stmt->fetchColumn();
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (final_corpus): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(final_corpus), 0) FROM user_calculations $where_clause AND final_corpus > 0");
+        $stmt->execute($params);
+        $avgFinalCorpus = (float) $stmt->fetchColumn();
 
-        $avgWealthMultiplier = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(wealth_multiplier), 0) FROM user_calculations $where_clause AND wealth_multiplier > 0");
-            $stmt->execute($params);
-            $avgWealthMultiplier = (float) $stmt->fetchColumn();
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (wealth_multiplier): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(wealth_multiplier), 0) FROM user_calculations $where_clause AND wealth_multiplier > 0");
+        $stmt->execute($params);
+        $avgWealthMultiplier = (float) $stmt->fetchColumn();
 
-        $b2bAdvisorRate = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND pdf_has_custom_name = 1");
-            $stmt->execute($params);
-            $b2bCount = (int) $stmt->fetchColumn();
-            $b2bAdvisorRate = $totalPdfDownloads > 0 ? round(($b2bCount / $totalPdfDownloads) * 100, 1) : 0.0;
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (pdf_has_custom_name): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND pdf_has_custom_name = 1");
+        $stmt->execute($params);
+        $b2bCount = (int) $stmt->fetchColumn();
+        $b2bAdvisorRate = $totalPdfDownloads > 0 ? round(($b2bCount / $totalPdfDownloads) * 100, 1) : 0.0;
 
-        $inflationRate = 0.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND inflation_enabled = 1");
-            $stmt->execute($params);
-            $inflationCount = (int) $stmt->fetchColumn();
-            $inflationRate = $totalInRange > 0 ? round(($inflationCount / $totalInRange) * 100, 1) : 0.0;
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (inflation_enabled): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations $where_clause AND inflation_enabled = 1");
+        $stmt->execute($params);
+        $inflationCount = (int) $stmt->fetchColumn();
+        $inflationRate = $totalInRange > 0 ? round(($inflationCount / $totalInRange) * 100, 1) : 0.0;
 
-        $avgIterations = 1.0;
-        try {
-            $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interaction_count), 1) FROM user_calculations $where_clause AND interaction_count > 0");
-            $stmt->execute($params);
-            $avgIterations = round((float) $stmt->fetchColumn(), 1);
-        } catch (\Throwable $e) {
-            error_log("InsightRepository Query Error (interaction_count): " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interaction_count), 1) FROM user_calculations $where_clause AND interaction_count > 0");
+        $stmt->execute($params);
+        $avgIterations = round((float) $stmt->fetchColumn(), 1);
 
         $result = [
             'totalCalculations'   => $totalInRange,

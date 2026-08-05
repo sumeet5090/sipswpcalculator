@@ -81,8 +81,7 @@ class GuideRenderer
             $seo_category,
             $page_config,
             $publishedDate,
-            $faqs,
-            $strategy
+            $faqs
         );
 
         $initialInputs = $strategy->getInitialInputs();
@@ -115,7 +114,7 @@ class GuideRenderer
         // Fetch all posts for related resources / internal linking via injected BlogRepository
         $all_posts = $this->blogRepository->getAllPosts();
 
-        return Response::html($this->viewRenderer->render($layout, [
+        return Response::html($this->viewRenderer->render($layout, array_merge([
             'content_html'        => $content_html,
             'content_metadata'    => $content_metadata,
             'page_config'         => $page_config,
@@ -126,17 +125,8 @@ class GuideRenderer
             'show_lumpsum'        => $show_lumpsum,
             'faqs'                => $faqs,
             'combined'            => [],
-            'sip'                 => $sip,
-            'years'               => $years,
-            'rate'                => $rate,
-            'stepup'              => $stepup,
-            'lumpsum'             => $lumpsum,
-            'corpus'              => $lumpsum,
             'swp_withdrawal'      => $initialInputs->getSwpWithdrawal(),
-            'swp_stepup'          => $initialInputs->getSwpStepup(),
-            'swp_rate'            => $initialInputs->getSwpRate(),
-            'inflation'           => $initialInputs->getInflation(),
             'all_posts'           => $all_posts,
-        ]));
+        ], $calcConfig)));
     }
 }

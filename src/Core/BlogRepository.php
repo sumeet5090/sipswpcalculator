@@ -135,4 +135,13 @@ class BlogRepository
             'date' => $meta['date'] ?? 'March 2026'
         ];
     }
+
+    /**
+     * Get the last modification date of a blog post file.
+     */
+    public function getPostModifiedDate(string $category, string $slug, string $fallbackDate = '2026-03-01'): string
+    {
+        $mdFile = __DIR__ . '/../../content/blog/' . $category . '/' . $slug . '.md';
+        return file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $fallbackDate;
+    }
 }

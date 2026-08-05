@@ -94,7 +94,7 @@ class App
         });
 
         $this->container->singleton(\Services\ConfigService::class, function () {
-            return new \Services\ConfigService();
+            return new \Services\ConfigService(__DIR__ . '/../../content/calculator_defaults.json');
         });
 
         $this->container->singleton(\Services\CsvExportService::class, function () {
@@ -123,7 +123,7 @@ class App
         });
 
         $this->container->singleton(ContentManager::class, function (Container $c) {
-            return new ContentManager($c->get(\Parsedown::class));
+            return new ContentManager($c->get(\Parsedown::class), __DIR__ . '/../../content');
         });
 
         $this->container->singleton(DatabaseMigrator::class, function (Container $c) {
@@ -183,7 +183,11 @@ class App
         });
 
         $this->container->singleton(FaqRepository::class, function () {
-            return new FaqRepository();
+            return new FaqRepository(__DIR__ . '/../../content/faqs.json');
+        });
+
+        $this->container->singleton(GlossaryRepository::class, function () {
+            return new GlossaryRepository(__DIR__ . '/../../content/glossary.json');
         });
 
         $this->container->singleton(BlogRepository::class, function (Container $c) {
@@ -246,6 +250,7 @@ class App
             return new PageController(
                 $c->get(FaqRepository::class),
                 $c->get(BlogRepository::class),
+                $c->get(GlossaryRepository::class),
                 $c->get(SchemaHelper::class),
                 $c->get(ViewRenderer::class)
             );
@@ -305,27 +310,36 @@ class App
         $this->router->get('/resource', [BlogController::class, 'index']);
         $this->router->get('/resource/{category}/{slug}', [BlogController::class, 'show']);
 
-        // Load Dynamic Redirects from JSON
-        $redirectsPath = __DIR__ . '/../../content/redirects.json';
-        if (file_exists($redirectsPath)) {
-            $rawJson = file_get_contents($redirectsPath);
-            $redirectsData = json_decode($rawJson, true);
+        $this->loadRedirects(__DIR__ . '/../../content/redirects.json');
+    }
 
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                error_log("Failed to parse content/redirects.json: " . json_last_error_msg());
-            } elseif (is_array($redirectsData)) {
-                if (isset($redirectsData['blog_redirects']) && is_array($redirectsData['blog_redirects'])) {
-                    foreach ($redirectsData['blog_redirects'] as $slug => $target) {
-                        $this->router->redirect("/resource/{$slug}", "/resource/{$target}");
-                    }
-                }
+    /**
+     * Load dynamic redirects from JSON configuration into Router.
+     */
+    private function loadRedirects(string $redirectsPath): void
+    {
+        if (!file_exists($redirectsPath)) {
+            return;
+        }
 
-                if (isset($redirectsData['stubs']) && is_array($redirectsData['stubs'])) {
-                    foreach ($redirectsData['stubs'] as $old => $new) {
-                        $this->router->redirect($old, $new);
-                        $this->router->redirect($old . '.php', $new);
-                    }
-                }
+        $rawJson = file_get_contents($redirectsPath);
+        $redirectsData = json_decode($rawJson, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($redirectsData)) {
+            error_log("Failed to parse content/redirects.json: " . json_last_error_msg());
+            return;
+        }
+
+        if (isset($redirectsData['blog_redirects']) && is_array($redirectsData['blog_redirects'])) {
+            foreach ($redirectsData['blog_redirects'] as $slug => $target) {
+                $this->router->redirect("/resource/{$slug}", "/resource/{$target}");
+            }
+        }
+
+        if (isset($redirectsData['stubs']) && is_array($redirectsData['stubs'])) {
+            foreach ($redirectsData['stubs'] as $old => $new) {
+                $this->router->redirect($old, $new);
+                $this->router->redirect($old . '.php', $new);
             }
         }
     }
