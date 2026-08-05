@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Core\BlogRepository;
 use Core\FaqRepository;
 use Core\GlossaryRepository;
 use Core\Http\Response;
@@ -18,20 +17,17 @@ use Core\ViewRenderer;
 class PageController
 {
     private FaqRepository $faqRepository;
-    private BlogRepository $blogRepository;
     private GlossaryRepository $glossaryRepository;
     private SchemaHelper $schemaHelper;
     private ViewRenderer $viewRenderer;
 
     public function __construct(
         FaqRepository $faqRepository,
-        BlogRepository $blogRepository,
         GlossaryRepository $glossaryRepository,
         SchemaHelper $schemaHelper,
         ViewRenderer $viewRenderer
     ) {
         $this->faqRepository = $faqRepository;
-        $this->blogRepository = $blogRepository;
         $this->glossaryRepository = $glossaryRepository;
         $this->schemaHelper = $schemaHelper;
         $this->viewRenderer = $viewRenderer;
@@ -56,26 +52,14 @@ class PageController
     public function glossary(): Response
     {
         $glossary_terms = $this->glossaryRepository->getAll();
-
-        $letters = [];
-        foreach ($glossary_terms as $term) {
-            $firstChar = strtoupper(substr($term['q'], 0, 1));
-            if (!in_array($firstChar, $letters)) {
-                $letters[] = $firstChar;
-            }
-        }
-        sort($letters);
+        $letters = $this->glossaryRepository->getAlphabeticalLetters();
 
         $breadcrumbs = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
             'Glossary' => '/glossary'
         ]);
 
-        $faqData = [];
-        foreach ($glossary_terms as $term) {
-            $faqData[$term['q']] = $term['a'];
-        }
-        $faq = $this->schemaHelper->getFAQ($faqData);
+        $faq = $this->schemaHelper->getFAQ($this->glossaryRepository->toFaqSchemaData());
 
         return Response::html($this->viewRenderer->render('pages/glossary', [
             'glossary_terms' => $glossary_terms,
@@ -98,28 +82,6 @@ class PageController
                 'title' => 'Privacy Policy',
                 'robots' => 'noindex, follow'
             ]
-        ]));
-    }
-
-    public function resources(): Response
-    {
-        $all_posts = $this->blogRepository->getAllPosts();
-        $categories = $this->blogRepository->getCategories();
-
-        $posts_by_cat = [];
-        foreach ($all_posts as $post) {
-            $posts_by_cat[$post['category']][] = $post;
-        }
-
-        $breadcrumbs = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            'Resources' => '/resources'
-        ]);
-
-        return Response::html($this->viewRenderer->render('pages/resources', [
-            'categories' => $categories,
-            'posts_by_cat' => $posts_by_cat,
-            'breadcrumbs' => $breadcrumbs,
         ]));
     }
 

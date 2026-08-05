@@ -7,6 +7,7 @@ namespace Controllers;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Exceptions\RateLimitExceededException;
+use Services\PdfGeneratorService;
 use Services\RateLimiter;
 use Services\SessionManager;
 
@@ -14,11 +15,16 @@ class GeneratePdfAction
 {
     private RateLimiter $rateLimiter;
     private SessionManager $sessionManager;
+    private PdfGeneratorService $pdfGenerator;
 
-    public function __construct(RateLimiter $rateLimiter, SessionManager $sessionManager)
-    {
+    public function __construct(
+        RateLimiter $rateLimiter,
+        SessionManager $sessionManager,
+        PdfGeneratorService $pdfGenerator
+    ) {
         $this->rateLimiter = $rateLimiter;
         $this->sessionManager = $sessionManager;
+        $this->pdfGenerator = $pdfGenerator;
     }
 
     public function __invoke(Request $request): Response
@@ -120,30 +126,13 @@ class GeneratePdfAction
                 $inputs['logo_base64'] = 'data:' . $safe_mime . ';base64,' . base64_encode($data);
             }
 
-            // Generate HTML using PDF template service
-            $html = \Core\PdfReportTemplate::render($inputs);
-
-            $options = new \Dompdf\Options();
-            $options->set('isRemoteEnabled', false);
-            $options->set('defaultFont', 'Helvetica');
-            $options->set('isPhpEnabled', false);
-            $options->set('isJavascriptEnabled', false);
-
-            ob_start();
-            $dompdf = new \Dompdf\Dompdf($options);
-            $dompdf->loadHtml($html);
-            $dompdf->setPaper('A4', 'portrait');
-            $dompdf->render();
-            $pdf_binary = $dompdf->output();
+            // Generate PDF binary using injected PdfGeneratorService
+            $pdf_binary = $this->pdfGenerator->generate($inputs);
 
             $raw_name = trim($inputs['client_name']);
             $clean_name = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $raw_name) ?: 'Client';
             $clean_name = preg_replace('/_+/', '_', $clean_name);
             $filename = "Financial_Report_for_{$clean_name}.pdf";
-
-            while (ob_get_level() > 0) {
-                ob_end_clean();
-            }
 
             return new Response($pdf_binary, 200, [
                 'Content-Type' => 'application/pdf',

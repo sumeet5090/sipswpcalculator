@@ -80,6 +80,11 @@ class InvestmentCalculator
                 $cumulativeWithdrawals += $annualWithdrawal;
             }
 
+            $preTaxGains = $netBalance + $cumulativeWithdrawals - $cumulativeInvested;
+            $taxableGains = max(0.0, $preTaxGains - 125000.0);
+            $ltcgTax = $taxableGains * 0.125;
+            $postTaxCorpus = max(0.0, $netBalance - $ltcgTax);
+
             $results[] = [
                 'year' => $y,
                 'begin_balance' => round($yearBegin),
@@ -90,7 +95,9 @@ class InvestmentCalculator
                 'annual_withdrawal' => ($enableSwp && $y >= $swpStartYear) ? $annualWithdrawal : null,
                 'cumulative_withdrawals' => ($enableSwp && $y >= $swpStartYear) ? $cumulativeWithdrawals : 0.0,
                 'interest' => round($interestEarned),
-                'combined_total' => round($netBalance)
+                'combined_total' => round($netBalance),
+                'ltcg_tax' => round($ltcgTax),
+                'post_tax_total' => round($postTaxCorpus)
             ];
         }
 

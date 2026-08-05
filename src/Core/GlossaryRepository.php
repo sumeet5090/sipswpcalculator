@@ -10,16 +10,26 @@ namespace Core;
  */
 class GlossaryRepository
 {
-    private array $terms;
+    private ?array $terms = null;
+    private string $jsonPath;
 
     public function __construct(string $jsonPath)
     {
-        if (!file_exists($jsonPath)) {
+        $this->jsonPath = $jsonPath;
+    }
+
+    private function load(): void
+    {
+        if ($this->terms !== null) {
+            return;
+        }
+
+        if (!file_exists($this->jsonPath)) {
             $this->terms = [];
             return;
         }
 
-        $jsonContent = file_get_contents($jsonPath);
+        $jsonContent = file_get_contents($this->jsonPath);
         $decoded = json_decode($jsonContent, true);
 
         if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
@@ -42,6 +52,45 @@ class GlossaryRepository
      */
     public function getAll(): array
     {
+        $this->load();
         return $this->terms;
+    }
+
+    /**
+     * Get distinct first letters of all glossary terms.
+     *
+     * @return array<string>
+     */
+    public function getAlphabeticalLetters(): array
+    {
+        $terms = $this->getAll();
+        $letters = [];
+        foreach ($terms as $term) {
+            if (isset($term['q']) && $term['q'] !== '') {
+                $firstChar = strtoupper(substr($term['q'], 0, 1));
+                if (!in_array($firstChar, $letters, true)) {
+                    $letters[] = $firstChar;
+                }
+            }
+        }
+        sort($letters);
+        return $letters;
+    }
+
+    /**
+     * Convert glossary terms to key-value pairs for FAQ schema generation.
+     *
+     * @return array<string, string>
+     */
+    public function toFaqSchemaData(): array
+    {
+        $terms = $this->getAll();
+        $faqData = [];
+        foreach ($terms as $term) {
+            if (isset($term['q'], $term['a'])) {
+                $faqData[$term['q']] = $term['a'];
+            }
+        }
+        return $faqData;
     }
 }

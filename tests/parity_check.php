@@ -137,7 +137,9 @@ foreach ($testCases as $index => $inputs) {
             'annual_withdrawal',
             'cumulative_withdrawals',
             'interest',
-            'combined_total'
+            'combined_total',
+            'ltcg_tax',
+            'post_tax_total'
         ];
 
         foreach ($fields as $field) {

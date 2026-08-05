@@ -167,10 +167,15 @@ class App
             );
         });
 
+        $this->container->singleton(\Services\PdfGeneratorService::class, function () {
+            return new \Services\PdfGeneratorService();
+        });
+
         $this->container->singleton(\Controllers\GeneratePdfAction::class, function (Container $c) {
             return new \Controllers\GeneratePdfAction(
                 $c->get(\Services\RateLimiter::class),
-                $c->get(\Services\SessionManager::class)
+                $c->get(\Services\SessionManager::class),
+                $c->get(\Services\PdfGeneratorService::class)
             );
         });
 
@@ -249,7 +254,6 @@ class App
         $this->container->singleton(PageController::class, function (Container $c) {
             return new PageController(
                 $c->get(FaqRepository::class),
-                $c->get(BlogRepository::class),
                 $c->get(GlossaryRepository::class),
                 $c->get(SchemaHelper::class),
                 $c->get(ViewRenderer::class)

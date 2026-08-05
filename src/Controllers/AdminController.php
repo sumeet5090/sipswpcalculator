@@ -123,14 +123,14 @@ class AdminController
             return new Response('Rate limit exceeded', 429);
         }
 
-        $inputJSON = file_get_contents('php://input');
-        if (strlen($inputJSON) > 65536) { // 64KB limit
+        $rawBody = $request->getRawBody();
+        if (strlen($rawBody) > 65536) { // 64KB limit
             return new Response('Payload Too Large', 413);
         }
 
-        $data = json_decode($inputJSON, true);
+        $data = $request->getJsonBody();
 
-        if (!is_array($data) || !isset($data['calc_type'], $data['amount'], $data['duration'])) {
+        if ($data === null || !isset($data['calc_type'], $data['amount'], $data['duration'])) {
             return new Response('Invalid payload', 400);
         }
 
