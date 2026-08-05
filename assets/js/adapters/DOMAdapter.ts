@@ -35,4 +35,11 @@ export class DOMAdapter {
             }
         }
     }
+
+    /**
+     * Clear cached DOM element references to handle dynamic DOM re-rendering.
+     */
+    clearCache(): void {
+        this.cache.clear();
+    }
 }

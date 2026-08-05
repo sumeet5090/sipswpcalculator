@@ -22,13 +22,12 @@ class App
 {
     private Container $container;
     private Router $router;
-    private array $routesConfig;
+    private array $routesConfig = [];
 
     public function __construct()
     {
         $this->container = new Container();
         $this->router = new Router($this->container);
-        $this->routesConfig = require __DIR__ . '/Config/routes.php';
     }
 
     /**
@@ -36,6 +35,7 @@ class App
      */
     public function boot(): Container
     {
+        $this->routesConfig = require __DIR__ . '/Config/routes.php';
         $this->registerDependencies();
         $this->registerRoutes();
         return $this->container;

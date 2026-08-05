@@ -37,14 +37,16 @@ class PdfReportTemplate
         $summary_corpus = (string) ($inputs['summary_corpus'] ?? '0');
         $currency_sym = (string) ($inputs['currency_symbol'] ?? '₹');
 
-        // Calculate Wealth Multiplier accurately
+        // Calculate Wealth Multiplier accurately using raw numeric floats
         $multiplier = '1.00x';
-        $clean_corpus_num = (float) preg_replace('/[^\d.]/', '', $summary_corpus);
-        $clean_invested_num = (float) preg_replace('/[^\d.]/', '', $summary_invested);
-        if ($clean_invested_num > 0 && $clean_corpus_num > 0) {
-            $multiplier = number_format($clean_corpus_num / $clean_invested_num, 2) . 'x';
-        } elseif ($raw_invested > 0 && $raw_corpus > 0) {
+        if ($raw_invested > 0 && $raw_corpus > 0) {
             $multiplier = number_format($raw_corpus / $raw_invested, 2) . 'x';
+        } else {
+            $clean_corpus_num = (float) preg_replace('/[^\d.]/', '', $summary_corpus);
+            $clean_invested_num = (float) preg_replace('/[^\d.]/', '', $summary_invested);
+            if ($clean_invested_num > 0 && $clean_corpus_num > 0) {
+                $multiplier = number_format($clean_corpus_num / $clean_invested_num, 2) . 'x';
+            }
         }
 
         $proposal_id = 'SWP-' . strtoupper(substr(md5($client_name . date('Y-m-d')), 0, 8));

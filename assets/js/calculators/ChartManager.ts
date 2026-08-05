@@ -77,10 +77,7 @@ export class ChartManager {
         for (let i = 0; i < results.length; i++) {
             const row = results[i];
 
-            const gains = (row.combined_total + (row.cumulative_withdrawals || 0)) - row.cumulative_invested;
-            const taxableGains = Math.max(0, gains - 125000);
-            const tax = taxableGains * 0.125;
-            const postTaxVal = Math.max(0, row.combined_total - tax);
+            const postTaxVal = row.post_tax_total ?? row.combined_total;
 
             const activeCorpusValue = showPostTax ? postTaxVal : row.combined_total;
 
@@ -117,12 +114,7 @@ export class ChartManager {
 
         this.currentMilestones = milestones;
 
-        const postTaxCorpus = results.map(r => {
-            const gains = (r.combined_total + (r.cumulative_withdrawals || 0)) - r.cumulative_invested;
-            const taxableGains = Math.max(0, gains - 125000);
-            const tax = taxableGains * 0.125;
-            return Math.max(0, r.combined_total - tax);
-        });
+        const postTaxCorpus = results.map(r => r.post_tax_total ?? r.combined_total);
 
         const milestoneIndices = milestones.map(m => m.index);
         const pointRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 6 : 0);

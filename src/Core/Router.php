@@ -79,10 +79,7 @@ class Router
         }
 
         if (!str_starts_with($controllerName, '\\')) {
-            $controllerName = '\\' . ltrim($controllerName, '\\');
-        }
-        if (!str_starts_with($controllerName, '\\Controllers\\')) {
-            $controllerName = '\\Controllers\\' . ltrim($controllerName, '\\');
+            $controllerName = '\\' . $controllerName;
         }
 
         if (class_exists($controllerName)) {
