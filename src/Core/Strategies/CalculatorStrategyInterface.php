@@ -17,9 +17,4 @@ interface CalculatorStrategyInterface
      * Provides the initial default inputs for the calculator
      */
     public function getInitialInputs(): InvestmentInputs;
-
-    /**
-     * Calculates the starting corpus based on inputs
-     */
-    public function getCorpus(InvestmentInputs $inputs): float;
 }

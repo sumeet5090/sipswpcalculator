@@ -7,21 +7,26 @@ namespace Controllers;
 use Core\BlogRepository;
 use Core\Http\Response;
 use Core\SiteConfig;
+use Core\ViewRenderer;
+use DOMDocument;
 
 class SitemapController
 {
     private BlogRepository $blogRepository;
     private SiteConfig $siteConfig;
     private array $routesConfig;
+    private ViewRenderer $viewRenderer;
 
     public function __construct(
         BlogRepository $blogRepository,
         SiteConfig $siteConfig,
-        array $routesConfig
+        array $routesConfig,
+        ViewRenderer $viewRenderer
     ) {
         $this->blogRepository = $blogRepository;
         $this->siteConfig = $siteConfig;
         $this->routesConfig = $routesConfig;
+        $this->viewRenderer = $viewRenderer;
     }
 
     public function index(): Response
@@ -34,17 +39,16 @@ class SitemapController
         // 1. Home Page
         $urls[] = [
             'loc' => $baseUrl . '/',
-            'lastmod' => date('Y-m-d', filemtime(__DIR__ . '/../Views/calculators/home.twig')),
+            'lastmod' => $this->viewRenderer->getTemplateModifiedDate('calculators/home'),
             'changefreq' => 'weekly',
             'priority' => '1.0'
         ];
 
         // 2. Calculators
         foreach (array_keys($routesConfig['calculators']) as $path) {
-            $mdFile = __DIR__ . '/../../content/calculators' . $path . '.md';
-            $lastmod = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : date('Y-m-d');
-
-            $priority = in_array($path, ['/sip-calculator', '/swp-calculator']) ? '0.9' : '0.8';
+            $slug = ltrim($path, '/');
+            $lastmod = $this->viewRenderer->getTemplateModifiedDate('calculators/' . $slug);
+            $priority = in_array($path, ['/sip-calculator', '/swp-calculator'], true) ? '0.9' : '0.8';
 
             $urls[] = [
                 'loc' => $baseUrl . $path,
@@ -57,8 +61,8 @@ class SitemapController
         // 3. Blog Posts
         $posts = $this->blogRepository->getAllPosts();
         foreach ($posts as $post) {
-            $mdFile = __DIR__ . '/../../content/blog/' . $post['category'] . '/' . basename($post['href']) . '.md';
-            $lastmod = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : date('Y-m-d', strtotime($post['date']));
+            $slug = basename($post['href']);
+            $lastmod = $this->blogRepository->getPostModifiedDate($post['category'], $slug);
 
             $urls[] = [
                 'loc' => $baseUrl . $post['href'],
@@ -71,7 +75,7 @@ class SitemapController
         // 4. Resources Index
         $urls[] = [
             'loc' => $baseUrl . '/resources',
-            'lastmod' => date('Y-m-d', filemtime(__DIR__ . '/../Views/pages/resources.twig')),
+            'lastmod' => $this->viewRenderer->getTemplateModifiedDate('pages/resources'),
             'changefreq' => 'weekly',
             'priority' => '0.7'
         ];
@@ -86,8 +90,8 @@ class SitemapController
         ];
 
         foreach ($pages as $path => $priority) {
-            $twigFile = __DIR__ . '/../Views/pages' . $path . '.twig';
-            $lastmod = file_exists($twigFile) ? date('Y-m-d', filemtime($twigFile)) : date('Y-m-d');
+            $slug = ltrim($path, '/');
+            $lastmod = $this->viewRenderer->getTemplateModifiedDate('pages/' . $slug);
 
             $urls[] = [
                 'loc' => $baseUrl . $path,
@@ -97,21 +101,31 @@ class SitemapController
             ];
         }
 
-        // Generate XML
-        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+        // Generate XML via DOMDocument
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->formatOutput = true;
 
-        foreach ($urls as $url) {
-            $xml .= "  <url>\n";
-            $xml .= "    <loc>" . htmlspecialchars($url['loc']) . "</loc>\n";
-            $xml .= "    <lastmod>" . $url['lastmod'] . "</lastmod>\n";
-            $xml .= "    <changefreq>" . $url['changefreq'] . "</changefreq>\n";
-            $xml .= "    <priority>" . $url['priority'] . "</priority>\n";
-            $xml .= "  </url>\n";
+        $urlset = $dom->createElementNS('http://www.sitemaps.org/schemas/sitemap/0.9', 'urlset');
+
+        foreach ($urls as $urlData) {
+            $url = $dom->createElement('url');
+
+            $loc = $dom->createElement('loc', $urlData['loc']);
+            $lastmod = $dom->createElement('lastmod', $urlData['lastmod']);
+            $changefreq = $dom->createElement('changefreq', $urlData['changefreq']);
+            $priority = $dom->createElement('priority', $urlData['priority']);
+
+            $url->appendChild($loc);
+            $url->appendChild($lastmod);
+            $url->appendChild($changefreq);
+            $url->appendChild($priority);
+
+            $urlset->appendChild($url);
         }
 
-        $xml .= '</urlset>';
+        $dom->appendChild($urlset);
+        $xml = $dom->saveXML();
 
-        return new Response($xml, 200, ['Content-Type' => 'application/xml; charset=utf-8']);
+        return new Response($xml ?: '', 200, ['Content-Type' => 'application/xml; charset=utf-8']);
     }
 }

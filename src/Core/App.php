@@ -235,7 +235,8 @@ class App
             return new SitemapController(
                 $c->get(BlogRepository::class),
                 $c->get(SiteConfig::class),
-                $routesConfig
+                $routesConfig,
+                $c->get(ViewRenderer::class)
             );
         });
 

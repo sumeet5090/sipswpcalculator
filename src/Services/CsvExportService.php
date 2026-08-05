@@ -20,6 +20,8 @@ class CsvExportService
     {
         $resource = fopen('php://temp', 'r+');
 
+        $hasTaxData = !empty($combined) && isset($combined[0]['ltcg_tax']);
+
         $headers = ['Year', 'Begin Balance (₹)', 'Monthly SIP (₹)', 'Annual Contribution (₹)', 'Cumulative Invested (₹)'];
         if ($enableSwp) {
             $headers[] = 'Monthly SWP (₹)';
@@ -28,6 +30,10 @@ class CsvExportService
         }
         $headers[] = 'Interest Earned (₹)';
         $headers[] = 'End Balance (₹)';
+        if ($hasTaxData) {
+            $headers[] = 'Est. LTCG Tax (₹)';
+            $headers[] = 'Post-Tax Balance (₹)';
+        }
 
         fputcsv($resource, $headers, ',', '"', '\\');
 
@@ -35,17 +41,21 @@ class CsvExportService
             $csvRow = [
                 $row['year'],
                 $row['begin_balance'],
-                $row['sip_monthly'] !== null ? $row['sip_monthly'] : 0,
+                $row['sip_monthly'] ?? 0,
                 $row['annual_contribution'],
                 $row['cumulative_invested']
             ];
             if ($enableSwp) {
-                $csvRow[] = $row['swp_monthly'] !== null ? $row['swp_monthly'] : 0;
-                $csvRow[] = $row['annual_withdrawal'] !== null ? $row['annual_withdrawal'] : 0;
+                $csvRow[] = $row['swp_monthly'] ?? 0;
+                $csvRow[] = $row['annual_withdrawal'] ?? 0;
                 $csvRow[] = $row['cumulative_withdrawals'];
             }
             $csvRow[] = $row['interest'];
             $csvRow[] = $row['combined_total'];
+            if ($hasTaxData) {
+                $csvRow[] = $row['ltcg_tax'] ?? 0;
+                $csvRow[] = $row['post_tax_total'] ?? $row['combined_total'];
+            }
             fputcsv($resource, $csvRow, ',', '"', '\\');
         }
 
