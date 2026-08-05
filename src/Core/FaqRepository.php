@@ -46,6 +46,7 @@ class FaqRepository
             ['id' => 'strategies', 'label' => 'Strategies'],
             ['id' => 'tax', 'label' => 'Tax & Risk'],
             ['id' => 'selection', 'label' => 'Selection'],
+            ['id' => 'retirement', 'label' => 'Retirement Planning'],
         ];
     }
 
