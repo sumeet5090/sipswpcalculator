@@ -19,7 +19,8 @@ class Container implements ContainerInterface
     private array $instances = [];
 
     /**
-     * Bind a key (interface/class name) to a resolver callback or value.
+     * Bind a key (interface/class name) to a transient resolver callback or value.
+     * Transient bindings produce a new instance on each get() call.
      */
     public function bind(string $key, callable|object|string $resolver): void
     {

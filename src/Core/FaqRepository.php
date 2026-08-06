@@ -39,16 +39,16 @@ class FaqRepository
     /**
      * Get FAQ categories metadata derived dynamically from FAQ data.
      */
-    public function getFaqCategories(): array
+    public function getFaqCategories(?array $customLabels = null): array
     {
         $this->load();
-        $labels = [
+        $labels = array_merge([
             'basics'     => 'Basics',
             'strategies' => 'Strategies',
             'tax'        => 'Tax & Risk',
             'selection'  => 'Selection',
             'retirement' => 'Retirement Planning',
-        ];
+        ], $customLabels ?? []);
 
         $categories = [];
         $seen = [];

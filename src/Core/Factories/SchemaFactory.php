@@ -12,15 +12,18 @@ class SchemaFactory
     private SchemaHelper $schemaHelper;
     private SiteConfig $siteConfig;
     private ?\Core\BlogRepository $blogRepository;
+    private string $contentDir;
 
     public function __construct(
         SchemaHelper $schemaHelper,
         SiteConfig $siteConfig,
-        ?\Core\BlogRepository $blogRepository = null
+        ?\Core\BlogRepository $blogRepository = null,
+        ?string $contentDir = null
     ) {
         $this->schemaHelper = $schemaHelper;
         $this->siteConfig = $siteConfig;
         $this->blogRepository = $blogRepository;
+        $this->contentDir = $contentDir ?? __DIR__ . '/../../../content/calculators';
     }
 
     /**
@@ -47,7 +50,7 @@ class SchemaFactory
                 $actualModifiedDate = $this->blogRepository->getPostModifiedDate($parts[0], $parts[1], $publishedDate);
             }
         } else {
-            $mdFile = __DIR__ . '/../../../content/calculators/' . ltrim($slug, '/') . '.md';
+            $mdFile = rtrim($this->contentDir, '/\\') . '/' . ltrim($slug, '/') . '.md';
             $actualModifiedDate = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $publishedDate;
         }
 

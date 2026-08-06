@@ -86,6 +86,10 @@ class App
      */
     private function registerDependencies(): void
     {
+        $this->container->singleton(\PDO::class, function () {
+            return $this->createPdoInstance();
+        });
+
         // Bind managers and helpers as Singletons
         $this->container->singleton(SiteConfig::class, function () {
             return new SiteConfig((string) Env::get('APP_URL', self::DEFAULT_APP_URL));
@@ -200,10 +204,6 @@ class App
 
         $this->container->singleton(BlogRepository::class, function (Container $c) {
             return new BlogRepository($c->get(ContentManager::class));
-        });
-
-        $this->container->singleton(\PDO::class, function () {
-            return $this->createPdoInstance();
         });
 
         $this->container->singleton(InsightRepository::class, function (Container $c) {
@@ -358,7 +358,7 @@ class App
             throw new \RuntimeException("Failed to create database file: {$dbPath}");
         }
         return new \PDO('sqlite:' . $dbPath, null, null, [
-            \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
         ]);
     }

@@ -7,7 +7,7 @@ import { InvestmentInputs, YearResult } from '../types';
  */
 export class AnalyticsService {
     private debounceMs: number;
-    private insightTimeout: any = null;
+    private insightTimeout: ReturnType<typeof setTimeout> | null = null;
 
     constructor(debounceMs: number = 3000) {
         this.debounceMs = debounceMs;

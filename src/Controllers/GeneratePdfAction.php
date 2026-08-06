@@ -9,6 +9,7 @@ use Core\Http\Response;
 use Core\Exceptions\RateLimitExceededException;
 use Core\InvestmentInputs;
 use Services\ConfigService;
+use Services\HtmlSanitizer;
 use Services\PdfGeneratorService;
 use Services\RateLimiter;
 use Services\SessionManager;
@@ -19,17 +20,20 @@ class GeneratePdfAction
     private SessionManager $sessionManager;
     private PdfGeneratorService $pdfGenerator;
     private ConfigService $configService;
+    private HtmlSanitizer $sanitizer;
 
     public function __construct(
         RateLimiter $rateLimiter,
         SessionManager $sessionManager,
         PdfGeneratorService $pdfGenerator,
-        ConfigService $configService
+        ConfigService $configService,
+        ?HtmlSanitizer $sanitizer = null
     ) {
         $this->rateLimiter = $rateLimiter;
         $this->sessionManager = $sessionManager;
         $this->pdfGenerator = $pdfGenerator;
         $this->configService = $configService;
+        $this->sanitizer = $sanitizer ?? new HtmlSanitizer();
     }
 
     public function __invoke(Request $request): Response
@@ -57,11 +61,11 @@ class GeneratePdfAction
             $calcInputs = InvestmentInputs::fromRequest($post, $this->configService);
 
             $inputs = [
-                'client_name'       => $this->sanitizeText((string) ($post['clientName'] ?? 'N/A'), 100),
-                'advisor_name'      => $this->sanitizeText((string) ($post['advisorName'] ?? 'N/A'), 100),
-                'custom_disclaimer' => $this->sanitizeText((string) ($post['customDisclaimer'] ?? ''), 1000),
-                'chart_base64'      => $this->extractChartData((string) ($post['chartData'] ?? '')),
-                'table_html'        => $this->sanitizeTableHtml((string) ($post['tableHtml'] ?? '')),
+                'client_name'       => $this->sanitizer->sanitizeText((string) ($post['clientName'] ?? 'N/A'), 100),
+                'advisor_name'      => $this->sanitizer->sanitizeText((string) ($post['advisorName'] ?? 'N/A'), 100),
+                'custom_disclaimer' => $this->sanitizer->sanitizeText((string) ($post['customDisclaimer'] ?? ''), 1000),
+                'chart_base64'      => $this->sanitizer->extractChartData((string) ($post['chartData'] ?? '')),
+                'table_html'        => $this->sanitizer->sanitizeTableHtml((string) ($post['tableHtml'] ?? '')),
                 'sip'               => $calcInputs->getSip(),
                 'years'             => $calcInputs->getYears(),
                 'rate'              => $calcInputs->getRate(),
@@ -74,11 +78,11 @@ class GeneratePdfAction
                 'logo_base64'       => $this->handleLogoUpload($request->files('advisorLogo')),
 
                 // Summary Metrics
-                'currency_symbol'   => $this->sanitizeText((string) ($post['currency_symbol'] ?? ''), 10),
-                'summary_invested'  => $this->sanitizeText((string) ($post['summary_invested'] ?? '0'), 50),
-                'summary_interest'  => $this->sanitizeText((string) ($post['summary_interest'] ?? '0'), 50),
-                'summary_withdrawn' => $this->sanitizeText((string) ($post['summary_withdrawn'] ?? '0'), 50),
-                'summary_corpus'    => $this->sanitizeText((string) ($post['summary_corpus'] ?? '0'), 50),
+                'currency_symbol'   => $this->sanitizer->sanitizeText((string) ($post['currency_symbol'] ?? ''), 10),
+                'summary_invested'  => $this->sanitizer->sanitizeText((string) ($post['summary_invested'] ?? '0'), 50),
+                'summary_interest'  => $this->sanitizer->sanitizeText((string) ($post['summary_interest'] ?? '0'), 50),
+                'summary_withdrawn' => $this->sanitizer->sanitizeText((string) ($post['summary_withdrawn'] ?? '0'), 50),
+                'summary_corpus'    => $this->sanitizer->sanitizeText((string) ($post['summary_corpus'] ?? '0'), 50),
                 'raw_invested'      => (float) ($post['raw_invested'] ?? 0),
                 'raw_corpus'        => (float) ($post['raw_corpus'] ?? 0),
             ];
@@ -102,33 +106,6 @@ class GeneratePdfAction
             error_log('PDF Generation Error: ' . $e->getMessage());
             return new Response('An error occurred during PDF generation. Please try again.', 500);
         }
-    }
-
-    private function sanitizeText(string $value, int $maxLength): string
-    {
-        return mb_substr(strip_tags($value), 0, $maxLength);
-    }
-
-    private function extractChartData(string $chartRaw): string
-    {
-        $chartRaw = trim($chartRaw);
-        if ($chartRaw !== '' && preg_match('/^data:image\/(png|jpeg|gif|webp);base64,/i', $chartRaw)) {
-            return $chartRaw;
-        }
-        return '';
-    }
-
-    private function sanitizeTableHtml(string $tableRaw): string
-    {
-        if (trim($tableRaw) === '') {
-            $tableRaw = '<table><tr><td>No data</td></tr></table>';
-        }
-        $clean = strip_tags(
-            $tableRaw,
-            '<table><thead><tbody><tfoot><tr><th><td><caption><colgroup><col><span><strong><em><br>'
-        );
-        $clean = (string) preg_replace('/\s+on\w+\s*=\s*["\'][^"\']*["\']/i', '', $clean);
-        return (string) preg_replace('/\s+style\s*=\s*["\'][^"\']*expression\s*\([^"\']*["\']/i', '', $clean);
     }
 
     private function handleLogoUpload(?array $logoFile): ?string

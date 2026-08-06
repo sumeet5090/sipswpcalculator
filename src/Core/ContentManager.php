@@ -97,19 +97,21 @@ class ContentManager
                 continue;
             }
 
-            $parts = explode(':', $line, 2);
-            if (count($parts) === 2) {
-                $key = trim($parts[0]);
-                $value = trim($parts[1]);
+            $colonPos = strpos($line, ':');
+            if ($colonPos !== false) {
+                $key = trim(substr($line, 0, $colonPos));
+                $value = trim(substr($line, $colonPos + 1));
 
-                if (preg_match('/^["\'](.*)["\']$/s', $value, $valMatches)) {
-                    $value = $valMatches[1];
+                if (preg_match('/^["\'](.*)["\']$/s', $value, $matches)) {
+                    $value = $matches[1];
                 }
 
-                if ($value === 'true') {
+                if (strtolower($value) === 'true') {
                     $value = true;
-                } elseif ($value === 'false') {
+                } elseif (strtolower($value) === 'false') {
                     $value = false;
+                } elseif (is_numeric($value) && !str_starts_with($value, '0') && strlen($value) < 10) {
+                    $value = str_contains($value, '.') ? (float) $value : (int) $value;
                 }
 
                 $metadata[$key] = $value;

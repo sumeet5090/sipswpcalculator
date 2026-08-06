@@ -16,7 +16,7 @@ class RateLimiter
 
     public function __construct(?string $baseStorageDir = null)
     {
-        $this->baseStorageDir = $baseStorageDir ?? sys_get_temp_dir();
+        $this->baseStorageDir = $baseStorageDir ?? __DIR__ . '/../../var/rate_limits';
     }
 
     /**

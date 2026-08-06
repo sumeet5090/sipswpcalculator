@@ -57,6 +57,13 @@ export class InputValidator {
     }
 
     /**
+     * Retrieve constraint boundaries for a field.
+     */
+    getConstraint(field: string): FieldConstraint | undefined {
+        return this.constraints[field];
+    }
+
+    /**
      * Sanitize and validate a specific field against its limits.
      * @returns Sanitized value within bounds, or default if NaN.
      */

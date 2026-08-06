@@ -95,17 +95,16 @@ class BlogController
             $content['metadata']['title'] ?: ucfirst(str_replace('-', ' ', $slug)) => "/resource/{$category}/{$slug}"
         ];
 
-        // Derive real datePublished from post config with dynamic file mtime fallback
-        $datePublished = $this->blogRepository->getPostModifiedDate($category, $slug);
+        // Derive real dateModified from markdown file mtime via repository
+        $dateModified = $this->blogRepository->getPostModifiedDate($category, $slug);
+        $datePublished = $dateModified;
+
         if ($post_metadata && !empty($post_metadata['date'])) {
             $parsed = \DateTimeImmutable::createFromFormat('F Y', $post_metadata['date']);
             if ($parsed) {
                 $datePublished = $parsed->format('Y-m-01');
             }
         }
-
-        // Derive real dateModified from markdown file mtime via repository
-        $dateModified = $this->blogRepository->getPostModifiedDate($category, $slug, $datePublished);
 
         $page_config['additional_head'] = $this->schemaFactory->generateForPage(
             $category . '/' . $slug,

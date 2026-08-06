@@ -47,8 +47,8 @@ class InsightRepository
         $totalInRange = (int) $stmt->fetchColumn();
 
         // 2. Average Step-Up % in range
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(step_up_pct), 0) FROM user_calculations {$whereClause} AND step_up_pct > 0");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(step_up_pct), 0) FROM user_calculations {$whereClause} AND step_up_pct > :min_stepup");
+        $stmt->execute(array_merge($params, [':min_stepup' => 0]));
         $avgStepUp = (float) $stmt->fetchColumn();
 
         // 3. Total all-time calculations
@@ -60,8 +60,8 @@ class InsightRepository
         $calcTypeBreakdown = $stmt->fetchAll();
 
         // 5. PDF Downloads count and conversion rate
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND pdf_downloaded = 1");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND pdf_downloaded = :pdf_flag");
+        $stmt->execute(array_merge($params, [':pdf_flag' => 1]));
         $totalPdfDownloads = (int) $stmt->fetchColumn();
         $conversionRate = $totalInRange > 0 ? round(($totalPdfDownloads / $totalInRange) * 100, 1) : 0.0;
 
@@ -156,12 +156,12 @@ class InsightRepository
         $stmt = $this->pdo->prepare("
             SELECT amount, UPPER(COALESCE(currency, 'INR')) AS currency, COUNT(*) AS frequency
             FROM user_calculations
-            {$whereClause} AND calc_type = 'SWP' AND amount IS NOT NULL
+            {$whereClause} AND calc_type = :swp_type AND amount IS NOT NULL
             GROUP BY amount, UPPER(COALESCE(currency, 'INR'))
             ORDER BY frequency DESC
             LIMIT 10
         ");
-        $stmt->execute($params);
+        $stmt->execute(array_merge($params, [':swp_type' => 'SWP']));
         $topCorpus = $stmt->fetchAll();
 
         return [
@@ -172,39 +172,39 @@ class InsightRepository
 
     private function getSipAndSwpAverages(string $whereClause, array $params): array
     {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND calc_type = 'SIP'");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND calc_type = :sip_type");
+        $stmt->execute(array_merge($params, [':sip_type' => 'SIP']));
         $totalSIP = (int) $stmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND calc_type = 'SIP' AND step_up_pct > 0");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND calc_type = :sip_type AND step_up_pct > :min_stepup");
+        $stmt->execute(array_merge($params, [':sip_type' => 'SIP', ':min_stepup' => 0]));
         $stepUpSIP = (int) $stmt->fetchColumn();
 
         $flatSIP = $totalSIP - $stepUpSIP;
         $stepUpAdoptionRate = $totalSIP > 0 ? round(($stepUpSIP / $totalSIP) * 100, 1) : 0.0;
 
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations {$whereClause} AND calc_type = 'SIP'");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations {$whereClause} AND calc_type = :sip_type");
+        $stmt->execute(array_merge($params, [':sip_type' => 'SIP']));
         $avgDurationSIP = (float) $stmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations {$whereClause} AND calc_type = 'SWP'");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations {$whereClause} AND calc_type = :swp_type");
+        $stmt->execute(array_merge($params, [':swp_type' => 'SWP']));
         $avgDurationSWP = (float) $stmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interest_rate), 0) FROM user_calculations {$whereClause} AND interest_rate > 0");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interest_rate), 0) FROM user_calculations {$whereClause} AND interest_rate > :min_rate");
+        $stmt->execute(array_merge($params, [':min_rate' => 0]));
         $avgInterestRate = (float) $stmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND swp_enabled = 1");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND swp_enabled = :swp_flag");
+        $stmt->execute(array_merge($params, [':swp_flag' => 1]));
         $totalSWPEnabled = (int) $stmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(sip_amount), 0) FROM user_calculations {$whereClause} AND sip_amount > 0");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(sip_amount), 0) FROM user_calculations {$whereClause} AND sip_amount > :min_sip");
+        $stmt->execute(array_merge($params, [':min_sip' => 0]));
         $avgSipAmount = (float) $stmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(swp_withdrawal), 0) FROM user_calculations {$whereClause} AND swp_withdrawal > 0");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(swp_withdrawal), 0) FROM user_calculations {$whereClause} AND swp_withdrawal > :min_swp");
+        $stmt->execute(array_merge($params, [':min_swp' => 0]));
         $avgSwpWithdrawal = (float) $stmt->fetchColumn();
 
         return [
@@ -252,11 +252,11 @@ class InsightRepository
                 END AS bucket,
                 COUNT(*) AS cnt
             FROM user_calculations
-            {$whereClause} AND calc_type = 'SWP' AND amount IS NOT NULL AND UPPER(COALESCE(currency,'INR')) = 'INR'
+            {$whereClause} AND calc_type = :swp_type AND amount IS NOT NULL AND UPPER(COALESCE(currency, :default_curr)) = :inr_curr
             GROUP BY bucket
             ORDER BY MIN(amount) ASC
         ");
-        $stmt->execute($params);
+        $stmt->execute(array_merge($params, [':swp_type' => 'SWP', ':default_curr' => 'INR', ':inr_curr' => 'INR']));
         $corpusBucketsINR = $stmt->fetchAll();
 
         $stmt = $this->pdo->prepare("
@@ -269,11 +269,11 @@ class InsightRepository
                 END AS bucket,
                 COUNT(*) AS cnt
             FROM user_calculations
-            {$whereClause} AND calc_type = 'SWP' AND amount IS NOT NULL AND UPPER(COALESCE(currency,'INR')) != 'INR'
+            {$whereClause} AND calc_type = :swp_type AND amount IS NOT NULL AND UPPER(COALESCE(currency, :default_curr)) != :inr_curr
             GROUP BY bucket
             ORDER BY MIN(amount) ASC
         ");
-        $stmt->execute($params);
+        $stmt->execute(array_merge($params, [':swp_type' => 'SWP', ':default_curr' => 'INR', ':inr_curr' => 'INR']));
         $corpusBucketsUSD = $stmt->fetchAll();
 
         $stmt = $this->pdo->prepare("
@@ -314,31 +314,31 @@ class InsightRepository
         $stmt->execute($params);
         $goalModeDist = $stmt->fetchAll();
 
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND table_viewed = 1");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND table_viewed = :viewed_flag");
+        $stmt->execute(array_merge($params, [':viewed_flag' => 1]));
         $tableViewedCount = (int) $stmt->fetchColumn();
         $tableViewEngagement = $totalInRange > 0 ? round(($tableViewedCount / $totalInRange) * 100, 1) : 0.0;
 
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(final_corpus), 0) FROM user_calculations {$whereClause} AND final_corpus > 0");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(final_corpus), 0) FROM user_calculations {$whereClause} AND final_corpus > :min_corpus");
+        $stmt->execute(array_merge($params, [':min_corpus' => 0]));
         $avgFinalCorpus = (float) $stmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(wealth_multiplier), 0) FROM user_calculations {$whereClause} AND wealth_multiplier > 0");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(wealth_multiplier), 0) FROM user_calculations {$whereClause} AND wealth_multiplier > :min_mult");
+        $stmt->execute(array_merge($params, [':min_mult' => 0]));
         $avgWealthMultiplier = (float) $stmt->fetchColumn();
 
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND pdf_has_custom_name = 1");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND pdf_has_custom_name = :custom_flag");
+        $stmt->execute(array_merge($params, [':custom_flag' => 1]));
         $b2bCount = (int) $stmt->fetchColumn();
         $b2bAdvisorRate = $totalPdfDownloads > 0 ? round(($b2bCount / $totalPdfDownloads) * 100, 1) : 0.0;
 
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND inflation_enabled = 1");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND inflation_enabled = :inf_flag");
+        $stmt->execute(array_merge($params, [':inf_flag' => 1]));
         $inflationCount = (int) $stmt->fetchColumn();
         $inflationRate = $totalInRange > 0 ? round(($inflationCount / $totalInRange) * 100, 1) : 0.0;
 
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interaction_count), 1) FROM user_calculations {$whereClause} AND interaction_count > 0");
-        $stmt->execute($params);
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interaction_count), 1) FROM user_calculations {$whereClause} AND interaction_count > :min_interaction");
+        $stmt->execute(array_merge($params, [':min_interaction' => 0]));
         $avgIterations = round((float) $stmt->fetchColumn(), 1);
 
         return [

@@ -75,6 +75,8 @@ class MathEngineAlignmentTest extends TestCase
             'swp_years' => $inputs->getSwpYears(),
             'swp_stepup' => $inputs->getSwpStepup(),
             'swp_rate' => $inputs->getSwpRate(),
+            'ltcg_exemption' => $inputs->getLtcgExemption(),
+            'ltcg_tax_rate' => $inputs->getLtcgTaxRate(),
         ];
         $jsResults = $this->runJsCalculation($jsData);
 

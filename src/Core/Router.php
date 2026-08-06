@@ -19,12 +19,12 @@ class Router
         $this->container = $container;
     }
 
-    public function get(string $uri, string|array $controllerAction): void
+    public function get(string $uri, array $controllerAction): void
     {
         $this->routes['GET'][$uri] = $controllerAction;
     }
 
-    public function post(string $uri, string|array $controllerAction): void
+    public function post(string $uri, array $controllerAction): void
     {
         $this->routes['POST'][$uri] = $controllerAction;
     }
@@ -68,16 +68,10 @@ class Router
         throw new \Core\Exceptions\RouteNotFoundException("No route found for URI: {$uri}");
     }
 
-    private function callAction(string|array $controllerAction, array $params = [], ?Request $request = null): Response
+    private function callAction(array $controllerAction, array $params = [], ?Request $request = null): Response
     {
-        if (is_array($controllerAction)) {
-            $controllerName = $controllerAction[0];
-            $action = $controllerAction[1] ?? '__invoke';
-        } else {
-            $parts = explode('@', $controllerAction);
-            $controllerName = $parts[0];
-            $action = $parts[1] ?? '__invoke';
-        }
+        $controllerName = $controllerAction[0];
+        $action = $controllerAction[1] ?? '__invoke';
 
         if (!str_starts_with($controllerName, '\\')) {
             $controllerName = '\\' . $controllerName;

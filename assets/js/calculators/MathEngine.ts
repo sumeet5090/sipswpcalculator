@@ -55,7 +55,7 @@ export class MathEngine {
                 if (netBalance < 0) netBalance = 0;
             }
 
-            cumulativeInvested = Math.round((cumulativeInvested + annualContribution) * 100) / 100;
+            cumulativeInvested += annualContribution;
             let annualWithdrawal = Math.round(actualYearWithdrawn * 100) / 100;
             if (inp.enable_swp && y >= swpStartYear) {
                 cumulativeWithdrawals = Math.round((cumulativeWithdrawals + annualWithdrawal) * 100) / 100;

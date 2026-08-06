@@ -139,9 +139,6 @@ export class CalculatorApp {
     }
 
     /**
-     * Draw years breakdown logs.
-     */
-    /**
      * Draw years breakdown logs securely using DOM node construction.
      */
     updateTable(data: YearResult[], enableSwp: boolean): void {
@@ -531,8 +528,8 @@ export class CalculatorApp {
                     sipSpan.classList.add('bg-slate-100');
                     sipSpan.classList.remove('bg-white/20');
                 }
+                sipTab.setAttribute('aria-selected', 'false');
                 swpTab.setAttribute('aria-selected', 'true');
-                swpTab.setAttribute('aria-selected', 'false');
             }
         };
     }
@@ -579,19 +576,19 @@ export class CalculatorApp {
         const closePdfBtn = this.dom.getElement('closePdfModalBtn');
         const pdfForm = this.dom.getElement<HTMLFormElement>('pdfForm');
 
-        const openModalFn = (el: any) => {
+        const openModalFn = (el: HTMLDialogElement | HTMLElement | null) => {
             if (!el) return;
-            if (typeof el.showModal === 'function') {
-                el.showModal();
+            if ('showModal' in el && typeof (el as HTMLDialogElement).showModal === 'function') {
+                (el as HTMLDialogElement).showModal();
             } else {
                 el.classList.remove('hidden');
             }
         };
 
-        const closeModalFn = (el: any) => {
+        const closeModalFn = (el: HTMLDialogElement | HTMLElement | null) => {
             if (!el) return;
-            if (typeof el.close === 'function') {
-                el.close();
+            if ('close' in el && typeof (el as HTMLDialogElement).close === 'function') {
+                (el as HTMLDialogElement).close();
             } else {
                 el.classList.add('hidden');
             }
@@ -637,7 +634,7 @@ export class CalculatorApp {
                 if (chartInst && chartInst.canvas) {
                     try {
                         chartDataURL = chartInst.canvas.toDataURL('image/png');
-                    } catch (e) {
+                    } catch (_err) {
                         chartDataURL = '';
                     }
                 }
@@ -779,7 +776,7 @@ export class CalculatorApp {
     }
 
     private initResizeListeners(): void {
-        let resizeTimer: any;
+        let resizeTimer: ReturnType<typeof setTimeout> | undefined;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {

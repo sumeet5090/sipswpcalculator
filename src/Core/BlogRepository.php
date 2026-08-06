@@ -13,6 +13,8 @@ class BlogRepository
     public const DEFAULT_POST_DATE = 'March 2026';
 
     private ContentManager $contentManager;
+    private ?array $cachedCategories = null;
+    private ?array $cachedPosts = null;
 
     public function __construct(ContentManager $contentManager)
     {
@@ -21,8 +23,13 @@ class BlogRepository
 
     public function getCategories(): array
     {
+        if ($this->cachedCategories !== null) {
+            return $this->cachedCategories;
+        }
+
         $jsonPath = __DIR__ . '/../../content/categories.json';
         if (!file_exists($jsonPath)) {
+            $this->cachedCategories = [];
             return [];
         }
 
@@ -31,10 +38,12 @@ class BlogRepository
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             error_log("Failed to parse content/categories.json: " . json_last_error_msg());
+            $this->cachedCategories = [];
             return [];
         }
 
-        return is_array($decoded) ? $decoded : [];
+        $this->cachedCategories = is_array($decoded) ? $decoded : [];
+        return $this->cachedCategories;
     }
 
     /**
@@ -44,6 +53,10 @@ class BlogRepository
      */
     public function getAllPosts(): array
     {
+        if ($this->cachedPosts !== null) {
+            return $this->cachedPosts;
+        }
+
         $contentDir = __DIR__ . '/../../content/blog';
         $posts = [];
 
@@ -88,7 +101,8 @@ class BlogRepository
             return $dateB <=> $dateA;
         });
 
-        return $posts;
+        $this->cachedPosts = $posts;
+        return $this->cachedPosts;
     }
 
     /**
