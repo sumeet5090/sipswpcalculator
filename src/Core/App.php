@@ -240,6 +240,10 @@ class App
             );
         });
 
+        $this->container->singleton(\Controllers\ErrorController::class, function (Container $c) {
+            return new \Controllers\ErrorController($c->get(ViewRenderer::class));
+        });
+
         $this->container->singleton(BlogController::class, function (Container $c) {
             return new BlogController(
                 $c->get(ContentManager::class),
@@ -248,7 +252,8 @@ class App
                 $c->get(BlogRepository::class),
                 $c->get(\Core\Factories\SchemaFactory::class),
                 $c->get(SiteConfig::class),
-                $c->get(ViewRenderer::class)
+                $c->get(ViewRenderer::class),
+                $c->get(\Controllers\ErrorController::class)
             );
         });
 
@@ -270,7 +275,8 @@ class App
                 $c->get(FaqRepository::class),
                 $c->get(BlogRepository::class),
                 $c->get(\Core\Strategies\StrategyFactory::class),
-                $c->get(ViewRenderer::class)
+                $c->get(ViewRenderer::class),
+                $c->get(\Controllers\ErrorController::class)
             );
         });
     }

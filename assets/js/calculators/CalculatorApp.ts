@@ -161,18 +161,9 @@ export class CalculatorApp {
             `;
             
             const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
-            let finalCorpus = row.combined_total;
-            let ltcgTax = 0;
-            
-            // Derive LTCG tax if needed
-            const gains = (row.combined_total + (row.cumulative_withdrawals || 0)) - row.cumulative_invested;
-            const taxableGains = Math.max(0, gains - 125000);
-            ltcgTax = taxableGains * 0.125;
+            let finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
+            const ltcgTax = row.ltcg_tax ?? 0;
 
-            if (showPostTax) {
-                finalCorpus = Math.max(0, row.combined_total - ltcgTax);
-            }
-            
             const taxDisplay = showPostTax ? '' : 'style="display:none"';
             let taxCols = `<td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap tax-col" ${taxDisplay}>${this.formatter.format(Math.round(ltcgTax))}</td>`;
 
@@ -231,9 +222,8 @@ export class CalculatorApp {
         }
 
         if (showPostTax) {
-            const taxableGains = Math.max(0, preTaxGains - 125000);
-            const ltcgTax = taxableGains * 0.125;
-            finalCorpus = Math.max(0, preTaxCorpus - ltcgTax);
+            const ltcgTax = lastRow.ltcg_tax ?? 0;
+            finalCorpus = lastRow.post_tax_total ?? Math.max(0, preTaxCorpus - ltcgTax);
             finalGains = Math.max(0, preTaxGains - ltcgTax);
 
             const interestTitle = document.getElementById('title-interest');

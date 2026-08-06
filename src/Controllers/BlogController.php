@@ -26,6 +26,7 @@ class BlogController
     private SchemaFactory $schemaFactory;
     private SiteConfig $siteConfig;
     private ViewRenderer $viewRenderer;
+    private ErrorController $errorController;
 
     public function __construct(
         ContentManager $contentManager,
@@ -34,7 +35,8 @@ class BlogController
         BlogRepository $blogRepository,
         SchemaFactory $schemaFactory,
         SiteConfig $siteConfig,
-        ViewRenderer $viewRenderer
+        ViewRenderer $viewRenderer,
+        ErrorController $errorController
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
@@ -43,6 +45,7 @@ class BlogController
         $this->schemaFactory = $schemaFactory;
         $this->siteConfig = $siteConfig;
         $this->viewRenderer = $viewRenderer;
+        $this->errorController = $errorController;
     }
 
     public function index(): Response
@@ -77,7 +80,7 @@ class BlogController
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            return ErrorController::handle404($this->viewRenderer);
+            return $this->errorController->render404();
         }
 
         $post_metadata = $this->blogRepository->getPostBySlug($category, $slug);

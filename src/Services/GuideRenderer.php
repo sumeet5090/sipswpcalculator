@@ -27,6 +27,7 @@ class GuideRenderer
     private BlogRepository $blogRepository;
     private StrategyFactory $strategyFactory;
     private ViewRenderer $viewRenderer;
+    private ErrorController $errorController;
 
     public function __construct(
         ContentManager $contentManager,
@@ -35,7 +36,8 @@ class GuideRenderer
         FaqRepository $faqRepository,
         BlogRepository $blogRepository,
         StrategyFactory $strategyFactory,
-        ViewRenderer $viewRenderer
+        ViewRenderer $viewRenderer,
+        ErrorController $errorController
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
@@ -44,6 +46,7 @@ class GuideRenderer
         $this->blogRepository = $blogRepository;
         $this->strategyFactory = $strategyFactory;
         $this->viewRenderer = $viewRenderer;
+        $this->errorController = $errorController;
     }
 
     /**
@@ -57,7 +60,7 @@ class GuideRenderer
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            return ErrorController::handle404($this->viewRenderer);
+            return $this->errorController->render404();
         }
 
         $meta = $content['metadata'];

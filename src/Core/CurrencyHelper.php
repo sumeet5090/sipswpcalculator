@@ -19,17 +19,18 @@ class CurrencyHelper
     public static function formatInr(float|int $num): string
     {
         $num = round($num);
-        $money = floor($num);
+        $isNegative = $num < 0;
+        $money = (int) abs($num);
         $length = strlen((string) $money);
         $delimiter = '';
 
-        $money = (string) $money;
+        $moneyStr = (string) $money;
 
         if ($length <= 3) {
-            $delimiter = $money;
+            $delimiter = $moneyStr;
         } else {
-            $lastThree = substr($money, -3);
-            $restUnits = substr($money, 0, -3);
+            $lastThree = substr($moneyStr, -3);
+            $restUnits = substr($moneyStr, 0, -3);
             $restUnits = (strlen($restUnits) % 2 === 1) ? "0" . $restUnits : $restUnits;
 
             $firstPart = '';
@@ -44,6 +45,7 @@ class CurrencyHelper
             $delimiter = $firstPart . $lastThree;
         }
 
-        return "₹ " . $delimiter;
+        $prefix = $isNegative ? "-₹ " : "₹ ";
+        return $prefix . $delimiter;
     }
 }

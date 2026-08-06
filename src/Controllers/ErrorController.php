@@ -10,6 +10,23 @@ use Core\ViewRenderer;
 
 class ErrorController
 {
+    private ?ViewRenderer $viewRenderer;
+
+    public function __construct(?ViewRenderer $viewRenderer = null)
+    {
+        $this->viewRenderer = $viewRenderer;
+    }
+
+    public function render404(): Response
+    {
+        return self::handle404($this->viewRenderer);
+    }
+
+    public function render500(\Throwable $e): Response
+    {
+        return self::handle500($e, $this->viewRenderer);
+    }
+
     public static function handle404(?ViewRenderer $viewRenderer = null): Response
     {
         $html = $viewRenderer
