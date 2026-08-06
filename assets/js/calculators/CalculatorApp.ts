@@ -141,48 +141,65 @@ export class CalculatorApp {
     /**
      * Draw years breakdown logs.
      */
+    /**
+     * Draw years breakdown logs securely using DOM node construction.
+     */
     updateTable(data: YearResult[], enableSwp: boolean): void {
         const tbody = this.dom.getElement('breakdown-body');
         if (!tbody) return;
 
         const fragment = document.createDocumentFragment();
+        const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
+        const inputs = this.getInputs();
 
         data.forEach(row => {
             const tr = document.createElement('tr');
             tr.className = "hover:bg-slate-50 border-b border-slate-100 transition-colors";
 
             const fmt = (v: number | null | undefined) => (v !== null && v !== undefined) ? this.formatter.format(v) : '-';
+            const swpDisplay = enableSwp ? '' : 'none';
+            const taxDisplay = showPostTax ? '' : 'none';
 
-            const swpDisplay = enableSwp ? '' : 'style="display:none"';
-            let swpCols = `
-                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col" ${swpDisplay}>${fmt(row.swp_monthly)}</td>
-                <td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col" ${swpDisplay}>${fmt(row.annual_withdrawal)}</td>
-                <td class="px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap swp-col" ${swpDisplay}>${fmt(row.cumulative_withdrawals)}</td>
-            `;
-            
-            const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
             let finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
             const ltcgTax = row.ltcg_tax ?? 0;
 
-            const taxDisplay = showPostTax ? '' : 'style="display:none"';
-            let taxCols = `<td class="px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap tax-col" ${taxDisplay}>${this.formatter.format(Math.round(ltcgTax))}</td>`;
-
-            const inputs = this.getInputs();
             if (inputs.inflation > 0) {
-                finalCorpus = MathEngine.calculateInflationDiscount(finalCorpus, inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years, inputs.inflation);
+                finalCorpus = MathEngine.calculateInflationDiscount(
+                    finalCorpus,
+                    inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years,
+                    inputs.inflation
+                );
             }
 
-            tr.innerHTML = `
-                <td class="px-6 py-4 font-medium text-slate-700 whitespace-nowrap">${row.year}</td>
-                <td class="px-6 py-4 text-right font-mono text-slate-600 whitespace-nowrap">${this.formatter.format(row.begin_balance)}</td>
-                <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap">${fmt(row.sip_monthly)}</td>
-                <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap">${this.formatter.format(row.annual_contribution)}</td>
-                <td class="px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap">${this.formatter.format(row.cumulative_invested)}</td>
-                ${swpCols}
-                <td class="px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap">${this.formatter.format(row.interest)}</td>
-                ${taxCols}
-                <td class="px-6 py-4 text-right font-bold text-slate-800 font-mono whitespace-nowrap end-corpus-col">${this.formatter.format(finalCorpus)}</td>
-            `;
+            const createCell = (text: string, className: string, displayStyle: string = ''): HTMLTableCellElement => {
+                const td = document.createElement('td');
+                td.className = className;
+                if (displayStyle !== '') {
+                    td.style.display = displayStyle;
+                }
+                td.textContent = text;
+                return td;
+            };
+
+            tr.appendChild(createCell(String(row.year), "px-6 py-4 font-medium text-slate-700 whitespace-nowrap"));
+            tr.appendChild(createCell(this.formatter.format(row.begin_balance), "px-6 py-4 text-right font-mono text-slate-600 whitespace-nowrap"));
+            tr.appendChild(createCell(fmt(row.sip_monthly), "px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap"));
+            tr.appendChild(createCell(this.formatter.format(row.annual_contribution), "px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap"));
+            tr.appendChild(createCell(this.formatter.format(row.cumulative_invested), "px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap"));
+
+            // SWP Columns
+            tr.appendChild(createCell(fmt(row.swp_monthly), "px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col", swpDisplay));
+            tr.appendChild(createCell(fmt(row.annual_withdrawal), "px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col", swpDisplay));
+            tr.appendChild(createCell(fmt(row.cumulative_withdrawals), "px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap swp-col", swpDisplay));
+
+            tr.appendChild(createCell(this.formatter.format(row.interest), "px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap"));
+
+            // Tax Column
+            tr.appendChild(createCell(this.formatter.format(Math.round(ltcgTax)), "px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap tax-col", taxDisplay));
+
+            // Final Corpus Column
+            tr.appendChild(createCell(this.formatter.format(finalCorpus), "px-6 py-4 text-right font-bold text-slate-800 font-mono whitespace-nowrap end-corpus-col"));
+
             fragment.appendChild(tr);
         });
 
@@ -359,7 +376,21 @@ export class CalculatorApp {
             this.activeGoalMode = 'target';
         }
 
-        // ── Synchronize Slider pairs via SliderManager ──
+        this.initSliderSync();
+        this.initGoalModeControls();
+        this.initSwpHandlers();
+        this.initToggles();
+        this.initTabsController();
+        this.initSmartNudges();
+        this.initPdfExportModal();
+        this.initShareButton();
+        this.initResizeListeners();
+        this.initUrlParamRestoration();
+        this.initEventBusSubscribers();
+        this.initInitialCalculation();
+    }
+
+    private initSliderSync(): void {
         this.sliderManager.syncAll({
             'sip':            'sip_range',
             'years':          'years_range',
@@ -374,8 +405,9 @@ export class CalculatorApp {
             'swp_stepup':     'swp_stepup_range',
             'swp_rate':       'swp_rate_range',
         });
+    }
 
-        // ── Goal Mode Segmented Controls ──
+    private initGoalModeControls(): void {
         const growBtn = this.dom.getElement('goal-grow');
         const targetBtn = this.dom.getElement('goal-target');
         if (growBtn) {
@@ -385,7 +417,6 @@ export class CalculatorApp {
             targetBtn.addEventListener('click', () => this.setGoalMode('target'));
         }
 
-        // ── Auto-Switch to Grow Mode when user directly interacts with SIP inputs ──
         const sipInput = this.dom.getElement('sip');
         const sipRange = this.dom.getElement('sip_range');
         const autoSwitchToGrow = () => {
@@ -395,8 +426,9 @@ export class CalculatorApp {
         };
         if (sipInput) sipInput.addEventListener('input', autoSwitchToGrow);
         if (sipRange) sipRange.addEventListener('input', autoSwitchToGrow);
+    }
 
-        // ── Auto-Calculate SWP Target Corpus and feed it back to SIP target ──
+    private initSwpHandlers(): void {
         const swpWithdrawal = this.dom.getElement('swp_withdrawal');
         const swpWithdrawalRange = this.dom.getElement('swp_withdrawal_range');
         const swpYears = this.dom.getElement('swp_years');
@@ -430,14 +462,14 @@ export class CalculatorApp {
         if (swpWithdrawalRange) swpWithdrawalRange.addEventListener('input', handleSwpInput);
         if (swpYears) swpYears.addEventListener('input', handleSwpInput);
         if (swpYearsRange) swpYearsRange.addEventListener('input', handleSwpInput);
+    }
 
-        // ── SWP Toggle ──
+    private initToggles(): void {
         const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
         if (swpToggle) {
             swpToggle.addEventListener('change', () => this.syncSwpToggleState());
         }
 
-        // ── Post-Tax Toggle ──
         const postTaxToggle = document.getElementById('show_post_tax') as HTMLInputElement | null;
         if (postTaxToggle) {
             postTaxToggle.addEventListener('change', () => {
@@ -449,13 +481,13 @@ export class CalculatorApp {
             });
         }
 
-        // ── Wealth Map Toggle ──
         const wealthMapToggle = document.getElementById('show_wealth_map');
         if (wealthMapToggle) {
             wealthMapToggle.addEventListener('change', () => this.triggerCalculation());
         }
+    }
 
-        // ── Tabs controller ──
+    private initTabsController(): void {
         window.switchFormTab = (tab: string) => {
             const sipPanel = document.getElementById('panel-sip');
             const swpPanel = document.getElementById('panel-swp');
@@ -503,8 +535,9 @@ export class CalculatorApp {
                 swpTab.setAttribute('aria-selected', 'false');
             }
         };
+    }
 
-        // ── Smart rate nudge popovers ──
+    private initSmartNudges(): void {
         const nudgeBtn = this.dom.getElement('rate-nudge-btn');
         const nudgePopover = this.dom.getElement('rate-nudge-popover');
         const nudgeClose = this.dom.getElement('rate-nudge-close');
@@ -538,8 +571,9 @@ export class CalculatorApp {
                 }
             });
         }
+    }
 
-        // ── PDF export actions modal ──
+    private initPdfExportModal(): void {
         const pdfModal = this.dom.getElement<HTMLDialogElement>('pdfModal');
         const openPdfBtn = this.dom.getElement('openPdfModalBtn');
         const closePdfBtn = this.dom.getElement('closePdfModalBtn');
@@ -704,8 +738,9 @@ export class CalculatorApp {
                 });
             });
         }
+    }
 
-        // ── Clipboard Sharing links ──
+    private initShareButton(): void {
         const shareBtn = this.dom.getElement('shareCalcBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
@@ -741,8 +776,9 @@ export class CalculatorApp {
                 });
             });
         }
+    }
 
-        // ── Resize handlers ──
+    private initResizeListeners(): void {
         let resizeTimer: any;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
@@ -755,8 +791,9 @@ export class CalculatorApp {
                 this.fitSummaryCards();
             }, 150);
         });
+    }
 
-        // ── Restore from URL query params ──
+    private initUrlParamRestoration(): void {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('sip') || urlParams.has('lumpsum')) {
             const paramMap: Record<string, string> = {
@@ -785,8 +822,9 @@ export class CalculatorApp {
                 }
             }
         }
+    }
 
-        // Setup event bus listeners
+    private initEventBusSubscribers(): void {
         eventBus.subscribe('input:changed', (inputs: InvestmentInputs) => {
             if (!this.userHasInteracted) return;
 
@@ -798,8 +836,9 @@ export class CalculatorApp {
             this.chartManager.updateChart(combined, inputs.enable_swp);
             this.analytics.logInsight(inputs, combined, this.activeGoalMode);
         });
+    }
 
-        // Initial render logic
+    private initInitialCalculation(): void {
         let swpEnabledOnLoad = false;
         const urlSwpOn = (new URLSearchParams(window.location.search)).get('swp_on') === '1';
         const initialSwpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');

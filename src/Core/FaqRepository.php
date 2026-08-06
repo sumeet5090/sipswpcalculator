@@ -37,17 +37,34 @@ class FaqRepository
     }
 
     /**
-     * Get default FAQ categories metadata.
+     * Get FAQ categories metadata derived dynamically from FAQ data.
      */
     public function getFaqCategories(): array
     {
-        return [
-            ['id' => 'basics', 'label' => 'Basics'],
-            ['id' => 'strategies', 'label' => 'Strategies'],
-            ['id' => 'tax', 'label' => 'Tax & Risk'],
-            ['id' => 'selection', 'label' => 'Selection'],
-            ['id' => 'retirement', 'label' => 'Retirement Planning'],
+        $this->load();
+        $labels = [
+            'basics'     => 'Basics',
+            'strategies' => 'Strategies',
+            'tax'        => 'Tax & Risk',
+            'selection'  => 'Selection',
+            'retirement' => 'Retirement Planning',
         ];
+
+        $categories = [];
+        $seen = [];
+
+        foreach ($this->faqs as $faq) {
+            $catId = $faq['category'] ?? '';
+            if ($catId !== '' && !isset($seen[$catId])) {
+                $seen[$catId] = true;
+                $categories[] = [
+                    'id'    => $catId,
+                    'label' => $labels[$catId] ?? ucfirst(str_replace('_', ' ', $catId)),
+                ];
+            }
+        }
+
+        return $categories;
     }
 
     /**

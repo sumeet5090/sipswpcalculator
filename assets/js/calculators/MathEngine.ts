@@ -63,10 +63,12 @@ export class MathEngine {
 
             let interestEarned = netBalance - (yearBegin + annualContribution - annualWithdrawal);
             
-            // Tax Calculation (LTCG 12.5% on gains exceeding 1.25 Lakh)
+            // Tax Calculation (LTCG rate on gains exceeding exemption threshold)
             let preTaxGains = netBalance + cumulativeWithdrawals - cumulativeInvested;
-            let taxableGains = Math.max(0, preTaxGains - 125000);
-            let ltcgTax = taxableGains * 0.125;
+            const ltcgExemption = inp.ltcg_exemption ?? 125000;
+            const ltcgTaxRate = inp.ltcg_tax_rate ?? 0.125;
+            let taxableGains = Math.max(0, preTaxGains - ltcgExemption);
+            let ltcgTax = taxableGains * ltcgTaxRate;
             let postTaxCorpus = Math.max(0, netBalance - ltcgTax);
 
             results.push({

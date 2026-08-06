@@ -8,7 +8,7 @@ use Services\ConfigService;
 
 class StrategyFactory
 {
-    private const STRATEGY_MAP = [
+    private const DEFAULT_STRATEGY_MAP = [
         'sip-calculator'            => SipStrategy::class,
         'swp-calculator'            => SwpStrategy::class,
         'sip-step-up-calculator'    => SipStrategy::class,
@@ -18,16 +18,18 @@ class StrategyFactory
     ];
 
     private ConfigService $configService;
+    private array $strategyMap;
 
-    public function __construct(ConfigService $configService)
+    public function __construct(ConfigService $configService, ?array $strategyMap = null)
     {
         $this->configService = $configService;
+        $this->strategyMap = $strategyMap ?? self::DEFAULT_STRATEGY_MAP;
     }
 
     public function create(string $slug): CalculatorStrategyInterface
     {
         $key = ltrim($slug, '/');
-        $strategyClass = self::STRATEGY_MAP[$key] ?? SipStrategy::class;
+        $strategyClass = $this->strategyMap[$key] ?? SipStrategy::class;
 
         return new $strategyClass($this->configService);
     }

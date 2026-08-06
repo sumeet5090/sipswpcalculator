@@ -11,19 +11,10 @@ $_ENV['DB_PATH'] = $testDb;
 
 // Run migrations on the test database before running tests
 try {
-    $dbPath = getenv('DB_PATH') ?: __DIR__ . '/../database/database.test.sqlite';
-    $dir = dirname($dbPath);
-    if (!is_dir($dir)) {
-        @mkdir($dir, 0775, true);
-    }
-    if (!file_exists($dbPath)) {
-        @touch($dbPath);
-    }
-    $pdo = new \PDO('sqlite:' . $dbPath, null, null, [
-        \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-        \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-    ]);
-    $migrator = new \Core\DatabaseMigrator($pdo);
+    $app = new \Core\App();
+    $container = $app->boot();
+    /** @var \Core\DatabaseMigrator $migrator */
+    $migrator = $container->get(\Core\DatabaseMigrator::class);
     $migrator->migrate();
 } catch (\Throwable $e) {
     fwrite(STDERR, "PHPUnit Bootstrap: Failed to migrate test database: " . $e->getMessage() . "\n");
@@ -32,7 +23,7 @@ try {
 
 // Clean up the test database file after the PHPUnit process finishes
 register_shutdown_function(function () use ($testDb) {
-    if (file_exists($testDb)) {
-        @unlink($testDb);
+    if (file_exists($testDb) && !unlink($testDb)) {
+        error_log("PHPUnit Bootstrap: Failed to clean up test database file at {$testDb}");
     }
 });
