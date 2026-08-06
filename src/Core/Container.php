@@ -47,7 +47,20 @@ class Container implements ContainerInterface
     public function has(string $id): bool
     {
         $id = ltrim($id, '\\');
-        return isset($this->instances[$id]) || isset($this->bindings[$id]) || class_exists($id);
+        if (isset($this->instances[$id]) || isset($this->bindings[$id])) {
+            return true;
+        }
+
+        if (!class_exists($id)) {
+            return false;
+        }
+
+        try {
+            $reflector = new \ReflectionClass($id);
+            return $reflector->isInstantiable();
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
     /**

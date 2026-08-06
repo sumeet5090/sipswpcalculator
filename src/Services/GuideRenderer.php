@@ -108,9 +108,6 @@ class GuideRenderer
             'inflation'   => $initialInputs->getInflation(),
         ];
 
-        $content_html = $content['html'];
-        $content_metadata = $meta;
-        $active_page = $slug;
         $show_lumpsum = ($calculator_type === 'lumpsum');
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
 
@@ -118,17 +115,16 @@ class GuideRenderer
         $all_posts = $this->blogRepository->getAllPosts();
 
         return Response::html($this->viewRenderer->render($layout, array_merge([
-            'content_html'        => $content_html,
-            'content_metadata'    => $content_metadata,
+            'content_html'        => $content['html'],
+            'content_metadata'    => $meta,
             'page_config'         => $page_config,
-            'active_page'         => $active_page,
+            'active_page'         => $slug,
             'category'            => $seo_category,
             'calculator_type'     => $calculator_type,
             'calc_config'         => $calcConfig,
             'show_lumpsum'        => $show_lumpsum,
             'faqs'                => $faqs,
             'combined'            => [],
-            'swp_withdrawal'      => $initialInputs->getSwpWithdrawal(),
             'all_posts'           => $all_posts,
         ], $calcConfig)));
     }

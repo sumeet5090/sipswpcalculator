@@ -10,6 +10,8 @@ namespace Core;
  */
 class BlogRepository
 {
+    public const DEFAULT_POST_DATE = 'March 2026';
+
     private ContentManager $contentManager;
 
     public function __construct(ContentManager $contentManager)
@@ -65,27 +67,14 @@ class BlogRepository
 
             foreach ($files as $file) {
                 $slug = basename($file, '.md');
-                $content = $this->contentManager->getParsedContent('/blog/' . $cat . '/' . $slug);
-                if (!$content) {
+                $meta = $this->contentManager->getMetadataOnly('/blog/' . $cat . '/' . $slug);
+                if (!$meta) {
                     continue;
                 }
 
-                $meta = $content['metadata'];
+                $readTime = $meta['read_time'] ?? '5 min';
 
-                $readTime = $this->calculateReadTime($content['html']);
-
-                $posts[] = [
-                    'category' => $cat,
-                    'id' => $cat,
-                    'tag' => $meta['tag'] ?? 'Guide',
-                    'tag_color' => $meta['tag_color'] ?? 'slate',
-                    'title' => !empty($meta['title']) ? $meta['title'] : ucfirst(str_replace('-', ' ', $slug)),
-                    'desc' => $meta['subtitle'] ?? '',
-                    'href' => "/resource/{$cat}/{$slug}",
-                    'featured' => $meta['featured'] ?? false,
-                    'read_time' => $readTime,
-                    'date' => $meta['date'] ?? 'March 2026'
-                ];
+                $posts[] = $this->buildPostData($cat, $slug, $meta, (string) $readTime);
             }
         }
 
@@ -117,17 +106,22 @@ class BlogRepository
         $meta = $content['metadata'];
         $readTime = $this->calculateReadTime($content['html']);
 
+        return $this->buildPostData($category, $slug, $meta, $readTime);
+    }
+
+    private function buildPostData(string $category, string $slug, array $meta, string $readTime): array
+    {
         return [
-            'category' => $category,
-            'id' => $category,
-            'tag' => $meta['tag'] ?? 'Guide',
+            'category'  => $category,
+            'id'        => $category,
+            'tag'       => $meta['tag'] ?? 'Guide',
             'tag_color' => $meta['tag_color'] ?? 'slate',
-            'title' => !empty($meta['title']) ? $meta['title'] : ucfirst(str_replace('-', ' ', $slug)),
-            'desc' => $meta['subtitle'] ?? '',
-            'href' => "/resource/{$category}/{$slug}",
-            'featured' => $meta['featured'] ?? false,
+            'title'     => !empty($meta['title']) ? $meta['title'] : ucfirst(str_replace('-', ' ', $slug)),
+            'desc'      => $meta['subtitle'] ?? '',
+            'href'      => "/resource/{$category}/{$slug}",
+            'featured'  => $meta['featured'] ?? false,
             'read_time' => $readTime,
-            'date' => $meta['date'] ?? 'March 2026'
+            'date'      => $meta['date'] ?? self::DEFAULT_POST_DATE,
         ];
     }
 

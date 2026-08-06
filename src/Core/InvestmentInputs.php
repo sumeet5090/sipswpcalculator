@@ -21,6 +21,8 @@ class InvestmentInputs
     private float $lumpsum;
     private float $swpRate;
     private float $inflation;
+    private float $ltcgExemption;
+    private float $ltcgTaxRate;
 
     /**
      * Private constructor to enforce factory creation.
@@ -36,7 +38,9 @@ class InvestmentInputs
         int $swpYears,
         float $lumpsum,
         float $swpRate,
-        float $inflation
+        float $inflation,
+        float $ltcgExemption = 125000.0,
+        float $ltcgTaxRate = 0.125
     ) {
         $this->sip = $sip;
         $this->years = $years;
@@ -49,6 +53,8 @@ class InvestmentInputs
         $this->lumpsum = $lumpsum;
         $this->swpRate = $swpRate;
         $this->inflation = $inflation;
+        $this->ltcgExemption = $ltcgExemption;
+        $this->ltcgTaxRate = $ltcgTaxRate;
     }
 
     /**
@@ -57,6 +63,19 @@ class InvestmentInputs
     private static function loadDefaults(\Services\ConfigService $config): array
     {
         return $config->getCalculatorDefaults();
+    }
+
+    /**
+     * Helper method to resolve and clamp a field from payload against config rules.
+     */
+    private static function resolveField(string $key, array $data, array $cfg): float
+    {
+        if (isset($data[$key])) {
+            $min = (float) ($cfg[$key]['min'] ?? 0);
+            $max = (float) ($cfg[$key]['max'] ?? PHP_FLOAT_MAX);
+            return self::clamp((float) $data[$key], $min, $max);
+        }
+        return (float) ($cfg[$key]['default'] ?? 0.0);
     }
 
     /**
@@ -72,47 +91,20 @@ class InvestmentInputs
         // Load the single source of truth for all bounds and defaults.
         $cfg = self::loadDefaults($config);
 
-        $sip           = isset($data['sip'])
-            ? self::clamp((float)$data['sip'], $cfg['sip']['min'], $cfg['sip']['max'])
-            : (float)$cfg['sip']['default'];
-
-        $years         = isset($data['years'])
-            ? (int)self::clamp((float)$data['years'], $cfg['years']['min'], $cfg['years']['max'])
-            : (int)$cfg['years']['default'];
-
-        $rate          = isset($data['rate'])
-            ? self::clamp((float)$data['rate'], $cfg['rate']['min'], $cfg['rate']['max'])
-            : (float)$cfg['rate']['default'];
-
-        $stepup        = isset($data['stepup'])
-            ? self::clamp((float)$data['stepup'], $cfg['stepup']['min'], $cfg['stepup']['max'])
-            : (float)$cfg['stepup']['default'];
-
+        $sip           = self::resolveField('sip', $data, $cfg);
+        $years         = (int) self::resolveField('years', $data, $cfg);
+        $rate          = self::resolveField('rate', $data, $cfg);
+        $stepup        = self::resolveField('stepup', $data, $cfg);
         $enableSwp     = isset($data['enable_swp']) && (bool)$data['enable_swp'];
+        $swpWithdrawal = self::resolveField('swp_withdrawal', $data, $cfg);
+        $swpStepup     = self::resolveField('swp_stepup', $data, $cfg);
+        $swpYears      = (int) self::resolveField('swp_years', $data, $cfg);
+        $lumpsum       = self::resolveField('lumpsum', $data, $cfg);
+        $swpRate       = self::resolveField('swp_rate', $data, $cfg);
+        $inflation     = self::resolveField('inflation', $data, $cfg);
 
-        $swpWithdrawal = isset($data['swp_withdrawal'])
-            ? self::clamp((float)$data['swp_withdrawal'], $cfg['swp_withdrawal']['min'], $cfg['swp_withdrawal']['max'])
-            : (float)$cfg['swp_withdrawal']['default'];
-
-        $swpStepup     = isset($data['swp_stepup'])
-            ? self::clamp((float)$data['swp_stepup'], $cfg['swp_stepup']['min'], $cfg['swp_stepup']['max'])
-            : (float)$cfg['swp_stepup']['default'];
-
-        $swpYears      = isset($data['swp_years'])
-            ? (int)self::clamp((float)$data['swp_years'], $cfg['swp_years']['min'], $cfg['swp_years']['max'])
-            : (int)$cfg['swp_years']['default'];
-
-        $lumpsum       = isset($data['lumpsum'])
-            ? self::clamp((float)$data['lumpsum'], $cfg['lumpsum']['min'], $cfg['lumpsum']['max'])
-            : (float)$cfg['lumpsum']['default'];
-
-        $swpRate       = isset($data['swp_rate'])
-            ? self::clamp((float)$data['swp_rate'], $cfg['swp_rate']['min'], $cfg['swp_rate']['max'])
-            : (float)$cfg['swp_rate']['default'];
-
-        $inflation       = isset($data['inflation'])
-            ? self::clamp((float)$data['inflation'], $cfg['inflation']['min'], $cfg['inflation']['max'])
-            : (float)$cfg['inflation']['default'];
+        $ltcgExemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? 125000.0);
+        $ltcgTaxRate   = (float) ($cfg['ltcg_tax']['rate'] ?? 0.125);
 
         return new self(
             $sip,
@@ -125,7 +117,9 @@ class InvestmentInputs
             $swpYears,
             $lumpsum,
             $swpRate,
-            $inflation
+            $inflation,
+            $ltcgExemption,
+            $ltcgTaxRate
         );
     }
 
@@ -144,35 +138,20 @@ class InvestmentInputs
     {
         $cfg = self::loadDefaults($config);
 
-        // `corpus` is the SWP-specific field — maps to internal `lumpsum` (starting balance).
-        $corpus = isset($data['corpus'])
-            ? self::clamp((float)$data['corpus'], $cfg['corpus']['min'], $cfg['corpus']['max'])
-            : (float)$cfg['corpus']['default'];
+        $corpus        = self::resolveField('corpus', $data, $cfg);
+        $swpWithdrawal = self::resolveField('swp_withdrawal', $data, $cfg);
+        $swpStepup     = self::resolveField('swp_stepup', $data, $cfg);
+        $swpYears      = (int) self::resolveField('swp_years', $data, $cfg);
+        $swpRate       = self::resolveField('swp_rate', $data, $cfg);
+        $inflation     = self::resolveField('inflation', $data, $cfg);
 
-        $swpWithdrawal = isset($data['swp_withdrawal'])
-            ? self::clamp((float)$data['swp_withdrawal'], $cfg['swp_withdrawal']['min'], $cfg['swp_withdrawal']['max'])
-            : (float)$cfg['swp_withdrawal']['default'];
-
-        $swpStepup = isset($data['swp_stepup'])
-            ? self::clamp((float)$data['swp_stepup'], $cfg['swp_stepup']['min'], $cfg['swp_stepup']['max'])
-            : (float)$cfg['swp_stepup']['default'];
-
-        $swpYears = isset($data['swp_years'])
-            ? (int)self::clamp((float)$data['swp_years'], $cfg['swp_years']['min'], $cfg['swp_years']['max'])
-            : (int)$cfg['swp_years']['default'];
-
-        $swpRate = isset($data['swp_rate'])
-            ? self::clamp((float)$data['swp_rate'], $cfg['swp_rate']['min'], $cfg['swp_rate']['max'])
-            : (float)$cfg['swp_rate']['default'];
-
-        $inflation = isset($data['inflation'])
-            ? self::clamp((float)$data['inflation'], $cfg['inflation']['min'], $cfg['inflation']['max'])
-            : (float)$cfg['inflation']['default'];
+        $ltcgExemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? 125000.0);
+        $ltcgTaxRate   = (float) ($cfg['ltcg_tax']['rate'] ?? 0.125);
 
         return new self(
             0.0,
             1,
-            (float)$cfg['rate']['default'],
+            (float) ($cfg['rate']['default'] ?? 12.0),
             0.0,
             true,
             $swpWithdrawal,
@@ -180,7 +159,9 @@ class InvestmentInputs
             $swpYears,
             $corpus,         // corpus maps to lumpsum as starting balance
             $swpRate,
-            $inflation
+            $inflation,
+            $ltcgExemption,
+            $ltcgTaxRate
         );
     }
 
@@ -245,5 +226,15 @@ class InvestmentInputs
     public function getInflation(): float
     {
         return $this->inflation;
+    }
+
+    public function getLtcgExemption(): float
+    {
+        return $this->ltcgExemption;
+    }
+
+    public function getLtcgTaxRate(): float
+    {
+        return $this->ltcgTaxRate;
     }
 }

@@ -28,7 +28,8 @@ class RateLimiter
     {
         $rateLimitDir = rtrim($this->baseStorageDir, '/\\') . '/' . trim($prefix, '/') . '/';
         if (!is_dir($rateLimitDir) && !mkdir($rateLimitDir, 0700, true) && !is_dir($rateLimitDir)) {
-            return; // Gracefully bypass if filesystem directory creation fails
+            error_log("RateLimiter Error: Failed to create storage directory at {$rateLimitDir}");
+            throw new RateLimitExceededException('Rate limiter storage unavailable.');
         }
 
         $ipHash = hash('sha256', $ip);

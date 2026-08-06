@@ -196,6 +196,23 @@ The site includes several modern SEO optimizations built into the core services:
 
 ---
 
+## Architecture Quality Standards
+
+This codebase is maintained to strict architectural quality standards as documented in `AGENTS.md`. Every subsystem adheres to the following principles:
+
+| Principle | Key Implementation |
+|---|---|
+| **DRY** | `InvestmentInputs::resolveField()` for all field clamping; `BlogRepository::buildPostData()` for all post index building |
+| **Single Source of Truth** | LTCG tax rates in `calculator_defaults.json`; `InvestmentInputs` is the only clamping layer for both web and PDF |
+| **Explicit > Implicit** | `Router` normalises URIs before redirect and route lookup; no silent null injection for unresolvable action params |
+| **CQS** | `SessionManager::get()` and `has()` are pure reads with no side effects; `ViewRenderer::render()` does not mutate caller's `$data` |
+| **Fail-Safe Security** | `RateLimiter` throws on storage directory failure rather than silently bypassing rate limits |
+| **PSR-11 Compliance** | `Container::has()` verifies class instantiability via reflection before returning `true` |
+| **Testability** | `DatabaseMigrator::bootstrap()` separated from `migrate()` for clean test isolation; `ViteHelper` accepts injected manifest path |
+| **Boy Scout Rule** | All audit violations (36 total) identified and fixed in one dedicated remediation session |
+
+---
+
 ## License
 
 MIT

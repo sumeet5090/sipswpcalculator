@@ -95,8 +95,8 @@ class BlogController
             $content['metadata']['title'] ?: ucfirst(str_replace('-', ' ', $slug)) => "/resource/{$category}/{$slug}"
         ];
 
-        // Derive real datePublished from post config (e.g., "March 2026" → "2026-03-01")
-        $datePublished = '2026-03-01';
+        // Derive real datePublished from post config with dynamic file mtime fallback
+        $datePublished = $this->blogRepository->getPostModifiedDate($category, $slug);
         if ($post_metadata && !empty($post_metadata['date'])) {
             $parsed = \DateTimeImmutable::createFromFormat('F Y', $post_metadata['date']);
             if ($parsed) {

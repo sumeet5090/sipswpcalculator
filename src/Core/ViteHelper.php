@@ -11,12 +11,18 @@ class ViteHelper
     private string $environment;
     private string $devHost;
     private int $devPort;
+    private ?string $manifestPath;
 
-    public function __construct(string $environment = 'development', string $devHost = '127.0.0.1', int $devPort = 5173)
-    {
+    public function __construct(
+        string $environment = 'development',
+        string $devHost = '127.0.0.1',
+        int $devPort = 5173,
+        ?string $manifestPath = null
+    ) {
         $this->environment = $environment;
         $this->devHost = $devHost;
         $this->devPort = $devPort;
+        $this->manifestPath = $manifestPath;
     }
 
     /**
@@ -99,6 +105,7 @@ class ViteHelper
 
     /**
      * Load dist/.vite/manifest.json safely.
+     * Uses injected manifest path, or discovers default locations.
      */
     private function loadManifest(): void
     {
@@ -106,13 +113,17 @@ class ViteHelper
             return;
         }
 
-        $manifestPath = __DIR__ . '/../../dist/.vite/manifest.json';
-        if (!file_exists($manifestPath)) {
-            $manifestPath = __DIR__ . '/../../dist/manifest.json';
+        if ($this->manifestPath !== null) {
+            $resolved = $this->manifestPath;
+        } else {
+            $resolved = __DIR__ . '/../../dist/.vite/manifest.json';
+            if (!file_exists($resolved)) {
+                $resolved = __DIR__ . '/../../dist/manifest.json';
+            }
         }
 
-        if (file_exists($manifestPath)) {
-            $this->manifest = json_decode(file_get_contents($manifestPath), true) ?: [];
+        if (file_exists($resolved)) {
+            $this->manifest = json_decode((string) file_get_contents($resolved), true) ?: [];
         } else {
             $this->manifest = [];
         }

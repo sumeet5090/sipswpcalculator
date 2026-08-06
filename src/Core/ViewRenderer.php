@@ -31,10 +31,11 @@ class ViewRenderer
         $cachePath = false;
         if ($isProd) {
             $cacheDir = __DIR__ . '/../../var/cache/twig';
-            if (!file_exists($cacheDir)) {
-                @mkdir($cacheDir, 0775, true);
+            if (!file_exists($cacheDir) && !mkdir($cacheDir, 0775, true) && !is_dir($cacheDir)) {
+                error_log("Failed to create Twig cache directory at: {$cacheDir}");
+            } else {
+                $cachePath = $cacheDir;
             }
-            $cachePath = $cacheDir;
         }
 
         $this->twig = new Environment($loader, [
@@ -64,8 +65,10 @@ class ViewRenderer
     public function render(string $view, array $data = []): string
     {
         $csrfToken = $data['csrf_token'] ?? $this->sessionManager->getCsrfToken();
-        $data['csrf_token'] = $csrfToken;
-        $data['app'] = $data['app'] ?? ['session' => ['csrf_token' => $csrfToken]];
+        $renderData = array_merge([
+            'csrf_token' => $csrfToken,
+            'app' => ['session' => ['csrf_token' => $csrfToken]],
+        ], $data);
 
         // Support extensionless view names, defaulting to .twig
         if (!str_ends_with($view, '.twig')) {
@@ -73,7 +76,7 @@ class ViewRenderer
         }
 
         try {
-            return $this->twig->render($view, $data);
+            return $this->twig->render($view, $renderData);
         } catch (\Exception $e) {
             throw new \RuntimeException("Twig rendering failed: " . $e->getMessage(), 0, $e);
         }

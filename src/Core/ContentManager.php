@@ -25,7 +25,7 @@ class ContentManager
             return null;
         }
 
-        $rawContent = file_get_contents($fullPath);
+        $rawContent = (string) file_get_contents($fullPath);
 
         $metadata = [];
         $body = $rawContent;
@@ -65,6 +65,27 @@ class ContentManager
         ];
     }
 
+    /**
+     * Get front-matter metadata only without rendering Markdown HTML.
+     */
+    public function getMetadataOnly(string $path): ?array
+    {
+        $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
+
+        if (!file_exists($fullPath)) {
+            return null;
+        }
+
+        $rawContent = (string) file_get_contents($fullPath);
+
+        if (preg_match('/\A\s*---\r?\n(.*?)\r?\n---/s', $rawContent, $matches)) {
+            return $this->parseFrontMatter($matches[1]);
+        }
+
+        $parsed = $this->getParsedContent($path);
+        return $parsed['metadata'] ?? null;
+    }
+
     private function parseFrontMatter(string $frontMatter): array
     {
         $metadata = [];
@@ -81,7 +102,7 @@ class ContentManager
                 $key = trim($parts[0]);
                 $value = trim($parts[1]);
 
-                if (preg_match('/^["\'](.*)["\']$/', $value, $valMatches)) {
+                if (preg_match('/^["\'](.*)["\']$/s', $value, $valMatches)) {
                     $value = $valMatches[1];
                 }
 

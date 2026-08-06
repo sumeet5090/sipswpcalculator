@@ -81,17 +81,11 @@ class SitemapController
         ];
 
         // 5. Static Pages
-        $pages = [
-            '/about' => '0.5',
-            '/faq' => '0.5',
-            '/glossary' => '0.5',
-            '/privacy' => '0.3',
-            '/terms' => '0.3'
-        ];
-
-        foreach ($pages as $path => $priority) {
+        $configuredPages = array_keys($routesConfig['pages'] ?? []);
+        foreach ($configuredPages as $path) {
             $slug = ltrim($path, '/');
             $lastmod = $this->viewRenderer->getTemplateModifiedDate('pages/' . $slug);
+            $priority = in_array($path, ['/privacy', '/terms'], true) ? '0.3' : '0.5';
 
             $urls[] = [
                 'loc' => $baseUrl . $path,

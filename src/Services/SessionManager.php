@@ -19,8 +19,7 @@ class SessionManager
 
     public function get(string $key, mixed $default = null): mixed
     {
-        $this->start();
-        return $_SESSION[$key] ?? $default;
+        return isset($_SESSION) ? ($_SESSION[$key] ?? $default) : $default;
     }
 
     public function set(string $key, mixed $value): void
@@ -31,8 +30,7 @@ class SessionManager
 
     public function has(string $key): bool
     {
-        $this->start();
-        return !empty($_SESSION[$key]);
+        return isset($_SESSION) && !empty($_SESSION[$key]);
     }
 
     public function remove(string $key): void

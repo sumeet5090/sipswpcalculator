@@ -7,10 +7,17 @@ namespace Core;
 class SchemaHelper
 {
     private SiteConfig $siteConfig;
+    private string $authorName;
+    private string $organizationName;
 
-    public function __construct(SiteConfig $siteConfig)
-    {
+    public function __construct(
+        SiteConfig $siteConfig,
+        string $authorName = 'Sumeet Boga',
+        string $organizationName = 'SIP SWP Calculator'
+    ) {
         $this->siteConfig = $siteConfig;
+        $this->authorName = $authorName;
+        $this->organizationName = $organizationName;
     }
 
     /**
@@ -77,12 +84,12 @@ class SchemaHelper
             "image" => $imageUrl,
             "author" => [
                 "@type" => "Person",
-                "name" => "Sumeet Boga",
+                "name" => $this->authorName,
                 "url" => $this->siteConfig->getUrl('/about'),
             ],
             "publisher" => [
                 "@type" => "Organization",
-                "name" => "SIP SWP Calculator",
+                "name" => $this->organizationName,
                 "logo" => [
                     "@type" => "ImageObject",
                     "url" => $this->siteConfig->getUrl('/assets/favicon.png')

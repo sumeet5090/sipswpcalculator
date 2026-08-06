@@ -40,24 +40,25 @@ class Router
         $uri = $request->getUri();
         $method = $request->getMethod();
 
-        if (array_key_exists($uri, $this->redirects)) {
-            return Response::redirect($this->redirects[$uri], 301);
+        $normalizedUri = $uri === '/' ? '/' : rtrim($uri, '/');
+
+        if (array_key_exists($uri, $this->redirects) || array_key_exists($normalizedUri, $this->redirects)) {
+            $target = $this->redirects[$uri] ?? $this->redirects[$normalizedUri];
+            return Response::redirect($target, 301);
         }
 
-        if ($uri === '/' && isset($this->routes[$method]['/'])) {
+        if ($normalizedUri === '/' && isset($this->routes[$method]['/'])) {
             return $this->callAction($this->routes[$method]['/'], [], $request);
         }
 
-        $uri = rtrim($uri, '/');
-
-        if (isset($this->routes[$method][$uri])) {
-            return $this->callAction($this->routes[$method][$uri], [], $request);
+        if (isset($this->routes[$method][$normalizedUri])) {
+            return $this->callAction($this->routes[$method][$normalizedUri], [], $request);
         }
 
         if (isset($this->routes[$method]) && is_array($this->routes[$method])) {
             foreach ($this->routes[$method] as $route => $action) {
                 $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_\.-]+)', $route);
-                if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
+                if (preg_match('#^' . $pattern . '$#', $normalizedUri, $matches)) {
                     $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
                     return $this->callAction($action, $params, $request);
                 }
@@ -99,7 +100,7 @@ class Router
                     } elseif ($param->isDefaultValueAvailable()) {
                         $args[] = $param->getDefaultValue();
                     } else {
-                        $args[] = null;
+                        throw new \Core\Exceptions\ContainerException("Cannot resolve parameter '{$name}' for controller action {$controllerName}@{$action}");
                     }
                 }
 

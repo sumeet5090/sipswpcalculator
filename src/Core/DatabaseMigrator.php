@@ -22,11 +22,10 @@ class DatabaseMigrator
     }
 
     /**
-     * Run all pending migrations.
-     *
-     * @return array<string> Names of newly executed migration files.
+     * Ensure the migrations tracking table exists. Idempotent.
+     * Separating this allows bootstrap without running migrations (e.g. tests).
      */
-    public function migrate(): array
+    public function bootstrap(): void
     {
         $this->pdo->exec("
             CREATE TABLE IF NOT EXISTS schema_migrations (
@@ -35,6 +34,16 @@ class DatabaseMigrator
                 executed_at TEXT DEFAULT CURRENT_TIMESTAMP
             )
         ");
+    }
+
+    /**
+     * Run all pending migrations.
+     *
+     * @return array<string> Names of newly executed migration files.
+     */
+    public function migrate(): array
+    {
+        $this->bootstrap();
 
         $stmt = $this->pdo->query("SELECT migration FROM schema_migrations");
         $executed = $stmt->fetchAll(PDO::FETCH_COLUMN);

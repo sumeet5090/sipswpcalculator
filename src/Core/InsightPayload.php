@@ -49,7 +49,7 @@ readonly class InsightPayload
             amount: (float) ($data['amount'] ?? 0.0),
             duration: (int) ($data['duration'] ?? 0),
             stepUpPct: (float) ($data['step_up_pct'] ?? 0.0),
-            currency: isset($data['currency']) ? (string) $data['currency'] : 'INR',
+            currency: array_key_exists('currency', $data) ? (string) $data['currency'] : 'INR',
             pdfDownloaded: !empty($data['pdf_downloaded']),
             interestRate: isset($data['interest_rate']) ? (float) $data['interest_rate'] : null,
             sipAmount: isset($data['sip_amount']) ? (float) $data['sip_amount'] : null,

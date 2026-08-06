@@ -32,7 +32,7 @@ class InsightRepository
         $overview = $this->getOverviewMetrics($whereClause, $params);
         $volume = $this->getVolumeSeries($unit, $cteStart, $interval);
         $distributions = $this->getDistributionMetrics($whereClause, $params);
-        $engagement = $this->getEngagementMetrics($whereClause, $params, $overview['totalCalculations'], $overview['totalPdfDownloads']);
+        $engagement = $this->getEngagementMetrics($whereClause, $params, $overview['totalCalculations'], $overview['totalPdfDownloads'], $distributions['totalSWPEnabled']);
 
         return array_merge($overview, [
             'dailyVolume' => $volume,
@@ -134,7 +134,15 @@ class InsightRepository
 
     private function getDistributionMetrics(string $whereClause, array $params): array
     {
-        // Currency distribution
+        $currencyAndCorpus = $this->getCurrencyAndCorpusMetrics($whereClause, $params);
+        $sipSwpAverages = $this->getSipAndSwpAverages($whereClause, $params);
+        $buckets = $this->getBucketDistributions($whereClause, $params);
+
+        return array_merge($currencyAndCorpus, $sipSwpAverages, $buckets);
+    }
+
+    private function getCurrencyAndCorpusMetrics(string $whereClause, array $params): array
+    {
         $stmt = $this->pdo->prepare("
             SELECT UPPER(COALESCE(currency, 'UNKNOWN')) AS currency, COUNT(*) AS cnt
             FROM user_calculations
@@ -145,7 +153,6 @@ class InsightRepository
         $stmt->execute($params);
         $currencyDist = $stmt->fetchAll();
 
-        // Top 10 SWP target corpus amounts
         $stmt = $this->pdo->prepare("
             SELECT amount, UPPER(COALESCE(currency, 'INR')) AS currency, COUNT(*) AS frequency
             FROM user_calculations
@@ -157,7 +164,14 @@ class InsightRepository
         $stmt->execute($params);
         $topCorpus = $stmt->fetchAll();
 
-        // SIP Step-Up metrics
+        return [
+            'currencyDist' => $currencyDist,
+            'topCorpus' => $topCorpus,
+        ];
+    }
+
+    private function getSipAndSwpAverages(string $whereClause, array $params): array
+    {
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND calc_type = 'SIP'");
         $stmt->execute($params);
         $totalSIP = (int) $stmt->fetchColumn();
@@ -169,7 +183,6 @@ class InsightRepository
         $flatSIP = $totalSIP - $stepUpSIP;
         $stepUpAdoptionRate = $totalSIP > 0 ? round(($stepUpSIP / $totalSIP) * 100, 1) : 0.0;
 
-        // Average Durations & Rates
         $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations {$whereClause} AND calc_type = 'SIP'");
         $stmt->execute($params);
         $avgDurationSIP = (float) $stmt->fetchColumn();
@@ -182,7 +195,6 @@ class InsightRepository
         $stmt->execute($params);
         $avgInterestRate = (float) $stmt->fetchColumn();
 
-        // SWP Adoption
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND swp_enabled = 1");
         $stmt->execute($params);
         $totalSWPEnabled = (int) $stmt->fetchColumn();
@@ -195,7 +207,22 @@ class InsightRepository
         $stmt->execute($params);
         $avgSwpWithdrawal = (float) $stmt->fetchColumn();
 
-        // Duration distribution buckets
+        return [
+            'totalSIP' => $totalSIP,
+            'stepUpSIP' => $stepUpSIP,
+            'flatSIP' => $flatSIP,
+            'stepUpAdoptionRate' => $stepUpAdoptionRate,
+            'avgDurationSIP' => $avgDurationSIP,
+            'avgDurationSWP' => $avgDurationSWP,
+            'avgInterestRate' => $avgInterestRate,
+            'totalSWPEnabled' => $totalSWPEnabled,
+            'avgSipAmount' => $avgSipAmount,
+            'avgSwpWithdrawal' => $avgSwpWithdrawal,
+        ];
+    }
+
+    private function getBucketDistributions(string $whereClause, array $params): array
+    {
         $stmt = $this->pdo->prepare("
             SELECT
                 CASE
@@ -215,7 +242,6 @@ class InsightRepository
         $stmt->execute($params);
         $durationDist = $stmt->fetchAll();
 
-        // Corpus Buckets (INR)
         $stmt = $this->pdo->prepare("
             SELECT
                 CASE
@@ -233,7 +259,6 @@ class InsightRepository
         $stmt->execute($params);
         $corpusBucketsINR = $stmt->fetchAll();
 
-        // Corpus Buckets (USD/Others)
         $stmt = $this->pdo->prepare("
             SELECT
                 CASE
@@ -251,7 +276,6 @@ class InsightRepository
         $stmt->execute($params);
         $corpusBucketsUSD = $stmt->fetchAll();
 
-        // Ambition Index buckets
         $stmt = $this->pdo->prepare("
             SELECT
                 CASE
@@ -271,18 +295,6 @@ class InsightRepository
         $ambitionBuckets = $stmt->fetchAll();
 
         return [
-            'currencyDist' => $currencyDist,
-            'topCorpus' => $topCorpus,
-            'totalSIP' => $totalSIP,
-            'stepUpSIP' => $stepUpSIP,
-            'flatSIP' => $flatSIP,
-            'stepUpAdoptionRate' => $stepUpAdoptionRate,
-            'avgDurationSIP' => $avgDurationSIP,
-            'avgDurationSWP' => $avgDurationSWP,
-            'avgInterestRate' => $avgInterestRate,
-            'totalSWPEnabled' => $totalSWPEnabled,
-            'avgSipAmount' => $avgSipAmount,
-            'avgSwpWithdrawal' => $avgSwpWithdrawal,
             'durationDist' => $durationDist,
             'corpusBucketsINR' => $corpusBucketsINR,
             'corpusBucketsUSD' => $corpusBucketsUSD,
@@ -290,13 +302,8 @@ class InsightRepository
         ];
     }
 
-    private function getEngagementMetrics(string $whereClause, array $params, int $totalInRange, int $totalPdfDownloads): array
+    private function getEngagementMetrics(string $whereClause, array $params, int $totalInRange, int $totalPdfDownloads, int $totalSWPEnabled): array
     {
-        $swpAdoptionRate = $totalInRange > 0 ? round(($params[':interval'] ? 0 : 0) /* recalculate if needed */, 1) : 0.0;
-
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND swp_enabled = 1");
-        $stmt->execute($params);
-        $totalSWPEnabled = (int) $stmt->fetchColumn();
         $swpAdoptionRate = $totalInRange > 0 ? round(($totalSWPEnabled / $totalInRange) * 100, 1) : 0.0;
 
         $stmt = $this->pdo->prepare("SELECT COALESCE(device_type, 'desktop') AS device, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY device ORDER BY cnt DESC");

@@ -20,6 +20,8 @@ use Core\Http\Request;
  */
 class App
 {
+    public const DEFAULT_APP_URL = 'https://sipswpcalculator.com';
+
     private Container $container;
     private Router $router;
     private array $routesConfig = [];
@@ -86,7 +88,7 @@ class App
     {
         // Bind managers and helpers as Singletons
         $this->container->singleton(SiteConfig::class, function () {
-            return new SiteConfig((string) Env::get('APP_URL', 'https://sipswpcalculator.com'));
+            return new SiteConfig((string) Env::get('APP_URL', self::DEFAULT_APP_URL));
         });
 
         $this->container->singleton(ViteHelper::class, function () {
@@ -114,7 +116,7 @@ class App
                 $c->get(\Services\SessionManager::class),
                 $c->get(ViteHelper::class),
                 (string) Env::get('ENVIRONMENT', 'development'),
-                (string) Env::get('APP_URL', 'https://sipswpcalculator.com')
+                (string) Env::get('APP_URL', self::DEFAULT_APP_URL)
             );
         });
 
@@ -175,7 +177,8 @@ class App
             return new \Controllers\GeneratePdfAction(
                 $c->get(\Services\RateLimiter::class),
                 $c->get(\Services\SessionManager::class),
-                $c->get(\Services\PdfGeneratorService::class)
+                $c->get(\Services\PdfGeneratorService::class),
+                $c->get(\Services\ConfigService::class)
             );
         });
 
@@ -200,18 +203,7 @@ class App
         });
 
         $this->container->singleton(\PDO::class, function () {
-            $dbPath = (string) Env::get('DB_PATH', __DIR__ . '/../../database/database.sqlite');
-            $dir = dirname($dbPath);
-            if (!file_exists($dir) && !mkdir($dir, 0775, true) && !is_dir($dir)) {
-                throw new \RuntimeException("Failed to create database directory: {$dir}");
-            }
-            if (!file_exists($dbPath) && touch($dbPath) === false) {
-                throw new \RuntimeException("Failed to create database file: {$dbPath}");
-            }
-            return new \PDO('sqlite:' . $dbPath, null, null, [
-                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-            ]);
+            return $this->createPdoInstance();
         });
 
         $this->container->singleton(InsightRepository::class, function (Container $c) {
@@ -353,5 +345,21 @@ class App
                 $this->router->redirect($old . '.php', $new);
             }
         }
+    }
+
+    private function createPdoInstance(): \PDO
+    {
+        $dbPath = (string) Env::get('DB_PATH', __DIR__ . '/../../database/database.sqlite');
+        $dir = dirname($dbPath);
+        if (!file_exists($dir) && !mkdir($dir, 0775, true) && !is_dir($dir)) {
+            throw new \RuntimeException("Failed to create database directory: {$dir}");
+        }
+        if (!file_exists($dbPath) && touch($dbPath) === false) {
+            throw new \RuntimeException("Failed to create database file: {$dbPath}");
+        }
+        return new \PDO('sqlite:' . $dbPath, null, null, [
+            \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+        ]);
     }
 }
