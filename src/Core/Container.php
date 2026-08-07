@@ -36,7 +36,13 @@ class Container implements ContainerInterface
         $key = ltrim($key, '\\');
         $this->bindings[$key] = function (self $container) use ($resolver, $key) {
             if (!isset($container->instances[$key])) {
-                $container->instances[$key] = is_callable($resolver) ? $resolver($container) : $resolver;
+                if (is_callable($resolver)) {
+                    $container->instances[$key] = $resolver($container);
+                } elseif (is_string($resolver) && class_exists($resolver)) {
+                    $container->instances[$key] = $container->resolve($resolver);
+                } else {
+                    $container->instances[$key] = $resolver;
+                }
             }
             return $container->instances[$key];
         };

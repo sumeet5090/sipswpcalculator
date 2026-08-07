@@ -6,6 +6,14 @@ export interface FieldConstraint {
     default: number;
 }
 
+export interface RawConfigField {
+    min?: number | string;
+    max?: number | string;
+    default?: number | string;
+}
+
+export type RawConfigMap = Record<string, RawConfigField>;
+
 /**
  * InputValidator.ts
  * Centralized boundaries, constraints, and validation rules.
@@ -29,7 +37,7 @@ export class InputValidator {
         const stateEl = document.getElementById('calculator-app-state');
         if (stateEl && stateEl.textContent) {
             try {
-                const cfg = JSON.parse(stateEl.textContent);
+                const cfg = JSON.parse(stateEl.textContent) as RawConfigMap;
                 this.constraints = this._mapConfig(cfg);
                 return;
             } catch {
@@ -38,20 +46,22 @@ export class InputValidator {
         }
 
         // Static fallback — read from compiled calculator_defaults.json
-        this.constraints = this._mapConfig(defaultsConfig as any);
+        this.constraints = this._mapConfig(defaultsConfig as unknown as RawConfigMap);
     }
 
     /**
      * Map the PHP config structure to the flat constraints object format.
      */
-    private _mapConfig(cfg: Record<string, any>): Record<string, FieldConstraint> {
+    private _mapConfig(cfg: RawConfigMap): Record<string, FieldConstraint> {
         const result: Record<string, FieldConstraint> = {};
         for (const [key, val] of Object.entries(cfg)) {
-            result[key] = {
-                min:     Number(val.min),
-                max:     Number(val.max),
-                default: Number(val.default),
-            };
+            if (val && typeof val === 'object' && ('min' in val || 'max' in val || 'default' in val)) {
+                result[key] = {
+                    min:     Number(val.min ?? 0),
+                    max:     Number(val.max ?? Number.MAX_SAFE_INTEGER),
+                    default: Number(val.default ?? 0),
+                };
+            }
         }
         return result;
     }
@@ -71,7 +81,7 @@ export class InputValidator {
         const limits = this.constraints[field];
         if (!limits) return parseFloat(String(val)) || 0;
 
-        let parsed = parseFloat(String(val));
+        const parsed = parseFloat(String(val));
         if (isNaN(parsed)) {
             return limits.default;
         }

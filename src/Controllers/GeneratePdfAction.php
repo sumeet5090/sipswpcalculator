@@ -137,6 +137,9 @@ class GeneratePdfAction
 
         $safe_mime = $image_info['mime'];
         $data = file_get_contents($tmp_name);
+        if ($data === false) {
+            throw new \RuntimeException('Failed to read uploaded image file.');
+        }
         return 'data:' . $safe_mime . ';base64,' . base64_encode($data);
     }
 }

@@ -13,12 +13,19 @@ class BlogRepository
     public const DEFAULT_POST_DATE = 'March 2026';
 
     private ContentManager $contentManager;
+    private string $contentDir;
+    private string $categoriesJsonPath;
     private ?array $cachedCategories = null;
     private ?array $cachedPosts = null;
 
-    public function __construct(ContentManager $contentManager)
-    {
+    public function __construct(
+        ContentManager $contentManager,
+        ?string $contentDir = null,
+        ?string $categoriesJsonPath = null
+    ) {
         $this->contentManager = $contentManager;
+        $this->contentDir = $contentDir ?? (__DIR__ . '/../../content/blog');
+        $this->categoriesJsonPath = $categoriesJsonPath ?? (__DIR__ . '/../../content/categories.json');
     }
 
     public function getCategories(): array
@@ -27,7 +34,7 @@ class BlogRepository
             return $this->cachedCategories;
         }
 
-        $jsonPath = __DIR__ . '/../../content/categories.json';
+        $jsonPath = $this->categoriesJsonPath;
         if (!file_exists($jsonPath)) {
             $this->cachedCategories = [];
             return [];
@@ -57,7 +64,7 @@ class BlogRepository
             return $this->cachedPosts;
         }
 
-        $contentDir = __DIR__ . '/../../content/blog';
+        $contentDir = $this->contentDir;
         $posts = [];
 
         $categories = $this->getCategories();
@@ -154,7 +161,7 @@ class BlogRepository
      */
     public function getPostModifiedDate(string $category, string $slug, string $fallbackDate = '2026-03-01'): string
     {
-        $mdFile = __DIR__ . '/../../content/blog/' . $category . '/' . $slug . '.md';
+        $mdFile = $this->contentDir . '/' . $category . '/' . $slug . '.md';
         return file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $fallbackDate;
     }
 }

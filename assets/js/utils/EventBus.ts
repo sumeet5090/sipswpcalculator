@@ -2,19 +2,19 @@
  * EventBus.ts
  * A simple typed publish-subscribe message broker to decouple UI events, calculations, and visualizers.
  */
-type EventCallback<T = any> = (data: T) => void;
+type EventCallback<T = unknown> = (data: T) => void;
 
 class EventBus {
-    private listeners: Record<string, EventCallback<any>[]> = {};
+    private listeners: Record<string, EventCallback<unknown>[]> = {};
 
     /**
      * Subscribe to an event topic.
      */
-    subscribe<T = any>(topic: string, callback: EventCallback<T>): () => void {
+    subscribe<T = unknown>(topic: string, callback: EventCallback<T>): () => void {
         if (!this.listeners[topic]) {
             this.listeners[topic] = [];
         }
-        this.listeners[topic].push(callback);
+        this.listeners[topic].push(callback as EventCallback<unknown>);
 
         // Return unsubscribe function
         return () => {
@@ -27,7 +27,7 @@ class EventBus {
     /**
      * Publish an event to all subscribers.
      */
-    publish<T = any>(topic: string, data?: T): void {
+    publish<T = unknown>(topic: string, data?: T): void {
         if (!this.listeners[topic]) return;
         this.listeners[topic].forEach(callback => {
             try {
