@@ -30,17 +30,21 @@ class PdfGeneratorService
         $options->set('isPhpEnabled', false);
         $options->set('isJavascriptEnabled', false);
 
+        $initialLevel = ob_get_level();
         ob_start();
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-        $pdfBinary = $dompdf->output();
 
-        while (ob_get_level() > 0) {
-            ob_end_clean();
+        try {
+            $dompdf = new Dompdf($options);
+            $dompdf->loadHtml($html);
+            $dompdf->setPaper('A4', 'portrait');
+            $dompdf->render();
+            $pdfBinary = $dompdf->output();
+
+            return (string) $pdfBinary;
+        } finally {
+            while (ob_get_level() > $initialLevel) {
+                ob_end_clean();
+            }
         }
-
-        return (string) $pdfBinary;
     }
 }

@@ -77,6 +77,8 @@ class AdminController
                     return Response::redirect('/admin_insights');
                 } catch (\Core\Exceptions\AuthenticationException $e) {
                     $loginError = 'Incorrect password. Access denied.';
+                } catch (\Core\Exceptions\ConfigurationException $e) {
+                    $loginError = 'Configuration Error: ' . $e->getMessage();
                 }
             } else {
                 $loginError = 'Incorrect password. Access denied.';

@@ -21,7 +21,9 @@ $testCases = [
         'swp_stepup'     => 0.0,
         'swp_years'      => 0,
         'lumpsum'        => 0.0,
-        'swp_rate'       => 8.0
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
     ],
     [
         'sip'            => 15000.0,
@@ -33,7 +35,9 @@ $testCases = [
         'swp_stepup'     => 6.0,
         'swp_years'      => 15,
         'lumpsum'        => 200000.0,
-        'swp_rate'       => 8.2
+        'swp_rate'       => 8.2,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
     ],
     [
         'sip'            => 5000.0,
@@ -45,7 +49,9 @@ $testCases = [
         'swp_stepup'     => 7.5,
         'swp_years'      => 20,
         'lumpsum'        => 1000000.0,
-        'swp_rate'       => 7.8
+        'swp_rate'       => 7.8,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
     ],
     // Extreme values
     [
@@ -58,7 +64,9 @@ $testCases = [
         'swp_stepup'     => 10.0,
         'swp_years'      => 10,
         'lumpsum'        => 5000000.0,
-        'swp_rate'       => 9.0
+        'swp_rate'       => 9.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
     ]
 ];
 
@@ -80,7 +88,9 @@ foreach ($testCases as $index => $inputs) {
         'swp_stepup'     => $inputs['swp_stepup'],
         'swp_years'      => $inputs['swp_years'],
         'lumpsum'        => $inputs['lumpsum'],
-        'swp_rate'       => $inputs['swp_rate']
+        'swp_rate'       => $inputs['swp_rate'],
+        'ltcg_exemption' => $inputs['ltcg_exemption'],
+        'ltcg_tax_rate'  => $inputs['ltcg_tax_rate'],
     ], new \Services\ConfigService(__DIR__ . '/../content/calculator_defaults.json'));
 
     $phpCalc = new \Core\InvestmentCalculator();
@@ -97,7 +107,9 @@ foreach ($testCases as $index => $inputs) {
         'swp_stepup'     => $inputs['swp_stepup'],
         'swp_years'      => $inputs['swp_years'],
         'lumpsum'        => $inputs['lumpsum'],
-        'swp_rate'       => $inputs['swp_rate']
+        'swp_rate'       => $inputs['swp_rate'],
+        'ltcg_exemption' => $dto->getLtcgExemption(),
+        'ltcg_tax_rate'  => $dto->getLtcgTaxRate(),
     ]));
 
     $cmd = "node " . escapeshellarg(__DIR__ . '/run_js_calc.js') . " {$escapedJson}";

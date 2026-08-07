@@ -21,25 +21,30 @@ class ViewRenderer
         SessionManager $sessionManager,
         ViteHelper $viteHelper,
         string $env = 'development',
-        string $appUrl = 'https://sipswpcalculator.com'
+        string $appUrl = 'https://sipswpcalculator.com',
+        ?string $viewsPath = null,
+        ?string $cachePath = null
     ) {
         $this->sessionManager = $sessionManager;
         $isProd = ($env === 'production');
 
-        $loader = new FilesystemLoader(__DIR__ . '/../Views');
+        $resolvedViews = $viewsPath ?? (__DIR__ . '/../Views');
+        $loader = new FilesystemLoader($resolvedViews);
 
-        $cachePath = false;
-        if ($isProd) {
+        $effectiveCache = false;
+        if ($cachePath !== null) {
+            $effectiveCache = $cachePath;
+        } elseif ($isProd) {
             $cacheDir = __DIR__ . '/../../var/cache/twig';
             if (!file_exists($cacheDir) && !mkdir($cacheDir, 0775, true) && !is_dir($cacheDir)) {
                 error_log("Failed to create Twig cache directory at: {$cacheDir}");
             } else {
-                $cachePath = $cacheDir;
+                $effectiveCache = $cacheDir;
             }
         }
 
         $this->twig = new Environment($loader, [
-            'cache' => $cachePath,
+            'cache' => $effectiveCache,
             'debug' => !$isProd,
         ]);
 

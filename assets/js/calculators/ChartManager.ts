@@ -32,7 +32,7 @@ export class ChartManager {
     }
 
     formatAxisTick(value: number): string {
-        const symbol = (this.formatter as any).symbol || '₹';
+        const symbol = this.formatter.getSymbol();
         if (value >= 10000000) return symbol + (value / 10000000).toFixed(1) + 'Cr';
         if (value >= 100000) return symbol + (value / 100000).toFixed(1) + 'L';
         if (value >= 1000) return symbol + (value / 1000).toFixed(1) + 'k';

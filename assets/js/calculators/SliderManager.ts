@@ -71,7 +71,9 @@ export class SliderManager {
             this._updateAria(range, validated);
 
             // Debounce text input to prevent jank during rapid typing
-            clearTimeout(this._inputDebounceTimer);
+            if (this._inputDebounceTimer !== null) {
+                clearTimeout(this._inputDebounceTimer);
+            }
             this._inputDebounceTimer = setTimeout(() => this.triggerFn(), 150);
         });
     }

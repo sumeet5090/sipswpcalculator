@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Strategies;
 
+use Core\Container;
 use Services\ConfigService;
 
 class StrategyFactory
@@ -19,17 +20,25 @@ class StrategyFactory
 
     private ConfigService $configService;
     private array $strategyMap;
+    private ?Container $container;
 
-    public function __construct(ConfigService $configService, ?array $strategyMap = null)
+    public function __construct(ConfigService $configService, ?array $strategyMap = null, ?Container $container = null)
     {
         $this->configService = $configService;
         $this->strategyMap = $strategyMap ?? self::DEFAULT_STRATEGY_MAP;
+        $this->container = $container;
     }
 
     public function create(string $slug): CalculatorStrategyInterface
     {
         $key = ltrim($slug, '/');
         $strategyClass = $this->strategyMap[$key] ?? SipStrategy::class;
+
+        if ($this->container && $this->container->has($strategyClass)) {
+            /** @var CalculatorStrategyInterface $strategy */
+            $strategy = $this->container->get($strategyClass);
+            return $strategy;
+        }
 
         return new $strategyClass($this->configService);
     }

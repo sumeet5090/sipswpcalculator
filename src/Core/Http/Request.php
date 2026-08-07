@@ -34,12 +34,15 @@ class Request
 
     public function getUri(): string
     {
-        $uri = $this->server['REQUEST_URI'] ?? '/';
+        $uri = (string) ($this->server['REQUEST_URI'] ?? '/');
+        if ($uri === '') {
+            return '/';
+        }
         $position = strpos($uri, '?');
         if ($position !== false) {
-            return substr($uri, 0, $position);
+            $uri = substr($uri, 0, $position);
         }
-        return $uri;
+        return $uri !== '' ? $uri : '/';
     }
 
     public function get(string $key, mixed $default = null): mixed

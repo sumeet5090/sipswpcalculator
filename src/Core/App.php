@@ -145,7 +145,9 @@ class App
 
         $this->container->singleton(\Core\Strategies\StrategyFactory::class, function (Container $c) {
             return new \Core\Strategies\StrategyFactory(
-                $c->get(\Services\ConfigService::class)
+                $c->get(\Services\ConfigService::class),
+                null,
+                $c
             );
         });
 

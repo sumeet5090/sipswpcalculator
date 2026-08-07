@@ -1,61 +1,85 @@
-/**
- * compound-interest.ts
- * Isolated scripting logic for the Compound Interest Calculator view.
- */
-(function() {
-    'use strict';
+import { DOMAdapter } from '../adapters/DOMAdapter';
+import { CurrencyFormatter } from './CurrencyHelper';
+import { InputValidator } from './InputValidator';
 
-    function calculateCI(): void {
-        const principalInput = document.getElementById('ci-principal') as HTMLInputElement | null;
-        const rateInput = document.getElementById('ci-rate') as HTMLInputElement | null;
-        const yearsInput = document.getElementById('ci-years') as HTMLInputElement | null;
-        const frequencySelect = document.getElementById('ci-frequency') as HTMLSelectElement | null;
+/**
+ * CompoundInterestCalculator
+ * Handles calculation and DOM updates for the Compound Interest Calculator view.
+ */
+export class CompoundInterestCalculator {
+    private dom: DOMAdapter;
+    private formatter: CurrencyFormatter;
+    private validator: InputValidator;
+
+    constructor() {
+        this.dom = new DOMAdapter();
+        this.formatter = new CurrencyFormatter();
+        this.validator = new InputValidator();
+    }
+
+    public init(): void {
+        const principalInput = this.dom.getElement<HTMLInputElement>('ci-principal');
+        const rateInput = this.dom.getElement<HTMLInputElement>('ci-rate');
+        const yearsInput = this.dom.getElement<HTMLInputElement>('ci-years');
+        const frequencySelect = this.dom.getElement<HTMLSelectElement>('ci-frequency');
 
         if (!principalInput || !rateInput || !yearsInput || !frequencySelect) {
             return;
         }
 
-        const P = parseFloat(principalInput.value) || 0;
-        const r = (parseFloat(rateInput.value) || 0) / 100;
-        const t = parseInt(yearsInput.value) || 0;
-        const n = parseInt(frequencySelect.value) || 12;
+        const runCalc = () => this.calculate();
+
+        ['ci-principal', 'ci-rate', 'ci-years', 'ci-frequency'].forEach(id => {
+            const el = this.dom.getElement(id);
+            if (el) {
+                el.addEventListener('input', runCalc);
+                el.addEventListener('change', runCalc);
+            }
+        });
+
+        this.calculate();
+    }
+
+    public calculate(): void {
+        const rawP = parseFloat(this.dom.getValue('ci-principal') || '0') || 0;
+        const rawR = parseFloat(this.dom.getValue('ci-rate') || '0') || 0;
+        const rawT = parseInt(this.dom.getValue('ci-years') || '0', 10) || 0;
+        const rawN = parseInt(this.dom.getValue('ci-frequency') || '12', 10) || 12;
+
+        const P = this.validator.validate('lumpsum', rawP);
+        const r = (this.validator.validate('rate', rawR)) / 100;
+        const t = this.validator.validate('years', rawT);
+        const n = rawN > 0 ? rawN : 12;
 
         const A = P * Math.pow(1 + r / n, n * t);
         const interest = A - P;
         const effectiveRate = (Math.pow(1 + r / n, n) - 1) * 100;
         const rule72Years = r > 0 ? (72 / (r * 100)).toFixed(1) : '∞';
 
-        const fmt = (num: number): string => {
-            return new Intl.NumberFormat('en-IN', {
-                style: 'currency',
-                currency: 'INR',
-                maximumFractionDigits: 0
-            }).format(num);
-        };
+        const finalEl = this.dom.getElement('ci-final');
+        const interestEl = this.dom.getElement('ci-interest');
+        const effectiveEl = this.dom.getElement('ci-effective');
+        const ruleRateEl = this.dom.getElement('ci-rule72-rate');
+        const ruleYearsEl = this.dom.getElement('ci-rule72-years');
 
-        const finalEl = document.getElementById('ci-final');
-        const interestEl = document.getElementById('ci-interest');
-        const effectiveEl = document.getElementById('ci-effective');
-        const ruleRateEl = document.getElementById('ci-rule72-rate');
-        const ruleYearsEl = document.getElementById('ci-rule72-years');
-
-        if (finalEl) finalEl.textContent = fmt(A);
-        if (interestEl) interestEl.textContent = fmt(interest);
+        if (finalEl) finalEl.textContent = this.formatter.format(A);
+        if (interestEl) interestEl.textContent = this.formatter.format(interest);
         if (effectiveEl) effectiveEl.textContent = effectiveRate.toFixed(2) + '%';
         if (ruleRateEl) ruleRateEl.textContent = (r * 100).toFixed(1);
         if (ruleYearsEl) ruleYearsEl.textContent = rule72Years;
     }
+}
 
-    // Attach listeners
-    document.querySelectorAll('#ci-principal, #ci-rate, #ci-years, #ci-frequency').forEach(el => {
-        el.addEventListener('input', calculateCI);
-        el.addEventListener('change', calculateCI);
-    });
+// Auto-instantiate on DOM load
+if (typeof document !== 'undefined') {
+    const initCI = () => {
+        const calc = new CompoundInterestCalculator();
+        calc.init();
+    };
 
-    // Run initial calculation when DOM is ready
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', calculateCI);
+        document.addEventListener('DOMContentLoaded', initCI);
     } else {
-        calculateCI();
+        initCI();
     }
-})();
+}
