@@ -212,7 +212,7 @@ This codebase is maintained to strict architectural quality standards as documen
 | **Fail-Safe Security** | `RateLimiter` throws on storage directory failure rather than silently bypassing rate limits |
 | **PSR-11 Compliance** | `Container::has()` verifies class instantiability via reflection before returning `true` |
 | **Testability** | `DatabaseMigrator::bootstrap()` separated from `migrate()` for clean test isolation; `ViteHelper` accepts injected manifest path |
-| **Boy Scout Rule** | All audit violations (66 total across Phases 1–8) identified and fixed in dedicated remediation passes |
+| **Boy Scout Rule** | All audit violations (68 total across Phases 1–9) identified and fixed in dedicated remediation passes |
 
 ---
 

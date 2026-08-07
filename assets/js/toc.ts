@@ -60,7 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     link.classList.add('text-slate-600');
                 });
 
-                const activeLink = document.querySelector<HTMLElement>(`#toc-list .toc-link[data-target="${entry.target.id}"]`);
+                const safeTargetId = typeof CSS !== 'undefined' && typeof CSS.escape === 'function'
+                    ? CSS.escape(entry.target.id)
+                    : entry.target.id.replace(/["\\]/g, '\\$&');
+                const activeLink = document.querySelector<HTMLElement>(`#toc-list .toc-link[data-target="${safeTargetId}"]`);
                 if (activeLink) {
                     activeLink.classList.remove('text-slate-600');
                     activeLink.classList.add('text-emerald-600', 'font-bold');

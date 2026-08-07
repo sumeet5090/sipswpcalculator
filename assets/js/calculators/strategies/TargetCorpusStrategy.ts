@@ -9,12 +9,11 @@ export class TargetCorpusStrategy extends CalculatorStrategy {
         const targetCorpus = this.validator.validate('target_corpus', targetCorpusRaw ? Number(targetCorpusRaw) : 10000000);
         
         const requiredSip = MathEngine.calculateRequiredSip(inputs, targetCorpus);
-        inputs.sip = requiredSip;
         
         // Update DOM elements with the required SIP
         this.dom.setValue('sip', requiredSip);
         this.dom.setValue('sip_range', requiredSip);
         
-        return inputs;
+        return { ...inputs, sip: requiredSip };
     }
 }
