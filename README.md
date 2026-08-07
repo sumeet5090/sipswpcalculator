@@ -208,14 +208,18 @@ This codebase is maintained to strict architectural quality standards as documen
 
 | Principle | Key Implementation |
 |---|---|
-| **DRY** | `InvestmentInputs::resolveField()` for all field clamping; `BlogRepository::buildPostData()` for all post index building |
+| **Modular Dependency Injection** | All DI bindings decoupled into SRP-compliant `ServiceProvider` modules (`CoreServiceProvider`, `RepositoryServiceProvider`, `ControllerServiceProvider`) |
+| **Strategy Pattern for RateLimiting** | `RateLimiter` delegates persistence to `RateLimitStorageInterface` (`FileRateLimitStorage`), enabling pluggable Redis/Memcached backends |
+| **Separation of Concerns (Views)** | `SitemapController` delegates XML rendering to `Views/sitemap.xml.twig` rather than constructing DOM nodes inline |
+| **Encapsulated Upload Handling** | `FileUploadService` handles image upload validation & Base64 encoding without error suppression operators |
+| **Custom Twig Extensions** | `AppTwigExtension` encapsulates custom Twig filters (`formatInr`, `array_values`) and Vite helper functions |
+| **DRY** | `InvestmentInputs::resolveField()` for all field clamping; `ContentManager` centralized for Markdown processing |
 | **Single Source of Truth** | LTCG tax rates in `calculator_defaults.json`; `InvestmentInputs` is the only clamping layer for both web and PDF |
 | **Explicit > Implicit** | `Router` normalises URIs before redirect and route lookup; no silent null injection for unresolvable action params |
-| **CQS** | `SessionManager::get()` and `has()` are pure reads with no side effects; `ViewRenderer::render()` does not mutate caller's `$data` |
+| **CQS & Constructor Safety** | Constructors are free of filesystem side effects (`mkdir`); `ViewRenderer` uses decoupled Twig caching |
 | **Fail-Safe Security** | `RateLimiter` throws on storage directory failure rather than silently bypassing rate limits |
 | **PSR-11 Compliance** | `Container::has()` verifies class instantiability via reflection before returning `true` |
 | **Testability** | `DatabaseMigrator::bootstrap()` separated from `migrate()` for clean test isolation; `ViteHelper` accepts injected manifest path |
-| **Boy Scout Rule** | All audit violations (68 total across Phases 1–9) identified and fixed in dedicated remediation passes |
 
 ---
 

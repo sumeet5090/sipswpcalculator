@@ -36,9 +36,7 @@ class ViewRenderer
             $effectiveCache = $cachePath;
         } elseif ($isProd) {
             $cacheDir = __DIR__ . '/../../var/cache/twig';
-            if (!file_exists($cacheDir) && !mkdir($cacheDir, 0775, true) && !is_dir($cacheDir)) {
-                error_log("Failed to create Twig cache directory at: {$cacheDir}");
-            } else {
+            if (is_dir($cacheDir)) {
                 $effectiveCache = $cacheDir;
             }
         }
@@ -50,18 +48,7 @@ class ViewRenderer
 
         $this->twig->addGlobal('env', $env);
         $this->twig->addGlobal('site_url', rtrim($appUrl, '/'));
-
-        $this->twig->addFilter(new \Twig\TwigFilter('formatInr', function ($amount) {
-            return \Core\CurrencyHelper::formatInr((float) $amount);
-        }));
-        $this->twig->addFilter(new \Twig\TwigFilter('array_values', function ($array) {
-            return is_array($array) ? array_values($array) : $array;
-        }));
-
-        $vite = $viteHelper;
-        $this->twig->addFunction(new \Twig\TwigFunction('vite_asset', [$vite, 'asset']));
-        $this->twig->addFunction(new \Twig\TwigFunction('vite_client', [$vite, 'client'], ['is_safe' => ['html']]));
-        $this->twig->addFunction(new \Twig\TwigFunction('vite_css', [$vite, 'css'], ['is_safe' => ['html']]));
+        $this->twig->addExtension(new \Core\Twig\AppTwigExtension($viteHelper));
     }
 
     /**

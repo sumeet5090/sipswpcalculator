@@ -75,25 +75,15 @@ class BlogRepository
         $categoryList = array_filter($categoryList);
 
         foreach ($categoryList as $cat) {
-            $dir = $contentDir . '/' . $cat;
-            if (!is_dir($dir)) {
-                continue;
-            }
+            $slugs = $this->contentManager->listMarkdownFiles('blog/' . $cat);
 
-            $files = glob($dir . '/*.md');
-            if (!$files) {
-                continue;
-            }
-
-            foreach ($files as $file) {
-                $slug = basename($file, '.md');
+            foreach ($slugs as $slug) {
                 $meta = $this->contentManager->getMetadataOnly('/blog/' . $cat . '/' . $slug);
                 if (!$meta) {
                     continue;
                 }
 
                 $readTime = $meta['read_time'] ?? '5 min';
-
                 $posts[] = $this->buildPostData($cat, $slug, $meta, (string) $readTime);
             }
         }
@@ -161,7 +151,6 @@ class BlogRepository
      */
     public function getPostModifiedDate(string $category, string $slug, string $fallbackDate = '2026-03-01'): string
     {
-        $mdFile = $this->contentDir . '/' . $category . '/' . $slug . '.md';
-        return file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $fallbackDate;
+        return $this->contentManager->getFileModifiedDate('blog/' . $category . '/' . $slug, $fallbackDate);
     }
 }

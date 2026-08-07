@@ -17,6 +17,27 @@ class ContentManager
         $this->contentDir = $contentDir;
     }
 
+    public function listMarkdownFiles(string $subDir): array
+    {
+        $dir = $this->contentDir . '/' . trim($subDir, '/');
+        if (!is_dir($dir)) {
+            return [];
+        }
+
+        $files = glob($dir . '/*.md');
+        if (!$files) {
+            return [];
+        }
+
+        return array_map(fn($f) => basename($f, '.md'), $files);
+    }
+
+    public function getFileModifiedDate(string $path, string $fallback = '2026-03-01'): string
+    {
+        $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
+        return file_exists($fullPath) ? date('Y-m-d', filemtime($fullPath)) : $fallback;
+    }
+
     public function getParsedContent(string $path): ?array
     {
         $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';

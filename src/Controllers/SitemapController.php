@@ -8,7 +8,6 @@ use Core\BlogRepository;
 use Core\Http\Response;
 use Core\SiteConfig;
 use Core\ViewRenderer;
-use DOMDocument;
 
 class SitemapController
 {
@@ -95,38 +94,8 @@ class SitemapController
             ];
         }
 
-        // Generate XML via DOMDocument
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->formatOutput = true;
+        $xml = $this->viewRenderer->render('sitemap.xml', ['urls' => $urls]);
 
-        $urlset = $dom->createElementNS('http://www.sitemaps.org/schemas/sitemap/0.9', 'urlset');
-
-        foreach ($urls as $urlData) {
-            $url = $dom->createElement('url');
-
-            $loc = $dom->createElement('loc');
-            $loc->appendChild($dom->createTextNode($urlData['loc']));
-
-            $lastmod = $dom->createElement('lastmod');
-            $lastmod->appendChild($dom->createTextNode($urlData['lastmod']));
-
-            $changefreq = $dom->createElement('changefreq');
-            $changefreq->appendChild($dom->createTextNode($urlData['changefreq']));
-
-            $priority = $dom->createElement('priority');
-            $priority->appendChild($dom->createTextNode($urlData['priority']));
-
-            $url->appendChild($loc);
-            $url->appendChild($lastmod);
-            $url->appendChild($changefreq);
-            $url->appendChild($priority);
-
-            $urlset->appendChild($url);
-        }
-
-        $dom->appendChild($urlset);
-        $xml = $dom->saveXML();
-
-        return new Response($xml ?: '', 200, ['Content-Type' => 'application/xml; charset=utf-8']);
+        return new Response($xml, 200, ['Content-Type' => 'application/xml; charset=utf-8']);
     }
 }

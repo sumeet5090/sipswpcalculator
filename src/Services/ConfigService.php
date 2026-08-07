@@ -37,4 +37,15 @@ class ConfigService
 
         return $this->calculatorDefaults;
     }
+
+    public function getJsonConfig(string $relativePath): array
+    {
+        $fullPath = __DIR__ . '/../../' . ltrim($relativePath, '/');
+        if (!file_exists($fullPath)) {
+            return [];
+        }
+        $content = file_get_contents($fullPath);
+        $decoded = json_decode($content, true);
+        return is_array($decoded) ? $decoded : [];
+    }
 }

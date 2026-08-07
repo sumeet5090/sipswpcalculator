@@ -16,16 +16,10 @@ class InsightRepository
     private PDO $pdo;
     private array $bucketConfig;
 
-    public function __construct(PDO $pdo, ?string $bucketConfigPath = null)
+    public function __construct(PDO $pdo, array $bucketConfig = [])
     {
         $this->pdo = $pdo;
-        $path = $bucketConfigPath ?? __DIR__ . '/../../content/dashboard_buckets.json';
-        if (file_exists($path)) {
-            $raw = file_get_contents($path);
-            $this->bucketConfig = json_decode($raw, true) ?? [];
-        } else {
-            $this->bucketConfig = [];
-        }
+        $this->bucketConfig = $bucketConfig;
     }
 
     private function buildCaseSql(array $buckets, string $column, string $alias = 'bucket'): string

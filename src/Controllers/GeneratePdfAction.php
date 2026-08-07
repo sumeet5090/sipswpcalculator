@@ -9,6 +9,7 @@ use Core\Http\Response;
 use Core\Exceptions\RateLimitExceededException;
 use Core\InvestmentInputs;
 use Services\ConfigService;
+use Services\FileUploadService;
 use Services\HtmlSanitizer;
 use Services\PdfGeneratorService;
 use Services\RateLimiter;
@@ -20,6 +21,7 @@ class GeneratePdfAction
     private SessionManager $sessionManager;
     private PdfGeneratorService $pdfGenerator;
     private ConfigService $configService;
+    private FileUploadService $fileUploadService;
     private HtmlSanitizer $sanitizer;
 
     public function __construct(
@@ -27,12 +29,14 @@ class GeneratePdfAction
         SessionManager $sessionManager,
         PdfGeneratorService $pdfGenerator,
         ConfigService $configService,
+        ?FileUploadService $fileUploadService = null,
         ?HtmlSanitizer $sanitizer = null
     ) {
         $this->rateLimiter = $rateLimiter;
         $this->sessionManager = $sessionManager;
         $this->pdfGenerator = $pdfGenerator;
         $this->configService = $configService;
+        $this->fileUploadService = $fileUploadService ?? new FileUploadService();
         $this->sanitizer = $sanitizer ?? new HtmlSanitizer();
     }
 
@@ -75,7 +79,7 @@ class GeneratePdfAction
                 'swp_stepup'        => $calcInputs->getSwpStepup(),
                 'swp_years'         => $calcInputs->getSwpYears(),
                 'swp_rate'          => $calcInputs->getSwpRate(),
-                'logo_base64'       => $this->handleLogoUpload($request->files('advisorLogo')),
+                'logo_base64'       => $this->fileUploadService->processLogoUpload($request->files('advisorLogo')),
 
                 // Summary Metrics
                 'currency_symbol'   => $this->sanitizer->sanitizeText((string) ($post['currency_symbol'] ?? ''), 10),
@@ -106,40 +110,5 @@ class GeneratePdfAction
             error_log('PDF Generation Error: ' . $e->getMessage());
             return new Response('An error occurred during PDF generation. Please try again.', 500);
         }
-    }
-
-    private function handleLogoUpload(?array $logoFile): ?string
-    {
-        if ($logoFile === null || ($logoFile['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
-            return null;
-        }
-
-        $tmp_name = $logoFile['tmp_name'];
-        $file_size = $logoFile['size'];
-
-        if ($file_size > 2 * 1024 * 1024) {
-            throw new \RuntimeException('Logo file too large. Maximum 2MB allowed.');
-        }
-
-        $image_info = @getimagesize($tmp_name);
-        if ($image_info === false) {
-            throw new \RuntimeException('Uploaded file is not a valid image.');
-        }
-
-        $allowed_types = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF, IMAGETYPE_WEBP];
-        if (!in_array($image_info[2], $allowed_types, true)) {
-            throw new \RuntimeException('Invalid image type. Only JPEG, PNG, GIF, and WebP are allowed.');
-        }
-
-        if ($image_info[0] > 2000 || $image_info[1] > 2000) {
-            throw new \RuntimeException('Image dimensions too large. Maximum 2000x2000 pixels.');
-        }
-
-        $safe_mime = $image_info['mime'];
-        $data = file_get_contents($tmp_name);
-        if ($data === false) {
-            throw new \RuntimeException('Failed to read uploaded image file.');
-        }
-        return 'data:' . $safe_mime . ';base64,' . base64_encode($data);
     }
 }
