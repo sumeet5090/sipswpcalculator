@@ -15,12 +15,6 @@ import { TargetCorpusStrategy } from './strategies/TargetCorpusStrategy';
 import { CalculatorStrategy } from './strategies/CalculatorStrategy';
 import { InvestmentInputs, YearResult } from '../types';
 
-declare global {
-    interface Window {
-        switchFormTab?: (tab: string) => void;
-    }
-}
-
 export class CalculatorApp {
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
@@ -485,11 +479,12 @@ export class CalculatorApp {
     }
 
     private initTabsController(): void {
-        window.switchFormTab = (tab: string) => {
+        const sipTab = document.getElementById('tab-sip');
+        const swpTab = document.getElementById('tab-swp');
+
+        const switchTab = (tab: string) => {
             const sipPanel = document.getElementById('panel-sip');
             const swpPanel = document.getElementById('panel-swp');
-            const sipTab = document.getElementById('tab-sip');
-            const swpTab = document.getElementById('tab-swp');
 
             if (!sipPanel || !swpPanel || !sipTab || !swpTab) return;
 
@@ -532,6 +527,13 @@ export class CalculatorApp {
                 swpTab.setAttribute('aria-selected', 'true');
             }
         };
+
+        if (sipTab) {
+            sipTab.addEventListener('click', () => switchTab('sip'));
+        }
+        if (swpTab) {
+            swpTab.addEventListener('click', () => switchTab('swp'));
+        }
     }
 
     private initSmartNudges(): void {

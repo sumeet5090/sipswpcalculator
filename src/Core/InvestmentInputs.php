@@ -150,8 +150,8 @@ class InvestmentInputs
 
         return new self(
             0.0,
-            1,
-            (float) ($cfg['rate']['default'] ?? 12.0),
+            0,
+            0.0,
             0.0,
             true,
             $swpWithdrawal,

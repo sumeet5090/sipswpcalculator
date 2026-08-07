@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Core;
 
-use Services\SessionManager;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -15,17 +14,14 @@ use Twig\Loader\FilesystemLoader;
 class ViewRenderer
 {
     private Environment $twig;
-    private SessionManager $sessionManager;
 
     public function __construct(
-        SessionManager $sessionManager,
         ViteHelper $viteHelper,
         string $env = 'development',
         string $appUrl = 'https://sipswpcalculator.com',
         ?string $viewsPath = null,
         ?string $cachePath = null
     ) {
-        $this->sessionManager = $sessionManager;
         $isProd = ($env === 'production');
 
         $resolvedViews = $viewsPath ?? (__DIR__ . '/../Views');
@@ -56,7 +52,7 @@ class ViewRenderer
      */
     public function render(string $view, array $data = []): string
     {
-        $csrfToken = $data['csrf_token'] ?? $this->sessionManager->getCsrfToken();
+        $csrfToken = $data['csrf_token'] ?? '';
         $renderData = array_merge([
             'csrf_token' => $csrfToken,
             'app' => ['session' => ['csrf_token' => $csrfToken]],

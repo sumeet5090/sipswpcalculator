@@ -134,7 +134,6 @@ class App
         $this->router->get('/admin_insights/migrate', [AdminController::class, 'runMigrations']);
         $this->router->get('/log_insight', [AdminController::class, 'logInsight']);
         $this->router->post('/log_insight', [AdminController::class, 'logInsight']);
-        $this->router->redirect('/log_insight.php', '/log_insight');
 
         // Blog / Resources Routing
         $this->router->get('/resources', [BlogController::class, 'index']);

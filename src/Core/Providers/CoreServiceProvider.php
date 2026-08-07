@@ -64,7 +64,6 @@ class CoreServiceProvider implements ServiceProviderInterface
 
         $container->singleton(ViewRenderer::class, function (Container $c) use ($environment, $appUrl) {
             return new ViewRenderer(
-                $c->get(SessionManager::class),
                 $c->get(ViteHelper::class),
                 $environment,
                 $appUrl
