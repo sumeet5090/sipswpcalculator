@@ -277,9 +277,10 @@ class PdfReportTemplate
 
         $found = [];
 
-        // If pre-computed yearly results array is provided, scan it directly (DRY principle)
-        if (!empty($inputs['combined_results']) && is_array($inputs['combined_results'])) {
-            foreach ($inputs['combined_results'] as $row) {
+        // Scan pre-computed yearly results from InvestmentCalculator
+        $combinedResults = $inputs['combined_results'] ?? [];
+        if (is_array($combinedResults)) {
+            foreach ($combinedResults as $row) {
                 $y = (int) ($row['year'] ?? 0);
                 $corpus = (float) ($row['combined_total'] ?? 0);
                 foreach ($milestoneTargets as $target => $label) {
@@ -290,34 +291,6 @@ class PdfReportTemplate
                             'year' => $y,
                         ];
                     }
-                }
-            }
-            return array_slice(array_values($found), 0, 4);
-        }
-
-        // Fallback simulation if combined_results vector is absent
-        $sip = (float) ($inputs['sip'] ?? 0);
-        $lumpsum = (float) ($inputs['lumpsum'] ?? 0);
-        $rate = (float) ($inputs['rate'] ?? 12) / 100 / 12;
-        $stepup = (float) ($inputs['stepup'] ?? 0) / 100;
-        $years = max(1, (int) ($inputs['years'] ?? 20));
-
-        $currentMonthlySip = $sip;
-        $corpus = $lumpsum;
-
-        for ($y = 1; $y <= $years; $y++) {
-            for ($m = 1; $m <= 12; $m++) {
-                $corpus = ($corpus + $currentMonthlySip) * (1 + $rate);
-            }
-            $currentMonthlySip *= (1 + $stepup);
-
-            foreach ($milestoneTargets as $target => $label) {
-                if (!isset($found[$target]) && $corpus >= $target) {
-                    $found[$target] = [
-                        'badge' => $label,
-                        'target_formatted' => CurrencyHelper::formatInr($target),
-                        'year' => $y,
-                    ];
                 }
             }
         }

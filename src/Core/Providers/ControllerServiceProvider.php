@@ -59,6 +59,29 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new PdfGeneratorService();
         });
 
+        $container->singleton(\Controllers\ShowAdminDashboardAction::class, function (Container $c) {
+            return new \Controllers\ShowAdminDashboardAction(
+                $c->get(InsightRepository::class),
+                $c->get(AdminAuthService::class),
+                $c->get(AdminDashboardPresenter::class),
+                $c->get(ViewRenderer::class)
+            );
+        });
+
+        $container->singleton(\Controllers\AdminAuthAction::class, function (Container $c) {
+            return new \Controllers\AdminAuthAction(
+                $c->get(AdminAuthService::class),
+                $c->get(ViewRenderer::class)
+            );
+        });
+
+        $container->singleton(\Controllers\LogInsightApiAction::class, function (Container $c) {
+            return new \Controllers\LogInsightApiAction(
+                $c->get(AnonymizedInsightLogger::class),
+                $c->get(RateLimiter::class)
+            );
+        });
+
         $container->singleton(AdminController::class, function (Container $c) {
             return new AdminController(
                 $c->get(InsightRepository::class),
@@ -122,8 +145,7 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(BlogRepository::class),
                 $c->get(SchemaFactory::class),
                 $c->get(SiteConfig::class),
-                $c->get(ViewRenderer::class),
-                $c->get(ErrorController::class)
+                $c->get(ViewRenderer::class)
             );
         });
 
@@ -144,8 +166,7 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(FaqRepository::class),
                 $c->get(BlogRepository::class),
                 $c->get(StrategyFactory::class),
-                $c->get(ViewRenderer::class),
-                $c->get(ErrorController::class)
+                $c->get(ViewRenderer::class)
             );
         });
     }

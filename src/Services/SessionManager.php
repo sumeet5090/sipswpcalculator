@@ -45,12 +45,18 @@ class SessionManager
         session_destroy();
     }
 
+    public function generateCsrfToken(): string
+    {
+        $token = bin2hex(random_bytes(32));
+        $this->set('csrf_token', $token);
+        return $token;
+    }
+
     public function getCsrfToken(): string
     {
         $token = $this->get('csrf_token');
         if (!is_string($token) || $token === '') {
-            $token = bin2hex(random_bytes(32));
-            $this->set('csrf_token', $token);
+            return $this->generateCsrfToken();
         }
         return $token;
     }

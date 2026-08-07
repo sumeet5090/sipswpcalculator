@@ -56,7 +56,6 @@ class RenderHomeAction
             'swp_years_input'     => $inputs->getSwpYears(),
             'swp_rate'            => $inputs->getSwpRate(),
             'inflation'           => $inputs->getInflation(),
-            'combined'            => [],
             'page_config'         => $page_config,
             'homeFaqs'            => $homeFaqs,
             'calc_config'         => $calcConfig,

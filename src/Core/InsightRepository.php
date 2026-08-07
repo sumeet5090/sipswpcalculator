@@ -24,6 +24,9 @@ class InsightRepository
 
     private function buildCaseSql(array $buckets, string $column, string $alias = 'bucket'): string
     {
+        $column = preg_replace('/[^a-zA-Z0-9_]/', '', $column);
+        $alias = preg_replace('/[^a-zA-Z0-9_]/', '', $alias);
+
         if (empty($buckets)) {
             return "{$column} AS {$alias}";
         }

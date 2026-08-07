@@ -209,16 +209,18 @@ This codebase is maintained to strict architectural quality standards as documen
 | Principle | Key Implementation |
 |---|---|
 | **Modular Dependency Injection** | All DI bindings decoupled into SRP-compliant `ServiceProvider` modules (`CoreServiceProvider`, `RepositoryServiceProvider`, `ControllerServiceProvider`) |
+| **SRP Controller Actions** | Single-responsibility action classes (`ShowAdminDashboardAction`, `AdminAuthAction`, `LogInsightApiAction`, `RenderHomeAction`, `GeneratePdfAction`) decoupled from monolithic controllers |
+| **Dependency Inversion (DIP)** | Kernel `App::run()` catches domain exceptions (`RouteNotFoundException`) and resolves `ErrorController` via DI container rather than static fallbacks |
 | **Strategy Pattern for RateLimiting** | `RateLimiter` delegates persistence to `RateLimitStorageInterface` (`FileRateLimitStorage`), enabling pluggable Redis/Memcached backends |
 | **Separation of Concerns (Views)** | `SitemapController` delegates XML rendering to `Views/sitemap.xml.twig` rather than constructing DOM nodes inline |
 | **Encapsulated Upload Handling** | `FileUploadService` handles image upload validation & Base64 encoding without error suppression operators |
 | **Custom Twig Extensions** | `AppTwigExtension` encapsulates custom Twig filters (`formatInr`, `array_values`) and Vite helper functions |
-| **DRY** | `InvestmentInputs::resolveField()` for all field clamping; `ContentManager` centralized for Markdown processing |
+| **DRY Calculation Engine** | PDF reporting (`GeneratePdfAction` / `PdfReportTemplate`) uses `InvestmentCalculator` cashflow vectors directly without duplicated math loops |
 | **Single Source of Truth** | LTCG tax rates in `calculator_defaults.json`; `InvestmentInputs` is the only clamping layer for both web and PDF |
-| **Explicit > Implicit** | `Router` explicitly resolves routes and issues SEO-friendly 301 redirects for trailing slashes without magic URI trimming |
-| **CQS Compliance** | `App::boot()` and `DatabaseMigrator::migrate()` return `void` (Command) to strictly separate state mutation from data queries |
+| **Explicit > Implicit** | `Router` explicitly resolves routes and enforces `MiddlewareInterface` compliance without magic URI trimming |
+| **CQS Compliance** | `SessionManager::generateCsrfToken()`, `App::boot()`, and `DatabaseMigrator::migrate()` return `void` or explicitly separate state mutation from query methods |
 | **Environment Security** | Schema migrations execute strictly via CLI (`migrate.php`) in deployment pipelines; no administrative web migration endpoints |
-| **Constructor & Type Safety** | Constructors are free of filesystem side effects (`mkdir`); `BlogRepository` generates unique composite resource IDs (`category/slug`) |
+| **Constructor & Type Safety** | Constructors are free of filesystem side effects (`mkdir`); `StrategyFactory` receives strategy instances via DI constructor without Service Locator anti-patterns |
 
 ---
 

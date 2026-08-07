@@ -68,13 +68,13 @@ class App
         try {
             $response = $this->router->dispatch($request);
         } catch (\Core\Exceptions\RouteNotFoundException $e) {
-            /** @var ViewRenderer $viewRenderer */
-            $viewRenderer = $this->container->get(ViewRenderer::class);
-            $response = \Controllers\ErrorController::handle404($viewRenderer);
+            /** @var \Controllers\ErrorController $errorController */
+            $errorController = $this->container->get(\Controllers\ErrorController::class);
+            $response = $errorController->render404();
         } catch (\Throwable $e) {
-            /** @var ViewRenderer $viewRenderer */
-            $viewRenderer = $this->container->get(ViewRenderer::class);
-            $response = \Controllers\ErrorController::handle500($e, $viewRenderer);
+            /** @var \Controllers\ErrorController $errorController */
+            $errorController = $this->container->get(\Controllers\ErrorController::class);
+            $response = $errorController->render500($e);
         }
 
         $response->send();

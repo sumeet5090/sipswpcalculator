@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Services;
 
-use Controllers\ErrorController;
 use Core\ContentManager;
+use Core\Exceptions\RouteNotFoundException;
 use Core\Factories\SchemaFactory;
 use Core\FaqRepository;
 use Core\BlogRepository;
@@ -27,7 +27,6 @@ class GuideRenderer
     private BlogRepository $blogRepository;
     private StrategyFactory $strategyFactory;
     private ViewRenderer $viewRenderer;
-    private ErrorController $errorController;
 
     public function __construct(
         ContentManager $contentManager,
@@ -36,8 +35,7 @@ class GuideRenderer
         FaqRepository $faqRepository,
         BlogRepository $blogRepository,
         StrategyFactory $strategyFactory,
-        ViewRenderer $viewRenderer,
-        ErrorController $errorController
+        ViewRenderer $viewRenderer
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
@@ -46,7 +44,6 @@ class GuideRenderer
         $this->blogRepository = $blogRepository;
         $this->strategyFactory = $strategyFactory;
         $this->viewRenderer = $viewRenderer;
-        $this->errorController = $errorController;
     }
 
     /**
@@ -60,7 +57,7 @@ class GuideRenderer
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            return $this->errorController->render404();
+            throw new RouteNotFoundException("Guide content not found for path: {$path}");
         }
 
         $meta = $content['metadata'];
@@ -124,7 +121,6 @@ class GuideRenderer
             'calc_config'         => $calcConfig,
             'show_lumpsum'        => $show_lumpsum,
             'faqs'                => $faqs,
-            'combined'            => [],
             'all_posts'           => $all_posts,
         ], $calcConfig)));
     }

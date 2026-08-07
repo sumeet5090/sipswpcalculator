@@ -11,20 +11,46 @@ use Core\ViewRenderer;
 class ErrorController
 {
     private ?ViewRenderer $viewRenderer;
+    private string $environment;
 
-    public function __construct(?ViewRenderer $viewRenderer = null)
+    public function __construct(?ViewRenderer $viewRenderer = null, string $environment = 'production')
     {
         $this->viewRenderer = $viewRenderer;
+        $this->environment = $environment;
     }
 
     public function render404(): Response
     {
-        return self::handle404($this->viewRenderer);
+        $html = $this->viewRenderer
+            ? $this->viewRenderer->render('pages/404', [
+                'page_config' => [
+                    'title' => 'Page Not Found - 404',
+                    'robots' => 'noindex, follow'
+                ]
+              ])
+            : '<h1>404 Not Found</h1>';
+
+        return Response::html($html, 404);
     }
 
     public function render500(\Throwable $e): Response
     {
-        return self::handle500($e, $this->viewRenderer);
+        error_log("Global 500 Error: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine());
+
+        $isDebug = ($this->environment === 'development' || Env::get('ENVIRONMENT', 'production') === 'development');
+        $errorMessage = $isDebug ? $e->getMessage() : 'An unexpected error occurred.';
+
+        $html = $this->viewRenderer
+            ? $this->viewRenderer->render('pages/500', [
+                'error' => $errorMessage,
+                'page_config' => [
+                    'title' => 'Internal Server Error - 500',
+                    'robots' => 'noindex, nofollow'
+                ]
+              ])
+            : '<h1>500 Internal Server Error</h1><p>' . htmlspecialchars($errorMessage) . '</p>';
+
+        return Response::html($html, 500);
     }
 
     public static function handle404(?ViewRenderer $viewRenderer = null): Response

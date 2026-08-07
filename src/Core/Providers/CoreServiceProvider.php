@@ -94,10 +94,17 @@ class CoreServiceProvider implements ServiceProviderInterface
         });
 
         $container->singleton(StrategyFactory::class, function (Container $c) {
+            $configService = $c->get(ConfigService::class);
             return new StrategyFactory(
-                $c->get(ConfigService::class),
+                $configService,
                 null,
-                $c
+                [
+                    \Core\Strategies\SipStrategy::class => new \Core\Strategies\SipStrategy($configService),
+                    \Core\Strategies\SwpStrategy::class => new \Core\Strategies\SwpStrategy($configService),
+                    \Core\Strategies\LumpsumStrategy::class => new \Core\Strategies\LumpsumStrategy($configService),
+                    \Core\Strategies\ComboStrategy::class => new \Core\Strategies\ComboStrategy($configService),
+                    \Core\Strategies\TargetCorpusStrategy::class => new \Core\Strategies\TargetCorpusStrategy($configService),
+                ]
             );
         });
     }

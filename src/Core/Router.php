@@ -24,6 +24,9 @@ class Router
 
     public function pipe(string|\Core\Middleware\MiddlewareInterface $middleware): void
     {
+        if (is_string($middleware) && !is_subclass_of($middleware, \Core\Middleware\MiddlewareInterface::class)) {
+            throw new \InvalidArgumentException("Middleware must implement \Core\Middleware\MiddlewareInterface");
+        }
         $this->middlewares[] = $middleware;
     }
 

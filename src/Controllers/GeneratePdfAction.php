@@ -7,6 +7,7 @@ namespace Controllers;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Exceptions\RateLimitExceededException;
+use Core\InvestmentCalculator;
 use Core\InvestmentInputs;
 use Services\ConfigService;
 use Services\FileUploadService;
@@ -23,6 +24,7 @@ class GeneratePdfAction
     private ConfigService $configService;
     private FileUploadService $fileUploadService;
     private HtmlSanitizer $sanitizer;
+    private InvestmentCalculator $calculator;
 
     public function __construct(
         RateLimiter $rateLimiter,
@@ -30,7 +32,8 @@ class GeneratePdfAction
         PdfGeneratorService $pdfGenerator,
         ConfigService $configService,
         ?FileUploadService $fileUploadService = null,
-        ?HtmlSanitizer $sanitizer = null
+        ?HtmlSanitizer $sanitizer = null,
+        ?InvestmentCalculator $calculator = null
     ) {
         $this->rateLimiter = $rateLimiter;
         $this->sessionManager = $sessionManager;
@@ -38,6 +41,7 @@ class GeneratePdfAction
         $this->configService = $configService;
         $this->fileUploadService = $fileUploadService ?? new FileUploadService();
         $this->sanitizer = $sanitizer ?? new HtmlSanitizer();
+        $this->calculator = $calculator ?? new InvestmentCalculator();
     }
 
     public function __invoke(Request $request): Response
@@ -63,6 +67,7 @@ class GeneratePdfAction
         try {
             // Use central InvestmentInputs for robust, config-driven clamping
             $calcInputs = InvestmentInputs::fromRequest($post, $this->configService);
+            $combined = $this->calculator->calculate($calcInputs);
 
             $inputs = [
                 'client_name'       => $this->sanitizer->sanitizeText((string) ($post['clientName'] ?? 'N/A'), 100),
@@ -87,8 +92,9 @@ class GeneratePdfAction
                 'summary_interest'  => $this->sanitizer->sanitizeText((string) ($post['summary_interest'] ?? '0'), 50),
                 'summary_withdrawn' => $this->sanitizer->sanitizeText((string) ($post['summary_withdrawn'] ?? '0'), 50),
                 'summary_corpus'    => $this->sanitizer->sanitizeText((string) ($post['summary_corpus'] ?? '0'), 50),
-                'raw_invested'      => (float) ($post['raw_invested'] ?? 0),
-                'raw_corpus'        => (float) ($post['raw_corpus'] ?? 0),
+                'raw_invested'      => max(0.0, (float) ($post['raw_invested'] ?? 0)),
+                'raw_corpus'        => max(0.0, (float) ($post['raw_corpus'] ?? 0)),
+                'combined_results'  => $combined,
             ];
 
             // Generate PDF binary using injected PdfGeneratorService

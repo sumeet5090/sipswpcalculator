@@ -26,7 +26,6 @@ class BlogController
     private SchemaFactory $schemaFactory;
     private SiteConfig $siteConfig;
     private ViewRenderer $viewRenderer;
-    private ErrorController $errorController;
 
     public function __construct(
         ContentManager $contentManager,
@@ -35,8 +34,7 @@ class BlogController
         BlogRepository $blogRepository,
         SchemaFactory $schemaFactory,
         SiteConfig $siteConfig,
-        ViewRenderer $viewRenderer,
-        ErrorController $errorController
+        ViewRenderer $viewRenderer
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
@@ -45,7 +43,6 @@ class BlogController
         $this->schemaFactory = $schemaFactory;
         $this->siteConfig = $siteConfig;
         $this->viewRenderer = $viewRenderer;
-        $this->errorController = $errorController;
     }
 
     public function index(): Response
@@ -80,7 +77,7 @@ class BlogController
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            return $this->errorController->render404();
+            throw new \Core\Exceptions\RouteNotFoundException("Blog post not found: {$category}/{$slug}");
         }
 
         $post_metadata = $this->blogRepository->getPostBySlug($category, $slug);
