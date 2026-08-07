@@ -1,5 +1,13 @@
 import { InvestmentInputs, YearResult } from '../types';
 
+export interface ExtraSignals {
+    pdf_has_custom_name?: boolean;
+    inflation_enabled?: boolean;
+    interaction_count?: number;
+    preset_clicked?: string;
+    exit_action?: string;
+}
+
 /**
  * AnalyticsLogger.ts
  * Manages debounced user planning behavior logging.
@@ -20,7 +28,7 @@ export class AnalyticsService {
         inputs: InvestmentInputs,
         results: YearResult[] = [],
         activeGoalMode: string = 'grow',
-        extraSignals: Record<string, any> = {}
+        extraSignals: ExtraSignals = {}
     ): void {
         if (this.insightTimeout) {
             clearTimeout(this.insightTimeout);

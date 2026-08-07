@@ -104,10 +104,17 @@ class SitemapController
         foreach ($urls as $urlData) {
             $url = $dom->createElement('url');
 
-            $loc = $dom->createElement('loc', $urlData['loc']);
-            $lastmod = $dom->createElement('lastmod', $urlData['lastmod']);
-            $changefreq = $dom->createElement('changefreq', $urlData['changefreq']);
-            $priority = $dom->createElement('priority', $urlData['priority']);
+            $loc = $dom->createElement('loc');
+            $loc->appendChild($dom->createTextNode($urlData['loc']));
+
+            $lastmod = $dom->createElement('lastmod');
+            $lastmod->appendChild($dom->createTextNode($urlData['lastmod']));
+
+            $changefreq = $dom->createElement('changefreq');
+            $changefreq->appendChild($dom->createTextNode($urlData['changefreq']));
+
+            $priority = $dom->createElement('priority');
+            $priority->appendChild($dom->createTextNode($urlData['priority']));
 
             $url->appendChild($loc);
             $url->appendChild($lastmod);

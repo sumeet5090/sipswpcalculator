@@ -642,15 +642,17 @@ export class CalculatorApp {
                 const tableHtml = resultsTable ? resultsTable.outerHTML : '<table><tr><td>No data available.</td></tr></table>';
 
                 const formData = new FormData(pdfForm);
-                formData.append('sip', String(this.dom.getValue('sip') || 0));
-                formData.append('years', String(this.dom.getValue('years') || 0));
-                formData.append('rate', String(this.dom.getValue('rate') || 0));
-                formData.append('stepup', String(this.dom.getValue('stepup') || 0));
-                formData.append('lumpsum', String(this.dom.getValue('lumpsum') || 0));
-                formData.append('swp_withdrawal', String(this.dom.getValue('swp_withdrawal') || 0));
-                formData.append('swp_stepup', String(this.dom.getValue('swp_stepup') || 0));
-                formData.append('swp_years', String(this.dom.getValue('swp_years') || 0));
-                formData.append('swp_rate', String(this.dom.getValue('swp_rate') || 0));
+                const currentInputs = this.getInputs();
+
+                formData.append('sip', String(currentInputs.sip));
+                formData.append('years', String(currentInputs.years));
+                formData.append('rate', String(currentInputs.rate));
+                formData.append('stepup', String(currentInputs.stepup));
+                formData.append('lumpsum', String(currentInputs.lumpsum));
+                formData.append('swp_withdrawal', String(currentInputs.swp_withdrawal));
+                formData.append('swp_stepup', String(currentInputs.swp_stepup));
+                formData.append('swp_years', String(currentInputs.swp_years));
+                formData.append('swp_rate', String(currentInputs.swp_rate));
 
                 formData.append('currency_symbol', '₹');
                 formData.append('summary_invested', document.getElementById('summary-invested')?.textContent?.trim() || '0');
