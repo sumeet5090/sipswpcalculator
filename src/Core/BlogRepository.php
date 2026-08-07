@@ -124,7 +124,8 @@ class BlogRepository
     {
         return [
             'category'  => $category,
-            'id'        => $category,
+            'id'        => "{$category}/{$slug}",
+            'slug'      => $slug,
             'tag'       => $meta['tag'] ?? 'Guide',
             'tag_color' => $meta['tag_color'] ?? 'slate',
             'title'     => !empty($meta['title']) ? $meta['title'] : ucfirst(str_replace('-', ' ', $slug)),

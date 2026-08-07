@@ -65,7 +65,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(AnonymizedInsightLogger::class),
                 $c->get(AdminAuthService::class),
                 $c->get(AdminDashboardPresenter::class),
-                $c->get(DatabaseMigrator::class),
                 $c->get(RateLimiter::class),
                 $c->get(ViewRenderer::class)
             );

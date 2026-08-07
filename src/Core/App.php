@@ -35,12 +35,11 @@ class App
     /**
      * Bootstrap dependencies and routes without dispatching.
      */
-    public function boot(): Container
+    public function boot(): void
     {
         $this->routesConfig = require __DIR__ . '/Config/routes.php';
         $this->registerDependencies();
         $this->registerRoutes();
-        return $this->container;
     }
 
     public function getContainer(): Container
@@ -131,7 +130,6 @@ class App
         $this->router->get('/admin_insights', [AdminController::class, 'insights']);
         $this->router->post('/admin_insights', [AdminController::class, 'login']);
         $this->router->post('/admin_insights/logout', [AdminController::class, 'logout']);
-        $this->router->get('/admin_insights/migrate', [AdminController::class, 'runMigrations']);
         $this->router->get('/log_insight', [AdminController::class, 'logInsight']);
         $this->router->post('/log_insight', [AdminController::class, 'logInsight']);
 

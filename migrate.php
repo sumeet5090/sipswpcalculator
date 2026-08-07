@@ -14,7 +14,8 @@ if (php_sapi_name() !== 'cli') {
 require_once __DIR__ . '/vendor/autoload.php';
 
 $app = new \Core\App();
-$container = $app->boot();
+$app->boot();
+$container = $app->getContainer();
 $migrator = $container->get(\Core\DatabaseMigrator::class);
 
 try {

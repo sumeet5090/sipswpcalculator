@@ -38,10 +38,8 @@ class DatabaseMigrator
 
     /**
      * Run all pending migrations.
-     *
-     * @return array<string> Names of newly executed migration files.
      */
-    public function migrate(): array
+    public function migrate(): void
     {
         $this->bootstrap();
 
@@ -49,13 +47,11 @@ class DatabaseMigrator
         $executed = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
         if (!is_dir($this->migrationsPath)) {
-            return [];
+            return;
         }
 
         $files = glob($this->migrationsPath . '/*.php');
         sort($files);
-
-        $executedMigrations = [];
 
         foreach ($files as $file) {
             $migrationName = basename($file);
@@ -76,7 +72,6 @@ class DatabaseMigrator
                     if (!$inTx && $this->pdo->inTransaction()) {
                         $this->pdo->commit();
                     }
-                    $executedMigrations[] = $migrationName;
                 } catch (\Throwable $e) {
                     if ($this->pdo->inTransaction()) {
                         $this->pdo->rollBack();
@@ -85,7 +80,5 @@ class DatabaseMigrator
                 }
             }
         }
-
-        return $executedMigrations;
     }
 }

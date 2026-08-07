@@ -12,7 +12,8 @@ $_ENV['DB_PATH'] = $testDb;
 // Run migrations on the test database before running tests
 try {
     $app = new \Core\App();
-    $container = $app->boot();
+    $app->boot();
+    $container = $app->getContainer();
     /** @var \Core\DatabaseMigrator $migrator */
     $migrator = $container->get(\Core\DatabaseMigrator::class);
     $migrator->migrate();

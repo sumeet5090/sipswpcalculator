@@ -38,7 +38,6 @@ class AdminController
     private AdminAuthService $authService;
     private AdminDashboardPresenter $presenter;
     private RateLimiter $rateLimiter;
-    private DatabaseMigrator $migrator;
     private ViewRenderer $viewRenderer;
 
     public function __construct(
@@ -46,7 +45,6 @@ class AdminController
         AnonymizedInsightLogger $insightLogger,
         AdminAuthService $authService,
         AdminDashboardPresenter $presenter,
-        DatabaseMigrator $migrator,
         RateLimiter $rateLimiter,
         ViewRenderer $viewRenderer
     ) {
@@ -54,7 +52,6 @@ class AdminController
         $this->insightLogger = $insightLogger;
         $this->authService = $authService;
         $this->presenter = $presenter;
-        $this->migrator = $migrator;
         $this->rateLimiter = $rateLimiter;
         $this->viewRenderer = $viewRenderer;
     }
@@ -146,26 +143,5 @@ class AdminController
         $this->insightLogger->logCalculation($payload, $request);
 
         return new Response('', 204);
-    }
-
-    /**
-     * Explicitly run migrations (admin authentication required).
-     */
-    public function runMigrations(): Response
-    {
-        if (!$this->authService->isAuthenticated()) {
-            return Response::json(['status' => 'error', 'message' => 'Unauthorized'], 403);
-        }
-
-        try {
-            $executed = $this->migrator->migrate();
-            $msg = count($executed) > 0
-                ? 'Migrated successfully: ' . implode(', ', $executed)
-                : 'Nothing to migrate.';
-
-            return Response::json(['status' => 'success', 'message' => $msg]);
-        } catch (\Throwable $e) {
-            return Response::json(['status' => 'error', 'message' => 'Migration failed: ' . $e->getMessage()], 500);
-        }
     }
 }

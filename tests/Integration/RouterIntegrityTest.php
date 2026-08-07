@@ -20,7 +20,8 @@ class RouterIntegrityTest extends TestCase
     protected function setUp(): void
     {
         $app = new \Core\App();
-        $this->container = $app->boot();
+        $app->boot();
+        $this->container = $app->getContainer();
         $this->router = $app->getRouter();
     }
 

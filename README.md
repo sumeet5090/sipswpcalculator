@@ -215,11 +215,10 @@ This codebase is maintained to strict architectural quality standards as documen
 | **Custom Twig Extensions** | `AppTwigExtension` encapsulates custom Twig filters (`formatInr`, `array_values`) and Vite helper functions |
 | **DRY** | `InvestmentInputs::resolveField()` for all field clamping; `ContentManager` centralized for Markdown processing |
 | **Single Source of Truth** | LTCG tax rates in `calculator_defaults.json`; `InvestmentInputs` is the only clamping layer for both web and PDF |
-| **Explicit > Implicit** | `Router` normalises URIs before redirect and route lookup; no silent null injection for unresolvable action params |
-| **CQS & Constructor Safety** | Constructors are free of filesystem side effects (`mkdir`); `ViewRenderer` uses decoupled Twig caching |
-| **Fail-Safe Security** | `RateLimiter` throws on storage directory failure rather than silently bypassing rate limits |
-| **PSR-11 Compliance** | `Container::has()` verifies class instantiability via reflection before returning `true` |
-| **Testability** | `DatabaseMigrator::bootstrap()` separated from `migrate()` for clean test isolation; `ViteHelper` accepts injected manifest path |
+| **Explicit > Implicit** | `Router` explicitly resolves routes and issues SEO-friendly 301 redirects for trailing slashes without magic URI trimming |
+| **CQS Compliance** | `App::boot()` and `DatabaseMigrator::migrate()` return `void` (Command) to strictly separate state mutation from data queries |
+| **Environment Security** | Schema migrations execute strictly via CLI (`migrate.php`) in deployment pipelines; no administrative web migration endpoints |
+| **Constructor & Type Safety** | Constructors are free of filesystem side effects (`mkdir`); `BlogRepository` generates unique composite resource IDs (`category/slug`) |
 
 ---
 
