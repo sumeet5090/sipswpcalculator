@@ -64,16 +64,23 @@ class DatabaseMigrator
                 $migration = require $file;
 
                 try {
-                    $this->pdo->beginTransaction();
+                    $inTx = $this->pdo->inTransaction();
+                    if (!$inTx) {
+                        $this->pdo->beginTransaction();
+                    }
                     $migration->up($this->pdo, true);
 
                     $stmt = $this->pdo->prepare("INSERT INTO schema_migrations (migration) VALUES (:migration)");
                     $stmt->execute([':migration' => $migrationName]);
 
-                    $this->pdo->commit();
+                    if (!$inTx && $this->pdo->inTransaction()) {
+                        $this->pdo->commit();
+                    }
                     $executedMigrations[] = $migrationName;
                 } catch (\Throwable $e) {
-                    $this->pdo->rollBack();
+                    if ($this->pdo->inTransaction()) {
+                        $this->pdo->rollBack();
+                    }
                     throw $e;
                 }
             }

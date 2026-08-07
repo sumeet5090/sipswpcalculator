@@ -59,7 +59,8 @@ class Router
             foreach ($this->routes[$method] as $route => $action) {
                 $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_\.-]+)', $route);
                 if (preg_match('#^' . $pattern . '$#', $normalizedUri, $matches)) {
-                    $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                    $rawParams = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                    $params = array_map('urldecode', $rawParams);
                     return $this->callAction($action, $params, $request);
                 }
             }

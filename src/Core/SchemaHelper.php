@@ -6,6 +6,8 @@ namespace Core;
 
 class SchemaHelper
 {
+    public const JSON_FLAGS = JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES;
+
     private SiteConfig $siteConfig;
     private string $authorName;
     private string $organizationName;
@@ -40,7 +42,7 @@ class SchemaHelper
             "@context" => "https://schema.org",
             "@type" => "BreadcrumbList",
             "itemListElement" => $itemListElement,
-        ], JSON_UNESCAPED_SLASHES);
+        ], self::JSON_FLAGS);
     }
 
     /**
@@ -64,7 +66,7 @@ class SchemaHelper
             "@context" => "https://schema.org",
             "@type" => "FAQPage",
             "mainEntity" => $mainEntity,
-        ], JSON_UNESCAPED_SLASHES);
+        ], self::JSON_FLAGS);
     }
 
     /**
@@ -97,7 +99,7 @@ class SchemaHelper
             ],
             "datePublished" => $datePublished,
             "dateModified" => $dateModified,
-        ], JSON_UNESCAPED_SLASHES);
+        ], self::JSON_FLAGS);
     }
 
     /**
@@ -115,7 +117,7 @@ class SchemaHelper
                 "@type" => "SpeakableSpecification",
                 "cssSelector" => ["h1", ".markdown-content p:first-of-type"]
             ]
-        ], JSON_UNESCAPED_SLASHES);
+        ], self::JSON_FLAGS);
     }
 
     /**
@@ -148,6 +150,6 @@ class SchemaHelper
             ];
         }
 
-        return json_encode($schema, JSON_UNESCAPED_SLASHES);
+        return json_encode($schema, self::JSON_FLAGS);
     }
 }

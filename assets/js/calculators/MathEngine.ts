@@ -164,20 +164,21 @@ export class MathEngine {
             const testInp: InvestmentInputs = {
                 ...inp,
                 sip: 0,
-                years: 0,
+                years: 1,
                 lumpsum: mid
             };
             const results = this.calculate(testInp);
             const finalBalance = results[results.length - 1].combined_total;
-            
-            if (Math.abs(finalBalance) < 1) {
+            const ranOutEarly = results.some((r, idx) => idx < results.length - 1 && r.combined_total <= 0);
+
+            if (!ranOutEarly && Math.abs(finalBalance) < 1) {
                 bestCorpus = mid;
                 break;
-            } else if (finalBalance <= 0) {
-                // If it ran out, we need more starting corpus
+            } else if (ranOutEarly || finalBalance <= 0) {
+                // If it ran out early or ended at zero, we need more starting corpus
                 low = mid;
             } else {
-                // If we ended with a surplus, we can start with less
+                // If we ended with a surplus without early depletion, we can try a lower corpus
                 high = mid;
             }
             bestCorpus = mid;

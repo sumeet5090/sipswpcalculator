@@ -88,11 +88,15 @@ class BlogController
 
         $page_config = $this->metaManager->buildFromMetadata($content['metadata'], $slug);
 
+        $breadcrumbTitle = !empty($content['metadata']['title'])
+            ? (string) $content['metadata']['title']
+            : ucfirst(str_replace('-', ' ', $slug));
+
         $breadcrumbs = [
             'Home' => '/',
             'Resources' => '/resources',
             ucfirst($category) => "/resource/{$category}",
-            $content['metadata']['title'] ?: ucfirst(str_replace('-', ' ', $slug)) => "/resource/{$category}/{$slug}"
+            $breadcrumbTitle => "/resource/{$category}/{$slug}"
         ];
 
         // Derive real dateModified from markdown file mtime via repository

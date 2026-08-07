@@ -57,7 +57,7 @@ class InsightRepository
         // 4. Calculations breakdown by type
         $stmt = $this->pdo->prepare("SELECT calc_type, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY calc_type ORDER BY cnt DESC");
         $stmt->execute($params);
-        $calcTypeBreakdown = $stmt->fetchAll();
+        $calcTypeBreakdown = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // 5. PDF Downloads count and conversion rate
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND pdf_downloaded = :pdf_flag");
@@ -80,7 +80,7 @@ class InsightRepository
             LIMIT 10
         ");
         $stmt->execute($params);
-        $topReferrers = $stmt->fetchAll();
+        $topReferrers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return [
             'totalCalculations' => $totalInRange,
@@ -129,7 +129,7 @@ class InsightRepository
             $stmt->execute([':cte_start' => $cteStart, ':interval' => $interval]);
         }
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     private function getDistributionMetrics(string $whereClause, array $params): array
@@ -151,7 +151,7 @@ class InsightRepository
             ORDER BY cnt DESC
         ");
         $stmt->execute($params);
-        $currencyDist = $stmt->fetchAll();
+        $currencyDist = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $stmt = $this->pdo->prepare("
             SELECT amount, UPPER(COALESCE(currency, 'INR')) AS currency, COUNT(*) AS frequency
@@ -162,7 +162,7 @@ class InsightRepository
             LIMIT 10
         ");
         $stmt->execute(array_merge($params, [':swp_type' => 'SWP']));
-        $topCorpus = $stmt->fetchAll();
+        $topCorpus = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return [
             'currencyDist' => $currencyDist,
@@ -240,7 +240,7 @@ class InsightRepository
             ORDER BY MIN(duration) ASC
         ");
         $stmt->execute($params);
-        $durationDist = $stmt->fetchAll();
+        $durationDist = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $stmt = $this->pdo->prepare("
             SELECT
@@ -257,7 +257,7 @@ class InsightRepository
             ORDER BY MIN(amount) ASC
         ");
         $stmt->execute(array_merge($params, [':swp_type' => 'SWP', ':default_curr' => 'INR', ':inr_curr' => 'INR']));
-        $corpusBucketsINR = $stmt->fetchAll();
+        $corpusBucketsINR = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $stmt = $this->pdo->prepare("
             SELECT
@@ -274,7 +274,7 @@ class InsightRepository
             ORDER BY MIN(amount) ASC
         ");
         $stmt->execute(array_merge($params, [':swp_type' => 'SWP', ':default_curr' => 'INR', ':inr_curr' => 'INR']));
-        $corpusBucketsUSD = $stmt->fetchAll();
+        $corpusBucketsUSD = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $stmt = $this->pdo->prepare("
             SELECT
@@ -292,7 +292,7 @@ class InsightRepository
             ORDER BY MIN(amount) ASC
         ");
         $stmt->execute($params);
-        $ambitionBuckets = $stmt->fetchAll();
+        $ambitionBuckets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return [
             'durationDist' => $durationDist,
@@ -308,11 +308,11 @@ class InsightRepository
 
         $stmt = $this->pdo->prepare("SELECT COALESCE(device_type, 'desktop') AS device, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY device ORDER BY cnt DESC");
         $stmt->execute($params);
-        $deviceDist = $stmt->fetchAll();
+        $deviceDist = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $stmt = $this->pdo->prepare("SELECT COALESCE(goal_mode, 'grow') AS mode, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY mode ORDER BY cnt DESC");
         $stmt->execute($params);
-        $goalModeDist = $stmt->fetchAll();
+        $goalModeDist = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND table_viewed = :viewed_flag");
         $stmt->execute(array_merge($params, [':viewed_flag' => 1]));

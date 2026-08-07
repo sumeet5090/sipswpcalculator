@@ -19,6 +19,9 @@ class CsvExportService
     public function generate(array $combined, bool $enableSwp): string
     {
         $resource = fopen('php://temp', 'r+');
+        if ($resource === false) {
+            throw new \RuntimeException('Failed to allocate stream resource for CSV export.');
+        }
 
         $hasTaxData = !empty($combined) && isset($combined[0]['ltcg_tax']);
 

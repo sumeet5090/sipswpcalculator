@@ -108,7 +108,7 @@ class PdfReportTemplate
                 <tr>
                     <td style='width: 30%;'>Investor: <strong>{$clientName}</strong></td>
                     <td style='width: 35%; text-align: center;'>Advisor: <strong>{$advisorName}</strong></td>
-                    <td style='width: 35%; text-align: right;'>Date: <strong>{$dateStr}</strong> \| Ref: <strong>{$proposalId}</strong></td>
+                    <td style='width: 35%; text-align: right;'>Date: <strong>{$dateStr}</strong> | Ref: <strong>{$proposalId}</strong></td>
                 </tr>
             </table>
         </div>";
