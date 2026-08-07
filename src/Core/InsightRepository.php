@@ -14,10 +14,36 @@ use PDO;
 class InsightRepository
 {
     private PDO $pdo;
+    private array $bucketConfig;
 
-    public function __construct(PDO $pdo)
+    public function __construct(PDO $pdo, ?string $bucketConfigPath = null)
     {
         $this->pdo = $pdo;
+        $path = $bucketConfigPath ?? __DIR__ . '/../../content/dashboard_buckets.json';
+        if (file_exists($path)) {
+            $raw = file_get_contents($path);
+            $this->bucketConfig = json_decode($raw, true) ?? [];
+        } else {
+            $this->bucketConfig = [];
+        }
+    }
+
+    private function buildCaseSql(array $buckets, string $column, string $alias = 'bucket'): string
+    {
+        if (empty($buckets)) {
+            return "{$column} AS {$alias}";
+        }
+        $cases = [];
+        foreach ($buckets as $b) {
+            $label = str_replace("'", "''", (string) ($b['label'] ?? ''));
+            if (isset($b['max'])) {
+                $max = (float) $b['max'];
+                $cases[] = "WHEN {$column} < {$max} THEN '{$label}'";
+            } else {
+                $cases[] = "ELSE '{$label}'";
+            }
+        }
+        return "CASE " . implode(' ', $cases) . " END AS {$alias}";
     }
 
     public function getDashboardData(array $range): array
@@ -223,16 +249,10 @@ class InsightRepository
 
     private function getBucketDistributions(string $whereClause, array $params): array
     {
+        $durationCase = $this->buildCaseSql($this->bucketConfig['duration_buckets'] ?? [], 'duration', 'bucket');
         $stmt = $this->pdo->prepare("
             SELECT
-                CASE
-                    WHEN duration <= 1 THEN '1 yr'
-                    WHEN duration <= 3 THEN '2–3 yrs'
-                    WHEN duration <= 5 THEN '4–5 yrs'
-                    WHEN duration <= 10 THEN '6–10 yrs'
-                    WHEN duration <= 20 THEN '11–20 yrs'
-                    ELSE '20+ yrs'
-                END AS bucket,
+                {$durationCase},
                 COUNT(*) AS cnt
             FROM user_calculations
             {$whereClause} AND duration IS NOT NULL
@@ -242,14 +262,10 @@ class InsightRepository
         $stmt->execute($params);
         $durationDist = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $corpusInrCase = $this->buildCaseSql($this->bucketConfig['corpus_buckets_inr'] ?? [], 'amount', 'bucket');
         $stmt = $this->pdo->prepare("
             SELECT
-                CASE
-                    WHEN amount < 1000000 THEN 'Under 10L'
-                    WHEN amount < 5000000 THEN '10L – 50L'
-                    WHEN amount < 10000000 THEN '50L – 1Cr'
-                    ELSE 'Above 1Cr'
-                END AS bucket,
+                {$corpusInrCase},
                 COUNT(*) AS cnt
             FROM user_calculations
             {$whereClause} AND calc_type = :swp_type AND amount IS NOT NULL AND UPPER(COALESCE(currency, :default_curr)) = :inr_curr
@@ -259,14 +275,10 @@ class InsightRepository
         $stmt->execute(array_merge($params, [':swp_type' => 'SWP', ':default_curr' => 'INR', ':inr_curr' => 'INR']));
         $corpusBucketsINR = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $corpusUsdCase = $this->buildCaseSql($this->bucketConfig['corpus_buckets_usd'] ?? [], 'amount', 'bucket');
         $stmt = $this->pdo->prepare("
             SELECT
-                CASE
-                    WHEN amount < 10000 THEN 'Under 10K'
-                    WHEN amount < 50000 THEN '10K – 50K'
-                    WHEN amount < 100000 THEN '50K – 100K'
-                    ELSE 'Above 100K'
-                END AS bucket,
+                {$corpusUsdCase},
                 COUNT(*) AS cnt
             FROM user_calculations
             {$whereClause} AND calc_type = :swp_type AND amount IS NOT NULL AND UPPER(COALESCE(currency, :default_curr)) != :inr_curr
@@ -276,15 +288,10 @@ class InsightRepository
         $stmt->execute(array_merge($params, [':swp_type' => 'SWP', ':default_curr' => 'INR', ':inr_curr' => 'INR']));
         $corpusBucketsUSD = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $ambitionCase = $this->buildCaseSql($this->bucketConfig['ambition_buckets'] ?? [], 'amount', 'goal_bucket');
         $stmt = $this->pdo->prepare("
             SELECT
-                CASE
-                    WHEN amount < 100000 THEN '$0 – 100K'
-                    WHEN amount < 500000 THEN '$100K – 500K'
-                    WHEN amount < 1000000 THEN '$500K – 1M'
-                    WHEN amount < 5000000 THEN '$1M – 5M'
-                    ELSE '$5M+'
-                END AS goal_bucket,
+                {$ambitionCase},
                 COUNT(*) AS cnt
             FROM user_calculations
             {$whereClause} AND amount IS NOT NULL

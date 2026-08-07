@@ -61,13 +61,34 @@ class AdminController
 
     public function insights(Request $request): Response
     {
-        // 1. Handle Logout
-        if ($request->get('logout') !== null) {
-            $this->authService->logout();
-            return Response::redirect('/admin_insights');
+        if (!$this->authService->isAuthenticated()) {
+            return Response::html($this->viewRenderer->render('admin/login', [
+                'error' => ''
+            ]));
         }
 
-        // 2. Handle Login Attempt
+        $time_ranges = self::TIME_RANGES;
+
+        $current_range_key = (string) $request->get('range', '24h');
+        if (!isset($time_ranges[$current_range_key])) {
+            $current_range_key = '1m';
+        }
+        $current_range = $time_ranges[$current_range_key];
+
+        $stats = $this->insightRepository->getDashboardData($current_range);
+        $viewModels = $this->presenter->formatForView($stats);
+
+        $payload = array_merge([
+            'current_range_key' => $current_range_key,
+            'time_ranges'       => $time_ranges,
+            'current_range'     => $current_range,
+        ], $viewModels);
+
+        return Response::html($this->viewRenderer->render('admin/dashboard', $payload));
+    }
+
+    public function login(Request $request): Response
+    {
         $loginError = '';
         if ($request->isPost()) {
             $password = $request->post('password');
@@ -85,34 +106,15 @@ class AdminController
             }
         }
 
-        // 3. Authenticate Check
-        if (!$this->authService->isAuthenticated()) {
-            return Response::html($this->viewRenderer->render('admin/login', [
-                'error' => $loginError
-            ]));
-        }
+        return Response::html($this->viewRenderer->render('admin/login', [
+            'error' => $loginError
+        ]));
+    }
 
-        // 4. Time Range Filter Config
-        $time_ranges = self::TIME_RANGES;
-
-        $current_range_key = (string) $request->get('range', '24h');
-        if (!isset($time_ranges[$current_range_key])) {
-            $current_range_key = '1m';
-        }
-        $current_range = $time_ranges[$current_range_key];
-
-        // 5. Gather statistics from the Repository and format for View
-        $stats = $this->insightRepository->getDashboardData($current_range);
-        $viewModels = $this->presenter->formatForView($stats);
-
-        // Merge view scope payload
-        $payload = array_merge([
-            'current_range_key' => $current_range_key,
-            'time_ranges'       => $time_ranges,
-            'current_range'     => $current_range,
-        ], $viewModels);
-
-        return Response::html($this->viewRenderer->render('admin/dashboard', $payload));
+    public function logout(Request $request): Response
+    {
+        $this->authService->logout();
+        return Response::redirect('/admin_insights');
     }
 
     public function logInsight(Request $request): Response

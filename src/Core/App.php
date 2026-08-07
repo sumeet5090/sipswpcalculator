@@ -167,11 +167,22 @@ class App
             return new \Controllers\RenderHomeAction(
                 $c->get(MetaManager::class),
                 $c->get(\Services\ConfigService::class),
-                $c->get(\Services\CsvExportService::class),
                 $c->get(FaqRepository::class),
-                $c->get(InvestmentCalculator::class),
-                $c->get(\Services\SessionManager::class),
                 $c->get(ViewRenderer::class)
+            );
+        });
+
+        $this->container->singleton(\Controllers\DownloadCsvAction::class, function (Container $c) {
+            return new \Controllers\DownloadCsvAction(
+                $c->get(InvestmentCalculator::class),
+                $c->get(\Services\ConfigService::class),
+                $c->get(\Services\CsvExportService::class)
+            );
+        });
+
+        $this->container->singleton(\Core\Middleware\CsrfHoneypotMiddleware::class, function (Container $c) {
+            return new \Core\Middleware\CsrfHoneypotMiddleware(
+                $c->get(\Services\SessionManager::class)
             );
         });
 
@@ -280,22 +291,24 @@ class App
      */
     private function registerRoutes(): void
     {
-        // Core landing pages
+        // Pipe Global Security Middleware
+        $this->router->pipe(\Core\Middleware\CsrfHoneypotMiddleware::class);
+
+        // Core landing pages & actions
         $this->router->get('/', [RenderHomeAction::class, '__invoke']);
         $this->router->post('/', [RenderHomeAction::class, '__invoke']);
+        $this->router->post('/download-csv', [\Controllers\DownloadCsvAction::class, '__invoke']);
         $this->router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke']);
 
         // Dynamic Calculators Registration
         foreach ($this->routesConfig['calculators'] as $calc => $action) {
             $this->router->get($calc, $action);
             $this->router->post($calc, $action);
-            $this->router->redirect($calc . '.php', $calc);
         }
 
         // Dynamic Pages Registration
         foreach ($this->routesConfig['pages'] as $uri => $action) {
             $this->router->get($uri, $action);
-            $this->router->redirect($uri . '.php', $uri);
         }
 
         // Dynamic Sitemap
@@ -303,8 +316,8 @@ class App
 
         // Admin / Insight Routing
         $this->router->get('/admin_insights', [AdminController::class, 'insights']);
-        $this->router->post('/admin_insights', [AdminController::class, 'insights']);
-        $this->router->redirect('/admin_insights.php', '/admin_insights');
+        $this->router->post('/admin_insights', [AdminController::class, 'login']);
+        $this->router->post('/admin_insights/logout', [AdminController::class, 'logout']);
         $this->router->get('/admin_insights/migrate', [AdminController::class, 'runMigrations']);
         $this->router->get('/log_insight', [AdminController::class, 'logInsight']);
         $this->router->post('/log_insight', [AdminController::class, 'logInsight']);
