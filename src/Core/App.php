@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Controllers\AdminAuthAction;
 use Controllers\BlogController;
+use Controllers\DownloadCsvAction;
 use Controllers\GeneratePdfAction;
+use Controllers\LogInsightApiAction;
 use Controllers\PageController;
 use Controllers\RenderGuideAction;
 use Controllers\RenderHomeAction;
+use Controllers\ShowAdminDashboardAction;
 use Controllers\SitemapController;
 use Core\Http\Request;
 
@@ -23,10 +27,10 @@ class App
     private Router $router;
     private array $routesConfig = [];
 
-    public function __construct()
+    public function __construct(?Container $container = null, ?Router $router = null)
     {
-        $this->container = new Container();
-        $this->router = new Router($this->container);
+        $this->container = $container ?? new Container();
+        $this->router = $router ?? new Router($this->container);
     }
 
     /**
@@ -107,7 +111,7 @@ class App
         // Core landing pages & actions
         $this->router->get('/', [RenderHomeAction::class, '__invoke']);
         $this->router->post('/', [RenderHomeAction::class, '__invoke']);
-        $this->router->post('/download-csv', [\Controllers\DownloadCsvAction::class, '__invoke']);
+        $this->router->post('/download-csv', [DownloadCsvAction::class, '__invoke']);
         $this->router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke']);
 
         // Dynamic Calculators Registration
@@ -125,16 +129,18 @@ class App
         $this->router->get('/sitemap.xml', [SitemapController::class, 'index']);
 
         // Admin / Insight Routing
-        $this->router->get('/admin_insights', [\Controllers\ShowAdminDashboardAction::class, '__invoke']);
-        $this->router->post('/admin_insights', [\Controllers\AdminAuthAction::class, 'login']);
-        $this->router->post('/admin_insights/logout', [\Controllers\AdminAuthAction::class, 'logout']);
-        $this->router->post('/log_insight', [\Controllers\LogInsightApiAction::class, '__invoke']);
+        $this->router->get('/admin_insights', [ShowAdminDashboardAction::class, '__invoke']);
+        $this->router->post('/admin_insights', [AdminAuthAction::class, 'login']);
+        $this->router->post('/admin_insights/logout', [AdminAuthAction::class, 'logout']);
+        $this->router->post('/log_insight', [LogInsightApiAction::class, '__invoke']);
 
         // Blog / Resources Routing
         $this->router->get('/resources', [BlogController::class, 'index']);
         $this->router->get('/resource', [BlogController::class, 'index']);
         $this->router->get('/resource/{category}/{slug}', [BlogController::class, 'show']);
 
-        (new RedirectLoader())->loadAndRegister(__DIR__ . '/../../content/redirects.json', $this->router);
+        /** @var RedirectLoader $redirectLoader */
+        $redirectLoader = $this->container->get(RedirectLoader::class);
+        $redirectLoader->loadAndRegister(__DIR__ . '/../../content/redirects.json', $this->router);
     }
 }

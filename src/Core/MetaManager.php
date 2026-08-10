@@ -12,13 +12,14 @@ class MetaManager
 {
     private SiteConfig $siteConfig;
     private array $pageMap = [];
+    private string $metaPagesPath;
 
-    public function __construct(SiteConfig $siteConfig)
+    public function __construct(SiteConfig $siteConfig, ?string $metaPagesPath = null)
     {
         $this->siteConfig = $siteConfig;
-        $jsonPath = __DIR__ . '/../../content/meta_pages.json';
-        if (file_exists($jsonPath)) {
-            $rawJson = (string) file_get_contents($jsonPath);
+        $this->metaPagesPath = $metaPagesPath ?? (__DIR__ . '/../../content/meta_pages.json');
+        if (file_exists($this->metaPagesPath)) {
+            $rawJson = (string) file_get_contents($this->metaPagesPath);
             $this->pageMap = json_decode($rawJson, true) ?? [];
         }
         if (isset($this->pageMap['home']) && !isset($this->pageMap['home']['canonical'])) {

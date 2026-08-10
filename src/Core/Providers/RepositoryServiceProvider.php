@@ -23,7 +23,10 @@ class RepositoryServiceProvider implements ServiceProviderInterface
     public function register(Container $container, array $config = []): void
     {
         $container->singleton(MetaManager::class, function (Container $c) {
-            return new MetaManager($c->get(SiteConfig::class));
+            return new MetaManager(
+                $c->get(SiteConfig::class),
+                __DIR__ . '/../../../content/meta_pages.json'
+            );
         });
 
         $container->singleton(SchemaHelper::class, function (Container $c) {

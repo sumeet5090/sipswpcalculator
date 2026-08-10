@@ -14,6 +14,12 @@ export interface RawConfigField {
 
 export type RawConfigMap = Record<string, RawConfigField>;
 
+export interface MilestoneTarget {
+    label: string;
+    value: number;
+    icon: string;
+}
+
 /**
  * InputValidator.ts
  * Centralized boundaries, constraints, and validation rules.
@@ -91,4 +97,25 @@ export class InputValidator {
 
         return parsed;
     }
+
+    /**
+     * Retrieve centralized milestone targets from configuration.
+     */
+    getMilestoneTargets(): MilestoneTarget[] {
+        const stateEl = document.getElementById('calculator-app-state');
+        if (stateEl && stateEl.textContent) {
+            try {
+                const parsed = JSON.parse(stateEl.textContent);
+                if (Array.isArray(parsed.milestones)) {
+                    return parsed.milestones;
+                }
+            } catch {}
+        }
+        return ((defaultsConfig as any).milestones || []).map((m: any) => ({
+            label: String(m.label ?? ''),
+            value: Number(m.value ?? 0),
+            icon: String(m.icon ?? '')
+        }));
+    }
 }
+

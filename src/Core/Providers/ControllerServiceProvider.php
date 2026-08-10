@@ -55,7 +55,11 @@ class ControllerServiceProvider implements ServiceProviderInterface
         });
 
         $container->singleton(\Core\PdfTemplateInterface::class, function (Container $c) {
-            return new \Core\PdfReportTemplate($c->get(\Core\CurrencyFormatterInterface::class));
+            /** @var ConfigService $configService */
+            $configService = $c->get(ConfigService::class);
+            $defaults = $configService->getCalculatorDefaults();
+            $milestones = $defaults['milestones'] ?? null;
+            return new \Core\PdfReportTemplate($c->get(\Core\CurrencyFormatterInterface::class), $milestones);
         });
 
         $container->singleton(PdfGeneratorService::class, function (Container $c) {

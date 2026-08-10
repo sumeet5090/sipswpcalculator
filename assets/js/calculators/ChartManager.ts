@@ -1,4 +1,5 @@
 import { CurrencyFormatter } from './CurrencyHelper';
+import { InputValidator } from './InputValidator';
 import { YearResult } from '../types';
 import type { Chart, ChartDataset, ChartConfiguration, TooltipItem } from 'chart.js';
 
@@ -25,11 +26,13 @@ export interface Milestone {
  */
 export class ChartManager {
     private formatter: CurrencyFormatter;
+    private validator: InputValidator;
     private chartInstance: Chart<'line'> | null = null;
     private currentMilestones: Milestone[] = [];
 
-    constructor(formatter: CurrencyFormatter) {
+    constructor(formatter: CurrencyFormatter, validator: InputValidator = new InputValidator()) {
         this.formatter = formatter;
+        this.validator = validator;
     }
 
     formatAxisTick(value: number): string {
@@ -62,17 +65,7 @@ export class ChartManager {
 
         // Calculate Milestones
         const milestones: Milestone[] = [];
-        const targets = [
-            { label: '₹1 Crore', value: 10000000, reached: false, icon: '🏆' },
-            { label: '₹5 Crores', value: 50000000, reached: false, icon: '👑' },
-            { label: '₹10 Crores', value: 100000000, reached: false, icon: '💎' },
-            { label: '₹25 Crores', value: 250000000, reached: false, icon: '🌠' },
-            { label: '₹50 Crores', value: 500000000, reached: false, icon: '🚀' },
-            { label: '₹75 Crores', value: 750000000, reached: false, icon: '🪐' },
-            { label: '₹100 Crores', value: 1000000000, reached: false, icon: '🌌' },
-            { label: '₹200 Crores', value: 2000000000, reached: false, icon: '🌠' },
-            { label: '₹500 Crores', value: 5000000000, reached: false, icon: '💫' }
-        ];
+        const targets = this.validator.getMilestoneTargets().map(t => ({ ...t, reached: false }));
         let swpCovered = false;
 
         for (let i = 0; i < results.length; i++) {

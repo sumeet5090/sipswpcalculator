@@ -387,7 +387,17 @@ export class CalculatorApp {
             this.updateSummaryMetrics(combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
-            this.analytics.logInsight(inputs, combined, this.activeGoalMode);
+
+            const breakdownEl = this.dom.getElement('yearly-breakdown-section') || this.dom.getElement('breakdown-body');
+            const tableViewed = breakdownEl
+                ? (breakdownEl.getBoundingClientRect().top < (window.innerHeight || document.documentElement.clientHeight) ? 1 : 0)
+                : 0;
+            const deviceType = (window.innerWidth < 768) ? 'mobile' : 'desktop';
+
+            this.analytics.logInsight(inputs, combined, this.activeGoalMode, {
+                table_viewed: tableViewed,
+                device_type: deviceType
+            });
         });
     }
 

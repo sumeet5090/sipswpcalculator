@@ -7,6 +7,8 @@ export interface ExtraSignals {
     interaction_count?: number;
     preset_clicked?: string;
     exit_action?: string;
+    table_viewed?: number;
+    device_type?: string;
 }
 
 /**
@@ -44,12 +46,8 @@ export class AnalyticsService {
                 ? parseFloat((finalCorpus / totalInvested).toFixed(2))
                 : null;
 
-            const breakdownEl = document.getElementById('yearly-breakdown-section') || document.getElementById('breakdown-body');
-            const tableViewed = breakdownEl
-                ? (breakdownEl.getBoundingClientRect().top < (window.innerHeight || document.documentElement.clientHeight) ? 1 : 0)
-                : 0;
-
-            const deviceType = (window.innerWidth < 768) ? 'mobile' : 'desktop';
+            const tableViewed = extraSignals.table_viewed ?? 0;
+            const deviceType = extraSignals.device_type ?? 'desktop';
 
             const payload = {
                 calc_type: inputs.enable_swp ? 'SWP' : 'SIP',

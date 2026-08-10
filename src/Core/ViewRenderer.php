@@ -21,7 +21,8 @@ class ViewRenderer
         string $appUrl,
         ?string $viewsPath = null,
         ?string $cachePath = null,
-        ?CurrencyFormatterInterface $currencyFormatter = null
+        ?CurrencyFormatterInterface $currencyFormatter = null,
+        ?\Core\Twig\AppTwigExtension $twigExtension = null
     ) {
         $isProd = ($env === 'production');
 
@@ -45,7 +46,8 @@ class ViewRenderer
 
         $this->twig->addGlobal('env', $env);
         $this->twig->addGlobal('site_url', rtrim($appUrl, '/'));
-        $this->twig->addExtension(new \Core\Twig\AppTwigExtension($viteHelper, $currencyFormatter));
+        $extension = $twigExtension ?? new \Core\Twig\AppTwigExtension($viteHelper, $currencyFormatter);
+        $this->twig->addExtension($extension);
     }
 
     /**

@@ -12,10 +12,14 @@ namespace Core;
 class PdfReportTemplate implements PdfTemplateInterface
 {
     private CurrencyFormatterInterface $currencyFormatter;
+    private ?array $milestoneConfig;
 
-    public function __construct(?CurrencyFormatterInterface $currencyFormatter = null)
-    {
+    public function __construct(
+        ?CurrencyFormatterInterface $currencyFormatter = null,
+        ?array $milestoneConfig = null
+    ) {
         $this->currencyFormatter = $currencyFormatter ?? new CurrencyHelper();
+        $this->milestoneConfig = $milestoneConfig;
     }
 
     /**
@@ -271,16 +275,25 @@ class PdfReportTemplate implements PdfTemplateInterface
 
     private function generateMilestones(array $inputs): array
     {
-        $milestoneTargets = [
-            10000000 => 'First ₹1 Crore',
-            50000000 => 'First ₹5 Crores',
-            100000000 => 'First ₹10 Crores',
-            500000000 => 'First ₹50 Crores',
-            1000000000 => 'First ₹100 Crores',
-            5000000000 => 'First ₹500 Crores',
-            10000000000 => 'First ₹1,000 Crores',
-            100000000000 => 'First ₹10,000 Crores',
-        ];
+        $milestoneTargets = [];
+        if (is_array($this->milestoneConfig)) {
+            foreach ($this->milestoneConfig as $item) {
+                if (isset($item['value'], $item['label'])) {
+                    $milestoneTargets[(int) $item['value']] = 'First ' . (string) $item['label'];
+                }
+            }
+        }
+
+        if (empty($milestoneTargets)) {
+            $milestoneTargets = [
+                10000000 => 'First ₹1 Crore',
+                50000000 => 'First ₹5 Crores',
+                100000000 => 'First ₹10 Crores',
+                500000000 => 'First ₹50 Crores',
+                1000000000 => 'First ₹100 Crores',
+                5000000000 => 'First ₹500 Crores',
+            ];
+        }
 
         $found = [];
 

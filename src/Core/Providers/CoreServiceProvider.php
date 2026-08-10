@@ -66,6 +66,13 @@ class CoreServiceProvider implements ServiceProviderInterface
             return new \Core\CurrencyHelper();
         });
 
+        $container->singleton(\Core\Twig\AppTwigExtension::class, function (Container $c) {
+            return new \Core\Twig\AppTwigExtension(
+                $c->get(ViteHelper::class),
+                $c->get(\Core\CurrencyFormatterInterface::class)
+            );
+        });
+
         $container->singleton(ViewRenderer::class, function (Container $c) use ($environment, $appUrl) {
             return new ViewRenderer(
                 $c->get(ViteHelper::class),
@@ -73,7 +80,8 @@ class CoreServiceProvider implements ServiceProviderInterface
                 $appUrl,
                 null,
                 null,
-                $c->get(\Core\CurrencyFormatterInterface::class)
+                $c->get(\Core\CurrencyFormatterInterface::class),
+                $c->get(\Core\Twig\AppTwigExtension::class)
             );
         });
 
@@ -101,18 +109,7 @@ class CoreServiceProvider implements ServiceProviderInterface
         });
 
         $container->singleton(StrategyFactory::class, function (Container $c) {
-            $configService = $c->get(ConfigService::class);
-            return new StrategyFactory(
-                $configService,
-                null,
-                [
-                    \Core\Strategies\SipStrategy::class => new \Core\Strategies\SipStrategy($configService),
-                    \Core\Strategies\SwpStrategy::class => new \Core\Strategies\SwpStrategy($configService),
-                    \Core\Strategies\LumpsumStrategy::class => new \Core\Strategies\LumpsumStrategy($configService),
-                    \Core\Strategies\ComboStrategy::class => new \Core\Strategies\ComboStrategy($configService),
-                    \Core\Strategies\TargetCorpusStrategy::class => new \Core\Strategies\TargetCorpusStrategy($configService),
-                ]
-            );
+            return new StrategyFactory($c->get(ConfigService::class), null, $c);
         });
     }
 }
