@@ -155,17 +155,5 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(ViewRenderer::class)
             );
         });
-
-        $container->singleton(GuideRenderer::class, function (Container $c) {
-            return new GuideRenderer(
-                $c->get(ContentManager::class),
-                $c->get(MetaManager::class),
-                $c->get(SchemaFactory::class),
-                $c->get(FaqRepository::class),
-                $c->get(BlogRepository::class),
-                $c->get(StrategyFactory::class),
-                $c->get(ViewRenderer::class)
-            );
-        });
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Factories;
 
+use Core\ContentManager;
 use Core\SchemaHelper;
 use Core\SiteConfig;
 
@@ -12,18 +13,18 @@ class SchemaFactory
     private SchemaHelper $schemaHelper;
     private SiteConfig $siteConfig;
     private ?\Core\BlogRepository $blogRepository;
-    private string $contentDir;
+    private ?ContentManager $contentManager;
 
     public function __construct(
         SchemaHelper $schemaHelper,
         SiteConfig $siteConfig,
         ?\Core\BlogRepository $blogRepository = null,
-        ?string $contentDir = null
+        ?ContentManager $contentManager = null
     ) {
         $this->schemaHelper = $schemaHelper;
         $this->siteConfig = $siteConfig;
         $this->blogRepository = $blogRepository;
-        $this->contentDir = $contentDir ?? __DIR__ . '/../../../content/calculators';
+        $this->contentManager = $contentManager;
     }
 
     /**
@@ -49,9 +50,8 @@ class SchemaFactory
             if (count($parts) === 2) {
                 $actualModifiedDate = $this->blogRepository->getPostModifiedDate($parts[0], $parts[1], $publishedDate);
             }
-        } else {
-            $mdFile = rtrim($this->contentDir, '/\\') . '/' . ltrim($slug, '/') . '.md';
-            $actualModifiedDate = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $publishedDate;
+        } elseif ($this->contentManager !== null) {
+            $actualModifiedDate = $this->contentManager->getFileModifiedDate('calculators/' . ltrim($slug, '/'), $publishedDate);
         }
 
         $schemas = [];

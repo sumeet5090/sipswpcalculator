@@ -16,21 +16,14 @@ class MetaManager
     public function __construct(SiteConfig $siteConfig)
     {
         $this->siteConfig = $siteConfig;
-        $this->initPageMap();
-    }
-
-    private function initPageMap(): void
-    {
-        $this->pageMap = [
-            'home' => [
-                'title'     => 'SIP and SWP Calculator Together | Combined Mutual Fund Planner India 2026',
-                'meta_desc' => 'Free SIP and SWP calculator combined in one tool. Plan your mutual fund journey — from step-up SIP wealth accumulation to SWP retirement withdrawals with charts and PDF reports.',
-                'keywords'  => 'sip and swp calculator together, sip swp combo calculator, sip swp combined calculator, sip to swp calculator, step up sip calculator, swp calculator india, mutual fund sip swp calculator, swp planner, investment planner, retirement planning, sip calculator india, mutual fund return calculator',
-                'canonical' => $this->siteConfig->getUrl('/'),
-                'og_title'  => 'SIP and SWP Calculator Together | Combined Mutual Fund Planner India 2026',
-                'og_desc'   => 'Free SIP and SWP calculator combined in one tool. Plan your mutual fund journey — from step-up SIP wealth accumulation to SWP retirement withdrawals with charts and PDF reports.',
-            ],
-        ];
+        $jsonPath = __DIR__ . '/../../content/meta_pages.json';
+        if (file_exists($jsonPath)) {
+            $rawJson = (string) file_get_contents($jsonPath);
+            $this->pageMap = json_decode($rawJson, true) ?? [];
+        }
+        if (isset($this->pageMap['home']) && !isset($this->pageMap['home']['canonical'])) {
+            $this->pageMap['home']['canonical'] = $this->siteConfig->getUrl('/');
+        }
     }
 
     /**

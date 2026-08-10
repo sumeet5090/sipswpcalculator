@@ -19,8 +19,6 @@ use Core\Http\Request;
  */
 class App
 {
-    public const DEFAULT_APP_URL = 'https://sipswpcalculator.com';
-
     private Container $container;
     private Router $router;
     private array $routesConfig = [];
@@ -87,6 +85,7 @@ class App
         $providers = [
             new \Core\Providers\CoreServiceProvider(),
             new \Core\Providers\RepositoryServiceProvider(),
+            new \Core\Providers\DomainServiceProvider(),
             new \Core\Providers\ControllerServiceProvider(),
         ];
 
@@ -136,37 +135,6 @@ class App
         $this->router->get('/resource', [BlogController::class, 'index']);
         $this->router->get('/resource/{category}/{slug}', [BlogController::class, 'show']);
 
-        $this->loadRedirects(__DIR__ . '/../../content/redirects.json');
-    }
-
-    /**
-     * Load dynamic redirects from JSON configuration into Router.
-     */
-    private function loadRedirects(string $redirectsPath): void
-    {
-        if (!file_exists($redirectsPath)) {
-            return;
-        }
-
-        $rawJson = file_get_contents($redirectsPath);
-        $redirectsData = json_decode($rawJson, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE || !is_array($redirectsData)) {
-            error_log("Failed to parse content/redirects.json: " . json_last_error_msg());
-            return;
-        }
-
-        if (isset($redirectsData['blog_redirects']) && is_array($redirectsData['blog_redirects'])) {
-            foreach ($redirectsData['blog_redirects'] as $slug => $target) {
-                $this->router->redirect("/resource/{$slug}", "/resource/{$target}");
-            }
-        }
-
-        if (isset($redirectsData['stubs']) && is_array($redirectsData['stubs'])) {
-            foreach ($redirectsData['stubs'] as $old => $new) {
-                $this->router->redirect($old, $new);
-                $this->router->redirect($old . '.php', $new);
-            }
-        }
+        (new RedirectLoader())->loadAndRegister(__DIR__ . '/../../content/redirects.json', $this->router);
     }
 }

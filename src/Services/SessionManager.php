@@ -19,6 +19,7 @@ class SessionManager
 
     public function get(string $key, mixed $default = null): mixed
     {
+        $this->start();
         return isset($_SESSION) ? ($_SESSION[$key] ?? $default) : $default;
     }
 
@@ -30,6 +31,7 @@ class SessionManager
 
     public function has(string $key): bool
     {
+        $this->start();
         return isset($_SESSION) && !empty($_SESSION[$key]);
     }
 

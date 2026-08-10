@@ -12,7 +12,7 @@ class SiteConfig
 {
     private string $baseUrl;
 
-    public function __construct(string $baseUrl = 'https://sipswpcalculator.com')
+    public function __construct(string $baseUrl)
     {
         $this->baseUrl = rtrim($baseUrl, '/');
     }

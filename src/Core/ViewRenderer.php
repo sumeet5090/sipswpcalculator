@@ -17,8 +17,8 @@ class ViewRenderer
 
     public function __construct(
         ViteHelper $viteHelper,
-        string $env = 'development',
-        string $appUrl = 'https://sipswpcalculator.com',
+        string $env,
+        string $appUrl,
         ?string $viewsPath = null,
         ?string $cachePath = null,
         ?CurrencyFormatterInterface $currencyFormatter = null

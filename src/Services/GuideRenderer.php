@@ -111,7 +111,7 @@ class GuideRenderer
         // Fetch all posts for related resources / internal linking via injected BlogRepository
         $all_posts = $this->blogRepository->getAllPosts();
 
-        return Response::html($this->viewRenderer->render($layout, array_merge([
+        return Response::html($this->viewRenderer->render($layout, [
             'content_html'        => $content['html'],
             'content_metadata'    => $meta,
             'page_config'         => $page_config,
@@ -122,6 +122,6 @@ class GuideRenderer
             'show_lumpsum'        => $show_lumpsum,
             'faqs'                => $faqs,
             'all_posts'           => $all_posts,
-        ], $calcConfig)));
+        ]));
     }
 }

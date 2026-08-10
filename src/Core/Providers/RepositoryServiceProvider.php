@@ -55,7 +55,9 @@ class RepositoryServiceProvider implements ServiceProviderInterface
         $container->singleton(SchemaFactory::class, function (Container $c) {
             return new SchemaFactory(
                 $c->get(SchemaHelper::class),
-                $c->get(SiteConfig::class)
+                $c->get(SiteConfig::class),
+                $c->get(BlogRepository::class),
+                $c->get(ContentManager::class)
             );
         });
     }
