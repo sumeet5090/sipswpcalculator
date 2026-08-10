@@ -19,7 +19,22 @@ class InsightRepository
     public function __construct(PDO $pdo, array $bucketConfig = [])
     {
         $this->pdo = $pdo;
+        $this->validateBucketConfig($bucketConfig);
         $this->bucketConfig = $bucketConfig;
+    }
+
+    private function validateBucketConfig(array $config): void
+    {
+        foreach ($config as $group => $buckets) {
+            if (!is_array($buckets)) {
+                continue;
+            }
+            foreach ($buckets as $b) {
+                if (isset($b['max']) && !is_numeric($b['max'])) {
+                    throw new \InvalidArgumentException("Bucket max value for group '{$group}' must be numeric.");
+                }
+            }
+        }
     }
 
     private function buildCaseSql(array $buckets, string $column, string $alias = 'bucket'): string

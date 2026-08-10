@@ -85,9 +85,10 @@ class BlogController
 
         $page_config = $this->metaManager->buildFromMetadata($content['metadata'], $cleanSlug);
 
-        $breadcrumbTitle = !empty($content['metadata']['title'])
-            ? (string) $content['metadata']['title']
-            : ucfirst(str_replace('-', ' ', $slug));
+        if (empty($content['metadata']['title'])) {
+            throw new \RuntimeException("Missing 'title' in frontmatter for blog post: {$category}/{$cleanSlug}");
+        }
+        $breadcrumbTitle = (string) $content['metadata']['title'];
 
         $breadcrumbs = [
             'Home' => '/',
@@ -122,7 +123,7 @@ class BlogController
             'content_metadata' => $content['metadata'],
             'page_config'      => $page_config,
             'post_metadata'    => $post_metadata,
-            'category'         => $category,
+            'seo_category'     => $category,
             'active_page'      => 'blog_post',
             'all_posts'        => $all_posts,
             'date_published'   => $datePublished,

@@ -20,7 +20,8 @@ sipswpcalculator/
 │
 ├── src/
 │   ├── Controllers/          # Request handling and view rendering
-│   ├── Core/                 # Framework utilities, ActionDispatcher, Router, and App initialization
+│   ├── Core/                 # Framework utilities, ActionDispatcher, Router, Middleware, and App initialization
+│   │   ├── Middleware/       # Security (CSRF) & Routing (Trailing Slash 301) Middleware
 │   │   ├── Strategies/       # Strategy Patterns for Calculators
 │   │   └── Factories/        # Factories (e.g. SEO SchemaFactory)
 │   ├── Services/             # Business logic (Calculations, PDF, SEO generation)

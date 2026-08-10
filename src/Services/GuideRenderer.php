@@ -116,7 +116,7 @@ class GuideRenderer
             'content_metadata'    => $meta,
             'page_config'         => $page_config,
             'active_page'         => $slug,
-            'category'            => $seo_category,
+            'seo_category'        => $seo_category,
             'calculator_type'     => $calculator_type,
             'calc_config'         => $calcConfig,
             'show_lumpsum'        => $show_lumpsum,

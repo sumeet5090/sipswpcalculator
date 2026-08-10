@@ -11,18 +11,15 @@ namespace Core;
 class BlogRepository
 {
     private ContentManager $contentManager;
-    private string $contentDir;
     private string $categoriesJsonPath;
     private ?array $cachedCategories = null;
     private ?array $cachedPosts = null;
 
     public function __construct(
         ContentManager $contentManager,
-        ?string $contentDir = null,
         ?string $categoriesJsonPath = null
     ) {
         $this->contentManager = $contentManager;
-        $this->contentDir = $contentDir ?? (__DIR__ . '/../../content/blog');
         $this->categoriesJsonPath = $categoriesJsonPath ?? (__DIR__ . '/../../content/categories.json');
     }
 
@@ -67,15 +64,13 @@ class BlogRepository
             return $this->cachedPosts;
         }
 
-        $contentDir = $this->contentDir;
         $posts = [];
-
         $categories = $this->getCategories();
         $categoryList = [];
-        foreach ($categories as $key => $cat) {
-            $categoryList[] = is_string($key) && !is_numeric($key) ? $key : ($cat['id'] ?? $cat['slug'] ?? '');
+
+        foreach ($categories as $slug => $cat) {
+            $categoryList[] = (string) $slug;
         }
-        $categoryList = array_filter($categoryList);
 
         foreach ($categoryList as $cat) {
             $slugs = $this->contentManager->listMarkdownFiles('blog/' . $cat);
@@ -118,7 +113,7 @@ class BlogRepository
         }
 
         $meta = $content['metadata'];
-        $readTime = $this->calculateReadTime($content['html']);
+        $readTime = (string) ($meta['read_time'] ?? '5 min');
 
         return $this->buildPostData($category, $slug, $meta, $readTime);
     }
@@ -126,28 +121,19 @@ class BlogRepository
     private function buildPostData(string $category, string $slug, array $meta, string $readTime): array
     {
         return [
-            'category'  => $category,
-            'id'        => "{$category}/{$slug}",
-            'slug'      => $slug,
-            'tag'       => $meta['tag'] ?? 'Guide',
-            'tag_color' => $meta['tag_color'] ?? 'slate',
-            'title'     => !empty($meta['title']) ? $meta['title'] : ucfirst(str_replace('-', ' ', $slug)),
-            'desc'      => $meta['subtitle'] ?? '',
-            'href'      => "/resource/{$category}/{$slug}",
-            'featured'  => $meta['featured'] ?? false,
-            'read_time' => $readTime,
-            'date'      => $meta['date'] ?? DateConstants::CONTENT_FALLBACK_DATE,
+            'seo_category' => $category,
+            'category'     => $category,
+            'id'           => "{$category}/{$slug}",
+            'slug'         => $slug,
+            'tag'          => $meta['tag'] ?? 'Guide',
+            'tag_color'    => $meta['tag_color'] ?? 'slate',
+            'title'        => !empty($meta['title']) ? $meta['title'] : ucfirst(str_replace('-', ' ', $slug)),
+            'desc'         => $meta['subtitle'] ?? '',
+            'href'         => "/resource/{$category}/{$slug}",
+            'featured'     => $meta['featured'] ?? false,
+            'read_time'    => $readTime,
+            'date'         => $meta['date'] ?? DateConstants::CONTENT_FALLBACK_DATE,
         ];
-    }
-
-    /**
-     * Calculate dynamic read time string based on HTML content word count.
-     */
-    private function calculateReadTime(string $htmlContent): string
-    {
-        $wordCount = str_word_count(strip_tags($htmlContent));
-        $readTimeVal = (int) ceil($wordCount / 200);
-        return $readTimeVal . ' min';
     }
 
     /**

@@ -112,7 +112,8 @@ class App
      */
     private function registerRoutes(): void
     {
-        // Pipe Global Security Middleware
+        // Pipe Global Security & Routing Middleware
+        $this->router->pipe(\Core\Middleware\TrailingSlashRedirectMiddleware::class);
         $this->router->pipe(\Core\Middleware\CsrfHoneypotMiddleware::class);
 
         // Core landing pages & actions
