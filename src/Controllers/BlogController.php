@@ -71,19 +71,19 @@ class BlogController
 
     public function show(string $category, string $slug): Response
     {
-        $slug = str_replace('.php', '', $slug);
-        $path = "/blog/{$category}/{$slug}";
+        $cleanSlug = basename($slug, '.php');
+        $path = "/blog/{$category}/{$cleanSlug}";
 
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            throw new \Core\Exceptions\RouteNotFoundException("Blog post not found: {$category}/{$slug}");
+            throw new \Core\Exceptions\RouteNotFoundException("Blog post not found: {$category}/{$cleanSlug}");
         }
 
-        $post_metadata = $this->blogRepository->getPostBySlug($category, $slug);
+        $post_metadata = $this->blogRepository->getPostBySlug($category, $cleanSlug);
         $all_posts = $this->blogRepository->getAllPosts();
 
-        $page_config = $this->metaManager->buildFromMetadata($content['metadata'], $slug);
+        $page_config = $this->metaManager->buildFromMetadata($content['metadata'], $cleanSlug);
 
         $breadcrumbTitle = !empty($content['metadata']['title'])
             ? (string) $content['metadata']['title']

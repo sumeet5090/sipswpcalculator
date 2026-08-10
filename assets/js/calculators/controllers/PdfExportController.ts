@@ -91,14 +91,14 @@ export class PdfExportController {
 
                 const chartInst = this.chartManager.getChartInstance();
                 let chartDataURL = '';
-                if (chartInst && (chartInst as any).canvas) {
+                if (chartInst && chartInst.canvas) {
                     try {
-                        chartDataURL = (chartInst as any).canvas.toDataURL('image/png');
+                        chartDataURL = chartInst.canvas.toDataURL('image/png');
                     } catch (_err) {
                         chartDataURL = '';
                     }
                 }
-                const resultsTable = document.getElementById('results-table');
+                const resultsTable = this.dom.getElement('results-table');
                 const tableHtml = resultsTable ? resultsTable.outerHTML : '<table><tr><td>No data available.</td></tr></table>';
 
                 const formData = new FormData(pdfForm);

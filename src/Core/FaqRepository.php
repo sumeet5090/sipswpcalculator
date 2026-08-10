@@ -8,10 +8,18 @@ class FaqRepository
 {
     private ?array $faqs = null;
     private string $jsonPath;
+    private array $defaultCategoryLabels;
 
-    public function __construct(string $jsonPath)
+    public function __construct(string $jsonPath, array $defaultCategoryLabels = [])
     {
         $this->jsonPath = $jsonPath;
+        $this->defaultCategoryLabels = array_merge([
+            'basics'     => 'Basics',
+            'strategies' => 'Strategies',
+            'tax'        => 'Tax & Risk',
+            'selection'  => 'Selection',
+            'retirement' => 'Retirement Planning',
+        ], $defaultCategoryLabels);
     }
 
     private function load(): void
@@ -42,13 +50,7 @@ class FaqRepository
     public function getFaqCategories(?array $customLabels = null): array
     {
         $this->load();
-        $labels = array_merge([
-            'basics'     => 'Basics',
-            'strategies' => 'Strategies',
-            'tax'        => 'Tax & Risk',
-            'selection'  => 'Selection',
-            'retirement' => 'Retirement Planning',
-        ], $customLabels ?? []);
+        $labels = array_merge($this->defaultCategoryLabels, $customLabels ?? []);
 
         $categories = [];
         $seen = [];

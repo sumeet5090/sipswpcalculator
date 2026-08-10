@@ -103,8 +103,16 @@ class ContentManager
             return $this->parseFrontMatter($matches[1]);
         }
 
-        $parsed = $this->getParsedContent($path);
-        return $parsed['metadata'] ?? null;
+        $metadata = [];
+        $lines = explode("\n", $rawContent);
+        if (str_starts_with($lines[0], '# ')) {
+            $metadata['title'] = trim(substr($lines[0], 2));
+            if (isset($lines[1]) && trim($lines[1]) !== '' && trim($lines[1]) !== '---') {
+                $metadata['subtitle'] = trim($lines[1]);
+            }
+        }
+
+        return $metadata;
     }
 
     private function parseFrontMatter(string $frontMatter): array

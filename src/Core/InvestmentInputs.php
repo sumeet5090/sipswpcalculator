@@ -219,19 +219,19 @@ class InvestmentInputs
     }
 
     /**
-     * Semantic alias for lumpsum representing initial starting portfolio balance/corpus.
+     * Alias for lumpsum representing initial starting portfolio balance.
      */
     public function getInitialBalance(): float
     {
-        return $this->lumpsum;
+        return $this->getLumpsum();
     }
 
     /**
-     * Semantic alias for SWP initial starting corpus.
+     * Alias for lumpsum representing initial starting corpus.
      */
     public function getInitialCorpus(): float
     {
-        return $this->lumpsum;
+        return $this->getLumpsum();
     }
 
     public function getSwpRate(): float

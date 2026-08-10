@@ -74,12 +74,14 @@ class CoreServiceProvider implements ServiceProviderInterface
         });
 
         $container->singleton(ViewRenderer::class, function (Container $c) use ($environment, $appUrl) {
+            $viewsDir = __DIR__ . '/../../Views';
+            $cacheDir = __DIR__ . '/../../../var/cache/twig';
             return new ViewRenderer(
                 $c->get(ViteHelper::class),
                 $environment,
                 $appUrl,
-                null,
-                null,
+                $viewsDir,
+                file_exists($cacheDir) ? $cacheDir : null,
                 $c->get(\Core\CurrencyFormatterInterface::class),
                 $c->get(\Core\Twig\AppTwigExtension::class)
             );

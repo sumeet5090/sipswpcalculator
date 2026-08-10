@@ -89,17 +89,17 @@ export class CalculatorApp {
             : this.validator.validate('lumpsum', this.dom.getValue('lumpsum') || 0);
 
         return {
-            sip:            this.validator.validate('sip', this.dom.getValue('sip') || 0),
-            years:          this.validator.validate('years', this.dom.getValue('years') || 0),
-            rate:           this.validator.validate('rate', this.dom.getValue('rate') || 0),
-            stepup:         this.validator.validate('stepup', this.dom.getValue('stepup') || 0),
-            inflation:      this.validator.validate('inflation', this.dom.getValue('inflation') || 0),
-            lumpsum:        lumpsumVal,
-            enable_swp:     (this.dom.getElement<HTMLInputElement>('enable_swp')?.checked) || isSwpMode,
+            sip: this.validator.validate('sip', this.dom.getValue('sip') || 0),
+            years: this.validator.validate('years', this.dom.getValue('years') || 0),
+            rate: this.validator.validate('rate', this.dom.getValue('rate') || 0),
+            stepup: this.validator.validate('stepup', this.dom.getValue('stepup') || 0),
+            inflation: this.validator.validate('inflation', this.dom.getValue('inflation') || 0),
+            lumpsum: lumpsumVal,
+            enable_swp: (this.dom.getElement<HTMLInputElement>('enable_swp')?.checked) || isSwpMode,
             swp_withdrawal: this.validator.validate('swp_withdrawal', this.dom.getValue('swp_withdrawal') || 0),
-            swp_years:      this.validator.validate('swp_years', this.dom.getValue('swp_years') || 0),
-            swp_stepup:     this.validator.validate('swp_stepup', this.dom.getValue('swp_stepup') || 0),
-            swp_rate:       this.validator.validate('swp_rate', this.dom.getValue('swp_rate') || 0)
+            swp_years: this.validator.validate('swp_years', this.dom.getValue('swp_years') || 0),
+            swp_stepup: this.validator.validate('swp_stepup', this.dom.getValue('swp_stepup') || 0),
+            swp_rate: this.validator.validate('swp_rate', this.dom.getValue('swp_rate') || 0)
         };
     }
 
@@ -271,18 +271,18 @@ export class CalculatorApp {
 
     private initSliderSync(): void {
         this.sliderManager.syncAll({
-            'sip':            'sip_range',
-            'years':          'years_range',
-            'rate':           'rate_range',
-            'stepup':         'stepup_range',
-            'inflation':      'inflation_range',
-            'lumpsum':        'lumpsum_range',
-            'corpus':         'corpus_range',
-            'target_corpus':  'target_corpus_range',
+            'sip': 'sip_range',
+            'years': 'years_range',
+            'rate': 'rate_range',
+            'stepup': 'stepup_range',
+            'inflation': 'inflation_range',
+            'lumpsum': 'lumpsum_range',
+            'corpus': 'corpus_range',
+            'target_corpus': 'target_corpus_range',
             'swp_withdrawal': 'swp_withdrawal_range',
-            'swp_years':      'swp_years_range',
-            'swp_stepup':     'swp_stepup_range',
-            'swp_rate':       'swp_rate_range',
+            'swp_years': 'swp_years_range',
+            'swp_stepup': 'swp_stepup_range',
+            'swp_rate': 'swp_rate_range',
         });
     }
 
@@ -316,7 +316,7 @@ export class CalculatorApp {
             const inputs = this.getInputs();
             if (inputs.enable_swp && inputs.swp_withdrawal > 0 && inputs.swp_years > 0) {
                 const reqCorpus = MathEngine.calculateRequiredStartingCorpusForSwp(inputs);
-                if (reqCorpus > 0) {
+                if (this.activeGoalMode === 'target') {
                     this.dom.setValue('target_corpus', reqCorpus);
 
                     const targetRangeEl = this.dom.getElement<HTMLInputElement>('target_corpus_range');
@@ -328,10 +328,6 @@ export class CalculatorApp {
                             targetRangeEl.max = String(defaultMax);
                         }
                         this.dom.setValue('target_corpus_range', reqCorpus);
-                    }
-
-                    if (this.activeGoalMode !== 'target') {
-                        this.setGoalMode('target');
                     }
                 }
             }

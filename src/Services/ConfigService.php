@@ -45,6 +45,9 @@ class ConfigService
             return [];
         }
         $content = file_get_contents($fullPath);
+        if ($content === false) {
+            return [];
+        }
         $decoded = json_decode($content, true);
         return is_array($decoded) ? $decoded : [];
     }

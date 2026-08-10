@@ -19,7 +19,15 @@ class Router
     public function __construct(ContainerInterface $container, ?ActionDispatcher $actionDispatcher = null)
     {
         $this->container = $container;
-        $this->actionDispatcher = $actionDispatcher ?? new ActionDispatcher($container);
+        if ($actionDispatcher !== null) {
+            $this->actionDispatcher = $actionDispatcher;
+        } elseif ($this->container->has(ActionDispatcher::class)) {
+            /** @var ActionDispatcher $dispatcher */
+            $dispatcher = $this->container->get(ActionDispatcher::class);
+            $this->actionDispatcher = $dispatcher;
+        } else {
+            $this->actionDispatcher = new ActionDispatcher($container);
+        }
     }
 
     public function pipe(string|\Core\Middleware\MiddlewareInterface $middleware): void

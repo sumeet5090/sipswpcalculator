@@ -78,7 +78,7 @@ class GuideRenderer
 
         $page_config['additional_head'] = $this->schemaFactory->generateForPage(
             $slug,
-            $seo_category,
+            $type,
             $page_config,
             $publishedDate,
             $faqs

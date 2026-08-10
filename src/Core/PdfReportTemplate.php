@@ -15,10 +15,10 @@ class PdfReportTemplate implements PdfTemplateInterface
     private ?array $milestoneConfig;
 
     public function __construct(
-        ?CurrencyFormatterInterface $currencyFormatter = null,
+        CurrencyFormatterInterface $currencyFormatter,
         ?array $milestoneConfig = null
     ) {
-        $this->currencyFormatter = $currencyFormatter ?? new CurrencyHelper();
+        $this->currencyFormatter = $currencyFormatter;
         $this->milestoneConfig = $milestoneConfig;
     }
 

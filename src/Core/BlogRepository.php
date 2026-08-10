@@ -39,6 +39,11 @@ class BlogRepository
         }
 
         $jsonContent = file_get_contents($jsonPath);
+        if ($jsonContent === false) {
+            error_log("Failed to read content/categories.json at: " . $jsonPath);
+            $this->cachedCategories = [];
+            return [];
+        }
         $decoded = json_decode($jsonContent, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {

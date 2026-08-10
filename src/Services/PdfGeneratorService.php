@@ -17,9 +17,9 @@ class PdfGeneratorService
 {
     private PdfTemplateInterface $template;
 
-    public function __construct(?PdfTemplateInterface $template = null)
+    public function __construct(PdfTemplateInterface $template)
     {
-        $this->template = $template ?? new PdfReportTemplate();
+        $this->template = $template;
     }
 
     /**

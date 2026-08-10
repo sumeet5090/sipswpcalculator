@@ -104,7 +104,7 @@ class GeneratePdfAction
                 'Cache-Control' => 'private, max-age=0, must-revalidate',
                 'Pragma' => 'public',
             ]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             error_log('PDF Generation Error: ' . $e->getMessage());
             return new Response('An error occurred during PDF generation. Please try again.', 500);
         }
