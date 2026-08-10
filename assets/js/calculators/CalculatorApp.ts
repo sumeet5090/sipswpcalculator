@@ -19,6 +19,8 @@ import { TabController } from './controllers/TabController';
 import { ShareController } from './controllers/ShareController';
 import { SmartNudgeController } from './controllers/SmartNudgeController';
 import { UrlStateController } from './controllers/UrlStateController';
+import { ResultsController } from './controllers/ResultsController';
+import { SummaryMetricsController } from './controllers/SummaryMetricsController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -32,6 +34,8 @@ export class CalculatorApp {
     private activeGoalMode: string;
     private strategies: Record<string, CalculatorStrategy>;
     private sliderManager: SliderManager;
+    private resultsController: ResultsController;
+    private summaryMetricsController: SummaryMetricsController;
 
     constructor() {
         this.dom = new DOMAdapter();
@@ -43,13 +47,13 @@ export class CalculatorApp {
         this.interactionCount = 0;
         this.latestResults = [];
         this.activeGoalMode = 'grow';
-        
+
         // Strategy instances
         this.strategies = {
             'grow': new GrowStrategy(this.dom, this.validator),
             'target': new TargetCorpusStrategy(this.dom, this.validator)
         };
-        
+
         this.sliderManager = new SliderManager(
             () => {
                 this.userHasInteracted = true;
@@ -58,13 +62,26 @@ export class CalculatorApp {
             },
             this.validator
         );
+
+        this.resultsController = new ResultsController(
+            this.dom,
+            this.formatter,
+            () => this.getInputs()
+        );
+
+        this.summaryMetricsController = new SummaryMetricsController(
+            this.dom,
+            this.formatter,
+            () => this.getInputs()
+        );
     }
 
     /**
      * Gather form input parameters and run validation constraints.
      */
     getInputs(): InvestmentInputs {
-        const mode = document.querySelector<HTMLElement>('[data-js="calculator-app"]')?.dataset?.mode ?? 'sip';
+        const appEl = this.dom.getElement('calculator-app');
+        const mode = appEl?.dataset?.mode ?? 'sip';
         const isSwpMode = (mode === 'swp');
 
         const lumpsumVal = isSwpMode
@@ -91,7 +108,7 @@ export class CalculatorApp {
      */
     triggerCalculation(): void {
         let inputs = this.getInputs();
-        
+
         // Execute Strategy based on goal mode
         const strategy = this.strategies[this.activeGoalMode];
         if (strategy) {
@@ -110,169 +127,21 @@ export class CalculatorApp {
      * Adapt text font size inside metrics tiles on screen resize.
      */
     fitSummaryCards(): void {
-        const ids = ['summary-invested', 'summary-interest', 'summary-withdrawn', 'summary-corpus'];
-        const cardElms = ids.map(id => document.getElementById(id)).filter((el): el is HTMLElement => el !== null);
-        if (cardElms.length === 0) return;
-
-        cardElms.forEach(el => {
-            el.style.whiteSpace = 'nowrap';
-            el.style.overflow = 'hidden';
-            if (!el.dataset.baseFont) {
-                el.dataset.baseFont = getComputedStyle(el).fontSize;
-            }
-            const basePx = parseFloat(el.dataset.baseFont);
-            el.style.fontSize = basePx + 'px';
-        });
-
-        const results = cardElms.map(el => {
-            const parent = el.parentElement;
-            if (!parent) return null;
-            const cs = getComputedStyle(parent);
-            const availableW = parent.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-            const textW = el.scrollWidth;
-            return { el, basePx: parseFloat(el.dataset.baseFont || '16'), availableW, textW };
-        }).filter((item): item is NonNullable<typeof item> => item !== null);
-
-        results.forEach(({ el, basePx, availableW, textW }) => {
-            if (textW > availableW && availableW > 0) {
-                el.style.fontSize = Math.max((availableW / textW) * basePx, 10) + 'px';
-            } else {
-                el.style.fontSize = basePx + 'px';
-            }
-        });
+        this.summaryMetricsController.fitSummaryCards();
     }
 
     /**
      * Draw years breakdown logs securely using DOM node construction.
      */
     updateTable(data: YearResult[], enableSwp: boolean): void {
-        const tbody = this.dom.getElement('breakdown-body');
-        if (!tbody) return;
-
-        const fragment = document.createDocumentFragment();
-        const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
-        const inputs = this.getInputs();
-
-        data.forEach(row => {
-            const tr = document.createElement('tr');
-            tr.className = "hover:bg-slate-50 border-b border-slate-100 transition-colors";
-
-            const fmt = (v: number | null | undefined) => (v !== null && v !== undefined) ? this.formatter.format(v) : '-';
-            const swpDisplay = enableSwp ? '' : 'none';
-            const taxDisplay = showPostTax ? '' : 'none';
-
-            let finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
-            const ltcgTax = row.ltcg_tax ?? 0;
-
-            if (inputs.inflation > 0) {
-                finalCorpus = MathEngine.calculateInflationDiscount(
-                    finalCorpus,
-                    inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years,
-                    inputs.inflation
-                );
-            }
-
-            const createCell = (text: string, className: string, displayStyle: string = ''): HTMLTableCellElement => {
-                const td = document.createElement('td');
-                td.className = className;
-                if (displayStyle !== '') {
-                    td.style.display = displayStyle;
-                }
-                td.textContent = text;
-                return td;
-            };
-
-            tr.appendChild(createCell(String(row.year), "px-6 py-4 font-medium text-slate-700 whitespace-nowrap"));
-            tr.appendChild(createCell(this.formatter.format(row.begin_balance), "px-6 py-4 text-right font-mono text-slate-600 whitespace-nowrap"));
-            tr.appendChild(createCell(fmt(row.sip_monthly), "px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap"));
-            tr.appendChild(createCell(this.formatter.format(row.annual_contribution), "px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap"));
-            tr.appendChild(createCell(this.formatter.format(row.cumulative_invested), "px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap"));
-
-            // SWP Columns
-            tr.appendChild(createCell(fmt(row.swp_monthly), "px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col", swpDisplay));
-            tr.appendChild(createCell(fmt(row.annual_withdrawal), "px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap swp-col", swpDisplay));
-            tr.appendChild(createCell(fmt(row.cumulative_withdrawals), "px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap swp-col", swpDisplay));
-
-            tr.appendChild(createCell(this.formatter.format(row.interest), "px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap"));
-
-            // Tax Column
-            tr.appendChild(createCell(this.formatter.format(Math.round(ltcgTax)), "px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap tax-col", taxDisplay));
-
-            // Final Corpus Column
-            tr.appendChild(createCell(this.formatter.format(finalCorpus), "px-6 py-4 text-right font-bold text-slate-800 font-mono whitespace-nowrap end-corpus-col"));
-
-            fragment.appendChild(tr);
-        });
-
-        tbody.innerHTML = '';
-        tbody.appendChild(fragment);
+        this.resultsController.updateTable(data, enableSwp);
     }
 
     /**
      * Update summary stats block.
      */
     updateSummaryMetrics(data: YearResult[]): void {
-        if (!data || data.length === 0) return;
-
-        const lastRow = data[data.length - 1];
-        const totalInvested = lastRow.cumulative_invested;
-        const preTaxCorpus = lastRow.combined_total;
-        const totalWithdrawn = lastRow.cumulative_withdrawals || 0;
-        const preTaxGains = (preTaxCorpus + totalWithdrawn) - totalInvested;
-
-        const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
-        
-        let finalCorpus = preTaxCorpus;
-        let finalGains = preTaxGains;
-        
-        const inputs = this.getInputs();
-        
-        // Calculate delay cost
-        const delayCost = MathEngine.calculateDelayCost(inputs);
-        const delayCostEl = document.getElementById('delay-cost-amount');
-        const delayCostBanner = document.getElementById('delay-cost-banner');
-        
-        if (delayCost > 0) {
-            if (delayCostBanner) delayCostBanner.style.display = 'flex';
-            if (delayCostEl) delayCostEl.textContent = this.formatter.format(delayCost);
-        } else {
-            if (delayCostBanner) delayCostBanner.style.display = 'none';
-        }
-
-        if (showPostTax) {
-            const ltcgTax = lastRow.ltcg_tax ?? 0;
-            finalCorpus = lastRow.post_tax_total ?? Math.max(0, preTaxCorpus - ltcgTax);
-            finalGains = Math.max(0, preTaxGains - ltcgTax);
-
-            const interestTitle = document.getElementById('title-interest');
-            const corpusTitle = document.getElementById('title-corpus');
-            if (interestTitle) interestTitle.textContent = 'Total Gains (Post-Tax)';
-            if (corpusTitle) corpusTitle.textContent = 'Final Corpus (Post-Tax)';
-        } else {
-            const interestTitle = document.getElementById('title-interest');
-            const corpusTitle = document.getElementById('title-corpus');
-            if (interestTitle) interestTitle.textContent = 'Total Gains';
-            if (corpusTitle) corpusTitle.textContent = 'Final Corpus';
-        }
-        
-        // Apply inflation discounting
-        if (inputs.inflation > 0) {
-            finalCorpus = MathEngine.calculateInflationDiscount(finalCorpus, inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years, inputs.inflation);
-            const corpusTitle = document.getElementById('title-corpus');
-            if (corpusTitle) corpusTitle.textContent += ' (Inflation Adjusted)';
-        }
-
-        const setVal = (id: string, val: number) => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = this.formatter.format(val);
-        };
-
-        setVal('summary-invested', totalInvested);
-        setVal('summary-interest', finalGains);
-        setVal('summary-withdrawn', totalWithdrawn);
-        setVal('summary-corpus', finalCorpus);
-
-        this.fitSummaryCards();
+        this.summaryMetricsController.updateSummaryMetrics(data);
     }
 
     /**
@@ -360,7 +229,7 @@ export class CalculatorApp {
         this.dom.getElement('rate')?.dispatchEvent(new Event('input', { bubbles: true }));
         this.dom.setValue('rate_range', val);
         this.dom.getElement('rate_range')?.dispatchEvent(new Event('input', { bubbles: true }));
-        
+
         const popover = this.dom.getElement('rate-nudge-popover');
         if (popover) {
             popover.classList.add('hidden');
@@ -372,7 +241,7 @@ export class CalculatorApp {
      * Initialize app lifecycle.
      */
     init(): void {
-        const appContainer = document.getElementById('calculator-app');
+        const appContainer = this.dom.getElement('calculator-app');
         if (appContainer && appContainer.dataset.mode === 'target_corpus') {
             this.activeGoalMode = 'target';
         }
@@ -449,7 +318,7 @@ export class CalculatorApp {
                 const reqCorpus = MathEngine.calculateRequiredStartingCorpusForSwp(inputs);
                 if (reqCorpus > 0) {
                     this.dom.setValue('target_corpus', reqCorpus);
-                    
+
                     const targetRangeEl = this.dom.getElement<HTMLInputElement>('target_corpus_range');
                     if (targetRangeEl) {
                         const defaultMax = parseFloat(targetRangeEl.getAttribute('max') || '50000000');
@@ -460,7 +329,7 @@ export class CalculatorApp {
                         }
                         this.dom.setValue('target_corpus_range', reqCorpus);
                     }
-                    
+
                     if (this.activeGoalMode !== 'target') {
                         this.setGoalMode('target');
                     }
@@ -480,7 +349,7 @@ export class CalculatorApp {
             swpToggle.addEventListener('change', () => this.syncSwpToggleState());
         }
 
-        const postTaxToggle = document.getElementById('show_post_tax') as HTMLInputElement | null;
+        const postTaxToggle = this.dom.getElement<HTMLInputElement>('show_post_tax');
         if (postTaxToggle) {
             postTaxToggle.addEventListener('change', () => {
                 const taxCols = document.querySelectorAll<HTMLElement>('.tax-col');
@@ -491,7 +360,7 @@ export class CalculatorApp {
             });
         }
 
-        const wealthMapToggle = document.getElementById('show_wealth_map');
+        const wealthMapToggle = this.dom.getElement('show_wealth_map');
         if (wealthMapToggle) {
             wealthMapToggle.addEventListener('change', () => this.triggerCalculation());
         }
@@ -502,11 +371,7 @@ export class CalculatorApp {
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
-                const ids = ['summary-invested', 'summary-interest', 'summary-withdrawn', 'summary-corpus'];
-                ids.forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) delete el.dataset.baseFont;
-                });
+                this.summaryMetricsController.resetBaseFontCache();
                 this.fitSummaryCards();
             }, 150);
         });
@@ -534,7 +399,7 @@ export class CalculatorApp {
             swpEnabledOnLoad = true;
             if (urlSwpOn) initialSwpToggle.checked = true;
             this.syncSwpToggleState();
-        } else if (document.querySelector<HTMLElement>('[data-js="calculator-app"]')?.dataset?.mode === 'swp') {
+        } else if (this.dom.getElement('calculator-app')?.dataset?.mode === 'swp') {
             swpEnabledOnLoad = true;
             if (initialSwpToggle) {
                 initialSwpToggle.checked = true;
@@ -552,7 +417,7 @@ export class CalculatorApp {
 
         if (existingData.length > 0) {
             this.latestResults = existingData;
-            
+
             this.updateTable(existingData, swpEnabledOnLoad);
             this.updateSummaryMetrics(existingData);
 
