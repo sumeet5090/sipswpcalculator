@@ -40,6 +40,23 @@ export class DOMAdapter {
     }
 
     /**
+     * Get multiple elements matching a CSS selector or class name.
+     */
+    getElements<T extends HTMLElement = HTMLElement>(selector: string): T[] {
+        const query = selector.startsWith('.') || selector.startsWith('#') || selector.includes(' ')
+            ? selector
+            : `.${selector}`;
+        return Array.from(document.querySelectorAll<T>(query));
+    }
+
+    /**
+     * Safely query current window viewport height.
+     */
+    getViewportHeight(): number {
+        return window.innerHeight || document.documentElement.clientHeight || 0;
+    }
+
+    /**
      * Clear cached DOM element references to handle dynamic DOM re-rendering.
      */
     clearCache(): void {

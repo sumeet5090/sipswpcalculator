@@ -113,5 +113,13 @@ class CoreServiceProvider implements ServiceProviderInterface
         $container->singleton(StrategyFactory::class, function (Container $c) {
             return new StrategyFactory($c->get(ConfigService::class), null, $c);
         });
+
+        $container->singleton(\Core\ActionDispatcher::class, function (Container $c) {
+            return new \Core\ActionDispatcher($c);
+        });
+
+        $container->singleton(\Core\Router::class, function (Container $c) {
+            return new \Core\Router($c, $c->get(\Core\ActionDispatcher::class));
+        });
     }
 }

@@ -137,17 +137,17 @@ export class ChartManager {
             }
 
             if (this.chartInstance.options.scales && this.chartInstance.options.scales.y) {
-                (this.chartInstance.options.scales.y as any).stacked = showWealthMap;
+                this.chartInstance.options.scales.y.stacked = showWealthMap;
             }
 
             if (showWealthMap) {
                 const interestOnly = corpus.map((c, i) => c - cumulative[i]);
                 this.chartInstance.data.datasets[1].data = interestOnly;
-                (this.chartInstance.data.datasets[1] as any).fill = true;
+                this.chartInstance.data.datasets[1].fill = true;
                 this.chartInstance.data.datasets[1].label = 'Interest Earned';
             } else {
                 this.chartInstance.data.datasets[1].data = corpus;
-                (this.chartInstance.data.datasets[1] as any).fill = false;
+                this.chartInstance.data.datasets[1].fill = false;
                 this.chartInstance.data.datasets[1].label = 'Pre-Tax Growth';
             }
 
@@ -331,8 +331,8 @@ export class ChartManager {
                         stacked: showWealthMap,
                         grid: {
                             color: gridColor,
-                            borderDash: [5, 5]
-                        } as any,
+                            tickBorderDash: [5, 5]
+                        },
                         ticks: {
                             color: textColor,
                             font: {

@@ -111,7 +111,8 @@ export class InputValidator {
                 }
             } catch {}
         }
-        return ((defaultsConfig as any).milestones || []).map((m: any) => ({
+        const rawMilestones = (defaultsConfig as unknown as { milestones?: Array<{ label?: string; value?: number; icon?: string }> }).milestones || [];
+        return rawMilestones.map((m) => ({
             label: String(m.label ?? ''),
             value: Number(m.value ?? 0),
             icon: String(m.icon ?? '')

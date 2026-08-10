@@ -19,8 +19,9 @@ class DomainServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $container, array $config = []): void
     {
-        $container->singleton(AdminDashboardPresenter::class, function () {
-            return new AdminDashboardPresenter();
+        $container->singleton(AdminDashboardPresenter::class, function () use ($config) {
+            $colorMap = $config['currencyColorMap'] ?? [];
+            return new AdminDashboardPresenter($colorMap);
         });
 
         $container->singleton(GuideRenderer::class, function (Container $c) {

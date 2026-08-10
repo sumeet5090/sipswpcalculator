@@ -34,6 +34,12 @@ class FaqRepository
         }
 
         $jsonContent = file_get_contents($this->jsonPath);
+        if ($jsonContent === false) {
+            error_log("Failed to read FAQs JSON at: " . $this->jsonPath);
+            $this->faqs = [];
+            return;
+        }
+
         $decoded = json_decode($jsonContent, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {

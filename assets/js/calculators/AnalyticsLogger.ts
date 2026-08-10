@@ -9,6 +9,7 @@ export interface ExtraSignals {
     exit_action?: string;
     table_viewed?: number;
     device_type?: string;
+    currency?: string;
 }
 
 /**
@@ -48,13 +49,14 @@ export class AnalyticsService {
 
             const tableViewed = extraSignals.table_viewed ?? 0;
             const deviceType = extraSignals.device_type ?? 'desktop';
+            const currencyCode = extraSignals.currency || 'INR';
 
             const payload = {
                 calc_type: inputs.enable_swp ? 'SWP' : 'SIP',
                 amount: inputs.enable_swp ? inputs.swp_withdrawal : inputs.sip,
                 duration: inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years,
                 step_up_pct: inputs.enable_swp ? inputs.swp_stepup : inputs.stepup,
-                currency: 'INR',
+                currency: currencyCode,
                 interest_rate: inputs.rate,
                 sip_amount: inputs.sip,
                 sip_duration: inputs.years,

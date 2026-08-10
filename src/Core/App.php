@@ -30,7 +30,9 @@ class App
     public function __construct(?Container $container = null, ?Router $router = null)
     {
         $this->container = $container ?? new Container();
-        $this->router = $router ?? new Router($this->container);
+        if ($router !== null) {
+            $this->router = $router;
+        }
     }
 
     /**
@@ -40,6 +42,11 @@ class App
     {
         $this->routesConfig = require __DIR__ . '/Config/routes.php';
         $this->registerDependencies();
+        if (!isset($this->router)) {
+            /** @var Router $router */
+            $router = $this->container->get(Router::class);
+            $this->router = $router;
+        }
         $this->registerRoutes();
     }
 

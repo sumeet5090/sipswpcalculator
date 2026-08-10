@@ -30,6 +30,12 @@ class GlossaryRepository
         }
 
         $jsonContent = file_get_contents($this->jsonPath);
+        if ($jsonContent === false) {
+            error_log("Failed to read glossary JSON at: " . $this->jsonPath);
+            $this->terms = [];
+            return;
+        }
+
         $decoded = json_decode($jsonContent, true);
 
         if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {

@@ -27,8 +27,16 @@ export class SmartNudgeController {
                     nudgeBtn.setAttribute('aria-expanded', 'false');
                 });
             }
-            this.dom.getElement('use-india-rate')?.addEventListener('click', () => this.setSmartNudgeRate(12));
-            this.dom.getElement('use-us-rate')?.addEventListener('click', () => this.setSmartNudgeRate(15));
+            const indiaBtn = this.dom.getElement('use-india-rate');
+            const usBtn = this.dom.getElement('use-us-rate');
+            if (indiaBtn) {
+                const indiaRate = parseFloat(indiaBtn.dataset.rate || '12');
+                indiaBtn.addEventListener('click', () => this.setSmartNudgeRate(indiaRate));
+            }
+            if (usBtn) {
+                const usRate = parseFloat(usBtn.dataset.rate || '15');
+                usBtn.addEventListener('click', () => this.setSmartNudgeRate(usRate));
+            }
 
             document.addEventListener('click', (e: Event) => {
                 if (!nudgePopover.contains(e.target as Node) && e.target !== nudgeBtn) {

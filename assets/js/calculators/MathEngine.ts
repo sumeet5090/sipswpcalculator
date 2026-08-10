@@ -13,7 +13,7 @@ export class MathEngine {
         const swpStartYear = inp.years + 1;
         const totalYears = inp.enable_swp ? (inp.years + inp.swp_years) : inp.years;
         const lumpsum = inp.lumpsum || 0;
-        const swpRate = inp.swp_rate || 8;
+        const swpRate = inp.swp_rate;
 
         let netBalance = lumpsum;
         let cumulativeInvested = lumpsum;

@@ -20,10 +20,10 @@ class AppTwigExtension extends AbstractExtension
     private ViteHelper $viteHelper;
     private CurrencyFormatterInterface $currencyFormatter;
 
-    public function __construct(ViteHelper $viteHelper, ?CurrencyFormatterInterface $currencyFormatter = null)
+    public function __construct(ViteHelper $viteHelper, CurrencyFormatterInterface $currencyFormatter)
     {
         $this->viteHelper = $viteHelper;
-        $this->currencyFormatter = $currencyFormatter ?? new CurrencyHelper();
+        $this->currencyFormatter = $currencyFormatter;
     }
 
     public function getFilters(): array

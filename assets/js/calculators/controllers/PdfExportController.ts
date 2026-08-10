@@ -115,10 +115,10 @@ export class PdfExportController {
                 formData.append('swp_rate', String(currentInputs.swp_rate));
 
                 formData.append('currency_symbol', '₹');
-                formData.append('summary_invested', document.getElementById('summary-invested')?.textContent?.trim() || '0');
-                formData.append('summary_interest', document.getElementById('summary-interest')?.textContent?.trim() || '0');
-                formData.append('summary_withdrawn', document.getElementById('summary-withdrawn')?.textContent?.trim() || '0');
-                formData.append('summary_corpus', document.getElementById('summary-corpus')?.textContent?.trim() || '0');
+                formData.append('summary_invested', this.dom.getElement('summary-invested')?.textContent?.trim() || '0');
+                formData.append('summary_interest', this.dom.getElement('summary-interest')?.textContent?.trim() || '0');
+                formData.append('summary_withdrawn', this.dom.getElement('summary-withdrawn')?.textContent?.trim() || '0');
+                formData.append('summary_corpus', this.dom.getElement('summary-corpus')?.textContent?.trim() || '0');
 
                 const latestResults = this.getLatestResults();
                 const lastRow = (Array.isArray(latestResults) && latestResults.length > 0)

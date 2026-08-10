@@ -1,11 +1,19 @@
+import { DOMAdapter } from '../../adapters/DOMAdapter';
+
 export class TabController {
+    private dom: DOMAdapter;
+
+    constructor(dom: DOMAdapter = new DOMAdapter()) {
+        this.dom = dom;
+    }
+
     init(): void {
-        const sipTab = document.getElementById('tab-sip');
-        const swpTab = document.getElementById('tab-swp');
+        const sipTab = this.dom.getElement('tab-sip');
+        const swpTab = this.dom.getElement('tab-swp');
 
         const switchTab = (tab: string) => {
-            const sipPanel = document.getElementById('panel-sip');
-            const swpPanel = document.getElementById('panel-swp');
+            const sipPanel = this.dom.getElement('panel-sip');
+            const swpPanel = this.dom.getElement('panel-swp');
 
             if (!sipPanel || !swpPanel || !sipTab || !swpTab) return;
 

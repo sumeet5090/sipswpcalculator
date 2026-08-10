@@ -55,27 +55,6 @@ class ContentManager
             $frontMatter = $matches[1];
             $body = ltrim($matches[2]);
             $metadata = $this->parseFrontMatter($frontMatter);
-        } else {
-            // Legacy fallback if no front-matter is used
-            $lines = explode("\n", $rawContent);
-            $title = '';
-            $subtitle = '';
-            $contentStartLine = 0;
-
-            if (str_starts_with($lines[0], '# ')) {
-                $title = substr($lines[0], 2);
-                $contentStartLine = 1;
-                if (isset($lines[1]) && trim($lines[1]) !== '' && trim($lines[1]) !== '---') {
-                    $subtitle = trim($lines[1]);
-                    $contentStartLine = 2;
-                }
-                if (isset($lines[$contentStartLine]) && trim($lines[$contentStartLine]) === '---') {
-                    $contentStartLine++;
-                }
-                $metadata['title'] = trim($title);
-                $metadata['subtitle'] = $subtitle;
-                $body = implode("\n", array_slice($lines, $contentStartLine));
-            }
         }
 
         $html = $this->parsedown->text($body);
@@ -97,22 +76,16 @@ class ContentManager
             return null;
         }
 
-        $rawContent = (string) file_get_contents($fullPath);
+        $rawContent = file_get_contents($fullPath);
+        if ($rawContent === false) {
+            return null;
+        }
 
         if (preg_match('/\A\s*---\r?\n(.*?)\r?\n---/s', $rawContent, $matches)) {
             return $this->parseFrontMatter($matches[1]);
         }
 
-        $metadata = [];
-        $lines = explode("\n", $rawContent);
-        if (str_starts_with($lines[0], '# ')) {
-            $metadata['title'] = trim(substr($lines[0], 2));
-            if (isset($lines[1]) && trim($lines[1]) !== '' && trim($lines[1]) !== '---') {
-                $metadata['subtitle'] = trim($lines[1]);
-            }
-        }
-
-        return $metadata;
+        return [];
     }
 
     private function parseFrontMatter(string $frontMatter): array

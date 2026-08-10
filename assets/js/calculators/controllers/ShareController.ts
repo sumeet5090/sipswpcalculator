@@ -21,7 +21,8 @@ export class ShareController {
                 params.set('rate', String(inputs.rate));
                 params.set('stepup', String(inputs.stepup));
                 params.set('lumpsum', String(inputs.lumpsum));
-                params.set('cur', 'INR');
+                const curVal = this.dom.getValue('currency') || 'INR';
+                params.set('cur', curVal);
                 if (inputs.enable_swp) {
                     params.set('swp_on', '1');
                     params.set('swp', String(inputs.swp_withdrawal));

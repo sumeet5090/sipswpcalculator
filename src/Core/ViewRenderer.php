@@ -68,7 +68,7 @@ class ViewRenderer
 
         try {
             return $this->twig->render($view, $renderData);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             throw new \RuntimeException("Twig rendering failed: " . $e->getMessage(), 0, $e);
         }
     }
@@ -81,8 +81,13 @@ class ViewRenderer
         if (!str_ends_with($view, '.twig')) {
             $view .= '.twig';
         }
-        $filePath = __DIR__ . '/../Views/' . ltrim($view, '/');
         $fallback = $fallbackDate ?? date('Y-m-d');
-        return file_exists($filePath) ? date('Y-m-d', filemtime($filePath)) : $fallback;
+        try {
+            $source = $this->twig->getLoader()->getSourceContext($view);
+            $filePath = $source->getPath();
+            return (!empty($filePath) && file_exists($filePath)) ? date('Y-m-d', filemtime($filePath)) : $fallback;
+        } catch (\Throwable) {
+            return $fallback;
+        }
     }
 }

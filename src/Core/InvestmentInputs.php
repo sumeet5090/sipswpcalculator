@@ -218,22 +218,6 @@ class InvestmentInputs
         return $this->lumpsum;
     }
 
-    /**
-     * Alias for lumpsum representing initial starting portfolio balance.
-     */
-    public function getInitialBalance(): float
-    {
-        return $this->getLumpsum();
-    }
-
-    /**
-     * Alias for lumpsum representing initial starting corpus.
-     */
-    public function getInitialCorpus(): float
-    {
-        return $this->getLumpsum();
-    }
-
     public function getSwpRate(): float
     {
         return $this->swpRate;

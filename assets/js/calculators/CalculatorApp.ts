@@ -152,7 +152,7 @@ export class CalculatorApp {
         const fields = this.dom.getElement('swp-fields');
         if (!fields) return;
 
-        document.querySelectorAll<HTMLElement>('.swp-col').forEach(el => {
+        this.dom.getElements<HTMLElement>('swp-col').forEach(el => {
             el.style.display = isChecked ? '' : 'none';
         });
 
@@ -251,7 +251,7 @@ export class CalculatorApp {
         this.initSwpHandlers();
         this.initToggles();
 
-        new TabController().init();
+        new TabController(this.dom).init();
         new SmartNudgeController(this.dom, (rate) => this.setSmartNudgeRate(rate)).init();
         new PdfExportController(
             this.dom,
@@ -348,7 +348,7 @@ export class CalculatorApp {
         const postTaxToggle = this.dom.getElement<HTMLInputElement>('show_post_tax');
         if (postTaxToggle) {
             postTaxToggle.addEventListener('change', () => {
-                const taxCols = document.querySelectorAll<HTMLElement>('.tax-col');
+                const taxCols = this.dom.getElements<HTMLElement>('tax-col');
                 taxCols.forEach(el => {
                     el.style.display = postTaxToggle.checked ? '' : 'none';
                 });
@@ -386,7 +386,7 @@ export class CalculatorApp {
 
             const breakdownEl = this.dom.getElement('yearly-breakdown-section') || this.dom.getElement('breakdown-body');
             const tableViewed = breakdownEl
-                ? (breakdownEl.getBoundingClientRect().top < (window.innerHeight || document.documentElement.clientHeight) ? 1 : 0)
+                ? (breakdownEl.getBoundingClientRect().top < this.dom.getViewportHeight() ? 1 : 0)
                 : 0;
             const deviceType = (window.innerWidth < 768) ? 'mobile' : 'desktop';
 
