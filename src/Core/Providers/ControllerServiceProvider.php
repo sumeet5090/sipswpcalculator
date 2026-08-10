@@ -113,7 +113,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
         $container->singleton(GeneratePdfAction::class, function (Container $c) {
             return new GeneratePdfAction(
                 $c->get(RateLimiter::class),
-                $c->get(SessionManager::class),
                 $c->get(PdfGeneratorService::class),
                 $c->get(ConfigService::class),
                 $c->get(\Services\FileUploadService::class),

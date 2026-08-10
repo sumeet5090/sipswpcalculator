@@ -1,6 +1,7 @@
 import { InvestmentInputs, YearResult } from '../types';
 
 export interface ExtraSignals {
+    pdf_downloaded?: boolean;
     pdf_has_custom_name?: boolean;
     inflation_enabled?: boolean;
     interaction_count?: number;
@@ -70,6 +71,7 @@ export class AnalyticsService {
                 goal_mode: activeGoalMode || 'grow',
                 device_type: deviceType,
                 table_viewed: tableViewed,
+                pdf_downloaded: extraSignals.pdf_downloaded ? 1 : 0,
                 pdf_has_custom_name: extraSignals.pdf_has_custom_name ? 1 : 0,
                 inflation_enabled: inputs.inflation > 0 ? 1 : (extraSignals.inflation_enabled ? 1 : 0),
                 interaction_count: extraSignals.interaction_count || 1,

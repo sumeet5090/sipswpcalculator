@@ -10,8 +10,6 @@ namespace Core;
  */
 class BlogRepository
 {
-    public const DEFAULT_POST_DATE = 'March 2026';
-
     private ContentManager $contentManager;
     private string $contentDir;
     private string $categoriesJsonPath;
@@ -133,7 +131,7 @@ class BlogRepository
             'href'      => "/resource/{$category}/{$slug}",
             'featured'  => $meta['featured'] ?? false,
             'read_time' => $readTime,
-            'date'      => $meta['date'] ?? self::DEFAULT_POST_DATE,
+            'date'      => $meta['date'] ?? DateConstants::CONTENT_FALLBACK_DATE,
         ];
     }
 

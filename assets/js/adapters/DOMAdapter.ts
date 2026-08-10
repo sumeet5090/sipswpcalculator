@@ -10,7 +10,10 @@ export class DOMAdapter {
             if (!el && required) {
                 throw new Error(`[DOMAdapter] Critical Error: Required element with ID '${id}' was not found in the DOM. This indicates a structural mismatch between the Strategy and the HTML template.`);
             }
-            this.cache.set(id, el);
+            if (el) {
+                this.cache.set(id, el);
+            }
+            return el;
         }
         return this.cache.get(id) as T | null;
     }

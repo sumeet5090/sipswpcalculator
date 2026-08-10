@@ -10,10 +10,6 @@ export class TargetCorpusStrategy extends CalculatorStrategy {
         
         const requiredSip = MathEngine.calculateRequiredSip(inputs, targetCorpus);
         
-        // Update DOM elements with the required SIP
-        this.dom.setValue('sip', requiredSip);
-        this.dom.setValue('sip_range', requiredSip);
-        
         return { ...inputs, sip: requiredSip };
     }
 }

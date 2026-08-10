@@ -8,6 +8,7 @@ use Core\AnonymizedInsightLogger;
 use Core\BlogRepository;
 use Core\Container;
 use Core\ContentManager;
+use Core\Env;
 use Core\Factories\SchemaFactory;
 use Core\FaqRepository;
 use Core\GlossaryRepository;
@@ -26,7 +27,11 @@ class RepositoryServiceProvider implements ServiceProviderInterface
         });
 
         $container->singleton(SchemaHelper::class, function (Container $c) {
-            return new SchemaHelper($c->get(SiteConfig::class));
+            return new SchemaHelper(
+                $c->get(SiteConfig::class),
+                (string) Env::get('SITE_AUTHOR_NAME', 'Sumeet Boga'),
+                (string) Env::get('SITE_ORG_NAME', 'SIP SWP Calculator')
+            );
         });
 
         $container->singleton(FaqRepository::class, function () {

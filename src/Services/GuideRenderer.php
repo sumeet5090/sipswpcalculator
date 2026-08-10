@@ -63,7 +63,7 @@ class GuideRenderer
         $meta = $content['metadata'];
         $seo_category = $meta['seo_category'] ?? 'growth';
         $type = $meta['type'] ?? 'guide';
-        $publishedDate = $meta['date'] ?? '2026-08-01';
+        $publishedDate = $meta['date'] ?? \Core\DateConstants::CONTENT_FALLBACK_DATE;
 
         $page_config = $this->metaManager->buildFromMetadata($meta, $slug);
 

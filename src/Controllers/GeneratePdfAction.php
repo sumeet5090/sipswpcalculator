@@ -14,12 +14,10 @@ use Services\FileUploadService;
 use Services\HtmlSanitizer;
 use Services\PdfGeneratorService;
 use Services\RateLimiter;
-use Services\SessionManager;
 
 class GeneratePdfAction
 {
     private RateLimiter $rateLimiter;
-    private SessionManager $sessionManager;
     private PdfGeneratorService $pdfGenerator;
     private ConfigService $configService;
     private FileUploadService $fileUploadService;
@@ -28,7 +26,6 @@ class GeneratePdfAction
 
     public function __construct(
         RateLimiter $rateLimiter,
-        SessionManager $sessionManager,
         PdfGeneratorService $pdfGenerator,
         ConfigService $configService,
         FileUploadService $fileUploadService,
@@ -36,7 +33,6 @@ class GeneratePdfAction
         InvestmentCalculator $calculator
     ) {
         $this->rateLimiter = $rateLimiter;
-        $this->sessionManager = $sessionManager;
         $this->pdfGenerator = $pdfGenerator;
         $this->configService = $configService;
         $this->fileUploadService = $fileUploadService;
@@ -51,10 +47,6 @@ class GeneratePdfAction
         }
 
         $post = $request->getParsedBody();
-        $token = (string) ($post['csrf_token'] ?? '');
-        if (!$this->sessionManager->verifyCsrfToken($token)) {
-            return new Response('Forbidden: Invalid security token. Please reload the page and try again.', 403);
-        }
 
         // Rate limiting check
         try {

@@ -1,9 +1,10 @@
 import { CurrencyFormatter } from './CurrencyHelper';
 import { YearResult } from '../types';
+import type { Chart, ChartDataset, ChartConfiguration, TooltipItem } from 'chart.js';
 
 declare global {
     interface Window {
-        Chart: any;
+        Chart: typeof Chart;
     }
 }
 
@@ -24,7 +25,7 @@ export interface Milestone {
  */
 export class ChartManager {
     private formatter: CurrencyFormatter;
-    private chartInstance: any = null;
+    private chartInstance: Chart<'line'> | null = null;
     private currentMilestones: Milestone[] = [];
 
     constructor(formatter: CurrencyFormatter) {
@@ -142,16 +143,18 @@ export class ChartManager {
                 this.chartInstance.data.datasets[3].hidden = !enableSwp;
             }
 
-            this.chartInstance.options.scales.y.stacked = showWealthMap;
+            if (this.chartInstance.options.scales && this.chartInstance.options.scales.y) {
+                (this.chartInstance.options.scales.y as any).stacked = showWealthMap;
+            }
 
             if (showWealthMap) {
                 const interestOnly = corpus.map((c, i) => c - cumulative[i]);
                 this.chartInstance.data.datasets[1].data = interestOnly;
-                this.chartInstance.data.datasets[1].fill = true;
+                (this.chartInstance.data.datasets[1] as any).fill = true;
                 this.chartInstance.data.datasets[1].label = 'Interest Earned';
             } else {
                 this.chartInstance.data.datasets[1].data = corpus;
-                this.chartInstance.data.datasets[1].fill = 0;
+                (this.chartInstance.data.datasets[1] as any).fill = false;
                 this.chartInstance.data.datasets[1].label = 'Pre-Tax Growth';
             }
 
@@ -176,7 +179,7 @@ export class ChartManager {
         const gridColor = 'rgba(0, 0, 0, 0.05)';
         const textColor = '#64748b';
 
-        const datasets: any[] = [
+        const datasets: ChartDataset<'line'>[] = [
             {
                 label: 'Total Invested',
                 data: cumulative,
@@ -240,8 +243,10 @@ export class ChartManager {
             });
         }
 
-        const config = {
-            type: 'line',
+
+
+        const config: ChartConfiguration<'line'> = {
+            type: 'line' as const,
             data: {
                 labels: years,
                 datasets: datasets
@@ -292,7 +297,7 @@ export class ChartManager {
                         boxPadding: 4,
                         usePointStyle: true,
                         callbacks: {
-                            label: (context: any) => {
+                            label: (context: TooltipItem<'line'>) => {
                                 let label = context.dataset.label || '';
                                 if (label) {
                                     label += ': ';
@@ -302,7 +307,7 @@ export class ChartManager {
                                 }
                                 return label;
                             },
-                            afterBody: (tooltipItems: any[]) => {
+                            afterBody: (tooltipItems: TooltipItem<'line'>[]) => {
                                 const index = tooltipItems[0].dataIndex;
                                 const reached = (this.currentMilestones || []).filter(m => m.index === index);
                                 if (reached.length > 0) {
@@ -334,7 +339,7 @@ export class ChartManager {
                         grid: {
                             color: gridColor,
                             borderDash: [5, 5]
-                        },
+                        } as any,
                         ticks: {
                             color: textColor,
                             font: {
@@ -342,8 +347,8 @@ export class ChartManager {
                                 size: 11,
                                 weight: 500
                             },
-                            callback: (value: number) => {
-                                return this.formatAxisTick(value);
+                            callback: (value: string | number) => {
+                                return this.formatAxisTick(typeof value === 'number' ? value : Number(value));
                             }
                         },
                         beginAtZero: true
@@ -352,7 +357,7 @@ export class ChartManager {
             }
         };
 
-        this.chartInstance = new window.Chart(ctx, config);
+        this.chartInstance = new window.Chart(ctx, config) as unknown as Chart<'line'>;
         this.renderMilestoneGrid(milestones);
     }
 
@@ -400,7 +405,7 @@ export class ChartManager {
         container.appendChild(fragment);
     }
 
-    getChartInstance(): any {
+    getChartInstance(): Chart | null {
         return this.chartInstance;
     }
 }

@@ -14,8 +14,8 @@ class SchemaHelper
 
     public function __construct(
         SiteConfig $siteConfig,
-        string $authorName = 'Sumeet Boga',
-        string $organizationName = 'SIP SWP Calculator'
+        string $authorName,
+        string $organizationName
     ) {
         $this->siteConfig = $siteConfig;
         $this->authorName = $authorName;
