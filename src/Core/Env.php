@@ -21,7 +21,7 @@ class Env
     public static function get(string $key, mixed $default = null): mixed
     {
         $val = getenv($key);
-        if ($val !== false) {
+        if ($val !== false && $val !== '') {
             return $val;
         }
 

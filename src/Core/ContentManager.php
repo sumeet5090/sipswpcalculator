@@ -17,6 +17,27 @@ class ContentManager
         $this->contentDir = $contentDir;
     }
 
+    public function listMarkdownFiles(string $subDir): array
+    {
+        $dir = $this->contentDir . '/' . trim($subDir, '/');
+        if (!is_dir($dir)) {
+            return [];
+        }
+
+        $files = glob($dir . '/*.md');
+        if (!$files) {
+            return [];
+        }
+
+        return array_map(fn($f) => basename($f, '.md'), $files);
+    }
+
+    public function getFileModifiedDate(string $path, string $fallback = '2026-03-01'): string
+    {
+        $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
+        return file_exists($fullPath) ? date('Y-m-d', filemtime($fullPath)) : $fallback;
+    }
+
     public function getParsedContent(string $path): ?array
     {
         $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
@@ -25,7 +46,7 @@ class ContentManager
             return null;
         }
 
-        $rawContent = file_get_contents($fullPath);
+        $rawContent = (string) file_get_contents($fullPath);
 
         $metadata = [];
         $body = $rawContent;
@@ -65,6 +86,27 @@ class ContentManager
         ];
     }
 
+    /**
+     * Get front-matter metadata only without rendering Markdown HTML.
+     */
+    public function getMetadataOnly(string $path): ?array
+    {
+        $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
+
+        if (!file_exists($fullPath)) {
+            return null;
+        }
+
+        $rawContent = (string) file_get_contents($fullPath);
+
+        if (preg_match('/\A\s*---\r?\n(.*?)\r?\n---/s', $rawContent, $matches)) {
+            return $this->parseFrontMatter($matches[1]);
+        }
+
+        $parsed = $this->getParsedContent($path);
+        return $parsed['metadata'] ?? null;
+    }
+
     private function parseFrontMatter(string $frontMatter): array
     {
         $metadata = [];
@@ -76,19 +118,21 @@ class ContentManager
                 continue;
             }
 
-            $parts = explode(':', $line, 2);
-            if (count($parts) === 2) {
-                $key = trim($parts[0]);
-                $value = trim($parts[1]);
+            $colonPos = strpos($line, ':');
+            if ($colonPos !== false) {
+                $key = trim(substr($line, 0, $colonPos));
+                $value = trim(substr($line, $colonPos + 1));
 
-                if (preg_match('/^["\'](.*)["\']$/', $value, $valMatches)) {
-                    $value = $valMatches[1];
+                if (preg_match('/^["\'](.*)["\']$/s', $value, $matches)) {
+                    $value = $matches[1];
                 }
 
-                if ($value === 'true') {
+                if (strtolower($value) === 'true') {
                     $value = true;
-                } elseif ($value === 'false') {
+                } elseif (strtolower($value) === 'false') {
                     $value = false;
+                } elseif (is_numeric($value) && !str_starts_with($value, '0') && strlen($value) < 10) {
+                    $value = str_contains($value, '.') ? (float) $value : (int) $value;
                 }
 
                 $metadata[$key] = $value;

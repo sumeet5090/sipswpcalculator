@@ -38,11 +38,12 @@ class GlossaryRepository
             return;
         }
 
-        usort($decoded, function (array $a, array $b) {
+        $sortedTerms = $decoded;
+        usort($sortedTerms, function (array $a, array $b) {
             return strcmp($a['q'] ?? '', $b['q'] ?? '');
         });
 
-        $this->terms = $decoded;
+        $this->terms = $sortedTerms;
     }
 
     /**

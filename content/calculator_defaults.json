@@ -97,5 +97,9 @@
         "step": 50000,
         "label": "Starting Corpus",
         "prefix": "₹"
+    },
+    "ltcg_tax": {
+        "exemption_threshold": 125000,
+        "rate": 0.125
     }
 }

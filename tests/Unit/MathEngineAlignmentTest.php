@@ -16,52 +16,31 @@ class MathEngineAlignmentTest extends TestCase
      */
     private function runJsCalculation(array $inputs): array
     {
-        $jsPath = __DIR__ . '/../../assets/js/calculators/MathEngine.ts';
-        $this->assertFileExists($jsPath, "MathEngine.ts file not found at $jsPath");
+        $runnerPath = __DIR__ . '/../run_js_calc.js';
+        $this->assertFileExists($runnerPath, "JS runner script not found at $runnerPath");
 
-        $jsCode = file_get_contents($jsPath);
-        $jsCode = preg_replace('/import\s+.*;/', '', $jsCode);
-        $jsCode = str_replace('export class MathEngine', 'class MathEngine', $jsCode);
-
-        // Normalize parameter naming expected by MathEngine.js
+        // Normalize parameter naming expected by MathEngine.ts
         $jsInputs = [
-            'sip' => $inputs['sip'] ?? 10000.0,
-            'years' => $inputs['years'] ?? 20,
-            'rate' => $inputs['rate'] ?? 12.0,
-            'stepup' => $inputs['stepup'] ?? 10.0,
-            'lumpsum' => $inputs['lumpsum'] ?? 0.0,
-            'enable_swp' => $inputs['enable_swp'] ?? false,
+            'sip'            => $inputs['sip'] ?? 10000.0,
+            'years'          => $inputs['years'] ?? 20,
+            'rate'           => $inputs['rate'] ?? 12.0,
+            'stepup'         => $inputs['stepup'] ?? 10.0,
+            'lumpsum'        => $inputs['lumpsum'] ?? 0.0,
+            'enable_swp'     => $inputs['enable_swp'] ?? false,
             'swp_withdrawal' => $inputs['swp_withdrawal'] ?? 0.0,
-            'swp_years' => $inputs['swp_years'] ?? 0,
-            'swp_stepup' => $inputs['swp_stepup'] ?? 0.0,
-            'swp_rate' => $inputs['swp_rate'] ?? 8.0,
+            'swp_years'      => $inputs['swp_years'] ?? 0,
+            'swp_stepup'     => $inputs['swp_stepup'] ?? 0.0,
+            'swp_rate'       => $inputs['swp_rate'] ?? 8.0,
+            'ltcg_exemption' => $inputs['ltcg_exemption'] ?? 125000.0,
+            'ltcg_tax_rate'  => $inputs['ltcg_tax_rate'] ?? 0.125,
         ];
 
-        $script = $jsCode . "\nconsole.log(JSON.stringify(MathEngine.calculate(" . json_encode($jsInputs) . ")));";
+        $jsonArg = escapeshellarg(json_encode($jsInputs));
+        $cmd = "node --experimental-strip-types " . escapeshellarg($runnerPath) . " {$jsonArg}";
 
-        $descriptorspec = [
-            0 => ["pipe", "r"],
-            1 => ["pipe", "w"],
-            2 => ["pipe", "w"]
-        ];
-
-        $process = proc_open("node --experimental-strip-types", $descriptorspec, $pipes);
-        if (!is_resource($process)) {
-            $this->fail("Failed to execute Node.js process");
-        }
-
-        fwrite($pipes[0], $script);
-        fclose($pipes[0]);
-
-        $output = stream_get_contents($pipes[1]);
-        $error = stream_get_contents($pipes[2]);
-        fclose($pipes[1]);
-        fclose($pipes[2]);
-
-        $status = proc_close($process);
-
-        if ($status !== 0) {
-            $this->fail("Node.js process failed with status $status. Error: $error");
+        $output = shell_exec($cmd);
+        if (!$output) {
+            $this->fail("Node runner failed or outputted empty response.");
         }
 
         $result = json_decode($output, true);
@@ -96,6 +75,8 @@ class MathEngineAlignmentTest extends TestCase
             'swp_years' => $inputs->getSwpYears(),
             'swp_stepup' => $inputs->getSwpStepup(),
             'swp_rate' => $inputs->getSwpRate(),
+            'ltcg_exemption' => $inputs->getLtcgExemption(),
+            'ltcg_tax_rate' => $inputs->getLtcgTaxRate(),
         ];
         $jsResults = $this->runJsCalculation($jsData);
 

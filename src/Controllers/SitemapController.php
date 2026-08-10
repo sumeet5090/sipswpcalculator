@@ -8,7 +8,6 @@ use Core\BlogRepository;
 use Core\Http\Response;
 use Core\SiteConfig;
 use Core\ViewRenderer;
-use DOMDocument;
 
 class SitemapController
 {
@@ -81,17 +80,11 @@ class SitemapController
         ];
 
         // 5. Static Pages
-        $pages = [
-            '/about' => '0.5',
-            '/faq' => '0.5',
-            '/glossary' => '0.5',
-            '/privacy' => '0.3',
-            '/terms' => '0.3'
-        ];
-
-        foreach ($pages as $path => $priority) {
+        $configuredPages = array_keys($routesConfig['pages'] ?? []);
+        foreach ($configuredPages as $path) {
             $slug = ltrim($path, '/');
             $lastmod = $this->viewRenderer->getTemplateModifiedDate('pages/' . $slug);
+            $priority = in_array($path, ['/privacy', '/terms'], true) ? '0.3' : '0.5';
 
             $urls[] = [
                 'loc' => $baseUrl . $path,
@@ -101,31 +94,8 @@ class SitemapController
             ];
         }
 
-        // Generate XML via DOMDocument
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->formatOutput = true;
+        $xml = $this->viewRenderer->render('sitemap.xml', ['urls' => $urls]);
 
-        $urlset = $dom->createElementNS('http://www.sitemaps.org/schemas/sitemap/0.9', 'urlset');
-
-        foreach ($urls as $urlData) {
-            $url = $dom->createElement('url');
-
-            $loc = $dom->createElement('loc', $urlData['loc']);
-            $lastmod = $dom->createElement('lastmod', $urlData['lastmod']);
-            $changefreq = $dom->createElement('changefreq', $urlData['changefreq']);
-            $priority = $dom->createElement('priority', $urlData['priority']);
-
-            $url->appendChild($loc);
-            $url->appendChild($lastmod);
-            $url->appendChild($changefreq);
-            $url->appendChild($priority);
-
-            $urlset->appendChild($url);
-        }
-
-        $dom->appendChild($urlset);
-        $xml = $dom->saveXML();
-
-        return new Response($xml ?: '', 200, ['Content-Type' => 'application/xml; charset=utf-8']);
+        return new Response($xml, 200, ['Content-Type' => 'application/xml; charset=utf-8']);
     }
 }

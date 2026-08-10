@@ -81,8 +81,8 @@ class InvestmentCalculator
             }
 
             $preTaxGains = $netBalance + $cumulativeWithdrawals - $cumulativeInvested;
-            $taxableGains = max(0.0, $preTaxGains - 125000.0);
-            $ltcgTax = $taxableGains * 0.125;
+            $taxableGains = max(0.0, $preTaxGains - $inputs->getLtcgExemption());
+            $ltcgTax = $taxableGains * $inputs->getLtcgTaxRate();
             $postTaxCorpus = max(0.0, $netBalance - $ltcgTax);
 
             $results[] = [

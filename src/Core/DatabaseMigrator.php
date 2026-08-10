@@ -22,11 +22,10 @@ class DatabaseMigrator
     }
 
     /**
-     * Run all pending migrations.
-     *
-     * @return array<string> Names of newly executed migration files.
+     * Ensure the migrations tracking table exists. Idempotent.
+     * Separating this allows bootstrap without running migrations (e.g. tests).
      */
-    public function migrate(): array
+    public function bootstrap(): void
     {
         $this->pdo->exec("
             CREATE TABLE IF NOT EXISTS schema_migrations (
@@ -35,18 +34,24 @@ class DatabaseMigrator
                 executed_at TEXT DEFAULT CURRENT_TIMESTAMP
             )
         ");
+    }
+
+    /**
+     * Run all pending migrations.
+     */
+    public function migrate(): void
+    {
+        $this->bootstrap();
 
         $stmt = $this->pdo->query("SELECT migration FROM schema_migrations");
         $executed = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
         if (!is_dir($this->migrationsPath)) {
-            return [];
+            return;
         }
 
         $files = glob($this->migrationsPath . '/*.php');
         sort($files);
-
-        $executedMigrations = [];
 
         foreach ($files as $file) {
             $migrationName = basename($file);
@@ -55,21 +60,25 @@ class DatabaseMigrator
                 $migration = require $file;
 
                 try {
-                    $this->pdo->beginTransaction();
+                    $inTx = $this->pdo->inTransaction();
+                    if (!$inTx) {
+                        $this->pdo->beginTransaction();
+                    }
                     $migration->up($this->pdo, true);
 
                     $stmt = $this->pdo->prepare("INSERT INTO schema_migrations (migration) VALUES (:migration)");
                     $stmt->execute([':migration' => $migrationName]);
 
-                    $this->pdo->commit();
-                    $executedMigrations[] = $migrationName;
+                    if (!$inTx && $this->pdo->inTransaction()) {
+                        $this->pdo->commit();
+                    }
                 } catch (\Throwable $e) {
-                    $this->pdo->rollBack();
+                    if ($this->pdo->inTransaction()) {
+                        $this->pdo->rollBack();
+                    }
                     throw $e;
                 }
             }
         }
-
-        return $executedMigrations;
     }
 }

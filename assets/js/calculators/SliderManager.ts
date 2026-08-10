@@ -14,9 +14,9 @@ interface SliderPair {
  */
 export class SliderManager {
     private triggerFn: () => void;
-    public validator: InputValidator;
+    private validator: InputValidator;
     private pairs: SliderPair[] = [];
-    private _inputDebounceTimer: any = null;
+    private _inputDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
     constructor(triggerFn: () => void, validator: InputValidator) {
         this.triggerFn = triggerFn;
@@ -49,7 +49,7 @@ export class SliderManager {
 
             // Show inline error if out of bounds (and user has typed something)
             if (!isNaN(rawVal) && rawVal !== validated) {
-                const limits = (this.validator as any).constraints[fieldName];
+                const limits = this.validator.getConstraint(fieldName);
                 if (limits) {
                     const msg = rawVal < limits.min
                         ? `Minimum is ${limits.min}`
@@ -71,7 +71,9 @@ export class SliderManager {
             this._updateAria(range, validated);
 
             // Debounce text input to prevent jank during rapid typing
-            clearTimeout(this._inputDebounceTimer);
+            if (this._inputDebounceTimer !== null) {
+                clearTimeout(this._inputDebounceTimer);
+            }
             this._inputDebounceTimer = setTimeout(() => this.triggerFn(), 150);
         });
     }

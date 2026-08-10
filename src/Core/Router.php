@@ -12,19 +12,30 @@ class Router
 {
     private array $routes = [];
     private array $redirects = [];
+    private array $middlewares = [];
     private ContainerInterface $container;
+    private ActionDispatcher $actionDispatcher;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, ?ActionDispatcher $actionDispatcher = null)
     {
         $this->container = $container;
+        $this->actionDispatcher = $actionDispatcher ?? new ActionDispatcher($container);
     }
 
-    public function get(string $uri, string|array $controllerAction): void
+    public function pipe(string|\Core\Middleware\MiddlewareInterface $middleware): void
+    {
+        if (is_string($middleware) && !is_subclass_of($middleware, \Core\Middleware\MiddlewareInterface::class)) {
+            throw new \InvalidArgumentException("Middleware must implement \Core\Middleware\MiddlewareInterface");
+        }
+        $this->middlewares[] = $middleware;
+    }
+
+    public function get(string $uri, array $controllerAction): void
     {
         $this->routes['GET'][$uri] = $controllerAction;
     }
 
-    public function post(string $uri, string|array $controllerAction): void
+    public function post(string $uri, array $controllerAction): void
     {
         $this->routes['POST'][$uri] = $controllerAction;
     }
@@ -40,78 +51,57 @@ class Router
         $uri = $request->getUri();
         $method = $request->getMethod();
 
-        if (array_key_exists($uri, $this->redirects)) {
-            return Response::redirect($this->redirects[$uri], 301);
-        }
+        $coreHandler = function (Request $req) use ($method, $uri): Response {
+            if (array_key_exists($uri, $this->redirects)) {
+                return Response::redirect($this->redirects[$uri], 301);
+            }
 
-        if ($uri === '/' && isset($this->routes[$method]['/'])) {
-            return $this->callAction($this->routes[$method]['/'], [], $request);
-        }
+            if (isset($this->routes[$method][$uri])) {
+                return $this->callAction($this->routes[$method][$uri], [], $req);
+            }
 
-        $uri = rtrim($uri, '/');
-
-        if (isset($this->routes[$method][$uri])) {
-            return $this->callAction($this->routes[$method][$uri], [], $request);
-        }
-
-        if (isset($this->routes[$method]) && is_array($this->routes[$method])) {
-            foreach ($this->routes[$method] as $route => $action) {
-                $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_\.-]+)', $route);
-                if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
-                    $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
-                    return $this->callAction($action, $params, $request);
+            // Explicit SEO 301 redirect for non-root URIs with trailing slashes
+            if ($uri !== '/' && str_ends_with($uri, '/')) {
+                $canonicalUri = rtrim($uri, '/');
+                if (isset($this->routes[$method][$canonicalUri]) || array_key_exists($canonicalUri, $this->redirects)) {
+                    return Response::redirect($canonicalUri, 301);
                 }
             }
-        }
 
-        throw new \Core\Exceptions\RouteNotFoundException("No route found for URI: {$uri}");
-    }
-
-    private function callAction(string|array $controllerAction, array $params = [], ?Request $request = null): Response
-    {
-        if (is_array($controllerAction)) {
-            $controllerName = $controllerAction[0];
-            $action = $controllerAction[1] ?? '__invoke';
-        } else {
-            $parts = explode('@', $controllerAction);
-            $controllerName = $parts[0];
-            $action = $parts[1] ?? '__invoke';
-        }
-
-        if (!str_starts_with($controllerName, '\\')) {
-            $controllerName = '\\' . $controllerName;
-        }
-
-        if (class_exists($controllerName)) {
-            $controller = $this->container->get($controllerName);
-            if (method_exists($controller, $action)) {
-                $request = $request ?? Request::createFromGlobals();
-
-                $reflection = new \ReflectionMethod($controller, $action);
-                $args = [];
-                foreach ($reflection->getParameters() as $param) {
-                    $name = $param->getName();
-                    $type = $param->getType();
-                    if ($type instanceof \ReflectionNamedType && !$type->isBuiltin() && $type->getName() === Request::class) {
-                        $args[] = $request;
-                    } elseif (array_key_exists($name, $params)) {
-                        $args[] = $params[$name];
-                    } elseif ($param->isDefaultValueAvailable()) {
-                        $args[] = $param->getDefaultValue();
-                    } else {
-                        $args[] = null;
+            if (isset($this->routes[$method]) && is_array($this->routes[$method])) {
+                foreach ($this->routes[$method] as $route => $action) {
+                    $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_\.-]+)', $route);
+                    if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
+                        $rawParams = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                        $params = array_map('urldecode', $rawParams);
+                        return $this->callAction($action, $params, $req);
                     }
                 }
-
-                $response = call_user_func_array([$controller, $action], $args);
-                if ($response instanceof Response) {
-                    return $response;
-                }
-                return new Response((string) $response, 200);
             }
-        }
 
-        throw new \Core\Exceptions\RouteNotFoundException("Controller or Method not found ({$controllerName}@{$action})");
+            throw new \Core\Exceptions\RouteNotFoundException("No route found for URI: {$uri}");
+        };
+
+        $pipeline = array_reduce(
+            array_reverse($this->middlewares),
+            function (callable $next, mixed $middleware) {
+                return function (Request $req) use ($next, $middleware): Response {
+                    $instance = is_string($middleware)
+                        ? $this->container->get($middleware)
+                        : $middleware;
+
+                    return $instance->process($req, $next);
+                };
+            },
+            $coreHandler
+        );
+
+        return $pipeline($request);
+    }
+
+    private function callAction(array $controllerAction, array $params = [], ?Request $request = null): Response
+    {
+        return $this->actionDispatcher->dispatch($controllerAction, $params, $request);
     }
 
     public function getRoutes(): array

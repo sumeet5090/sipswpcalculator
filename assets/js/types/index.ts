@@ -11,6 +11,8 @@ export interface InvestmentInputs {
     swp_rate: number;
     inflation: number;
     corpus?: number;
+    ltcg_exemption?: number;
+    ltcg_tax_rate?: number;
 }
 
 export interface YearResult {

@@ -32,7 +32,7 @@ export class ChartManager {
     }
 
     formatAxisTick(value: number): string {
-        const symbol = (this.formatter as any).symbol || '₹';
+        const symbol = this.formatter.getSymbol();
         if (value >= 10000000) return symbol + (value / 10000000).toFixed(1) + 'Cr';
         if (value >= 100000) return symbol + (value / 100000).toFixed(1) + 'L';
         if (value >= 1000) return symbol + (value / 1000).toFixed(1) + 'k';
@@ -360,30 +360,44 @@ export class ChartManager {
         const container = document.getElementById('milestones-container');
         if (!container) return;
 
+        container.replaceChildren();
+
         if (milestones.length === 0) {
-            container.innerHTML = '';
             container.classList.add('hidden');
             return;
         }
 
         container.classList.remove('hidden');
-        container.innerHTML = milestones.map(m => {
-            const description = m.type === 'security'
-                ? m.description
+        const fragment = document.createDocumentFragment();
+
+        milestones.forEach(m => {
+            const card = document.createElement('div');
+            card.className = 'glass-card p-4 flex items-start gap-3 border border-slate-100/85 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5';
+
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'flex items-center justify-center w-10 h-10 rounded-xl bg-amber-50 text-xl shrink-0';
+            iconDiv.textContent = m.icon;
+
+            const textDiv = document.createElement('div');
+
+            const h4 = document.createElement('h4');
+            h4.className = 'text-sm font-bold text-slate-800';
+            h4.textContent = m.label;
+
+            const p = document.createElement('p');
+            p.className = 'text-xs text-slate-500 mt-1';
+            p.textContent = m.type === 'security'
+                ? (m.description || '')
                 : `Crossed in Year ${m.year} with ${this.formatter.formatDynamic(m.value)}`;
 
-            return `
-                <div class="glass-card p-4 flex items-start gap-3 border border-slate-100/85 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-amber-50 text-xl shrink-0">
-                        ${m.icon}
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-800">${m.label}</h4>
-                        <p class="text-xs text-slate-500 mt-1">${description}</p>
-                    </div>
-                </div>
-            `;
-        }).join('');
+            textDiv.appendChild(h4);
+            textDiv.appendChild(p);
+            card.appendChild(iconDiv);
+            card.appendChild(textDiv);
+            fragment.appendChild(card);
+        });
+
+        container.appendChild(fragment);
     }
 
     getChartInstance(): any {

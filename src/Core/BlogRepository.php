@@ -10,17 +10,33 @@ namespace Core;
  */
 class BlogRepository
 {
-    private ContentManager $contentManager;
+    public const DEFAULT_POST_DATE = 'March 2026';
 
-    public function __construct(ContentManager $contentManager)
-    {
+    private ContentManager $contentManager;
+    private string $contentDir;
+    private string $categoriesJsonPath;
+    private ?array $cachedCategories = null;
+    private ?array $cachedPosts = null;
+
+    public function __construct(
+        ContentManager $contentManager,
+        ?string $contentDir = null,
+        ?string $categoriesJsonPath = null
+    ) {
         $this->contentManager = $contentManager;
+        $this->contentDir = $contentDir ?? (__DIR__ . '/../../content/blog');
+        $this->categoriesJsonPath = $categoriesJsonPath ?? (__DIR__ . '/../../content/categories.json');
     }
 
     public function getCategories(): array
     {
-        $jsonPath = __DIR__ . '/../../content/categories.json';
+        if ($this->cachedCategories !== null) {
+            return $this->cachedCategories;
+        }
+
+        $jsonPath = $this->categoriesJsonPath;
         if (!file_exists($jsonPath)) {
+            $this->cachedCategories = [];
             return [];
         }
 
@@ -29,10 +45,12 @@ class BlogRepository
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             error_log("Failed to parse content/categories.json: " . json_last_error_msg());
+            $this->cachedCategories = [];
             return [];
         }
 
-        return is_array($decoded) ? $decoded : [];
+        $this->cachedCategories = is_array($decoded) ? $decoded : [];
+        return $this->cachedCategories;
     }
 
     /**
@@ -42,7 +60,11 @@ class BlogRepository
      */
     public function getAllPosts(): array
     {
-        $contentDir = __DIR__ . '/../../content/blog';
+        if ($this->cachedPosts !== null) {
+            return $this->cachedPosts;
+        }
+
+        $contentDir = $this->contentDir;
         $posts = [];
 
         $categories = $this->getCategories();
@@ -53,39 +75,16 @@ class BlogRepository
         $categoryList = array_filter($categoryList);
 
         foreach ($categoryList as $cat) {
-            $dir = $contentDir . '/' . $cat;
-            if (!is_dir($dir)) {
-                continue;
-            }
+            $slugs = $this->contentManager->listMarkdownFiles('blog/' . $cat);
 
-            $files = glob($dir . '/*.md');
-            if (!$files) {
-                continue;
-            }
-
-            foreach ($files as $file) {
-                $slug = basename($file, '.md');
-                $content = $this->contentManager->getParsedContent('/blog/' . $cat . '/' . $slug);
-                if (!$content) {
+            foreach ($slugs as $slug) {
+                $meta = $this->contentManager->getMetadataOnly('/blog/' . $cat . '/' . $slug);
+                if (!$meta) {
                     continue;
                 }
 
-                $meta = $content['metadata'];
-
-                $readTime = $this->calculateReadTime($content['html']);
-
-                $posts[] = [
-                    'category' => $cat,
-                    'id' => $cat,
-                    'tag' => $meta['tag'] ?? 'Guide',
-                    'tag_color' => $meta['tag_color'] ?? 'slate',
-                    'title' => !empty($meta['title']) ? $meta['title'] : ucfirst(str_replace('-', ' ', $slug)),
-                    'desc' => $meta['subtitle'] ?? '',
-                    'href' => "/resource/{$cat}/{$slug}",
-                    'featured' => $meta['featured'] ?? false,
-                    'read_time' => $readTime,
-                    'date' => $meta['date'] ?? 'March 2026'
-                ];
+                $readTime = $meta['read_time'] ?? '5 min';
+                $posts[] = $this->buildPostData($cat, $slug, $meta, (string) $readTime);
             }
         }
 
@@ -99,7 +98,8 @@ class BlogRepository
             return $dateB <=> $dateA;
         });
 
-        return $posts;
+        $this->cachedPosts = $posts;
+        return $this->cachedPosts;
     }
 
     /**
@@ -117,17 +117,23 @@ class BlogRepository
         $meta = $content['metadata'];
         $readTime = $this->calculateReadTime($content['html']);
 
+        return $this->buildPostData($category, $slug, $meta, $readTime);
+    }
+
+    private function buildPostData(string $category, string $slug, array $meta, string $readTime): array
+    {
         return [
-            'category' => $category,
-            'id' => $category,
-            'tag' => $meta['tag'] ?? 'Guide',
+            'category'  => $category,
+            'id'        => "{$category}/{$slug}",
+            'slug'      => $slug,
+            'tag'       => $meta['tag'] ?? 'Guide',
             'tag_color' => $meta['tag_color'] ?? 'slate',
-            'title' => !empty($meta['title']) ? $meta['title'] : ucfirst(str_replace('-', ' ', $slug)),
-            'desc' => $meta['subtitle'] ?? '',
-            'href' => "/resource/{$category}/{$slug}",
-            'featured' => $meta['featured'] ?? false,
+            'title'     => !empty($meta['title']) ? $meta['title'] : ucfirst(str_replace('-', ' ', $slug)),
+            'desc'      => $meta['subtitle'] ?? '',
+            'href'      => "/resource/{$category}/{$slug}",
+            'featured'  => $meta['featured'] ?? false,
             'read_time' => $readTime,
-            'date' => $meta['date'] ?? 'March 2026'
+            'date'      => $meta['date'] ?? self::DEFAULT_POST_DATE,
         ];
     }
 
@@ -146,7 +152,6 @@ class BlogRepository
      */
     public function getPostModifiedDate(string $category, string $slug, string $fallbackDate = '2026-03-01'): string
     {
-        $mdFile = __DIR__ . '/../../content/blog/' . $category . '/' . $slug . '.md';
-        return file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $fallbackDate;
+        return $this->contentManager->getFileModifiedDate('blog/' . $category . '/' . $slug, $fallbackDate);
     }
 }

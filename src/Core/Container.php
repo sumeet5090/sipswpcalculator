@@ -19,7 +19,8 @@ class Container implements ContainerInterface
     private array $instances = [];
 
     /**
-     * Bind a key (interface/class name) to a resolver callback or value.
+     * Bind a key (interface/class name) to a transient resolver callback or value.
+     * Transient bindings produce a new instance on each get() call.
      */
     public function bind(string $key, callable|object|string $resolver): void
     {
@@ -35,7 +36,13 @@ class Container implements ContainerInterface
         $key = ltrim($key, '\\');
         $this->bindings[$key] = function (self $container) use ($resolver, $key) {
             if (!isset($container->instances[$key])) {
-                $container->instances[$key] = is_callable($resolver) ? $resolver($container) : $resolver;
+                if (is_callable($resolver)) {
+                    $container->instances[$key] = $resolver($container);
+                } elseif (is_string($resolver) && class_exists($resolver)) {
+                    $container->instances[$key] = $container->resolve($resolver);
+                } else {
+                    $container->instances[$key] = $resolver;
+                }
             }
             return $container->instances[$key];
         };
@@ -47,7 +54,20 @@ class Container implements ContainerInterface
     public function has(string $id): bool
     {
         $id = ltrim($id, '\\');
-        return isset($this->instances[$id]) || isset($this->bindings[$id]) || class_exists($id);
+        if (isset($this->instances[$id]) || isset($this->bindings[$id])) {
+            return true;
+        }
+
+        if (!class_exists($id)) {
+            return false;
+        }
+
+        try {
+            $reflector = new \ReflectionClass($id);
+            return $reflector->isInstantiable();
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
     /**

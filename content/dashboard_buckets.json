@@ -1,0 +1,29 @@
+{
+    "duration_buckets": [
+        {"max": 1, "label": "1 yr"},
+        {"max": 3, "label": "2–3 yrs"},
+        {"max": 5, "label": "4–5 yrs"},
+        {"max": 10, "label": "6–10 yrs"},
+        {"max": 20, "label": "11–20 yrs"},
+        {"max": null, "label": "20+ yrs"}
+    ],
+    "corpus_buckets_inr": [
+        {"max": 1000000, "label": "Under 10L"},
+        {"max": 5000000, "label": "10L – 50L"},
+        {"max": 10000000, "label": "50L – 1Cr"},
+        {"max": null, "label": "Above 1Cr"}
+    ],
+    "corpus_buckets_usd": [
+        {"max": 10000, "label": "Under 10K"},
+        {"max": 50000, "label": "10K – 50K"},
+        {"max": 100000, "label": "50K – 100K"},
+        {"max": null, "label": "Above 100K"}
+    ],
+    "ambition_buckets": [
+        {"max": 100000, "label": "$0 – 100K"},
+        {"max": 500000, "label": "$100K – 500K"},
+        {"max": 1000000, "label": "$500K – 1M"},
+        {"max": 5000000, "label": "$1M – 5M"},
+        {"max": null, "label": "$5M+"}
+    ]
+}

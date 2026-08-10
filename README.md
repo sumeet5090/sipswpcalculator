@@ -20,7 +20,7 @@ sipswpcalculator/
 │
 ├── src/
 │   ├── Controllers/          # Request handling and view rendering
-│   ├── Core/                 # Framework utilities and App initialization
+│   ├── Core/                 # Framework utilities, ActionDispatcher, Router, and App initialization
 │   │   ├── Strategies/       # Strategy Patterns for Calculators
 │   │   └── Factories/        # Factories (e.g. SEO SchemaFactory)
 │   ├── Services/             # Business logic (Calculations, PDF, SEO generation)
@@ -115,8 +115,11 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 
 ### Architecture & Service Decoupling
 - **Full PHP-TypeScript Calculation Parity:** Calculation math (`InvestmentCalculator.php` and `MathEngine.ts`) is strictly synchronized across PHP and TypeScript, including month-by-month compounding and LTCG tax calculations (12.5% tax on gains exceeding ₹1.25 Lakh). Calculation parity is continuously enforced via automated integration tests (`tests/parity_check.php`).
+- **DRY Calculation Engine & Zero Duplicate Tax Equations:** Both `ChartManager.ts` and `CalculatorApp.ts` (`updateTable()` and `updateSummaryMetrics()`) directly access `row.ltcg_tax` and `row.post_tax_total` calculated by `MathEngine.ts`, removing duplicate LTCG tax equations across frontend components.
+- **Instance-Based Error Handling & Injection:** `ErrorController` provides constructor-injected instance methods (`render404()`, `render500()`) for controller DI dispatching (`BlogController`, `GuideRenderer`), while maintaining static fallbacks for top-level catches in `index.php` and `App.php`.
+- **Negative Currency Formatting & Postel's Law:** `CurrencyHelper::formatInr()` handles negative balance amounts and losses cleanly with leading minus signs (e.g. `-₹ 5,000`).
 - **Explicit FQCN Routing & Zero Constructor Side-Effects:** `Router.php` resolves action class strings strictly via explicit Fully Qualified Class Names without magic namespace prepending. `App.php` defers routes loading (`routes.php`) from `__construct()` to `boot()`, enforcing side-effect-free object initialization.
-- **DRY Frontend Tax Calculations & DOM Cache Clearing:** `ChartManager.ts` reads `row.post_tax_total` directly from `MathEngine.ts` output, eliminating duplicate LTCG tax equations. `DOMAdapter.ts` provides explicit `clearCache()` support for dynamic DOM re-rendering and tab switching.
+- **DOMAdapter Cache Clearing:** `DOMAdapter.ts` provides explicit `clearCache()` support for dynamic DOM re-rendering and tab switching.
 - **DOMDocument Sitemap Generator (`SitemapController`):** Refactored XML sitemap builder using `DOMDocument` for robust XML node building, formatting, and character escaping (adhering to Postel's Law). Modification dates are resolved cleanly through injected `ViewRenderer` and `BlogRepository` services.
 - **Configurable RateLimiter & ViteHelper:** `RateLimiter` accepts configurable base storage directories via constructor, eliminating hardcoded system temp assumptions and silence operator `@` calls. `ViteHelper` accepts configurable dev host and port parameters for flexible dev environments.
 - **Modular Data Repositories (`InsightRepository`):** `InsightRepository` aggregates metrics using modular query helper methods (`getOverviewMetrics`, `getVolumeSeries`, `getDistributionMetrics`, `getEngagementMetrics`), adhering strictly to SRP.
@@ -125,14 +128,20 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 - **Command-Query Separation (CQS) & Lazy Repository Loading:** Data repositories (`GlossaryRepository`, `FaqRepository`, `ConfigService`, `ContentManager`) defer disk file reading and parsing out of constructors into lazy-loading methods, ensuring side-effect-free object instantiation.
 - **Env Wrapper (`Core\Env`):** Centralizes environment variable resolution, guaranteeing that OS-level CLI/testing environment overrides (`getenv`) take precedence over `.env` defaults. Env reads are **exclusively performed at the DI boundary** inside `App::registerDependencies()` — domain services, strategies, and controllers never call `Env::get()` directly.
 - **Strongly-Typed Callable Routing:** Routes in `routes.php` and `App.php` use class-string callable tuples (e.g. `[PageController::class, 'about']`), eliminating brittle string-based route definitions and enabling compile-time / static analysis verification. Both `calculators` and `pages` entries now use a **uniform tuple syntax**.
-- **Immutable HTTP Pipeline:** Controllers strictly return `Core\Http\Response` objects (e.g. via `Response::html()`), separating view compilation from response emitting. `index.php` instantiates a single `Request` object top-down.
+- **Immutable HTTP Pipeline & Middleware System:** Controllers strictly return `Core\Http\Response` objects (e.g. via `Response::html()`), separating view compilation from response emitting. `Router` supports a pipeline of `Core\Middleware\MiddlewareInterface` middlewares (such as `CsrfHoneypotMiddleware`), handling security checks like CSRF validation and honeypot bot detection globally before reaching controllers.
+- **Dedicated Single-Responsibility Actions:** Specific controller actions like CSV export downloads (`DownloadCsvAction`) and admin authentication handlers (`AdminController::login` & `logout`) are extracted into dedicated, single-responsibility methods and routes (`POST /download-csv`, `POST /admin_insights`), adhering strictly to SRP and REST standards.
+- **Externalized Metric Bucketing Configuration:** `InsightRepository` dynamically generates SQL bucket queries using `content/dashboard_buckets.json`, decoupling UI metric ranges and labels from raw SQL string statements.
+- **Strict Command-Query Separation (CQS):** `SessionManager::getCsrfToken()` is a pure query method returning string values without mutating state. State-changing token initialization is handled via `ensureCsrfToken()` (Command) called during session bootstrap.
 - **ViewRenderer (`Core\ViewRenderer`):** Twig rendering is now a proper injectable service. Previously `View::render()` was a static global facade that silently instantiated `SessionManager` internally. `ViewRenderer` receives `SessionManager`, `ViteHelper`, `$env`, and `$appUrl` via constructor and is registered as a singleton in the DI container. All controllers call `$this->viewRenderer->render()` instead of the static method.
 - **PSR-11 Container & Strict DI:** `Core\Container` implements `Psr\Container\ContainerInterface` with `has()` and PSR-11 exception primitives (`NotFoundException`, `ContainerException`). Class name resolution strips leading backslashes (`ltrim($id, '\\')`) to guarantee exact key resolution between callable tuple routes and DI container registrations. Static container singletons (`Container::getInstance()`) have been eliminated in favor of instance-based container lifecycle management (`App::boot()`).
 - **StrategyFactory (`Core\Strategies\StrategyFactory`):** Resolves calculator strategies via an explicit, type-safe `STRATEGY_MAP` constant mapping URI slugs directly to strategy classes (`SipStrategy`, `SwpStrategy`, `LumpsumStrategy`, `ComboStrategy`, `TargetCorpusStrategy`), eliminating magic substring pattern matching.
 - **Strict Constructor Dependency Injection:** Services (`ViewRenderer`, `ContentManager`, `SitemapController`, `ConfigService`, `FaqRepository`, `GlossaryRepository`, `PdfGeneratorService`) require mandatory constructor parameters without implicit default instantiations, enforcing the Pit of Success across the dependency graph.
 - **Dedicated Content Repositories:** Data access is strictly delegated to dedicated repositories (`BlogRepository`, `FaqRepository`, `GlossaryRepository`, `InsightRepository`). Controller actions never perform raw JSON file reading or compute disk paths directly.
-- **Encapsulated Metadata & Template Resolution:** View template and blog post modification dates are resolved via `ViewRenderer::getTemplateModifiedDate()` and `BlogRepository::getPostModifiedDate()`, preventing Law of Demeter violations inside controller actions.
-- **Dependency Injection & Repositories:** Controllers (`RenderHomeAction`, `PageController`, `SitemapController`, `BlogController`, `AdminController`, `GeneratePdfAction`) use constructor injection managed by `Core\Container` via Reflection auto-wiring.
+- **Parameterized Database Queries (`InsightRepository`):** SQL queries in `InsightRepository` strictly use parameterized PDO bindings for all dynamic values, conditions, and filters, eliminating raw string concatenation and enforcing Postel's Law and security standards.
+- **Decomposed Report Generator (`PdfReportTemplate` & `HtmlSanitizer`):** Dompdf report HTML generation is decomposed into modular section renderers (`renderHeader`, `renderKpis`, `renderParameters`, `renderMilestones`, `renderTable`, `renderFooter`). Table and text HTML sanitization is extracted into a standalone `Services\HtmlSanitizer` service. Key wealth milestone calculations directly consume pre-computed calculator output vectors to maintain DRY principles.
+- **DOM & ARIA Hardening (`CalculatorApp`, `ChartManager`):** Frontend DOM rendering uses structured `document.createElement` node construction for milestone grids, eliminating latent XSS vectors. ARIA accessibility attributes on tab controls strictly manage state transitions.
+- **Strict TypeScript & Full Parity:** `MathEngine.ts` precision is fully aligned with `InvestmentCalculator.php`. All event topics, timers, chart configurations, and strategy contracts (`abstract class CalculatorStrategy`) are strongly typed without `any` bypasses.
+- **Dependency Injection & Repositories:** Controllers (`RenderHomeAction`, `DownloadCsvAction`, `PageController`, `SitemapController`, `BlogController`, `AdminController`, `GeneratePdfAction`) use constructor injection managed by `Core\Container` via Reflection auto-wiring.
 - **Session Lifecycle & Pure Twig Templates:** Session initialization is strictly centralized in `App::run()`, and template rendering is 100% handled via Twig with legacy PHP view rendering eliminated.
 
 ### PHPUnit Database & Test Server Isolation
@@ -190,6 +199,28 @@ The site includes several modern SEO optimizations built into the core services:
 4. Make your changes in `src/` or `assets/`
 5. Validate code quality: `composer check-all`
 6. Open a Pull Request
+
+---
+
+## Architecture Quality Standards
+
+This codebase is maintained to strict architectural quality standards as documented in `AGENTS.md`. Every subsystem adheres to the following principles:
+
+| Principle | Key Implementation |
+|---|---|
+| **Modular Dependency Injection** | All DI bindings decoupled into SRP-compliant `ServiceProvider` modules (`CoreServiceProvider`, `RepositoryServiceProvider`, `ControllerServiceProvider`) |
+| **SRP Controller Actions** | Single-responsibility action classes (`ShowAdminDashboardAction`, `AdminAuthAction`, `LogInsightApiAction`, `RenderHomeAction`, `GeneratePdfAction`) decoupled from monolithic controllers |
+| **Dependency Inversion (DIP)** | Kernel `App::run()` catches domain exceptions (`RouteNotFoundException`) and resolves `ErrorController` via DI container rather than static fallbacks |
+| **Strategy Pattern for RateLimiting** | `RateLimiter` delegates persistence to `RateLimitStorageInterface` (`FileRateLimitStorage`), enabling pluggable Redis/Memcached backends |
+| **Separation of Concerns (Views)** | `SitemapController` delegates XML rendering to `Views/sitemap.xml.twig` rather than constructing DOM nodes inline |
+| **Encapsulated Upload Handling** | `FileUploadService` handles image upload validation & Base64 encoding without error suppression operators |
+| **Custom Twig Extensions** | `AppTwigExtension` encapsulates custom Twig filters (`formatInr`, `array_values`) and Vite helper functions |
+| **DRY Calculation Engine** | PDF reporting (`GeneratePdfAction` / `PdfReportTemplate`) uses `InvestmentCalculator` cashflow vectors directly without duplicated math loops |
+| **Single Source of Truth** | LTCG tax rates in `calculator_defaults.json`; `InvestmentInputs` is the only clamping layer for both web and PDF |
+| **Explicit > Implicit** | `Router` explicitly resolves routes and enforces `MiddlewareInterface` compliance without magic URI trimming |
+| **CQS Compliance** | `SessionManager::generateCsrfToken()`, `App::boot()`, and `DatabaseMigrator::migrate()` return `void` or explicitly separate state mutation from query methods |
+| **Environment Security** | Schema migrations execute strictly via CLI (`migrate.php`) in deployment pipelines; no administrative web migration endpoints |
+| **Constructor & Type Safety** | Constructors are free of filesystem side effects (`mkdir`); `StrategyFactory` receives strategy instances via DI constructor without Service Locator anti-patterns |
 
 ---
 

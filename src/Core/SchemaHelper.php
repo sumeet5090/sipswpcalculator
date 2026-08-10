@@ -6,11 +6,20 @@ namespace Core;
 
 class SchemaHelper
 {
-    private SiteConfig $siteConfig;
+    public const JSON_FLAGS = JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES;
 
-    public function __construct(SiteConfig $siteConfig)
-    {
+    private SiteConfig $siteConfig;
+    private string $authorName;
+    private string $organizationName;
+
+    public function __construct(
+        SiteConfig $siteConfig,
+        string $authorName = 'Sumeet Boga',
+        string $organizationName = 'SIP SWP Calculator'
+    ) {
         $this->siteConfig = $siteConfig;
+        $this->authorName = $authorName;
+        $this->organizationName = $organizationName;
     }
 
     /**
@@ -33,7 +42,7 @@ class SchemaHelper
             "@context" => "https://schema.org",
             "@type" => "BreadcrumbList",
             "itemListElement" => $itemListElement,
-        ], JSON_UNESCAPED_SLASHES);
+        ], self::JSON_FLAGS);
     }
 
     /**
@@ -57,7 +66,7 @@ class SchemaHelper
             "@context" => "https://schema.org",
             "@type" => "FAQPage",
             "mainEntity" => $mainEntity,
-        ], JSON_UNESCAPED_SLASHES);
+        ], self::JSON_FLAGS);
     }
 
     /**
@@ -77,12 +86,12 @@ class SchemaHelper
             "image" => $imageUrl,
             "author" => [
                 "@type" => "Person",
-                "name" => "Sumeet Boga",
+                "name" => $this->authorName,
                 "url" => $this->siteConfig->getUrl('/about'),
             ],
             "publisher" => [
                 "@type" => "Organization",
-                "name" => "SIP SWP Calculator",
+                "name" => $this->organizationName,
                 "logo" => [
                     "@type" => "ImageObject",
                     "url" => $this->siteConfig->getUrl('/assets/favicon.png')
@@ -90,7 +99,7 @@ class SchemaHelper
             ],
             "datePublished" => $datePublished,
             "dateModified" => $dateModified,
-        ], JSON_UNESCAPED_SLASHES);
+        ], self::JSON_FLAGS);
     }
 
     /**
@@ -108,7 +117,7 @@ class SchemaHelper
                 "@type" => "SpeakableSpecification",
                 "cssSelector" => ["h1", ".markdown-content p:first-of-type"]
             ]
-        ], JSON_UNESCAPED_SLASHES);
+        ], self::JSON_FLAGS);
     }
 
     /**
@@ -141,6 +150,6 @@ class SchemaHelper
             ];
         }
 
-        return json_encode($schema, JSON_UNESCAPED_SLASHES);
+        return json_encode($schema, self::JSON_FLAGS);
     }
 }

@@ -29,7 +29,8 @@ class AnonymizedInsightLogger
     public function logCalculation(InsightPayload $payload, ?Http\Request $request = null): void
     {
         try {
-            $countryCode = $request ? $request->server('HTTP_CF_IPCOUNTRY') : null;
+            $rawCountryCode = $request ? $request->server('HTTP_CF_IPCOUNTRY') : null;
+            $countryCode = is_string($rawCountryCode) ? substr(trim($rawCountryCode), 0, 10) : null;
             $rawReferrer = $request ? $request->server('HTTP_REFERER') : null;
             $referrer = is_string($rawReferrer) ? substr($rawReferrer, 0, 512) : null;
             $currency = $payload->currency ?? ($request ? (string) $request->get('currency', 'INR') : 'INR');

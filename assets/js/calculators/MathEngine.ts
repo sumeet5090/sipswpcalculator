@@ -55,7 +55,7 @@ export class MathEngine {
                 if (netBalance < 0) netBalance = 0;
             }
 
-            cumulativeInvested = Math.round((cumulativeInvested + annualContribution) * 100) / 100;
+            cumulativeInvested += annualContribution;
             let annualWithdrawal = Math.round(actualYearWithdrawn * 100) / 100;
             if (inp.enable_swp && y >= swpStartYear) {
                 cumulativeWithdrawals = Math.round((cumulativeWithdrawals + annualWithdrawal) * 100) / 100;
@@ -63,10 +63,12 @@ export class MathEngine {
 
             let interestEarned = netBalance - (yearBegin + annualContribution - annualWithdrawal);
             
-            // Tax Calculation (LTCG 12.5% on gains exceeding 1.25 Lakh)
+            // Tax Calculation (LTCG rate on gains exceeding exemption threshold)
             let preTaxGains = netBalance + cumulativeWithdrawals - cumulativeInvested;
-            let taxableGains = Math.max(0, preTaxGains - 125000);
-            let ltcgTax = taxableGains * 0.125;
+            const ltcgExemption = inp.ltcg_exemption ?? 125000;
+            const ltcgTaxRate = inp.ltcg_tax_rate ?? 0.125;
+            let taxableGains = Math.max(0, preTaxGains - ltcgExemption);
+            let ltcgTax = taxableGains * ltcgTaxRate;
             let postTaxCorpus = Math.max(0, netBalance - ltcgTax);
 
             results.push({
@@ -162,20 +164,21 @@ export class MathEngine {
             const testInp: InvestmentInputs = {
                 ...inp,
                 sip: 0,
-                years: 0,
+                years: 1,
                 lumpsum: mid
             };
             const results = this.calculate(testInp);
             const finalBalance = results[results.length - 1].combined_total;
-            
-            if (Math.abs(finalBalance) < 1) {
+            const ranOutEarly = results.some((r, idx) => idx < results.length - 1 && r.combined_total <= 0);
+
+            if (!ranOutEarly && Math.abs(finalBalance) < 1) {
                 bestCorpus = mid;
                 break;
-            } else if (finalBalance <= 0) {
-                // If it ran out, we need more starting corpus
+            } else if (ranOutEarly || finalBalance <= 0) {
+                // If it ran out early or ended at zero, we need more starting corpus
                 low = mid;
             } else {
-                // If we ended with a surplus, we can start with less
+                // If we ended with a surplus without early depletion, we can try a lower corpus
                 high = mid;
             }
             bestCorpus = mid;

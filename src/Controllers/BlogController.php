@@ -77,7 +77,7 @@ class BlogController
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            return ErrorController::handle404($this->viewRenderer);
+            throw new \Core\Exceptions\RouteNotFoundException("Blog post not found: {$category}/{$slug}");
         }
 
         $post_metadata = $this->blogRepository->getPostBySlug($category, $slug);
@@ -85,24 +85,27 @@ class BlogController
 
         $page_config = $this->metaManager->buildFromMetadata($content['metadata'], $slug);
 
+        $breadcrumbTitle = !empty($content['metadata']['title'])
+            ? (string) $content['metadata']['title']
+            : ucfirst(str_replace('-', ' ', $slug));
+
         $breadcrumbs = [
             'Home' => '/',
             'Resources' => '/resources',
             ucfirst($category) => "/resource/{$category}",
-            $content['metadata']['title'] ?: ucfirst(str_replace('-', ' ', $slug)) => "/resource/{$category}/{$slug}"
+            $breadcrumbTitle => "/resource/{$category}/{$slug}"
         ];
 
-        // Derive real datePublished from post config (e.g., "March 2026" → "2026-03-01")
-        $datePublished = '2026-03-01';
+        // Derive real dateModified from markdown file mtime via repository
+        $dateModified = $this->blogRepository->getPostModifiedDate($category, $slug);
+        $datePublished = $dateModified;
+
         if ($post_metadata && !empty($post_metadata['date'])) {
             $parsed = \DateTimeImmutable::createFromFormat('F Y', $post_metadata['date']);
             if ($parsed) {
                 $datePublished = $parsed->format('Y-m-01');
             }
         }
-
-        // Derive real dateModified from markdown file mtime via repository
-        $dateModified = $this->blogRepository->getPostModifiedDate($category, $slug, $datePublished);
 
         $page_config['additional_head'] = $this->schemaFactory->generateForPage(
             $category . '/' . $slug,

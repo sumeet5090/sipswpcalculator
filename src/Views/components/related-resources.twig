@@ -59,19 +59,25 @@
         </h3>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {% for post in related %}
-                {% set accent = 'emerald' %}
+                {% set border_hover = 'hover:border-emerald-200' %}
+                {% set tag_badge = 'bg-emerald-50 text-emerald-700 border-emerald-100' %}
+                {% set title_hover = 'group-hover:text-emerald-700' %}
                 {% if post.category == 'retirement' %}
-                    {% set accent = 'indigo' %}
+                    {% set border_hover = 'hover:border-indigo-200' %}
+                    {% set tag_badge = 'bg-indigo-50 text-indigo-700 border-indigo-100' %}
+                    {% set title_hover = 'group-hover:text-indigo-700' %}
                 {% elseif post.category == 'comparison' %}
-                    {% set accent = 'amber' %}
+                    {% set border_hover = 'hover:border-amber-200' %}
+                    {% set tag_badge = 'bg-amber-50 text-amber-700 border-amber-100' %}
+                    {% set title_hover = 'group-hover:text-amber-700' %}
                 {% endif %}
 
                 <a href="{{ post.href }}"
-                    class="group block p-5 rounded-xl border border-slate-200/80 bg-white hover:shadow-md hover:border-{{ accent }}-200 transition-all duration-200">
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-{{ accent }}-50 text-{{ accent }}-700 border border-{{ accent }}-100 mb-3">
+                    class="group block p-5 rounded-xl border border-slate-200/80 bg-white hover:shadow-md {{ border_hover }} transition-all duration-200">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider {{ tag_badge }} mb-3">
                         {{ post.tag|default('Guide') }}
                     </span>
-                    <h4 class="text-sm font-bold text-slate-800 group-hover:text-{{ accent }}-700 transition-colors leading-snug mb-2 line-clamp-2">
+                    <h4 class="text-sm font-bold text-slate-800 {{ title_hover }} transition-colors leading-snug mb-2 line-clamp-2">
                         {{ post.title }}
                     </h4>
                     <p class="text-xs text-slate-400 flex items-center gap-2">

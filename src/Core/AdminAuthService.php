@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Core;
 
 use Core\Exceptions\AuthenticationException;
+use Core\Exceptions\ConfigurationException;
 use Services\SessionManager;
 
 /**
@@ -34,11 +35,12 @@ class AdminAuthService
      * Attempt to log in with the provided password.
      *
      * @throws AuthenticationException
+     * @throws ConfigurationException
      */
     public function login(string $password): void
     {
         if ($this->adminPassword === '') {
-            throw new \RuntimeException('ADMIN_INSIGHTS_PASSWORD environment variable is missing or empty.');
+            throw new ConfigurationException('ADMIN_INSIGHTS_PASSWORD environment variable is missing or empty.');
         }
 
         if (hash_equals($this->adminPassword, $password)) {

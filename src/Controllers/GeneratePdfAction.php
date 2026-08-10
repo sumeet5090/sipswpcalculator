@@ -7,6 +7,11 @@ namespace Controllers;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Exceptions\RateLimitExceededException;
+use Core\InvestmentCalculator;
+use Core\InvestmentInputs;
+use Services\ConfigService;
+use Services\FileUploadService;
+use Services\HtmlSanitizer;
 use Services\PdfGeneratorService;
 use Services\RateLimiter;
 use Services\SessionManager;
@@ -16,15 +21,27 @@ class GeneratePdfAction
     private RateLimiter $rateLimiter;
     private SessionManager $sessionManager;
     private PdfGeneratorService $pdfGenerator;
+    private ConfigService $configService;
+    private FileUploadService $fileUploadService;
+    private HtmlSanitizer $sanitizer;
+    private InvestmentCalculator $calculator;
 
     public function __construct(
         RateLimiter $rateLimiter,
         SessionManager $sessionManager,
-        PdfGeneratorService $pdfGenerator
+        PdfGeneratorService $pdfGenerator,
+        ConfigService $configService,
+        ?FileUploadService $fileUploadService = null,
+        ?HtmlSanitizer $sanitizer = null,
+        ?InvestmentCalculator $calculator = null
     ) {
         $this->rateLimiter = $rateLimiter;
         $this->sessionManager = $sessionManager;
         $this->pdfGenerator = $pdfGenerator;
+        $this->configService = $configService;
+        $this->fileUploadService = $fileUploadService ?? new FileUploadService();
+        $this->sanitizer = $sanitizer ?? new HtmlSanitizer();
+        $this->calculator = $calculator ?? new InvestmentCalculator();
     }
 
     public function __invoke(Request $request): Response
@@ -48,90 +65,44 @@ class GeneratePdfAction
         }
 
         try {
+            // Use central InvestmentInputs for robust, config-driven clamping
+            $calcInputs = InvestmentInputs::fromRequest($post, $this->configService);
+            $combined = $this->calculator->calculate($calcInputs);
+
             $inputs = [
-                'client_name'       => mb_substr(strip_tags($post['clientName'] ?? 'N/A'), 0, 100),
-                'advisor_name'      => mb_substr(strip_tags($post['advisorName'] ?? 'N/A'), 0, 100),
-                'custom_disclaimer' => mb_substr(strip_tags($post['customDisclaimer'] ?? ''), 0, 1000),
-                'chart_base64'      => '',
-                'table_html'        => '',
-                'sip'               => 0,
-                'years'             => 0,
-                'rate'              => 0,
-                'stepup'            => 0,
-                'lumpsum'           => 0,
-                'swp_withdrawal'    => 0,
-                'swp_stepup'        => 0,
-                'swp_years'         => 0,
-                'swp_rate'          => 8,
-                'logo_base64'       => null,
+                'client_name'       => $this->sanitizer->sanitizeText((string) ($post['clientName'] ?? 'N/A'), 100),
+                'advisor_name'      => $this->sanitizer->sanitizeText((string) ($post['advisorName'] ?? 'N/A'), 100),
+                'custom_disclaimer' => $this->sanitizer->sanitizeText((string) ($post['customDisclaimer'] ?? ''), 1000),
+                'chart_base64'      => $this->sanitizer->extractChartData((string) ($post['chartData'] ?? '')),
+                'table_html'        => $this->sanitizer->sanitizeTableHtml((string) ($post['tableHtml'] ?? '')),
+                'sip'               => $calcInputs->getSip(),
+                'years'             => $calcInputs->getYears(),
+                'rate'              => $calcInputs->getRate(),
+                'stepup'            => $calcInputs->getStepup(),
+                'lumpsum'           => $calcInputs->getLumpsum(),
+                'swp_withdrawal'    => $calcInputs->getSwpWithdrawal(),
+                'swp_stepup'        => $calcInputs->getSwpStepup(),
+                'swp_years'         => $calcInputs->getSwpYears(),
+                'swp_rate'          => $calcInputs->getSwpRate(),
+                'logo_base64'       => $this->fileUploadService->processLogoUpload($request->files('advisorLogo')),
 
                 // Summary Metrics
-                'currency_symbol'   => mb_substr(strip_tags($post['currency_symbol'] ?? ''), 0, 10),
-                'summary_invested'  => mb_substr(strip_tags($post['summary_invested'] ?? '0'), 0, 50),
-                'summary_interest'  => mb_substr(strip_tags($post['summary_interest'] ?? '0'), 0, 50),
-                'summary_withdrawn' => mb_substr(strip_tags($post['summary_withdrawn'] ?? '0'), 0, 50),
-                'summary_corpus'    => mb_substr(strip_tags($post['summary_corpus'] ?? '0'), 0, 50),
-                'raw_invested'      => (float) ($post['raw_invested'] ?? 0),
-                'raw_corpus'        => (float) ($post['raw_corpus'] ?? 0),
+                'currency_symbol'   => $this->sanitizer->sanitizeText((string) ($post['currency_symbol'] ?? ''), 10),
+                'summary_invested'  => $this->sanitizer->sanitizeText((string) ($post['summary_invested'] ?? '0'), 50),
+                'summary_interest'  => $this->sanitizer->sanitizeText((string) ($post['summary_interest'] ?? '0'), 50),
+                'summary_withdrawn' => $this->sanitizer->sanitizeText((string) ($post['summary_withdrawn'] ?? '0'), 50),
+                'summary_corpus'    => $this->sanitizer->sanitizeText((string) ($post['summary_corpus'] ?? '0'), 50),
+                'raw_invested'      => max(0.0, (float) ($post['raw_invested'] ?? 0)),
+                'raw_corpus'        => max(0.0, (float) ($post['raw_corpus'] ?? 0)),
+                'combined_results'  => $combined,
             ];
-
-            $chart_raw = trim($post['chartData'] ?? '');
-            if ($chart_raw !== '' && preg_match('/^data:image\/(png|jpeg|gif|webp);base64,/i', $chart_raw)) {
-                $inputs['chart_base64'] = $chart_raw;
-            }
-
-            $table_raw = $post['tableHtml'] ?? '<table><tr><td>No data</td></tr></table>';
-            $inputs['table_html'] = strip_tags(
-                $table_raw,
-                '<table><thead><tbody><tfoot><tr><th><td><caption><colgroup><col><span><strong><em><br>'
-            );
-            $inputs['table_html'] = preg_replace('/\s+on\w+\s*=\s*["\'][^"\']*["\']/i', '', $inputs['table_html']);
-            $inputs['table_html'] = preg_replace('/\s+style\s*=\s*["\'][^"\']*expression\s*\([^"\']*["\']/i', '', $inputs['table_html']);
-
-            $inputs['sip'] = max(0, min(10000000, (float) ($post['sip'] ?? 0)));
-            $inputs['years'] = max(0, min(50, (int) ($post['years'] ?? 0)));
-            $inputs['rate'] = max(0, min(50, (float) ($post['rate'] ?? 0)));
-            $inputs['stepup'] = max(0, min(100, (float) ($post['stepup'] ?? 0)));
-            $inputs['lumpsum'] = max(0, min(10000000, (float) ($post['lumpsum'] ?? 0)));
-            $inputs['swp_withdrawal'] = max(0, min(10000000, (float) ($post['swp_withdrawal'] ?? 0)));
-            $inputs['swp_stepup'] = max(0, min(50, (float) ($post['swp_stepup'] ?? 0)));
-            $inputs['swp_years'] = max(0, min(50, (int) ($post['swp_years'] ?? 0)));
-            $inputs['swp_rate'] = max(0.1, min(30, (float) ($post['swp_rate'] ?? 8)));
-
-            $logoFile = $request->files('advisorLogo');
-            if ($logoFile !== null && ($logoFile['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
-                $tmp_name = $logoFile['tmp_name'];
-                $file_size = $logoFile['size'];
-
-                if ($file_size > 2 * 1024 * 1024) {
-                    throw new \RuntimeException('Logo file too large. Maximum 2MB allowed.');
-                }
-
-                $image_info = @getimagesize($tmp_name);
-                if ($image_info === false) {
-                    throw new \RuntimeException('Uploaded file is not a valid image.');
-                }
-
-                $allowed_types = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF, IMAGETYPE_WEBP];
-                if (!in_array($image_info[2], $allowed_types, true)) {
-                    throw new \RuntimeException('Invalid image type. Only JPEG, PNG, GIF, and WebP are allowed.');
-                }
-
-                if ($image_info[0] > 2000 || $image_info[1] > 2000) {
-                    throw new \RuntimeException('Image dimensions too large. Maximum 2000x2000 pixels.');
-                }
-
-                $safe_mime = $image_info['mime'];
-                $data = file_get_contents($tmp_name);
-                $inputs['logo_base64'] = 'data:' . $safe_mime . ';base64,' . base64_encode($data);
-            }
 
             // Generate PDF binary using injected PdfGeneratorService
             $pdf_binary = $this->pdfGenerator->generate($inputs);
 
             $raw_name = trim($inputs['client_name']);
             $clean_name = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $raw_name) ?: 'Client';
-            $clean_name = preg_replace('/_+/', '_', $clean_name);
+            $clean_name = (string) preg_replace('/_+/', '_', $clean_name);
             $filename = "Financial_Report_for_{$clean_name}.pdf";
 
             return new Response($pdf_binary, 200, [

@@ -6,11 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const headings = mainContent.querySelectorAll<HTMLElement>('h2, h3');
     if (headings.length === 0) {
-        tocList.innerHTML = '<li class="text-slate-400 italic">No sections found.</li>';
+        tocList.replaceChildren();
+        const emptyItem = document.createElement('li');
+        emptyItem.className = 'text-slate-400 italic';
+        emptyItem.textContent = 'No sections found.';
+        tocList.appendChild(emptyItem);
         return;
     }
 
-    let tocHTML = '';
+    const fragment = document.createDocumentFragment();
     const tocItems: HTMLElement[] = [];
 
     headings.forEach((heading, index) => {
@@ -21,20 +25,24 @@ document.addEventListener('DOMContentLoaded', () => {
             heading.id = `section-${index}`;
         }
 
-        const level = parseInt(heading.tagName.substring(1));
-        const indentClass = level === 3 ? 'ml-4 border-l border-slate-200 pl-3 text-slate-500' : 'font-semibold text-slate-700';
+        const level = parseInt(heading.tagName.substring(1), 10);
+        const li = document.createElement('li');
+        li.className = level === 3
+            ? 'toc-item-wrapper ml-4 border-l border-slate-200 pl-3 text-slate-500'
+            : 'toc-item-wrapper font-semibold text-slate-700';
 
-        tocHTML += `
-            <li class="toc-item-wrapper ${indentClass}">
-                <a href="#${heading.id}" class="toc-link block py-1 hover:text-emerald-600 transition-colors" data-target="${heading.id}">
-                    ${heading.textContent}
-                </a>
-            </li>
-        `;
+        const a = document.createElement('a');
+        a.href = `#${heading.id}`;
+        a.className = 'toc-link block py-1 hover:text-emerald-600 transition-colors';
+        a.dataset.target = heading.id;
+        a.textContent = heading.textContent;
+
+        li.appendChild(a);
+        fragment.appendChild(li);
         tocItems.push(heading);
     });
 
-    tocList.innerHTML = tocHTML;
+    tocList.replaceChildren(fragment);
 
     const observerOptions: IntersectionObserverInit = {
         root: null,
@@ -52,7 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     link.classList.add('text-slate-600');
                 });
 
-                const activeLink = document.querySelector<HTMLElement>(`#toc-list .toc-link[data-target="${entry.target.id}"]`);
+                const safeTargetId = typeof CSS !== 'undefined' && typeof CSS.escape === 'function'
+                    ? CSS.escape(entry.target.id)
+                    : entry.target.id.replace(/["\\]/g, '\\$&');
+                const activeLink = document.querySelector<HTMLElement>(`#toc-list .toc-link[data-target="${safeTargetId}"]`);
                 if (activeLink) {
                     activeLink.classList.remove('text-slate-600');
                     activeLink.classList.add('text-emerald-600', 'font-bold');

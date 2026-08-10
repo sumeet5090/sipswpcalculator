@@ -2,7 +2,7 @@ import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { InputValidator } from '../InputValidator';
 import { InvestmentInputs } from '../../types';
 
-export class CalculatorStrategy {
+export abstract class CalculatorStrategy {
     protected dom: DOMAdapter;
     protected validator: InputValidator;
 
@@ -14,7 +14,5 @@ export class CalculatorStrategy {
     /**
      * Executes the strategy-specific calculation or logic.
      */
-    execute(_inputs: InvestmentInputs): InvestmentInputs {
-        throw new Error("Method 'execute()' must be implemented.");
-    }
+    abstract execute(inputs: InvestmentInputs): InvestmentInputs;
 }

@@ -17,11 +17,10 @@ class RenderGuideAction
         $this->guideRenderer = $guideRenderer;
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, ?string $slug = null): Response
     {
-        $uri = $request->getUri();
-        $slug = ltrim($uri, '/');
+        $resolvedSlug = $slug ?? ltrim($request->getUri(), '/');
 
-        return $this->guideRenderer->render($slug);
+        return $this->guideRenderer->render($resolvedSlug);
     }
 }

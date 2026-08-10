@@ -11,11 +11,19 @@ class SchemaFactory
 {
     private SchemaHelper $schemaHelper;
     private SiteConfig $siteConfig;
+    private ?\Core\BlogRepository $blogRepository;
+    private string $contentDir;
 
-    public function __construct(SchemaHelper $schemaHelper, SiteConfig $siteConfig)
-    {
+    public function __construct(
+        SchemaHelper $schemaHelper,
+        SiteConfig $siteConfig,
+        ?\Core\BlogRepository $blogRepository = null,
+        ?string $contentDir = null
+    ) {
         $this->schemaHelper = $schemaHelper;
         $this->siteConfig = $siteConfig;
+        $this->blogRepository = $blogRepository;
+        $this->contentDir = $contentDir ?? __DIR__ . '/../../../content/calculators';
     }
 
     /**
@@ -35,16 +43,16 @@ class SchemaFactory
         $description = $page_config['meta_desc'] ?? $title;
         $imageUrl = $page_config['og_image'] ?? $this->siteConfig->getUrl('/assets/og-image-main.jpg');
 
-        $mdFile = '';
-        if ($type === 'blog') {
-            $mdFile = __DIR__ . '/../../../content/blog/' . ltrim($slug, '/');
-            if (!str_ends_with($mdFile, '.md')) {
-                $mdFile .= '.md';
+        $actualModifiedDate = $publishedDate;
+        if ($type === 'blog' && $this->blogRepository !== null) {
+            $parts = explode('/', ltrim($slug, '/'));
+            if (count($parts) === 2) {
+                $actualModifiedDate = $this->blogRepository->getPostModifiedDate($parts[0], $parts[1], $publishedDate);
             }
         } else {
-            $mdFile = __DIR__ . '/../../../content/calculators/' . ltrim($slug, '/') . '.md';
+            $mdFile = rtrim($this->contentDir, '/\\') . '/' . ltrim($slug, '/') . '.md';
+            $actualModifiedDate = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $publishedDate;
         }
-        $actualModifiedDate = file_exists($mdFile) ? date('Y-m-d', filemtime($mdFile)) : $publishedDate;
 
         $schemas = [];
 
