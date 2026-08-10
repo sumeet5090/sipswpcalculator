@@ -9,15 +9,22 @@ namespace Core;
  * Renders an executive, world-class HTML report template for Dompdf.
  * Refactored into modular section renderers adhering to SRP and OCP.
  */
-class PdfReportTemplate
+class PdfReportTemplate implements PdfTemplateInterface
 {
+    private CurrencyFormatterInterface $currencyFormatter;
+
+    public function __construct(?CurrencyFormatterInterface $currencyFormatter = null)
+    {
+        $this->currencyFormatter = $currencyFormatter ?? new CurrencyHelper();
+    }
+
     /**
      * Render the report HTML template using input parameters.
      *
      * @param array<string, mixed> $inputs
      * @return string
      */
-    public static function render(array $inputs): string
+    public function render(array $inputs): string
     {
         $client_name = htmlspecialchars((string) ($inputs['client_name'] ?? 'Valued Client'));
         $advisor_name = htmlspecialchars((string) ($inputs['advisor_name'] ?? 'Your Financial Advisor'));
@@ -39,7 +46,7 @@ class PdfReportTemplate
         $kpiCardsHtml = self::renderKpiCards($inputs, $multiplier, $has_swp);
         $configCardHtml = self::renderConfigCard($inputs, $has_swp);
         $chartHtml = self::renderChartSection($chart_base64);
-        $milestonesHtml = self::renderMilestoneGrid($inputs);
+        $milestonesHtml = $this->renderMilestoneGrid($inputs);
         $calloutsHtml = self::renderCalloutsAndFooter((string) ($inputs['currency_symbol'] ?? '₹'), $custom_disclaimer, $proposal_id);
 
         return "
@@ -218,9 +225,9 @@ class PdfReportTemplate
         </div>";
     }
 
-    private static function renderMilestoneGrid(array $inputs): string
+    private function renderMilestoneGrid(array $inputs): string
     {
-        $milestones = self::generateMilestones($inputs);
+        $milestones = $this->generateMilestones($inputs);
         if (empty($milestones)) {
             return '';
         }
@@ -228,8 +235,8 @@ class PdfReportTemplate
         $cardsHtml = '';
         foreach ($milestones as $m) {
             $cardsHtml .= "
-                <td class='milestone-card' style='width: {$colWidth};'>
-                    <span class='milestone-badge'>{$m['badge']}</span>
+                <td style='width: {$colWidth}; padding: 0 4px;'>
+                    <div class='milestone-badge'>{$m['badge']}</div>
                     <div class='milestone-val'>{$m['target_formatted']}</div>
                     <div class='milestone-sub'>Achieved in <strong>Year {$m['year']}</strong></div>
                 </td>";
@@ -262,7 +269,7 @@ class PdfReportTemplate
         </div>";
     }
 
-    private static function generateMilestones(array $inputs): array
+    private function generateMilestones(array $inputs): array
     {
         $milestoneTargets = [
             10000000 => 'First ₹1 Crore',
@@ -287,7 +294,7 @@ class PdfReportTemplate
                     if (!isset($found[$target]) && $corpus >= $target) {
                         $found[$target] = [
                             'badge' => $label,
-                            'target_formatted' => CurrencyHelper::formatInr($target),
+                            'target_formatted' => $this->currencyFormatter->format($target),
                             'year' => $y,
                         ];
                     }

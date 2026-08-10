@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Core\Providers;
 
-use Controllers\AdminController;
 use Controllers\BlogController;
 use Controllers\DownloadCsvAction;
 use Controllers\ErrorController;
@@ -55,8 +54,16 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new RateLimiter($c->get(\Services\RateLimitStorageInterface::class));
         });
 
-        $container->singleton(PdfGeneratorService::class, function () {
-            return new PdfGeneratorService();
+        $container->singleton(\Core\PdfTemplateInterface::class, function (Container $c) {
+            return new \Core\PdfReportTemplate($c->get(\Core\CurrencyFormatterInterface::class));
+        });
+
+        $container->singleton(PdfGeneratorService::class, function (Container $c) {
+            return new PdfGeneratorService($c->get(\Core\PdfTemplateInterface::class));
+        });
+
+        $container->singleton(\Services\HtmlSanitizer::class, function () {
+            return new \Services\HtmlSanitizer();
         });
 
         $container->singleton(\Controllers\ShowAdminDashboardAction::class, function (Container $c) {
@@ -79,17 +86,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new \Controllers\LogInsightApiAction(
                 $c->get(AnonymizedInsightLogger::class),
                 $c->get(RateLimiter::class)
-            );
-        });
-
-        $container->singleton(AdminController::class, function (Container $c) {
-            return new AdminController(
-                $c->get(InsightRepository::class),
-                $c->get(AnonymizedInsightLogger::class),
-                $c->get(AdminAuthService::class),
-                $c->get(AdminDashboardPresenter::class),
-                $c->get(RateLimiter::class),
-                $c->get(ViewRenderer::class)
             );
         });
 
@@ -120,7 +116,9 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(SessionManager::class),
                 $c->get(PdfGeneratorService::class),
                 $c->get(ConfigService::class),
-                $c->get(\Services\FileUploadService::class)
+                $c->get(\Services\FileUploadService::class),
+                $c->get(\Services\HtmlSanitizer::class),
+                $c->get(InvestmentCalculator::class)
             );
         });
 

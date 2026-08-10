@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Core;
 
-use Controllers\AdminController;
 use Controllers\BlogController;
 use Controllers\GeneratePdfAction;
 use Controllers\PageController;
@@ -127,11 +126,10 @@ class App
         $this->router->get('/sitemap.xml', [SitemapController::class, 'index']);
 
         // Admin / Insight Routing
-        $this->router->get('/admin_insights', [AdminController::class, 'insights']);
-        $this->router->post('/admin_insights', [AdminController::class, 'login']);
-        $this->router->post('/admin_insights/logout', [AdminController::class, 'logout']);
-        $this->router->get('/log_insight', [AdminController::class, 'logInsight']);
-        $this->router->post('/log_insight', [AdminController::class, 'logInsight']);
+        $this->router->get('/admin_insights', [\Controllers\ShowAdminDashboardAction::class, '__invoke']);
+        $this->router->post('/admin_insights', [\Controllers\AdminAuthAction::class, 'login']);
+        $this->router->post('/admin_insights/logout', [\Controllers\AdminAuthAction::class, 'logout']);
+        $this->router->post('/log_insight', [\Controllers\LogInsightApiAction::class, '__invoke']);
 
         // Blog / Resources Routing
         $this->router->get('/resources', [BlogController::class, 'index']);

@@ -62,11 +62,18 @@ class CoreServiceProvider implements ServiceProviderInterface
             return new SessionManager();
         });
 
+        $container->singleton(\Core\CurrencyFormatterInterface::class, function () {
+            return new \Core\CurrencyHelper();
+        });
+
         $container->singleton(ViewRenderer::class, function (Container $c) use ($environment, $appUrl) {
             return new ViewRenderer(
                 $c->get(ViteHelper::class),
                 $environment,
-                $appUrl
+                $appUrl,
+                null,
+                null,
+                $c->get(\Core\CurrencyFormatterInterface::class)
             );
         });
 

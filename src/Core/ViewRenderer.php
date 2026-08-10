@@ -20,7 +20,8 @@ class ViewRenderer
         string $env = 'development',
         string $appUrl = 'https://sipswpcalculator.com',
         ?string $viewsPath = null,
-        ?string $cachePath = null
+        ?string $cachePath = null,
+        ?CurrencyFormatterInterface $currencyFormatter = null
     ) {
         $isProd = ($env === 'production');
 
@@ -44,7 +45,7 @@ class ViewRenderer
 
         $this->twig->addGlobal('env', $env);
         $this->twig->addGlobal('site_url', rtrim($appUrl, '/'));
-        $this->twig->addExtension(new \Core\Twig\AppTwigExtension($viteHelper));
+        $this->twig->addExtension(new \Core\Twig\AppTwigExtension($viteHelper, $currencyFormatter));
     }
 
     /**

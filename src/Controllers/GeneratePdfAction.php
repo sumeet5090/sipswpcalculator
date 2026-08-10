@@ -31,17 +31,17 @@ class GeneratePdfAction
         SessionManager $sessionManager,
         PdfGeneratorService $pdfGenerator,
         ConfigService $configService,
-        ?FileUploadService $fileUploadService = null,
-        ?HtmlSanitizer $sanitizer = null,
-        ?InvestmentCalculator $calculator = null
+        FileUploadService $fileUploadService,
+        HtmlSanitizer $sanitizer,
+        InvestmentCalculator $calculator
     ) {
         $this->rateLimiter = $rateLimiter;
         $this->sessionManager = $sessionManager;
         $this->pdfGenerator = $pdfGenerator;
         $this->configService = $configService;
-        $this->fileUploadService = $fileUploadService ?? new FileUploadService();
-        $this->sanitizer = $sanitizer ?? new HtmlSanitizer();
-        $this->calculator = $calculator ?? new InvestmentCalculator();
+        $this->fileUploadService = $fileUploadService;
+        $this->sanitizer = $sanitizer;
+        $this->calculator = $calculator;
     }
 
     public function __invoke(Request $request): Response
