@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Services;
 
-use Core\PdfReportTemplate;
+use Core\PdfTemplateInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Core\PdfReportTemplate;
 
 /**
  * PdfGeneratorService
@@ -14,6 +15,13 @@ use Dompdf\Options;
  */
 class PdfGeneratorService
 {
+    private PdfTemplateInterface $template;
+
+    public function __construct(PdfTemplateInterface $template)
+    {
+        $this->template = $template;
+    }
+
     /**
      * Render inputs into binary PDF content string.
      *
@@ -22,7 +30,7 @@ class PdfGeneratorService
      */
     public function generate(array $inputs): string
     {
-        $html = PdfReportTemplate::render($inputs);
+        $html = $this->template->render($inputs);
 
         $options = new Options();
         $options->set('isRemoteEnabled', false);

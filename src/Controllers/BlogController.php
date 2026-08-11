@@ -52,7 +52,7 @@ class BlogController
 
         $posts_by_cat = [];
         foreach ($all_posts as $post) {
-            $posts_by_cat[$post['category']][] = $post;
+            $posts_by_cat[$post['seo_category']][] = $post;
         }
 
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
@@ -71,33 +71,34 @@ class BlogController
 
     public function show(string $category, string $slug): Response
     {
-        $slug = str_replace('.php', '', $slug);
-        $path = "/blog/{$category}/{$slug}";
+        $cleanSlug = basename($slug, '.php');
+        $path = "/blog/{$category}/{$cleanSlug}";
 
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
-            throw new \Core\Exceptions\RouteNotFoundException("Blog post not found: {$category}/{$slug}");
+            throw new \Core\Exceptions\RouteNotFoundException("Blog post not found: {$category}/{$cleanSlug}");
         }
 
-        $post_metadata = $this->blogRepository->getPostBySlug($category, $slug);
+        $post_metadata = $this->blogRepository->getPostBySlug($category, $cleanSlug);
         $all_posts = $this->blogRepository->getAllPosts();
 
-        $page_config = $this->metaManager->buildFromMetadata($content['metadata'], $slug);
+        $page_config = $this->metaManager->buildFromMetadata($content['metadata'], $cleanSlug);
 
-        $breadcrumbTitle = !empty($content['metadata']['title'])
-            ? (string) $content['metadata']['title']
-            : ucfirst(str_replace('-', ' ', $slug));
+        if (empty($content['metadata']['title'])) {
+            throw new \RuntimeException("Missing 'title' in frontmatter for blog post: {$category}/{$cleanSlug}");
+        }
+        $breadcrumbTitle = (string) $content['metadata']['title'];
 
         $breadcrumbs = [
             'Home' => '/',
             'Resources' => '/resources',
             ucfirst($category) => "/resource/{$category}",
-            $breadcrumbTitle => "/resource/{$category}/{$slug}"
+            $breadcrumbTitle => "/resource/{$category}/{$cleanSlug}"
         ];
 
         // Derive real dateModified from markdown file mtime via repository
-        $dateModified = $this->blogRepository->getPostModifiedDate($category, $slug);
+        $dateModified = $this->blogRepository->getPostModifiedDate($category, $cleanSlug);
         $datePublished = $dateModified;
 
         if ($post_metadata && !empty($post_metadata['date'])) {
@@ -108,13 +109,13 @@ class BlogController
         }
 
         $page_config['additional_head'] = $this->schemaFactory->generateForPage(
-            $category . '/' . $slug,
+            $category . '/' . $cleanSlug,
             'blog',
             $page_config,
             $datePublished,
             [],
             $breadcrumbs,
-            $this->siteConfig->getUrl('/resource/' . $category . '/' . $slug)
+            $this->siteConfig->getUrl('/resource/' . $category . '/' . $cleanSlug)
         );
 
         return Response::html($this->viewRenderer->render('layouts/generic-post', [
@@ -122,7 +123,7 @@ class BlogController
             'content_metadata' => $content['metadata'],
             'page_config'      => $page_config,
             'post_metadata'    => $post_metadata,
-            'category'         => $category,
+            'seo_category'     => $category,
             'active_page'      => 'blog_post',
             'all_posts'        => $all_posts,
             'date_published'   => $datePublished,

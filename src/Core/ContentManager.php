@@ -32,7 +32,7 @@ class ContentManager
         return array_map(fn($f) => basename($f, '.md'), $files);
     }
 
-    public function getFileModifiedDate(string $path, string $fallback = '2026-03-01'): string
+    public function getFileModifiedDate(string $path, string $fallback = DateConstants::CONTENT_FALLBACK_DATE): string
     {
         $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
         return file_exists($fullPath) ? date('Y-m-d', filemtime($fullPath)) : $fallback;
@@ -55,27 +55,6 @@ class ContentManager
             $frontMatter = $matches[1];
             $body = ltrim($matches[2]);
             $metadata = $this->parseFrontMatter($frontMatter);
-        } else {
-            // Legacy fallback if no front-matter is used
-            $lines = explode("\n", $rawContent);
-            $title = '';
-            $subtitle = '';
-            $contentStartLine = 0;
-
-            if (str_starts_with($lines[0], '# ')) {
-                $title = substr($lines[0], 2);
-                $contentStartLine = 1;
-                if (isset($lines[1]) && trim($lines[1]) !== '' && trim($lines[1]) !== '---') {
-                    $subtitle = trim($lines[1]);
-                    $contentStartLine = 2;
-                }
-                if (isset($lines[$contentStartLine]) && trim($lines[$contentStartLine]) === '---') {
-                    $contentStartLine++;
-                }
-                $metadata['title'] = trim($title);
-                $metadata['subtitle'] = $subtitle;
-                $body = implode("\n", array_slice($lines, $contentStartLine));
-            }
         }
 
         $html = $this->parsedown->text($body);
@@ -97,14 +76,16 @@ class ContentManager
             return null;
         }
 
-        $rawContent = (string) file_get_contents($fullPath);
+        $rawContent = file_get_contents($fullPath);
+        if ($rawContent === false) {
+            return null;
+        }
 
         if (preg_match('/\A\s*---\r?\n(.*?)\r?\n---/s', $rawContent, $matches)) {
             return $this->parseFrontMatter($matches[1]);
         }
 
-        $parsed = $this->getParsedContent($path);
-        return $parsed['metadata'] ?? null;
+        return [];
     }
 
     private function parseFrontMatter(string $frontMatter): array
@@ -131,8 +112,6 @@ class ContentManager
                     $value = true;
                 } elseif (strtolower($value) === 'false') {
                     $value = false;
-                } elseif (is_numeric($value) && !str_starts_with($value, '0') && strlen($value) < 10) {
-                    $value = str_contains($value, '.') ? (float) $value : (int) $value;
                 }
 
                 $metadata[$key] = $value;

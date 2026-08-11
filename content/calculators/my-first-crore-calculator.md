@@ -1,8 +1,8 @@
 ---
-title: "My First Crore Calculator India: Calculate Required SIP for ₹1 Crore Goal"
-subtitle: "Find out exactly how much monthly SIP investment or time you need to reach your target goal of ₹1 Crore with compounding."
-meta_desc: "Free Goal Planning Calculator. Calculate exactly how much monthly SIP you need to reach ₹1 Crore in 5, 10, or 15 years."
-keywords: "my first crore calculator, 1 crore sip calculator, goal planning calculator, target corpus calculator, how to make 1 crore"
+title: "1 Crore SIP Calculator - How Much SIP to Reach 1 Crore? Free 2026"
+subtitle: "Find the exact monthly SIP needed to reach ₹1 Crore in 5, 10, 15, or 20 years. Free goal planning calculator for Indian mutual fund investors."
+meta_desc: "Free 1 Crore SIP calculator. Find out exactly how much monthly SIP you need to reach ₹1 Crore based on your time horizon and expected return. Updated for 2026."
+keywords: "1 crore sip calculator, my first crore calculator, how much sip for 1 crore, 10 lakh sip for 10 years, goal planning calculator india, target corpus sip calculator, how to make 1 crore sip"
 canonical: "https://sipswpcalculator.com/my-first-crore-calculator"
 seo_category: "growth"
 type: "calculator"

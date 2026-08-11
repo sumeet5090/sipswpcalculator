@@ -3,15 +3,9 @@
 {% block head %}
 {{ page_config.additional_head|raw }}
 
-<!-- PWA Manifest -->
-<link rel="manifest" href="/manifest.json">
 
-<!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 
-<!-- Preconnect to font & CDN origins -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Preconnect to CDN -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
 <!-- Critical above-the-fold CSS inlined for instant FCP -->
@@ -216,7 +210,7 @@
 <div class="max-w-4xl mx-auto">
     {% include 'components/related-resources.twig' with {
         all_posts: all_posts,
-        category: category
+        seo_category: seo_category
     } %}
 </div>
 

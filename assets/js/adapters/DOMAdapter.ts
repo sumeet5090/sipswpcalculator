@@ -10,7 +10,10 @@ export class DOMAdapter {
             if (!el && required) {
                 throw new Error(`[DOMAdapter] Critical Error: Required element with ID '${id}' was not found in the DOM. This indicates a structural mismatch between the Strategy and the HTML template.`);
             }
-            this.cache.set(id, el);
+            if (el) {
+                this.cache.set(id, el);
+            }
+            return el;
         }
         return this.cache.get(id) as T | null;
     }
@@ -34,6 +37,23 @@ export class DOMAdapter {
                 el.setAttribute('aria-valuenow', String(value));
             }
         }
+    }
+
+    /**
+     * Get multiple elements matching a CSS selector or class name.
+     */
+    getElements<T extends HTMLElement = HTMLElement>(selector: string): T[] {
+        const query = selector.startsWith('.') || selector.startsWith('#') || selector.includes(' ')
+            ? selector
+            : `.${selector}`;
+        return Array.from(document.querySelectorAll<T>(query));
+    }
+
+    /**
+     * Safely query current window viewport height.
+     */
+    getViewportHeight(): number {
+        return window.innerHeight || document.documentElement.clientHeight || 0;
     }
 
     /**

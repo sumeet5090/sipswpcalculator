@@ -14,9 +14,9 @@ class RateLimiter
 {
     private RateLimitStorageInterface $storage;
 
-    public function __construct(?RateLimitStorageInterface $storage = null)
+    public function __construct(RateLimitStorageInterface $storage)
     {
-        $this->storage = $storage ?? new FileRateLimitStorage();
+        $this->storage = $storage;
     }
 
     /**

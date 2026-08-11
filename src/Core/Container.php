@@ -18,6 +18,12 @@ class Container implements ContainerInterface
     private array $bindings = [];
     private array $instances = [];
 
+    public function __construct()
+    {
+        $this->instances[ContainerInterface::class] = $this;
+        $this->instances[self::class] = $this;
+    }
+
     /**
      * Bind a key (interface/class name) to a transient resolver callback or value.
      * Transient bindings produce a new instance on each get() call.

@@ -14,12 +14,10 @@ use Services\FileUploadService;
 use Services\HtmlSanitizer;
 use Services\PdfGeneratorService;
 use Services\RateLimiter;
-use Services\SessionManager;
 
 class GeneratePdfAction
 {
     private RateLimiter $rateLimiter;
-    private SessionManager $sessionManager;
     private PdfGeneratorService $pdfGenerator;
     private ConfigService $configService;
     private FileUploadService $fileUploadService;
@@ -28,20 +26,18 @@ class GeneratePdfAction
 
     public function __construct(
         RateLimiter $rateLimiter,
-        SessionManager $sessionManager,
         PdfGeneratorService $pdfGenerator,
         ConfigService $configService,
-        ?FileUploadService $fileUploadService = null,
-        ?HtmlSanitizer $sanitizer = null,
-        ?InvestmentCalculator $calculator = null
+        FileUploadService $fileUploadService,
+        HtmlSanitizer $sanitizer,
+        InvestmentCalculator $calculator
     ) {
         $this->rateLimiter = $rateLimiter;
-        $this->sessionManager = $sessionManager;
         $this->pdfGenerator = $pdfGenerator;
         $this->configService = $configService;
-        $this->fileUploadService = $fileUploadService ?? new FileUploadService();
-        $this->sanitizer = $sanitizer ?? new HtmlSanitizer();
-        $this->calculator = $calculator ?? new InvestmentCalculator();
+        $this->fileUploadService = $fileUploadService;
+        $this->sanitizer = $sanitizer;
+        $this->calculator = $calculator;
     }
 
     public function __invoke(Request $request): Response
@@ -51,10 +47,6 @@ class GeneratePdfAction
         }
 
         $post = $request->getParsedBody();
-        $token = (string) ($post['csrf_token'] ?? '');
-        if (!$this->sessionManager->verifyCsrfToken($token)) {
-            return new Response('Forbidden: Invalid security token. Please reload the page and try again.', 403);
-        }
 
         // Rate limiting check
         try {
@@ -112,7 +104,7 @@ class GeneratePdfAction
                 'Cache-Control' => 'private, max-age=0, must-revalidate',
                 'Pragma' => 'public',
             ]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             error_log('PDF Generation Error: ' . $e->getMessage());
             return new Response('An error occurred during PDF generation. Please try again.', 500);
         }

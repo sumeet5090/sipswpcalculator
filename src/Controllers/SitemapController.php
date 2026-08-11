@@ -61,7 +61,7 @@ class SitemapController
         $posts = $this->blogRepository->getAllPosts();
         foreach ($posts as $post) {
             $slug = basename($post['href']);
-            $lastmod = $this->blogRepository->getPostModifiedDate($post['category'], $slug);
+            $lastmod = $this->blogRepository->getPostModifiedDate($post['seo_category'], $slug);
 
             $urls[] = [
                 'loc' => $baseUrl . $post['href'],

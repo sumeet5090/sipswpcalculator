@@ -16,10 +16,10 @@ class Router
     private ContainerInterface $container;
     private ActionDispatcher $actionDispatcher;
 
-    public function __construct(ContainerInterface $container, ?ActionDispatcher $actionDispatcher = null)
+    public function __construct(ContainerInterface $container, ActionDispatcher $actionDispatcher)
     {
         $this->container = $container;
-        $this->actionDispatcher = $actionDispatcher ?? new ActionDispatcher($container);
+        $this->actionDispatcher = $actionDispatcher;
     }
 
     public function pipe(string|\Core\Middleware\MiddlewareInterface $middleware): void
@@ -60,13 +60,6 @@ class Router
                 return $this->callAction($this->routes[$method][$uri], [], $req);
             }
 
-            // Explicit SEO 301 redirect for non-root URIs with trailing slashes
-            if ($uri !== '/' && str_ends_with($uri, '/')) {
-                $canonicalUri = rtrim($uri, '/');
-                if (isset($this->routes[$method][$canonicalUri]) || array_key_exists($canonicalUri, $this->redirects)) {
-                    return Response::redirect($canonicalUri, 301);
-                }
-            }
 
             if (isset($this->routes[$method]) && is_array($this->routes[$method])) {
                 foreach ($this->routes[$method] as $route => $action) {

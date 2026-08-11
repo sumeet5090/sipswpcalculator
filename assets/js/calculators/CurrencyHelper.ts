@@ -15,6 +15,13 @@ export class CurrencyFormatter {
     }
 
     /**
+     * Get currency code string.
+     */
+    getCurrency(): string {
+        return this.currency;
+    }
+
+    /**
      * Get currency symbol string.
      */
     getSymbol(): string {

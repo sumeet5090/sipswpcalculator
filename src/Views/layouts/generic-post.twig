@@ -3,7 +3,7 @@
 {% block content %}
 {% include 'components/theme-glow-blobs.twig' %}
 
-{% set cat_slug = category|default('growth') %}
+{% set cat_slug = seo_category|default('growth') %}
 {% set cat_accent = 'emerald' %}
 {% set cat_name = 'Wealth Growth' %}
 {% set cat_icon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>' %}
@@ -35,7 +35,7 @@
                     <ul class="space-y-1 text-sm font-medium">
                         {% if all_posts is defined and all_posts is not empty %}
                             {% for post in all_posts %}
-                                {% if post.category == cat_slug %}
+                                {% if post.seo_category == cat_slug %}
                                     <li>
                                         <a href="{{ post.href }}" class="block px-3 py-1.5 {% if request.server('REQUEST_URI') == post.href %}text-emerald-700 bg-emerald-50 border-l-2 border-emerald-500{% else %}text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-l-2 border-transparent{% endif %} transition-colors">
                                             {{ post.title }}
@@ -188,7 +188,7 @@
                 {# Related Resources & Calculator CTA — internal linking for SEO #}
                 {% include 'components/related-resources.twig' with {
                     all_posts: all_posts,
-                    category: cat_slug
+                    seo_category: cat_slug
                 } %}
             </article>
         </div>

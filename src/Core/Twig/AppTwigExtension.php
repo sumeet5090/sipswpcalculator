@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Twig;
 
+use Core\CurrencyFormatterInterface;
 use Core\CurrencyHelper;
 use Core\ViteHelper;
 use Twig\Extension\AbstractExtension;
@@ -17,16 +18,18 @@ use Twig\TwigFunction;
 class AppTwigExtension extends AbstractExtension
 {
     private ViteHelper $viteHelper;
+    private CurrencyFormatterInterface $currencyFormatter;
 
-    public function __construct(ViteHelper $viteHelper)
+    public function __construct(ViteHelper $viteHelper, CurrencyFormatterInterface $currencyFormatter)
     {
         $this->viteHelper = $viteHelper;
+        $this->currencyFormatter = $currencyFormatter;
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('formatInr', fn($amount) => CurrencyHelper::formatInr((float) $amount)),
+            new TwigFilter('formatInr', fn($amount) => $this->currencyFormatter->format((float) $amount)),
             new TwigFilter('array_values', fn($array) => is_array($array) ? array_values($array) : $array),
         ];
     }

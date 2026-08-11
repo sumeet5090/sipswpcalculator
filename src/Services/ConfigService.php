@@ -45,7 +45,15 @@ class ConfigService
             return [];
         }
         $content = file_get_contents($fullPath);
+        if ($content === false) {
+            error_log("Failed to read JSON config at: {$fullPath}");
+            return [];
+        }
         $decoded = json_decode($content, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log("Failed to parse JSON config at {$fullPath}: " . json_last_error_msg());
+            return [];
+        }
         return is_array($decoded) ? $decoded : [];
     }
 }

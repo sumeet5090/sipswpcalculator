@@ -63,7 +63,7 @@ class GuideRenderer
         $meta = $content['metadata'];
         $seo_category = $meta['seo_category'] ?? 'growth';
         $type = $meta['type'] ?? 'guide';
-        $publishedDate = $meta['date'] ?? '2026-08-01';
+        $publishedDate = $meta['date'] ?? \Core\DateConstants::CONTENT_FALLBACK_DATE;
 
         $page_config = $this->metaManager->buildFromMetadata($meta, $slug);
 
@@ -78,7 +78,7 @@ class GuideRenderer
 
         $page_config['additional_head'] = $this->schemaFactory->generateForPage(
             $slug,
-            $seo_category,
+            $type,
             $page_config,
             $publishedDate,
             $faqs
@@ -111,17 +111,17 @@ class GuideRenderer
         // Fetch all posts for related resources / internal linking via injected BlogRepository
         $all_posts = $this->blogRepository->getAllPosts();
 
-        return Response::html($this->viewRenderer->render($layout, array_merge([
+        return Response::html($this->viewRenderer->render($layout, [
             'content_html'        => $content['html'],
             'content_metadata'    => $meta,
             'page_config'         => $page_config,
             'active_page'         => $slug,
-            'category'            => $seo_category,
+            'seo_category'        => $seo_category,
             'calculator_type'     => $calculator_type,
             'calc_config'         => $calcConfig,
             'show_lumpsum'        => $show_lumpsum,
             'faqs'                => $faqs,
             'all_posts'           => $all_posts,
-        ], $calcConfig)));
+        ]));
     }
 }

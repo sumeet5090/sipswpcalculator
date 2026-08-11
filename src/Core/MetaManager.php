@@ -11,33 +11,50 @@ namespace Core;
 class MetaManager
 {
     private SiteConfig $siteConfig;
-    private array $pageMap = [];
+    private ?array $pageMap = null;
+    private string $metaPagesPath;
 
-    public function __construct(SiteConfig $siteConfig)
+    public function __construct(SiteConfig $siteConfig, ?string $metaPagesPath = null)
     {
         $this->siteConfig = $siteConfig;
-        $this->initPageMap();
+        $this->metaPagesPath = $metaPagesPath ?? (__DIR__ . '/../../content/meta_pages.json');
     }
 
-    private function initPageMap(): void
+    private function loadPageMap(): void
     {
-        $this->pageMap = [
-            'home' => [
-                'title'     => 'SIP and SWP Calculator Together | Combined Mutual Fund Planner India 2026',
-                'meta_desc' => 'Free SIP and SWP calculator combined in one tool. Plan your mutual fund journey — from step-up SIP wealth accumulation to SWP retirement withdrawals with charts and PDF reports.',
-                'keywords'  => 'sip and swp calculator together, sip swp combo calculator, sip swp combined calculator, sip to swp calculator, step up sip calculator, swp calculator india, mutual fund sip swp calculator, swp planner, investment planner, retirement planning, sip calculator india, mutual fund return calculator',
-                'canonical' => $this->siteConfig->getUrl('/'),
-                'og_title'  => 'SIP and SWP Calculator Together | Combined Mutual Fund Planner India 2026',
-                'og_desc'   => 'Free SIP and SWP calculator combined in one tool. Plan your mutual fund journey — from step-up SIP wealth accumulation to SWP retirement withdrawals with charts and PDF reports.',
-            ],
-        ];
+        if ($this->pageMap !== null) {
+            return;
+        }
+
+        if (!file_exists($this->metaPagesPath)) {
+            throw new \Core\Exceptions\ConfigurationException("Metadata pages configuration missing at: {$this->metaPagesPath}");
+        }
+
+        $rawJson = file_get_contents($this->metaPagesPath);
+        if ($rawJson === false) {
+            throw new \Core\Exceptions\ConfigurationException("Failed to read metadata pages configuration at: {$this->metaPagesPath}");
+        }
+
+        $decoded = json_decode($rawJson, true);
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
+            throw new \Core\Exceptions\ConfigurationException("Failed to parse metadata pages configuration: " . json_last_error_msg());
+        }
+
+        $this->pageMap = $decoded;
+
+        if (isset($this->pageMap['home']) && !isset($this->pageMap['home']['canonical'])) {
+            $this->pageMap['home']['canonical'] = $this->siteConfig->getUrl('/');
+        }
     }
+
 
     /**
      * Retrieve pre-configured page metadata by key.
      */
     public function getMeta(string $pageKey): array
     {
+        $this->loadPageMap();
+
         if (isset($this->pageMap[$pageKey])) {
             return $this->pageMap[$pageKey];
         }
@@ -56,12 +73,12 @@ class MetaManager
         $canonical = $metadata['canonical'] ?? $this->siteConfig->getUrl('/' . ltrim($fallbackSlug, '/'));
 
         return [
-            'title'     => $title,
+            'title' => $title,
             'meta_desc' => $desc,
-            'keywords'  => $metadata['keywords'] ?? '',
+            'keywords' => $metadata['keywords'] ?? '',
             'canonical' => $canonical,
-            'og_title'  => $title,
-            'og_desc'   => $desc,
+            'og_title' => $title,
+            'og_desc' => $desc,
         ];
     }
 
@@ -71,12 +88,12 @@ class MetaManager
     public function setDynamicMeta(string $title, string $desc, ?string $canonical = null): array
     {
         return [
-            'title'     => $title,
+            'title' => $title,
             'meta_desc' => $desc,
-            'keywords'  => '',
+            'keywords' => '',
             'canonical' => $canonical ?? $this->siteConfig->getUrl('/'),
-            'og_title'  => $title,
-            'og_desc'   => $desc,
+            'og_title' => $title,
+            'og_desc' => $desc,
         ];
     }
 }

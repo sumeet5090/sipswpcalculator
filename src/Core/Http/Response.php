@@ -21,8 +21,16 @@ class Response
     {
         http_response_code($this->statusCode);
 
+        $hasContentType = false;
         foreach ($this->headers as $name => $value) {
+            if (strcasecmp($name, 'Content-Type') === 0) {
+                $hasContentType = true;
+            }
             header(sprintf('%s: %s', $name, $value));
+        }
+
+        if (!$hasContentType && $this->statusCode !== 301 && $this->statusCode !== 302 && $this->statusCode !== 204) {
+            header('Content-Type: text/plain; charset=utf-8');
         }
 
         echo $this->content;

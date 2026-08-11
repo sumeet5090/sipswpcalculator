@@ -8,7 +8,7 @@ namespace Core;
  * CurrencyHelper
  * Formats numbers in Indian Standard Notation (Lakhs/Crores) prefixed with the Rupee symbol.
  */
-class CurrencyHelper
+class CurrencyHelper implements CurrencyFormatterInterface
 {
     /**
      * Format a numeric amount using Indian numbering system notation.
@@ -16,7 +16,18 @@ class CurrencyHelper
      * @param float|int $num
      * @return string
      */
-    public static function formatInr(float|int $num): string
+    public function format(float|int $num): string
+    {
+        return self::formatInr($num);
+    }
+
+    /**
+     * Format a numeric amount using Indian numbering system notation.
+     *
+     * @param float|int $num
+     * @return string
+     */
+    private static function formatInr(float|int $num): string
     {
         $num = round($num);
         $isNegative = $num < 0;

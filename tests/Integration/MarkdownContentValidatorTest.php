@@ -125,7 +125,7 @@ class MarkdownContentValidatorTest extends TestCase
             $postMetadata = null;
 
             foreach ($allPosts as $post) {
-                if ($post['category'] === $category && basename($post['href']) === $slug) {
+                if ($post['seo_category'] === $category && basename($post['href']) === $slug) {
                     $found = true;
                     $postMetadata = $post;
                     break;

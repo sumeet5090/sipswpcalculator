@@ -8,10 +8,18 @@ class FaqRepository
 {
     private ?array $faqs = null;
     private string $jsonPath;
+    private array $defaultCategoryLabels;
 
-    public function __construct(string $jsonPath)
+    public function __construct(string $jsonPath, array $defaultCategoryLabels = [])
     {
         $this->jsonPath = $jsonPath;
+        $this->defaultCategoryLabels = array_merge([
+            'basics' => 'Basics',
+            'strategies' => 'Strategies',
+            'tax' => 'Tax & Risk',
+            'selection' => 'Selection',
+            'retirement' => 'Retirement Planning',
+        ], $defaultCategoryLabels);
     }
 
     private function load(): void
@@ -26,6 +34,12 @@ class FaqRepository
         }
 
         $jsonContent = file_get_contents($this->jsonPath);
+        if ($jsonContent === false) {
+            error_log("Failed to read FAQs JSON at: " . $this->jsonPath);
+            $this->faqs = [];
+            return;
+        }
+
         $decoded = json_decode($jsonContent, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -42,13 +56,8 @@ class FaqRepository
     public function getFaqCategories(?array $customLabels = null): array
     {
         $this->load();
-        $labels = array_merge([
-            'basics'     => 'Basics',
-            'strategies' => 'Strategies',
-            'tax'        => 'Tax & Risk',
-            'selection'  => 'Selection',
-            'retirement' => 'Retirement Planning',
-        ], $customLabels ?? []);
+
+        $labels = array_merge($this->defaultCategoryLabels, $customLabels ?? []);
 
         $categories = [];
         $seen = [];
@@ -56,10 +65,13 @@ class FaqRepository
         foreach ($this->faqs as $faq) {
             $catId = $faq['category'] ?? '';
             if ($catId !== '' && !isset($seen[$catId])) {
+                if (!isset($labels[$catId])) {
+                    throw new \DomainException("Unmapped FAQ category label for category ID: '{$catId}'");
+                }
                 $seen[$catId] = true;
                 $categories[] = [
-                    'id'    => $catId,
-                    'label' => $labels[$catId] ?? ucfirst(str_replace('_', ' ', $catId)),
+                    'id' => $catId,
+                    'label' => $labels[$catId],
                 ];
             }
         }
@@ -73,6 +85,7 @@ class FaqRepository
     public function getAll(): array
     {
         $this->load();
+
         return $this->faqs;
     }
 
@@ -82,6 +95,7 @@ class FaqRepository
     public function getByTag(string $tag): array
     {
         $this->load();
+
         return array_values(array_filter($this->faqs, function (array $faq) use ($tag) {
             return in_array($tag, $faq['tags'] ?? [], true);
         }));
@@ -93,6 +107,7 @@ class FaqRepository
     public function getByCategory(string $category): array
     {
         $this->load();
+
         return array_values(array_filter($this->faqs, function (array $faq) use ($category) {
             return ($faq['category'] ?? '') === $category;
         }));

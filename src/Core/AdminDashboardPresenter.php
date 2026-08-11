@@ -11,6 +11,16 @@ namespace Core;
  */
 class AdminDashboardPresenter
 {
+    private array $currencyColorMap;
+
+    public function __construct(array $currencyColorMap = [])
+    {
+        $this->currencyColorMap = array_merge([
+            'INR' => 'rgba(5, 150, 105, 0.85)', // Emerald 600
+            'UNKNOWN' => 'rgba(148, 163, 184, 0.7)', // Slate 400
+        ], $currencyColorMap);
+    }
+
     /**
      * Format the raw statistics array for the Twig view.
      *
@@ -24,11 +34,7 @@ class AdminDashboardPresenter
         $durationDist = $stats['durationDist'] ?? [];
         $ambitionBuckets = $stats['ambitionBuckets'] ?? [];
 
-        // Currency Colors mapping (matching brand emerald/teal)
-        $currencyColorMap = [
-            'INR' => 'rgba(5, 150, 105, 0.85)', // Emerald 600
-            'UNKNOWN' => 'rgba(148, 163, 184, 0.7)', // Slate 400
-        ];
+        $currencyColorMap = $this->currencyColorMap;
         $currencyColors = [];
         foreach (array_column($currencyDist, 'currency') as $c) {
             $currencyColors[] = $currencyColorMap[$c] ?? 'rgba(13, 148, 136, 0.85)'; // Teal 600

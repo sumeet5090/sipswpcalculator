@@ -19,6 +19,7 @@ database/database.sqlite-*
 *.bak
 *.swp
 GEMINI.md
+var/
 
 # --- Build Artifacts ---
 # Ignored because GitHub Actions builds the frontend assets now

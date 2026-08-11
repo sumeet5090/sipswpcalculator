@@ -9,15 +9,29 @@ namespace Core;
  * Renders an executive, world-class HTML report template for Dompdf.
  * Refactored into modular section renderers adhering to SRP and OCP.
  */
-class PdfReportTemplate
+class PdfReportTemplate implements PdfTemplateInterface
 {
+    private CurrencyFormatterInterface $currencyFormatter;
+    private ?array $milestoneConfig;
+    private PdfReportStylesheet $stylesheet;
+
+    public function __construct(
+        CurrencyFormatterInterface $currencyFormatter,
+        ?array $milestoneConfig = null,
+        ?PdfReportStylesheet $stylesheet = null
+    ) {
+        $this->currencyFormatter = $currencyFormatter;
+        $this->milestoneConfig = $milestoneConfig;
+        $this->stylesheet = $stylesheet ?? new PdfReportStylesheet();
+    }
+
     /**
      * Render the report HTML template using input parameters.
      *
      * @param array<string, mixed> $inputs
      * @return string
      */
-    public static function render(array $inputs): string
+    public function render(array $inputs): string
     {
         $client_name = htmlspecialchars((string) ($inputs['client_name'] ?? 'Valued Client'));
         $advisor_name = htmlspecialchars((string) ($inputs['advisor_name'] ?? 'Your Financial Advisor'));
@@ -33,13 +47,13 @@ class PdfReportTemplate
         $has_swp = ((int) ($inputs['swp_years'] ?? 0) > 0 || (float) ($inputs['swp_withdrawal'] ?? 0) > 0);
         $years_count = max(1, (int) ($inputs['years'] ?? 20));
 
-        $styles = self::getStyles($years_count);
+        $styles = $this->stylesheet->getStyles($years_count);
         $headerHtml = self::renderHeader($client_name, $advisor_name, $inputs['logo_base64'] ?? null);
         $metaRibbonHtml = self::renderMetaRibbon($client_name, $advisor_name, $proposal_id);
         $kpiCardsHtml = self::renderKpiCards($inputs, $multiplier, $has_swp);
         $configCardHtml = self::renderConfigCard($inputs, $has_swp);
         $chartHtml = self::renderChartSection($chart_base64);
-        $milestonesHtml = self::renderMilestoneGrid($inputs);
+        $milestonesHtml = $this->renderMilestoneGrid($inputs);
         $calloutsHtml = self::renderCalloutsAndFooter((string) ($inputs['currency_symbol'] ?? '₹'), $custom_disclaimer, $proposal_id);
 
         return "
@@ -218,9 +232,9 @@ class PdfReportTemplate
         </div>";
     }
 
-    private static function renderMilestoneGrid(array $inputs): string
+    private function renderMilestoneGrid(array $inputs): string
     {
-        $milestones = self::generateMilestones($inputs);
+        $milestones = $this->generateMilestones($inputs);
         if (empty($milestones)) {
             return '';
         }
@@ -228,8 +242,8 @@ class PdfReportTemplate
         $cardsHtml = '';
         foreach ($milestones as $m) {
             $cardsHtml .= "
-                <td class='milestone-card' style='width: {$colWidth};'>
-                    <span class='milestone-badge'>{$m['badge']}</span>
+                <td style='width: {$colWidth}; padding: 0 4px;'>
+                    <div class='milestone-badge'>{$m['badge']}</div>
                     <div class='milestone-val'>{$m['target_formatted']}</div>
                     <div class='milestone-sub'>Achieved in <strong>Year {$m['year']}</strong></div>
                 </td>";
@@ -262,18 +276,27 @@ class PdfReportTemplate
         </div>";
     }
 
-    private static function generateMilestones(array $inputs): array
+    private function generateMilestones(array $inputs): array
     {
-        $milestoneTargets = [
-            10000000 => 'First ₹1 Crore',
-            50000000 => 'First ₹5 Crores',
-            100000000 => 'First ₹10 Crores',
-            500000000 => 'First ₹50 Crores',
-            1000000000 => 'First ₹100 Crores',
-            5000000000 => 'First ₹500 Crores',
-            10000000000 => 'First ₹1,000 Crores',
-            100000000000 => 'First ₹10,000 Crores',
-        ];
+        $milestoneTargets = [];
+        if (is_array($this->milestoneConfig)) {
+            foreach ($this->milestoneConfig as $item) {
+                if (isset($item['value'], $item['label'])) {
+                    $milestoneTargets[(int) $item['value']] = 'First ' . (string) $item['label'];
+                }
+            }
+        }
+
+        if (empty($milestoneTargets)) {
+            $milestoneTargets = [
+                10000000 => 'First ₹1 Crore',
+                50000000 => 'First ₹5 Crores',
+                100000000 => 'First ₹10 Crores',
+                500000000 => 'First ₹50 Crores',
+                1000000000 => 'First ₹100 Crores',
+                5000000000 => 'First ₹500 Crores',
+            ];
+        }
 
         $found = [];
 
@@ -287,7 +310,7 @@ class PdfReportTemplate
                     if (!isset($found[$target]) && $corpus >= $target) {
                         $found[$target] = [
                             'badge' => $label,
-                            'target_formatted' => CurrencyHelper::formatInr($target),
+                            'target_formatted' => $this->currencyFormatter->format($target),
                             'year' => $y,
                         ];
                     }
@@ -296,71 +319,5 @@ class PdfReportTemplate
         }
 
         return array_slice(array_values($found), 0, 4);
-    }
-
-    private static function getStyles(int $yearsCount): string
-    {
-        $tablePadding = ($yearsCount > 25) ? '3px 6px' : '5px 8px';
-        $thPadding = ($yearsCount > 25) ? '5px 6px' : '7px 8px';
-        $tableFontSize = ($yearsCount > 25) ? '7.5px' : '8.5px';
-        $boxMargin = ($yearsCount > 25) ? '10px' : '16px';
-
-        return "
-            @page { margin: 24px 32px 28px 32px; }
-            body { font-family: 'DejaVu Sans', sans-serif; color: #1e293b; font-size: 9.5px; line-height: 1.45; background-color: #ffffff; margin: 0; padding: 0; }
-            .top-accent { height: 4px; background: #059669; margin-bottom: 16px; border-radius: 2px; }
-            .header-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
-            .header-table td { vertical-align: middle; }
-            .doc-title { font-size: 20px; font-weight: bold; color: #0f172a; letter-spacing: -0.3px; margin: 0 0 2px 0; }
-            .doc-subtitle { font-size: 9px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
-            .advisor-badge { background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 14px; border-radius: 6px; text-align: right; display: inline-block; }
-            .advisor-label { font-size: 8px; color: #059669; font-weight: bold; text-transform: uppercase; letter-spacing: 0.8px; }
-            .advisor-name { font-size: 11px; font-weight: bold; color: #0f172a; margin-top: 1px; }
-            .meta-ribbon { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px 14px; margin-bottom: 16px; }
-            .meta-table { width: 100%; border-collapse: collapse; font-size: 9px; }
-            .meta-table td { color: #64748b; }
-            .meta-table td strong { color: #0f172a; font-weight: bold; }
-            .kpi-container { width: 100%; margin-bottom: 16px; }
-            .kpi-table { width: 100%; border-collapse: separate; border-spacing: 6px 0; }
-            .kpi-card { background: #ffffff; border: 1px solid #e2e8f0; border-top: 3px solid #64748b; padding: 10px 6px; border-radius: 6px; text-align: center; }
-            .kpi-card.invested { border-top-color: #0f172a; background: #f8fafc; }
-            .kpi-card.returns { border-top-color: #059669; background: #f0fdf4; }
-            .kpi-card.swp { border-top-color: #e11d48; background: #fff1f2; }
-            .kpi-card.corpus { border-top-color: #0284c7; background: #f0f9ff; }
-            .kpi-card.multiplier { border-top-color: #6366f1; background: #f5f3ff; }
-            .kpi-label { font-size: 8px; text-transform: uppercase; letter-spacing: 0.6px; color: #64748b; margin-bottom: 3px; display: block; font-weight: bold; }
-            .kpi-val { font-size: 13.5px; font-weight: bold; color: #0f172a; margin: 0; white-space: nowrap; }
-            .section-heading { font-size: 11px; font-weight: bold; color: #0f172a; text-transform: uppercase; letter-spacing: 0.6px; padding-bottom: 4px; border-bottom: 2px solid #059669; margin-top: 16px; margin-bottom: 10px; page-break-after: avoid; }
-            .config-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; margin-bottom: 14px; page-break-inside: avoid; }
-            .config-table { width: 100%; border-collapse: collapse; font-size: 9px; }
-            .config-table th { text-align: left; color: #64748b; font-weight: bold; width: 25%; padding: 4px 0; }
-            .config-table td { text-align: left; color: #0f172a; font-weight: bold; width: 25%; padding: 4px 0; white-space: nowrap; }
-            .phase-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 8.5px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-            .phase-badge.sip { background: #dcfce7; color: #166534; }
-            .phase-badge.swp { background: #ffe4e6; color: #9f1239; }
-            .chart-box { text-align: center; margin: 6px 0 8px 0; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px; background: #ffffff; page-break-inside: avoid; width: 100%; box-sizing: border-box; }
-            .chart-box img { width: 100%; height: auto; max-height: 475px; display: block; margin: 0 auto; object-fit: contain; }
-            .milestones-container { margin: 8px 0 0 0; page-break-inside: avoid; }
-            .milestones-table { width: 100%; border-collapse: separate; border-spacing: 6px 0; table-layout: fixed; }
-            .milestone-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #059669; padding: 6px 6px; border-radius: 6px; text-align: center; vertical-align: top; }
-            .milestone-badge { font-size: 7.5px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; color: #15803d; margin-bottom: 2px; display: block; white-space: nowrap; }
-            .milestone-val { font-size: 11px; font-weight: bold; color: #0f172a; margin: 0; white-space: nowrap; }
-            .milestone-sub { font-size: 7.5px; color: #475569; margin-top: 2px; white-space: nowrap; }
-            .results-table-container { margin-top: 10px; }
-            .results-table-container table { width: 100%; border-collapse: collapse; font-size: {$tableFontSize}; }
-            .results-table-container table thead { display: table-header-group; }
-            .results-table-container tr { page-break-inside: avoid; }
-            .results-table-container th { background-color: #0f172a; color: #ffffff; padding: {$thPadding}; text-align: right; font-weight: bold; font-size: 7.5px; text-transform: uppercase; letter-spacing: 0.5px; }
-            .results-table-container th:first-child { text-align: left; border-top-left-radius: 4px; }
-            .results-table-container th:last-child { border-top-right-radius: 4px; }
-            .results-table-container td { padding: {$tablePadding}; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155; white-space: nowrap; }
-            .results-table-container tr:nth-child(even) td { background-color: #f8fafc; }
-            .results-table-container td:first-child { text-align: left; font-weight: bold; color: #0f172a; }
-            .purchasing-power { margin-top: {$boxMargin}; padding: 10px 14px; background-color: #fffbeb; border-left: 4px solid #f59e0b; font-size: 8.5px; color: #92400e; border-radius: 0 6px 6px 0; page-break-inside: avoid; }
-            .purchasing-power strong { display: block; margin-bottom: 2px; font-size: 9px; text-transform: uppercase; color: #b45309; font-weight: bold; }
-            .disclaimer { margin-top: {$boxMargin}; padding: 10px 14px; background-color: #fef2f2; border-left: 4px solid #e11d48; font-size: 8px; color: #991b1b; border-radius: 0 6px 6px 0; page-break-inside: avoid; }
-            .disclaimer strong { display: block; margin-bottom: 2px; text-transform: uppercase; font-size: 8.5px; font-weight: bold; }
-            .doc-footer { margin-top: 18px; padding-top: 10px; border-top: 1px solid #e2e8f0; text-align: center; color: #94a3b8; font-size: 7.5px; }
-        ";
     }
 }

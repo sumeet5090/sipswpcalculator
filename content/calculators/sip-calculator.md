@@ -1,8 +1,8 @@
 ---
-title: "SIP Calculator India 2026: Step-Up Mutual Fund Return Calculator & Guide"
-subtitle: "Free SIP calculator with step-up (top-up) compounding for Indian mutual funds. Calculate SIP returns, view interactive charts, and export PDF reports."
-meta_desc: "Free SIP calculator with step-up (top-up) compounding for Indian mutual funds. Calculate returns, view interactive charts, and export PDF reports. Includes 2026 tax rules and examples."
-keywords: "sip calculator, sip return calculator, mutual fund sip, sip calculation formula, sip tax rules"
+title: "SIP Calculator 2026 - Free Step-Up Mutual Fund Return Calculator India"
+subtitle: "Free SIP calculator with step-up (top-up) compounding for Indian mutual funds. Calculate SIP returns, view interactive charts, and export PDF reports — no signup needed."
+meta_desc: "Free SIP calculator with step-up compounding. Calculate mutual fund returns for 1-50 years, view interactive charts & export PDF reports. Updated with 2026 Indian tax rules."
+keywords: "sip calculator, free sip calculator, sip return calculator, step up sip calculator, mutual fund sip calculator india, sip calculation formula, sip tax rules 2026"
 canonical: "https://sipswpcalculator.com/sip-calculator"
 seo_category: "growth"
 type: "calculator"
@@ -129,11 +129,14 @@ Yes, most Asset Management Companies (AMCs) allow you to "Pause" a SIP for 1-6 m
 <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
 <h3 class="text-xl font-bold text-gray-800 mb-4">Related Guides</h3>
 <ul class="space-y-2 text-sm">
-<li><a href="/resource/retirement/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP Retirement Planning</a> — Generate steady retirement income from your mutual fund corpus</li>
-<li><a href="/resource/comparison/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual Fund Tax Rules 2026</a> — LTCG, STCG & tax-efficient withdrawal strategies</li>
-<li><a href="/resource/comparison/sip-vs-fd-vs-bonds" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs Bonds</a> — Which investment gives the best returns for your goal?</li>
 <li><a href="/swp-calculator" class="text-indigo-600 hover:underline font-medium">SWP Calculator Guide</a> — Master your retirement withdrawals</li>
-<li><a href="/" class="text-indigo-600 hover:underline font-medium">SIP & SWP Combined Planner</a> — Model your full accumulation-to-income journey</li>
+<li><a href="/sip-step-up-calculator" class="text-indigo-600 hover:underline font-medium">Step-Up SIP Calculator</a> — See how annual top-ups accelerate your goal</li>
+<li><a href="/lumpsum-calculator" class="text-indigo-600 hover:underline font-medium">Lumpsum Calculator</a> — Compare SIP vs one-time investment growth</li>
+<li><a href="/retirement-calculator" class="text-indigo-600 hover:underline font-medium">Retirement Calculator</a> — Plan your accumulation and pension income together</li>
+<li><a href="/my-first-crore-calculator" class="text-indigo-600 hover:underline font-medium">My First Crore Calculator</a> — Find the exact SIP to reach Rs 1 Crore</li>
+<li><a href="/resource/comparison/mutual-fund-tax-2026" class="text-indigo-600 hover:underline font-medium">Mutual Fund Tax Rules 2026</a> — LTCG, STCG &amp; tax-efficient withdrawal strategies</li>
+<li><a href="/resource/comparison/sip-vs-fd-vs-ppf" class="text-indigo-600 hover:underline font-medium">SIP vs FD vs PPF</a> — Which investment gives the best returns for your goal?</li>
+<li><a href="/" class="text-indigo-600 hover:underline font-medium">SIP &amp; SWP Combined Planner</a> — Model your full accumulation-to-income journey</li>
 </ul>
 </div>
 

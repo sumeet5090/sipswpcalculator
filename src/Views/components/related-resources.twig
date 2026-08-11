@@ -2,11 +2,12 @@
    Displays a calculator CTA and cross-category related posts to strengthen internal linking.
    Expected variables:
      - all_posts: array of all blog posts (from BlogRepository::getAllPosts)
-     - category: current post's category slug (growth, retirement, comparison)
+     - seo_category: current post's category slug (growth, retirement, comparison)
      - current_href: current post's href (optional, to exclude self)
 #}
 
 {% set current_href = current_href|default(request.server('REQUEST_URI', '/')) %}
+{% set current_cat = seo_category|default(category|default('')) %}
 
 {# Calculator CTA — links every blog post back to the core product #}
 <section class="mt-12 mb-8" aria-label="Try the Calculator">
@@ -34,8 +35,9 @@
 {% if all_posts is defined and all_posts is not empty %}
     {% set related = [] %}
     {% for post in all_posts %}
+        {% set post_cat = post.seo_category|default(post.category|default('')) %}
         {# Pick posts from OTHER categories, excluding the current post #}
-        {% if post.category != category and post.href != current_href and related|length < 3 %}
+        {% if post_cat != current_cat and post.href != current_href and related|length < 3 %}
             {% set related = related|merge([post]) %}
         {% endif %}
     {% endfor %}
@@ -62,11 +64,12 @@
                 {% set border_hover = 'hover:border-emerald-200' %}
                 {% set tag_badge = 'bg-emerald-50 text-emerald-700 border-emerald-100' %}
                 {% set title_hover = 'group-hover:text-emerald-700' %}
-                {% if post.category == 'retirement' %}
+                {% set post_cat = post.seo_category|default(post.category|default('')) %}
+                {% if post_cat == 'retirement' %}
                     {% set border_hover = 'hover:border-indigo-200' %}
                     {% set tag_badge = 'bg-indigo-50 text-indigo-700 border-indigo-100' %}
                     {% set title_hover = 'group-hover:text-indigo-700' %}
-                {% elseif post.category == 'comparison' %}
+                {% elseif post_cat == 'comparison' %}
                     {% set border_hover = 'hover:border-amber-200' %}
                     {% set tag_badge = 'bg-amber-50 text-amber-700 border-amber-100' %}
                     {% set title_hover = 'group-hover:text-amber-700' %}

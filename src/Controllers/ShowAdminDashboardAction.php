@@ -6,6 +6,7 @@ namespace Controllers;
 
 use Core\AdminAuthService;
 use Core\AdminDashboardPresenter;
+use Core\DashboardConfig;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\InsightRepository;
@@ -17,16 +18,6 @@ use Core\ViewRenderer;
  */
 class ShowAdminDashboardAction
 {
-    public const TIME_RANGES = [
-        '24h' => ['label' => '24 Hours',   'interval' => '-1 day',   'unit' => 'hour', 'cte_start' => '-23 hours'],
-        '48h' => ['label' => '48 Hours',   'interval' => '-2 days',  'unit' => 'hour', 'cte_start' => '-47 hours'],
-        '72h' => ['label' => '72 Hours',   'interval' => '-3 days',  'unit' => 'hour', 'cte_start' => '-71 hours'],
-        '1w'  => ['label' => '1 Week',     'interval' => '-7 days',  'unit' => 'day',  'cte_start' => '-6 days'],
-        '1m'  => ['label' => '1 Month',    'interval' => '-30 days', 'unit' => 'day',  'cte_start' => '-29 days'],
-        '6m'  => ['label' => '6 Months',   'interval' => '-180 days','unit' => 'day',  'cte_start' => '-179 days'],
-        '1y'  => ['label' => '1 Year',     'interval' => '-365 days','unit' => 'day',  'cte_start' => '-364 days'],
-    ];
-
     private InsightRepository $insightRepository;
     private AdminAuthService $authService;
     private AdminDashboardPresenter $presenter;
@@ -52,7 +43,7 @@ class ShowAdminDashboardAction
             ]));
         }
 
-        $time_ranges = self::TIME_RANGES;
+        $time_ranges = DashboardConfig::TIME_RANGES;
 
         $current_range_key = (string) $request->get('range', '24h');
         if (!isset($time_ranges[$current_range_key])) {

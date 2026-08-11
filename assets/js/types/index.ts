@@ -38,3 +38,5 @@ export interface CalculatorConfig {
         step: number;
     };
 }
+
+export type GoalMode = 'grow' | 'target' | 'target_corpus';

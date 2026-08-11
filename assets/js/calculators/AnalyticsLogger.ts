@@ -1,11 +1,15 @@
 import { InvestmentInputs, YearResult } from '../types';
 
 export interface ExtraSignals {
+    pdf_downloaded?: boolean;
     pdf_has_custom_name?: boolean;
     inflation_enabled?: boolean;
     interaction_count?: number;
     preset_clicked?: string;
     exit_action?: string;
+    table_viewed?: number;
+    device_type?: string;
+    currency?: string;
 }
 
 /**
@@ -43,19 +47,16 @@ export class AnalyticsService {
                 ? parseFloat((finalCorpus / totalInvested).toFixed(2))
                 : null;
 
-            const breakdownEl = document.getElementById('yearly-breakdown-section') || document.getElementById('breakdown-body');
-            const tableViewed = breakdownEl
-                ? (breakdownEl.getBoundingClientRect().top < (window.innerHeight || document.documentElement.clientHeight) ? 1 : 0)
-                : 0;
-
-            const deviceType = (window.innerWidth < 768) ? 'mobile' : 'desktop';
+            const tableViewed = extraSignals.table_viewed ?? 0;
+            const deviceType = extraSignals.device_type ?? 'desktop';
+            const currencyCode = extraSignals.currency || 'INR';
 
             const payload = {
                 calc_type: inputs.enable_swp ? 'SWP' : 'SIP',
                 amount: inputs.enable_swp ? inputs.swp_withdrawal : inputs.sip,
                 duration: inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years,
                 step_up_pct: inputs.enable_swp ? inputs.swp_stepup : inputs.stepup,
-                currency: 'INR',
+                currency: currencyCode,
                 interest_rate: inputs.rate,
                 sip_amount: inputs.sip,
                 sip_duration: inputs.years,
@@ -70,6 +71,7 @@ export class AnalyticsService {
                 goal_mode: activeGoalMode || 'grow',
                 device_type: deviceType,
                 table_viewed: tableViewed,
+                pdf_downloaded: extraSignals.pdf_downloaded ? 1 : 0,
                 pdf_has_custom_name: extraSignals.pdf_has_custom_name ? 1 : 0,
                 inflation_enabled: inputs.inflation > 0 ? 1 : (extraSignals.inflation_enabled ? 1 : 0),
                 interaction_count: extraSignals.interaction_count || 1,
