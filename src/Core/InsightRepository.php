@@ -136,15 +136,15 @@ class InsightRepository
         if ($unit === 'hour') {
             $stmt = $this->pdo->prepare("
                 WITH RECURSIVE hours(tp) AS (
-                    SELECT strftime('%Y-%m-%d %H:00', 'now', :cte_start)
+                    SELECT strftime('%Y-%m-%d %H:00', 'now', '+5 hours', '+30 minutes', :cte_start)
                     UNION ALL
                     SELECT strftime('%Y-%m-%d %H:00', tp, '+1 hour')
                     FROM hours
-                    WHERE tp < strftime('%Y-%m-%d %H:00', 'now')
+                    WHERE tp < strftime('%Y-%m-%d %H:00', 'now', '+5 hours', '+30 minutes')
                 )
                 SELECT h.tp AS day, COUNT(u.id) AS cnt
                 FROM hours h
-                LEFT JOIN user_calculations u ON u.created_at >= datetime('now', :interval) AND strftime('%Y-%m-%d %H:00', u.created_at) = h.tp
+                LEFT JOIN user_calculations u ON u.created_at >= datetime('now', :interval) AND strftime('%Y-%m-%d %H:00', u.created_at, '+5 hours', '+30 minutes') = h.tp
                 GROUP BY h.tp
                 ORDER BY h.tp ASC
             ");
@@ -152,15 +152,15 @@ class InsightRepository
         } else {
             $stmt = $this->pdo->prepare("
                 WITH RECURSIVE days(dp) AS (
-                    SELECT DATE('now', :cte_start)
+                    SELECT DATE('now', '+5 hours', '+30 minutes', :cte_start)
                     UNION ALL
                     SELECT DATE(dp, '+1 day')
                     FROM days
-                    WHERE dp < DATE('now')
+                    WHERE dp < DATE('now', '+5 hours', '+30 minutes')
                 )
                 SELECT d.dp AS day, COUNT(u.id) AS cnt
                 FROM days d
-                LEFT JOIN user_calculations u ON u.created_at >= datetime('now', :interval) AND DATE(u.created_at) = d.dp
+                LEFT JOIN user_calculations u ON u.created_at >= datetime('now', :interval) AND DATE(u.created_at, '+5 hours', '+30 minutes') = d.dp
                 GROUP BY d.dp
                 ORDER BY d.dp ASC
             ");

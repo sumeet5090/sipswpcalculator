@@ -38,6 +38,7 @@ class App
      */
     public function boot(): void
     {
+        date_default_timezone_set('Asia/Kolkata');
         $this->routesConfig = require __DIR__ . '/Config/routes.php';
         $this->registerDependencies();
         if ($this->router === null) {
