@@ -37,7 +37,7 @@ class ErrorController
     {
         error_log("Global 500 Error: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine());
 
-        $isDebug = ($this->environment === 'development' || Env::get('ENVIRONMENT', 'production') === 'development');
+        $isDebug = ($this->environment === 'development');
         $errorMessage = $isDebug ? $e->getMessage() : 'An unexpected error occurred.';
 
         $html = $this->viewRenderer

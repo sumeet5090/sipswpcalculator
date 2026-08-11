@@ -35,7 +35,7 @@
                     <ul class="space-y-1 text-sm font-medium">
                         {% if all_posts is defined and all_posts is not empty %}
                             {% for post in all_posts %}
-                                {% if post.category == cat_slug %}
+                                {% if post.seo_category == cat_slug %}
                                     <li>
                                         <a href="{{ post.href }}" class="block px-3 py-1.5 {% if request.server('REQUEST_URI') == post.href %}text-emerald-700 bg-emerald-50 border-l-2 border-emerald-500{% else %}text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-l-2 border-transparent{% endif %} transition-colors">
                                             {{ post.title }}

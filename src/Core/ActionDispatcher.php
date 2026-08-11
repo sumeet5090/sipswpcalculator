@@ -30,10 +30,6 @@ class ActionDispatcher
         $controllerName = $controllerAction[0];
         $action = $controllerAction[1] ?? '__invoke';
 
-        if (!str_starts_with($controllerName, '\\')) {
-            $controllerName = '\\' . $controllerName;
-        }
-
         if (class_exists($controllerName)) {
             $controller = $this->container->get($controllerName);
             if (method_exists($controller, $action)) {

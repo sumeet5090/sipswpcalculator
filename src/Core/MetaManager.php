@@ -11,7 +11,7 @@ namespace Core;
 class MetaManager
 {
     private SiteConfig $siteConfig;
-    private array $pageMap = [];
+    private ?array $pageMap = null;
     private string $metaPagesPath;
 
     public function __construct(SiteConfig $siteConfig, ?string $metaPagesPath = null)
@@ -20,21 +20,28 @@ class MetaManager
         $this->metaPagesPath = $metaPagesPath ?? (__DIR__ . '/../../content/meta_pages.json');
     }
 
-    public function loadPageMap(): void
+    private function loadPageMap(): void
     {
-        if (file_exists($this->metaPagesPath)) {
-            $rawJson = file_get_contents($this->metaPagesPath);
-            if ($rawJson !== false) {
-                $decoded = json_decode($rawJson, true);
-                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                    $this->pageMap = $decoded;
-                } else {
-                    error_log("Failed to parse meta_pages.json: " . json_last_error_msg());
-                }
-            } else {
-                error_log("Failed to read meta_pages.json at: " . $this->metaPagesPath);
-            }
+        if ($this->pageMap !== null) {
+            return;
         }
+
+        if (!file_exists($this->metaPagesPath)) {
+            throw new \Core\Exceptions\ConfigurationException("Metadata pages configuration missing at: {$this->metaPagesPath}");
+        }
+
+        $rawJson = file_get_contents($this->metaPagesPath);
+        if ($rawJson === false) {
+            throw new \Core\Exceptions\ConfigurationException("Failed to read metadata pages configuration at: {$this->metaPagesPath}");
+        }
+
+        $decoded = json_decode($rawJson, true);
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
+            throw new \Core\Exceptions\ConfigurationException("Failed to parse metadata pages configuration: " . json_last_error_msg());
+        }
+
+        $this->pageMap = $decoded;
+
         if (isset($this->pageMap['home']) && !isset($this->pageMap['home']['canonical'])) {
             $this->pageMap['home']['canonical'] = $this->siteConfig->getUrl('/');
         }

@@ -24,15 +24,13 @@ use Core\Http\Request;
 class App
 {
     private Container $container;
-    private Router $router;
+    private ?Router $router = null;
     private array $routesConfig = [];
 
     public function __construct(?Container $container = null, ?Router $router = null)
     {
         $this->container = $container ?? new Container();
-        if ($router !== null) {
-            $this->router = $router;
-        }
+        $this->router = $router;
     }
 
     /**
@@ -42,7 +40,7 @@ class App
     {
         $this->routesConfig = require __DIR__ . '/Config/routes.php';
         $this->registerDependencies();
-        if (!isset($this->router)) {
+        if ($this->router === null) {
             /** @var Router $router */
             $router = $this->container->get(Router::class);
             $this->router = $router;

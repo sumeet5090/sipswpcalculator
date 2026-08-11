@@ -122,7 +122,6 @@ class BlogRepository
     {
         return [
             'seo_category' => $category,
-            'category'     => $category,
             'id'           => "{$category}/{$slug}",
             'slug'         => $slug,
             'tag'          => $meta['tag'] ?? 'Guide',

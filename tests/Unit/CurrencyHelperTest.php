@@ -9,15 +9,22 @@ use Core\CurrencyHelper;
 
 class CurrencyHelperTest extends TestCase
 {
+    private CurrencyHelper $helper;
+
+    protected function setUp(): void
+    {
+        $this->helper = new CurrencyHelper();
+    }
+
     /**
      * Test formatting of low integer amounts (under 1000)
      */
     public function testLowValues(): void
     {
-        $this->assertEquals('₹ 0', CurrencyHelper::formatInr(0));
-        $this->assertEquals('₹ 5', CurrencyHelper::formatInr(5));
-        $this->assertEquals('₹ 99', CurrencyHelper::formatInr(99));
-        $this->assertEquals('₹ 999', CurrencyHelper::formatInr(999));
+        $this->assertEquals('₹ 0', $this->helper->format(0));
+        $this->assertEquals('₹ 5', $this->helper->format(5));
+        $this->assertEquals('₹ 99', $this->helper->format(99));
+        $this->assertEquals('₹ 999', $this->helper->format(999));
     }
 
     /**
@@ -25,9 +32,9 @@ class CurrencyHelperTest extends TestCase
      */
     public function testThousands(): void
     {
-        $this->assertEquals('₹ 1,000', CurrencyHelper::formatInr(1000));
-        $this->assertEquals('₹ 10,000', CurrencyHelper::formatInr(10000));
-        $this->assertEquals('₹ 99,999', CurrencyHelper::formatInr(99999));
+        $this->assertEquals('₹ 1,000', $this->helper->format(1000));
+        $this->assertEquals('₹ 10,000', $this->helper->format(10000));
+        $this->assertEquals('₹ 99,999', $this->helper->format(99999));
     }
 
     /**
@@ -35,9 +42,9 @@ class CurrencyHelperTest extends TestCase
      */
     public function testLakhs(): void
     {
-        $this->assertEquals('₹ 1,00,000', CurrencyHelper::formatInr(100000));
-        $this->assertEquals('₹ 10,00,000', CurrencyHelper::formatInr(1000000));
-        $this->assertEquals('₹ 99,50,000', CurrencyHelper::formatInr(9950000));
+        $this->assertEquals('₹ 1,00,000', $this->helper->format(100000));
+        $this->assertEquals('₹ 10,00,000', $this->helper->format(1000000));
+        $this->assertEquals('₹ 99,50,000', $this->helper->format(9950000));
     }
 
     /**
@@ -45,8 +52,8 @@ class CurrencyHelperTest extends TestCase
      */
     public function testCrores(): void
     {
-        $this->assertEquals('₹ 1,00,00,000', CurrencyHelper::formatInr(10000000));
-        $this->assertEquals('₹ 12,34,56,789', CurrencyHelper::formatInr(123456789));
+        $this->assertEquals('₹ 1,00,00,000', $this->helper->format(10000000));
+        $this->assertEquals('₹ 12,34,56,789', $this->helper->format(123456789));
     }
 
     /**
@@ -54,8 +61,8 @@ class CurrencyHelperTest extends TestCase
      */
     public function testFloatRounding(): void
     {
-        $this->assertEquals('₹ 1,001', CurrencyHelper::formatInr(1000.7));
-        $this->assertEquals('₹ 1,000', CurrencyHelper::formatInr(1000.4));
-        $this->assertEquals('₹ 1,00,000', CurrencyHelper::formatInr(99999.9));
+        $this->assertEquals('₹ 1,001', $this->helper->format(1000.7));
+        $this->assertEquals('₹ 1,000', $this->helper->format(1000.4));
+        $this->assertEquals('₹ 1,00,000', $this->helper->format(99999.9));
     }
 }
