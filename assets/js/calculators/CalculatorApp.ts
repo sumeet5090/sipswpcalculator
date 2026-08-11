@@ -398,36 +398,44 @@ export class CalculatorApp {
     }
 
     private initInitialCalculation(): void {
-        let swpEnabledOnLoad = false;
-        const urlSwpOn = (new URLSearchParams(window.location.search)).get('swp_on') === '1';
-        const initialSwpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
-        if (initialSwpToggle && (initialSwpToggle.checked || urlSwpOn)) {
-            swpEnabledOnLoad = true;
-            if (urlSwpOn) initialSwpToggle.checked = true;
-            this.syncSwpToggleState();
-        } else if (this.dom.getElement('calculator-app')?.dataset?.mode === 'swp') {
-            swpEnabledOnLoad = true;
-            if (initialSwpToggle) {
-                initialSwpToggle.checked = true;
+        const runInitCalc = () => {
+            let swpEnabledOnLoad = false;
+            const urlSwpOn = (new URLSearchParams(window.location.search)).get('swp_on') === '1';
+            const initialSwpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
+            if (initialSwpToggle && (initialSwpToggle.checked || urlSwpOn)) {
+                swpEnabledOnLoad = true;
+                if (urlSwpOn) initialSwpToggle.checked = true;
                 this.syncSwpToggleState();
+            } else if (this.dom.getElement('calculator-app')?.dataset?.mode === 'swp') {
+                swpEnabledOnLoad = true;
+                if (initialSwpToggle) {
+                    initialSwpToggle.checked = true;
+                    this.syncSwpToggleState();
+                }
             }
-        }
 
-        const initialInputs = this.getInputs();
-        let existingData: YearResult[] = [];
-        try {
-            existingData = MathEngine.calculate(initialInputs);
-        } catch (e) {
-            console.error("Initial JS Calculation Failed:", e);
-        }
+            const initialInputs = this.getInputs();
+            let existingData: YearResult[] = [];
+            try {
+                existingData = MathEngine.calculate(initialInputs);
+            } catch (e) {
+                console.error("Initial JS Calculation Failed:", e);
+            }
 
-        if (existingData.length > 0) {
-            this.latestResults = existingData;
+            if (existingData.length > 0) {
+                this.latestResults = existingData;
 
-            this.updateTable(existingData, swpEnabledOnLoad);
-            this.updateSummaryMetrics(existingData);
+                this.updateTable(existingData, swpEnabledOnLoad);
+                this.updateSummaryMetrics(existingData);
 
-            this.chartManager.updateChart(existingData, swpEnabledOnLoad);
+                this.chartManager.updateChart(existingData, swpEnabledOnLoad);
+            }
+        };
+
+        if ('requestIdleCallback' in window) {
+            (window as any).requestIdleCallback(runInitCalc, { timeout: 1000 });
+        } else {
+            setTimeout(runInitCalc, 50);
         }
     }
 }
