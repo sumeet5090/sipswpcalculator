@@ -1,8 +1,8 @@
 ---
-title: "Retirement Calculator India 2026: Complete Pension & Drawdown Planner"
-subtitle: "Free retirement calculator for India. Plan your accumulation phase (SIP) and drawdown phase (SWP). See exactly how long your money will last using the 4% rule."
-meta_desc: "Free retirement calculator for India. Plan your accumulation phase (SIP) and drawdown phase (SWP). See exactly how long your money will last using the 4% rule."
-keywords: "retirement calculator india, pension calculator, swp retirement calculator, 4 percent rule calculator, retirement corpus calculator"
+title: "Retirement Calculator India 2026 - SIP to SWP Pension & Corpus Planner"
+subtitle: "Free retirement calculator for India. Model your SIP accumulation phase and SWP pension drawdown in one tool. See exactly how long your corpus lasts using the 4% safe withdrawal rule."
+meta_desc: "Free retirement calculator India. Plan your SIP accumulation and SWP drawdown phases together. See how long your corpus lasts, model the 4% rule, and plan inflation-adjusted pension income."
+keywords: "retirement calculator india, sip to swp calculator, pension calculator india, swp retirement calculator, 4 percent rule calculator, retirement corpus calculator, retirement planning 2026"
 canonical: "https://sipswpcalculator.com/retirement-calculator"
 seo_category: "retirement"
 type: "calculator"
@@ -44,8 +44,12 @@ For example, if your corpus is ₹1 Crore, a 4% annual withdrawal equates to ₹
 <div class="mt-8 bg-rose-50/50 p-6 rounded-xl border border-rose-100">
 <h3 class="text-xl font-bold text-gray-800 mb-4">Related Calculators & Guides</h3>
 <ul class="space-y-2 text-sm">
+<li><a href="/swp-calculator" class="text-rose-600 hover:underline font-medium">SWP Calculator</a> — Dedicated step-up withdrawal calculator with 2026 tax rules</li>
+<li><a href="/sip-calculator" class="text-rose-600 hover:underline font-medium">SIP Calculator</a> — Build your retirement corpus with step-up compounding</li>
+<li><a href="/sip-step-up-calculator" class="text-rose-600 hover:underline font-medium">Step-Up SIP Calculator</a> — Maximize corpus growth by increasing SIP annually</li>
+<li><a href="/my-first-crore-calculator" class="text-rose-600 hover:underline font-medium">My First Crore Calculator</a> — Reach your first milestone on the way to retirement</li>
+<li><a href="/lumpsum-calculator" class="text-rose-600 hover:underline font-medium">Lumpsum Calculator</a> — Model one-time investment into your retirement fund</li>
 <li><a href="/resource/retirement/swp-retirement-planning" class="text-rose-600 hover:underline font-medium">SWP Retirement Planning Guide</a> — Complete retirement income strategy</li>
 <li><a href="/resource/retirement/retirement-planning-4-percent-swp-rule" class="text-rose-600 hover:underline font-medium">The 4% Rule Explained</a> — Is it still valid for Indian retirees?</li>
-<li><a href="/swp-calculator" class="text-rose-600 hover:underline font-medium">SWP Only Calculator</a> — Dedicated drawdown calculator</li>
 </ul>
 </div>

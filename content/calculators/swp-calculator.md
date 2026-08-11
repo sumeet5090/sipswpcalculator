@@ -1,8 +1,8 @@
 ---
-title: "SWP Calculator India 2026: Free Systematic Withdrawal Plan Calculator"
-subtitle: "Plan tax-efficient monthly retirement income from your mutual fund corpus. Use our free SWP calculator with step-up withdrawals, interactive charts, and yearly breakdown tables."
-meta_desc: "Free SWP calculator for Indian mutual funds. Calculate post-tax monthly retirement income with step-up withdrawals. Plan your corpus drawdown with interactive charts and yearly tables."
-keywords: "swp calculator, systematic withdrawal plan calculator, swp mutual fund, mutual fund withdrawal, retirement calculator"
+title: "SWP Calculator with Step-Up - Free Systematic Withdrawal Plan India 2026"
+subtitle: "Free SWP calculator with step-up withdrawals for Indian mutual funds. See how long your corpus lasts, plan inflation-adjusted retirement income & export yearly breakdown tables."
+meta_desc: "Free SWP calculator with step-up withdrawals for Indian mutual funds. See how long your corpus lasts, plan inflation-adjusted retirement income & export yearly tables. Updated for 2026 tax rules."
+keywords: "swp calculator, step up swp calculator, swp calculator with step up, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, best swp calculator, swp retirement calculator 2026"
 canonical: "https://sipswpcalculator.com/swp-calculator"
 seo_category: "retirement"
 type: "calculator"
@@ -230,12 +230,14 @@ This is called "Sequence of Returns Risk." If markets fall early in your SWP pha
 <div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
 <h3 class="text-xl font-bold text-gray-800 mb-4">Related Calculators & Guides</h3>
 <ul class="space-y-2 text-sm">
-<li><a href="/" class="text-indigo-600 hover:underline font-medium">SIP & SWP Calculator</a> — Plan your complete SIP-to-SWP mutual fund journey</li>
+<li><a href="/" class="text-indigo-600 hover:underline font-medium">SIP &amp; SWP Calculator</a> — Plan your complete SIP-to-SWP mutual fund journey</li>
+<li><a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">SIP Calculator Guide</a> — Master SIP compounding with step-up strategy</li>
+<li><a href="/sip-step-up-calculator" class="text-indigo-600 hover:underline font-medium">Step-Up SIP Calculator</a> — Grow your SIP amount annually to beat inflation</li>
+<li><a href="/retirement-calculator" class="text-indigo-600 hover:underline font-medium">Retirement Calculator</a> — Plan your complete accumulation-to-income journey</li>
+<li><a href="/lumpsum-calculator" class="text-indigo-600 hover:underline font-medium">Lumpsum Calculator</a> — Calculate returns on one-time investments</li>
 <li><a href="/resource/retirement/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP Retirement Planning Guide</a> — Complete retirement income strategy</li>
 <li><a href="/resource/retirement/retirement-planning-4-percent-swp-rule" class="text-indigo-600 hover:underline font-medium">The 4% Rule Explained</a> — Is it still valid for Indian retirees?</li>
 <li><a href="/resource/comparison/swp-vs-fixed-deposit" class="text-indigo-600 hover:underline font-medium">SWP vs Fixed Deposit</a> — Which is better for retirement income?</li>
-<li><a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">SIP Calculator Guide</a> — Master SIP compounding with step-up strategy</li>
-<li><a href="/" class="text-indigo-600 hover:underline font-medium">SIP & SWP Combined Planner</a> — Model your full accumulation-to-income journey</li>
 </ul>
 </div>
 

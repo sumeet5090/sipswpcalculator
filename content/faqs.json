@@ -356,5 +356,47 @@
         ],
         "q": "Are low-cost Index Funds better than Actively Managed Equity Funds in India?",
         "a": "In the Large Cap category, low-cost Nifty 50 and Sensex Index Funds consistently beat 75%+ of active fund managers post-expenses. In Mid Cap and Small Cap categories, active fund managers still generate positive Alpha over benchmark indices."
+    },
+    {
+        "id": "home-10-lakh-sip-10-years",
+        "category": "basics",
+        "tags": [
+            "home",
+            "sip-calculator"
+        ],
+        "q": "How much will a Rs 10,000 per month SIP grow in 10 years?",
+        "a": "A Rs 10,000/month SIP for 10 years at 12% annual returns grows to approximately Rs 23 Lakh. Your total investment is Rs 12 Lakh and your wealth gained is approximately Rs 11 Lakh — nearly doubling your money. Use our SIP calculator above to model your own scenario."
+    },
+    {
+        "id": "home-sip-swp-combo",
+        "category": "basics",
+        "tags": [
+            "home",
+            "sip-calculator",
+            "swp-calculator"
+        ],
+        "q": "Can I combine SIP and SWP in one calculator?",
+        "a": "Yes. Our combined SIP and SWP calculator lets you plan both the accumulation phase (SIP with annual step-up) and the withdrawal phase (SWP with inflation adjustment) in a single tool — with interactive charts, yearly breakdown tables, and PDF export. No other free tool combines both phases in real time."
+    },
+    {
+        "id": "home-best-swp-plan-india",
+        "category": "basics",
+        "tags": [
+            "home",
+            "swp-calculator"
+        ],
+        "q": "What is the best SWP plan in India for 2026?",
+        "a": "The best SWP strategy in 2026 is to invest your retirement corpus in a Conservative Hybrid or Balanced Advantage Fund and withdraw 3.5% to 4% of the corpus annually. For a Rs 1 Crore corpus at 8% return, this gives approximately Rs 30,000 to Rs 33,000 per month for 30+ years. Adding a 5% annual step-up ensures your income keeps pace with inflation."
+    },
+    {
+        "id": "home-1-crore-swp-income",
+        "category": "basics",
+        "tags": [
+            "home",
+            "swp-calculator",
+            "retirement-calculator"
+        ],
+        "q": "How much monthly income can Rs 1 Crore generate via SWP?",
+        "a": "A Rs 1 Crore corpus invested in a Hybrid Fund returning 8% per year can generate approximately Rs 65,000 per month via SWP for 25+ years — if you apply a 5% annual step-up to beat inflation. Total withdrawn over 25 years: approximately Rs 2.8 Crore. Use our SWP calculator to model your exact scenario."
     }
 ]

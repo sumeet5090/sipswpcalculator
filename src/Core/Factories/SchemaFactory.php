@@ -98,8 +98,11 @@ class SchemaFactory
 
         // 5. Software Application Schema (if Calculator)
         if ($type === 'calculator') {
+            // Extract primary tool name from full title (e.g. "SWP Calculator" from full SEO title)
+            // Per architecture constraint: schema name must match URL intent, not full page title.
+            $schemaName = preg_split('/\s[-—:]\s/', $title, 2)[0] ?? $title;
             $software_schema = $this->schemaHelper->getSoftwareApplication(
-                $title,
+                $schemaName,
                 $description,
                 $url,
                 "FinanceApplication"
