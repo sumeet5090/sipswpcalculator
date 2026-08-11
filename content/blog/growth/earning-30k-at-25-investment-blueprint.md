@@ -1,6 +1,6 @@
 ---
-title: "Earning ₹30,000/Month at Age 25? Here is Your Wealth Creation Blueprint"
-subtitle: "A step-by-step financial plan to start investing for long-term compounding, allocate across SIPs, emergency funds, and leverage the power of starting early in India."
+title: "Earning ₹30,000/Month at Age 25? Investment Blueprint India (2026)"
+subtitle: "A step-by-step financial plan to start investing for long-term compounding. Build a crore-plus corpus using Step-Up SIPs and emergency funds in India."
 tag: "Blueprint"
 tag_color: "emerald"
 featured: false
@@ -18,7 +18,7 @@ canonical: "https://sipswpcalculator.com/resource/growth/earning-30k-at-25-inves
             The Age 25 Advantage
         </h2>
         <p class="text-slate-700 leading-relaxed text-justify">
-            Starting your career in India with a moderate income of ₹30,000/month is a powerful launchpad. While it may feel small after paying for rent and expenses in major cities, your greatest asset isn't the size of your paycheck—<strong>it is time</strong>. Every single rupee you invest today has 30 to 40 years to compound. This guide provides a direct, mathematically proven blueprint to turn a modest monthly contribution into a crore-plus retirement corpus.
+            Starting your career in India with a moderate income of ₹30,000/month is a powerful launchpad. While it may feel small after paying for rent and expenses in major cities, your greatest asset isn't the size of your paycheck—<strong>it is time</strong>. Every single rupee you invest today has 30 to 40 years to compound. This guide provides a direct, mathematically proven blueprint to turn a modest monthly contribution into a <a href="/my-first-crore-calculator" class="text-indigo-600 font-bold hover:underline">crore-plus retirement corpus</a>.
         </p>
     </div>
 </div>
@@ -68,6 +68,8 @@ Do not start investing in high-risk equity markets until you have covered two de
 ---
 
 <h2 id="compounding-power">3. The Power of a Step-Up SIP (The Math)</h2>
+You can calculate your own exact numbers using our <a href="/sip-step-up-calculator" class="text-emerald-600 font-bold hover:underline">Step-Up SIP Calculator</a>.
+
 Let's look at the numbers. If you start a **modest SIP** of ₹5,000/month at age 25 and hold it for 30 years (until age 55), assuming a **12% average annual return** on equity:
 
 *   **Flat SIP (₹5,000/mo):**
@@ -76,7 +78,7 @@ Let's look at the numbers. If you start a **modest SIP** of ₹5,000/month at ag
 *   **With a 10% Annual Step-Up:**
     If you increase your SIP amount by just **10% every year** to match your annual salary raises (from ₹5,000 to ₹5,500 in Year 2, and so on):
     *   Total Invested: ₹98.7 Lakh (gradually increasing as your income grows)
-    *   Total Maturity Value: **₹3.68 Crore!**
+    *   Total Maturity Value: **₹3.68 Crore!** (Check out the <a href="/my-first-crore-calculator" class="text-emerald-600 font-bold hover:underline">My First Crore Calculator</a> to model your exact timeline.)
 
 By stepping up your contributions, you more than **double** your final wealth with minimal friction because the increment mirrors your salary growth.
 

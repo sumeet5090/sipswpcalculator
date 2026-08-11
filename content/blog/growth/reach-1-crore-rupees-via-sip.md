@@ -1,6 +1,6 @@
 ---
-title: "How to Reach ₹1 Crore in 15 to 20 Years via SIP"
-subtitle: "The exact monthly SIP amounts, return rates, and step-up strategies needed to hit the ₹1 Crore, ₹5 Crores, and ₹10 Crores milestones with Indian Mutual Funds"
+title: "How to Reach ₹1 Crore via SIP in India — Exact Math & Timelines 2026"
+subtitle: "The exact monthly SIP amounts, return rates, and step-up strategies needed to hit ₹1 Crore, ₹5 Crore, and ₹10 Crore milestones with Indian Mutual Funds."
 tag: "Milestone"
 tag_color: "emerald"
 featured: false
@@ -121,6 +121,28 @@ As you get salary increments or business profits, automate an annual top-up of 1
 
 ### 3. Maintain Asset Discipline
 Do not redeem your equity mutual fund units during brief market corrections (e.g., 10-20% drops). These corrections are normal cycles. Redemptions trigger premature exit loads and lock in capital gains tax.
+
+---
+
+<h2 id="returns-impact">The Impact of Return Rates on Reaching ₹1 Crore</h2>
+<p>Even a 1% or 2% difference in your annualized return (CAGR) significantly shifts your timeline. Here is a breakdown of how long it takes a ₹10,000/month flat SIP to reach ₹1 Crore at different return rates:</p>
+
+<div class="overflow-x-auto border border-slate-200 rounded-xl mb-8 not-prose shadow-sm">
+    <table class="min-w-full divide-y divide-slate-200 text-sm border-collapse">
+        <thead class="bg-slate-50">
+            <tr>
+                <th class="px-5 py-4 text-left font-extrabold text-slate-800">Assumed Annual Return (CAGR)</th>
+                <th class="px-5 py-4 text-right font-extrabold text-slate-700">Time to Reach ₹1 Crore</th>
+                <th class="px-5 py-4 text-right font-extrabold text-slate-800">Total Capital Invested</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-slate-100">
+            <tr><td class="px-5 py-4 font-bold text-slate-700">10% (Conservative Equity)</td><td class="px-5 py-4 text-right font-bold">22 Years, 5 Months</td><td class="px-5 py-4 text-right">₹26.9 Lakh</td></tr>
+            <tr class="bg-emerald-50/30"><td class="px-5 py-4 font-extrabold text-emerald-700">12% (Standard Equity)</td><td class="px-5 py-4 text-right font-extrabold">20 Years, 1 Month</td><td class="px-5 py-4 text-right">₹24.1 Lakh</td></tr>
+            <tr><td class="px-5 py-4 font-bold text-slate-700">15% (Aggressive/Small Cap)</td><td class="px-5 py-4 text-right font-bold">17 Years, 4 Months</td><td class="px-5 py-4 text-right">₹20.8 Lakh</td></tr>
+        </tbody>
+    </table>
+</div>
 
 ---
 

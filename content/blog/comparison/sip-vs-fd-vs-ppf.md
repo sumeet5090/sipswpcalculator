@@ -1,5 +1,5 @@
 ---
-title: "SIP vs FD vs PPF 2026: Which Investment Gives the Best Returns?"
+title: "SIP vs FD vs PPF 2026: Compare Mutual Fund Returns (Tax Math)"
 subtitle: "The complete guide to choosing between Equity SIP, Bank Fixed Deposit, and PPF — with real numbers, tax math, and the ideal allocation strategy by age"
 tag: "Comparison"
 tag_color: "amber"
