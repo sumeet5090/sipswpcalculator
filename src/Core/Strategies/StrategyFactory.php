@@ -35,7 +35,10 @@ class StrategyFactory
     public function create(string $slug): CalculatorStrategyInterface
     {
         $key = ltrim($slug, '/');
-        $strategyClass = $this->strategyMap[$key] ?? SipStrategy::class;
+        if (!isset($this->strategyMap[$key])) {
+            throw new \DomainException("No calculator strategy mapped for slug: '{$key}'");
+        }
+        $strategyClass = $this->strategyMap[$key];
 
         if ($this->container !== null && $this->container->has($strategyClass)) {
             /** @var CalculatorStrategyInterface $strategy */

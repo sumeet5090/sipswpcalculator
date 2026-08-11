@@ -60,6 +60,7 @@ class GlossaryRepository
     public function getAll(): array
     {
         $this->load();
+
         return $this->terms;
     }
 

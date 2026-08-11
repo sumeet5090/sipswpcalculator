@@ -18,6 +18,10 @@ class MetaManager
     {
         $this->siteConfig = $siteConfig;
         $this->metaPagesPath = $metaPagesPath ?? (__DIR__ . '/../../content/meta_pages.json');
+    }
+
+    public function loadPageMap(): void
+    {
         if (file_exists($this->metaPagesPath)) {
             $rawJson = file_get_contents($this->metaPagesPath);
             if ($rawJson !== false) {
@@ -36,11 +40,14 @@ class MetaManager
         }
     }
 
+
     /**
      * Retrieve pre-configured page metadata by key.
      */
     public function getMeta(string $pageKey): array
     {
+        $this->loadPageMap();
+
         if (isset($this->pageMap[$pageKey])) {
             return $this->pageMap[$pageKey];
         }
@@ -59,12 +66,12 @@ class MetaManager
         $canonical = $metadata['canonical'] ?? $this->siteConfig->getUrl('/' . ltrim($fallbackSlug, '/'));
 
         return [
-            'title'     => $title,
+            'title' => $title,
             'meta_desc' => $desc,
-            'keywords'  => $metadata['keywords'] ?? '',
+            'keywords' => $metadata['keywords'] ?? '',
             'canonical' => $canonical,
-            'og_title'  => $title,
-            'og_desc'   => $desc,
+            'og_title' => $title,
+            'og_desc' => $desc,
         ];
     }
 
@@ -74,12 +81,12 @@ class MetaManager
     public function setDynamicMeta(string $title, string $desc, ?string $canonical = null): array
     {
         return [
-            'title'     => $title,
+            'title' => $title,
             'meta_desc' => $desc,
-            'keywords'  => '',
+            'keywords' => '',
             'canonical' => $canonical ?? $this->siteConfig->getUrl('/'),
-            'og_title'  => $title,
-            'og_desc'   => $desc,
+            'og_title' => $title,
+            'og_desc' => $desc,
         ];
     }
 }

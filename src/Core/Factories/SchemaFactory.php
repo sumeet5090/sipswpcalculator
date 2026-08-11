@@ -40,7 +40,10 @@ class SchemaFactory
         string $customUrl = ''
     ): string {
         $url = $customUrl ?: $this->siteConfig->getUrl('/' . ltrim($slug, '/'));
-        $title = $page_config['title'] ?? ucfirst(str_replace('-', ' ', basename($slug)));
+        if (empty($page_config['title'])) {
+            throw new \Core\Exceptions\ConfigurationException("Missing required 'title' in page configuration for slug: '{$slug}'");
+        }
+        $title = (string) $page_config['title'];
         $description = $page_config['meta_desc'] ?? $title;
         $imageUrl = $page_config['og_image'] ?? $this->siteConfig->getUrl('/assets/og-image-main.jpg');
 

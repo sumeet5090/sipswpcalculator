@@ -19,31 +19,26 @@ class SessionManager
 
     public function get(string $key, mixed $default = null): mixed
     {
-        $this->start();
         return isset($_SESSION) ? ($_SESSION[$key] ?? $default) : $default;
     }
 
     public function set(string $key, mixed $value): void
     {
-        $this->start();
         $_SESSION[$key] = $value;
     }
 
     public function has(string $key): bool
     {
-        $this->start();
         return isset($_SESSION) && !empty($_SESSION[$key]);
     }
 
     public function remove(string $key): void
     {
-        $this->start();
         unset($_SESSION[$key]);
     }
 
     public function destroy(): void
     {
-        $this->start();
         session_destroy();
     }
 
@@ -54,7 +49,7 @@ class SessionManager
         return $token;
     }
 
-    public function getCsrfToken(): string
+    public function ensureCsrfToken(): string
     {
         $token = $this->get('csrf_token');
         if (!is_string($token) || $token === '') {
@@ -63,9 +58,22 @@ class SessionManager
         return $token;
     }
 
+    public function getCsrfToken(): string
+    {
+        $token = $this->get('csrf_token');
+        if (!is_string($token) || $token === '') {
+            throw new \RuntimeException('CSRF token has not been initialized in session.');
+        }
+        return $token;
+    }
+
     public function verifyCsrfToken(string $token): bool
     {
-        $stored = $this->get('csrf_token');
-        return is_string($stored) && hash_equals($stored, $token);
+        try {
+            $stored = $this->getCsrfToken();
+            return hash_equals($stored, $token);
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }

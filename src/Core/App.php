@@ -69,10 +69,6 @@ class App
 
         $this->boot();
 
-        /** @var \Services\SessionManager $sessionManager */
-        $sessionManager = $this->container->get(\Services\SessionManager::class);
-        $sessionManager->start();
-
         try {
             $response = $this->router->dispatch($request);
         } catch (\Core\Exceptions\RouteNotFoundException $e) {
@@ -114,6 +110,7 @@ class App
     {
         // Pipe Global Security & Routing Middleware
         $this->router->pipe(\Core\Middleware\TrailingSlashRedirectMiddleware::class);
+        $this->router->pipe(\Core\Middleware\SessionMiddleware::class);
         $this->router->pipe(\Core\Middleware\CsrfHoneypotMiddleware::class);
 
         // Core landing pages & actions

@@ -112,8 +112,6 @@ class ContentManager
                     $value = true;
                 } elseif (strtolower($value) === 'false') {
                     $value = false;
-                } elseif (is_numeric($value) && !str_starts_with($value, '0') && strlen($value) < 10) {
-                    $value = str_contains($value, '.') ? (float) $value : (int) $value;
                 }
 
                 $metadata[$key] = $value;
