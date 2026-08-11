@@ -22,7 +22,7 @@ canonical: "https://sipswpcalculator.com/resource/comparison/swp-vs-fixed-deposi
 
 <h2 id="what-is-swp">What Is a Systematic Withdrawal Plan (SWP)?</h2>
 
-<p>Imagine you have a large water tank (your mutual fund corpus). Instead of emptying it all at once, you install a tap that drips out a fixed amount every month. Meanwhile, rain keeps filling the tank (your fund keeps earning returns). As long as it rains more than you drip out, the tank never empties. <strong>That's an SWP.</strong></p>
+<p>Imagine you have a large water tank (your mutual fund corpus). Instead of emptying it all at once, you install a tap that drips out a fixed amount every month. Meanwhile, rain keeps filling the tank (your fund keeps earning returns). As long as it rains more than you drip out, the tank never empties. <strong>That's an SWP.</strong> (You can model your own tank using our <a href="/swp-calculator" class="text-indigo-600 font-bold hover:underline">SWP Calculator India 2026</a>.)</p>
 
 <p>Technically, an SWP is a facility offered by mutual fund companies that allows you to withdraw a <strong>fixed amount at regular intervals</strong> (monthly, quarterly, or annually) from your mutual fund investment. Here's what makes it powerful:</p>
 
