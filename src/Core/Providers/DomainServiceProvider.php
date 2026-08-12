@@ -13,6 +13,7 @@ use Core\FaqRepository;
 use Core\MetaManager;
 use Core\Strategies\StrategyFactory;
 use Core\ViewRenderer;
+use Services\ConfigService;
 use Services\GuideRenderer;
 
 class DomainServiceProvider implements ServiceProviderInterface
@@ -32,7 +33,8 @@ class DomainServiceProvider implements ServiceProviderInterface
                 $c->get(FaqRepository::class),
                 $c->get(BlogRepository::class),
                 $c->get(StrategyFactory::class),
-                $c->get(ViewRenderer::class)
+                $c->get(ViewRenderer::class),
+                $c->get(ConfigService::class)
             );
         });
     }
