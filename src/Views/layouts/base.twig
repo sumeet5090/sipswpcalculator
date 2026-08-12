@@ -49,6 +49,9 @@
     {{ page_config.additional_head|default('')|raw }}
 
     {% if env == 'production' %}
+        <!-- Sentry Error Monitoring -->
+        <script src="https://js-de.sentry-cdn.com/475d8af2dda1d5fc4e23fd8923e5f908.min.js" crossorigin="anonymous"></script>
+
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5PLFTW4E7"></script>
         <script>
