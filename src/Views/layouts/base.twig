@@ -49,6 +49,9 @@
     {{ page_config.additional_head|default('')|raw }}
 
     {% if env == 'production' %}
+        <!-- Sentry Error Monitoring -->
+        <script src="https://js-de.sentry-cdn.com/475d8af2dda1d5fc4e23fd8923e5f908.min.js" crossorigin="anonymous"></script>
+
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5PLFTW4E7"></script>
         <script>
@@ -57,7 +60,18 @@
             gtag('js', new Date());
             gtag('config', 'G-P5PLFTW4E7');
         </script>
+
+        <!-- Ahrefs Webmaster Analytics -->
         <script src="https://analytics.ahrefs.com/analytics.js" data-key="WiDGDiqV9F0xelXDCYFUfw" async></script>
+
+        <!-- Microsoft Clarity -->
+        <script type="text/javascript">
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "y1ed7um9dp");
+        </script>
     {% endif %}
     
     {% block head %}{% endblock %}
