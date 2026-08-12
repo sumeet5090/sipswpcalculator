@@ -27,6 +27,7 @@ class GuideRenderer
     private BlogRepository $blogRepository;
     private StrategyFactory $strategyFactory;
     private ViewRenderer $viewRenderer;
+    private ConfigService $configService;
 
     public function __construct(
         ContentManager $contentManager,
@@ -35,7 +36,8 @@ class GuideRenderer
         FaqRepository $faqRepository,
         BlogRepository $blogRepository,
         StrategyFactory $strategyFactory,
-        ViewRenderer $viewRenderer
+        ViewRenderer $viewRenderer,
+        ConfigService $configService
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;
@@ -44,6 +46,7 @@ class GuideRenderer
         $this->blogRepository = $blogRepository;
         $this->strategyFactory = $strategyFactory;
         $this->viewRenderer = $viewRenderer;
+        $this->configService = $configService;
     }
 
     /**
@@ -91,19 +94,7 @@ class GuideRenderer
         $stepup        = $initialInputs->getStepup();
         $lumpsum       = $initialInputs->getLumpsum();
 
-        $calcConfig = [
-            'type'        => $calculator_type,
-            'sip'         => $sip,
-            'years'       => $years,
-            'rate'        => $rate,
-            'stepup'      => $stepup,
-            'lumpsum'     => $lumpsum,
-            'corpus'      => $lumpsum,
-            'swp'         => $initialInputs->getSwpWithdrawal(),
-            'swp_stepup'  => $initialInputs->getSwpStepup(),
-            'swp_rate'    => $initialInputs->getSwpRate(),
-            'inflation'   => $initialInputs->getInflation(),
-        ];
+        $calcDefaults  = $this->configService->getCalculatorDefaults();
 
         $show_lumpsum = ($calculator_type === 'lumpsum');
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
@@ -118,10 +109,22 @@ class GuideRenderer
             'active_page'         => $slug,
             'seo_category'        => $seo_category,
             'calculator_type'     => $calculator_type,
-            'calc_config'         => $calcConfig,
+            'calc_config'         => $calcDefaults,
             'show_lumpsum'        => $show_lumpsum,
             'faqs'                => $faqs,
             'all_posts'           => $all_posts,
+            'sip'                 => $sip,
+            'years'               => $years,
+            'rate'                => $rate,
+            'stepup'              => $stepup,
+            'lumpsum'             => $lumpsum,
+            'corpus'              => $lumpsum,
+            'enable_swp'          => $initialInputs->isSwpEnabled(),
+            'swp_withdrawal'      => $initialInputs->getSwpWithdrawal(),
+            'swp_years_input'     => $initialInputs->getSwpYears(),
+            'swp_stepup'          => $initialInputs->getSwpStepup(),
+            'swp_rate'            => $initialInputs->getSwpRate(),
+            'inflation'           => $initialInputs->getInflation(),
         ]));
     }
 }

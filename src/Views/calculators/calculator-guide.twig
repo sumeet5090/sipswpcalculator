@@ -249,7 +249,6 @@
 {% endblock %}
 
 {% block scripts %}
-<script defer src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 {% if page_config.scripts %}
     {% for script in page_config.scripts %}
         <script type="module" src="{{ script }}"></script>

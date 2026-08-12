@@ -29,10 +29,30 @@ export class ChartManager {
     private validator: InputValidator;
     private chartInstance: Chart<'line'> | null = null;
     private currentMilestones: Milestone[] = [];
+    private chartJsPromise: Promise<void> | null = null;
 
     constructor(formatter: CurrencyFormatter, validator: InputValidator = new InputValidator()) {
         this.formatter = formatter;
         this.validator = validator;
+    }
+
+    /**
+     * Dynamically loads Chart.js from CDN on demand.
+     */
+    private loadChartJs(): Promise<void> {
+        if (window.Chart) return Promise.resolve();
+        if (this.chartJsPromise) return this.chartJsPromise;
+
+        this.chartJsPromise = new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js';
+            script.async = true;
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('Failed to load Chart.js script'));
+            document.head.appendChild(script);
+        });
+
+        return this.chartJsPromise;
     }
 
     formatAxisTick(value: number): string {
@@ -46,9 +66,16 @@ export class ChartManager {
     /**
      * Initialize or update the chart.
      */
-    updateChart(results: YearResult[], enableSwp: boolean = true): void {
+    async updateChart(results: YearResult[], enableSwp: boolean = true): Promise<void> {
         const ctxEl = document.getElementById('corpusChart') as HTMLCanvasElement | null;
         if (!ctxEl) return;
+
+        try {
+            await this.loadChartJs();
+        } catch (e) {
+            console.error('Chart.js dynamic load error:', e);
+            return;
+        }
 
         const ctx = ctxEl.getContext('2d');
         if (!ctx) return;
