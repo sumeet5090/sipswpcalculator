@@ -38,6 +38,9 @@ class CsvExportService
             $headers[] = 'Post-Tax Balance (₹)';
         }
 
+        // Prepend UTF-8 BOM for Microsoft Excel compatibility with Rupee (₹) symbol
+        fwrite($resource, "\xEF\xBB\xBF");
+
         fputcsv($resource, $headers, ',', '"', '\\');
 
         foreach ($combined as $row) {

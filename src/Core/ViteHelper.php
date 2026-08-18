@@ -34,7 +34,7 @@ class ViteHelper
             return $this->devServerActive;
         }
 
-        if ($this->environment === 'production') {
+        if ($this->environment === 'production' || $this->environment === 'testing') {
             $this->devServerActive = false;
             return false;
         }

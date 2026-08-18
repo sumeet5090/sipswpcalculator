@@ -70,6 +70,11 @@ class Request
         return $this->getMethod() === 'POST';
     }
 
+    public function isGet(): bool
+    {
+        return $this->getMethod() === 'GET';
+    }
+
     public function getParsedBody(): array
     {
         return $this->post;

@@ -50,6 +50,19 @@ class MetaManager
     {
         $this->loadPageMap();
 
+        $key = trim($pageKey, '/');
+        if ($key === '') {
+            $key = 'home';
+        }
+
+        if (isset($this->pageMap[$key])) {
+            $meta = $this->pageMap[$key];
+            if ($key === 'home' && !isset($meta['canonical'])) {
+                $meta['canonical'] = $this->siteConfig->getUrl('/');
+            }
+            return $meta;
+        }
+
         if (isset($this->pageMap[$pageKey])) {
             $meta = $this->pageMap[$pageKey];
             if ($pageKey === 'home' && !isset($meta['canonical'])) {
@@ -58,8 +71,8 @@ class MetaManager
             return $meta;
         }
 
-        $fallbackTitle = ucfirst(str_replace(['-', '_'], ' ', $pageKey));
-        return $this->setDynamicMeta($fallbackTitle !== '' ? $fallbackTitle : 'SIP SWP Calculator', '');
+        $fallbackTitle = ucfirst(str_replace(['-', '_'], ' ', $key));
+        return $this->setDynamicMeta($fallbackTitle, '', $this->siteConfig->getUrl('/' . $key));
     }
 
     /**

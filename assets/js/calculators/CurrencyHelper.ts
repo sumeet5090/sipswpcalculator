@@ -43,15 +43,21 @@ export class CurrencyFormatter {
      * Format dynamic large amounts with appropriate Lakh/Crore suffix.
      */
     formatDynamic(amount: number): string {
-        if (amount >= 10000000) {
-            return this.symbol + (amount / 10000000).toFixed(2).replace(/\.00$/, '') + ' Crore';
+        const isNegative = amount < 0;
+        const absAmount = Math.abs(amount);
+        const prefix = isNegative ? `-${this.symbol}` : this.symbol;
+
+        if (absAmount >= 10000000) {
+            return prefix + (absAmount / 10000000).toFixed(2).replace(/\.00$/, '') + ' Crore';
         }
-        if (amount >= 100000) {
-            return this.symbol + (amount / 100000).toFixed(2).replace(/\.00$/, '') + ' Lakh';
+        if (absAmount >= 100000) {
+            return prefix + (absAmount / 100000).toFixed(2).replace(/\.00$/, '') + ' Lakh';
         }
-        if (amount >= 1000) {
-            return this.symbol + (amount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
+        if (absAmount >= 1000) {
+            return prefix + (absAmount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
         }
-        return this.symbol + amount.toLocaleString(this.locale);
+        return isNegative
+            ? `-${this.symbol}${absAmount.toLocaleString(this.locale)}`
+            : `${this.symbol}${absAmount.toLocaleString(this.locale)}`;
     }
 }

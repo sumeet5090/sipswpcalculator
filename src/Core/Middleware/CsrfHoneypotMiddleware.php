@@ -26,7 +26,7 @@ class CsrfHoneypotMiddleware implements MiddlewareInterface
                 return new Response('Forbidden: Automated request detected.', 403);
             }
 
-            if (array_key_exists('csrf_token', $post)) {
+            if (isset($post['csrf_token'])) {
                 $token = (string) $post['csrf_token'];
                 if (!$this->sessionManager->verifyCsrfToken($token)) {
                     return new Response('Forbidden: Invalid security token. Please reload the page and try again.', 403);

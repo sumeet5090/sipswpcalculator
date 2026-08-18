@@ -253,10 +253,18 @@ class SchemaFactory
         if ($type === 'blog' && $this->blogRepository !== null) {
             $parts = explode('/', ltrim($slug, '/'));
             if (count($parts) === 2) {
-                $actualModifiedDate = $this->blogRepository->getPostModifiedDate($parts[0], $parts[1]);
+                try {
+                    $actualModifiedDate = $this->blogRepository->getPostModifiedDate($parts[0], $parts[1]);
+                } catch (\Throwable) {
+                    $actualModifiedDate = $publishedDate;
+                }
             }
         } elseif ($this->contentManager !== null) {
-            $actualModifiedDate = $this->contentManager->getFileModifiedDate('calculators/' . ltrim($slug, '/'));
+            try {
+                $actualModifiedDate = $this->contentManager->getFileModifiedDate('calculators/' . ltrim($slug, '/'));
+            } catch (\Throwable) {
+                $actualModifiedDate = $publishedDate;
+            }
         }
 
         $schemas = [];

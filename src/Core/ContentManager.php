@@ -95,10 +95,23 @@ class ContentManager
     {
         $metadata = [];
         $lines = explode("\n", $frontMatter);
+        $currentKey = null;
 
         foreach ($lines as $line) {
-            $line = trim($line);
-            if (empty($line) || str_starts_with($line, '#')) {
+            $trimmed = trim($line);
+            if (empty($trimmed) || str_starts_with($trimmed, '#')) {
+                continue;
+            }
+
+            if (str_starts_with($trimmed, '-') && $currentKey !== null) {
+                $item = trim(substr($trimmed, 1));
+                if (preg_match('/^["\'](.*)["\']$/s', $item, $matches)) {
+                    $item = $matches[1];
+                }
+                if (!isset($metadata[$currentKey]) || !is_array($metadata[$currentKey])) {
+                    $metadata[$currentKey] = [];
+                }
+                $metadata[$currentKey][] = $item;
                 continue;
             }
 
@@ -106,14 +119,20 @@ class ContentManager
             if ($colonPos !== false) {
                 $key = trim(substr($line, 0, $colonPos));
                 $value = trim(substr($line, $colonPos + 1));
+                $currentKey = $key;
+
+                if ($value === '') {
+                    $metadata[$key] = [];
+                    continue;
+                }
 
                 if (preg_match('/^["\'](.*)["\']$/s', $value, $matches)) {
                     $value = $matches[1];
                 }
 
-                if (strtolower($value) === 'true') {
+                if (strtolower((string) $value) === 'true') {
                     $value = true;
-                } elseif (strtolower($value) === 'false') {
+                } elseif (strtolower((string) $value) === 'false') {
                     $value = false;
                 }
 

@@ -151,6 +151,10 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 - **Declarative Bidirectional URL State Engine & Postel's Law Hydration:** `UrlStateController.ts` and `ShareController.ts` implement schema-driven serialization and liberal hydration supporting `inflation`, `cur`, `post_tax`, `wealth_map`, `goal_mode`, `target_corpus`, and mode-aware starting `corpus` without gatekeeper constraints.
 - **Full DTO Contract Parity for PDF Export:** `PdfExportController.ts` and `GeneratePdfAction.php` strictly synchronize `enable_swp` and `inflation` form data vectors, ensuring PDF reports render exact SWP distribution cashflows.
 - **Kernel Container Factory (`App::createContainer`):** Standardized static DI container bootstrapping method for isolated test suites and CLI tools, guaranteeing zero unresolvable primitive parameters.
+- **HTTP Method-Preserving Trailing Slash Redirects:** `TrailingSlashRedirectMiddleware` restricts 301 canonical redirects strictly to `GET` and `HEAD` methods, ensuring `POST` request bodies are never dropped or converted.
+- **Excel-Compatible UTF-8 BOM CSV Streaming:** `CsvExportService` automatically prepends `\xEF\xBB\xBF` Byte Order Marks to raw CSV output streams, guaranteeing correct rendering of Rupee `(₹)` currency symbols in Microsoft Excel across all operating systems.
+- **Robust Canonical Metadata Key Normalization:** `MetaManager::getMeta` normalizes leading and trailing slashes (`trim($pageKey, '/')`), ensuring both `about` and `/about` resolve canonical URLs and meta descriptions deterministically.
+- **Client-Side Negative Currency Formatting Parity:** `CurrencyFormatter.ts` handles negative numbers with leading negative prefixes (`-₹ 50 Lakh`), maintaining visual parity with backend `CurrencyHelper.php`.
 
 ### PHPUnit Database & Test Server Isolation
 To ensure test runs do not pollute your development environment, PHPUnit is configured with dedicated isolation primitives:
