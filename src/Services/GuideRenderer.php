@@ -68,7 +68,7 @@ class GuideRenderer
         $type = $meta['type'] ?? 'guide';
         $publishedDate = $meta['date'] ?? \Core\DateConstants::CONTENT_FALLBACK_DATE;
 
-        $page_config = $this->metaManager->buildFromMetadata($meta, $slug);
+        $page_config = $this->metaManager->buildFromMetadata($meta, '/' . $slug);
 
         $strategy = $this->strategyFactory->create($slug);
         $calculator_type = 'all';

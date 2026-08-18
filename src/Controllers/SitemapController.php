@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Controllers;
 
 use Core\BlogRepository;
+use Core\ContentManager;
 use Core\Http\Response;
 use Core\SiteConfig;
 use Core\ViewRenderer;
@@ -15,17 +16,20 @@ class SitemapController
     private SiteConfig $siteConfig;
     private array $routesConfig;
     private ViewRenderer $viewRenderer;
+    private ContentManager $contentManager;
 
     public function __construct(
         BlogRepository $blogRepository,
         SiteConfig $siteConfig,
         array $routesConfig,
-        ViewRenderer $viewRenderer
+        ViewRenderer $viewRenderer,
+        ContentManager $contentManager
     ) {
         $this->blogRepository = $blogRepository;
         $this->siteConfig = $siteConfig;
         $this->routesConfig = $routesConfig;
         $this->viewRenderer = $viewRenderer;
+        $this->contentManager = $contentManager;
     }
 
     public function index(): Response
@@ -44,15 +48,16 @@ class SitemapController
         ];
 
         // 2. Calculators
-        foreach (array_keys($routesConfig['calculators']) as $path) {
+        foreach ($routesConfig['calculators'] as $path => $config) {
             $slug = ltrim($path, '/');
-            $lastmod = $this->viewRenderer->getTemplateModifiedDate('calculators/' . $slug);
-            $priority = in_array($path, ['/sip-calculator', '/swp-calculator'], true) ? '0.9' : '0.8';
+            $lastmod = $this->contentManager->getFileModifiedDate('calculators/' . $slug);
+            $priority = is_array($config) && isset($config['priority']) ? $config['priority'] : '0.8';
+            $changefreq = is_array($config) && isset($config['changefreq']) ? $config['changefreq'] : 'monthly';
 
             $urls[] = [
                 'loc' => $baseUrl . $path,
                 'lastmod' => $lastmod,
-                'changefreq' => 'monthly',
+                'changefreq' => $changefreq,
                 'priority' => $priority
             ];
         }
@@ -80,16 +85,16 @@ class SitemapController
         ];
 
         // 5. Static Pages
-        $configuredPages = array_keys($routesConfig['pages'] ?? []);
-        foreach ($configuredPages as $path) {
+        foreach ($routesConfig['pages'] as $path => $config) {
             $slug = ltrim($path, '/');
             $lastmod = $this->viewRenderer->getTemplateModifiedDate('pages/' . $slug);
-            $priority = in_array($path, ['/privacy', '/terms'], true) ? '0.3' : '0.5';
+            $priority = is_array($config) && isset($config['priority']) ? $config['priority'] : '0.5';
+            $changefreq = is_array($config) && isset($config['changefreq']) ? $config['changefreq'] : 'yearly';
 
             $urls[] = [
                 'loc' => $baseUrl . $path,
                 'lastmod' => $lastmod,
-                'changefreq' => 'yearly',
+                'changefreq' => $changefreq,
                 'priority' => $priority
             ];
         }

@@ -98,7 +98,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(MetaManager::class),
                 $c->get(ConfigService::class),
                 $c->get(FaqRepository::class),
-                $c->get(ViewRenderer::class)
+                $c->get(ViewRenderer::class),
+                $c->get(SchemaFactory::class)
             );
         });
 
@@ -130,7 +131,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(BlogRepository::class),
                 $c->get(SiteConfig::class),
                 $routesConfig,
-                $c->get(ViewRenderer::class)
+                $c->get(ViewRenderer::class),
+                $c->get(ContentManager::class)
             );
         });
 
@@ -155,7 +157,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(FaqRepository::class),
                 $c->get(GlossaryRepository::class),
                 $c->get(SchemaHelper::class),
-                $c->get(ViewRenderer::class)
+                $c->get(ViewRenderer::class),
+                $c->get(MetaManager::class)
             );
         });
 

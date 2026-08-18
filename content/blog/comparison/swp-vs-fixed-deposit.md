@@ -4,8 +4,7 @@ subtitle: "The definitive side-by-side comparison of Systematic Withdrawal Plans
 tag: "Comparison"
 tag_color: "amber"
 featured: false
-date: "February 2026"
-canonical: "https://sipswpcalculator.com/resource/comparison/swp-vs-fixed-deposit"
+date: "January 2026"
 ---
 
 ---

@@ -138,8 +138,8 @@ class BlogRepository
     /**
      * Get the last modification date of a blog post file.
      */
-    public function getPostModifiedDate(string $category, string $slug, string $fallbackDate = DateConstants::CONTENT_FALLBACK_DATE): string
+    public function getPostModifiedDate(string $category, string $slug): string
     {
-        return $this->contentManager->getFileModifiedDate('blog/' . $category . '/' . $slug, $fallbackDate);
+        return $this->contentManager->getFileModifiedDate('blog/' . $category . '/' . $slug);
     }
 }

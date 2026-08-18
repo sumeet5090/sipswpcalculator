@@ -14,7 +14,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
      */
     public static function setUpBeforeClass(): void
     {
-        self::startLocalServer(9000, 'APP_URL=https://sipswpcalculator.com');
+        self::startLocalServer(9000);
     }
 
     /**
@@ -156,10 +156,13 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
         $this->assertInstanceOf(\DOMElement::class, $canonicalNode);
         $canonicalHref = trim($canonicalNode->getAttribute('href'));
         $this->assertNotEmpty($canonicalHref, "SEO Rule Violation: Canonical link href is empty on page '$path'.");
-        $this->assertStringStartsWith(
-            'https://sipswpcalculator.com',
+        $expectedBaseUrl = (new \Core\SiteConfig((string) \Core\Env::get('APP_URL', 'https://sipswpcalculator.com')))->getBaseUrl();
+        $expectedCanonical = rtrim($expectedBaseUrl, '/') . '/' . ltrim($path, '/');
+
+        $this->assertEquals(
+            $expectedCanonical,
             $canonicalHref,
-            "SEO Rule Violation: Canonical link '$canonicalHref' must point to https://sipswpcalculator.com root."
+            "SEO Rule Violation: Canonical link '$canonicalHref' must point to exactly '$expectedCanonical'."
         );
 
         // 5. OpenGraph tag Validation
@@ -173,7 +176,18 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
         $this->assertGreaterThanOrEqual(1, $ogDescriptions->length, "SEO Rule Violation: Missing meta og:description on page '$path'.");
         $ogDescNode = $ogDescriptions->item(0);
         $this->assertInstanceOf(\DOMElement::class, $ogDescNode);
-        $this->assertNotEmpty(trim($ogDescNode->getAttribute('content')), "SEO Rule Violation: og:description is empty on page '$path'.");
+        $ogDescContent = trim($ogDescNode->getAttribute('content'));
+        $this->assertNotEmpty($ogDescContent, "SEO Rule Violation: og:description is empty on page '$path'.");
+        $this->assertGreaterThanOrEqual(
+            40,
+            strlen($ogDescContent),
+            "SEO Rule Violation: Description on page '$path' is too short (Length: " . strlen($ogDescContent) . ", min: 40)."
+        );
+        $this->assertLessThanOrEqual(
+            200,
+            strlen($ogDescContent),
+            "SEO Rule Violation: Description on page '$path' is too long (Length: " . strlen($ogDescContent) . ", max: 200)."
+        );
 
         $ogUrls = $xpath->query('//meta[@property="og:url"]');
         $this->assertGreaterThanOrEqual(1, $ogUrls->length, "SEO Rule Violation: Missing meta og:url on page '$path'.");

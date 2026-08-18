@@ -5,7 +5,6 @@ tag: "Blueprint"
 tag_color: "emerald"
 featured: false
 date: "July 2026"
-canonical: "https://sipswpcalculator.com/resource/growth/earning-30k-at-25-investment-blueprint"
 ---
 
 ---

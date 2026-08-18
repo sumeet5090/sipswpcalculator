@@ -50,6 +50,11 @@ class ViewRenderer
         $this->twig->addExtension($extension);
     }
 
+    private function normalizeViewName(string $view): string
+    {
+        return str_ends_with($view, '.twig') ? $view : $view . '.twig';
+    }
+
     /**
      * Render a template file and return the string content.
      */
@@ -59,15 +64,13 @@ class ViewRenderer
         $renderData = array_merge([
             'csrf_token' => $csrfToken,
             'app' => ['session' => ['csrf_token' => $csrfToken]],
+            'request' => \Core\Http\Request::createFromGlobals(),
         ], $data);
 
-        // Support extensionless view names, defaulting to .twig
-        if (!str_ends_with($view, '.twig')) {
-            $view .= '.twig';
-        }
+        $resolvedView = $this->normalizeViewName($view);
 
         try {
-            return $this->twig->render($view, $renderData);
+            return $this->twig->render($resolvedView, $renderData);
         } catch (\Throwable $e) {
             throw new \RuntimeException("Twig rendering failed: " . $e->getMessage(), 0, $e);
         }
@@ -76,18 +79,21 @@ class ViewRenderer
     /**
      * Get the modification date of a view template file.
      */
-    public function getTemplateModifiedDate(string $view, ?string $fallbackDate = null): string
+    public function getTemplateModifiedDate(string $view): string
     {
-        if (!str_ends_with($view, '.twig')) {
-            $view .= '.twig';
-        }
-        $fallback = $fallbackDate ?? date('Y-m-d');
+        $resolvedView = $this->normalizeViewName($view);
         try {
-            $source = $this->twig->getLoader()->getSourceContext($view);
+            $source = $this->twig->getLoader()->getSourceContext($resolvedView);
             $filePath = $source->getPath();
-            return (!empty($filePath) && file_exists($filePath)) ? date('Y-m-d', filemtime($filePath)) : $fallback;
-        } catch (\Throwable) {
-            return $fallback;
+            if (empty($filePath) || !file_exists($filePath)) {
+                throw new \RuntimeException("View template file missing at path: '{$filePath}' for view: '{$resolvedView}'");
+            }
+            return date('Y-m-d', filemtime($filePath));
+        } catch (\Throwable $e) {
+            if ($e instanceof \RuntimeException) {
+                throw $e;
+            }
+            throw new \RuntimeException("Failed to get modification date for template '{$resolvedView}': " . $e->getMessage(), 0, $e);
         }
     }
 }

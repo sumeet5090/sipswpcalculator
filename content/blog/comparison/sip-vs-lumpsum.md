@@ -5,7 +5,6 @@ tag: "Comparison"
 tag_color: "amber"
 featured: true
 date: "July 2026"
-canonical: "https://sipswpcalculator.com/resource/comparison/sip-vs-lumpsum"
 ---
 
 ---

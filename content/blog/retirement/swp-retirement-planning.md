@@ -5,7 +5,6 @@ tag: "Planning"
 tag_color: "indigo"
 featured: false
 date: "March 2026"
-canonical: "https://sipswpcalculator.com/resource/retirement/swp-retirement-planning"
 ---
 
 ---

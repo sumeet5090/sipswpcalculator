@@ -1,0 +1,32 @@
+<!-- Curated FAQ Section -->
+<div class="mt-16 border-t border-slate-200/60 pt-12">
+    <h2 id="faq-section" class="text-3xl font-bold text-center mb-8">Frequently Asked Questions (FAQ) on SIP to SWP</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {% for faq in homeFaqs|default([]) %}
+            {% set isLastOdd = (loop.last and loop.length is odd) %}
+            {% set colSpan = isLastOdd ? 'md:col-span-2' : '' %}
+            <div class="{{ colSpan }}">
+                <h3 id="faq-{{ loop.index }}" class="text-lg font-bold text-slate-800 mb-2">{{ loop.index }}. {{ faq.q }}</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">{{ faq.a }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<p class="text-center mt-12">Use our <a href="/#calculator-section"
+        class="text-emerald-600 hover:underline font-medium">advanced
+        SIP & SWP calculator</a> to model your investments and plan your
+    withdrawals to see how you can achieve your financial goals, whether it's building a retirement
+    corpus, funding your child's education, or creating a passive income stream.
+    <a href="/faq" class="text-emerald-600 hover:underline font-medium">Have more questions? Check our FAQ →</a>
+</p>
+
+<div class="mt-12 p-6 bg-slate-50 border border-slate-200 rounded-xl text-center max-w-2xl mx-auto">
+    <p class="font-bold text-slate-800 text-lg mb-2">Cite This Calculator</p>
+    <p class="text-slate-600 text-sm mb-4">Writing an article, blog post, or research paper? You can cite this
+        tool using the following format.</p>
+    <div class="bg-white p-4 border border-slate-200 rounded-lg text-left text-sm text-slate-700 font-mono overflow-x-auto select-all">
+        Boga, S. (2026). Advanced SIP & SWP Calculator. sipswpcalculator.com. Retrieved from
+        https://sipswpcalculator.com/
+    </div>
+</div>
