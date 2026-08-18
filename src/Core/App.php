@@ -54,6 +54,16 @@ class App
         return $this->container;
     }
 
+    /**
+     * Create and bootstrap a fully configured DI Container.
+     */
+    public static function createContainer(?Container $container = null): Container
+    {
+        $app = new self($container);
+        $app->boot();
+        return $app->getContainer();
+    }
+
     public function getRouter(): Router
     {
         return $this->router;

@@ -109,6 +109,8 @@ export class PdfExportController {
                 formData.append('rate', String(currentInputs.rate));
                 formData.append('stepup', String(currentInputs.stepup));
                 formData.append('lumpsum', String(currentInputs.lumpsum));
+                formData.append('inflation', String(currentInputs.inflation));
+                formData.append('enable_swp', currentInputs.enable_swp ? '1' : '0');
                 formData.append('swp_withdrawal', String(currentInputs.swp_withdrawal));
                 formData.append('swp_stepup', String(currentInputs.swp_stepup));
                 formData.append('swp_years', String(currentInputs.swp_years));
@@ -134,48 +136,48 @@ export class PdfExportController {
                     method: 'POST',
                     body: formData
                 })
-                .then(res => {
-                    if (res.ok) return res.blob();
-                    throw new Error('PDF generation failed.');
-                })
-                .then(blob => {
-                    const clientNameClean = (formData.get('clientName') || 'Client').toString().trim().replace(/[^a-zA-Z0-9_\-]/g, '_').replace(/_+/g, '_') || 'Client';
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    a.download = `Financial_Report_for_${clientNameClean}.pdf`;
-                    document.body.appendChild(a);
-                    a.click();
+                    .then(res => {
+                        if (res.ok) return res.blob();
+                        throw new Error('PDF generation failed.');
+                    })
+                    .then(blob => {
+                        const clientNameClean = (formData.get('clientName') || 'Client').toString().trim().replace(/[^a-zA-Z0-9_\-]/g, '_').replace(/_+/g, '_') || 'Client';
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        a.href = url;
+                        a.download = `Financial_Report_for_${clientNameClean}.pdf`;
+                        document.body.appendChild(a);
+                        a.click();
 
-                    if (generatePdfBtn) {
-                        generatePdfBtn.disabled = false;
-                        generatePdfBtn.textContent = 'Download PDF';
-                    }
-                    closeModalFn(pdfModal);
-                    a.remove();
+                        if (generatePdfBtn) {
+                            generatePdfBtn.disabled = false;
+                            generatePdfBtn.textContent = 'Download PDF';
+                        }
+                        closeModalFn(pdfModal);
+                        a.remove();
 
-                    // Log PDF telemetry using AnalyticsLogger (CQS Fix)
-                    const inputs = this.getInputs();
-                    const advisorNameStr = (formData.get('advisorName') || '').toString().trim();
-                    const pdfHasCustomName = advisorNameStr.length > 0;
+                        // Log PDF telemetry using AnalyticsLogger (CQS Fix)
+                        const inputs = this.getInputs();
+                        const advisorNameStr = (formData.get('advisorName') || '').toString().trim();
+                        const pdfHasCustomName = advisorNameStr.length > 0;
 
-                    this.analytics.logInsight(inputs, this.getLatestResults(), this.getActiveGoalMode(), {
-                        pdf_downloaded: true,
-                        pdf_has_custom_name: pdfHasCustomName,
-                        exit_action: 'pdf_download',
-                        interaction_count: this.getInteractionCount()
+                        this.analytics.logInsight(inputs, this.getLatestResults(), this.getActiveGoalMode(), {
+                            pdf_downloaded: true,
+                            pdf_has_custom_name: pdfHasCustomName,
+                            exit_action: 'pdf_download',
+                            interaction_count: this.getInteractionCount()
+                        });
+
+                        setTimeout(() => window.URL.revokeObjectURL(url), 100);
+                    })
+                    .catch(err => {
+                        console.error('PDF generation failed:', err.message);
+                        if (generatePdfBtn) {
+                            generatePdfBtn.disabled = false;
+                            generatePdfBtn.textContent = 'Download PDF';
+                        }
                     });
-
-                    setTimeout(() => window.URL.revokeObjectURL(url), 100);
-                })
-                .catch(err => {
-                    console.error('PDF generation failed:', err.message);
-                    if (generatePdfBtn) {
-                        generatePdfBtn.disabled = false;
-                        generatePdfBtn.textContent = 'Download PDF';
-                    }
-                });
             });
         }
     }

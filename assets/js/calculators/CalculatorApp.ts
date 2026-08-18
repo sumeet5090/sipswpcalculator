@@ -219,6 +219,9 @@ export class CalculatorApp {
             if (sipContainer) {
                 sipContainer.style.opacity = '1';
                 sipContainer.style.pointerEvents = 'auto';
+                sipContainer.removeAttribute('aria-hidden');
+                const sipInputs = sipContainer.querySelectorAll<HTMLInputElement>('input');
+                sipInputs.forEach(input => { input.disabled = false; });
             }
             if (targetCorpusContainer) {
                 targetCorpusContainer.style.display = 'none';
@@ -237,6 +240,9 @@ export class CalculatorApp {
             if (sipContainer) {
                 sipContainer.style.opacity = '0.65';
                 sipContainer.style.pointerEvents = 'none';
+                sipContainer.setAttribute('aria-hidden', 'true');
+                const sipInputs = sipContainer.querySelectorAll<HTMLInputElement>('input');
+                sipInputs.forEach(input => { input.disabled = true; });
             }
             if (targetCorpusContainer) {
                 targetCorpusContainer.style.display = 'block';
@@ -285,7 +291,11 @@ export class CalculatorApp {
         ).init();
         new ShareController(this.dom, () => this.getInputs()).init();
         this.initResizeListeners();
-        new UrlStateController(this.dom, () => this.syncSwpToggleState()).init();
+        new UrlStateController(
+            this.dom,
+            () => this.syncSwpToggleState(),
+            (mode) => this.setGoalMode(mode)
+        ).init();
         this.initEventBusSubscribers();
         this.initInitialCalculation();
     }
@@ -396,14 +406,14 @@ export class CalculatorApp {
 
     private initEventBusSubscribers(): void {
         eventBus.subscribe('input:changed', (inputs: InvestmentInputs) => {
-            if (!this.userHasInteracted) return;
-
             const combined = MathEngine.calculate(inputs);
             this.latestResults = combined;
             this.updateTable(combined, inputs.enable_swp);
             this.updateSummaryMetrics(combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
+
+            if (!this.userHasInteracted) return;
 
             const breakdownEl = this.dom.getElement('yearly-breakdown-section') || this.dom.getElement('breakdown-body');
             const tableViewed = breakdownEl

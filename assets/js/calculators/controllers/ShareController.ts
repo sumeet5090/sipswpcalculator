@@ -16,13 +16,48 @@ export class ShareController {
             shareBtn.addEventListener('click', () => {
                 const inputs = this.getInputs();
                 const params = new URLSearchParams();
+                const appEl = this.dom.getElement('calculator-app');
+                const isSwpMode = (appEl?.dataset?.mode === 'swp');
+
                 params.set('sip', String(inputs.sip));
                 params.set('years', String(inputs.years));
                 params.set('rate', String(inputs.rate));
                 params.set('stepup', String(inputs.stepup));
-                params.set('lumpsum', String(inputs.lumpsum));
+
+                if (isSwpMode) {
+                    params.set('corpus', String(inputs.lumpsum));
+                } else {
+                    params.set('lumpsum', String(inputs.lumpsum));
+                }
+
+                if (inputs.inflation > 0) {
+                    params.set('inflation', String(inputs.inflation));
+                }
+
                 const curVal = this.dom.getValue('currency') || 'INR';
-                params.set('cur', curVal);
+                if (curVal !== 'INR') {
+                    params.set('cur', curVal);
+                }
+
+                const targetCorpusVal = this.dom.getValue('target_corpus');
+                const goalTargetBtn = this.dom.getElement('goal-target');
+                if (goalTargetBtn && goalTargetBtn.getAttribute('aria-checked') === 'true') {
+                    params.set('goal_mode', 'target');
+                    if (targetCorpusVal) {
+                        params.set('target_corpus', String(targetCorpusVal));
+                    }
+                }
+
+                const postTaxToggle = this.dom.getElement<HTMLInputElement>('show_post_tax');
+                if (postTaxToggle?.checked) {
+                    params.set('post_tax', '1');
+                }
+
+                const wealthMapToggle = this.dom.getElement<HTMLInputElement>('show_wealth_map');
+                if (wealthMapToggle?.checked) {
+                    params.set('wealth_map', '1');
+                }
+
                 if (inputs.enable_swp) {
                     params.set('swp_on', '1');
                     params.set('swp', String(inputs.swp_withdrawal));
