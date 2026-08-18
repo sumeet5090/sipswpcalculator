@@ -160,6 +160,11 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 - **Hierarchical Breadcrumb Category Routing:** `BlogController::category()` and `/resource/{category}` route provide category-filtered archives for complete internal linking without 404 dead ends.
 - **Opportunistic Rate-Limiting Garbage Collection:** `FileRateLimitStorage` automatically prunes stale IP JSON files older than 2x the time window to safeguard server disk inodes.
 - **Immediate-Withdrawal Standalone SWP Numerical Engine:** `MathEngine.calculateRequiredStartingCorpusForSwp()` calculates starting corpus requirements based strictly on active accumulation duration without artificial Year 1 offsets.
+- **SQLite WAL Mode & Concurrency Architecture:** `CoreServiceProvider` automatically configures `PRAGMA journal_mode = WAL;`, `PRAGMA synchronous = NORMAL;`, and `PRAGMA busy_timeout = 5000;` on all SQLite PDO connections, eliminating concurrency lock contention during traffic surges.
+- **Session Security & Fixation Protection:** `SessionManager` enforces `HttpOnly` and `SameSite=Lax` cookie attributes, and `AdminAuthService` regenerates session IDs upon login to eliminate session fixation vectors.
+- **Lumpsum SSR Initial Input Parity:** `LumpsumStrategy` provisions explicit `getInitialInputs()` with `lumpsum: 500000` and `sip: 0` so SSR renders genuine Lumpsum calculations.
+- **Mobile Virtual Keyboard CLS Prevention:** `CalculatorApp` filters `window.resize` events to ignore height-only resizes caused by mobile virtual keyboard deployment.
+- **WCAG 2.1 Focus Restoration:** `SmartNudgeController` returns keyboard focus to the trigger button upon popover dismissal.
 
 ### PHPUnit Database & Test Server Isolation
 To ensure test runs do not pollute your development environment, PHPUnit is configured with dedicated isolation primitives:

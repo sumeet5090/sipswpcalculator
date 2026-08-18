@@ -395,7 +395,12 @@ export class CalculatorApp {
 
     private initResizeListeners(): void {
         let resizeTimer: ReturnType<typeof setTimeout> | undefined;
+        let lastWidth = window.innerWidth;
         window.addEventListener('resize', () => {
+            if (window.innerWidth === lastWidth) {
+                return; // Ignore height-only resizes from mobile keyboards to prevent CLS
+            }
+            lastWidth = window.innerWidth;
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
                 this.summaryMetricsController.resetBaseFontCache();

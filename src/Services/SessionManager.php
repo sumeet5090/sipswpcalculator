@@ -13,7 +13,12 @@ class SessionManager
     public function start(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+            $isHttps = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+            session_start([
+                'cookie_httponly' => true,
+                'cookie_samesite' => 'Lax',
+                'cookie_secure'   => $isHttps,
+            ]);
         }
     }
 

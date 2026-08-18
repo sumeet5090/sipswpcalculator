@@ -87,6 +87,10 @@ class MetaManager
         $title = $metadata['title'] ?? ucfirst(str_replace('-', ' ', basename($urlPath)));
         $desc = $metadata['meta_desc'] ?? $metadata['subtitle'] ?? '';
         $canonical = $metadata['canonical'] ?? $this->siteConfig->getUrl($urlPath);
+        $ogImage = $metadata['og_image'] ?? $this->siteConfig->getUrl('/assets/og-image-main.jpg');
+        if (is_string($ogImage) && !str_starts_with($ogImage, 'http')) {
+            $ogImage = $this->siteConfig->getUrl($ogImage);
+        }
 
         return [
             'title' => $title,
@@ -95,6 +99,7 @@ class MetaManager
             'canonical' => $canonical,
             'og_title' => $title,
             'og_desc' => $desc,
+            'og_image' => $ogImage,
         ];
     }
 

@@ -37,7 +37,7 @@ class LogInsightApiAction
 
         // Rate limiting check (max 30 requests per minute per IP)
         try {
-            $ip = (string) $request->server('REMOTE_ADDR', 'unknown');
+            $ip = $request->getClientIp();
             $this->rateLimiter->checkLimit($ip, 'sipswp_log_limits', 30, 60);
         } catch (\Core\Exceptions\RateLimitExceededException $e) {
             return new Response('Rate limit exceeded', 429);

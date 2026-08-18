@@ -36,10 +36,15 @@ class CoreServiceProvider implements ServiceProviderInterface
             if (!file_exists($dbPath) && touch($dbPath) === false) {
                 throw new \RuntimeException("Failed to create database file: {$dbPath}");
             }
-            return new PDO('sqlite:' . $dbPath, null, null, [
+            $pdo = new PDO('sqlite:' . $dbPath, null, null, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_TIMEOUT => 5,
             ]);
+            $pdo->exec('PRAGMA journal_mode = WAL;');
+            $pdo->exec('PRAGMA synchronous = NORMAL;');
+            $pdo->exec('PRAGMA busy_timeout = 5000;');
+            return $pdo;
         });
 
         $container->singleton(SiteConfig::class, function () use ($appUrl) {

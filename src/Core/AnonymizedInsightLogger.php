@@ -30,9 +30,9 @@ class AnonymizedInsightLogger
     {
         try {
             $rawCountryCode = $request ? $request->server('HTTP_CF_IPCOUNTRY') : null;
-            $countryCode = is_string($rawCountryCode) ? substr(trim($rawCountryCode), 0, 10) : null;
+            $countryCode = is_string($rawCountryCode) ? mb_substr(trim($rawCountryCode), 0, 10, 'UTF-8') : null;
             $rawReferrer = $request ? $request->server('HTTP_REFERER') : null;
-            $referrer = is_string($rawReferrer) ? substr($rawReferrer, 0, 512) : null;
+            $referrer = is_string($rawReferrer) ? mb_substr($rawReferrer, 0, 512, 'UTF-8') : null;
             $currency = $payload->currency ?? ($request ? (string) $request->get('currency', 'INR') : 'INR');
 
             $stmt = $this->pdo->prepare("

@@ -118,6 +118,12 @@ export class MathEngine {
      */
     static calculateRequiredSip(inp: InvestmentInputs, targetCorpus: number): number {
         if (targetCorpus <= 0) return 0;
+
+        // Closed-form linear calculation when rate is 0 and stepup is 0
+        if (inp.rate <= 0 && inp.stepup <= 0 && inp.years > 0) {
+            const remaining = Math.max(0, targetCorpus - (inp.lumpsum || 0));
+            return Math.round(remaining / (inp.years * 12));
+        }
         
         const zeroSipResults = this.calculate({ ...inp, sip: 0 });
         if (zeroSipResults[zeroSipResults.length - 1].combined_total >= targetCorpus) {

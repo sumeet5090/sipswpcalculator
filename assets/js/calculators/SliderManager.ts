@@ -76,6 +76,24 @@ export class SliderManager {
             }
             this._inputDebounceTimer = setTimeout(() => this.triggerFn(), 150);
         });
+
+        input.addEventListener('change', () => {
+            if (this._inputDebounceTimer !== null) {
+                clearTimeout(this._inputDebounceTimer);
+                this._inputDebounceTimer = null;
+            }
+            this.triggerFn();
+        });
+
+        input.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Enter') {
+                if (this._inputDebounceTimer !== null) {
+                    clearTimeout(this._inputDebounceTimer);
+                    this._inputDebounceTimer = null;
+                }
+                this.triggerFn();
+            }
+        });
     }
 
     /**

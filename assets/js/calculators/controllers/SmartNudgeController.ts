@@ -52,9 +52,10 @@ export class SmartNudgeController {
                 }
             };
             this.documentKeydownListener = (e: KeyboardEvent) => {
-                if (e.key === 'Escape') {
+                if (e.key === 'Escape' && !nudgePopover.classList.contains('hidden')) {
                     nudgePopover.classList.add('hidden');
                     nudgeBtn.setAttribute('aria-expanded', 'false');
+                    nudgeBtn.focus();
                 }
             };
 

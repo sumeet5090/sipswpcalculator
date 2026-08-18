@@ -166,6 +166,42 @@ class InvestmentInputs
     }
 
     /**
+     * Named constructor for the Lumpsum-only calculator.
+     *
+     * @param array $data POST/GET payload from the Lumpsum calculator form
+     * @param \Services\ConfigService $config ConfigService instance
+     * @return self
+     */
+    public static function fromLumpsumRequest(array $data, \Services\ConfigService $config): self
+    {
+        $cfg = self::loadDefaults($config);
+
+        $lumpsum   = isset($data['lumpsum']) ? self::resolveField('lumpsum', $data, $cfg) : 500000.0;
+        $years     = (int) self::resolveField('years', $data, $cfg);
+        $rate      = self::resolveField('rate', $data, $cfg);
+        $inflation = self::resolveField('inflation', $data, $cfg);
+
+        $ltcgExemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? 125000.0);
+        $ltcgTaxRate   = (float) ($cfg['ltcg_tax']['rate'] ?? 0.125);
+
+        return new self(
+            0.0,
+            $years,
+            $rate,
+            0.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            $lumpsum,
+            0.0,
+            $inflation,
+            $ltcgExemption,
+            $ltcgTaxRate
+        );
+    }
+
+    /**
      * Clamp a numeric value to constraints.
      */
     private static function clamp(float $val, float $min, float $max): float
