@@ -71,7 +71,7 @@ class BlogController
 
     public function show(string $category, string $slug): Response
     {
-        $cleanSlug = basename($slug, '.php');
+        $cleanSlug = trim($slug, '/');
         $path = "/blog/{$category}/{$cleanSlug}";
 
         $content = $this->contentManager->getParsedContent($path);
@@ -83,7 +83,7 @@ class BlogController
         $post_metadata = $this->blogRepository->getPostBySlug($category, $cleanSlug);
         $all_posts = $this->blogRepository->getAllPosts();
 
-        $page_config = $this->metaManager->buildFromMetadata($content['metadata'], $cleanSlug);
+        $page_config = $this->metaManager->buildFromMetadata($content['metadata'], '/resource/' . $category . '/' . $cleanSlug);
 
         if (empty($content['metadata']['title'])) {
             throw new \RuntimeException("Missing 'title' in frontmatter for blog post: {$category}/{$cleanSlug}");

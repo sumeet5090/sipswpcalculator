@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+// Load environment variables via phpdotenv
+$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->safeLoad();
+
 // Force environment DB_PATH to database/database.test.sqlite
 $testDb = __DIR__ . '/../database/database.test.sqlite';
 putenv('DB_PATH=' . $testDb);

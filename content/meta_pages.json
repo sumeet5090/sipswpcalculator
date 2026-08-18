@@ -4,6 +4,39 @@
         "meta_desc": "Free SIP & SWP calculator with step-up compounding, lumpsum & inflation-adjusted withdrawals. Interactive charts, yearly tables & PDF reports. Plan your full mutual fund investment journey.",
         "keywords": "sip swp calculator, sip and swp calculator together, sip swp combo calculator, sip swp combined calculator, sip to swp calculator, step up sip calculator, swp calculator india, mutual fund sip swp calculator, sip calculator with lumpsum, swp planner, investment planner, retirement planning, sip calculator india",
         "og_title": "SIP SWP Calculator Together — Step-Up, Lumpsum & SWP Planner 2026",
-        "og_desc": "Free SIP & SWP calculator with step-up compounding, lumpsum, inflation-adjusted withdrawals, interactive charts, yearly tables & PDF reports. Plan your full mutual fund investment journey — no signup."
+        "og_desc": "Free SIP & SWP calculator with step-up compounding, lumpsum, inflation-adjusted withdrawals, interactive charts, yearly tables & PDF reports. Plan your full mutual fund investment journey.",
+        "schema_name": "SIP & SWP Calculator"
+    },
+    "about": {
+        "title": "About Us — Advanced SIP & SWP Calculator",
+        "meta_desc": "Learn about the mission, engineering, and author behind the Advanced SIP & SWP Calculator for Indian investors.",
+        "og_title": "About Us — Advanced SIP & SWP Calculator",
+        "og_desc": "Learn about the mission, engineering, and author behind the Advanced SIP & SWP Calculator for Indian investors."
+    },
+    "faq": {
+        "title": "FAQ — SIP & SWP Calculator & Mutual Fund Questions",
+        "meta_desc": "Find answers to popular SIP SWP FAQ questions, mutual fund calculation queries, step-up rules, SWP taxation, and retirement planning strategies in India.",
+        "og_title": "FAQ — SIP & SWP Calculator & Mutual Fund Questions",
+        "og_desc": "Find answers to popular SIP SWP FAQ questions, mutual fund calculation queries, step-up rules, SWP taxation, and retirement planning strategies in India."
+    },
+    "glossary": {
+        "title": "Financial Glossary — SIP & SWP Investment Terms Explained",
+        "meta_desc": "Plain-English financial glossary for Indian mutual fund investors. Learn terms like XIRR, SWP, SIP, Step-Up, Expense Ratio, and CAGR.",
+        "og_title": "Financial Glossary — SIP & SWP Investment Terms Explained",
+        "og_desc": "Plain-English financial glossary for Indian mutual fund investors. Learn terms like XIRR, SWP, SIP, Step-Up, Expense Ratio, and CAGR."
+    },
+    "privacy": {
+        "title": "Privacy Policy — SIP & SWP Calculator",
+        "meta_desc": "Privacy Policy for SIP & SWP Calculator. Learn how your parameters and calculations remain 100% private in your browser session.",
+        "og_title": "Privacy Policy — SIP & SWP Calculator",
+        "og_desc": "Privacy Policy for SIP & SWP Calculator. Learn how your parameters and calculations remain 100% private in your browser session.",
+        "robots": "noindex, follow"
+    },
+    "terms": {
+        "title": "Terms of Service — SIP & SWP Calculator",
+        "meta_desc": "Terms of Service for using the SIP & SWP Calculator tool, financial projections, and educational content.",
+        "og_title": "Terms of Service — SIP & SWP Calculator",
+        "og_desc": "Terms of Service for using the SIP & SWP Calculator tool, financial projections, and educational content.",
+        "robots": "noindex, follow"
     }
 }

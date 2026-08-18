@@ -5,7 +5,6 @@ tag: "Comparison"
 tag_color: "amber"
 featured: false
 date: "January 2026"
-canonical: "https://sipswpcalculator.com/resource/comparison/swp-vs-annuity-2026"
 ---
 
 ---

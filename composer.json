@@ -32,6 +32,7 @@
             "@phpstan",
             "@phpcs",
             "@test"
-        ]
+        ],
+        "setup-hooks": "sh scripts/setup-hooks.sh"
     }
 }

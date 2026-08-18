@@ -5,7 +5,6 @@ tag: "Beginner"
 tag_color: "emerald"
 featured: true
 date: "March 2026"
-canonical: "https://sipswpcalculator.com/resource/growth/sip-for-beginners"
 ---
 
 ---

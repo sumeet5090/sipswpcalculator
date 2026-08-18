@@ -5,7 +5,6 @@ tag: "Lifecycle"
 tag_color: "indigo"
 featured: false
 date: "February 2026"
-canonical: "https://sipswpcalculator.com/resource/retirement/sip-vs-swp-wealth-creation-withdrawal-strategy"
 ---
 
 ---

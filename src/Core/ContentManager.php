@@ -32,10 +32,13 @@ class ContentManager
         return array_map(fn($f) => basename($f, '.md'), $files);
     }
 
-    public function getFileModifiedDate(string $path, string $fallback = DateConstants::CONTENT_FALLBACK_DATE): string
+    public function getFileModifiedDate(string $path): string
     {
         $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
-        return file_exists($fullPath) ? date('Y-m-d', filemtime($fullPath)) : $fallback;
+        if (!file_exists($fullPath)) {
+            throw new \RuntimeException("Content markdown file missing at: {$fullPath}");
+        }
+        return date('Y-m-d', filemtime($fullPath));
     }
 
     public function getParsedContent(string $path): ?array

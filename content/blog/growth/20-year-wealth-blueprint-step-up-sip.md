@@ -5,7 +5,6 @@ tag: "Strategy"
 tag_color: "emerald"
 featured: false
 date: "February 2026"
-canonical: "https://sipswpcalculator.com/resource/growth/20-year-wealth-blueprint-step-up-sip"
 ---
 
 ---

@@ -4,8 +4,7 @@ subtitle: "Your definitive guide to mutual fund taxation in India and globally â
 tag: "Tax"
 tag_color: "amber"
 featured: false
-date: "March 2026"
-canonical: "https://sipswpcalculator.com/resource/comparison/mutual-fund-tax-2026"
+date: "January 2026"
 ---
 
 ---

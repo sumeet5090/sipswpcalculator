@@ -5,7 +5,6 @@ tag: "Inflation"
 tag_color: "emerald"
 featured: false
 date: "March 2026"
-canonical: "https://sipswpcalculator.com/resource/growth/inflation-impact-on-sip"
 ---
 
 ---

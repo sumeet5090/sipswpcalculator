@@ -119,13 +119,15 @@ class App
         $this->router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke']);
 
         // Dynamic Calculators Registration
-        foreach ($this->routesConfig['calculators'] as $calc => $action) {
+        foreach ($this->routesConfig['calculators'] as $calc => $config) {
+            $action = is_array($config) && isset($config['action']) ? $config['action'] : $config;
             $this->router->get($calc, $action);
             $this->router->post($calc, $action);
         }
 
         // Dynamic Pages Registration
-        foreach ($this->routesConfig['pages'] as $uri => $action) {
+        foreach ($this->routesConfig['pages'] as $uri => $config) {
+            $action = is_array($config) && isset($config['action']) ? $config['action'] : $config;
             $this->router->get($uri, $action);
         }
 

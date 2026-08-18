@@ -5,7 +5,6 @@ tag: "Milestone"
 tag_color: "emerald"
 featured: false
 date: "January 2026"
-canonical: "https://sipswpcalculator.com/resource/growth/reach-1-crore-rupees-via-sip"
 ---
 
 ---

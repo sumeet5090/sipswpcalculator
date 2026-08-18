@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Controllers;
 
+use Core\Factories\SchemaFactory;
 use Core\FaqRepository;
 use Core\Http\Request;
 use Core\Http\Response;
@@ -18,17 +19,20 @@ class RenderHomeAction
     private ConfigService $configService;
     private FaqRepository $faqRepository;
     private ViewRenderer $viewRenderer;
+    private SchemaFactory $schemaFactory;
 
     public function __construct(
         MetaManager $metaManager,
         ConfigService $configService,
         FaqRepository $faqRepository,
-        ViewRenderer $viewRenderer
+        ViewRenderer $viewRenderer,
+        SchemaFactory $schemaFactory
     ) {
         $this->metaManager = $metaManager;
         $this->configService = $configService;
         $this->faqRepository = $faqRepository;
         $this->viewRenderer = $viewRenderer;
+        $this->schemaFactory = $schemaFactory;
     }
 
     public function __invoke(Request $request): Response
@@ -42,6 +46,8 @@ class RenderHomeAction
         $calcConfig = $this->configService->getCalculatorDefaults();
 
         $siteModified = $this->viewRenderer->getTemplateModifiedDate('calculators/home');
+
+        $page_config['additional_head'] = $this->schemaFactory->generateForHome($page_config, $homeFaqs, $siteModified);
 
         return Response::html($this->viewRenderer->render('calculators/home', [
             'active_page'         => 'index.php',

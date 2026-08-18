@@ -41,12 +41,7 @@ class MetaManager
         }
 
         $this->pageMap = $decoded;
-
-        if (isset($this->pageMap['home']) && !isset($this->pageMap['home']['canonical'])) {
-            $this->pageMap['home']['canonical'] = $this->siteConfig->getUrl('/');
-        }
     }
-
 
     /**
      * Retrieve pre-configured page metadata by key.
@@ -56,7 +51,11 @@ class MetaManager
         $this->loadPageMap();
 
         if (isset($this->pageMap[$pageKey])) {
-            return $this->pageMap[$pageKey];
+            $meta = $this->pageMap[$pageKey];
+            if ($pageKey === 'home' && !isset($meta['canonical'])) {
+                $meta['canonical'] = $this->siteConfig->getUrl('/');
+            }
+            return $meta;
         }
 
         $fallbackTitle = ucfirst(str_replace(['-', '_'], ' ', $pageKey));
@@ -66,11 +65,15 @@ class MetaManager
     /**
      * Build SEO metadata array from a markdown content metadata array.
      */
-    public function buildFromMetadata(array $metadata, string $fallbackSlug): array
+    public function buildFromMetadata(array $metadata, string $urlPath): array
     {
-        $title = $metadata['title'] ?? ucfirst(str_replace('-', ' ', $fallbackSlug));
+        if (!str_starts_with($urlPath, '/')) {
+            throw new \InvalidArgumentException("URL path must start with a slash: {$urlPath}");
+        }
+
+        $title = $metadata['title'] ?? ucfirst(str_replace('-', ' ', basename($urlPath)));
         $desc = $metadata['meta_desc'] ?? $metadata['subtitle'] ?? '';
-        $canonical = $metadata['canonical'] ?? $this->siteConfig->getUrl('/' . ltrim($fallbackSlug, '/'));
+        $canonical = $metadata['canonical'] ?? $this->siteConfig->getUrl($urlPath);
 
         return [
             'title' => $title,

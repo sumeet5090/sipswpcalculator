@@ -7,18 +7,18 @@ use Controllers\RenderGuideAction;
 
 return [
     'calculators' => [
-        '/sip-calculator'            => [RenderGuideAction::class, '__invoke'],
-        '/swp-calculator'            => [RenderGuideAction::class, '__invoke'],
-        '/sip-step-up-calculator'    => [RenderGuideAction::class, '__invoke'],
-        '/lumpsum-calculator'        => [RenderGuideAction::class, '__invoke'],
-        '/retirement-calculator'     => [RenderGuideAction::class, '__invoke'],
-        '/my-first-crore-calculator' => [RenderGuideAction::class, '__invoke']
+        '/sip-calculator'            => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
+        '/swp-calculator'            => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
+        '/sip-step-up-calculator'    => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
+        '/lumpsum-calculator'        => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
+        '/retirement-calculator'     => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
+        '/my-first-crore-calculator' => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly']
     ],
     'pages' => [
-        '/about'    => [PageController::class, 'about'],
-        '/faq'      => [PageController::class, 'faq'],
-        '/glossary' => [PageController::class, 'glossary'],
-        '/privacy'  => [PageController::class, 'privacy'],
-        '/terms'    => [PageController::class, 'terms']
+        '/about'    => ['action' => [PageController::class, 'about'], 'priority' => '0.5', 'changefreq' => 'yearly'],
+        '/faq'      => ['action' => [PageController::class, 'faq'], 'priority' => '0.5', 'changefreq' => 'yearly'],
+        '/glossary' => ['action' => [PageController::class, 'glossary'], 'priority' => '0.5', 'changefreq' => 'yearly'],
+        '/privacy'  => ['action' => [PageController::class, 'privacy'], 'priority' => '0.3', 'changefreq' => 'yearly'],
+        '/terms'    => ['action' => [PageController::class, 'terms'], 'priority' => '0.3', 'changefreq' => 'yearly']
     ]
 ];
