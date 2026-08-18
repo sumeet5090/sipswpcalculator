@@ -117,12 +117,19 @@ export class SummaryMetricsController {
 
         // Apply inflation discounting
         if (inputs.inflation > 0) {
+            const totalYears = inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years;
             finalCorpus = MathEngine.calculateInflationDiscount(
                 finalCorpus,
-                inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years,
+                totalYears,
+                inputs.inflation
+            );
+            finalGains = MathEngine.calculateInflationDiscount(
+                finalGains,
+                totalYears,
                 inputs.inflation
             );
             if (corpusTitle) corpusTitle.textContent += ' (Inflation Adjusted)';
+            if (interestTitle) interestTitle.textContent += ' (Inflation Adjusted)';
         }
 
         const setVal = (id: string, val: number) => {

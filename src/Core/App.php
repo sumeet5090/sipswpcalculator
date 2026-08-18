@@ -153,6 +153,7 @@ class App
         // Blog / Resources Routing
         $this->router->get('/resources', [BlogController::class, 'index']);
         $this->router->get('/resource', [BlogController::class, 'index']);
+        $this->router->get('/resource/{category}', [BlogController::class, 'category']);
         $this->router->get('/resource/{category}/{slug}', [BlogController::class, 'show']);
 
         /** @var RedirectLoader $redirectLoader */

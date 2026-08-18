@@ -46,8 +46,8 @@ export class InputValidator {
                 const cfg = JSON.parse(stateEl.textContent) as RawConfigMap;
                 this.constraints = this._mapConfig(cfg);
                 return;
-            } catch {
-                // Fallback to static defaultsConfig silently
+            } catch (err) {
+                console.warn('[InputValidator] Failed to parse #calculator-app-state Data Island, using static defaults:', err);
             }
         }
 

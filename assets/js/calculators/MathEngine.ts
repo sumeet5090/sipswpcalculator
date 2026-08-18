@@ -164,7 +164,7 @@ export class MathEngine {
             const testInp: InvestmentInputs = {
                 ...inp,
                 sip: 0,
-                years: 1,
+                years: (inp.years && inp.years > 0) ? inp.years : 0,
                 lumpsum: mid
             };
             const results = this.calculate(testInp);

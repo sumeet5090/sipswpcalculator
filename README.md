@@ -155,6 +155,11 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 - **Excel-Compatible UTF-8 BOM CSV Streaming:** `CsvExportService` automatically prepends `\xEF\xBB\xBF` Byte Order Marks to raw CSV output streams, guaranteeing correct rendering of Rupee `(₹)` currency symbols in Microsoft Excel across all operating systems.
 - **Robust Canonical Metadata Key Normalization:** `MetaManager::getMeta` normalizes leading and trailing slashes (`trim($pageKey, '/')`), ensuring both `about` and `/about` resolve canonical URLs and meta descriptions deterministically.
 - **Client-Side Negative Currency Formatting Parity:** `CurrencyFormatter.ts` handles negative numbers with leading negative prefixes (`-₹ 50 Lakh`), maintaining visual parity with backend `CurrencyHelper.php`.
+- **Reverse Proxy Client IP Discovery:** `Request::getClientIp()` inspects `CF-Connecting-IP`, `X-Forwarded-For`, and `Client-IP` headers with `FILTER_VALIDATE_IP` validation, preventing rate-limiting collisions on cloud load balancers.
+- **Query String Preserving Dynamic Redirection:** `Router::dispatch()` preserves incoming query strings across 301 dynamic redirects, preventing loss of UTM marketing tags and URL state.
+- **Hierarchical Breadcrumb Category Routing:** `BlogController::category()` and `/resource/{category}` route provide category-filtered archives for complete internal linking without 404 dead ends.
+- **Opportunistic Rate-Limiting Garbage Collection:** `FileRateLimitStorage` automatically prunes stale IP JSON files older than 2x the time window to safeguard server disk inodes.
+- **Immediate-Withdrawal Standalone SWP Numerical Engine:** `MathEngine.calculateRequiredStartingCorpusForSwp()` calculates starting corpus requirements based strictly on active accumulation duration without artificial Year 1 offsets.
 
 ### PHPUnit Database & Test Server Isolation
 To ensure test runs do not pollute your development environment, PHPUnit is configured with dedicated isolation primitives:

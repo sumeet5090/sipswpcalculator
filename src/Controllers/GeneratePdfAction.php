@@ -50,7 +50,7 @@ class GeneratePdfAction
 
         // Rate limiting check
         try {
-            $ip = (string) $request->server('REMOTE_ADDR', 'unknown');
+            $ip = $request->getClientIp();
             $this->rateLimiter->checkLimit($ip, 'sipswp_rate_limits', 10, 60);
         } catch (RateLimitExceededException $e) {
             return new Response('Too many requests. Please wait a minute before generating another PDF.', 429);

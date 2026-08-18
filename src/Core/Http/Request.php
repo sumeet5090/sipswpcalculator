@@ -65,6 +65,29 @@ class Request
         return $this->files[$key] ?? null;
     }
 
+    public function getClientIp(): string
+    {
+        $headers = [
+            'HTTP_CF_CONNECTING_IP',
+            'HTTP_X_FORWARDED_FOR',
+            'HTTP_CLIENT_IP',
+            'REMOTE_ADDR'
+        ];
+
+        foreach ($headers as $header) {
+            $value = $this->server[$header] ?? null;
+            if ($value !== null && is_string($value) && trim($value) !== '') {
+                $ips = explode(',', $value);
+                $ip = trim($ips[0]);
+                if (filter_var($ip, FILTER_VALIDATE_IP)) {
+                    return $ip;
+                }
+            }
+        }
+
+        return '127.0.0.1';
+    }
+
     public function isPost(): bool
     {
         return $this->getMethod() === 'POST';

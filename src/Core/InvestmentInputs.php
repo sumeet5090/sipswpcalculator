@@ -95,7 +95,7 @@ class InvestmentInputs
         $years         = (int) self::resolveField('years', $data, $cfg);
         $rate          = self::resolveField('rate', $data, $cfg);
         $stepup        = self::resolveField('stepup', $data, $cfg);
-        $enableSwp     = isset($data['enable_swp']) && (bool)$data['enable_swp'];
+        $enableSwp     = filter_var($data['enable_swp'] ?? false, FILTER_VALIDATE_BOOLEAN);
         $swpWithdrawal = self::resolveField('swp_withdrawal', $data, $cfg);
         $swpStepup     = self::resolveField('swp_stepup', $data, $cfg);
         $swpYears      = (int) self::resolveField('swp_years', $data, $cfg);

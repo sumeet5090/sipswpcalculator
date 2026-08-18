@@ -53,7 +53,12 @@ class Router
 
         $coreHandler = function (Request $req) use ($method, $uri): Response {
             if (array_key_exists($uri, $this->redirects)) {
-                return Response::redirect($this->redirects[$uri], 301);
+                $target = $this->redirects[$uri];
+                $queryString = (string) $req->server('QUERY_STRING', '');
+                if ($queryString !== '') {
+                    $target .= (str_contains($target, '?') ? '&' : '?') . $queryString;
+                }
+                return Response::redirect($target, 301);
             }
 
             if (isset($this->routes[$method][$uri])) {

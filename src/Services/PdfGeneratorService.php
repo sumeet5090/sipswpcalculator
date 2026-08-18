@@ -35,6 +35,7 @@ class PdfGeneratorService
         $options = new Options();
         $options->set('isRemoteEnabled', false);
         $options->set('defaultFont', 'Helvetica');
+        $options->set('isFontSubsettingEnabled', true);
         $options->set('isPhpEnabled', false);
         $options->set('isJavascriptEnabled', false);
 

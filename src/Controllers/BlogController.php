@@ -69,6 +69,38 @@ class BlogController
         ]));
     }
 
+    public function category(string $category): Response
+    {
+        $all_posts = $this->blogRepository->getAllPosts();
+        $categories = $this->blogRepository->getCategories();
+
+        $filtered_posts = array_filter($all_posts, fn($p) => strtolower((string)($p['seo_category'] ?? '')) === strtolower($category));
+
+        if (empty($filtered_posts) && !in_array($category, $categories, true)) {
+            throw new \Core\Exceptions\RouteNotFoundException("Resource category not found: {$category}");
+        }
+
+        $posts_by_cat = [];
+        foreach ($all_posts as $post) {
+            $posts_by_cat[$post['seo_category']][] = $post;
+        }
+
+        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
+            'Home' => '/',
+            'Resources' => '/resources',
+            ucfirst($category) => "/resource/{$category}"
+        ]);
+
+        return Response::html($this->viewRenderer->render('pages/resources', [
+            'active_page'       => 'resources.php',
+            'all_posts'         => !empty($filtered_posts) ? array_values($filtered_posts) : $all_posts,
+            'posts_by_cat'      => $posts_by_cat,
+            'categories'        => $categories,
+            'selected_category' => $category,
+            'breadcrumbs'       => $breadcrumbs_schema,
+        ]));
+    }
+
     public function show(string $category, string $slug): Response
     {
         $cleanSlug = trim($slug, '/');

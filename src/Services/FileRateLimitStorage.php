@@ -61,5 +61,32 @@ class FileRateLimitStorage implements RateLimitStorageInterface
             flock($fp, LOCK_UN);
             fclose($fp);
         }
+
+        $this->pruneStaleFiles($rateLimitDir, $windowSeconds);
+    }
+
+    /**
+     * Opportunistically prune stale rate limit JSON files to prevent inode exhaustion.
+     */
+    private function pruneStaleFiles(string $dir, int $windowSeconds): void
+    {
+        if (random_int(1, 100) !== 1) {
+            return;
+        }
+
+        $files = glob($dir . '*.json');
+        if (!$files) {
+            return;
+        }
+
+        $now = time();
+        $staleThreshold = $windowSeconds * 2;
+
+        foreach ($files as $file) {
+            $mtime = filemtime($file);
+            if ($mtime !== false && ($now - $mtime) > $staleThreshold) {
+                @unlink($file);
+            }
+        }
     }
 }
