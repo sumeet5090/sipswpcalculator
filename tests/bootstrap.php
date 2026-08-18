@@ -26,9 +26,12 @@ try {
     exit(1);
 }
 
-// Clean up the test database file after the PHPUnit process finishes
+// Clean up test database files (main db, WAL log, and shared memory index) after PHPUnit finishes
 register_shutdown_function(function () use ($testDb) {
-    if (file_exists($testDb) && !unlink($testDb)) {
-        error_log("PHPUnit Bootstrap: Failed to clean up test database file at {$testDb}");
+    $filesToClean = [$testDb, $testDb . '-wal', $testDb . '-shm'];
+    foreach ($filesToClean as $file) {
+        if (file_exists($file) && !unlink($file)) {
+            error_log("PHPUnit Bootstrap: Failed to clean up test database file at {$file}");
+        }
     }
 });

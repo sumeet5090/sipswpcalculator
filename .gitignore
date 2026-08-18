@@ -10,8 +10,8 @@ stage/
 .DS_Store
 
 # --- Database ---
-database/database.sqlite
-database/database.sqlite-*
+database/*.sqlite
+database/*.sqlite-*
 
 # --- Logs & Temps ---
 *.log
