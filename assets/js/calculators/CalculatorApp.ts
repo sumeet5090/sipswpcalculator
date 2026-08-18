@@ -148,23 +148,44 @@ export class CalculatorApp {
      * Show/Hide SWP withdrawal configurations.
      */
     syncSwpToggleState(): void {
-        const isChecked = this.dom.getElement<HTMLInputElement>('enable_swp')?.checked || false;
+        const appEl = this.dom.getElement('calculator-app');
+        const isSwpMode = (appEl?.dataset?.mode === 'swp');
+        const toggleEl = this.dom.getElement<HTMLInputElement>('enable_swp');
+
+        let isChecked = false;
+        if (isSwpMode) {
+            isChecked = true;
+        } else if (toggleEl) {
+            isChecked = (toggleEl.type === 'checkbox') ? toggleEl.checked : (toggleEl.value === '1');
+        }
+
+        if (toggleEl) {
+            toggleEl.setAttribute('aria-expanded', isChecked ? 'true' : 'false');
+        }
+
         const fields = this.dom.getElement('swp-fields');
-        if (!fields) return;
+        if (fields) {
+            fields.setAttribute('aria-hidden', isChecked ? 'false' : 'true');
+
+            const childInputs = fields.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select');
+            childInputs.forEach(input => {
+                input.disabled = !isChecked;
+            });
+
+            if (isChecked) {
+                fields.style.display = 'block';
+                setTimeout(() => { fields.style.opacity = '1'; }, 10);
+                fields.style.pointerEvents = 'auto';
+            } else {
+                fields.style.opacity = '0.5';
+                fields.style.pointerEvents = 'none';
+                fields.style.display = 'none';
+            }
+        }
 
         this.dom.getElements<HTMLElement>('swp-col').forEach(el => {
             el.style.display = isChecked ? '' : 'none';
         });
-
-        if (isChecked) {
-            fields.style.display = 'block';
-            setTimeout(() => { fields.style.opacity = '1'; }, 10);
-            fields.style.pointerEvents = 'auto';
-        } else {
-            fields.style.opacity = '0.5';
-            fields.style.pointerEvents = 'none';
-            fields.style.display = 'none';
-        }
 
         this.triggerCalculation();
     }
@@ -399,22 +420,25 @@ export class CalculatorApp {
 
     private initInitialCalculation(): void {
         const runInitCalc = () => {
-            let swpEnabledOnLoad = false;
             const urlSwpOn = (new URLSearchParams(window.location.search)).get('swp_on') === '1';
             const initialSwpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
-            if (initialSwpToggle && (initialSwpToggle.checked || urlSwpOn)) {
-                swpEnabledOnLoad = true;
-                if (urlSwpOn) initialSwpToggle.checked = true;
-                this.syncSwpToggleState();
-            } else if (this.dom.getElement('calculator-app')?.dataset?.mode === 'swp') {
-                swpEnabledOnLoad = true;
-                if (initialSwpToggle) {
-                    initialSwpToggle.checked = true;
-                    this.syncSwpToggleState();
+            const isSwpMode = (this.dom.getElement('calculator-app')?.dataset?.mode === 'swp');
+
+            if (initialSwpToggle) {
+                if (urlSwpOn || isSwpMode) {
+                    if (initialSwpToggle.type === 'checkbox') {
+                        initialSwpToggle.checked = true;
+                    } else {
+                        initialSwpToggle.value = '1';
+                    }
                 }
+                this.syncSwpToggleState();
+            } else if (isSwpMode) {
+                this.syncSwpToggleState();
             }
 
             const initialInputs = this.getInputs();
+            const swpEnabledOnLoad = initialInputs.enable_swp;
             let existingData: YearResult[] = [];
             try {
                 existingData = MathEngine.calculate(initialInputs);

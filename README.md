@@ -147,6 +147,7 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 - **Dynamic Route Metadata & Sitemap Priority (`routes.php` & `SitemapController`):** Sitemap priorities (`priority`) and change frequencies (`changefreq`) are defined directly in `src/Core/Config/routes.php` per route definition, decoupling `SitemapController` from hardcoded path lists.
 - **Automated Git Pre-Commit Quality Assurance (`composer setup-hooks`):** Local development environment includes a git pre-commit hook installer (`scripts/setup-hooks.sh`), executing `composer check-all` (PHPStan, PHPCS, and PHPUnit) automatically before allowing commits.
 - **Granular Micro-Componentization (`home-guide-content.twig`):** Bloated structural templates are split into focused, single-responsibility components (`guide-definitions`, `guide-how-to`, `guide-formulas`, `guide-examples`, `guide-historical-data`, `guide-risks`, `guide-faq`) included by the parent view.
+- **State-Driven SWP Disclosure Panel Parity & WCAG Accessibility:** `CalculatorApp.ts` and Twig templates (`calculator-form.twig`, `calculator-guide.twig`) enforce state-driven initial SSR and client hydration parity for disclosure panels (`#swp-fields`). When `enable_swp` is OFF, fields are visually hidden (`display: none`), marked with `aria-hidden="true"`, and child inputs are set to `disabled` for keyboard accessibility.
 
 ### PHPUnit Database & Test Server Isolation
 To ensure test runs do not pollute your development environment, PHPUnit is configured with dedicated isolation primitives:
