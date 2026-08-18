@@ -31,11 +31,11 @@
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@id": "https://sipswpcalculator.com/#calculator",
+      "@id": "{{ site_url }}/#calculator",
       "@type": "SoftwareApplication",
       "name": "Advanced SIP & SWP Calculator",
       "alternateName": ["SIP Calculator", "SWP Calculator", "Step-Up SIP Calculator", "Mutual Fund SIP Calculator", "SIP Return Calculator", "SWP Retirement Planner"],
-      "url": "https://sipswpcalculator.com/",
+      "url": "{{ site_url }}/",
       "applicationCategory": "FinanceApplication",
       "applicationSubCategory": "Investment Calculator",
       "operatingSystem": "Web",
@@ -63,24 +63,24 @@
         "Shareable URL with pre-filled parameters",
         "SIP vs FD vs PPF comparison data"
       ],
-      "screenshot": "https://sipswpcalculator.com/assets/og-image-main.jpg",
-      "image": "https://sipswpcalculator.com/assets/og-image-main.jpg",
+      "screenshot": "{{ site_url }}/assets/og-image-main.jpg",
+      "image": "{{ site_url }}/assets/og-image-main.jpg",
       "datePublished": "2024-12-01",
       "dateModified": "2026-08-02",
       "softwareVersion": "3.0",
       "releaseNotes": "Locked default currency to INR (₹), updated Indian tax integrations, and optimized performance.",
       "author": {
-        "@id": "https://sipswpcalculator.com/#author"
+        "@id": "{{ site_url }}/#author"
       },
       "publisher": {
-        "@id": "https://sipswpcalculator.com/#organization"
+        "@id": "{{ site_url }}/#organization"
       },
       "potentialAction": {
         "@type": "UseAction",
         "name": "Calculate SIP & SWP Returns",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": "https://sipswpcalculator.com/?sip={sip}&years={years}&rate={rate}&stepup={stepup}",
+          "urlTemplate": "{{ site_url }}/?sip={sip}&years={years}&rate={rate}&stepup={stepup}",
           "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"],
           "inLanguage": "en"
         },
@@ -134,14 +134,14 @@
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@id": "https://sipswpcalculator.com/#financialproduct",
+      "@id": "{{ site_url }}/#financialproduct",
       "@type": "FinancialProduct",
       "name": "SIP & SWP Investment Planning Tool",
       "alternateName": "Mutual Fund SIP Return Calculator",
       "description": "Free financial planning tool for calculating Systematic Investment Plan (SIP) returns with annual step-up compounding and Systematic Withdrawal Plan (SWP) retirement income projections. Supports monthly SIP amounts from ₹1 to ₹10,000,00, investment periods from 1 to 50 years, expected annual returns from 1% to 70%, and annual step-up percentages from 0% to 50%. SWP module supports monthly withdrawals with inflation-adjusted step-up from 0% to 20%. Uses month-by-month simulation with compound interest for accuracy superior to simple annuity formulas. Verified against standard mutual fund industry methodology. Diversified equity funds have historically delivered approximately 10-15% CAGR over 20-year rolling periods. SIP inflows globally have exceeded billions of dollars per month.",
-      "url": "https://sipswpcalculator.com/",
+      "url": "{{ site_url }}/",
       "provider": {
-        "@id": "https://sipswpcalculator.com/#organization"
+        "@id": "{{ site_url }}/#organization"
       },
       "category": "Investment Planning Tool",
       "feesAndCommissionsSpecification": "Completely free — no fees, commissions, or registration required",
@@ -151,12 +151,12 @@
       },
       "availableChannel": {
         "@type": "ServiceChannel",
-        "serviceUrl": "https://sipswpcalculator.com/",
+        "serviceUrl": "{{ site_url }}/",
         "availableLanguage": "English"
       },
-      "termsOfService": "https://sipswpcalculator.com/terms",
+      "termsOfService": "{{ site_url }}/terms",
       "broker": {
-        "@id": "https://sipswpcalculator.com/#author"
+        "@id": "{{ site_url }}/#author"
       },
       "currenciesAccepted": "INR",
       "sameAs": [
@@ -170,30 +170,30 @@
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@id": "https://sipswpcalculator.com/#website",
+      "@id": "{{ site_url }}/#website",
       "@type": "WebSite",
       "name": "Advanced SIP & SWP Calculator",
       "alternateName": "sipswpcalculator.com",
-      "url": "https://sipswpcalculator.com/",
+      "url": "{{ site_url }}/",
       "description": "Free online SIP calculator with step-up compounding and SWP retirement planner. Uses month-by-month simulation based on standard mutual fund methodology. Features interactive charts, yearly breakdown tables, CSV exports, and branded PDF reports. Trusted by investors and financial advisors worldwide.",
       "inLanguage": "en",
       "publisher": {
-        "@id": "https://sipswpcalculator.com/#organization"
+        "@id": "{{ site_url }}/#organization"
       },
       "creator": {
-        "@id": "https://sipswpcalculator.com/#author"
+        "@id": "{{ site_url }}/#author"
       },
       "datePublished": "2024-12-01",
       "dateModified": "{{ site_modified|default('2026-03-02') }}",
       "copyrightYear": 2024,
       "copyrightHolder": {
-        "@id": "https://sipswpcalculator.com/#author"
+        "@id": "{{ site_url }}/#author"
       },
       "potentialAction": {
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": "https://sipswpcalculator.com/?sip={sip_amount}"
+          "urlTemplate": "{{ site_url }}/?sip={sip_amount}"
         },
         "query-input": "required name=sip_amount"
       }
@@ -204,21 +204,21 @@
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@id": "https://sipswpcalculator.com/#organization",
+      "@id": "{{ site_url }}/#organization",
       "@type": "Organization",
       "name": "SIP & SWP Calculator",
       "legalName": "SIP SWP Calculator",
-      "url": "https://sipswpcalculator.com/",
+      "url": "{{ site_url }}/",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://sipswpcalculator.com/assets/favicon.svg",
+        "url": "{{ site_url }}/assets/favicon.svg",
         "width": 512,
         "height": 512
       },
       "description": "Publisher of free, open-access financial planning tools for SIP and SWP calculations. All formulas verified against standard mutual fund industry methodology. Used by individual investors, financial advisors, and global investors for mutual fund return projections.",
       "foundingDate": "2024-12-01",
       "founder": {
-        "@id": "https://sipswpcalculator.com/#author"
+        "@id": "{{ site_url }}/#author"
       },
       "contactPoint": {
         "@type": "ContactPoint",
@@ -247,11 +247,11 @@
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@id": "https://sipswpcalculator.com/#author",
+      "@id": "{{ site_url }}/#author",
       "@type": "Person",
       "name": "Sumeet Boga",
-      "url": "https://sipswpcalculator.com/about",
-      "image": "https://sipswpcalculator.com/assets/sumeet-boga-56.jpg",
+      "url": "{{ site_url }}/about",
+      "image": "{{ site_url }}/assets/sumeet-boga-56.jpg",
       "jobTitle": "Software Engineer & Finance Enthusiast",
       "description": "Creator of the Advanced SIP & SWP Calculator. Software developer specializing in financial planning tools with expertise in mutual fund return calculations, step-up compounding methodology, and tax-efficient withdrawal planning.",
       "sameAs": [
@@ -265,7 +265,7 @@
         "Retirement Income Planning"
       ],
       "worksFor": {
-        "@id": "https://sipswpcalculator.com/#organization"
+        "@id": "{{ site_url }}/#organization"
       }
     }
 </script>
@@ -274,13 +274,13 @@
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@id": "https://sipswpcalculator.com/#howto",
+      "@id": "{{ site_url }}/#howto",
       "@type": "HowTo",
       "name": "How to Calculate SIP Returns with Step-Up Compounding",
       "description": "Step-by-step guide to using the Advanced SIP & SWP Calculator to project mutual fund returns, plan retirement withdrawals, and export branded PDF reports. The calculator uses month-by-month simulation with the annuity due formula for compounding accuracy.",
       "totalTime": "PT2M",
       "tool": {
-        "@id": "https://sipswpcalculator.com/#calculator"
+        "@id": "{{ site_url }}/#calculator"
       },
       "step": [
         {
@@ -288,21 +288,21 @@
           "position": 1,
           "name": "Enter SIP Investment Details",
           "text": "Set your monthly SIP amount (₹1 to ₹10,000,00), investment period (1-50 years), expected annual return rate (1-30%), and optional annual step-up percentage (0-50%). A 10% step-up is recommended to match average salary growth worldwide.",
-          "url": "https://sipswpcalculator.com/#calculator-heading"
+          "url": "{{ site_url }}/#calculator-heading"
         },
         {
           "@type": "HowToStep",
           "position": 2,
           "name": "Configure SWP Retirement Withdrawals (Optional)",
           "text": "Enable the SWP toggle to plan systematic withdrawals. Set your desired monthly withdrawal amount, withdrawal period (1-50 years), and yearly step-up (0-20%) to combat inflation. The SWP phase begins automatically after your SIP period ends. The 4% rule suggests keeping annual withdrawals below 4% of your corpus for a sustainable 30-year retirement.",
-          "url": "https://sipswpcalculator.com/#calculator-heading"
+          "url": "{{ site_url }}/#calculator-heading"
         },
         {
           "@type": "HowToStep",
           "position": 3,
           "name": "Analyze Results and Export Reports",
           "text": "View the interactive growth chart showing invested capital vs corpus value, review the yearly breakdown table with monthly SIP/SWP amounts, interest earned, and end-of-year corpus. Export results as CSV for spreadsheet analysis or generate a branded PDF report with your company logo, client name, and custom disclaimer for client presentations.",
-          "url": "https://sipswpcalculator.com/#yearly-breakdown"
+          "url": "{{ site_url }}/#yearly-breakdown"
         }
       ]
     }
@@ -330,12 +330,13 @@
     </div>
 
     <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
-        <span class="text-gradient block mb-2">SIP + SWP Calculator Together</span>
-        <span class="text-gray-800 text-2xl sm:text-4xl md:text-5xl block">Free Combined Mutual Fund Planner India</span>
+        <span class="text-gradient block mb-2">SIP SWP Calculator Together</span>
+        <span class="text-gray-800 text-2xl sm:text-4xl md:text-5xl block">Step-Up SIP + Lumpsum + Inflation-Adjusted SWP Planner</span>
     </h1>
     
     <p class="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-6">
-        Use our SIP and SWP calculators <strong>together</strong> to see your full investment journey with our <strong>combo</strong> calculator.
+        Use our SIP and SWP calculators <strong>together</strong> with <strong>step-up compounding</strong>,
+        <strong>lumpsum</strong> start, and <strong>inflation-adjusted</strong> withdrawals — all in one <strong>combo</strong> calculator.
     </p>
 
     <!-- EEAT Trust Bar -->
@@ -382,12 +383,12 @@
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "SIP and SWP Calculator Together — Combined Mutual Fund Planner 2026",
+  "name": "SIP SWP Calculator Together — Combined Mutual Fund Planner 2026",
   "speakable": {
     "@type": "SpeakableSpecification",
     "cssSelector": ["#quick-answer"]
   },
-  "url": "https://sipswpcalculator.com/"
+  "url": "{{ site_url }}/"
 }
 </script>
 
