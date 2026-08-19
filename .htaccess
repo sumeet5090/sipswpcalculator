@@ -86,7 +86,7 @@ Header unset Server
 
   # ── SECURITY: Block common attack patterns in URLs ──
   # Block SQL injection attempts in query strings
-  RewriteCond %{QUERY_STRING} (union|select|insert|drop|delete|update|concat|char|hex|load_file|outfile|information_schema) [NC]
+  RewriteCond %{QUERY_STRING} (union\+select|union\s+all\s+select|information_schema|load_file|into\s+outfile|benchmark\(|sleep\(|schema\() [NC]
   RewriteRule .* - [F,L]
 
   # Block path traversal (../ or ..\)

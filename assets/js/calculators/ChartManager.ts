@@ -48,7 +48,14 @@ export class ChartManager {
             script.src = 'https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js';
             script.async = true;
             script.onload = () => resolve();
-            script.onerror = () => reject(new Error('Failed to load Chart.js script'));
+            script.onerror = () => {
+                const fallbackScript = document.createElement('script');
+                fallbackScript.src = 'https://unpkg.com/chart.js@3.7.1/dist/chart.min.js';
+                fallbackScript.async = true;
+                fallbackScript.onload = () => resolve();
+                fallbackScript.onerror = () => reject(new Error('Failed to load Chart.js script from CDN'));
+                document.head.appendChild(fallbackScript);
+            };
             document.head.appendChild(script);
         });
 

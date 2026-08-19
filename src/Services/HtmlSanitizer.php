@@ -24,14 +24,14 @@ class HtmlSanitizer
     public function extractChartData(string $chartRaw): string
     {
         $chartRaw = trim($chartRaw);
-        if ($chartRaw !== '' && preg_match('/^data:image\/(png|jpeg|gif|webp);base64,/i', $chartRaw)) {
+        if ($chartRaw !== '' && preg_match('/^data:image\/(png|jpeg|gif);base64,/i', $chartRaw)) {
             return $chartRaw;
         }
         return '';
     }
 
     /**
-     * Sanitize HTML table strings allowing safe report tags only.
+     * Sanitize HTML table strings allowing safe report tags only and auto-repairing unbalanced tags.
      */
     public function sanitizeTableHtml(string $tableRaw): string
     {
@@ -43,6 +43,23 @@ class HtmlSanitizer
             '<table><thead><tbody><tfoot><tr><th><td><caption><colgroup><col><span><strong><em><br>'
         );
         $clean = (string) preg_replace('/\s+on\w+\s*=\s*["\'][^"\']*["\']/i', '', $clean);
-        return (string) preg_replace('/\s+style\s*=\s*["\'][^"\']*expression\s*\([^"\']*["\']/i', '', $clean);
+        $clean = (string) preg_replace('/\s+style\s*=\s*["\'][^"\']*expression\s*\([^"\']*["\']/i', '', $clean);
+
+        // Auto-balance and repair unclosed/broken HTML table tags via DOMDocument
+        $dom = new \DOMDocument();
+        $libxmlState = libxml_use_internal_errors(true);
+        $dom->loadHTML('<?xml encoding="utf-8" ?>' . $clean, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        libxml_clear_errors();
+        libxml_use_internal_errors($libxmlState);
+
+        $tables = $dom->getElementsByTagName('table');
+        if ($tables->length > 0) {
+            $table = $tables->item(0);
+            if ($table) {
+                return (string) $dom->saveHTML($table);
+            }
+        }
+
+        return $clean !== '' ? $clean : '<table><tr><td>No data</td></tr></table>';
     }
 }

@@ -51,9 +51,15 @@ export class AnalyticsService {
             const deviceType = extraSignals.device_type ?? 'desktop';
             const currencyCode = extraSignals.currency || 'INR';
 
+            const isLumpsumOnly = !inputs.enable_swp && inputs.lumpsum > 0 && inputs.sip === 0;
+            const calcType = inputs.enable_swp ? 'SWP' : (isLumpsumOnly ? 'Lumpsum' : 'SIP');
+            const primaryAmount = inputs.enable_swp
+                ? inputs.swp_withdrawal
+                : (isLumpsumOnly ? inputs.lumpsum : inputs.sip);
+
             const payload = {
-                calc_type: inputs.enable_swp ? 'SWP' : 'SIP',
-                amount: inputs.enable_swp ? inputs.swp_withdrawal : inputs.sip,
+                calc_type: calcType,
+                amount: primaryAmount,
                 duration: inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years,
                 step_up_pct: inputs.enable_swp ? inputs.swp_stepup : inputs.stepup,
                 currency: currencyCode,

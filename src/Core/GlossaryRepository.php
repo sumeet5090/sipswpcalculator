@@ -46,7 +46,7 @@ class GlossaryRepository
 
         $sortedTerms = $decoded;
         usort($sortedTerms, function (array $a, array $b) {
-            return strcmp($a['q'] ?? '', $b['q'] ?? '');
+            return strcasecmp($a['q'] ?? '', $b['q'] ?? '');
         });
 
         $this->terms = $sortedTerms;
@@ -86,17 +86,23 @@ class GlossaryRepository
     }
 
     /**
-     * Convert glossary terms to key-value pairs for FAQ schema generation.
+     * Convert top glossary terms to key-value pairs for FAQ schema generation.
      *
+     * @param int $limit Maximum terms to include in JSON-LD schema (prevents schema bloat)
      * @return array<string, string>
      */
-    public function toFaqSchemaData(): array
+    public function toFaqSchemaData(int $limit = 15): array
     {
         $terms = $this->getAll();
         $faqData = [];
+        $count = 0;
         foreach ($terms as $term) {
             if (isset($term['q'], $term['a'])) {
                 $faqData[$term['q']] = $term['a'];
+                $count++;
+                if ($count >= $limit) {
+                    break;
+                }
             }
         }
         return $faqData;

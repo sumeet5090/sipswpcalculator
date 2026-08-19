@@ -60,8 +60,11 @@ class BlogController
             'Resources' => '/resources'
         ]);
 
+        $page_config = $this->metaManager->getMeta('resources');
+
         return Response::html($this->viewRenderer->render('pages/resources', [
-            'active_page'  => 'resources.php',
+            'page_config'  => $page_config,
+            'active_page'  => 'resources',
             'all_posts'    => $all_posts,
             'posts_by_cat' => $posts_by_cat,
             'categories'   => $categories,
@@ -91,8 +94,17 @@ class BlogController
             ucfirst($category) => "/resource/{$category}"
         ]);
 
+        $catMeta = $categories[$category] ?? [];
+        $catTitle = !empty($catMeta['title']) ? $catMeta['title'] : ucfirst($category);
+        $page_config = $this->metaManager->setDynamicMeta(
+            "{$catTitle} Resources — SIP & SWP Calculator",
+            "Expert financial guides and calculators for {$catTitle}.",
+            $this->siteConfig->getUrl("/resource/{$category}")
+        );
+
         return Response::html($this->viewRenderer->render('pages/resources', [
-            'active_page'       => 'resources.php',
+            'page_config'       => $page_config,
+            'active_page'       => 'resources',
             'all_posts'         => !empty($filtered_posts) ? array_values($filtered_posts) : $all_posts,
             'posts_by_cat'      => $posts_by_cat,
             'categories'        => $categories,
@@ -140,6 +152,8 @@ class BlogController
             }
         }
 
+        $currentUri = "/resource/{$category}/{$cleanSlug}";
+
         $page_config['additional_head'] = $this->schemaFactory->generateForPage(
             $category . '/' . $cleanSlug,
             'blog',
@@ -147,7 +161,7 @@ class BlogController
             $datePublished,
             [],
             $breadcrumbs,
-            $this->siteConfig->getUrl('/resource/' . $category . '/' . $cleanSlug)
+            $this->siteConfig->getUrl($currentUri)
         );
 
         return Response::html($this->viewRenderer->render('layouts/generic-post', [
@@ -157,6 +171,7 @@ class BlogController
             'post_metadata'    => $post_metadata,
             'seo_category'     => $category,
             'active_page'      => 'blog_post',
+            'current_uri'      => $currentUri,
             'all_posts'        => $all_posts,
             'date_published'   => $datePublished,
             'date_modified'    => $dateModified,

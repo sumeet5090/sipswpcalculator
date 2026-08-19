@@ -25,6 +25,8 @@ class ErrorController
             ? $this->viewRenderer->render('pages/404', [
                 'page_config' => [
                     'title' => 'Page Not Found - 404',
+                    'meta_desc' => 'The requested page could not be found. Return to SIP & SWP Calculator to plan your investments.',
+                    'canonical' => '',
                     'robots' => 'noindex, follow'
                 ]
               ])
@@ -45,6 +47,8 @@ class ErrorController
                 'error' => $errorMessage,
                 'page_config' => [
                     'title' => 'Internal Server Error - 500',
+                    'meta_desc' => 'An internal server error occurred while processing your calculation request.',
+                    'canonical' => '',
                     'robots' => 'noindex, nofollow'
                 ]
               ])
@@ -59,6 +63,8 @@ class ErrorController
             ? $viewRenderer->render('pages/404', [
                 'page_config' => [
                     'title' => 'Page Not Found - 404',
+                    'meta_desc' => 'The requested page could not be found. Return to SIP & SWP Calculator to plan your investments.',
+                    'canonical' => '',
                     'robots' => 'noindex, follow'
                 ]
               ])
@@ -89,6 +95,8 @@ class ErrorController
                 'error' => $errorMessage,
                 'page_config' => [
                     'title' => 'Internal Server Error - 500',
+                    'meta_desc' => 'An internal server error occurred while processing your calculation request.',
+                    'canonical' => '',
                     'robots' => 'noindex, nofollow'
                 ]
               ])

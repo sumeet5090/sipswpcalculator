@@ -37,9 +37,9 @@ class FileUploadService
             throw new RuntimeException('Uploaded file is not a valid image.');
         }
 
-        $allowedTypes = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF, IMAGETYPE_WEBP];
+        $allowedTypes = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF];
         if (!in_array($imageInfo[2], $allowedTypes, true)) {
-            throw new RuntimeException('Invalid image type. Only JPEG, PNG, GIF, and WebP are allowed.');
+            throw new RuntimeException('Invalid image type. Only JPEG, PNG, and GIF are allowed for PDF report generation.');
         }
 
         if ($imageInfo[0] > 2000 || $imageInfo[1] > 2000) {

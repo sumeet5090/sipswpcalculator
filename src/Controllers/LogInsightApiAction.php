@@ -48,9 +48,9 @@ class LogInsightApiAction
             return new Response('Payload Too Large', 413);
         }
 
-        $data = $request->getJsonBody();
+        $data = $request->getParsedBody();
 
-        if ($data === null || !isset($data['calc_type'], $data['amount'], $data['duration'])) {
+        if (empty($data) || !isset($data['calc_type'], $data['amount'], $data['duration'])) {
             return new Response('Invalid payload', 400);
         }
 

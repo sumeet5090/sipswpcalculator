@@ -40,7 +40,9 @@ class RedirectLoader
         if (isset($redirectsData['stubs']) && is_array($redirectsData['stubs'])) {
             foreach ($redirectsData['stubs'] as $old => $new) {
                 $router->redirect($old, $new);
-                $router->redirect($old . '.php', $new);
+                if (substr_count($old, '/') <= 1) {
+                    $router->redirect($old . '.php', $new);
+                }
             }
         }
     }

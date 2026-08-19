@@ -43,6 +43,7 @@ class PageController
 
         return Response::html($this->viewRenderer->render('pages/about', [
             'page_config' => $page_config,
+            'active_page' => 'about',
         ]));
     }
 
@@ -56,6 +57,7 @@ class PageController
             'faqs' => $faqs,
             'faq_categories' => $faq_categories,
             'page_config' => $page_config,
+            'active_page' => 'faq',
         ]));
     }
 
@@ -78,6 +80,7 @@ class PageController
             'breadcrumbs' => $breadcrumbs,
             'faq_schema' => $faq,
             'page_config' => $page_config,
+            'active_page' => 'glossary',
         ]));
     }
 
@@ -93,6 +96,7 @@ class PageController
         return Response::html($this->viewRenderer->render('pages/privacy', [
             'breadcrumbs' => $breadcrumbs,
             'page_config' => $page_config,
+            'active_page' => 'privacy',
         ]));
     }
 
@@ -108,6 +112,7 @@ class PageController
         return Response::html($this->viewRenderer->render('pages/terms', [
             'breadcrumbs' => $breadcrumbs,
             'page_config' => $page_config,
+            'active_page' => 'terms',
         ]));
     }
 }

@@ -67,7 +67,7 @@ export class ShareController {
                 }
                 const shareUrl = window.location.origin + window.location.pathname + '?' + params.toString();
 
-                navigator.clipboard.writeText(shareUrl).then(() => {
+                const showCopiedFeedback = () => {
                     const btnText = this.dom.getElement('shareBtnText');
                     if (btnText) btnText.textContent = 'Copied!';
                     shareBtn.classList.remove('text-emerald-600', 'border-indigo-200');
@@ -77,10 +77,34 @@ export class ShareController {
                         shareBtn.classList.add('text-emerald-600', 'border-indigo-200');
                         shareBtn.classList.remove('text-emerald-700', 'border-emerald-300', 'bg-emerald-50');
                     }, 2000);
-                }).catch(() => {
-                    prompt('Copy this link:', shareUrl);
-                });
+                };
+
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(shareUrl).then(showCopiedFeedback).catch(() => {
+                        this.fallbackCopy(shareUrl, showCopiedFeedback);
+                    });
+                } else {
+                    this.fallbackCopy(shareUrl, showCopiedFeedback);
+                }
             });
+        }
+    }
+
+    private fallbackCopy(text: string, onSuccess: () => void): void {
+        try {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+            onSuccess();
+        } catch {
+            // Silently complete if clipboard is fully restricted
         }
     }
 }

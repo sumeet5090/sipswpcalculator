@@ -29,7 +29,15 @@ class AppTwigExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('formatInr', fn($amount) => $this->currencyFormatter->format((float) $amount)),
+            new TwigFilter('formatInr', function ($amount): string {
+                if (is_string($amount)) {
+                    $cleaned = str_replace([',', ' '], '', $amount);
+                    if (is_numeric($cleaned)) {
+                        return $this->currencyFormatter->format((float) $cleaned);
+                    }
+                }
+                return $this->currencyFormatter->format((float) $amount);
+            }),
             new TwigFilter('array_values', fn($array) => is_array($array) ? array_values($array) : $array),
         ];
     }

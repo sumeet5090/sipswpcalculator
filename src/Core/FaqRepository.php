@@ -65,13 +65,11 @@ class FaqRepository
         foreach ($this->faqs as $faq) {
             $catId = $faq['category'] ?? '';
             if ($catId !== '' && !isset($seen[$catId])) {
-                if (!isset($labels[$catId])) {
-                    throw new \DomainException("Unmapped FAQ category label for category ID: '{$catId}'");
-                }
+                $label = $labels[$catId] ?? ucfirst(str_replace(['-', '_'], ' ', $catId));
                 $seen[$catId] = true;
                 $categories[] = [
                     'id' => $catId,
-                    'label' => $labels[$catId],
+                    'label' => $label,
                 ];
             }
         }

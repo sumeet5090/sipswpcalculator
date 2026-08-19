@@ -44,15 +44,36 @@ readonly class InsightPayload
      */
     public static function fromArray(array $data): self
     {
-        $toBoolInt = fn(string $key): int => (!empty($data[$key]) && $data[$key] !== 'false') ? 1 : 0;
+        $toBoolInt = function (string $key) use ($data): int {
+            if (!isset($data[$key])) {
+                return 0;
+            }
+            $val = $data[$key];
+            if (is_bool($val)) {
+                return $val ? 1 : 0;
+            }
+            $filtered = filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            return $filtered === true ? 1 : 0;
+        };
+
+        $currency = (!empty($data['currency']) && is_string($data['currency']))
+            ? trim($data['currency'])
+            : 'INR';
+
+        $pdfDownloaded = false;
+        if (isset($data['pdf_downloaded'])) {
+            $pdfDownloaded = is_bool($data['pdf_downloaded'])
+                ? $data['pdf_downloaded']
+                : (filter_var($data['pdf_downloaded'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? false);
+        }
 
         return new self(
             calcType: (string) ($data['calc_type'] ?? 'SIP'),
             amount: (float) ($data['amount'] ?? 0.0),
             duration: (int) ($data['duration'] ?? 0),
             stepUpPct: (float) ($data['step_up_pct'] ?? 0.0),
-            currency: array_key_exists('currency', $data) ? (string) $data['currency'] : 'INR',
-            pdfDownloaded: !empty($data['pdf_downloaded']) && $data['pdf_downloaded'] !== 'false',
+            currency: $currency,
+            pdfDownloaded: $pdfDownloaded,
             interestRate: isset($data['interest_rate']) ? (float) $data['interest_rate'] : null,
             sipAmount: isset($data['sip_amount']) ? (float) $data['sip_amount'] : null,
             sipDuration: isset($data['sip_duration']) ? (int) $data['sip_duration'] : null,

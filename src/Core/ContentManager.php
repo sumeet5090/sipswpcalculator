@@ -62,6 +62,17 @@ class ContentManager
 
         $html = $this->parsedown->text($body);
 
+        // Inject slug IDs and scroll-margin-top into h2 and h3 headings for SSR deep linking & TOC parity
+        $html = (string) preg_replace_callback('/<h([23])(?:\s+class="([^"]*)")?>(.*?)<\/h\1>/i', function ($matches) {
+            $level = $matches[1];
+            $existingClass = (string) $matches[2];
+            $text = $matches[3];
+            $plainText = strip_tags($text);
+            $slug = strtolower(trim((string) preg_replace('/[^a-zA-Z0-9]+/', '-', $plainText), '-'));
+            $classes = trim($existingClass . ' scroll-mt-28');
+            return "<h{$level} id=\"{$slug}\" class=\"{$classes}\">{$text}</h{$level}>";
+        }, $html);
+
         return [
             'metadata' => $metadata,
             'html' => $html

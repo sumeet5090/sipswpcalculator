@@ -35,6 +35,9 @@ class StrategyFactory
     public function create(string $slug): CalculatorStrategyInterface
     {
         $key = ltrim($slug, '/');
+        if ($key === '') {
+            $key = 'sip-calculator';
+        }
         if (!isset($this->strategyMap[$key])) {
             throw new \DomainException("No calculator strategy mapped for slug: '{$key}'");
         }

@@ -82,13 +82,28 @@ class PdfReportTemplate implements PdfTemplateInterface
         </html>";
     }
 
+    private static function parseFormattedAmount(string $formatted): float
+    {
+        $clean = (float) preg_replace('/[^\d.]/', '', $formatted);
+        if (stripos($formatted, 'Crore') !== false || stripos($formatted, 'Cr') !== false) {
+            return $clean * 10000000;
+        }
+        if (stripos($formatted, 'Lakh') !== false || stripos($formatted, 'L') !== false) {
+            return $clean * 100000;
+        }
+        if (stripos($formatted, 'k') !== false) {
+            return $clean * 1000;
+        }
+        return $clean;
+    }
+
     private static function calculateMultiplier(float $rawInvested, float $rawCorpus, string $summaryInvested, string $summaryCorpus): string
     {
         if ($rawInvested > 0 && $rawCorpus > 0) {
             return number_format($rawCorpus / $rawInvested, 2) . 'x';
         }
-        $cleanCorpus = (float) preg_replace('/[^\d.]/', '', $summaryCorpus);
-        $cleanInvested = (float) preg_replace('/[^\d.]/', '', $summaryInvested);
+        $cleanCorpus = self::parseFormattedAmount($summaryCorpus);
+        $cleanInvested = self::parseFormattedAmount($summaryInvested);
         if ($cleanInvested > 0 && $cleanCorpus > 0) {
             return number_format($cleanCorpus / $cleanInvested, 2) . 'x';
         }
