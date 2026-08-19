@@ -5,6 +5,7 @@
 @source "../../src/Views/**/*.php";
 @source "../../src/Core/**/*.php";
 @source "../../src/Controllers/**/*.php";
+@source "../../assets/js/**/*.ts";
 
 /* Custom theme: replicate the old tailwind.config from the CDN inline script */
 @theme {

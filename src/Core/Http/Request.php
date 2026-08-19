@@ -100,6 +100,15 @@ class Request
 
     public function getParsedBody(): array
     {
+        if (!empty($this->post)) {
+            return $this->post;
+        }
+
+        $json = $this->getJsonBody();
+        if ($json !== null) {
+            return $json;
+        }
+
         return $this->post;
     }
 

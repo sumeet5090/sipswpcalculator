@@ -40,11 +40,15 @@ class ViteHelper
         }
 
         // Fast socket check to see if dev server port is open
-        $connection = @fsockopen($this->devHost, $this->devPort, $errno, $errstr, 0.05);
-        if (is_resource($connection)) {
-            fclose($connection);
-            $this->devServerActive = true;
-            return true;
+        $hosts = array_unique([$this->devHost, '127.0.0.1', 'localhost']);
+        foreach ($hosts as $host) {
+            $connection = @fsockopen($host, $this->devPort, $errno, $errstr, 0.05);
+            if (is_resource($connection)) {
+                fclose($connection);
+                $this->devHost = $host;
+                $this->devServerActive = true;
+                return true;
+            }
         }
 
         $this->devServerActive = false;

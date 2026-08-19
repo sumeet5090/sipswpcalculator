@@ -91,13 +91,29 @@ class BlogRepository
             if ($a['featured'] !== $b['featured']) {
                 return $b['featured'] ? 1 : -1;
             }
-            $dateA = \DateTimeImmutable::createFromFormat('F Y', $a['date']) ?: new \DateTimeImmutable('1970-01-01');
-            $dateB = \DateTimeImmutable::createFromFormat('F Y', $b['date']) ?: new \DateTimeImmutable('1970-01-01');
+            $dateA = $this->parsePostDate((string) ($a['date'] ?? ''));
+            $dateB = $this->parsePostDate((string) ($b['date'] ?? ''));
             return $dateB <=> $dateA;
         });
 
         $this->cachedPosts = $posts;
         return $this->cachedPosts;
+    }
+
+    private function parsePostDate(string $rawDate): \DateTimeImmutable
+    {
+        $formats = ['F Y', 'Y-m-d', 'd F Y', 'Y-m', 'M Y', 'F d, Y', 'Y/m/d'];
+        foreach ($formats as $fmt) {
+            $parsed = \DateTimeImmutable::createFromFormat($fmt, trim($rawDate));
+            if ($parsed !== false) {
+                return $parsed;
+            }
+        }
+        try {
+            return new \DateTimeImmutable($rawDate);
+        } catch (\Throwable) {
+            return new \DateTimeImmutable('1970-01-01');
+        }
     }
 
     /**

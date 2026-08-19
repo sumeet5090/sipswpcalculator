@@ -30,6 +30,8 @@ abstract class IntegrationTestCase extends TestCase
         exec($command, $output);
         self::$serverPid = (int)($output[0] ?? 0);
 
+        register_shutdown_function([self::class, 'stopLocalServer']);
+
         // Wait up to 1 second for the server to bind and start responding
         $maxRetries = 10;
         $started = false;
