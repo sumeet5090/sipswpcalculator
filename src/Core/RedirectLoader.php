@@ -33,15 +33,19 @@ class RedirectLoader
 
         if (isset($redirectsData['blog_redirects']) && is_array($redirectsData['blog_redirects'])) {
             foreach ($redirectsData['blog_redirects'] as $slug => $target) {
-                $router->redirect("/resource/{$slug}", "/resource/{$target}");
+                if ($slug !== $target) {
+                    $router->redirect("/resource/{$slug}", "/resource/{$target}");
+                }
             }
         }
 
         if (isset($redirectsData['stubs']) && is_array($redirectsData['stubs'])) {
             foreach ($redirectsData['stubs'] as $old => $new) {
-                $router->redirect($old, $new);
-                if (substr_count($old, '/') <= 1) {
-                    $router->redirect($old . '.php', $new);
+                if ($old !== $new) {
+                    $router->redirect($old, $new);
+                    if (substr_count($old, '/') <= 1) {
+                        $router->redirect($old . '.php', $new);
+                    }
                 }
             }
         }

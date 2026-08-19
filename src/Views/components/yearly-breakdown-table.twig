@@ -54,11 +54,9 @@
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Monthly SIP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Annual SIP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">Total Invested</th>
-                        {% if calculator_type != 'sip' %}
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Monthly SWP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Annual SWP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Total Withdrawn</th>
-                        {% endif %}
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Interest</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap tax-col" style="display:none">LTCG Tax</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">End Corpus</th>

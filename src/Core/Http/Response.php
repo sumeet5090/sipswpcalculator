@@ -75,6 +75,9 @@ class Response
         if (!isset($headers['Content-Type'])) {
             $headers['Content-Type'] = 'text/html; charset=utf-8';
         }
+        if (!isset($headers['Cache-Control'])) {
+            $headers['Cache-Control'] = 'no-cache, private';
+        }
 
         return new self($html, $statusCode, $headers);
     }

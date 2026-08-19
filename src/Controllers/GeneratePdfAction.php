@@ -61,6 +61,16 @@ class GeneratePdfAction
             $calcInputs = InvestmentInputs::fromRequest($post, $this->configService);
             $combined = $this->calculator->calculate($calcInputs);
 
+            // Derive verified server-side summary values from calculated schedule
+            $lastRow = !empty($combined) ? $combined[count($combined) - 1] : [];
+            $serverInvested = (float) ($lastRow['cumulative_invested'] ?? 0);
+            $serverInterest = (float) array_sum(array_column($combined, 'interest'));
+            $serverWithdrawn = (float) ($lastRow['cumulative_withdrawals'] ?? 0);
+            $serverCorpus = (float) ($lastRow['combined_total'] ?? 0);
+
+            $sym = $this->sanitizer->sanitizeText((string) ($post['currency_symbol'] ?? '₹'), 10);
+            $formatter = new \Core\CurrencyHelper();
+
             $inputs = [
                 'client_name'       => $this->sanitizer->sanitizeText((string) ($post['clientName'] ?? 'N/A'), 100),
                 'advisor_name'      => $this->sanitizer->sanitizeText((string) ($post['advisorName'] ?? 'N/A'), 100),
@@ -78,28 +88,31 @@ class GeneratePdfAction
                 'swp_rate'          => $calcInputs->getSwpRate(),
                 'logo_base64'       => $this->fileUploadService->processLogoUpload($request->files('advisorLogo')),
 
-                // Summary Metrics
-                'currency_symbol'   => $this->sanitizer->sanitizeText((string) ($post['currency_symbol'] ?? ''), 10),
-                'summary_invested'  => $this->sanitizer->sanitizeText((string) ($post['summary_invested'] ?? '0'), 50),
-                'summary_interest'  => $this->sanitizer->sanitizeText((string) ($post['summary_interest'] ?? '0'), 50),
-                'summary_withdrawn' => $this->sanitizer->sanitizeText((string) ($post['summary_withdrawn'] ?? '0'), 50),
-                'summary_corpus'    => $this->sanitizer->sanitizeText((string) ($post['summary_corpus'] ?? '0'), 50),
-                'raw_invested'      => max(0.0, (float) ($post['raw_invested'] ?? 0)),
-                'raw_corpus'        => max(0.0, (float) ($post['raw_corpus'] ?? 0)),
+                // Verified Summary Metrics
+                'currency_symbol'   => $sym,
+                'summary_invested'  => $formatter->format($serverInvested),
+                'summary_interest'  => $formatter->format($serverInterest),
+                'summary_withdrawn' => $formatter->format($serverWithdrawn),
+                'summary_corpus'    => $formatter->format($serverCorpus),
+                'raw_invested'      => $serverInvested,
+                'raw_corpus'        => $serverCorpus,
                 'combined_results'  => $combined,
             ];
 
             // Generate PDF binary using injected PdfGeneratorService
             $pdf_binary = $this->pdfGenerator->generate($inputs);
 
-            $raw_name = trim($inputs['client_name']);
-            $clean_name = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $raw_name) ?: 'Client';
-            $clean_name = (string) preg_replace('/_+/', '_', $clean_name);
-            $filename = "Financial_Report_for_{$clean_name}.pdf";
+            $raw_name = trim((string) $inputs['client_name']);
+            $unicode_name = preg_replace('/[^\p{L}\p{N}_\- ]/u', '', $raw_name) ?: 'Client';
+            $clean_unicode = (string) preg_replace('/\s+/', '_', trim($unicode_name));
+            $ascii_name = (string) preg_replace('/[^a-zA-Z0-9_\-]/', '_', $raw_name) ?: 'Client';
+            $ascii_name = (string) preg_replace('/_+/', '_', $ascii_name) ?: 'Client';
+            $filename = "Financial_Report_for_{$ascii_name}.pdf";
+            $encodedFilename = rawurlencode("Financial_Report_for_{$clean_unicode}.pdf");
 
             return new Response($pdf_binary, 200, [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                'Content-Disposition' => "attachment; filename=\"{$filename}\"; filename*=UTF-8''{$encodedFilename}",
                 'Content-Length' => (string) strlen($pdf_binary),
                 'Cache-Control' => 'private, max-age=0, must-revalidate',
                 'Pragma' => 'public',

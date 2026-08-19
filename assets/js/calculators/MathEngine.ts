@@ -117,16 +117,16 @@ export class MathEngine {
      * Binary Search to find the required starting SIP to reach a target corpus.
      */
     static calculateRequiredSip(inp: InvestmentInputs, targetCorpus: number): number {
-        if (targetCorpus <= 0) return 0;
+        if (targetCorpus <= 0 || inp.years <= 0) return 0;
 
         // Closed-form linear calculation when rate is 0 and stepup is 0
-        if (inp.rate <= 0 && inp.stepup <= 0 && inp.years > 0) {
+        if (inp.rate <= 0 && inp.stepup <= 0) {
             const remaining = Math.max(0, targetCorpus - (inp.lumpsum || 0));
             return Math.round(remaining / (inp.years * 12));
         }
         
         const zeroSipResults = this.calculate({ ...inp, sip: 0 });
-        if (zeroSipResults[zeroSipResults.length - 1].combined_total >= targetCorpus) {
+        if (zeroSipResults.length > 0 && zeroSipResults[zeroSipResults.length - 1].combined_total >= targetCorpus) {
             return 0;
         }
         
@@ -139,6 +139,7 @@ export class MathEngine {
             const mid = (low + high) / 2;
             const testInp: InvestmentInputs = { ...inp, sip: mid };
             const results = this.calculate(testInp);
+            if (results.length === 0) break;
             const finalCorpus = results[results.length - 1].combined_total;
             
             if (Math.abs(finalCorpus - targetCorpus) < 1) {
@@ -174,6 +175,7 @@ export class MathEngine {
                 lumpsum: mid
             };
             const results = this.calculate(testInp);
+            if (results.length === 0) break;
             const finalBalance = results[results.length - 1].combined_total;
             const ranOutEarly = results.some((r, idx) => idx < results.length - 1 && r.combined_total <= 0);
 

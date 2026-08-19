@@ -166,6 +166,12 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 - **Lumpsum SSR Initial Input Parity:** `LumpsumStrategy` provisions explicit `getInitialInputs()` with `lumpsum: 500000` and `sip: 0` so SSR renders genuine Lumpsum calculations.
 - **Mobile Virtual Keyboard CLS Prevention:** `CalculatorApp` filters `window.resize` events to ignore height-only resizes caused by mobile virtual keyboard deployment.
 - **WCAG 2.1 Focus Restoration:** `SmartNudgeController` returns keyboard focus to the trigger button upon popover dismissal.
+- **Yearly Breakdown Row Inflation Discounting:** `ResultsController.ts` passes `row.year` into `MathEngine.calculateInflationDiscount()`, ensuring the breakdown table reflects precise per-year compound discounting.
+- **Hydration Layout Shift Prevention:** `CurrencyHelper.php` and `CurrencyHelper.ts` standardize on the canonical unspaced Rupee format (`"₹1,00,000"`), eliminating text-shift and CLS during client-side hydration.
+- **OWASP CSV Formula Injection Neutralization:** `CsvExportService` automatically sanitizes cells starting with formula characters (`=`, `+`, `-`, `@`, `\t`, `\r`) with single quotes and supports multi-currency column headers.
+- **Reverse Proxy SSL Security:** `SessionManager` detects `HTTP_X_FORWARDED_PROTO: https` to set `cookie_secure: true` when running behind Cloudflare or AWS ALBs, and purges `$_SESSION` in memory upon destruction.
+- **Container Circular Dependency Detection:** `Container.resolve()` tracks resolving classes via recursion stack, throwing descriptive exceptions on cyclical references.
+- **HTTP 308 Trailing Slash Normalization:** `TrailingSlashRedirectMiddleware` uses RFC 9110 HTTP 308 Permanent Redirect for POST requests, preserving request bodies and HTTP methods.
 
 ### PHPUnit Database & Test Server Isolation
 To ensure test runs do not pollute your development environment, PHPUnit is configured with dedicated isolation primitives:

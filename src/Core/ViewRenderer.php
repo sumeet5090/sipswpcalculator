@@ -42,6 +42,7 @@ class ViewRenderer
         $this->twig = new Environment($loader, [
             'cache' => $effectiveCache,
             'debug' => !$isProd,
+            'auto_reload' => !$isProd,
         ]);
 
         $this->twig->addGlobal('env', $env);

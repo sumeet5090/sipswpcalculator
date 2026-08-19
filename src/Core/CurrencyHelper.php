@@ -56,7 +56,7 @@ class CurrencyHelper implements CurrencyFormatterInterface
             $delimiter = $firstPart . $lastThree;
         }
 
-        $prefix = $isNegative ? "-₹ " : "₹ ";
+        $prefix = $isNegative ? "-₹" : "₹";
         return $prefix . $delimiter;
     }
 }

@@ -17,6 +17,7 @@ class Container implements ContainerInterface
 {
     private array $bindings = [];
     private array $instances = [];
+    private array $resolving = [];
 
     public function __construct()
     {
@@ -40,51 +41,49 @@ class Container implements ContainerInterface
     public function singleton(string $key, callable|object|string $resolver): void
     {
         $key = ltrim($key, '\\');
-        $this->bindings[$key] = function (self $container) use ($resolver, $key) {
-            if (!isset($container->instances[$key])) {
-                if (is_callable($resolver)) {
-                    $container->instances[$key] = $resolver($container);
-                } elseif (is_string($resolver) && class_exists($resolver)) {
-                    $container->instances[$key] = $container->resolve($resolver);
-                } else {
-                    $container->instances[$key] = $resolver;
-                }
+        $this->bindings[$key] = function (Container $container) use ($key, $resolver) {
+            if (is_callable($resolver)) {
+                $resolved = $resolver($container);
+            } elseif (is_string($resolver) && class_exists($resolver)) {
+                $resolved = $container->resolve($resolver);
+            } elseif (is_object($resolver)) {
+                $resolved = $resolver;
+            } else {
+                throw new ContainerException("Invalid singleton resolver provided for key: {$key}");
             }
-            return $container->instances[$key];
+            $container->instances[$key] = $resolved;
+            return $resolved;
         };
     }
 
     /**
-     * Check if the container has a binding or instance for the given identifier.
+     * Bind an already existing instance as a singleton.
+     */
+    public function instance(string $key, object $instance): void
+    {
+        $key = ltrim($key, '\\');
+        $this->instances[$key] = $instance;
+    }
+
+    /**
+     * Check if a binding or singleton instance exists.
      */
     public function has(string $id): bool
     {
         $id = ltrim($id, '\\');
-        if (isset($this->instances[$id]) || isset($this->bindings[$id])) {
-            return true;
-        }
-
-        if (!class_exists($id)) {
-            return false;
-        }
-
-        try {
-            $reflector = new \ReflectionClass($id);
-            return $reflector->isInstantiable();
-        } catch (\Throwable) {
-            return false;
-        }
+        return isset($this->instances[$id]) || isset($this->bindings[$id]) || class_exists($id);
     }
 
     /**
-     * Retrieve and resolve a class instance by its identifier.
+     * Retrieve an instance from the container by key.
      *
-     * @throws NotFoundException if entry is not found
-     * @throws ContainerException if error while retrieving the entry
+     * @throws NotFoundException if the key cannot be found/resolved
+     * @throws ContainerException on generic dependency resolution failures
      */
     public function get(string $id): mixed
     {
         $id = ltrim($id, '\\');
+
         if (isset($this->instances[$id])) {
             return $this->instances[$id];
         }
@@ -93,10 +92,12 @@ class Container implements ContainerInterface
             $resolver = $this->bindings[$id];
             if (is_callable($resolver)) {
                 $resolved = $resolver($this);
-            } else {
-                $resolved = $resolver;
+                return $resolved;
             }
-            return $resolved;
+            if (is_string($resolver) && class_exists($resolver)) {
+                return $this->resolve($resolver);
+            }
+            return $resolver;
         }
 
         return $this->resolve($id);
@@ -111,9 +112,19 @@ class Container implements ContainerInterface
     public function resolve(string $class): object
     {
         $class = ltrim($class, '\\');
+        if (interface_exists($class)) {
+            throw new ContainerException("Cannot instantiate interface {$class}. Please bind an implementation in a ServiceProvider.");
+        }
         if (!class_exists($class)) {
             throw new NotFoundException("Class {$class} does not exist.");
         }
+
+        if (isset($this->resolving[$class])) {
+            $chain = implode(' -> ', array_keys($this->resolving)) . ' -> ' . $class;
+            throw new ContainerException("Circular dependency detected while resolving {$class} [{$chain}].");
+        }
+
+        $this->resolving[$class] = true;
 
         try {
             $reflector = new \ReflectionClass($class);
@@ -157,6 +168,8 @@ class Container implements ContainerInterface
             throw $e;
         } catch (\Throwable $e) {
             throw new ContainerException("Failed to resolve class {$class}: " . $e->getMessage(), 0, $e);
+        } finally {
+            unset($this->resolving[$class]);
         }
     }
 }

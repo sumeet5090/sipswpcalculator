@@ -98,9 +98,13 @@ class ViteHelper
         $entryKey = ltrim($entry, '/');
         $html = '';
 
-        if (isset($this->manifest[$entryKey]['css'])) {
-            foreach ($this->manifest[$entryKey]['css'] as $cssFile) {
-                $html .= '<link rel="stylesheet" href="/dist/' . $cssFile . '">';
+        if (isset($this->manifest[$entryKey])) {
+            if (isset($this->manifest[$entryKey]['css']) && is_array($this->manifest[$entryKey]['css'])) {
+                foreach ($this->manifest[$entryKey]['css'] as $cssFile) {
+                    $html .= '<link rel="stylesheet" href="/dist/' . $cssFile . '">';
+                }
+            } elseif (isset($this->manifest[$entryKey]['file']) && str_ends_with($this->manifest[$entryKey]['file'], '.css')) {
+                $html .= '<link rel="stylesheet" href="/dist/' . $this->manifest[$entryKey]['file'] . '">';
             }
         }
 

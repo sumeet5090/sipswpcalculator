@@ -33,10 +33,16 @@ class DownloadCsvAction
 
     public function __invoke(Request $request): Response
     {
-        $inputs = InvestmentInputs::fromRequest($request->getParsedBody(), $this->configService);
+        $body = $request->getParsedBody();
+        $inputs = InvestmentInputs::fromRequest($body, $this->configService);
         $enableSwp = $inputs->isSwpEnabled();
         $combined = $this->calculator->calculate($inputs);
-        $csvContent = $this->csvExportService->generate($combined, $enableSwp);
+
+        $currency = strtoupper((string) ($body['currency'] ?? $body['cur'] ?? 'INR'));
+        $symbolMap = ['INR' => '₹', 'USD' => '$', 'EUR' => '€', 'GBP' => '£', 'AED' => 'AED', 'CAD' => '$', 'AUD' => '$'];
+        $sym = $symbolMap[$currency] ?? '₹';
+
+        $csvContent = $this->csvExportService->generate($combined, $enableSwp, $sym);
 
         return Response::csv($csvContent, 'SIP_SWP_Yearly_Report.csv');
     }

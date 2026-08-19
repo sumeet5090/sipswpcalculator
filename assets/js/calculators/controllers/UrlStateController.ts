@@ -36,9 +36,25 @@ export class UrlStateController {
 
         for (const [key, id] of Object.entries(paramMap)) {
             if (urlParams.has(key)) {
-                const val = urlParams.get(key) || '';
-                this.dom.setValue(id, val);
-                this.dom.setValue(id + '_range', val);
+                const rawVal = urlParams.get(key) || '';
+                const numVal = parseFloat(rawVal);
+                if (!isNaN(numVal)) {
+                    const inputEl = this.dom.getElement<HTMLInputElement>(id);
+                    const rangeEl = this.dom.getElement<HTMLInputElement>(id + '_range');
+
+                    let clampedVal = numVal;
+                    if (inputEl) {
+                        const min = parseFloat(inputEl.getAttribute('min') || '0');
+                        const max = parseFloat(inputEl.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
+                        clampedVal = Math.min(Math.max(numVal, min), max);
+                        inputEl.value = String(clampedVal);
+                        inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+                    if (rangeEl) {
+                        rangeEl.value = String(clampedVal);
+                        rangeEl.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+                }
             }
         }
 

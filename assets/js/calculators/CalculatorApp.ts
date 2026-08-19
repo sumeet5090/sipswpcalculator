@@ -174,10 +174,10 @@ export class CalculatorApp {
 
             if (isChecked) {
                 fields.style.display = 'block';
-                setTimeout(() => { fields.style.opacity = '1'; }, 10);
+                fields.style.opacity = '1';
                 fields.style.pointerEvents = 'auto';
             } else {
-                fields.style.opacity = '0.5';
+                fields.style.opacity = '0';
                 fields.style.pointerEvents = 'none';
                 fields.style.display = 'none';
             }
@@ -343,25 +343,29 @@ export class CalculatorApp {
         const swpWithdrawalRange = this.dom.getElement('swp_withdrawal_range');
         const swpYears = this.dom.getElement('swp_years');
         const swpYearsRange = this.dom.getElement('swp_years_range');
+        let swpRaf: number | null = null;
         const handleSwpInput = () => {
-            const inputs = this.getInputs();
-            if (inputs.enable_swp && inputs.swp_withdrawal > 0 && inputs.swp_years > 0) {
-                const reqCorpus = MathEngine.calculateRequiredStartingCorpusForSwp(inputs);
-                if (this.activeGoalMode === 'target') {
-                    this.dom.setValue('target_corpus', reqCorpus);
+            if (swpRaf) cancelAnimationFrame(swpRaf);
+            swpRaf = requestAnimationFrame(() => {
+                const inputs = this.getInputs();
+                if (inputs.enable_swp && inputs.swp_withdrawal > 0 && inputs.swp_years > 0) {
+                    const reqCorpus = MathEngine.calculateRequiredStartingCorpusForSwp(inputs);
+                    if (this.activeGoalMode === 'target') {
+                        this.dom.setValue('target_corpus', reqCorpus);
 
-                    const targetRangeEl = this.dom.getElement<HTMLInputElement>('target_corpus_range');
-                    if (targetRangeEl) {
-                        const defaultMax = parseFloat(targetRangeEl.getAttribute('max') || '50000000');
-                        if (reqCorpus > defaultMax) {
-                            targetRangeEl.max = String(reqCorpus);
-                        } else {
-                            targetRangeEl.max = String(defaultMax);
+                        const targetRangeEl = this.dom.getElement<HTMLInputElement>('target_corpus_range');
+                        if (targetRangeEl) {
+                            const defaultMax = parseFloat(targetRangeEl.getAttribute('max') || '50000000');
+                            if (reqCorpus > defaultMax) {
+                                targetRangeEl.max = String(reqCorpus);
+                            } else {
+                                targetRangeEl.max = String(defaultMax);
+                            }
+                            this.dom.setValue('target_corpus_range', reqCorpus);
                         }
-                        this.dom.setValue('target_corpus_range', reqCorpus);
                     }
                 }
-            }
+            });
         };
 
         if (swpWithdrawal) swpWithdrawal.addEventListener('input', handleSwpInput);
@@ -471,10 +475,10 @@ export class CalculatorApp {
             }
         };
 
-        if ('requestIdleCallback' in window) {
-            (window as any).requestIdleCallback(runInitCalc, { timeout: 1000 });
+        if (typeof requestAnimationFrame !== 'undefined') {
+            requestAnimationFrame(runInitCalc);
         } else {
-            setTimeout(runInitCalc, 50);
+            setTimeout(runInitCalc, 0);
         }
     }
 }

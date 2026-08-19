@@ -37,13 +37,20 @@ class ActionDispatcher
 
                 $reflection = new \ReflectionMethod($controller, $action);
                 $args = [];
+                $paramValues = array_values($params);
+                $paramIndex = 0;
+
                 foreach ($reflection->getParameters() as $param) {
                     $name = $param->getName();
                     $type = $param->getType();
-                    if ($type instanceof \ReflectionNamedType && !$type->isBuiltin() && $type->getName() === Request::class) {
+
+                    if ($type instanceof \ReflectionNamedType && !$type->isBuiltin() && is_a($type->getName(), Request::class, true)) {
                         $args[] = $request;
                     } elseif (array_key_exists($name, $params)) {
                         $args[] = $params[$name];
+                    } elseif (isset($paramValues[$paramIndex])) {
+                        $args[] = $paramValues[$paramIndex];
+                        $paramIndex++;
                     } elseif ($param->isDefaultValueAvailable()) {
                         $args[] = $param->getDefaultValue();
                     } else {
@@ -54,6 +61,9 @@ class ActionDispatcher
                 $response = call_user_func_array([$controller, $action], $args);
                 if ($response instanceof Response) {
                     return $response;
+                }
+                if ($response === null || $response === false) {
+                    throw new \Core\Exceptions\ContainerException("Controller action {$controllerName}@{$action} did not return a valid Core\\Http\\Response object.");
                 }
                 return new Response((string) $response, 200);
             }

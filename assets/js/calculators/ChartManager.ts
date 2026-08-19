@@ -64,9 +64,18 @@ export class ChartManager {
 
     formatAxisTick(value: number): string {
         const symbol = this.formatter.getSymbol();
-        if (value >= 10000000) return symbol + (value / 10000000).toFixed(1) + 'Cr';
-        if (value >= 100000) return symbol + (value / 100000).toFixed(1) + 'L';
-        if (value >= 1000) return symbol + (value / 1000).toFixed(1) + 'k';
+        const currency = this.formatter.getCurrency();
+
+        if (currency === 'INR') {
+            if (value >= 10000000) return symbol + (value / 10000000).toFixed(1).replace(/\.0$/, '') + 'Cr';
+            if (value >= 100000) return symbol + (value / 100000).toFixed(1).replace(/\.0$/, '') + 'L';
+            if (value >= 1000) return symbol + (value / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+            return symbol + value;
+        }
+
+        if (value >= 1000000000) return symbol + (value / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
+        if (value >= 1000000) return symbol + (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+        if (value >= 1000) return symbol + (value / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
         return symbol + value;
     }
 

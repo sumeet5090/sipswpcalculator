@@ -17,13 +17,16 @@ class AdminAuthAction
 {
     private AdminAuthService $authService;
     private ViewRenderer $viewRenderer;
+    private \Services\SessionManager $sessionManager;
 
     public function __construct(
         AdminAuthService $authService,
-        ViewRenderer $viewRenderer
+        ViewRenderer $viewRenderer,
+        \Services\SessionManager $sessionManager
     ) {
         $this->authService = $authService;
         $this->viewRenderer = $viewRenderer;
+        $this->sessionManager = $sessionManager;
     }
 
     public function login(Request $request): Response
@@ -46,7 +49,8 @@ class AdminAuthAction
         }
 
         return Response::html($this->viewRenderer->render('admin/login', [
-            'error' => $loginError
+            'error' => $loginError,
+            'csrf_token' => $this->sessionManager->ensureCsrfToken(),
         ]));
     }
 

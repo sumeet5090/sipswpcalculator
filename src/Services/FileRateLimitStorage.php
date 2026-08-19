@@ -17,9 +17,13 @@ class FileRateLimitStorage implements RateLimitStorageInterface
 
     public function checkAndIncrement(string $ip, string $prefix, int $maxRequests, int $windowSeconds): void
     {
+        if ($maxRequests <= 0) {
+            return;
+        }
+
         $rateLimitDir = rtrim($this->baseStorageDir, '/\\') . '/' . trim($prefix, '/') . '/';
         if (!is_dir($rateLimitDir) && !mkdir($rateLimitDir, 0700, true) && !is_dir($rateLimitDir)) {
-            error_log("RateLimiter Error: Failed to create storage directory at {$rateLimitDir}");
+            error_log("RateLimiter Error: Failed to create storage directory at {$rateLimitDir}. Check filesystem permissions.");
             throw new RateLimitExceededException('Rate limiter storage unavailable.');
         }
 
@@ -60,6 +64,7 @@ class FileRateLimitStorage implements RateLimitStorageInterface
         } finally {
             flock($fp, LOCK_UN);
             fclose($fp);
+            @touch($rateFile);
         }
 
         $this->pruneStaleFiles($rateLimitDir, $windowSeconds);

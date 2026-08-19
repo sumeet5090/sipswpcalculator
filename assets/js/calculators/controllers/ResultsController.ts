@@ -52,7 +52,7 @@ export class ResultsController {
             if (inputs.inflation > 0) {
                 finalCorpus = MathEngine.calculateInflationDiscount(
                     finalCorpus,
-                    inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years,
+                    row.year,
                     inputs.inflation
                 );
             }

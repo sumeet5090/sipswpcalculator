@@ -37,7 +37,7 @@ class ErrorController
 
     public function render500(\Throwable $e): Response
     {
-        error_log("Global 500 Error: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine());
+        error_log("Global 500 Error: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine() . "\nStack Trace:\n" . $e->getTraceAsString());
 
         $isDebug = ($this->environment === 'development');
         $errorMessage = $isDebug ? $e->getMessage() : 'An unexpected error occurred.';
@@ -85,7 +85,7 @@ class ErrorController
      */
     public static function handle500(\Throwable $e, ?ViewRenderer $viewRenderer = null): Response
     {
-        error_log("Global 500 Error: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine());
+        error_log("Global 500 Error: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine() . "\nStack Trace:\n" . $e->getTraceAsString());
 
         $isDebug = (Env::get('ENVIRONMENT', 'production') === 'development');
         $errorMessage = $isDebug ? $e->getMessage() : 'An unexpected error occurred.';

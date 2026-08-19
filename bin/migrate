@@ -20,8 +20,7 @@ if (file_exists($envFile)) {
 }
 
 try {
-    $app = new \Core\App();
-    $container = $app->boot();
+    $container = \Core\App::createContainer();
     $migrator = $container->get(\Core\DatabaseMigrator::class);
     $migrator->migrate();
     exit(0);

@@ -82,7 +82,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
         $container->singleton(\Controllers\AdminAuthAction::class, function (Container $c) {
             return new \Controllers\AdminAuthAction(
                 $c->get(AdminAuthService::class),
-                $c->get(ViewRenderer::class)
+                $c->get(ViewRenderer::class),
+                $c->get(SessionManager::class)
             );
         });
 

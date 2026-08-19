@@ -13,7 +13,8 @@ class SessionManager
     public function start(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
-            $isHttps = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+            $isHttps = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+                || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower((string) $_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https');
             session_start([
                 'cookie_httponly' => true,
                 'cookie_samesite' => 'Lax',
@@ -44,7 +45,10 @@ class SessionManager
 
     public function destroy(): void
     {
-        session_destroy();
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            $_SESSION = [];
+            session_destroy();
+        }
     }
 
     public function generateCsrfToken(): string
