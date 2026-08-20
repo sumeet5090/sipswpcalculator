@@ -64,11 +64,11 @@ class ViteHelper
             return "http://{$this->devHost}:{$this->devPort}/" . ltrim($entry, '/');
         }
 
-        $this->loadManifest();
+        $entryData = $this->resolveManifestEntry($entry);
         $entryKey = ltrim($entry, '/');
 
-        if (isset($this->manifest[$entryKey])) {
-            return '/dist/' . $this->manifest[$entryKey]['file'];
+        if ($entryData !== null && isset($entryData['file'])) {
+            return '/dist/' . $entryData['file'];
         }
 
         if ($this->environment === 'production') {
@@ -76,7 +76,9 @@ class ViteHelper
             return '';
         }
 
-        return '/' . ltrim($entry, '/');
+        // Development fallback when dev server is offline and no compiled manifest entry was found
+        error_log("ViteHelper Warning: Vite dev server is not active on {$this->devHost}:{$this->devPort} and no manifest entry found for '{$entryKey}'. Run 'npm run dev' or 'npm run build'.");
+        return '/' . $entryKey;
     }
 
     /**
@@ -99,21 +101,57 @@ class ViteHelper
             return ''; // CSS is injected via JS in dev mode when Vite dev server is running
         }
 
-        $this->loadManifest();
-        $entryKey = ltrim($entry, '/');
+        $entryData = $this->resolveManifestEntry($entry);
         $html = '';
 
-        if (isset($this->manifest[$entryKey])) {
-            if (isset($this->manifest[$entryKey]['css']) && is_array($this->manifest[$entryKey]['css'])) {
-                foreach ($this->manifest[$entryKey]['css'] as $cssFile) {
+        if ($entryData !== null) {
+            if (isset($entryData['css']) && is_array($entryData['css'])) {
+                foreach ($entryData['css'] as $cssFile) {
                     $html .= '<link rel="stylesheet" href="/dist/' . $cssFile . '">';
                 }
-            } elseif (isset($this->manifest[$entryKey]['file']) && str_ends_with($this->manifest[$entryKey]['file'], '.css')) {
-                $html .= '<link rel="stylesheet" href="/dist/' . $this->manifest[$entryKey]['file'] . '">';
+            } elseif (isset($entryData['file']) && str_ends_with($entryData['file'], '.css')) {
+                $html .= '<link rel="stylesheet" href="/dist/' . $entryData['file'] . '">';
             }
         }
 
         return $html;
+    }
+
+    /**
+     * Resolve a manifest entry by path, shorthand name, or bundled CSS association.
+     * Implements Postel's Law (Robustness Principle) for asset discovery.
+     */
+    private function resolveManifestEntry(string $entry): ?array
+    {
+        $this->loadManifest();
+        $key = ltrim($entry, '/');
+
+        // 1. Exact key match (e.g. 'resources/js/app.ts')
+        if (isset($this->manifest[$key])) {
+            return $this->manifest[$key];
+        }
+
+        // 2. Match by entry name or filename stem (e.g. 'app')
+        foreach ($this->manifest as $manifestKey => $item) {
+            if (isset($item['name']) && $item['name'] === $key) {
+                return $item;
+            }
+            $stem = pathinfo($manifestKey, PATHINFO_FILENAME);
+            if ($stem === $key) {
+                return $item;
+            }
+        }
+
+        // 3. Match direct CSS paths against entries with bundled CSS (e.g. 'resources/css/input.css' or 'input.css')
+        if (str_ends_with($key, '.css')) {
+            foreach ($this->manifest as $item) {
+                if (!empty($item['css']) && is_array($item['css'])) {
+                    return $item;
+                }
+            }
+        }
+
+        return null;
     }
 
     /**

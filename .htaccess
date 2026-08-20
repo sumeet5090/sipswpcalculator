@@ -159,12 +159,21 @@ Header unset Server
 </IfModule>
 
 # Set Cache-Control headers
+# Static media & fonts - long immutable cache
 <FilesMatch "\.(jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|otf|eot)$">
   Header set Cache-Control "public, max-age=31536000, immutable"
 </FilesMatch>
 
-<FilesMatch "\.(css|js|json)$">
-  Header set Cache-Control "public, max-age=31536000, immutable"
+# Compiled Vite bundles in /dist/ are content-hashed and immutable
+<If "%{REQUEST_URI} =~ m#^/dist/#">
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</If>
+
+# Root PWA web app manifest - cached with daily revalidation (not immutable)
+<FilesMatch "manifest\.json$">
+  Header set Cache-Control "public, max-age=86400, must-revalidate"
 </FilesMatch>
 
 <FilesMatch "\.(html|php)$">
@@ -181,7 +190,7 @@ Header set X-Content-Type-Options "nosniff"
 Header set X-Frame-Options "SAMEORIGIN"
 Header set X-XSS-Protection "1; mode=block"
 Header set Referrer-Policy "strict-origin-when-cross-origin"
-Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://analytics.ahrefs.com https://www.googletagmanager.com https://js-de.sentry-cdn.com https://js.sentry-cdn.com https://www.clarity.ms https://scripts.clarity.ms https://*.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://analytics.ahrefs.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://www.clarity.ms https://*.clarity.ms https://c.bing.com; base-uri 'self'; form-action 'self'; frame-ancestors 'self';"
+Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' http://localhost:5173 http://127.0.0.1:5173 https://cdn.jsdelivr.net https://analytics.ahrefs.com https://www.googletagmanager.com https://js-de.sentry-cdn.com https://js.sentry-cdn.com https://www.clarity.ms https://scripts.clarity.ms https://*.clarity.ms; style-src 'self' 'unsafe-inline' http://localhost:5173 http://127.0.0.1:5173 https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' http://localhost:5173 http://127.0.0.1:5173 ws://localhost:5173 ws://127.0.0.1:5173 https://analytics.ahrefs.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://www.clarity.ms https://*.clarity.ms https://c.bing.com; base-uri 'self'; form-action 'self'; frame-ancestors 'self';"
 Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
 # HSTS: Force HTTPS for 1 year, include subdomains, allow preload list
 Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"

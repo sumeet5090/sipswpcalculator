@@ -100,6 +100,9 @@ This skill provides an exhaustive guide to runtime traps, hosting quirks (CloudL
 48. **Missing Manifest Fallback**: Return empty string instead of raw `.ts` file paths in production.
 49. **Tailwind JIT Class Purging**: Avoid dynamic class concatenation (`bg-{{ color }}-500`); use static mapping tables in Twig.
 50. **Data Island XSS Mitigation**: Use `json_island` Twig filter enforcing `JSON_HEX_*` flags on embedded JSON tags.
+51. **PWA Manifest vs Hashed Asset Caching**: Never apply `immutable` caching to root `/manifest.json`; scope 1-year immutable caching strictly to `/dist/assets/*`.
+52. **Vite HMR Content-Security-Policy**: Include `http://localhost:5173` and `ws://localhost:5173` in CSP headers during local development to prevent WebSocket and script blocking.
+53. **Dompdf CSS 2.1 Isolation**: Never inject modern Vite/Tailwind stylesheets into Dompdf; keep PDF styling strictly within `PdfReportStylesheet.php`.
 
 ---
 

@@ -1,13 +1,24 @@
+/* ==========================================================================
+   Tailwind CSS v4 Configuration & Entry Stylesheet
+   --------------------------------------------------------------------------
+   NOTE: In Tailwind CSS v4, configuration is strictly CSS-first via directives.
+   Do NOT create a tailwind.config.js or postcss.config.js file.
+   - Use @source to declare file paths scanned by the JIT compiler.
+   - Use @theme to define design tokens and CSS variables.
+   ========================================================================== */
+
 @import "tailwindcss";
 
-/* Tell Tailwind v4 where to scan for utility classes */
+/* ── Declare all template, content, and script paths for class scanning ── */
 @source "../../src/Views/**/*.twig";
 @source "../../src/Views/**/*.php";
 @source "../../src/Core/**/*.php";
 @source "../../src/Controllers/**/*.php";
+@source "../../content/**/*.md";
 @source "../../assets/js/**/*.ts";
+@source "../../resources/js/**/*.ts";
 
-/* Custom theme: replicate the old tailwind.config from the CDN inline script */
+/* ── Custom Theme: Brand typography tokens and color palette ── */
 @theme {
   --font-sans: "Inter", sans-serif;
   --font-heading: "Plus Jakarta Sans", sans-serif;
