@@ -152,7 +152,7 @@ export class MathEngine {
         }
         
         let low = 0;
-        let high = targetCorpus;
+        let high = Math.max(targetCorpus, (targetCorpus / inp.years) * 2);
         let bestSip = 0;
         
         // Cap iterations to 40 for max 5ms execution time (zero-latency)
@@ -183,6 +183,11 @@ export class MathEngine {
     static calculateRequiredStartingCorpusForSwp(inp: InvestmentInputs): number {
         if (!inp.enable_swp || inp.swp_withdrawal <= 0 || inp.swp_years <= 0) return 0;
         
+        // Closed-form linear calculation when swp_rate is 0 and swp_stepup is 0
+        if (inp.swp_rate <= 0 && inp.swp_stepup <= 0) {
+            return Math.round(inp.swp_withdrawal * 12 * inp.swp_years);
+        }
+
         let low = 0;
         let high = inp.swp_withdrawal * 12 * inp.swp_years * 3; // safe upper bound
         let bestCorpus = 0;

@@ -32,19 +32,21 @@ export class CurrencyFormatter {
      * Format numeric value to currency string.
      */
     format(value: number): string {
+        const rounded = Math.round(value) || 0;
         return new Intl.NumberFormat(this.locale, {
             style: 'currency',
             currency: this.currency,
             maximumFractionDigits: 0
-        }).format(value);
+        }).format(rounded);
     }
 
     /**
      * Format dynamic large amounts with appropriate Lakh/Crore suffix.
      */
     formatDynamic(amount: number): string {
-        const isNegative = amount < 0;
-        const absAmount = Math.abs(amount);
+        const rounded = Math.round(amount) || 0;
+        const isNegative = rounded < 0;
+        const absAmount = Math.abs(rounded);
         const prefix = isNegative ? `-${this.symbol}` : this.symbol;
 
         if (absAmount >= 10000000) {

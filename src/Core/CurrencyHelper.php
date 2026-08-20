@@ -30,8 +30,8 @@ class CurrencyHelper implements CurrencyFormatterInterface
     private static function formatInr(float|int $num): string
     {
         $num = round($num);
-        $isNegative = $num < 0;
         $money = (int) abs($num);
+        $isNegative = ($money > 0) && ($num < 0);
         $length = strlen((string) $money);
         $delimiter = '';
 

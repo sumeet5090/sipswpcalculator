@@ -336,4 +336,46 @@ class InvestmentCalculatorTest extends TestCase
         $this->assertGreaterThanOrEqual(0.0, $lastRow['combined_total']);
         $this->assertGreaterThan(0.0, $lastRow['cumulative_withdrawals']);
     }
+
+    /**
+     * Test Case 11: Negative Zero Currency Formatting (Point 4)
+     * Verifies that -0.0001, -0.0, and 0 format as "₹0" without leading negative signs.
+     */
+    public function testNegativeZeroCurrencyFormatting(): void
+    {
+        $formatter = new \Core\CurrencyHelper();
+        $this->assertEquals("₹0", $formatter->format(0.0));
+        $this->assertEquals("₹0", $formatter->format(-0.0));
+        $this->assertEquals("₹0", $formatter->format(-0.0001));
+        $this->assertEquals("-₹500", $formatter->format(-500.0));
+        $this->assertEquals("₹1,00,000", $formatter->format(100000.0));
+    }
+
+    /**
+     * Test Case 12: Pure Lumpsum Compounding Without SIP (Point 6)
+     * Asserts that a pure lumpsum investment compounds correctly across multiple years.
+     */
+    public function testPureLumpsumCompoundingWithoutSip(): void
+    {
+        $configService = new \Services\ConfigService(__DIR__ . '/../../content/calculator_defaults.json');
+        $inputs = InvestmentInputs::fromLumpsumRequest([
+            'lumpsum' => 1000000.0,
+            'years' => 5,
+            'rate' => 12.0,
+            'inflation' => 0.0
+        ], $configService);
+
+        $calculator = new InvestmentCalculator();
+        $results = $calculator->calculate($inputs);
+
+        $this->assertCount(5, $results);
+        // Year 1: ₹10,00,000 * (1.01)^12 = ₹11,26,825
+        $this->assertEquals(1000000.0, $results[0]['begin_balance']);
+        $this->assertEquals(1126825.0, $results[0]['combined_total']);
+        $this->assertEquals(126825.0, $results[0]['interest']);
+
+        // Year 5: ₹10,00,000 * (1.01)^60 = ₹18,16,697
+        $this->assertEquals(1816697.0, $results[4]['combined_total']);
+        $this->assertEquals(1000000.0, $results[4]['cumulative_invested']);
+    }
 }
