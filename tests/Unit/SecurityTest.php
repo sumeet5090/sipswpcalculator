@@ -8,6 +8,7 @@ use Core\ContentManager;
 use Core\CurrencyHelper;
 use Core\Http\Request;
 use Core\Http\Response;
+use Core\Middleware\CsrfHoneypotMiddleware;
 use Core\PdfTemplateInterface;
 use Core\SchemaHelper;
 use Core\SiteConfig;
@@ -229,5 +230,47 @@ class SecurityTest extends TestCase
         $this->assertStringNotContainsString('</script>', $faqSchema);
         $this->assertStringContainsString('\u003C/script\u003E', $faqSchema);
         $this->assertStringContainsString('\u0026', $faqSchema);
+    }
+
+    public function testCsrfHoneypotMiddlewareAllowsPublicExportAndBlocksBots(): void
+    {
+        $sessionManager = new SessionManager();
+        $middleware = new CsrfHoneypotMiddleware($sessionManager);
+
+        $nextCalled = false;
+        $next = function (Request $req) use (&$nextCalled): Response {
+            $nextCalled = true;
+            return new Response('OK', 200);
+        };
+
+        // 1. Clean public export POST should pass through without CSRF requirement
+        $publicReq = new Request([], ['sip' => '25000', 'years' => '10'], ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/download-csv']);
+        $resp = $middleware->process($publicReq, $next);
+        $this->assertTrue($nextCalled);
+        $this->assertEquals(200, $resp->getStatusCode());
+
+        // 2. Bot request with honeypot field filled should be blocked (403)
+        $botCalled = false;
+        $botNext = function (Request $req) use (&$botCalled): Response {
+            $botCalled = true;
+            return new Response('OK', 200);
+        };
+        $botReq = new Request([], ['website_url' => 'https://spam.com', 'sip' => '25000'], ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/download-csv']);
+        $botResp = $middleware->process($botReq, $botNext);
+        $this->assertFalse($botCalled);
+        $this->assertEquals(403, $botResp->getStatusCode());
+        $this->assertStringContainsString('Automated request detected', $botResp->getBody());
+
+        // 3. Admin POST request without CSRF token should be blocked (403)
+        $adminCalled = false;
+        $adminNext = function (Request $req) use (&$adminCalled): Response {
+            $adminCalled = true;
+            return new Response('OK', 200);
+        };
+        $adminReq = new Request([], ['password' => 'secret'], ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/admin_insights/login']);
+        $adminResp = $middleware->process($adminReq, $adminNext);
+        $this->assertFalse($adminCalled);
+        $this->assertEquals(403, $adminResp->getStatusCode());
+        $this->assertStringContainsString('Invalid security token', $adminResp->getBody());
     }
 }

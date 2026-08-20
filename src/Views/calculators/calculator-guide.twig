@@ -221,7 +221,6 @@
     <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
         <form id="pdfForm" class="space-y-4">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token|default(app.session.csrf_token|default(''))|escape('html_attr') }}">
             <div>
                 <label for="clientName" class="block text-sm font-medium mb-1 text-gray-600">Client Name</label>
                 <input type="text" id="clientName" name="clientName" placeholder="e.g., John Doe"

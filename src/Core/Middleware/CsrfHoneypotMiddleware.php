@@ -29,7 +29,7 @@ class CsrfHoneypotMiddleware implements MiddlewareInterface
             $uri = $request->getUri();
             $isAdminPost = str_starts_with($uri, '/admin_insights');
 
-            if ($isAdminPost || isset($post['csrf_token'])) {
+            if ($isAdminPost) {
                 $token = (string) ($post['csrf_token'] ?? '');
                 if ($token === '' || !$this->sessionManager->verifyCsrfToken($token)) {
                     return new Response('Forbidden: Invalid security token. Please reload the page and try again.', 403);

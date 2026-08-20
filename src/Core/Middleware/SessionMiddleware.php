@@ -23,10 +23,8 @@ class SessionMiddleware implements MiddlewareInterface
         $hasSessionCookie = isset($_COOKIE[$sessionCookieName]);
         $uri = $request->getUri();
         $isAdmin = str_starts_with($uri, '/admin_insights');
-        $isPost = $request->isPost();
-
-        // Lazy session initialization: only start if existing cookie present, admin route, or POST request
-        if ($hasSessionCookie || $isAdmin || $isPost) {
+        // Lazy session initialization: only start if existing cookie present or admin route
+        if ($hasSessionCookie || $isAdmin) {
             $this->sessionManager->start();
             $this->sessionManager->ensureCsrfToken();
         }
