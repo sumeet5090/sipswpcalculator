@@ -129,6 +129,70 @@ $testCases = [
         'swp_rate'       => 6.0,
         'ltcg_exemption' => 125000.0,
         'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Pure Lumpsum Compounding
+    [
+        'type'           => 'lumpsum',
+        'sip'            => 0.0,
+        'years'          => 10,
+        'rate'           => 14.0,
+        'stepup'         => 0.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 2500000.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Target Corpus High Accumulation 30-Year
+    [
+        'type'           => 'sip',
+        'sip'            => 100000.0,
+        'years'          => 30,
+        'rate'           => 15.0,
+        'stepup'         => 10.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 500000.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Max Step-Up Boundary (50% annual stepup)
+    [
+        'type'           => 'sip',
+        'sip'            => 10000.0,
+        'years'          => 10,
+        'rate'           => 25.0,
+        'stepup'         => 50.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 0.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Dual Regime High Inflation & High Rate
+    [
+        'type'           => 'sip_swp',
+        'sip'            => 25000.0,
+        'years'          => 15,
+        'rate'           => 18.0,
+        'stepup'         => 10.0,
+        'enable_swp'     => true,
+        'swp_withdrawal' => 75000.0,
+        'swp_stepup'     => 8.0,
+        'swp_years'      => 15,
+        'lumpsum'        => 1000000.0,
+        'swp_rate'       => 12.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
     ]
 ];
 

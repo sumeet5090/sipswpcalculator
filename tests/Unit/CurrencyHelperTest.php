@@ -65,4 +65,27 @@ class CurrencyHelperTest extends TestCase
         $this->assertEquals('₹1,000', $this->helper->format(1000.4));
         $this->assertEquals('₹1,00,000', $this->helper->format(99999.9));
     }
+
+    /**
+     * Test negative values formatting with correct sign and delimiter
+     */
+    public function testNegativeValues(): void
+    {
+        $this->assertEquals('-₹500', $this->helper->format(-500));
+        $this->assertEquals('-₹1,000', $this->helper->format(-1000));
+        $this->assertEquals('-₹1,00,000', $this->helper->format(-100000));
+        $this->assertEquals('-₹1,23,45,678', $this->helper->format(-12345678));
+    }
+
+    /**
+     * Test sub-zero epsilon values normalize to positive ₹0 without -₹0 artifact
+     */
+    public function testSubZeroRounding(): void
+    {
+        $this->assertEquals('₹0', $this->helper->format(-0.0001));
+        $this->assertEquals('₹0', $this->helper->format(-0.0));
+        $this->assertEquals('₹0', $this->helper->format(0.0));
+        $this->assertEquals('₹0', $this->helper->format(-0.49));
+        $this->assertEquals('-₹1', $this->helper->format(-0.51));
+    }
 }
