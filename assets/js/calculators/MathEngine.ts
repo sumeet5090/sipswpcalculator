@@ -6,6 +6,10 @@ import type { InvestmentInputs, YearResult } from '../types/index.ts';
  * Refactored as an Object-Oriented class.
  */
 export class MathEngine {
+    private static round2(val: number): number {
+        return Math.round((val + Number.EPSILON) * 100) / 100;
+    }
+
     /**
      * Perform month-by-month compounding simulation.
      */
@@ -19,6 +23,23 @@ export class MathEngine {
         let cumulativeInvested = lumpsum;
         let cumulativeWithdrawals = 0.0;
 
+        if (totalYears <= 0) {
+            return [{
+                year: 0,
+                begin_balance: Math.round(lumpsum),
+                sip_monthly: null,
+                annual_contribution: 0,
+                cumulative_invested: Math.round(lumpsum),
+                swp_monthly: null,
+                annual_withdrawal: null,
+                cumulative_withdrawals: 0,
+                interest: 0,
+                combined_total: Math.round(lumpsum),
+                ltcg_tax: 0,
+                post_tax_total: Math.round(lumpsum)
+            }];
+        }
+
         const results: YearResult[] = [];
 
         for (let y = 1; y <= totalYears; y++) {
@@ -28,17 +49,17 @@ export class MathEngine {
             // Monthly SIP amount for this year
             let monthlySip = 0.0;
             if (y <= inp.years) {
-                monthlySip = Math.round((inp.sip * Math.pow(1 + inp.stepup / 100, y - 1)) * 100) / 100;
+                monthlySip = this.round2(inp.sip * Math.pow(1 + inp.stepup / 100, y - 1));
             }
 
             // Monthly SWP amount for this year
             let monthlySwp = 0.0;
             if (inp.enable_swp && y >= swpStartYear) {
-                monthlySwp = Math.round((inp.swp_withdrawal * Math.pow(1 + inp.swp_stepup / 100, y - swpStartYear)) * 100) / 100;
+                monthlySwp = this.round2(inp.swp_withdrawal * Math.pow(1 + inp.swp_stepup / 100, y - swpStartYear));
             }
 
             let actualYearWithdrawn = 0.0;
-            let annualContribution = Math.round((monthlySip * 12) * 100) / 100;
+            let annualContribution = this.round2(monthlySip * 12);
             let yearBegin = netBalance;
 
             for (let m = 1; m <= 12; m++) {
@@ -56,9 +77,9 @@ export class MathEngine {
             }
 
             cumulativeInvested += annualContribution;
-            let annualWithdrawal = Math.round(actualYearWithdrawn * 100) / 100;
+            let annualWithdrawal = this.round2(actualYearWithdrawn);
             if (inp.enable_swp && y >= swpStartYear) {
-                cumulativeWithdrawals = Math.round((cumulativeWithdrawals + annualWithdrawal) * 100) / 100;
+                cumulativeWithdrawals = this.round2(cumulativeWithdrawals + annualWithdrawal);
             }
 
             let interestEarned = netBalance - (yearBegin + annualContribution - annualWithdrawal);

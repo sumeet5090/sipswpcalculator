@@ -40,7 +40,7 @@ class InvestmentCalculator
             return [[
                 'year' => 0,
                 'begin_balance' => round($lumpsum),
-                'sip_monthly' => 0.0,
+                'sip_monthly' => null,
                 'annual_contribution' => 0.0,
                 'cumulative_invested' => round($lumpsum),
                 'swp_monthly' => null,

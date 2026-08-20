@@ -317,10 +317,13 @@ class PdfReportTemplate implements PdfTemplateInterface
 
         // Scan pre-computed yearly results from InvestmentCalculator
         $combinedResults = $inputs['combined_results'] ?? [];
+        $showPostTax = (bool) ($inputs['show_post_tax'] ?? false);
         if (is_array($combinedResults)) {
             foreach ($combinedResults as $row) {
                 $y = (int) ($row['year'] ?? 0);
-                $corpus = (float) ($row['combined_total'] ?? 0);
+                $corpus = $showPostTax
+                    ? (float) ($row['post_tax_total'] ?? $row['combined_total'] ?? 0)
+                    : (float) ($row['combined_total'] ?? 0);
                 foreach ($milestoneTargets as $target => $label) {
                     if (!isset($found[$target]) && $corpus >= $target) {
                         $found[$target] = [
