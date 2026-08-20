@@ -456,7 +456,16 @@ export class CalculatorApp {
                 this.syncSwpToggleState();
             }
 
-            const initialInputs = this.getInputs();
+            let initialInputs = this.getInputs();
+            const strategy = this.strategies[this.activeGoalMode];
+            if (strategy) {
+                initialInputs = strategy.execute(initialInputs);
+            }
+            if (this.activeGoalMode === 'target_corpus' || this.activeGoalMode === 'target') {
+                this.dom.setValue('sip', initialInputs.sip);
+                this.dom.setValue('sip_range', initialInputs.sip);
+            }
+
             const swpEnabledOnLoad = initialInputs.enable_swp;
             let existingData: YearResult[] = [];
             try {

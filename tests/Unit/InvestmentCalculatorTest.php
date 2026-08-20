@@ -378,4 +378,61 @@ class InvestmentCalculatorTest extends TestCase
         $this->assertEquals(1816697.0, $results[4]['combined_total']);
         $this->assertEquals(1000000.0, $results[4]['cumulative_invested']);
     }
+
+    /**
+     * Test Case 13: Zero SIP + Zero Lumpsum Singularity (Point 1)
+     * Asserts that when duration is 0, both begin and end balances return exact 0 without NaN or exceptions.
+     */
+    public function testZeroInvestedZeroLumpsumSingularity(): void
+    {
+        $inputs = InvestmentInputs::fromValues(
+            0.0,
+            0,
+            12.0,
+            0.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            0.0,
+            0.0,
+            0.0,
+            125000.0,
+            0.125
+        );
+
+        $calculator = new InvestmentCalculator();
+        $results = $calculator->calculate($inputs);
+
+        $this->assertCount(1, $results);
+        $this->assertEquals(0, $results[0]['year']);
+        $this->assertEquals(0.0, $results[0]['begin_balance']);
+        $this->assertEquals(0.0, $results[0]['combined_total']);
+        $this->assertEquals(0.0, $results[0]['interest']);
+        $this->assertNull($results[0]['sip_monthly']);
+    }
+
+    /**
+     * Test Case 14: Max Safe Integer Step-Up Compounding Boundary (Point 3)
+     * Asserts that high step-up parameters (50% per year over 30 years) calculate finite numeric totals without float overflow.
+     */
+    public function testMaxSafeIntegerStepupCompounding(): void
+    {
+        $inputs = $this->createInputs([
+            'sip' => 50000.0,
+            'years' => 30,
+            'rate' => 25.0,
+            'stepup' => 50.0,
+            'enable_swp' => false
+        ]);
+
+        $calculator = new InvestmentCalculator();
+        $results = $calculator->calculate($inputs);
+
+        $this->assertCount(30, $results);
+        $finalRow = end($results);
+        $this->assertFinite($finalRow['combined_total']);
+        $this->assertGreaterThan(0.0, $finalRow['combined_total']);
+        $this->assertGreaterThan(0.0, $finalRow['cumulative_invested']);
+    }
 }

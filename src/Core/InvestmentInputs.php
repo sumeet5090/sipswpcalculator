@@ -202,6 +202,41 @@ class InvestmentInputs
     }
 
     /**
+     * Named constructor to instantiate inputs directly from typed primitive values.
+     */
+    public static function fromValues(
+        float $sip = 0.0,
+        int $years = 0,
+        float $rate = 0.0,
+        float $stepup = 0.0,
+        bool $enableSwp = false,
+        float $swpWithdrawal = 0.0,
+        float $swpStepup = 0.0,
+        int $swpYears = 0,
+        float $lumpsum = 0.0,
+        float $swpRate = 0.0,
+        float $inflation = 0.0,
+        float $ltcgExemption = 125000.0,
+        float $ltcgTaxRate = 0.125
+    ): self {
+        return new self(
+            $sip,
+            $years,
+            $rate,
+            $stepup,
+            $enableSwp,
+            $swpWithdrawal,
+            $swpStepup,
+            $swpYears,
+            $lumpsum,
+            $swpRate,
+            $inflation,
+            $ltcgExemption,
+            $ltcgTaxRate
+        );
+    }
+
+    /**
      * Clamp a numeric value to constraints.
      */
     private static function clamp(float $val, float $min, float $max): float
