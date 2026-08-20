@@ -41,7 +41,7 @@ export class CurrencyFormatter {
     }
 
     /**
-     * Format dynamic large amounts with appropriate Lakh/Crore suffix.
+     * Format dynamic large amounts with appropriate Lakh/Crore or Million/Billion suffix.
      */
     formatDynamic(amount: number): string {
         const rounded = Math.round(amount) || 0;
@@ -49,15 +49,28 @@ export class CurrencyFormatter {
         const absAmount = Math.abs(rounded);
         const prefix = isNegative ? `-${this.symbol}` : this.symbol;
 
-        if (absAmount >= 10000000) {
-            return prefix + (absAmount / 10000000).toFixed(2).replace(/\.00$/, '') + ' Crore';
+        if (this.currency === 'INR') {
+            if (absAmount >= 10000000) {
+                return prefix + (absAmount / 10000000).toFixed(2).replace(/\.00$/, '') + ' Crore';
+            }
+            if (absAmount >= 100000) {
+                return prefix + (absAmount / 100000).toFixed(2).replace(/\.00$/, '') + ' Lakh';
+            }
+            if (absAmount >= 1000) {
+                return prefix + (absAmount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
+            }
+        } else {
+            if (absAmount >= 1000000000) {
+                return prefix + (absAmount / 1000000000).toFixed(2).replace(/\.00$/, '') + 'B';
+            }
+            if (absAmount >= 1000000) {
+                return prefix + (absAmount / 1000000).toFixed(2).replace(/\.00$/, '') + 'M';
+            }
+            if (absAmount >= 1000) {
+                return prefix + (absAmount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
+            }
         }
-        if (absAmount >= 100000) {
-            return prefix + (absAmount / 100000).toFixed(2).replace(/\.00$/, '') + ' Lakh';
-        }
-        if (absAmount >= 1000) {
-            return prefix + (absAmount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
-        }
+
         return isNegative
             ? `-${this.symbol}${absAmount.toLocaleString(this.locale)}`
             : `${this.symbol}${absAmount.toLocaleString(this.locale)}`;

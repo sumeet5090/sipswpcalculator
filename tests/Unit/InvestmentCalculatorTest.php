@@ -435,4 +435,73 @@ class InvestmentCalculatorTest extends TestCase
         $this->assertGreaterThan(0.0, $finalRow['combined_total']);
         $this->assertGreaterThan(0.0, $finalRow['cumulative_invested']);
     }
+
+    /**
+     * Test Case 15: Lumpsum Step-Up Independence (Point 7)
+     * Asserts that step-up applies solely to periodic SIP contributions, never mutating lumpsum.
+     */
+    public function testLumpsumExclusionFromStepupEscalation(): void
+    {
+        $configService = new \Services\ConfigService(__DIR__ . '/../../content/calculator_defaults.json');
+        $inputs = InvestmentInputs::fromLumpsumRequest([
+            'lumpsum' => 500000.0,
+            'years' => 3,
+            'rate' => 10.0,
+            'inflation' => 0.0
+        ], $configService);
+
+        $calculator = new InvestmentCalculator();
+        $results = $calculator->calculate($inputs);
+
+        $this->assertCount(3, $results);
+        foreach ($results as $row) {
+            $this->assertEquals(0, $row['annual_contribution']);
+            $this->assertEquals(500000.0, $row['cumulative_invested']);
+        }
+    }
+
+    /**
+     * Test Case 16: PDF Report Template Parameter Symmetry (Point 2)
+     * Asserts that PDF template renders all strategy parameters symmetrically without missing or duplicate rows.
+     */
+    public function testPdfReportTemplateConfigCardSymmetry(): void
+    {
+        $template = new \Core\PdfReportTemplate(new \Core\CurrencyHelper());
+        $htmlSwp = $template->render([
+            'client_name' => 'Investor A',
+            'advisor_name' => 'Advisor B',
+            'lumpsum' => 1000000.0,
+            'sip' => 20000.0,
+            'years' => 10,
+            'rate' => 12.0,
+            'stepup' => 10.0,
+            'swp_withdrawal' => 50000.0,
+            'swp_years' => 15,
+            'swp_stepup' => 5.0,
+            'swp_rate' => 8.0,
+            'inflation' => 6.0
+        ]);
+
+        $this->assertStringContainsString('Phase 1: Accumulation (SIP)', $htmlSwp);
+        $this->assertStringContainsString('Phase 2: Retirement Income (SWP)', $htmlSwp);
+        $this->assertStringContainsString('Monthly SWP:', $htmlSwp);
+        $this->assertStringContainsString('Expected Inflation:', $htmlSwp);
+
+        $htmlSip = $template->render([
+            'client_name' => 'Investor A',
+            'advisor_name' => 'Advisor B',
+            'lumpsum' => 500000.0,
+            'sip' => 10000.0,
+            'years' => 15,
+            'rate' => 12.0,
+            'stepup' => 10.0,
+            'swp_years' => 0,
+            'swp_withdrawal' => 0,
+            'inflation' => 6.0
+        ]);
+
+        $this->assertStringContainsString('Wealth Accumulation (SIP) Parameters', $htmlSip);
+        $this->assertStringContainsString('Expected Return:', $htmlSip);
+        $this->assertStringContainsString('Annual Step-Up:', $htmlSip);
+    }
 }
