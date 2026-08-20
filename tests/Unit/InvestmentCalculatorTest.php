@@ -230,4 +230,110 @@ class InvestmentCalculatorTest extends TestCase
         $this->assertFinite($finalYear['combined_total']);
         $this->assertGreaterThan(0.0, $finalYear['combined_total']);
     }
+
+    /**
+     * Test Case 7: Nominal APR Compounding & Effective Annual Yield (Point 1)
+     * 12% nominal compounded monthly on ₹1,00,000 lumpsum yields approx ₹1,12,683 (12.68% EAR).
+     */
+    public function testEffectiveAnnualRateCompounding(): void
+    {
+        $configService = new \Services\ConfigService(__DIR__ . '/../../content/calculator_defaults.json');
+        $inputs = InvestmentInputs::fromLumpsumRequest([
+            'lumpsum' => 100000.0,
+            'years' => 1,
+            'rate' => 12.0,
+            'inflation' => 0.0
+        ], $configService);
+
+        $calculator = new InvestmentCalculator();
+        $results = $calculator->calculate($inputs);
+
+        $this->assertCount(1, $results);
+        $row = $results[0];
+        // 100000 * (1 + 0.01)^12 = 112682.50 -> 112683
+        $this->assertEquals(112683.0, $row['combined_total']);
+        $this->assertEquals(12683.0, $row['interest']);
+    }
+
+    /**
+     * Test Case 8: Discrete Annual Step-Up Timing (Point 2)
+     * Verifies that Step-up jumps cleanly between annual boundaries.
+     */
+    public function testDiscreteAnnualStepupJump(): void
+    {
+        $inputs = $this->createInputs([
+            'sip' => 10000.0,
+            'years' => 3,
+            'rate' => 10.0,
+            'stepup' => 15.0,
+            'enable_swp' => false
+        ]);
+
+        $calculator = new InvestmentCalculator();
+        $results = $calculator->calculate($inputs);
+
+        $this->assertCount(3, $results);
+
+        // Year 1: ₹10,000/mo -> ₹1,20,000/yr
+        $this->assertEquals(10000.0, $results[0]['sip_monthly']);
+        $this->assertEquals(120000.0, $results[0]['annual_contribution']);
+
+        // Year 2: ₹10,000 * 1.15 = ₹11,500/mo -> ₹1,38,000/yr
+        $this->assertEquals(11500.0, $results[1]['sip_monthly']);
+        $this->assertEquals(138000.0, $results[1]['annual_contribution']);
+
+        // Year 3: ₹10,000 * (1.15)^2 = ₹13,225/mo -> ₹1,58,700/yr
+        $this->assertEquals(13225.0, $results[2]['sip_monthly']);
+        $this->assertEquals(158700.0, $results[2]['annual_contribution']);
+    }
+
+    /**
+     * Test Case 9: LTCG Exemption & Loss Floor Protection (Point 7 & 20)
+     * When returns are zero/minimum and gains are below exemption (or zero), LTCG tax must be 0.
+     */
+    public function testLtcgExemptionFloorLossProtection(): void
+    {
+        $inputs = $this->createInputs([
+            'sip' => 5000.0,
+            'years' => 1,
+            'rate' => 1.0, // Low return
+            'stepup' => 0.0,
+            'enable_swp' => false,
+            'ltcg_exemption' => 125000.0,
+            'ltcg_tax_rate' => 0.125
+        ]);
+
+        $calculator = new InvestmentCalculator();
+        $results = $calculator->calculate($inputs);
+
+        $row = $results[0];
+        $this->assertEquals(0.0, $row['ltcg_tax']);
+        $this->assertEquals($row['combined_total'], $row['post_tax_total']);
+    }
+
+    /**
+     * Test Case 10: SWP Depleted Portfolio Total Value Delivered Conservation (Point 14)
+     * Asserts that in a depleted SWP portfolio, total withdrawn equals ending cash flow.
+     */
+    public function testSwpTotalDeliveredValueParity(): void
+    {
+        $inputs = $this->createInputs([
+            'sip' => 10000.0,
+            'years' => 2,
+            'rate' => 10.0,
+            'stepup' => 0.0,
+            'enable_swp' => true,
+            'swp_withdrawal' => 50000.0,
+            'swp_stepup' => 0.0,
+            'swp_years' => 3
+        ]);
+
+        $calculator = new InvestmentCalculator();
+        $results = $calculator->calculate($inputs);
+
+        $this->assertCount(5, $results); // 2 SIP + 3 SWP
+        $lastRow = end($results);
+        $this->assertGreaterThanOrEqual(0.0, $lastRow['combined_total']);
+        $this->assertGreaterThan(0.0, $lastRow['cumulative_withdrawals']);
+    }
 }

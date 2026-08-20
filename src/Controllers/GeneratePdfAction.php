@@ -96,6 +96,7 @@ class GeneratePdfAction
                 'summary_corpus'    => $formatter->format($serverCorpus),
                 'raw_invested'      => $serverInvested,
                 'raw_corpus'        => $serverCorpus,
+                'raw_withdrawn'     => $serverWithdrawn,
                 'combined_results'  => $combined,
             ];
 

@@ -41,7 +41,15 @@ class PdfReportTemplate implements PdfTemplateInterface
 
         $summary_corpus = (string) ($inputs['summary_corpus'] ?? '0');
         $summary_invested = (string) ($inputs['summary_invested'] ?? '0');
-        $multiplier = self::calculateMultiplier((float) ($inputs['raw_invested'] ?? 0), (float) ($inputs['raw_corpus'] ?? 0), $summary_invested, $summary_corpus);
+        $summary_withdrawn = (string) ($inputs['summary_withdrawn'] ?? '0');
+        $multiplier = self::calculateMultiplier(
+            (float) ($inputs['raw_invested'] ?? 0),
+            (float) ($inputs['raw_corpus'] ?? 0),
+            (float) ($inputs['raw_withdrawn'] ?? 0),
+            $summary_invested,
+            $summary_corpus,
+            $summary_withdrawn
+        );
 
         $proposal_id = 'SWP-' . strtoupper(substr(md5($client_name . date('Y-m-d')), 0, 8));
         $has_swp = ((int) ($inputs['swp_years'] ?? 0) > 0 || (float) ($inputs['swp_withdrawal'] ?? 0) > 0);
@@ -97,15 +105,24 @@ class PdfReportTemplate implements PdfTemplateInterface
         return $clean;
     }
 
-    private static function calculateMultiplier(float $rawInvested, float $rawCorpus, string $summaryInvested, string $summaryCorpus): string
-    {
-        if ($rawInvested > 0 && $rawCorpus > 0) {
-            return number_format($rawCorpus / $rawInvested, 2) . 'x';
+    private static function calculateMultiplier(
+        float $rawInvested,
+        float $rawCorpus,
+        float $rawWithdrawn,
+        string $summaryInvested,
+        string $summaryCorpus,
+        string $summaryWithdrawn
+    ): string {
+        $totalDelivered = $rawCorpus + $rawWithdrawn;
+        if ($rawInvested > 0 && $totalDelivered > 0) {
+            return number_format($totalDelivered / $rawInvested, 2) . 'x';
         }
         $cleanCorpus = self::parseFormattedAmount($summaryCorpus);
+        $cleanWithdrawn = self::parseFormattedAmount($summaryWithdrawn);
         $cleanInvested = self::parseFormattedAmount($summaryInvested);
-        if ($cleanInvested > 0 && $cleanCorpus > 0) {
-            return number_format($cleanCorpus / $cleanInvested, 2) . 'x';
+        $cleanDelivered = $cleanCorpus + $cleanWithdrawn;
+        if ($cleanInvested > 0 && $cleanDelivered > 0) {
+            return number_format($cleanDelivered / $cleanInvested, 2) . 'x';
         }
         return '1.00x';
     }
