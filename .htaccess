@@ -11,7 +11,7 @@ Header unset Server
 # ============================================================
 # SECURITY: Block access to sensitive files & directories
 # ============================================================
-# Block .env, .git, .gitignore, .gitattributes, .editorconfig
+# Block .env, .git, .gitignore, .gitattributes, .editorconfig, .DS_Store
 <FilesMatch "^\.(env|git|gitignore|gitattributes|editorconfig|DS_Store)">
   <IfModule mod_authz_core.c>
     Require all denied
@@ -33,8 +33,8 @@ Header unset Server
   </IfModule>
 </FilesMatch>
 
-# Block composer files, package files, READMEs, logs
-<FilesMatch "(composer\.(json|lock)|package(-lock)?\.json|\.log$|\.sql$|\.bak$|\.swp$|~$)">
+# Block composer files, package files, logs, sql, bak, markdown, ts, shell scripts
+<FilesMatch "(composer\.(json|lock)|package(-lock)?\.json|\.log$|\.sql$|\.bak$|\.swp$|\.md$|\.ts$|\.sh$|~$)">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>
@@ -55,17 +55,14 @@ Header unset Server
   </IfModule>
 </FilesMatch>
 
-# Block access to vendor directory entirely
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteRule ^vendor(/.*)?$ - [F,L]
-</IfModule>
-
 # ============================================================
 # URL Rewriting (SEO & routing)
 # ============================================================
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  # Block access to protected application directories entirely
+  RewriteRule ^(vendor|src|content|database|var|tests|bin|scripts|node_modules)(/.*)?$ - [F,L]
 
   # Force HTTPS + strip www in one hop (avoids redirect chain) but only on production
   RewriteCond %{HTTP_HOST} ^(www\.)?sipswpcalculator\.com$ [NC]
@@ -105,13 +102,10 @@ Header unset Server
   RewriteCond %{REQUEST_URI} (wp-admin|wp-login|wp-config|wp-content|xmlrpc\.php|\.asp$|\.aspx$|\.jsp$) [NC]
   RewriteRule .* - [F,L]
 
-  # Remove .php extension
+  # Remove .php extension and route through index.php
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^(.*)$ index.php [QSA,L]
-
-  # Block access to the database folder
-  RewriteRule ^database/.*$ - [F,L]
 </IfModule>
 
 # ============================================================
@@ -184,7 +178,7 @@ Header set X-Content-Type-Options "nosniff"
 Header set X-Frame-Options "SAMEORIGIN"
 Header set X-XSS-Protection "1; mode=block"
 Header set Referrer-Policy "strict-origin-when-cross-origin"
-Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://analytics.ahrefs.com https://www.googletagmanager.com https://js-de.sentry-cdn.com https://js.sentry-cdn.com https://www.clarity.ms https://scripts.clarity.ms https://*.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://analytics.ahrefs.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://www.clarity.ms https://*.clarity.ms https://c.bing.com; base-uri 'self'; form-action 'self';"
+Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://analytics.ahrefs.com https://www.googletagmanager.com https://js-de.sentry-cdn.com https://js.sentry-cdn.com https://www.clarity.ms https://scripts.clarity.ms https://*.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://analytics.ahrefs.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://www.clarity.ms https://*.clarity.ms https://c.bing.com; base-uri 'self'; form-action 'self'; frame-ancestors 'self';"
 Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
 # HSTS: Force HTTPS for 1 year, include subdomains, allow preload list
 Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"

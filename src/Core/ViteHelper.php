@@ -71,6 +71,11 @@ class ViteHelper
             return '/dist/' . $this->manifest[$entryKey]['file'];
         }
 
+        if ($this->environment === 'production') {
+            error_log("ViteHelper Warning: Manifest entry missing for '{$entryKey}'. Ensure 'npm run build' was executed.");
+            return '';
+        }
+
         return '/' . ltrim($entry, '/');
     }
 

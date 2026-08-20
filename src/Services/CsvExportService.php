@@ -83,7 +83,14 @@ class CsvExportService
     private function sanitizeCsvCell(mixed $value): string
     {
         $str = (string) $value;
-        if ($str !== '' && in_array($str[0], ['=', '+', '-', '@', "\t", "\r"], true) && !is_numeric($str)) {
+        if ($str === '') {
+            return '';
+        }
+        $trimmed = ltrim($str);
+        if ($trimmed !== '' && in_array($trimmed[0], ['=', '+', '-', '@', "\t", "\r", '|'], true)) {
+            if (is_numeric($str) && $str[0] !== '+' && $str[0] !== '=') {
+                return $str;
+            }
             return "'" . $str;
         }
         return $str;

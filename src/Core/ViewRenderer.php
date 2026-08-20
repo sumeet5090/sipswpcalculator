@@ -30,11 +30,14 @@ class ViewRenderer
         $loader = new FilesystemLoader($resolvedViews);
 
         $effectiveCache = false;
-        if ($cachePath !== null) {
+        if ($cachePath !== null && is_dir($cachePath) && is_writable($cachePath)) {
             $effectiveCache = $cachePath;
         } elseif ($isProd) {
             $cacheDir = __DIR__ . '/../../var/cache/twig';
-            if (is_dir($cacheDir)) {
+            if (!is_dir($cacheDir)) {
+                @mkdir($cacheDir, 0775, true);
+            }
+            if (is_dir($cacheDir) && is_writable($cacheDir)) {
                 $effectiveCache = $cacheDir;
             }
         }

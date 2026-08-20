@@ -43,7 +43,7 @@ class ContentManagerTest extends TestCase
         $manager = new ContentManager($parsedown, $this->tempDir);
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage("Content markdown file missing at: {$this->tempDir}/missing.md");
+        $this->expectExceptionMessage("Content markdown file missing or unauthorized at: /missing");
 
         $manager->getFileModifiedDate('/missing');
     }

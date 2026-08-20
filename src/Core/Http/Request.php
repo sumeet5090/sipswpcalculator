@@ -42,6 +42,7 @@ class Request
         if ($position !== false) {
             $uri = substr($uri, 0, $position);
         }
+        $uri = (string) preg_replace('#/{2,}#', '/', $uri);
         return $uri !== '' ? $uri : '/';
     }
 
@@ -67,25 +68,35 @@ class Request
 
     public function getClientIp(): string
     {
-        $headers = [
-            'HTTP_CF_CONNECTING_IP',
-            'HTTP_X_FORWARDED_FOR',
-            'HTTP_CLIENT_IP',
-            'REMOTE_ADDR'
-        ];
+        $remoteAddr = (string) ($this->server['REMOTE_ADDR'] ?? '127.0.0.1');
 
-        foreach ($headers as $header) {
-            $value = $this->server[$header] ?? null;
-            if ($value !== null && is_string($value) && trim($value) !== '') {
-                $ips = explode(',', $value);
-                $ip = trim($ips[0]);
+        // Check for Cloudflare connecting IP if present and valid
+        if (!empty($this->server['HTTP_CF_CONNECTING_IP'])) {
+            $cfIp = trim((string) $this->server['HTTP_CF_CONNECTING_IP']);
+            if (filter_var($cfIp, FILTER_VALIDATE_IP)) {
+                return $cfIp;
+            }
+        }
+
+        // Check for X-Forwarded-For if present
+        if (!empty($this->server['HTTP_X_FORWARDED_FOR'])) {
+            $rawXff = (string) $this->server['HTTP_X_FORWARDED_FOR'];
+            $ips = array_map('trim', explode(',', $rawXff));
+            foreach ($ips as $ip) {
                 if (filter_var($ip, FILTER_VALIDATE_IP)) {
                     return $ip;
                 }
             }
         }
 
-        return '127.0.0.1';
+        if (!empty($this->server['HTTP_CLIENT_IP'])) {
+            $clientIp = trim((string) $this->server['HTTP_CLIENT_IP']);
+            if (filter_var($clientIp, FILTER_VALIDATE_IP)) {
+                return $clientIp;
+            }
+        }
+
+        return filter_var($remoteAddr, FILTER_VALIDATE_IP) ? $remoteAddr : '127.0.0.1';
     }
 
     public function isPost(): bool

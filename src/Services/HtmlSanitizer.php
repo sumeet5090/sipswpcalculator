@@ -19,12 +19,12 @@ class HtmlSanitizer
     }
 
     /**
-     * Extract clean base64 data URI for chart image.
+     * Extract clean base64 data URI for chart image with strict size constraint.
      */
-    public function extractChartData(string $chartRaw): string
+    public function extractChartData(string $chartRaw, int $maxBytes = 5242880): string
     {
         $chartRaw = trim($chartRaw);
-        if ($chartRaw !== '' && preg_match('/^data:image\/(png|jpeg|gif);base64,/i', $chartRaw)) {
+        if ($chartRaw !== '' && strlen($chartRaw) <= $maxBytes && preg_match('/^data:image\/(png|jpeg|gif);base64,[A-Za-z0-9+\/=\s]+$/i', $chartRaw)) {
             return $chartRaw;
         }
         return '';
@@ -43,7 +43,7 @@ class HtmlSanitizer
             '<table><thead><tbody><tfoot><tr><th><td><caption><colgroup><col><span><strong><em><br>'
         );
         $clean = (string) preg_replace('/\s+on\w+\s*=\s*["\'][^"\']*["\']/i', '', $clean);
-        $clean = (string) preg_replace('/\s+style\s*=\s*["\'][^"\']*expression\s*\([^"\']*["\']/i', '', $clean);
+        $clean = (string) preg_replace('/\s+style\s*=\s*["\'][^"\']*(expression|position|fixed|absolute|@import|url\()[^"\']*["\']/i', '', $clean);
 
         // Auto-balance and repair unclosed/broken HTML table tags via DOMDocument
         $dom = new \DOMDocument();

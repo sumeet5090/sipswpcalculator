@@ -20,13 +20,17 @@ class Env
      */
     public static function get(string $key, mixed $default = null): mixed
     {
+        if (isset($_ENV[$key]) && $_ENV[$key] !== '') {
+            return $_ENV[$key];
+        }
+
+        if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') {
+            return $_SERVER[$key];
+        }
+
         $val = getenv($key);
         if ($val !== false && $val !== '') {
             return $val;
-        }
-
-        if (isset($_ENV[$key]) && $_ENV[$key] !== '') {
-            return $_ENV[$key];
         }
 
         return $default;

@@ -47,6 +47,18 @@ class SessionManager
     {
         if (session_status() === PHP_SESSION_ACTIVE) {
             $_SESSION = [];
+            if (ini_get('session.use_cookies')) {
+                $params = session_get_cookie_params();
+                setcookie(
+                    session_name(),
+                    '',
+                    time() - 42000,
+                    $params['path'],
+                    $params['domain'],
+                    $params['secure'],
+                    $params['httponly']
+                );
+            }
             session_destroy();
         }
     }
@@ -60,6 +72,7 @@ class SessionManager
 
     public function ensureCsrfToken(): string
     {
+        $this->start();
         $token = $this->get('csrf_token');
         if (!is_string($token) || $token === '') {
             return $this->generateCsrfToken();
@@ -76,8 +89,11 @@ class SessionManager
         return $token;
     }
 
-    public function verifyCsrfToken(string $token): bool
+    public function verifyCsrfToken(mixed $token): bool
     {
+        if (!is_string($token) || $token === '') {
+            return false;
+        }
         try {
             $stored = $this->getCsrfToken();
             return hash_equals($stored, $token);

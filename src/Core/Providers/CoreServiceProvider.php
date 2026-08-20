@@ -26,7 +26,20 @@ class CoreServiceProvider implements ServiceProviderInterface
     {
         $appUrl = (string) Env::get('APP_URL', 'https://sipswpcalculator.com');
         $environment = (string) Env::get('ENVIRONMENT', 'development');
-        $dbPath = (string) Env::get('DB_PATH', __DIR__ . '/../../../database/database.sqlite');
+        $defaultDbPath = __DIR__ . '/../../../database/database.sqlite';
+        $sharedCandidates = [
+            dirname(__DIR__, 4) . '/shared/database.sqlite',
+            dirname(__DIR__, 3) . '/shared/database.sqlite',
+        ];
+        foreach ($sharedCandidates as $candidate) {
+            if (file_exists($candidate) || file_exists(dirname($candidate))) {
+                if (file_exists($candidate)) {
+                    $defaultDbPath = $candidate;
+                    break;
+                }
+            }
+        }
+        $dbPath = (string) Env::get('DB_PATH', $defaultDbPath);
 
         $container->singleton(PDO::class, function () use ($dbPath) {
             $dir = dirname($dbPath);

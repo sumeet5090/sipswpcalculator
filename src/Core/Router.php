@@ -50,8 +50,9 @@ class Router
         $request = $request ?? Request::createFromGlobals();
         $uri = $request->getUri();
         $method = $request->getMethod();
+        $lookupMethod = ($method === 'HEAD') ? 'GET' : $method;
 
-        $coreHandler = function (Request $req) use ($method, $uri): Response {
+        $coreHandler = function (Request $req) use ($lookupMethod, $uri): Response {
             if (array_key_exists($uri, $this->redirects)) {
                 $target = $this->redirects[$uri];
                 $queryString = (string) $req->server('QUERY_STRING', '');
@@ -61,14 +62,14 @@ class Router
                 return Response::redirect($target, 301);
             }
 
-            if (isset($this->routes[$method][$uri])) {
-                return $this->callAction($this->routes[$method][$uri], [], $req);
+            if (isset($this->routes[$lookupMethod][$uri])) {
+                return $this->callAction($this->routes[$lookupMethod][$uri], [], $req);
             }
 
 
-            if (isset($this->routes[$method]) && is_array($this->routes[$method])) {
-                foreach ($this->routes[$method] as $route => $action) {
-                    $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_\.-]+)', $route);
+            if (isset($this->routes[$lookupMethod]) && is_array($this->routes[$lookupMethod])) {
+                foreach ($this->routes[$lookupMethod] as $route => $action) {
+                    $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_-]+)', $route);
                     if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
                         $rawParams = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
                         $params = array_map('urldecode', $rawParams);

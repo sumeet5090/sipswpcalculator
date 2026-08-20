@@ -52,6 +52,29 @@ class FileUploadService
             throw new RuntimeException('Failed to read uploaded image file.');
         }
 
+        // If GD is available, re-encode image to strip EXIF metadata and neutralize polyglots
+        if (function_exists('imagecreatefromstring')) {
+            $img = @imagecreatefromstring($data);
+            if ($img !== false) {
+                ob_start();
+                if ($imageInfo[2] === IMAGETYPE_PNG) {
+                    imagepng($img);
+                    $safeMime = 'image/png';
+                } elseif ($imageInfo[2] === IMAGETYPE_GIF) {
+                    imagegif($img);
+                    $safeMime = 'image/gif';
+                } else {
+                    imagejpeg($img, null, 90);
+                    $safeMime = 'image/jpeg';
+                }
+                $cleanData = ob_get_clean();
+                imagedestroy($img);
+                if ($cleanData !== '') {
+                    $data = $cleanData;
+                }
+            }
+        }
+
         return 'data:' . $safeMime . ';base64,' . base64_encode($data);
     }
 }

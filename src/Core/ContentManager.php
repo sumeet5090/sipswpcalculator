@@ -32,20 +32,38 @@ class ContentManager
         return array_map(fn($f) => basename($f, '.md'), $files);
     }
 
+    private function resolveSafePath(string $path): ?string
+    {
+        $normalized = ltrim($path, '/');
+        $candidate = $this->contentDir . '/' . $normalized . '.md';
+        $realContentDir = realpath($this->contentDir);
+        $realFile = realpath($candidate);
+
+        if ($realFile === false || $realContentDir === false) {
+            return null;
+        }
+
+        if (!str_starts_with($realFile, $realContentDir . DIRECTORY_SEPARATOR) && $realFile !== $realContentDir) {
+            return null;
+        }
+
+        return $realFile;
+    }
+
     public function getFileModifiedDate(string $path): string
     {
-        $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
-        if (!file_exists($fullPath)) {
-            throw new \RuntimeException("Content markdown file missing at: {$fullPath}");
+        $fullPath = $this->resolveSafePath($path);
+        if ($fullPath === null || !file_exists($fullPath)) {
+            throw new \RuntimeException("Content markdown file missing or unauthorized at: {$path}");
         }
         return date('Y-m-d', filemtime($fullPath));
     }
 
     public function getParsedContent(string $path): ?array
     {
-        $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
+        $fullPath = $this->resolveSafePath($path);
 
-        if (!file_exists($fullPath)) {
+        if ($fullPath === null || !file_exists($fullPath)) {
             return null;
         }
 
@@ -84,9 +102,9 @@ class ContentManager
      */
     public function getMetadataOnly(string $path): ?array
     {
-        $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
+        $fullPath = $this->resolveSafePath($path);
 
-        if (!file_exists($fullPath)) {
+        if ($fullPath === null || !file_exists($fullPath)) {
             return null;
         }
 

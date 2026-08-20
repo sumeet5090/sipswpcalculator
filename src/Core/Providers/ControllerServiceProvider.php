@@ -83,7 +83,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new \Controllers\AdminAuthAction(
                 $c->get(AdminAuthService::class),
                 $c->get(ViewRenderer::class),
-                $c->get(SessionManager::class)
+                $c->get(SessionManager::class),
+                $c->get(RateLimiter::class)
             );
         });
 
@@ -138,7 +139,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
         });
 
         $container->singleton(ErrorController::class, function (Container $c) {
-            return new ErrorController($c->get(ViewRenderer::class));
+            $env = (string) \Core\Env::get('ENVIRONMENT', 'production');
+            return new ErrorController($c->get(ViewRenderer::class), $env);
         });
 
         $container->singleton(BlogController::class, function (Container $c) {
