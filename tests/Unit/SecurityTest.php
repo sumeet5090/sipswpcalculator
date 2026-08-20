@@ -5,11 +5,19 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use Core\ContentManager;
+use Core\CurrencyHelper;
 use Core\Http\Request;
+use Core\Http\Response;
+use Core\PdfTemplateInterface;
+use Core\SchemaHelper;
+use Core\SiteConfig;
+use Core\Twig\AppTwigExtension;
+use Core\ViteHelper;
 use Parsedown;
 use PHPUnit\Framework\TestCase;
 use Services\CsvExportService;
 use Services\HtmlSanitizer;
+use Services\PdfGeneratorService;
 use Services\SessionManager;
 
 class SecurityTest extends TestCase
@@ -132,5 +140,94 @@ class SecurityTest extends TestCase
         // Cleanup
         unlink($tempDir . '/allowed.md');
         rmdir($tempDir);
+    }
+
+    public function testTwigJsonIslandFilterEscapesHtmlEntitiesAndScriptTags(): void
+    {
+        $extension = new AppTwigExtension(new ViteHelper('testing'), new CurrencyHelper());
+        $filters = $extension->getFilters();
+
+        $jsonIslandFilter = null;
+        foreach ($filters as $filter) {
+            if ($filter->getName() === 'json_island') {
+                $jsonIslandFilter = $filter;
+                break;
+            }
+        }
+
+        $this->assertNotNull($jsonIslandFilter, 'json_island filter must be registered');
+
+        $callable = $jsonIslandFilter->getCallable();
+        $this->assertIsCallable($callable);
+
+        $maliciousPayload = [
+            'tag' => '</script><script>alert("XSS")</script>',
+            'quotes' => "single' and double\"",
+            'ampersand' => 'A & B',
+            'numeric' => 5000,
+        ];
+
+        $encoded = $callable($maliciousPayload);
+
+        // Verify HTML/Script tags are hex-escaped
+        $this->assertStringNotContainsString('</script>', $encoded);
+        $this->assertStringNotContainsString('<script>', $encoded);
+        $this->assertStringContainsString('\u003C\/script\u003E', $encoded);
+        $this->assertStringContainsString('\u0026', $encoded);
+        $this->assertStringContainsString('\u0027', $encoded);
+        $this->assertStringContainsString('\u0022', $encoded);
+    }
+
+    public function testPdfGeneratorServiceConfiguresCustomCacheDirectories(): void
+    {
+        $tempFontDir = sys_get_temp_dir() . '/sec_fonts_' . uniqid();
+        $tempPdfDir = sys_get_temp_dir() . '/sec_pdf_' . uniqid();
+
+        $mockTemplate = $this->createMock(PdfTemplateInterface::class);
+        $service = new PdfGeneratorService($mockTemplate, $tempFontDir, $tempPdfDir);
+
+        $this->assertEquals($tempFontDir, $service->getFontDir());
+        $this->assertEquals($tempPdfDir, $service->getTempDir());
+        $this->assertTrue(is_dir($tempFontDir));
+        $this->assertTrue(is_dir($tempPdfDir));
+
+        // Cleanup
+        rmdir($tempFontDir);
+        rmdir($tempPdfDir);
+    }
+
+    public function testParsedownSafeModeEscapesRawScriptTags(): void
+    {
+        $parsedown = new Parsedown();
+        $parsedown->setSafeMode(true);
+
+        $dirtyMarkdown = "Here is some text with <script>alert('XSS')</script> embedded.";
+        $rendered = $parsedown->text($dirtyMarkdown);
+
+        $this->assertStringNotContainsString('<script>', $rendered);
+        $this->assertStringContainsString('&lt;script&gt;', $rendered);
+    }
+
+    public function testResponseCsvIncludesXAccelBufferingNo(): void
+    {
+        $response = Response::csv("Year,Amount\n1,1000\n", "test.csv");
+        $headers = $response->getHeaders();
+
+        $this->assertArrayHasKey('X-Accel-Buffering', $headers);
+        $this->assertEquals('no', $headers['X-Accel-Buffering']);
+    }
+
+    public function testSchemaHelperGeneratesHexEscapedJson(): void
+    {
+        $siteConfig = new SiteConfig('https://sipswpcalculator.com');
+        $schemaHelper = new SchemaHelper($siteConfig, 'Sumeet Boga', 'SIP SWP Calculator');
+
+        $faqSchema = $schemaHelper->getFAQ([
+            'What is SIP? </script><script>' => 'Systematic Investment Plan & more.'
+        ]);
+
+        $this->assertStringNotContainsString('</script>', $faqSchema);
+        $this->assertStringContainsString('\u003C/script\u003E', $faqSchema);
+        $this->assertStringContainsString('\u0026', $faqSchema);
     }
 }

@@ -39,6 +39,12 @@ class AppTwigExtension extends AbstractExtension
                 return $this->currencyFormatter->format((float) $amount);
             }),
             new TwigFilter('array_values', fn($array) => is_array($array) ? array_values($array) : $array),
+            new TwigFilter('json_island', function ($data): string {
+                return (string) json_encode(
+                    $data,
+                    JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_THROW_ON_ERROR
+                );
+            }, ['is_safe' => ['html']]),
         ];
     }
 

@@ -247,10 +247,17 @@ This codebase is maintained to strict architectural quality standards as documen
 | **Image EXIF & Polyglot Neutralization** | `FileUploadService` re-encodes uploaded images via GD to strip malicious EXIF metadata and polyglot payloads |
 | **Shared Directory Auto-Discovery** | Database and rate-limit storage automatically discover parent shared directory structures across atomic symlink releases |
 | **Separation of Concerns (Views)** | `SitemapController` delegates XML rendering to `Views/sitemap.xml.twig` rather than constructing DOM nodes inline |
-| **Custom Twig Extensions** | `AppTwigExtension` encapsulates custom Twig filters (`formatInr`, `array_values`) and Vite helper functions |
+| **Custom Twig Extensions** | `AppTwigExtension` encapsulates custom Twig filters (`formatInr`, `array_values`, `json_island`) and Vite helper functions |
+| **Data Island XSS Protection** | `json_island` Twig filter automatically escapes HTML entities, quotes, and closing tags with `JSON_HEX_*` flags to protect embedded JSON state |
+| **LiteSpeed LSAPI Hardening** | Dedicated `.user.ini` file safely enforces Hostinger LSAPI runtime PHP configurations (`display_errors = Off`, `expose_php = Off`, upload limits) |
+| **Dompdf Cache Isolation** | Dedicated `var/cache/fonts` and `var/cache/dompdf` directories prevent permission issues on read-only vendor folders across atomic releases |
+| **Static Tailwind Class Mapping** | Category accent badges mapped to static utility classes to prevent Tailwind CSS v4 JIT class purging in production |
 | **DRY Calculation Engine** | PDF reporting (`GeneratePdfAction` / `PdfReportTemplate`) uses `InvestmentCalculator` cashflow vectors directly without duplicated math loops |
 | **Single Source of Truth** | LTCG tax rates in `calculator_defaults.json`; `InvestmentInputs` is the only clamping layer for both web and PDF |
 | **Explicit > Implicit** | `Router` explicitly resolves routes and supports `HEAD` methods for all `GET` routes without magic URI trimming |
+| **Markdown Safe Mode** | `Parsedown::setSafeMode(true)` ensures all raw HTML/script tags embedded in markdown content files are safely escaped |
+| **JSON-LD Schema Hex Escaping** | `SchemaHelper` and `SchemaFactory` enforce `JSON_HEX_TAG | JSON_HEX_AMP` on all structured data output to prevent script tag injection |
+| **Production Traps Guardrails** | Full encyclopedia of 65 production server, LiteSpeed, CloudLinux, and concurrency traps codified in `.agents/skills/production-traps/SKILL.md` |
 | **CQS Compliance** | `SessionManager::generateCsrfToken()`, `App::boot()`, and `DatabaseMigrator::migrate()` return `void` or explicitly separate state mutation from query methods |
 | **Environment Security** | Schema migrations execute strictly via CLI (`bin/migrate`) in deployment pipelines; no administrative web migration endpoints |
 

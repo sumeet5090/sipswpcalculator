@@ -90,6 +90,7 @@ class Response
             'Content-Length' => (string) strlen($csvContent),
             'Cache-Control' => 'no-cache, must-revalidate',
             'Pragma' => 'no-cache',
+            'X-Accel-Buffering' => 'no',
         ]);
     }
 }

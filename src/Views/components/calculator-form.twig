@@ -1,7 +1,7 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
 <script type="application/json" id="calculator-app-state">
-    {{ calc_config|json_encode|raw }}
+    {{ calc_config|json_island }}
 </script>
 
 <div id="{{ container_id|default('calculator-app') }}"

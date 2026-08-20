@@ -98,10 +98,16 @@
                     {% set posts = posts_by_cat[cat_id]|default([]) %}
                     {% for post in posts %}
                         {% set is_featured = post.featured|default(false) %}
-                        <article class="group relative glass-card flex flex-col transition-all section-glow-{{ accent_color }} {{ is_featured ? 'md:col-span-2 p-10 lg:p-14' : 'p-8' }}">
+                        {% set tag_badge_class = 'text-emerald-600 bg-emerald-50' %}
+                        {% if accent_color == 'indigo' %}
+                            {% set tag_badge_class = 'text-indigo-600 bg-indigo-50' %}
+                        {% elseif accent_color == 'amber' %}
+                            {% set tag_badge_class = 'text-amber-600 bg-amber-50' %}
+                        {% endif %}
+                        <article class="group relative glass-card flex flex-col transition-all {{ is_featured ? 'md:col-span-2 p-10 lg:p-14' : 'p-8' }}">
                             <div class="flex flex-col h-full">
                                 <div class="flex items-center justify-between mb-6">
-                                    <span class="text-[10px] font-black uppercase tracking-widest text-{{ accent_color }}-600 px-3 py-1 bg-{{ accent_color }}-50 rounded-full">
+                                    <span class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full {{ tag_badge_class }}">
                                         {{ post.tag }}
                                     </span>
                                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">

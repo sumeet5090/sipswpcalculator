@@ -117,6 +117,7 @@ class GeneratePdfAction
                 'Content-Length' => (string) strlen($pdf_binary),
                 'Cache-Control' => 'private, max-age=0, must-revalidate',
                 'Pragma' => 'public',
+                'X-Accel-Buffering' => 'no',
             ]);
         } catch (\Throwable $e) {
             error_log('PDF Generation Error: ' . $e->getMessage());

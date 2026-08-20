@@ -16,10 +16,37 @@ use Core\PdfReportTemplate;
 class PdfGeneratorService
 {
     private PdfTemplateInterface $template;
+    private string $fontDir;
+    private string $tempDir;
 
-    public function __construct(PdfTemplateInterface $template)
-    {
+    public function __construct(
+        PdfTemplateInterface $template,
+        ?string $fontDir = null,
+        ?string $tempDir = null
+    ) {
         $this->template = $template;
+        $this->fontDir = $fontDir ?? dirname(__DIR__, 2) . '/var/cache/fonts';
+        $this->tempDir = $tempDir ?? dirname(__DIR__, 2) . '/var/cache/dompdf';
+        $this->ensureDirectories();
+    }
+
+    private function ensureDirectories(): void
+    {
+        foreach ([$this->fontDir, $this->tempDir] as $dir) {
+            if (!file_exists($dir) && !mkdir($dir, 0775, true) && !is_dir($dir)) {
+                error_log("PdfGeneratorService: Failed to create cache directory: {$dir}");
+            }
+        }
+    }
+
+    public function getFontDir(): string
+    {
+        return $this->fontDir;
+    }
+
+    public function getTempDir(): string
+    {
+        return $this->tempDir;
     }
 
     /**
@@ -38,6 +65,9 @@ class PdfGeneratorService
         $options->set('isFontSubsettingEnabled', true);
         $options->set('isPhpEnabled', false);
         $options->set('isJavascriptEnabled', false);
+        $options->set('fontDir', $this->fontDir);
+        $options->set('fontCache', $this->fontDir);
+        $options->set('tempDir', $this->tempDir);
 
         $initialLevel = ob_get_level();
         ob_start();

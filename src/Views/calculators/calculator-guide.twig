@@ -88,7 +88,7 @@
     <h2 class="sr-only" id="calculator-heading">Calculate Your Returns</h2>
     
     <script type="application/json" id="calculator-app-state">
-        {{ calc_config|json_encode|raw }}
+        {{ calc_config|json_island }}
     </script>
     <div id="calculator-app"
          data-js="calculator-app"
