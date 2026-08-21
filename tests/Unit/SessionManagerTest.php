@@ -86,4 +86,14 @@ class SessionManagerTest extends TestCase
         $token = $this->sessionManager->generateCsrfToken();
         $this->assertSame($token, $this->sessionManager->getCsrfToken());
     }
+
+    public function testVerifyCsrfTokenHandlesNonStringTypesSafely(): void
+    {
+        $this->sessionManager->generateCsrfToken();
+
+        $this->assertFalse($this->sessionManager->verifyCsrfToken(12345));
+        $this->assertFalse($this->sessionManager->verifyCsrfToken(null));
+        $this->assertFalse($this->sessionManager->verifyCsrfToken(['token' => 'val']));
+        $this->assertFalse($this->sessionManager->verifyCsrfToken(true));
+    }
 }

@@ -174,4 +174,59 @@ class MiddlewarePipelineTest extends TestCase
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame('log_insight_processed', $response->getContent());
     }
+
+    public function testCsrfHoneypotBlocksArraySpamPayload(): void
+    {
+        $sessionManager = new SessionManager();
+        $middleware = new CsrfHoneypotMiddleware($sessionManager);
+
+        $request = new Request([], ['website_url' => ['malicious_array']], [
+            'REQUEST_METHOD' => 'POST',
+            'REQUEST_URI' => '/generate-pdf'
+        ]);
+
+        $response = $middleware->process($request, function () {
+            return Response::html('should_not_reach');
+        });
+
+        $this->assertSame(403, $response->getStatusCode());
+        $this->assertStringContainsString('Automated request detected', $response->getContent());
+    }
+
+    public function testCsrfHoneypotRefreshesTokenOnFailure(): void
+    {
+        $sessionManager = new SessionManager();
+        $initialToken = $sessionManager->ensureCsrfToken();
+        $middleware = new CsrfHoneypotMiddleware($sessionManager);
+
+        $request = new Request([], ['csrf_token' => 'invalid_expired_token', 'password' => 'secret'], [
+            'REQUEST_METHOD' => 'POST',
+            'REQUEST_URI' => '/admin_insights'
+        ]);
+
+        $response = $middleware->process($request, function () {
+            return Response::html('should_not_reach');
+        });
+
+        $this->assertSame(403, $response->getStatusCode());
+        // Verify token was refreshed
+        $this->assertNotSame($initialToken, $sessionManager->getCsrfToken());
+    }
+
+    public function testTrailingSlashRedirectPreservesQueryParamsOnPost(): void
+    {
+        $middleware = new TrailingSlashRedirectMiddleware();
+        $request = new Request([], [], [
+            'REQUEST_URI' => '/calculate/',
+            'REQUEST_METHOD' => 'POST',
+            'QUERY_STRING' => 'utm_source=test'
+        ]);
+
+        $response = $middleware->process($request, function () {
+            return Response::html('next_called');
+        });
+
+        $this->assertSame(308, $response->getStatusCode());
+        $this->assertSame('/calculate?utm_source=test', $response->getHeader('Location'));
+    }
 }
