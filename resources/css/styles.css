@@ -1253,6 +1253,38 @@ input[type=range]::-moz-range-track {
     transition: opacity 0.3s ease;
 }
 
+/* ── Specular Shimmer Sweep Animation ── */
+@keyframes specular-sweep {
+    0% {
+        transform: translateX(-100%) skewX(-15deg);
+    }
+    50%, 100% {
+        transform: translateX(200%) skewX(-15deg);
+    }
+}
+
+.specular-sweep {
+    position: relative;
+    overflow: hidden;
+}
+
+.specular-sweep::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.08),
+        transparent
+    );
+    animation: specular-sweep 6s infinite ease-in-out;
+    pointer-events: none;
+}
+
 /* ── Accessibility: Respect user motion preferences (WCAG 2.2) ── */
 @media (prefers-reduced-motion: reduce) {
     *,

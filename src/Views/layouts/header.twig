@@ -93,8 +93,16 @@
             {% endfor %}
         </nav>
 
-        <!-- Actions (Search & Audio Toggle) -->
+        <!-- Actions (Search, QR & Audio Toggle) -->
         <div class="hidden sm:flex items-center gap-2">
+            <button type="button" id="open-qr-modal-btn"
+                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-500 hover:text-slate-800 text-xs font-semibold shadow-2xs transition-all cursor-pointer"
+                title="Scan Plan on Mobile"
+                aria-label="Scan Plan on Mobile">
+                <span class="text-xs">📱</span>
+                <span class="hidden xl:inline text-[11px]">QR Sync</span>
+            </button>
+
             <button type="button" id="open-command-palette-btn"
                 class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-500 hover:text-slate-800 text-xs font-semibold shadow-2xs transition-all cursor-pointer group"
                 aria-label="Open Command Palette (Cmd + K)">

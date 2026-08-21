@@ -43,7 +43,7 @@
                 ₹ --
             </div>
         </div>
-        <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl border border-slate-700/80 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.25)] p-3 sm:p-4 text-center overflow-hidden transition-all duration-200 hover:shadow-xl hover:border-emerald-500/40">
+        <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl border border-slate-700/80 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.25)] p-3 sm:p-4 text-center overflow-hidden transition-all duration-200 hover:shadow-xl hover:border-emerald-500/40 specular-sweep">
             <div id="title-corpus" class="text-[10px] sm:text-xs font-bold text-emerald-400 uppercase tracking-widest mb-1 truncate">
                 Final Corpus
             </div>
@@ -55,6 +55,12 @@
 
     <!-- Velocity & Feasibility Badges Row -->
     <div class="flex flex-wrap items-center gap-2 px-1 -mt-1">
+        <div id="daily-lifestyle-multiplier-badge" class="hidden items-center gap-1.5 text-[11px] font-bold px-3 py-1 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-900 border border-emerald-200/90 shadow-2xs">
+            <span>⚡</span>
+            <span id="daily-accrual-amount" class="font-extrabold font-mono text-emerald-700">₹0 / day</span>
+            <span class="text-slate-400">•</span>
+            <span id="daily-lifestyle-equiv" class="font-medium text-slate-700">Daily compounding velocity at maturity</span>
+        </div>
         <span id="summary-crossover-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100/90 text-emerald-800 border border-emerald-200 shadow-2xs"></span>
         <span id="summary-longevity-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100/90 text-emerald-800 border border-emerald-200 shadow-2xs"></span>
         <span id="summary-ratio-pill" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200/80 shadow-2xs"></span>

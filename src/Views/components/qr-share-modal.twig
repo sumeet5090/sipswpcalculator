@@ -1,0 +1,42 @@
+<!-- Instant Client Proposal QR Code & Mobile Sync Studio Modal -->
+<div id="qr-share-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md hidden" role="dialog" aria-modal="true" aria-labelledby="qr-modal-title">
+    <div class="relative w-full max-w-sm bg-slate-900 text-white rounded-3xl border border-slate-700/80 shadow-2xl overflow-hidden p-6 text-center animate-in fade-in zoom-in-95 duration-200">
+        <!-- Ambient Glow -->
+        <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Header -->
+        <div class="flex items-center justify-between gap-3 mb-4 relative z-10">
+            <div class="flex items-center gap-2 text-left">
+                <span class="flex items-center justify-center w-7 h-7 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-black">📱</span>
+                <div>
+                    <h3 id="qr-modal-title" class="text-xs sm:text-sm font-extrabold text-white">Scan on Mobile</h3>
+                    <p class="text-[10px] text-slate-400">Instant mobile plan sync</p>
+                </div>
+            </div>
+            <button type="button" id="close-qr-modal-btn" class="text-slate-400 hover:text-white p-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 transition-all cursor-pointer" aria-label="Close Modal">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- QR Code Canvas Container -->
+        <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-inner inline-block my-2 relative z-10">
+            <div id="qr-code-canvas-container" class="w-48 h-48 flex items-center justify-center">
+                <!-- QR Code SVG / Canvas rendered dynamically -->
+            </div>
+        </div>
+
+        <p class="text-[11px] text-slate-300 mt-2 mb-4 relative z-10">
+            Scan with your smartphone camera to open and manipulate this financial plan on mobile with zero loss of data.
+        </p>
+
+        <!-- Copy URL Button -->
+        <div class="flex items-center gap-2 relative z-10">
+            <input type="text" id="qr-share-url-input" readonly class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-[11px] text-slate-300 font-mono truncate focus:outline-none" value="" aria-label="Plan URL">
+            <button type="button" id="copy-qr-url-btn" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all cursor-pointer whitespace-nowrap">
+                <span>📋 Copy</span>
+            </button>
+        </div>
+    </div>
+</div>

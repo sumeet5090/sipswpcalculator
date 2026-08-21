@@ -34,6 +34,8 @@ import { StressTestController } from './controllers/StressTestController';
 import { AssetRebalanceController } from './controllers/AssetRebalanceController';
 import { CardSpotlightController } from './controllers/CardSpotlightController';
 import { GoalCommitmentController } from './controllers/GoalCommitmentController';
+import { DailyAccrualController } from './controllers/DailyAccrualController';
+import { QrShareModalController } from './controllers/QrShareModalController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -57,6 +59,8 @@ export class CalculatorApp {
     private assetRebalanceController: AssetRebalanceController;
     private spotlightController: CardSpotlightController;
     private goalCommitmentController: GoalCommitmentController;
+    private dailyAccrualController: DailyAccrualController;
+    private qrShareModalController: QrShareModalController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -142,6 +146,15 @@ export class CalculatorApp {
             this.formatter,
             () => this.getInputs(),
             () => this.latestResults
+        );
+
+        this.dailyAccrualController = new DailyAccrualController(
+            this.dom,
+            this.formatter
+        );
+
+        this.qrShareModalController = new QrShareModalController(
+            this.dom
         );
     }
 
@@ -390,6 +403,8 @@ export class CalculatorApp {
         this.assetRebalanceController.init();
         this.spotlightController.init();
         this.goalCommitmentController.init();
+        this.dailyAccrualController.init();
+        this.qrShareModalController.init();
         const snapshotBtn = document.getElementById('snapshot-scenario-btn');
         if (snapshotBtn) {
             snapshotBtn.addEventListener('click', () => {
@@ -570,6 +585,7 @@ export class CalculatorApp {
 
             this.stressTestController.updateResults(combined);
             this.assetRebalanceController.updateInputs(inputs);
+            this.dailyAccrualController.updateResults(combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 
