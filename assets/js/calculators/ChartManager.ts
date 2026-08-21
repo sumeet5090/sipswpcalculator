@@ -269,13 +269,117 @@ export class ChartManager {
             });
         }
 
+        if (this.activeBenchmark !== 'none') {
+            let rate = 12;
+            let label = 'Nifty 50 (12%)';
+            let color = '#f59e0b'; // Amber 500
+
+            if (this.activeBenchmark === 'gold') {
+                rate = 9;
+                label = 'Gold (9%)';
+                color = '#eab308';
+            } else if (this.activeBenchmark === 'fd') {
+                rate = 6.5;
+                label = 'Fixed Deposit (6.5%)';
+                color = '#64748b';
+            }
+
+            const benchmarkData = this.computeBenchmarkCurve(results, rate);
+            datasets.push({
+                label,
+                data: benchmarkData,
+                borderColor: color,
+                backgroundColor: 'transparent',
+                borderWidth: 2,
+                borderDash: [6, 4],
+                tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
+                fill: false,
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: color,
+                pointRadius: isSinglePoint ? 4 : 0,
+                pointHoverRadius: 6,
+                order: 1,
+            });
+        }
+
         return datasets;
     }
 
+    private activeBenchmark: 'none' | 'nifty' | 'gold' | 'fd' = 'none';
     private activeViewType: 'line' | 'donut' = 'line';
     private currentChartType: 'line' | 'doughnut' | null = null;
     private lastResults: YearResult[] = [];
     private lastEnableSwp: boolean = true;
+
+    /**
+     * Switch active historical benchmark comparison (Nifty 50, Gold, FD, or None).
+     */
+    setBenchmark(benchmark: 'none' | 'nifty' | 'gold' | 'fd'): void {
+        this.activeBenchmark = benchmark;
+        const chips = document.querySelectorAll<HTMLButtonElement>('.benchmark-chip');
+        chips.forEach(c => {
+            if (c.dataset.benchmark === benchmark) {
+                c.classList.add('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600');
+                c.classList.remove('bg-slate-50', 'text-slate-600');
+            } else {
+                c.classList.remove('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600');
+                c.classList.add('bg-slate-50', 'text-slate-600');
+            }
+        });
+
+        if (this.lastResults.length > 0) {
+            this.updateChart(this.lastResults, this.lastEnableSwp);
+        }
+    }
+
+    private crosshairPlugin = {
+        id: 'crosshairLine',
+        afterDraw: (chart: any) => {
+            if (chart.tooltip?.getActiveElements()?.length && chart.config.type === 'line') {
+                const activePoint = chart.tooltip.getActiveElements()[0];
+                const ctx = chart.ctx;
+                const x = activePoint.element.x;
+                const topY = chart.scales.y.top;
+                const bottomY = chart.scales.y.bottom;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.setLineDash([4, 4]);
+                ctx.moveTo(x, topY);
+                ctx.lineTo(x, bottomY);
+                ctx.lineWidth = 1.5;
+                ctx.strokeStyle = 'rgba(16, 185, 129, 0.45)';
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+    };
+
+    /**
+     * Compute benchmark projection dataset (Nifty 50, Gold, or FD) for the same cashflow sequence.
+     */
+    private computeBenchmarkCurve(results: YearResult[], benchmarkRate: number): number[] {
+        let corpus = 0;
+        const curve: number[] = [];
+        const monthlyRate = benchmarkRate / 12 / 100;
+
+        for (let i = 0; i < results.length; i++) {
+            const row = results[i];
+            const monthlySip = row.sip_monthly ?? 0;
+
+            if (i === 0) {
+                corpus += (row.begin_balance ?? 0);
+            }
+
+            for (let m = 0; m < 12; m++) {
+                corpus = (corpus + monthlySip) * (1 + monthlyRate);
+            }
+            curve.push(Math.round(corpus));
+        }
+
+        return curve;
+    }
 
     /**
      * Switch between Line (Growth Curve) and Donut (Asset Allocation) views.
@@ -368,6 +472,18 @@ export class ChartManager {
             donutBtn.dataset.wired = 'true';
             donutBtn.addEventListener('click', () => this.setViewType('donut'));
         }
+
+        // Wire benchmark comparison chips
+        const benchmarkChips = document.querySelectorAll<HTMLButtonElement>('.benchmark-chip');
+        benchmarkChips.forEach(chip => {
+            if (!chip.dataset.wired) {
+                chip.dataset.wired = 'true';
+                chip.addEventListener('click', () => {
+                    const bm = (chip.dataset.benchmark || 'none') as 'none' | 'nifty' | 'gold' | 'fd';
+                    this.setBenchmark(bm);
+                });
+            }
+        });
 
         let ChartClass: typeof Chart;
         try {
@@ -513,6 +629,7 @@ export class ChartManager {
                 labels: years,
                 datasets: datasets
             },
+            plugins: [this.crosshairPlugin],
             options: {
                 responsive: true,
                 maintainAspectRatio: false,

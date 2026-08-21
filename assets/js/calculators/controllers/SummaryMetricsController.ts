@@ -2,11 +2,13 @@ import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { CurrencyFormatter } from '../CurrencyHelper';
 import { MathEngine } from '../MathEngine';
 import { InvestmentInputs, YearResult } from '../../types';
+import { OdometerController } from './OdometerController';
 
 export class SummaryMetricsController {
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
     private getInputs: () => InvestmentInputs;
+    private odometer: OdometerController;
 
     constructor(
         dom: DOMAdapter,
@@ -16,6 +18,7 @@ export class SummaryMetricsController {
         this.dom = dom;
         this.formatter = formatter;
         this.getInputs = getInputs;
+        this.odometer = new OdometerController(dom, formatter);
     }
 
     /**
@@ -73,7 +76,7 @@ export class SummaryMetricsController {
     }
 
     /**
-     * Update summary stats block.
+     * Update top-level summary metrics with smooth odometer numeric roll physics.
      */
     updateSummaryMetrics(data: YearResult[]): void {
         if (!data || data.length === 0) return;
@@ -136,15 +139,11 @@ export class SummaryMetricsController {
             if (interestTitle) interestTitle.textContent += ' (Inflation Adjusted)';
         }
 
-        const setVal = (id: string, val: number) => {
-            const el = this.dom.getElement(id);
-            if (el) el.textContent = this.formatter.format(val);
-        };
-
-        setVal('summary-invested', totalInvested);
-        setVal('summary-interest', finalGains);
-        setVal('summary-withdrawn', totalWithdrawn);
-        setVal('summary-corpus', finalCorpus);
+        // Odometer spring animation for KPI numbers
+        this.odometer.animateValue('summary-invested', totalInvested);
+        this.odometer.animateValue('summary-interest', finalGains);
+        this.odometer.animateValue('summary-withdrawn', totalWithdrawn);
+        this.odometer.animateValue('summary-corpus', finalCorpus);
 
         // Update Gain Ratio Badge
         const gainBadge = this.dom.getElement('summary-gain-badge');

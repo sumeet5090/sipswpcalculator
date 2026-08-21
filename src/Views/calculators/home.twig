@@ -44,8 +44,8 @@
 
     <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium mb-2">
         This <dfn><strong class="text-emerald-600">combined SIP and SWP calculator</strong></dfn> helps you estimate
-        your <strong>mutual fund returns</strong> with annual step-up (top-up) compounding and plan
-        tax-efficient withdrawals via a <dfn><a href="/swp-calculator" class="text-rose-500 font-bold hover:underline">Systematic Withdrawal Plan (SWP)</a></dfn> for a steady retirement income. Use this tool to visualize your accumulation and withdrawal phases, compare scenarios, and download detailed reports.
+        your <strong>mutual fund returns</strong> with annual <span data-glossary="stepup" class="font-bold text-slate-700">step-up (top-up) compounding</span> and plan
+        tax-efficient withdrawals via a <dfn><a href="/swp-calculator" data-glossary="swp" class="text-rose-500 font-bold hover:underline">Systematic Withdrawal Plan (SWP)</a></dfn> for a steady retirement income. Use this tool to visualize your accumulation and withdrawal phases, compare scenarios, and download detailed reports.
     </p>
 
     <p class="text-sm text-gray-400 max-w-2xl mx-auto leading-relaxed mb-4">
@@ -85,7 +85,11 @@
 <section id="calculator-section" class="scroll-mt-32" style="scroll-margin-top: 120px;"
     aria-labelledby="calculator-heading">
     <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <!-- Quick-Start Financial Blueprints -->
+    {% include 'components/persona-blueprints.twig' %}
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
 
         <!-- Left Column: Form -->
         <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar"
@@ -100,6 +104,9 @@
 
     <!-- Full-width Yearly Breakdown -->
     {% include 'components/yearly-breakdown-table.twig' %}
+
+    <!-- Mathematical Formula Transparency & Proofs -->
+    {% include 'components/math-transparency.twig' %}
 </section><!-- /calculator section -->
 
 {% include 'components/home-guide-content.twig' %}

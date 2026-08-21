@@ -18,6 +18,7 @@ export class ResultsController {
     private getInputs: () => InvestmentInputs;
     private chartManager: ChartManager | null;
     private density: 'all' | '5y' = 'all';
+    private searchYear: number | null = null;
     private lastData: YearResult[] = [];
     private lastEnableSwp: boolean = true;
 
@@ -31,10 +32,10 @@ export class ResultsController {
         this.formatter = formatter;
         this.getInputs = getInputs;
         this.chartManager = chartManager;
-        this.initDensityControls();
+        this.initControls();
     }
 
-    private initDensityControls(): void {
+    private initControls(): void {
         const allBtn = document.getElementById('table-density-all');
         const fiveYBtn = document.getElementById('table-density-5y');
         if (allBtn) {
@@ -42,6 +43,17 @@ export class ResultsController {
         }
         if (fiveYBtn) {
             fiveYBtn.addEventListener('click', () => this.setDensity('5y'));
+        }
+
+        const searchInput = document.getElementById('table-year-search') as HTMLInputElement | null;
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                const val = parseInt(searchInput.value, 10);
+                this.searchYear = !isNaN(val) && val > 0 ? val : null;
+                if (this.lastData.length > 0) {
+                    this.updateTable(this.lastData, this.lastEnableSwp);
+                }
+            });
         }
     }
 
@@ -89,9 +101,12 @@ export class ResultsController {
         const showPostTax = postTaxToggle?.checked || false;
         const inputs = this.getInputs();
 
-        const filteredData = this.density === '5y'
-            ? data.filter(r => r.year % 5 === 0 || r.year === data.length)
-            : data;
+        let filteredData = data;
+        if (this.searchYear !== null) {
+            filteredData = data.filter(r => r.year === this.searchYear);
+        } else if (this.density === '5y') {
+            filteredData = data.filter(r => r.year % 5 === 0 || r.year === data.length);
+        }
 
         filteredData.forEach(row => {
             const tr = document.createElement('tr');
