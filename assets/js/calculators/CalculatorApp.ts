@@ -32,6 +32,8 @@ import { AudioFeedbackController } from './controllers/AudioFeedbackController';
 import { CityBenchmarkController } from './controllers/CityBenchmarkController';
 import { StressTestController } from './controllers/StressTestController';
 import { AssetRebalanceController } from './controllers/AssetRebalanceController';
+import { CardSpotlightController } from './controllers/CardSpotlightController';
+import { GoalCommitmentController } from './controllers/GoalCommitmentController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -53,6 +55,8 @@ export class CalculatorApp {
     private cityBenchmarkController: CityBenchmarkController;
     private stressTestController: StressTestController;
     private assetRebalanceController: AssetRebalanceController;
+    private spotlightController: CardSpotlightController;
+    private goalCommitmentController: GoalCommitmentController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -129,6 +133,15 @@ export class CalculatorApp {
         this.assetRebalanceController = new AssetRebalanceController(
             this.dom,
             this.formatter
+        );
+
+        this.spotlightController = new CardSpotlightController();
+
+        this.goalCommitmentController = new GoalCommitmentController(
+            this.dom,
+            this.formatter,
+            () => this.getInputs(),
+            () => this.latestResults
         );
     }
 
@@ -375,6 +388,8 @@ export class CalculatorApp {
         this.celebrationController.init();
         this.stressTestController.init();
         this.assetRebalanceController.init();
+        this.spotlightController.init();
+        this.goalCommitmentController.init();
         const snapshotBtn = document.getElementById('snapshot-scenario-btn');
         if (snapshotBtn) {
             snapshotBtn.addEventListener('click', () => {

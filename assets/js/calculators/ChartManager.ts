@@ -336,10 +336,15 @@ export class ChartManager {
     private crosshairPlugin = {
         id: 'crosshairLine',
         afterDraw: (chart: any) => {
-            if (chart.tooltip?.getActiveElements()?.length && chart.config.type === 'line') {
+            if (chart.config.type !== 'line') return;
+
+            // Draw active bi-directional crosshair on hover
+            if (chart.tooltip?.getActiveElements()?.length) {
                 const activePoint = chart.tooltip.getActiveElements()[0];
                 const ctx = chart.ctx;
                 const x = activePoint.element.x;
+                const y = activePoint.element.y;
+                const leftX = chart.scales.x.left;
                 const topY = chart.scales.y.top;
                 const bottomY = chart.scales.y.bottom;
 
@@ -350,6 +355,13 @@ export class ChartManager {
                 ctx.lineTo(x, bottomY);
                 ctx.lineWidth = 1.5;
                 ctx.strokeStyle = 'rgba(16, 185, 129, 0.45)';
+                ctx.stroke();
+
+                // Horizontal guide line to Y axis
+                ctx.beginPath();
+                ctx.moveTo(leftX, y);
+                ctx.lineTo(x, y);
+                ctx.strokeStyle = 'rgba(16, 185, 129, 0.3)';
                 ctx.stroke();
                 ctx.restore();
             }

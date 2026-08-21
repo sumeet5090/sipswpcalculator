@@ -84,15 +84,19 @@ export class StepperController {
 
                 let holdDuration = 0;
                 this.holdTimer = setTimeout(() => {
-                    this.stepInterval = setInterval(() => {
-                        holdDuration += 60;
+                    const stepLoop = () => {
+                        holdDuration += 40;
                         let multiplier = 1;
-                        if (holdDuration > 2000) multiplier = 5;
-                        else if (holdDuration > 1000) multiplier = 2;
+                        if (holdDuration > 2500) multiplier = 10;
+                        else if (holdDuration > 1500) multiplier = 5;
+                        else if (holdDuration > 800) multiplier = 2;
 
                         this.executeStep(btn, multiplier);
-                    }, 60);
-                }, 300);
+                        const nextInterval = Math.max(15, 60 - Math.floor(holdDuration / 50));
+                        this.stepInterval = setTimeout(stepLoop, nextInterval) as unknown as ReturnType<typeof setInterval>;
+                    };
+                    stepLoop();
+                }, 280);
             };
 
             const endHold = () => this.clearHold();

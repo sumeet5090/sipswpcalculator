@@ -1235,6 +1235,24 @@ input[type=range]::-moz-range-track {
     transition: opacity 0.5s ease;
 }
 
+/* ── Dynamic Cursor Spotlight & Specular Bevels ── */
+.spotlight-card {
+    position: relative;
+    --mouse-x: -999px;
+    --mouse-y: -999px;
+}
+
+.spotlight-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(16, 185, 129, 0.14), transparent 80%);
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
 /* ── Accessibility: Respect user motion preferences (WCAG 2.2) ── */
 @media (prefers-reduced-motion: reduce) {
     *,
