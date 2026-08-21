@@ -98,7 +98,13 @@ class ServiceProviderTest extends TestCase
     public function testDomainServiceProviderBindings(): void
     {
         $this->assertInstanceOf(AdminDashboardPresenter::class, $this->container->get(AdminDashboardPresenter::class));
+        $this->assertInstanceOf(\Services\GuideViewModelBuilder::class, $this->container->get(\Services\GuideViewModelBuilder::class));
         $this->assertInstanceOf(GuideRenderer::class, $this->container->get(GuideRenderer::class));
+        $this->assertInstanceOf(\Core\Strategies\SipStrategy::class, $this->container->get(\Core\Strategies\SipStrategy::class));
+        $this->assertInstanceOf(\Core\Strategies\SwpStrategy::class, $this->container->get(\Core\Strategies\SwpStrategy::class));
+        $this->assertInstanceOf(\Core\Strategies\LumpsumStrategy::class, $this->container->get(\Core\Strategies\LumpsumStrategy::class));
+        $this->assertInstanceOf(\Core\Strategies\TargetCorpusStrategy::class, $this->container->get(\Core\Strategies\TargetCorpusStrategy::class));
+        $this->assertInstanceOf(\Core\Strategies\ComboStrategy::class, $this->container->get(\Core\Strategies\ComboStrategy::class));
     }
 
     public function testControllerServiceProviderBindings(): void

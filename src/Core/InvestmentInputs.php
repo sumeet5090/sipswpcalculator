@@ -186,7 +186,8 @@ class InvestmentInputs
     {
         $cfg = self::loadDefaults($config);
 
-        $lumpsum   = isset($data['lumpsum']) ? self::resolveField('lumpsum', $data, $cfg) : 500000.0;
+        $defaultLumpsum = (float) ($cfg['lumpsum']['default'] ?? 500000.0);
+        $lumpsum   = isset($data['lumpsum']) ? self::resolveField('lumpsum', $data, $cfg) : $defaultLumpsum;
         $years     = (int) self::resolveField('years', $data, $cfg);
         $rate      = self::resolveField('rate', $data, $cfg);
         $inflation = self::resolveField('inflation', $data, $cfg);
@@ -316,5 +317,28 @@ class InvestmentInputs
     public function getLtcgTaxRate(): float
     {
         return $this->ltcgTaxRate;
+    }
+
+    /**
+     * Export inputs as an associative array formatted for Twig templates.
+     *
+     * @return array<string, mixed>
+     */
+    public function toTemplateData(): array
+    {
+        return [
+            'sip'             => $this->sip,
+            'years'           => $this->years,
+            'rate'            => $this->rate,
+            'stepup'          => $this->stepup,
+            'lumpsum'         => $this->lumpsum,
+            'corpus'          => $this->lumpsum,
+            'enable_swp'      => $this->enableSwp,
+            'swp_withdrawal'  => $this->swpWithdrawal,
+            'swp_years_input' => $this->swpYears,
+            'swp_stepup'      => $this->swpStepup,
+            'swp_rate'        => $this->swpRate,
+            'inflation'       => $this->inflation,
+        ];
     }
 }

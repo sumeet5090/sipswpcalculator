@@ -37,12 +37,18 @@ export class CalculatorApp {
     private resultsController: ResultsController;
     private summaryMetricsController: SummaryMetricsController;
 
-    constructor() {
-        this.dom = new DOMAdapter();
-        this.formatter = new CurrencyFormatter();
-        this.validator = new InputValidator();
-        this.chartManager = new ChartManager(this.formatter);
-        this.analytics = new AnalyticsService();
+    constructor(
+        dom: DOMAdapter = new DOMAdapter(),
+        formatter: CurrencyFormatter = new CurrencyFormatter(),
+        validator: InputValidator = new InputValidator(),
+        chartManager?: ChartManager,
+        analytics: AnalyticsService = new AnalyticsService()
+    ) {
+        this.dom = dom;
+        this.formatter = formatter;
+        this.validator = validator;
+        this.chartManager = chartManager ?? new ChartManager(this.formatter);
+        this.analytics = analytics;
         this.userHasInteracted = false;
         this.interactionCount = 0;
         this.latestResults = [];
@@ -60,7 +66,8 @@ export class CalculatorApp {
                 this.interactionCount++;
                 this.triggerCalculation();
             },
-            this.validator
+            this.validator,
+            this.dom
         );
 
         this.resultsController = new ResultsController(
@@ -287,7 +294,8 @@ export class CalculatorApp {
             () => this.getInputs(),
             () => this.latestResults,
             () => this.activeGoalMode,
-            () => this.interactionCount
+            () => this.interactionCount,
+            this.formatter
         ).init();
         new ShareController(this.dom, () => this.getInputs()).init();
         this.initResizeListeners();

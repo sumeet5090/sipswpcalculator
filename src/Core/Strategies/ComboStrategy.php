@@ -8,6 +8,6 @@ class ComboStrategy extends BaseStrategy
 {
     public function getType(): string
     {
-        return 'all';
+        return 'combo';
     }
 }

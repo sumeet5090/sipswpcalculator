@@ -1,6 +1,7 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { ChartManager } from '../ChartManager';
 import { AnalyticsService } from '../AnalyticsLogger';
+import { CurrencyFormatter } from '../CurrencyHelper';
 import { InvestmentInputs, YearResult } from '../../types';
 
 export class PdfExportController {
@@ -11,6 +12,7 @@ export class PdfExportController {
     private getLatestResults: () => YearResult[];
     private getActiveGoalMode: () => string;
     private getInteractionCount: () => number;
+    private formatter: CurrencyFormatter;
 
     constructor(
         dom: DOMAdapter,
@@ -19,7 +21,8 @@ export class PdfExportController {
         getInputs: () => InvestmentInputs,
         getLatestResults: () => YearResult[],
         getActiveGoalMode: () => string,
-        getInteractionCount: () => number
+        getInteractionCount: () => number,
+        formatter: CurrencyFormatter = new CurrencyFormatter()
     ) {
         this.dom = dom;
         this.chartManager = chartManager;
@@ -28,6 +31,7 @@ export class PdfExportController {
         this.getLatestResults = getLatestResults;
         this.getActiveGoalMode = getActiveGoalMode;
         this.getInteractionCount = getInteractionCount;
+        this.formatter = formatter;
     }
 
     init(): void {
@@ -136,7 +140,8 @@ export class PdfExportController {
                 formData.append('swp_years', String(currentInputs.swp_years));
                 formData.append('swp_rate', String(currentInputs.swp_rate));
 
-                formData.append('currency_symbol', '₹');
+                formData.append('currency_symbol', this.formatter.getSymbol());
+                formData.append('currency', this.formatter.getCurrency());
                 formData.append('summary_invested', this.dom.getElement('summary-invested')?.textContent?.trim() || '0');
                 formData.append('summary_interest', this.dom.getElement('summary-interest')?.textContent?.trim() || '0');
                 formData.append('summary_withdrawn', this.dom.getElement('summary-withdrawn')?.textContent?.trim() || '0');

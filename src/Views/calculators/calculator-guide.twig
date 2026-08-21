@@ -99,7 +99,7 @@
             style="top: 120px;">
             <div class="glass-card p-4 sm:p-5">
                 <form id="calculator-form" class="space-y-6" onsubmit="event.preventDefault();">
-                    {% if calculator_type == 'all' %}
+                    {% if calculator_type == 'all' or calculator_type == 'combo' %}
                         <!-- Combo Form (SIP + SWP Tabs) -->
                         <div class="flex rounded-xl overflow-hidden border border-slate-200 mb-4" role="tablist">
                             <button type="button" id="tab-sip" role="tab" aria-selected="true"
