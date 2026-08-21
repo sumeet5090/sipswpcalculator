@@ -22,7 +22,7 @@ class CsrfHoneypotMiddleware implements MiddlewareInterface
         if ($request->isPost()) {
             $post = $request->getParsedBody();
 
-            if (!empty($post['website_url'])) {
+            if (isset($post['website_url']) && (!is_string($post['website_url']) || trim((string) $post['website_url']) !== '')) {
                 return new Response('Forbidden: Automated request detected.', 403);
             }
 

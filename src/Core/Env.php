@@ -62,4 +62,53 @@ class Env
 
         return (int) $val;
     }
+
+    /**
+     * Get an environment variable as a float.
+     */
+    public static function getFloat(string $key, float $default = 0.0): float
+    {
+        $val = self::get($key);
+        if ($val === null || !is_numeric($val)) {
+            return $default;
+        }
+
+        return (float) $val;
+    }
+
+    /**
+     * Get an environment variable as an array from a delimited string.
+     *
+     * @param string $key
+     * @param array<int, string> $default
+     * @param string $delimiter
+     * @return array<int, string>
+     */
+    public static function getArray(string $key, array $default = [], string $delimiter = ','): array
+    {
+        $val = self::get($key);
+        if ($val === null) {
+            return $default;
+        }
+
+        if (is_array($val)) {
+            return $val;
+        }
+
+        $trimmed = trim((string) $val);
+        if ($trimmed === '') {
+            return $default;
+        }
+
+        $parts = explode($delimiter, $trimmed);
+        $result = [];
+        foreach ($parts as $part) {
+            $p = trim($part);
+            if ($p !== '') {
+                $result[] = $p;
+            }
+        }
+
+        return $result;
+    }
 }

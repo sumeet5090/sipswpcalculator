@@ -99,4 +99,28 @@ class EnvTest extends TestCase
         $this->assertSame(10, Env::getInt('TEST_INT_INVALID', 10));
         $this->assertSame(999, Env::getInt('NON_EXISTENT_INT_KEY', 999));
     }
+
+    public function testGetFloatParsing(): void
+    {
+        $_ENV['TEST_FLOAT_VALID'] = '12.5';
+        $_ENV['TEST_FLOAT_INT'] = '100';
+        $_ENV['TEST_FLOAT_INVALID'] = 'not_a_float';
+
+        $this->assertSame(12.5, Env::getFloat('TEST_FLOAT_VALID'));
+        $this->assertSame(100.0, Env::getFloat('TEST_FLOAT_INT'));
+        $this->assertSame(5.5, Env::getFloat('TEST_FLOAT_INVALID', 5.5));
+        $this->assertSame(0.0, Env::getFloat('NON_EXISTENT_FLOAT_KEY'));
+    }
+
+    public function testGetArrayParsing(): void
+    {
+        $_ENV['TEST_ARRAY_COMMA'] = 'apple, banana, cherry';
+        $_ENV['TEST_ARRAY_PIPE'] = 'one | two | three';
+        $_ENV['TEST_ARRAY_EMPTY'] = '   ';
+
+        $this->assertSame(['apple', 'banana', 'cherry'], Env::getArray('TEST_ARRAY_COMMA'));
+        $this->assertSame(['one', 'two', 'three'], Env::getArray('TEST_ARRAY_PIPE', [], '|'));
+        $this->assertSame(['default'], Env::getArray('TEST_ARRAY_EMPTY', ['default']));
+        $this->assertSame(['fallback'], Env::getArray('NON_EXISTENT_ARRAY_KEY', ['fallback']));
+    }
 }

@@ -258,9 +258,9 @@ This codebase is maintained to strict architectural quality standards as documen
 | **Rich Markdown Content Delivery** | `ContentManager` and `Parsedown` render curated repository markdown with embedded callouts, tables, and deep linking IDs |
 | **JSON-LD Schema Hex Escaping** | `SchemaHelper` and `SchemaFactory` enforce `JSON_HEX_TAG | JSON_HEX_AMP` on all structured data output to prevent script tag injection |
 | **DI Container Reflection & Autowiring** | `Container` provides strict reflection autowiring, detecting circular dependencies (`A -> B -> A`), union/intersection types, variadics, nullable types, and providing `forget()` and `flush()` lifecycle resets |
-| **Action Parameter Injection** | `ActionDispatcher` matches controller action parameters by typehint (`Request`), exact route slug name, positional index, and default values |
-| **Environment Precedence & Type Safety** | `Env::get()` enforces `$_ENV` > `$_SERVER` > `getenv()` > `$default` with empty string fallthrough, supplemented by `Env::getBool()` and `Env::getInt()` |
-| **Comprehensive Unit Test Suite** | 215+ unit and integration tests across Container, ActionDispatcher, Env, SiteConfig, DatabaseMigrator, ServiceProviders, Middleware, Repositories, Security, and Parity |
+| **Action Parameter Injection & Coercion** | `ActionDispatcher` matches controller action parameters by typehint (`Request`), exact route slug name, positional index, and default values, with automatic scalar type coercion (`int`, `float`, `bool`) |
+| **Environment Precedence & Type Safety** | `Env::get()` enforces `$_ENV` > `$_SERVER` > `getenv()` > `$default` with empty string fallthrough, supplemented by `Env::getBool()`, `Env::getInt()`, `Env::getFloat()`, and `Env::getArray()` |
+| **Comprehensive Unit Test Suite** | 225+ unit and integration tests across Container, ActionDispatcher, Env, SiteConfig, DatabaseMigrator, FileRateLimitStorage, ServiceProviders, Middleware, Repositories, Security, and Parity |
 | **Production Traps Guardrails** | Full encyclopedia of 65 production server, LiteSpeed, CloudLinux, and concurrency traps codified in `.agents/skills/production-traps/SKILL.md` |
 | **CQS Compliance** | `SessionManager::generateCsrfToken()`, `App::boot()`, and `DatabaseMigrator::migrate()` return `void` or explicitly separate state mutation from query methods |
 | **Environment Security** | Schema migrations execute strictly via CLI (`bin/migrate`) in deployment pipelines; no administrative web migration endpoints |

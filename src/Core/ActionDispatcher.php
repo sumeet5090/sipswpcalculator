@@ -20,15 +20,20 @@ class ActionDispatcher
     /**
      * Dispatch request to controller action with parameter resolution.
      *
-     * @param array $controllerAction
+     * @param array|string $controllerAction
      * @param array $params
      * @param Request|null $request
      * @return Response
      */
-    public function dispatch(array $controllerAction, array $params = [], ?Request $request = null): Response
+    public function dispatch(array|string $controllerAction, array $params = [], ?Request $request = null): Response
     {
-        $controllerName = $controllerAction[0];
-        $action = $controllerAction[1] ?? '__invoke';
+        if (is_string($controllerAction)) {
+            $controllerName = $controllerAction;
+            $action = '__invoke';
+        } else {
+            $controllerName = $controllerAction[0] ?? '';
+            $action = $controllerAction[1] ?? '__invoke';
+        }
 
         if (class_exists($controllerName)) {
             $controller = $this->container->get($controllerName);
@@ -59,9 +64,9 @@ class ActionDispatcher
                     if ($isRequestType) {
                         $args[] = $request;
                     } elseif (array_key_exists($name, $params)) {
-                        $args[] = $params[$name];
+                        $args[] = $this->coerceParameterValue($params[$name], $type);
                     } elseif (isset($paramValues[$paramIndex])) {
-                        $args[] = $paramValues[$paramIndex];
+                        $args[] = $this->coerceParameterValue($paramValues[$paramIndex], $type);
                         $paramIndex++;
                     } elseif ($param->isDefaultValueAvailable()) {
                         $args[] = $param->getDefaultValue();
@@ -82,5 +87,27 @@ class ActionDispatcher
         }
 
         throw new \Core\Exceptions\RouteNotFoundException("Controller or Method not found ({$controllerName}@{$action})");
+    }
+
+    /**
+     * Coerce string route parameters to expected scalar method typehint.
+     */
+    private function coerceParameterValue(mixed $val, ?\ReflectionType $type): mixed
+    {
+        if ($val === null || $type === null) {
+            return $val;
+        }
+
+        if ($type instanceof \ReflectionNamedType && $type->isBuiltin()) {
+            return match ($type->getName()) {
+                'int' => is_numeric($val) ? (int) $val : $val,
+                'float' => is_numeric($val) ? (float) $val : $val,
+                'bool' => is_string($val) ? filter_var($val, FILTER_VALIDATE_BOOLEAN) : (bool) $val,
+                'string' => (string) $val,
+                default => $val,
+            };
+        }
+
+        return $val;
     }
 }

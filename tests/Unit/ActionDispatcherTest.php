@@ -53,6 +53,11 @@ class DummyActionController
     {
         return null;
     }
+
+    public function typedScalarAction(int $id, float $rate, bool $active): Response
+    {
+        return Response::html("id:{$id}|rate:{$rate}|active:" . ($active ? '1' : '0'));
+    }
 }
 
 class ActionDispatcherTest extends TestCase
@@ -157,5 +162,22 @@ class ActionDispatcherTest extends TestCase
         $request = new Request([], [], ['REQUEST_URI' => '/test']);
         $this->expectException(RouteNotFoundException::class);
         $this->dispatcher->dispatch([DummyActionController::class, 'nonExistentMethod'], [], $request);
+    }
+
+    public function testScalarRouteParameterCoercion(): void
+    {
+        $request = new Request([], [], ['REQUEST_URI' => '/test']);
+        $params = ['id' => '100', 'rate' => '12.5', 'active' => 'true'];
+        $response = $this->dispatcher->dispatch([DummyActionController::class, 'typedScalarAction'], $params, $request);
+
+        $this->assertSame('id:100|rate:12.5|active:1', $response->getContent());
+    }
+
+    public function testSingleStringInvokableControllerDispatch(): void
+    {
+        $request = new Request([], [], ['REQUEST_URI' => '/test']);
+        $response = $this->dispatcher->dispatch(DummyActionController::class, ['slug' => 'shorthand_slug'], $request);
+
+        $this->assertSame('invoked_shorthand_slug', $response->getContent());
     }
 }
