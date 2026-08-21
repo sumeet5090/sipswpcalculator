@@ -2,7 +2,7 @@
 <html lang="en-IN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="color-scheme" content="light">
     <title>{{ page_config.title|default('SIP & SWP Calculator') }}</title>
     <meta name="description" content="{{ page_config.meta_desc|default('Free SIP & SWP calculator with step-up compounding.') }}">
@@ -81,7 +81,7 @@
     {% block head %}{% endblock %}
 </head>
 <body class="{{ page_config.body_class|default('bg-gray-50 text-gray-800 font-sans antialiased') }} overflow-x-hidden" style="{{ page_config.body_style|default('background-image: var(--gradient-surface); background-attachment: fixed;') }}">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:p-3 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:shadow-lg focus:z-50 font-bold transition-all">Skip to main content</a>
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:p-3 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:shadow-xl focus:z-[100] font-bold transition-all">Skip to main content</a>
     
     {% include 'layouts/header.twig' %}
     

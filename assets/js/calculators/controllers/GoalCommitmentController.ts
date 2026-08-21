@@ -117,7 +117,7 @@ export class GoalCommitmentController {
 
         const text = `📜 INVESTOR GOAL COMMITMENT CERTIFICATE\n\nI, ${name}, hereby pledge to systematically invest ${this.formatter.formatDynamic(sipVal)}/month for ${yearsVal} years to achieve my target corpus of ${this.formatter.formatDynamic(finalCorpus)}.\n\n"Market volatility is the fee for exceptional long-term wealth compounding."`;
 
-        navigator.clipboard.writeText(text).then(() => {
+        const onCopySuccess = () => {
             const copyBtn = this.dom.getElement('copy-pledge-btn');
             if (copyBtn) {
                 const original = copyBtn.innerHTML;
@@ -126,6 +126,31 @@ export class GoalCommitmentController {
                     copyBtn.innerHTML = original;
                 }, 2000);
             }
-        });
+        };
+
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            navigator.clipboard.writeText(text).then(onCopySuccess).catch(() => {
+                this.fallbackCopy(text);
+                onCopySuccess();
+            });
+        } else {
+            this.fallbackCopy(text);
+            onCopySuccess();
+        }
+    }
+
+    private fallbackCopy(text: string): void {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+        } catch {
+            // Safe fallback ignore
+        }
+        document.body.removeChild(textarea);
     }
 }

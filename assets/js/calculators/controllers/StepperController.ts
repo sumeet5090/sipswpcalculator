@@ -77,10 +77,21 @@ export class StepperController {
     init(): void {
         const steppers = document.querySelectorAll<HTMLButtonElement>('button[data-step-action][data-step-for]');
         steppers.forEach(btn => {
+            const endHold = () => {
+                this.clearHold();
+                window.removeEventListener('pointerup', endHold);
+                window.removeEventListener('touchend', endHold);
+                window.removeEventListener('touchcancel', endHold);
+            };
+
             const startHold = (e: Event) => {
                 e.preventDefault();
                 this.clearHold();
                 this.executeStep(btn, 1);
+
+                window.addEventListener('pointerup', endHold, { once: true });
+                window.addEventListener('touchend', endHold, { once: true });
+                window.addEventListener('touchcancel', endHold, { once: true });
 
                 let holdDuration = 0;
                 this.holdTimer = setTimeout(() => {
@@ -98,8 +109,6 @@ export class StepperController {
                     stepLoop();
                 }, 280);
             };
-
-            const endHold = () => this.clearHold();
 
             btn.addEventListener('mousedown', startHold);
             btn.addEventListener('touchstart', startHold, { passive: false });

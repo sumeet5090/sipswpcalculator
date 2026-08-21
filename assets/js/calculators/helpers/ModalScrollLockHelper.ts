@@ -21,7 +21,12 @@ export class ModalScrollLockHelper {
 
         if (this.openModalCount === 0) {
             document.body.style.overflow = '';
-            if (restoreFocus && this.previousActiveElement && typeof this.previousActiveElement.focus === 'function') {
+            if (
+                restoreFocus &&
+                this.previousActiveElement &&
+                document.body.contains(this.previousActiveElement) &&
+                typeof this.previousActiveElement.focus === 'function'
+            ) {
                 this.previousActiveElement.focus();
                 this.previousActiveElement = null;
             }

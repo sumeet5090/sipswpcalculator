@@ -93,9 +93,10 @@ export class QrShareModalController {
         container.innerHTML = '';
 
         const canvas = document.createElement('canvas');
-        canvas.width = 192;
-        canvas.height = 192;
+        canvas.width = 200;
+        canvas.height = 200;
         canvas.className = 'w-full h-full rounded-lg';
+        canvas.style.imageRendering = 'pixelated';
         container.appendChild(canvas);
 
         const ctx = canvas.getContext('2d');
@@ -103,11 +104,11 @@ export class QrShareModalController {
 
         // Render crisp visual placeholder QR pattern
         ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, 192, 192);
+        ctx.fillRect(0, 0, 200, 200);
 
         // Generate deterministic pattern based on URL string
         const size = 25; // 25x25 grid
-        const cellSize = 192 / size;
+        const cellSize = 8; // exact 8px cells (25 * 8 = 200)
         ctx.fillStyle = '#0f172a';
 
         // Draw 3 corner position markers (Standard QR Markers)

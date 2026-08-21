@@ -67,7 +67,13 @@ export class MilestoneCelebrationController {
         });
     }
 
+    private lastBurstTime: number = 0;
+
     private triggerMicroBurst(): void {
+        const now = Date.now();
+        if (now - this.lastBurstTime < 2500) return;
+        this.lastBurstTime = now;
+
         const targetContainer = this.dom.getElement('summary-corpus') || document.body;
         const rect = targetContainer.getBoundingClientRect();
         const originX = rect.left + rect.width / 2;

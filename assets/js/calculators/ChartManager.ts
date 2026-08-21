@@ -336,7 +336,7 @@ export class ChartManager {
     private crosshairPlugin = {
         id: 'crosshairLine',
         afterDraw: (chart: any) => {
-            if (chart.config.type !== 'line') return;
+            if (chart.config.type !== 'line' || !chart.scales?.x || !chart.scales?.y) return;
 
             // Draw active bi-directional crosshair on hover
             if (chart.tooltip?.getActiveElements()?.length) {
@@ -657,6 +657,7 @@ export class ChartManager {
                     legend: {
                         position: 'top',
                         align: 'center',
+                        onClick: () => {},
                         labels: {
                             usePointStyle: true,
                             boxWidth: 6,

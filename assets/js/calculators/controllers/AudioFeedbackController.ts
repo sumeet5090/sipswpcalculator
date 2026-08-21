@@ -19,6 +19,16 @@ export class AudioFeedbackController {
                 this.toggleSound();
             });
         }
+
+        // Cross-tab preference synchronization
+        if (typeof window !== 'undefined') {
+            window.addEventListener('storage', (e: StorageEvent) => {
+                if (e.key === 'sip_sound_enabled') {
+                    this.isEnabled = e.newValue === 'true';
+                    this.updateToggleButton();
+                }
+            });
+        }
     }
 
     toggleSound(): boolean {
@@ -54,6 +64,16 @@ export class AudioFeedbackController {
 
             osc.start();
             osc.stop(this.audioCtx.currentTime + duration);
+
+            // Clean up audio graph nodes to prevent memory retention
+            setTimeout(() => {
+                try {
+                    osc.disconnect();
+                    gain.disconnect();
+                } catch {
+                    // Safe cleanup ignore
+                }
+            }, Math.ceil((duration + 0.05) * 1000));
         } catch {
             // Graceful silence on audio failure
         }
@@ -81,13 +101,28 @@ export class AudioFeedbackController {
 
                 osc.start(now + i * 0.08);
                 osc.stop(now + i * 0.08 + 0.3);
+
+                setTimeout(() => {
+                    try {
+                        osc.disconnect();
+                        gain.disconnect();
+                    } catch {
+                        // Safe cleanup ignore
+                    }
+                }, Math.ceil((0.08 * i + 0.35) * 1000));
             });
         } catch {
             // Graceful silence
         }
     }
 
+    private lastVibrateTime: number = 0;
+
     vibrate(pattern: number | number[] = 8): void {
+        const now = Date.now();
+        if (now - this.lastVibrateTime < 35) return;
+        this.lastVibrateTime = now;
+
         if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
             try {
                 navigator.vibrate(pattern);

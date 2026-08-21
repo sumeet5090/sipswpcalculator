@@ -167,9 +167,9 @@ export class CommandPaletteController {
 
     private parseNaturalLanguage(query: string): CommandItem | null {
         const q = query.trim().toLowerCase();
-        const sipMatch = q.match(/^sip\s+(\d+(?:k|l|cr)?)\s*(?:(\d+)\s*(?:y|yrs|years)?)?\s*(?:(\d+(?:\.\d+)?)\s*%)?/i);
+        const sipMatch = q.match(/^sip\s+(\d+(?:\.\d+)?(?:k|l|cr)?)\s*(?:(\d+(?:\.\d+)?)\s*(?:y|yrs|years)?)?\s*(?:(\d+(?:\.\d+)?)\s*%)?/i);
         if (sipMatch) {
-            let sipStr = sipMatch[1];
+            const sipStr = sipMatch[1];
             let sipNum = parseFloat(sipStr);
             if (sipStr.endsWith('k')) sipNum *= 1000;
             else if (sipStr.endsWith('l')) sipNum *= 100000;

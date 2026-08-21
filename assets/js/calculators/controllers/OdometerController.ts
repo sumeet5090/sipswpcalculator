@@ -54,7 +54,7 @@ export class OdometerController {
 
         const frame = (now: number) => {
             const elapsed = now - startTime;
-            const progress = Math.min(elapsed / durationMs, 1);
+            const progress = Math.min(Math.max(elapsed / durationMs, 0), 1);
             const easeProgress = 1 - Math.pow(1 - progress, 4); // easeOutQuart
             const val = startVal + (targetVal - startVal) * easeProgress;
 

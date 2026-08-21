@@ -61,7 +61,9 @@
     border: var(--glass-border);
     box-shadow: var(--glass-shadow);
     backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
     border-radius: 1.5rem;
+    background-clip: padding-box;
 }
 
 /* Specular Shimmer Sweep Effect */
@@ -160,10 +162,19 @@
     line-gap-override: 0%;
 }
 
+@font-face {
+    font-family: 'Inter Fallback';
+    src: local('Arial');
+    size-adjust: 100%;
+    ascent-override: 96%;
+    descent-override: 24%;
+    line-gap-override: 0%;
+}
+
 body {
     background-color: var(--color-bg);
     background-attachment: fixed;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', 'Inter Fallback', system-ui, -apple-system, sans-serif;
     color: var(--color-text-primary);
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
