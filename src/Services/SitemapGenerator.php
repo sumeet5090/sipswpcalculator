@@ -94,6 +94,10 @@ class SitemapGenerator
 
         // 5. Static Pages
         foreach ($routesConfig['pages'] ?? [] as $path => $config) {
+            if (is_array($config) && !empty($config['sitemap_exclude'])) {
+                continue;
+            }
+
             $slug = ltrim($path, '/');
             $lastmod = $this->viewRenderer->getTemplateModifiedDate('pages/' . $slug);
             $priority = is_array($config) && isset($config['priority']) ? (string) $config['priority'] : '0.5';

@@ -235,9 +235,10 @@ The site includes several modern SEO optimizations built into the core services:
 - **Schema markup:** `SoftwareApplication`, `FinancialProduct`, `FAQPage`, `BreadcrumbList`, `Article`, `WebPage` generated dynamically.
 - **Combo Keyword Optimization:** Front-loaded titles, metadata, and structured data targeted specifically for combined SIP + SWP calculator search queries ("SIP and SWP Calculator Together").
 - **Internal Linking Engine:** Reusable `related-resources.twig` component generating cross-category links between calculators and guides for optimal PageRank flow.
-- **Open Graph / Twitter cards** for social sharing.
-- **Canonical URLs** and dynamic meta title/description rendering per route.
-- **Dynamic XML Sitemap** (`/sitemap.xml`) and **robots.txt**.
+- **Open Graph & Twitter Cards:** Dynamic `og:type` (`article` on educational guides, `website` on landing/calculator tools), `author`, and Twitter creator attribution.
+- **Canonical URLs:** Deterministic canonical URL and meta description rendering per route.
+- **Dynamic XML Sitemap (`/sitemap.xml`):** Automatically aggregates canonical calculator, blog, and page routes while strictly filtering out `noindex` routes (e.g. `/privacy`, `/terms`) via route-level `sitemap_exclude` configuration.
+- **Search Engine Crawlability (`robots.txt`):** Permits search engine bots to crawl bundled Vite assets (`/dist/assets/`) for accurate page rendering, mobile-friendly scoring, and Core Web Vitals assessment.
 
 ---
 

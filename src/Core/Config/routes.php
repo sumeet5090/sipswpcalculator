@@ -22,7 +22,7 @@ return [
         '/about'    => ['action' => [RenderAboutAction::class, '__invoke'], 'priority' => '0.5', 'changefreq' => 'yearly'],
         '/faq'      => ['action' => [RenderFaqAction::class, '__invoke'], 'priority' => '0.5', 'changefreq' => 'yearly'],
         '/glossary' => ['action' => [RenderGlossaryAction::class, '__invoke'], 'priority' => '0.5', 'changefreq' => 'yearly'],
-        '/privacy'  => ['action' => [RenderPrivacyAction::class, '__invoke'], 'priority' => '0.3', 'changefreq' => 'yearly'],
-        '/terms'    => ['action' => [RenderTermsAction::class, '__invoke'], 'priority' => '0.3', 'changefreq' => 'yearly']
+        '/privacy'  => ['action' => [RenderPrivacyAction::class, '__invoke'], 'priority' => '0.3', 'changefreq' => 'yearly', 'sitemap_exclude' => true],
+        '/terms'    => ['action' => [RenderTermsAction::class, '__invoke'], 'priority' => '0.3', 'changefreq' => 'yearly', 'sitemap_exclude' => true]
     ]
 ];

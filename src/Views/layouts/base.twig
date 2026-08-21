@@ -15,10 +15,12 @@
     <link rel="canonical" href="{{ canonical_url }}">
     <meta name="robots" content="{{ page_config.robots|default('index, follow') }}">
 
+    <meta name="author" content="{{ page_config.author|default('Sumeet Boga') }}">
+
     <link rel="alternate" hreflang="en-IN" href="{{ canonical_url }}">
     <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
 
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="{{ page_config.og_type|default('website') }}">
     <meta property="og:site_name" content="SIP & SWP Calculator">
     <meta property="og:locale" content="en_IN">
     <meta property="og:url" content="{{ canonical_url }}">
@@ -29,6 +31,7 @@
     <meta property="og:image:height" content="630">
 
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="{{ page_config.twitter_creator|default('@sumeetboga') }}">
     <meta name="twitter:title" content="{{ page_config.og_title|default(page_config.title|default('SIP & SWP Calculator')) }}">
     <meta name="twitter:description" content="{{ page_config.og_desc|default(page_config.meta_desc|default('Free SIP & SWP calculator with step-up compounding.')) }}">
     <meta name="twitter:image" content="{{ page_config.og_image|default(site_url ~ '/assets/og-image-main.jpg') }}">

@@ -27,6 +27,7 @@ class SitemapGeneratorTest extends TestCase
             ],
             'pages' => [
                 '/about' => ['priority' => '0.5', 'changefreq' => 'yearly'],
+                '/privacy' => ['priority' => '0.3', 'changefreq' => 'yearly', 'sitemap_exclude' => true],
             ],
         ];
 
@@ -47,6 +48,7 @@ class SitemapGeneratorTest extends TestCase
         $this->assertContains('https://sipswpcalculator.com/sip-calculator', $locs);
         $this->assertContains('https://sipswpcalculator.com/about', $locs);
         $this->assertContains('https://sipswpcalculator.com/resources', $locs);
+        $this->assertNotContains('https://sipswpcalculator.com/privacy', $locs);
 
         foreach ($urls as $url) {
             $this->assertArrayHasKey('loc', $url);

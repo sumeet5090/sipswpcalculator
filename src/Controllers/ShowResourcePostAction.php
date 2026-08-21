@@ -59,6 +59,7 @@ class ShowResourcePostAction
         $allPosts = $this->blogRepository->getAllPosts();
 
         $pageConfig = $this->metaManager->buildFromMetadata($content['metadata'], '/resource/' . $category . '/' . $cleanSlug);
+        $pageConfig['og_type'] = 'article';
 
         if (empty($content['metadata']['title'])) {
             throw new ConfigurationException("Missing 'title' in frontmatter for blog post: {$category}/{$cleanSlug}");

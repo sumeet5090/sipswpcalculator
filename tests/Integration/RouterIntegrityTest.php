@@ -158,6 +158,7 @@ class RouterIntegrityTest extends TestCase
             );
         }
 
+        $routesConfig = require __DIR__ . '/../../src/Core/Config/routes.php';
         $routes = $this->router->getRoutes()['GET'] ?? [];
         $ignoredRoutes = [
             '/admin_insights',
@@ -165,11 +166,19 @@ class RouterIntegrityTest extends TestCase
             '/log_insight',
             '/sitemap.xml',
             '/resource', // Generic fallback redirect/canonical checks
-            '/resource/{category}/{slug}' // General parameter matching
+            '/resource/{category}/{slug}', // General parameter matching
         ];
 
         foreach (array_keys($routes) as $route) {
             if (in_array($route, $ignoredRoutes, true) || strpos($route, '{') !== false) {
+                continue;
+            }
+
+            // Exclude routes explicitly configured to be excluded from sitemap (e.g. noindex pages)
+            if (isset($routesConfig['pages'][$route]['sitemap_exclude']) && $routesConfig['pages'][$route]['sitemap_exclude'] === true) {
+                continue;
+            }
+            if (isset($routesConfig['calculators'][$route]['sitemap_exclude']) && $routesConfig['calculators'][$route]['sitemap_exclude'] === true) {
                 continue;
             }
 
