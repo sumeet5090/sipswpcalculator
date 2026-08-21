@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Core;
 
-use Controllers\AdminAuthAction;
-use Controllers\BlogController;
 use Controllers\DownloadCsvAction;
 use Controllers\GeneratePdfAction;
+use Controllers\ListResourcesAction;
 use Controllers\LogInsightApiAction;
-use Controllers\PageController;
-use Controllers\RenderGuideAction;
+use Controllers\ProcessAdminLoginAction;
+use Controllers\ProcessAdminLogoutAction;
 use Controllers\RenderHomeAction;
 use Controllers\ShowAdminDashboardAction;
+use Controllers\ShowResourceCategoryAction;
+use Controllers\ShowResourcePostAction;
 use Controllers\SitemapController;
 use Core\Http\Request;
 
@@ -66,6 +67,9 @@ class App
 
     public function getRouter(): Router
     {
+        if ($this->router === null) {
+            $this->boot();
+        }
         return $this->router;
     }
 
@@ -120,7 +124,8 @@ class App
         // Pipe Global Security & Routing Middleware
         $this->router->pipe(\Core\Middleware\TrailingSlashRedirectMiddleware::class);
         $this->router->pipe(\Core\Middleware\SessionMiddleware::class);
-        $this->router->pipe(\Core\Middleware\CsrfHoneypotMiddleware::class);
+        $this->router->pipe(\Core\Middleware\HoneypotMiddleware::class);
+        $this->router->pipe(\Core\Middleware\AdminCsrfMiddleware::class);
 
         // Core landing pages & actions
         $this->router->get('/', [RenderHomeAction::class, '__invoke']);
@@ -146,15 +151,15 @@ class App
 
         // Admin / Insight Routing
         $this->router->get('/admin_insights', [ShowAdminDashboardAction::class, '__invoke']);
-        $this->router->post('/admin_insights', [\Controllers\ProcessAdminLoginAction::class, '__invoke']);
-        $this->router->post('/admin_insights/logout', [\Controllers\ProcessAdminLogoutAction::class, '__invoke']);
+        $this->router->post('/admin_insights', [ProcessAdminLoginAction::class, '__invoke']);
+        $this->router->post('/admin_insights/logout', [ProcessAdminLogoutAction::class, '__invoke']);
         $this->router->post('/log_insight', [LogInsightApiAction::class, '__invoke']);
 
         // Blog / Resources Routing
-        $this->router->get('/resources', [\Controllers\ListResourcesAction::class, '__invoke']);
-        $this->router->get('/resource', [\Controllers\ListResourcesAction::class, '__invoke']);
-        $this->router->get('/resource/{category}', [\Controllers\ShowResourceCategoryAction::class, '__invoke']);
-        $this->router->get('/resource/{category}/{slug}', [\Controllers\ShowResourcePostAction::class, '__invoke']);
+        $this->router->get('/resources', [ListResourcesAction::class, '__invoke']);
+        $this->router->get('/resource', [ListResourcesAction::class, '__invoke']);
+        $this->router->get('/resource/{category}', [ShowResourceCategoryAction::class, '__invoke']);
+        $this->router->get('/resource/{category}/{slug}', [ShowResourcePostAction::class, '__invoke']);
 
         /** @var RedirectLoader $redirectLoader */
         $redirectLoader = $this->container->get(RedirectLoader::class);

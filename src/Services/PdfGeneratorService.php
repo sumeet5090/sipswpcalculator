@@ -7,7 +7,6 @@ namespace Services;
 use Core\PdfTemplateInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Core\PdfReportTemplate;
 
 /**
  * PdfGeneratorService

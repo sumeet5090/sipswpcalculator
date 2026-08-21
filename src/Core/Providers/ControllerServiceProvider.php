@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Providers;
 
+use Controllers\AdminAuthAction;
 use Controllers\BlogController;
 use Controllers\DownloadCsvAction;
 use Controllers\ErrorController;
@@ -38,6 +39,7 @@ use Core\GlossaryRepository;
 use Core\InsightRepository;
 use Core\InvestmentCalculator;
 use Core\MetaManager;
+use Core\PdfReportStylesheet;
 use Core\PdfReportTemplate;
 use Core\PdfTemplateInterface;
 use Core\SchemaHelper;
@@ -48,6 +50,7 @@ use Services\CsvExportService;
 use Services\FilenameSanitizer;
 use Services\FileRateLimitStorage;
 use Services\FileUploadService;
+use Services\GuideRenderer;
 use Services\HtmlSanitizer;
 use Services\PdfGeneratorService;
 use Services\RateLimiter;
@@ -69,12 +72,20 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new RateLimiter($c->get(RateLimitStorageInterface::class));
         });
 
+        $container->singleton(PdfReportStylesheet::class, function () {
+            return new PdfReportStylesheet();
+        });
+
         $container->singleton(PdfTemplateInterface::class, function (Container $c) {
             /** @var ConfigService $configService */
             $configService = $c->get(ConfigService::class);
             $defaults = $configService->getCalculatorDefaults();
             $milestones = $defaults['milestones'] ?? null;
-            return new PdfReportTemplate($c->get(CurrencyFormatterInterface::class), $milestones);
+            return new PdfReportTemplate(
+                $c->get(CurrencyFormatterInterface::class),
+                $milestones,
+                $c->get(PdfReportStylesheet::class)
+            );
         });
 
         $container->singleton(PdfGeneratorService::class, function (Container $c) {
@@ -153,6 +164,10 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new FileUploadService();
         });
 
+        $container->singleton(FilenameSanitizer::class, function () {
+            return new FilenameSanitizer();
+        });
+
         $container->singleton(GeneratePdfAction::class, function (Container $c) {
             return new GeneratePdfAction(
                 $c->get(RateLimiter::class),
@@ -161,7 +176,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(FileUploadService::class),
                 $c->get(HtmlSanitizer::class),
                 $c->get(InvestmentCalculator::class),
-                $c->get(CurrencyFormatterInterface::class)
+                $c->get(CurrencyFormatterInterface::class),
+                $c->get(FilenameSanitizer::class)
             );
         });
 
@@ -265,8 +281,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
             );
         });
 
-        $container->singleton(\Controllers\AdminAuthAction::class, function (Container $c) {
-            return new \Controllers\AdminAuthAction(
+        $container->singleton(AdminAuthAction::class, function (Container $c) {
+            return new AdminAuthAction(
                 $c->get(ShowAdminLoginAction::class),
                 $c->get(ProcessAdminLoginAction::class),
                 $c->get(ProcessAdminLogoutAction::class)
@@ -285,7 +301,7 @@ class ControllerServiceProvider implements ServiceProviderInterface
 
         $container->singleton(RenderGuideAction::class, function (Container $c) {
             return new RenderGuideAction(
-                $c->get(\Services\GuideRenderer::class)
+                $c->get(GuideRenderer::class)
             );
         });
     }

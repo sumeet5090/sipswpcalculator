@@ -9,8 +9,16 @@ use PHPUnit\Framework\TestCase;
 
 class RequestIpResolutionTest extends TestCase
 {
-    public function testCloudflareConnectingIpTakesPrecedence(): void
+    protected function tearDown(): void
     {
+        unset($_ENV['TRUSTED_PROXIES']);
+        parent::tearDown();
+    }
+
+    public function testCloudflareConnectingIpTakesPrecedenceWhenProxyTrusted(): void
+    {
+        $_ENV['TRUSTED_PROXIES'] = '127.0.0.1';
+
         $request = new Request([], [], [
             'HTTP_CF_CONNECTING_IP' => '203.0.113.195',
             'HTTP_X_FORWARDED_FOR'  => '198.51.100.10, 192.0.2.1',
@@ -20,8 +28,10 @@ class RequestIpResolutionTest extends TestCase
         $this->assertSame('203.0.113.195', $request->getClientIp());
     }
 
-    public function testXForwardedForExtractsFirstValidIp(): void
+    public function testXForwardedForExtractsFirstValidIpWhenProxyTrusted(): void
     {
+        $_ENV['TRUSTED_PROXIES'] = '127.0.0.1';
+
         $request = new Request([], [], [
             'HTTP_X_FORWARDED_FOR' => '198.51.100.42, 192.0.2.100',
             'REMOTE_ADDR'          => '127.0.0.1',
@@ -32,6 +42,8 @@ class RequestIpResolutionTest extends TestCase
 
     public function testXForwardedForSkipsInvalidIpAndPicksNextValidIp(): void
     {
+        $_ENV['TRUSTED_PROXIES'] = '127.0.0.1';
+
         $request = new Request([], [], [
             'HTTP_X_FORWARDED_FOR' => 'invalid_ip_string, 198.51.100.99',
             'REMOTE_ADDR'          => '127.0.0.1',
@@ -40,14 +52,29 @@ class RequestIpResolutionTest extends TestCase
         $this->assertSame('198.51.100.99', $request->getClientIp());
     }
 
-    public function testIpv6AddressResolution(): void
+    public function testIpv6AddressResolutionWhenProxyTrusted(): void
     {
+        $_ENV['TRUSTED_PROXIES'] = '127.0.0.1';
+
         $request = new Request([], [], [
             'HTTP_CF_CONNECTING_IP' => '2001:db8:85a3::8a2e:370:7334',
             'REMOTE_ADDR'           => '127.0.0.1',
         ]);
 
         $this->assertSame('2001:db8:85a3::8a2e:370:7334', $request->getClientIp());
+    }
+
+    public function testHeadersIgnoredWhenTrustedProxiesUnconfigured(): void
+    {
+        unset($_ENV['TRUSTED_PROXIES']);
+
+        $request = new Request([], [], [
+            'HTTP_CF_CONNECTING_IP' => '203.0.113.195',
+            'HTTP_X_FORWARDED_FOR'  => '198.51.100.10',
+            'REMOTE_ADDR'           => '198.51.100.42',
+        ]);
+
+        $this->assertSame('198.51.100.42', $request->getClientIp());
     }
 
     public function testFallbackToRemoteAddrWhenHeadersAbsent(): void
@@ -76,8 +103,6 @@ class RequestIpResolutionTest extends TestCase
         ]);
 
         $this->assertSame('203.0.113.55', $request->getClientIp());
-
-        unset($_ENV['TRUSTED_PROXIES']);
     }
 
     public function testUntrustedProxyRejectsForwardedHeaders(): void
@@ -91,7 +116,5 @@ class RequestIpResolutionTest extends TestCase
         ]);
 
         $this->assertSame('198.51.100.20', $request->getClientIp());
-
-        unset($_ENV['TRUSTED_PROXIES']);
     }
 }

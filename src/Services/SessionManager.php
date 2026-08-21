@@ -8,7 +8,7 @@ namespace Services;
  * SessionManager
  * Encapsulates $_SESSION interaction and lifecycle management.
  */
-class SessionManager
+class SessionManager implements SessionManagerInterface
 {
     public function start(): void
     {

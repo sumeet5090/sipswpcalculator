@@ -41,7 +41,8 @@ class ContentManager
     private function resolveSafePath(string $path): ?string
     {
         $normalized = ltrim($path, '/');
-        $candidate = $this->contentDir . '/' . $normalized . '.md';
+        $withoutExt = (string) preg_replace('/\.md$/i', '', $normalized);
+        $candidate = $this->contentDir . '/' . $withoutExt . '.md';
         $realContentDir = realpath($this->contentDir);
         $realFile = realpath($candidate);
 

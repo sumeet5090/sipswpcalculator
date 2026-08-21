@@ -68,8 +68,10 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(SiteConfig::class, $this->container->get(SiteConfig::class));
         $this->assertInstanceOf(ViteHelper::class, $this->container->get(ViteHelper::class));
         $this->assertInstanceOf(ConfigService::class, $this->container->get(ConfigService::class));
+        $this->assertInstanceOf(\Services\ConfigServiceInterface::class, $this->container->get(\Services\ConfigServiceInterface::class));
         $this->assertInstanceOf(CsvExportService::class, $this->container->get(CsvExportService::class));
         $this->assertInstanceOf(SessionManager::class, $this->container->get(SessionManager::class));
+        $this->assertInstanceOf(\Services\SessionManagerInterface::class, $this->container->get(\Services\SessionManagerInterface::class));
         $this->assertInstanceOf(CurrencyFormatterInterface::class, $this->container->get(CurrencyFormatterInterface::class));
         $this->assertInstanceOf(AppTwigExtension::class, $this->container->get(AppTwigExtension::class));
         $this->assertInstanceOf(ViewRenderer::class, $this->container->get(ViewRenderer::class));

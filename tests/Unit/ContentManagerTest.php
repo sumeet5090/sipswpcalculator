@@ -83,4 +83,20 @@ MD;
         $result = $manager->getParsedContent('/does-not-exist');
         $this->assertNull($result);
     }
+
+    public function testResolvesContentWithAndWithoutMdExtension(): void
+    {
+        $parsedown = new Parsedown();
+        $manager = new ContentManager($parsedown, $this->tempDir);
+
+        file_put_contents("{$this->tempDir}/extension-test.md", "# Heading\nBody content");
+
+        $withoutExt = $manager->getParsedContent('/extension-test');
+        $withExt = $manager->getParsedContent('/extension-test.md');
+
+        $this->assertNotNull($withoutExt);
+        $this->assertNotNull($withExt);
+        $this->assertSame($withoutExt['html'], $withExt['html']);
+        $this->assertSame($manager->getFileModifiedDate('/extension-test'), $manager->getFileModifiedDate('/extension-test.md'));
+    }
 }

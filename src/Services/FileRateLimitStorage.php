@@ -99,19 +99,20 @@ class FileRateLimitStorage implements RateLimitStorageInterface
         $now = time();
         $staleThreshold = $windowSeconds * 2;
         $count = 0;
+        $dirClean = rtrim($dir, '/\\') . DIRECTORY_SEPARATOR;
 
         foreach ($entries as $entry) {
             if ($entry === '.' || $entry === '..' || !str_ends_with($entry, '.json')) {
                 continue;
             }
-            $file = $dir . $entry;
+            $file = $dirClean . $entry;
             if (file_exists($file)) {
                 $mtime = filemtime($file);
                 if ($mtime !== false && ($now - $mtime) > $staleThreshold) {
-                    unlink($file);
+                    @unlink($file);
                 }
             }
-            if (++$count > 50) {
+            if (++$count > 200) {
                 break;
             }
         }

@@ -17,8 +17,11 @@ use Core\ViteHelper;
 use Parsedown;
 use PDO;
 use Services\ConfigService;
+use Services\ConfigServiceInterface;
 use Services\CsvExportService;
+use Services\HtmlHeadingEnhancer;
 use Services\SessionManager;
+use Services\SessionManagerInterface;
 
 class CoreServiceProvider implements ServiceProviderInterface
 {
@@ -73,12 +76,20 @@ class CoreServiceProvider implements ServiceProviderInterface
             return new ConfigService(__DIR__ . '/../../../content/calculator_defaults.json');
         });
 
+        $container->singleton(ConfigServiceInterface::class, function (Container $c) {
+            return $c->get(ConfigService::class);
+        });
+
         $container->singleton(CsvExportService::class, function () {
             return new CsvExportService();
         });
 
         $container->singleton(SessionManager::class, function () {
             return new SessionManager();
+        });
+
+        $container->singleton(SessionManagerInterface::class, function (Container $c) {
+            return $c->get(SessionManager::class);
         });
 
         $container->singleton(\Core\CurrencyFormatterInterface::class, function () {
@@ -110,8 +121,16 @@ class CoreServiceProvider implements ServiceProviderInterface
             return new Parsedown();
         });
 
+        $container->singleton(HtmlHeadingEnhancer::class, function () {
+            return new HtmlHeadingEnhancer();
+        });
+
         $container->singleton(ContentManager::class, function (Container $c) {
-            return new ContentManager($c->get(Parsedown::class), __DIR__ . '/../../../content');
+            return new ContentManager(
+                $c->get(Parsedown::class),
+                __DIR__ . '/../../../content',
+                $c->get(HtmlHeadingEnhancer::class)
+            );
         });
 
         $container->singleton(DatabaseMigrator::class, function (Container $c) {

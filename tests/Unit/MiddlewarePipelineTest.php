@@ -255,4 +255,18 @@ class MiddlewarePipelineTest extends TestCase
         $this->assertSame(308, $response->getStatusCode());
         $this->assertSame('/calculate?sip=5000&years=10', $response->getHeader('Location'));
     }
+
+    public function testDirectPipedRouterExecution(): void
+    {
+        $app = new \Core\App();
+        $router = $app->getRouter();
+        $request = new Request([], [], [
+            'REQUEST_METHOD' => 'GET',
+            'REQUEST_URI' => '/'
+        ]);
+
+        $response = $router->dispatch($request);
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertStringContainsString('<!DOCTYPE html>', $response->getContent());
+    }
 }

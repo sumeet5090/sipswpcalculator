@@ -29,7 +29,7 @@ class HomeSchemaBuilder
      * @param string $siteModified
      * @return array<string> Array of JSON-encoded schema strings
      */
-    public function build(array $page_config, array $homeFaqs = [], string $siteModified = '2026-08-02'): array
+    public function build(array $page_config, array $homeFaqs = [], string $siteModified = \Core\DateConstants::CONTENT_FALLBACK_DATE): array
     {
         $baseUrl = rtrim($this->siteConfig->getUrl('/'), '/');
         $schemas = [];

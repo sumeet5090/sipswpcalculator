@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Core\Twig;
 
 use Core\CurrencyFormatterInterface;
-use Core\CurrencyHelper;
 use Core\ViteHelper;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;

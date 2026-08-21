@@ -39,16 +39,10 @@ class PdfReportTemplate implements PdfTemplateInterface
         $table_html = (string) ($inputs['table_html'] ?? '');
         $custom_disclaimer = htmlspecialchars((string) ($inputs['custom_disclaimer'] ?? ''));
 
-        $summary_corpus = (string) ($inputs['summary_corpus'] ?? '0');
-        $summary_invested = (string) ($inputs['summary_invested'] ?? '0');
-        $summary_withdrawn = (string) ($inputs['summary_withdrawn'] ?? '0');
         $multiplier = self::calculateMultiplier(
             (float) ($inputs['raw_invested'] ?? 0),
             (float) ($inputs['raw_corpus'] ?? 0),
-            (float) ($inputs['raw_withdrawn'] ?? 0),
-            $summary_invested,
-            $summary_corpus,
-            $summary_withdrawn
+            (float) ($inputs['raw_withdrawn'] ?? 0)
         );
 
         $proposal_id = 'SWP-' . strtoupper(substr(md5($client_name . date('Y-m-d')), 0, 8));
@@ -90,39 +84,14 @@ class PdfReportTemplate implements PdfTemplateInterface
         </html>";
     }
 
-    private static function parseFormattedAmount(string $formatted): float
-    {
-        $clean = (float) preg_replace('/[^\d.]/', '', $formatted);
-        if (stripos($formatted, 'Crore') !== false || stripos($formatted, 'Cr') !== false) {
-            return $clean * 10000000;
-        }
-        if (stripos($formatted, 'Lakh') !== false || stripos($formatted, 'L') !== false) {
-            return $clean * 100000;
-        }
-        if (stripos($formatted, 'k') !== false) {
-            return $clean * 1000;
-        }
-        return $clean;
-    }
-
     private static function calculateMultiplier(
         float $rawInvested,
         float $rawCorpus,
-        float $rawWithdrawn,
-        string $summaryInvested,
-        string $summaryCorpus,
-        string $summaryWithdrawn
+        float $rawWithdrawn
     ): string {
         $totalDelivered = $rawCorpus + $rawWithdrawn;
         if ($rawInvested > 0 && $totalDelivered > 0) {
             return number_format($totalDelivered / $rawInvested, 2) . 'x';
-        }
-        $cleanCorpus = self::parseFormattedAmount($summaryCorpus);
-        $cleanWithdrawn = self::parseFormattedAmount($summaryWithdrawn);
-        $cleanInvested = self::parseFormattedAmount($summaryInvested);
-        $cleanDelivered = $cleanCorpus + $cleanWithdrawn;
-        if ($cleanInvested > 0 && $cleanDelivered > 0) {
-            return number_format($cleanDelivered / $cleanInvested, 2) . 'x';
         }
         return '1.00x';
     }

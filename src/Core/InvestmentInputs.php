@@ -10,6 +10,9 @@ namespace Core;
  */
 class InvestmentInputs
 {
+    public const DEFAULT_LTCG_EXEMPTION = 125000.0;
+    public const DEFAULT_LTCG_TAX_RATE = 0.125;
+
     private float $sip;
     private int $years;
     private float $rate;
@@ -39,8 +42,8 @@ class InvestmentInputs
         float $lumpsum,
         float $swpRate,
         float $inflation,
-        float $ltcgExemption = 125000.0,
-        float $ltcgTaxRate = 0.125
+        float $ltcgExemption = self::DEFAULT_LTCG_EXEMPTION,
+        float $ltcgTaxRate = self::DEFAULT_LTCG_TAX_RATE
     ) {
         $this->sip = $sip;
         $this->years = $years;
@@ -85,8 +88,8 @@ class InvestmentInputs
      */
     private static function resolveLtcgConfig(array $cfg): array
     {
-        $exemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? 125000.0);
-        $rate = (float) ($cfg['ltcg_tax']['rate'] ?? 0.125);
+        $exemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? self::DEFAULT_LTCG_EXEMPTION);
+        $rate = (float) ($cfg['ltcg_tax']['rate'] ?? self::DEFAULT_LTCG_TAX_RATE);
         return [$exemption, $rate];
     }
 
@@ -226,8 +229,8 @@ class InvestmentInputs
         float $lumpsum = 0.0,
         float $swpRate = 0.0,
         float $inflation = 0.0,
-        float $ltcgExemption = 125000.0,
-        float $ltcgTaxRate = 0.125
+        float $ltcgExemption = self::DEFAULT_LTCG_EXEMPTION,
+        float $ltcgTaxRate = self::DEFAULT_LTCG_TAX_RATE
     ): self {
         return new self(
             $sip,

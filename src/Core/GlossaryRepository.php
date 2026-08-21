@@ -14,12 +14,12 @@ class GlossaryRepository
 {
     private ?array $terms = null;
     private string $jsonPath;
-    private ?ConfigService $configService;
+    private ConfigService $configService;
 
     public function __construct(string $jsonPath, ?ConfigService $configService = null)
     {
         $this->jsonPath = $jsonPath;
-        $this->configService = $configService;
+        $this->configService = $configService ?? new ConfigService();
     }
 
     private function load(): void
@@ -28,30 +28,7 @@ class GlossaryRepository
             return;
         }
 
-        if ($this->configService !== null) {
-            $decoded = $this->configService->getJsonConfig($this->jsonPath);
-        } else {
-            if (!file_exists($this->jsonPath)) {
-                $this->terms = [];
-                return;
-            }
-
-            $jsonContent = file_get_contents($this->jsonPath);
-            if ($jsonContent === false) {
-                error_log("Failed to read glossary JSON at: " . $this->jsonPath);
-                $this->terms = [];
-                return;
-            }
-
-            $decoded = json_decode($jsonContent, true);
-
-            if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
-                error_log("Failed to parse glossary JSON: " . json_last_error_msg());
-                $this->terms = [];
-                return;
-            }
-        }
-
+        $decoded = $this->configService->getJsonConfig($this->jsonPath);
         $sortedTerms = $decoded;
         usort($sortedTerms, function (array $a, array $b) {
             return strcasecmp($a['q'] ?? '', $b['q'] ?? '');

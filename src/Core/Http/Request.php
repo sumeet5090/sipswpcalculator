@@ -90,7 +90,7 @@ class Request
         $validRemoteAddr = filter_var($remoteAddr, FILTER_VALIDATE_IP) ? $remoteAddr : '127.0.0.1';
 
         $trustedProxies = \Core\Env::getArray('TRUSTED_PROXIES', []);
-        $isProxyTrusted = empty($trustedProxies) || in_array($validRemoteAddr, $trustedProxies, true);
+        $isProxyTrusted = !empty($trustedProxies) && in_array($validRemoteAddr, $trustedProxies, true);
 
         if (!$isProxyTrusted) {
             return $validRemoteAddr;

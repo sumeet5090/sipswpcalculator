@@ -102,12 +102,14 @@ class SecurityTest extends TestCase
         $reqDirect = new Request([], [], ['REMOTE_ADDR' => '203.0.113.195']);
         $this->assertEquals('203.0.113.195', $reqDirect->getClientIp());
 
-        // 2. Cloudflare connecting IP
+        // 2. Cloudflare connecting IP with trusted reverse proxy configured
+        $_ENV['TRUSTED_PROXIES'] = '172.68.1.1';
         $reqCf = new Request([], [], [
             'REMOTE_ADDR' => '172.68.1.1',
             'HTTP_CF_CONNECTING_IP' => '198.51.100.42'
         ]);
         $this->assertEquals('198.51.100.42', $reqCf->getClientIp());
+        unset($_ENV['TRUSTED_PROXIES']);
 
         // 3. Invalid IP fallback
         $reqInvalid = new Request([], [], [

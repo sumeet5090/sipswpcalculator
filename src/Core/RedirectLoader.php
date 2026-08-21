@@ -12,11 +12,11 @@ use Services\ConfigService;
  */
 class RedirectLoader
 {
-    private ?ConfigService $configService;
+    private ConfigService $configService;
 
     public function __construct(?ConfigService $configService = null)
     {
-        $this->configService = $configService;
+        $this->configService = $configService ?? new ConfigService();
     }
 
     /**
@@ -28,19 +28,7 @@ class RedirectLoader
      */
     public function loadAndRegister(string $redirectsPath, Router $router): void
     {
-        if ($this->configService !== null) {
-            $redirectsData = $this->configService->getJsonConfig($redirectsPath);
-        } else {
-            if (!file_exists($redirectsPath)) {
-                return;
-            }
-            $rawJson = (string) file_get_contents($redirectsPath);
-            $redirectsData = json_decode($rawJson, true);
-            if (json_last_error() !== JSON_ERROR_NONE || !is_array($redirectsData)) {
-                error_log("Failed to parse {$redirectsPath}: " . json_last_error_msg());
-                return;
-            }
-        }
+        $redirectsData = $this->configService->getJsonConfig($redirectsPath);
 
         if (isset($redirectsData['blog_redirects']) && is_array($redirectsData['blog_redirects'])) {
             foreach ($redirectsData['blog_redirects'] as $slug => $target) {

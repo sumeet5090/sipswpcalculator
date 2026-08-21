@@ -42,9 +42,6 @@ readonly class InsightPayload
     /**
      * Create an InsightPayload instance from a decoded JSON request array.
      */
-    /**
-     * Create an InsightPayload instance from a decoded JSON request array.
-     */
     public static function fromArray(array $data): self
     {
         $currency = (!empty($data['currency']) && is_string($data['currency']))

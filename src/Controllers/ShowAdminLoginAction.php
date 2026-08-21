@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Core\AdminAuthService;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\ViewRenderer;

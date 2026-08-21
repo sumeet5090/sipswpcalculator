@@ -13,18 +13,15 @@ use Services\ConfigService;
 class MetaManager
 {
     private SiteConfig $siteConfig;
-    private ?ConfigService $configService;
     private ?array $pageMap = null;
     private string $metaPagesPath;
 
     public function __construct(
         SiteConfig $siteConfig,
-        ?string $metaPagesPath = null,
-        ?ConfigService $configService = null
+        ?string $metaPagesPath = null
     ) {
         $this->siteConfig = $siteConfig;
         $this->metaPagesPath = $metaPagesPath ?? 'content/meta_pages.json';
-        $this->configService = $configService;
     }
 
     private function loadPageMap(): void
@@ -33,14 +30,9 @@ class MetaManager
             return;
         }
 
-        if ($this->configService !== null) {
-            $this->pageMap = $this->configService->getJsonConfig($this->metaPagesPath);
-            return;
-        }
-
-        $fullPath = (str_starts_with($this->metaPagesPath, '/') || str_starts_with($this->metaPagesPath, '\\'))
+        $fullPath = (str_starts_with($this->metaPagesPath, '/') || (DIRECTORY_SEPARATOR === '\\' && str_contains($this->metaPagesPath, ':')))
             ? $this->metaPagesPath
-            : __DIR__ . '/../../' . $this->metaPagesPath;
+            : __DIR__ . '/../../' . ltrim($this->metaPagesPath, '/');
 
         if (!file_exists($fullPath)) {
             throw new \Core\Exceptions\ConfigurationException("Metadata pages configuration missing at: {$fullPath}");

@@ -8,14 +8,14 @@ namespace Services;
  * ConfigService
  * Centralized configuration loader for calculator defaults and related settings.
  */
-class ConfigService
+class ConfigService implements ConfigServiceInterface
 {
     private ?array $calculatorDefaults = null;
     private string $configPath;
 
-    public function __construct(string $configPath)
+    public function __construct(?string $configPath = null)
     {
-        $this->configPath = $configPath;
+        $this->configPath = $configPath ?? (__DIR__ . '/../../content/calculator_defaults.json');
     }
 
     public function getCalculatorDefaults(): array

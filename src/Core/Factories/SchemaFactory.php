@@ -33,7 +33,7 @@ class SchemaFactory
     /**
      * Generates home page structured schemas.
      */
-    public function generateForHome(array $page_config, array $homeFaqs = [], string $siteModified = '2026-08-02'): string
+    public function generateForHome(array $page_config, array $homeFaqs = [], string $siteModified = \Core\DateConstants::CONTENT_FALLBACK_DATE): string
     {
         $schemas = [];
 
