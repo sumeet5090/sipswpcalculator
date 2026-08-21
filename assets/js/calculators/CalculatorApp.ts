@@ -27,6 +27,7 @@ import { GlossaryController } from './controllers/GlossaryController';
 import { CommandPaletteController } from './controllers/CommandPaletteController';
 import { WealthQuizController } from './controllers/WealthQuizController';
 import { ScenarioDiffController } from './controllers/ScenarioDiffController';
+import { MilestoneCelebrationController } from './controllers/MilestoneCelebrationController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -43,6 +44,7 @@ export class CalculatorApp {
     private resultsController: ResultsController;
     private summaryMetricsController: SummaryMetricsController;
     private scenarioDiffController: ScenarioDiffController;
+    private celebrationController: MilestoneCelebrationController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -94,6 +96,10 @@ export class CalculatorApp {
         this.scenarioDiffController = new ScenarioDiffController(
             this.dom,
             this.formatter
+        );
+
+        this.celebrationController = new MilestoneCelebrationController(
+            this.dom
         );
     }
 
@@ -326,6 +332,7 @@ export class CalculatorApp {
         new CommandPaletteController(this.dom).init();
         new WealthQuizController(this.dom, this.sliderManager, () => this.triggerCalculation()).init();
         this.scenarioDiffController.init();
+        this.celebrationController.init();
         const snapshotBtn = document.getElementById('snapshot-scenario-btn');
         if (snapshotBtn) {
             snapshotBtn.addEventListener('click', () => {
@@ -498,6 +505,11 @@ export class CalculatorApp {
             this.updateTable(combined, inputs.enable_swp);
             this.updateSummaryMetrics(combined);
             this.scenarioDiffController.updateDiff(combined);
+
+            const lastRow = combined[combined.length - 1];
+            if (lastRow) {
+                this.celebrationController.checkMilestones(lastRow.combined_total);
+            }
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 

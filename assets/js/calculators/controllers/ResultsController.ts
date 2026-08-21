@@ -108,9 +108,10 @@ export class ResultsController {
             filteredData = data.filter(r => r.year % 5 === 0 || r.year === data.length);
         }
 
-        filteredData.forEach(row => {
+        filteredData.forEach((row, index) => {
             const tr = document.createElement('tr');
-            tr.className = TABLE_ROW_CLASS;
+            tr.className = `${TABLE_ROW_CLASS} stagger-row`;
+            tr.style.setProperty('--row-index', String(index));
 
             // Hover sync with Chart
             if (this.chartManager) {

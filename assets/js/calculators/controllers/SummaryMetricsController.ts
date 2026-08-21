@@ -198,6 +198,45 @@ export class SummaryMetricsController {
             }
         }
 
+        // Principal vs Profit Ratio Pill
+        const ratioPill = this.dom.getElement('summary-ratio-pill');
+        if (ratioPill) {
+            const totalSum = totalInvested + finalGains;
+            if (totalSum > 0) {
+                const invPct = Math.round((totalInvested / totalSum) * 100);
+                const gainPct = 100 - invPct;
+                ratioPill.textContent = `${invPct}% Invested • ${gainPct}% Compounded Profit`;
+                ratioPill.style.display = 'inline-flex';
+            } else {
+                ratioPill.style.display = 'none';
+            }
+        }
+
+        // Rule of 72 Doubling Time Indicator
+        const doublingBadge = this.dom.getElement('summary-doubling-badge');
+        if (doublingBadge) {
+            if (inputs.rate > 0) {
+                const doublingYrs = (72 / inputs.rate).toFixed(1);
+                doublingBadge.textContent = `⏳ Capital doubles every ${doublingYrs} yrs (@${inputs.rate}%)`;
+                doublingBadge.style.display = 'inline-flex';
+            } else {
+                doublingBadge.style.display = 'none';
+            }
+        }
+
+        // Daily Wealth Accrual at Maturity
+        const dailyAccrual = this.dom.getElement('summary-daily-accrual');
+        if (dailyAccrual) {
+            const lastInterest = lastRow.interest || 0;
+            if (lastInterest > 0) {
+                const daily = Math.round(lastInterest / 365);
+                dailyAccrual.textContent = `⚡ Compounding at ${this.formatter.format(daily)}/day at maturity`;
+                dailyAccrual.style.display = 'inline-flex';
+            } else {
+                dailyAccrual.style.display = 'none';
+            }
+        }
+
         this.fitSummaryCards();
     }
 }

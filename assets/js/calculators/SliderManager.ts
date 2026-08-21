@@ -117,6 +117,14 @@ export class SliderManager {
             this.triggerFn();
         });
 
+        // Bi-directional focus halo lighting
+        input.addEventListener('focus', () => {
+            range.classList.add('ring-2', 'ring-emerald-400/50');
+        });
+        input.addEventListener('blur', () => {
+            range.classList.remove('ring-2', 'ring-emerald-400/50');
+        });
+
         input.addEventListener('keydown', (e: KeyboardEvent) => {
             if (e.key === 'Enter') {
                 if (this._inputDebounceTimer !== null) {
@@ -128,6 +136,16 @@ export class SliderManager {
                 this._updateSubtext(inputId, val);
                 this._updatePresetChips(inputId, val);
                 this.triggerFn();
+            } else if (e.key === 'ArrowUp' && e.shiftKey) {
+                e.preventDefault();
+                const step = parseFloat(range.step) || 1;
+                const current = parseFloat(input.value) || 0;
+                this.updateFieldValue(inputId, current + step * 10);
+            } else if (e.key === 'ArrowDown' && e.shiftKey) {
+                e.preventDefault();
+                const step = parseFloat(range.step) || 1;
+                const current = parseFloat(input.value) || 0;
+                this.updateFieldValue(inputId, Math.max(0, current - step * 10));
             }
         });
     }
