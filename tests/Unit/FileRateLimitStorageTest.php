@@ -108,4 +108,35 @@ class FileRateLimitStorageTest extends TestCase
 
         $this->assertFileDoesNotExist($filePath);
     }
+
+    public function testZeroOrNegativeWindowSecondsNoOps(): void
+    {
+        $ip = '192.168.1.104';
+        $prefix = 'noop_win_test';
+
+        $this->storage->checkAndIncrement($ip, $prefix, 5, 0);
+        $this->storage->checkAndIncrement($ip, $prefix, 5, -10);
+
+        $ipHash = hash('sha256', $ip);
+        $subDir = substr($ipHash, 0, 2);
+        $filePath = "{$this->tempDir}/{$prefix}/{$subDir}/{$ipHash}.json";
+
+        $this->assertFileDoesNotExist($filePath);
+    }
+
+    public function testExceptionMessagesDoNotLeakInternalPaths(): void
+    {
+        $ip = '192.168.1.105';
+        $prefix = 'leak_test';
+
+        $this->storage->checkAndIncrement($ip, $prefix, 1, 60);
+
+        try {
+            $this->storage->checkAndIncrement($ip, $prefix, 1, 60);
+            $this->fail('Expected RateLimitExceededException was not thrown');
+        } catch (RateLimitExceededException $e) {
+            $this->assertStringNotContainsString($this->tempDir, $e->getMessage());
+            $this->assertStringContainsString('Rate limit exceeded', $e->getMessage());
+        }
+    }
 }

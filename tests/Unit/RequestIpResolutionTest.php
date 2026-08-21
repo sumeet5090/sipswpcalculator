@@ -65,4 +65,33 @@ class RequestIpResolutionTest extends TestCase
 
         $this->assertSame('127.0.0.1', $request->getClientIp());
     }
+
+    public function testTrustedProxyAllowsForwardedHeaders(): void
+    {
+        $_ENV['TRUSTED_PROXIES'] = '10.0.0.1, 10.0.0.2';
+
+        $request = new Request([], [], [
+            'HTTP_X_FORWARDED_FOR' => '203.0.113.55',
+            'REMOTE_ADDR'          => '10.0.0.1',
+        ]);
+
+        $this->assertSame('203.0.113.55', $request->getClientIp());
+
+        unset($_ENV['TRUSTED_PROXIES']);
+    }
+
+    public function testUntrustedProxyRejectsForwardedHeaders(): void
+    {
+        $_ENV['TRUSTED_PROXIES'] = '10.0.0.1';
+
+        // Attacker hitting origin from 198.51.100.20 trying to spoof header
+        $request = new Request([], [], [
+            'HTTP_X_FORWARDED_FOR' => '203.0.113.55',
+            'REMOTE_ADDR'          => '198.51.100.20',
+        ]);
+
+        $this->assertSame('198.51.100.20', $request->getClientIp());
+
+        unset($_ENV['TRUSTED_PROXIES']);
+    }
 }

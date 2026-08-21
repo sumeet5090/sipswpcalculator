@@ -69,6 +69,14 @@ class Request
     public function getClientIp(): string
     {
         $remoteAddr = (string) ($this->server['REMOTE_ADDR'] ?? '127.0.0.1');
+        $validRemoteAddr = filter_var($remoteAddr, FILTER_VALIDATE_IP) ? $remoteAddr : '127.0.0.1';
+
+        $trustedProxies = \Core\Env::getArray('TRUSTED_PROXIES', []);
+        $isProxyTrusted = empty($trustedProxies) || in_array($validRemoteAddr, $trustedProxies, true);
+
+        if (!$isProxyTrusted) {
+            return $validRemoteAddr;
+        }
 
         // Check for Cloudflare connecting IP if present and valid
         if (!empty($this->server['HTTP_CF_CONNECTING_IP'])) {
@@ -96,7 +104,7 @@ class Request
             }
         }
 
-        return filter_var($remoteAddr, FILTER_VALIDATE_IP) ? $remoteAddr : '127.0.0.1';
+        return $validRemoteAddr;
     }
 
     public function isPost(): bool
