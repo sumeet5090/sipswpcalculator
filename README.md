@@ -111,6 +111,8 @@ This CLI migrator executes all outstanding PHP schema migrations. You can also t
 - `content/rate_limits.json` is the centralized configuration for rate-limiting thresholds and window durations across `admin_auth`, `pdf_generation`, and `log_insight` endpoints.
 
 ### Architectural Refactorings & Services
+- **Pure Composite Facades & Strict DIP**: Composite controllers (`AdminAuthAction`, `PageController`, `BlogController`) receive their specialized child actions directly via constructor dependency injection, eliminating concrete `new` instantiations in accordance with the Dependency Inversion Principle (DIP) and Hollywood Principle.
+- **Client-Side Clipboard DOM Abstraction**: `assets/js/adapters/DOMAdapter.ts` encapsulates `copyToClipboard()` to manage `navigator.clipboard` access and fallback DOM element creation, eliminating raw `document` queries from UI controllers (`ShareController`).
 - **Single-Responsibility Resource Actions**: Blog and educational resources are decomposed into dedicated invokable controllers (`ListResourcesAction`, `ShowResourceCategoryAction`, `ShowResourcePostAction`), with `BlogController` acting as a backward-compatible composite facade.
 - **Centralized Rate Limiting Configuration**: `GeneratePdfAction`, `LogInsightApiAction`, and `ProcessAdminLoginAction` query rate limits dynamically from `content/rate_limits.json` via `Services\ConfigService`.
 - **Client-Side Telemetry Transport Abstraction**: `assets/js/calculators/AnalyticsLogger.ts` decouples `AnalyticsTransport` (`BeaconFetchTransport`) from `AnalyticsService` page lifecycle observers and debounce timers.

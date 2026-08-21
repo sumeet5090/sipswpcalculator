@@ -57,7 +57,7 @@ class RepositoryServiceProvider implements ServiceProviderInterface
         });
 
         $container->singleton(BlogRepository::class, function (Container $c) {
-            return new BlogRepository($c->get(ContentManager::class));
+            return new BlogRepository($c->get(ContentManager::class), null, $c->get(ConfigService::class));
         });
 
         $container->singleton(InsightRepository::class, function (Container $c) {

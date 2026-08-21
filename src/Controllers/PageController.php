@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Core\FaqRepository;
-use Core\GlossaryRepository;
 use Core\Http\Response;
-use Core\MetaManager;
-use Core\SchemaHelper;
-use Core\ViewRenderer;
 
 /**
  * PageController
@@ -24,17 +19,17 @@ class PageController
     private RenderTermsAction $termsAction;
 
     public function __construct(
-        FaqRepository $faqRepository,
-        GlossaryRepository $glossaryRepository,
-        SchemaHelper $schemaHelper,
-        ViewRenderer $viewRenderer,
-        MetaManager $metaManager
+        RenderAboutAction $aboutAction,
+        RenderFaqAction $faqAction,
+        RenderGlossaryAction $glossaryAction,
+        RenderPrivacyAction $privacyAction,
+        RenderTermsAction $termsAction
     ) {
-        $this->aboutAction = new RenderAboutAction($metaManager, $viewRenderer);
-        $this->faqAction = new RenderFaqAction($faqRepository, $viewRenderer, $metaManager);
-        $this->glossaryAction = new RenderGlossaryAction($glossaryRepository, $schemaHelper, $viewRenderer, $metaManager);
-        $this->privacyAction = new RenderPrivacyAction($schemaHelper, $viewRenderer, $metaManager);
-        $this->termsAction = new RenderTermsAction($schemaHelper, $viewRenderer, $metaManager);
+        $this->aboutAction = $aboutAction;
+        $this->faqAction = $faqAction;
+        $this->glossaryAction = $glossaryAction;
+        $this->privacyAction = $privacyAction;
+        $this->termsAction = $termsAction;
     }
 
     public function about(): Response

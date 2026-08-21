@@ -79,32 +79,8 @@ export class ShareController {
                     }, 2000);
                 };
 
-                if (navigator.clipboard && window.isSecureContext) {
-                    navigator.clipboard.writeText(shareUrl).then(showCopiedFeedback).catch(() => {
-                        this.fallbackCopy(shareUrl, showCopiedFeedback);
-                    });
-                } else {
-                    this.fallbackCopy(shareUrl, showCopiedFeedback);
-                }
+                this.dom.copyToClipboard(shareUrl, showCopiedFeedback);
             });
-        }
-    }
-
-    private fallbackCopy(text: string, onSuccess: () => void): void {
-        try {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            textArea.style.position = 'fixed';
-            textArea.style.left = '-999999px';
-            textArea.style.top = '-999999px';
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            document.execCommand('copy');
-            textArea.remove();
-            onSuccess();
-        } catch {
-            // Silently complete if clipboard is fully restricted
         }
     }
 }

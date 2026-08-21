@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Core\AdminAuthService;
 use Core\Http\Request;
 use Core\Http\Response;
-use Core\ViewRenderer;
-use Services\ConfigService;
-use Services\RateLimiter;
-use Services\SessionManager;
 
 /**
  * AdminAuthAction
@@ -23,16 +18,13 @@ class AdminAuthAction
     private ProcessAdminLogoutAction $processLogoutAction;
 
     public function __construct(
-        AdminAuthService $authService,
-        ViewRenderer $viewRenderer,
-        SessionManager $sessionManager,
-        RateLimiter $rateLimiter,
-        ?ConfigService $configService = null
+        ShowAdminLoginAction $showLoginAction,
+        ProcessAdminLoginAction $processLoginAction,
+        ProcessAdminLogoutAction $processLogoutAction
     ) {
-        $cfg = $configService ?? new ConfigService(__DIR__ . '/../../content/calculator_defaults.json');
-        $this->showLoginAction = new ShowAdminLoginAction($viewRenderer, $sessionManager);
-        $this->processLoginAction = new ProcessAdminLoginAction($authService, $viewRenderer, $sessionManager, $rateLimiter, $cfg);
-        $this->processLogoutAction = new ProcessAdminLogoutAction($authService);
+        $this->showLoginAction = $showLoginAction;
+        $this->processLoginAction = $processLoginAction;
+        $this->processLogoutAction = $processLogoutAction;
     }
 
     public function login(Request $request): Response

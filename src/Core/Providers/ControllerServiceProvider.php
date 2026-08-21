@@ -265,13 +265,21 @@ class ControllerServiceProvider implements ServiceProviderInterface
             );
         });
 
+        $container->singleton(\Controllers\AdminAuthAction::class, function (Container $c) {
+            return new \Controllers\AdminAuthAction(
+                $c->get(ShowAdminLoginAction::class),
+                $c->get(ProcessAdminLoginAction::class),
+                $c->get(ProcessAdminLogoutAction::class)
+            );
+        });
+
         $container->singleton(PageController::class, function (Container $c) {
             return new PageController(
-                $c->get(FaqRepository::class),
-                $c->get(GlossaryRepository::class),
-                $c->get(SchemaHelper::class),
-                $c->get(ViewRenderer::class),
-                $c->get(MetaManager::class)
+                $c->get(RenderAboutAction::class),
+                $c->get(RenderFaqAction::class),
+                $c->get(RenderGlossaryAction::class),
+                $c->get(RenderPrivacyAction::class),
+                $c->get(RenderTermsAction::class)
             );
         });
 

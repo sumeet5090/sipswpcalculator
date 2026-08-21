@@ -71,6 +71,37 @@ export class DOMAdapter {
     }
 
     /**
+     * Copy text to system clipboard via navigator.clipboard with fallback textarea element creation.
+     */
+    copyToClipboard(text: string, onSuccess: () => void): void {
+        if (typeof navigator !== 'undefined' && navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
+                this.fallbackCopyToClipboard(text, onSuccess);
+            });
+        } else {
+            this.fallbackCopyToClipboard(text, onSuccess);
+        }
+    }
+
+    private fallbackCopyToClipboard(text: string, onSuccess: () => void): void {
+        try {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+            onSuccess();
+        } catch {
+            // Silently complete if clipboard is fully restricted
+        }
+    }
+
+    /**
      * Clear cached DOM element references to handle dynamic DOM re-rendering.
      */
     clearCache(): void {
