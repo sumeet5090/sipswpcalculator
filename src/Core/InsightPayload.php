@@ -52,12 +52,46 @@ readonly class InsightPayload
             if (is_bool($val)) {
                 return $val ? 1 : 0;
             }
+            if (is_numeric($val)) {
+                return ((int) $val) > 0 ? 1 : 0;
+            }
             $filtered = filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
             return $filtered === true ? 1 : 0;
         };
 
+        $toFloatOrNull = function (string $key) use ($data): ?float {
+            if (!isset($data[$key]) || $data[$key] === '') {
+                return null;
+            }
+            if (is_numeric($data[$key])) {
+                return (float) $data[$key];
+            }
+            return null;
+        };
+
+        $toIntOrNull = function (string $key) use ($data): ?int {
+            if (!isset($data[$key]) || $data[$key] === '') {
+                return null;
+            }
+            if (is_numeric($data[$key])) {
+                return (int) $data[$key];
+            }
+            return null;
+        };
+
+        $toStringOrNull = function (string $key, int $maxLen = 64) use ($data): ?string {
+            if (!isset($data[$key]) || !is_string($data[$key])) {
+                return null;
+            }
+            $trimmed = trim($data[$key]);
+            if ($trimmed === '') {
+                return null;
+            }
+            return mb_substr($trimmed, 0, $maxLen, 'UTF-8');
+        };
+
         $currency = (!empty($data['currency']) && is_string($data['currency']))
-            ? trim($data['currency'])
+            ? mb_substr(trim(strtoupper($data['currency'])), 0, 10, 'UTF-8')
             : 'INR';
 
         $pdfDownloaded = false;
@@ -67,32 +101,42 @@ readonly class InsightPayload
                 : (filter_var($data['pdf_downloaded'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? false);
         }
 
+        $rawCalcType = isset($data['calc_type']) && is_string($data['calc_type']) ? trim($data['calc_type']) : 'SIP';
+        $calcType = mb_substr($rawCalcType !== '' ? $rawCalcType : 'SIP', 0, 32, 'UTF-8');
+
+        $interactionCount = isset($data['interaction_count']) && is_numeric($data['interaction_count'])
+            ? max(1, (int) $data['interaction_count'])
+            : 1;
+
+        $presetClicked = $toStringOrNull('preset_clicked', 64) ?? 'none';
+        $exitAction = $toStringOrNull('exit_action', 64) ?? 'calc_only';
+
         return new self(
-            calcType: (string) ($data['calc_type'] ?? 'SIP'),
-            amount: (float) ($data['amount'] ?? 0.0),
-            duration: (int) ($data['duration'] ?? 0),
-            stepUpPct: (float) ($data['step_up_pct'] ?? 0.0),
+            calcType: $calcType,
+            amount: isset($data['amount']) && is_numeric($data['amount']) ? (float) $data['amount'] : 0.0,
+            duration: isset($data['duration']) && is_numeric($data['duration']) ? (int) $data['duration'] : 0,
+            stepUpPct: isset($data['step_up_pct']) && is_numeric($data['step_up_pct']) ? (float) $data['step_up_pct'] : 0.0,
             currency: $currency,
             pdfDownloaded: $pdfDownloaded,
-            interestRate: isset($data['interest_rate']) ? (float) $data['interest_rate'] : null,
-            sipAmount: isset($data['sip_amount']) ? (float) $data['sip_amount'] : null,
-            sipDuration: isset($data['sip_duration']) ? (int) $data['sip_duration'] : null,
-            sipStepUp: isset($data['sip_step_up']) ? (float) $data['sip_step_up'] : null,
+            interestRate: $toFloatOrNull('interest_rate'),
+            sipAmount: $toFloatOrNull('sip_amount'),
+            sipDuration: $toIntOrNull('sip_duration'),
+            sipStepUp: $toFloatOrNull('sip_step_up'),
             swpEnabled: $toBoolInt('swp_enabled'),
-            swpWithdrawal: isset($data['swp_withdrawal']) ? (float) $data['swp_withdrawal'] : null,
-            swpDuration: isset($data['swp_duration']) ? (int) $data['swp_duration'] : null,
-            swpStepUp: isset($data['swp_step_up']) ? (float) $data['swp_step_up'] : null,
-            finalCorpus: isset($data['final_corpus']) ? (float) $data['final_corpus'] : null,
-            totalInvested: isset($data['total_invested']) ? (float) $data['total_invested'] : null,
-            wealthMultiplier: isset($data['wealth_multiplier']) ? (float) $data['wealth_multiplier'] : null,
-            goalMode: isset($data['goal_mode']) ? (string) $data['goal_mode'] : null,
-            deviceType: isset($data['device_type']) ? (string) $data['device_type'] : null,
+            swpWithdrawal: $toFloatOrNull('swp_withdrawal'),
+            swpDuration: $toIntOrNull('swp_duration'),
+            swpStepUp: $toFloatOrNull('swp_step_up'),
+            finalCorpus: $toFloatOrNull('final_corpus'),
+            totalInvested: $toFloatOrNull('total_invested'),
+            wealthMultiplier: $toFloatOrNull('wealth_multiplier'),
+            goalMode: $toStringOrNull('goal_mode', 32),
+            deviceType: $toStringOrNull('device_type', 32),
             tableViewed: $toBoolInt('table_viewed'),
             pdfHasCustomName: $toBoolInt('pdf_has_custom_name'),
             inflationEnabled: $toBoolInt('inflation_enabled'),
-            interactionCount: isset($data['interaction_count']) ? (int) $data['interaction_count'] : 1,
-            presetClicked: isset($data['preset_clicked']) ? (string) $data['preset_clicked'] : 'none',
-            exitAction: isset($data['exit_action']) ? (string) $data['exit_action'] : 'calc_only'
+            interactionCount: $interactionCount,
+            presetClicked: $presetClicked,
+            exitAction: $exitAction
         );
     }
 }

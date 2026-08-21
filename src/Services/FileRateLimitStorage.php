@@ -25,7 +25,7 @@ class FileRateLimitStorage implements RateLimitStorageInterface
 
     public function checkAndIncrement(string $ip, string $prefix, int $maxRequests, int $windowSeconds): void
     {
-        if ($maxRequests <= 0) {
+        if ($maxRequests <= 0 || $windowSeconds <= 0) {
             return;
         }
 

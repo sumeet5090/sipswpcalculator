@@ -177,12 +177,12 @@ export class PdfExportController {
                         closeModalFn(pdfModal);
                         a.remove();
 
-                        // Log PDF telemetry using AnalyticsLogger (CQS Fix)
+                        // Log PDF telemetry immediately using AnalyticsLogger (CQS Fix)
                         const inputs = this.getInputs();
                         const advisorNameStr = (formData.get('advisorName') || '').toString().trim();
                         const pdfHasCustomName = advisorNameStr.length > 0;
 
-                        this.analytics.logInsight(inputs, this.getLatestResults(), this.getActiveGoalMode(), {
+                        this.analytics.sendImmediateInsight(inputs, this.getLatestResults(), this.getActiveGoalMode(), {
                             pdf_downloaded: true,
                             pdf_has_custom_name: pdfHasCustomName,
                             exit_action: 'pdf_download',

@@ -59,6 +59,10 @@ class DatabaseMigrator
             if (!in_array($migrationName, $executed, true)) {
                 $migration = require $file;
 
+                if (!is_object($migration) || !method_exists($migration, 'up')) {
+                    throw new \RuntimeException("Migration file '{$migrationName}' must return an object implementing 'up(PDO \$pdo, bool \$silent = false): void'.");
+                }
+
                 try {
                     $inTx = $this->pdo->inTransaction();
                     if (!$inTx) {

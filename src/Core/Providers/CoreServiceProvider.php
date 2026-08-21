@@ -57,6 +57,7 @@ class CoreServiceProvider implements ServiceProviderInterface
             $pdo->exec('PRAGMA journal_mode = WAL;');
             $pdo->exec('PRAGMA synchronous = NORMAL;');
             $pdo->exec('PRAGMA busy_timeout = 5000;');
+            $pdo->exec('PRAGMA foreign_keys = ON;');
             return $pdo;
         });
 

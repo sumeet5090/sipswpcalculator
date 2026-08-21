@@ -79,7 +79,11 @@ class AnonymizedInsightLogger
 
             // Opportunistic telemetry retention pruning (1 in 500 requests)
             if (random_int(1, 500) === 1) {
-                $this->pdo->exec("DELETE FROM user_calculations WHERE created_at < datetime('now', '-180 days')");
+                try {
+                    $this->pdo->exec("DELETE FROM user_calculations WHERE created_at < datetime('now', '-180 days')");
+                } catch (\Throwable $pe) {
+                    error_log("AnonymizedInsightLogger Pruning Warning: " . $pe->getMessage());
+                }
             }
         } catch (\Throwable $e) {
             // Silently fail to ensure user experience is never impacted by logging errors

@@ -100,4 +100,20 @@ PHP;
         $migrations = $stmt->fetchAll(PDO::FETCH_COLUMN);
         $this->assertNotContains('20260101000001_fail_table.php', $migrations);
     }
+
+    public function testMigrateThrowsExceptionForInvalidMigrationObject(): void
+    {
+        $migrationContent = <<<'PHP'
+<?php
+// Returns a string instead of an object with up() method
+return "INVALID_MIGRATION";
+PHP;
+        file_put_contents($this->tempMigrationsDir . '/20260101000002_invalid_structure.php', $migrationContent);
+
+        $migrator = new DatabaseMigrator($this->pdo, $this->tempMigrationsDir);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("must return an object implementing 'up");
+        $migrator->migrate();
+    }
 }
