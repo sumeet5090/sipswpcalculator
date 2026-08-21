@@ -15,6 +15,7 @@ import { TargetCorpusStrategy } from './strategies/TargetCorpusStrategy';
 import { CalculatorStrategy } from './strategies/CalculatorStrategy';
 import { InvestmentInputs, YearResult } from '../types';
 import { PdfExportController } from './controllers/PdfExportController';
+import { CsvExportController } from './controllers/CsvExportController';
 import { TabController } from './controllers/TabController';
 import { ShareController } from './controllers/ShareController';
 import { SmartNudgeController } from './controllers/SmartNudgeController';
@@ -296,6 +297,11 @@ export class CalculatorApp {
             () => this.activeGoalMode,
             () => this.interactionCount,
             this.formatter
+        ).init();
+        new CsvExportController(
+            this.dom,
+            this.analytics,
+            () => this.getInputs()
         ).init();
         new ShareController(this.dom, () => this.getInputs()).init();
         this.initResizeListeners();

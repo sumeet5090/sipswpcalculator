@@ -114,7 +114,8 @@ class InvestmentInputs
         $swpWithdrawal = self::resolveField('swp_withdrawal', $data, $cfg);
         $swpStepup     = self::resolveField('swp_stepup', $data, $cfg);
         $swpYears      = (int) self::resolveField('swp_years', $data, $cfg);
-        $lumpsum       = self::resolveField('lumpsum', $data, $cfg);
+        $lumpsumField  = (!isset($data['lumpsum']) && isset($data['corpus'])) ? 'corpus' : 'lumpsum';
+        $lumpsum       = self::resolveField($lumpsumField, $data, $cfg);
         $swpRate       = self::resolveField('swp_rate', $data, $cfg);
         $inflation     = self::resolveField('inflation', $data, $cfg);
 

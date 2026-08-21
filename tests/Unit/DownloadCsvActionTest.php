@@ -66,4 +66,24 @@ class DownloadCsvActionTest extends TestCase
             $this->assertStringContainsString("Begin Balance ({$symbol})", $response->getBody());
         }
     }
+
+    public function testInvokeHandlesSwpOnlyPayload(): void
+    {
+        $request = new Request([], [
+            'corpus'         => 10000000,
+            'swp_withdrawal' => 60000,
+            'swp_years'      => 10,
+            'swp_rate'       => 8,
+            'swp_stepup'     => 5,
+        ], ['REQUEST_METHOD' => 'POST']);
+
+        $response = ($this->action)($request);
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('text/csv; charset=utf-8', $response->getHeader('Content-Type'));
+        $body = $response->getBody();
+        $this->assertStringContainsString('Monthly SWP (₹)', $body);
+        $this->assertStringContainsString('Cumulative Withdrawals (₹)', $body);
+        $this->assertStringContainsString('10000000', $body);
+    }
 }

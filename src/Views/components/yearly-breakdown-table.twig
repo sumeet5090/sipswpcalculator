@@ -10,13 +10,13 @@
         </h2>
         <div class="flex items-center gap-2.5">
             <!-- CSV Export Button -->
-            <button type="submit" name="action" value="download_csv" form="calculator-form"
+            <button type="submit" id="downloadCsvBtn" name="action" value="download_csv" form="calculator-form" formaction="/download-csv"
                 class="text-xs sm:text-sm px-4 py-2.5 inline-flex items-center gap-2 rounded-xl font-bold bg-slate-900 text-white hover:bg-slate-800 transition-all duration-200 shadow-sm hover:shadow active:scale-95 cursor-pointer">
                 <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                         d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
-                CSV Export
+                <span>CSV Export</span>
             </button>
 
             <!-- Branded PDF Proposal Hero Button -->

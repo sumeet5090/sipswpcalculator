@@ -38,7 +38,10 @@ class DownloadCsvAction
     public function __invoke(Request $request): Response
     {
         $body = $request->getParsedBody();
-        $inputs = InvestmentInputs::fromRequest($body, $this->configService);
+        $isSwpOnly = isset($body['corpus']) && !isset($body['sip']);
+        $inputs = $isSwpOnly
+            ? InvestmentInputs::fromSwpRequest($body, $this->configService)
+            : InvestmentInputs::fromRequest($body, $this->configService);
         $enableSwp = $inputs->isSwpEnabled();
         $combined = $this->calculator->calculate($inputs);
 
