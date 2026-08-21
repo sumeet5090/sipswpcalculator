@@ -124,7 +124,7 @@ class ViteHelper
     private function resolveManifestEntry(string $entry): ?array
     {
         $this->loadManifest();
-        $key = ltrim($entry, '/');
+        $key = ltrim(trim($entry), '/');
 
         // 1. Exact key match (e.g. 'resources/js/app.ts')
         if (isset($this->manifest[$key])) {

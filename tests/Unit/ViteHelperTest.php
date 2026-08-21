@@ -122,4 +122,44 @@ class ViteHelperTest extends TestCase
         $this->assertEquals('/dist/assets/app-12345678.js', $helper->asset('resources/js/app.ts'));
         $this->assertEquals('<link rel="stylesheet" href="/dist/assets/app-87654321.css">', $helper->css('resources/js/app.ts'));
     }
+
+    public function testHandlesCorruptedOrInvalidJsonManifest(): void
+    {
+        $this->expectOutputRegex('/ViteHelper Warning: Manifest entry missing/');
+        $corruptedPath = sys_get_temp_dir() . '/corrupted_manifest_' . uniqid() . '.json';
+        file_put_contents($corruptedPath, '{ invalid json content !!!');
+
+        $helper = new ViteHelper('production', '127.0.0.1', 5173, $corruptedPath);
+
+        $this->assertEquals('', $helper->asset('resources/js/app.ts'));
+        $this->assertEquals('', $helper->css('resources/js/app.ts'));
+
+        if (file_exists($corruptedPath)) {
+            unlink($corruptedPath);
+        }
+    }
+
+    public function testHandlesEmptyManifestArray(): void
+    {
+        $this->expectOutputRegex('/ViteHelper Warning: Manifest entry missing/');
+        $emptyPath = sys_get_temp_dir() . '/empty_manifest_' . uniqid() . '.json';
+        file_put_contents($emptyPath, json_encode([]));
+
+        $helper = new ViteHelper('production', '127.0.0.1', 5173, $emptyPath);
+
+        $this->assertEquals('', $helper->asset('resources/js/app.ts'));
+        $this->assertEquals('', $helper->css('resources/js/app.ts'));
+
+        if (file_exists($emptyPath)) {
+            unlink($emptyPath);
+        }
+    }
+
+    public function testHandlesMultipleLeadingSlashesAndWhitespace(): void
+    {
+        $helper = new ViteHelper('production', '127.0.0.1', 5173, $this->tempManifestPath);
+
+        $this->assertEquals('/dist/assets/app-12345678.js', $helper->asset('   ///resources/js/app.ts   '));
+        $this->assertEquals('<link rel="stylesheet" href="/dist/assets/app-87654321.css">', $helper->css('  app  '));
+    }
 }
