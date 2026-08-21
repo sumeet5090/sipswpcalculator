@@ -405,7 +405,7 @@ export class CalculatorApp {
         this.goalCommitmentController.init();
         this.dailyAccrualController.init();
         this.qrShareModalController.init();
-        const snapshotBtn = document.getElementById('snapshot-scenario-btn');
+        const snapshotBtn = this.dom.getElement('snapshot-scenario-btn');
         if (snapshotBtn) {
             snapshotBtn.addEventListener('click', () => {
                 const inputs = this.getInputs();

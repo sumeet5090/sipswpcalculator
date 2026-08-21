@@ -3,6 +3,7 @@ import { CurrencyFormatter } from '../CurrencyHelper';
 import { MathEngine } from '../MathEngine';
 import { InvestmentInputs, YearResult } from '../../types';
 import { OdometerController } from './OdometerController';
+import { ModalScrollLockHelper } from '../helpers/ModalScrollLockHelper';
 
 export class SummaryMetricsController {
     private dom: DOMAdapter;
@@ -259,17 +260,28 @@ export class SummaryMetricsController {
 
         if (!modal) return;
 
+        const closeModal = () => {
+            modal.close();
+            ModalScrollLockHelper.unlock();
+        };
+
         if (openBtn) {
-            openBtn.addEventListener('click', () => modal.showModal());
+            openBtn.addEventListener('click', () => {
+                modal.showModal();
+                ModalScrollLockHelper.lock(openBtn);
+            });
         }
         if (closeBtn) {
-            closeBtn.addEventListener('click', () => modal.close());
+            closeBtn.addEventListener('click', closeModal);
         }
         if (footerCloseBtn) {
-            footerCloseBtn.addEventListener('click', () => modal.close());
+            footerCloseBtn.addEventListener('click', closeModal);
         }
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.close();
+            if (e.target === modal) closeModal();
+        });
+        modal.addEventListener('cancel', () => {
+            ModalScrollLockHelper.unlock();
         });
     }
 }

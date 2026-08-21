@@ -1,6 +1,7 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { CurrencyFormatter } from '../CurrencyHelper';
 import { InvestmentInputs, YearResult } from '../../types';
+import { ModalScrollLockHelper } from '../helpers/ModalScrollLockHelper';
 
 export class GoalCommitmentController {
     private dom: DOMAdapter;
@@ -28,19 +29,19 @@ export class GoalCommitmentController {
         const modal = this.dom.getElement('goal-commitment-modal');
 
         if (openBtn) {
-            openBtn.addEventListener('click', () => this.openModal());
+            openBtn.addEventListener('click', () => this.openModal(openBtn));
         }
 
         if (closeBtn && modal) {
             closeBtn.addEventListener('click', () => {
-                modal.classList.add('hidden');
+                this.closeModal();
             });
         }
 
         if (modal) {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
-                    modal.classList.add('hidden');
+                    this.closeModal();
                 }
             });
         }
@@ -57,15 +58,29 @@ export class GoalCommitmentController {
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
-                modal.classList.add('hidden');
+                this.closeModal();
             }
         });
     }
 
-    openModal(): void {
+    openModal(triggerElement?: HTMLElement): void {
         const modal = this.dom.getElement('goal-commitment-modal');
         if (!modal) return;
 
+        this.populateMetrics();
+        modal.classList.remove('hidden');
+        ModalScrollLockHelper.lock(triggerElement);
+    }
+
+    closeModal(): void {
+        const modal = this.dom.getElement('goal-commitment-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            ModalScrollLockHelper.unlock();
+        }
+    }
+
+    private populateMetrics(): void {
         const inputs = this.getInputsCallback();
         const results = this.getResultsCallback();
         const lastRow = results && results.length > 0 ? results[results.length - 1] : null;
@@ -87,8 +102,6 @@ export class GoalCommitmentController {
         if (targetDisplay) {
             targetDisplay.textContent = this.formatter.formatDynamic(finalCorpus);
         }
-
-        modal.classList.remove('hidden');
     }
 
     private copyPledge(): void {

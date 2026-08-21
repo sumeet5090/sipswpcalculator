@@ -1,4 +1,5 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
+import { ModalScrollLockHelper } from '../helpers/ModalScrollLockHelper';
 
 export class QrShareModalController {
     private dom: DOMAdapter;
@@ -8,25 +9,25 @@ export class QrShareModalController {
     }
 
     init(): void {
-        const openBtns = document.querySelectorAll<HTMLElement>('.open-qr-modal-btn, #open-qr-modal-btn');
+        const openBtns = this.dom.getElements<HTMLElement>('.open-qr-modal-btn, #open-qr-modal-btn');
         const closeBtn = this.dom.getElement('close-qr-modal-btn');
         const modal = this.dom.getElement('qr-share-modal');
         const copyBtn = this.dom.getElement('copy-qr-url-btn');
 
         openBtns.forEach(btn => {
-            btn.addEventListener('click', () => this.openModal());
+            btn.addEventListener('click', () => this.openModal(btn));
         });
 
         if (closeBtn && modal) {
             closeBtn.addEventListener('click', () => {
-                modal.classList.add('hidden');
+                this.closeModal();
             });
         }
 
         if (modal) {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
-                    modal.classList.add('hidden');
+                    this.closeModal();
                 }
             });
         }
@@ -37,12 +38,12 @@ export class QrShareModalController {
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
-                modal.classList.add('hidden');
+                this.closeModal();
             }
         });
     }
 
-    openModal(): void {
+    openModal(triggerElement?: HTMLElement): void {
         const modal = this.dom.getElement('qr-share-modal');
         const container = this.dom.getElement('qr-code-canvas-container');
         const urlInput = this.dom.getElement<HTMLInputElement>('qr-share-url-input');
@@ -58,6 +59,15 @@ export class QrShareModalController {
         this.renderQrCode(container, currentUrl);
 
         modal.classList.remove('hidden');
+        ModalScrollLockHelper.lock(triggerElement);
+    }
+
+    closeModal(): void {
+        const modal = this.dom.getElement('qr-share-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            ModalScrollLockHelper.unlock();
+        }
     }
 
     private copyUrl(): void {

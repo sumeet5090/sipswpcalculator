@@ -37,8 +37,8 @@ export class ResultsController {
     }
 
     private initControls(): void {
-        const allBtn = document.getElementById('table-density-all');
-        const fiveYBtn = document.getElementById('table-density-5y');
+        const allBtn = this.dom.getElement('table-density-all');
+        const fiveYBtn = this.dom.getElement('table-density-5y');
         if (allBtn) {
             allBtn.addEventListener('click', () => this.setDensity('all'));
         }
@@ -46,7 +46,7 @@ export class ResultsController {
             fiveYBtn.addEventListener('click', () => this.setDensity('5y'));
         }
 
-        const heatmapBtn = document.getElementById('table-heatmap-toggle');
+        const heatmapBtn = this.dom.getElement('table-heatmap-toggle');
         if (heatmapBtn) {
             heatmapBtn.addEventListener('click', () => {
                 this.heatmapEnabled = !this.heatmapEnabled;
@@ -59,7 +59,7 @@ export class ResultsController {
             });
         }
 
-        const searchInput = document.getElementById('table-year-search') as HTMLInputElement | null;
+        const searchInput = this.dom.getElement<HTMLInputElement>('table-year-search');
         if (searchInput) {
             searchInput.addEventListener('input', () => {
                 const val = parseInt(searchInput.value, 10);
@@ -75,8 +75,8 @@ export class ResultsController {
         if (this.density === density) return;
         this.density = density;
 
-        const allBtn = document.getElementById('table-density-all');
-        const fiveYBtn = document.getElementById('table-density-5y');
+        const allBtn = this.dom.getElement('table-density-all');
+        const fiveYBtn = this.dom.getElement('table-density-5y');
         if (allBtn && fiveYBtn) {
             if (density === 'all') {
                 allBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
@@ -119,7 +119,7 @@ export class ResultsController {
         if (this.searchYear !== null) {
             filteredData = data.filter(r => r.year === this.searchYear);
         } else if (this.density === '5y') {
-            filteredData = data.filter(r => r.year % 5 === 0 || r.year === data.length);
+            filteredData = data.filter(r => r.year === 1 || r.year % 5 === 0 || r.year === data.length);
         }
 
         filteredData.forEach((row, index) => {
