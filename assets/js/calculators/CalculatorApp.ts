@@ -68,7 +68,8 @@ export class CalculatorApp {
                 this.triggerCalculation();
             },
             this.validator,
-            this.dom
+            this.dom,
+            this.formatter
         );
 
         this.resultsController = new ResultsController(
@@ -496,6 +497,8 @@ export class CalculatorApp {
 
                 this.chartManager.updateChart(existingData, swpEnabledOnLoad);
             }
+
+            this.sliderManager.refreshVisuals();
         };
 
         if (typeof requestAnimationFrame !== 'undefined') {

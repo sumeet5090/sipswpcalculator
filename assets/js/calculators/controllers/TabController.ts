@@ -23,17 +23,17 @@ export class TabController {
             if (tab === 'sip') {
                 sipPanel.classList.remove('hidden');
                 swpPanel.classList.add('hidden');
-                sipTab.classList.add('bg-emerald-500', 'text-white');
-                sipTab.classList.remove('bg-white', 'text-slate-500');
+                sipTab.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/30');
+                sipTab.classList.remove('text-slate-500', 'hover:text-slate-700');
                 if (sipSpan) {
-                    sipSpan.classList.add('bg-white/20');
-                    sipSpan.classList.remove('bg-slate-100');
+                    sipSpan.classList.add('bg-emerald-100', 'text-emerald-800');
+                    sipSpan.classList.remove('bg-slate-200/80', 'text-slate-600');
                 }
-                swpTab.classList.add('bg-white', 'text-slate-500');
-                swpTab.classList.remove('bg-rose-500', 'text-white');
+                swpTab.classList.remove('bg-white', 'text-rose-600', 'shadow-sm', 'border', 'border-slate-200/30');
+                swpTab.classList.add('text-slate-500', 'hover:text-slate-700');
                 if (swpSpan) {
-                    swpSpan.classList.add('bg-slate-100');
-                    swpSpan.classList.remove('bg-white/20');
+                    swpSpan.classList.add('bg-slate-200/80', 'text-slate-600');
+                    swpSpan.classList.remove('bg-rose-100', 'text-rose-800');
                 }
                 sipTab.setAttribute('aria-selected', 'true');
                 sipTab.setAttribute('tabindex', '0');
@@ -43,17 +43,17 @@ export class TabController {
             } else {
                 swpPanel.classList.remove('hidden');
                 sipPanel.classList.add('hidden');
-                swpTab.classList.add('bg-rose-500', 'text-white');
-                swpTab.classList.remove('bg-white', 'text-slate-500');
+                swpTab.classList.add('bg-white', 'text-rose-600', 'shadow-sm', 'border', 'border-slate-200/30');
+                swpTab.classList.remove('text-slate-500', 'hover:text-slate-700');
                 if (swpSpan) {
-                    swpSpan.classList.add('bg-white/20');
-                    swpSpan.classList.remove('bg-slate-100');
+                    swpSpan.classList.add('bg-rose-100', 'text-rose-800');
+                    swpSpan.classList.remove('bg-slate-200/80', 'text-slate-600');
                 }
-                sipTab.classList.add('bg-white', 'text-slate-500');
-                sipTab.classList.remove('bg-emerald-500', 'text-white');
+                sipTab.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/30');
+                sipTab.classList.add('text-slate-500', 'hover:text-slate-700');
                 if (sipSpan) {
-                    sipSpan.classList.add('bg-slate-100');
-                    sipSpan.classList.remove('bg-white/20');
+                    sipSpan.classList.add('bg-slate-200/80', 'text-slate-600');
+                    sipSpan.classList.remove('bg-emerald-100', 'text-emerald-800');
                 }
                 sipTab.setAttribute('aria-selected', 'false');
                 sipTab.setAttribute('tabindex', '-1');

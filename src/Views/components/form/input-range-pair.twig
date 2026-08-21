@@ -21,6 +21,9 @@
     {% set textClass = config.input_text_color|default(inputColorClass) %}
     {% set labelHtml = config.label_html|default(null) %}
     
+    {% set presets = config.presets|default(null) %}
+    {% set activeChipClass = theme == 'rose' ? 'is-active-rose bg-rose-600 text-white border-rose-600' : 'is-active bg-emerald-600 text-white border-emerald-600' %}
+    
     <div class="group" data-field-id="{{ id }}">
         {% if labelHtml %}
             {{ labelHtml|raw }}
@@ -45,12 +48,33 @@
         {# Inline validation error — shown by JS when value is out of bounds #}
         <p id="{{ id }}_error" role="alert" aria-live="polite"
            class="hidden text-[10px] font-semibold text-rose-500 mt-0.5 field-error"></p>
+        
+        {# Dynamic Live Subtext Hint (e.g. ₹25,000 / mo • ₹3.0 Lakh / yr) #}
+        <div id="{{ id }}_subtext" class="field-unit-hint text-[11px] font-medium text-slate-400 mt-1 min-h-[16px] transition-all"></div>
+
         <input type="range" id="{{ id }}_range" min="{{ min }}" max="{{ sliderMax }}" step="{{ sliderStep }}"
             value="{{ value }}"
             aria-labelledby="{{ id }}_label"
             aria-valuenow="{{ value }}"
             aria-valuemin="{{ min }}"
             aria-valuemax="{{ sliderMax }}"
-            class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer {{ rangeColorClass }} mt-2">
+            class="w-full h-1.5 bg-slate-200 rounded-full appearance-none cursor-pointer {{ rangeColorClass }} mt-1">
+
+        {% if presets %}
+            <div class="flex flex-wrap items-center gap-1.5 mt-2" role="group" aria-label="{{ label }} quick presets">
+                {% for preset in presets %}
+                    {% set p_label = preset.label|default(preset) %}
+                    {% set p_val = preset.value|default(preset) %}
+                    <button type="button" 
+                        class="preset-chip text-[10px] font-semibold px-2 py-0.5 rounded-md border border-slate-200/90 bg-slate-50/90 text-slate-600 hover:border-slate-300 hover:bg-slate-100/90 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 transition-all cursor-pointer select-none active:scale-95 {{ value == p_val ? activeChipClass : '' }}"
+                        data-preset-for="{{ id }}"
+                        data-preset-val="{{ p_val }}"
+                        aria-pressed="{{ value == p_val ? 'true' : 'false' }}">
+                        {{ p_label }}
+                    </button>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 {% endmacro %}
+

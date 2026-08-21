@@ -146,6 +146,19 @@ export class SummaryMetricsController {
         setVal('summary-withdrawn', totalWithdrawn);
         setVal('summary-corpus', finalCorpus);
 
+        // Update Gain Ratio Badge
+        const gainBadge = this.dom.getElement('summary-gain-badge');
+        if (gainBadge) {
+            if (totalInvested > 0) {
+                const gainPct = Math.round((finalGains / totalInvested) * 100);
+                const sign = gainPct >= 0 ? '+' : '';
+                gainBadge.textContent = `${sign}${gainPct}%`;
+                gainBadge.style.display = '';
+            } else {
+                gainBadge.style.display = 'none';
+            }
+        }
+
         this.fitSummaryCards();
     }
 }

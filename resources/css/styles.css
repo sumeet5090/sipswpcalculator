@@ -509,103 +509,143 @@ tr:hover td {
 } 
 */
 
-/* Custom Range Slider */
-/* Custom Range Slider */
+/* Custom Range Slider with Dynamic Progress Fill */
 input[type=range] {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
-    background: transparent;
+    height: 6px;
+    background: linear-gradient(to right, #10b981 0%, #059669 var(--range-progress, 0%), #e2e8f0 var(--range-progress, 0%), #e2e8f0 100%);
+    border-radius: 9999px;
     margin: 10px 0;
+    outline: none;
+    transition: background 0.1s ease;
 }
 
-/* Thumb Styles */
+input[type=range].accent-rose-500,
+input[type=range].accent-rose-600 {
+    background: linear-gradient(to right, #f43f5e 0%, #e11d48 var(--range-progress, 0%), #e2e8f0 var(--range-progress, 0%), #e2e8f0 100%);
+}
+
+/* Webkit Thumb */
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
+    appearance: none;
+    height: 18px;
+    width: 18px;
     border-radius: 50%;
-    background: #10b981;
-    /* Emerald 500 */
+    background: #059669;
+    border: 2.5px solid #ffffff;
     cursor: pointer;
-    margin-top: -8px;
-    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
-    transition: transform 0.2s;
-}
-
-input[type=range]:active::-webkit-slider-thumb {
-    transform: scale(1.4);
-    background: #10b981;
-    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(16, 185, 129, 0.2);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
 input[type=range]:hover::-webkit-slider-thumb {
-    transform: scale(1.1);
-    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.15);
+    transform: scale(1.18);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2), 0 0 0 5px rgba(16, 185, 129, 0.28);
 }
 
+input[type=range]:active::-webkit-slider-thumb {
+    transform: scale(1.28);
+    background: #047857;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 0 7px rgba(16, 185, 129, 0.35);
+}
+
+/* Firefox Thumb */
 input[type=range]::-moz-range-thumb {
-    height: 20px;
-    width: 20px;
-    border: none;
+    height: 18px;
+    width: 18px;
     border-radius: 50%;
-    background: #10b981;
+    background: #059669;
+    border: 2.5px solid #ffffff;
     cursor: pointer;
-    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
-    transition: transform 0.2s;
-}
-
-input[type=range]:active::-moz-range-thumb {
-    transform: scale(1.4);
-    background: #10b981;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(16, 185, 129, 0.2);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
 input[type=range]:hover::-moz-range-thumb {
-    transform: scale(1.1);
-    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.15);
+    transform: scale(1.18);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2), 0 0 0 5px rgba(16, 185, 129, 0.28);
 }
 
-/* SWP Rose Variant (overrides Emerald) */
-.accent-rose-500::-webkit-slider-thumb {
-    background: #fb7185;
-    /* Rose 400 */
-    box-shadow: 0 0 0 4px rgba(251, 113, 133, 0.1);
+input[type=range]:active::-moz-range-thumb {
+    transform: scale(1.28);
+    background: #047857;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 0 7px rgba(16, 185, 129, 0.35);
 }
 
-.accent-rose-500:active::-webkit-slider-thumb {
-    background: #fb7185;
-    box-shadow: 0 0 0 8px rgba(251, 113, 133, 0.2);
+/* Rose Variant Thumbs */
+input[type=range].accent-rose-500::-webkit-slider-thumb,
+input[type=range].accent-rose-600::-webkit-slider-thumb {
+    background: #e11d48;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(225, 29, 72, 0.2);
 }
 
-.accent-rose-500:hover::-webkit-slider-thumb {
-    box-shadow: 0 0 0 6px rgba(251, 113, 133, 0.15);
+input[type=range].accent-rose-500:hover::-webkit-slider-thumb,
+input[type=range].accent-rose-600:hover::-webkit-slider-thumb {
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2), 0 0 0 5px rgba(225, 29, 72, 0.28);
 }
 
-.accent-rose-500::-moz-range-thumb {
-    background: #fb7185;
-    box-shadow: 0 0 0 4px rgba(251, 113, 133, 0.1);
+input[type=range].accent-rose-500:active::-webkit-slider-thumb,
+input[type=range].accent-rose-600:active::-webkit-slider-thumb {
+    background: #be123c;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 0 7px rgba(225, 29, 72, 0.35);
 }
 
-.accent-rose-500:active::-moz-range-thumb {
-    background: #fb7185;
+input[type=range].accent-rose-500::-moz-range-thumb,
+input[type=range].accent-rose-600::-moz-range-thumb {
+    background: #e11d48;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(225, 29, 72, 0.2);
 }
 
-.accent-rose-500:hover::-moz-range-thumb {
-    box-shadow: 0 0 0 6px rgba(251, 113, 133, 0.15);
+input[type=range].accent-rose-500:hover::-moz-range-thumb,
+input[type=range].accent-rose-600:hover::-moz-range-thumb {
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2), 0 0 0 5px rgba(225, 29, 72, 0.28);
 }
 
-/* Track Styles */
+input[type=range].accent-rose-500:active::-moz-range-thumb,
+input[type=range].accent-rose-600:active::-moz-range-thumb {
+    background: #be123c;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 0 7px rgba(225, 29, 72, 0.35);
+}
+
+/* Hide default track pseudo-elements so dynamic background shows through */
 input[type=range]::-webkit-slider-runnable-track {
-    width: 100%;
+    background: transparent;
     height: 6px;
-    cursor: pointer;
-    background: #e2e8f0;
-    border-radius: 3px;
-    transition: background 0.2s ease;
 }
 
-input[type=range]:hover::-webkit-slider-runnable-track {
-    background: #cbd5e1;
+input[type=range]::-moz-range-track {
+    background: transparent;
+    height: 6px;
+}
+
+/* Preset Chips */
+.preset-chip {
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preset-chip:hover {
+    transform: translateY(-1px);
+}
+
+.preset-chip:active {
+    transform: translateY(0) scale(0.96);
+}
+
+.preset-chip.is-active {
+    background-color: #059669;
+    color: #ffffff;
+    border-color: #047857;
+    box-shadow: 0 1px 3px rgba(5, 150, 105, 0.25);
+}
+
+.preset-chip.is-active-rose {
+    background-color: #e11d48;
+    color: #ffffff;
+    border-color: #be123c;
+    box-shadow: 0 1px 3px rgba(225, 29, 72, 0.25);
 }
 
 /* Custom Scrollbar for Table */

@@ -75,4 +75,32 @@ export class CurrencyFormatter {
             ? `-${this.symbol}${absAmount.toLocaleString(this.locale)}`
             : `${this.symbol}${absAmount.toLocaleString(this.locale)}`;
     }
+
+    /**
+     * Format contextual subtext for inputs (e.g., SIP amount, Lumpsum, Target Corpus, SWP).
+     */
+    formatSubtext(fieldId: string, value: number): string {
+        if (isNaN(value) || value <= 0) return '';
+
+        if (fieldId === 'sip') {
+            const annual = value * 12;
+            const annualFormatted = this.formatDynamic(annual);
+            const monthlyFormatted = this.formatDynamic(value);
+            return `${monthlyFormatted} / mo • ${annualFormatted} / yr`;
+        }
+
+        if (fieldId === 'swp' || fieldId === 'swp_withdrawal' || fieldId === 'swp_amount') {
+            const annual = value * 12;
+            const annualFormatted = this.formatDynamic(annual);
+            const monthlyFormatted = this.formatDynamic(value);
+            return `${monthlyFormatted} / mo • ${annualFormatted} / yr`;
+        }
+
+        if (fieldId === 'lumpsum' || fieldId === 'corpus' || fieldId === 'initial_corpus' || fieldId === 'target_corpus') {
+            return this.formatDynamic(value);
+        }
+
+        return '';
+    }
 }
+

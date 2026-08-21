@@ -10,6 +10,14 @@
     'step': calc_config.lumpsum.step,
     'value': lumpsum|default(0),
     'prefix': '₹',
-    'theme': 'emerald'
+    'theme': 'emerald',
+    'presets': [
+        {'label': '₹50k', 'value': 50000},
+        {'label': '₹1L', 'value': 100000},
+        {'label': '₹5L', 'value': 500000},
+        {'label': '₹10L', 'value': 1000000},
+        {'label': '₹25L', 'value': 2500000}
+    ]
 }) }}
 {% endif %}
+

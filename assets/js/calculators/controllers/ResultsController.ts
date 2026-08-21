@@ -84,7 +84,35 @@ export class ResultsController {
             tr.appendChild(createCell(this.formatter.format(Math.round(ltcgTax)), CELL_ROSE_CLASS + " tax-col", taxDisplay));
 
             // Final Corpus Column
-            tr.appendChild(createCell(this.formatter.format(finalCorpus), CELL_BOLD_CLASS + " end-corpus-col"));
+            const corpusCell = document.createElement('td');
+            corpusCell.className = CELL_BOLD_CLASS + " end-corpus-col";
+
+            const corpusValDiv = document.createElement('div');
+            corpusValDiv.textContent = this.formatter.format(finalCorpus);
+            corpusCell.appendChild(corpusValDiv);
+
+            if (row.cumulative_invested > 0 && finalCorpus > 0) {
+                const investedRatio = Math.min((row.cumulative_invested / finalCorpus) * 100, 100);
+                const gainsRatio = Math.max(100 - investedRatio, 0);
+
+                const miniBar = document.createElement('div');
+                miniBar.className = "w-full bg-slate-200/80 rounded-full h-1 mt-1 flex overflow-hidden";
+                miniBar.title = `Invested: ${investedRatio.toFixed(0)}% • Gains: ${gainsRatio.toFixed(0)}%`;
+
+                const investedSeg = document.createElement('div');
+                investedSeg.className = "bg-slate-400 h-full";
+                investedSeg.style.width = `${investedRatio}%`;
+
+                const gainsSeg = document.createElement('div');
+                gainsSeg.className = "bg-emerald-500 h-full";
+                gainsSeg.style.width = `${gainsRatio}%`;
+
+                miniBar.appendChild(investedSeg);
+                miniBar.appendChild(gainsSeg);
+                corpusCell.appendChild(miniBar);
+            }
+
+            tr.appendChild(corpusCell);
 
             fragment.appendChild(tr);
         });

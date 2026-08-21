@@ -58,15 +58,18 @@ export class ChartManager {
         const safeHeight = Math.max(height, 200);
 
         const gradientInvested = ctx.createLinearGradient(0, 0, 0, safeHeight);
-        gradientInvested.addColorStop(0, 'rgba(79, 70, 229, 0.22)');
-        gradientInvested.addColorStop(1, 'rgba(79, 70, 229, 0.0)');
+        gradientInvested.addColorStop(0, 'rgba(99, 102, 241, 0.22)');
+        gradientInvested.addColorStop(0.7, 'rgba(99, 102, 241, 0.05)');
+        gradientInvested.addColorStop(1, 'rgba(99, 102, 241, 0.0)');
 
         const gradientCorpus = ctx.createLinearGradient(0, 0, 0, safeHeight);
-        gradientCorpus.addColorStop(0, 'rgba(16, 185, 129, 0.45)');
-        gradientCorpus.addColorStop(1, 'rgba(16, 185, 129, 0.03)');
+        gradientCorpus.addColorStop(0, 'rgba(16, 185, 129, 0.35)');
+        gradientCorpus.addColorStop(0.6, 'rgba(16, 185, 129, 0.10)');
+        gradientCorpus.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
 
         const gradientPostTax = ctx.createLinearGradient(0, 0, 0, safeHeight);
-        gradientPostTax.addColorStop(0, 'rgba(139, 92, 246, 0.22)');
+        gradientPostTax.addColorStop(0, 'rgba(139, 92, 246, 0.25)');
+        gradientPostTax.addColorStop(0.7, 'rgba(139, 92, 246, 0.05)');
         gradientPostTax.addColorStop(1, 'rgba(139, 92, 246, 0.0)');
 
         return {
