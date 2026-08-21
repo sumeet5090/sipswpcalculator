@@ -37,6 +37,16 @@ class Response
         return $this->headers;
     }
 
+    public function getHeader(string $name, ?string $default = null): ?string
+    {
+        foreach ($this->headers as $headerName => $value) {
+            if (strcasecmp($headerName, $name) === 0) {
+                return (string) $value;
+            }
+        }
+        return $default;
+    }
+
     public function send(): void
     {
         http_response_code($this->statusCode);

@@ -68,7 +68,6 @@ class FileUploadService
                     $safeMime = 'image/jpeg';
                 }
                 $cleanData = ob_get_clean();
-                imagedestroy($img);
                 if ($cleanData !== '') {
                     $data = $cleanData;
                 }
