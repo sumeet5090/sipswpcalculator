@@ -208,6 +208,7 @@ export class ChartManager {
                 pointBorderColor: '#6366f1',
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
+                order: 2,
             },
             {
                 label: showWealthMap ? 'Interest Earned' : 'Pre-Tax Corpus',
@@ -224,6 +225,7 @@ export class ChartManager {
                 pointRadius: pointRadii,
                 pointHoverRadius: pointHoverRadii,
                 pointHoverBorderWidth: 3,
+                order: 1,
             },
             {
                 label: 'Post-Tax Corpus',
@@ -240,6 +242,7 @@ export class ChartManager {
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
                 hidden: !showPostTax || showWealthMap,
+                order: 1,
             }
         ];
 
@@ -259,6 +262,7 @@ export class ChartManager {
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
                 hidden: !enableSwp,
+                order: 1,
             });
         }
 

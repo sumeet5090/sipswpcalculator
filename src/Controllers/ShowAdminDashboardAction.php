@@ -11,6 +11,7 @@ use Core\Http\Request;
 use Core\Http\Response;
 use Core\InsightRepository;
 use Core\ViewRenderer;
+use Services\SessionManager;
 
 /**
  * ShowAdminDashboardAction
@@ -22,24 +23,28 @@ class ShowAdminDashboardAction
     private AdminAuthService $authService;
     private AdminDashboardPresenter $presenter;
     private ViewRenderer $viewRenderer;
+    private SessionManager $sessionManager;
 
     public function __construct(
         InsightRepository $insightRepository,
         AdminAuthService $authService,
         AdminDashboardPresenter $presenter,
-        ViewRenderer $viewRenderer
+        ViewRenderer $viewRenderer,
+        SessionManager $sessionManager
     ) {
         $this->insightRepository = $insightRepository;
         $this->authService = $authService;
         $this->presenter = $presenter;
         $this->viewRenderer = $viewRenderer;
+        $this->sessionManager = $sessionManager;
     }
 
     public function __invoke(Request $request): Response
     {
         if (!$this->authService->isAuthenticated()) {
             return Response::html($this->viewRenderer->render('admin/login', [
-                'error' => ''
+                'error' => '',
+                'csrf_token' => $this->sessionManager->ensureCsrfToken(),
             ]));
         }
 
@@ -58,6 +63,7 @@ class ShowAdminDashboardAction
             'current_range_key' => $current_range_key,
             'time_ranges'       => $time_ranges,
             'current_range'     => $current_range,
+            'csrf_token'        => $this->sessionManager->ensureCsrfToken(),
         ], $viewModels);
 
         return Response::html($this->viewRenderer->render('admin/dashboard', $payload));

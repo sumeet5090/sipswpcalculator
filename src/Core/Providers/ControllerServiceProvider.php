@@ -42,10 +42,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
     {
         $routesConfig = $config['routesConfig'] ?? [];
 
-        $container->singleton(CsrfHoneypotMiddleware::class, function (Container $c) {
-            return new CsrfHoneypotMiddleware($c->get(SessionManager::class));
-        });
-
         $container->singleton(\Services\RateLimitStorageInterface::class, function () {
             return new \Services\FileRateLimitStorage();
         });
@@ -75,7 +71,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(InsightRepository::class),
                 $c->get(AdminAuthService::class),
                 $c->get(AdminDashboardPresenter::class),
-                $c->get(ViewRenderer::class)
+                $c->get(ViewRenderer::class),
+                $c->get(SessionManager::class)
             );
         });
 

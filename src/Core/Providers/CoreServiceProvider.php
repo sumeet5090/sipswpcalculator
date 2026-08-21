@@ -132,6 +132,17 @@ class CoreServiceProvider implements ServiceProviderInterface
             return new StrategyFactory($c->get(ConfigService::class), null, $c);
         });
 
+        $container->singleton(\Core\Middleware\SessionMiddleware::class, function (Container $c) {
+            return new \Core\Middleware\SessionMiddleware($c->get(SessionManager::class));
+        });
+
+        $container->singleton(\Core\Middleware\CsrfHoneypotMiddleware::class, function (Container $c) {
+            return new \Core\Middleware\CsrfHoneypotMiddleware(
+                $c->get(SessionManager::class),
+                $c->get(ViewRenderer::class)
+            );
+        });
+
         $container->singleton(\Core\ActionDispatcher::class, function (Container $c) {
             return new \Core\ActionDispatcher($c);
         });
