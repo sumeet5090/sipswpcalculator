@@ -237,6 +237,39 @@ export class SummaryMetricsController {
             }
         }
 
+        // Populate Tax Waterfall Modal values
+        const taxGross = this.dom.getElement('tax-modal-gross-gains');
+        const taxTaxable = this.dom.getElement('tax-modal-taxable-gains');
+        const taxAmount = this.dom.getElement('tax-modal-tax-amount');
+        const taxNet = this.dom.getElement('tax-modal-net-corpus');
+
+        if (taxGross) taxGross.textContent = this.formatter.format(preTaxGains);
+        if (taxTaxable) taxTaxable.textContent = this.formatter.format(Math.max(0, preTaxGains - 125000));
+        if (taxAmount) taxAmount.textContent = `- ${this.formatter.format(lastRow.ltcg_tax ?? 0)}`;
+        if (taxNet) taxNet.textContent = this.formatter.format(lastRow.post_tax_total ?? preTaxCorpus);
+
         this.fitSummaryCards();
+    }
+
+    initTaxWaterfallModal(): void {
+        const modal = this.dom.getElement<HTMLDialogElement>('tax-waterfall-modal');
+        const openBtn = this.dom.getElement('open-tax-waterfall-btn');
+        const closeBtn = this.dom.getElement('close-tax-waterfall-btn');
+        const footerCloseBtn = this.dom.getElement('close-tax-waterfall-footer-btn');
+
+        if (!modal) return;
+
+        if (openBtn) {
+            openBtn.addEventListener('click', () => modal.showModal());
+        }
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => modal.close());
+        }
+        if (footerCloseBtn) {
+            footerCloseBtn.addEventListener('click', () => modal.close());
+        }
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.close();
+        });
     }
 }

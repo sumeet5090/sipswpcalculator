@@ -1,21 +1,25 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { InputValidator } from '../InputValidator';
+import { AudioFeedbackController } from './AudioFeedbackController';
 
 export class StepperController {
     private dom: DOMAdapter;
     private validator: InputValidator;
     private onValueChange: (fieldId: string, value: number) => void;
+    private audio?: AudioFeedbackController;
     private holdTimer: ReturnType<typeof setTimeout> | null = null;
     private stepInterval: ReturnType<typeof setInterval> | null = null;
 
     constructor(
         dom: DOMAdapter,
         validator: InputValidator,
-        onValueChange: (fieldId: string, value: number) => void
+        onValueChange: (fieldId: string, value: number) => void,
+        audio?: AudioFeedbackController
     ) {
         this.dom = dom;
         this.validator = validator;
         this.onValueChange = onValueChange;
+        this.audio = audio;
     }
 
     private executeStep(btn: HTMLButtonElement, multiplier: number = 1): void {
@@ -51,6 +55,8 @@ export class StepperController {
             range.value = String(validated);
         }
 
+        this.audio?.playTick(multiplier > 1 ? 480 : 380, 0.012);
+        this.audio?.vibrate(5);
         this.onValueChange(fieldId, validated);
     }
 

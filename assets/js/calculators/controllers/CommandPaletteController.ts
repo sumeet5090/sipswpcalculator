@@ -79,14 +79,16 @@ export const COMMAND_ITEMS: CommandItem[] = [
 
 export class CommandPaletteController {
     private dom: DOMAdapter;
+    private onQuickApply?: (params: { sip?: number; years?: number; rate?: number }) => void;
     private modal: HTMLDialogElement | null = null;
     private input: HTMLInputElement | null = null;
     private resultsContainer: HTMLElement | null = null;
     private selectedIndex: number = 0;
     private filteredItems: CommandItem[] = [];
 
-    constructor(dom: DOMAdapter) {
+    constructor(dom: DOMAdapter, onQuickApply?: (params: { sip?: number; years?: number; rate?: number }) => void) {
         this.dom = dom;
+        this.onQuickApply = onQuickApply;
     }
 
     init(): void {
@@ -163,16 +165,50 @@ export class CommandPaletteController {
         }
     }
 
+    private parseNaturalLanguage(query: string): CommandItem | null {
+        const q = query.trim().toLowerCase();
+        const sipMatch = q.match(/^sip\s+(\d+(?:k|l|cr)?)\s*(?:(\d+)\s*(?:y|yrs|years)?)?\s*(?:(\d+(?:\.\d+)?)\s*%)?/i);
+        if (sipMatch) {
+            let sipStr = sipMatch[1];
+            let sipNum = parseFloat(sipStr);
+            if (sipStr.endsWith('k')) sipNum *= 1000;
+            else if (sipStr.endsWith('l')) sipNum *= 100000;
+            else if (sipStr.endsWith('cr')) sipNum *= 10000000;
+
+            const years = sipMatch[2] ? parseFloat(sipMatch[2]) : 10;
+            const rate = sipMatch[3] ? parseFloat(sipMatch[3]) : 12;
+
+            return {
+                id: 'dynamic-nlp-sip',
+                title: `⚡ Quick-Apply: Monthly SIP ₹${sipNum.toLocaleString('en-IN')} for ${years} Years (@${rate}%)`,
+                description: 'Instant natural language prompt execution',
+                category: 'Calculator',
+                icon: '🚀',
+                action: () => {
+                    if (this.onQuickApply) {
+                        this.onQuickApply({ sip: sipNum, years, rate });
+                    }
+                }
+            };
+        }
+        return null;
+    }
+
     private filter(query: string): void {
         const q = query.trim().toLowerCase();
         if (!q) {
-            this.filteredItems = COMMAND_ITEMS;
+            this.filteredItems = [...COMMAND_ITEMS];
         } else {
             this.filteredItems = COMMAND_ITEMS.filter(item => 
                 item.title.toLowerCase().includes(q) ||
                 item.description.toLowerCase().includes(q) ||
                 item.category.toLowerCase().includes(q)
             );
+
+            const nlpItem = this.parseNaturalLanguage(q);
+            if (nlpItem) {
+                this.filteredItems.unshift(nlpItem);
+            }
         }
         this.selectedIndex = 0;
         this.renderResults();

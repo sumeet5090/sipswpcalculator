@@ -21,6 +21,7 @@ export class ResultsController {
     private searchYear: number | null = null;
     private lastData: YearResult[] = [];
     private lastEnableSwp: boolean = true;
+    private heatmapEnabled: boolean = false;
 
     constructor(
         dom: DOMAdapter,
@@ -43,6 +44,19 @@ export class ResultsController {
         }
         if (fiveYBtn) {
             fiveYBtn.addEventListener('click', () => this.setDensity('5y'));
+        }
+
+        const heatmapBtn = document.getElementById('table-heatmap-toggle');
+        if (heatmapBtn) {
+            heatmapBtn.addEventListener('click', () => {
+                this.heatmapEnabled = !this.heatmapEnabled;
+                heatmapBtn.classList.toggle('bg-emerald-100', this.heatmapEnabled);
+                heatmapBtn.classList.toggle('text-emerald-800', this.heatmapEnabled);
+                heatmapBtn.classList.toggle('border-emerald-300', this.heatmapEnabled);
+                if (this.lastData.length > 0) {
+                    this.updateTable(this.lastData, this.lastEnableSwp);
+                }
+            });
         }
 
         const searchInput = document.getElementById('table-year-search') as HTMLInputElement | null;
@@ -156,7 +170,13 @@ export class ResultsController {
             tr.appendChild(createCell(fmt(row.annual_withdrawal), CELL_ROSE_CLASS + " swp-col", swpDisplay));
             tr.appendChild(createCell(fmt(row.cumulative_withdrawals), CELL_MUTED_CLASS + " swp-col", swpDisplay));
 
-            tr.appendChild(createCell(this.formatter.format(row.interest), CELL_EMERALD_CLASS));
+            const interestCell = createCell(this.formatter.format(row.interest), CELL_EMERALD_CLASS);
+            if (this.heatmapEnabled && row.interest > 0) {
+                const maxInterest = Math.max(1, ...data.map(r => r.interest));
+                const intensity = Math.min(1, row.interest / maxInterest);
+                interestCell.style.backgroundColor = `rgba(16, 185, 129, ${(0.06 + intensity * 0.24).toFixed(2)})`;
+            }
+            tr.appendChild(interestCell);
 
             // Tax Column
             tr.appendChild(createCell(this.formatter.format(Math.round(ltcgTax)), CELL_ROSE_CLASS + " tax-col", taxDisplay));

@@ -28,6 +28,8 @@ import { CommandPaletteController } from './controllers/CommandPaletteController
 import { WealthQuizController } from './controllers/WealthQuizController';
 import { ScenarioDiffController } from './controllers/ScenarioDiffController';
 import { MilestoneCelebrationController } from './controllers/MilestoneCelebrationController';
+import { AudioFeedbackController } from './controllers/AudioFeedbackController';
+import { CityBenchmarkController } from './controllers/CityBenchmarkController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -45,6 +47,8 @@ export class CalculatorApp {
     private summaryMetricsController: SummaryMetricsController;
     private scenarioDiffController: ScenarioDiffController;
     private celebrationController: MilestoneCelebrationController;
+    private audioController: AudioFeedbackController;
+    private cityBenchmarkController: CityBenchmarkController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -100,6 +104,17 @@ export class CalculatorApp {
 
         this.celebrationController = new MilestoneCelebrationController(
             this.dom
+        );
+
+        this.audioController = new AudioFeedbackController(
+            this.dom
+        );
+
+        this.cityBenchmarkController = new CityBenchmarkController(
+            this.dom,
+            this.sliderManager,
+            this.formatter,
+            () => this.triggerCalculation()
         );
     }
 
@@ -309,7 +324,8 @@ export class CalculatorApp {
         new StepperController(
             this.dom,
             this.validator,
-            (fieldId, val) => this.sliderManager.updateFieldValue(fieldId, val)
+            (fieldId, val) => this.sliderManager.updateFieldValue(fieldId, val),
+            this.audioController
         ).init();
         new SmartNudgeController(this.dom, (rate) => this.setSmartNudgeRate(rate)).init();
         new PdfExportController(
@@ -329,7 +345,17 @@ export class CalculatorApp {
         ).init();
         new ShareController(this.dom, () => this.getInputs()).init();
         new GlossaryController().init();
-        new CommandPaletteController(this.dom).init();
+        this.audioController.init();
+        this.cityBenchmarkController.init();
+        this.summaryMetricsController.initTaxWaterfallModal();
+        new CommandPaletteController(this.dom, (params) => {
+            if (params.sip !== undefined) this.sliderManager.updateFieldValue('sip', params.sip);
+            if (params.years !== undefined) this.sliderManager.updateFieldValue('years', params.years);
+            if (params.rate !== undefined) this.sliderManager.updateFieldValue('rate', params.rate);
+            this.triggerCalculation();
+            const sec = this.dom.getElement('calculator-section');
+            if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+        }).init();
         new WealthQuizController(this.dom, this.sliderManager, () => this.triggerCalculation()).init();
         this.scenarioDiffController.init();
         this.celebrationController.init();
