@@ -40,7 +40,7 @@
         "min": 0,
         "max": 15,
         "slider_max": 12,
-        "step": 0.1,
+        "step": 1,
         "label": "Expected Inflation",
         "suffix": "%"
     },
@@ -76,7 +76,7 @@
         "min": 0,
         "max": 20,
         "slider_max": 20,
-        "step": 0.5,
+        "step": 1,
         "label": "Yearly Hike",
         "suffix": "%"
     },
@@ -103,14 +103,50 @@
         "rate": 0.125
     },
     "milestones": [
-        { "label": "₹1 Crore", "value": 10000000, "icon": "🏆" },
-        { "label": "₹5 Crores", "value": 50000000, "icon": "👑" },
-        { "label": "₹10 Crores", "value": 100000000, "icon": "💎" },
-        { "label": "₹25 Crores", "value": 250000000, "icon": "🌠" },
-        { "label": "₹50 Crores", "value": 500000000, "icon": "🚀" },
-        { "label": "₹75 Crores", "value": 750000000, "icon": "🪐" },
-        { "label": "₹100 Crores", "value": 1000000000, "icon": "🌌" },
-        { "label": "₹200 Crores", "value": 2000000000, "icon": "🌠" },
-        { "label": "₹500 Crores", "value": 5000000000, "icon": "💫" }
+        {
+            "label": "₹1 Crore",
+            "value": 10000000,
+            "icon": "🏆"
+        },
+        {
+            "label": "₹5 Crores",
+            "value": 50000000,
+            "icon": "👑"
+        },
+        {
+            "label": "₹10 Crores",
+            "value": 100000000,
+            "icon": "💎"
+        },
+        {
+            "label": "₹25 Crores",
+            "value": 250000000,
+            "icon": "🌠"
+        },
+        {
+            "label": "₹50 Crores",
+            "value": 500000000,
+            "icon": "🚀"
+        },
+        {
+            "label": "₹75 Crores",
+            "value": 750000000,
+            "icon": "🪐"
+        },
+        {
+            "label": "₹100 Crores",
+            "value": 1000000000,
+            "icon": "🌌"
+        },
+        {
+            "label": "₹200 Crores",
+            "value": 2000000000,
+            "icon": "🌠"
+        },
+        {
+            "label": "₹500 Crores",
+            "value": 5000000000,
+            "icon": "💫"
+        }
     ]
 }
