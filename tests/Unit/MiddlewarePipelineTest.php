@@ -6,7 +6,9 @@ namespace Tests\Unit;
 
 use Core\Http\Request;
 use Core\Http\Response;
+use Core\Middleware\AdminCsrfMiddleware;
 use Core\Middleware\CsrfHoneypotMiddleware;
+use Core\Middleware\HoneypotMiddleware;
 use Core\Middleware\SessionMiddleware;
 use Core\Middleware\TrailingSlashRedirectMiddleware;
 use PHPUnit\Framework\TestCase;
@@ -18,38 +20,35 @@ class MiddlewarePipelineTest extends TestCase
     {
         $middleware = new TrailingSlashRedirectMiddleware();
         $request = new Request([], [], [
-            'REQUEST_URI' => '/sip-calculator/',
-            'REQUEST_METHOD' => 'GET',
-            'QUERY_STRING' => 'sip=5000'
+            'REQUEST_URI' => '/about/',
+            'REQUEST_METHOD' => 'GET'
         ]);
 
         $response = $middleware->process($request, function () {
-            return Response::html('next_called');
+            return Response::html('should_not_reach');
         });
 
         $this->assertSame(301, $response->getStatusCode());
-        $headers = $response->getHeaders();
-        $this->assertSame('/sip-calculator?sip=5000', $headers['Location']);
+        $this->assertSame('/about', $response->getHeader('Location'));
     }
 
     public function testTrailingSlashRedirectOnPost(): void
     {
         $middleware = new TrailingSlashRedirectMiddleware();
         $request = new Request([], [], [
-            'REQUEST_URI' => '/calculate/',
+            'REQUEST_URI' => '/generate-pdf/',
             'REQUEST_METHOD' => 'POST'
         ]);
 
         $response = $middleware->process($request, function () {
-            return Response::html('next_called');
+            return Response::html('should_not_reach');
         });
 
         $this->assertSame(308, $response->getStatusCode());
-        $headers = $response->getHeaders();
-        $this->assertSame('/calculate', $headers['Location']);
+        $this->assertSame('/generate-pdf', $response->getHeader('Location'));
     }
 
-    public function testTrailingSlashRootIgnored(): void
+    public function testNoRedirectForRootSlash(): void
     {
         $middleware = new TrailingSlashRedirectMiddleware();
         $request = new Request([], [], [
@@ -65,33 +64,60 @@ class MiddlewarePipelineTest extends TestCase
         $this->assertSame('root_reached', $response->getContent());
     }
 
-    public function testSessionMiddlewareLazyInitializationPublic(): void
+    public function testSessionMiddlewareStartsSessionForAdmin(): void
     {
-        $sessionManager = new SessionManager();
+        $sessionManager = $this->createMock(SessionManager::class);
+        $sessionManager->expects($this->once())->method('start');
+        $sessionManager->expects($this->once())->method('ensureCsrfToken');
+
         $middleware = new SessionMiddleware($sessionManager);
-
-        $request = new Request([], [], [
-            'REQUEST_URI' => '/sip-calculator',
-            'REQUEST_METHOD' => 'GET'
-        ]);
-
-        $response = $middleware->process($request, function () {
-            return Response::html('public_page');
-        });
-
-        $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame('public_page', $response->getContent());
-    }
-
-    public function testSessionMiddlewareStartsOnAdminRoute(): void
-    {
-        $sessionManager = new SessionManager();
-        $middleware = new SessionMiddleware($sessionManager);
-
         $request = new Request([], [], [
             'REQUEST_URI' => '/admin_insights',
             'REQUEST_METHOD' => 'GET'
         ]);
+
+        $response = $middleware->process($request, function () {
+            return Response::html('admin_reached');
+        });
+
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testSessionMiddlewareDoesNotStartForPublicWithoutCookie(): void
+    {
+        $sessionManager = $this->createMock(SessionManager::class);
+        $sessionManager->expects($this->never())->method('start');
+
+        $middleware = new SessionMiddleware($sessionManager);
+        $request = new Request([], [], [
+            'REQUEST_URI' => '/about',
+            'REQUEST_METHOD' => 'GET'
+        ]);
+
+        $response = $middleware->process($request, function () {
+            return Response::html('about_reached');
+        });
+
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testSessionMiddlewareStartsWhenSessionCookieExists(): void
+    {
+        $sessionManager = new SessionManager();
+        $sessionCookieName = session_name();
+        $middleware = new SessionMiddleware($sessionManager);
+
+        $request = new Request(
+            [],
+            [],
+            [
+                'REQUEST_URI' => '/about',
+                'REQUEST_METHOD' => 'GET',
+            ],
+            [],
+            null,
+            [$sessionCookieName => 'mock_session_id']
+        );
 
         $response = $middleware->process($request, function () use ($sessionManager) {
             return Response::html($sessionManager->getCsrfToken());
@@ -104,7 +130,7 @@ class MiddlewarePipelineTest extends TestCase
     public function testCsrfHoneypotBlocksSpam(): void
     {
         $sessionManager = new SessionManager();
-        $middleware = new CsrfHoneypotMiddleware($sessionManager);
+        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
 
         $request = new Request([], ['website_url' => 'http://spam-bot.com'], [
             'REQUEST_METHOD' => 'POST',
@@ -123,7 +149,7 @@ class MiddlewarePipelineTest extends TestCase
     {
         $sessionManager = new SessionManager();
         $sessionManager->ensureCsrfToken();
-        $middleware = new CsrfHoneypotMiddleware($sessionManager);
+        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
 
         $request = new Request([], ['password' => 'secret'], [
             'REQUEST_METHOD' => 'POST',
@@ -142,7 +168,7 @@ class MiddlewarePipelineTest extends TestCase
     {
         $sessionManager = new SessionManager();
         $token = $sessionManager->ensureCsrfToken();
-        $middleware = new CsrfHoneypotMiddleware($sessionManager);
+        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
 
         $request = new Request([], ['csrf_token' => $token, 'password' => 'secret'], [
             'REQUEST_METHOD' => 'POST',
@@ -160,7 +186,7 @@ class MiddlewarePipelineTest extends TestCase
     public function testCsrfHoneypotAllowsNonAdminPostWithoutToken(): void
     {
         $sessionManager = new SessionManager();
-        $middleware = new CsrfHoneypotMiddleware($sessionManager);
+        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
 
         $request = new Request([], ['calc_type' => 'SIP', 'amount' => 5000], [
             'REQUEST_METHOD' => 'POST',
@@ -178,7 +204,7 @@ class MiddlewarePipelineTest extends TestCase
     public function testCsrfHoneypotBlocksArraySpamPayload(): void
     {
         $sessionManager = new SessionManager();
-        $middleware = new CsrfHoneypotMiddleware($sessionManager);
+        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
 
         $request = new Request([], ['website_url' => ['malicious_array']], [
             'REQUEST_METHOD' => 'POST',
@@ -197,7 +223,7 @@ class MiddlewarePipelineTest extends TestCase
     {
         $sessionManager = new SessionManager();
         $initialToken = $sessionManager->ensureCsrfToken();
-        $middleware = new CsrfHoneypotMiddleware($sessionManager);
+        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
 
         $request = new Request([], ['csrf_token' => 'invalid_expired_token', 'password' => 'secret'], [
             'REQUEST_METHOD' => 'POST',
@@ -218,15 +244,15 @@ class MiddlewarePipelineTest extends TestCase
         $middleware = new TrailingSlashRedirectMiddleware();
         $request = new Request([], [], [
             'REQUEST_URI' => '/calculate/',
-            'REQUEST_METHOD' => 'POST',
-            'QUERY_STRING' => 'utm_source=test'
+            'QUERY_STRING' => 'sip=5000&years=10',
+            'REQUEST_METHOD' => 'POST'
         ]);
 
         $response = $middleware->process($request, function () {
-            return Response::html('next_called');
+            return Response::html('should_not_reach');
         });
 
         $this->assertSame(308, $response->getStatusCode());
-        $this->assertSame('/calculate?utm_source=test', $response->getHeader('Location'));
+        $this->assertSame('/calculate?sip=5000&years=10', $response->getHeader('Location'));
     }
 }

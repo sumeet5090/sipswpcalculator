@@ -109,6 +109,8 @@ class ServiceProviderTest extends TestCase
 
     public function testControllerServiceProviderBindings(): void
     {
+        $this->assertInstanceOf(\Core\Middleware\HoneypotMiddleware::class, $this->container->get(\Core\Middleware\HoneypotMiddleware::class));
+        $this->assertInstanceOf(\Core\Middleware\AdminCsrfMiddleware::class, $this->container->get(\Core\Middleware\AdminCsrfMiddleware::class));
         $this->assertInstanceOf(CsrfHoneypotMiddleware::class, $this->container->get(CsrfHoneypotMiddleware::class));
         $this->assertInstanceOf(RateLimitStorageInterface::class, $this->container->get(RateLimitStorageInterface::class));
         $this->assertInstanceOf(RateLimiter::class, $this->container->get(RateLimiter::class));

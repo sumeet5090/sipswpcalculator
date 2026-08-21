@@ -8,7 +8,9 @@ use Core\ContentManager;
 use Core\CurrencyHelper;
 use Core\Http\Request;
 use Core\Http\Response;
+use Core\Middleware\AdminCsrfMiddleware;
 use Core\Middleware\CsrfHoneypotMiddleware;
+use Core\Middleware\HoneypotMiddleware;
 use Core\PdfTemplateInterface;
 use Core\SchemaHelper;
 use Core\SiteConfig;
@@ -235,7 +237,7 @@ class SecurityTest extends TestCase
     public function testCsrfHoneypotMiddlewareAllowsPublicExportAndBlocksBots(): void
     {
         $sessionManager = new SessionManager();
-        $middleware = new CsrfHoneypotMiddleware($sessionManager);
+        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
 
         $nextCalled = false;
         $next = function (Request $req) use (&$nextCalled): Response {

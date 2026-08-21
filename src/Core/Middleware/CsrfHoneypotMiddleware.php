@@ -6,8 +6,6 @@ namespace Core\Middleware;
 
 use Core\Http\Request;
 use Core\Http\Response;
-use Core\ViewRenderer;
-use Services\SessionManager;
 
 /**
  * CsrfHoneypotMiddleware
@@ -18,10 +16,12 @@ class CsrfHoneypotMiddleware implements MiddlewareInterface
     private HoneypotMiddleware $honeypotMiddleware;
     private AdminCsrfMiddleware $adminCsrfMiddleware;
 
-    public function __construct(SessionManager $sessionManager, ?ViewRenderer $viewRenderer = null)
-    {
-        $this->honeypotMiddleware = new HoneypotMiddleware();
-        $this->adminCsrfMiddleware = new AdminCsrfMiddleware($sessionManager, $viewRenderer);
+    public function __construct(
+        HoneypotMiddleware $honeypotMiddleware,
+        AdminCsrfMiddleware $adminCsrfMiddleware
+    ) {
+        $this->honeypotMiddleware = $honeypotMiddleware;
+        $this->adminCsrfMiddleware = $adminCsrfMiddleware;
     }
 
     public function process(Request $request, callable $next): Response

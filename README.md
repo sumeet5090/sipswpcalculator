@@ -111,6 +111,7 @@ This CLI migrator executes all outstanding PHP schema migrations. You can also t
 - `content/rate_limits.json` is the centralized configuration for rate-limiting thresholds and window durations across `admin_auth`, `pdf_generation`, and `log_insight` endpoints.
 
 ### Architectural Refactorings & Services
+- **Decoupled Security & Composite Middleware**: Bot prevention (`Core\Middleware\HoneypotMiddleware`) and CSRF validation (`Core\Middleware\AdminCsrfMiddleware`) are individual singletons composed cleanly into `Core\Middleware\CsrfHoneypotMiddleware` via constructor dependency injection (DIP / Hollywood Principle).
 - **Pure Composite Facades & Strict DIP**: Composite controllers (`AdminAuthAction`, `PageController`, `BlogController`) receive their specialized child actions directly via constructor dependency injection, eliminating concrete `new` instantiations in accordance with the Dependency Inversion Principle (DIP) and Hollywood Principle.
 - **Client-Side Clipboard DOM Abstraction**: `assets/js/adapters/DOMAdapter.ts` encapsulates `copyToClipboard()` to manage `navigator.clipboard` access and fallback DOM element creation, eliminating raw `document` queries from UI controllers (`ShareController`).
 - **Single-Responsibility Resource Actions**: Blog and educational resources are decomposed into dedicated invokable controllers (`ListResourcesAction`, `ShowResourceCategoryAction`, `ShowResourcePostAction`), with `BlogController` acting as a backward-compatible composite facade.
@@ -122,7 +123,6 @@ This CLI migrator executes all outstanding PHP schema migrations. You can also t
 - **Single-Responsibility Admin Auth Controllers**: Admin authentication is split into dedicated, invokable single-action controllers (`ShowAdminLoginAction`, `ProcessAdminLoginAction`, `ProcessAdminLogoutAction`).
 - **SitemapGenerator Service**: `Services\SitemapGenerator` encapsulates canonical URL node and last-modified date aggregation across 5 content layers for `sitemap.xml`, leaving `SitemapController` as a thin HTTP view responder.
 - **HomeSchemaBuilder**: `Core\Factories\HomeSchemaBuilder` modularizes monolithic structured data schemas (`SoftwareApplication`, `FinancialProduct`, `WebSite`, `Organization`, `Person`, `HowTo`) away from `SchemaFactory`.
-- **Decoupled Security Middleware**: Bot prevention (`Core\Middleware\HoneypotMiddleware`) and CSRF validation (`Core\Middleware\AdminCsrfMiddleware`) are split into distinct, single-responsibility middleware components.
 - **TelemetryPruningService**: `Services\TelemetryPruningService` decouples background SQLite data retention pruning from the real-time `AnonymizedInsightLogger` request ingestion cycle.
 - **MigrationInterface**: `Core\Database\MigrationInterface` enforces a strict, typed contract for database schema migrations across `DatabaseMigrator`.
 - **FilenameSanitizer Service**: `Services\FilenameSanitizer` encapsulates ASCII and Unicode HTTP Content-Disposition header filename generation.
