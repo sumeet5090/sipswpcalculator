@@ -142,6 +142,32 @@ export class SliderManager {
     }
 
     /**
+     * Programmatically update a field value from external controllers (e.g. StepperController).
+     */
+    updateFieldValue(fieldId: string, val: number): void {
+        const pair = this.pairs.find(p => p.fieldId === fieldId);
+        if (!pair) {
+            this.triggerFn();
+            return;
+        }
+
+        const { input, range } = pair;
+        const defaultMax = pair.defaultSliderMax;
+        if (val > defaultMax) {
+            range.max = String(val);
+        }
+
+        input.value = String(val);
+        range.value = String(val);
+        this._updateAria(range, val);
+        this._updateTrackProgress(range);
+        this._updateSubtext(fieldId, val);
+        this._updatePresetChips(fieldId, val);
+        this._clearError(fieldId);
+        this.triggerFn();
+    }
+
+    /**
      * Recompute and update all visual elements (track progress, subtexts, chips).
      */
     refreshVisuals(): void {

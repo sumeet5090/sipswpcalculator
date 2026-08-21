@@ -648,6 +648,20 @@ input[type=range]::-moz-range-track {
     box-shadow: 0 1px 3px rgba(225, 29, 72, 0.25);
 }
 
+/* Micro-Stepper Buttons */
+.stepper-btn {
+    transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stepper-btn:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+.stepper-btn:active {
+    transform: scale(0.88);
+}
+
 /* Custom Scrollbar for Table */
 .custom-scrollbar::-webkit-scrollbar {
     width: 6px;

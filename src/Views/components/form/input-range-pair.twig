@@ -28,22 +28,43 @@
         {% if labelHtml %}
             {{ labelHtml|raw }}
         {% else %}
-            <label for="{{ id }}" id="{{ id }}_label" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">
-                {{ label }}
-            </label>
+            <div class="flex items-center justify-between mb-1.5">
+                <label for="{{ id }}" id="{{ id }}_label" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
+                    {{ label }}
+                </label>
+                <span class="text-[10px] font-semibold text-slate-400 font-mono tracking-tight select-none">
+                    {{ prefix }}{{ min }}{{ suffix }} – {{ prefix }}{{ sliderMax }}{{ suffix }}
+                </span>
+            </div>
         {% endif %}
-        <div class="relative">
+        <div class="relative flex items-center">
+            <button type="button" 
+                class="stepper-btn stepper-dec absolute left-1.5 z-10 w-7 h-7 flex items-center justify-center rounded-md bg-slate-100/90 text-slate-600 hover:bg-slate-200 hover:text-slate-900 active:scale-90 transition-all text-xs font-black select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 cursor-pointer"
+                data-step-action="dec"
+                data-step-for="{{ id }}"
+                data-step-val="{{ step }}"
+                aria-label="Decrease {{ label }}">
+                −
+            </button>
             {% if prefix %}
-                <span class="currency-symbol absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">{{ prefix }}</span>
+                <span class="currency-symbol absolute left-10 top-1/2 -translate-y-1/2 text-[11px] font-bold text-slate-400 pointer-events-none">{{ prefix }}</span>
             {% endif %}
             <input type="number" id="{{ id }}" name="{{ name }}"
-                class="w-full bg-white border border-slate-200 rounded-lg {{ prefix ? 'pl-6' : 'px-2.5' }} {{ suffix ? 'pr-8' : 'pr-2.5' }} py-3 sm:py-1.5 text-sm font-bold {{ textClass }} focus:outline-none transition-colors"
+                class="w-full bg-white border border-slate-200 rounded-lg {{ prefix ? 'pl-14' : 'pl-10' }} {{ suffix ? 'pr-14' : 'pr-10' }} py-2.5 sm:py-1.5 text-center text-sm font-bold {{ textClass }} focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
                 required min="{{ min }}" step="{{ step }}" max="{{ max }}"
                 value="{{ value }}"
                 aria-describedby="{{ id }}_error">
             {% if suffix %}
-                <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 pointer-events-none">{{ suffix }}</span>
+                <span class="absolute right-10 top-1/2 -translate-y-1/2 text-[11px] font-bold text-slate-400 pointer-events-none">{{ suffix }}</span>
             {% endif %}
+            <button type="button" 
+                class="stepper-btn stepper-inc absolute right-1.5 z-10 w-7 h-7 flex items-center justify-center rounded-md bg-slate-100/90 text-slate-600 hover:bg-slate-200 hover:text-slate-900 active:scale-90 transition-all text-xs font-black select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 cursor-pointer"
+                data-step-action="inc"
+                data-step-for="{{ id }}"
+                data-step-val="{{ step }}"
+                aria-label="Increase {{ label }}">
+                +
+            </button>
         </div>
         {# Inline validation error — shown by JS when value is out of bounds #}
         <p id="{{ id }}_error" role="alert" aria-live="polite"

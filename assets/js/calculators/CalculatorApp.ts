@@ -17,6 +17,7 @@ import { InvestmentInputs, YearResult } from '../types';
 import { PdfExportController } from './controllers/PdfExportController';
 import { CsvExportController } from './controllers/CsvExportController';
 import { TabController } from './controllers/TabController';
+import { StepperController } from './controllers/StepperController';
 import { ShareController } from './controllers/ShareController';
 import { SmartNudgeController } from './controllers/SmartNudgeController';
 import { UrlStateController } from './controllers/UrlStateController';
@@ -75,7 +76,8 @@ export class CalculatorApp {
         this.resultsController = new ResultsController(
             this.dom,
             this.formatter,
-            () => this.getInputs()
+            () => this.getInputs(),
+            this.chartManager
         );
 
         this.summaryMetricsController = new SummaryMetricsController(
@@ -288,6 +290,11 @@ export class CalculatorApp {
         this.initToggles();
 
         new TabController(this.dom).init();
+        new StepperController(
+            this.dom,
+            this.validator,
+            (fieldId, val) => this.sliderManager.updateFieldValue(fieldId, val)
+        ).init();
         new SmartNudgeController(this.dom, (rate) => this.setSmartNudgeRate(rate)).init();
         new PdfExportController(
             this.dom,

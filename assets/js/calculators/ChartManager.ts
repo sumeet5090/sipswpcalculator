@@ -272,12 +272,102 @@ export class ChartManager {
         return datasets;
     }
 
+    private activeViewType: 'line' | 'donut' = 'line';
+    private currentChartType: 'line' | 'doughnut' | null = null;
+    private lastResults: YearResult[] = [];
+    private lastEnableSwp: boolean = true;
+
+    /**
+     * Switch between Line (Growth Curve) and Donut (Asset Allocation) views.
+     */
+    setViewType(type: 'line' | 'donut'): void {
+        if (this.activeViewType === type) return;
+        this.activeViewType = type;
+
+        const lineBtn = document.getElementById('chart-view-line');
+        const donutBtn = document.getElementById('chart-view-donut');
+        if (lineBtn && donutBtn) {
+            if (type === 'line') {
+                lineBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                lineBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                lineBtn.setAttribute('aria-selected', 'true');
+                donutBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                donutBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                donutBtn.setAttribute('aria-selected', 'false');
+            } else {
+                donutBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                donutBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                donutBtn.setAttribute('aria-selected', 'true');
+                lineBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                lineBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                lineBtn.setAttribute('aria-selected', 'false');
+            }
+        }
+
+        // Destroy existing chart instance to allow fresh type instantiation
+        if (this.chartInstance) {
+            this.chartInstance.destroy();
+            this.chartInstance = null;
+        }
+
+        if (this.lastResults.length > 0) {
+            this.updateChart(this.lastResults, this.lastEnableSwp);
+        }
+    }
+
+    /**
+     * Highlight specific data point on hover from external components (e.g. breakdown table).
+     */
+    highlightYear(index: number): void {
+        if (!this.chartInstance || this.activeViewType !== 'line') return;
+        try {
+            this.chartInstance.setActiveElements([{ datasetIndex: 1, index }]);
+            if (this.chartInstance.tooltip) {
+                this.chartInstance.tooltip.setActiveElements([{ datasetIndex: 1, index }], { x: 0, y: 0 });
+            }
+            this.chartInstance.update('none');
+        } catch {
+            // Ignore if chart is updating
+        }
+    }
+
+    /**
+     * Clear highlighted data point.
+     */
+    clearHighlight(): void {
+        if (!this.chartInstance || this.activeViewType !== 'line') return;
+        try {
+            this.chartInstance.setActiveElements([]);
+            if (this.chartInstance.tooltip) {
+                this.chartInstance.tooltip.setActiveElements([], { x: 0, y: 0 });
+            }
+            this.chartInstance.update('none');
+        } catch {
+            // Ignore if chart is updating
+        }
+    }
+
     /**
      * Initialize or update the chart.
      */
     async updateChart(results: YearResult[], enableSwp: boolean = true): Promise<void> {
+        this.lastResults = results;
+        this.lastEnableSwp = enableSwp;
+
         const ctxEl = document.getElementById('corpusChart') as HTMLCanvasElement | null;
         if (!ctxEl || !document.body.contains(ctxEl)) return;
+
+        // Wire view switcher buttons once
+        const lineBtn = document.getElementById('chart-view-line');
+        const donutBtn = document.getElementById('chart-view-donut');
+        if (lineBtn && !lineBtn.dataset.wired) {
+            lineBtn.dataset.wired = 'true';
+            lineBtn.addEventListener('click', () => this.setViewType('line'));
+        }
+        if (donutBtn && !donutBtn.dataset.wired) {
+            donutBtn.dataset.wired = 'true';
+            donutBtn.addEventListener('click', () => this.setViewType('donut'));
+        }
 
         let ChartClass: typeof Chart;
         try {
@@ -299,11 +389,104 @@ export class ChartManager {
         const milestones = this.computeMilestones(results, enableSwp, showPostTax);
         this.currentMilestones = milestones;
 
+        const fontFamily = "'Plus Jakarta Sans', sans-serif";
+        const gridColor = 'rgba(0, 0, 0, 0.05)';
+        const textColor = '#64748b';
+
+        // ── DOUGHNUT VIEW (Asset Allocation Split) ──
+        if (this.activeViewType === 'donut') {
+            if (this.chartInstance && this.currentChartType !== 'doughnut') {
+                this.chartInstance.destroy();
+                this.chartInstance = null;
+            }
+
+            const lastRow = results[results.length - 1];
+            const totalInvested = lastRow.cumulative_invested || 0;
+            const finalCorpus = showPostTax ? (lastRow.post_tax_total ?? lastRow.combined_total) : lastRow.combined_total;
+            const totalWithdrawn = lastRow.cumulative_withdrawals || 0;
+            const totalGains = Math.max(0, (finalCorpus + totalWithdrawn) - totalInvested);
+
+            const labels: string[] = ['Total Invested', 'Compounding Gains'];
+            const data: number[] = [totalInvested, totalGains];
+            const bgColors: string[] = ['#0f766e', '#10b981'];
+
+            if (totalWithdrawn > 0) {
+                labels.push('Total Withdrawn');
+                data.push(totalWithdrawn);
+                bgColors.push('#f43f5e');
+            }
+
+            const donutConfig: ChartConfiguration<'doughnut'> = {
+                type: 'doughnut' as const,
+                data: {
+                    labels,
+                    datasets: [{
+                        data,
+                        backgroundColor: bgColors,
+                        borderWidth: 3,
+                        borderColor: '#ffffff',
+                        hoverOffset: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    animation: {
+                        duration: 600,
+                        easing: 'easeOutQuart'
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 8,
+                                color: textColor,
+                                font: {
+                                    family: fontFamily,
+                                    size: 12,
+                                    weight: 600
+                                },
+                                padding: 16
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            titleFont: { family: fontFamily, size: 13, weight: 'bold' },
+                            bodyFont: { family: fontFamily, size: 12 },
+                            padding: 12,
+                            cornerRadius: 10,
+                            callbacks: {
+                                label: (item) => {
+                                    const val = Number(item.raw) || 0;
+                                    const total = data.reduce((a, b) => a + b, 0);
+                                    const pct = total > 0 ? ((val / total) * 100).toFixed(1) : '0';
+                                    return ` ${item.label}: ${this.formatter.format(val)} (${pct}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            const existingChart = ChartClass.getChart(ctxEl);
+            if (existingChart) {
+                existingChart.destroy();
+            }
+
+            this.chartInstance = new ChartClass(ctx, donutConfig as unknown as ChartConfiguration) as unknown as Chart<'line'>;
+            this.currentChartType = 'doughnut';
+            this.renderMilestoneGrid(milestones);
+            return;
+        }
+
+        // ── LINE CHART VIEW (Growth Projection) ──
         const canvasHeight = ctxEl.clientHeight || 400;
         const gradients = this.createGradients(ctx, canvasHeight);
 
-        // Update in-place if chartInstance is alive and still bound to this canvas
-        if (this.chartInstance && this.chartInstance.ctx.canvas === ctxEl) {
+        // Update in-place if chartInstance is alive and still a line chart
+        if (this.chartInstance && this.currentChartType === 'line' && this.chartInstance.ctx.canvas === ctxEl) {
             const datasets = this.buildDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
             this.chartInstance.data.labels = years;
             this.chartInstance.data.datasets = datasets;
@@ -317,15 +500,10 @@ export class ChartManager {
             return;
         }
 
-        // Clean up any existing chart attached to the canvas element before creating a new one
         const existingChart = ChartClass.getChart(ctxEl);
         if (existingChart) {
             existingChart.destroy();
         }
-
-        const fontFamily = "'Plus Jakarta Sans', sans-serif";
-        const gridColor = 'rgba(0, 0, 0, 0.05)';
-        const textColor = '#64748b';
 
         const datasets = this.buildDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
 
@@ -375,10 +553,11 @@ export class ChartManager {
                             family: fontFamily,
                             size: 13
                         },
-                        borderColor: '#334155',
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
                         borderWidth: 1,
                         padding: 12,
                         boxPadding: 4,
+                        cornerRadius: 12,
                         usePointStyle: true,
                         callbacks: {
                             label: (context: TooltipItem<'line'>) => {
@@ -443,17 +622,18 @@ export class ChartManager {
         };
 
         this.chartInstance = new ChartClass(ctx, config) as unknown as Chart<'line'>;
+        this.currentChartType = 'line';
         this.renderMilestoneGrid(milestones);
     }
 
     /**
-     * Cross-browser safe milestone badge renderer.
+     * Cross-browser safe celebratory milestone badge renderer.
      */
     renderMilestoneGrid(milestones: Milestone[]): void {
         const container = document.getElementById('milestones-container');
         if (!container) return;
 
-        // Legacy-safe DOM clearance (avoids replaceChildren() bugs on older iOS Safari)
+        // Legacy-safe DOM clearance
         while (container.firstChild) {
             container.removeChild(container.firstChild);
         }
@@ -468,23 +648,29 @@ export class ChartManager {
 
         milestones.forEach(m => {
             const card = document.createElement('div');
-            card.className = 'glass-card p-4 flex items-start gap-3 border border-slate-100/85 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5';
+            card.className = 'bg-gradient-to-r from-amber-50/90 via-white to-emerald-50/50 p-3.5 rounded-2xl border border-amber-200/80 shadow-sm flex items-center gap-3 transition-all duration-200 hover:shadow-md hover:border-amber-300';
 
             const iconDiv = document.createElement('div');
-            iconDiv.className = 'flex items-center justify-center w-10 h-10 rounded-xl bg-amber-50 text-xl shrink-0';
+            iconDiv.className = 'flex items-center justify-center w-10 h-10 rounded-xl bg-amber-100/80 text-xl shrink-0 shadow-sm';
             iconDiv.textContent = m.icon;
 
             const textDiv = document.createElement('div');
+            textDiv.className = 'min-w-0 flex-1';
 
             const h4 = document.createElement('h4');
-            h4.className = 'text-sm font-bold text-slate-800';
+            h4.className = 'text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5';
             h4.textContent = m.label;
 
+            const badge = document.createElement('span');
+            badge.className = 'text-[9px] font-black uppercase px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200';
+            badge.textContent = `Year ${m.year}`;
+            h4.appendChild(badge);
+
             const p = document.createElement('p');
-            p.className = 'text-xs text-slate-500 mt-1';
+            p.className = 'text-[11px] sm:text-xs text-slate-500 mt-0.5 truncate';
             p.textContent = m.type === 'security'
                 ? (m.description || '')
-                : `Crossed in Year ${m.year} with ${this.formatter.formatDynamic(m.value)}`;
+                : `Corpus reached ${this.formatter.formatDynamic(m.value)} milestone`;
 
             textDiv.appendChild(h4);
             textDiv.appendChild(p);
@@ -510,3 +696,4 @@ export class ChartManager {
         return this.chartInstance;
     }
 }
+

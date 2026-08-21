@@ -2,9 +2,10 @@ import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { CurrencyFormatter } from '../CurrencyHelper';
 import { MathEngine } from '../MathEngine';
 import { InvestmentInputs, YearResult } from '../../types';
+import type { ChartManager } from '../ChartManager';
 
-const TABLE_ROW_CLASS = "hover:bg-slate-50 border-b border-slate-100 transition-colors";
-const CELL_YEAR_CLASS = "px-6 py-4 font-medium text-slate-700 whitespace-nowrap";
+const TABLE_ROW_CLASS = "hover:bg-emerald-50/40 border-b border-slate-100 transition-colors cursor-default";
+const CELL_YEAR_CLASS = "px-6 py-4 font-bold text-slate-700 whitespace-nowrap";
 const CELL_MONO_CLASS = "px-6 py-4 text-right font-mono text-slate-600 whitespace-nowrap";
 const CELL_EMERALD_CLASS = "px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap";
 const CELL_MUTED_CLASS = "px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap";
@@ -15,21 +16,71 @@ export class ResultsController {
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
     private getInputs: () => InvestmentInputs;
+    private chartManager: ChartManager | null;
+    private density: 'all' | '5y' = 'all';
+    private lastData: YearResult[] = [];
+    private lastEnableSwp: boolean = true;
 
     constructor(
         dom: DOMAdapter,
         formatter: CurrencyFormatter,
-        getInputs: () => InvestmentInputs
+        getInputs: () => InvestmentInputs,
+        chartManager: ChartManager | null = null
     ) {
         this.dom = dom;
         this.formatter = formatter;
         this.getInputs = getInputs;
+        this.chartManager = chartManager;
+        this.initDensityControls();
+    }
+
+    private initDensityControls(): void {
+        const allBtn = document.getElementById('table-density-all');
+        const fiveYBtn = document.getElementById('table-density-5y');
+        if (allBtn) {
+            allBtn.addEventListener('click', () => this.setDensity('all'));
+        }
+        if (fiveYBtn) {
+            fiveYBtn.addEventListener('click', () => this.setDensity('5y'));
+        }
+    }
+
+    setDensity(density: 'all' | '5y'): void {
+        if (this.density === density) return;
+        this.density = density;
+
+        const allBtn = document.getElementById('table-density-all');
+        const fiveYBtn = document.getElementById('table-density-5y');
+        if (allBtn && fiveYBtn) {
+            if (density === 'all') {
+                allBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                allBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                allBtn.setAttribute('aria-selected', 'true');
+                fiveYBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                fiveYBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                fiveYBtn.setAttribute('aria-selected', 'false');
+            } else {
+                fiveYBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                fiveYBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                fiveYBtn.setAttribute('aria-selected', 'true');
+                allBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                allBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                allBtn.setAttribute('aria-selected', 'false');
+            }
+        }
+
+        if (this.lastData.length > 0) {
+            this.updateTable(this.lastData, this.lastEnableSwp);
+        }
     }
 
     /**
      * Draw years breakdown logs securely using DOM node construction.
      */
     updateTable(data: YearResult[], enableSwp: boolean): void {
+        this.lastData = data;
+        this.lastEnableSwp = enableSwp;
+
         const tbody = this.dom.getElement('breakdown-body');
         if (!tbody) return;
 
@@ -38,9 +89,20 @@ export class ResultsController {
         const showPostTax = postTaxToggle?.checked || false;
         const inputs = this.getInputs();
 
-        data.forEach(row => {
+        const filteredData = this.density === '5y'
+            ? data.filter(r => r.year % 5 === 0 || r.year === data.length)
+            : data;
+
+        filteredData.forEach(row => {
             const tr = document.createElement('tr');
             tr.className = TABLE_ROW_CLASS;
+
+            // Hover sync with Chart
+            if (this.chartManager) {
+                const yearIndex = row.year - 1;
+                tr.addEventListener('mouseenter', () => this.chartManager?.highlightYear(yearIndex));
+                tr.addEventListener('mouseleave', () => this.chartManager?.clearHighlight());
+            }
 
             const fmt = (v: number | null | undefined) => (v !== null && v !== undefined) ? this.formatter.format(v) : '-';
             const swpDisplay = enableSwp ? '' : 'none';
