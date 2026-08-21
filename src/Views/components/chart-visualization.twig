@@ -53,6 +53,12 @@
         </div>
     </div>
 
+    <!-- Velocity & Feasibility Badges Row -->
+    <div class="flex flex-wrap items-center gap-2 px-1 -mt-1">
+        <span id="summary-crossover-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100/90 text-emerald-800 border border-emerald-200 shadow-2xs"></span>
+        <span id="summary-longevity-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100/90 text-emerald-800 border border-emerald-200 shadow-2xs"></span>
+    </div>
+
     <!-- Chart Card -->
     <div class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-4 sm:p-6">
         <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
@@ -73,6 +79,13 @@
             </div>
             
             <div class="flex flex-wrap items-center gap-3">
+                <button type="button" id="snapshot-scenario-btn" 
+                    class="text-[11px] font-bold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs"
+                    title="Snapshot current scenario to compare changes">
+                    <span>📸</span>
+                    <span>Snapshot</span>
+                </button>
+
                 <div class="flex items-center gap-2">
                     <span class="text-xs font-semibold text-slate-500">Post-Tax (LTCG)</span>
                     <label class="toggle-switch relative inline-flex items-center cursor-pointer">

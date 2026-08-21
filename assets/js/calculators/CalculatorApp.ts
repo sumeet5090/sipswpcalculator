@@ -24,6 +24,9 @@ import { UrlStateController } from './controllers/UrlStateController';
 import { ResultsController } from './controllers/ResultsController';
 import { SummaryMetricsController } from './controllers/SummaryMetricsController';
 import { GlossaryController } from './controllers/GlossaryController';
+import { CommandPaletteController } from './controllers/CommandPaletteController';
+import { WealthQuizController } from './controllers/WealthQuizController';
+import { ScenarioDiffController } from './controllers/ScenarioDiffController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -39,6 +42,7 @@ export class CalculatorApp {
     private sliderManager: SliderManager;
     private resultsController: ResultsController;
     private summaryMetricsController: SummaryMetricsController;
+    private scenarioDiffController: ScenarioDiffController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -85,6 +89,11 @@ export class CalculatorApp {
             this.dom,
             this.formatter,
             () => this.getInputs()
+        );
+
+        this.scenarioDiffController = new ScenarioDiffController(
+            this.dom,
+            this.formatter
         );
     }
 
@@ -314,6 +323,16 @@ export class CalculatorApp {
         ).init();
         new ShareController(this.dom, () => this.getInputs()).init();
         new GlossaryController().init();
+        new CommandPaletteController(this.dom).init();
+        new WealthQuizController(this.dom, this.sliderManager, () => this.triggerCalculation()).init();
+        this.scenarioDiffController.init();
+        const snapshotBtn = document.getElementById('snapshot-scenario-btn');
+        if (snapshotBtn) {
+            snapshotBtn.addEventListener('click', () => {
+                const inputs = this.getInputs();
+                this.scenarioDiffController.setSnapshot(inputs, this.latestResults);
+            });
+        }
         this.initPersonaBlueprints();
         this.initResizeListeners();
         new UrlStateController(
@@ -478,6 +497,7 @@ export class CalculatorApp {
             this.latestResults = combined;
             this.updateTable(combined, inputs.enable_swp);
             this.updateSummaryMetrics(combined);
+            this.scenarioDiffController.updateDiff(combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 

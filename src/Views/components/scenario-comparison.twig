@@ -1,0 +1,22 @@
+<!-- Side-by-Side Scenario Snapshot & Comparison Pill -->
+<div id="scenario-diff-card" class="mt-4 p-4 rounded-2xl bg-white/90 border border-slate-200/80 shadow-sm backdrop-blur-md hidden transition-all">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+            <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 text-sm font-black shrink-0">📊</span>
+            <div>
+                <div class="text-xs font-bold text-slate-800 flex items-center gap-2">
+                    <span>Scenario Comparison vs Baseline</span>
+                    <span id="scenario-diff-pct" class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">+0%</span>
+                </div>
+                <div id="scenario-diff-text" class="text-[11px] text-slate-500 mt-0.5">
+                    Modifying parameters to compare against saved snapshot.
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <button type="button" id="scenario-clear-btn" class="text-[11px] font-bold text-slate-500 hover:text-slate-800 px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer">
+                Clear Baseline
+            </button>
+        </div>
+    </div>
+</div>
