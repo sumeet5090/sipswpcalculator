@@ -255,7 +255,7 @@ This codebase is maintained to strict architectural quality standards as documen
 | **DRY Calculation Engine** | PDF reporting (`GeneratePdfAction` / `PdfReportTemplate`) uses `InvestmentCalculator` cashflow vectors directly without duplicated math loops |
 | **Single Source of Truth** | LTCG tax rates in `calculator_defaults.json`; `InvestmentInputs` is the only clamping layer for both web and PDF |
 | **Explicit > Implicit** | `Router` explicitly resolves routes and supports `HEAD` methods for all `GET` routes without magic URI trimming |
-| **Markdown Safe Mode** | `Parsedown::setSafeMode(true)` ensures all raw HTML/script tags embedded in markdown content files are safely escaped |
+| **Rich Markdown Content Delivery** | `ContentManager` and `Parsedown` render curated repository markdown with embedded callouts, tables, and deep linking IDs |
 | **JSON-LD Schema Hex Escaping** | `SchemaHelper` and `SchemaFactory` enforce `JSON_HEX_TAG | JSON_HEX_AMP` on all structured data output to prevent script tag injection |
 | **DI Container Reflection & Autowiring** | `Container` provides strict reflection autowiring, detecting circular dependencies (`A -> B -> A`), union/intersection types, un-typehinted parameters, and providing `forget()` and `flush()` lifecycle resets |
 | **Action Parameter Injection** | `ActionDispatcher` matches controller action parameters by typehint (`Request`), exact route slug name, positional index, and default values |

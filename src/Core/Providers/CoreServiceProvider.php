@@ -106,9 +106,7 @@ class CoreServiceProvider implements ServiceProviderInterface
         });
 
         $container->singleton(Parsedown::class, function () {
-            $parsedown = new Parsedown();
-            $parsedown->setSafeMode(true);
-            return $parsedown;
+            return new Parsedown();
         });
 
         $container->singleton(ContentManager::class, function (Container $c) {

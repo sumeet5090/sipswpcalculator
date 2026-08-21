@@ -116,7 +116,7 @@ This skill provides an exhaustive guide to runtime traps, hosting quirks (CloudL
 ---
 
 ## 13. Content Management, Parsedown & SEO
-56. **Markdown Safe Mode**: Enforce `Parsedown::setSafeMode(true)` to escape embedded HTML script tags.
+56. **Markdown HTML Parsing**: Markdown files in `content/` contain curated rich HTML formatting (callouts, custom styled tables); `Parsedown` renders these directly without `setSafeMode(true)` which would entity-escape HTML tags into raw text.
 57. **JSON-LD Script Breakout Protection**: Encode structured data with `SchemaHelper::JSON_FLAGS`.
 58. **XML Sitemap Encoding**: Clean UTF-8 XML declaration without trailing/leading whitespace.
 59. **Canonical URL Uniformity**: Centralized `SiteConfig` resolving canonical host and protocol.
