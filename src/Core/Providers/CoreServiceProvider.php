@@ -151,5 +151,9 @@ class CoreServiceProvider implements ServiceProviderInterface
         $container->singleton(\Core\Router::class, function (Container $c) {
             return new \Core\Router($c, $c->get(\Core\ActionDispatcher::class));
         });
+
+        $container->singleton(\Core\RedirectLoader::class, function (Container $c) {
+            return new \Core\RedirectLoader($c->get(ConfigService::class));
+        });
     }
 }

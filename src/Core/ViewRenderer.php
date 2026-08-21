@@ -50,7 +50,8 @@ class ViewRenderer
 
         $this->twig->addGlobal('env', $env);
         $this->twig->addGlobal('site_url', rtrim($appUrl, '/'));
-        $extension = $twigExtension ?? new \Core\Twig\AppTwigExtension($viteHelper, $currencyFormatter);
+        $formatter = $currencyFormatter ?? new \Core\CurrencyHelper();
+        $extension = $twigExtension ?? new \Core\Twig\AppTwigExtension($viteHelper, $formatter);
         $this->twig->addExtension($extension);
     }
 

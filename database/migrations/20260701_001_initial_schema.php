@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-return new class {
+return new class implements \Core\Database\MigrationInterface {
     public function up(PDO $pdo, bool $silent = false): void
     {
         if (!$silent) {

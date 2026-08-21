@@ -38,9 +38,11 @@ class ConfigService
         return $this->calculatorDefaults;
     }
 
-    public function getJsonConfig(string $relativePath): array
+    public function getJsonConfig(string $path): array
     {
-        $fullPath = __DIR__ . '/../../' . ltrim($relativePath, '/');
+        $fullPath = (str_starts_with($path, '/') || (DIRECTORY_SEPARATOR === '\\' && str_contains($path, ':')))
+            ? $path
+            : __DIR__ . '/../../' . ltrim($path, '/');
         if (!file_exists($fullPath)) {
             return [];
         }

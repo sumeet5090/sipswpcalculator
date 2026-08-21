@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Core\Database\MigrationInterface;
 use PDO;
 
 /**
@@ -51,6 +52,9 @@ class DatabaseMigrator
         }
 
         $files = glob($this->migrationsPath . '/*.php');
+        if (!$files) {
+            return;
+        }
         sort($files);
 
         foreach ($files as $file) {
@@ -59,8 +63,8 @@ class DatabaseMigrator
             if (!in_array($migrationName, $executed, true)) {
                 $migration = require $file;
 
-                if (!is_object($migration) || !method_exists($migration, 'up')) {
-                    throw new \RuntimeException("Migration file '{$migrationName}' must return an object implementing 'up(PDO \$pdo, bool \$silent = false): void'.");
+                if (!($migration instanceof MigrationInterface) && (!is_object($migration) || !method_exists($migration, 'up'))) {
+                    throw new \RuntimeException("Migration file '{$migrationName}' must implement Core\Database\MigrationInterface.");
                 }
 
                 try {

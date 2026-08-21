@@ -113,7 +113,7 @@ PHP;
         $migrator = new DatabaseMigrator($this->pdo, $this->tempMigrationsDir);
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage("must return an object implementing 'up");
+        $this->expectExceptionMessage("must implement Core\\Database\\MigrationInterface");
         $migrator->migrate();
     }
 }

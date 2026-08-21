@@ -10,21 +10,29 @@ class Request
     private array $post;
     private array $server;
     private array $files;
+    private array $cookies;
 
     private ?string $rawBody;
 
-    public function __construct(array $get = [], array $post = [], array $server = [], array $files = [], ?string $rawBody = null)
-    {
+    public function __construct(
+        array $get = [],
+        array $post = [],
+        array $server = [],
+        array $files = [],
+        ?string $rawBody = null,
+        array $cookies = []
+    ) {
         $this->get = $get;
         $this->post = $post;
         $this->server = $server;
         $this->files = $files;
         $this->rawBody = $rawBody;
+        $this->cookies = $cookies;
     }
 
     public static function createFromGlobals(): self
     {
-        return new self($_GET, $_POST, $_SERVER, $_FILES);
+        return new self($_GET, $_POST, $_SERVER, $_FILES, null, $_COOKIE);
     }
 
     public function getMethod(): string
@@ -64,6 +72,16 @@ class Request
     public function files(string $key): ?array
     {
         return $this->files[$key] ?? null;
+    }
+
+    public function getCookie(string $key, mixed $default = null): mixed
+    {
+        return $this->cookies[$key] ?? $default;
+    }
+
+    public function getCookies(): array
+    {
+        return $this->cookies;
     }
 
     public function getClientIp(): string

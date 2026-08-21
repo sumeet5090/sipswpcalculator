@@ -20,7 +20,7 @@ class SessionMiddleware implements MiddlewareInterface
     public function process(Request $request, callable $next): Response
     {
         $sessionCookieName = session_name();
-        $hasSessionCookie = isset($_COOKIE[$sessionCookieName]);
+        $hasSessionCookie = $request->getCookie($sessionCookieName) !== null;
         $uri = $request->getUri();
         $isAdmin = str_starts_with($uri, '/admin_insights');
         // Lazy session initialization: only start if existing cookie present or admin route

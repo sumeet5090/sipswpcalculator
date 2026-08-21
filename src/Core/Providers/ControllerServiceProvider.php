@@ -9,7 +9,12 @@ use Controllers\DownloadCsvAction;
 use Controllers\ErrorController;
 use Controllers\GeneratePdfAction;
 use Controllers\PageController;
+use Controllers\RenderAboutAction;
+use Controllers\RenderFaqAction;
+use Controllers\RenderGlossaryAction;
 use Controllers\RenderHomeAction;
+use Controllers\RenderPrivacyAction;
+use Controllers\RenderTermsAction;
 use Controllers\SitemapController;
 use Core\AdminDashboardPresenter;
 use Core\AdminAuthService;
@@ -35,6 +40,7 @@ use Services\GuideRenderer;
 use Services\PdfGeneratorService;
 use Services\RateLimiter;
 use Services\SessionManager;
+use Services\SitemapGenerator;
 
 class ControllerServiceProvider implements ServiceProviderInterface
 {
@@ -155,13 +161,20 @@ class ControllerServiceProvider implements ServiceProviderInterface
             );
         });
 
-        $container->singleton(SitemapController::class, function (Container $c) use ($routesConfig) {
-            return new SitemapController(
+        $container->singleton(SitemapGenerator::class, function (Container $c) use ($routesConfig) {
+            return new SitemapGenerator(
                 $c->get(BlogRepository::class),
                 $c->get(SiteConfig::class),
                 $routesConfig,
                 $c->get(ViewRenderer::class),
                 $c->get(ContentManager::class)
+            );
+        });
+
+        $container->singleton(SitemapController::class, function (Container $c) {
+            return new SitemapController(
+                $c->get(SitemapGenerator::class),
+                $c->get(ViewRenderer::class)
             );
         });
 
@@ -179,6 +192,46 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(SchemaFactory::class),
                 $c->get(SiteConfig::class),
                 $c->get(ViewRenderer::class)
+            );
+        });
+
+        $container->singleton(RenderAboutAction::class, function (Container $c) {
+            return new RenderAboutAction(
+                $c->get(MetaManager::class),
+                $c->get(ViewRenderer::class)
+            );
+        });
+
+        $container->singleton(RenderFaqAction::class, function (Container $c) {
+            return new RenderFaqAction(
+                $c->get(FaqRepository::class),
+                $c->get(ViewRenderer::class),
+                $c->get(MetaManager::class)
+            );
+        });
+
+        $container->singleton(RenderGlossaryAction::class, function (Container $c) {
+            return new RenderGlossaryAction(
+                $c->get(GlossaryRepository::class),
+                $c->get(SchemaHelper::class),
+                $c->get(ViewRenderer::class),
+                $c->get(MetaManager::class)
+            );
+        });
+
+        $container->singleton(RenderPrivacyAction::class, function (Container $c) {
+            return new RenderPrivacyAction(
+                $c->get(SchemaHelper::class),
+                $c->get(ViewRenderer::class),
+                $c->get(MetaManager::class)
+            );
+        });
+
+        $container->singleton(RenderTermsAction::class, function (Container $c) {
+            return new RenderTermsAction(
+                $c->get(SchemaHelper::class),
+                $c->get(ViewRenderer::class),
+                $c->get(MetaManager::class)
             );
         });
 

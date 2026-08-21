@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Core;
 
 use PDO;
+use Services\TelemetryPruningService;
 
 /**
  * Privacy-First Anonymized Insight Logger
@@ -14,10 +15,12 @@ use PDO;
 class AnonymizedInsightLogger
 {
     private PDO $pdo;
+    private TelemetryPruningService $pruningService;
 
-    public function __construct(PDO $pdo)
+    public function __construct(PDO $pdo, ?TelemetryPruningService $pruningService = null)
     {
         $this->pdo = $pdo;
+        $this->pruningService = $pruningService ?? new TelemetryPruningService($pdo);
     }
 
     /**
@@ -77,14 +80,8 @@ class AnonymizedInsightLogger
                 ':exit_action' => $payload->exitAction,
             ]);
 
-            // Opportunistic telemetry retention pruning (1 in 500 requests)
-            if (random_int(1, 500) === 1) {
-                try {
-                    $this->pdo->exec("DELETE FROM user_calculations WHERE created_at < datetime('now', '-180 days')");
-                } catch (\Throwable $pe) {
-                    error_log("AnonymizedInsightLogger Pruning Warning: " . $pe->getMessage());
-                }
-            }
+            // Opportunistic telemetry retention pruning delegated to maintenance service
+            $this->pruningService->opportunisticPrune(500);
         } catch (\Throwable $e) {
             // Silently fail to ensure user experience is never impacted by logging errors
             error_log("AnonymizedInsightLogger Error: " . $e->getMessage());

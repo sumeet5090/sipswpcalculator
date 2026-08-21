@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Services\ConfigService;
+
 /**
  * GlossaryRepository
  * Dedicated service encapsulating retrieval and sorting of financial glossary terms.
@@ -12,10 +14,12 @@ class GlossaryRepository
 {
     private ?array $terms = null;
     private string $jsonPath;
+    private ?ConfigService $configService;
 
-    public function __construct(string $jsonPath)
+    public function __construct(string $jsonPath, ?ConfigService $configService = null)
     {
         $this->jsonPath = $jsonPath;
+        $this->configService = $configService;
     }
 
     private function load(): void
@@ -24,24 +28,28 @@ class GlossaryRepository
             return;
         }
 
-        if (!file_exists($this->jsonPath)) {
-            $this->terms = [];
-            return;
-        }
+        if ($this->configService !== null) {
+            $decoded = $this->configService->getJsonConfig($this->jsonPath);
+        } else {
+            if (!file_exists($this->jsonPath)) {
+                $this->terms = [];
+                return;
+            }
 
-        $jsonContent = file_get_contents($this->jsonPath);
-        if ($jsonContent === false) {
-            error_log("Failed to read glossary JSON at: " . $this->jsonPath);
-            $this->terms = [];
-            return;
-        }
+            $jsonContent = file_get_contents($this->jsonPath);
+            if ($jsonContent === false) {
+                error_log("Failed to read glossary JSON at: " . $this->jsonPath);
+                $this->terms = [];
+                return;
+            }
 
-        $decoded = json_decode($jsonContent, true);
+            $decoded = json_decode($jsonContent, true);
 
-        if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
-            error_log("Failed to parse glossary JSON: " . json_last_error_msg());
-            $this->terms = [];
-            return;
+            if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
+                error_log("Failed to parse glossary JSON: " . json_last_error_msg());
+                $this->terms = [];
+                return;
+            }
         }
 
         $sortedTerms = $decoded;

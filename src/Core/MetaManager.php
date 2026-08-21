@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Services\ConfigService;
+
 /**
  * MetaManager
  * Encapsulates SEO page metadata generation and metadata mapping.
@@ -11,13 +13,18 @@ namespace Core;
 class MetaManager
 {
     private SiteConfig $siteConfig;
+    private ?ConfigService $configService;
     private ?array $pageMap = null;
     private string $metaPagesPath;
 
-    public function __construct(SiteConfig $siteConfig, ?string $metaPagesPath = null)
-    {
+    public function __construct(
+        SiteConfig $siteConfig,
+        ?string $metaPagesPath = null,
+        ?ConfigService $configService = null
+    ) {
         $this->siteConfig = $siteConfig;
-        $this->metaPagesPath = $metaPagesPath ?? (__DIR__ . '/../../content/meta_pages.json');
+        $this->metaPagesPath = $metaPagesPath ?? 'content/meta_pages.json';
+        $this->configService = $configService;
     }
 
     private function loadPageMap(): void
@@ -26,13 +33,22 @@ class MetaManager
             return;
         }
 
-        if (!file_exists($this->metaPagesPath)) {
-            throw new \Core\Exceptions\ConfigurationException("Metadata pages configuration missing at: {$this->metaPagesPath}");
+        if ($this->configService !== null) {
+            $this->pageMap = $this->configService->getJsonConfig($this->metaPagesPath);
+            return;
         }
 
-        $rawJson = file_get_contents($this->metaPagesPath);
+        $fullPath = (str_starts_with($this->metaPagesPath, '/') || str_starts_with($this->metaPagesPath, '\\'))
+            ? $this->metaPagesPath
+            : __DIR__ . '/../../' . $this->metaPagesPath;
+
+        if (!file_exists($fullPath)) {
+            throw new \Core\Exceptions\ConfigurationException("Metadata pages configuration missing at: {$fullPath}");
+        }
+
+        $rawJson = file_get_contents($fullPath);
         if ($rawJson === false) {
-            throw new \Core\Exceptions\ConfigurationException("Failed to read metadata pages configuration at: {$this->metaPagesPath}");
+            throw new \Core\Exceptions\ConfigurationException("Failed to read metadata pages configuration at: {$fullPath}");
         }
 
         $decoded = json_decode($rawJson, true);

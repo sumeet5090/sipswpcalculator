@@ -123,6 +123,7 @@ class RouterIntegrityTest extends TestCase
     public function testRedirectTargetsAreValid(): void
     {
         $redirects = $this->router->getRedirects();
+        $this->assertNotEmpty($redirects, "Redirects list should not be empty.");
         foreach ($redirects as $source => $target) {
             $this->assertTrue(
                 $this->resolvesToGetRoute($target),
