@@ -75,6 +75,8 @@ class ViewRenderer
 
         try {
             return $this->twig->render($resolvedView, $renderData);
+        } catch (\Twig\Error\LoaderError $e) {
+            throw new \Core\Exceptions\NotFoundException("Template '{$resolvedView}' not found: " . $e->getMessage(), 0, $e);
         } catch (\Throwable $e) {
             throw new \RuntimeException("Twig rendering failed: " . $e->getMessage(), 0, $e);
         }
@@ -90,11 +92,13 @@ class ViewRenderer
             $source = $this->twig->getLoader()->getSourceContext($resolvedView);
             $filePath = $source->getPath();
             if (empty($filePath) || !file_exists($filePath)) {
-                throw new \RuntimeException("View template file missing at path: '{$filePath}' for view: '{$resolvedView}'");
+                throw new \Core\Exceptions\NotFoundException("View template file missing at path: '{$filePath}' for view: '{$resolvedView}'");
             }
-            return date('Y-m-d', filemtime($filePath));
+            return date('Y-m-d', (int) filemtime($filePath));
+        } catch (\Twig\Error\LoaderError $e) {
+            throw new \Core\Exceptions\NotFoundException("View template '{$resolvedView}' not found: " . $e->getMessage(), 0, $e);
         } catch (\Throwable $e) {
-            if ($e instanceof \RuntimeException) {
+            if ($e instanceof \Core\Exceptions\NotFoundException || $e instanceof \RuntimeException) {
                 throw $e;
             }
             throw new \RuntimeException("Failed to get modification date for template '{$resolvedView}': " . $e->getMessage(), 0, $e);

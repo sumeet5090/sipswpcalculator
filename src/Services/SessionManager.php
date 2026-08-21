@@ -45,8 +45,8 @@ class SessionManager
 
     public function destroy(): void
     {
+        $_SESSION = [];
         if (session_status() === PHP_SESSION_ACTIVE) {
-            $_SESSION = [];
             if (ini_get('session.use_cookies')) {
                 $params = session_get_cookie_params();
                 setcookie(

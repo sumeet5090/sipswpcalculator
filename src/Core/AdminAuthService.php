@@ -59,6 +59,7 @@ class AdminAuthService
      */
     public function logout(): void
     {
+        $this->sessionManager->remove('admin_authenticated');
         $this->sessionManager->destroy();
     }
 }

@@ -58,12 +58,16 @@ class ViewRendererTest extends TestCase
     {
         $renderer = $this->createViewRenderer();
 
-        $this->expectException(RuntimeException::class);
-        // Twig will throw a LoaderError which ViewRenderer will catch and wrap in a RuntimeException.
-        // Wait, getTemplateModifiedDate doesn't wrap the Twig loader exception, wait, yes it does.
-        // Let's just expect RuntimeException.
-
+        $this->expectException(\Core\Exceptions\NotFoundException::class);
         $renderer->getTemplateModifiedDate('nonexistent_view');
+    }
+
+    public function testRenderThrowsNotFoundExceptionWhenTemplateMissing(): void
+    {
+        $renderer = $this->createViewRenderer();
+
+        $this->expectException(\Core\Exceptions\NotFoundException::class);
+        $renderer->render('nonexistent_template');
     }
 
     public function testNormalizesTwigExtensionAutomatically(): void
