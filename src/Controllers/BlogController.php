@@ -4,170 +4,41 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Core\BlogRepository;
-use Core\ContentManager;
-use Core\Factories\SchemaFactory;
+use Core\Http\Request;
 use Core\Http\Response;
-use Core\MetaManager;
-use Core\SchemaHelper;
-use Core\SiteConfig;
-use Core\ViewRenderer;
 
 /**
  * BlogController
- * Handles displaying blog lists and guides content.
+ * Composite facade delegating resource actions to dedicated single-responsibility controllers.
  */
 class BlogController
 {
-    private ContentManager $contentManager;
-    private MetaManager $metaManager;
-    private SchemaHelper $schemaHelper;
-    private BlogRepository $blogRepository;
-    private SchemaFactory $schemaFactory;
-    private SiteConfig $siteConfig;
-    private ViewRenderer $viewRenderer;
+    private ListResourcesAction $listAction;
+    private ShowResourceCategoryAction $categoryAction;
+    private ShowResourcePostAction $postAction;
 
     public function __construct(
-        ContentManager $contentManager,
-        MetaManager $metaManager,
-        SchemaHelper $schemaHelper,
-        BlogRepository $blogRepository,
-        SchemaFactory $schemaFactory,
-        SiteConfig $siteConfig,
-        ViewRenderer $viewRenderer
+        ListResourcesAction $listAction,
+        ShowResourceCategoryAction $categoryAction,
+        ShowResourcePostAction $postAction
     ) {
-        $this->contentManager = $contentManager;
-        $this->metaManager = $metaManager;
-        $this->schemaHelper = $schemaHelper;
-        $this->blogRepository = $blogRepository;
-        $this->schemaFactory = $schemaFactory;
-        $this->siteConfig = $siteConfig;
-        $this->viewRenderer = $viewRenderer;
+        $this->listAction = $listAction;
+        $this->categoryAction = $categoryAction;
+        $this->postAction = $postAction;
     }
 
-    public function index(): Response
+    public function index(?Request $request = null): Response
     {
-        $all_posts = $this->blogRepository->getAllPosts();
-        $categories = $this->blogRepository->getCategories();
-        $posts_by_cat = $this->blogRepository->getPostsGroupedByCategory();
-
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            'Resources' => '/resources'
-        ]);
-
-        $page_config = $this->metaManager->getMeta('resources');
-
-        return Response::html($this->viewRenderer->render('pages/resources', [
-            'page_config'  => $page_config,
-            'active_page'  => 'resources',
-            'all_posts'    => $all_posts,
-            'posts_by_cat' => $posts_by_cat,
-            'categories'   => $categories,
-            'breadcrumbs'  => $breadcrumbs_schema,
-        ]));
+        return ($this->listAction)($request);
     }
 
-    public function category(string $category): Response
+    public function category(string $category, ?Request $request = null): Response
     {
-        $all_posts = $this->blogRepository->getAllPosts();
-        $categories = $this->blogRepository->getCategories();
-
-        $filtered_posts = array_filter($all_posts, fn($p) => strtolower((string)($p['seo_category'] ?? '')) === strtolower($category));
-
-        if (empty($filtered_posts) && !in_array($category, $categories, true)) {
-            throw new \Core\Exceptions\RouteNotFoundException("Resource category not found: {$category}");
-        }
-
-        $posts_by_cat = $this->blogRepository->getPostsGroupedByCategory();
-
-        $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
-            'Home' => '/',
-            'Resources' => '/resources',
-            ucfirst($category) => "/resource/{$category}"
-        ]);
-
-        $catMeta = $categories[$category] ?? [];
-        $catTitle = !empty($catMeta['title']) ? $catMeta['title'] : ucfirst($category);
-        $page_config = $this->metaManager->setDynamicMeta(
-            "{$catTitle} Resources — SIP & SWP Calculator",
-            "Expert financial guides and calculators for {$catTitle}.",
-            $this->siteConfig->getUrl("/resource/{$category}")
-        );
-
-        return Response::html($this->viewRenderer->render('pages/resources', [
-            'page_config'       => $page_config,
-            'active_page'       => 'resources',
-            'all_posts'         => !empty($filtered_posts) ? array_values($filtered_posts) : $all_posts,
-            'posts_by_cat'      => $posts_by_cat,
-            'categories'        => $categories,
-            'selected_category' => $category,
-            'breadcrumbs'       => $breadcrumbs_schema,
-        ]));
+        return ($this->categoryAction)($category, $request);
     }
 
-    public function show(string $category, string $slug): Response
+    public function show(string $category, string $slug, ?Request $request = null): Response
     {
-        $cleanSlug = trim($slug, '/');
-        $path = "/blog/{$category}/{$cleanSlug}";
-
-        $content = $this->contentManager->getParsedContent($path);
-
-        if (!$content) {
-            throw new \Core\Exceptions\RouteNotFoundException("Blog post not found: {$category}/{$cleanSlug}");
-        }
-
-        $post_metadata = $this->blogRepository->getPostBySlug($category, $cleanSlug);
-        $all_posts = $this->blogRepository->getAllPosts();
-
-        $page_config = $this->metaManager->buildFromMetadata($content['metadata'], '/resource/' . $category . '/' . $cleanSlug);
-
-        if (empty($content['metadata']['title'])) {
-            throw new \Core\Exceptions\ConfigurationException("Missing 'title' in frontmatter for blog post: {$category}/{$cleanSlug}");
-        }
-        $breadcrumbTitle = (string) $content['metadata']['title'];
-
-        $breadcrumbs = [
-            'Home' => '/',
-            'Resources' => '/resources',
-            ucfirst($category) => "/resource/{$category}",
-            $breadcrumbTitle => "/resource/{$category}/{$cleanSlug}"
-        ];
-
-        // Derive real dateModified from markdown file mtime via repository
-        $dateModified = $this->blogRepository->getPostModifiedDate($category, $cleanSlug);
-        $datePublished = $dateModified;
-
-        if ($post_metadata && !empty($post_metadata['date'])) {
-            $parsed = \DateTimeImmutable::createFromFormat('F Y', $post_metadata['date']);
-            if ($parsed) {
-                $datePublished = $parsed->format('Y-m-01');
-            }
-        }
-
-        $currentUri = "/resource/{$category}/{$cleanSlug}";
-
-        $page_config['additional_head'] = $this->schemaFactory->generateForPage(
-            $category . '/' . $cleanSlug,
-            'blog',
-            $page_config,
-            $datePublished,
-            [],
-            $breadcrumbs,
-            $this->siteConfig->getUrl($currentUri)
-        );
-
-        return Response::html($this->viewRenderer->render('layouts/generic-post', [
-            'content_html'     => $content['html'],
-            'content_metadata' => $content['metadata'],
-            'page_config'      => $page_config,
-            'post_metadata'    => $post_metadata,
-            'seo_category'     => $category,
-            'active_page'      => 'blog_post',
-            'current_uri'      => $currentUri,
-            'all_posts'        => $all_posts,
-            'date_published'   => $datePublished,
-            'date_modified'    => $dateModified,
-        ]));
+        return ($this->postAction)($category, $slug, $request);
     }
 }

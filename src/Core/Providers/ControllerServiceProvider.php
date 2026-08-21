@@ -8,37 +8,50 @@ use Controllers\BlogController;
 use Controllers\DownloadCsvAction;
 use Controllers\ErrorController;
 use Controllers\GeneratePdfAction;
+use Controllers\ListResourcesAction;
+use Controllers\LogInsightApiAction;
 use Controllers\PageController;
+use Controllers\ProcessAdminLoginAction;
+use Controllers\ProcessAdminLogoutAction;
 use Controllers\RenderAboutAction;
 use Controllers\RenderFaqAction;
 use Controllers\RenderGlossaryAction;
+use Controllers\RenderGuideAction;
 use Controllers\RenderHomeAction;
 use Controllers\RenderPrivacyAction;
 use Controllers\RenderTermsAction;
+use Controllers\ShowAdminDashboardAction;
+use Controllers\ShowAdminLoginAction;
+use Controllers\ShowResourceCategoryAction;
+use Controllers\ShowResourcePostAction;
 use Controllers\SitemapController;
-use Core\AdminDashboardPresenter;
 use Core\AdminAuthService;
+use Core\AdminDashboardPresenter;
 use Core\AnonymizedInsightLogger;
 use Core\BlogRepository;
 use Core\Container;
 use Core\ContentManager;
-use Core\DatabaseMigrator;
+use Core\CurrencyFormatterInterface;
 use Core\Factories\SchemaFactory;
 use Core\FaqRepository;
 use Core\GlossaryRepository;
 use Core\InsightRepository;
 use Core\InvestmentCalculator;
 use Core\MetaManager;
-use Core\Middleware\CsrfHoneypotMiddleware;
+use Core\PdfReportTemplate;
+use Core\PdfTemplateInterface;
 use Core\SchemaHelper;
 use Core\SiteConfig;
-use Core\Strategies\StrategyFactory;
 use Core\ViewRenderer;
 use Services\ConfigService;
 use Services\CsvExportService;
-use Services\GuideRenderer;
+use Services\FilenameSanitizer;
+use Services\FileRateLimitStorage;
+use Services\FileUploadService;
+use Services\HtmlSanitizer;
 use Services\PdfGeneratorService;
 use Services\RateLimiter;
+use Services\RateLimitStorageInterface;
 use Services\SessionManager;
 use Services\SitemapGenerator;
 
@@ -48,32 +61,32 @@ class ControllerServiceProvider implements ServiceProviderInterface
     {
         $routesConfig = $config['routesConfig'] ?? [];
 
-        $container->singleton(\Services\RateLimitStorageInterface::class, function () {
-            return new \Services\FileRateLimitStorage();
+        $container->singleton(RateLimitStorageInterface::class, function () {
+            return new FileRateLimitStorage();
         });
 
         $container->singleton(RateLimiter::class, function (Container $c) {
-            return new RateLimiter($c->get(\Services\RateLimitStorageInterface::class));
+            return new RateLimiter($c->get(RateLimitStorageInterface::class));
         });
 
-        $container->singleton(\Core\PdfTemplateInterface::class, function (Container $c) {
+        $container->singleton(PdfTemplateInterface::class, function (Container $c) {
             /** @var ConfigService $configService */
             $configService = $c->get(ConfigService::class);
             $defaults = $configService->getCalculatorDefaults();
             $milestones = $defaults['milestones'] ?? null;
-            return new \Core\PdfReportTemplate($c->get(\Core\CurrencyFormatterInterface::class), $milestones);
+            return new PdfReportTemplate($c->get(CurrencyFormatterInterface::class), $milestones);
         });
 
         $container->singleton(PdfGeneratorService::class, function (Container $c) {
-            return new PdfGeneratorService($c->get(\Core\PdfTemplateInterface::class));
+            return new PdfGeneratorService($c->get(PdfTemplateInterface::class));
         });
 
-        $container->singleton(\Services\HtmlSanitizer::class, function () {
-            return new \Services\HtmlSanitizer();
+        $container->singleton(HtmlSanitizer::class, function () {
+            return new HtmlSanitizer();
         });
 
-        $container->singleton(\Controllers\ShowAdminDashboardAction::class, function (Container $c) {
-            return new \Controllers\ShowAdminDashboardAction(
+        $container->singleton(ShowAdminDashboardAction::class, function (Container $c) {
+            return new ShowAdminDashboardAction(
                 $c->get(InsightRepository::class),
                 $c->get(AdminAuthService::class),
                 $c->get(AdminDashboardPresenter::class),
@@ -82,19 +95,19 @@ class ControllerServiceProvider implements ServiceProviderInterface
             );
         });
 
-        $container->singleton(\Services\FilenameSanitizer::class, function () {
-            return new \Services\FilenameSanitizer();
+        $container->singleton(FilenameSanitizer::class, function () {
+            return new FilenameSanitizer();
         });
 
-        $container->singleton(\Controllers\ShowAdminLoginAction::class, function (Container $c) {
-            return new \Controllers\ShowAdminLoginAction(
+        $container->singleton(ShowAdminLoginAction::class, function (Container $c) {
+            return new ShowAdminLoginAction(
                 $c->get(ViewRenderer::class),
                 $c->get(SessionManager::class)
             );
         });
 
-        $container->singleton(\Controllers\ProcessAdminLoginAction::class, function (Container $c) {
-            return new \Controllers\ProcessAdminLoginAction(
+        $container->singleton(ProcessAdminLoginAction::class, function (Container $c) {
+            return new ProcessAdminLoginAction(
                 $c->get(AdminAuthService::class),
                 $c->get(ViewRenderer::class),
                 $c->get(SessionManager::class),
@@ -103,26 +116,17 @@ class ControllerServiceProvider implements ServiceProviderInterface
             );
         });
 
-        $container->singleton(\Controllers\ProcessAdminLogoutAction::class, function (Container $c) {
-            return new \Controllers\ProcessAdminLogoutAction(
+        $container->singleton(ProcessAdminLogoutAction::class, function (Container $c) {
+            return new ProcessAdminLogoutAction(
                 $c->get(AdminAuthService::class)
             );
         });
 
-        $container->singleton(\Controllers\AdminAuthAction::class, function (Container $c) {
-            return new \Controllers\AdminAuthAction(
-                $c->get(AdminAuthService::class),
-                $c->get(ViewRenderer::class),
-                $c->get(SessionManager::class),
+        $container->singleton(LogInsightApiAction::class, function (Container $c) {
+            return new LogInsightApiAction(
+                $c->get(AnonymizedInsightLogger::class),
                 $c->get(RateLimiter::class),
                 $c->get(ConfigService::class)
-            );
-        });
-
-        $container->singleton(\Controllers\LogInsightApiAction::class, function (Container $c) {
-            return new \Controllers\LogInsightApiAction(
-                $c->get(AnonymizedInsightLogger::class),
-                $c->get(RateLimiter::class)
             );
         });
 
@@ -141,12 +145,12 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(InvestmentCalculator::class),
                 $c->get(ConfigService::class),
                 $c->get(CsvExportService::class),
-                $c->get(\Core\CurrencyFormatterInterface::class)
+                $c->get(CurrencyFormatterInterface::class)
             );
         });
 
-        $container->singleton(\Services\FileUploadService::class, function () {
-            return new \Services\FileUploadService();
+        $container->singleton(FileUploadService::class, function () {
+            return new FileUploadService();
         });
 
         $container->singleton(GeneratePdfAction::class, function (Container $c) {
@@ -154,10 +158,10 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(RateLimiter::class),
                 $c->get(PdfGeneratorService::class),
                 $c->get(ConfigService::class),
-                $c->get(\Services\FileUploadService::class),
-                $c->get(\Services\HtmlSanitizer::class),
+                $c->get(FileUploadService::class),
+                $c->get(HtmlSanitizer::class),
                 $c->get(InvestmentCalculator::class),
-                $c->get(\Core\CurrencyFormatterInterface::class)
+                $c->get(CurrencyFormatterInterface::class)
             );
         });
 
@@ -183,15 +187,41 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new ErrorController($c->get(ViewRenderer::class), $env);
         });
 
-        $container->singleton(BlogController::class, function (Container $c) {
-            return new BlogController(
-                $c->get(ContentManager::class),
-                $c->get(MetaManager::class),
-                $c->get(SchemaHelper::class),
+        $container->singleton(ListResourcesAction::class, function (Container $c) {
+            return new ListResourcesAction(
                 $c->get(BlogRepository::class),
+                $c->get(SchemaHelper::class),
+                $c->get(MetaManager::class),
+                $c->get(ViewRenderer::class)
+            );
+        });
+
+        $container->singleton(ShowResourceCategoryAction::class, function (Container $c) {
+            return new ShowResourceCategoryAction(
+                $c->get(BlogRepository::class),
+                $c->get(SchemaHelper::class),
+                $c->get(MetaManager::class),
+                $c->get(SiteConfig::class),
+                $c->get(ViewRenderer::class)
+            );
+        });
+
+        $container->singleton(ShowResourcePostAction::class, function (Container $c) {
+            return new ShowResourcePostAction(
+                $c->get(ContentManager::class),
+                $c->get(BlogRepository::class),
+                $c->get(MetaManager::class),
                 $c->get(SchemaFactory::class),
                 $c->get(SiteConfig::class),
                 $c->get(ViewRenderer::class)
+            );
+        });
+
+        $container->singleton(BlogController::class, function (Container $c) {
+            return new BlogController(
+                $c->get(ListResourcesAction::class),
+                $c->get(ShowResourceCategoryAction::class),
+                $c->get(ShowResourcePostAction::class)
             );
         });
 
@@ -245,9 +275,9 @@ class ControllerServiceProvider implements ServiceProviderInterface
             );
         });
 
-        $container->singleton(\Controllers\RenderGuideAction::class, function (Container $c) {
-            return new \Controllers\RenderGuideAction(
-                $c->get(GuideRenderer::class)
+        $container->singleton(RenderGuideAction::class, function (Container $c) {
+            return new RenderGuideAction(
+                $c->get(\Services\GuideRenderer::class)
             );
         });
     }

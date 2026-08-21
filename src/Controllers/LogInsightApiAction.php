@@ -8,6 +8,7 @@ use Core\AnonymizedInsightLogger;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\InsightPayload;
+use Services\ConfigService;
 use Services\RateLimiter;
 
 /**
@@ -20,13 +21,16 @@ class LogInsightApiAction
 
     private AnonymizedInsightLogger $insightLogger;
     private RateLimiter $rateLimiter;
+    private ConfigService $configService;
 
     public function __construct(
         AnonymizedInsightLogger $insightLogger,
-        RateLimiter $rateLimiter
+        RateLimiter $rateLimiter,
+        ConfigService $configService
     ) {
         $this->insightLogger = $insightLogger;
         $this->rateLimiter = $rateLimiter;
+        $this->configService = $configService;
     }
 
     public function __invoke(Request $request): Response
@@ -35,11 +39,14 @@ class LogInsightApiAction
             return new Response('Method Not Allowed', 405);
         }
 
-        // Rate limiting check (max 30 requests per minute per IP)
+        // Rate limiting check using centralized configuration
         try {
             $ip = $request->getClientIp();
-            $this->rateLimiter->checkLimit($ip, 'sipswp_log_limits', 30, 60);
-        } catch (\Core\Exceptions\RateLimitExceededException $e) {
+            $rateLimits = $this->configService->getJsonConfig('content/rate_limits.json');
+            $maxRequests = (int) ($rateLimits['log_insight']['max_requests'] ?? 30);
+            $windowSeconds = (int) ($rateLimits['log_insight']['window_seconds'] ?? 60);
+            $this->rateLimiter->checkLimit($ip, 'sipswp_log_limits', $maxRequests, $windowSeconds);
+        } catch (\Core\Exceptions\RateLimitExceededException) {
             return new Response('Rate limit exceeded', 429);
         }
 

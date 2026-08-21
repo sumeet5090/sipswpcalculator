@@ -125,6 +125,9 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(SitemapController::class, $this->container->get(SitemapController::class));
         $this->assertInstanceOf(ErrorController::class, $this->container->get(ErrorController::class));
         $this->assertInstanceOf(BlogController::class, $this->container->get(BlogController::class));
+        $this->assertInstanceOf(\Controllers\ListResourcesAction::class, $this->container->get(\Controllers\ListResourcesAction::class));
+        $this->assertInstanceOf(\Controllers\ShowResourceCategoryAction::class, $this->container->get(\Controllers\ShowResourceCategoryAction::class));
+        $this->assertInstanceOf(\Controllers\ShowResourcePostAction::class, $this->container->get(\Controllers\ShowResourcePostAction::class));
         $this->assertInstanceOf(PageController::class, $this->container->get(PageController::class));
         $this->assertInstanceOf(RenderGuideAction::class, $this->container->get(RenderGuideAction::class));
     }

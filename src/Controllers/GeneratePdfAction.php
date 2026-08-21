@@ -59,7 +59,10 @@ class GeneratePdfAction
         // Rate limiting check
         try {
             $ip = $request->getClientIp();
-            $this->rateLimiter->checkLimit($ip, 'sipswp_rate_limits', 10, 60);
+            $rateLimits = $this->configService->getJsonConfig('content/rate_limits.json');
+            $maxRequests = (int) ($rateLimits['pdf_generation']['max_requests'] ?? 10);
+            $windowSeconds = (int) ($rateLimits['pdf_generation']['window_seconds'] ?? 60);
+            $this->rateLimiter->checkLimit($ip, 'sipswp_rate_limits', $maxRequests, $windowSeconds);
         } catch (RateLimitExceededException $e) {
             return new Response('Too many requests. Please wait a minute before generating another PDF.', 429);
         }
@@ -79,21 +82,12 @@ class GeneratePdfAction
             $sym = $this->sanitizer->sanitizeText((string) ($post['currency_symbol'] ?? '₹'), 10);
             $formatter = $this->currencyFormatter;
 
-            $inputs = [
+            $inputs = array_merge($calcInputs->toTemplateData(), [
                 'client_name'       => $this->sanitizer->sanitizeText((string) ($post['clientName'] ?? 'N/A'), 100),
                 'advisor_name'      => $this->sanitizer->sanitizeText((string) ($post['advisorName'] ?? 'N/A'), 100),
                 'custom_disclaimer' => $this->sanitizer->sanitizeText((string) ($post['customDisclaimer'] ?? ''), 1000),
                 'chart_base64'      => $this->sanitizer->extractChartData((string) ($post['chartData'] ?? '')),
                 'table_html'        => $this->sanitizer->sanitizeTableHtml((string) ($post['tableHtml'] ?? '')),
-                'sip'               => $calcInputs->getSip(),
-                'years'             => $calcInputs->getYears(),
-                'rate'              => $calcInputs->getRate(),
-                'stepup'            => $calcInputs->getStepup(),
-                'lumpsum'           => $calcInputs->getLumpsum(),
-                'swp_withdrawal'    => $calcInputs->getSwpWithdrawal(),
-                'swp_stepup'        => $calcInputs->getSwpStepup(),
-                'swp_years'         => $calcInputs->getSwpYears(),
-                'swp_rate'          => $calcInputs->getSwpRate(),
                 'logo_base64'       => $this->fileUploadService->processLogoUpload($request->files('advisorLogo')),
 
                 // Verified Summary Metrics
@@ -106,7 +100,7 @@ class GeneratePdfAction
                 'raw_corpus'        => $serverCorpus,
                 'raw_withdrawn'     => $serverWithdrawn,
                 'combined_results'  => $combined,
-            ];
+            ]);
 
             // Generate PDF binary using injected PdfGeneratorService
             $pdf_binary = $this->pdfGenerator->generate($inputs);

@@ -12,18 +12,54 @@ export interface ExtraSignals {
     currency?: string;
 }
 
+export interface AnalyticsTransport {
+    send(payload: Record<string, unknown>): void;
+}
+
+/**
+ * BeaconFetchTransport
+ * Transmits telemetry payloads via navigator.sendBeacon with fetch fallback.
+ */
+export class BeaconFetchTransport implements AnalyticsTransport {
+    send(payload: Record<string, unknown>): void {
+        try {
+            const body = JSON.stringify(payload);
+            if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
+                const blob = new Blob([body], { type: 'application/json' });
+                const queued = navigator.sendBeacon('/log_insight', blob);
+                if (queued) {
+                    return;
+                }
+            }
+            fetch('/log_insight', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body,
+                keepalive: true
+            }).catch(() => {});
+        } catch {
+            // Silently ignore network or serialization errors to protect UX
+        }
+    }
+}
+
 /**
  * AnalyticsLogger.ts
  * Manages debounced user planning behavior logging.
- * Refactored as an Object-Oriented class.
+ * Decouples telemetry schema building and lifecycle observers from network transport.
  */
 export class AnalyticsService {
     private debounceMs: number;
+    private transport: AnalyticsTransport;
     private insightTimeout: ReturnType<typeof setTimeout> | null = null;
     private pendingPayload: Record<string, unknown> | null = null;
 
-    constructor(debounceMs: number = 3000) {
+    constructor(
+        debounceMs: number = 3000,
+        transport: AnalyticsTransport = new BeaconFetchTransport()
+    ) {
         this.debounceMs = debounceMs;
+        this.transport = transport;
         this.registerLifecycleListeners();
     }
 
@@ -98,30 +134,6 @@ export class AnalyticsService {
     }
 
     /**
-     * Transmit payload immediately to the backend endpoint.
-     */
-    private dispatchPayload(payload: Record<string, unknown>): void {
-        try {
-            const body = JSON.stringify(payload);
-            if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
-                const blob = new Blob([body], { type: 'application/json' });
-                const queued = navigator.sendBeacon('/log_insight', blob);
-                if (queued) {
-                    return;
-                }
-            }
-            fetch('/log_insight', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body,
-                keepalive: true
-            }).catch(() => {});
-        } catch {
-            // Silently ignore network or serialization errors to protect UX
-        }
-    }
-
-    /**
      * Immediately send insight without debouncing (e.g. for conversion actions like PDF download).
      */
     public sendImmediateInsight(
@@ -136,7 +148,7 @@ export class AnalyticsService {
         }
         this.pendingPayload = null;
         const payload = this.buildPayload(inputs, results, activeGoalMode, extraSignals);
-        this.dispatchPayload(payload);
+        this.transport.send(payload);
     }
 
     /**
@@ -150,7 +162,7 @@ export class AnalyticsService {
         if (this.pendingPayload) {
             const payload = this.pendingPayload;
             this.pendingPayload = null;
-            this.dispatchPayload(payload);
+            this.transport.send(payload);
         }
     }
 

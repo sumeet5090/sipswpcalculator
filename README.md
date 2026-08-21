@@ -111,8 +111,11 @@ This CLI migrator executes all outstanding PHP schema migrations. You can also t
 - `content/rate_limits.json` is the centralized configuration for rate-limiting thresholds and window durations across `admin_auth`, `pdf_generation`, and `log_insight` endpoints.
 
 ### Architectural Refactorings & Services
+- **Single-Responsibility Resource Actions**: Blog and educational resources are decomposed into dedicated invokable controllers (`ListResourcesAction`, `ShowResourceCategoryAction`, `ShowResourcePostAction`), with `BlogController` acting as a backward-compatible composite facade.
+- **Centralized Rate Limiting Configuration**: `GeneratePdfAction`, `LogInsightApiAction`, and `ProcessAdminLoginAction` query rate limits dynamically from `content/rate_limits.json` via `Services\ConfigService`.
+- **Client-Side Telemetry Transport Abstraction**: `assets/js/calculators/AnalyticsLogger.ts` decouples `AnalyticsTransport` (`BeaconFetchTransport`) from `AnalyticsService` page lifecycle observers and debounce timers.
 - **GuideViewModelBuilder Service**: `Services\GuideViewModelBuilder` decouples the educational guide presentation model assembly (markdown content parsing, SEO metadata/schema graph compilation, related post lookups, and strategy input hydration) from HTTP view response emission (`GuideRenderer`).
-- **Template Serialization Encapsulation**: `Core\InvestmentInputs::toTemplateData()` encapsulates presentation array formatting for calculation parameters, eliminating manual getter unpacking and variable bloat across render actions (`RenderHomeAction`, `GuideRenderer`).
+- **Template Serialization Encapsulation**: `Core\InvestmentInputs::toTemplateData()` encapsulates presentation array formatting for calculation parameters, eliminating manual getter unpacking and variable bloat across render actions (`RenderHomeAction`, `GeneratePdfAction`, `GuideRenderer`).
 - **Single-Responsibility Page Actions**: Static page routing is split into dedicated, invokable single-action controllers (`RenderAboutAction`, `RenderFaqAction`, `RenderGlossaryAction`, `RenderPrivacyAction`, `RenderTermsAction`).
 - **Single-Responsibility Admin Auth Controllers**: Admin authentication is split into dedicated, invokable single-action controllers (`ShowAdminLoginAction`, `ProcessAdminLoginAction`, `ProcessAdminLogoutAction`).
 - **SitemapGenerator Service**: `Services\SitemapGenerator` encapsulates canonical URL node and last-modified date aggregation across 5 content layers for `sitemap.xml`, leaving `SitemapController` as a thin HTTP view responder.

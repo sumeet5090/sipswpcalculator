@@ -151,10 +151,10 @@ class App
         $this->router->post('/log_insight', [LogInsightApiAction::class, '__invoke']);
 
         // Blog / Resources Routing
-        $this->router->get('/resources', [BlogController::class, 'index']);
-        $this->router->get('/resource', [BlogController::class, 'index']);
-        $this->router->get('/resource/{category}', [BlogController::class, 'category']);
-        $this->router->get('/resource/{category}/{slug}', [BlogController::class, 'show']);
+        $this->router->get('/resources', [\Controllers\ListResourcesAction::class, '__invoke']);
+        $this->router->get('/resource', [\Controllers\ListResourcesAction::class, '__invoke']);
+        $this->router->get('/resource/{category}', [\Controllers\ShowResourceCategoryAction::class, '__invoke']);
+        $this->router->get('/resource/{category}/{slug}', [\Controllers\ShowResourcePostAction::class, '__invoke']);
 
         /** @var RedirectLoader $redirectLoader */
         $redirectLoader = $this->container->get(RedirectLoader::class);
