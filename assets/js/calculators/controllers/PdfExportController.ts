@@ -93,7 +93,27 @@ export class PdfExportController {
                 let chartDataURL = '';
                 if (chartInst && chartInst.canvas) {
                     try {
-                        chartDataURL = chartInst.canvas.toDataURL('image/png');
+                        chartInst.stop();
+                        chartInst.render();
+
+                        const srcCanvas = chartInst.canvas;
+                        const maxW = 1200;
+                        const scale = srcCanvas.width > maxW ? (maxW / srcCanvas.width) : 1;
+                        const targetW = Math.round(srcCanvas.width * scale);
+                        const targetH = Math.round(srcCanvas.height * scale);
+
+                        const offscreen = document.createElement('canvas');
+                        offscreen.width = targetW;
+                        offscreen.height = targetH;
+                        const offCtx = offscreen.getContext('2d');
+                        if (offCtx) {
+                            offCtx.fillStyle = '#ffffff';
+                            offCtx.fillRect(0, 0, targetW, targetH);
+                            offCtx.drawImage(srcCanvas, 0, 0, targetW, targetH);
+                            chartDataURL = offscreen.toDataURL('image/png', 0.92);
+                        } else {
+                            chartDataURL = srcCanvas.toDataURL('image/png');
+                        }
                     } catch (_err) {
                         chartDataURL = '';
                     }

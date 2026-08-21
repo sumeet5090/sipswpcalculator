@@ -361,7 +361,7 @@ amountInput.addEventListener('input', calculateMini);
 yearsInput.addEventListener('input', calculateMini);
 if (typeof Chart === 'undefined') {
 const script = document.createElement('script');
-script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js';
 script.onload = setupChart;
 document.head.appendChild(script);
 } else {
