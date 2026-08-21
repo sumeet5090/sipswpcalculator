@@ -257,6 +257,10 @@ This codebase is maintained to strict architectural quality standards as documen
 | **Explicit > Implicit** | `Router` explicitly resolves routes and supports `HEAD` methods for all `GET` routes without magic URI trimming |
 | **Markdown Safe Mode** | `Parsedown::setSafeMode(true)` ensures all raw HTML/script tags embedded in markdown content files are safely escaped |
 | **JSON-LD Schema Hex Escaping** | `SchemaHelper` and `SchemaFactory` enforce `JSON_HEX_TAG | JSON_HEX_AMP` on all structured data output to prevent script tag injection |
+| **DI Container Reflection & Autowiring** | `Container` provides strict reflection autowiring, detecting circular dependencies (`A -> B -> A`), union/intersection types, un-typehinted parameters, and providing `forget()` and `flush()` lifecycle resets |
+| **Action Parameter Injection** | `ActionDispatcher` matches controller action parameters by typehint (`Request`), exact route slug name, positional index, and default values |
+| **Environment Precedence Hierarchy** | `Env::get()` enforces `$_ENV` > `$_SERVER` > `getenv()` > `$default` with empty string fallthrough |
+| **Comprehensive Unit Test Suite** | 200+ unit and integration tests across Container, ActionDispatcher, Env, ServiceProviders, Middleware, Repositories, Security, and Parity |
 | **Production Traps Guardrails** | Full encyclopedia of 65 production server, LiteSpeed, CloudLinux, and concurrency traps codified in `.agents/skills/production-traps/SKILL.md` |
 | **CQS Compliance** | `SessionManager::generateCsrfToken()`, `App::boot()`, and `DatabaseMigrator::migrate()` return `void` or explicitly separate state mutation from query methods |
 | **Environment Security** | Schema migrations execute strictly via CLI (`bin/migrate`) in deployment pipelines; no administrative web migration endpoints |

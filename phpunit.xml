@@ -8,6 +8,7 @@
          failOnRisky="true"
          beStrictAboutOutputDuringTests="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
          cacheDirectory=".phpunit.cache">
     <php>
         <env name="DB_PATH" value="database/database.test.sqlite"/>

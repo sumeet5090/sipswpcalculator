@@ -66,6 +66,27 @@ class Container implements ContainerInterface
     }
 
     /**
+     * Remove a binding and cached singleton instance from the container.
+     */
+    public function forget(string $id): void
+    {
+        $id = ltrim($id, '\\');
+        unset($this->instances[$id], $this->bindings[$id]);
+    }
+
+    /**
+     * Flush all bindings and instances, re-registering the container itself.
+     */
+    public function flush(): void
+    {
+        $this->instances = [];
+        $this->bindings = [];
+        $this->resolving = [];
+        $this->instances[ContainerInterface::class] = $this;
+        $this->instances[self::class] = $this;
+    }
+
+    /**
      * Check if a binding or singleton instance exists.
      */
     public function has(string $id): bool
@@ -149,6 +170,35 @@ class Container implements ContainerInterface
                         $dependencies[] = $parameter->getDefaultValue();
                     } else {
                         throw new ContainerException("Cannot resolve parameter '{$parameter->getName()}' in class {$class} (no type hint).");
+                    }
+                } elseif ($type instanceof \ReflectionUnionType) {
+                    $resolved = false;
+                    foreach ($type->getTypes() as $subType) {
+                        if ($subType instanceof \ReflectionNamedType && !$subType->isBuiltin()) {
+                            $subName = $subType->getName();
+                            if ($this->has($subName)) {
+                                try {
+                                    $dependencies[] = $this->get($subName);
+                                    $resolved = true;
+                                    break;
+                                } catch (\Throwable) {
+                                    // Try next union candidate
+                                }
+                            }
+                        }
+                    }
+                    if (!$resolved) {
+                        if ($parameter->isDefaultValueAvailable()) {
+                            $dependencies[] = $parameter->getDefaultValue();
+                        } else {
+                            throw new ContainerException("Cannot resolve union type parameter '{$parameter->getName()}' in class {$class}.");
+                        }
+                    }
+                } elseif ($type instanceof \ReflectionIntersectionType) {
+                    if ($parameter->isDefaultValueAvailable()) {
+                        $dependencies[] = $parameter->getDefaultValue();
+                    } else {
+                        throw new ContainerException("Intersection types are not supported for autowiring parameter '{$parameter->getName()}' in class {$class}.");
                     }
                 } else {
                     if ($type instanceof \ReflectionNamedType && !$type->isBuiltin()) {

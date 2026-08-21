@@ -184,7 +184,7 @@ class SecurityTest extends TestCase
         $tempFontDir = sys_get_temp_dir() . '/sec_fonts_' . uniqid();
         $tempPdfDir = sys_get_temp_dir() . '/sec_pdf_' . uniqid();
 
-        $mockTemplate = $this->createMock(PdfTemplateInterface::class);
+        $mockTemplate = $this->createStub(PdfTemplateInterface::class);
         $service = new PdfGeneratorService($mockTemplate, $tempFontDir, $tempPdfDir);
 
         $this->assertEquals($tempFontDir, $service->getFontDir());

@@ -41,8 +41,8 @@ class ViewRendererTest extends TestCase
 
     private function createViewRenderer(): ViewRenderer
     {
-        $viteHelper = $this->createMock(ViteHelper::class);
-        $currencyFormatter = $this->createMock(CurrencyFormatterInterface::class);
+        $viteHelper = $this->createStub(ViteHelper::class);
+        $currencyFormatter = $this->createStub(CurrencyFormatterInterface::class);
 
         return new ViewRenderer(
             $viteHelper,

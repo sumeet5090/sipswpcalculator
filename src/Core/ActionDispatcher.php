@@ -44,7 +44,19 @@ class ActionDispatcher
                     $name = $param->getName();
                     $type = $param->getType();
 
+                    $isRequestType = false;
                     if ($type instanceof \ReflectionNamedType && !$type->isBuiltin() && is_a($type->getName(), Request::class, true)) {
+                        $isRequestType = true;
+                    } elseif ($type instanceof \ReflectionUnionType) {
+                        foreach ($type->getTypes() as $subType) {
+                            if ($subType instanceof \ReflectionNamedType && !$subType->isBuiltin() && is_a($subType->getName(), Request::class, true)) {
+                                $isRequestType = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if ($isRequestType) {
                         $args[] = $request;
                     } elseif (array_key_exists($name, $params)) {
                         $args[] = $params[$name];

@@ -32,5 +32,14 @@ If you modify formulas, you must verify parity against `tests/MathEngineAlignmen
   3. `<script type="module" src="{{ vite_asset('resources/js/app.ts') }}"></script>` in footer for client JS execution.
 - **Dompdf Style Isolation:** Dompdf cannot parse modern Tailwind/CSS variables; PDF styles must strictly reside in `PdfReportStylesheet.php`.
 
+### 7. Dependency Injection, Env & Architecture Governance
+**Action:**
+- **DI Container Autowiring:** `Container` resolves via reflection. Never depend on autowiring for classes with unconfigured primitive arguments or interfaces; bind them explicitly in Service Providers (`CoreServiceProvider`, `RepositoryServiceProvider`, `DomainServiceProvider`, `ControllerServiceProvider`).
+- **Circular Dependencies:** Guard against circular dependencies; the Container will throw a `ContainerException` detailing the chain (`A -> B -> A`).
+- **Environment Precedence:** Always use `Env::get($key, $default)` rather than direct `$_ENV` access. The resolution hierarchy is `$_ENV` > `$_SERVER` > `getenv()` > `$default` (empty strings fall through).
+- **Action Dispatching:** Controller actions resolve parameters by typehint (`Request`), exact route slug name, positional index, and default values. Non-Response returns must be valid string HTML or throw `ContainerException`.
+- **Zero Echoes:** Never use `echo`, `print_r()`, or `var_dump()` in controllers or services; log via `error_log()`.
+
 > **Further Reading:** For a deep dive into these rules, always read the root `README.md` file before proposing major changes.
+
 
