@@ -78,15 +78,16 @@
     {% block head %}{% endblock %}
 </head>
 <body class="{{ page_config.body_class|default('bg-gray-50 text-gray-800 font-sans antialiased') }} overflow-x-hidden" style="{{ page_config.body_style|default('background-image: var(--gradient-surface); background-attachment: fixed;') }}">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:p-3 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:shadow-lg focus:z-50 font-bold transition-all">Skip to main content</a>
     
     {% include 'layouts/header.twig' %}
     
     <!-- spacer to prevent content from being hidden behind fixed header -->
     <div class="h-16"></div>
     
-    <div class="container mt-6 mx-auto px-4 sm:px-6 lg:px-8 {{ page_config.container_class|default('max-w-7xl') }}">
+    <main id="main-content" class="container mt-6 mx-auto px-4 sm:px-6 lg:px-8 {{ page_config.container_class|default('max-w-7xl') }}">
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
     {% include 'layouts/footer.twig' %}
 
