@@ -64,9 +64,12 @@ export class WealthQuizController {
         // Step 3 choice listeners
         step3.querySelectorAll<HTMLButtonElement>('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
-                if (btn.dataset.tenure) this.state.years = parseFloat(btn.dataset.tenure);
-                step3.querySelectorAll('.quiz-choice').forEach(c => c.classList.remove('border-emerald-500', 'bg-slate-700/80'));
-                btn.classList.add('border-emerald-500', 'bg-slate-700/80');
+                step3.querySelectorAll('.quiz-choice').forEach(c => {
+                    c.classList.remove('border-emerald-500', 'border-2', 'bg-white', 'shadow-sm');
+                    c.classList.add('border-slate-200', 'bg-slate-50/90');
+                });
+                btn.classList.add('border-emerald-500', 'border-2', 'bg-white', 'shadow-sm');
+                btn.classList.remove('border-slate-200', 'bg-slate-50/90');
             });
         });
 

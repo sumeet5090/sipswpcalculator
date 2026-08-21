@@ -38,11 +38,11 @@ export class AssetRebalanceController {
         const buttons = card.querySelectorAll<HTMLButtonElement>('.rebalance-choice-btn');
         buttons.forEach(b => {
             if (parseFloat(b.dataset.equity || '0') === equityPct) {
-                b.classList.add('border-indigo-500', 'text-white');
-                b.classList.remove('border-slate-700', 'text-slate-300');
+                b.classList.add('border-indigo-600', 'border-2', 'bg-white', 'shadow-sm');
+                b.classList.remove('border-slate-200', 'bg-slate-50/90');
             } else {
-                b.classList.remove('border-indigo-500', 'text-white');
-                b.classList.add('border-slate-700', 'text-slate-300');
+                b.classList.remove('border-indigo-600', 'border-2', 'bg-white', 'shadow-sm');
+                b.classList.add('border-slate-200', 'bg-slate-50/90');
             }
         });
 
@@ -76,7 +76,7 @@ export class AssetRebalanceController {
         const debtSip = totalSip - equitySip;
 
         if (actionEl) {
-            actionEl.innerHTML = `Allocate monthly SIP: <strong class="text-white">${this.formatter.format(equitySip)} into Equity</strong> and <strong class="text-white">${this.formatter.format(debtSip)} into Debt</strong> funds to maintain exact ${this.targetEquityPct}/${this.targetDebtPct} asset balance without triggering any capital gains tax.`;
+            actionEl.innerHTML = `Allocate monthly SIP: <strong class="text-slate-900">${this.formatter.format(equitySip)} into Equity</strong> and <strong class="text-slate-900">${this.formatter.format(debtSip)} into Debt</strong> funds to maintain exact ${this.targetEquityPct}/${this.targetDebtPct} asset balance without triggering any capital gains tax.`;
         }
     }
 }

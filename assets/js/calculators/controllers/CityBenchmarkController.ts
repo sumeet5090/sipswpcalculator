@@ -48,11 +48,11 @@ export class CityBenchmarkController {
                 this.activeData = { city, expense, corpus, sip };
 
                 buttons.forEach(b => {
-                    b.classList.remove('border-emerald-500', 'text-white');
-                    b.classList.add('border-slate-700', 'text-slate-300');
+                    b.classList.remove('border-emerald-500', 'border-2', 'bg-white', 'shadow-sm');
+                    b.classList.add('border-slate-200', 'bg-slate-50/90');
                 });
-                btn.classList.add('border-emerald-500', 'text-white');
-                btn.classList.remove('border-slate-700', 'text-slate-300');
+                btn.classList.add('border-emerald-500', 'border-2', 'bg-white', 'shadow-sm');
+                btn.classList.remove('border-slate-200', 'bg-slate-50/90');
 
                 this.updatePreviews();
             });

@@ -73,11 +73,11 @@ export class StressTestController {
         const buttons = card.querySelectorAll<HTMLButtonElement>('.stress-choice-btn');
         buttons.forEach(b => {
             if (b.dataset.scenario === scenarioId) {
-                b.classList.add('border-emerald-500', 'text-white');
-                b.classList.remove('border-slate-700', 'text-slate-300');
+                b.classList.add('border-emerald-500', 'border-2', 'bg-white', 'shadow-sm');
+                b.classList.remove('border-slate-200', 'bg-slate-50/90');
             } else {
-                b.classList.remove('border-emerald-500', 'text-white');
-                b.classList.add('border-slate-700', 'text-slate-300');
+                b.classList.remove('border-emerald-500', 'border-2', 'bg-white', 'shadow-sm');
+                b.classList.add('border-slate-200', 'bg-slate-50/90');
             }
         });
 
