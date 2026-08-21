@@ -23,6 +23,11 @@ class AppTwigExtensionTest extends TestCase
             {
                 return '₹' . number_format($num);
             }
+
+            public function getSymbol(string $currency): string
+            {
+                return '₹';
+            }
         };
 
         $this->extension = new AppTwigExtension($this->viteHelper, $this->currencyFormatter);

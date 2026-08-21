@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
 class ActionDispatcher
 {
     private ContainerInterface $container;
+    private array $methodCache = [];
 
     public function __construct(ContainerInterface $container)
     {
@@ -40,7 +41,11 @@ class ActionDispatcher
             if (method_exists($controller, $action)) {
                 $request = $request ?? Request::createFromGlobals();
 
-                $reflection = new \ReflectionMethod($controller, $action);
+                $cacheKey = $controllerName . '::' . $action;
+                if (!isset($this->methodCache[$cacheKey])) {
+                    $this->methodCache[$cacheKey] = new \ReflectionMethod($controller, $action);
+                }
+                $reflection = $this->methodCache[$cacheKey];
                 $args = [];
                 $paramValues = array_values($params);
                 $paramIndex = 0;

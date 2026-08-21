@@ -76,12 +76,40 @@ class ControllerServiceProvider implements ServiceProviderInterface
             );
         });
 
+        $container->singleton(\Services\FilenameSanitizer::class, function () {
+            return new \Services\FilenameSanitizer();
+        });
+
+        $container->singleton(\Controllers\ShowAdminLoginAction::class, function (Container $c) {
+            return new \Controllers\ShowAdminLoginAction(
+                $c->get(ViewRenderer::class),
+                $c->get(SessionManager::class)
+            );
+        });
+
+        $container->singleton(\Controllers\ProcessAdminLoginAction::class, function (Container $c) {
+            return new \Controllers\ProcessAdminLoginAction(
+                $c->get(AdminAuthService::class),
+                $c->get(ViewRenderer::class),
+                $c->get(SessionManager::class),
+                $c->get(RateLimiter::class),
+                $c->get(ConfigService::class)
+            );
+        });
+
+        $container->singleton(\Controllers\ProcessAdminLogoutAction::class, function (Container $c) {
+            return new \Controllers\ProcessAdminLogoutAction(
+                $c->get(AdminAuthService::class)
+            );
+        });
+
         $container->singleton(\Controllers\AdminAuthAction::class, function (Container $c) {
             return new \Controllers\AdminAuthAction(
                 $c->get(AdminAuthService::class),
                 $c->get(ViewRenderer::class),
                 $c->get(SessionManager::class),
-                $c->get(RateLimiter::class)
+                $c->get(RateLimiter::class),
+                $c->get(ConfigService::class)
             );
         });
 
@@ -106,7 +134,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new DownloadCsvAction(
                 $c->get(InvestmentCalculator::class),
                 $c->get(ConfigService::class),
-                $c->get(CsvExportService::class)
+                $c->get(CsvExportService::class),
+                $c->get(\Core\CurrencyFormatterInterface::class)
             );
         });
 
@@ -121,7 +150,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(ConfigService::class),
                 $c->get(\Services\FileUploadService::class),
                 $c->get(\Services\HtmlSanitizer::class),
-                $c->get(InvestmentCalculator::class)
+                $c->get(InvestmentCalculator::class),
+                $c->get(\Core\CurrencyFormatterInterface::class)
             );
         });
 

@@ -79,6 +79,18 @@ class InvestmentInputs
     }
 
     /**
+     * Helper method to resolve LTCG tax exemption and rate from config.
+     *
+     * @return array{0: float, 1: float} [exemption_threshold, rate]
+     */
+    private static function resolveLtcgConfig(array $cfg): array
+    {
+        $exemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? 125000.0);
+        $rate = (float) ($cfg['ltcg_tax']['rate'] ?? 0.125);
+        return [$exemption, $rate];
+    }
+
+    /**
      * Create sanitized inputs from request POST/GET payload.
      * Bounds and defaults are read from the central calculator_defaults.json config.
      *
@@ -103,8 +115,7 @@ class InvestmentInputs
         $swpRate       = self::resolveField('swp_rate', $data, $cfg);
         $inflation     = self::resolveField('inflation', $data, $cfg);
 
-        $ltcgExemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? 125000.0);
-        $ltcgTaxRate   = (float) ($cfg['ltcg_tax']['rate'] ?? 0.125);
+        [$ltcgExemption, $ltcgTaxRate] = self::resolveLtcgConfig($cfg);
 
         return new self(
             $sip,
@@ -145,8 +156,7 @@ class InvestmentInputs
         $swpRate       = self::resolveField('swp_rate', $data, $cfg);
         $inflation     = self::resolveField('inflation', $data, $cfg);
 
-        $ltcgExemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? 125000.0);
-        $ltcgTaxRate   = (float) ($cfg['ltcg_tax']['rate'] ?? 0.125);
+        [$ltcgExemption, $ltcgTaxRate] = self::resolveLtcgConfig($cfg);
 
         return new self(
             0.0,
@@ -181,8 +191,7 @@ class InvestmentInputs
         $rate      = self::resolveField('rate', $data, $cfg);
         $inflation = self::resolveField('inflation', $data, $cfg);
 
-        $ltcgExemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? 125000.0);
-        $ltcgTaxRate   = (float) ($cfg['ltcg_tax']['rate'] ?? 0.125);
+        [$ltcgExemption, $ltcgTaxRate] = self::resolveLtcgConfig($cfg);
 
         return new self(
             0.0,

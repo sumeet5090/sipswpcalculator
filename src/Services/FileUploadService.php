@@ -54,7 +54,11 @@ class FileUploadService
 
         // If GD is available, re-encode image to strip EXIF metadata and neutralize polyglots
         if (function_exists('imagecreatefromstring')) {
-            $img = @imagecreatefromstring($data);
+            try {
+                $img = imagecreatefromstring($data);
+            } catch (\Throwable) {
+                $img = false;
+            }
             if ($img !== false) {
                 ob_start();
                 if ($imageInfo[2] === IMAGETYPE_PNG) {

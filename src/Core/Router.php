@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
 class Router
 {
     private array $routes = [];
+    private array $compiledPatterns = [];
     private array $redirects = [];
     private array $middlewares = [];
     private ContainerInterface $container;
@@ -33,11 +34,17 @@ class Router
     public function get(string $uri, array $controllerAction): void
     {
         $this->routes['GET'][$uri] = $controllerAction;
+        if (str_contains($uri, '{')) {
+            $this->compiledPatterns['GET'][$uri] = '#^' . preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_-]+)', $uri) . '$#';
+        }
     }
 
     public function post(string $uri, array $controllerAction): void
     {
         $this->routes['POST'][$uri] = $controllerAction;
+        if (str_contains($uri, '{')) {
+            $this->compiledPatterns['POST'][$uri] = '#^' . preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_-]+)', $uri) . '$#';
+        }
     }
 
     public function redirect(string $uri, string $target): void
@@ -66,13 +73,12 @@ class Router
                 return $this->callAction($this->routes[$lookupMethod][$uri], [], $req);
             }
 
-
-            if (isset($this->routes[$lookupMethod]) && is_array($this->routes[$lookupMethod])) {
-                foreach ($this->routes[$lookupMethod] as $route => $action) {
-                    $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_-]+)', $route);
-                    if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
+            if (isset($this->compiledPatterns[$lookupMethod]) && is_array($this->compiledPatterns[$lookupMethod])) {
+                foreach ($this->compiledPatterns[$lookupMethod] as $route => $pattern) {
+                    if (preg_match($pattern, $uri, $matches)) {
                         $rawParams = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
                         $params = array_map('urldecode', $rawParams);
+                        $action = $this->routes[$lookupMethod][$route];
                         return $this->callAction($action, $params, $req);
                     }
                 }

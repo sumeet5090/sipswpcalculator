@@ -34,8 +34,8 @@ class ViewRenderer
             $effectiveCache = $cachePath;
         } elseif ($isProd) {
             $cacheDir = __DIR__ . '/../../var/cache/twig';
-            if (!is_dir($cacheDir)) {
-                @mkdir($cacheDir, 0775, true);
+            if (!is_dir($cacheDir) && !mkdir($cacheDir, 0775, true) && !is_dir($cacheDir)) {
+                error_log("ViewRenderer: Failed to create Twig cache directory at {$cacheDir}");
             }
             if (is_dir($cacheDir) && is_writable($cacheDir)) {
                 $effectiveCache = $cacheDir;

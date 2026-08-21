@@ -17,4 +17,12 @@ interface CurrencyFormatterInterface
      * @return string
      */
     public function format(float|int $num): string;
+
+    /**
+     * Get symbol for a given currency code.
+     *
+     * @param string $currency
+     * @return string
+     */
+    public function getSymbol(string $currency): string;
 }

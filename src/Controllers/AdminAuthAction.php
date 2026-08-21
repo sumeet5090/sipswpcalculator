@@ -5,78 +5,46 @@ declare(strict_types=1);
 namespace Controllers;
 
 use Core\AdminAuthService;
-use Core\Exceptions\RateLimitExceededException;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\ViewRenderer;
+use Services\ConfigService;
 use Services\RateLimiter;
 use Services\SessionManager;
 
 /**
  * AdminAuthAction
- * Single Responsibility action dedicated strictly to handling administrator login and logout lifecycle.
+ * Backward-compatible composition controller delegating to single-responsibility actions.
  */
 class AdminAuthAction
 {
-    private AdminAuthService $authService;
-    private ViewRenderer $viewRenderer;
-    private SessionManager $sessionManager;
-    private ?RateLimiter $rateLimiter;
+    private ShowAdminLoginAction $showLoginAction;
+    private ProcessAdminLoginAction $processLoginAction;
+    private ProcessAdminLogoutAction $processLogoutAction;
 
     public function __construct(
         AdminAuthService $authService,
         ViewRenderer $viewRenderer,
         SessionManager $sessionManager,
-        ?RateLimiter $rateLimiter = null
+        RateLimiter $rateLimiter,
+        ?ConfigService $configService = null
     ) {
-        $this->authService = $authService;
-        $this->viewRenderer = $viewRenderer;
-        $this->sessionManager = $sessionManager;
-        $this->rateLimiter = $rateLimiter;
+        $cfg = $configService ?? new ConfigService(__DIR__ . '/../../content/calculator_defaults.json');
+        $this->showLoginAction = new ShowAdminLoginAction($viewRenderer, $sessionManager);
+        $this->processLoginAction = new ProcessAdminLoginAction($authService, $viewRenderer, $sessionManager, $rateLimiter, $cfg);
+        $this->processLogoutAction = new ProcessAdminLogoutAction($authService);
     }
 
     public function login(Request $request): Response
     {
-        $loginError = '';
         if ($request->isPost()) {
-            $ip = $request->getClientIp();
-
-            if ($this->rateLimiter !== null) {
-                try {
-                    $this->rateLimiter->checkLimit($ip, 'sipswp_admin_auth', 5, 300);
-                } catch (RateLimitExceededException) {
-                    return Response::html($this->viewRenderer->render('admin/login', [
-                        'error' => 'Too many login attempts. Please wait 5 minutes before trying again.',
-                        'csrf_token' => $this->sessionManager->ensureCsrfToken(),
-                    ]), 429);
-                }
-            }
-
-            $password = $request->post('password');
-            if (is_string($password)) {
-                try {
-                    $this->authService->login($password);
-                    return Response::redirect('/admin_insights');
-                } catch (\Core\Exceptions\AuthenticationException) {
-                    $loginError = 'Incorrect password. Access denied.';
-                } catch (\Core\Exceptions\ConfigurationException $e) {
-                    error_log('AdminAuth Configuration Error: ' . $e->getMessage());
-                    $loginError = 'Admin authentication is currently unavailable due to server configuration.';
-                }
-            } else {
-                $loginError = 'Incorrect password. Access denied.';
-            }
+            return ($this->processLoginAction)($request);
         }
-
-        return Response::html($this->viewRenderer->render('admin/login', [
-            'error' => $loginError,
-            'csrf_token' => $this->sessionManager->ensureCsrfToken(),
-        ]));
+        return ($this->showLoginAction)($request);
     }
 
-    public function logout(Request $request): Response
+    public function logout(?Request $request = null): Response
     {
-        $this->authService->logout();
-        return Response::redirect('/admin_insights');
+        return ($this->processLogoutAction)();
     }
 }

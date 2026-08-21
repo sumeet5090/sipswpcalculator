@@ -5,16 +5,22 @@ declare(strict_types=1);
 namespace Core;
 
 use Parsedown;
+use Services\HtmlHeadingEnhancer;
 
 class ContentManager
 {
     private Parsedown $parsedown;
     private string $contentDir;
+    private HtmlHeadingEnhancer $headingEnhancer;
 
-    public function __construct(Parsedown $parsedown, string $contentDir)
-    {
+    public function __construct(
+        Parsedown $parsedown,
+        string $contentDir,
+        ?HtmlHeadingEnhancer $headingEnhancer = null
+    ) {
         $this->parsedown = $parsedown;
         $this->contentDir = $contentDir;
+        $this->headingEnhancer = $headingEnhancer ?? new HtmlHeadingEnhancer();
     }
 
     public function listMarkdownFiles(string $subDir): array
@@ -79,17 +85,7 @@ class ContentManager
         }
 
         $html = $this->parsedown->text($body);
-
-        // Inject slug IDs and scroll-margin-top into h2 and h3 headings for SSR deep linking & TOC parity
-        $html = (string) preg_replace_callback('/<h([23])(?:\s+class="([^"]*)")?>(.*?)<\/h\1>/i', function ($matches) {
-            $level = $matches[1];
-            $existingClass = (string) $matches[2];
-            $text = $matches[3];
-            $plainText = strip_tags($text);
-            $slug = strtolower(trim((string) preg_replace('/[^a-zA-Z0-9]+/', '-', $plainText), '-'));
-            $classes = trim($existingClass . ' scroll-mt-28');
-            return "<h{$level} id=\"{$slug}\" class=\"{$classes}\">{$text}</h{$level}>";
-        }, $html);
+        $html = $this->headingEnhancer->enhanceHeadings($html);
 
         return [
             'metadata' => $metadata,

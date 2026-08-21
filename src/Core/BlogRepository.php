@@ -100,6 +100,24 @@ class BlogRepository
         return $this->cachedPosts;
     }
 
+    /**
+     * Group all blog posts by their SEO category.
+     *
+     * @return array<string, array>
+     */
+    public function getPostsGroupedByCategory(): array
+    {
+        $allPosts = $this->getAllPosts();
+        $postsByCat = [];
+        foreach ($allPosts as $post) {
+            $cat = (string) ($post['seo_category'] ?? '');
+            if ($cat !== '') {
+                $postsByCat[$cat][] = $post;
+            }
+        }
+        return $postsByCat;
+    }
+
     private function parsePostDate(string $rawDate): \DateTimeImmutable
     {
         $formats = ['F Y', 'Y-m-d', 'd F Y', 'Y-m', 'M Y', 'F d, Y', 'Y/m/d'];

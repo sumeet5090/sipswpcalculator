@@ -12,6 +12,8 @@ use Core\InvestmentInputs;
 use Services\ConfigService;
 use Services\FileUploadService;
 use Services\HtmlSanitizer;
+use Core\CurrencyFormatterInterface;
+use Services\FilenameSanitizer;
 use Services\PdfGeneratorService;
 use Services\RateLimiter;
 
@@ -23,6 +25,8 @@ class GeneratePdfAction
     private FileUploadService $fileUploadService;
     private HtmlSanitizer $sanitizer;
     private InvestmentCalculator $calculator;
+    private CurrencyFormatterInterface $currencyFormatter;
+    private FilenameSanitizer $filenameSanitizer;
 
     public function __construct(
         RateLimiter $rateLimiter,
@@ -30,7 +34,9 @@ class GeneratePdfAction
         ConfigService $configService,
         FileUploadService $fileUploadService,
         HtmlSanitizer $sanitizer,
-        InvestmentCalculator $calculator
+        InvestmentCalculator $calculator,
+        ?CurrencyFormatterInterface $currencyFormatter = null,
+        ?FilenameSanitizer $filenameSanitizer = null
     ) {
         $this->rateLimiter = $rateLimiter;
         $this->pdfGenerator = $pdfGenerator;
@@ -38,6 +44,8 @@ class GeneratePdfAction
         $this->fileUploadService = $fileUploadService;
         $this->sanitizer = $sanitizer;
         $this->calculator = $calculator;
+        $this->currencyFormatter = $currencyFormatter ?? new \Core\CurrencyHelper();
+        $this->filenameSanitizer = $filenameSanitizer ?? new FilenameSanitizer();
     }
 
     public function __invoke(Request $request): Response
@@ -69,7 +77,7 @@ class GeneratePdfAction
             $serverCorpus = (float) ($lastRow['combined_total'] ?? 0);
 
             $sym = $this->sanitizer->sanitizeText((string) ($post['currency_symbol'] ?? '₹'), 10);
-            $formatter = new \Core\CurrencyHelper();
+            $formatter = $this->currencyFormatter;
 
             $inputs = [
                 'client_name'       => $this->sanitizer->sanitizeText((string) ($post['clientName'] ?? 'N/A'), 100),
@@ -103,13 +111,9 @@ class GeneratePdfAction
             // Generate PDF binary using injected PdfGeneratorService
             $pdf_binary = $this->pdfGenerator->generate($inputs);
 
-            $raw_name = trim((string) $inputs['client_name']);
-            $unicode_name = preg_replace('/[^\p{L}\p{N}_\- ]/u', '', $raw_name) ?: 'Client';
-            $clean_unicode = (string) preg_replace('/\s+/', '_', trim($unicode_name));
-            $ascii_name = (string) preg_replace('/[^a-zA-Z0-9_\-]/', '_', $raw_name) ?: 'Client';
-            $ascii_name = (string) preg_replace('/_+/', '_', $ascii_name) ?: 'Client';
-            $filename = "Financial_Report_for_{$ascii_name}.pdf";
-            $encodedFilename = rawurlencode("Financial_Report_for_{$clean_unicode}.pdf");
+            $names = $this->filenameSanitizer->sanitizeForAttachment((string) $inputs['client_name']);
+            $filename = $names['filename'];
+            $encodedFilename = $names['encodedFilename'];
 
             return new Response($pdf_binary, 200, [
                 'Content-Type' => 'application/pdf',

@@ -36,16 +36,9 @@ class SchemaFactory
         $schemas = [];
 
         // 1. FAQ Schema
-        if (!empty($homeFaqs)) {
-            $faqData = [];
-            foreach ($homeFaqs as $faq) {
-                if (isset($faq['q'], $faq['a'])) {
-                    $faqData[$faq['q']] = $faq['a'];
-                }
-            }
-            if (!empty($faqData)) {
-                $schemas[] = $this->schemaHelper->getFAQ($faqData);
-            }
+        $faqData = $this->formatFaqData($homeFaqs);
+        if (!empty($faqData)) {
+            $schemas[] = $this->schemaHelper->getFAQ($faqData);
         }
 
         // 2. SoftwareApplication Schema
@@ -294,16 +287,9 @@ class SchemaFactory
         );
 
         // 4. FAQ Schema
-        if (!empty($faqs)) {
-            $faqData = [];
-            foreach ($faqs as $faq) {
-                if (isset($faq['q']) && isset($faq['a'])) {
-                    $faqData[$faq['q']] = $faq['a'];
-                }
-            }
-            if (!empty($faqData)) {
-                $schemas[] = $this->schemaHelper->getFAQ($faqData);
-            }
+        $faqData = $this->formatFaqData($faqs);
+        if (!empty($faqData)) {
+            $schemas[] = $this->schemaHelper->getFAQ($faqData);
         }
 
         // 5. Software Application Schema (if Calculator)
@@ -324,5 +310,26 @@ class SchemaFactory
         }
 
         return $html;
+    }
+
+    /**
+     * Format raw FAQ arrays into key-value pairs [question => answer].
+     *
+     * @param array $faqs List of FAQ items
+     * @return array<string, string>
+     */
+    private function formatFaqData(array $faqs): array
+    {
+        if (empty($faqs)) {
+            return [];
+        }
+
+        $faqData = [];
+        foreach ($faqs as $faq) {
+            if (isset($faq['q'], $faq['a']) && is_string($faq['q']) && is_string($faq['a'])) {
+                $faqData[$faq['q']] = $faq['a'];
+            }
+        }
+        return $faqData;
     }
 }

@@ -74,7 +74,9 @@ class FileRateLimitStorage implements RateLimitStorageInterface
         } finally {
             flock($fp, LOCK_UN);
             fclose($fp);
-            @touch($rateFile);
+            if (file_exists($rateFile)) {
+                touch($rateFile);
+            }
         }
 
         $this->pruneStaleFiles($rateLimitDir, $windowSeconds);
@@ -89,7 +91,7 @@ class FileRateLimitStorage implements RateLimitStorageInterface
             return;
         }
 
-        $entries = @scandir($dir);
+        $entries = scandir($dir);
         if ($entries === false) {
             return;
         }
@@ -103,9 +105,11 @@ class FileRateLimitStorage implements RateLimitStorageInterface
                 continue;
             }
             $file = $dir . $entry;
-            $mtime = @filemtime($file);
-            if ($mtime !== false && ($now - $mtime) > $staleThreshold) {
-                @unlink($file);
+            if (file_exists($file)) {
+                $mtime = filemtime($file);
+                if ($mtime !== false && ($now - $mtime) > $staleThreshold) {
+                    unlink($file);
+                }
             }
             if (++$count > 50) {
                 break;

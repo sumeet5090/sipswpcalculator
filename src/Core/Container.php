@@ -18,6 +18,7 @@ class Container implements ContainerInterface
     private array $bindings = [];
     private array $instances = [];
     private array $resolving = [];
+    private array $reflectionCache = [];
 
     public function __construct()
     {
@@ -154,7 +155,10 @@ class Container implements ContainerInterface
         $this->resolving[$class] = true;
 
         try {
-            $reflector = new \ReflectionClass($class);
+            if (!isset($this->reflectionCache[$class])) {
+                $this->reflectionCache[$class] = new \ReflectionClass($class);
+            }
+            $reflector = $this->reflectionCache[$class];
 
             if (!$reflector->isInstantiable()) {
                 throw new ContainerException("Class {$class} is not instantiable.");

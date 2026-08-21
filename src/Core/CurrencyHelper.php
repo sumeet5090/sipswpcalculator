@@ -59,4 +59,22 @@ class CurrencyHelper implements CurrencyFormatterInterface
         $prefix = $isNegative ? "-₹" : "₹";
         return $prefix . $delimiter;
     }
+
+    /**
+     * Get symbol for a given currency code.
+     */
+    public function getSymbol(string $currency): string
+    {
+        $code = strtoupper(trim($currency));
+        $symbolMap = [
+            'INR' => '₹',
+            'USD' => '$',
+            'EUR' => '€',
+            'GBP' => '£',
+            'AED' => 'AED',
+            'CAD' => '$',
+            'AUD' => '$',
+        ];
+        return $symbolMap[$code] ?? '₹';
+    }
 }

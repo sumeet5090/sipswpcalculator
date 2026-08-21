@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Controllers;
 
+use Core\CurrencyFormatterInterface;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\InvestmentCalculator;
@@ -20,15 +21,18 @@ class DownloadCsvAction
     private InvestmentCalculator $calculator;
     private ConfigService $configService;
     private CsvExportService $csvExportService;
+    private CurrencyFormatterInterface $currencyFormatter;
 
     public function __construct(
         InvestmentCalculator $calculator,
         ConfigService $configService,
-        CsvExportService $csvExportService
+        CsvExportService $csvExportService,
+        ?CurrencyFormatterInterface $currencyFormatter = null
     ) {
         $this->calculator = $calculator;
         $this->configService = $configService;
         $this->csvExportService = $csvExportService;
+        $this->currencyFormatter = $currencyFormatter ?? new \Core\CurrencyHelper();
     }
 
     public function __invoke(Request $request): Response
@@ -39,8 +43,7 @@ class DownloadCsvAction
         $combined = $this->calculator->calculate($inputs);
 
         $currency = strtoupper((string) ($body['currency'] ?? $body['cur'] ?? 'INR'));
-        $symbolMap = ['INR' => '₹', 'USD' => '$', 'EUR' => '€', 'GBP' => '£', 'AED' => 'AED', 'CAD' => '$', 'AUD' => '$'];
-        $sym = $symbolMap[$currency] ?? '₹';
+        $sym = $this->currencyFormatter->getSymbol($currency);
 
         $csvContent = $this->csvExportService->generate($combined, $enableSwp, $sym);
 

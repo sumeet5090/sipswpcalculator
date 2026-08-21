@@ -49,11 +49,7 @@ class BlogController
     {
         $all_posts = $this->blogRepository->getAllPosts();
         $categories = $this->blogRepository->getCategories();
-
-        $posts_by_cat = [];
-        foreach ($all_posts as $post) {
-            $posts_by_cat[$post['seo_category']][] = $post;
-        }
+        $posts_by_cat = $this->blogRepository->getPostsGroupedByCategory();
 
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
@@ -83,10 +79,7 @@ class BlogController
             throw new \Core\Exceptions\RouteNotFoundException("Resource category not found: {$category}");
         }
 
-        $posts_by_cat = [];
-        foreach ($all_posts as $post) {
-            $posts_by_cat[$post['seo_category']][] = $post;
-        }
+        $posts_by_cat = $this->blogRepository->getPostsGroupedByCategory();
 
         $breadcrumbs_schema = $this->schemaHelper->getBreadcrumbs([
             'Home' => '/',
@@ -130,7 +123,7 @@ class BlogController
         $page_config = $this->metaManager->buildFromMetadata($content['metadata'], '/resource/' . $category . '/' . $cleanSlug);
 
         if (empty($content['metadata']['title'])) {
-            throw new \RuntimeException("Missing 'title' in frontmatter for blog post: {$category}/{$cleanSlug}");
+            throw new \Core\Exceptions\ConfigurationException("Missing 'title' in frontmatter for blog post: {$category}/{$cleanSlug}");
         }
         $breadcrumbTitle = (string) $content['metadata']['title'];
 

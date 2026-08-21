@@ -42,54 +42,11 @@ readonly class InsightPayload
     /**
      * Create an InsightPayload instance from a decoded JSON request array.
      */
+    /**
+     * Create an InsightPayload instance from a decoded JSON request array.
+     */
     public static function fromArray(array $data): self
     {
-        $toBoolInt = function (string $key) use ($data): int {
-            if (!isset($data[$key])) {
-                return 0;
-            }
-            $val = $data[$key];
-            if (is_bool($val)) {
-                return $val ? 1 : 0;
-            }
-            if (is_numeric($val)) {
-                return ((int) $val) > 0 ? 1 : 0;
-            }
-            $filtered = filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-            return $filtered === true ? 1 : 0;
-        };
-
-        $toFloatOrNull = function (string $key) use ($data): ?float {
-            if (!isset($data[$key]) || $data[$key] === '') {
-                return null;
-            }
-            if (is_numeric($data[$key])) {
-                return (float) $data[$key];
-            }
-            return null;
-        };
-
-        $toIntOrNull = function (string $key) use ($data): ?int {
-            if (!isset($data[$key]) || $data[$key] === '') {
-                return null;
-            }
-            if (is_numeric($data[$key])) {
-                return (int) $data[$key];
-            }
-            return null;
-        };
-
-        $toStringOrNull = function (string $key, int $maxLen = 64) use ($data): ?string {
-            if (!isset($data[$key]) || !is_string($data[$key])) {
-                return null;
-            }
-            $trimmed = trim($data[$key]);
-            if ($trimmed === '') {
-                return null;
-            }
-            return mb_substr($trimmed, 0, $maxLen, 'UTF-8');
-        };
-
         $currency = (!empty($data['currency']) && is_string($data['currency']))
             ? mb_substr(trim(strtoupper($data['currency'])), 0, 10, 'UTF-8')
             : 'INR';
@@ -108,8 +65,8 @@ readonly class InsightPayload
             ? max(1, (int) $data['interaction_count'])
             : 1;
 
-        $presetClicked = $toStringOrNull('preset_clicked', 64) ?? 'none';
-        $exitAction = $toStringOrNull('exit_action', 64) ?? 'calc_only';
+        $presetClicked = self::toStringOrNull($data, 'preset_clicked', 64) ?? 'none';
+        $exitAction = self::toStringOrNull($data, 'exit_action', 64) ?? 'calc_only';
 
         return new self(
             calcType: $calcType,
@@ -118,25 +75,75 @@ readonly class InsightPayload
             stepUpPct: isset($data['step_up_pct']) && is_numeric($data['step_up_pct']) ? (float) $data['step_up_pct'] : 0.0,
             currency: $currency,
             pdfDownloaded: $pdfDownloaded,
-            interestRate: $toFloatOrNull('interest_rate'),
-            sipAmount: $toFloatOrNull('sip_amount'),
-            sipDuration: $toIntOrNull('sip_duration'),
-            sipStepUp: $toFloatOrNull('sip_step_up'),
-            swpEnabled: $toBoolInt('swp_enabled'),
-            swpWithdrawal: $toFloatOrNull('swp_withdrawal'),
-            swpDuration: $toIntOrNull('swp_duration'),
-            swpStepUp: $toFloatOrNull('swp_step_up'),
-            finalCorpus: $toFloatOrNull('final_corpus'),
-            totalInvested: $toFloatOrNull('total_invested'),
-            wealthMultiplier: $toFloatOrNull('wealth_multiplier'),
-            goalMode: $toStringOrNull('goal_mode', 32),
-            deviceType: $toStringOrNull('device_type', 32),
-            tableViewed: $toBoolInt('table_viewed'),
-            pdfHasCustomName: $toBoolInt('pdf_has_custom_name'),
-            inflationEnabled: $toBoolInt('inflation_enabled'),
+            interestRate: self::toFloatOrNull($data, 'interest_rate'),
+            sipAmount: self::toFloatOrNull($data, 'sip_amount'),
+            sipDuration: self::toIntOrNull($data, 'sip_duration'),
+            sipStepUp: self::toFloatOrNull($data, 'sip_step_up'),
+            swpEnabled: self::toBoolInt($data, 'swp_enabled'),
+            swpWithdrawal: self::toFloatOrNull($data, 'swp_withdrawal'),
+            swpDuration: self::toIntOrNull($data, 'swp_duration'),
+            swpStepUp: self::toFloatOrNull($data, 'swp_step_up'),
+            finalCorpus: self::toFloatOrNull($data, 'final_corpus'),
+            totalInvested: self::toFloatOrNull($data, 'total_invested'),
+            wealthMultiplier: self::toFloatOrNull($data, 'wealth_multiplier'),
+            goalMode: self::toStringOrNull($data, 'goal_mode', 32),
+            deviceType: self::toStringOrNull($data, 'device_type', 32),
+            tableViewed: self::toBoolInt($data, 'table_viewed'),
+            pdfHasCustomName: self::toBoolInt($data, 'pdf_has_custom_name'),
+            inflationEnabled: self::toBoolInt($data, 'inflation_enabled'),
             interactionCount: $interactionCount,
             presetClicked: $presetClicked,
             exitAction: $exitAction
         );
+    }
+
+    private static function toBoolInt(array $data, string $key): int
+    {
+        if (!isset($data[$key])) {
+            return 0;
+        }
+        $val = $data[$key];
+        if (is_bool($val)) {
+            return $val ? 1 : 0;
+        }
+        if (is_numeric($val)) {
+            return ((int) $val) > 0 ? 1 : 0;
+        }
+        $filtered = filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        return $filtered === true ? 1 : 0;
+    }
+
+    private static function toFloatOrNull(array $data, string $key): ?float
+    {
+        if (!isset($data[$key]) || $data[$key] === '') {
+            return null;
+        }
+        if (is_numeric($data[$key])) {
+            return (float) $data[$key];
+        }
+        return null;
+    }
+
+    private static function toIntOrNull(array $data, string $key): ?int
+    {
+        if (!isset($data[$key]) || $data[$key] === '') {
+            return null;
+        }
+        if (is_numeric($data[$key])) {
+            return (int) $data[$key];
+        }
+        return null;
+    }
+
+    private static function toStringOrNull(array $data, string $key, int $maxLen = 64): ?string
+    {
+        if (!isset($data[$key]) || !is_string($data[$key])) {
+            return null;
+        }
+        $trimmed = trim($data[$key]);
+        if ($trimmed === '') {
+            return null;
+        }
+        return mb_substr($trimmed, 0, $maxLen, 'UTF-8');
     }
 }

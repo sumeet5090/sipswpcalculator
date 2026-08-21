@@ -146,8 +146,8 @@ class App
 
         // Admin / Insight Routing
         $this->router->get('/admin_insights', [ShowAdminDashboardAction::class, '__invoke']);
-        $this->router->post('/admin_insights', [AdminAuthAction::class, 'login']);
-        $this->router->post('/admin_insights/logout', [AdminAuthAction::class, 'logout']);
+        $this->router->post('/admin_insights', [\Controllers\ProcessAdminLoginAction::class, '__invoke']);
+        $this->router->post('/admin_insights/logout', [\Controllers\ProcessAdminLogoutAction::class, '__invoke']);
         $this->router->post('/log_insight', [LogInsightApiAction::class, '__invoke']);
 
         // Blog / Resources Routing
