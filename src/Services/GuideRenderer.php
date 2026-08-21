@@ -4,127 +4,35 @@ declare(strict_types=1);
 
 namespace Services;
 
-use Core\ContentManager;
-use Core\Exceptions\RouteNotFoundException;
-use Core\Factories\SchemaFactory;
-use Core\FaqRepository;
-use Core\BlogRepository;
 use Core\Http\Response;
-use Core\MetaManager;
-use Core\Strategies\StrategyFactory;
 use Core\ViewRenderer;
 
 /**
  * GuideRenderer
- * Strategy pattern service to parse, build SEO metadata/schemas, and render educational guides.
+ * Renders educational guides and calculator pages using GuideViewModelBuilder.
  */
 class GuideRenderer
 {
-    private ContentManager $contentManager;
-    private MetaManager $metaManager;
-    private SchemaFactory $schemaFactory;
-    private FaqRepository $faqRepository;
-    private BlogRepository $blogRepository;
-    private StrategyFactory $strategyFactory;
+    private GuideViewModelBuilder $viewModelBuilder;
     private ViewRenderer $viewRenderer;
-    private ConfigService $configService;
 
     public function __construct(
-        ContentManager $contentManager,
-        MetaManager $metaManager,
-        SchemaFactory $schemaFactory,
-        FaqRepository $faqRepository,
-        BlogRepository $blogRepository,
-        StrategyFactory $strategyFactory,
-        ViewRenderer $viewRenderer,
-        ConfigService $configService
+        GuideViewModelBuilder $viewModelBuilder,
+        ViewRenderer $viewRenderer
     ) {
-        $this->contentManager = $contentManager;
-        $this->metaManager = $metaManager;
-        $this->schemaFactory = $schemaFactory;
-        $this->faqRepository = $faqRepository;
-        $this->blogRepository = $blogRepository;
-        $this->strategyFactory = $strategyFactory;
+        $this->viewModelBuilder = $viewModelBuilder;
         $this->viewRenderer = $viewRenderer;
-        $this->configService = $configService;
     }
 
     /**
-     * Parse and render an educational guide template in a standard strategy flow.
+     * Parse, build view model, and render an educational guide template.
      *
      * @param string $slug Guide URL path slug (e.g. 'sip-calculator')
      */
     public function render(string $slug): Response
     {
-        $path = "/calculators/{$slug}";
-        $content = $this->contentManager->getParsedContent($path);
+        $viewModel = $this->viewModelBuilder->build($slug);
 
-        if (!$content) {
-            throw new RouteNotFoundException("Guide content not found for path: {$path}");
-        }
-
-        $meta = $content['metadata'];
-        $seo_category = $meta['seo_category'] ?? 'growth';
-        $type = $meta['type'] ?? 'guide';
-        $publishedDate = $meta['date'] ?? \Core\DateConstants::CONTENT_FALLBACK_DATE;
-
-        $page_config = $this->metaManager->buildFromMetadata($meta, '/' . $slug);
-
-        $strategy = $this->strategyFactory->create($slug);
-        $calculator_type = 'all';
-
-        if ($type === 'calculator') {
-            $calculator_type = $strategy->getType();
-        }
-
-        $faqs = $this->faqRepository->getByTag($slug);
-
-        $page_config['additional_head'] = $this->schemaFactory->generateForPage(
-            $slug,
-            $type,
-            $page_config,
-            $publishedDate,
-            $faqs
-        );
-
-        $initialInputs = $strategy->getInitialInputs();
-        $sip           = $initialInputs->getSip();
-        $years         = $initialInputs->getYears();
-        $rate          = $initialInputs->getRate();
-        $stepup        = $initialInputs->getStepup();
-        $lumpsum       = $initialInputs->getLumpsum();
-
-        $calcDefaults  = $this->configService->getCalculatorDefaults();
-
-        $show_lumpsum = ($calculator_type === 'lumpsum');
-        $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
-
-        // Fetch all posts for related resources / internal linking via injected BlogRepository
-        $all_posts = $this->blogRepository->getAllPosts();
-
-        return Response::html($this->viewRenderer->render($layout, [
-            'content_html'        => $content['html'],
-            'content_metadata'    => $meta,
-            'page_config'         => $page_config,
-            'active_page'         => $slug,
-            'seo_category'        => $seo_category,
-            'calculator_type'     => $calculator_type,
-            'calc_config'         => $calcDefaults,
-            'show_lumpsum'        => $show_lumpsum,
-            'faqs'                => $faqs,
-            'all_posts'           => $all_posts,
-            'sip'                 => $sip,
-            'years'               => $years,
-            'rate'                => $rate,
-            'stepup'              => $stepup,
-            'lumpsum'             => $lumpsum,
-            'corpus'              => $lumpsum,
-            'enable_swp'          => $initialInputs->isSwpEnabled(),
-            'swp_withdrawal'      => $initialInputs->getSwpWithdrawal(),
-            'swp_years_input'     => $initialInputs->getSwpYears(),
-            'swp_stepup'          => $initialInputs->getSwpStepup(),
-            'swp_rate'            => $initialInputs->getSwpRate(),
-            'inflation'           => $initialInputs->getInflation(),
-        ]));
+        return Response::html($this->viewRenderer->render($viewModel['layout'], $viewModel['data']));
     }
 }

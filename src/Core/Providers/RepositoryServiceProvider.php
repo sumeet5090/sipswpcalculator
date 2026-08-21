@@ -9,6 +9,7 @@ use Core\BlogRepository;
 use Core\Container;
 use Core\ContentManager;
 use Core\Env;
+use Core\Factories\HomeSchemaBuilder;
 use Core\Factories\SchemaFactory;
 use Core\FaqRepository;
 use Core\GlossaryRepository;
@@ -17,6 +18,8 @@ use Core\MetaManager;
 use Core\SchemaHelper;
 use Core\SiteConfig;
 use PDO;
+use Services\ConfigService;
+use Services\TelemetryPruningService;
 
 class RepositoryServiceProvider implements ServiceProviderInterface
 {
@@ -25,7 +28,7 @@ class RepositoryServiceProvider implements ServiceProviderInterface
         $container->singleton(MetaManager::class, function (Container $c) {
             return new MetaManager(
                 $c->get(SiteConfig::class),
-                __DIR__ . '/../../../content/meta_pages.json'
+                'content/meta_pages.json'
             );
         });
 
@@ -37,27 +40,47 @@ class RepositoryServiceProvider implements ServiceProviderInterface
             );
         });
 
-        $container->singleton(FaqRepository::class, function () {
-            return new FaqRepository(__DIR__ . '/../../../content/faqs.json');
+        $container->singleton(FaqRepository::class, function (Container $c) {
+            return new FaqRepository(
+                'content/faqs.json',
+                [],
+                $c->get(ConfigService::class)
+            );
         });
 
-        $container->singleton(GlossaryRepository::class, function () {
-            return new GlossaryRepository(__DIR__ . '/../../../content/glossary.json');
+        $container->singleton(GlossaryRepository::class, function (Container $c) {
+            return new GlossaryRepository(
+                'content/glossary.json',
+                $c->get(ConfigService::class)
+            );
         });
 
         $container->singleton(BlogRepository::class, function (Container $c) {
-            return new BlogRepository($c->get(ContentManager::class));
+            return new BlogRepository($c->get(ContentManager::class), null, $c->get(ConfigService::class));
         });
 
         $container->singleton(InsightRepository::class, function (Container $c) {
-            /** @var \Services\ConfigService $configService */
-            $configService = $c->get(\Services\ConfigService::class);
+            /** @var ConfigService $configService */
+            $configService = $c->get(ConfigService::class);
             $bucketConfig = $configService->getJsonConfig('content/dashboard_buckets.json');
             return new InsightRepository($c->get(PDO::class), $bucketConfig);
         });
 
+        $container->singleton(TelemetryPruningService::class, function (Container $c) {
+            return new TelemetryPruningService($c->get(PDO::class));
+        });
+
         $container->singleton(AnonymizedInsightLogger::class, function (Container $c) {
-            return new AnonymizedInsightLogger($c->get(PDO::class));
+            return new AnonymizedInsightLogger(
+                $c->get(PDO::class),
+                $c->get(TelemetryPruningService::class)
+            );
+        });
+
+        $container->singleton(HomeSchemaBuilder::class, function (Container $c) {
+            return new HomeSchemaBuilder(
+                $c->get(SiteConfig::class)
+            );
         });
 
         $container->singleton(SchemaFactory::class, function (Container $c) {
@@ -65,7 +88,8 @@ class RepositoryServiceProvider implements ServiceProviderInterface
                 $c->get(SchemaHelper::class),
                 $c->get(SiteConfig::class),
                 $c->get(BlogRepository::class),
-                $c->get(ContentManager::class)
+                $c->get(ContentManager::class),
+                $c->get(HomeSchemaBuilder::class)
             );
         });
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Core;
 
 use PDO;
+use Services\TelemetryPruningService;
 
 /**
  * Privacy-First Anonymized Insight Logger
@@ -14,10 +15,12 @@ use PDO;
 class AnonymizedInsightLogger
 {
     private PDO $pdo;
+    private TelemetryPruningService $pruningService;
 
-    public function __construct(PDO $pdo)
+    public function __construct(PDO $pdo, ?TelemetryPruningService $pruningService = null)
     {
         $this->pdo = $pdo;
+        $this->pruningService = $pruningService ?? new TelemetryPruningService($pdo);
     }
 
     /**
@@ -30,9 +33,9 @@ class AnonymizedInsightLogger
     {
         try {
             $rawCountryCode = $request ? $request->server('HTTP_CF_IPCOUNTRY') : null;
-            $countryCode = is_string($rawCountryCode) ? substr(trim($rawCountryCode), 0, 10) : null;
+            $countryCode = is_string($rawCountryCode) ? mb_substr(trim($rawCountryCode), 0, 10, 'UTF-8') : null;
             $rawReferrer = $request ? $request->server('HTTP_REFERER') : null;
-            $referrer = is_string($rawReferrer) ? substr($rawReferrer, 0, 512) : null;
+            $referrer = is_string($rawReferrer) ? mb_substr($rawReferrer, 0, 512, 'UTF-8') : null;
             $currency = $payload->currency ?? ($request ? (string) $request->get('currency', 'INR') : 'INR');
 
             $stmt = $this->pdo->prepare("
@@ -76,6 +79,9 @@ class AnonymizedInsightLogger
                 ':preset_clicked' => $payload->presetClicked,
                 ':exit_action' => $payload->exitAction,
             ]);
+
+            // Opportunistic telemetry retention pruning delegated to maintenance service
+            $this->pruningService->opportunisticPrune(500);
         } catch (\Throwable $e) {
             // Silently fail to ensure user experience is never impacted by logging errors
             error_log("AnonymizedInsightLogger Error: " . $e->getMessage());

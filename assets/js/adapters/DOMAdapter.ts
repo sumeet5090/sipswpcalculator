@@ -43,10 +43,24 @@ export class DOMAdapter {
      * Get multiple elements matching a CSS selector or class name.
      */
     getElements<T extends HTMLElement = HTMLElement>(selector: string): T[] {
-        const query = selector.startsWith('.') || selector.startsWith('#') || selector.includes(' ')
-            ? selector
-            : `.${selector}`;
-        return Array.from(document.querySelectorAll<T>(query));
+        const isSelector = selector.startsWith('.') ||
+            selector.startsWith('#') ||
+            selector.startsWith('[') ||
+            selector.includes(' ') ||
+            selector.includes('>') ||
+            selector.includes(':');
+
+        const query = isSelector ? selector : `.${selector}`;
+        try {
+            const results = document.querySelectorAll<T>(query);
+            if (results.length > 0) {
+                return Array.from(results);
+            }
+            // Fallback: test if selector was a valid HTML tag name
+            return Array.from(document.querySelectorAll<T>(selector));
+        } catch (_err) {
+            return [];
+        }
     }
 
     /**
@@ -54,6 +68,37 @@ export class DOMAdapter {
      */
     getViewportHeight(): number {
         return window.innerHeight || document.documentElement.clientHeight || 0;
+    }
+
+    /**
+     * Copy text to system clipboard via navigator.clipboard with fallback textarea element creation.
+     */
+    copyToClipboard(text: string, onSuccess: () => void): void {
+        if (typeof navigator !== 'undefined' && navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
+                this.fallbackCopyToClipboard(text, onSuccess);
+            });
+        } else {
+            this.fallbackCopyToClipboard(text, onSuccess);
+        }
+    }
+
+    private fallbackCopyToClipboard(text: string, onSuccess: () => void): void {
+        try {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+            onSuccess();
+        } catch {
+            // Silently complete if clipboard is fully restricted
+        }
     }
 
     /**

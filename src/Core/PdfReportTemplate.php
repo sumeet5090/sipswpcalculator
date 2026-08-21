@@ -39,9 +39,11 @@ class PdfReportTemplate implements PdfTemplateInterface
         $table_html = (string) ($inputs['table_html'] ?? '');
         $custom_disclaimer = htmlspecialchars((string) ($inputs['custom_disclaimer'] ?? ''));
 
-        $summary_corpus = (string) ($inputs['summary_corpus'] ?? '0');
-        $summary_invested = (string) ($inputs['summary_invested'] ?? '0');
-        $multiplier = self::calculateMultiplier((float) ($inputs['raw_invested'] ?? 0), (float) ($inputs['raw_corpus'] ?? 0), $summary_invested, $summary_corpus);
+        $multiplier = self::calculateMultiplier(
+            (float) ($inputs['raw_invested'] ?? 0),
+            (float) ($inputs['raw_corpus'] ?? 0),
+            (float) ($inputs['raw_withdrawn'] ?? 0)
+        );
 
         $proposal_id = 'SWP-' . strtoupper(substr(md5($client_name . date('Y-m-d')), 0, 8));
         $has_swp = ((int) ($inputs['swp_years'] ?? 0) > 0 || (float) ($inputs['swp_withdrawal'] ?? 0) > 0);
@@ -82,15 +84,14 @@ class PdfReportTemplate implements PdfTemplateInterface
         </html>";
     }
 
-    private static function calculateMultiplier(float $rawInvested, float $rawCorpus, string $summaryInvested, string $summaryCorpus): string
-    {
-        if ($rawInvested > 0 && $rawCorpus > 0) {
-            return number_format($rawCorpus / $rawInvested, 2) . 'x';
-        }
-        $cleanCorpus = (float) preg_replace('/[^\d.]/', '', $summaryCorpus);
-        $cleanInvested = (float) preg_replace('/[^\d.]/', '', $summaryInvested);
-        if ($cleanInvested > 0 && $cleanCorpus > 0) {
-            return number_format($cleanCorpus / $cleanInvested, 2) . 'x';
+    private static function calculateMultiplier(
+        float $rawInvested,
+        float $rawCorpus,
+        float $rawWithdrawn
+    ): string {
+        $totalDelivered = $rawCorpus + $rawWithdrawn;
+        if ($rawInvested > 0 && $totalDelivered > 0) {
+            return number_format($totalDelivered / $rawInvested, 2) . 'x';
         }
         return '1.00x';
     }
@@ -173,48 +174,80 @@ class PdfReportTemplate implements PdfTemplateInterface
         $years = (int) ($inputs['years'] ?? 0);
         $stepup = (float) ($inputs['stepup'] ?? 0);
         $rate = (float) ($inputs['rate'] ?? 0);
+        $inflation = (float) ($inputs['inflation'] ?? 0);
 
-        $phase2Header = $hasSwp ? "<th colspan='2'><span class='phase-badge swp'>Phase 2: Retirement Income (SWP)</span></th>" : "<th colspan='2'></th>";
-        $swpCol1 = $hasSwp
-            ? "<th>Monthly SWP:</th><td>{$sym}&nbsp;" . number_format((float) ($inputs['swp_withdrawal'] ?? 0)) . "</td>"
-            : "<th>Expected Return:</th><td>{$rate}% p.a.</td>";
-        $swpCol2 = $hasSwp
-            ? "<th>SWP Period:</th><td>" . ($inputs['swp_years'] ?? 0) . " Years</td>"
-            : "<th>Annual Step-Up:</th><td>{$stepup}%</td>";
-        $swpCol3 = $hasSwp
-            ? "<th>SWP Annual Hike:</th><td>" . ($inputs['swp_stepup'] ?? 0) . "%</td>"
-            : "<th></th><td></td>";
-        $swpCol4 = $hasSwp
-            ? "<th>SWP Return Rate:</th><td>" . ($inputs['swp_rate'] ?? 8) . "% p.a.</td>"
-            : "<th></th><td></td>";
+        if ($hasSwp) {
+            $swpWithdrawal = number_format((float) ($inputs['swp_withdrawal'] ?? 0));
+            $swpYears = (int) ($inputs['swp_years'] ?? 0);
+            $swpStepup = (float) ($inputs['swp_stepup'] ?? 0);
+            $swpRate = (float) ($inputs['swp_rate'] ?? 8);
+
+            return "
+            <div class='section-heading'>Strategy Parameters & Allocation</div>
+            <div class='config-card'>
+                <table class='config-table'>
+                    <tr>
+                        <th colspan='2'><span class='phase-badge sip'>Phase 1: Accumulation (SIP)</span></th>
+                        <th colspan='2'><span class='phase-badge swp'>Phase 2: Retirement Income (SWP)</span></th>
+                    </tr>
+                    <tr>
+                        <th>Initial Lumpsum:</th>
+                        <td>{$sym}&nbsp;{$lumpsum}</td>
+                        <th>Monthly SWP:</th>
+                        <td>{$sym}&nbsp;{$swpWithdrawal}</td>
+                    </tr>
+                    <tr>
+                        <th>Monthly SIP:</th>
+                        <td>{$sym}&nbsp;{$sip}</td>
+                        <th>SWP Period:</th>
+                        <td>{$swpYears} Years</td>
+                    </tr>
+                    <tr>
+                        <th>SIP Period:</th>
+                        <td>{$years} Years</td>
+                        <th>SWP Annual Hike:</th>
+                        <td>{$swpStepup}%</td>
+                    </tr>
+                    <tr>
+                        <th>Annual Step-Up:</th>
+                        <td>{$stepup}%</td>
+                        <th>SWP Return Rate:</th>
+                        <td>{$swpRate}% p.a.</td>
+                    </tr>
+                    <tr>
+                        <th>Expected Return:</th>
+                        <td>{$rate}% p.a.</td>
+                        <th>Expected Inflation:</th>
+                        <td>{$inflation}% p.a.</td>
+                    </tr>
+                </table>
+            </div>";
+        }
 
         return "
         <div class='section-heading'>Strategy Parameters & Allocation</div>
         <div class='config-card'>
             <table class='config-table'>
                 <tr>
-                    <th colspan='2'><span class='phase-badge sip'>Phase 1: Accumulation (SIP)</span></th>
-                    {$phase2Header}
+                    <th colspan='4'><span class='phase-badge sip'>Wealth Accumulation (SIP) Parameters</span></th>
                 </tr>
                 <tr>
                     <th>Initial Lumpsum:</th>
                     <td>{$sym}&nbsp;{$lumpsum}</td>
-                    {$swpCol1}
-                </tr>
-                <tr>
                     <th>Monthly SIP:</th>
                     <td>{$sym}&nbsp;{$sip}</td>
-                    {$swpCol2}
                 </tr>
                 <tr>
                     <th>SIP Period:</th>
                     <td>{$years} Years</td>
-                    {$swpCol3}
+                    <th>Expected Return:</th>
+                    <td>{$rate}% p.a.</td>
                 </tr>
                 <tr>
                     <th>Annual Step-Up:</th>
                     <td>{$stepup}%</td>
-                    {$swpCol4}
+                    <th>Expected Inflation:</th>
+                    <td>{$inflation}% p.a.</td>
                 </tr>
             </table>
         </div>";
@@ -302,10 +335,13 @@ class PdfReportTemplate implements PdfTemplateInterface
 
         // Scan pre-computed yearly results from InvestmentCalculator
         $combinedResults = $inputs['combined_results'] ?? [];
+        $showPostTax = (bool) ($inputs['show_post_tax'] ?? false);
         if (is_array($combinedResults)) {
             foreach ($combinedResults as $row) {
                 $y = (int) ($row['year'] ?? 0);
-                $corpus = (float) ($row['combined_total'] ?? 0);
+                $corpus = $showPostTax
+                    ? (float) ($row['post_tax_total'] ?? $row['combined_total'] ?? 0)
+                    : (float) ($row['combined_total'] ?? 0);
                 foreach ($milestoneTargets as $target => $label) {
                     if (!isset($found[$target]) && $corpus >= $target) {
                         $found[$target] = [

@@ -36,6 +36,23 @@ class InvestmentCalculator
         $cumulativeWithdrawals = 0.0;
         $results = [];
 
+        if ($simulationYears <= 0) {
+            return [[
+                'year' => 0,
+                'begin_balance' => round($lumpsum),
+                'sip_monthly' => null,
+                'annual_contribution' => 0.0,
+                'cumulative_invested' => round($lumpsum),
+                'swp_monthly' => null,
+                'annual_withdrawal' => null,
+                'cumulative_withdrawals' => 0.0,
+                'interest' => 0.0,
+                'combined_total' => round($lumpsum),
+                'ltcg_tax' => 0.0,
+                'post_tax_total' => round($lumpsum)
+            ]];
+        }
+
         for ($y = 1; $y <= $simulationYears; $y++) {
             $currentRate = ($y <= $sipYears) ? $rate : $swpRate;
             $monthlyRate = $currentRate / 100 / 12;

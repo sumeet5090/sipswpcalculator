@@ -6,6 +6,10 @@ import type { InvestmentInputs, YearResult } from '../types/index.ts';
  * Refactored as an Object-Oriented class.
  */
 export class MathEngine {
+    private static round2(val: number): number {
+        return Math.round((val + Number.EPSILON) * 100) / 100;
+    }
+
     /**
      * Perform month-by-month compounding simulation.
      */
@@ -19,6 +23,23 @@ export class MathEngine {
         let cumulativeInvested = lumpsum;
         let cumulativeWithdrawals = 0.0;
 
+        if (totalYears <= 0) {
+            return [{
+                year: 0,
+                begin_balance: Math.round(lumpsum),
+                sip_monthly: null,
+                annual_contribution: 0,
+                cumulative_invested: Math.round(lumpsum),
+                swp_monthly: null,
+                annual_withdrawal: null,
+                cumulative_withdrawals: 0,
+                interest: 0,
+                combined_total: Math.round(lumpsum),
+                ltcg_tax: 0,
+                post_tax_total: Math.round(lumpsum)
+            }];
+        }
+
         const results: YearResult[] = [];
 
         for (let y = 1; y <= totalYears; y++) {
@@ -28,17 +49,17 @@ export class MathEngine {
             // Monthly SIP amount for this year
             let monthlySip = 0.0;
             if (y <= inp.years) {
-                monthlySip = Math.round((inp.sip * Math.pow(1 + inp.stepup / 100, y - 1)) * 100) / 100;
+                monthlySip = this.round2(inp.sip * Math.pow(1 + inp.stepup / 100, y - 1));
             }
 
             // Monthly SWP amount for this year
             let monthlySwp = 0.0;
             if (inp.enable_swp && y >= swpStartYear) {
-                monthlySwp = Math.round((inp.swp_withdrawal * Math.pow(1 + inp.swp_stepup / 100, y - swpStartYear)) * 100) / 100;
+                monthlySwp = this.round2(inp.swp_withdrawal * Math.pow(1 + inp.swp_stepup / 100, y - swpStartYear));
             }
 
             let actualYearWithdrawn = 0.0;
-            let annualContribution = Math.round((monthlySip * 12) * 100) / 100;
+            let annualContribution = this.round2(monthlySip * 12);
             let yearBegin = netBalance;
 
             for (let m = 1; m <= 12; m++) {
@@ -56,9 +77,9 @@ export class MathEngine {
             }
 
             cumulativeInvested += annualContribution;
-            let annualWithdrawal = Math.round(actualYearWithdrawn * 100) / 100;
+            let annualWithdrawal = this.round2(actualYearWithdrawn);
             if (inp.enable_swp && y >= swpStartYear) {
-                cumulativeWithdrawals = Math.round((cumulativeWithdrawals + annualWithdrawal) * 100) / 100;
+                cumulativeWithdrawals = this.round2(cumulativeWithdrawals + annualWithdrawal);
             }
 
             let interestEarned = netBalance - (yearBegin + annualContribution - annualWithdrawal);
@@ -117,15 +138,21 @@ export class MathEngine {
      * Binary Search to find the required starting SIP to reach a target corpus.
      */
     static calculateRequiredSip(inp: InvestmentInputs, targetCorpus: number): number {
-        if (targetCorpus <= 0) return 0;
+        if (targetCorpus <= 0 || inp.years <= 0) return 0;
+
+        // Closed-form linear calculation when rate is 0 and stepup is 0
+        if (inp.rate <= 0 && inp.stepup <= 0) {
+            const remaining = Math.max(0, targetCorpus - (inp.lumpsum || 0));
+            return Math.round(remaining / (inp.years * 12));
+        }
         
         const zeroSipResults = this.calculate({ ...inp, sip: 0 });
-        if (zeroSipResults[zeroSipResults.length - 1].combined_total >= targetCorpus) {
+        if (zeroSipResults.length > 0 && zeroSipResults[zeroSipResults.length - 1].combined_total >= targetCorpus) {
             return 0;
         }
         
         let low = 0;
-        let high = targetCorpus;
+        let high = Math.max(targetCorpus, (targetCorpus / inp.years) * 2);
         let bestSip = 0;
         
         // Cap iterations to 40 for max 5ms execution time (zero-latency)
@@ -133,6 +160,7 @@ export class MathEngine {
             const mid = (low + high) / 2;
             const testInp: InvestmentInputs = { ...inp, sip: mid };
             const results = this.calculate(testInp);
+            if (results.length === 0) break;
             const finalCorpus = results[results.length - 1].combined_total;
             
             if (Math.abs(finalCorpus - targetCorpus) < 1) {
@@ -155,6 +183,11 @@ export class MathEngine {
     static calculateRequiredStartingCorpusForSwp(inp: InvestmentInputs): number {
         if (!inp.enable_swp || inp.swp_withdrawal <= 0 || inp.swp_years <= 0) return 0;
         
+        // Closed-form linear calculation when swp_rate is 0 and swp_stepup is 0
+        if (inp.swp_rate <= 0 && inp.swp_stepup <= 0) {
+            return Math.round(inp.swp_withdrawal * 12 * inp.swp_years);
+        }
+
         let low = 0;
         let high = inp.swp_withdrawal * 12 * inp.swp_years * 3; // safe upper bound
         let bestCorpus = 0;
@@ -164,10 +197,11 @@ export class MathEngine {
             const testInp: InvestmentInputs = {
                 ...inp,
                 sip: 0,
-                years: 1,
+                years: (inp.years && inp.years > 0) ? inp.years : 0,
                 lumpsum: mid
             };
             const results = this.calculate(testInp);
+            if (results.length === 0) break;
             const finalBalance = results[results.length - 1].combined_total;
             const ranOutEarly = results.some((r, idx) => idx < results.length - 1 && r.combined_total <= 0);
 

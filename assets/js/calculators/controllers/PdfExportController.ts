@@ -1,6 +1,7 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { ChartManager } from '../ChartManager';
 import { AnalyticsService } from '../AnalyticsLogger';
+import { CurrencyFormatter } from '../CurrencyHelper';
 import { InvestmentInputs, YearResult } from '../../types';
 
 export class PdfExportController {
@@ -11,6 +12,7 @@ export class PdfExportController {
     private getLatestResults: () => YearResult[];
     private getActiveGoalMode: () => string;
     private getInteractionCount: () => number;
+    private formatter: CurrencyFormatter;
 
     constructor(
         dom: DOMAdapter,
@@ -19,7 +21,8 @@ export class PdfExportController {
         getInputs: () => InvestmentInputs,
         getLatestResults: () => YearResult[],
         getActiveGoalMode: () => string,
-        getInteractionCount: () => number
+        getInteractionCount: () => number,
+        formatter: CurrencyFormatter = new CurrencyFormatter()
     ) {
         this.dom = dom;
         this.chartManager = chartManager;
@@ -28,6 +31,7 @@ export class PdfExportController {
         this.getLatestResults = getLatestResults;
         this.getActiveGoalMode = getActiveGoalMode;
         this.getInteractionCount = getInteractionCount;
+        this.formatter = formatter;
     }
 
     init(): void {
@@ -93,7 +97,27 @@ export class PdfExportController {
                 let chartDataURL = '';
                 if (chartInst && chartInst.canvas) {
                     try {
-                        chartDataURL = chartInst.canvas.toDataURL('image/png');
+                        chartInst.stop();
+                        chartInst.render();
+
+                        const srcCanvas = chartInst.canvas;
+                        const maxW = 1200;
+                        const scale = srcCanvas.width > maxW ? (maxW / srcCanvas.width) : 1;
+                        const targetW = Math.round(srcCanvas.width * scale);
+                        const targetH = Math.round(srcCanvas.height * scale);
+
+                        const offscreen = document.createElement('canvas');
+                        offscreen.width = targetW;
+                        offscreen.height = targetH;
+                        const offCtx = offscreen.getContext('2d');
+                        if (offCtx) {
+                            offCtx.fillStyle = '#ffffff';
+                            offCtx.fillRect(0, 0, targetW, targetH);
+                            offCtx.drawImage(srcCanvas, 0, 0, targetW, targetH);
+                            chartDataURL = offscreen.toDataURL('image/png', 0.92);
+                        } else {
+                            chartDataURL = srcCanvas.toDataURL('image/png');
+                        }
                     } catch (_err) {
                         chartDataURL = '';
                     }
@@ -109,12 +133,15 @@ export class PdfExportController {
                 formData.append('rate', String(currentInputs.rate));
                 formData.append('stepup', String(currentInputs.stepup));
                 formData.append('lumpsum', String(currentInputs.lumpsum));
+                formData.append('inflation', String(currentInputs.inflation));
+                formData.append('enable_swp', currentInputs.enable_swp ? '1' : '0');
                 formData.append('swp_withdrawal', String(currentInputs.swp_withdrawal));
                 formData.append('swp_stepup', String(currentInputs.swp_stepup));
                 formData.append('swp_years', String(currentInputs.swp_years));
                 formData.append('swp_rate', String(currentInputs.swp_rate));
 
-                formData.append('currency_symbol', '₹');
+                formData.append('currency_symbol', this.formatter.getSymbol());
+                formData.append('currency', this.formatter.getCurrency());
                 formData.append('summary_invested', this.dom.getElement('summary-invested')?.textContent?.trim() || '0');
                 formData.append('summary_interest', this.dom.getElement('summary-interest')?.textContent?.trim() || '0');
                 formData.append('summary_withdrawn', this.dom.getElement('summary-withdrawn')?.textContent?.trim() || '0');
@@ -134,48 +161,48 @@ export class PdfExportController {
                     method: 'POST',
                     body: formData
                 })
-                .then(res => {
-                    if (res.ok) return res.blob();
-                    throw new Error('PDF generation failed.');
-                })
-                .then(blob => {
-                    const clientNameClean = (formData.get('clientName') || 'Client').toString().trim().replace(/[^a-zA-Z0-9_\-]/g, '_').replace(/_+/g, '_') || 'Client';
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    a.download = `Financial_Report_for_${clientNameClean}.pdf`;
-                    document.body.appendChild(a);
-                    a.click();
+                    .then(res => {
+                        if (res.ok) return res.blob();
+                        throw new Error('PDF generation failed.');
+                    })
+                    .then(blob => {
+                        const clientNameClean = (formData.get('clientName') || 'Client').toString().trim().replace(/[^a-zA-Z0-9_\-]/g, '_').replace(/_+/g, '_') || 'Client';
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        a.href = url;
+                        a.download = `Financial_Report_for_${clientNameClean}.pdf`;
+                        document.body.appendChild(a);
+                        a.click();
 
-                    if (generatePdfBtn) {
-                        generatePdfBtn.disabled = false;
-                        generatePdfBtn.textContent = 'Download PDF';
-                    }
-                    closeModalFn(pdfModal);
-                    a.remove();
+                        if (generatePdfBtn) {
+                            generatePdfBtn.disabled = false;
+                            generatePdfBtn.textContent = 'Download PDF';
+                        }
+                        closeModalFn(pdfModal);
+                        a.remove();
 
-                    // Log PDF telemetry using AnalyticsLogger (CQS Fix)
-                    const inputs = this.getInputs();
-                    const advisorNameStr = (formData.get('advisorName') || '').toString().trim();
-                    const pdfHasCustomName = advisorNameStr.length > 0;
+                        // Log PDF telemetry immediately using AnalyticsLogger (CQS Fix)
+                        const inputs = this.getInputs();
+                        const advisorNameStr = (formData.get('advisorName') || '').toString().trim();
+                        const pdfHasCustomName = advisorNameStr.length > 0;
 
-                    this.analytics.logInsight(inputs, this.getLatestResults(), this.getActiveGoalMode(), {
-                        pdf_downloaded: true,
-                        pdf_has_custom_name: pdfHasCustomName,
-                        exit_action: 'pdf_download',
-                        interaction_count: this.getInteractionCount()
+                        this.analytics.sendImmediateInsight(inputs, this.getLatestResults(), this.getActiveGoalMode(), {
+                            pdf_downloaded: true,
+                            pdf_has_custom_name: pdfHasCustomName,
+                            exit_action: 'pdf_download',
+                            interaction_count: this.getInteractionCount()
+                        });
+
+                        setTimeout(() => window.URL.revokeObjectURL(url), 100);
+                    })
+                    .catch(err => {
+                        console.error('PDF generation failed:', err.message);
+                        if (generatePdfBtn) {
+                            generatePdfBtn.disabled = false;
+                            generatePdfBtn.textContent = 'Download PDF';
+                        }
                     });
-
-                    setTimeout(() => window.URL.revokeObjectURL(url), 100);
-                })
-                .catch(err => {
-                    console.error('PDF generation failed:', err.message);
-                    if (generatePdfBtn) {
-                        generatePdfBtn.disabled = false;
-                        generatePdfBtn.textContent = 'Download PDF';
-                    }
-                });
             });
         }
     }

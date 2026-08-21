@@ -12,6 +12,8 @@ use Core\InvestmentInputs;
 use Services\ConfigService;
 use Services\FileUploadService;
 use Services\HtmlSanitizer;
+use Core\CurrencyFormatterInterface;
+use Services\FilenameSanitizer;
 use Services\PdfGeneratorService;
 use Services\RateLimiter;
 
@@ -23,6 +25,8 @@ class GeneratePdfAction
     private FileUploadService $fileUploadService;
     private HtmlSanitizer $sanitizer;
     private InvestmentCalculator $calculator;
+    private CurrencyFormatterInterface $currencyFormatter;
+    private FilenameSanitizer $filenameSanitizer;
 
     public function __construct(
         RateLimiter $rateLimiter,
@@ -30,7 +34,9 @@ class GeneratePdfAction
         ConfigService $configService,
         FileUploadService $fileUploadService,
         HtmlSanitizer $sanitizer,
-        InvestmentCalculator $calculator
+        InvestmentCalculator $calculator,
+        ?CurrencyFormatterInterface $currencyFormatter = null,
+        ?FilenameSanitizer $filenameSanitizer = null
     ) {
         $this->rateLimiter = $rateLimiter;
         $this->pdfGenerator = $pdfGenerator;
@@ -38,6 +44,8 @@ class GeneratePdfAction
         $this->fileUploadService = $fileUploadService;
         $this->sanitizer = $sanitizer;
         $this->calculator = $calculator;
+        $this->currencyFormatter = $currencyFormatter ?? new \Core\CurrencyHelper();
+        $this->filenameSanitizer = $filenameSanitizer ?? new FilenameSanitizer();
     }
 
     public function __invoke(Request $request): Response
@@ -50,8 +58,11 @@ class GeneratePdfAction
 
         // Rate limiting check
         try {
-            $ip = (string) $request->server('REMOTE_ADDR', 'unknown');
-            $this->rateLimiter->checkLimit($ip, 'sipswp_rate_limits', 10, 60);
+            $ip = $request->getClientIp();
+            $rateLimits = $this->configService->getJsonConfig('content/rate_limits.json');
+            $maxRequests = (int) ($rateLimits['pdf_generation']['max_requests'] ?? 10);
+            $windowSeconds = (int) ($rateLimits['pdf_generation']['window_seconds'] ?? 60);
+            $this->rateLimiter->checkLimit($ip, 'sipswp_rate_limits', $maxRequests, $windowSeconds);
         } catch (RateLimitExceededException $e) {
             return new Response('Too many requests. Please wait a minute before generating another PDF.', 429);
         }
@@ -61,48 +72,50 @@ class GeneratePdfAction
             $calcInputs = InvestmentInputs::fromRequest($post, $this->configService);
             $combined = $this->calculator->calculate($calcInputs);
 
-            $inputs = [
+            // Derive verified server-side summary values from calculated schedule
+            $lastRow = !empty($combined) ? $combined[count($combined) - 1] : [];
+            $serverInvested = (float) ($lastRow['cumulative_invested'] ?? 0);
+            $serverInterest = (float) array_sum(array_column($combined, 'interest'));
+            $serverWithdrawn = (float) ($lastRow['cumulative_withdrawals'] ?? 0);
+            $serverCorpus = (float) ($lastRow['combined_total'] ?? 0);
+
+            $sym = $this->sanitizer->sanitizeText((string) ($post['currency_symbol'] ?? '₹'), 10);
+            $formatter = $this->currencyFormatter;
+
+            $inputs = array_merge($calcInputs->toTemplateData(), [
                 'client_name'       => $this->sanitizer->sanitizeText((string) ($post['clientName'] ?? 'N/A'), 100),
                 'advisor_name'      => $this->sanitizer->sanitizeText((string) ($post['advisorName'] ?? 'N/A'), 100),
                 'custom_disclaimer' => $this->sanitizer->sanitizeText((string) ($post['customDisclaimer'] ?? ''), 1000),
                 'chart_base64'      => $this->sanitizer->extractChartData((string) ($post['chartData'] ?? '')),
                 'table_html'        => $this->sanitizer->sanitizeTableHtml((string) ($post['tableHtml'] ?? '')),
-                'sip'               => $calcInputs->getSip(),
-                'years'             => $calcInputs->getYears(),
-                'rate'              => $calcInputs->getRate(),
-                'stepup'            => $calcInputs->getStepup(),
-                'lumpsum'           => $calcInputs->getLumpsum(),
-                'swp_withdrawal'    => $calcInputs->getSwpWithdrawal(),
-                'swp_stepup'        => $calcInputs->getSwpStepup(),
-                'swp_years'         => $calcInputs->getSwpYears(),
-                'swp_rate'          => $calcInputs->getSwpRate(),
                 'logo_base64'       => $this->fileUploadService->processLogoUpload($request->files('advisorLogo')),
 
-                // Summary Metrics
-                'currency_symbol'   => $this->sanitizer->sanitizeText((string) ($post['currency_symbol'] ?? ''), 10),
-                'summary_invested'  => $this->sanitizer->sanitizeText((string) ($post['summary_invested'] ?? '0'), 50),
-                'summary_interest'  => $this->sanitizer->sanitizeText((string) ($post['summary_interest'] ?? '0'), 50),
-                'summary_withdrawn' => $this->sanitizer->sanitizeText((string) ($post['summary_withdrawn'] ?? '0'), 50),
-                'summary_corpus'    => $this->sanitizer->sanitizeText((string) ($post['summary_corpus'] ?? '0'), 50),
-                'raw_invested'      => max(0.0, (float) ($post['raw_invested'] ?? 0)),
-                'raw_corpus'        => max(0.0, (float) ($post['raw_corpus'] ?? 0)),
+                // Verified Summary Metrics
+                'currency_symbol'   => $sym,
+                'summary_invested'  => $formatter->format($serverInvested),
+                'summary_interest'  => $formatter->format($serverInterest),
+                'summary_withdrawn' => $formatter->format($serverWithdrawn),
+                'summary_corpus'    => $formatter->format($serverCorpus),
+                'raw_invested'      => $serverInvested,
+                'raw_corpus'        => $serverCorpus,
+                'raw_withdrawn'     => $serverWithdrawn,
                 'combined_results'  => $combined,
-            ];
+            ]);
 
             // Generate PDF binary using injected PdfGeneratorService
             $pdf_binary = $this->pdfGenerator->generate($inputs);
 
-            $raw_name = trim($inputs['client_name']);
-            $clean_name = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $raw_name) ?: 'Client';
-            $clean_name = (string) preg_replace('/_+/', '_', $clean_name);
-            $filename = "Financial_Report_for_{$clean_name}.pdf";
+            $names = $this->filenameSanitizer->sanitizeForAttachment((string) $inputs['client_name']);
+            $filename = $names['filename'];
+            $encodedFilename = $names['encodedFilename'];
 
             return new Response($pdf_binary, 200, [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                'Content-Disposition' => "attachment; filename=\"{$filename}\"; filename*=UTF-8''{$encodedFilename}",
                 'Content-Length' => (string) strlen($pdf_binary),
                 'Cache-Control' => 'private, max-age=0, must-revalidate',
                 'Pragma' => 'public',
+                'X-Accel-Buffering' => 'no',
             ]);
         } catch (\Throwable $e) {
             error_log('PDF Generation Error: ' . $e->getMessage());

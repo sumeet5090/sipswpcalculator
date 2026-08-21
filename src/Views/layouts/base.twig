@@ -15,10 +15,12 @@
     <link rel="canonical" href="{{ canonical_url }}">
     <meta name="robots" content="{{ page_config.robots|default('index, follow') }}">
 
+    <meta name="author" content="{{ page_config.author|default('Sumeet Boga') }}">
+
     <link rel="alternate" hreflang="en-IN" href="{{ canonical_url }}">
     <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
 
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="{{ page_config.og_type|default('website') }}">
     <meta property="og:site_name" content="SIP & SWP Calculator">
     <meta property="og:locale" content="en_IN">
     <meta property="og:url" content="{{ canonical_url }}">
@@ -29,6 +31,7 @@
     <meta property="og:image:height" content="630">
 
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="{{ page_config.twitter_creator|default('@sumeetboga') }}">
     <meta name="twitter:title" content="{{ page_config.og_title|default(page_config.title|default('SIP & SWP Calculator')) }}">
     <meta name="twitter:description" content="{{ page_config.og_desc|default(page_config.meta_desc|default('Free SIP & SWP calculator with step-up compounding.')) }}">
     <meta name="twitter:image" content="{{ page_config.og_image|default(site_url ~ '/assets/og-image-main.jpg') }}">
@@ -43,6 +46,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     </noscript>
 
+    {# ── Vite Asset Integration: HMR client (dev) & compiled CSS links (prod) ── #}
     {{ vite_client() }}
     {{ vite_css('resources/js/app.ts') }}
 
@@ -77,15 +81,16 @@
     {% block head %}{% endblock %}
 </head>
 <body class="{{ page_config.body_class|default('bg-gray-50 text-gray-800 font-sans antialiased') }} overflow-x-hidden" style="{{ page_config.body_style|default('background-image: var(--gradient-surface); background-attachment: fixed;') }}">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:p-3 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:shadow-lg focus:z-50 font-bold transition-all">Skip to main content</a>
     
     {% include 'layouts/header.twig' %}
     
     <!-- spacer to prevent content from being hidden behind fixed header -->
     <div class="h-16"></div>
     
-    <div class="container mt-6 mx-auto px-4 sm:px-6 lg:px-8 {{ page_config.container_class|default('max-w-7xl') }}">
+    <main id="main-content" class="container mt-6 mx-auto px-4 sm:px-6 lg:px-8 {{ page_config.container_class|default('max-w-7xl') }}">
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
     {% include 'layouts/footer.twig' %}
 

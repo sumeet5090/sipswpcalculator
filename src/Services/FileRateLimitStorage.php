@@ -12,18 +12,32 @@ class FileRateLimitStorage implements RateLimitStorageInterface
 
     public function __construct(?string $baseStorageDir = null)
     {
-        $this->baseStorageDir = $baseStorageDir ?? __DIR__ . '/../../var/rate_limits';
+        if ($baseStorageDir === null) {
+            $sharedParent = dirname(__DIR__, 4) . '/shared/var/rate_limits';
+            if (is_dir(dirname($sharedParent))) {
+                $baseStorageDir = $sharedParent;
+            } else {
+                $baseStorageDir = __DIR__ . '/../../var/rate_limits';
+            }
+        }
+        $this->baseStorageDir = $baseStorageDir;
     }
 
     public function checkAndIncrement(string $ip, string $prefix, int $maxRequests, int $windowSeconds): void
     {
-        $rateLimitDir = rtrim($this->baseStorageDir, '/\\') . '/' . trim($prefix, '/') . '/';
-        if (!is_dir($rateLimitDir) && !mkdir($rateLimitDir, 0700, true) && !is_dir($rateLimitDir)) {
-            error_log("RateLimiter Error: Failed to create storage directory at {$rateLimitDir}");
-            throw new RateLimitExceededException('Rate limiter storage unavailable.');
+        if ($maxRequests <= 0 || $windowSeconds <= 0) {
+            return;
         }
 
         $ipHash = hash('sha256', $ip);
+        $subDir = substr($ipHash, 0, 2);
+        $rateLimitDir = rtrim($this->baseStorageDir, '/\\') . '/' . trim($prefix, '/') . '/' . $subDir . '/';
+
+        if (!is_dir($rateLimitDir) && !mkdir($rateLimitDir, 0775, true) && !is_dir($rateLimitDir)) {
+            error_log("RateLimiter Error: Failed to create storage directory at {$rateLimitDir}. Check filesystem permissions.");
+            throw new RateLimitExceededException('Rate limiter storage unavailable.');
+        }
+
         $rateFile = $rateLimitDir . $ipHash . '.json';
         $fp = fopen($rateFile, 'c+');
 
@@ -60,6 +74,47 @@ class FileRateLimitStorage implements RateLimitStorageInterface
         } finally {
             flock($fp, LOCK_UN);
             fclose($fp);
+            if (file_exists($rateFile)) {
+                touch($rateFile);
+            }
+        }
+
+        $this->pruneStaleFiles($rateLimitDir, $windowSeconds);
+    }
+
+    /**
+     * Opportunistically prune stale rate limit JSON files to prevent inode exhaustion.
+     */
+    private function pruneStaleFiles(string $dir, int $windowSeconds): void
+    {
+        if (random_int(1, 100) !== 1 || !is_dir($dir)) {
+            return;
+        }
+
+        $entries = scandir($dir);
+        if ($entries === false) {
+            return;
+        }
+
+        $now = time();
+        $staleThreshold = $windowSeconds * 2;
+        $count = 0;
+        $dirClean = rtrim($dir, '/\\') . DIRECTORY_SEPARATOR;
+
+        foreach ($entries as $entry) {
+            if ($entry === '.' || $entry === '..' || !str_ends_with($entry, '.json')) {
+                continue;
+            }
+            $file = $dirClean . $entry;
+            if (file_exists($file)) {
+                $mtime = filemtime($file);
+                if ($mtime !== false && ($now - $mtime) > $staleThreshold) {
+                    @unlink($file);
+                }
+            }
+            if (++$count > 200) {
+                break;
+            }
         }
     }
 }

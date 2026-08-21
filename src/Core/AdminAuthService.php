@@ -44,6 +44,9 @@ class AdminAuthService
         }
 
         if (hash_equals($this->adminPassword, $password)) {
+            if (session_status() === PHP_SESSION_ACTIVE) {
+                session_regenerate_id(true);
+            }
             $this->sessionManager->set('admin_authenticated', true);
             return;
         }
@@ -56,6 +59,7 @@ class AdminAuthService
      */
     public function logout(): void
     {
+        $this->sessionManager->remove('admin_authenticated');
         $this->sessionManager->destroy();
     }
 }

@@ -15,7 +15,12 @@ class TrailingSlashRedirectMiddleware implements MiddlewareInterface
 
         if ($uri !== '/' && str_ends_with($uri, '/')) {
             $canonicalUri = rtrim($uri, '/');
-            return Response::redirect($canonicalUri, 301);
+            $queryString = (string) $request->server('QUERY_STRING', '');
+            if ($queryString !== '') {
+                $canonicalUri .= '?' . $queryString;
+            }
+            $status = $request->isPost() ? 308 : 301;
+            return Response::redirect($canonicalUri, $status);
         }
 
         return $next($request);

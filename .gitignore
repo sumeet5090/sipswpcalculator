@@ -10,8 +10,8 @@ stage/
 .DS_Store
 
 # --- Database ---
-database/database.sqlite
-database/database.sqlite-*
+database/*.sqlite
+database/*.sqlite-*
 
 # --- Logs & Temps ---
 *.log
@@ -28,7 +28,6 @@ var/
 assets/js/calculators/calculator_defaults.json
 
 # --- Binaries ---
-# We ignore general binaries but KEEP our Tailwind compiler 
 *.dll
 *.so
 *.o
@@ -38,10 +37,7 @@ __pycache__/
 *.jar
 *.war
 *.ear
-
-# If you want to ignore all other .exes but KEEP tailwind:
 *.exe
-# !tailwindcss.exe
 
 # --- Testing Cache ---
 .phpunit.cache/

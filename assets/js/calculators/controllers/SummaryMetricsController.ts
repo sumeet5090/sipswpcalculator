@@ -29,6 +29,7 @@ export class SummaryMetricsController {
 
         if (cardElms.length === 0) return;
 
+        // 1. Reset Phase
         cardElms.forEach(el => {
             el.style.whiteSpace = 'nowrap';
             el.style.overflow = 'hidden';
@@ -39,16 +40,19 @@ export class SummaryMetricsController {
             el.style.fontSize = basePx + 'px';
         });
 
-        const results = cardElms.map(el => {
+        // 2. Query Phase (batch all DOM measurements together to prevent layout thrashing)
+        const measurements = cardElms.map(el => {
             const parent = el.parentElement;
             if (!parent) return null;
             const cs = getComputedStyle(parent);
             const availableW = parent.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
             const textW = el.scrollWidth;
-            return { el, basePx: parseFloat(el.dataset.baseFont || '16'), availableW, textW };
+            const basePx = parseFloat(el.dataset.baseFont || '16');
+            return { el, basePx, availableW, textW };
         }).filter((item): item is NonNullable<typeof item> => item !== null);
 
-        results.forEach(({ el, basePx, availableW, textW }) => {
+        // 3. Command Phase (batch all style mutations together)
+        measurements.forEach(({ el, basePx, availableW, textW }) => {
             if (textW > availableW && availableW > 0) {
                 el.style.fontSize = Math.max((availableW / textW) * basePx, 10) + 'px';
             } else {
@@ -117,12 +121,19 @@ export class SummaryMetricsController {
 
         // Apply inflation discounting
         if (inputs.inflation > 0) {
+            const totalYears = inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years;
             finalCorpus = MathEngine.calculateInflationDiscount(
                 finalCorpus,
-                inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years,
+                totalYears,
+                inputs.inflation
+            );
+            finalGains = MathEngine.calculateInflationDiscount(
+                finalGains,
+                totalYears,
                 inputs.inflation
             );
             if (corpusTitle) corpusTitle.textContent += ' (Inflation Adjusted)';
+            if (interestTitle) interestTitle.textContent += ' (Inflation Adjusted)';
         }
 
         const setVal = (id: string, val: number) => {

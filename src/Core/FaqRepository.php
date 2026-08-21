@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Services\ConfigService;
+
 class FaqRepository
 {
     private ?array $faqs = null;
     private string $jsonPath;
     private array $defaultCategoryLabels;
+    private ConfigService $configService;
 
-    public function __construct(string $jsonPath, array $defaultCategoryLabels = [])
-    {
+    public function __construct(
+        string $jsonPath = 'content/faqs.json',
+        array $defaultCategoryLabels = [],
+        ?ConfigService $configService = null
+    ) {
         $this->jsonPath = $jsonPath;
+        $this->configService = $configService ?? new ConfigService();
         $this->defaultCategoryLabels = array_merge([
             'basics' => 'Basics',
             'strategies' => 'Strategies',
@@ -28,26 +35,7 @@ class FaqRepository
             return;
         }
 
-        if (!file_exists($this->jsonPath)) {
-            $this->faqs = [];
-            return;
-        }
-
-        $jsonContent = file_get_contents($this->jsonPath);
-        if ($jsonContent === false) {
-            error_log("Failed to read FAQs JSON at: " . $this->jsonPath);
-            $this->faqs = [];
-            return;
-        }
-
-        $decoded = json_decode($jsonContent, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            error_log("Failed to parse FAQs JSON: " . json_last_error_msg());
-            $this->faqs = [];
-        } else {
-            $this->faqs = is_array($decoded) ? $decoded : [];
-        }
+        $this->faqs = $this->configService->getJsonConfig($this->jsonPath);
     }
 
     /**
@@ -65,13 +53,11 @@ class FaqRepository
         foreach ($this->faqs as $faq) {
             $catId = $faq['category'] ?? '';
             if ($catId !== '' && !isset($seen[$catId])) {
-                if (!isset($labels[$catId])) {
-                    throw new \DomainException("Unmapped FAQ category label for category ID: '{$catId}'");
-                }
+                $label = $labels[$catId] ?? ucfirst(str_replace(['-', '_'], ' ', $catId));
                 $seen[$catId] = true;
                 $categories[] = [
                     'id' => $catId,
-                    'label' => $labels[$catId],
+                    'label' => $label,
                 ];
             }
         }

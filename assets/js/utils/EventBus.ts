@@ -31,7 +31,12 @@ class EventBus {
         if (!this.listeners[topic]) return;
         this.listeners[topic].forEach(callback => {
             try {
-                callback(data);
+                const res = callback(data) as unknown;
+                if (res instanceof Promise) {
+                    res.catch(err => {
+                        console.error(`Unhandled error in async event listener for ${topic}:`, err);
+                    });
+                }
             } catch (err) {
                 console.error(`Error in event listener for ${topic}:`, err);
             }

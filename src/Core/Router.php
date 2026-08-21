@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
 class Router
 {
     private array $routes = [];
+    private array $compiledPatterns = [];
     private array $redirects = [];
     private array $middlewares = [];
     private ContainerInterface $container;
@@ -33,11 +34,17 @@ class Router
     public function get(string $uri, array $controllerAction): void
     {
         $this->routes['GET'][$uri] = $controllerAction;
+        if (str_contains($uri, '{')) {
+            $this->compiledPatterns['GET'][$uri] = '#^' . preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_-]+)', $uri) . '$#';
+        }
     }
 
     public function post(string $uri, array $controllerAction): void
     {
         $this->routes['POST'][$uri] = $controllerAction;
+        if (str_contains($uri, '{')) {
+            $this->compiledPatterns['POST'][$uri] = '#^' . preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_-]+)', $uri) . '$#';
+        }
     }
 
     public function redirect(string $uri, string $target): void
@@ -50,23 +57,28 @@ class Router
         $request = $request ?? Request::createFromGlobals();
         $uri = $request->getUri();
         $method = $request->getMethod();
+        $lookupMethod = ($method === 'HEAD') ? 'GET' : $method;
 
-        $coreHandler = function (Request $req) use ($method, $uri): Response {
+        $coreHandler = function (Request $req) use ($lookupMethod, $uri): Response {
             if (array_key_exists($uri, $this->redirects)) {
-                return Response::redirect($this->redirects[$uri], 301);
+                $target = $this->redirects[$uri];
+                $queryString = (string) $req->server('QUERY_STRING', '');
+                if ($queryString !== '') {
+                    $target .= (str_contains($target, '?') ? '&' : '?') . $queryString;
+                }
+                return Response::redirect($target, 301);
             }
 
-            if (isset($this->routes[$method][$uri])) {
-                return $this->callAction($this->routes[$method][$uri], [], $req);
+            if (isset($this->routes[$lookupMethod][$uri])) {
+                return $this->callAction($this->routes[$lookupMethod][$uri], [], $req);
             }
 
-
-            if (isset($this->routes[$method]) && is_array($this->routes[$method])) {
-                foreach ($this->routes[$method] as $route => $action) {
-                    $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_\.-]+)', $route);
-                    if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
+            if (isset($this->compiledPatterns[$lookupMethod]) && is_array($this->compiledPatterns[$lookupMethod])) {
+                foreach ($this->compiledPatterns[$lookupMethod] as $route => $pattern) {
+                    if (preg_match($pattern, $uri, $matches)) {
                         $rawParams = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
                         $params = array_map('urldecode', $rawParams);
+                        $action = $this->routes[$lookupMethod][$route];
                         return $this->callAction($action, $params, $req);
                     }
                 }

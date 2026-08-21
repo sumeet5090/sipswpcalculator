@@ -4,55 +4,39 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Core\AdminAuthService;
 use Core\Http\Request;
 use Core\Http\Response;
-use Core\ViewRenderer;
 
 /**
  * AdminAuthAction
- * Single Responsibility action dedicated strictly to handling administrator login and logout lifecycle.
+ * Backward-compatible composition controller delegating to single-responsibility actions.
  */
 class AdminAuthAction
 {
-    private AdminAuthService $authService;
-    private ViewRenderer $viewRenderer;
+    private ShowAdminLoginAction $showLoginAction;
+    private ProcessAdminLoginAction $processLoginAction;
+    private ProcessAdminLogoutAction $processLogoutAction;
 
     public function __construct(
-        AdminAuthService $authService,
-        ViewRenderer $viewRenderer
+        ShowAdminLoginAction $showLoginAction,
+        ProcessAdminLoginAction $processLoginAction,
+        ProcessAdminLogoutAction $processLogoutAction
     ) {
-        $this->authService = $authService;
-        $this->viewRenderer = $viewRenderer;
+        $this->showLoginAction = $showLoginAction;
+        $this->processLoginAction = $processLoginAction;
+        $this->processLogoutAction = $processLogoutAction;
     }
 
     public function login(Request $request): Response
     {
-        $loginError = '';
         if ($request->isPost()) {
-            $password = $request->post('password');
-            if (is_string($password)) {
-                try {
-                    $this->authService->login($password);
-                    return Response::redirect('/admin_insights');
-                } catch (\Core\Exceptions\AuthenticationException $e) {
-                    $loginError = 'Incorrect password. Access denied.';
-                } catch (\Core\Exceptions\ConfigurationException $e) {
-                    $loginError = 'Configuration Error: ' . $e->getMessage();
-                }
-            } else {
-                $loginError = 'Incorrect password. Access denied.';
-            }
+            return ($this->processLoginAction)($request);
         }
-
-        return Response::html($this->viewRenderer->render('admin/login', [
-            'error' => $loginError
-        ]));
+        return ($this->showLoginAction)($request);
     }
 
-    public function logout(Request $request): Response
+    public function logout(?Request $request = null): Response
     {
-        $this->authService->logout();
-        return Response::redirect('/admin_insights');
+        return ($this->processLogoutAction)();
     }
 }

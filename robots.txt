@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Disallow: /dist/
+Disallow: /dist/assets/*.map
 Disallow: /node_modules/
 Disallow: /src/
 Disallow: /generate-pdf

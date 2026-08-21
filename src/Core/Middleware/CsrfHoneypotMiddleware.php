@@ -6,34 +6,28 @@ namespace Core\Middleware;
 
 use Core\Http\Request;
 use Core\Http\Response;
-use Services\SessionManager;
 
+/**
+ * CsrfHoneypotMiddleware
+ * Backward-compatible composite middleware piping through HoneypotMiddleware and AdminCsrfMiddleware.
+ */
 class CsrfHoneypotMiddleware implements MiddlewareInterface
 {
-    private SessionManager $sessionManager;
+    private HoneypotMiddleware $honeypotMiddleware;
+    private AdminCsrfMiddleware $adminCsrfMiddleware;
 
-    public function __construct(SessionManager $sessionManager)
-    {
-        $this->sessionManager = $sessionManager;
+    public function __construct(
+        HoneypotMiddleware $honeypotMiddleware,
+        AdminCsrfMiddleware $adminCsrfMiddleware
+    ) {
+        $this->honeypotMiddleware = $honeypotMiddleware;
+        $this->adminCsrfMiddleware = $adminCsrfMiddleware;
     }
 
     public function process(Request $request, callable $next): Response
     {
-        if ($request->isPost()) {
-            $post = $request->getParsedBody();
-
-            if (!empty($post['website_url'])) {
-                return new Response('Forbidden: Automated request detected.', 403);
-            }
-
-            if (array_key_exists('csrf_token', $post)) {
-                $token = (string) $post['csrf_token'];
-                if (!$this->sessionManager->verifyCsrfToken($token)) {
-                    return new Response('Forbidden: Invalid security token. Please reload the page and try again.', 403);
-                }
-            }
-        }
-
-        return $next($request);
+        return $this->honeypotMiddleware->process($request, function (Request $req) use ($next) {
+            return $this->adminCsrfMiddleware->process($req, $next);
+        });
     }
 }

@@ -13,7 +13,11 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@/*": ["./resources/js/*"],
+      "@assets/*": ["./assets/js/*"]
+    }
   },
   "include": ["resources/js/**/*.ts", "assets/js/**/*.ts"]
 }

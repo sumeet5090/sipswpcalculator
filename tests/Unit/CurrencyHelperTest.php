@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Core\CurrencyHelper;
+use PHPUnit\Framework\TestCase;
 
 class CurrencyHelperTest extends TestCase
 {
@@ -16,53 +16,42 @@ class CurrencyHelperTest extends TestCase
         $this->helper = new CurrencyHelper();
     }
 
-    /**
-     * Test formatting of low integer amounts (under 1000)
-     */
-    public function testLowValues(): void
+    public function testFormatsSmallNumbers(): void
     {
-        $this->assertEquals('₹ 0', $this->helper->format(0));
-        $this->assertEquals('₹ 5', $this->helper->format(5));
-        $this->assertEquals('₹ 99', $this->helper->format(99));
-        $this->assertEquals('₹ 999', $this->helper->format(999));
+        $this->assertSame('₹0', $this->helper->format(0));
+        $this->assertSame('₹50', $this->helper->format(50));
+        $this->assertSame('₹500', $this->helper->format(500));
     }
 
-    /**
-     * Test formatting of thousands (1,000 to 99,999)
-     */
-    public function testThousands(): void
+    public function testFormatsThousands(): void
     {
-        $this->assertEquals('₹ 1,000', $this->helper->format(1000));
-        $this->assertEquals('₹ 10,000', $this->helper->format(10000));
-        $this->assertEquals('₹ 99,999', $this->helper->format(99999));
+        $this->assertSame('₹1,000', $this->helper->format(1000));
+        $this->assertSame('₹25,000', $this->helper->format(25000));
+        $this->assertSame('₹99,999', $this->helper->format(99999));
     }
 
-    /**
-     * Test formatting of Lakhs (1,00,000 to 99,99,999)
-     */
-    public function testLakhs(): void
+    public function testFormatsLakhs(): void
     {
-        $this->assertEquals('₹ 1,00,000', $this->helper->format(100000));
-        $this->assertEquals('₹ 10,00,000', $this->helper->format(1000000));
-        $this->assertEquals('₹ 99,50,000', $this->helper->format(9950000));
+        $this->assertSame('₹1,00,000', $this->helper->format(100000));
+        $this->assertSame('₹15,50,000', $this->helper->format(1550000));
+        $this->assertSame('₹99,99,999', $this->helper->format(9999999));
     }
 
-    /**
-     * Test formatting of Crores (1,00,00,000+)
-     */
-    public function testCrores(): void
+    public function testFormatsCrores(): void
     {
-        $this->assertEquals('₹ 1,00,00,000', $this->helper->format(10000000));
-        $this->assertEquals('₹ 12,34,56,789', $this->helper->format(123456789));
+        $this->assertSame('₹1,00,00,000', $this->helper->format(10000000));
+        $this->assertSame('₹12,34,56,789', $this->helper->format(123456789));
     }
 
-    /**
-     * Test float rounding behavior
-     */
-    public function testFloatRounding(): void
+    public function testFormatsNegativeNumbers(): void
     {
-        $this->assertEquals('₹ 1,001', $this->helper->format(1000.7));
-        $this->assertEquals('₹ 1,000', $this->helper->format(1000.4));
-        $this->assertEquals('₹ 1,00,000', $this->helper->format(99999.9));
+        $this->assertSame('-₹500', $this->helper->format(-500));
+        $this->assertSame('-₹1,00,000', $this->helper->format(-100000));
+    }
+
+    public function testRoundsDecimalInputs(): void
+    {
+        $this->assertSame('₹1,500', $this->helper->format(1499.8));
+        $this->assertSame('₹1,499', $this->helper->format(1499.2));
     }
 }

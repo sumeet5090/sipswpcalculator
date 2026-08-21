@@ -199,6 +199,23 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
             "SEO Rule Violation: og:url does not match canonical URL on page '$path'."
         );
 
+        $ogTypes = $xpath->query('//meta[@property="og:type"]');
+        $this->assertGreaterThanOrEqual(1, $ogTypes->length, "SEO Rule Violation: Missing meta og:type on page '$path'.");
+        $ogTypeNode = $ogTypes->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $ogTypeNode);
+        $expectedOgType = (str_starts_with($path, '/resource/') && substr_count(trim($path, '/'), '/') >= 2) ? 'article' : 'website';
+        $this->assertEquals(
+            $expectedOgType,
+            trim($ogTypeNode->getAttribute('content')),
+            "SEO Rule Violation: og:type must be '$expectedOgType' on page '$path'."
+        );
+
+        $authors = $xpath->query('//meta[@name="author"]');
+        $this->assertGreaterThanOrEqual(1, $authors->length, "SEO Rule Violation: Missing meta name=author on page '$path'.");
+        $authorNode = $authors->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $authorNode);
+        $this->assertNotEmpty(trim($authorNode->getAttribute('content')), "SEO Rule Violation: author meta is empty on page '$path'.");
+
         // 6. JSON-LD Schema.org Validation
         $schemas = $xpath->query('//script[@type="application/ld+json"]');
         $this->assertGreaterThanOrEqual(

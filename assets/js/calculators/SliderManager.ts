@@ -1,4 +1,5 @@
 import { InputValidator } from './InputValidator';
+import { DOMAdapter } from '../adapters/DOMAdapter';
 
 interface SliderPair {
     input: HTMLInputElement;
@@ -10,25 +11,31 @@ interface SliderPair {
 /**
  * SliderManager.ts
  * Encapsulates all range slider ↔ input synchronization logic.
- * Follows Single Responsibility Principle.
+ * Follows Single Responsibility Principle and encapsulates DOM queries via DOMAdapter.
  */
 export class SliderManager {
     private triggerFn: () => void;
     private validator: InputValidator;
+    private dom: DOMAdapter;
     private pairs: SliderPair[] = [];
     private _inputDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
-    constructor(triggerFn: () => void, validator: InputValidator) {
+    constructor(
+        triggerFn: () => void,
+        validator: InputValidator,
+        dom: DOMAdapter = new DOMAdapter()
+    ) {
         this.triggerFn = triggerFn;
         this.validator = validator;
+        this.dom = dom;
     }
 
     /**
      * Register and wire a single input ↔ range pair.
      */
     sync(inputId: string, rangeId: string): void {
-        const input = document.getElementById(inputId) as HTMLInputElement | null;
-        const range = document.getElementById(rangeId) as HTMLInputElement | null;
+        const input = this.dom.getElement<HTMLInputElement>(inputId);
+        const range = this.dom.getElement<HTMLInputElement>(rangeId);
         if (!input || !range) return;
 
         const defaultSliderMax = parseFloat(range.getAttribute('max') || '100000');
@@ -76,6 +83,24 @@ export class SliderManager {
             }
             this._inputDebounceTimer = setTimeout(() => this.triggerFn(), 150);
         });
+
+        input.addEventListener('change', () => {
+            if (this._inputDebounceTimer !== null) {
+                clearTimeout(this._inputDebounceTimer);
+                this._inputDebounceTimer = null;
+            }
+            this.triggerFn();
+        });
+
+        input.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Enter') {
+                if (this._inputDebounceTimer !== null) {
+                    clearTimeout(this._inputDebounceTimer);
+                    this._inputDebounceTimer = null;
+                }
+                this.triggerFn();
+            }
+        });
     }
 
     /**
@@ -92,24 +117,24 @@ export class SliderManager {
     }
 
     private _showError(fieldId: string, message: string): void {
-        const errorEl = document.getElementById(`${fieldId}_error`);
+        const errorEl = this.dom.getElement(`${fieldId}_error`);
         if (!errorEl) return;
         errorEl.textContent = message;
         errorEl.classList.remove('hidden');
 
-        const input = document.getElementById(fieldId);
+        const input = this.dom.getElement(fieldId);
         if (input) {
             input.classList.add('border-rose-400', 'bg-rose-50');
         }
     }
 
     private _clearError(fieldId: string): void {
-        const errorEl = document.getElementById(`${fieldId}_error`);
+        const errorEl = this.dom.getElement(`${fieldId}_error`);
         if (!errorEl) return;
         errorEl.textContent = '';
         errorEl.classList.add('hidden');
 
-        const input = document.getElementById(fieldId);
+        const input = this.dom.getElement(fieldId);
         if (input) {
             input.classList.remove('border-rose-400', 'bg-rose-50');
         }

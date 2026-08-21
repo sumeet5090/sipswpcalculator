@@ -29,9 +29,12 @@
                     </span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="/admin_insights?logout=1" class="text-sm font-semibold text-slate-600 hover:text-emerald-600 bg-slate-100 hover:bg-emerald-50 px-3.5 py-2 rounded-xl transition-all duration-300">
-                        Logout
-                    </a>
+                    <form method="POST" action="/admin_insights/logout" class="inline m-0">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="text-sm font-semibold text-slate-600 hover:text-emerald-600 bg-slate-100 hover:bg-emerald-50 px-3.5 py-2 rounded-xl transition-all duration-300 cursor-pointer border-0">
+                            Logout
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -42,7 +45,6 @@
         {% block content %}{% endblock %}
     </main>
 
-    <script type="module" src="{{ vite_asset('resources/js/app.ts') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

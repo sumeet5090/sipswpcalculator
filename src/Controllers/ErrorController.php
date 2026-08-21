@@ -25,6 +25,8 @@ class ErrorController
             ? $this->viewRenderer->render('pages/404', [
                 'page_config' => [
                     'title' => 'Page Not Found - 404',
+                    'meta_desc' => 'The requested page could not be found. Return to SIP & SWP Calculator to plan your investments.',
+                    'canonical' => '',
                     'robots' => 'noindex, follow'
                 ]
               ])
@@ -35,7 +37,7 @@ class ErrorController
 
     public function render500(\Throwable $e): Response
     {
-        error_log("Global 500 Error: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine());
+        error_log("Global 500 Error: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine() . "\nStack Trace:\n" . $e->getTraceAsString());
 
         $isDebug = ($this->environment === 'development');
         $errorMessage = $isDebug ? $e->getMessage() : 'An unexpected error occurred.';
@@ -45,6 +47,8 @@ class ErrorController
                 'error' => $errorMessage,
                 'page_config' => [
                     'title' => 'Internal Server Error - 500',
+                    'meta_desc' => 'An internal server error occurred while processing your calculation request.',
+                    'canonical' => '',
                     'robots' => 'noindex, nofollow'
                 ]
               ])
@@ -55,16 +59,7 @@ class ErrorController
 
     public static function handle404(?ViewRenderer $viewRenderer = null): Response
     {
-        $html = $viewRenderer
-            ? $viewRenderer->render('pages/404', [
-                'page_config' => [
-                    'title' => 'Page Not Found - 404',
-                    'robots' => 'noindex, follow'
-                ]
-              ])
-            : '<h1>404 Not Found</h1>';
-
-        return Response::html($html, 404);
+        return (new self($viewRenderer))->render404();
     }
 
     /**
@@ -79,21 +74,7 @@ class ErrorController
      */
     public static function handle500(\Throwable $e, ?ViewRenderer $viewRenderer = null): Response
     {
-        error_log("Global 500 Error: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine());
-
-        $isDebug = (Env::get('ENVIRONMENT', 'production') === 'development');
-        $errorMessage = $isDebug ? $e->getMessage() : 'An unexpected error occurred.';
-
-        $html = $viewRenderer
-            ? $viewRenderer->render('pages/500', [
-                'error' => $errorMessage,
-                'page_config' => [
-                    'title' => 'Internal Server Error - 500',
-                    'robots' => 'noindex, nofollow'
-                ]
-              ])
-            : '<h1>500 Internal Server Error</h1><p>' . htmlspecialchars($errorMessage) . '</p>';
-
-        return Response::html($html, 500);
+        $env = (string) Env::get('ENVIRONMENT', 'production');
+        return (new self($viewRenderer, $env))->render500($e);
     }
 }

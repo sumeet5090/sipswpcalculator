@@ -30,8 +30,8 @@ class CurrencyHelper implements CurrencyFormatterInterface
     private static function formatInr(float|int $num): string
     {
         $num = round($num);
-        $isNegative = $num < 0;
         $money = (int) abs($num);
+        $isNegative = ($money > 0) && ($num < 0);
         $length = strlen((string) $money);
         $delimiter = '';
 
@@ -56,7 +56,25 @@ class CurrencyHelper implements CurrencyFormatterInterface
             $delimiter = $firstPart . $lastThree;
         }
 
-        $prefix = $isNegative ? "-₹ " : "₹ ";
+        $prefix = $isNegative ? "-₹" : "₹";
         return $prefix . $delimiter;
+    }
+
+    /**
+     * Get symbol for a given currency code.
+     */
+    public function getSymbol(string $currency): string
+    {
+        $code = strtoupper(trim($currency));
+        $symbolMap = [
+            'INR' => '₹',
+            'USD' => '$',
+            'EUR' => '€',
+            'GBP' => '£',
+            'AED' => 'AED',
+            'CAD' => '$',
+            'AUD' => '$',
+        ];
+        return $symbolMap[$code] ?? '₹';
     }
 }

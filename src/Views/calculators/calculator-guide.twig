@@ -88,7 +88,7 @@
     <h2 class="sr-only" id="calculator-heading">Calculate Your Returns</h2>
     
     <script type="application/json" id="calculator-app-state">
-        {{ calc_config|json_encode|raw }}
+        {{ calc_config|json_island }}
     </script>
     <div id="calculator-app"
          data-js="calculator-app"
@@ -99,7 +99,7 @@
             style="top: 120px;">
             <div class="glass-card p-4 sm:p-5">
                 <form id="calculator-form" class="space-y-6" onsubmit="event.preventDefault();">
-                    {% if calculator_type == 'all' %}
+                    {% if calculator_type == 'all' or calculator_type == 'combo' %}
                         <!-- Combo Form (SIP + SWP Tabs) -->
                         <div class="flex rounded-xl overflow-hidden border border-slate-200 mb-4" role="tablist">
                             <button type="button" id="tab-sip" role="tab" aria-selected="true"
@@ -221,7 +221,6 @@
     <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-gray-200 max-h-[90vh] overflow-y-auto">
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Branded PDF Report</h2>
         <form id="pdfForm" class="space-y-4">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token|default(app.session.csrf_token|default(''))|escape('html_attr') }}">
             <div>
                 <label for="clientName" class="block text-sm font-medium mb-1 text-gray-600">Client Name</label>
                 <input type="text" id="clientName" name="clientName" placeholder="e.g., John Doe"

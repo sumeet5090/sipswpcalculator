@@ -10,13 +10,13 @@
         </h2>
         <div class="flex items-center gap-2.5">
             <!-- CSV Export Button -->
-            <button type="submit" name="action" value="download_csv" form="calculator-form"
+            <button type="submit" id="downloadCsvBtn" name="action" value="download_csv" form="calculator-form" formaction="/download-csv"
                 class="text-xs sm:text-sm px-4 py-2.5 inline-flex items-center gap-2 rounded-xl font-bold bg-slate-900 text-white hover:bg-slate-800 transition-all duration-200 shadow-sm hover:shadow active:scale-95 cursor-pointer">
                 <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                         d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
-                CSV Export
+                <span>CSV Export</span>
             </button>
 
             <!-- Branded PDF Proposal Hero Button -->
@@ -54,11 +54,9 @@
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Monthly SIP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Annual SIP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 whitespace-nowrap">Total Invested</th>
-                        {% if calculator_type != 'sip' %}
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Monthly SWP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Annual SWP</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-slate-500 whitespace-nowrap swp-col" {{ not enable_swp ? 'style="display:none"' : '' }}>Total Withdrawn</th>
-                        {% endif %}
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Interest</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 text-rose-500 whitespace-nowrap tax-col" style="display:none">LTCG Tax</th>
                         <th scope="col" class="px-6 py-4 text-right bg-slate-50/95 border-b border-slate-200 font-bold text-slate-800 whitespace-nowrap">End Corpus</th>

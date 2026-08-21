@@ -15,6 +15,7 @@ import { TargetCorpusStrategy } from './strategies/TargetCorpusStrategy';
 import { CalculatorStrategy } from './strategies/CalculatorStrategy';
 import { InvestmentInputs, YearResult } from '../types';
 import { PdfExportController } from './controllers/PdfExportController';
+import { CsvExportController } from './controllers/CsvExportController';
 import { TabController } from './controllers/TabController';
 import { ShareController } from './controllers/ShareController';
 import { SmartNudgeController } from './controllers/SmartNudgeController';
@@ -37,12 +38,18 @@ export class CalculatorApp {
     private resultsController: ResultsController;
     private summaryMetricsController: SummaryMetricsController;
 
-    constructor() {
-        this.dom = new DOMAdapter();
-        this.formatter = new CurrencyFormatter();
-        this.validator = new InputValidator();
-        this.chartManager = new ChartManager(this.formatter);
-        this.analytics = new AnalyticsService();
+    constructor(
+        dom: DOMAdapter = new DOMAdapter(),
+        formatter: CurrencyFormatter = new CurrencyFormatter(),
+        validator: InputValidator = new InputValidator(),
+        chartManager?: ChartManager,
+        analytics: AnalyticsService = new AnalyticsService()
+    ) {
+        this.dom = dom;
+        this.formatter = formatter;
+        this.validator = validator;
+        this.chartManager = chartManager ?? new ChartManager(this.formatter);
+        this.analytics = analytics;
         this.userHasInteracted = false;
         this.interactionCount = 0;
         this.latestResults = [];
@@ -60,7 +67,8 @@ export class CalculatorApp {
                 this.interactionCount++;
                 this.triggerCalculation();
             },
-            this.validator
+            this.validator,
+            this.dom
         );
 
         this.resultsController = new ResultsController(
@@ -174,10 +182,10 @@ export class CalculatorApp {
 
             if (isChecked) {
                 fields.style.display = 'block';
-                setTimeout(() => { fields.style.opacity = '1'; }, 10);
+                fields.style.opacity = '1';
                 fields.style.pointerEvents = 'auto';
             } else {
-                fields.style.opacity = '0.5';
+                fields.style.opacity = '0';
                 fields.style.pointerEvents = 'none';
                 fields.style.display = 'none';
             }
@@ -219,6 +227,9 @@ export class CalculatorApp {
             if (sipContainer) {
                 sipContainer.style.opacity = '1';
                 sipContainer.style.pointerEvents = 'auto';
+                sipContainer.removeAttribute('aria-hidden');
+                const sipInputs = sipContainer.querySelectorAll<HTMLInputElement>('input');
+                sipInputs.forEach(input => { input.disabled = false; });
             }
             if (targetCorpusContainer) {
                 targetCorpusContainer.style.display = 'none';
@@ -237,6 +248,9 @@ export class CalculatorApp {
             if (sipContainer) {
                 sipContainer.style.opacity = '0.65';
                 sipContainer.style.pointerEvents = 'none';
+                sipContainer.setAttribute('aria-hidden', 'true');
+                const sipInputs = sipContainer.querySelectorAll<HTMLInputElement>('input');
+                sipInputs.forEach(input => { input.disabled = true; });
             }
             if (targetCorpusContainer) {
                 targetCorpusContainer.style.display = 'block';
@@ -281,11 +295,21 @@ export class CalculatorApp {
             () => this.getInputs(),
             () => this.latestResults,
             () => this.activeGoalMode,
-            () => this.interactionCount
+            () => this.interactionCount,
+            this.formatter
+        ).init();
+        new CsvExportController(
+            this.dom,
+            this.analytics,
+            () => this.getInputs()
         ).init();
         new ShareController(this.dom, () => this.getInputs()).init();
         this.initResizeListeners();
-        new UrlStateController(this.dom, () => this.syncSwpToggleState()).init();
+        new UrlStateController(
+            this.dom,
+            () => this.syncSwpToggleState(),
+            (mode) => this.setGoalMode(mode)
+        ).init();
         this.initEventBusSubscribers();
         this.initInitialCalculation();
     }
@@ -333,25 +357,29 @@ export class CalculatorApp {
         const swpWithdrawalRange = this.dom.getElement('swp_withdrawal_range');
         const swpYears = this.dom.getElement('swp_years');
         const swpYearsRange = this.dom.getElement('swp_years_range');
+        let swpRaf: number | null = null;
         const handleSwpInput = () => {
-            const inputs = this.getInputs();
-            if (inputs.enable_swp && inputs.swp_withdrawal > 0 && inputs.swp_years > 0) {
-                const reqCorpus = MathEngine.calculateRequiredStartingCorpusForSwp(inputs);
-                if (this.activeGoalMode === 'target') {
-                    this.dom.setValue('target_corpus', reqCorpus);
+            if (swpRaf) cancelAnimationFrame(swpRaf);
+            swpRaf = requestAnimationFrame(() => {
+                const inputs = this.getInputs();
+                if (inputs.enable_swp && inputs.swp_withdrawal > 0 && inputs.swp_years > 0) {
+                    const reqCorpus = MathEngine.calculateRequiredStartingCorpusForSwp(inputs);
+                    if (this.activeGoalMode === 'target') {
+                        this.dom.setValue('target_corpus', reqCorpus);
 
-                    const targetRangeEl = this.dom.getElement<HTMLInputElement>('target_corpus_range');
-                    if (targetRangeEl) {
-                        const defaultMax = parseFloat(targetRangeEl.getAttribute('max') || '50000000');
-                        if (reqCorpus > defaultMax) {
-                            targetRangeEl.max = String(reqCorpus);
-                        } else {
-                            targetRangeEl.max = String(defaultMax);
+                        const targetRangeEl = this.dom.getElement<HTMLInputElement>('target_corpus_range');
+                        if (targetRangeEl) {
+                            const defaultMax = parseFloat(targetRangeEl.getAttribute('max') || '50000000');
+                            if (reqCorpus > defaultMax) {
+                                targetRangeEl.max = String(reqCorpus);
+                            } else {
+                                targetRangeEl.max = String(defaultMax);
+                            }
+                            this.dom.setValue('target_corpus_range', reqCorpus);
                         }
-                        this.dom.setValue('target_corpus_range', reqCorpus);
                     }
                 }
-            }
+            });
         };
 
         if (swpWithdrawal) swpWithdrawal.addEventListener('input', handleSwpInput);
@@ -385,7 +413,12 @@ export class CalculatorApp {
 
     private initResizeListeners(): void {
         let resizeTimer: ReturnType<typeof setTimeout> | undefined;
+        let lastWidth = window.innerWidth;
         window.addEventListener('resize', () => {
+            if (window.innerWidth === lastWidth) {
+                return; // Ignore height-only resizes from mobile keyboards to prevent CLS
+            }
+            lastWidth = window.innerWidth;
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
                 this.summaryMetricsController.resetBaseFontCache();
@@ -396,14 +429,14 @@ export class CalculatorApp {
 
     private initEventBusSubscribers(): void {
         eventBus.subscribe('input:changed', (inputs: InvestmentInputs) => {
-            if (!this.userHasInteracted) return;
-
             const combined = MathEngine.calculate(inputs);
             this.latestResults = combined;
             this.updateTable(combined, inputs.enable_swp);
             this.updateSummaryMetrics(combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
+
+            if (!this.userHasInteracted) return;
 
             const breakdownEl = this.dom.getElement('yearly-breakdown-section') || this.dom.getElement('breakdown-body');
             const tableViewed = breakdownEl
@@ -437,7 +470,16 @@ export class CalculatorApp {
                 this.syncSwpToggleState();
             }
 
-            const initialInputs = this.getInputs();
+            let initialInputs = this.getInputs();
+            const strategy = this.strategies[this.activeGoalMode];
+            if (strategy) {
+                initialInputs = strategy.execute(initialInputs);
+            }
+            if (this.activeGoalMode === 'target_corpus' || this.activeGoalMode === 'target') {
+                this.dom.setValue('sip', initialInputs.sip);
+                this.dom.setValue('sip_range', initialInputs.sip);
+            }
+
             const swpEnabledOnLoad = initialInputs.enable_swp;
             let existingData: YearResult[] = [];
             try {
@@ -456,10 +498,10 @@ export class CalculatorApp {
             }
         };
 
-        if ('requestIdleCallback' in window) {
-            (window as any).requestIdleCallback(runInitCalc, { timeout: 1000 });
+        if (typeof requestAnimationFrame !== 'undefined') {
+            requestAnimationFrame(runInitCalc);
         } else {
-            setTimeout(runInitCalc, 50);
+            setTimeout(runInitCalc, 0);
         }
     }
 }

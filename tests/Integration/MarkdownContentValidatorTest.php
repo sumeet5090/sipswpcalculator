@@ -84,9 +84,21 @@ class MarkdownContentValidatorTest extends TestCase
             );
         }
 
-        // 4. Body Content Presence
+        // 4. Body Content Presence & Heading Level Check
         $body = $parsed['html'];
         $this->assertNotEmpty($body, "Markdown file '$fileName' has no HTML content in the body section.");
+
+        // Assert no raw H1 heading in markdown content (Twig layout provides single <h1>)
+        $this->assertDoesNotMatchRegularExpression(
+            '/^#\s+[^\n]+/m',
+            $content,
+            "Markdown file '$fileName' contains a raw H1 header ('# Title'). Markdown files must start at H2 ('## Section') as the page <h1> is rendered by Twig layouts."
+        );
+        $this->assertDoesNotMatchRegularExpression(
+            '/<h1[\s>]/i',
+            $body,
+            "Markdown file '$fileName' contains a raw <h1> tag. Markdown files must start at H2 as the page <h1> is rendered by Twig layouts."
+        );
 
         // 5. Relative Markdown Link Check (detects links pointing to .md files which will break routes)
         // RegEx matches standard relative markdown links ending in .md, e.g. [Anchor](guide.md)

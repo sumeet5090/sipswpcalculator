@@ -11,7 +11,7 @@ export class TabController {
         const sipTab = this.dom.getElement('tab-sip');
         const swpTab = this.dom.getElement('tab-swp');
 
-        const switchTab = (tab: string) => {
+        const switchTab = (tab: string, shouldFocus = false) => {
             const sipPanel = this.dom.getElement('panel-sip');
             const swpPanel = this.dom.getElement('panel-swp');
 
@@ -36,7 +36,10 @@ export class TabController {
                     swpSpan.classList.remove('bg-white/20');
                 }
                 sipTab.setAttribute('aria-selected', 'true');
+                sipTab.setAttribute('tabindex', '0');
                 swpTab.setAttribute('aria-selected', 'false');
+                swpTab.setAttribute('tabindex', '-1');
+                if (shouldFocus) sipTab.focus();
             } else {
                 swpPanel.classList.remove('hidden');
                 sipPanel.classList.add('hidden');
@@ -53,15 +56,30 @@ export class TabController {
                     sipSpan.classList.remove('bg-white/20');
                 }
                 sipTab.setAttribute('aria-selected', 'false');
+                sipTab.setAttribute('tabindex', '-1');
                 swpTab.setAttribute('aria-selected', 'true');
+                swpTab.setAttribute('tabindex', '0');
+                if (shouldFocus) swpTab.focus();
             }
         };
 
         if (sipTab) {
             sipTab.addEventListener('click', () => switchTab('sip'));
+            sipTab.addEventListener('keydown', (e: KeyboardEvent) => {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    switchTab('swp', true);
+                }
+            });
         }
         if (swpTab) {
             swpTab.addEventListener('click', () => switchTab('swp'));
+            swpTab.addEventListener('keydown', (e: KeyboardEvent) => {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    switchTab('sip', true);
+                }
+            });
         }
     }
 }

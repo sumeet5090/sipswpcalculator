@@ -10,6 +10,9 @@ namespace Core;
  */
 class InvestmentInputs
 {
+    public const DEFAULT_LTCG_EXEMPTION = 125000.0;
+    public const DEFAULT_LTCG_TAX_RATE = 0.125;
+
     private float $sip;
     private int $years;
     private float $rate;
@@ -39,8 +42,8 @@ class InvestmentInputs
         float $lumpsum,
         float $swpRate,
         float $inflation,
-        float $ltcgExemption = 125000.0,
-        float $ltcgTaxRate = 0.125
+        float $ltcgExemption = self::DEFAULT_LTCG_EXEMPTION,
+        float $ltcgTaxRate = self::DEFAULT_LTCG_TAX_RATE
     ) {
         $this->sip = $sip;
         $this->years = $years;
@@ -79,6 +82,18 @@ class InvestmentInputs
     }
 
     /**
+     * Helper method to resolve LTCG tax exemption and rate from config.
+     *
+     * @return array{0: float, 1: float} [exemption_threshold, rate]
+     */
+    private static function resolveLtcgConfig(array $cfg): array
+    {
+        $exemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? self::DEFAULT_LTCG_EXEMPTION);
+        $rate = (float) ($cfg['ltcg_tax']['rate'] ?? self::DEFAULT_LTCG_TAX_RATE);
+        return [$exemption, $rate];
+    }
+
+    /**
      * Create sanitized inputs from request POST/GET payload.
      * Bounds and defaults are read from the central calculator_defaults.json config.
      *
@@ -95,16 +110,16 @@ class InvestmentInputs
         $years         = (int) self::resolveField('years', $data, $cfg);
         $rate          = self::resolveField('rate', $data, $cfg);
         $stepup        = self::resolveField('stepup', $data, $cfg);
-        $enableSwp     = isset($data['enable_swp']) && (bool)$data['enable_swp'];
+        $enableSwp     = filter_var($data['enable_swp'] ?? false, FILTER_VALIDATE_BOOLEAN);
         $swpWithdrawal = self::resolveField('swp_withdrawal', $data, $cfg);
         $swpStepup     = self::resolveField('swp_stepup', $data, $cfg);
         $swpYears      = (int) self::resolveField('swp_years', $data, $cfg);
-        $lumpsum       = self::resolveField('lumpsum', $data, $cfg);
+        $lumpsumField  = (!isset($data['lumpsum']) && isset($data['corpus'])) ? 'corpus' : 'lumpsum';
+        $lumpsum       = self::resolveField($lumpsumField, $data, $cfg);
         $swpRate       = self::resolveField('swp_rate', $data, $cfg);
         $inflation     = self::resolveField('inflation', $data, $cfg);
 
-        $ltcgExemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? 125000.0);
-        $ltcgTaxRate   = (float) ($cfg['ltcg_tax']['rate'] ?? 0.125);
+        [$ltcgExemption, $ltcgTaxRate] = self::resolveLtcgConfig($cfg);
 
         return new self(
             $sip,
@@ -145,8 +160,7 @@ class InvestmentInputs
         $swpRate       = self::resolveField('swp_rate', $data, $cfg);
         $inflation     = self::resolveField('inflation', $data, $cfg);
 
-        $ltcgExemption = (float) ($cfg['ltcg_tax']['exemption_threshold'] ?? 125000.0);
-        $ltcgTaxRate   = (float) ($cfg['ltcg_tax']['rate'] ?? 0.125);
+        [$ltcgExemption, $ltcgTaxRate] = self::resolveLtcgConfig($cfg);
 
         return new self(
             0.0,
@@ -158,6 +172,77 @@ class InvestmentInputs
             $swpStepup,
             $swpYears,
             $corpus,         // corpus maps to lumpsum as starting balance
+            $swpRate,
+            $inflation,
+            $ltcgExemption,
+            $ltcgTaxRate
+        );
+    }
+
+    /**
+     * Named constructor for the Lumpsum-only calculator.
+     *
+     * @param array $data POST/GET payload from the Lumpsum calculator form
+     * @param \Services\ConfigService $config ConfigService instance
+     * @return self
+     */
+    public static function fromLumpsumRequest(array $data, \Services\ConfigService $config): self
+    {
+        $cfg = self::loadDefaults($config);
+
+        $defaultLumpsum = (float) ($cfg['lumpsum']['default'] ?? 500000.0);
+        $lumpsum   = isset($data['lumpsum']) ? self::resolveField('lumpsum', $data, $cfg) : $defaultLumpsum;
+        $years     = (int) self::resolveField('years', $data, $cfg);
+        $rate      = self::resolveField('rate', $data, $cfg);
+        $inflation = self::resolveField('inflation', $data, $cfg);
+
+        [$ltcgExemption, $ltcgTaxRate] = self::resolveLtcgConfig($cfg);
+
+        return new self(
+            0.0,
+            $years,
+            $rate,
+            0.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            $lumpsum,
+            0.0,
+            $inflation,
+            $ltcgExemption,
+            $ltcgTaxRate
+        );
+    }
+
+    /**
+     * Named constructor to instantiate inputs directly from typed primitive values.
+     */
+    public static function fromValues(
+        float $sip = 0.0,
+        int $years = 0,
+        float $rate = 0.0,
+        float $stepup = 0.0,
+        bool $enableSwp = false,
+        float $swpWithdrawal = 0.0,
+        float $swpStepup = 0.0,
+        int $swpYears = 0,
+        float $lumpsum = 0.0,
+        float $swpRate = 0.0,
+        float $inflation = 0.0,
+        float $ltcgExemption = self::DEFAULT_LTCG_EXEMPTION,
+        float $ltcgTaxRate = self::DEFAULT_LTCG_TAX_RATE
+    ): self {
+        return new self(
+            $sip,
+            $years,
+            $rate,
+            $stepup,
+            $enableSwp,
+            $swpWithdrawal,
+            $swpStepup,
+            $swpYears,
+            $lumpsum,
             $swpRate,
             $inflation,
             $ltcgExemption,
@@ -236,5 +321,28 @@ class InvestmentInputs
     public function getLtcgTaxRate(): float
     {
         return $this->ltcgTaxRate;
+    }
+
+    /**
+     * Export inputs as an associative array formatted for Twig templates.
+     *
+     * @return array<string, mixed>
+     */
+    public function toTemplateData(): array
+    {
+        return [
+            'sip'             => $this->sip,
+            'years'           => $this->years,
+            'rate'            => $this->rate,
+            'stepup'          => $this->stepup,
+            'lumpsum'         => $this->lumpsum,
+            'corpus'          => $this->lumpsum,
+            'enable_swp'      => $this->enableSwp,
+            'swp_withdrawal'  => $this->swpWithdrawal,
+            'swp_years_input' => $this->swpYears,
+            'swp_stepup'      => $this->swpStepup,
+            'swp_rate'        => $this->swpRate,
+            'inflation'       => $this->inflation,
+        ];
     }
 }

@@ -18,15 +18,18 @@ When fixing a bug (like a 500 internal server error or a syntax issue), **apply 
 ### 3. Missing Database Tables (SQLite)
 If you encounter a `500 Internal Server Error: SQLSTATE[HY000]: General error: 1 no such table: main.user_calculations`:
 - **Action:** DO NOT write PHP scripts or modify `DatabaseManager` to automatically create tables.
-- **Action:** Inform the user to visit `/admin_insights/migrate` in their browser to explicitly run the schema updates. The database migration workflow is manual/explicit by design.
+- **Action:** Execute the database migrations via CLI: `php bin/migrate` (or `php migrate.php`). Database schema migrations are executed strictly via CLI for environment security; there are no administrative web migration endpoints.
 
 ### 4. Broken Tailwind Styles in New Twig Files
 If a newly created Twig layout has broken CSS/styling:
-- **Action:** Check if the layout includes the Vite frontend assets. 
-- You must include the following in the `<head>` of your new Twig layouts, or extend a layout (`admin/layouts/admin.twig`) that already includes it:
-```html
-<script type="module" src="http://localhost:5173/@vite/client"></script>
-<script type="module" src="http://localhost:5173/resources/js/app.js"></script>
+- **Action:** Ensure the Twig layout includes Vite assets via the built-in Twig functions, or extends `layouts/base.twig` / `admin/layouts/admin.twig`:
+```twig
+{{ vite_client() }}
+{{ vite_css('resources/js/app.ts') }}
+```
+and before `</body>`:
+```twig
+<script type="module" src="{{ vite_asset('resources/js/app.ts') }}"></script>
 ```
 
 ### 5. Always Verify First

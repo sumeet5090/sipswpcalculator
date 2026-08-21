@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Controllers;
 
+use Core\CurrencyFormatterInterface;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\InvestmentCalculator;
@@ -20,23 +21,34 @@ class DownloadCsvAction
     private InvestmentCalculator $calculator;
     private ConfigService $configService;
     private CsvExportService $csvExportService;
+    private CurrencyFormatterInterface $currencyFormatter;
 
     public function __construct(
         InvestmentCalculator $calculator,
         ConfigService $configService,
-        CsvExportService $csvExportService
+        CsvExportService $csvExportService,
+        ?CurrencyFormatterInterface $currencyFormatter = null
     ) {
         $this->calculator = $calculator;
         $this->configService = $configService;
         $this->csvExportService = $csvExportService;
+        $this->currencyFormatter = $currencyFormatter ?? new \Core\CurrencyHelper();
     }
 
     public function __invoke(Request $request): Response
     {
-        $inputs = InvestmentInputs::fromRequest($request->getParsedBody(), $this->configService);
+        $body = $request->getParsedBody();
+        $isSwpOnly = isset($body['corpus']) && !isset($body['sip']);
+        $inputs = $isSwpOnly
+            ? InvestmentInputs::fromSwpRequest($body, $this->configService)
+            : InvestmentInputs::fromRequest($body, $this->configService);
         $enableSwp = $inputs->isSwpEnabled();
         $combined = $this->calculator->calculate($inputs);
-        $csvContent = $this->csvExportService->generate($combined, $enableSwp);
+
+        $currency = strtoupper((string) ($body['currency'] ?? $body['cur'] ?? 'INR'));
+        $sym = $this->currencyFormatter->getSymbol($currency);
+
+        $csvContent = $this->csvExportService->generate($combined, $enableSwp, $sym);
 
         return Response::csv($csvContent, 'SIP_SWP_Yearly_Report.csv');
     }

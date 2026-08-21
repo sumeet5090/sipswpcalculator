@@ -5,16 +5,22 @@ declare(strict_types=1);
 namespace Core;
 
 use Parsedown;
+use Services\HtmlHeadingEnhancer;
 
 class ContentManager
 {
     private Parsedown $parsedown;
     private string $contentDir;
+    private HtmlHeadingEnhancer $headingEnhancer;
 
-    public function __construct(Parsedown $parsedown, string $contentDir)
-    {
+    public function __construct(
+        Parsedown $parsedown,
+        string $contentDir,
+        ?HtmlHeadingEnhancer $headingEnhancer = null
+    ) {
         $this->parsedown = $parsedown;
         $this->contentDir = $contentDir;
+        $this->headingEnhancer = $headingEnhancer ?? new HtmlHeadingEnhancer();
     }
 
     public function listMarkdownFiles(string $subDir): array
@@ -32,20 +38,39 @@ class ContentManager
         return array_map(fn($f) => basename($f, '.md'), $files);
     }
 
+    private function resolveSafePath(string $path): ?string
+    {
+        $normalized = ltrim($path, '/');
+        $withoutExt = (string) preg_replace('/\.md$/i', '', $normalized);
+        $candidate = $this->contentDir . '/' . $withoutExt . '.md';
+        $realContentDir = realpath($this->contentDir);
+        $realFile = realpath($candidate);
+
+        if ($realFile === false || $realContentDir === false) {
+            return null;
+        }
+
+        if (!str_starts_with($realFile, $realContentDir . DIRECTORY_SEPARATOR) && $realFile !== $realContentDir) {
+            return null;
+        }
+
+        return $realFile;
+    }
+
     public function getFileModifiedDate(string $path): string
     {
-        $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
-        if (!file_exists($fullPath)) {
-            throw new \RuntimeException("Content markdown file missing at: {$fullPath}");
+        $fullPath = $this->resolveSafePath($path);
+        if ($fullPath === null || !file_exists($fullPath)) {
+            throw new \RuntimeException("Content markdown file missing or unauthorized at: {$path}");
         }
         return date('Y-m-d', filemtime($fullPath));
     }
 
     public function getParsedContent(string $path): ?array
     {
-        $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
+        $fullPath = $this->resolveSafePath($path);
 
-        if (!file_exists($fullPath)) {
+        if ($fullPath === null || !file_exists($fullPath)) {
             return null;
         }
 
@@ -61,6 +86,7 @@ class ContentManager
         }
 
         $html = $this->parsedown->text($body);
+        $html = $this->headingEnhancer->enhanceHeadings($html);
 
         return [
             'metadata' => $metadata,
@@ -73,9 +99,9 @@ class ContentManager
      */
     public function getMetadataOnly(string $path): ?array
     {
-        $fullPath = $this->contentDir . '/' . ltrim($path, '/') . '.md';
+        $fullPath = $this->resolveSafePath($path);
 
-        if (!file_exists($fullPath)) {
+        if ($fullPath === null || !file_exists($fullPath)) {
             return null;
         }
 
@@ -95,10 +121,23 @@ class ContentManager
     {
         $metadata = [];
         $lines = explode("\n", $frontMatter);
+        $currentKey = null;
 
         foreach ($lines as $line) {
-            $line = trim($line);
-            if (empty($line) || str_starts_with($line, '#')) {
+            $trimmed = trim($line);
+            if (empty($trimmed) || str_starts_with($trimmed, '#')) {
+                continue;
+            }
+
+            if (str_starts_with($trimmed, '-') && $currentKey !== null) {
+                $item = trim(substr($trimmed, 1));
+                if (preg_match('/^["\'](.*)["\']$/s', $item, $matches)) {
+                    $item = $matches[1];
+                }
+                if (!isset($metadata[$currentKey]) || !is_array($metadata[$currentKey])) {
+                    $metadata[$currentKey] = [];
+                }
+                $metadata[$currentKey][] = $item;
                 continue;
             }
 
@@ -106,14 +145,20 @@ class ContentManager
             if ($colonPos !== false) {
                 $key = trim(substr($line, 0, $colonPos));
                 $value = trim(substr($line, $colonPos + 1));
+                $currentKey = $key;
+
+                if ($value === '') {
+                    $metadata[$key] = [];
+                    continue;
+                }
 
                 if (preg_match('/^["\'](.*)["\']$/s', $value, $matches)) {
                     $value = $matches[1];
                 }
 
-                if (strtolower($value) === 'true') {
+                if (strtolower((string) $value) === 'true') {
                     $value = true;
-                } elseif (strtolower($value) === 'false') {
+                } elseif (strtolower((string) $value) === 'false') {
                     $value = false;
                 }
 

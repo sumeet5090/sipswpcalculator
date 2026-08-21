@@ -17,8 +17,11 @@ use Core\ViteHelper;
 use Parsedown;
 use PDO;
 use Services\ConfigService;
+use Services\ConfigServiceInterface;
 use Services\CsvExportService;
+use Services\HtmlHeadingEnhancer;
 use Services\SessionManager;
+use Services\SessionManagerInterface;
 
 class CoreServiceProvider implements ServiceProviderInterface
 {
@@ -26,7 +29,20 @@ class CoreServiceProvider implements ServiceProviderInterface
     {
         $appUrl = (string) Env::get('APP_URL', 'https://sipswpcalculator.com');
         $environment = (string) Env::get('ENVIRONMENT', 'development');
-        $dbPath = (string) Env::get('DB_PATH', __DIR__ . '/../../../database/database.sqlite');
+        $defaultDbPath = __DIR__ . '/../../../database/database.sqlite';
+        $sharedCandidates = [
+            dirname(__DIR__, 4) . '/shared/database.sqlite',
+            dirname(__DIR__, 3) . '/shared/database.sqlite',
+        ];
+        foreach ($sharedCandidates as $candidate) {
+            if (file_exists($candidate) || file_exists(dirname($candidate))) {
+                if (file_exists($candidate)) {
+                    $defaultDbPath = $candidate;
+                    break;
+                }
+            }
+        }
+        $dbPath = (string) Env::get('DB_PATH', $defaultDbPath);
 
         $container->singleton(PDO::class, function () use ($dbPath) {
             $dir = dirname($dbPath);
@@ -36,10 +52,16 @@ class CoreServiceProvider implements ServiceProviderInterface
             if (!file_exists($dbPath) && touch($dbPath) === false) {
                 throw new \RuntimeException("Failed to create database file: {$dbPath}");
             }
-            return new PDO('sqlite:' . $dbPath, null, null, [
+            $pdo = new PDO('sqlite:' . $dbPath, null, null, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_TIMEOUT => 5,
             ]);
+            $pdo->exec('PRAGMA journal_mode = WAL;');
+            $pdo->exec('PRAGMA synchronous = NORMAL;');
+            $pdo->exec('PRAGMA busy_timeout = 5000;');
+            $pdo->exec('PRAGMA foreign_keys = ON;');
+            return $pdo;
         });
 
         $container->singleton(SiteConfig::class, function () use ($appUrl) {
@@ -54,12 +76,20 @@ class CoreServiceProvider implements ServiceProviderInterface
             return new ConfigService(__DIR__ . '/../../../content/calculator_defaults.json');
         });
 
+        $container->singleton(ConfigServiceInterface::class, function (Container $c) {
+            return $c->get(ConfigService::class);
+        });
+
         $container->singleton(CsvExportService::class, function () {
             return new CsvExportService();
         });
 
         $container->singleton(SessionManager::class, function () {
             return new SessionManager();
+        });
+
+        $container->singleton(SessionManagerInterface::class, function (Container $c) {
+            return $c->get(SessionManager::class);
         });
 
         $container->singleton(\Core\CurrencyFormatterInterface::class, function () {
@@ -91,8 +121,16 @@ class CoreServiceProvider implements ServiceProviderInterface
             return new Parsedown();
         });
 
+        $container->singleton(HtmlHeadingEnhancer::class, function () {
+            return new HtmlHeadingEnhancer();
+        });
+
         $container->singleton(ContentManager::class, function (Container $c) {
-            return new ContentManager($c->get(Parsedown::class), __DIR__ . '/../../../content');
+            return new ContentManager(
+                $c->get(Parsedown::class),
+                __DIR__ . '/../../../content',
+                $c->get(HtmlHeadingEnhancer::class)
+            );
         });
 
         $container->singleton(DatabaseMigrator::class, function (Container $c) {
@@ -114,12 +152,38 @@ class CoreServiceProvider implements ServiceProviderInterface
             return new StrategyFactory($c->get(ConfigService::class), null, $c);
         });
 
+        $container->singleton(\Core\Middleware\SessionMiddleware::class, function (Container $c) {
+            return new \Core\Middleware\SessionMiddleware($c->get(SessionManager::class));
+        });
+
+        $container->singleton(\Core\Middleware\HoneypotMiddleware::class, function () {
+            return new \Core\Middleware\HoneypotMiddleware();
+        });
+
+        $container->singleton(\Core\Middleware\AdminCsrfMiddleware::class, function (Container $c) {
+            return new \Core\Middleware\AdminCsrfMiddleware(
+                $c->get(SessionManager::class),
+                $c->get(ViewRenderer::class)
+            );
+        });
+
+        $container->singleton(\Core\Middleware\CsrfHoneypotMiddleware::class, function (Container $c) {
+            return new \Core\Middleware\CsrfHoneypotMiddleware(
+                $c->get(\Core\Middleware\HoneypotMiddleware::class),
+                $c->get(\Core\Middleware\AdminCsrfMiddleware::class)
+            );
+        });
+
         $container->singleton(\Core\ActionDispatcher::class, function (Container $c) {
             return new \Core\ActionDispatcher($c);
         });
 
         $container->singleton(\Core\Router::class, function (Container $c) {
             return new \Core\Router($c, $c->get(\Core\ActionDispatcher::class));
+        });
+
+        $container->singleton(\Core\RedirectLoader::class, function (Container $c) {
+            return new \Core\RedirectLoader($c->get(ConfigService::class));
         });
     }
 }

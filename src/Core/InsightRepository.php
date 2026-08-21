@@ -30,8 +30,14 @@ class InsightRepository
                 continue;
             }
             foreach ($buckets as $b) {
+                if (!is_array($b)) {
+                    throw new \InvalidArgumentException("Each bucket entry in group '{$group}' must be an array.");
+                }
                 if (isset($b['max']) && !is_numeric($b['max'])) {
                     throw new \InvalidArgumentException("Bucket max value for group '{$group}' must be numeric.");
+                }
+                if (!isset($b['label']) || !is_string($b['label'])) {
+                    throw new \InvalidArgumentException("Bucket label for group '{$group}' must be a non-empty string.");
                 }
             }
         }

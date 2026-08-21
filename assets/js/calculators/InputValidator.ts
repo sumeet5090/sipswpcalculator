@@ -46,8 +46,8 @@ export class InputValidator {
                 const cfg = JSON.parse(stateEl.textContent) as RawConfigMap;
                 this.constraints = this._mapConfig(cfg);
                 return;
-            } catch {
-                // Fallback to static defaultsConfig silently
+            } catch (err) {
+                console.warn('[InputValidator] Failed to parse #calculator-app-state Data Island, using static defaults:', err);
             }
         }
 
@@ -61,12 +61,18 @@ export class InputValidator {
     private _mapConfig(cfg: RawConfigMap): Record<string, FieldConstraint> {
         const result: Record<string, FieldConstraint> = {};
         for (const [key, val] of Object.entries(cfg)) {
-            if (val && typeof val === 'object' && ('min' in val || 'max' in val || 'default' in val)) {
-                result[key] = {
-                    min:     Number(val.min ?? 0),
-                    max:     Number(val.max ?? Number.MAX_SAFE_INTEGER),
-                    default: Number(val.default ?? 0),
-                };
+            if (val && typeof val === 'object' && !Array.isArray(val)) {
+                const hasMin = 'min' in val && typeof val.min !== 'undefined' && val.min !== null && !isNaN(Number(val.min));
+                const hasMax = 'max' in val && typeof val.max !== 'undefined' && val.max !== null && !isNaN(Number(val.max));
+                const hasDefault = 'default' in val && typeof val.default !== 'undefined' && val.default !== null && !isNaN(Number(val.default));
+
+                if (hasMin || hasMax || hasDefault) {
+                    result[key] = {
+                        min:     hasMin ? Number(val.min) : 0,
+                        max:     hasMax ? Number(val.max) : Number.MAX_SAFE_INTEGER,
+                        default: hasDefault ? Number(val.default) : (hasMin ? Number(val.min) : 0),
+                    };
+                }
             }
         }
         return result;

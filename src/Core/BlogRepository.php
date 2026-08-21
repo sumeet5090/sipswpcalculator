@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Services\ConfigService;
+
 /**
  * BlogRepository
  * Dynamically queries and retrieves blog categories and post configurations.
@@ -12,15 +14,18 @@ class BlogRepository
 {
     private ContentManager $contentManager;
     private string $categoriesJsonPath;
+    private ConfigService $configService;
     private ?array $cachedCategories = null;
     private ?array $cachedPosts = null;
 
     public function __construct(
         ContentManager $contentManager,
-        ?string $categoriesJsonPath = null
+        ?string $categoriesJsonPath = null,
+        ?ConfigService $configService = null
     ) {
         $this->contentManager = $contentManager;
         $this->categoriesJsonPath = $categoriesJsonPath ?? (__DIR__ . '/../../content/categories.json');
+        $this->configService = $configService ?? new ConfigService($this->categoriesJsonPath);
     }
 
     public function getCategories(): array
@@ -29,27 +34,8 @@ class BlogRepository
             return $this->cachedCategories;
         }
 
-        $jsonPath = $this->categoriesJsonPath;
-        if (!file_exists($jsonPath)) {
-            $this->cachedCategories = [];
-            return [];
-        }
-
-        $jsonContent = file_get_contents($jsonPath);
-        if ($jsonContent === false) {
-            error_log("Failed to read content/categories.json at: " . $jsonPath);
-            $this->cachedCategories = [];
-            return [];
-        }
-        $decoded = json_decode($jsonContent, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            error_log("Failed to parse content/categories.json: " . json_last_error_msg());
-            $this->cachedCategories = [];
-            return [];
-        }
-
-        $this->cachedCategories = is_array($decoded) ? $decoded : [];
+        $decoded = $this->configService->getJsonConfig($this->categoriesJsonPath);
+        $this->cachedCategories = $decoded;
         return $this->cachedCategories;
     }
 
@@ -91,13 +77,58 @@ class BlogRepository
             if ($a['featured'] !== $b['featured']) {
                 return $b['featured'] ? 1 : -1;
             }
-            $dateA = \DateTimeImmutable::createFromFormat('F Y', $a['date']) ?: new \DateTimeImmutable('1970-01-01');
-            $dateB = \DateTimeImmutable::createFromFormat('F Y', $b['date']) ?: new \DateTimeImmutable('1970-01-01');
+            $dateA = $this->parsePostDate((string) ($a['date'] ?? ''));
+            $dateB = $this->parsePostDate((string) ($b['date'] ?? ''));
             return $dateB <=> $dateA;
         });
 
         $this->cachedPosts = $posts;
         return $this->cachedPosts;
+    }
+
+    /**
+     * Group all blog posts by their SEO category.
+     *
+     * @return array<string, array>
+     */
+    public function getPostsGroupedByCategory(): array
+    {
+        $allPosts = $this->getAllPosts();
+        $postsByCat = [];
+        foreach ($allPosts as $post) {
+            $cat = (string) ($post['seo_category'] ?? '');
+            if ($cat !== '') {
+                $postsByCat[$cat][] = $post;
+            }
+        }
+        return $postsByCat;
+    }
+
+    /**
+     * Robust multi-format date parser cascade.
+     */
+    public function parsePostDate(string $rawDate): \DateTimeImmutable
+    {
+        $formats = ['F Y', 'Y-m-d', 'd F Y', 'Y-m', 'M Y', 'F d, Y', 'Y/m/d'];
+        foreach ($formats as $fmt) {
+            $parsed = \DateTimeImmutable::createFromFormat($fmt, trim($rawDate));
+            if ($parsed !== false) {
+                return $parsed;
+            }
+        }
+        try {
+            return new \DateTimeImmutable($rawDate);
+        } catch (\Throwable) {
+            return new \DateTimeImmutable('1970-01-01');
+        }
+    }
+
+    /**
+     * Normalizes a raw date string into standard ISO 'Y-m-d' format for SEO schemas.
+     */
+    public function formatPublishedDate(string $rawDate): string
+    {
+        return $this->parsePostDate($rawDate)->format('Y-m-d');
     }
 
     /**

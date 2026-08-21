@@ -4,6 +4,9 @@
     <rule ref="PSR12">
         <exclude name="Generic.Files.LineLength"/>
     </rule>
+    <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
 
     <file>src</file>
     <file>tests</file>

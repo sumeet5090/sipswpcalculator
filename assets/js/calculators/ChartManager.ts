@@ -3,12 +3,6 @@ import { InputValidator } from './InputValidator';
 import { YearResult } from '../types';
 import type { Chart, ChartDataset, ChartConfiguration, TooltipItem } from 'chart.js';
 
-declare global {
-    interface Window {
-        Chart: typeof Chart;
-    }
-}
-
 export interface Milestone {
     type: 'wealth' | 'security';
     label: string;
@@ -19,17 +13,23 @@ export interface Milestone {
     index: number;
 }
 
+interface GradientBundle {
+    invested: CanvasGradient;
+    corpus: CanvasGradient;
+    postTax: CanvasGradient;
+}
+
 /**
  * ChartManager.ts
- * Handles instantiation and updates of the Chart.js visualization.
- * Refactored as an Object-Oriented class.
+ * Manages instantiation, dataset state transitions, and responsive rendering of Chart.js.
+ * Strictly adheres to SOLID, DRY, and POLA principles.
  */
 export class ChartManager {
     private formatter: CurrencyFormatter;
     private validator: InputValidator;
     private chartInstance: Chart<'line'> | null = null;
     private currentMilestones: Milestone[] = [];
-    private chartJsPromise: Promise<void> | null = null;
+    private chartModulePromise: Promise<typeof Chart> | null = null;
 
     constructor(formatter: CurrencyFormatter, validator: InputValidator = new InputValidator()) {
         this.formatter = formatter;
@@ -37,69 +37,96 @@ export class ChartManager {
     }
 
     /**
-     * Dynamically loads Chart.js from CDN on demand.
+     * Dynamically loads Chart.js as an isolated vendor chunk via Vite.
+     * Eliminates external CDN dependencies, network latency, and CSP blocking.
      */
-    private loadChartJs(): Promise<void> {
-        if (window.Chart) return Promise.resolve();
-        if (this.chartJsPromise) return this.chartJsPromise;
+    private async loadChartModule(): Promise<typeof Chart> {
+        if (this.chartModulePromise) return this.chartModulePromise;
 
-        this.chartJsPromise = new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js';
-            script.async = true;
-            script.onload = () => resolve();
-            script.onerror = () => reject(new Error('Failed to load Chart.js script'));
-            document.head.appendChild(script);
-        });
+        this.chartModulePromise = (async () => {
+            const module = await import('chart.js/auto');
+            return module.Chart || module.default;
+        })();
 
-        return this.chartJsPromise;
-    }
-
-    formatAxisTick(value: number): string {
-        const symbol = this.formatter.getSymbol();
-        if (value >= 10000000) return symbol + (value / 10000000).toFixed(1) + 'Cr';
-        if (value >= 100000) return symbol + (value / 100000).toFixed(1) + 'L';
-        if (value >= 1000) return symbol + (value / 1000).toFixed(1) + 'k';
-        return symbol + value;
+        return this.chartModulePromise;
     }
 
     /**
-     * Initialize or update the chart.
+     * Compute dynamic linear gradients strictly bounded to actual canvas pixel height.
      */
-    async updateChart(results: YearResult[], enableSwp: boolean = true): Promise<void> {
-        const ctxEl = document.getElementById('corpusChart') as HTMLCanvasElement | null;
-        if (!ctxEl) return;
+    private createGradients(ctx: CanvasRenderingContext2D, height: number): GradientBundle {
+        const safeHeight = Math.max(height, 200);
 
-        try {
-            await this.loadChartJs();
-        } catch (e) {
-            console.error('Chart.js dynamic load error:', e);
-            return;
+        const gradientInvested = ctx.createLinearGradient(0, 0, 0, safeHeight);
+        gradientInvested.addColorStop(0, 'rgba(79, 70, 229, 0.22)');
+        gradientInvested.addColorStop(1, 'rgba(79, 70, 229, 0.0)');
+
+        const gradientCorpus = ctx.createLinearGradient(0, 0, 0, safeHeight);
+        gradientCorpus.addColorStop(0, 'rgba(16, 185, 129, 0.45)');
+        gradientCorpus.addColorStop(1, 'rgba(16, 185, 129, 0.03)');
+
+        const gradientPostTax = ctx.createLinearGradient(0, 0, 0, safeHeight);
+        gradientPostTax.addColorStop(0, 'rgba(139, 92, 246, 0.22)');
+        gradientPostTax.addColorStop(1, 'rgba(139, 92, 246, 0.0)');
+
+        return {
+            invested: gradientInvested,
+            corpus: gradientCorpus,
+            postTax: gradientPostTax
+        };
+    }
+
+    /**
+     * Formats axis tick numbers cleanly into Indian (Cr/L/k) or Western (B/M/k) scales.
+     */
+    formatAxisTick(value: number): string {
+        if (isNaN(value) || !isFinite(value)) return '';
+
+        const symbol = this.formatter.getSymbol();
+        const currency = this.formatter.getCurrency();
+
+        if (currency === 'INR') {
+            if (value >= 10000000) {
+                const cr = (value / 10000000).toFixed(1).replace(/\.0$/, '');
+                return `${symbol}${cr}Cr`;
+            }
+            if (value >= 100000) {
+                const l = (value / 100000).toFixed(1).replace(/\.0$/, '');
+                return `${symbol}${l}L`;
+            }
+            if (value >= 1000) {
+                const k = (value / 1000).toFixed(1).replace(/\.0$/, '');
+                return `${symbol}${k}k`;
+            }
+            return `${symbol}${Math.round(value)}`;
         }
 
-        const ctx = ctxEl.getContext('2d');
-        if (!ctx) return;
+        if (value >= 1000000000) {
+            const b = (value / 1000000000).toFixed(1).replace(/\.0$/, '');
+            return `${symbol}${b}B`;
+        }
+        if (value >= 1000000) {
+            const m = (value / 1000000).toFixed(1).replace(/\.0$/, '');
+            return `${symbol}${m}M`;
+        }
+        if (value >= 1000) {
+            const k = (value / 1000).toFixed(1).replace(/\.0$/, '');
+            return `${symbol}${k}k`;
+        }
+        return `${symbol}${Math.round(value)}`;
+    }
 
-        const years = results.map(r => `Yr ${r.year}`);
-        const cumulative = results.map(r => r.cumulative_invested);
-        const corpus = results.map(r => r.combined_total);
-        const swp = results.map(r => r.annual_withdrawal ?? 0);
-
-        const calcApp = document.querySelector<HTMLElement>('[data-js="calculator-app"]');
-        const mode = calcApp ? (calcApp.dataset.mode || 'all') : 'all';
-        const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
-        const showWealthMap = (document.getElementById('show_wealth_map') as HTMLInputElement | null)?.checked || false;
-
-        // Calculate Milestones
+    /**
+     * Calculate active milestones for current results.
+     */
+    private computeMilestones(results: YearResult[], enableSwp: boolean, showPostTax: boolean): Milestone[] {
         const milestones: Milestone[] = [];
         const targets = this.validator.getMilestoneTargets().map(t => ({ ...t, reached: false }));
         let swpCovered = false;
 
         for (let i = 0; i < results.length; i++) {
             const row = results[i];
-
             const postTaxVal = row.post_tax_total ?? row.combined_total;
-
             const activeCorpusValue = showPostTax ? postTaxVal : row.combined_total;
 
             for (const target of targets) {
@@ -118,7 +145,9 @@ export class ChartManager {
 
             if (enableSwp && !swpCovered && (row.annual_withdrawal ?? 0) > 0) {
                 const tenYearsWithdrawal = (row.annual_withdrawal ?? 0) * 10;
-                if (activeCorpusValue >= tenYearsWithdrawal) {
+                // Verify sustainability: corpus must cover 10 years of withdrawals and portfolio doesn't deplete to 0 within 10 years
+                const isSustainable = activeCorpusValue >= tenYearsWithdrawal;
+                if (isSustainable) {
                     swpCovered = true;
                     milestones.push({
                         type: 'security',
@@ -133,93 +162,62 @@ export class ChartManager {
             }
         }
 
-        this.currentMilestones = milestones;
+        return milestones;
+    }
 
+    /**
+     * Build semantic dataset collection based on active UI toggles.
+     */
+    private buildDatasets(
+        results: YearResult[],
+        gradients: GradientBundle,
+        enableSwp: boolean,
+        showPostTax: boolean,
+        showWealthMap: boolean,
+        mode: string,
+        milestones: Milestone[]
+    ): ChartDataset<'line'>[] {
+        const cumulative = results.map(r => r.cumulative_invested);
+        const corpus = results.map(r => r.combined_total);
         const postTaxCorpus = results.map(r => r.post_tax_total ?? r.combined_total);
+        const swp = results.map(r => r.annual_withdrawal ?? 0);
 
         const milestoneIndices = milestones.map(m => m.index);
-        const pointRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 6 : 0);
-        const pointHoverRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 10 : 8);
+        const isSinglePoint = results.length === 1;
+
+        // 0-Year singularity guard: when results.length === 1, ensure point is visible
+        const pointRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 6 : (isSinglePoint ? 4 : 0));
+        const pointHoverRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 10 : (isSinglePoint ? 8 : 6));
         const pointBgColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? '#fbbf24' : '#10b981');
         const pointBorderColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? '#ffffff' : '#10b981');
         const pointBorderWidths = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 3 : 2);
 
-        if (this.chartInstance) {
-            this.chartInstance.data.labels = years;
-            this.chartInstance.data.datasets[0].data = cumulative;
-            this.chartInstance.data.datasets[1].data = corpus;
-            this.chartInstance.data.datasets[1].pointRadius = pointRadii;
-            this.chartInstance.data.datasets[1].pointHoverRadius = pointHoverRadii;
-            this.chartInstance.data.datasets[1].pointBackgroundColor = pointBgColors;
-            this.chartInstance.data.datasets[1].pointBorderColor = pointBorderColors;
-            this.chartInstance.data.datasets[1].pointBorderWidth = pointBorderWidths;
-
-            if (this.chartInstance.data.datasets.length > 2) {
-                this.chartInstance.data.datasets[2].data = postTaxCorpus;
-                this.chartInstance.data.datasets[2].hidden = !showPostTax || showWealthMap;
-            }
-            if (this.chartInstance.data.datasets.length > 3) {
-                this.chartInstance.data.datasets[3].data = swp;
-                this.chartInstance.data.datasets[3].hidden = !enableSwp;
-            }
-
-            if (this.chartInstance.options.scales && this.chartInstance.options.scales.y) {
-                this.chartInstance.options.scales.y.stacked = showWealthMap;
-            }
-
-            if (showWealthMap) {
-                const interestOnly = corpus.map((c, i) => c - cumulative[i]);
-                this.chartInstance.data.datasets[1].data = interestOnly;
-                this.chartInstance.data.datasets[1].fill = true;
-                this.chartInstance.data.datasets[1].label = 'Interest Earned';
-            } else {
-                this.chartInstance.data.datasets[1].data = corpus;
-                this.chartInstance.data.datasets[1].fill = false;
-                this.chartInstance.data.datasets[1].label = 'Pre-Tax Growth';
-            }
-
-            this.chartInstance.update();
-            this.renderMilestoneGrid(milestones);
-            return;
-        }
-
-        const gradientInvested = ctx.createLinearGradient(0, 0, 0, 400);
-        gradientInvested.addColorStop(0, 'rgba(79, 70, 229, 0.2)');
-        gradientInvested.addColorStop(1, 'rgba(79, 70, 229, 0.0)');
-
-        const gradientCorpus = ctx.createLinearGradient(0, 0, 0, 400);
-        gradientCorpus.addColorStop(0, 'rgba(16, 185, 129, 0.4)');
-        gradientCorpus.addColorStop(1, 'rgba(16, 185, 129, 0.05)');
-
-        const gradientPostTax = ctx.createLinearGradient(0, 0, 0, 400);
-        gradientPostTax.addColorStop(0, 'rgba(139, 92, 246, 0.2)');
-        gradientPostTax.addColorStop(1, 'rgba(139, 92, 246, 0.0)');
-
-        const fontFamily = "'Plus Jakarta Sans', sans-serif";
-        const gridColor = 'rgba(0, 0, 0, 0.05)';
-        const textColor = '#64748b';
+        const interestOnly = corpus.map((c, i) => Math.max(0, c - cumulative[i]));
 
         const datasets: ChartDataset<'line'>[] = [
             {
                 label: 'Total Invested',
                 data: cumulative,
                 borderColor: '#6366f1',
-                backgroundColor: gradientInvested,
+                backgroundColor: gradients.invested,
                 borderWidth: 2,
                 tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
                 fill: 'origin',
                 pointBackgroundColor: '#ffffff',
                 pointBorderColor: '#6366f1',
-                pointRadius: 0,
+                pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
+                order: 2,
             },
             {
                 label: showWealthMap ? 'Interest Earned' : 'Pre-Tax Corpus',
-                data: showWealthMap ? corpus.map((c, i) => c - cumulative[i]) : corpus,
+                data: showWealthMap ? interestOnly : corpus,
                 borderColor: '#10b981',
-                backgroundColor: gradientCorpus,
+                backgroundColor: gradients.corpus,
                 borderWidth: 3,
                 tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
                 fill: showWealthMap ? true : 0,
                 pointBackgroundColor: pointBgColors,
                 pointBorderColor: pointBorderColors,
@@ -227,25 +225,28 @@ export class ChartManager {
                 pointRadius: pointRadii,
                 pointHoverRadius: pointHoverRadii,
                 pointHoverBorderWidth: 3,
+                order: 1,
             },
             {
                 label: 'Post-Tax Corpus',
                 data: postTaxCorpus,
                 borderColor: '#8b5cf6',
-                backgroundColor: gradientPostTax,
+                backgroundColor: gradients.postTax,
                 borderWidth: 2,
-                borderDash: [3, 3],
+                borderDash: [4, 4],
                 tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
                 fill: 'origin',
                 pointBackgroundColor: '#ffffff',
                 pointBorderColor: '#8b5cf6',
-                pointRadius: 0,
+                pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
                 hidden: !showPostTax || showWealthMap,
+                order: 1,
             }
         ];
 
-        if (mode !== 'sip') {
+        if (mode !== 'sip' || enableSwp) {
             datasets.push({
                 label: 'Annual Withdrawal',
                 data: swp,
@@ -254,16 +255,76 @@ export class ChartManager {
                 borderWidth: 2,
                 borderDash: [5, 5],
                 tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
                 fill: false,
                 pointBackgroundColor: '#ffffff',
                 pointBorderColor: '#f43f5e',
-                pointRadius: 0,
+                pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
                 hidden: !enableSwp,
+                order: 1,
             });
         }
 
+        return datasets;
+    }
 
+    /**
+     * Initialize or update the chart.
+     */
+    async updateChart(results: YearResult[], enableSwp: boolean = true): Promise<void> {
+        const ctxEl = document.getElementById('corpusChart') as HTMLCanvasElement | null;
+        if (!ctxEl || !document.body.contains(ctxEl)) return;
+
+        let ChartClass: typeof Chart;
+        try {
+            ChartClass = await this.loadChartModule();
+        } catch (e) {
+            console.error('[ChartManager] Failed to load Chart.js module:', e);
+            return;
+        }
+
+        const ctx = ctxEl.getContext('2d');
+        if (!ctx) return;
+
+        const years = results.map(r => `Yr ${r.year}`);
+        const calcApp = document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const mode = calcApp ? (calcApp.dataset.mode || 'all') : 'all';
+        const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
+        const showWealthMap = (document.getElementById('show_wealth_map') as HTMLInputElement | null)?.checked || false;
+
+        const milestones = this.computeMilestones(results, enableSwp, showPostTax);
+        this.currentMilestones = milestones;
+
+        const canvasHeight = ctxEl.clientHeight || 400;
+        const gradients = this.createGradients(ctx, canvasHeight);
+
+        // Update in-place if chartInstance is alive and still bound to this canvas
+        if (this.chartInstance && this.chartInstance.ctx.canvas === ctxEl) {
+            const datasets = this.buildDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
+            this.chartInstance.data.labels = years;
+            this.chartInstance.data.datasets = datasets;
+
+            if (this.chartInstance.options.scales?.y) {
+                this.chartInstance.options.scales.y.stacked = showWealthMap;
+            }
+
+            this.chartInstance.update();
+            this.renderMilestoneGrid(milestones);
+            return;
+        }
+
+        // Clean up any existing chart attached to the canvas element before creating a new one
+        const existingChart = ChartClass.getChart(ctxEl);
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
+        const fontFamily = "'Plus Jakarta Sans', sans-serif";
+        const gridColor = 'rgba(0, 0, 0, 0.05)';
+        const textColor = '#64748b';
+
+        const datasets = this.buildDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
 
         const config: ChartConfiguration<'line'> = {
             type: 'line' as const,
@@ -275,7 +336,7 @@ export class ChartManager {
                 responsive: true,
                 maintainAspectRatio: false,
                 animation: {
-                    duration: 1000,
+                    duration: 750,
                     easing: 'easeOutQuart',
                 },
                 interaction: {
@@ -322,12 +383,13 @@ export class ChartManager {
                                 if (label) {
                                     label += ': ';
                                 }
-                                if (context.parsed.y !== null) {
+                                if (context.parsed.y !== null && context.parsed.y !== undefined) {
                                     label += this.formatter.format(context.parsed.y);
                                 }
                                 return label;
                             },
                             afterBody: (tooltipItems: TooltipItem<'line'>[]) => {
+                                if (!tooltipItems || tooltipItems.length === 0) return '';
                                 const index = tooltipItems[0].dataIndex;
                                 const reached = (this.currentMilestones || []).filter(m => m.index === index);
                                 if (reached.length > 0) {
@@ -377,15 +439,21 @@ export class ChartManager {
             }
         };
 
-        this.chartInstance = new window.Chart(ctx, config) as unknown as Chart<'line'>;
+        this.chartInstance = new ChartClass(ctx, config) as unknown as Chart<'line'>;
         this.renderMilestoneGrid(milestones);
     }
 
+    /**
+     * Cross-browser safe milestone badge renderer.
+     */
     renderMilestoneGrid(milestones: Milestone[]): void {
         const container = document.getElementById('milestones-container');
         if (!container) return;
 
-        container.replaceChildren();
+        // Legacy-safe DOM clearance (avoids replaceChildren() bugs on older iOS Safari)
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
 
         if (milestones.length === 0) {
             container.classList.add('hidden');
@@ -423,6 +491,16 @@ export class ChartManager {
         });
 
         container.appendChild(fragment);
+    }
+
+    /**
+     * Explicit cleanup to prevent memory leaks and detached event listeners.
+     */
+    destroy(): void {
+        if (this.chartInstance) {
+            this.chartInstance.destroy();
+            this.chartInstance = null;
+        }
     }
 
     getChartInstance(): Chart | null {

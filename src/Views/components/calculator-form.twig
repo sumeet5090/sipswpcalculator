@@ -1,7 +1,7 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
 <script type="application/json" id="calculator-app-state">
-    {{ calc_config|json_encode|raw }}
+    {{ calc_config|json_island }}
 </script>
 
 <div id="{{ container_id|default('calculator-app') }}"
@@ -9,10 +9,6 @@
      data-mode="sip"
      class="glass-card p-4">
     <form method="post" novalidate id="calculator-form">
-        <!-- SECURITY: CSRF Token for main form -->
-        <input type="hidden" name="csrf_token"
-            value="{{ csrf_token|default(app.session.csrf_token|default(''))|escape('html_attr') }}">
-
         <!-- SECURITY: Honeypot field (hidden from real users, catches bots) -->
         <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
             <label for="website_url">Leave this field empty</label>

@@ -54,26 +54,35 @@ class AdminDashboardPresenter
             'avgIterations'       => number_format((float) ($stats['avgIterations'] ?? 1.0), 1),
 
             // Chart.js JSON Payloads
-            'volumeLabels'       => json_encode(array_column($dailyVolume, 'day')),
-            'volumeData'         => json_encode(array_map('intval', array_column($dailyVolume, 'cnt'))),
+            'volumeLabels'       => $this->encodeJson(array_column($dailyVolume, 'day')),
+            'volumeData'         => $this->encodeJson(array_map('intval', array_column($dailyVolume, 'cnt'))),
 
-            'currencyLabels'     => json_encode(array_column($currencyDist, 'currency')),
-            'currencyData'       => json_encode(array_map('intval', array_column($currencyDist, 'cnt'))),
-            'currencyColorsJson' => json_encode($currencyColors),
+            'currencyLabels'     => $this->encodeJson(array_column($currencyDist, 'currency')),
+            'currencyData'       => $this->encodeJson(array_map('intval', array_column($currencyDist, 'cnt'))),
+            'currencyColorsJson' => $this->encodeJson($currencyColors),
 
-            'stepUpDoughnutData' => json_encode([$stats['stepUpSIP'] ?? 0, $stats['flatSIP'] ?? 0]),
+            'stepUpDoughnutData' => $this->encodeJson([$stats['stepUpSIP'] ?? 0, $stats['flatSIP'] ?? 0]),
 
-            'durationLabels'     => json_encode(array_column($durationDist, 'bucket')),
-            'durationData'       => json_encode(array_map('intval', array_column($durationDist, 'cnt'))),
+            'durationLabels'     => $this->encodeJson(array_column($durationDist, 'bucket')),
+            'durationData'       => $this->encodeJson(array_map('intval', array_column($durationDist, 'cnt'))),
 
-            'ambitionLabels'     => json_encode(array_column($ambitionBuckets, 'goal_bucket')),
-            'ambitionData'       => json_encode(array_map('intval', array_column($ambitionBuckets, 'cnt'))),
+            'ambitionLabels'     => $this->encodeJson(array_column($ambitionBuckets, 'goal_bucket')),
+            'ambitionData'       => $this->encodeJson(array_map('intval', array_column($ambitionBuckets, 'cnt'))),
 
-            'deviceLabels'       => json_encode(array_map('ucfirst', array_column($stats['deviceDist'] ?? [], 'device'))),
-            'deviceData'         => json_encode(array_map('intval', array_column($stats['deviceDist'] ?? [], 'cnt'))),
+            'deviceLabels'       => $this->encodeJson(array_map('ucfirst', array_column($stats['deviceDist'] ?? [], 'device'))),
+            'deviceData'         => $this->encodeJson(array_map('intval', array_column($stats['deviceDist'] ?? [], 'cnt'))),
 
-            'goalModeLabels'     => json_encode(array_map('ucfirst', array_column($stats['goalModeDist'] ?? [], 'mode'))),
-            'goalModeData'       => json_encode(array_map('intval', array_column($stats['goalModeDist'] ?? [], 'cnt'))),
+            'goalModeLabels'     => $this->encodeJson(array_map('ucfirst', array_column($stats['goalModeDist'] ?? [], 'mode'))),
+            'goalModeData'       => $this->encodeJson(array_map('intval', array_column($stats['goalModeDist'] ?? [], 'cnt'))),
         ];
+    }
+
+    private function encodeJson(mixed $data): string
+    {
+        $json = json_encode(
+            $data,
+            JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE
+        );
+        return is_string($json) ? $json : '[]';
     }
 }

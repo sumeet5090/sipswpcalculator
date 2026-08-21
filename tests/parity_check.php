@@ -67,6 +67,132 @@ $testCases = [
         'swp_rate'       => 9.0,
         'ltcg_exemption' => 125000.0,
         'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Year 0 Singularity
+    [
+        'sip'            => 0.0,
+        'years'          => 0,
+        'rate'           => 12.0,
+        'stepup'         => 0.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 100000.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Zero Rate & Zero Stepup
+    [
+        'sip'            => 10000.0,
+        'years'          => 5,
+        'rate'           => 0.0,
+        'stepup'         => 0.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 0.0,
+        'swp_rate'       => 0.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Standalone SWP (0 SIP years, 15 SWP years)
+    [
+        'type'           => 'swp',
+        'sip'            => 0.0,
+        'years'          => 0,
+        'rate'           => 12.0,
+        'stepup'         => 0.0,
+        'enable_swp'     => true,
+        'swp_withdrawal' => 60000.0,
+        'swp_stepup'     => 5.0,
+        'swp_years'      => 15,
+        'lumpsum'        => 10000000.0,
+        'swp_rate'       => 7.5,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Early Depletion SWP (Depletes in Year 3 of 10)
+    [
+        'type'           => 'swp',
+        'sip'            => 0.0,
+        'years'          => 0,
+        'rate'           => 10.0,
+        'stepup'         => 0.0,
+        'enable_swp'     => true,
+        'swp_withdrawal' => 100000.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 10,
+        'lumpsum'        => 2000000.0,
+        'swp_rate'       => 6.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Pure Lumpsum Compounding
+    [
+        'type'           => 'lumpsum',
+        'sip'            => 0.0,
+        'years'          => 10,
+        'rate'           => 14.0,
+        'stepup'         => 0.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 2500000.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Target Corpus High Accumulation 30-Year
+    [
+        'type'           => 'sip',
+        'sip'            => 100000.0,
+        'years'          => 30,
+        'rate'           => 15.0,
+        'stepup'         => 10.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 500000.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Max Step-Up Boundary (50% annual stepup)
+    [
+        'type'           => 'sip',
+        'sip'            => 10000.0,
+        'years'          => 10,
+        'rate'           => 25.0,
+        'stepup'         => 50.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 0.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Dual Regime High Inflation & High Rate
+    [
+        'type'           => 'sip_swp',
+        'sip'            => 25000.0,
+        'years'          => 15,
+        'rate'           => 18.0,
+        'stepup'         => 10.0,
+        'enable_swp'     => true,
+        'swp_withdrawal' => 75000.0,
+        'swp_stepup'     => 8.0,
+        'swp_years'      => 15,
+        'lumpsum'        => 1000000.0,
+        'swp_rate'       => 12.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
     ]
 ];
 
@@ -78,36 +204,48 @@ foreach ($testCases as $index => $inputs) {
     echo "Running Test Case #" . ($index + 1) . "... ";
 
     // 1. PHP calculations
-    $dto = \Core\InvestmentInputs::fromRequest([
-        'sip'            => $inputs['sip'],
-        'years'          => $inputs['years'],
-        'rate'           => $inputs['rate'],
-        'stepup'         => $inputs['stepup'],
-        'enable_swp'     => $inputs['enable_swp'],
-        'swp_withdrawal' => $inputs['swp_withdrawal'],
-        'swp_stepup'     => $inputs['swp_stepup'],
-        'swp_years'      => $inputs['swp_years'],
-        'lumpsum'        => $inputs['lumpsum'],
-        'swp_rate'       => $inputs['swp_rate'],
-        'ltcg_exemption' => $inputs['ltcg_exemption'],
-        'ltcg_tax_rate'  => $inputs['ltcg_tax_rate'],
-    ], new \Services\ConfigService(__DIR__ . '/../content/calculator_defaults.json'));
+    $configService = new \Services\ConfigService(__DIR__ . '/../content/calculator_defaults.json');
+    if (($inputs['type'] ?? '') === 'swp') {
+        $dto = \Core\InvestmentInputs::fromSwpRequest([
+            'corpus'         => $inputs['lumpsum'],
+            'swp_withdrawal' => $inputs['swp_withdrawal'],
+            'swp_stepup'     => $inputs['swp_stepup'],
+            'swp_years'      => $inputs['swp_years'],
+            'swp_rate'       => $inputs['swp_rate'],
+            'inflation'      => 0.0
+        ], $configService);
+    } else {
+        $dto = \Core\InvestmentInputs::fromRequest([
+            'sip'            => $inputs['sip'],
+            'years'          => $inputs['years'],
+            'rate'           => $inputs['rate'],
+            'stepup'         => $inputs['stepup'],
+            'enable_swp'     => $inputs['enable_swp'],
+            'swp_withdrawal' => $inputs['swp_withdrawal'],
+            'swp_stepup'     => $inputs['swp_stepup'],
+            'swp_years'      => $inputs['swp_years'],
+            'lumpsum'        => $inputs['lumpsum'],
+            'swp_rate'       => $inputs['swp_rate'],
+            'ltcg_exemption' => $inputs['ltcg_exemption'],
+            'ltcg_tax_rate'  => $inputs['ltcg_tax_rate'],
+        ], $configService);
+    }
 
     $phpCalc = new \Core\InvestmentCalculator();
     $phpResults = $phpCalc->calculate($dto);
 
     // 2. JS calculations
     $escapedJson = escapeshellarg(json_encode([
-        'sip'            => $inputs['sip'],
-        'years'          => $inputs['years'],
-        'rate'           => $inputs['rate'],
-        'stepup'         => $inputs['stepup'],
-        'enable_swp'     => $inputs['enable_swp'],
-        'swp_withdrawal' => $inputs['swp_withdrawal'],
-        'swp_stepup'     => $inputs['swp_stepup'],
-        'swp_years'      => $inputs['swp_years'],
-        'lumpsum'        => $inputs['lumpsum'],
-        'swp_rate'       => $inputs['swp_rate'],
+        'sip'            => $dto->getSip(),
+        'years'          => $dto->getYears(),
+        'rate'           => $dto->getRate(),
+        'stepup'         => $dto->getStepup(),
+        'enable_swp'     => $dto->isSwpEnabled(),
+        'swp_withdrawal' => $dto->getSwpWithdrawal(),
+        'swp_stepup'     => $dto->getSwpStepup(),
+        'swp_years'      => $dto->getSwpYears(),
+        'lumpsum'        => $dto->getLumpsum(),
+        'swp_rate'       => $dto->getSwpRate(),
         'ltcg_exemption' => $dto->getLtcgExemption(),
         'ltcg_tax_rate'  => $dto->getLtcgTaxRate(),
     ]));

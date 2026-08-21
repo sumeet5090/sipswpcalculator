@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Core\Exceptions\ConfigurationException;
+
 /**
  * SiteConfig
  * Immutable value object holding site-wide URL configuration.
@@ -14,7 +16,11 @@ class SiteConfig
 
     public function __construct(string $baseUrl)
     {
-        $this->baseUrl = rtrim($baseUrl, '/');
+        $trimmed = trim($baseUrl);
+        if ($trimmed === '' || !preg_match('#^https?://#i', $trimmed)) {
+            throw new ConfigurationException("Invalid base URL '{$baseUrl}'. Must be non-empty and start with http:// or https://.");
+        }
+        $this->baseUrl = rtrim($trimmed, '/');
     }
 
     public function getBaseUrl(): string
@@ -27,6 +33,9 @@ class SiteConfig
         if ($path === '' || $path === '/') {
             return $this->baseUrl . '/';
         }
-        return $this->baseUrl . '/' . ltrim($path, '/');
+        $cleanPath = ltrim($path, '/');
+        // Collapse any consecutive internal slashes in path
+        $cleanPath = (string) preg_replace('#/{2,}#', '/', $cleanPath);
+        return $this->baseUrl . '/' . $cleanPath;
     }
 }

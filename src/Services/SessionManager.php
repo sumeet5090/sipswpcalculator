@@ -8,12 +8,18 @@ namespace Services;
  * SessionManager
  * Encapsulates $_SESSION interaction and lifecycle management.
  */
-class SessionManager
+class SessionManager implements SessionManagerInterface
 {
     public function start(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+            $isHttps = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+                || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower((string) $_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https');
+            session_start([
+                'cookie_httponly' => true,
+                'cookie_samesite' => 'Lax',
+                'cookie_secure'   => $isHttps,
+            ]);
         }
     }
 
@@ -39,7 +45,22 @@ class SessionManager
 
     public function destroy(): void
     {
-        session_destroy();
+        $_SESSION = [];
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            if (ini_get('session.use_cookies')) {
+                $params = session_get_cookie_params();
+                setcookie(
+                    session_name(),
+                    '',
+                    time() - 42000,
+                    $params['path'],
+                    $params['domain'],
+                    $params['secure'],
+                    $params['httponly']
+                );
+            }
+            session_destroy();
+        }
     }
 
     public function generateCsrfToken(): string
@@ -51,6 +72,7 @@ class SessionManager
 
     public function ensureCsrfToken(): string
     {
+        $this->start();
         $token = $this->get('csrf_token');
         if (!is_string($token) || $token === '') {
             return $this->generateCsrfToken();
@@ -67,8 +89,11 @@ class SessionManager
         return $token;
     }
 
-    public function verifyCsrfToken(string $token): bool
+    public function verifyCsrfToken(mixed $token): bool
     {
+        if (!is_string($token) || $token === '') {
+            return false;
+        }
         try {
             $stored = $this->getCsrfToken();
             return hash_equals($stored, $token);

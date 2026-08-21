@@ -23,4 +23,23 @@ If you modify formulas, you must verify parity against `tests/MathEngineAlignmen
 ### 5. SEO & Structured Data
 **Action:** Every calculator page must inject a highly specific `SoftwareApplication` JSON-LD schema (via `SchemaHelper.php`). Do not use generic names; match the schema name precisely to the URL intent (e.g., "SWP Calculator").
 
+### 6. Asset Bundling, Tailwind CSS v4 & Vite Delivery
+**Action:** 
+- **Tailwind CSS v4 Configuration:** Tailwind v4 is strictly configured via CSS directives in `resources/css/input.css` (`@theme`, `@source`). Never create `tailwind.config.js` or `postcss.config.js`.
+- **Twig Asset Loading Contract:** Every full page layout must declare:
+  1. `{{ vite_client() }}` in `<head>` for dev HMR.
+  2. `{{ vite_css('resources/js/app.ts') }}` in `<head>` for compiled CSS `<link>` tags.
+  3. `<script type="module" src="{{ vite_asset('resources/js/app.ts') }}"></script>` in footer for client JS execution.
+- **Dompdf Style Isolation:** Dompdf cannot parse modern Tailwind/CSS variables; PDF styles must strictly reside in `PdfReportStylesheet.php`.
+
+### 7. Dependency Injection, Env & Architecture Governance
+**Action:**
+- **DI Container Autowiring:** `Container` resolves via reflection. Never depend on autowiring for classes with unconfigured primitive arguments or interfaces; bind them explicitly in Service Providers (`CoreServiceProvider`, `RepositoryServiceProvider`, `DomainServiceProvider`, `ControllerServiceProvider`).
+- **Circular Dependencies:** Guard against circular dependencies; the Container will throw a `ContainerException` detailing the chain (`A -> B -> A`).
+- **Environment Precedence:** Always use `Env::get($key, $default)` rather than direct `$_ENV` access. The resolution hierarchy is `$_ENV` > `$_SERVER` > `getenv()` > `$default` (empty strings fall through).
+- **Action Dispatching:** Controller actions resolve parameters by typehint (`Request`), exact route slug name, positional index, and default values. Non-Response returns must be valid string HTML or throw `ContainerException`.
+- **Zero Echoes:** Never use `echo`, `print_r()`, or `var_dump()` in controllers or services; log via `error_log()`.
+
 > **Further Reading:** For a deep dive into these rules, always read the root `README.md` file before proposing major changes.
+
+

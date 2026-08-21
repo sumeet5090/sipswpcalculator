@@ -17,6 +17,36 @@ class Response
         $this->headers = $headers;
     }
 
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
+    }
+
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    public function getBody(): string
+    {
+        return $this->content;
+    }
+
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    public function getHeader(string $name, ?string $default = null): ?string
+    {
+        foreach ($this->headers as $headerName => $value) {
+            if (strcasecmp($headerName, $name) === 0) {
+                return (string) $value;
+            }
+        }
+        return $default;
+    }
+
     public function send(): void
     {
         http_response_code($this->statusCode);
@@ -55,6 +85,9 @@ class Response
         if (!isset($headers['Content-Type'])) {
             $headers['Content-Type'] = 'text/html; charset=utf-8';
         }
+        if (!isset($headers['Cache-Control'])) {
+            $headers['Cache-Control'] = 'no-cache, private';
+        }
 
         return new self($html, $statusCode, $headers);
     }
@@ -67,6 +100,7 @@ class Response
             'Content-Length' => (string) strlen($csvContent),
             'Cache-Control' => 'no-cache, must-revalidate',
             'Pragma' => 'no-cache',
+            'X-Accel-Buffering' => 'no',
         ]);
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Services\ConfigService;
+
 /**
  * MetaManager
  * Encapsulates SEO page metadata generation and metadata mapping.
@@ -14,10 +16,12 @@ class MetaManager
     private ?array $pageMap = null;
     private string $metaPagesPath;
 
-    public function __construct(SiteConfig $siteConfig, ?string $metaPagesPath = null)
-    {
+    public function __construct(
+        SiteConfig $siteConfig,
+        ?string $metaPagesPath = null
+    ) {
         $this->siteConfig = $siteConfig;
-        $this->metaPagesPath = $metaPagesPath ?? (__DIR__ . '/../../content/meta_pages.json');
+        $this->metaPagesPath = $metaPagesPath ?? 'content/meta_pages.json';
     }
 
     private function loadPageMap(): void
@@ -26,13 +30,17 @@ class MetaManager
             return;
         }
 
-        if (!file_exists($this->metaPagesPath)) {
-            throw new \Core\Exceptions\ConfigurationException("Metadata pages configuration missing at: {$this->metaPagesPath}");
+        $fullPath = (str_starts_with($this->metaPagesPath, '/') || (DIRECTORY_SEPARATOR === '\\' && str_contains($this->metaPagesPath, ':')))
+            ? $this->metaPagesPath
+            : __DIR__ . '/../../' . ltrim($this->metaPagesPath, '/');
+
+        if (!file_exists($fullPath)) {
+            throw new \Core\Exceptions\ConfigurationException("Metadata pages configuration missing at: {$fullPath}");
         }
 
-        $rawJson = file_get_contents($this->metaPagesPath);
+        $rawJson = file_get_contents($fullPath);
         if ($rawJson === false) {
-            throw new \Core\Exceptions\ConfigurationException("Failed to read metadata pages configuration at: {$this->metaPagesPath}");
+            throw new \Core\Exceptions\ConfigurationException("Failed to read metadata pages configuration at: {$fullPath}");
         }
 
         $decoded = json_decode($rawJson, true);
@@ -50,6 +58,19 @@ class MetaManager
     {
         $this->loadPageMap();
 
+        $key = trim($pageKey, '/');
+        if ($key === '') {
+            $key = 'home';
+        }
+
+        if (isset($this->pageMap[$key])) {
+            $meta = $this->pageMap[$key];
+            if ($key === 'home' && !isset($meta['canonical'])) {
+                $meta['canonical'] = $this->siteConfig->getUrl('/');
+            }
+            return $meta;
+        }
+
         if (isset($this->pageMap[$pageKey])) {
             $meta = $this->pageMap[$pageKey];
             if ($pageKey === 'home' && !isset($meta['canonical'])) {
@@ -58,8 +79,8 @@ class MetaManager
             return $meta;
         }
 
-        $fallbackTitle = ucfirst(str_replace(['-', '_'], ' ', $pageKey));
-        return $this->setDynamicMeta($fallbackTitle !== '' ? $fallbackTitle : 'SIP SWP Calculator', '');
+        $fallbackTitle = ucfirst(str_replace(['-', '_'], ' ', $key));
+        return $this->setDynamicMeta($fallbackTitle, '', $this->siteConfig->getUrl('/' . $key));
     }
 
     /**
@@ -74,6 +95,10 @@ class MetaManager
         $title = $metadata['title'] ?? ucfirst(str_replace('-', ' ', basename($urlPath)));
         $desc = $metadata['meta_desc'] ?? $metadata['subtitle'] ?? '';
         $canonical = $metadata['canonical'] ?? $this->siteConfig->getUrl($urlPath);
+        $ogImage = $metadata['og_image'] ?? $this->siteConfig->getUrl('/assets/og-image-main.jpg');
+        if (is_string($ogImage) && !str_starts_with($ogImage, 'http')) {
+            $ogImage = $this->siteConfig->getUrl($ogImage);
+        }
 
         return [
             'title' => $title,
@@ -82,6 +107,7 @@ class MetaManager
             'canonical' => $canonical,
             'og_title' => $title,
             'og_desc' => $desc,
+            'og_image' => $ogImage,
         ];
     }
 

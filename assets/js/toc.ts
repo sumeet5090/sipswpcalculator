@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+export function initToc(): void {
     const mainContent = document.getElementById('main-content');
     const tocList = document.getElementById('toc-list');
 
@@ -87,4 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-});
+}
+
+if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initToc);
+    } else {
+        initToc();
+    }
+}

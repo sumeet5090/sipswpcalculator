@@ -168,6 +168,50 @@ class MathEngineAlignmentTest extends TestCase
                     'swp_stepup' => 30, // Clamped to 20
                     'swp_rate' => 40 // Clamped to 30
                 ]
+            ],
+            'pure_lumpsum' => [
+                [
+                    'sip' => 0,
+                    'years' => 10,
+                    'rate' => 14,
+                    'stepup' => 0,
+                    'lumpsum' => 500000
+                ]
+            ],
+            'early_depletion_swp' => [
+                [
+                    'sip' => 0,
+                    'years' => 1,
+                    'rate' => 5,
+                    'lumpsum' => 500000,
+                    'enable_swp' => 1,
+                    'swp_withdrawal' => 80000,
+                    'swp_years' => 10,
+                    'swp_stepup' => 5,
+                    'swp_rate' => 6
+                ]
+            ],
+            'zero_rate_linear' => [
+                [
+                    'sip' => 10000,
+                    'years' => 5,
+                    'rate' => 0,
+                    'stepup' => 0,
+                    'lumpsum' => 0
+                ]
+            ],
+            'standalone_swp_regime' => [
+                [
+                    'sip' => 0,
+                    'years' => 1,
+                    'rate' => 8,
+                    'lumpsum' => 5000000,
+                    'enable_swp' => 1,
+                    'swp_withdrawal' => 40000,
+                    'swp_years' => 15,
+                    'swp_stepup' => 6,
+                    'swp_rate' => 8.5
+                ]
             ]
         ];
     }

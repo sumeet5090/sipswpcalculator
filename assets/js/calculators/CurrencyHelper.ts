@@ -32,26 +32,47 @@ export class CurrencyFormatter {
      * Format numeric value to currency string.
      */
     format(value: number): string {
+        const rounded = Math.round(value) || 0;
         return new Intl.NumberFormat(this.locale, {
             style: 'currency',
             currency: this.currency,
             maximumFractionDigits: 0
-        }).format(value);
+        }).format(rounded);
     }
 
     /**
-     * Format dynamic large amounts with appropriate Lakh/Crore suffix.
+     * Format dynamic large amounts with appropriate Lakh/Crore or Million/Billion suffix.
      */
     formatDynamic(amount: number): string {
-        if (amount >= 10000000) {
-            return this.symbol + (amount / 10000000).toFixed(2).replace(/\.00$/, '') + ' Crore';
+        const rounded = Math.round(amount) || 0;
+        const isNegative = rounded < 0;
+        const absAmount = Math.abs(rounded);
+        const prefix = isNegative ? `-${this.symbol}` : this.symbol;
+
+        if (this.currency === 'INR') {
+            if (absAmount >= 10000000) {
+                return prefix + (absAmount / 10000000).toFixed(2).replace(/\.00$/, '') + ' Crore';
+            }
+            if (absAmount >= 100000) {
+                return prefix + (absAmount / 100000).toFixed(2).replace(/\.00$/, '') + ' Lakh';
+            }
+            if (absAmount >= 1000) {
+                return prefix + (absAmount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
+            }
+        } else {
+            if (absAmount >= 1000000000) {
+                return prefix + (absAmount / 1000000000).toFixed(2).replace(/\.00$/, '') + 'B';
+            }
+            if (absAmount >= 1000000) {
+                return prefix + (absAmount / 1000000).toFixed(2).replace(/\.00$/, '') + 'M';
+            }
+            if (absAmount >= 1000) {
+                return prefix + (absAmount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
+            }
         }
-        if (amount >= 100000) {
-            return this.symbol + (amount / 100000).toFixed(2).replace(/\.00$/, '') + ' Lakh';
-        }
-        if (amount >= 1000) {
-            return this.symbol + (amount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
-        }
-        return this.symbol + amount.toLocaleString(this.locale);
+
+        return isNegative
+            ? `-${this.symbol}${absAmount.toLocaleString(this.locale)}`
+            : `${this.symbol}${absAmount.toLocaleString(this.locale)}`;
     }
 }

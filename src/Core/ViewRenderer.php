@@ -30,11 +30,14 @@ class ViewRenderer
         $loader = new FilesystemLoader($resolvedViews);
 
         $effectiveCache = false;
-        if ($cachePath !== null) {
+        if ($cachePath !== null && is_dir($cachePath) && is_writable($cachePath)) {
             $effectiveCache = $cachePath;
         } elseif ($isProd) {
             $cacheDir = __DIR__ . '/../../var/cache/twig';
-            if (is_dir($cacheDir)) {
+            if (!is_dir($cacheDir) && !mkdir($cacheDir, 0775, true) && !is_dir($cacheDir)) {
+                error_log("ViewRenderer: Failed to create Twig cache directory at {$cacheDir}");
+            }
+            if (is_dir($cacheDir) && is_writable($cacheDir)) {
                 $effectiveCache = $cacheDir;
             }
         }
@@ -42,11 +45,13 @@ class ViewRenderer
         $this->twig = new Environment($loader, [
             'cache' => $effectiveCache,
             'debug' => !$isProd,
+            'auto_reload' => !$isProd,
         ]);
 
         $this->twig->addGlobal('env', $env);
         $this->twig->addGlobal('site_url', rtrim($appUrl, '/'));
-        $extension = $twigExtension ?? new \Core\Twig\AppTwigExtension($viteHelper, $currencyFormatter);
+        $formatter = $currencyFormatter ?? new \Core\CurrencyHelper();
+        $extension = $twigExtension ?? new \Core\Twig\AppTwigExtension($viteHelper, $formatter);
         $this->twig->addExtension($extension);
     }
 
@@ -71,6 +76,8 @@ class ViewRenderer
 
         try {
             return $this->twig->render($resolvedView, $renderData);
+        } catch (\Twig\Error\LoaderError $e) {
+            throw new \Core\Exceptions\NotFoundException("Template '{$resolvedView}' not found: " . $e->getMessage(), 0, $e);
         } catch (\Throwable $e) {
             throw new \RuntimeException("Twig rendering failed: " . $e->getMessage(), 0, $e);
         }
@@ -86,11 +93,13 @@ class ViewRenderer
             $source = $this->twig->getLoader()->getSourceContext($resolvedView);
             $filePath = $source->getPath();
             if (empty($filePath) || !file_exists($filePath)) {
-                throw new \RuntimeException("View template file missing at path: '{$filePath}' for view: '{$resolvedView}'");
+                throw new \Core\Exceptions\NotFoundException("View template file missing at path: '{$filePath}' for view: '{$resolvedView}'");
             }
-            return date('Y-m-d', filemtime($filePath));
+            return date('Y-m-d', (int) filemtime($filePath));
+        } catch (\Twig\Error\LoaderError $e) {
+            throw new \Core\Exceptions\NotFoundException("View template '{$resolvedView}' not found: " . $e->getMessage(), 0, $e);
         } catch (\Throwable $e) {
-            if ($e instanceof \RuntimeException) {
+            if ($e instanceof \Core\Exceptions\NotFoundException || $e instanceof \RuntimeException) {
                 throw $e;
             }
             throw new \RuntimeException("Failed to get modification date for template '{$resolvedView}': " . $e->getMessage(), 0, $e);

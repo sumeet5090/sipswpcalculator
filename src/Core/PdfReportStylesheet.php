@@ -54,7 +54,7 @@ class PdfReportStylesheet
             .phase-badge.sip { background: #dcfce7; color: #166534; }
             .phase-badge.swp { background: #ffe4e6; color: #9f1239; }
             .chart-box { text-align: center; margin: 6px 0 8px 0; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px; background: #ffffff; page-break-inside: avoid; width: 100%; box-sizing: border-box; }
-            .chart-box img { width: 100%; height: auto; max-height: 475px; display: block; margin: 0 auto; object-fit: contain; }
+            .chart-box img { width: 100%; height: auto; max-height: 475px; display: block; margin: 0 auto; }
             .milestones-container { margin: 8px 0 0 0; page-break-inside: avoid; }
             .milestones-table { width: 100%; border-collapse: separate; border-spacing: 6px 0; table-layout: fixed; }
             .milestone-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #059669; padding: 6px 6px; border-radius: 6px; text-align: center; vertical-align: top; }
