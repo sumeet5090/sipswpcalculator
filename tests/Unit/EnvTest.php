@@ -67,4 +67,36 @@ class EnvTest extends TestCase
 
         $this->assertSame('fallback_val', Env::get('COMPLETELY_UNDEFINED_KEY_9999', 'fallback_val'));
     }
+
+    public function testGetBoolParsing(): void
+    {
+        $_ENV['TEST_BOOL_TRUE'] = 'true';
+        $_ENV['TEST_BOOL_FALSE'] = 'false';
+        $_ENV['TEST_BOOL_ONE'] = '1';
+        $_ENV['TEST_BOOL_ZERO'] = '0';
+        $_ENV['TEST_BOOL_YES'] = 'yes';
+        $_ENV['TEST_BOOL_NO'] = 'no';
+        $_ENV['TEST_BOOL_INVALID'] = 'invalid_string';
+
+        $this->assertTrue(Env::getBool('TEST_BOOL_TRUE'));
+        $this->assertFalse(Env::getBool('TEST_BOOL_FALSE', true));
+        $this->assertTrue(Env::getBool('TEST_BOOL_ONE'));
+        $this->assertFalse(Env::getBool('TEST_BOOL_ZERO', true));
+        $this->assertTrue(Env::getBool('TEST_BOOL_YES'));
+        $this->assertFalse(Env::getBool('TEST_BOOL_NO', true));
+        $this->assertTrue(Env::getBool('TEST_BOOL_INVALID', true));
+        $this->assertFalse(Env::getBool('NON_EXISTENT_BOOL_KEY', false));
+    }
+
+    public function testGetIntParsing(): void
+    {
+        $_ENV['TEST_INT_VALID'] = '42';
+        $_ENV['TEST_INT_NEGATIVE'] = '-100';
+        $_ENV['TEST_INT_INVALID'] = 'not_a_number';
+
+        $this->assertSame(42, Env::getInt('TEST_INT_VALID'));
+        $this->assertSame(-100, Env::getInt('TEST_INT_NEGATIVE'));
+        $this->assertSame(10, Env::getInt('TEST_INT_INVALID', 10));
+        $this->assertSame(999, Env::getInt('NON_EXISTENT_INT_KEY', 999));
+    }
 }

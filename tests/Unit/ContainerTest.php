@@ -118,6 +118,31 @@ class DummyUnionTypeRequired
     }
 }
 
+class DummyVariadic
+{
+    /** @var string[] */
+    public array $items;
+
+    public function __construct(string ...$items)
+    {
+        $this->items = $items;
+    }
+}
+
+abstract class DummyUnboundNonInstantiable
+{
+}
+
+class DummyNullableUnbound
+{
+    public ?DummyUnboundNonInstantiable $unbound;
+
+    public function __construct(?DummyUnboundNonInstantiable $unbound)
+    {
+        $this->unbound = $unbound;
+    }
+}
+
 class ContainerTest extends TestCase
 {
     private Container $container;
@@ -295,5 +320,34 @@ class ContainerTest extends TestCase
         $instance = $this->container->get(DummyUnionType::class);
         $this->assertInstanceOf(DummyUnionType::class, $instance);
         $this->assertInstanceOf(DummyServiceA::class, $instance->dependency);
+    }
+
+    public function testVariadicParameterThrowsContainerException(): void
+    {
+        $this->expectException(ContainerException::class);
+        $this->expectExceptionMessage("Variadic parameter 'items' in class " . DummyVariadic::class . " cannot be autowired by reflection.");
+        $this->container->get(DummyVariadic::class);
+    }
+
+    public function testNullableParameterFallsBackToNullWhenUnbound(): void
+    {
+        /** @var DummyNullableUnbound $instance */
+        $instance = $this->container->get(DummyNullableUnbound::class);
+        $this->assertInstanceOf(DummyNullableUnbound::class, $instance);
+        $this->assertNull($instance->unbound);
+    }
+
+    public function testInvalidStringResolverInBindThrows(): void
+    {
+        $this->expectException(ContainerException::class);
+        $this->expectExceptionMessage("Target class or interface 'NonExistentResolverClass' does not exist");
+        $this->container->bind('some_key', 'NonExistentResolverClass');
+    }
+
+    public function testInvalidStringResolverInSingletonThrows(): void
+    {
+        $this->expectException(ContainerException::class);
+        $this->expectExceptionMessage("Target class or interface 'NonExistentResolverClass' does not exist");
+        $this->container->singleton('some_key', 'NonExistentResolverClass');
     }
 }

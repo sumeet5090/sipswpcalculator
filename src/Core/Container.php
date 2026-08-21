@@ -32,6 +32,9 @@ class Container implements ContainerInterface
     public function bind(string $key, callable|object|string $resolver): void
     {
         $key = ltrim($key, '\\');
+        if (is_string($resolver) && !class_exists($resolver) && !interface_exists($resolver)) {
+            throw new ContainerException("Target class or interface '{$resolver}' does not exist for binding '{$key}'.");
+        }
         $this->bindings[$key] = $resolver;
     }
 
@@ -41,6 +44,9 @@ class Container implements ContainerInterface
     public function singleton(string $key, callable|object|string $resolver): void
     {
         $key = ltrim($key, '\\');
+        if (is_string($resolver) && !class_exists($resolver) && !interface_exists($resolver)) {
+            throw new ContainerException("Target class or interface '{$resolver}' does not exist for singleton binding '{$key}'.");
+        }
         $this->bindings[$key] = function (Container $container) use ($key, $resolver) {
             if (is_callable($resolver)) {
                 $resolved = $resolver($container);
@@ -164,6 +170,10 @@ class Container implements ContainerInterface
             $dependencies = [];
 
             foreach ($parameters as $parameter) {
+                if ($parameter->isVariadic()) {
+                    throw new ContainerException("Variadic parameter '{$parameter->getName()}' in class {$class} cannot be autowired by reflection.");
+                }
+
                 $type = $parameter->getType();
                 if ($type === null) {
                     if ($parameter->isDefaultValueAvailable()) {
@@ -202,7 +212,22 @@ class Container implements ContainerInterface
                     }
                 } else {
                     if ($type instanceof \ReflectionNamedType && !$type->isBuiltin()) {
-                        $dependencies[] = $this->get($type->getName());
+                        $typeName = $type->getName();
+                        if (isset($this->instances[$typeName]) || isset($this->bindings[$typeName])) {
+                            $dependencies[] = $this->get($typeName);
+                        } else {
+                            try {
+                                $dependencies[] = $this->get($typeName);
+                            } catch (\Throwable $e) {
+                                if ($type->allowsNull()) {
+                                    $dependencies[] = null;
+                                } elseif ($parameter->isDefaultValueAvailable()) {
+                                    $dependencies[] = $parameter->getDefaultValue();
+                                } else {
+                                    throw $e;
+                                }
+                            }
+                        }
                     } else {
                         if ($parameter->isDefaultValueAvailable()) {
                             $dependencies[] = $parameter->getDefaultValue();
