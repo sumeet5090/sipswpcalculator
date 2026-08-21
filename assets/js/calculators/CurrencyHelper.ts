@@ -29,6 +29,15 @@ export class CurrencyFormatter {
     }
 
     /**
+     * Update active currency configuration.
+     */
+    setCurrency(locale: string, currency: string, symbol: string): void {
+        this.locale = locale;
+        this.currency = currency;
+        this.symbol = symbol;
+    }
+
+    /**
      * Format numeric value to currency string.
      */
     format(value: number): string {

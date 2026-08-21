@@ -55,5 +55,24 @@ export class GlossaryController {
             el.setAttribute('title', `${termData.title}: ${termData.description}`);
             el.classList.add('cursor-help', 'border-b', 'border-dotted', 'border-emerald-500/60');
         });
+
+        // Initialize formula copy buttons
+        const copyBtns = document.querySelectorAll<HTMLButtonElement>('.copy-formula-btn');
+        copyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const formula = btn.dataset.formula || '';
+                if (formula && navigator.clipboard) {
+                    navigator.clipboard.writeText(formula).then(() => {
+                        const originalText = btn.textContent;
+                        btn.textContent = '✓ Copied';
+                        btn.classList.add('text-emerald-700', 'bg-emerald-50');
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.classList.remove('text-emerald-700', 'bg-emerald-50');
+                        }, 1500);
+                    });
+                }
+            });
+        });
     }
 }

@@ -30,6 +30,9 @@ import { ScenarioDiffController } from './controllers/ScenarioDiffController';
 import { MilestoneCelebrationController } from './controllers/MilestoneCelebrationController';
 import { AudioFeedbackController } from './controllers/AudioFeedbackController';
 import { CityBenchmarkController } from './controllers/CityBenchmarkController';
+import { StressTestController } from './controllers/StressTestController';
+import { AssetRebalanceController } from './controllers/AssetRebalanceController';
+import { CurrencyToggleController } from './controllers/CurrencyToggleController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -49,6 +52,9 @@ export class CalculatorApp {
     private celebrationController: MilestoneCelebrationController;
     private audioController: AudioFeedbackController;
     private cityBenchmarkController: CityBenchmarkController;
+    private stressTestController: StressTestController;
+    private assetRebalanceController: AssetRebalanceController;
+    private currencyToggleController: CurrencyToggleController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -113,6 +119,22 @@ export class CalculatorApp {
         this.cityBenchmarkController = new CityBenchmarkController(
             this.dom,
             this.sliderManager,
+            this.formatter,
+            () => this.triggerCalculation()
+        );
+
+        this.stressTestController = new StressTestController(
+            this.dom,
+            this.formatter
+        );
+
+        this.assetRebalanceController = new AssetRebalanceController(
+            this.dom,
+            this.formatter
+        );
+
+        this.currencyToggleController = new CurrencyToggleController(
+            this.dom,
             this.formatter,
             () => this.triggerCalculation()
         );
@@ -359,6 +381,9 @@ export class CalculatorApp {
         new WealthQuizController(this.dom, this.sliderManager, () => this.triggerCalculation()).init();
         this.scenarioDiffController.init();
         this.celebrationController.init();
+        this.stressTestController.init();
+        this.assetRebalanceController.init();
+        this.currencyToggleController.init();
         const snapshotBtn = document.getElementById('snapshot-scenario-btn');
         if (snapshotBtn) {
             snapshotBtn.addEventListener('click', () => {
@@ -536,6 +561,9 @@ export class CalculatorApp {
             if (lastRow) {
                 this.celebrationController.checkMilestones(lastRow.combined_total);
             }
+
+            this.stressTestController.updateResults(combined);
+            this.assetRebalanceController.updateInputs(inputs);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 

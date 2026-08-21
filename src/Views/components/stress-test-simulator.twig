@@ -1,0 +1,62 @@
+<!-- Historical Black Swan Stress-Testing & Crash Recovery Simulator -->
+<div id="stress-test-simulator-card" class="p-5 sm:p-6 rounded-3xl bg-slate-900 text-white border border-slate-700/80 shadow-xl relative overflow-hidden">
+    <!-- Ambient Glow -->
+    <div class="absolute -left-16 -top-16 w-56 h-56 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div class="flex items-center gap-2.5">
+                <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30 text-sm font-black">📉</span>
+                <div>
+                    <h4 class="text-xs sm:text-sm font-extrabold text-white">Historical Black Swan Crash Simulator</h4>
+                    <p class="text-[11px] text-slate-400">Stress-test your portfolio against major Indian market shocks</p>
+                </div>
+            </div>
+            <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-rose-950/80 text-rose-400 border border-rose-800/60">
+                Stress-Test Engine
+            </span>
+        </div>
+
+        <!-- Crash Selector Buttons -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4" role="tablist" aria-label="Black Swan Scenarios">
+            <button type="button" class="stress-choice-btn p-2.5 rounded-xl bg-slate-800/80 border border-emerald-500 text-white text-left transition-all cursor-pointer" data-scenario="baseline" data-drop="0" data-recovery="0" data-year="0">
+                <strong class="text-xs block">Normal Growth</strong>
+                <span class="text-[10px] text-emerald-400">Steady Compounding</span>
+            </button>
+            <button type="button" class="stress-choice-btn p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-left transition-all cursor-pointer" data-scenario="lehman" data-drop="52" data-recovery="24" data-year="3">
+                <strong class="text-xs block">2008 Lehman</strong>
+                <span class="text-[10px] text-rose-400">-52% Drop (Yr 3)</span>
+            </button>
+            <button type="button" class="stress-choice-btn p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-left transition-all cursor-pointer" data-scenario="covid" data-drop="38" data-recovery="8" data-year="5">
+                <strong class="text-xs block">2020 COVID</strong>
+                <span class="text-[10px] text-amber-400">-38% Drop (Yr 5)</span>
+            </button>
+            <button type="button" class="stress-choice-btn p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-left transition-all cursor-pointer" data-scenario="dotcom" data-drop="30" data-recovery="36" data-year="2">
+                <strong class="text-xs block">2000 Dot-Com</strong>
+                <span class="text-[10px] text-indigo-400">3 Flat / Bear Yrs</span>
+            </button>
+        </div>
+
+        <!-- Stress Metrics Display -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-2xl bg-slate-800/60 border border-slate-700/60 mb-3">
+            <div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">Max Temporary Drawdown</div>
+                <div id="stress-preview-drawdown" class="text-sm font-extrabold text-rose-400 font-mono mt-0.5">₹ 0 (0%)</div>
+            </div>
+            <div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">Historical Breakeven Time</div>
+                <div id="stress-preview-recovery" class="text-sm font-extrabold text-emerald-400 font-mono mt-0.5">0 Months (No Drop)</div>
+            </div>
+            <div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">Net Wealth After Rebound</div>
+                <div id="stress-preview-final" class="text-sm font-extrabold text-white font-mono mt-0.5">₹ --</div>
+            </div>
+        </div>
+
+        <!-- Rupee Cost Averaging Lesson Callout -->
+        <div id="stress-lesson-callout" class="text-[11px] text-slate-300 p-2.5 rounded-xl bg-slate-800/40 border border-slate-700/40 flex items-start gap-2">
+            <span class="text-xs">💡</span>
+            <span id="stress-lesson-text">In a steady compounding market, monthly SIP systematically accumulates wealth with standard compound interest.</span>
+        </div>
+    </div>
+</div>

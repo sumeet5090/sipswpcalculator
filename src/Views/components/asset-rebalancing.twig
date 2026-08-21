@@ -1,0 +1,63 @@
+<!-- Dynamic Asset Allocation & Tax-Free Cashflow Rebalancing Router -->
+<div id="asset-rebalancing-card" class="p-5 sm:p-6 rounded-3xl bg-slate-900 text-white border border-slate-700/80 shadow-xl relative overflow-hidden">
+    <!-- Ambient Glow -->
+    <div class="absolute -right-16 -bottom-16 w-56 h-56 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div class="flex items-center gap-2.5">
+                <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-sm font-black">⚖️</span>
+                <div>
+                    <h4 class="text-xs sm:text-sm font-extrabold text-white">Dynamic Asset Allocation &amp; Rebalancing</h4>
+                    <p class="text-[11px] text-slate-400">Manage equity/debt drift with zero-tax cashflow routing</p>
+                </div>
+            </div>
+            <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-indigo-950/80 text-indigo-400 border border-indigo-800/60">
+                Tax-Free Router
+            </span>
+        </div>
+
+        <!-- Target Allocation Split Buttons -->
+        <div class="grid grid-cols-3 gap-2 mb-4" role="tablist" aria-label="Asset Allocation Profiles">
+            <button type="button" class="rebalance-choice-btn p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-left transition-all cursor-pointer" data-equity="80" data-debt="20">
+                <strong class="text-xs block">80/20 Aggressive</strong>
+                <span class="text-[10px] text-emerald-400">80% Eq • 20% Debt</span>
+            </button>
+            <button type="button" class="rebalance-choice-btn p-2.5 rounded-xl bg-slate-800/80 border border-indigo-500 text-white text-left transition-all cursor-pointer" data-equity="70" data-debt="30">
+                <strong class="text-xs block">70/30 Balanced</strong>
+                <span class="text-[10px] text-indigo-300">70% Eq • 30% Debt</span>
+            </button>
+            <button type="button" class="rebalance-choice-btn p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-left transition-all cursor-pointer" data-equity="60" data-debt="40">
+                <strong class="text-xs block">60/40 Defensive</strong>
+                <span class="text-[10px] text-teal-300">60% Eq • 40% Debt</span>
+            </button>
+        </div>
+
+        <!-- Allocation Metrics Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-2xl bg-slate-800/60 border border-slate-700/60 mb-3">
+            <div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">Blended Portfolio CAGR</div>
+                <div id="rebalance-preview-cagr" class="text-sm font-extrabold text-emerald-400 font-mono mt-0.5">10.8% p.a.</div>
+            </div>
+            <div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">Target Asset Split</div>
+                <div id="rebalance-preview-split" class="text-sm font-extrabold text-white font-mono mt-0.5">70% Equity / 30% Debt</div>
+            </div>
+            <div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">Volatility Reduction</div>
+                <div id="rebalance-preview-volatility" class="text-sm font-extrabold text-indigo-300 font-mono mt-0.5">-28% vs Pure Eq</div>
+            </div>
+        </div>
+
+        <!-- Action Recommendation Banner -->
+        <div class="p-3 rounded-2xl bg-indigo-950/40 border border-indigo-800/50 flex items-start gap-2.5">
+            <span class="text-sm">🛡️</span>
+            <div>
+                <div class="text-xs font-bold text-indigo-200">Tax-Free Cashflow Rebalancing Recommendation</div>
+                <p id="rebalance-action-text" class="text-[11px] text-slate-300 mt-0.5">
+                    Allocate monthly SIP: <strong class="text-white">₹17,500 into Equity</strong> and <strong class="text-white">₹7,500 into Debt</strong> funds to maintain exact 70/30 asset balance without triggering any capital gains tax.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
