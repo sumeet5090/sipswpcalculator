@@ -133,4 +133,23 @@ final class TypographyAndThemeTokensTest extends TestCase
             'ChartManager.ts must import THEME_COLORS and THEME_FONTS from ThemeTokens.ts'
         );
     }
+
+    public function testProseTypographyAdheresToHarmonizedScale(): void
+    {
+        $this->assertStringContainsString(
+            'font-size: 1.5rem;',
+            $this->stylesCssContent,
+            'styles.css .prose h2 must use normalized 1.5rem scale'
+        );
+        $this->assertStringContainsString(
+            'font-size: 1.25rem;',
+            $this->stylesCssContent,
+            'styles.css .prose h3 must use normalized 1.25rem scale'
+        );
+        $this->assertStringNotContainsString(
+            'font-size: 1.85rem !important',
+            $this->stylesCssContent,
+            'styles.css must not use oversized !important overrides on prose h2'
+        );
+    }
 }

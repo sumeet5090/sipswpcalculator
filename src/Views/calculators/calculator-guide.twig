@@ -188,18 +188,21 @@
 </section>
 
 <!-- Markdown Educational Guide -->
-<article class="markdown-content mt-16 max-w-4xl mx-auto border-t border-slate-200 pt-10">
+<article class="markdown-content prose prose-slate max-w-4xl mx-auto border-t border-slate-200 pt-10">
     {{ content_html|raw }}
 </article>
 
 {% if faqs is not empty %}
-<section class="mt-16 max-w-4xl mx-auto border-t border-slate-200 pt-10 pb-10" aria-labelledby="faq-heading">
-    <h2 id="faq-heading" class="text-3xl font-extrabold text-slate-900 mb-8 tracking-tight">Frequently Asked Questions</h2>
-    <div class="space-y-6">
+<section class="mt-12 max-w-4xl mx-auto border-t border-slate-200 pt-8 pb-10" aria-labelledby="faq-heading">
+    <h2 id="faq-heading" class="text-xl sm:text-2xl font-extrabold text-slate-900 mb-6 tracking-tight flex items-center gap-2">
+        <span>❓</span>
+        <span>Frequently Asked Questions</span>
+    </h2>
+    <div class="space-y-4">
         {% for faq in faqs %}
-        <div class="glass-card p-6 border-slate-200 shadow-sm transition-all duration-300 hover:shadow-md">
-            <h3 class="text-xl font-bold text-slate-800 mb-3">{{ faq.q }}</h3>
-            <p class="text-slate-600 leading-relaxed">{{ faq.a }}</p>
+        <div class="glass-card p-5 border border-slate-200/90 rounded-2xl shadow-xs transition-all duration-300 hover:shadow-md">
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 mb-2">{{ faq.q }}</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ faq.a }}</p>
         </div>
         {% endfor %}
     </div>
