@@ -252,7 +252,7 @@ export class SummaryMetricsController {
         this.fitSummaryCards();
     }
 
-    initTaxWaterfallModal(): void {
+    initTaxWaterfallModal(onOpen?: () => void): void {
         const modal = this.dom.getElement<HTMLDialogElement>('tax-waterfall-modal');
         const openBtn = this.dom.getElement('open-tax-waterfall-btn');
         const closeBtn = this.dom.getElement('close-tax-waterfall-btn');
@@ -269,6 +269,7 @@ export class SummaryMetricsController {
             openBtn.addEventListener('click', () => {
                 modal.showModal();
                 ModalScrollLockHelper.lock(openBtn);
+                onOpen?.();
             });
         }
         if (closeBtn) {

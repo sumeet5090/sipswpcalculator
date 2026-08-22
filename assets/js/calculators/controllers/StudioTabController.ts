@@ -7,9 +7,11 @@ import { DOMAdapter } from '../../adapters/DOMAdapter';
  */
 export class StudioTabController {
     private dom: DOMAdapter;
+    private onTabChange?: (tabId: string) => void;
 
-    constructor(dom: DOMAdapter = new DOMAdapter()) {
+    constructor(dom: DOMAdapter = new DOMAdapter(), onTabChange?: (tabId: string) => void) {
         this.dom = dom;
+        this.onTabChange = onTabChange;
     }
 
     init(): void {
@@ -45,6 +47,8 @@ export class StudioTabController {
                     panel.classList.add('hidden');
                 }
             });
+
+            this.onTabChange?.(targetTabId);
         };
 
         tabs.forEach((tab, index) => {

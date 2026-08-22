@@ -48,6 +48,32 @@ class InsightRepositoryTest extends TestCase
                 preset_clicked TEXT,
                 exit_action TEXT,
                 referrer TEXT,
+                landing_path TEXT,
+                referrer_category TEXT,
+                utm_source TEXT,
+                utm_medium TEXT,
+                scroll_depth_pct INTEGER,
+                dwell_time_seconds INTEGER,
+                quick_answer_viewed INTEGER,
+                faq_item_expanded TEXT,
+                glossary_term_clicked TEXT,
+                hud_shortcut_clicked TEXT,
+                active_studio_tab TEXT,
+                strategy_starter_used TEXT,
+                guided_wizard_completed INTEGER,
+                stress_test_scenario TEXT,
+                city_benchmark_city TEXT,
+                scenario_diff_saved INTEGER,
+                csv_exported INTEGER,
+                qr_modal_opened INTEGER,
+                tax_waterfall_opened INTEGER,
+                goal_pledge_created INTEGER,
+                internal_hub_clicked TEXT,
+                cwv_lcp_ms INTEGER,
+                cwv_cls REAL,
+                cwv_inp_ms INTEGER,
+                connection_speed TEXT,
+                viewport_bucket TEXT,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         ");
@@ -82,5 +108,10 @@ class InsightRepositoryTest extends TestCase
         $this->assertArrayHasKey('b2bAdvisorRate', $data);
         $this->assertArrayHasKey('inflationRate', $data);
         $this->assertArrayHasKey('avgIterations', $data);
+        $this->assertArrayHasKey('referrerDist', $data);
+        $this->assertArrayHasKey('studioTabDist', $data);
+        $this->assertArrayHasKey('strategyStarterDist', $data);
+        $this->assertArrayHasKey('avgScrollDepth', $data);
+        $this->assertArrayHasKey('avgDwellTime', $data);
     }
 }

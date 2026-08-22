@@ -375,8 +375,9 @@ export class CalculatorApp {
      * Initialize app lifecycle.
      */
     init(): void {
-        const appContainer = this.dom.getElement('calculator-app');
-        if (appContainer && appContainer.dataset.mode === 'target_corpus') {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlGoal = urlParams.get('goal');
+        if (urlGoal === 'target_corpus' || urlGoal === 'target') {
             this.activeGoalMode = 'target';
         }
 
@@ -385,8 +386,16 @@ export class CalculatorApp {
         this.initSwpHandlers();
         this.initToggles();
 
+        this.qrShareModalController = new QrShareModalController(
+            this.dom,
+            () => this.getInputs(),
+            () => this.analytics.setQrModalOpened()
+        );
+
+        this.initGlobalShortcuts();
+
         new TabController(this.dom).init();
-        new StudioTabController(this.dom).init();
+        new StudioTabController(this.dom, (tabId) => this.analytics.setActiveStudioTab(tabId)).init();
         new StepperController(
             this.dom,
             this.validator,
@@ -413,7 +422,7 @@ export class CalculatorApp {
         new GlossaryController().init();
         this.audioController.init();
         this.cityBenchmarkController.init();
-        this.summaryMetricsController.initTaxWaterfallModal();
+        this.summaryMetricsController.initTaxWaterfallModal(() => this.analytics.setTaxWaterfallOpened());
         new CommandPaletteController(this.dom, (params) => {
             if (params.sip !== undefined) this.sliderManager.updateFieldValue('sip', params.sip);
             if (params.years !== undefined) this.sliderManager.updateFieldValue('years', params.years);
@@ -422,7 +431,12 @@ export class CalculatorApp {
             const sec = this.dom.getElement('calculator-section');
             if (sec) sec.scrollIntoView({ behavior: 'smooth' });
         }).init();
-        new WealthQuizController(this.dom, this.sliderManager, () => this.triggerCalculation()).init();
+        new WealthQuizController(
+            this.dom,
+            this.sliderManager,
+            () => this.triggerCalculation(),
+            () => this.analytics.setGuidedWizardCompleted()
+        ).init();
         this.scenarioDiffController.init();
         this.celebrationController.init();
         this.stressTestController.init();
@@ -436,9 +450,11 @@ export class CalculatorApp {
             snapshotBtn.addEventListener('click', () => {
                 const inputs = this.getInputs();
                 this.scenarioDiffController.setSnapshot(inputs, this.latestResults);
+                this.analytics.setScenarioDiffSaved();
             });
         }
         this.initPersonaBlueprints();
+        this.initPassiveSeoClickListeners();
         this.initResizeListeners();
         new UrlStateController(
             this.dom,
@@ -453,6 +469,9 @@ export class CalculatorApp {
         const buttons = document.querySelectorAll<HTMLButtonElement>('.persona-btn');
         buttons.forEach(btn => {
             btn.addEventListener('click', () => {
+                const persona = btn.dataset.persona || 'blueprint';
+                this.analytics.setStrategyStarterUsed(persona);
+
                 const sip = parseFloat(btn.dataset.sip || '0');
                 const years = parseFloat(btn.dataset.years || '0');
                 const rate = parseFloat(btn.dataset.rate || '0');
@@ -479,6 +498,60 @@ export class CalculatorApp {
                 }
 
                 this.triggerCalculation();
+            });
+        });
+    }
+
+    private initPassiveSeoClickListeners(): void {
+        if (typeof document === 'undefined') return;
+
+        // FAQ Details toggles
+        document.querySelectorAll('details').forEach(details => {
+            details.addEventListener('toggle', () => {
+                if (details.open) {
+                    const summaryText = details.querySelector('summary')?.textContent?.trim() || details.id || 'faq';
+                    this.analytics.setFaqExpanded(summaryText.slice(0, 64));
+                }
+            });
+        });
+
+        // Glossary tooltips
+        document.querySelectorAll('[data-glossary]').forEach(el => {
+            el.addEventListener('click', () => {
+                const term = el.getAttribute('data-glossary') || el.textContent?.trim() || 'term';
+                this.analytics.setGlossaryClicked(term.slice(0, 64));
+            });
+        });
+
+        // Floating Discovery HUD shortcuts
+        document.querySelectorAll('#floating-discovery-hud a, .hud-nav-link').forEach(el => {
+            el.addEventListener('click', () => {
+                const target = el.getAttribute('href') || el.id || 'hud';
+                this.analytics.setHudShortcutClicked(target.slice(0, 64));
+            });
+        });
+
+        // City FIRE Benchmark choices
+        document.querySelectorAll('.city-choice-btn, [data-city]').forEach(el => {
+            el.addEventListener('click', () => {
+                const city = (el as HTMLElement).dataset.city || el.textContent?.trim() || 'city';
+                this.analytics.setCityBenchmarkCity(city.slice(0, 64));
+            });
+        });
+
+        // Stress Test Crisis Scenarios
+        document.querySelectorAll('.stress-card, [data-scenario]').forEach(el => {
+            el.addEventListener('click', () => {
+                const sc = (el as HTMLElement).dataset.scenario || el.textContent?.trim() || 'stress';
+                this.analytics.setStressTestScenario(sc.slice(0, 64));
+            });
+        });
+
+        // Related Resources internal links
+        document.querySelectorAll('#related-resources a').forEach(el => {
+            el.addEventListener('click', () => {
+                const href = el.getAttribute('href') || 'related';
+                this.analytics.setInternalHubClicked(href.slice(0, 64));
             });
         });
     }

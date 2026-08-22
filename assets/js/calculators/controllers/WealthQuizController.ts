@@ -21,6 +21,7 @@ export class WealthQuizController {
     private dom: DOMAdapter;
     private sliderManager: SliderManager;
     private onApply: () => void;
+    private onWizardComplete?: () => void;
     private state: QuizState = {
         sip: 15000,
         years: 10,
@@ -30,10 +31,16 @@ export class WealthQuizController {
         swp: 0
     };
 
-    constructor(dom: DOMAdapter, sliderManager: SliderManager, onApply: () => void) {
+    constructor(
+        dom: DOMAdapter,
+        sliderManager: SliderManager,
+        onApply: () => void,
+        onWizardComplete?: () => void
+    ) {
         this.dom = dom;
         this.sliderManager = sliderManager;
         this.onApply = onApply;
+        this.onWizardComplete = onWizardComplete;
     }
 
     init(): void {
@@ -158,6 +165,7 @@ export class WealthQuizController {
         }
 
         this.onApply();
+        this.onWizardComplete?.();
 
         // Close wizard drawer after applying
         const drawer = this.dom.getElement('wealth-guided-wizard-drawer');

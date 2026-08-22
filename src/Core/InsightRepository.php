@@ -366,6 +366,26 @@ class InsightRepository
         $stmt->execute(array_merge($params, [':min_interaction' => 0]));
         $avgIterations = round((float) $stmt->fetchColumn(), 1);
 
+        $stmt = $this->pdo->prepare("SELECT COALESCE(referrer_category, 'direct') AS ref, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY ref ORDER BY cnt DESC LIMIT 10");
+        $stmt->execute($params);
+        $referrerDist = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = $this->pdo->prepare("SELECT COALESCE(active_studio_tab, 'city_benchmark') AS tab, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY tab ORDER BY cnt DESC");
+        $stmt->execute($params);
+        $studioTabDist = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = $this->pdo->prepare("SELECT COALESCE(strategy_starter_used, 'none') AS preset, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY preset ORDER BY cnt DESC");
+        $stmt->execute($params);
+        $strategyStarterDist = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(scroll_depth_pct), 0) FROM user_calculations {$whereClause} AND scroll_depth_pct > :min_scroll");
+        $stmt->execute(array_merge($params, [':min_scroll' => 0]));
+        $avgScrollDepth = round((float) $stmt->fetchColumn(), 1);
+
+        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(dwell_time_seconds), 0) FROM user_calculations {$whereClause} AND dwell_time_seconds > :min_dwell");
+        $stmt->execute(array_merge($params, [':min_dwell' => 0]));
+        $avgDwellTime = round((float) $stmt->fetchColumn(), 1);
+
         return [
             'swpAdoptionRate' => $swpAdoptionRate,
             'deviceDist' => $deviceDist,
@@ -376,6 +396,11 @@ class InsightRepository
             'b2bAdvisorRate' => $b2bAdvisorRate,
             'inflationRate' => $inflationRate,
             'avgIterations' => $avgIterations,
+            'referrerDist' => $referrerDist,
+            'studioTabDist' => $studioTabDist,
+            'strategyStarterDist' => $strategyStarterDist,
+            'avgScrollDepth' => $avgScrollDepth,
+            'avgDwellTime' => $avgDwellTime,
         ];
     }
 }

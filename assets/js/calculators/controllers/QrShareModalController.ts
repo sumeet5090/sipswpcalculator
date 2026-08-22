@@ -8,10 +8,16 @@ import { THEME_COLORS } from '../constants/ThemeTokens.ts';
 export class QrShareModalController {
     private dom: DOMAdapter;
     private getInputs?: () => InvestmentInputs;
+    private onOpen?: () => void;
 
-    constructor(dom: DOMAdapter = new DOMAdapter(), getInputs?: () => InvestmentInputs) {
+    constructor(
+        dom: DOMAdapter = new DOMAdapter(),
+        getInputs?: () => InvestmentInputs,
+        onOpen?: () => void
+    ) {
         this.dom = dom;
         this.getInputs = getInputs;
+        this.onOpen = onOpen;
     }
 
     init(): void {
@@ -145,6 +151,7 @@ export class QrShareModalController {
 
         modal.classList.remove('hidden');
         ModalScrollLockHelper.lock(triggerElement);
+        this.onOpen?.();
     }
 
     closeModal(): void {
