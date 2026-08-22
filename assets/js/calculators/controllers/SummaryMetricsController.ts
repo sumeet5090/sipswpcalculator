@@ -111,34 +111,34 @@ export class SummaryMetricsController {
         const interestTitle = this.dom.getElement('title-interest');
         const corpusTitle = this.dom.getElement('title-corpus');
 
-        if (showPostTax) {
+        let interestLabel = 'Total Gains';
+        let corpusLabel = 'Final Corpus';
+
+        if (showPostTax && inputs.inflation > 0) {
             const ltcgTax = lastRow.ltcg_tax ?? 0;
             finalCorpus = lastRow.post_tax_total ?? Math.max(0, preTaxCorpus - ltcgTax);
             finalGains = Math.max(0, preTaxGains - ltcgTax);
-
-            if (interestTitle) interestTitle.textContent = 'Total Gains (Post-Tax)';
-            if (corpusTitle) corpusTitle.textContent = 'Final Corpus (Post-Tax)';
-        } else {
-            if (interestTitle) interestTitle.textContent = 'Total Gains';
-            if (corpusTitle) corpusTitle.textContent = 'Final Corpus';
-        }
-
-        // Apply inflation discounting
-        if (inputs.inflation > 0) {
             const totalYears = inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years;
-            finalCorpus = MathEngine.calculateInflationDiscount(
-                finalCorpus,
-                totalYears,
-                inputs.inflation
-            );
-            finalGains = MathEngine.calculateInflationDiscount(
-                finalGains,
-                totalYears,
-                inputs.inflation
-            );
-            if (corpusTitle) corpusTitle.textContent += ' (Inflation Adjusted)';
-            if (interestTitle) interestTitle.textContent += ' (Inflation Adjusted)';
+            finalCorpus = MathEngine.calculateInflationDiscount(finalCorpus, totalYears, inputs.inflation);
+            finalGains = MathEngine.calculateInflationDiscount(finalGains, totalYears, inputs.inflation);
+            interestLabel = 'Post-Tax Real Gains';
+            corpusLabel = 'Post-Tax Real Corpus';
+        } else if (showPostTax) {
+            const ltcgTax = lastRow.ltcg_tax ?? 0;
+            finalCorpus = lastRow.post_tax_total ?? Math.max(0, preTaxCorpus - ltcgTax);
+            finalGains = Math.max(0, preTaxGains - ltcgTax);
+            interestLabel = 'Post-Tax Gains';
+            corpusLabel = 'Post-Tax Corpus';
+        } else if (inputs.inflation > 0) {
+            const totalYears = inputs.enable_swp ? (inputs.years + inputs.swp_years) : inputs.years;
+            finalCorpus = MathEngine.calculateInflationDiscount(finalCorpus, totalYears, inputs.inflation);
+            finalGains = MathEngine.calculateInflationDiscount(finalGains, totalYears, inputs.inflation);
+            interestLabel = 'Real Gains';
+            corpusLabel = 'Real Corpus';
         }
+
+        if (interestTitle) interestTitle.textContent = interestLabel;
+        if (corpusTitle) corpusTitle.textContent = corpusLabel;
 
         // Odometer spring animation for KPI numbers
         this.odometer.animateValue('summary-invested', totalInvested);

@@ -36,11 +36,11 @@
         "suffix": "%"
     },
     "inflation": {
-        "default": 6,
+        "default": 0,
         "min": 0,
         "max": 15,
         "slider_max": 12,
-        "step": 1,
+        "step": 0.5,
         "label": "Expected Inflation",
         "suffix": "%"
     },
