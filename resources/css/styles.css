@@ -27,6 +27,28 @@ input[type=number] {
     appearance: textfield;
 }
 
+/* ── Universal Native <dialog> Centering & Backdrop Styling ── */
+dialog {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    max-height: calc(100vh - 2rem);
+    max-width: calc(100vw - 2rem);
+    z-index: 50;
+    box-sizing: border-box;
+}
+
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+dialog::backdrop {
+    background-color: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
 /* 1. Reset & Base Tokens */
 :root {
     /* SaaS Premium Gradients (Updated to Emerald/Teal) */
