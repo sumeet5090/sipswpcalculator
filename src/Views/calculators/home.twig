@@ -97,37 +97,24 @@
             {% include 'components/calculator-form.twig' with {'container_id': 'homepage-calc'} %}
         </div> <!-- /left column -->
 
+        <!-- Right Column: Visualization & Scenario Diff -->
         <div class="lg:col-span-2 space-y-4">
             {% include 'components/chart-visualization.twig' %}
             
-            <!-- Side-by-Side Scenario Diff Comparison -->
+            <!-- Side-by-Side Scenario Diff Comparison (Unhides when snapshot baseline is taken) -->
             {% include 'components/scenario-comparison.twig' %}
-
-            <!-- Wealth Milestone Roadmap -->
-            {% include 'components/wealth-roadmap.twig' %}
-
-            <!-- Indian City Cost of Living & FIRE Retirement Benchmark -->
-            {% include 'components/city-fire-benchmark.twig' %}
-
-            <!-- Historical Black Swan Stress-Testing Simulator -->
-            {% include 'components/stress-test-simulator.twig' %}
-
-            <!-- Dynamic Asset Allocation & Tax-Free Rebalancing Router -->
-            {% include 'components/asset-rebalancing.twig' %}
         </div>
     </div><!-- /3-col grid -->
 
-    <!-- Full-width Yearly Breakdown -->
-    {% include 'components/yearly-breakdown-table.twig' %}
-
-    <!-- Mathematical Formula Transparency & Proofs -->
-    {% include 'components/math-transparency.twig' %}
-
-    <!-- 100% Client-Side Privacy & Offline Trust Signals -->
-    {% include 'components/privacy-trust-badge.twig' %}
+    <!-- Multi-Mode Interactive Analytical Studio (Default: Yearly Breakdown Table) -->
+    {% include 'components/analytical-studio.twig' %}
 </section><!-- /calculator section -->
 
+<!-- Editorial Knowledge & Research Vault -->
 {% include 'components/home-guide-content.twig' %}
+
+<!-- Floating In-Page Discovery Navigation HUD -->
+{% include 'components/floating-discovery-hud.twig' %}
 {% endblock %}
 
 {% block modals %}

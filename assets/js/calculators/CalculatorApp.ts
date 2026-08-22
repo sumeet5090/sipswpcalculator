@@ -36,6 +36,7 @@ import { CardSpotlightController } from './controllers/CardSpotlightController';
 import { GoalCommitmentController } from './controllers/GoalCommitmentController';
 import { DailyAccrualController } from './controllers/DailyAccrualController';
 import { QrShareModalController } from './controllers/QrShareModalController';
+import { StudioTabController } from './controllers/StudioTabController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -385,6 +386,7 @@ export class CalculatorApp {
         this.initToggles();
 
         new TabController(this.dom).init();
+        new StudioTabController(this.dom).init();
         new StepperController(
             this.dom,
             this.validator,
