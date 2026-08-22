@@ -3,7 +3,7 @@ import { ModalScrollLockHelper } from '../helpers/ModalScrollLockHelper';
 import { QrCodeGenerator } from '../../utils/QrCodeGenerator';
 import { InvestmentInputs } from '../../types';
 
-import { THEME_COLORS } from '../constants/ThemeTokens';
+import { THEME_COLORS } from '../constants/ThemeTokens.ts';
 
 export class QrShareModalController {
     private dom: DOMAdapter;

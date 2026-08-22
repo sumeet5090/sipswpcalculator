@@ -2,7 +2,7 @@ import { CurrencyFormatter } from './CurrencyHelper';
 import { InputValidator } from './InputValidator';
 import { DOMAdapter } from '../adapters/DOMAdapter';
 import { YearResult } from '../types';
-import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens';
+import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens.ts';
 import type { Chart, ChartDataset, ChartConfiguration, TooltipItem } from 'chart.js';
 
 export interface Milestone {

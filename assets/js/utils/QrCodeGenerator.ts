@@ -5,6 +5,8 @@
  * with Reed-Solomon Error Correction (Level M/L) and renders to HTML5 Canvas.
  */
 
+import { THEME_COLORS } from '../calculators/constants/ThemeTokens.ts';
+
 interface QrVersionSpec {
     version: number;
     totalCodewords: number;
@@ -371,8 +373,8 @@ export class QrCodeGenerator {
     public static renderToCanvas(
         canvas: HTMLCanvasElement,
         text: string,
-        darkColor: string = '#0f172a',
-        lightColor: string = '#ffffff'
+        darkColor: string = THEME_COLORS.slate[900],
+        lightColor: string = THEME_COLORS.chart.pointBgWhite
     ): void {
         const matrix = this.generateMatrix(text);
         const matrixSize = matrix.length;

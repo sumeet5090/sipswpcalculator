@@ -1,6 +1,6 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 
-import { THEME_COLORS } from '../constants/ThemeTokens';
+import { THEME_COLORS } from '../constants/ThemeTokens.ts';
 
 export class MilestoneCelebrationController {
     private dom: DOMAdapter;

@@ -128,7 +128,7 @@ final class TypographyAndThemeTokensTest extends TestCase
     public function testChartManagerImportsFromThemeTokens(): void
     {
         $this->assertStringContainsString(
-            "import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens'",
+            "import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens.ts'",
             $this->chartManagerTsContent,
             'ChartManager.ts must import THEME_COLORS and THEME_FONTS from ThemeTokens.ts'
         );
