@@ -96,18 +96,6 @@ export class SummaryMetricsController {
 
         const inputs = this.getInputs();
 
-        // Calculate delay cost
-        const delayCost = MathEngine.calculateDelayCost(inputs);
-        const delayCostEl = this.dom.getElement('delay-cost-amount');
-        const delayCostBanner = this.dom.getElement('delay-cost-banner');
-
-        if (delayCost > 0) {
-            if (delayCostBanner) delayCostBanner.style.display = 'flex';
-            if (delayCostEl) delayCostEl.textContent = this.formatter.format(delayCost);
-        } else {
-            if (delayCostBanner) delayCostBanner.style.display = 'none';
-        }
-
         const interestTitle = this.dom.getElement('title-interest');
         const corpusTitle = this.dom.getElement('title-corpus');
 
