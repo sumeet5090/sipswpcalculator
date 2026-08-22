@@ -14,32 +14,32 @@
         <!-- Studio Segmented Tab Navigation -->
         <nav id="studio-tabs-nav" role="tablist" aria-label="Analytical Studio Modules"
             class="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 border border-slate-200/80 overflow-x-auto max-w-full custom-scrollbar">
-            <!-- Tab 1: Yearly Breakdown (Default Active) -->
-            <button type="button" role="tab" id="tab-yearly-breakdown" aria-controls="panel-yearly-breakdown" aria-selected="true" tabindex="0"
+            <!-- Tab 1: City FIRE Benchmark (Default Active) -->
+            <button type="button" role="tab" id="tab-city-benchmark" aria-controls="panel-city-benchmark" aria-selected="true" tabindex="0"
                 class="studio-tab-btn px-3 py-1.5 rounded-xl text-xs whitespace-nowrap transition-all cursor-pointer bg-white text-emerald-800 shadow-xs border border-slate-200/90 font-bold flex items-center gap-1.5">
+                <span>🏙️</span>
+                <span>City FIRE Benchmark</span>
+            </button>
+
+            <!-- Tab 2: Yearly Breakdown -->
+            <button type="button" role="tab" id="tab-yearly-breakdown" aria-controls="panel-yearly-breakdown" aria-selected="false" tabindex="-1"
+                class="studio-tab-btn px-3 py-1.5 rounded-xl text-xs whitespace-nowrap transition-all cursor-pointer text-slate-500 hover:text-slate-800 font-medium border border-transparent flex items-center gap-1.5">
                 <span>📊</span>
                 <span>Yearly Breakdown</span>
             </button>
 
-            <!-- Tab 2: Milestone Roadmap -->
+            <!-- Tab 3: Milestone Roadmap -->
             <button type="button" role="tab" id="tab-milestone-roadmap" aria-controls="panel-milestone-roadmap" aria-selected="false" tabindex="-1"
                 class="studio-tab-btn px-3 py-1.5 rounded-xl text-xs whitespace-nowrap transition-all cursor-pointer text-slate-500 hover:text-slate-800 font-medium border border-transparent flex items-center gap-1.5">
                 <span>🎯</span>
                 <span>Milestone Roadmap</span>
             </button>
 
-            <!-- Tab 3: Stress-Test Simulator -->
+            <!-- Tab 4: Stress-Test Simulator -->
             <button type="button" role="tab" id="tab-stress-test" aria-controls="panel-stress-test" aria-selected="false" tabindex="-1"
                 class="studio-tab-btn px-3 py-1.5 rounded-xl text-xs whitespace-nowrap transition-all cursor-pointer text-slate-500 hover:text-slate-800 font-medium border border-transparent flex items-center gap-1.5">
                 <span>🛡️</span>
                 <span>Crash Stress-Test</span>
-            </button>
-
-            <!-- Tab 4: City FIRE Benchmark -->
-            <button type="button" role="tab" id="tab-city-benchmark" aria-controls="panel-city-benchmark" aria-selected="false" tabindex="-1"
-                class="studio-tab-btn px-3 py-1.5 rounded-xl text-xs whitespace-nowrap transition-all cursor-pointer text-slate-500 hover:text-slate-800 font-medium border border-transparent flex items-center gap-1.5">
-                <span>🏙️</span>
-                <span>City FIRE Benchmark</span>
             </button>
 
             <!-- Tab 5: Asset Allocation -->
@@ -53,24 +53,24 @@
 
     <!-- Studio Tab Panels (All server-rendered in DOM for complete search indexing) -->
     <div class="space-y-4">
-        <!-- Panel 1: Yearly Breakdown Table (Default Active) -->
-        <div id="panel-yearly-breakdown" role="tabpanel" aria-labelledby="tab-yearly-breakdown" class="studio-tab-panel">
+        <!-- Panel 1: City FIRE Benchmark (Default Active) -->
+        <div id="panel-city-benchmark" role="tabpanel" aria-labelledby="tab-city-benchmark" class="studio-tab-panel">
+            {% include 'components/city-fire-benchmark.twig' %}
+        </div>
+
+        <!-- Panel 2: Yearly Breakdown Table -->
+        <div id="panel-yearly-breakdown" role="tabpanel" aria-labelledby="tab-yearly-breakdown" class="studio-tab-panel hidden">
             {% include 'components/yearly-breakdown-table.twig' %}
         </div>
 
-        <!-- Panel 2: Milestone Roadmap -->
+        <!-- Panel 3: Milestone Roadmap -->
         <div id="panel-milestone-roadmap" role="tabpanel" aria-labelledby="tab-milestone-roadmap" class="studio-tab-panel hidden">
             {% include 'components/wealth-roadmap.twig' %}
         </div>
 
-        <!-- Panel 3: Stress-Test Simulator -->
+        <!-- Panel 4: Stress-Test Simulator -->
         <div id="panel-stress-test" role="tabpanel" aria-labelledby="tab-stress-test" class="studio-tab-panel hidden">
             {% include 'components/stress-test-simulator.twig' %}
-        </div>
-
-        <!-- Panel 4: City FIRE Benchmark -->
-        <div id="panel-city-benchmark" role="tabpanel" aria-labelledby="tab-city-benchmark" class="studio-tab-panel hidden">
-            {% include 'components/city-fire-benchmark.twig' %}
         </div>
 
         <!-- Panel 5: Asset Rebalance -->
