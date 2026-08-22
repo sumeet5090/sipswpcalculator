@@ -58,6 +58,40 @@ export class SliderManager {
         this._updateSubtext(inputId, initialVal);
         this._updatePresetChips(inputId, initialVal);
 
+        // Dynamic Floating Thumb Tooltip
+        const tooltip = document.createElement('div');
+        tooltip.className = 'slider-floating-tooltip';
+        tooltip.id = `${rangeId}_tooltip`;
+        if (range.parentElement) {
+            range.parentElement.style.position = 'relative';
+            range.parentElement.appendChild(tooltip);
+        }
+
+        const showTooltip = (val: number) => {
+            const min = parseFloat(range.min) || 0;
+            const max = parseFloat(range.max) || 100;
+            const pct = max > min ? (val - min) / (max - min) : 0;
+            tooltip.style.left = `${Math.min(Math.max(pct * 100, 3), 97)}%`;
+            if (inputId === 'sip' || inputId === 'lumpsum' || inputId === 'target_corpus' || inputId === 'swp_withdrawal') {
+                tooltip.textContent = this.formatter.formatDynamic(val);
+            } else if (inputId === 'years' || inputId === 'swp_years') {
+                tooltip.textContent = `${val} Yrs`;
+            } else {
+                tooltip.textContent = `${val}%`;
+            }
+            tooltip.classList.add('is-active');
+        };
+
+        const hideTooltip = () => {
+            tooltip.classList.remove('is-active');
+        };
+
+        range.addEventListener('pointerdown', () => showTooltip(parseFloat(range.value) || 0));
+        range.addEventListener('touchstart', () => showTooltip(parseFloat(range.value) || 0), { passive: true });
+        window.addEventListener('pointerup', hideTooltip);
+        window.addEventListener('touchend', hideTooltip);
+        window.addEventListener('touchcancel', hideTooltip);
+
         range.addEventListener('input', () => {
             if (this.isInternalSyncing) return;
             this.isInternalSyncing = true;
@@ -69,6 +103,7 @@ export class SliderManager {
                 this._updateSubtext(inputId, numericVal);
                 this._updatePresetChips(inputId, numericVal);
                 this._clearError(inputId);
+                showTooltip(numericVal);
             } finally {
                 this.isInternalSyncing = false;
             }

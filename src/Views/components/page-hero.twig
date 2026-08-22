@@ -1,20 +1,43 @@
-<header class="text-center mb-14 md:mb-20 pt-6 {{ hero.extra_class|default('') }}">
-    {% if hero.badge is defined and hero.badge %}
-        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100/60 uppercase tracking-widest mb-4">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            {{ hero.badge }}
-        </span>
-    {% endif %}
-    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight pb-3">
-        {{ hero.title_prefix|default('') }}
-        {% if hero.title_highlight is defined and hero.title_highlight %}
-            <span class="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">{{ hero.title_highlight }}</span>
+<header class="text-center mb-10 md:mb-16 pt-4 relative {{ hero.extra_class|default('') }}">
+    <!-- Soft Light Ambient Aurora Halo -->
+    <div class="absolute left-1/2 -top-12 -translate-x-1/2 w-full max-w-3xl h-36 bg-gradient-to-r from-emerald-400/10 via-teal-300/8 to-indigo-300/6 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10">
+        {% if hero.badge is defined and hero.badge %}
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/90 text-emerald-800 border border-emerald-200/80 shadow-[0_2px_8px_-2px_rgba(16,185,129,0.15)] mb-4 backdrop-blur-md">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="tracking-wide uppercase text-[11px]">{{ hero.badge }}</span>
+            </div>
         {% endif %}
-        {{ hero.title_suffix|default('') }}
-    </h1>
-    {% if hero.description is defined and hero.description %}
-        <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium">
-            {{ hero.description }}
-        </p>
-    {% endif %}
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 pb-2">
+            {{ hero.title_prefix|default('') }}
+            {% if hero.title_highlight is defined and hero.title_highlight %}
+                <span class="bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 bg-clip-text text-transparent">{{ hero.title_highlight }}</span>
+            {% endif %}
+            {{ hero.title_suffix|default('') }}
+        </h1>
+
+        {% if hero.description is defined and hero.description %}
+            <p class="mt-3 text-sm sm:text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-medium">
+                {{ hero.description }}
+            </p>
+        {% endif %}
+
+        <!-- Feature Trust Micro-Badges -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mt-4 text-[11px] font-bold text-slate-500">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100/90 border border-slate-200/70 text-slate-700 shadow-2xs">
+                <span>🛡️</span> SEBI &amp; AMFI Compliant
+            </span>
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100/90 border border-slate-200/70 text-slate-700 shadow-2xs">
+                <span>⚖️</span> Budget 2024 §112A Tax
+            </span>
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100/90 border border-slate-200/70 text-slate-700 shadow-2xs">
+                <span>⚡</span> Instant Zero-Lag Math
+            </span>
+        </div>
+    </div>
 </header>

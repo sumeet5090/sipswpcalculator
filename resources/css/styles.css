@@ -1296,6 +1296,52 @@ input[type=range]::-moz-range-track {
     pointer-events: none;
 }
 
+/* ── Light-Mode Ambient Aurora & Specular System ── */
+.light-aurora-glow {
+    position: relative;
+    background: radial-gradient(120% 120% at 50% -20%, rgba(16, 185, 129, 0.08) 0%, rgba(20, 184, 166, 0.05) 40%, rgba(248, 250, 252, 0) 100%);
+}
+
+.light-specular-border {
+    position: relative;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
+}
+
+/* ── Floating Range Slider Thumb Tooltip ── */
+.slider-floating-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.9);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    padding: 2px 8px;
+    border-radius: 8px;
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 30;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.slider-floating-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 4px;
+    border-style: solid;
+    border-color: rgba(15, 23, 42, 0.9) transparent transparent transparent;
+}
+
+.slider-floating-tooltip.is-active {
+    opacity: 1;
+}
+
 /* ── Accessibility: Respect user motion preferences (WCAG 2.2) ── */
 @media (prefers-reduced-motion: reduce) {
     *,
