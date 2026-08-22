@@ -7,11 +7,16 @@ namespace Core\Config;
 /**
  * ThemeConstants
  * Single Source of Truth for PHP backend styling, PDF reports, and server-side visual tokens.
- * Kept in 100% parity with Tailwind CSS v4 input.css and TypeScript ThemeTokens.ts.
+ * Automatically loads and synchronizes with content/theme_tokens.json.
  */
 final class ThemeConstants
 {
-    // Typography
+    /**
+     * @var array<string, mixed>|null
+     */
+    private static ?array $tokensCache = null;
+
+    // Typography constants
     public const FONT_SANS = "'DejaVu Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
     public const FONT_HEADING = "'Plus Jakarta Sans', 'Inter', sans-serif";
     public const FONT_MONO = "'JetBrains Mono', monospace";
@@ -58,4 +63,56 @@ final class ThemeConstants
     public const COLOR_FINANCIAL_GOLD = '#b45309';
     public const COLOR_FINANCIAL_GOLD_BG = '#fef3c7';
     public const COLOR_FINANCIAL_GOLD_BORDER = '#fde68a';
+
+    /**
+     * Load the canonical theme tokens JSON definition with memory caching.
+     *
+     * @return array<string, mixed>
+     */
+    public static function getTokens(): array
+    {
+        if (self::$tokensCache !== null) {
+            return self::$tokensCache;
+        }
+
+        $jsonPath = dirname(__DIR__, 3) . '/content/theme_tokens.json';
+        if (file_exists($jsonPath)) {
+            $raw = (string) file_get_contents($jsonPath);
+            /** @var array<string, mixed>|null $decoded */
+            $decoded = json_decode($raw, true);
+            if (is_array($decoded)) {
+                self::$tokensCache = $decoded;
+                return self::$tokensCache;
+            }
+        }
+
+        // Fallback array structure
+        self::$tokensCache = [
+            'fonts' => [
+                'sans' => self::FONT_SANS,
+                'heading' => self::FONT_HEADING,
+                'mono' => self::FONT_MONO,
+            ],
+            'colors' => [
+                'financial' => [
+                    'growth' => self::COLOR_FINANCIAL_GROWTH,
+                    'withdrawal' => self::COLOR_FINANCIAL_WITHDRAWAL,
+                    'principal' => self::COLOR_FINANCIAL_PRINCIPAL,
+                    'tax' => self::COLOR_FINANCIAL_TAX,
+                    'inflation' => self::COLOR_FINANCIAL_INFLATION,
+                    'gold' => self::COLOR_FINANCIAL_GOLD,
+                ],
+            ],
+        ];
+
+        return self::$tokensCache;
+    }
+
+    /**
+     * Reset the tokens cache (useful in unit tests).
+     */
+    public static function resetCache(): void
+    {
+        self::$tokensCache = null;
+    }
 }

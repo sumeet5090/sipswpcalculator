@@ -16,6 +16,7 @@ final class TypographyAndThemeTokensTest extends TestCase
     private string $stylesCssContent;
     private string $themeTokensTsContent;
     private string $chartManagerTsContent;
+    private string $themeTokensJsonPath;
 
     protected function setUp(): void
     {
@@ -24,6 +25,31 @@ final class TypographyAndThemeTokensTest extends TestCase
         $this->stylesCssContent = (string) file_get_contents(__DIR__ . '/../../resources/css/styles.css');
         $this->themeTokensTsContent = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/constants/ThemeTokens.ts');
         $this->chartManagerTsContent = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/ChartManager.ts');
+        $this->themeTokensJsonPath = (string) realpath(__DIR__ . '/../../content/theme_tokens.json');
+    }
+
+    public function testThemeTokensJsonFileExistsAndIsValid(): void
+    {
+        $this->assertFileExists($this->themeTokensJsonPath);
+        $raw = (string) file_get_contents($this->themeTokensJsonPath);
+        $json = json_decode($raw, true);
+        $this->assertIsArray($json);
+        $this->assertArrayHasKey('fonts', $json);
+        $this->assertArrayHasKey('colors', $json);
+        $this->assertArrayHasKey('springs', $json);
+        $this->assertArrayHasKey('financial', $json['colors']);
+        $this->assertArrayHasKey('chart', $json['colors']);
+    }
+
+    public function testThemeConstantsLoadsCanonicalJsonTokens(): void
+    {
+        ThemeConstants::resetCache();
+        $tokens = ThemeConstants::getTokens();
+        $this->assertArrayHasKey('fonts', $tokens);
+        $this->assertArrayHasKey('colors', $tokens);
+        $this->assertSame('#047857', $tokens['colors']['financial']['growth_dark']);
+        $this->assertSame('#10b981', $tokens['colors']['financial']['growth']);
+        $this->assertSame('#be123c', $tokens['colors']['financial']['withdrawal_dark']);
     }
 
     public function testTailwindV4ThemeContainsRequiredSemanticColorTokens(): void
@@ -93,11 +119,10 @@ final class TypographyAndThemeTokensTest extends TestCase
 
     public function testTypeScriptThemeTokensProvideSingleSourceOfTruth(): void
     {
-        $this->assertStringContainsString('THEME_FONTS', $this->themeTokensTsContent);
-        $this->assertStringContainsString('THEME_COLORS', $this->themeTokensTsContent);
-        $this->assertStringContainsString('invested: \'#6366f1\'', $this->themeTokensTsContent);
-        $this->assertStringContainsString('growth: \'#10b981\'', $this->themeTokensTsContent);
-        $this->assertStringContainsString('withdrawal: \'#f43f5e\'', $this->themeTokensTsContent);
+        $this->assertStringContainsString('DEFAULT_THEME_FONTS', $this->themeTokensTsContent);
+        $this->assertStringContainsString('DEFAULT_THEME_COLORS', $this->themeTokensTsContent);
+        $this->assertStringContainsString('getHydratedThemeTokens', $this->themeTokensTsContent);
+        $this->assertStringContainsString('calculator-app-state', $this->themeTokensTsContent);
     }
 
     public function testChartManagerImportsFromThemeTokens(): void
