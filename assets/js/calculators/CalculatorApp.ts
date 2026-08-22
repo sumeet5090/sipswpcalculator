@@ -154,7 +154,8 @@ export class CalculatorApp {
         );
 
         this.qrShareModalController = new QrShareModalController(
-            this.dom
+            this.dom,
+            () => this.getInputs()
         );
 
         this.initGlobalShortcuts();

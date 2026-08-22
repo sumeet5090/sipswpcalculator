@@ -1,5 +1,6 @@
 import { MathEngine } from '../assets/js/calculators/MathEngine.ts';
 import { CurrencyFormatter } from '../assets/js/calculators/CurrencyHelper.ts';
+import { QrCodeGenerator } from '../assets/js/utils/QrCodeGenerator.ts';
 
 try {
     // Read input parameters JSON from command line arguments
@@ -74,6 +75,14 @@ try {
     } else if (inputArgs.action === 'delay_cost') {
         const res = MathEngine.calculateDelayCost(inputArgs.inputs);
         console.log(JSON.stringify({ result: res }));
+    } else if (inputArgs.action === 'generate_qr_test') {
+        const matrix = QrCodeGenerator.generateMatrix(inputArgs.text);
+        console.log(JSON.stringify({
+            success: true,
+            size: matrix.length,
+            isSquare: matrix.every(row => row.length === matrix.length),
+            hasTopLeftFinder: matrix[0][0] && matrix[0][6] && matrix[6][0] && matrix[6][6] && !matrix[1][1]
+        }));
     } else {
         const results = MathEngine.calculate(inputArgs);
         console.log(JSON.stringify(results));
