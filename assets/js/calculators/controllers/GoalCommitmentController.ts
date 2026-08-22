@@ -91,7 +91,7 @@ export class GoalCommitmentController {
 
         const sipVal = inputs.sip ?? 25000;
         const yearsVal = inputs.years ?? 15;
-        const finalCorpus = lastRow ? lastRow.combined_total : 12600000;
+        const finalCorpus = lastRow ? lastRow.combined_total : 0;
 
         if (sipDisplay) {
             sipDisplay.textContent = `${this.formatter.formatDynamic(sipVal)} / month`;
@@ -113,7 +113,7 @@ export class GoalCommitmentController {
 
         const sipVal = inputs.sip ?? 25000;
         const yearsVal = inputs.years ?? 15;
-        const finalCorpus = lastRow ? lastRow.combined_total : 12600000;
+        const finalCorpus = lastRow ? lastRow.combined_total : 0;
 
         const text = `📜 INVESTOR GOAL COMMITMENT CERTIFICATE\n\nI, ${name}, hereby pledge to systematically invest ${this.formatter.formatDynamic(sipVal)}/month for ${yearsVal} years to achieve my target corpus of ${this.formatter.formatDynamic(finalCorpus)}.\n\n"Market volatility is the fee for exceptional long-term wealth compounding."`;
 
