@@ -1,90 +1,98 @@
 <!-- Mathematical Transparency & Formula Verification Proofs -->
-<div id="math-formulas" class="mt-8 bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200/80 shadow-md p-5 sm:p-7 scroll-mt-24">
-    <div class="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100">
-        <div class="flex items-center gap-2.5">
+<div id="math-formulas" class="mt-8 bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 scroll-mt-24">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-100">
+        <div class="flex items-center gap-3">
             <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 text-sm font-black">Σ</span>
             <div>
-                <h3 class="text-base font-extrabold text-slate-800">Mathematical Calculation Transparency</h3>
-                <p class="text-xs text-slate-500">Exact formulas and financial equations verified under SEBI & Indian Banking norms</p>
+                <h3 class="text-base sm:text-lg font-bold text-slate-900">Mathematical Calculation Transparency</h3>
+                <p class="text-xs sm:text-sm text-slate-500">Exact formulas and financial equations verified under SEBI &amp; Indian Banking norms</p>
             </div>
         </div>
-        <span class="hidden sm:inline-flex items-center text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+        <span class="inline-flex items-center self-start sm:self-auto text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
             ✓ Audited Math Engine
         </span>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600">
-        <!-- SIP Formula -->
-        <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70 relative group">
-            <div class="flex items-center justify-between mb-2">
-                <h4 class="font-bold text-slate-800">1. Monthly SIP Future Value (Annuity Due)</h4>
-                <div class="flex items-center gap-1.5">
-                    <span class="text-[10px] font-mono bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Compound Interest</span>
-                    <button type="button" class="copy-formula-btn text-[10px] font-bold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-500 hover:text-slate-900 transition-all cursor-pointer shadow-2xs" data-formula="FV = P × [ ( (1 + r)^n - 1 ) / r ] × (1 + r)" title="Copy Formula">📋</button>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+        <!-- 1. SIP Formula -->
+        <div class="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/90 shadow-xs relative group flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <h4 id="sip-calculator-formula" class="text-sm sm:text-base font-bold text-slate-900">1. Monthly SIP Future Value (Annuity Due)</h4>
+                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                        <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md">Compound Interest</span>
+                        <button type="button" class="copy-formula-btn text-xs font-bold px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-2xs" data-formula="FV = P × [ ( (1 + r)^n - 1 ) / r ] × (1 + r)" title="Copy Formula">📋</button>
+                    </div>
+                </div>
+                <div class="font-mono text-xs sm:text-sm md:text-base font-bold bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 text-slate-900 mb-3 overflow-x-auto select-all">
+                    FV = P × [ { (1 + r)<sup>n</sup> - 1 } / r ] × (1 + r)
                 </div>
             </div>
-            <p class="font-mono text-[11px] bg-white p-2.5 rounded-lg border border-slate-200 text-slate-800 mb-2 overflow-x-auto">
-                FV = P × [ ( (1 + r)^n - 1 ) / r ] × (1 + r)
-            </p>
-            <ul class="space-y-1 text-[11px] text-slate-500 list-disc list-inside">
-                <li><strong class="text-slate-700">P</strong> = Monthly investment amount</li>
-                <li><strong class="text-slate-700">r</strong> = Periodic monthly interest rate (Annual Rate / 12 / 100)</li>
-                <li><strong class="text-slate-700">n</strong> = Total number of monthly instalments (Years × 12)</li>
+            <ul class="space-y-1.5 text-xs sm:text-sm text-slate-600 border-t border-slate-100 pt-3">
+                <li><strong class="font-semibold text-slate-900">P</strong> = Monthly investment amount</li>
+                <li><strong class="font-semibold text-slate-900">r</strong> = Periodic monthly rate (Annual Rate ÷ 12 ÷ 100)</li>
+                <li><strong class="font-semibold text-slate-900">n</strong> = Total number of monthly instalments (Years × 12)</li>
             </ul>
         </div>
 
-        <!-- SWP Formula -->
-        <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70 relative group">
-            <div class="flex items-center justify-between mb-2">
-                <h4 class="font-bold text-slate-800">2. Systematic Withdrawal Cashflow (SWP)</h4>
-                <div class="flex items-center gap-1.5">
-                    <span class="text-[10px] font-mono bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded">Depletion / Longevity</span>
-                    <button type="button" class="copy-formula-btn text-[10px] font-bold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-500 hover:text-slate-900 transition-all cursor-pointer shadow-2xs" data-formula="Balance_{m} = (Balance_{m-1} - W_{m}) × (1 + r)" title="Copy Formula">📋</button>
+        <!-- 2. SWP Formula -->
+        <div class="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/90 shadow-xs relative group flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900">2. Systematic Withdrawal Cashflow (SWP)</h4>
+                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                        <span class="text-[10px] font-mono font-bold bg-rose-100 text-rose-800 px-2 py-0.5 rounded-md">Depletion / Longevity</span>
+                        <button type="button" class="copy-formula-btn text-xs font-bold px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-2xs" data-formula="Balance_{m} = (Balance_{m-1} - W_{m}) × (1 + r)" title="Copy Formula">📋</button>
+                    </div>
+                </div>
+                <div class="font-mono text-xs sm:text-sm md:text-base font-bold bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 text-slate-900 mb-3 overflow-x-auto select-all">
+                    Balance<sub>m</sub> = (Balance<sub>m-1</sub> - W<sub>m</sub>) × (1 + r)
                 </div>
             </div>
-            <p class="font-mono text-[11px] bg-white p-2.5 rounded-lg border border-slate-200 text-slate-800 mb-2 overflow-x-auto">
-                Balance_{m} = (Balance_{m-1} - W_{m}) × (1 + r)
-            </p>
-            <ul class="space-y-1 text-[11px] text-slate-500 list-disc list-inside">
-                <li><strong class="text-slate-700">Balance_{m}</strong> = End of month remaining portfolio corpus</li>
-                <li><strong class="text-slate-700">W_{m}</strong> = Monthly withdrawal (indexed for annual hike)</li>
-                <li><strong class="text-slate-700">r</strong> = Periodic monthly growth rate during retirement</li>
+            <ul class="space-y-1.5 text-xs sm:text-sm text-slate-600 border-t border-slate-100 pt-3">
+                <li><strong class="font-semibold text-slate-900">Balance<sub>m</sub></strong> = End-of-month remaining portfolio corpus</li>
+                <li><strong class="font-semibold text-slate-900">W<sub>m</sub></strong> = Monthly withdrawal (indexed for annual hike)</li>
+                <li><strong class="font-semibold text-slate-900">r</strong> = Periodic monthly growth rate during retirement</li>
             </ul>
         </div>
 
-        <!-- Step-Up SIP -->
-        <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70 relative group">
-            <div class="flex items-center justify-between mb-2">
-                <h4 class="font-bold text-slate-800">3. Annual Step-Up Compounding (Top-Up)</h4>
-                <div class="flex items-center gap-1.5">
-                    <span class="text-[10px] font-mono bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded">Geometric Gradient</span>
-                    <button type="button" class="copy-formula-btn text-[10px] font-bold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-500 hover:text-slate-900 transition-all cursor-pointer shadow-2xs" data-formula="SIP_{Year k} = SIP_{Initial} × (1 + g)^{k-1}" title="Copy Formula">📋</button>
+        <!-- 3. Step-Up SIP -->
+        <div class="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/90 shadow-xs relative group flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900">3. Annual Step-Up Compounding (Top-Up)</h4>
+                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                        <span class="text-[10px] font-mono font-bold bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-md">Geometric Gradient</span>
+                        <button type="button" class="copy-formula-btn text-xs font-bold px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-2xs" data-formula="SIP_{Year k} = SIP_{Initial} × (1 + g)^{k-1}" title="Copy Formula">📋</button>
+                    </div>
+                </div>
+                <div class="font-mono text-xs sm:text-sm md:text-base font-bold bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 text-slate-900 mb-3 overflow-x-auto select-all">
+                    SIP<sub>Year k</sub> = SIP<sub>Initial</sub> × (1 + g)<sup>k-1</sup>
                 </div>
             </div>
-            <p class="font-mono text-[11px] bg-white p-2.5 rounded-lg border border-slate-200 text-slate-800 mb-2 overflow-x-auto">
-                SIP_{Year k} = SIP_{Initial} × (1 + g)^{k-1}
-            </p>
-            <ul class="space-y-1 text-[11px] text-slate-500 list-disc list-inside">
-                <li><strong class="text-slate-700">g</strong> = Annual step-up percentage rate (e.g. 10%)</li>
-                <li><strong class="text-slate-700">k</strong> = Current investment year sequence index</li>
+            <ul class="space-y-1.5 text-xs sm:text-sm text-slate-600 border-t border-slate-100 pt-3">
+                <li><strong class="font-semibold text-slate-900">g</strong> = Annual step-up percentage rate (e.g. 10%)</li>
+                <li><strong class="font-semibold text-slate-900">k</strong> = Current investment year sequence index</li>
             </ul>
         </div>
 
-        <!-- Budget 2024 LTCG Section 112A -->
-        <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70 relative group">
-            <div class="flex items-center justify-between mb-2">
-                <h4 class="font-bold text-slate-800">4. Equity LTCG Tax (Budget 2024 - Section 112A)</h4>
-                <div class="flex items-center gap-1.5">
-                    <span class="text-[10px] font-mono bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded">Statutory Rules</span>
-                    <button type="button" class="copy-formula-btn text-[10px] font-bold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-500 hover:text-slate-900 transition-all cursor-pointer shadow-2xs" data-formula="Tax = Max(0, Gains - ₹1,25,000) × 12.5%" title="Copy Formula">📋</button>
+        <!-- 4. Budget 2024 LTCG Section 112A -->
+        <div class="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/90 shadow-xs relative group flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900">4. Equity LTCG Tax (Budget 2024 §112A)</h4>
+                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                        <span class="text-[10px] font-mono font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded-md">Statutory Rules</span>
+                        <button type="button" class="copy-formula-btn text-xs font-bold px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-2xs" data-formula="Tax = Max(0, Gains - ₹1,25,000) × 12.5%" title="Copy Formula">📋</button>
+                    </div>
+                </div>
+                <div class="font-mono text-xs sm:text-sm md:text-base font-bold bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 text-slate-900 mb-3 overflow-x-auto select-all">
+                    Tax = Max(0, Gains - ₹1,25,000) × 12.5%
                 </div>
             </div>
-            <p class="font-mono text-[11px] bg-white p-2.5 rounded-lg border border-slate-200 text-slate-800 mb-2 overflow-x-auto">
-                Tax = Max(0, Gains - ₹1,25,000) × 12.5%
-            </p>
-            <ul class="space-y-1 text-[11px] text-slate-500 list-disc list-inside">
-                <li><strong class="text-slate-700">Exemption</strong> = ₹1,25,000 per financial year</li>
-                <li><strong class="text-slate-700">Tax Rate</strong> = 12.5% on capital gains exceeding statutory threshold</li>
+            <ul class="space-y-1.5 text-xs sm:text-sm text-slate-600 border-t border-slate-100 pt-3">
+                <li><strong class="font-semibold text-slate-900">Exemption</strong> = ₹1,25,000 per financial year</li>
+                <li><strong class="font-semibold text-slate-900">Tax Rate</strong> = 12.5% on long-term capital gains exceeding exemption</li>
             </ul>
         </div>
     </div>
