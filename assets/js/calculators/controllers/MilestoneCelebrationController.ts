@@ -1,5 +1,7 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 
+import { THEME_COLORS } from '../constants/ThemeTokens';
+
 export class MilestoneCelebrationController {
     private dom: DOMAdapter;
     private celebratedMilestones: Set<number> = new Set();
@@ -100,7 +102,7 @@ export class MilestoneCelebrationController {
             }
         }
 
-        const colors = ['#10b981', '#059669', '#34d399', '#f59e0b', '#fbbf24', '#6366f1'];
+        const colors = THEME_COLORS.celebration;
 
         for (let i = 0; i < 16; i++) {
             const particle = document.createElement('div');

@@ -3,6 +3,8 @@ import { ModalScrollLockHelper } from '../helpers/ModalScrollLockHelper';
 import { QrCodeGenerator } from '../../utils/QrCodeGenerator';
 import { InvestmentInputs } from '../../types';
 
+import { THEME_COLORS } from '../constants/ThemeTokens';
+
 export class QrShareModalController {
     private dom: DOMAdapter;
     private getInputs?: () => InvestmentInputs;
@@ -139,7 +141,7 @@ export class QrShareModalController {
         canvas.style.imageRendering = 'pixelated';
         container.appendChild(canvas);
 
-        QrCodeGenerator.renderToCanvas(canvas, shareUrl, '#0f172a', '#ffffff');
+        QrCodeGenerator.renderToCanvas(canvas, shareUrl, THEME_COLORS.slate[900], THEME_COLORS.chart.pointBgWhite);
 
         modal.classList.remove('hidden');
         ModalScrollLockHelper.lock(triggerElement);
