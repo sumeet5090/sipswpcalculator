@@ -243,5 +243,29 @@ export function getHydratedThemeTokens(): ThemeTokensSchema {
     return { fonts: DEFAULT_THEME_FONTS, colors: DEFAULT_THEME_COLORS };
 }
 
-export const THEME_FONTS: ThemeFontsSchema = DEFAULT_THEME_FONTS;
-export const THEME_COLORS: ThemeColorsSchema = DEFAULT_THEME_COLORS;
+let cachedTokens: ThemeTokensSchema | null = null;
+
+export function getThemeTokens(): ThemeTokensSchema {
+    if (!cachedTokens) {
+        cachedTokens = getHydratedThemeTokens();
+    }
+    return cachedTokens;
+}
+
+export function resetThemeTokensCache(): void {
+    cachedTokens = null;
+}
+
+export const THEME_FONTS: ThemeFontsSchema = new Proxy(DEFAULT_THEME_FONTS, {
+    get(_target, prop: string) {
+        const key = prop as keyof ThemeFontsSchema;
+        return getThemeTokens().fonts[key] ?? DEFAULT_THEME_FONTS[key];
+    }
+});
+
+export const THEME_COLORS: ThemeColorsSchema = new Proxy(DEFAULT_THEME_COLORS, {
+    get(_target, prop: string) {
+        const key = prop as keyof ThemeColorsSchema;
+        return getThemeTokens().colors[key] ?? DEFAULT_THEME_COLORS[key];
+    }
+});
