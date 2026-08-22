@@ -72,7 +72,7 @@ export class CalculatorApp {
         this.dom = dom;
         this.formatter = formatter;
         this.validator = validator;
-        this.chartManager = chartManager ?? new ChartManager(this.formatter);
+        this.chartManager = chartManager ?? new ChartManager(this.formatter, this.validator, this.dom);
         this.analytics = analytics;
         this.userHasInteracted = false;
         this.interactionCount = 0;

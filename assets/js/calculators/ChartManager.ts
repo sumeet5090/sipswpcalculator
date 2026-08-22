@@ -1,5 +1,6 @@
 import { CurrencyFormatter } from './CurrencyHelper';
 import { InputValidator } from './InputValidator';
+import { DOMAdapter } from '../adapters/DOMAdapter';
 import { YearResult } from '../types';
 import type { Chart, ChartDataset, ChartConfiguration, TooltipItem } from 'chart.js';
 
@@ -27,13 +28,19 @@ interface GradientBundle {
 export class ChartManager {
     private formatter: CurrencyFormatter;
     private validator: InputValidator;
+    private dom: DOMAdapter;
     private chartInstance: Chart<'line'> | null = null;
     private currentMilestones: Milestone[] = [];
     private chartModulePromise: Promise<typeof Chart> | null = null;
 
-    constructor(formatter: CurrencyFormatter, validator: InputValidator = new InputValidator()) {
+    constructor(
+        formatter: CurrencyFormatter,
+        validator: InputValidator = new InputValidator(),
+        dom: DOMAdapter = new DOMAdapter()
+    ) {
         this.formatter = formatter;
         this.validator = validator;
+        this.dom = dom;
     }
 
     /**
@@ -317,7 +324,7 @@ export class ChartManager {
      */
     setBenchmark(benchmark: 'none' | 'nifty' | 'gold' | 'fd'): void {
         this.activeBenchmark = benchmark;
-        const chips = document.querySelectorAll<HTMLButtonElement>('.benchmark-chip');
+        const chips = this.dom.getElements<HTMLButtonElement>('.benchmark-chip');
         chips.forEach(c => {
             if (c.dataset.benchmark === benchmark) {
                 c.classList.add('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600');
@@ -400,8 +407,8 @@ export class ChartManager {
         if (this.activeViewType === type) return;
         this.activeViewType = type;
 
-        const lineBtn = document.getElementById('chart-view-line');
-        const donutBtn = document.getElementById('chart-view-donut');
+        const lineBtn = this.dom.getElement('chart-view-line');
+        const donutBtn = this.dom.getElement('chart-view-donut');
         if (lineBtn && donutBtn) {
             if (type === 'line') {
                 lineBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
@@ -470,12 +477,12 @@ export class ChartManager {
         this.lastResults = results;
         this.lastEnableSwp = enableSwp;
 
-        const ctxEl = document.getElementById('corpusChart') as HTMLCanvasElement | null;
+        const ctxEl = this.dom.getElement<HTMLCanvasElement>('corpusChart');
         if (!ctxEl || !document.body.contains(ctxEl)) return;
 
         // Wire view switcher buttons once
-        const lineBtn = document.getElementById('chart-view-line');
-        const donutBtn = document.getElementById('chart-view-donut');
+        const lineBtn = this.dom.getElement('chart-view-line');
+        const donutBtn = this.dom.getElement('chart-view-donut');
         if (lineBtn && !lineBtn.dataset.wired) {
             lineBtn.dataset.wired = 'true';
             lineBtn.addEventListener('click', () => this.setViewType('line'));
@@ -486,7 +493,7 @@ export class ChartManager {
         }
 
         // Wire benchmark comparison chips
-        const benchmarkChips = document.querySelectorAll<HTMLButtonElement>('.benchmark-chip');
+        const benchmarkChips = this.dom.getElements<HTMLButtonElement>('.benchmark-chip');
         benchmarkChips.forEach(chip => {
             if (!chip.dataset.wired) {
                 chip.dataset.wired = 'true';
@@ -511,8 +518,8 @@ export class ChartManager {
         const years = results.map(r => `Yr ${r.year}`);
         const calcApp = document.querySelector<HTMLElement>('[data-js="calculator-app"]');
         const mode = calcApp ? (calcApp.dataset.mode || 'all') : 'all';
-        const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
-        const showWealthMap = (document.getElementById('show_wealth_map') as HTMLInputElement | null)?.checked || false;
+        const showPostTax = this.dom.getElement<HTMLInputElement>('show_post_tax')?.checked || false;
+        const showWealthMap = this.dom.getElement<HTMLInputElement>('show_wealth_map')?.checked || false;
 
         const milestones = this.computeMilestones(results, enableSwp, showPostTax);
         this.currentMilestones = milestones;
@@ -760,7 +767,7 @@ export class ChartManager {
      * Cross-browser safe celebratory milestone badge renderer.
      */
     renderMilestoneGrid(milestones: Milestone[]): void {
-        const container = document.getElementById('milestones-container');
+        const container = this.dom.getElement('milestones-container');
         if (!container) return;
 
         // Legacy-safe DOM clearance
