@@ -22,6 +22,58 @@ class CurrencyHelper implements CurrencyFormatterInterface
     }
 
     /**
+     * Format dynamic large amounts with appropriate Lakh/Crore or Million/Billion suffix.
+     *
+     * @param float|int $amount
+     * @param string $currency
+     * @return string
+     */
+    public function formatDynamic(float|int $amount, string $currency = 'INR'): string
+    {
+        $rounded = round((float) $amount);
+        $isNegative = $rounded < 0;
+        $absAmount = abs($rounded);
+        $sym = $this->getSymbol($currency);
+        $prefix = $isNegative ? "-{$sym}" : $sym;
+
+        if (strtoupper($currency) === 'INR') {
+            if ($absAmount >= 10000000.0) {
+                $val = number_format($absAmount / 10000000.0, 2, '.', '');
+                $val = preg_replace('/\.00$/', '', $val);
+                return $prefix . $val . ' Crore';
+            }
+            if ($absAmount >= 100000.0) {
+                $val = number_format($absAmount / 100000.0, 2, '.', '');
+                $val = preg_replace('/\.00$/', '', $val);
+                return $prefix . $val . ' Lakh';
+            }
+            if ($absAmount >= 1000.0) {
+                $val = number_format($absAmount / 1000.0, 2, '.', '');
+                $val = preg_replace('/\.00$/', '', $val);
+                return $prefix . $val . 'k';
+            }
+        } else {
+            if ($absAmount >= 1000000000.0) {
+                $val = number_format($absAmount / 1000000000.0, 2, '.', '');
+                $val = preg_replace('/\.00$/', '', $val);
+                return $prefix . $val . 'B';
+            }
+            if ($absAmount >= 1000000.0) {
+                $val = number_format($absAmount / 1000000.0, 2, '.', '');
+                $val = preg_replace('/\.00$/', '', $val);
+                return $prefix . $val . 'M';
+            }
+            if ($absAmount >= 1000.0) {
+                $val = number_format($absAmount / 1000.0, 2, '.', '');
+                $val = preg_replace('/\.00$/', '', $val);
+                return $prefix . $val . 'k';
+            }
+        }
+
+        return $this->format($amount);
+    }
+
+    /**
      * Format a numeric amount using Indian numbering system notation.
      *
      * @param float|int $num

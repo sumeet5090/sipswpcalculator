@@ -250,6 +250,27 @@ class InvestmentInputs
         );
     }
 
+    public function withSip(float $sip): self
+    {
+        $clone = clone $this;
+        $clone->sip = $sip;
+        return $clone;
+    }
+
+    public function withYears(int $years): self
+    {
+        $clone = clone $this;
+        $clone->years = $years;
+        return $clone;
+    }
+
+    public function withLumpsum(float $lumpsum): self
+    {
+        $clone = clone $this;
+        $clone->lumpsum = $lumpsum;
+        return $clone;
+    }
+
     /**
      * Clamp a numeric value to constraints.
      */

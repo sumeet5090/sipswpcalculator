@@ -152,7 +152,7 @@ export class MathEngine {
         }
         
         let low = 0;
-        let high = Math.max(targetCorpus, (targetCorpus / inp.years) * 2);
+        let high = Math.max(targetCorpus, (targetCorpus / Math.max(1, inp.years)) * 2, 1000000);
         let bestSip = 0;
         
         // Cap iterations to 40 for max 5ms execution time (zero-latency)
@@ -188,9 +188,15 @@ export class MathEngine {
             return Math.round(inp.swp_withdrawal * 12 * inp.swp_years);
         }
 
+        // Dynamically compute exact escalated sum of withdrawals to set a mathematically safe upper bound
+        let totalEscalatedWithdrawals = 0;
+        for (let k = 0; k < inp.swp_years; k++) {
+            totalEscalatedWithdrawals += 12 * inp.swp_withdrawal * Math.pow(1 + inp.swp_stepup / 100, k);
+        }
+
         let low = 0;
-        let high = inp.swp_withdrawal * 12 * inp.swp_years * 3; // safe upper bound
-        let bestCorpus = 0;
+        let high = Math.max(totalEscalatedWithdrawals * 1.5, inp.swp_withdrawal * 12 * inp.swp_years * 5, 1000000);
+        let bestCorpus = high;
         
         for (let i = 0; i < 40; i++) {
             const mid = (low + high) / 2;
@@ -205,17 +211,15 @@ export class MathEngine {
             const finalBalance = results[results.length - 1].combined_total;
             const ranOutEarly = results.some((r, idx) => idx < results.length - 1 && r.combined_total <= 0);
 
-            if (!ranOutEarly && Math.abs(finalBalance) < 1) {
+            if (!ranOutEarly && finalBalance >= 0) {
                 bestCorpus = mid;
-                break;
-            } else if (ranOutEarly || finalBalance <= 0) {
-                // If it ran out early or ended at zero, we need more starting corpus
-                low = mid;
-            } else {
-                // If we ended with a surplus without early depletion, we can try a lower corpus
+                if (Math.abs(finalBalance) < 1) {
+                    break;
+                }
                 high = mid;
+            } else {
+                low = mid;
             }
-            bestCorpus = mid;
         }
         return Math.round(bestCorpus);
     }

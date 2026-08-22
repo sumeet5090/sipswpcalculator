@@ -160,10 +160,7 @@ export class SummaryMetricsController {
         }
 
         // Compounding Crossover Point (Year when annual return > annual investment)
-        const crossoverYear = data.find(r => {
-            const annualContrib = (r.sip_monthly ?? 0) * 12;
-            return r.interest > annualContrib && annualContrib > 0;
-        })?.year;
+        const crossoverYear = data.find(r => r.annual_contribution > 0 && r.interest > r.annual_contribution)?.year;
 
         const crossoverBadge = this.dom.getElement('summary-crossover-badge');
         if (crossoverBadge) {
@@ -175,18 +172,24 @@ export class SummaryMetricsController {
             }
         }
 
-        // SWP Retirement Longevity Feasibility
+        // SWP Retirement Longevity Feasibility (Benchmarked against starting retirement corpus)
         const longevityBadge = this.dom.getElement('summary-longevity-badge');
         if (longevityBadge) {
             if (inputs.enable_swp && inputs.swp_withdrawal > 0) {
+                const startingRetirementCorpus = inputs.years > 0
+                    ? (data[inputs.years - 1]?.combined_total || 0)
+                    : (inputs.lumpsum || 0);
+                const initialAnnualSwp = inputs.swp_withdrawal * 12;
+                const swrRate = startingRetirementCorpus > 0 ? (initialAnnualSwp / startingRetirementCorpus) * 100 : 99;
                 const finalYearCorpus = lastRow.combined_total;
-                const annualSwp = inputs.swp_withdrawal * 12;
-                const rate = finalYearCorpus > 0 ? (annualSwp / finalYearCorpus) * 100 : 99;
 
-                if (finalYearCorpus > 0 && rate <= 4) {
+                if (finalYearCorpus <= 0) {
+                    longevityBadge.textContent = '🚨 Depletes Before Horizon';
+                    longevityBadge.className = 'inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-200';
+                } else if (swrRate <= 4.0) {
                     longevityBadge.textContent = '🛡️ Highly Sustainable (Safe 4% Rule)';
                     longevityBadge.className = 'inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200';
-                } else if (finalYearCorpus > 0 && rate <= 6) {
+                } else if (swrRate <= 6.0) {
                     longevityBadge.textContent = '⚠️ Moderate Depletion Risk';
                     longevityBadge.className = 'inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-200';
                 } else {

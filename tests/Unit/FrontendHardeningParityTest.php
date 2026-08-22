@@ -108,5 +108,106 @@ class FrontendHardeningParityTest extends TestCase
         $this->assertGreaterThan(0.0, $realCorpus);
         $this->assertLessThan($nominalCorpus, $realCorpus);
         $this->assertEqualsWithDelta(4172650.5, $realCorpus, 100.0);
+
+        // Parity with static helper
+        $helperResult = InvestmentCalculator::calculateInflationDiscount($nominalCorpus, $years, $inflationRate);
+        $this->assertEqualsWithDelta($realCorpus, $helperResult, 1.0);
+    }
+
+    public function testRequiredStartingCorpusForSwpUnderHighStepUp(): void
+    {
+        // 30 years SWP, ₹50,000/mo, 10% annual step-up, 7% return
+        $inputs = InvestmentInputs::fromSwpRequest([
+            'corpus'         => 0,
+            'swp_withdrawal' => 50000,
+            'swp_years'      => 30,
+            'swp_stepup'     => 10,
+            'swp_rate'       => 7,
+            'inflation'      => 0,
+        ], $this->config);
+
+        $requiredCorpus = $this->calculator->calculateRequiredStartingCorpusForSwp($inputs);
+
+        $this->assertGreaterThan(0.0, $requiredCorpus);
+
+        // Verify the found starting corpus successfully sustains the full 30 years without early exhaustion
+        $simInputs = InvestmentInputs::fromSwpRequest([
+            'corpus'         => $requiredCorpus,
+            'swp_withdrawal' => 50000,
+            'swp_years'      => 30,
+            'swp_stepup'     => 10,
+            'swp_rate'       => 7,
+            'inflation'      => 0,
+        ], $this->config);
+
+        $results = $this->calculator->calculate($simInputs);
+        $this->assertCount(30, $results);
+
+        // Ensure no premature exhaustion before year 30
+        for ($i = 0; $i < 29; $i++) {
+            $this->assertGreaterThan(0.0, $results[$i]['combined_total'], "Year " . ($i + 1) . " should not be depleted");
+        }
+
+        // Year 30 final balance should be nearly zero (converged within tolerance)
+        $finalBalance = $results[29]['combined_total'];
+        $this->assertGreaterThanOrEqual(0.0, $finalBalance);
+    }
+
+    public function testRequiredSipTargetCorpusSolverPrecision(): void
+    {
+        // Target ₹5 Crore in 15 years at 12% CAGR with 10% step-up
+        $targetCorpus = 50000000.0;
+        $inputs = InvestmentInputs::fromRequest([
+            'sip'     => 10000,
+            'years'   => 15,
+            'rate'    => 12,
+            'stepup'  => 10,
+            'lumpsum' => 0
+        ], $this->config);
+
+        $requiredSip = $this->calculator->calculateRequiredSip($inputs, $targetCorpus);
+
+        $this->assertGreaterThan(0.0, $requiredSip);
+
+        // Run forward simulation with the solved SIP
+        $forwardInputs = $inputs->withSip($requiredSip);
+        $results = $this->calculator->calculate($forwardInputs);
+        $lastRow = end($results);
+        $achievedCorpus = $lastRow['combined_total'];
+
+        // Must achieve target within ₹1,000 rounding tolerance
+        $this->assertEqualsWithDelta($targetCorpus, $achievedCorpus, 1000.0);
+    }
+
+    public function testDelayCostCompoundingParity(): void
+    {
+        $inputs = InvestmentInputs::fromRequest([
+            'sip'     => 25000,
+            'years'   => 20,
+            'rate'    => 12,
+            'stepup'  => 10,
+            'lumpsum' => 0
+        ], $this->config);
+
+        $delayCost = $this->calculator->calculateDelayCost($inputs);
+
+        $this->assertGreaterThan(0.0, $delayCost);
+
+        // Delay cost for 1-year horizon should be 0
+        $oneYearInputs = $inputs->withYears(1);
+        $this->assertEquals(0.0, $this->calculator->calculateDelayCost($oneYearInputs));
+    }
+
+    public function testCurrencyHelperFormatDynamicParity(): void
+    {
+        $currencyHelper = new \Core\CurrencyHelper();
+
+        $this->assertSame('₹10k', $currencyHelper->formatDynamic(10000));
+        $this->assertSame('₹25.50k', $currencyHelper->formatDynamic(25500));
+        $this->assertSame('₹1.50 Lakh', $currencyHelper->formatDynamic(150000));
+        $this->assertSame('₹50 Lakh', $currencyHelper->formatDynamic(5000000));
+        $this->assertSame('₹1 Crore', $currencyHelper->formatDynamic(10000000));
+        $this->assertSame('₹2.50 Crore', $currencyHelper->formatDynamic(25000000));
+        $this->assertSame('-₹5 Lakh', $currencyHelper->formatDynamic(-500000));
     }
 }

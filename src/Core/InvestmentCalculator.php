@@ -120,4 +120,149 @@ class InvestmentCalculator
 
         return $results;
     }
+
+    /**
+     * Calculate the cost of delaying the investment by 1 year.
+     */
+    public function calculateDelayCost(InvestmentInputs $inputs): float
+    {
+        if ($inputs->getYears() <= 1) {
+            return 0.0;
+        }
+
+        $currentResults = $this->calculate($inputs);
+        $delayedInputs = $inputs->withYears($inputs->getYears() - 1);
+        $delayedResults = $this->calculate($delayedInputs);
+
+        $currentFinal = (float) ($currentResults[count($currentResults) - 1]['combined_total'] ?? 0.0);
+        $delayedFinal = (float) ($delayedResults[count($delayedResults) - 1]['combined_total'] ?? 0.0);
+
+        return max(0.0, $currentFinal - $delayedFinal);
+    }
+
+    /**
+     * Adjust the final corpus for inflation to show purchasing power parity.
+     */
+    public static function calculateInflationDiscount(float $finalCorpus, int $totalYears, float $inflationRate): float
+    {
+        if ($inflationRate <= 0.0 || $totalYears <= 0) {
+            return $finalCorpus;
+        }
+        return $finalCorpus / pow(1.0 + ($inflationRate / 100.0), $totalYears);
+    }
+
+    /**
+     * Binary Search to find the required starting SIP to reach a target corpus.
+     */
+    public function calculateRequiredSip(InvestmentInputs $inputs, float $targetCorpus): float
+    {
+        if ($targetCorpus <= 0.0 || $inputs->getYears() <= 0) {
+            return 0.0;
+        }
+
+        if ($inputs->getRate() <= 0.0 && $inputs->getStepup() <= 0.0) {
+            $remaining = max(0.0, $targetCorpus - $inputs->getLumpsum());
+            return round($remaining / ($inputs->getYears() * 12.0));
+        }
+
+        $zeroSipResults = $this->calculate($inputs->withSip(0.0));
+        if (!empty($zeroSipResults) && $zeroSipResults[count($zeroSipResults) - 1]['combined_total'] >= $targetCorpus) {
+            return 0.0;
+        }
+
+        $low = 0.0;
+        $high = max($targetCorpus, ($targetCorpus / max(1, $inputs->getYears())) * 2.0, 1000000.0);
+        $bestSip = 0.0;
+
+        for ($i = 0; $i < 40; $i++) {
+            $mid = ($low + $high) / 2.0;
+            $testInp = $inputs->withSip($mid);
+            $results = $this->calculate($testInp);
+            if (empty($results)) {
+                break;
+            }
+            $finalCorpus = (float) $results[count($results) - 1]['combined_total'];
+
+            if (abs($finalCorpus - $targetCorpus) < 1.0) {
+                $bestSip = $mid;
+                break;
+            } elseif ($finalCorpus < $targetCorpus) {
+                $low = $mid;
+            } else {
+                $high = $mid;
+            }
+            $bestSip = $mid;
+        }
+
+        return round($bestSip);
+    }
+
+    /**
+     * Binary Search to find the required initial corpus to sustain a specific SWP plan.
+     */
+    public function calculateRequiredStartingCorpusForSwp(InvestmentInputs $inputs): float
+    {
+        if (!$inputs->isSwpEnabled() || $inputs->getSwpWithdrawal() <= 0.0 || $inputs->getSwpYears() <= 0) {
+            return 0.0;
+        }
+
+        if ($inputs->getSwpRate() <= 0.0 && $inputs->getSwpStepup() <= 0.0) {
+            return round($inputs->getSwpWithdrawal() * 12.0 * $inputs->getSwpYears());
+        }
+
+        $totalEscalatedWithdrawals = 0.0;
+        for ($k = 0; $k < $inputs->getSwpYears(); $k++) {
+            $totalEscalatedWithdrawals += 12.0 * $inputs->getSwpWithdrawal() * pow(1.0 + $inputs->getSwpStepup() / 100.0, $k);
+        }
+
+        $low = 0.0;
+        $high = max($totalEscalatedWithdrawals * 1.5, $inputs->getSwpWithdrawal() * 12.0 * $inputs->getSwpYears() * 5.0, 1000000.0);
+        $bestCorpus = $high;
+
+        for ($i = 0; $i < 40; $i++) {
+            $mid = ($low + $high) / 2.0;
+            $testInp = InvestmentInputs::fromValues(
+                0.0,
+                max(0, $inputs->getYears()),
+                $inputs->getRate(),
+                $inputs->getStepup(),
+                true,
+                $inputs->getSwpWithdrawal(),
+                $inputs->getSwpStepup(),
+                $inputs->getSwpYears(),
+                $mid,
+                $inputs->getSwpRate(),
+                $inputs->getInflation(),
+                $inputs->getLtcgExemption(),
+                $inputs->getLtcgTaxRate()
+            );
+
+            $results = $this->calculate($testInp);
+            if (empty($results)) {
+                break;
+            }
+            $finalBalance = (float) $results[count($results) - 1]['combined_total'];
+
+            $ranOutEarly = false;
+            $resCount = count($results);
+            for ($rIdx = 0; $rIdx < $resCount - 1; $rIdx++) {
+                if ($results[$rIdx]['combined_total'] <= 0) {
+                    $ranOutEarly = true;
+                    break;
+                }
+            }
+
+            if (!$ranOutEarly && $finalBalance >= 0.0) {
+                $bestCorpus = $mid;
+                if (abs($finalBalance) < 1.0) {
+                    break;
+                }
+                $high = $mid;
+            } else {
+                $low = $mid;
+            }
+        }
+
+        return round($bestCorpus);
+    }
 }
