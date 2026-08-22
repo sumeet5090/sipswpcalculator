@@ -30,6 +30,8 @@ class AdminDashboardPresenterTest extends TestCase
         $this->assertSame('0.0', $viewData['b2bAdvisorRate']);
         $this->assertSame('0.0', $viewData['inflationRate']);
         $this->assertSame('1.0', $viewData['avgIterations']);
+        $this->assertSame('0.0', $viewData['avgScrollDepth']);
+        $this->assertSame(0, $viewData['avgDwellTime']);
 
         $this->assertSame('[]', $viewData['volumeLabels']);
         $this->assertSame('[]', $viewData['volumeData']);
@@ -45,6 +47,12 @@ class AdminDashboardPresenterTest extends TestCase
         $this->assertSame('[]', $viewData['deviceData']);
         $this->assertSame('[]', $viewData['goalModeLabels']);
         $this->assertSame('[]', $viewData['goalModeData']);
+        $this->assertSame('[]', $viewData['referrerLabels']);
+        $this->assertSame('[]', $viewData['referrerData']);
+        $this->assertSame('[]', $viewData['studioTabLabels']);
+        $this->assertSame('[]', $viewData['studioTabData']);
+        $this->assertSame('[]', $viewData['strategyStarterLabels']);
+        $this->assertSame('[]', $viewData['strategyStarterData']);
     }
 
     public function testFormatForViewWithPopulatedStats(): void
@@ -60,6 +68,8 @@ class AdminDashboardPresenterTest extends TestCase
             'b2bAdvisorRate'      => 12.0,
             'inflationRate'       => 45.0,
             'avgIterations'       => 4.2,
+            'avgScrollDepth'      => 82.5,
+            'avgDwellTime'        => 95.0,
             'dailyVolume'         => [
                 ['day' => '2026-08-20', 'cnt' => '40'],
                 ['day' => '2026-08-21', 'cnt' => '110'],
@@ -84,6 +94,18 @@ class AdminDashboardPresenterTest extends TestCase
                 ['mode' => 'grow', 'cnt' => '110'],
                 ['mode' => 'target', 'cnt' => '40'],
             ],
+            'referrerDist'        => [
+                ['ref' => 'google_organic', 'cnt' => '85'],
+                ['ref' => 'direct', 'cnt' => '65'],
+            ],
+            'studioTabDist'       => [
+                ['tab' => 'city_benchmark', 'cnt' => '90'],
+                ['tab' => 'milestone_roadmap', 'cnt' => '60'],
+            ],
+            'strategyStarterDist' => [
+                ['preset' => 'first_crore', 'cnt' => '70'],
+                ['preset' => 'fire_retirement', 'cnt' => '50'],
+            ],
         ];
 
         $viewData = $this->presenter->formatForView($stats);
@@ -98,6 +120,8 @@ class AdminDashboardPresenterTest extends TestCase
         $this->assertSame('12.0', $viewData['b2bAdvisorRate']);
         $this->assertSame('45.0', $viewData['inflationRate']);
         $this->assertSame('4.2', $viewData['avgIterations']);
+        $this->assertSame('82.5', $viewData['avgScrollDepth']);
+        $this->assertSame(95, $viewData['avgDwellTime']);
 
         $this->assertStringContainsString('2026-08-20', $viewData['volumeLabels']);
         $this->assertStringContainsString('2026-08-21', $viewData['volumeLabels']);
@@ -106,6 +130,12 @@ class AdminDashboardPresenterTest extends TestCase
         $this->assertStringContainsString('Mobile', $viewData['deviceLabels']);
         $this->assertStringContainsString('Desktop', $viewData['deviceLabels']);
         $this->assertSame('[100,50]', $viewData['deviceData']);
+        $this->assertStringContainsString('Google Organic', $viewData['referrerLabels']);
+        $this->assertSame('[85,65]', $viewData['referrerData']);
+        $this->assertStringContainsString('City Benchmark', $viewData['studioTabLabels']);
+        $this->assertSame('[90,60]', $viewData['studioTabData']);
+        $this->assertStringContainsString('First Crore', $viewData['strategyStarterLabels']);
+        $this->assertSame('[70,50]', $viewData['strategyStarterData']);
     }
 
     public function testJsonEncodingEscapesScriptBreakouts(): void

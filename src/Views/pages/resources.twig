@@ -88,13 +88,13 @@
                         {{ cat.icon|raw }}
                     </div>
                     <div>
-                        <h2 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight leading-none mb-2">{{ cat.title }}</h2>
-                        <p class="text-slate-500 text-sm lg:text-lg font-medium max-w-2xl leading-relaxed">{{ cat.desc }}</p>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-none mb-1">{{ cat.title }}</h2>
+                        <p class="text-slate-500 text-xs sm:text-sm font-normal max-w-2xl leading-relaxed">{{ cat.desc }}</p>
                     </div>
                 </div>
 
                 <!-- Posts Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     {% set posts = posts_by_cat[cat_id]|default([]) %}
                     {% for post in posts %}
                         {% set is_featured = post.featured|default(false) %}
@@ -104,9 +104,9 @@
                         {% elseif accent_color == 'amber' %}
                             {% set tag_badge_class = 'text-amber-600 bg-amber-50' %}
                         {% endif %}
-                        <article class="group relative glass-card flex flex-col transition-all {{ is_featured ? 'md:col-span-2 p-10 lg:p-14' : 'p-8' }}">
+                        <article class="group relative glass-card flex flex-col transition-all {{ is_featured ? 'md:col-span-2 p-6 sm:p-8' : 'p-6' }} rounded-3xl border border-slate-200/90 shadow-xs">
                             <div class="flex flex-col h-full">
-                                <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center justify-between mb-4">
                                     <span class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full {{ tag_badge_class }}">
                                         {{ post.tag }}
                                     </span>
@@ -115,13 +115,13 @@
                                     </span>
                                 </div>
                                 
-                                <h3 class="{{ is_featured ? 'text-2xl md:text-3xl lg:text-4xl' : 'text-xl' }} font-black text-slate-900 group-hover:text-emerald-600 transition-colors leading-[1.2] mb-6">
+                                <h3 class="{{ is_featured ? 'text-lg sm:text-xl md:text-2xl' : 'text-base sm:text-lg' }} font-bold text-slate-900 group-hover:text-emerald-700 transition-colors leading-[1.3] mb-3">
                                     <a href="{{ post.href }}" class="after:absolute after:inset-0">
                                         {{ post.title }}
                                     </a>
                                 </h3>
                                 
-                                <p class="text-slate-500 leading-relaxed font-medium {{ is_featured ? 'text-base lg:text-lg line-clamp-3 mb-10' : 'text-sm line-clamp-3 mb-8' }}">
+                                <p class="text-slate-600 leading-relaxed text-xs sm:text-sm line-clamp-3 mb-6">
                                     {{ post.desc }}
                                 </p>
                                 

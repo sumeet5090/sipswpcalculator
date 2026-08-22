@@ -1,6 +1,7 @@
 /**
  * CurrencyHelper.ts
- * Manages currency formatting according to Indian standards (Lakhs/Crores).
+ * Manages currency formatting according to Indian standards (Lakhs/Crores)
+ * and international formats, with strict negative sign placement and zero suppression.
  * Refactored as an Object-Oriented class.
  */
 export class CurrencyFormatter {
@@ -38,51 +39,81 @@ export class CurrencyFormatter {
     }
 
     /**
-     * Format numeric value to currency string.
+     * Standard currency formatting with negative sign preceding the currency symbol.
      */
     format(value: number): string {
-        const rounded = Math.round(value) || 0;
-        return new Intl.NumberFormat(this.locale, {
-            style: 'currency',
-            currency: this.currency,
-            maximumFractionDigits: 0
-        }).format(rounded);
+        const rounded = Math.round(value + Number.EPSILON) || 0;
+        if (Math.abs(rounded) === 0) {
+            return `${this.symbol}0`;
+        }
+
+        const isNegative = rounded < 0;
+        const absVal = Math.abs(rounded);
+        const formattedNumber = new Intl.NumberFormat(this.locale, {
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0
+        }).format(absVal);
+
+        return isNegative ? `-${this.symbol}${formattedNumber}` : `${this.symbol}${formattedNumber}`;
     }
 
     /**
-     * Format dynamic large amounts with appropriate Lakh/Crore or Million/Billion suffix.
+     * Dynamic denomination formatting (e.g. ₹10 Lakh, ₹1.5 Crore, ₹50k).
      */
     formatDynamic(amount: number): string {
-        const rounded = Math.round(amount) || 0;
+        const rounded = Math.round(amount + Number.EPSILON) || 0;
+        if (Math.abs(rounded) === 0) {
+            return `${this.symbol}0`;
+        }
+
         const absAmount = Math.abs(rounded);
-        const isNegative = absAmount > 0 && rounded < 0;
+        const isNegative = rounded < 0;
         const prefix = isNegative ? `-${this.symbol}` : this.symbol;
 
         if (this.currency === 'INR') {
             if (absAmount >= 10000000) {
-                return prefix + (absAmount / 10000000).toFixed(2).replace(/\.00$/, '') + ' Crore';
+                const cr = (absAmount / 10000000).toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1');
+                return `${prefix}${cr} Crore`;
             }
             if (absAmount >= 100000) {
-                return prefix + (absAmount / 100000).toFixed(2).replace(/\.00$/, '') + ' Lakh';
+                const lk = (absAmount / 100000).toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1');
+                return `${prefix}${lk} Lakh`;
             }
             if (absAmount >= 1000) {
-                return prefix + (absAmount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
+                const k = (absAmount / 1000).toFixed(1).replace(/\.0$/, '');
+                return `${prefix}${k}k`;
             }
         } else {
             if (absAmount >= 1000000000) {
-                return prefix + (absAmount / 1000000000).toFixed(2).replace(/\.00$/, '') + 'B';
+                return `${prefix}${(absAmount / 1000000000).toFixed(2).replace(/\.00$/, '')}B`;
             }
             if (absAmount >= 1000000) {
-                return prefix + (absAmount / 1000000).toFixed(2).replace(/\.00$/, '') + 'M';
+                return `${prefix}${(absAmount / 1000000).toFixed(2).replace(/\.00$/, '')}M`;
             }
             if (absAmount >= 1000) {
-                return prefix + (absAmount / 1000).toFixed(2).replace(/\.00$/, '') + 'k';
+                return `${prefix}${(absAmount / 1000).toFixed(1).replace(/\.0$/, '')}k`;
             }
         }
 
         return isNegative
             ? `-${this.symbol}${absAmount.toLocaleString(this.locale)}`
             : `${this.symbol}${absAmount.toLocaleString(this.locale)}`;
+    }
+
+    /**
+     * Formats Indian word translation for live input helper badges (e.g. "≈ 25 Lakhs").
+     */
+    formatWordBadge(amount: number): string {
+        const absVal = Math.abs(Math.round(amount + Number.EPSILON) || 0);
+        if (absVal < 100000) {
+            return '';
+        }
+        if (absVal >= 10000000) {
+            const cr = (absVal / 10000000).toFixed(2).replace(/\.00$/, '');
+            return `≈ ${cr} Crore${parseFloat(cr) > 1 ? 's' : ''}`;
+        }
+        const lk = (absVal / 100000).toFixed(2).replace(/\.00$/, '');
+        return `≈ ${lk} Lakh${parseFloat(lk) > 1 ? 's' : ''}`;
     }
 
     /**
@@ -109,7 +140,15 @@ export class CurrencyFormatter {
             return this.formatDynamic(value);
         }
 
+        if (fieldId === 'years' || fieldId === 'swp_years') {
+            const months = value * 12;
+            return `${value} Year${value > 1 ? 's' : ''} (${months} Months)`;
+        }
+
+        if (fieldId === 'rate' || fieldId === 'swp_rate' || fieldId === 'inflation' || fieldId === 'stepup') {
+            return `${value.toFixed(1).replace(/\.0$/, '')}% per annum`;
+        }
+
         return '';
     }
 }
-

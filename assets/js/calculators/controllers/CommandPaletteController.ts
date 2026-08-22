@@ -1,4 +1,5 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
+import { ModalScrollLockHelper } from '../helpers/ModalScrollLockHelper';
 
 export interface CommandItem {
     id: string;
@@ -109,7 +110,7 @@ export class CommandPaletteController {
         // Trigger button
         const openBtn = this.dom.getElement('open-command-palette-btn');
         if (openBtn) {
-            openBtn.addEventListener('click', () => this.open());
+            openBtn.addEventListener('click', () => this.open(openBtn));
         }
 
         // Close on backdrop click
@@ -119,21 +120,29 @@ export class CommandPaletteController {
             }
         });
 
+        // Close on Escape or native dialog cancellation
+        this.modal.addEventListener('cancel', () => {
+            ModalScrollLockHelper.unlock();
+        });
+
         // Input filtering
         this.input.addEventListener('input', () => {
             this.filter(this.input?.value || '');
         });
 
-        // Keyboard navigation inside input
-        this.input.addEventListener('keydown', (e) => {
+        // Keyboard navigation scoped to modal dialog container to prevent any background scroll bleed
+        this.modal.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowDown') {
                 e.preventDefault();
+                e.stopPropagation();
                 this.navigate(1);
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
+                e.stopPropagation();
                 this.navigate(-1);
             } else if (e.key === 'Enter') {
                 e.preventDefault();
+                e.stopPropagation();
                 this.selectActive();
             }
         });
@@ -141,9 +150,10 @@ export class CommandPaletteController {
         this.filter('');
     }
 
-    open(): void {
+    open(triggerElement?: HTMLElement): void {
         if (!this.modal) return;
         this.modal.showModal();
+        ModalScrollLockHelper.lock(triggerElement);
         if (this.input) {
             this.input.value = '';
             this.filter('');
@@ -154,6 +164,7 @@ export class CommandPaletteController {
     close(): void {
         if (!this.modal) return;
         this.modal.close();
+        ModalScrollLockHelper.unlock();
     }
 
     toggle(): void {
@@ -232,9 +243,18 @@ export class CommandPaletteController {
         this.selectedIndex = (this.selectedIndex + direction + this.filteredItems.length) % this.filteredItems.length;
         this.renderResults();
         
-        const activeEl = this.resultsContainer?.querySelector(`[data-index="${this.selectedIndex}"]`);
-        if (activeEl) {
-            activeEl.scrollIntoView({ block: 'nearest' });
+        const activeEl = this.resultsContainer?.querySelector<HTMLElement>(`[data-index="${this.selectedIndex}"]`);
+        if (this.resultsContainer && activeEl) {
+            const containerTop = this.resultsContainer.scrollTop;
+            const containerHeight = this.resultsContainer.clientHeight;
+            const elTop = activeEl.offsetTop - this.resultsContainer.offsetTop;
+            const elHeight = activeEl.offsetHeight;
+
+            if (elTop < containerTop) {
+                this.resultsContainer.scrollTop = elTop;
+            } else if (elTop + elHeight > containerTop + containerHeight) {
+                this.resultsContainer.scrollTop = elTop + elHeight - containerHeight;
+            }
         }
     }
 

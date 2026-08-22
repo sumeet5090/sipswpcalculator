@@ -112,4 +112,81 @@ class InsightPayloadTest extends TestCase
         $this->assertSame(32, mb_strlen($payload->goalMode ?? ''));
         $this->assertSame(32, mb_strlen($payload->deviceType ?? ''));
     }
+
+    public function testFromArrayParsesSeoAndStudioSignals(): void
+    {
+        $data = [
+            'calc_type' => 'SIP',
+            'amount' => 10000,
+            'duration' => 10,
+            'landing_path' => '/swp-calculator',
+            'referrer_category' => 'google_organic',
+            'utm_source' => 'newsletter',
+            'utm_medium' => 'email',
+            'scroll_depth_pct' => 75,
+            'dwell_time_seconds' => 120,
+            'quick_answer_viewed' => 1,
+            'faq_item_expanded' => 'faq-swp-taxation',
+            'glossary_term_clicked' => 'ltcg',
+            'hud_shortcut_clicked' => '#breakdown-studio',
+            'active_studio_tab' => 'stress_test',
+            'strategy_starter_used' => 'fire_retirement',
+            'guided_wizard_completed' => 1,
+            'stress_test_scenario' => '2008_subprime',
+            'city_benchmark_city' => 'mumbai',
+            'scenario_diff_saved' => 1,
+            'csv_exported' => 1,
+            'qr_modal_opened' => 1,
+            'tax_waterfall_opened' => 1,
+            'goal_pledge_created' => 1,
+            'internal_hub_clicked' => '/step-up-sip-calculator',
+            'cwv_lcp_ms' => 450,
+            'cwv_cls' => 0.025,
+            'cwv_inp_ms' => 65,
+            'connection_speed' => '4g',
+            'viewport_bucket' => 'mobile_lg',
+        ];
+
+        $payload = InsightPayload::fromArray($data);
+
+        $this->assertSame('/swp-calculator', $payload->landingPath);
+        $this->assertSame('google_organic', $payload->referrerCategory);
+        $this->assertSame('newsletter', $payload->utmSource);
+        $this->assertSame('email', $payload->utmMedium);
+        $this->assertSame(75, $payload->scrollDepthPct);
+        $this->assertSame(120, $payload->dwellTimeSeconds);
+        $this->assertSame(1, $payload->quickAnswerViewed);
+        $this->assertSame('faq-swp-taxation', $payload->faqItemExpanded);
+        $this->assertSame('ltcg', $payload->glossaryTermClicked);
+        $this->assertSame('#breakdown-studio', $payload->hudShortcutClicked);
+        $this->assertSame('stress_test', $payload->activeStudioTab);
+        $this->assertSame('fire_retirement', $payload->strategyStarterUsed);
+        $this->assertSame(1, $payload->guidedWizardCompleted);
+        $this->assertSame('2008_subprime', $payload->stressTestScenario);
+        $this->assertSame('mumbai', $payload->cityBenchmarkCity);
+        $this->assertSame(1, $payload->scenarioDiffSaved);
+        $this->assertSame(1, $payload->csvExported);
+        $this->assertSame(1, $payload->qrModalOpened);
+        $this->assertSame(1, $payload->taxWaterfallOpened);
+        $this->assertSame(1, $payload->goalPledgeCreated);
+        $this->assertSame('/step-up-sip-calculator', $payload->internalHubClicked);
+        $this->assertSame(450, $payload->cwvLcpMs);
+        $this->assertSame(0.025, $payload->cwvCls);
+        $this->assertSame(65, $payload->cwvInpMs);
+        $this->assertSame('4g', $payload->connectionSpeed);
+        $this->assertSame('mobile_lg', $payload->viewportBucket);
+    }
+
+    public function testFromArrayClampsScrollDepthAndBoundsDwellTime(): void
+    {
+        $data = [
+            'scroll_depth_pct' => 150,
+            'dwell_time_seconds' => -10,
+        ];
+
+        $payload = InsightPayload::fromArray($data);
+
+        $this->assertSame(100, $payload->scrollDepthPct);
+        $this->assertSame(0, $payload->dwellTimeSeconds);
+    }
 }

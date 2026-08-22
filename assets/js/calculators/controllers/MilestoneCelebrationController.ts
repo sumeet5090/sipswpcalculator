@@ -1,5 +1,7 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 
+import { THEME_COLORS } from '../constants/ThemeTokens.ts';
+
 export class MilestoneCelebrationController {
     private dom: DOMAdapter;
     private celebratedMilestones: Set<number> = new Set();
@@ -37,31 +39,45 @@ export class MilestoneCelebrationController {
     }
 
     private updateRoadmap(corpus: number): void {
-        const checkpoints = document.querySelectorAll<HTMLElement>('.roadmap-checkpoint');
+        const checkpoints = this.dom.getElements<HTMLElement>('.roadmap-checkpoint');
         checkpoints.forEach(cp => {
             const target = parseFloat(cp.dataset.target || '0');
             const icon = cp.querySelector('.checkpoint-icon');
-            const line = cp.querySelector('.checkpoint-line');
+            const bar = cp.querySelector<HTMLElement>('.checkpoint-bar');
+            const status = cp.querySelector('.checkpoint-status');
+
+            const pct = target > 0 ? Math.min(Math.round((corpus / target) * 100), 100) : 0;
+
+            if (bar) {
+                bar.style.width = `${pct}%`;
+            }
+
+            if (status) {
+                if (pct >= 100) {
+                    status.textContent = '✓ Achieved';
+                    status.className = 'checkpoint-status text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200';
+                } else if (pct > 0) {
+                    status.textContent = `${pct}%`;
+                    status.className = 'checkpoint-status text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100';
+                } else {
+                    status.textContent = '0%';
+                    status.className = 'checkpoint-status text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-slate-200/80 text-slate-600';
+                }
+            }
 
             if (corpus >= target && target > 0) {
-                cp.classList.add('active-checkpoint');
+                cp.classList.add('border-emerald-300', 'bg-emerald-50/40');
+                cp.classList.remove('border-slate-200/90', 'bg-slate-50/80');
                 if (icon) {
-                    icon.classList.remove('bg-slate-100', 'text-slate-400', 'border-slate-200');
+                    icon.classList.remove('bg-white', 'text-slate-400', 'border-slate-200');
                     icon.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600', 'shadow-md', 'shadow-emerald-600/30');
                 }
-                if (line) {
-                    line.classList.remove('bg-slate-200');
-                    line.classList.add('bg-emerald-500');
-                }
             } else {
-                cp.classList.remove('active-checkpoint');
+                cp.classList.remove('border-emerald-300', 'bg-emerald-50/40');
+                cp.classList.add('border-slate-200/90', 'bg-slate-50/80');
                 if (icon) {
-                    icon.classList.add('bg-slate-100', 'text-slate-400', 'border-slate-200');
+                    icon.classList.add('bg-white', 'text-slate-400', 'border-slate-200');
                     icon.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600', 'shadow-md', 'shadow-emerald-600/30');
-                }
-                if (line) {
-                    line.classList.add('bg-slate-200');
-                    line.classList.remove('bg-emerald-500');
                 }
             }
         });
@@ -86,7 +102,7 @@ export class MilestoneCelebrationController {
             }
         }
 
-        const colors = ['#10b981', '#059669', '#34d399', '#f59e0b', '#fbbf24', '#6366f1'];
+        const colors = THEME_COLORS.celebration;
 
         for (let i = 0; i < 16; i++) {
             const particle = document.createElement('div');

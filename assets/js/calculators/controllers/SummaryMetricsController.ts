@@ -96,18 +96,6 @@ export class SummaryMetricsController {
 
         const inputs = this.getInputs();
 
-        // Calculate delay cost
-        const delayCost = MathEngine.calculateDelayCost(inputs);
-        const delayCostEl = this.dom.getElement('delay-cost-amount');
-        const delayCostBanner = this.dom.getElement('delay-cost-banner');
-
-        if (delayCost > 0) {
-            if (delayCostBanner) delayCostBanner.style.display = 'flex';
-            if (delayCostEl) delayCostEl.textContent = this.formatter.format(delayCost);
-        } else {
-            if (delayCostBanner) delayCostBanner.style.display = 'none';
-        }
-
         const interestTitle = this.dom.getElement('title-interest');
         const corpusTitle = this.dom.getElement('title-corpus');
 
@@ -145,6 +133,14 @@ export class SummaryMetricsController {
         this.odometer.animateValue('summary-interest', finalGains);
         this.odometer.animateValue('summary-withdrawn', totalWithdrawn);
         this.odometer.animateValue('summary-corpus', finalCorpus);
+
+        // Flash ambient recalculation indicator on primary corpus card
+        const corpusCard = this.dom.getElement('summary-corpus')?.closest('.glass-card, [class*="rounded-2xl"]');
+        if (corpusCard) {
+            corpusCard.classList.remove('metric-pulse-active');
+            void (corpusCard as HTMLElement).offsetWidth; // Force DOM reflow
+            corpusCard.classList.add('metric-pulse-active');
+        }
 
         // Update Gain Ratio Badge
         const gainBadge = this.dom.getElement('summary-gain-badge');
@@ -256,7 +252,7 @@ export class SummaryMetricsController {
         this.fitSummaryCards();
     }
 
-    initTaxWaterfallModal(): void {
+    initTaxWaterfallModal(onOpen?: () => void): void {
         const modal = this.dom.getElement<HTMLDialogElement>('tax-waterfall-modal');
         const openBtn = this.dom.getElement('open-tax-waterfall-btn');
         const closeBtn = this.dom.getElement('close-tax-waterfall-btn');
@@ -273,6 +269,7 @@ export class SummaryMetricsController {
             openBtn.addEventListener('click', () => {
                 modal.showModal();
                 ModalScrollLockHelper.lock(openBtn);
+                onOpen?.();
             });
         }
         if (closeBtn) {

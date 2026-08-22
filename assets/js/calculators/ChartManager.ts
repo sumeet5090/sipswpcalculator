@@ -1,6 +1,8 @@
 import { CurrencyFormatter } from './CurrencyHelper';
 import { InputValidator } from './InputValidator';
+import { DOMAdapter } from '../adapters/DOMAdapter';
 import { YearResult } from '../types';
+import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens.ts';
 import type { Chart, ChartDataset, ChartConfiguration, TooltipItem } from 'chart.js';
 
 export interface Milestone {
@@ -27,13 +29,19 @@ interface GradientBundle {
 export class ChartManager {
     private formatter: CurrencyFormatter;
     private validator: InputValidator;
+    private dom: DOMAdapter;
     private chartInstance: Chart<'line'> | null = null;
     private currentMilestones: Milestone[] = [];
     private chartModulePromise: Promise<typeof Chart> | null = null;
 
-    constructor(formatter: CurrencyFormatter, validator: InputValidator = new InputValidator()) {
+    constructor(
+        formatter: CurrencyFormatter,
+        validator: InputValidator = new InputValidator(),
+        dom: DOMAdapter = new DOMAdapter()
+    ) {
         this.formatter = formatter;
         this.validator = validator;
+        this.dom = dom;
     }
 
     /**
@@ -58,19 +66,19 @@ export class ChartManager {
         const safeHeight = Math.max(height, 200);
 
         const gradientInvested = ctx.createLinearGradient(0, 0, 0, safeHeight);
-        gradientInvested.addColorStop(0, 'rgba(99, 102, 241, 0.22)');
-        gradientInvested.addColorStop(0.7, 'rgba(99, 102, 241, 0.05)');
-        gradientInvested.addColorStop(1, 'rgba(99, 102, 241, 0.0)');
+        gradientInvested.addColorStop(0, THEME_COLORS.chart.gradientInvestedTop);
+        gradientInvested.addColorStop(0.7, THEME_COLORS.chart.gradientInvestedMid);
+        gradientInvested.addColorStop(1, THEME_COLORS.chart.gradientInvestedBottom);
 
         const gradientCorpus = ctx.createLinearGradient(0, 0, 0, safeHeight);
-        gradientCorpus.addColorStop(0, 'rgba(16, 185, 129, 0.35)');
-        gradientCorpus.addColorStop(0.6, 'rgba(16, 185, 129, 0.10)');
-        gradientCorpus.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+        gradientCorpus.addColorStop(0, THEME_COLORS.chart.gradientCorpusTop);
+        gradientCorpus.addColorStop(0.6, THEME_COLORS.chart.gradientCorpusMid);
+        gradientCorpus.addColorStop(1, THEME_COLORS.chart.gradientCorpusBottom);
 
         const gradientPostTax = ctx.createLinearGradient(0, 0, 0, safeHeight);
-        gradientPostTax.addColorStop(0, 'rgba(139, 92, 246, 0.25)');
-        gradientPostTax.addColorStop(0.7, 'rgba(139, 92, 246, 0.05)');
-        gradientPostTax.addColorStop(1, 'rgba(139, 92, 246, 0.0)');
+        gradientPostTax.addColorStop(0, THEME_COLORS.chart.gradientPostTaxTop);
+        gradientPostTax.addColorStop(0.7, THEME_COLORS.chart.gradientPostTaxMid);
+        gradientPostTax.addColorStop(1, THEME_COLORS.chart.gradientPostTaxBottom);
 
         return {
             invested: gradientInvested,
@@ -191,8 +199,8 @@ export class ChartManager {
         // 0-Year singularity guard: when results.length === 1, ensure point is visible
         const pointRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 6 : (isSinglePoint ? 4 : 0));
         const pointHoverRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 10 : (isSinglePoint ? 8 : 6));
-        const pointBgColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? '#fbbf24' : '#10b981');
-        const pointBorderColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? '#ffffff' : '#10b981');
+        const pointBgColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? THEME_COLORS.financial.milestoneGold : THEME_COLORS.financial.growth);
+        const pointBorderColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? THEME_COLORS.chart.pointBgWhite : THEME_COLORS.financial.growth);
         const pointBorderWidths = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 3 : 2);
 
         const interestOnly = corpus.map((c, i) => Math.max(0, c - cumulative[i]));
@@ -201,14 +209,14 @@ export class ChartManager {
             {
                 label: 'Total Invested',
                 data: cumulative,
-                borderColor: '#6366f1',
+                borderColor: THEME_COLORS.financial.invested,
                 backgroundColor: gradients.invested,
                 borderWidth: 2,
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
                 fill: 'origin',
-                pointBackgroundColor: '#ffffff',
-                pointBorderColor: '#6366f1',
+                pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
+                pointBorderColor: THEME_COLORS.financial.invested,
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
                 order: 2,
@@ -216,7 +224,7 @@ export class ChartManager {
             {
                 label: showWealthMap ? 'Interest Earned' : 'Pre-Tax Corpus',
                 data: showWealthMap ? interestOnly : corpus,
-                borderColor: '#10b981',
+                borderColor: THEME_COLORS.financial.growth,
                 backgroundColor: gradients.corpus,
                 borderWidth: 3,
                 tension: 0.4,
@@ -233,15 +241,15 @@ export class ChartManager {
             {
                 label: 'Post-Tax Corpus',
                 data: postTaxCorpus,
-                borderColor: '#8b5cf6',
+                borderColor: THEME_COLORS.financial.postTax,
                 backgroundColor: gradients.postTax,
                 borderWidth: 2,
                 borderDash: [4, 4],
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
                 fill: 'origin',
-                pointBackgroundColor: '#ffffff',
-                pointBorderColor: '#8b5cf6',
+                pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
+                pointBorderColor: THEME_COLORS.financial.postTax,
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
                 hidden: !showPostTax || showWealthMap,
@@ -253,15 +261,15 @@ export class ChartManager {
             datasets.push({
                 label: 'Annual Withdrawal',
                 data: swp,
-                borderColor: '#f43f5e',
-                backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                borderColor: THEME_COLORS.financial.withdrawal,
+                backgroundColor: THEME_COLORS.chart.swpFillBg,
                 borderWidth: 2,
                 borderDash: [5, 5],
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
                 fill: false,
-                pointBackgroundColor: '#ffffff',
-                pointBorderColor: '#f43f5e',
+                pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
+                pointBorderColor: THEME_COLORS.financial.withdrawal,
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
                 hidden: !enableSwp,
@@ -272,16 +280,16 @@ export class ChartManager {
         if (this.activeBenchmark !== 'none') {
             let rate = 12;
             let label = 'Nifty 50 (12%)';
-            let color = '#f59e0b'; // Amber 500
+            let color: string = THEME_COLORS.financial.milestoneGold;
 
             if (this.activeBenchmark === 'gold') {
                 rate = 9;
                 label = 'Gold (9%)';
-                color = '#eab308';
+                color = THEME_COLORS.financial.milestoneGoldDark;
             } else if (this.activeBenchmark === 'fd') {
                 rate = 6.5;
                 label = 'Fixed Deposit (6.5%)';
-                color = '#64748b';
+                color = THEME_COLORS.slate[500];
             }
 
             const benchmarkData = this.computeBenchmarkCurve(results, rate);
@@ -295,7 +303,7 @@ export class ChartManager {
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
                 fill: false,
-                pointBackgroundColor: '#ffffff',
+                pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
                 pointBorderColor: color,
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
@@ -317,7 +325,7 @@ export class ChartManager {
      */
     setBenchmark(benchmark: 'none' | 'nifty' | 'gold' | 'fd'): void {
         this.activeBenchmark = benchmark;
-        const chips = document.querySelectorAll<HTMLButtonElement>('.benchmark-chip');
+        const chips = this.dom.getElements<HTMLButtonElement>('.benchmark-chip');
         chips.forEach(c => {
             if (c.dataset.benchmark === benchmark) {
                 c.classList.add('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600');
@@ -354,14 +362,14 @@ export class ChartManager {
                 ctx.moveTo(x, topY);
                 ctx.lineTo(x, bottomY);
                 ctx.lineWidth = 1.5;
-                ctx.strokeStyle = 'rgba(16, 185, 129, 0.45)';
+                ctx.strokeStyle = THEME_COLORS.chart.milestoneLineActive;
                 ctx.stroke();
 
                 // Horizontal guide line to Y axis
                 ctx.beginPath();
                 ctx.moveTo(leftX, y);
                 ctx.lineTo(x, y);
-                ctx.strokeStyle = 'rgba(16, 185, 129, 0.3)';
+                ctx.strokeStyle = THEME_COLORS.chart.milestoneLineSubtle;
                 ctx.stroke();
                 ctx.restore();
             }
@@ -400,8 +408,8 @@ export class ChartManager {
         if (this.activeViewType === type) return;
         this.activeViewType = type;
 
-        const lineBtn = document.getElementById('chart-view-line');
-        const donutBtn = document.getElementById('chart-view-donut');
+        const lineBtn = this.dom.getElement('chart-view-line');
+        const donutBtn = this.dom.getElement('chart-view-donut');
         if (lineBtn && donutBtn) {
             if (type === 'line') {
                 lineBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
@@ -470,12 +478,12 @@ export class ChartManager {
         this.lastResults = results;
         this.lastEnableSwp = enableSwp;
 
-        const ctxEl = document.getElementById('corpusChart') as HTMLCanvasElement | null;
+        const ctxEl = this.dom.getElement<HTMLCanvasElement>('corpusChart');
         if (!ctxEl || !document.body.contains(ctxEl)) return;
 
         // Wire view switcher buttons once
-        const lineBtn = document.getElementById('chart-view-line');
-        const donutBtn = document.getElementById('chart-view-donut');
+        const lineBtn = this.dom.getElement('chart-view-line');
+        const donutBtn = this.dom.getElement('chart-view-donut');
         if (lineBtn && !lineBtn.dataset.wired) {
             lineBtn.dataset.wired = 'true';
             lineBtn.addEventListener('click', () => this.setViewType('line'));
@@ -486,7 +494,7 @@ export class ChartManager {
         }
 
         // Wire benchmark comparison chips
-        const benchmarkChips = document.querySelectorAll<HTMLButtonElement>('.benchmark-chip');
+        const benchmarkChips = this.dom.getElements<HTMLButtonElement>('.benchmark-chip');
         benchmarkChips.forEach(chip => {
             if (!chip.dataset.wired) {
                 chip.dataset.wired = 'true';
@@ -511,15 +519,15 @@ export class ChartManager {
         const years = results.map(r => `Yr ${r.year}`);
         const calcApp = document.querySelector<HTMLElement>('[data-js="calculator-app"]');
         const mode = calcApp ? (calcApp.dataset.mode || 'all') : 'all';
-        const showPostTax = (document.getElementById('show_post_tax') as HTMLInputElement | null)?.checked || false;
-        const showWealthMap = (document.getElementById('show_wealth_map') as HTMLInputElement | null)?.checked || false;
+        const showPostTax = this.dom.getElement<HTMLInputElement>('show_post_tax')?.checked || false;
+        const showWealthMap = this.dom.getElement<HTMLInputElement>('show_wealth_map')?.checked || false;
 
         const milestones = this.computeMilestones(results, enableSwp, showPostTax);
         this.currentMilestones = milestones;
 
-        const fontFamily = "'Plus Jakarta Sans', sans-serif";
-        const gridColor = 'rgba(0, 0, 0, 0.05)';
-        const textColor = '#64748b';
+        const fontFamily = THEME_FONTS.heading;
+        const gridColor = THEME_COLORS.chart.gridLine;
+        const textColor = THEME_COLORS.chart.textMuted;
 
         // ── DOUGHNUT VIEW (Asset Allocation Split) ──
         if (this.activeViewType === 'donut') {
@@ -536,12 +544,12 @@ export class ChartManager {
 
             const labels: string[] = ['Total Invested', 'Compounding Gains'];
             const data: number[] = [totalInvested, totalGains];
-            const bgColors: string[] = ['#0f766e', '#10b981'];
+            const bgColors: string[] = [THEME_COLORS.financial.growthDark, THEME_COLORS.financial.growth];
 
             if (totalWithdrawn > 0) {
                 labels.push('Total Withdrawn');
                 data.push(totalWithdrawn);
-                bgColors.push('#f43f5e');
+                bgColors.push(THEME_COLORS.financial.withdrawal);
             }
 
             const donutConfig: ChartConfiguration<'doughnut'> = {
@@ -552,7 +560,7 @@ export class ChartManager {
                         data,
                         backgroundColor: bgColors,
                         borderWidth: 3,
-                        borderColor: '#ffffff',
+                        borderColor: THEME_COLORS.chart.pointBgWhite,
                         hoverOffset: 6
                     }]
                 },
@@ -580,7 +588,7 @@ export class ChartManager {
                             }
                         },
                         tooltip: {
-                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            backgroundColor: THEME_COLORS.chart.tooltipBg,
                             titleFont: { family: fontFamily, size: 13, weight: 'bold' },
                             bodyFont: { family: fontFamily, size: 12 },
                             padding: 12,
@@ -671,19 +679,19 @@ export class ChartManager {
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(15, 23, 42, 0.95)',
-                        titleColor: '#f8fafc',
+                        backgroundColor: THEME_COLORS.chart.tooltipBg,
+                        titleColor: THEME_COLORS.chart.tooltipTitle,
                         titleFont: {
                             family: fontFamily,
                             size: 14,
                             weight: 'bold'
                         },
-                        bodyColor: '#cbd5e1',
+                        bodyColor: THEME_COLORS.chart.tooltipBody,
                         bodyFont: {
                             family: fontFamily,
                             size: 13
                         },
-                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        borderColor: THEME_COLORS.chart.tooltipBorder,
                         borderWidth: 1,
                         padding: 12,
                         boxPadding: 4,
@@ -760,7 +768,7 @@ export class ChartManager {
      * Cross-browser safe celebratory milestone badge renderer.
      */
     renderMilestoneGrid(milestones: Milestone[]): void {
-        const container = document.getElementById('milestones-container');
+        const container = this.dom.getElement('milestones-container');
         if (!container) return;
 
         // Legacy-safe DOM clearance

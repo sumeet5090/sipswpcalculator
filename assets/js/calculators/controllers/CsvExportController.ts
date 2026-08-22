@@ -74,7 +74,8 @@ export class CsvExportController {
                 window.URL.revokeObjectURL(url);
 
                 this.analytics.sendImmediateInsight(inputs, [], 'grow', {
-                    exit_action: 'csv_download'
+                    exit_action: 'csv_download',
+                    csv_exported: 1
                 });
             } catch (err) {
                 console.error('CSV download failed:', err);

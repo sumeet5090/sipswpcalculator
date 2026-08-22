@@ -289,6 +289,38 @@ $testCases = [
         'swp_rate'       => 8.0,
         'ltcg_exemption' => 125000.0,
         'ltcg_tax_rate'  => 0.125
+    ],
+    // Case 19: 40-Year Ultra-Horizon Compounding (₹25k/mo, 10% Stepup, 40 yrs @ 12%)
+    [
+        'type'           => 'sip',
+        'sip'            => 25000.0,
+        'years'          => 40,
+        'rate'           => 12.0,
+        'stepup'         => 10.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 0.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Case 20: 20-Yr Accumulation + 20-Yr SWP Retirement (₹50k/mo SIP -> ₹1.5L/mo SWP)
+    [
+        'type'           => 'sip_swp',
+        'sip'            => 50000.0,
+        'years'          => 20,
+        'rate'           => 13.0,
+        'stepup'         => 8.0,
+        'enable_swp'     => true,
+        'swp_withdrawal' => 150000.0,
+        'swp_stepup'     => 5.0,
+        'swp_years'      => 20,
+        'lumpsum'        => 500000.0,
+        'swp_rate'       => 8.5,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
     ]
 ];
 

@@ -84,13 +84,13 @@ class TemplateDataParityTest extends TestCase
     }
 
     /**
-     * Test that persona blueprints presets are within calculator boundaries.
+     * Test that strategy starter blueprints presets are within calculator boundaries.
      */
     public function testPersonaBlueprintsPresetBounds(): void
     {
-        $personaTwigPath = __DIR__ . '/../../src/Views/components/persona-blueprints.twig';
-        $this->assertFileExists($personaTwigPath);
-        $content = file_get_contents($personaTwigPath);
+        $strategyTwigPath = __DIR__ . '/../../src/Views/components/strategy-starter.twig';
+        $this->assertFileExists($strategyTwigPath);
+        $content = file_get_contents($strategyTwigPath);
         $this->assertIsString($content);
 
         // Check for persona preset attributes in HTML

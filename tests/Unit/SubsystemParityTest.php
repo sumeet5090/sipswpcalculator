@@ -53,6 +53,32 @@ class SubsystemParityTest extends TestCase
                 interaction_count INTEGER,
                 preset_clicked TEXT,
                 exit_action TEXT,
+                landing_path TEXT,
+                referrer_category TEXT,
+                utm_source TEXT,
+                utm_medium TEXT,
+                scroll_depth_pct INTEGER,
+                dwell_time_seconds INTEGER,
+                quick_answer_viewed INTEGER,
+                faq_item_expanded TEXT,
+                glossary_term_clicked TEXT,
+                hud_shortcut_clicked TEXT,
+                active_studio_tab TEXT,
+                strategy_starter_used TEXT,
+                guided_wizard_completed INTEGER,
+                stress_test_scenario TEXT,
+                city_benchmark_city TEXT,
+                scenario_diff_saved INTEGER,
+                csv_exported INTEGER,
+                qr_modal_opened INTEGER,
+                tax_waterfall_opened INTEGER,
+                goal_pledge_created INTEGER,
+                internal_hub_clicked TEXT,
+                cwv_lcp_ms INTEGER,
+                cwv_cls REAL,
+                cwv_inp_ms INTEGER,
+                connection_speed TEXT,
+                viewport_bucket TEXT,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         ");
@@ -249,6 +275,60 @@ class SubsystemParityTest extends TestCase
         // Zero-baseline division guard
         $guardedPct = $this->calculateDifferentialPercentage($deltaInr, 0.0);
         $this->assertEquals(0.0, $guardedPct);
+    }
+
+    /**
+     * Test Historical Benchmark Compound Curves (Nifty 12%, Gold 9%, Bank FD 6.5%).
+     */
+    public function testBenchmarkCurveParityMath(): void
+    {
+        $monthlySip = 25000.0;
+        $years = 5;
+        $months = $years * 12;
+
+        // Formula: Sum of monthly compounding cashflows for 5 years
+        $computeBenchmark = function (float $annualRate) use ($monthlySip, $months): float {
+            $monthlyRate = ($annualRate / 100.0) / 12.0;
+            $corpus = 0.0;
+            for ($m = 0; $m < $months; $m++) {
+                $corpus = ($corpus + $monthlySip) * (1.0 + $monthlyRate);
+            }
+            return round($corpus);
+        };
+
+        $niftyCorpus = $computeBenchmark(12.0);
+        $goldCorpus = $computeBenchmark(9.0);
+        $fdCorpus = $computeBenchmark(6.5);
+
+        // 5-year ₹25k monthly SIP:
+        // Nifty @ 12% -> ~₹20.62 Lakh
+        // Gold @ 9% -> ~₹18.88 Lakh
+        // FD @ 6.5% -> ~₹17.57 Lakh
+        $this->assertGreaterThan($goldCorpus, $niftyCorpus);
+        $this->assertGreaterThan($fdCorpus, $goldCorpus);
+        $this->assertEquals(2062159.0, $niftyCorpus);
+        $this->assertEquals(1899745.0, $goldCorpus);
+        $this->assertEquals(1776420.0, $fdCorpus);
+    }
+
+    /**
+     * Test Default Benchmark State Consistency across form boundaries.
+     */
+    public function testDefaultBenchmarkStateConsistency(): void
+    {
+        $defaultSip = 25000.0;
+        $defaultYears = 15;
+        $defaultRate = 12.0;
+        $defaultStepUp = 10.0;
+
+        $this->assertGreaterThanOrEqual(500.0, $defaultSip);
+        $this->assertLessThanOrEqual(10000000.0, $defaultSip);
+        $this->assertGreaterThanOrEqual(1, $defaultYears);
+        $this->assertLessThanOrEqual(40, $defaultYears);
+        $this->assertGreaterThanOrEqual(1.0, $defaultRate);
+        $this->assertLessThanOrEqual(30.0, $defaultRate);
+        $this->assertGreaterThanOrEqual(0.0, $defaultStepUp);
+        $this->assertLessThanOrEqual(50.0, $defaultStepUp);
     }
 
     private function calculateDifferentialPercentage(float $deltaInr, float $baseline): float

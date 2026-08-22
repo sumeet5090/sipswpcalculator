@@ -35,7 +35,33 @@ readonly class InsightPayload
         public int $inflationEnabled = 0,
         public int $interactionCount = 1,
         public string $presetClicked = 'none',
-        public string $exitAction = 'calc_only'
+        public string $exitAction = 'calc_only',
+        public string $landingPath = '/',
+        public string $referrerCategory = 'direct',
+        public ?string $utmSource = null,
+        public ?string $utmMedium = null,
+        public int $scrollDepthPct = 0,
+        public int $dwellTimeSeconds = 0,
+        public int $quickAnswerViewed = 0,
+        public string $faqItemExpanded = 'none',
+        public string $glossaryTermClicked = 'none',
+        public string $hudShortcutClicked = 'none',
+        public string $activeStudioTab = 'city_benchmark',
+        public string $strategyStarterUsed = 'none',
+        public int $guidedWizardCompleted = 0,
+        public string $stressTestScenario = 'none',
+        public string $cityBenchmarkCity = 'none',
+        public int $scenarioDiffSaved = 0,
+        public int $csvExported = 0,
+        public int $qrModalOpened = 0,
+        public int $taxWaterfallOpened = 0,
+        public int $goalPledgeCreated = 0,
+        public string $internalHubClicked = 'none',
+        public ?int $cwvLcpMs = null,
+        public ?float $cwvCls = null,
+        public ?int $cwvInpMs = null,
+        public ?string $connectionSpeed = null,
+        public ?string $viewportBucket = 'desktop'
     ) {
     }
 
@@ -65,6 +91,32 @@ readonly class InsightPayload
         $presetClicked = self::toStringOrNull($data, 'preset_clicked', 64) ?? 'none';
         $exitAction = self::toStringOrNull($data, 'exit_action', 64) ?? 'calc_only';
 
+        $rawScrollDepth = isset($data['scroll_depth_pct']) && is_numeric($data['scroll_depth_pct'])
+            ? (int) $data['scroll_depth_pct']
+            : 0;
+        $scrollDepthPct = max(0, min(100, $rawScrollDepth));
+
+        $rawDwellTime = isset($data['dwell_time_seconds']) && is_numeric($data['dwell_time_seconds'])
+            ? (int) $data['dwell_time_seconds']
+            : 0;
+        $dwellTimeSeconds = max(0, $rawDwellTime);
+
+        $landingPath = self::toStringOrNull($data, 'landing_path', 128) ?? '/';
+        $referrerCategory = self::toStringOrNull($data, 'referrer_category', 32) ?? 'direct';
+        $utmSource = self::toStringOrNull($data, 'utm_source', 64);
+        $utmMedium = self::toStringOrNull($data, 'utm_medium', 64);
+
+        $faqItemExpanded = self::toStringOrNull($data, 'faq_item_expanded', 64) ?? 'none';
+        $glossaryTermClicked = self::toStringOrNull($data, 'glossary_term_clicked', 64) ?? 'none';
+        $hudShortcutClicked = self::toStringOrNull($data, 'hud_shortcut_clicked', 64) ?? 'none';
+        $activeStudioTab = self::toStringOrNull($data, 'active_studio_tab', 64) ?? 'city_benchmark';
+        $strategyStarterUsed = self::toStringOrNull($data, 'strategy_starter_used', 64) ?? 'none';
+        $stressTestScenario = self::toStringOrNull($data, 'stress_test_scenario', 64) ?? 'none';
+        $cityBenchmarkCity = self::toStringOrNull($data, 'city_benchmark_city', 64) ?? 'none';
+        $internalHubClicked = self::toStringOrNull($data, 'internal_hub_clicked', 64) ?? 'none';
+        $connectionSpeed = self::toStringOrNull($data, 'connection_speed', 16);
+        $viewportBucket = self::toStringOrNull($data, 'viewport_bucket', 32) ?? 'desktop';
+
         return new self(
             calcType: $calcType,
             amount: isset($data['amount']) && is_numeric($data['amount']) ? (float) $data['amount'] : 0.0,
@@ -90,7 +142,33 @@ readonly class InsightPayload
             inflationEnabled: self::toBoolInt($data, 'inflation_enabled'),
             interactionCount: $interactionCount,
             presetClicked: $presetClicked,
-            exitAction: $exitAction
+            exitAction: $exitAction,
+            landingPath: $landingPath,
+            referrerCategory: $referrerCategory,
+            utmSource: $utmSource,
+            utmMedium: $utmMedium,
+            scrollDepthPct: $scrollDepthPct,
+            dwellTimeSeconds: $dwellTimeSeconds,
+            quickAnswerViewed: self::toBoolInt($data, 'quick_answer_viewed'),
+            faqItemExpanded: $faqItemExpanded,
+            glossaryTermClicked: $glossaryTermClicked,
+            hudShortcutClicked: $hudShortcutClicked,
+            activeStudioTab: $activeStudioTab,
+            strategyStarterUsed: $strategyStarterUsed,
+            guidedWizardCompleted: self::toBoolInt($data, 'guided_wizard_completed'),
+            stressTestScenario: $stressTestScenario,
+            cityBenchmarkCity: $cityBenchmarkCity,
+            scenarioDiffSaved: self::toBoolInt($data, 'scenario_diff_saved'),
+            csvExported: self::toBoolInt($data, 'csv_exported'),
+            qrModalOpened: self::toBoolInt($data, 'qr_modal_opened'),
+            taxWaterfallOpened: self::toBoolInt($data, 'tax_waterfall_opened'),
+            goalPledgeCreated: self::toBoolInt($data, 'goal_pledge_created'),
+            internalHubClicked: $internalHubClicked,
+            cwvLcpMs: self::toIntOrNull($data, 'cwv_lcp_ms'),
+            cwvCls: self::toFloatOrNull($data, 'cwv_cls'),
+            cwvInpMs: self::toIntOrNull($data, 'cwv_inp_ms'),
+            connectionSpeed: $connectionSpeed,
+            viewportBucket: $viewportBucket
         );
     }
 

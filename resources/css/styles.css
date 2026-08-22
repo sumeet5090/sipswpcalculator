@@ -1,69 +1,136 @@
 /* styles.css - Refined Fintech Theme (Light Mode) */
 
+/* ── Global Tabular Figures & Numerals Enforcements ── */
+.tabular-nums,
+.numeral-tabular,
+.metric-value,
+.table-numeral,
+input[type="number"],
+input[type="text"].numeral-input {
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+    letter-spacing: -0.015em;
+}
+
 /* ── Remove up/down spinner arrows inside SIP & SWP form number inputs ── */
 .glass-card input[type=number]::-webkit-inner-spin-button,
-.glass-card input[type=number]::-webkit-outer-spin-button {
+.glass-card input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.glass-card input[type=number] {
+.glass-card input[type=number],
+input[type=number] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
 
-/* 1. Reset & Base */
-:root {
-    /* SaaS Premium Gradients (Updated to Emerald/Teal) */
-    --gradient-saas: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #059669 100%);
-    --gradient-saas-card: linear-gradient(135deg, rgba(6, 78, 59, 0.9) 0%, rgba(5, 150, 105, 0.8) 100%);
-    
-    /* Primary Brand Gradient - Logo emerald #059669 */
-    --gradient-primary: linear-gradient(135deg, #059669 0%, #047857 100%);
-
-    /* Semantic Financial Color Tokens */
-    --color-growth: #10b981;      /* Emerald 500 */
-    --color-withdrawal: #f43f5e;  /* Rose 500 */
-    --color-principal: #6366f1;   /* Indigo 500 */
-    --color-tax: #8b5cf6;         /* Violet 500 */
-    --color-gold: #f59e0b;        /* Amber 500 */
-
-    /* Legacy Accents */
-    --color-acc-growth: #10b981;
-    --color-acc-withdraw: #f43f5e;
-
-    /* Base Typography & Surfaces */
-    --color-text-primary: #0f172a;
-    --color-text-secondary: #64748b;
-    --color-border: #e2e8f0;
-    --color-bg: #f8fafc;
-
-    /* Multi-Tier Composite Elevation Tokens */
-    --elevation-flat: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --elevation-card: 0 1px 3px rgba(0,0,0,0.03), 0 8px 24px -4px rgba(0,0,0,0.06);
-    --elevation-floating: 0 4px 6px -1px rgba(0,0,0,0.04), 0 20px 40px -8px rgba(0,0,0,0.10);
-    --elevation-modal: 0 24px 48px -12px rgba(15, 23, 42, 0.25);
-    --shadow-glow: 0 0 20px rgba(5, 150, 105, 0.15);
-
-    /* Glassmorphism & Chiseled Edge Highlights */
-    --glass-bg: rgba(255, 255, 255, 0.92);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.6);
-    --glass-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8), var(--elevation-card);
-
-    /* Spring Motion & Timing Tokens */
-    --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-    --spring-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-    --spring-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);
+/* ── Universal Native <dialog> Centering & Backdrop Styling ── */
+dialog {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    max-height: calc(100vh - 2rem);
+    max-width: calc(100vw - 2rem);
+    z-index: 50;
+    box-sizing: border-box;
 }
 
-.glass-card {
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+dialog::backdrop {
+    background-color: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* 1. Reset & Base Tokens (Tethered to Tailwind v4 @theme SSoT) */
+:root {
+    /* SaaS Premium Gradients (Emerald/Teal) */
+    --gradient-saas: linear-gradient(135deg, var(--color-brand-900, #064e3b) 0%, var(--color-brand-800, #065f46) 50%, var(--color-brand-600, #059669) 100%);
+    --gradient-saas-card: linear-gradient(135deg, rgba(6, 78, 59, 0.9) 0%, rgba(5, 150, 105, 0.8) 100%);
+    
+    /* Primary Brand Gradient */
+    --gradient-primary: linear-gradient(135deg, var(--color-brand-600, #059669) 0%, var(--color-brand-700, #047857) 100%);
+
+    /* Semantic Financial Color Tokens (Aliased to input.css @theme) */
+    --color-growth: var(--color-financial-growth, #047857);
+    --color-withdrawal: var(--color-financial-withdrawal, #be123c);
+    --color-principal: var(--color-financial-principal, #334155);
+    --color-tax: var(--color-financial-tax, #6d28d9);
+    --color-gold: var(--color-financial-gold, #b45309);
+
+    /* Legacy Accents */
+    --color-acc-growth: var(--color-financial-growth, #047857);
+    --color-acc-withdraw: var(--color-financial-withdrawal, #be123c);
+
+    /* Base Typography & Surfaces */
+    --color-text-primary: var(--color-slate-900, #0f172a);
+    --color-text-secondary: var(--color-slate-600, #475569);
+    --color-text-muted: var(--color-slate-400, #94a3b8);
+    --color-border: var(--color-slate-200, #e2e8f0);
+    --color-bg: var(--color-slate-50, #f8fafc);
+
+    /* Multi-Tier Composite Elevation Tokens */
+    --elevation-flat: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --elevation-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px -4px rgba(15, 23, 42, 0.05);
+    --elevation-floating: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 20px 40px -8px rgba(15, 23, 42, 0.08);
+    --elevation-modal: 0 24px 48px -12px rgba(15, 23, 42, 0.18);
+    --shadow-glow: 0 0 20px rgba(5, 150, 105, 0.12);
+
+    /* Glassmorphism & Chiseled Edge Highlights */
+    --glass-bg: rgba(255, 255, 255, 0.96);
+    --glass-border: 1px solid rgba(226, 232, 240, 0.8);
+    --glass-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), var(--elevation-card);
+    --glass-card-bg: rgba(255, 255, 255, 0.96);
+    --glass-card-border: 1px solid rgba(226, 232, 240, 0.8);
+    --glass-card-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), var(--elevation-card);
+
+    /* Spring Motion & Timing Tokens */
+    --spring-bounce: var(--ease-spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
+    --spring-smooth: var(--ease-spring-smooth, cubic-bezier(0.16, 1, 0.3, 1));
+    --spring-snappy: var(--ease-spring-snappy, cubic-bezier(0.2, 0.8, 0.2, 1));
+}
+
+.glass-card,
+.glass-surface-card {
     background-color: var(--glass-bg);
     border: var(--glass-border);
     box-shadow: var(--glass-shadow);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border-radius: 1.5rem;
+    border-radius: 1.25rem;
     background-clip: padding-box;
+}
+
+/* Fluid Metric Headline Clamping */
+.fluid-metric-headline {
+    font-size: clamp(1.75rem, 1.25rem + 2.25vw, 2.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+    color: var(--color-text-primary);
+}
+
+/* Micro-Interaction Recalculation Pulse */
+@keyframes ambientPulse {
+    0% {
+        background-color: rgba(16, 185, 129, 0.08);
+        border-color: rgba(16, 185, 129, 0.3);
+    }
+    100% {
+        background-color: var(--glass-bg);
+        border-color: rgba(226, 232, 240, 0.8);
+    }
+}
+
+.metric-pulse-active {
+    animation: ambientPulse 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Specular Shimmer Sweep Effect */
@@ -450,9 +517,9 @@ label {
     padding: 0.75rem 1.5rem;
     font-weight: 600;
     font-size: 1rem;
-    color: #475569;
+    color: var(--color-slate-600, #475569);
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200, #e2e8f0);
     border-radius: 0.5rem;
     cursor: pointer;
     box-shadow: var(--shadow-sm);
@@ -460,9 +527,9 @@ label {
 }
 
 .btn-secondary:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
-    color: #1e293b;
+    background: var(--color-slate-50, #f8fafc);
+    border-color: var(--color-slate-300, #cbd5e1);
+    color: var(--color-slate-800, #1e293b);
 }
 
 
@@ -470,7 +537,7 @@ label {
 .table-container {
     overflow-x: auto;
     margin: 2rem 0;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-slate-200, #e2e8f0);
     border-radius: 0.5rem;
     box-shadow: none;
 }
@@ -483,24 +550,24 @@ table {
 }
 
 th {
-    background: #f8fafc;
-    color: #475569;
+    background: var(--color-slate-50, #f8fafc);
+    color: var(--color-slate-600, #475569);
     font-size: 0.875rem;
     font-weight: 600;
     padding: 0.875rem 1rem;
     text-align: left;
-    border-bottom: 1px solid #cbd5e1;
+    border-bottom: 1px solid var(--color-slate-300, #cbd5e1);
 }
 
 td {
     padding: 0.875rem 1rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--color-slate-200, #e2e8f0);
     font-size: 0.875rem;
-    color: #334155;
+    color: var(--color-slate-700, #334155);
 }
 
 tr:nth-child(even) td {
-    background-color: #f8fafc;
+    background-color: var(--color-slate-50, #f8fafc);
 }
 
 tr:last-child td {
@@ -508,7 +575,7 @@ tr:last-child td {
 }
 
 tr:hover td {
-    background-color: #f1f5f9;
+    background-color: var(--color-slate-100, #f1f5f9);
 }
 
 /* Utility */
@@ -606,7 +673,7 @@ input[type=range] {
     appearance: none;
     width: 100%;
     height: 6px;
-    background: linear-gradient(to right, #10b981 0%, #059669 var(--range-progress, 0%), #e2e8f0 var(--range-progress, 0%), #e2e8f0 100%);
+    background: linear-gradient(to right, var(--color-brand-500, #10b981) 0%, var(--color-brand-600, #059669) var(--range-progress, 0%), var(--color-slate-200, #e2e8f0) var(--range-progress, 0%), var(--color-slate-200, #e2e8f0) 100%);
     border-radius: 9999px;
     margin: 10px 0;
     outline: none;
@@ -615,7 +682,7 @@ input[type=range] {
 
 input[type=range].accent-rose-500,
 input[type=range].accent-rose-600 {
-    background: linear-gradient(to right, #f43f5e 0%, #e11d48 var(--range-progress, 0%), #e2e8f0 var(--range-progress, 0%), #e2e8f0 100%);
+    background: linear-gradient(to right, var(--color-financial-withdrawal, #f43f5e) 0%, var(--color-financial-withdrawal-dark, #be123c) var(--range-progress, 0%), var(--color-slate-200, #e2e8f0) var(--range-progress, 0%), var(--color-slate-200, #e2e8f0) 100%);
 }
 
 /* Webkit Thumb */
@@ -625,7 +692,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 18px;
     width: 18px;
     border-radius: 50%;
-    background: #059669;
+    background: var(--color-brand-600, #059669);
     border: 2.5px solid #ffffff;
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(16, 185, 129, 0.2);
@@ -639,7 +706,7 @@ input[type=range]:hover::-webkit-slider-thumb {
 
 input[type=range]:active::-webkit-slider-thumb {
     transform: scale(1.28);
-    background: #047857;
+    background: var(--color-brand-700, #047857);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 0 7px rgba(16, 185, 129, 0.35);
 }
 
@@ -648,7 +715,7 @@ input[type=range]::-moz-range-thumb {
     height: 18px;
     width: 18px;
     border-radius: 50%;
-    background: #059669;
+    background: var(--color-brand-600, #059669);
     border: 2.5px solid #ffffff;
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(16, 185, 129, 0.2);
@@ -662,7 +729,7 @@ input[type=range]:hover::-moz-range-thumb {
 
 input[type=range]:active::-moz-range-thumb {
     transform: scale(1.28);
-    background: #047857;
+    background: var(--color-brand-700, #047857);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 0 7px rgba(16, 185, 129, 0.35);
 }
 
@@ -1121,49 +1188,47 @@ input[type=range]::-moz-range-track {
 
 /* ── Immersive Article Reading Interface ── */
 .prose {
-    font-size: 1.05rem;
-    color: #334155 !important; /* slate-700 */
-    line-height: 1.85 !important;
+    font-size: 1rem;
+    color: var(--color-slate-700, #334155);
+    line-height: 1.75;
 }
 
 .prose p {
-    margin-bottom: 1.75rem !important;
-    text-align: justify;
-    text-justify: inter-word;
+    margin-bottom: 1.25rem;
 }
 
 .prose h2 {
-    font-size: 1.85rem !important;
-    font-weight: 800 !important;
-    color: #0f172a !important; /* slate-900 */
-    margin-top: 3rem !important;
-    margin-bottom: 1.25rem !important;
-    letter-spacing: -0.025em !important;
-    border-bottom: 1px solid #f1f5f9;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-slate-900, #0f172a);
+    margin-top: 2.25rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    border-bottom: 1px solid var(--color-slate-100, #f1f5f9);
     padding-bottom: 0.5rem;
 }
 
 .prose h3 {
-    font-size: 1.4rem !important;
-    font-weight: 800 !important;
-    color: #1e293b !important; /* slate-800 */
-    margin-top: 2.25rem !important;
-    margin-bottom: 0.75rem !important;
-    letter-spacing: -0.02em !important;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-slate-800, #1e293b);
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.015em;
 }
 
 .prose ul, .prose ol {
-    margin-top: 0.5rem !important;
-    margin-bottom: 1.75rem !important;
-    padding-left: 1.75rem !important;
+    margin-top: 0.5rem;
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
 }
 
 .prose li {
-    margin-bottom: 0.65rem !important;
+    margin-bottom: 0.5rem;
 }
 
 .prose li strong {
-    color: #0f172a !important;
+    color: var(--color-slate-900, #0f172a);
 }
 
 /* Category-specific quotes, custom icons & highlights */
@@ -1294,6 +1359,52 @@ input[type=range]::-moz-range-track {
     );
     animation: specular-sweep 6s infinite ease-in-out;
     pointer-events: none;
+}
+
+/* ── Light-Mode Ambient Aurora & Specular System ── */
+.light-aurora-glow {
+    position: relative;
+    background: radial-gradient(120% 120% at 50% -20%, rgba(16, 185, 129, 0.08) 0%, rgba(20, 184, 166, 0.05) 40%, rgba(248, 250, 252, 0) 100%);
+}
+
+.light-specular-border {
+    position: relative;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04), inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
+}
+
+/* ── Floating Range Slider Thumb Tooltip ── */
+.slider-floating-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.9);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    padding: 2px 8px;
+    border-radius: 8px;
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 30;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.slider-floating-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 4px;
+    border-style: solid;
+    border-color: rgba(15, 23, 42, 0.9) transparent transparent transparent;
+}
+
+.slider-floating-tooltip.is-active {
+    opacity: 1;
 }
 
 /* ── Accessibility: Respect user motion preferences (WCAG 2.2) ── */

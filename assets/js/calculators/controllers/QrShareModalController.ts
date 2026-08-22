@@ -1,11 +1,23 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { ModalScrollLockHelper } from '../helpers/ModalScrollLockHelper';
+import { QrCodeGenerator } from '../../utils/QrCodeGenerator';
+import { InvestmentInputs } from '../../types';
+
+import { THEME_COLORS } from '../constants/ThemeTokens.ts';
 
 export class QrShareModalController {
     private dom: DOMAdapter;
+    private getInputs?: () => InvestmentInputs;
+    private onOpen?: () => void;
 
-    constructor(dom: DOMAdapter = new DOMAdapter()) {
+    constructor(
+        dom: DOMAdapter = new DOMAdapter(),
+        getInputs?: () => InvestmentInputs,
+        onOpen?: () => void
+    ) {
         this.dom = dom;
+        this.getInputs = getInputs;
+        this.onOpen = onOpen;
     }
 
     init(): void {
@@ -15,7 +27,10 @@ export class QrShareModalController {
         const copyBtn = this.dom.getElement('copy-qr-url-btn');
 
         openBtns.forEach(btn => {
-            btn.addEventListener('click', () => this.openModal(btn));
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openModal(btn);
+            });
         });
 
         if (closeBtn && modal) {
@@ -43,6 +58,76 @@ export class QrShareModalController {
         });
     }
 
+    /**
+     * Compute full permalink URL with current live calculator inputs.
+     */
+    public buildShareUrl(): string {
+        if (!this.getInputs) {
+            return window.location.href;
+        }
+
+        try {
+            const inputs = this.getInputs();
+            const params = new URLSearchParams();
+            const appEl = this.dom.getElement('calculator-app');
+            const isSwpMode = (appEl?.dataset?.mode === 'swp');
+
+            if (inputs.sip !== undefined) params.set('sip', String(inputs.sip));
+            if (inputs.years !== undefined) params.set('years', String(inputs.years));
+            if (inputs.rate !== undefined) params.set('rate', String(inputs.rate));
+            if (inputs.stepup !== undefined) params.set('stepup', String(inputs.stepup));
+
+            if (isSwpMode) {
+                if (inputs.lumpsum !== undefined) params.set('corpus', String(inputs.lumpsum));
+            } else {
+                if (inputs.lumpsum !== undefined) params.set('lumpsum', String(inputs.lumpsum));
+            }
+
+            if (inputs.inflation && inputs.inflation > 0) {
+                params.set('inflation', String(inputs.inflation));
+            }
+
+            const curVal = this.dom.getValue('currency') || 'INR';
+            if (curVal !== 'INR') {
+                params.set('cur', curVal);
+            }
+
+            const targetCorpusVal = this.dom.getValue('target_corpus');
+            const goalTargetBtn = this.dom.getElement('goal-target');
+            if (goalTargetBtn && goalTargetBtn.getAttribute('aria-checked') === 'true') {
+                params.set('goal_mode', 'target');
+                if (targetCorpusVal) {
+                    params.set('target_corpus', String(targetCorpusVal));
+                }
+            }
+
+            const postTaxToggle = this.dom.getElement<HTMLInputElement>('show_post_tax');
+            if (postTaxToggle?.checked) {
+                params.set('post_tax', '1');
+            }
+
+            const wealthMapToggle = this.dom.getElement<HTMLInputElement>('show_wealth_map');
+            if (wealthMapToggle?.checked) {
+                params.set('wealth_map', '1');
+            }
+
+            if (inputs.enable_swp) {
+                params.set('swp_on', '1');
+                if (inputs.swp_withdrawal) params.set('swp', String(inputs.swp_withdrawal));
+                if (inputs.swp_years) params.set('swp_years', String(inputs.swp_years));
+                if (inputs.swp_stepup) params.set('swp_stepup', String(inputs.swp_stepup));
+                if (inputs.swp_rate) params.set('swp_rate', String(inputs.swp_rate));
+            }
+
+            const queryString = params.toString();
+            return queryString
+                ? `${window.location.origin}${window.location.pathname}?${queryString}`
+                : `${window.location.origin}${window.location.pathname}`;
+        } catch {
+            return window.location.href;
+        }
+    }
+
     openModal(triggerElement?: HTMLElement): void {
         const modal = this.dom.getElement('qr-share-modal');
         const container = this.dom.getElement('qr-code-canvas-container');
@@ -50,16 +135,23 @@ export class QrShareModalController {
 
         if (!modal || !container) return;
 
-        const currentUrl = window.location.href;
+        const shareUrl = this.buildShareUrl();
         if (urlInput) {
-            urlInput.value = currentUrl;
+            urlInput.value = shareUrl;
         }
 
-        // Generate QR code on canvas
-        this.renderQrCode(container, currentUrl);
+        // Generate authentic, scannable QR code on canvas
+        container.innerHTML = '';
+        const canvas = document.createElement('canvas');
+        canvas.className = 'w-full h-full rounded-lg shadow-2xs';
+        canvas.style.imageRendering = 'pixelated';
+        container.appendChild(canvas);
+
+        QrCodeGenerator.renderToCanvas(canvas, shareUrl, THEME_COLORS.slate[900], THEME_COLORS.chart.pointBgWhite);
 
         modal.classList.remove('hidden');
         ModalScrollLockHelper.lock(triggerElement);
+        this.onOpen?.();
     }
 
     closeModal(): void {
@@ -75,14 +167,14 @@ export class QrShareModalController {
     private copyUrl(): void {
         const urlInput = this.dom.getElement<HTMLInputElement>('qr-share-url-input');
         const copyBtn = this.dom.getElement('copy-qr-url-btn');
-        const text = urlInput?.value || window.location.href;
+        const text = urlInput?.value || this.buildShareUrl();
 
         const onCopySuccess = () => {
             if (copyBtn) {
                 if (this.copyTimeoutId) {
                     clearTimeout(this.copyTimeoutId);
                 }
-                const original = '<span>📋 Copy Link</span>';
+                const original = '<span>📋 Copy</span>';
                 copyBtn.innerHTML = '<span>✓ Copied!</span>';
                 this.copyTimeoutId = setTimeout(() => {
                     copyBtn.innerHTML = original;
@@ -93,85 +185,10 @@ export class QrShareModalController {
 
         if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
             navigator.clipboard.writeText(text).then(onCopySuccess).catch(() => {
-                onCopySuccess();
+                this.dom.copyToClipboard(text, onCopySuccess);
             });
         } else {
-            onCopySuccess();
+            this.dom.copyToClipboard(text, onCopySuccess);
         }
-    }
-
-    /**
-     * Renders a high-contrast QR Code directly using a canvas element.
-     */
-    private renderQrCode(container: HTMLElement, data: string): void {
-        container.innerHTML = '';
-
-        const canvas = document.createElement('canvas');
-        canvas.width = 200;
-        canvas.height = 200;
-        canvas.className = 'w-full h-full rounded-lg';
-        canvas.style.imageRendering = 'pixelated';
-        container.appendChild(canvas);
-
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        // Render crisp visual placeholder QR pattern
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, 200, 200);
-
-        // Generate deterministic pattern based on URL string
-        const size = 25; // 25x25 grid
-        const cellSize = 8; // exact 8px cells (25 * 8 = 200)
-        ctx.fillStyle = '#0f172a';
-
-        // Draw 3 corner position markers (Standard QR Markers)
-        this.drawPositionMarker(ctx, 0, 0, cellSize);
-        this.drawPositionMarker(ctx, (size - 7) * cellSize, 0, cellSize);
-        this.drawPositionMarker(ctx, 0, (size - 7) * cellSize, cellSize);
-
-        // Hash data to populate inner data cells
-        let hash = 0;
-        for (let i = 0; i < data.length; i++) {
-            hash = ((hash << 5) - hash) + data.charCodeAt(i);
-            hash |= 0;
-        }
-
-        for (let r = 0; r < size; r++) {
-            for (let c = 0; c < size; c++) {
-                // Skip corner finder patterns
-                if ((r < 8 && c < 8) || (r < 8 && c >= size - 8) || (r >= size - 8 && c < 8)) {
-                    continue;
-                }
-
-                // Timing patterns
-                if (r === 6 || c === 6) {
-                    if ((r + c) % 2 === 0) {
-                        ctx.fillRect(c * cellSize, r * cellSize, cellSize - 0.5, cellSize - 0.5);
-                    }
-                    continue;
-                }
-
-                // Pseudo-random deterministic module based on data and coordinates
-                const pseudo = Math.abs(Math.sin(hash + r * 31 + c * 17) * 10000);
-                if (pseudo - Math.floor(pseudo) > 0.45) {
-                    ctx.fillRect(c * cellSize, r * cellSize, cellSize - 0.5, cellSize - 0.5);
-                }
-            }
-        }
-    }
-
-    private drawPositionMarker(ctx: CanvasRenderingContext2D, x: number, y: number, cellSize: number): void {
-        // Outer 7x7 box
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(x, y, 7 * cellSize, 7 * cellSize);
-
-        // Inner 5x5 white box
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(x + cellSize, y + cellSize, 5 * cellSize, 5 * cellSize);
-
-        // Center 3x3 black box
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(x + 2 * cellSize, y + 2 * cellSize, 3 * cellSize, 3 * cellSize);
     }
 }
