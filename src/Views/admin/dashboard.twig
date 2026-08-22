@@ -51,8 +51,8 @@
     } %}
 </div>
 
-<!-- KPI Stats Row 2 (Advanced Privacy & B2B Signals) -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<!-- KPI Stats Row 2 (Advanced Privacy, SEO & Intent Signals) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
     {% include 'admin/components/stat_card.twig' with {
         title: 'B2B Advisor Rate',
         value: b2bAdvisorRate ~ '%',
@@ -62,13 +62,25 @@
     {% include 'admin/components/stat_card.twig' with {
         title: 'Inflation Adjusted',
         value: inflationRate ~ '%',
-        subtitle: 'Calculations considering inflation'
+        subtitle: 'Calculations with inflation toggle'
     } %}
     
     {% include 'admin/components/stat_card.twig' with {
         title: 'Avg Scenario Iterations',
         value: avgIterations,
         subtitle: 'Input adjustments per session'
+    } %}
+
+    {% include 'admin/components/stat_card.twig' with {
+        title: 'Avg Scroll Depth',
+        value: avgScrollDepth ~ '%',
+        subtitle: 'Editorial content reading depth'
+    } %}
+
+    {% include 'admin/components/stat_card.twig' with {
+        title: 'Avg Dwell Time',
+        value: avgDwellTime ~ 's',
+        subtitle: 'Active user engagement time'
     } %}
 </div>
 
@@ -80,6 +92,24 @@
         canvas_id: 'volumeChart'
     } %}
     
+    {% include 'admin/components/chart_card.twig' with {
+        title: 'Search & Traffic Attribution',
+        description: 'Organic search engines, AI search, social, and direct referral distribution.',
+        canvas_id: 'referrerChart'
+    } %}
+
+    {% include 'admin/components/chart_card.twig' with {
+        title: 'Interactive Studio Modules',
+        description: 'User engagement across City FIRE, Amortization Table, Roadmap, and Stress-Test.',
+        canvas_id: 'studioTabChart'
+    } %}
+
+    {% include 'admin/components/chart_card.twig' with {
+        title: '1-Click Strategy Blueprints',
+        description: 'Adoption rate of preset financial goals (First ₹1 Cr, FIRE, Education).',
+        canvas_id: 'strategyStarterChart'
+    } %}
+
     {% include 'admin/components/chart_card.twig' with {
         title: 'Device Form Factor',
         description: 'Mobile vs Desktop usage split. Guides UX optimization priorities.',
@@ -155,7 +185,91 @@
         });
     }
 
-    // 2. Device Form Factor Doughnut Chart
+    // 2. Search & Referrer Distribution Doughnut
+    const referrerEl = document.getElementById('referrerChart');
+    if (referrerEl) {
+        const refData = {{ referrerData|raw }};
+        const refTotal = (refData || []).reduce((a, b) => a + b, 0);
+        const hasRefData = refTotal > 0;
+
+        new Chart(referrerEl, {
+            type: 'doughnut',
+            data: {
+                labels: hasRefData ? {{ referrerLabels|raw }} : ['Direct / None'],
+                datasets: [{
+                    data: hasRefData ? refData : [1],
+                    backgroundColor: hasRefData
+                        ? ['#059669', '#0284c7', '#8b5cf6', '#f59e0b', '#ec4899', '#64748b']
+                        : ['#e2e8f0'],
+                    borderWidth: 0,
+                    hoverOffset: hasRefData ? 4 : 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    ...commonPlugins,
+                    tooltip: { enabled: hasRefData }
+                },
+                cutout: '65%'
+            }
+        });
+    }
+
+    // 3. Interactive Studio Modules Bar Chart
+    const studioTabEl = document.getElementById('studioTabChart');
+    if (studioTabEl) {
+        new Chart(studioTabEl, {
+            type: 'bar',
+            data: {
+                labels: {{ studioTabLabels|raw }},
+                datasets: [{
+                    label: 'Views',
+                    data: {{ studioTabData|raw }},
+                    backgroundColor: '#0d9488', // Teal 600
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: commonPlugins,
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(226, 232, 240, 0.8)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    // 4. Strategy Starter Presets Bar Chart
+    const strategyStarterEl = document.getElementById('strategyStarterChart');
+    if (strategyStarterEl) {
+        new Chart(strategyStarterEl, {
+            type: 'bar',
+            data: {
+                labels: {{ strategyStarterLabels|raw }},
+                datasets: [{
+                    label: 'Preset Clicks',
+                    data: {{ strategyStarterData|raw }},
+                    backgroundColor: '#6366f1', // Indigo 500
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: commonPlugins,
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(226, 232, 240, 0.8)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    // 5. Device Form Factor Doughnut Chart
     const deviceEl = document.getElementById('deviceChart');
     if (deviceEl) {
         const deviceData = {{ deviceData|raw }};
@@ -187,7 +301,7 @@
         });
     }
 
-    // 3. Goal Mode Bar Chart
+    // 6. Goal Mode Bar Chart
     const goalModeEl = document.getElementById('goalModeChart');
     if (goalModeEl) {
         new Chart(goalModeEl, {
@@ -213,7 +327,7 @@
         });
     }
 
-    // 4. SIP Type Doughnut Chart
+    // 7. SIP Type Doughnut Chart
     const stepUpEl = document.getElementById('stepUpChart');
     if (stepUpEl) {
         const stepUpData = {{ stepUpDoughnutData|raw }};
@@ -245,7 +359,7 @@
         });
     }
 
-    // 5. Duration Histogram
+    // 8. Duration Histogram
     const durationEl = document.getElementById('durationChart');
     if (durationEl) {
         new Chart(durationEl, {
@@ -271,7 +385,7 @@
         });
     }
 
-    // 6. Ambition Index Bar Chart
+    // 9. Ambition Index Bar Chart
     const ambitionEl = document.getElementById('ambitionChart');
     if (ambitionEl) {
         new Chart(ambitionEl, {

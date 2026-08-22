@@ -40,6 +40,14 @@ class AdminDashboardPresenter
             $currencyColors[] = $currencyColorMap[$c] ?? 'rgba(13, 148, 136, 0.85)'; // Teal 600
         }
 
+        $referrerDist = $stats['referrerDist'] ?? [];
+        $studioTabDist = $stats['studioTabDist'] ?? [];
+        $strategyStarterDist = $stats['strategyStarterDist'] ?? [];
+
+        $formatLabel = static function (string $val): string {
+            return ucwords(str_replace(['_', '-'], ' ', $val));
+        };
+
         return [
             // KPI Scalars
             'totalCalculations'   => $stats['totalCalculations'] ?? 0,
@@ -52,6 +60,8 @@ class AdminDashboardPresenter
             'b2bAdvisorRate'      => number_format((float) ($stats['b2bAdvisorRate'] ?? 0), 1),
             'inflationRate'       => number_format((float) ($stats['inflationRate'] ?? 0), 1),
             'avgIterations'       => number_format((float) ($stats['avgIterations'] ?? 1.0), 1),
+            'avgScrollDepth'      => number_format((float) ($stats['avgScrollDepth'] ?? 0), 1),
+            'avgDwellTime'        => (int) round((float) ($stats['avgDwellTime'] ?? 0)),
 
             // Chart.js JSON Payloads
             'volumeLabels'       => $this->encodeJson(array_column($dailyVolume, 'day')),
@@ -74,6 +84,15 @@ class AdminDashboardPresenter
 
             'goalModeLabels'     => $this->encodeJson(array_map('ucfirst', array_column($stats['goalModeDist'] ?? [], 'mode'))),
             'goalModeData'       => $this->encodeJson(array_map('intval', array_column($stats['goalModeDist'] ?? [], 'cnt'))),
+
+            'referrerLabels'     => $this->encodeJson(array_map($formatLabel, array_column($referrerDist, 'ref'))),
+            'referrerData'       => $this->encodeJson(array_map('intval', array_column($referrerDist, 'cnt'))),
+
+            'studioTabLabels'    => $this->encodeJson(array_map($formatLabel, array_column($studioTabDist, 'tab'))),
+            'studioTabData'      => $this->encodeJson(array_map('intval', array_column($studioTabDist, 'cnt'))),
+
+            'strategyStarterLabels' => $this->encodeJson(array_map($formatLabel, array_column($strategyStarterDist, 'preset'))),
+            'strategyStarterData'   => $this->encodeJson(array_map('intval', array_column($strategyStarterDist, 'cnt'))),
         ];
     }
 
