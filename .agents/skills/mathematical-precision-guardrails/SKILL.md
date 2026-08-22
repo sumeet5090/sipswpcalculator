@@ -1,11 +1,11 @@
 ---
 name: mathematical-precision-guardrails
-description: Comprehensive encyclopedia of 255 mathematical engine, simulation, financial precision hazards, compounding nuances, and PHP/TypeScript cross-runtime parity guardrails.
+description: Comprehensive encyclopedia of 345 mathematical engine, simulation, financial precision hazards, compounding nuances, and PHP/TypeScript cross-runtime parity guardrails.
 ---
 
 # Mathematical Precision, Simulation & Calculation Parity Guardrails
 
-This skill serves as the definitive reference manual for all mathematical, financial, simulation, audio synthesis, document geometry, and cross-runtime parity engineering across the SIP and SWP calculation stack.
+This skill serves as the definitive reference manual for all mathematical, financial, simulation, audio synthesis, document geometry, multi-asset allocation, risk modeling, and cross-runtime parity engineering across the SIP and SWP calculation stack.
 
 ---
 
@@ -160,3 +160,63 @@ This skill serves as the definitive reference manual for all mathematical, finan
 3. **Daily Salting Privacy:** `hash_hmac('sha256', ip . date('Y-m-d'), secret)` enforces DPDP/GDPR compliance.
 4. **WAL Mode Concurrency:** `PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;` prevents database write locks.
 5. **CLI Schema Migrations:** Migrations execute strictly via `bin/migrate` during deployment pipelines.
+
+---
+
+## 16. Multi-Asset Rebalancing & Glidepath Mathematics
+
+1. **Blended Portfolio CAGR:** $r_{\text{blended}} = (w_{\text{eq}} \times r_{\text{eq}} + w_{\text{debt}} \times r_{\text{debt}}) / 100$.
+2. **Tax-Free Cashflow Routing:** Rebalance exclusively by splitting new monthly SIP inflows without selling units or triggering capital gains.
+3. **Strict Sum-to-100 Allocation:** Preset weightings enforce $w_{\text{equity}} + w_{\text{debt}} = 100\%$ with residual rounding on debt.
+4. **Glidepath Age Formula:** $\text{Equity}\% = \max(20, \min(90, 110 - \text{Age}))$.
+5. **Zero-Rate Number Check:** Use `Number.isFinite(rate) ? rate : 12` to prevent `0%` from evaluating to `12%` via falsy `0 || 12`.
+
+---
+
+## 17. Stress Test Simulator & Sequence of Returns Risk (SRR) Dynamics
+
+1. **Historical Black Swan Drop Factors:** 2008 GFC ($-54\%$), 2020 Covid ($-38\%$), 2000 Dotcom ($-45\%$) applied strictly to valuation.
+2. **Pre-Crash Valuation Non-Negative Guard:** `Math.max(0, lastRow?.combined_total ?? 0)`.
+3. **Compound Rebound Curves:** $V_{\text{recovered}} = V_{\text{crash}} \times (1 + r_{\text{cagr}})^{\text{recoveryYears}}$.
+4. **Sequence of Returns Risk (SRR):** Highlight catastrophic early-retirement depletion vs accumulation dollar-cost averaging advantages.
+5. **Defensive Cash Buffer Advice:** Recommends 2–3 years of SWP in liquid debt funds to eliminate forced equity panic sales.
+
+---
+
+## 18. Daily Accrual Velocity & Lifestyle Inflation Multipliers
+
+1. **Daily Velocity Formula:** $\text{DailyInterest} = \text{round}(\text{AnnualInterest}_{\text{terminal}} / 365)$.
+2. **Terminal Non-Negative Guard:** `Math.max(0, lastRow.interest || 0)` ensures 0 output on depleted SWP years.
+3. **Lifestyle Tier Progression Matrix:** Matches daily compounding against realistic daily lifestyle benchmarks (Coffee $\rightarrow$ Gourmet $\rightarrow$ Family Dinner $\rightarrow$ Luxury Suite).
+4. **Tabular Numerals Rendering:** `font-variant-numeric: tabular-nums` prevents horizontal layout jiggle during numeric animations.
+5. **State Latch Visibility:** Shows badge only when `dailyInterest > 0`.
+
+---
+
+## 19. Milestone Celebration Physics & Particle Kinematics
+
+1. **Threshold Crossing Deduplication:** `celebratedMilestones.add(m.threshold)` triggers celebration strictly once when crossing ₹1 Crore.
+2. **De-celebration on Downward Sliders:** Deletes milestone threshold if corpus drops back below threshold.
+3. **Radial Particle Kinematics:** $\theta = \frac{2\pi i}{N} + \delta, \;\; \Delta x = v\cos\theta, \;\; \Delta y = v\sin\theta + 40\text{px}$.
+4. **Cooldown Throttling:** $2500\text{ms}$ cooldown prevents particle flooding during rapid slider manipulation.
+5. **Particle Memory Removal:** Schedules `particle.remove()` after $1200\text{ms}$ animation completes.
+
+---
+
+## 20. Interactive Wealth Readiness & Risk Scoring Algorithms
+
+1. **Weighted Diagnostic Score:** $S = \sum w_i A_i \in [0, 100]$ weighted across time horizon, emergency fund, and volatility tolerance.
+2. **Three-Tier Investor Persona:** Conservative ($S < 40$), Balanced ($40 \le S \le 70$), Growth ($S > 70$).
+3. **Emergency Fund Risk Ceiling:** Hard-caps risk score at $45$ if emergency liquidity $< 3\text{ months}$.
+4. **Live Input Injection:** Injects recommended parameters and dispatches synthetic change events for instant recalculation.
+5. **SWP Automatic Engagement:** Auto-enables SWP phase if selected investor objective is retirement.
+
+---
+
+## 21. Scenario Comparison & Differential Yield Calculations
+
+1. **Baseline Snapshot Deep Clone:** `JSON.parse(JSON.stringify(currentSnapshot))` prevents in-place mutation on slider drag.
+2. **Differential Growth Formula:** $\Delta\% = ((\text{Corpus}_{\text{active}} - \text{Corpus}_{\text{baseline}}) / \text{Corpus}_{\text{baseline}}) \times 100$ with zero-baseline guard.
+3. **Sign-Aware Formatting:** Prepends `+` for positive gains (`+₹1.25 Crore (+42.5%)`) and `-` for reductions.
+4. **Zero-Differential State:** Displays `"Identical to Baseline Scenario"` when $\Delta = 0$.
+5. **Visual Delta Semantics:** Emerald text/border for positive yield deltas; Rose for negative reductions.

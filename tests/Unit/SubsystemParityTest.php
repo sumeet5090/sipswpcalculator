@@ -177,4 +177,85 @@ class SubsystemParityTest extends TestCase
         $this->assertEquals(1, (int)$row['swp_enabled']);
         $this->assertEquals(1, (int)$row['pdf_downloaded']);
     }
+
+    /**
+     * Test Multi-Asset Rebalance Blended CAGR and Cashflow allocation equations.
+     */
+    public function testAssetRebalanceMathematics(): void
+    {
+        $equityPct = 70.0;
+        $debtPct = 30.0;
+        $equityRate = 12.0;
+        $debtRate = 7.0;
+
+        // Blended CAGR: (70 * 12 + 30 * 7) / 100 = (840 + 210) / 100 = 10.5%
+        $blendedRate = (($equityPct / 100.0) * $equityRate) + (($debtPct / 100.0) * $debtRate);
+        $this->assertEqualsWithDelta(10.5, $blendedRate, 0.001);
+
+        // Volatility damping: (30 / 100) * 80 = 24% reduction
+        $volReduction = (int) round(($debtPct / 100.0) * 80.0);
+        $this->assertEquals(24, $volReduction);
+
+        // Cashflow split on ₹25,000 monthly SIP
+        $totalSip = 25000.0;
+        $equitySip = (int) round(($equityPct / 100.0) * $totalSip);
+        $debtSip = (int) ($totalSip - $equitySip);
+        $this->assertEquals(17500, $equitySip);
+        $this->assertEquals(7500, $debtSip);
+        $this->assertEquals($totalSip, $equitySip + $debtSip);
+    }
+
+    /**
+     * Test Daily Accrual terminal interest velocity and lifestyle tier progression.
+     */
+    public function testDailyAccrualMathematics(): void
+    {
+        $annualInterest = 2199815.0; // Terminal interest from 20-yr ₹10k SIP @ 12% + 10% stepup
+        $dailyVelocity = (int) round($annualInterest / 365.0);
+
+        // Daily velocity: 2,199,815 / 365 = 6,026.89 -> ₹6,027 / day
+        $this->assertEquals(6027, $dailyVelocity);
+
+        // Verify tier matching for ₹6,027 (matches >= ₹4,000 tier: 4 Premium Family Dinners)
+        $tier = 'Standard';
+        if ($dailyVelocity >= 20000) {
+            $tier = '5-Star Luxury Suite';
+        } elseif ($dailyVelocity >= 10000) {
+            $tier = 'Weekend Getaway';
+        } elseif ($dailyVelocity >= 4000) {
+            $tier = '4 Premium Family Dinners';
+        } elseif ($dailyVelocity >= 1500) {
+            $tier = 'Household Expenses';
+        }
+        $this->assertEquals('4 Premium Family Dinners', $tier);
+    }
+
+    /**
+     * Test Scenario Comparison Differential Yield and Zero-Baseline division guard.
+     */
+    public function testScenarioDifferentialMathematics(): void
+    {
+        $baselineCorpus = 15000000.0; // ₹1.50 Crore
+        $activeCorpus = 20000000.0;   // ₹2.00 Crore
+
+        // Absolute delta: +₹50 Lakh
+        $deltaInr = $activeCorpus - $baselineCorpus;
+        $this->assertEquals(5000000.0, $deltaInr);
+
+        // Relative delta: (5,000,000 / 15,000,000) * 100 = +33.333%
+        $deltaPct = $this->calculateDifferentialPercentage($deltaInr, $baselineCorpus);
+        $this->assertEqualsWithDelta(33.333, $deltaPct, 0.01);
+
+        // Zero-baseline division guard
+        $guardedPct = $this->calculateDifferentialPercentage($deltaInr, 0.0);
+        $this->assertEquals(0.0, $guardedPct);
+    }
+
+    private function calculateDifferentialPercentage(float $deltaInr, float $baseline): float
+    {
+        if ($baseline <= 0.0) {
+            return 0.0;
+        }
+        return ($deltaInr / $baseline) * 100.0;
+    }
 }

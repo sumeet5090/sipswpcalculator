@@ -57,7 +57,7 @@ export class AssetRebalanceController {
     private updateDisplay(): void {
         if (!this.currentInputs) return;
 
-        const eqRate = this.currentInputs.rate || 12;
+        const eqRate = Number.isFinite(this.currentInputs.rate) ? (this.currentInputs.rate ?? 12) : 12;
         const debtRate = 7.0; // Standard high-quality AAA Indian debt fund yield
         const blendedRate = ((this.targetEquityPct / 100) * eqRate) + ((this.targetDebtPct / 100) * debtRate);
         const volReduction = Math.round((this.targetDebtPct / 100) * 80);
@@ -71,9 +71,9 @@ export class AssetRebalanceController {
         if (splitEl) splitEl.textContent = `${this.targetEquityPct}% Equity / ${this.targetDebtPct}% Debt`;
         if (volEl) volEl.textContent = `-${volReduction}% vs Pure Eq`;
 
-        const totalSip = this.currentInputs.sip || 25000;
+        const totalSip = Math.max(0, this.currentInputs.sip ?? 25000);
         const equitySip = Math.round((this.targetEquityPct / 100) * totalSip);
-        const debtSip = totalSip - equitySip;
+        const debtSip = Math.max(0, totalSip - equitySip);
 
         if (actionEl) {
             actionEl.innerHTML = `Allocate monthly SIP: <strong class="text-slate-900">${this.formatter.format(equitySip)} into Equity</strong> and <strong class="text-slate-900">${this.formatter.format(debtSip)} into Debt</strong> funds to maintain exact ${this.targetEquityPct}/${this.targetDebtPct} asset balance without triggering any capital gains tax.`;
