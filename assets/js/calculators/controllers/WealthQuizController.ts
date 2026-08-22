@@ -12,6 +12,11 @@ export interface QuizState {
     corpus?: number;
 }
 
+/**
+ * WealthQuizController.ts
+ * Manages the interactive 3-step Wealth Readiness Wizard drawer,
+ * accordion expand/collapse toggling, and goal plan application.
+ */
 export class WealthQuizController {
     private dom: DOMAdapter;
     private sliderManager: SliderManager;
@@ -32,6 +37,8 @@ export class WealthQuizController {
     }
 
     init(): void {
+        this.initDrawerToggle();
+
         const step1 = this.dom.getElement('quiz-step-1');
         const step2 = this.dom.getElement('quiz-step-2');
         const step3 = this.dom.getElement('quiz-step-3');
@@ -66,10 +73,10 @@ export class WealthQuizController {
             btn.addEventListener('click', () => {
                 step3.querySelectorAll('.quiz-choice').forEach(c => {
                     c.classList.remove('border-emerald-500', 'border-2', 'bg-white', 'shadow-sm');
-                    c.classList.add('border-slate-200', 'bg-slate-50/90');
+                    c.classList.add('border-slate-200', 'bg-slate-50');
                 });
                 btn.classList.add('border-emerald-500', 'border-2', 'bg-white', 'shadow-sm');
-                btn.classList.remove('border-slate-200', 'bg-slate-50/90');
+                btn.classList.remove('border-slate-200', 'bg-slate-50');
             });
         });
 
@@ -77,6 +84,44 @@ export class WealthQuizController {
         const applyBtn = document.getElementById('apply-quiz-plan-btn');
         if (applyBtn) {
             applyBtn.addEventListener('click', () => this.applyPlan());
+        }
+    }
+
+    private initDrawerToggle(): void {
+        const toggleBtn = this.dom.getElement<HTMLButtonElement>('toggle-guided-wizard-btn');
+        const closeBtn = this.dom.getElement<HTMLButtonElement>('close-guided-wizard-btn');
+        const drawer = this.dom.getElement('wealth-guided-wizard-drawer');
+        const toggleText = this.dom.getElement('wizard-toggle-text');
+        const toggleIcon = this.dom.getElement('wizard-toggle-icon');
+
+        if (!toggleBtn || !drawer) return;
+
+        const openDrawer = () => {
+            drawer.classList.remove('hidden');
+            toggleBtn.setAttribute('aria-expanded', 'true');
+            if (toggleText) toggleText.textContent = 'Close Guided Wizard';
+            if (toggleIcon) toggleIcon.style.transform = 'rotate(180deg)';
+            this.goToStep(1);
+        };
+
+        const closeDrawer = () => {
+            drawer.classList.add('hidden');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            if (toggleText) toggleText.textContent = 'Need Guidance? Open 3-Step Wizard';
+            if (toggleIcon) toggleIcon.style.transform = 'rotate(0deg)';
+        };
+
+        toggleBtn.addEventListener('click', () => {
+            const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+            if (isExpanded) {
+                closeDrawer();
+            } else {
+                openDrawer();
+            }
+        });
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeDrawer);
         }
     }
 
@@ -113,6 +158,16 @@ export class WealthQuizController {
         }
 
         this.onApply();
+
+        // Close wizard drawer after applying
+        const drawer = this.dom.getElement('wealth-guided-wizard-drawer');
+        const toggleBtn = this.dom.getElement<HTMLButtonElement>('toggle-guided-wizard-btn');
+        const toggleText = this.dom.getElement('wizard-toggle-text');
+        const toggleIcon = this.dom.getElement('wizard-toggle-icon');
+        if (drawer) drawer.classList.add('hidden');
+        if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+        if (toggleText) toggleText.textContent = 'Need Guidance? Open 3-Step Wizard';
+        if (toggleIcon) toggleIcon.style.transform = 'rotate(0deg)';
 
         const calcSection = this.dom.getElement('calculator-section');
         if (calcSection) {
