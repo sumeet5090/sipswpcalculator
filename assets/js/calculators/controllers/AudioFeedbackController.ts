@@ -49,15 +49,18 @@ export class AudioFeedbackController {
         this.ensureAudioContext();
         if (!this.audioCtx) return;
 
+        const safeFreq = Math.max(50, Math.min(20000, Number.isFinite(freq) ? freq : 380));
+        const safeDuration = Math.max(0.005, Math.min(1.0, Number.isFinite(duration) ? duration : 0.015));
+
         try {
             const osc = this.audioCtx.createOscillator();
             const gain = this.audioCtx.createGain();
 
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, this.audioCtx.currentTime);
+            osc.frequency.setValueAtTime(safeFreq, this.audioCtx.currentTime);
 
             gain.gain.setValueAtTime(0.04, this.audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.0001, this.audioCtx.currentTime + duration);
+            gain.gain.exponentialRampToValueAtTime(0.0001, this.audioCtx.currentTime + safeDuration);
 
             osc.connect(gain);
             gain.connect(this.audioCtx.destination);

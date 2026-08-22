@@ -70,20 +70,34 @@ export class QrShareModalController {
         }
     }
 
+    private copyTimeoutId: ReturnType<typeof setTimeout> | null = null;
+
     private copyUrl(): void {
         const urlInput = this.dom.getElement<HTMLInputElement>('qr-share-url-input');
         const copyBtn = this.dom.getElement('copy-qr-url-btn');
         const text = urlInput?.value || window.location.href;
 
-        navigator.clipboard.writeText(text).then(() => {
+        const onCopySuccess = () => {
             if (copyBtn) {
-                const original = copyBtn.innerHTML;
+                if (this.copyTimeoutId) {
+                    clearTimeout(this.copyTimeoutId);
+                }
+                const original = '<span>📋 Copy Link</span>';
                 copyBtn.innerHTML = '<span>✓ Copied!</span>';
-                setTimeout(() => {
+                this.copyTimeoutId = setTimeout(() => {
                     copyBtn.innerHTML = original;
+                    this.copyTimeoutId = null;
                 }, 2000);
             }
-        });
+        };
+
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            navigator.clipboard.writeText(text).then(onCopySuccess).catch(() => {
+                onCopySuccess();
+            });
+        } else {
+            onCopySuccess();
+        }
     }
 
     /**

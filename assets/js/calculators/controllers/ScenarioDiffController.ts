@@ -63,7 +63,7 @@ export class ScenarioDiffController {
         if (!this.snapshot || !currentResults || currentResults.length === 0) return;
 
         const currentLast = currentResults[currentResults.length - 1];
-        const currentCorpus = currentLast.combined_total;
+        const currentCorpus = currentLast?.combined_total ?? 0;
         const deltaCorpus = currentCorpus - this.snapshot.finalCorpus;
         const pct = this.snapshot.finalCorpus > 0 ? (deltaCorpus / this.snapshot.finalCorpus) * 100 : 0;
 

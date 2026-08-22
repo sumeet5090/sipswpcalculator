@@ -166,17 +166,30 @@ export class CommandPaletteController {
     }
 
     private parseNaturalLanguage(query: string): CommandItem | null {
-        const q = query.trim().toLowerCase();
-        const sipMatch = q.match(/^sip\s+(\d+(?:\.\d+)?(?:k|l|cr)?)\s*(?:(\d+(?:\.\d+)?)\s*(?:y|yrs|years)?)?\s*(?:(\d+(?:\.\d+)?)\s*%)?/i);
-        if (sipMatch) {
-            const sipStr = sipMatch[1];
-            let sipNum = parseFloat(sipStr);
-            if (sipStr.endsWith('k')) sipNum *= 1000;
-            else if (sipStr.endsWith('l')) sipNum *= 100000;
-            else if (sipStr.endsWith('cr')) sipNum *= 10000000;
+        const q = query.trim().toLowerCase().replace(/,/g, '').replace(/₹/g, '');
+        
+        // Match queries containing "sip" or numeric investment shorthands
+        if (!q.includes('sip') && !q.match(/^\d+(?:\.\d+)?\s*(?:k|l|lakh|cr|crore)/i)) {
+            return null;
+        }
 
-            const years = sipMatch[2] ? parseFloat(sipMatch[2]) : 10;
-            const rate = sipMatch[3] ? parseFloat(sipMatch[3]) : 12;
+        const nlpPattern = /(?:sip\s+)?(\d+(?:\.\d+)?\s*(?:k|l|lakh|lakhs|cr|crore|crores)?)\s*(?:sip)?(?:\s+(?:for\s+)?(\d+(?:\.\d+)?)\s*(?:y|yr|yrs|year|years)?)?(?:\s*(?:@|at\s*)?(\d+(?:\.\d+)?)\s*%)?/i;
+        const match = q.match(nlpPattern);
+
+        if (match && match[1]) {
+            const rawAmount = match[1].trim();
+            let amount = parseFloat(rawAmount);
+            if (isNaN(amount) || amount <= 0) return null;
+
+            if (rawAmount.endsWith('k')) amount *= 1000;
+            else if (rawAmount.includes('lakh') || rawAmount.endsWith('l')) amount *= 100000;
+            else if (rawAmount.includes('crore') || rawAmount.includes('cr')) amount *= 10000000;
+
+            const sipNum = Math.max(500, Math.min(1000000, Math.round(amount)));
+            const rawYears = match[2] ? parseFloat(match[2]) : 15;
+            const years = Math.max(1, Math.min(50, Math.round(rawYears)));
+            const rawRate = match[3] ? parseFloat(match[3]) : 12;
+            const rate = Math.max(1, Math.min(30, Math.round(rawRate * 10) / 10));
 
             return {
                 id: 'dynamic-nlp-sip',

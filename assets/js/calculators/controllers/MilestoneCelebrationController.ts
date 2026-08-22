@@ -74,10 +74,17 @@ export class MilestoneCelebrationController {
         if (now - this.lastBurstTime < 2500) return;
         this.lastBurstTime = now;
 
-        const targetContainer = this.dom.getElement('summary-corpus') || document.body;
-        const rect = targetContainer.getBoundingClientRect();
-        const originX = rect.left + rect.width / 2;
-        const originY = rect.top + rect.height / 2;
+        const targetContainer = this.dom.getElement('summary-corpus');
+        let originX = typeof window !== 'undefined' ? window.innerWidth / 2 : 300;
+        let originY = typeof window !== 'undefined' ? window.innerHeight / 3 : 200;
+
+        if (targetContainer) {
+            const rect = targetContainer.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+                originX = rect.left + rect.width / 2;
+                originY = rect.top + rect.height / 2;
+            }
+        }
 
         const colors = ['#10b981', '#059669', '#34d399', '#f59e0b', '#fbbf24', '#6366f1'];
 

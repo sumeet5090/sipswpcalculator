@@ -193,6 +193,102 @@ $testCases = [
         'swp_rate'       => 12.0,
         'ltcg_exemption' => 125000.0,
         'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Micro-SIP (₹500, 1-year horizon, 1% rate)
+    [
+        'type'           => 'sip',
+        'sip'            => 500.0,
+        'years'          => 1,
+        'rate'           => 1.0,
+        'stepup'         => 0.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 0.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Ultra-High Wealth (₹10 Lakh/mo, 40 yrs, 25% CAGR, 20% stepup, ₹1 Cr lumpsum)
+    [
+        'type'           => 'sip',
+        'sip'            => 1000000.0,
+        'years'          => 40,
+        'rate'           => 25.0,
+        'stepup'         => 20.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 10000000.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Edge case: Rapid SWP Depletion (₹2 Lakh/mo with ₹10 Lakh corpus, exhausts in <1 yr)
+    [
+        'type'           => 'swp',
+        'sip'            => 0.0,
+        'years'          => 0,
+        'rate'           => 6.0,
+        'stepup'         => 0.0,
+        'enable_swp'     => true,
+        'swp_withdrawal' => 200000.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 10,
+        'lumpsum'        => 1000000.0,
+        'swp_rate'       => 6.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Guide Scenario B (₹20k/mo, 10% Stepup, 15 yrs @ 12%)
+    [
+        'type'           => 'sip',
+        'sip'            => 20000.0,
+        'years'          => 15,
+        'rate'           => 12.0,
+        'stepup'         => 10.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 0.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Guide Step-Up 5% (₹10k/mo, 5% Stepup, 20 yrs @ 12%)
+    [
+        'type'           => 'sip',
+        'sip'            => 10000.0,
+        'years'          => 20,
+        'rate'           => 12.0,
+        'stepup'         => 5.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 0.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Guide SWP Plan 2 (1 Cr corpus, ₹45k/mo, 25 yrs @ 8% return, 5% hike)
+    [
+        'type'           => 'swp',
+        'sip'            => 0.0,
+        'years'          => 0,
+        'rate'           => 8.0,
+        'stepup'         => 0.0,
+        'enable_swp'     => true,
+        'swp_withdrawal' => 45000.0,
+        'swp_stepup'     => 5.0,
+        'swp_years'      => 25,
+        'lumpsum'        => 10000000.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
     ]
 ];
 
@@ -297,8 +393,9 @@ foreach ($testCases as $index => $inputs) {
             $jsVal = $jsRow[$field];
 
             if ($phpVal !== null && $jsVal !== null) {
-                // Assert float value parity within 2 decimals
-                if (abs((float)$phpVal - (float)$jsVal) > 0.05) {
+                // Assert float value parity within tolerance (accounting for huge scales)
+                $tolerance = max(0.05, abs((float)$phpVal * 0.00001));
+                if (abs((float)$phpVal - (float)$jsVal) > $tolerance) {
                     echo "FAIL: Parity drift at row {$rowIdx}, field '{$field}'. PHP: '{$phpVal}', JS: '{$jsVal}'\n";
                     $mismatch = true;
                     $failed = true;
@@ -317,6 +414,105 @@ foreach ($testCases as $index => $inputs) {
 
     if (!$mismatch) {
         echo "PASS\n";
+    }
+}
+
+// 4. Binary Search & Helper Parity Tests
+echo "\n=== Running Inverse Binary Search & Helper Math Parity ===\n";
+
+$helperTests = [
+    [
+        'name' => 'Required SIP for ₹1 Crore Target (15 yrs @ 12%, 10% stepup)',
+        'action' => 'required_sip',
+        'inputs' => \Core\InvestmentInputs::fromValues(0.0, 15, 12.0, 10.0, false, 0.0, 0.0, 0, 0.0),
+        'target_corpus' => 10000000.0,
+    ],
+    [
+        'name' => 'Required SWP Starting Corpus (₹50k/mo, 20 yrs @ 8%, 5% hike)',
+        'action' => 'swp_required_corpus',
+        'inputs' => \Core\InvestmentInputs::fromValues(0.0, 0, 0.0, 0.0, true, 50000.0, 5.0, 20, 0.0, 8.0),
+    ],
+    [
+        'name' => 'Inflation Discounting (₹1 Crore over 20 yrs @ 6% inflation)',
+        'action' => 'inflation_discount',
+        'corpus' => 10000000.0,
+        'years' => 20,
+        'inflation' => 6.0,
+    ],
+    [
+        'name' => '1-Year Delay Cost (₹25k SIP, 15 yrs @ 12%, 10% stepup)',
+        'action' => 'delay_cost',
+        'inputs' => \Core\InvestmentInputs::fromValues(25000.0, 15, 12.0, 10.0, false, 0.0, 0.0, 0, 0.0),
+    ]
+];
+
+foreach ($helperTests as $hTest) {
+    echo "Running {$hTest['name']}... ";
+
+    $phpVal = 0.0;
+    $jsPayload = ['action' => $hTest['action']];
+
+    if ($hTest['action'] === 'required_sip') {
+        $phpVal = $phpCalc->calculateRequiredSip($hTest['inputs'], $hTest['target_corpus']);
+        $jsPayload['inputs'] = [
+            'sip' => 0,
+            'years' => $hTest['inputs']->getYears(),
+            'rate' => $hTest['inputs']->getRate(),
+            'stepup' => $hTest['inputs']->getStepup(),
+            'lumpsum' => $hTest['inputs']->getLumpsum(),
+            'enable_swp' => false,
+            'swp_withdrawal' => 0,
+            'swp_years' => 0,
+            'swp_stepup' => 0,
+            'swp_rate' => 8
+        ];
+        $jsPayload['target_corpus'] = $hTest['target_corpus'];
+    } elseif ($hTest['action'] === 'swp_required_corpus') {
+        $phpVal = $phpCalc->calculateRequiredStartingCorpusForSwp($hTest['inputs']);
+        $jsPayload['inputs'] = [
+            'sip' => 0,
+            'years' => 0,
+            'rate' => 0,
+            'stepup' => 0,
+            'lumpsum' => 0,
+            'enable_swp' => true,
+            'swp_withdrawal' => $hTest['inputs']->getSwpWithdrawal(),
+            'swp_years' => $hTest['inputs']->getSwpYears(),
+            'swp_stepup' => $hTest['inputs']->getSwpStepup(),
+            'swp_rate' => $hTest['inputs']->getSwpRate()
+        ];
+    } elseif ($hTest['action'] === 'inflation_discount') {
+        $phpVal = \Core\InvestmentCalculator::calculateInflationDiscount($hTest['corpus'], $hTest['years'], $hTest['inflation']);
+        $jsPayload['corpus'] = $hTest['corpus'];
+        $jsPayload['years'] = $hTest['years'];
+        $jsPayload['inflation'] = $hTest['inflation'];
+    } elseif ($hTest['action'] === 'delay_cost') {
+        $phpVal = $phpCalc->calculateDelayCost($hTest['inputs']);
+        $jsPayload['inputs'] = [
+            'sip' => $hTest['inputs']->getSip(),
+            'years' => $hTest['inputs']->getYears(),
+            'rate' => $hTest['inputs']->getRate(),
+            'stepup' => $hTest['inputs']->getStepup(),
+            'lumpsum' => $hTest['inputs']->getLumpsum(),
+            'enable_swp' => false,
+            'swp_withdrawal' => 0,
+            'swp_years' => 0,
+            'swp_stepup' => 0,
+            'swp_rate' => 8
+        ];
+    }
+
+    $escapedJson = escapeshellarg(json_encode($jsPayload));
+    $cmd = "node " . escapeshellarg(__DIR__ . '/run_js_calc.js') . " {$escapedJson}";
+    $jsOutputRaw = shell_exec($cmd);
+    $jsRes = json_decode((string) $jsOutputRaw, true);
+    $jsVal = (float) ($jsRes['result'] ?? -999999);
+
+    if (abs($phpVal - $jsVal) <= 1.0) {
+        echo "PASS (PHP: {$phpVal}, JS: {$jsVal})\n";
+    } else {
+        echo "FAIL (PHP: {$phpVal}, JS: {$jsVal})\n";
+        $failed = true;
     }
 }
 

@@ -21,7 +21,8 @@ export class DailyAccrualController {
         const lastRow = results[results.length - 1];
         if (!lastRow) return;
 
-        const annualInterest = Math.max(0, lastRow.interest || 0);
+        const rawInterest = lastRow.interest ?? 0;
+        const annualInterest = Number.isFinite(rawInterest) ? Math.max(0, rawInterest) : 0;
         const dailyInterest = Math.round(annualInterest / 365);
 
         const amountEl = this.dom.getElement('daily-accrual-amount');

@@ -54,11 +54,11 @@ The difference between a flat SIP and a step-up SIP is staggering over long inve
 
 | Strategy | Monthly SIP (Year 1) | Monthly SIP (Year 20) | Total Invested | Maturity Value |
 | :--- | :--- | :--- | :--- | :--- |
-| **Flat SIP** | Rs 10,000 | Rs 10,000 | Rs 24 Lakh | **Rs 1 Crore** |
-| **Step-Up SIP @ 5%** | Rs 10,000 | Rs 25,270 | Rs 40.7 Lakh | **Rs 1.7 Crore** |
-| **Step-Up SIP @ 10%** | Rs 10,000 | Rs 67,270 | Rs 68.7 Lakh | **Rs 3.5 Crore** |
+| **Flat SIP** | Rs 10,000 | Rs 10,000 | Rs 24.0 Lakh | **Rs 99.91 Lakh (~Rs 1 Crore)** |
+| **Step-Up SIP @ 5%** | Rs 10,000 | Rs 25,270 | Rs 39.68 Lakh | **Rs 1.37 Crore** |
+| **Step-Up SIP @ 10%** | Rs 10,000 | Rs 61,159 | Rs 68.73 Lakh | **Rs 1.99 Crore (~Rs 2 Crore)** |
 
-> **Insight:** A 10% annual step-up on a Rs 10,000/month starting SIP results in a corpus that is **3.5x larger** than a flat SIP, while the total amount invested is only 2.9x more. The extra compounding on higher instalments in later years is the key driver.
+> **Insight:** A 10% annual step-up on a Rs 10,000/month starting SIP results in a corpus of **Rs 1.99 Crore** (~2x larger than a flat SIP), while increasing total contributions to Rs 68.73 Lakh. The extra compounding on higher instalments in later years is the key driver.
 
 ---
 

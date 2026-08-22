@@ -94,7 +94,7 @@ class InvestmentCalculator
 
             $cumulativeInvested += $annualContribution;
             if ($enableSwp && $y >= $swpStartYear) {
-                $cumulativeWithdrawals += $annualWithdrawal;
+                $cumulativeWithdrawals = round($cumulativeWithdrawals + $annualWithdrawal, 2);
             }
 
             $preTaxGains = $netBalance + $cumulativeWithdrawals - $cumulativeInvested;
@@ -145,10 +145,10 @@ class InvestmentCalculator
      */
     public static function calculateInflationDiscount(float $finalCorpus, int $totalYears, float $inflationRate): float
     {
-        if ($inflationRate <= 0.0 || $totalYears <= 0) {
-            return $finalCorpus;
+        if ($inflationRate <= 0.0 || $totalYears <= 0 || $finalCorpus <= 0.0) {
+            return max(0.0, $finalCorpus);
         }
-        return $finalCorpus / pow(1.0 + ($inflationRate / 100.0), $totalYears);
+        return max(0.0, $finalCorpus / pow(1.0 + ($inflationRate / 100.0), $totalYears));
     }
 
     /**

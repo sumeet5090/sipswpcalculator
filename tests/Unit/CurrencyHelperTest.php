@@ -54,4 +54,30 @@ class CurrencyHelperTest extends TestCase
         $this->assertSame('₹1,500', $this->helper->format(1499.8));
         $this->assertSame('₹1,499', $this->helper->format(1499.2));
     }
+
+    public function testFormatDynamicInr(): void
+    {
+        $this->assertSame('₹1 Crore', $this->helper->formatDynamic(10000000));
+        $this->assertSame('₹2.50 Crore', $this->helper->formatDynamic(25000000));
+        $this->assertSame('₹15 Lakh', $this->helper->formatDynamic(1500000));
+        $this->assertSame('₹25k', $this->helper->formatDynamic(25000));
+        $this->assertSame('-₹50 Lakh', $this->helper->formatDynamic(-5000000));
+        $this->assertSame('₹0', $this->helper->formatDynamic(0));
+        $this->assertSame('₹0', $this->helper->formatDynamic(-0.4));
+    }
+
+    public function testFormatDynamicInternationalCurrencies(): void
+    {
+        $this->assertSame('$2.50B', $this->helper->formatDynamic(2500000000, 'USD'));
+        $this->assertSame('€15M', $this->helper->formatDynamic(15000000, 'EUR'));
+        $this->assertSame('£250k', $this->helper->formatDynamic(250000, 'GBP'));
+        $this->assertSame('AED1.50M', $this->helper->formatDynamic(1500000, 'AED'));
+    }
+
+    public function testNegativeZeroFormatting(): void
+    {
+        $this->assertSame('₹0', $this->helper->format(-0.0));
+        $this->assertSame('₹0', $this->helper->format(-0.4));
+        $this->assertSame('-₹1', $this->helper->format(-0.6));
+    }
 }

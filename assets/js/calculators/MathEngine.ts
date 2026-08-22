@@ -120,8 +120,8 @@ export class MathEngine {
         const delayedInp: InvestmentInputs = { ...inp, years: inp.years - 1 };
         const delayedResults = this.calculate(delayedInp);
         
-        const currentFinal = currentResults[currentResults.length - 1].combined_total;
-        const delayedFinal = delayedResults[delayedResults.length - 1].combined_total;
+        const currentFinal = currentResults[currentResults.length - 1]?.combined_total ?? 0;
+        const delayedFinal = delayedResults[delayedResults.length - 1]?.combined_total ?? 0;
         
         return Math.max(0, currentFinal - delayedFinal);
     }
@@ -130,8 +130,8 @@ export class MathEngine {
      * Adjust the final corpus for inflation to show purchasing power parity.
      */
     static calculateInflationDiscount(finalCorpus: number, totalYears: number, inflationRate: number): number {
-        if (inflationRate <= 0) return finalCorpus;
-        return finalCorpus / Math.pow(1 + (inflationRate / 100), totalYears);
+        if (inflationRate <= 0 || totalYears <= 0 || finalCorpus <= 0) return Math.max(0, finalCorpus);
+        return Math.max(0, finalCorpus / Math.pow(1 + (inflationRate / 100), totalYears));
     }
 
     /**

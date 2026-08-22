@@ -110,6 +110,136 @@ class MathEngineAlignmentTest extends TestCase
         }
     }
 
+    /**
+     * Verify alignment of Required SIP binary search inversion.
+     */
+    public function testBinarySearchRequiredSipAlignment(): void
+    {
+        $calculator = new InvestmentCalculator();
+        $inputs = InvestmentInputs::fromValues(0.0, 15, 12.0, 10.0, false, 0.0, 0.0, 0, 0.0);
+        $targetCorpus = 10000000.0;
+
+        $phpSip = $calculator->calculateRequiredSip($inputs, $targetCorpus);
+
+        $runnerPath = __DIR__ . '/../run_js_calc.js';
+        $jsPayload = [
+            'action' => 'required_sip',
+            'inputs' => [
+                'sip' => 0,
+                'years' => 15,
+                'rate' => 12.0,
+                'stepup' => 10.0,
+                'lumpsum' => 0.0,
+                'enable_swp' => false,
+                'swp_withdrawal' => 0,
+                'swp_years' => 0,
+                'swp_stepup' => 0,
+                'swp_rate' => 8
+            ],
+            'target_corpus' => $targetCorpus
+        ];
+
+        $jsonArg = escapeshellarg(json_encode($jsPayload));
+        $output = shell_exec("node " . escapeshellarg($runnerPath) . " {$jsonArg}");
+        $jsRes = json_decode((string) $output, true);
+        $jsSip = (float) ($jsRes['result'] ?? -1);
+
+        $this->assertEqualsWithDelta($phpSip, $jsSip, 1.0, "Required SIP mismatch between PHP and JS");
+    }
+
+    /**
+     * Verify alignment of SWP Starting Corpus binary search inversion.
+     */
+    public function testBinarySearchRequiredSwpCorpusAlignment(): void
+    {
+        $calculator = new InvestmentCalculator();
+        $inputs = InvestmentInputs::fromValues(0.0, 0, 0.0, 0.0, true, 50000.0, 5.0, 20, 0.0, 8.0);
+
+        $phpCorpus = $calculator->calculateRequiredStartingCorpusForSwp($inputs);
+
+        $runnerPath = __DIR__ . '/../run_js_calc.js';
+        $jsPayload = [
+            'action' => 'swp_required_corpus',
+            'inputs' => [
+                'sip' => 0,
+                'years' => 0,
+                'rate' => 0,
+                'stepup' => 0,
+                'lumpsum' => 0,
+                'enable_swp' => true,
+                'swp_withdrawal' => 50000.0,
+                'swp_years' => 20,
+                'swp_stepup' => 5.0,
+                'swp_rate' => 8.0
+            ]
+        ];
+
+        $jsonArg = escapeshellarg(json_encode($jsPayload));
+        $output = shell_exec("node " . escapeshellarg($runnerPath) . " {$jsonArg}");
+        $jsRes = json_decode((string) $output, true);
+        $jsCorpus = (float) ($jsRes['result'] ?? -1);
+
+        $this->assertEqualsWithDelta($phpCorpus, $jsCorpus, 1.0, "SWP Required Corpus mismatch between PHP and JS");
+    }
+
+    /**
+     * Verify alignment of Inflation Discounting.
+     */
+    public function testInflationDiscountAlignment(): void
+    {
+        $phpDiscount = InvestmentCalculator::calculateInflationDiscount(10000000.0, 20, 6.0);
+
+        $runnerPath = __DIR__ . '/../run_js_calc.js';
+        $jsPayload = [
+            'action' => 'inflation_discount',
+            'corpus' => 10000000.0,
+            'years' => 20,
+            'inflation' => 6.0
+        ];
+
+        $jsonArg = escapeshellarg(json_encode($jsPayload));
+        $output = shell_exec("node " . escapeshellarg($runnerPath) . " {$jsonArg}");
+        $jsRes = json_decode((string) $output, true);
+        $jsDiscount = (float) ($jsRes['result'] ?? -1);
+
+        $this->assertEqualsWithDelta($phpDiscount, $jsDiscount, 0.01, "Inflation discount mismatch between PHP and JS");
+    }
+
+    /**
+     * Verify alignment of Delay Cost calculation.
+     */
+    public function testDelayCostAlignment(): void
+    {
+        $calculator = new InvestmentCalculator();
+        $inputs = InvestmentInputs::fromValues(25000.0, 15, 12.0, 10.0, false, 0.0, 0.0, 0, 0.0);
+
+        $phpDelayCost = $calculator->calculateDelayCost($inputs);
+
+        $runnerPath = __DIR__ . '/../run_js_calc.js';
+        $jsPayload = [
+            'action' => 'delay_cost',
+            'inputs' => [
+                'sip' => 25000.0,
+                'years' => 15,
+                'rate' => 12.0,
+                'stepup' => 10.0,
+                'lumpsum' => 0.0,
+                'enable_swp' => false,
+                'swp_withdrawal' => 0,
+                'swp_years' => 0,
+                'swp_stepup' => 0,
+                'swp_rate' => 8
+            ]
+        ];
+
+        $jsonArg = escapeshellarg(json_encode($jsPayload));
+        $output = shell_exec("node " . escapeshellarg($runnerPath) . " {$jsonArg}");
+        $jsRes = json_decode((string) $output, true);
+        $jsDelayCost = (float) ($jsRes['result'] ?? -1);
+
+        $this->assertEqualsWithDelta($phpDelayCost, $jsDelayCost, 1.0, "Delay cost mismatch between PHP and JS");
+    }
+
     public static function inputProvider(): array
     {
         return [
@@ -211,6 +341,55 @@ class MathEngineAlignmentTest extends TestCase
                     'swp_years' => 15,
                     'swp_stepup' => 6,
                     'swp_rate' => 8.5
+                ]
+            ],
+            'micro_sip_regime' => [
+                [
+                    'sip' => 500,
+                    'years' => 1,
+                    'rate' => 1,
+                    'stepup' => 0,
+                    'lumpsum' => 0
+                ]
+            ],
+            'ultra_high_wealth_regime' => [
+                [
+                    'sip' => 1000000,
+                    'years' => 40,
+                    'rate' => 25,
+                    'stepup' => 20,
+                    'lumpsum' => 10000000
+                ]
+            ],
+            'guide_scenario_b' => [
+                [
+                    'sip' => 20000,
+                    'years' => 15,
+                    'rate' => 12,
+                    'stepup' => 10,
+                    'lumpsum' => 0
+                ]
+            ],
+            'guide_stepup_5pct' => [
+                [
+                    'sip' => 10000,
+                    'years' => 20,
+                    'rate' => 12,
+                    'stepup' => 5,
+                    'lumpsum' => 0
+                ]
+            ],
+            'guide_swp_plan_2' => [
+                [
+                    'sip' => 0,
+                    'years' => 0,
+                    'rate' => 8,
+                    'lumpsum' => 10000000,
+                    'enable_swp' => 1,
+                    'swp_withdrawal' => 45000,
+                    'swp_years' => 25,
+                    'swp_stepup' => 5,
+                    'swp_rate' => 8
                 ]
             ]
         ];

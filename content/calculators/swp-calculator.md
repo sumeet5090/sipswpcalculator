@@ -24,7 +24,7 @@ Our SWP calculator goes beyond basic tools by supporting:
 <div class="bg-emerald-50/70 border border-emerald-200 rounded-xl p-6 my-8" role="complementary" aria-label="Quick Answer">
 <p class="text-sm font-bold text-emerald-800 mb-1">Quick Answer</p>
 <p class="text-base text-gray-700"><strong>How much monthly income can ₹1 Crore generate via SWP?</strong></p>
-<p class="text-sm text-gray-600 mt-1">A ₹1 Crore corpus invested in a Conservative Hybrid Fund returning 8% p.a. can generate <strong class="text-emerald-700">₹65,000/month</strong> via SWP for <strong>25+ years</strong> (with 5% annual step-up for inflation). Total withdrawn: ₹2.86 Crore. Remaining corpus after 25 years: ₹18.6 Lakhs.</p>
+<p class="text-sm text-gray-600 mt-1">A ₹1 Crore corpus invested in a Conservative Hybrid Fund returning 8% p.a. can generate <strong class="text-emerald-700">₹45,000/month</strong> via SWP for <strong>25+ years</strong> (with 5% annual step-up for inflation, delivering ₹2.49+ Crore total withdrawals). Alternatively, following the standard 4% Safe Withdrawal Rule, a starting withdrawal of <strong class="text-emerald-700">₹33,333/month</strong> with 5% annual hike sustains for <strong>30+ years</strong>.</p>
 </div>
 
 ## The SWP Formula
@@ -52,48 +52,48 @@ Our calculator lets you model this annual hike so you can stress-test whether yo
 <div class="grid md:grid-cols-2 gap-8 my-8 not-prose">
 <div class="bg-white p-6 rounded-xl shadow-sm border border-purple-100 relative overflow-hidden">
 <div class="text-xs font-bold text-purple-600 mb-1">CONSERVATIVE PLAN</div>
-<h4 class="text-lg font-bold text-purple-700 mb-2">₹50 Lakh Corpus, ₹30,000/month</h4>
+<h4 class="text-lg font-bold text-purple-700 mb-2">₹50 Lakh Corpus, ₹25,000/month</h4>
 <p class="text-sm text-gray-500 mb-4">@ 8% return, 5% annual SWP step-up</p>
 <ul class="space-y-2 text-sm text-gray-700">
-<li class="flex justify-between"><span>Monthly Income (Year 1):</span> <span class="font-bold text-purple-700"><span class="dynamic-amount" data-amount-inr="30000"></span></span></li>
-<li class="flex justify-between"><span>Monthly Income (Year 10):</span> <span class="font-bold text-purple-700"><span class="dynamic-amount" data-amount-inr="46600"></span></span></li>
-<li class="flex justify-between"><span>Total Withdrawn (20 yrs):</span> <span class="font-bold text-green-700"><span class="dynamic-amount" data-amount-inr="11900000"></span></span></li>
-<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Corpus Lasts:</span> <span class="font-bold text-purple-700">20+ Years</span></li>
+<li class="flex justify-between"><span>Monthly Income (Year 1):</span> <span class="font-bold text-purple-700"><span class="dynamic-amount" data-amount-inr="25000"></span></span></li>
+<li class="flex justify-between"><span>Monthly Income (Year 10):</span> <span class="font-bold text-purple-700"><span class="dynamic-amount" data-amount-inr="38783"></span></span></li>
+<li class="flex justify-between"><span>Total Withdrawn (20 yrs):</span> <span class="font-bold text-green-700"><span class="dynamic-amount" data-amount-inr="9919786"></span></span></li>
+<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Corpus Lasts:</span> <span class="font-bold text-purple-700">24+ Years</span></li>
 </ul>
 </div>
 
 <div class="bg-white p-6 rounded-xl shadow-sm border border-emerald-100 ring-2 ring-emerald-100 relative overflow-hidden">
 <div class="text-xs font-bold text-emerald-600 mb-1">RECOMMENDED PLAN</div>
-<h4 class="text-lg font-bold text-emerald-700 mb-2">₹1 Crore Corpus, ₹65,000/month</h4>
+<h4 class="text-lg font-bold text-emerald-700 mb-2">₹1 Crore Corpus, ₹45,000/month</h4>
 <p class="text-sm text-gray-500 mb-4">@ 8% return, 5% annual SWP step-up</p>
 <ul class="space-y-2 text-sm text-gray-700">
-<li class="flex justify-between"><span>Monthly Income (Year 1):</span> <span class="font-bold text-emerald-700"><span class="dynamic-amount" data-amount-inr="65000"></span></span></li>
-<li class="flex justify-between"><span>Monthly Income (Year 10):</span> <span class="font-bold text-emerald-700"><span class="dynamic-amount" data-amount-inr="100900"></span></span></li>
-<li class="flex justify-between"><span>Total Withdrawn (25 yrs):</span> <span class="font-bold text-green-700"><span class="dynamic-amount" data-amount-inr="28600000"></span></span></li>
+<li class="flex justify-between"><span>Monthly Income (Year 1):</span> <span class="font-bold text-emerald-700"><span class="dynamic-amount" data-amount-inr="45000"></span></span></li>
+<li class="flex justify-between"><span>Monthly Income (Year 10):</span> <span class="font-bold text-emerald-700"><span class="dynamic-amount" data-amount-inr="69810"></span></span></li>
+<li class="flex justify-between"><span>Total Withdrawn (20 yrs):</span> <span class="font-bold text-green-700"><span class="dynamic-amount" data-amount-inr="17855615"></span></span></li>
 <li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Corpus Lasts:</span> <span class="font-bold text-emerald-700">25+ Years</span></li>
 </ul>
 </div>
 
 <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden">
-<h4 class="text-lg font-bold text-rose-700 mb-2">₹2 Crore Corpus, ₹1.2 Lakh/month</h4>
-<p class="text-sm text-gray-500 mb-4">@ 8% return, 6% annual SWP step-up</p>
+<h4 class="text-lg font-bold text-rose-700 mb-2">₹2 Crore Corpus, ₹80,000/month</h4>
+<p class="text-sm text-gray-500 mb-4">@ 8.5% return, 5% annual SWP step-up</p>
 <ul class="space-y-2 text-sm text-gray-700">
-<li class="flex justify-between"><span>Monthly Income (Year 1):</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="120000"></span></span></li>
-<li class="flex justify-between"><span>Monthly Income (Year 15):</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="287000"></span></span></li>
-<li class="flex justify-between"><span>Total Withdrawn (30 yrs):</span> <span class="font-bold text-green-700"><span class="dynamic-amount" data-amount-inr="90000000"></span></span></li>
-<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Corpus Lasts:</span> <span class="font-bold text-rose-700">28 Years</span></li>
+<li class="flex justify-between"><span>Monthly Income (Year 1):</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="80000"></span></span></li>
+<li class="flex justify-between"><span>Monthly Income (Year 15):</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="158395"></span></span></li>
+<li class="flex justify-between"><span>Total Withdrawn (25 yrs):</span> <span class="font-bold text-green-700"><span class="dynamic-amount" data-amount-inr="45818015"></span></span></li>
+<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Corpus Lasts:</span> <span class="font-bold text-rose-700">25+ Years</span></li>
 </ul>
 </div>
 
 <div class="bg-white p-6 rounded-xl shadow-sm border border-amber-100 relative overflow-hidden">
-<div class="text-xs font-bold text-amber-600 mb-1">AGGRESSIVE PLAN</div>
-<h4 class="text-lg font-bold text-amber-700 mb-2">₹3 Crore Corpus, ₹2 Lakh/month</h4>
-<p class="text-sm text-gray-500 mb-4">@ 9% return, 7% annual SWP step-up</p>
+<div class="text-xs font-bold text-amber-600 mb-1">BALANCED GROWTH PLAN</div>
+<h4 class="text-lg font-bold text-amber-700 mb-2">₹3 Crore Corpus, ₹1.25 Lakh/month</h4>
+<p class="text-sm text-gray-500 mb-4">@ 9% return, 5% annual SWP step-up</p>
 <ul class="space-y-2 text-sm text-gray-700">
-<li class="flex justify-between"><span>Monthly Income (Year 1):</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="200000"></span></span></li>
-<li class="flex justify-between"><span>Monthly Income (Year 10):</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="393000"></span></span></li>
-<li class="flex justify-between"><span>Total Withdrawn (25 yrs):</span> <span class="font-bold text-green-700"><span class="dynamic-amount" data-amount-inr="127000000"></span></span></li>
-<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Corpus Lasts:</span> <span class="font-bold text-amber-700">22 Years</span></li>
+<li class="flex justify-between"><span>Monthly Income (Year 1):</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="125000"></span></span></li>
+<li class="flex justify-between"><span>Monthly Income (Year 10):</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="193916"></span></span></li>
+<li class="flex justify-between"><span>Total Withdrawn (25 yrs):</span> <span class="font-bold text-green-700"><span class="dynamic-amount" data-amount-inr="71590648"></span></span></li>
+<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Corpus Lasts:</span> <span class="font-bold text-amber-700">25+ Years</span></li>
 </ul>
 </div>
 </div>

@@ -54,8 +54,8 @@ export class CurrencyFormatter {
      */
     formatDynamic(amount: number): string {
         const rounded = Math.round(amount) || 0;
-        const isNegative = rounded < 0;
         const absAmount = Math.abs(rounded);
+        const isNegative = absAmount > 0 && rounded < 0;
         const prefix = isNegative ? `-${this.symbol}` : this.symbol;
 
         if (this.currency === 'INR') {
