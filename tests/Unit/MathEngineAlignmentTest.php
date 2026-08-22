@@ -360,6 +360,37 @@ class MathEngineAlignmentTest extends TestCase
                     'stepup' => 20,
                     'lumpsum' => 10000000
                 ]
+            ],
+            'guide_scenario_b' => [
+                [
+                    'sip' => 20000,
+                    'years' => 15,
+                    'rate' => 12,
+                    'stepup' => 10,
+                    'lumpsum' => 0
+                ]
+            ],
+            'guide_stepup_5pct' => [
+                [
+                    'sip' => 10000,
+                    'years' => 20,
+                    'rate' => 12,
+                    'stepup' => 5,
+                    'lumpsum' => 0
+                ]
+            ],
+            'guide_swp_plan_2' => [
+                [
+                    'sip' => 0,
+                    'years' => 0,
+                    'rate' => 8,
+                    'lumpsum' => 10000000,
+                    'enable_swp' => 1,
+                    'swp_withdrawal' => 45000,
+                    'swp_years' => 25,
+                    'swp_stepup' => 5,
+                    'swp_rate' => 8
+                ]
             ]
         ];
     }

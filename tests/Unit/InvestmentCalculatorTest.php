@@ -617,4 +617,175 @@ class InvestmentCalculatorTest extends TestCase
         // 50 Lakhs at 12% over 10 years grows to ~1.55 Crore (> 1 Crore target)
         $this->assertEquals(0.0, $calculator->calculateRequiredSip($inputsWithLumpsum, 10000000.0));
     }
+
+    /**
+     * Test Case 22: SIP Guide Worked Scenarios Parity (Scenario A & Scenario B)
+     */
+    public function testSipGuideScenariosParity(): void
+    {
+        $calculator = new InvestmentCalculator();
+
+        // Scenario A: ₹10,000/mo for 20 Years @ 12%
+        $inputsA = InvestmentInputs::fromValues(10000.0, 20, 12.0, 0.0, false, 0.0, 0.0, 0, 0.0);
+        $resA = $calculator->calculate($inputsA);
+        $lastA = end($resA);
+        $this->assertEquals(2400000.0, $lastA['cumulative_invested']);
+        $this->assertEquals(9991479.0, $lastA['combined_total']);
+        $this->assertEquals(7591479.0, $lastA['combined_total'] - $lastA['cumulative_invested']);
+
+        // Scenario B: ₹20,000/mo, 10% Step-Up, 15 Years @ 12%
+        $inputsB = InvestmentInputs::fromValues(20000.0, 15, 12.0, 10.0, false, 0.0, 0.0, 0, 0.0);
+        $resB = $calculator->calculate($inputsB);
+        $lastB = end($resB);
+        $this->assertEqualsWithDelta(7625395.56, $lastB['cumulative_invested'], 0.01);
+        $this->assertEquals(17367699.0, $lastB['combined_total']);
+        $this->assertEqualsWithDelta(9742303.44, $lastB['combined_total'] - $lastB['cumulative_invested'], 0.01);
+    }
+
+    /**
+     * Test Case 23: Step-Up SIP Comparison Table Parity
+     */
+    public function testStepUpSipComparisonTableParity(): void
+    {
+        $calculator = new InvestmentCalculator();
+
+        // 1. Flat SIP: ₹10,000/mo, 20 Years @ 12%
+        $flat = $calculator->calculate(InvestmentInputs::fromValues(10000.0, 20, 12.0, 0.0, false, 0.0, 0.0, 0, 0.0));
+        $lastFlat = end($flat);
+        $this->assertEquals(10000.0, $flat[19]['sip_monthly']);
+        $this->assertEquals(2400000.0, $lastFlat['cumulative_invested']);
+        $this->assertEquals(9991479.0, $lastFlat['combined_total']);
+
+        // 2. 5% Step-Up: ₹10,000/mo, 20 Years @ 12%
+        $step5 = $calculator->calculate(InvestmentInputs::fromValues(10000.0, 20, 12.0, 5.0, false, 0.0, 0.0, 0, 0.0));
+        $last5 = end($step5);
+        $this->assertEquals(25269.5, $step5[19]['sip_monthly']);
+        $this->assertEqualsWithDelta(3967914.36, $last5['cumulative_invested'], 0.01);
+        $this->assertEquals(13737623.0, $last5['combined_total']);
+
+        // 3. 10% Step-Up: ₹10,000/mo, 20 Years @ 12%
+        $step10 = $calculator->calculate(InvestmentInputs::fromValues(10000.0, 20, 12.0, 10.0, false, 0.0, 0.0, 0, 0.0));
+        $last10 = end($step10);
+        $this->assertEquals(61159.09, $step10[19]['sip_monthly']);
+        $this->assertEqualsWithDelta(6872999.76, $last10['cumulative_invested'], 0.01);
+        $this->assertEquals(19888715.0, $last10['combined_total']);
+    }
+
+    /**
+     * Test Case 24: Lumpsum Guide Reference Table Parity
+     */
+    public function testLumpsumGuideReferenceTableParity(): void
+    {
+        $calculator = new InvestmentCalculator();
+
+        // ₹1 Lakh @ 12% (10 Yrs) -> ₹3.30 Lakh
+        $r1 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 10, 12.0, 0.0, false, 0.0, 0.0, 0, 100000.0));
+        $this->assertEquals(330039.0, end($r1)['combined_total']);
+
+        // ₹1 Lakh @ 12% (20 Yrs) -> ₹10.89 Lakh
+        $r2 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 20, 12.0, 0.0, false, 0.0, 0.0, 0, 100000.0));
+        $this->assertEquals(1089255.0, end($r2)['combined_total']);
+
+        // ₹5 Lakh @ 12% (10 Yrs) -> ₹16.50 Lakh
+        $r3 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 10, 12.0, 0.0, false, 0.0, 0.0, 0, 500000.0));
+        $this->assertEquals(1650193.0, end($r3)['combined_total']);
+
+        // ₹5 Lakh @ 12% (20 Yrs) -> ₹54.46 Lakh
+        $r4 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 20, 12.0, 0.0, false, 0.0, 0.0, 0, 500000.0));
+        $this->assertEquals(5446277.0, end($r4)['combined_total']);
+
+        // ₹10 Lakh @ 12% (10 Yrs) -> ₹33.00 Lakh
+        $r5 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 10, 12.0, 0.0, false, 0.0, 0.0, 0, 1000000.0));
+        $this->assertEquals(3300387.0, end($r5)['combined_total']);
+
+        // ₹10 Lakh @ 12% (20 Yrs) -> ₹1.09 Crore
+        $r6 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 20, 12.0, 0.0, false, 0.0, 0.0, 0, 1000000.0));
+        $this->assertEquals(10892554.0, end($r6)['combined_total']);
+
+        // ₹10 Lakh @ 15% (20 Yrs) -> ₹1.97 Crore
+        $r7 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 20, 15.0, 0.0, false, 0.0, 0.0, 0, 1000000.0));
+        $this->assertEquals(19715494.0, end($r7)['combined_total']);
+    }
+
+    /**
+     * Test Case 25: 1 Crore Target Required SIP Table Parity
+     */
+    public function testMyFirstCroreRequiredSipTableParity(): void
+    {
+        $calculator = new InvestmentCalculator();
+
+        // 5 Years @ 12% -> ₹1,21,232/mo
+        $req5 = $calculator->calculateRequiredSip(InvestmentInputs::fromValues(0.0, 5, 12.0, 0.0, false, 0.0, 0.0, 0, 0.0), 10000000.0);
+        $this->assertEquals(121232.0, $req5);
+
+        // 10 Years @ 12% -> ₹43,041/mo
+        $req10 = $calculator->calculateRequiredSip(InvestmentInputs::fromValues(0.0, 10, 12.0, 0.0, false, 0.0, 0.0, 0, 0.0), 10000000.0);
+        $this->assertEquals(43041.0, $req10);
+
+        // 15 Years @ 12% -> ₹19,819/mo
+        $req15 = $calculator->calculateRequiredSip(InvestmentInputs::fromValues(0.0, 15, 12.0, 0.0, false, 0.0, 0.0, 0, 0.0), 10000000.0);
+        $this->assertEquals(19819.0, $req15);
+
+        // 20 Years @ 12% -> ₹10,009/mo
+        $req20 = $calculator->calculateRequiredSip(InvestmentInputs::fromValues(0.0, 20, 12.0, 0.0, false, 0.0, 0.0, 0, 0.0), 10000000.0);
+        $this->assertEquals(10009.0, $req20);
+    }
+
+    /**
+     * Test Case 26: SWP Worked Examples Parity
+     */
+    public function testSwpWorkedExamplesParity(): void
+    {
+        $calculator = new InvestmentCalculator();
+
+        // Plan 1: 50 Lakh corpus, ₹25,000/mo, 8% return, 5% hike
+        $plan1 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 0, 0.0, 0.0, true, 25000.0, 5.0, 25, 5000000.0, 8.0));
+        $this->assertEquals(38783.21, $plan1[9]['swp_monthly']);
+        $this->assertEquals(9919786.32, $plan1[19]['cumulative_withdrawals']);
+        $this->assertGreaterThan(0.0, $plan1[23]['combined_total']); // Lasts 24+ years
+
+        // Plan 2: 1 Crore corpus, ₹45,000/mo, 8% return, 5% hike
+        $plan2 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 0, 0.0, 0.0, true, 45000.0, 5.0, 25, 10000000.0, 8.0));
+        $this->assertEquals(69809.77, $plan2[9]['swp_monthly']);
+        $this->assertEquals(17855615.16, $plan2[19]['cumulative_withdrawals']);
+        $this->assertGreaterThan(0.0, $plan2[24]['combined_total']); // Lasts 25+ years
+
+        // Plan 3: 2 Crore corpus, ₹80,000/mo, 8.5% return, 5% hike
+        $plan3 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 0, 0.0, 0.0, true, 80000.0, 5.0, 30, 20000000.0, 8.5));
+        $this->assertEquals(158394.53, $plan3[14]['swp_monthly']);
+        $this->assertEquals(45818015.28, $plan3[24]['cumulative_withdrawals']);
+        $this->assertGreaterThan(0.0, $plan3[24]['combined_total']); // Lasts 25+ years
+
+        // Plan 4: 3 Crore corpus, ₹1.25 Lakh/mo, 9% return, 5% hike
+        $plan4 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 0, 0.0, 0.0, true, 125000.0, 5.0, 30, 30000000.0, 9.0));
+        $this->assertEquals(193916.03, $plan4[9]['swp_monthly']);
+        $this->assertEquals(71590648.08, $plan4[24]['cumulative_withdrawals']);
+        $this->assertGreaterThan(0.0, $plan4[24]['combined_total']); // Lasts 25+ years
+    }
+
+    /**
+     * Test Case 27: Finance (No. 2) Act 2024 Section 112A LTCG Tax Arithmetic
+     */
+    public function testFinanceAct2024Section112aLtcgTaxArithmetic(): void
+    {
+        $calculator = new InvestmentCalculator();
+
+        // 1. Gains below ₹1,25,000 exemption -> ₹0 tax
+        $inpBelow = InvestmentInputs::fromValues(2000.0, 2, 10.0, 0.0, false, 0.0, 0.0, 0, 0.0);
+        $resBelow = $calculator->calculate($inpBelow);
+        $lastBelow = end($resBelow);
+        $this->assertEquals(0.0, $lastBelow['ltcg_tax']);
+        $this->assertEquals($lastBelow['combined_total'], $lastBelow['post_tax_total']);
+
+        // 2. Gains above ₹1,25,000 exemption -> 12.5% on excess
+        $inpAbove = InvestmentInputs::fromValues(10000.0, 10, 12.0, 0.0, false, 0.0, 0.0, 0, 0.0);
+        $resAbove = $calculator->calculate($inpAbove);
+        $lastAbove = end($resAbove);
+        // Total invested: 12,00,000, Total corpus: 23,23,391, Pre-tax gain: 11,23,391
+        // Taxable gain: 11,23,391 - 1,25,000 = 9,98,391
+        // LTCG Tax @ 12.5%: 9,98,391 * 0.125 = 124798.875 -> 124799
+        $expectedTax = round((2323391.0 - 1200000.0 - 125000.0) * 0.125);
+        $this->assertEquals($expectedTax, $lastAbove['ltcg_tax']);
+        $this->assertEquals($lastAbove['combined_total'] - $expectedTax, $lastAbove['post_tax_total']);
+    }
 }

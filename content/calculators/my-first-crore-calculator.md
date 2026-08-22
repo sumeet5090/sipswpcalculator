@@ -32,10 +32,10 @@ Assuming an average **12% annual return** from equity mutual funds, here is a qu
 
 | Time Horizon | Target Corpus | Expected Return | Monthly SIP Required | Total Investment | Wealth Gained |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **5 Years** | ₹1 Crore | 12% p.a. | **₹1,22,444** | ₹73,46,664 | ₹26,53,336 |
-| **10 Years** | ₹1 Crore | 12% p.a. | **₹43,041** | ₹51,64,867 | ₹48,35,133 |
-| **15 Years** | ₹1 Crore | 12% p.a. | **₹20,017** | ₹36,03,030 | ₹63,96,970 |
-| **20 Years** | ₹1 Crore | 12% p.a. | **₹10,009** | ₹24,02,084 | ₹75,97,916 |
+| **5 Years** | ₹1 Crore | 12% p.a. | **₹1,21,232** | ₹72,73,920 | ₹27,26,080 |
+| **10 Years** | ₹1 Crore | 12% p.a. | **₹43,041** | ₹51,64,920 | ₹48,35,080 |
+| **15 Years** | ₹1 Crore | 12% p.a. | **₹19,819** | ₹35,67,420 | ₹64,32,580 |
+| **20 Years** | ₹1 Crore | 12% p.a. | **₹10,009** | ₹24,02,160 | ₹75,97,840 |
 
 > **Key Takeaway:** Extending your investment horizon from 10 years to 20 years reduces your required monthly investment by over **75%** (from ~₹43,000/mo to ~₹10,000/mo), proving that time in the market is vastly more powerful than timing the market.
 

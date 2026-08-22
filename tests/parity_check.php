@@ -241,6 +241,54 @@ $testCases = [
         'swp_rate'       => 6.0,
         'ltcg_exemption' => 125000.0,
         'ltcg_tax_rate'  => 0.125
+    ],
+    // Guide Scenario B (₹20k/mo, 10% Stepup, 15 yrs @ 12%)
+    [
+        'type'           => 'sip',
+        'sip'            => 20000.0,
+        'years'          => 15,
+        'rate'           => 12.0,
+        'stepup'         => 10.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 0.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Guide Step-Up 5% (₹10k/mo, 5% Stepup, 20 yrs @ 12%)
+    [
+        'type'           => 'sip',
+        'sip'            => 10000.0,
+        'years'          => 20,
+        'rate'           => 12.0,
+        'stepup'         => 5.0,
+        'enable_swp'     => false,
+        'swp_withdrawal' => 0.0,
+        'swp_stepup'     => 0.0,
+        'swp_years'      => 0,
+        'lumpsum'        => 0.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
+    ],
+    // Guide SWP Plan 2 (1 Cr corpus, ₹45k/mo, 25 yrs @ 8% return, 5% hike)
+    [
+        'type'           => 'swp',
+        'sip'            => 0.0,
+        'years'          => 0,
+        'rate'           => 8.0,
+        'stepup'         => 0.0,
+        'enable_swp'     => true,
+        'swp_withdrawal' => 45000.0,
+        'swp_stepup'     => 5.0,
+        'swp_years'      => 25,
+        'lumpsum'        => 10000000.0,
+        'swp_rate'       => 8.0,
+        'ltcg_exemption' => 125000.0,
+        'ltcg_tax_rate'  => 0.125
     ]
 ];
 

@@ -64,9 +64,9 @@ This adjustment is made because SIP payments are technically an "Annuity Due" (p
 <h4 class="text-lg font-bold text-rose-600 mb-2">Scenario B: The Late Starter (Step-Up)</h4>
 <p class="text-sm text-gray-500 mb-4">Start <span class="dynamic-amount" data-amount-inr="20000"></span>/month, Step-up 10% yearly, 15 Years @ 12%</p>
 <ul class="space-y-2 text-sm text-gray-700">
-<li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="7626000"></span></span></li>
-<li class="flex justify-between"><span>Wealth Gained:</span> <span class="font-bold text-green-700">+<span class="dynamic-amount" data-amount-inr="8556000"></span></span></li>
-<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity Value:</span> <span class="font-bold text-rose-700"><span class="dynamic-amount" data-amount-inr="16182000"></span></span></li>
+<li class="flex justify-between"><span>Total Invested:</span> <span class="font-bold"><span class="dynamic-amount" data-amount-inr="7625396"></span></span></li>
+<li class="flex justify-between"><span>Wealth Gained:</span> <span class="font-bold text-green-700">+<span class="dynamic-amount" data-amount-inr="9742303"></span></span></li>
+<li class="flex justify-between border-t border-gray-100 pt-2 text-base"><span>Maturity Value:</span> <span class="font-bold text-rose-700"><span class="dynamic-amount" data-amount-inr="17367699"></span></span></li>
 </ul>
 <p class="text-xs text-gray-500 mt-4">Result: Catch up by increasing contributions.</p>
 </div>

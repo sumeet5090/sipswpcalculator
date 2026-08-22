@@ -47,13 +47,13 @@ Assuming a single lumpsum investment at different return rates over different ti
 
 | Investment Amount | Return Rate | Time Horizon | Estimated Maturity Value |
 | :--- | :--- | :--- | :--- |
-| Rs 1 Lakh | 12% p.a. | 10 Years | **Rs 3.1 Lakh** |
-| Rs 1 Lakh | 12% p.a. | 20 Years | **Rs 9.6 Lakh** |
-| Rs 5 Lakh | 12% p.a. | 10 Years | **Rs 15.5 Lakh** |
-| Rs 5 Lakh | 12% p.a. | 20 Years | **Rs 48.2 Lakh** |
-| Rs 10 Lakh | 12% p.a. | 10 Years | **Rs 31 Lakh** |
-| Rs 10 Lakh | 12% p.a. | 20 Years | **Rs 96.5 Lakh** |
-| Rs 10 Lakh | 15% p.a. | 20 Years | **Rs 1.6 Crore** |
+| Rs 1 Lakh | 12% p.a. | 10 Years | **Rs 3.30 Lakh** |
+| Rs 1 Lakh | 12% p.a. | 20 Years | **Rs 10.89 Lakh** |
+| Rs 5 Lakh | 12% p.a. | 10 Years | **Rs 16.50 Lakh** |
+| Rs 5 Lakh | 12% p.a. | 20 Years | **Rs 54.46 Lakh** |
+| Rs 10 Lakh | 12% p.a. | 10 Years | **Rs 33.00 Lakh** |
+| Rs 10 Lakh | 12% p.a. | 20 Years | **Rs 1.09 Crore** |
+| Rs 10 Lakh | 15% p.a. | 20 Years | **Rs 1.97 Crore** |
 
 > These are illustrative projections. Actual mutual fund returns are market-linked and not guaranteed.
 
