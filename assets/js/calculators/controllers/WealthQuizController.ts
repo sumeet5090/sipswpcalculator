@@ -109,6 +109,7 @@ export class WealthQuizController {
         const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
         if (swpToggle) {
             swpToggle.checked = this.state.enableSwp;
+            swpToggle.dispatchEvent(new Event('change', { bubbles: true }));
         }
 
         this.onApply();

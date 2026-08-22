@@ -87,6 +87,7 @@ export class CityBenchmarkController {
         const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
         if (swpToggle) {
             swpToggle.checked = true;
+            swpToggle.dispatchEvent(new Event('change', { bubbles: true }));
         }
 
         this.sliderManager.updateFieldValue('swp_years', 25);

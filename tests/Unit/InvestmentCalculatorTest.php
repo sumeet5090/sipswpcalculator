@@ -504,4 +504,68 @@ class InvestmentCalculatorTest extends TestCase
         $this->assertStringContainsString('Expected Return:', $htmlSip);
         $this->assertStringContainsString('Annual Step-Up:', $htmlSip);
     }
+
+    /**
+     * Test Case 17: Inflation Discount Edge Cases & Guards
+     */
+    public function testCalculateInflationDiscountEdgeCases(): void
+    {
+        // 0% inflation returns exact nominal corpus
+        $this->assertEquals(1000000.0, InvestmentCalculator::calculateInflationDiscount(1000000.0, 10, 0.0));
+
+        // 0 years returns exact nominal corpus
+        $this->assertEquals(1000000.0, InvestmentCalculator::calculateInflationDiscount(1000000.0, 0, 6.0));
+
+        // Negative corpus returns 0.0
+        $this->assertEquals(0.0, InvestmentCalculator::calculateInflationDiscount(-5000.0, 10, 6.0));
+
+        // Normal 6% inflation over 10 years: 1000000 / (1.06)^10 = 558394.7769
+        $discounted = InvestmentCalculator::calculateInflationDiscount(1000000.0, 10, 6.0);
+        $this->assertEqualsWithDelta(558394.78, $discounted, 0.01);
+    }
+
+    /**
+     * Test Case 18: Delay Cost Calculation Edge Cases
+     */
+    public function testCalculateDelayCostEdgeCases(): void
+    {
+        $calculator = new InvestmentCalculator();
+
+        // 1-year horizon delay cost must be 0.0
+        $inputs1Yr = $this->createInputs([
+            'sip' => 10000,
+            'years' => 1,
+            'rate' => 12.0,
+            'stepup' => 0.0
+        ]);
+        $this->assertEquals(0.0, $calculator->calculateDelayCost($inputs1Yr));
+
+        // 15-year horizon delay cost
+        $inputs15Yr = $this->createInputs([
+            'sip' => 25000,
+            'years' => 15,
+            'rate' => 12.0,
+            'stepup' => 10.0
+        ]);
+        $delayCost = $calculator->calculateDelayCost($inputs15Yr);
+        $this->assertGreaterThan(1000000.0, $delayCost);
+    }
+
+    /**
+     * Test Case 19: SWP Starting Corpus Inversion Fast Path & Escalation
+     */
+    public function testRequiredStartingCorpusForSwpEdgeCases(): void
+    {
+        $calculator = new InvestmentCalculator();
+
+        // Linear zero rate, zero hike fast path: 50,000 * 12 * 10 = 6,000,000
+        $zeroRateInp = InvestmentInputs::fromValues(0.0, 0, 0.0, 0.0, true, 50000.0, 0.0, 10, 0.0, 0.0);
+        $this->assertEquals(6000000.0, $calculator->calculateRequiredStartingCorpusForSwp($zeroRateInp));
+
+        // Standard escalating SWP: ₹50k/mo, 5% hike, 20 yrs @ 8% return
+        $standardInp = InvestmentInputs::fromValues(0.0, 0, 0.0, 0.0, true, 50000.0, 5.0, 20, 0.0, 8.0);
+        $corpus = $calculator->calculateRequiredStartingCorpusForSwp($standardInp);
+        $this->assertGreaterThan(5000000.0, $corpus);
+        $this->assertLessThan(15000000.0, $corpus);
+    }
 }
