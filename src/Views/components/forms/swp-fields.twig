@@ -9,7 +9,14 @@
     'step': calc_config.swp_withdrawal.step,
     'value': swp_withdrawal,
     'prefix': '₹',
-    'theme': 'rose'
+    'theme': 'rose',
+    'presets': [
+        {'label': '₹10k', 'value': 10000},
+        {'label': '₹25k', 'value': 25000},
+        {'label': '₹50k', 'value': 50000},
+        {'label': '₹75k', 'value': 75000},
+        {'label': '₹1L', 'value': 100000}
+    ]
 }) }}
 
 <!-- Withdrawal Duration -->
@@ -23,7 +30,15 @@
     'value': swp_years_input,
     'suffix': 'Yrs',
     'theme': 'rose',
-    'input_text_color': 'text-slate-700 focus:border-rose-400 focus:ring-rose-400/30 focus:ring-1'
+    'input_text_color': 'text-slate-700 focus:border-rose-400 focus:ring-rose-400/30 focus:ring-1',
+    'presets': [
+        {'label': '5Y', 'value': 5},
+        {'label': '10Y', 'value': 10},
+        {'label': '15Y', 'value': 15},
+        {'label': '20Y', 'value': 20},
+        {'label': '25Y', 'value': 25},
+        {'label': '30Y', 'value': 30}
+    ]
 }) }}
 
 <details class="group mt-4 border-t border-slate-100 pt-3" id="swp-advanced-details">
@@ -45,7 +60,13 @@
             'value': swp_stepup,
             'suffix': '%',
             'theme': 'rose',
-            'input_text_color': 'text-slate-700 focus:border-rose-400 focus:ring-rose-400/30 focus:ring-1'
+            'input_text_color': 'text-slate-700 focus:border-rose-400 focus:ring-rose-400/30 focus:ring-1',
+            'presets': [
+                {'label': '0%', 'value': 0},
+                {'label': '5%', 'value': 5},
+                {'label': '6%', 'value': 6},
+                {'label': '8%', 'value': 8}
+            ]
         }) }}
 
         <!-- SWP Expected Return -->
@@ -58,7 +79,13 @@
             'step': calc_config.swp_rate.step,
             'value': swp_rate,
             'suffix': '%',
-            'theme': 'rose'
+            'theme': 'rose',
+            'presets': [
+                {'label': '6%', 'value': 6},
+                {'label': '7%', 'value': 7},
+                {'label': '8%', 'value': 8},
+                {'label': '9%', 'value': 9}
+            ]
         }) }}
     </div>
 </details>

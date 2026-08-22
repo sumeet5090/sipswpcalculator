@@ -12,6 +12,8 @@ Adhere to the following protocols for all development, design, and implementatio
 ### 2. Design & Styling
 * **Premium Aesthetic:** Maintain a premium, professional look and feel. Use **Tailwind CSS** for all styling, ensuring high consistency in fonts, layouts, and component design across the entire application.
 * **Consistency:** All new components must align with existing premium design themes.
+* **Strict Pure Light-Mode Theme:** Under no circumstances should dark surfaces, dark widgets, or inverted dark cards (e.g. `bg-slate-900`, `bg-slate-950`, `bg-gray-900`) be used. The application strictly adheres to a clean, crisp, premium light fintech aesthetic. All cards, modals, and interactive widgets must be styled with light surfaces (`bg-white/95`, `bg-slate-50`), crisp borders (`border-slate-200`), dark high-contrast typography (`text-slate-900`, `text-slate-700`), and vibrant emerald/teal/indigo accents.
+* **Light Ambient Glow System:** Ambient background lighting must always use soft, light, pastel aurora gradients (e.g. `emerald-400/12`, `teal-300/8`, `indigo-300/6`, `cyan-200/5`) to create a luminous, breathable, light depth atmosphere rather than dark vignette lighting.
 
 ### 3. SEO & Content Strategy
 * **Strategic Optimization:** Maintain strict SEO friendliness. Use semantic HTML, descriptive page titles, and accurate meta tags.

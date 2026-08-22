@@ -17,11 +17,25 @@ import { InvestmentInputs, YearResult } from '../types';
 import { PdfExportController } from './controllers/PdfExportController';
 import { CsvExportController } from './controllers/CsvExportController';
 import { TabController } from './controllers/TabController';
+import { StepperController } from './controllers/StepperController';
 import { ShareController } from './controllers/ShareController';
 import { SmartNudgeController } from './controllers/SmartNudgeController';
 import { UrlStateController } from './controllers/UrlStateController';
 import { ResultsController } from './controllers/ResultsController';
 import { SummaryMetricsController } from './controllers/SummaryMetricsController';
+import { GlossaryController } from './controllers/GlossaryController';
+import { CommandPaletteController } from './controllers/CommandPaletteController';
+import { WealthQuizController } from './controllers/WealthQuizController';
+import { ScenarioDiffController } from './controllers/ScenarioDiffController';
+import { MilestoneCelebrationController } from './controllers/MilestoneCelebrationController';
+import { AudioFeedbackController } from './controllers/AudioFeedbackController';
+import { CityBenchmarkController } from './controllers/CityBenchmarkController';
+import { StressTestController } from './controllers/StressTestController';
+import { AssetRebalanceController } from './controllers/AssetRebalanceController';
+import { CardSpotlightController } from './controllers/CardSpotlightController';
+import { GoalCommitmentController } from './controllers/GoalCommitmentController';
+import { DailyAccrualController } from './controllers/DailyAccrualController';
+import { QrShareModalController } from './controllers/QrShareModalController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -37,6 +51,16 @@ export class CalculatorApp {
     private sliderManager: SliderManager;
     private resultsController: ResultsController;
     private summaryMetricsController: SummaryMetricsController;
+    private scenarioDiffController: ScenarioDiffController;
+    private celebrationController: MilestoneCelebrationController;
+    private audioController: AudioFeedbackController;
+    private cityBenchmarkController: CityBenchmarkController;
+    private stressTestController: StressTestController;
+    private assetRebalanceController: AssetRebalanceController;
+    private spotlightController: CardSpotlightController;
+    private goalCommitmentController: GoalCommitmentController;
+    private dailyAccrualController: DailyAccrualController;
+    private qrShareModalController: QrShareModalController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -68,19 +92,69 @@ export class CalculatorApp {
                 this.triggerCalculation();
             },
             this.validator,
-            this.dom
+            this.dom,
+            this.formatter
         );
 
         this.resultsController = new ResultsController(
             this.dom,
             this.formatter,
-            () => this.getInputs()
+            () => this.getInputs(),
+            this.chartManager
         );
 
         this.summaryMetricsController = new SummaryMetricsController(
             this.dom,
             this.formatter,
             () => this.getInputs()
+        );
+
+        this.scenarioDiffController = new ScenarioDiffController(
+            this.dom,
+            this.formatter
+        );
+
+        this.celebrationController = new MilestoneCelebrationController(
+            this.dom
+        );
+
+        this.audioController = new AudioFeedbackController(
+            this.dom
+        );
+
+        this.cityBenchmarkController = new CityBenchmarkController(
+            this.dom,
+            this.sliderManager,
+            this.formatter,
+            () => this.triggerCalculation()
+        );
+
+        this.stressTestController = new StressTestController(
+            this.dom,
+            this.formatter
+        );
+
+        this.assetRebalanceController = new AssetRebalanceController(
+            this.dom,
+            this.formatter
+        );
+
+        this.spotlightController = new CardSpotlightController();
+
+        this.goalCommitmentController = new GoalCommitmentController(
+            this.dom,
+            this.formatter,
+            () => this.getInputs(),
+            () => this.latestResults
+        );
+
+        this.dailyAccrualController = new DailyAccrualController(
+            this.dom,
+            this.formatter
+        );
+
+        this.qrShareModalController = new QrShareModalController(
+            this.dom
         );
     }
 
@@ -287,6 +361,12 @@ export class CalculatorApp {
         this.initToggles();
 
         new TabController(this.dom).init();
+        new StepperController(
+            this.dom,
+            this.validator,
+            (fieldId, val) => this.sliderManager.updateFieldValue(fieldId, val),
+            this.audioController
+        ).init();
         new SmartNudgeController(this.dom, (rate) => this.setSmartNudgeRate(rate)).init();
         new PdfExportController(
             this.dom,
@@ -304,6 +384,35 @@ export class CalculatorApp {
             () => this.getInputs()
         ).init();
         new ShareController(this.dom, () => this.getInputs()).init();
+        new GlossaryController().init();
+        this.audioController.init();
+        this.cityBenchmarkController.init();
+        this.summaryMetricsController.initTaxWaterfallModal();
+        new CommandPaletteController(this.dom, (params) => {
+            if (params.sip !== undefined) this.sliderManager.updateFieldValue('sip', params.sip);
+            if (params.years !== undefined) this.sliderManager.updateFieldValue('years', params.years);
+            if (params.rate !== undefined) this.sliderManager.updateFieldValue('rate', params.rate);
+            this.triggerCalculation();
+            const sec = this.dom.getElement('calculator-section');
+            if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+        }).init();
+        new WealthQuizController(this.dom, this.sliderManager, () => this.triggerCalculation()).init();
+        this.scenarioDiffController.init();
+        this.celebrationController.init();
+        this.stressTestController.init();
+        this.assetRebalanceController.init();
+        this.spotlightController.init();
+        this.goalCommitmentController.init();
+        this.dailyAccrualController.init();
+        this.qrShareModalController.init();
+        const snapshotBtn = this.dom.getElement('snapshot-scenario-btn');
+        if (snapshotBtn) {
+            snapshotBtn.addEventListener('click', () => {
+                const inputs = this.getInputs();
+                this.scenarioDiffController.setSnapshot(inputs, this.latestResults);
+            });
+        }
+        this.initPersonaBlueprints();
         this.initResizeListeners();
         new UrlStateController(
             this.dom,
@@ -312,6 +421,40 @@ export class CalculatorApp {
         ).init();
         this.initEventBusSubscribers();
         this.initInitialCalculation();
+    }
+
+    private initPersonaBlueprints(): void {
+        const buttons = document.querySelectorAll<HTMLButtonElement>('.persona-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const sip = parseFloat(btn.dataset.sip || '0');
+                const years = parseFloat(btn.dataset.years || '0');
+                const rate = parseFloat(btn.dataset.rate || '0');
+                const stepup = parseFloat(btn.dataset.stepup || '0');
+                const lumpsum = parseFloat(btn.dataset.lumpsum || '0');
+                const enableSwp = btn.dataset.enableSwp === 'true';
+
+                if (btn.dataset.sip !== undefined) this.sliderManager.updateFieldValue('sip', sip);
+                if (btn.dataset.years !== undefined) this.sliderManager.updateFieldValue('years', years);
+                if (btn.dataset.rate !== undefined) this.sliderManager.updateFieldValue('rate', rate);
+                if (btn.dataset.stepup !== undefined) this.sliderManager.updateFieldValue('stepup', stepup);
+                if (btn.dataset.lumpsum !== undefined) this.sliderManager.updateFieldValue('lumpsum', lumpsum);
+                if (btn.dataset.corpus !== undefined) this.sliderManager.updateFieldValue('corpus', parseFloat(btn.dataset.corpus));
+
+                if (btn.dataset.swp !== undefined) this.sliderManager.updateFieldValue('swp_withdrawal', parseFloat(btn.dataset.swp));
+                if (btn.dataset.swpYears !== undefined) this.sliderManager.updateFieldValue('swp_years', parseFloat(btn.dataset.swpYears));
+                if (btn.dataset.swpRate !== undefined) this.sliderManager.updateFieldValue('swp_rate', parseFloat(btn.dataset.swpRate));
+                if (btn.dataset.swpHike !== undefined) this.sliderManager.updateFieldValue('swp_stepup', parseFloat(btn.dataset.swpHike));
+
+                const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
+                if (swpToggle) {
+                    swpToggle.checked = enableSwp;
+                    this.syncSwpToggleState();
+                }
+
+                this.triggerCalculation();
+            });
+        });
     }
 
     private initSliderSync(): void {
@@ -433,6 +576,16 @@ export class CalculatorApp {
             this.latestResults = combined;
             this.updateTable(combined, inputs.enable_swp);
             this.updateSummaryMetrics(combined);
+            this.scenarioDiffController.updateDiff(combined);
+
+            const lastRow = combined[combined.length - 1];
+            if (lastRow) {
+                this.celebrationController.checkMilestones(lastRow.combined_total);
+            }
+
+            this.stressTestController.updateResults(combined);
+            this.assetRebalanceController.updateInputs(inputs);
+            this.dailyAccrualController.updateResults(combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 
@@ -496,6 +649,8 @@ export class CalculatorApp {
 
                 this.chartManager.updateChart(existingData, swpEnabledOnLoad);
             }
+
+            this.sliderManager.refreshVisuals();
         };
 
         if (typeof requestAnimationFrame !== 'undefined') {

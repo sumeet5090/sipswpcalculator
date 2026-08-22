@@ -24,6 +24,11 @@ class AppTwigExtensionTest extends TestCase
                 return '₹' . number_format($num);
             }
 
+            public function formatDynamic(float|int $amount, string $currency = 'INR'): string
+            {
+                return '₹' . number_format($amount);
+            }
+
             public function getSymbol(string $currency): string
             {
                 return '₹';

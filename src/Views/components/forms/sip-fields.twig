@@ -23,7 +23,14 @@
     'step': 100000,
     'value': 10000000,
     'prefix': '₹',
-    'theme': 'emerald'
+    'theme': 'emerald',
+    'presets': [
+        {'label': '₹25L', 'value': 2500000},
+        {'label': '₹50L', 'value': 5000000},
+        {'label': '₹1 Cr', 'value': 10000000},
+        {'label': '₹2 Cr', 'value': 20000000},
+        {'label': '₹5 Cr', 'value': 50000000}
+    ]
 }) }}
 </div>
 
@@ -38,7 +45,14 @@
     'step': calc_config.sip.step,
     'value': sip,
     'prefix': '₹',
-    'theme': 'emerald'
+    'theme': 'emerald',
+    'presets': [
+        {'label': '₹5k', 'value': 5000},
+        {'label': '₹10k', 'value': 10000},
+        {'label': '₹25k', 'value': 25000},
+        {'label': '₹50k', 'value': 50000},
+        {'label': '₹1L', 'value': 100000}
+    ]
 }) }}
 </div>
 
@@ -53,7 +67,15 @@
     'value': years,
     'suffix': 'Yrs',
     'theme': 'emerald',
-    'input_text_color': 'text-slate-700 focus:border-emerald-500 focus:ring-emerald-500/30 focus:ring-1'
+    'input_text_color': 'text-slate-700 focus:border-emerald-500 focus:ring-emerald-500/30 focus:ring-1',
+    'presets': [
+        {'label': '5Y', 'value': 5},
+        {'label': '10Y', 'value': 10},
+        {'label': '15Y', 'value': 15},
+        {'label': '20Y', 'value': 20},
+        {'label': '25Y', 'value': 25},
+        {'label': '30Y', 'value': 30}
+    ]
 }) }}
 
 <details class="group mt-4 border-t border-slate-100 pt-3" id="sip-advanced-details">
@@ -95,7 +117,13 @@
             'value': rate,
             'suffix': '%',
             'theme': 'emerald',
-            'input_text_color': 'text-slate-700 focus:border-emerald-500 focus:ring-emerald-500/30 focus:ring-1'
+            'input_text_color': 'text-slate-700 focus:border-emerald-500 focus:ring-emerald-500/30 focus:ring-1',
+            'presets': [
+                {'label': '10%', 'value': 10},
+                {'label': '12%', 'value': 12},
+                {'label': '14%', 'value': 14},
+                {'label': '15%', 'value': 15}
+            ]
         }) }}
 
         <!-- Yearly Step-up -->
@@ -108,7 +136,13 @@
             'step': calc_config.stepup.step,
             'value': stepup,
             'suffix': '%',
-            'theme': 'emerald'
+            'theme': 'emerald',
+            'presets': [
+                {'label': '0%', 'value': 0},
+                {'label': '5%', 'value': 5},
+                {'label': '10%', 'value': 10},
+                {'label': '15%', 'value': 15}
+            ]
         }) }}
 
         <!-- Expected Inflation -->
@@ -119,9 +153,15 @@
             'max': calc_config.inflation.max|default(15),
             'slider_max': calc_config.inflation.slider_max|default(12),
             'step': calc_config.inflation.step|default(0.5),
-            'value': inflation|default(6),
+            'value': inflation|default(0),
             'suffix': '%',
-            'theme': 'emerald'
+            'theme': 'emerald',
+            'presets': [
+                {'label': '0%', 'value': 0},
+                {'label': '6%', 'value': 6},
+                {'label': '7%', 'value': 7},
+                {'label': '8%', 'value': 8}
+            ]
         }) }}
     </div>
 </details>

@@ -19,6 +19,15 @@ interface CurrencyFormatterInterface
     public function format(float|int $num): string;
 
     /**
+     * Format dynamic large amounts with appropriate Lakh/Crore or Million/Billion suffix.
+     *
+     * @param float|int $amount
+     * @param string $currency
+     * @return string
+     */
+    public function formatDynamic(float|int $amount, string $currency = 'INR'): string;
+
+    /**
      * Get symbol for a given currency code.
      *
      * @param string $currency
