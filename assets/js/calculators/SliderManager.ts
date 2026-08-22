@@ -280,7 +280,7 @@ export class SliderManager {
     }
 
     private _initPresetChips(fieldId: string, input: HTMLInputElement, range: HTMLInputElement): void {
-        const chips = document.querySelectorAll<HTMLButtonElement>(`button[data-preset-for="${fieldId}"]`);
+        const chips = this.dom.getElements<HTMLButtonElement>(`button[data-preset-for="${fieldId}"]`);
         chips.forEach(chip => {
             chip.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -324,7 +324,7 @@ export class SliderManager {
     }
 
     private _updatePresetChips(fieldId: string, currentVal: number): void {
-        const chips = document.querySelectorAll<HTMLButtonElement>(`button[data-preset-for="${fieldId}"]`);
+        const chips = this.dom.getElements<HTMLButtonElement>(`button[data-preset-for="${fieldId}"]`);
         chips.forEach(chip => {
             const presetVal = parseFloat(chip.dataset.presetVal || '');
             const isActive = (!isNaN(presetVal) && Math.abs(presetVal - currentVal) < 0.01);
