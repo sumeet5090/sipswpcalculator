@@ -18,15 +18,57 @@
 @source "../../assets/js/**/*.ts";
 @source "../../resources/js/**/*.ts";
 
-/* ── Custom Theme: Brand typography tokens and color palette ── */
+/* ── Custom Theme: Brand typography tokens, semantic financial colors & curves ── */
 @theme {
-  --font-sans: "Inter", sans-serif;
-  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Plus Jakarta Sans", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
+  /* Brand Emerald / Teal Primary Palette */
+  --color-brand-50: #ecfdf5;
+  --color-brand-100: #d1fae5;
+  --color-brand-200: #a7f3d0;
+  --color-brand-300: #6ee7b7;
+  --color-brand-400: #34d399;
+  --color-brand-500: #10b981;
+  --color-brand-600: #059669;
+  --color-brand-700: #047857;
+  --color-brand-800: #065f46;
+  --color-brand-900: #064e3b;
+
+  /* Indigo Secondary Palette */
   --color-indigo-50: #eef2ff;
   --color-indigo-100: #e0e7ff;
+  --color-indigo-200: #c7d2fe;
   --color-indigo-500: #6366f1;
   --color-indigo-600: #4f46e5;
   --color-indigo-700: #4338ca;
   --color-indigo-900: #312e81;
+
+  /* Semantic Financial Colors (Pure Light-Theme Calibrated) */
+  --color-financial-growth: #047857;       /* Emerald 700 - High contrast on white (5.8:1) */
+  --color-financial-growth-bg: #ecfdf5;    /* Emerald 50 */
+  --color-financial-growth-border: #a7f3d0;/* Emerald 200 */
+
+  --color-financial-withdrawal: #be123c;   /* Rose 700 - High contrast on white (5.4:1) */
+  --color-financial-withdrawal-bg: #fff1f2;/* Rose 50 */
+  --color-financial-withdrawal-border: #fecdd3;
+
+  --color-financial-principal: #334155;    /* Slate 700 (9.2:1 contrast) */
+  --color-financial-principal-bg: #f8fafc; /* Slate 50 */
+  --color-financial-principal-border: #e2e8f0;
+
+  --color-financial-tax: #6d28d9;          /* Purple 700 (6.1:1 contrast) */
+  --color-financial-tax-bg: #f5f3ff;
+  --color-financial-tax-border: #ddd6fe;
+
+  --color-financial-inflation: #c2410c;    /* Orange 700 (5.1:1 contrast) */
+  --color-financial-inflation-bg: #fff7ed;
+  --color-financial-inflation-border: #fed7aa;
+
+  /* Kinetic Spring Timing Tokens */
+  --ease-spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

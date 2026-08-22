@@ -146,6 +146,14 @@ export class SummaryMetricsController {
         this.odometer.animateValue('summary-withdrawn', totalWithdrawn);
         this.odometer.animateValue('summary-corpus', finalCorpus);
 
+        // Flash ambient recalculation indicator on primary corpus card
+        const corpusCard = this.dom.getElement('summary-corpus')?.closest('.glass-card, [class*="rounded-2xl"]');
+        if (corpusCard) {
+            corpusCard.classList.remove('metric-pulse-active');
+            void (corpusCard as HTMLElement).offsetWidth; // Force DOM reflow
+            corpusCard.classList.add('metric-pulse-active');
+        }
+
         // Update Gain Ratio Badge
         const gainBadge = this.dom.getElement('summary-gain-badge');
         if (gainBadge) {

@@ -79,6 +79,7 @@ export class SliderManager {
         const initialVal = parseFloat(input.value) || 0;
         this._updateTrackProgress(range);
         this._updateSubtext(inputId, initialVal);
+        this._updateWordBadge(inputId, initialVal);
         this._updatePresetChips(inputId, initialVal);
 
         // Dynamic Floating Thumb Tooltip
@@ -124,9 +125,17 @@ export class SliderManager {
                 this._updateAria(range, range.value);
                 this._updateTrackProgress(range);
                 this._updateSubtext(inputId, numericVal);
+                this._updateWordBadge(inputId, numericVal);
                 this._updatePresetChips(inputId, numericVal);
                 this._clearError(inputId);
                 showTooltip(numericVal);
+
+                // Tactile Haptic Vibration at major intervals
+                if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+                    if (numericVal % 10000 === 0 || (inputId === 'years' && numericVal % 5 === 0)) {
+                        navigator.vibrate(6);
+                    }
+                }
             } finally {
                 this.isInternalSyncing = false;
             }
@@ -166,6 +175,7 @@ export class SliderManager {
                 this._updateAria(range, validated);
                 this._updateTrackProgress(range);
                 this._updateSubtext(inputId, isNaN(rawVal) ? validated : rawVal);
+                this._updateWordBadge(inputId, isNaN(rawVal) ? validated : rawVal);
                 this._updatePresetChips(inputId, isNaN(rawVal) ? validated : rawVal);
             } finally {
                 this.isInternalSyncing = false;
@@ -190,9 +200,10 @@ export class SliderManager {
             this.triggerFn();
         });
 
-        // Bi-directional focus halo lighting
+        // Bi-directional focus halo lighting & Auto-select on focus
         input.addEventListener('focus', () => {
             range.classList.add('ring-2', 'ring-emerald-400/50');
+            input.select();
         });
         input.addEventListener('blur', () => {
             range.classList.remove('ring-2', 'ring-emerald-400/50');
@@ -253,6 +264,7 @@ export class SliderManager {
         this._updateAria(range, val);
         this._updateTrackProgress(range);
         this._updateSubtext(fieldId, val);
+        this._updateWordBadge(fieldId, val);
         this._updatePresetChips(fieldId, val);
         this._clearError(fieldId);
         this.triggerFn();
@@ -266,6 +278,7 @@ export class SliderManager {
             const val = parseFloat(input.value) || 0;
             this._updateTrackProgress(range);
             this._updateSubtext(fieldId, val);
+            this._updateWordBadge(fieldId, val);
             this._updatePresetChips(fieldId, val);
         });
     }
@@ -321,6 +334,14 @@ export class SliderManager {
         if (!subtextEl) return;
         const text = this.formatter.formatSubtext(fieldId, val);
         subtextEl.textContent = text;
+    }
+
+    private _updateWordBadge(fieldId: string, val: number): void {
+        const badgeEl = this.dom.getElement(`${fieldId}_word_badge`);
+        if (!badgeEl) return;
+        const text = this.formatter.formatWordBadge(val);
+        badgeEl.textContent = text;
+        badgeEl.style.display = text ? 'inline-block' : 'none';
     }
 
     private _updatePresetChips(fieldId: string, currentVal: number): void {

@@ -1,18 +1,33 @@
 /* styles.css - Refined Fintech Theme (Light Mode) */
 
+/* ── Global Tabular Figures & Numerals Enforcements ── */
+.tabular-nums,
+.numeral-tabular,
+.metric-value,
+.table-numeral,
+input[type="number"],
+input[type="text"].numeral-input {
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+    letter-spacing: -0.015em;
+}
+
 /* ── Remove up/down spinner arrows inside SIP & SWP form number inputs ── */
 .glass-card input[type=number]::-webkit-inner-spin-button,
-.glass-card input[type=number]::-webkit-outer-spin-button {
+.glass-card input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.glass-card input[type=number] {
+.glass-card input[type=number],
+input[type=number] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
 
-/* 1. Reset & Base */
+/* 1. Reset & Base Tokens */
 :root {
     /* SaaS Premium Gradients (Updated to Emerald/Teal) */
     --gradient-saas: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #059669 100%);
@@ -22,33 +37,37 @@
     --gradient-primary: linear-gradient(135deg, #059669 0%, #047857 100%);
 
     /* Semantic Financial Color Tokens */
-    --color-growth: #10b981;      /* Emerald 500 */
-    --color-withdrawal: #f43f5e;  /* Rose 500 */
-    --color-principal: #6366f1;   /* Indigo 500 */
-    --color-tax: #8b5cf6;         /* Violet 500 */
-    --color-gold: #f59e0b;        /* Amber 500 */
+    --color-growth: #047857;      /* Emerald 700 */
+    --color-withdrawal: #be123c;  /* Rose 700 */
+    --color-principal: #334155;   /* Slate 700 */
+    --color-tax: #6d28d9;         /* Violet 700 */
+    --color-gold: #b45309;        /* Amber 700 */
 
     /* Legacy Accents */
-    --color-acc-growth: #10b981;
-    --color-acc-withdraw: #f43f5e;
+    --color-acc-growth: #047857;
+    --color-acc-withdraw: #be123c;
 
     /* Base Typography & Surfaces */
     --color-text-primary: #0f172a;
-    --color-text-secondary: #64748b;
+    --color-text-secondary: #475569;
+    --color-text-muted: #94a3b8;
     --color-border: #e2e8f0;
     --color-bg: #f8fafc;
 
     /* Multi-Tier Composite Elevation Tokens */
-    --elevation-flat: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --elevation-card: 0 1px 3px rgba(0,0,0,0.03), 0 8px 24px -4px rgba(0,0,0,0.06);
-    --elevation-floating: 0 4px 6px -1px rgba(0,0,0,0.04), 0 20px 40px -8px rgba(0,0,0,0.10);
-    --elevation-modal: 0 24px 48px -12px rgba(15, 23, 42, 0.25);
-    --shadow-glow: 0 0 20px rgba(5, 150, 105, 0.15);
+    --elevation-flat: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --elevation-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px -4px rgba(15, 23, 42, 0.05);
+    --elevation-floating: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 20px 40px -8px rgba(15, 23, 42, 0.08);
+    --elevation-modal: 0 24px 48px -12px rgba(15, 23, 42, 0.18);
+    --shadow-glow: 0 0 20px rgba(5, 150, 105, 0.12);
 
     /* Glassmorphism & Chiseled Edge Highlights */
-    --glass-bg: rgba(255, 255, 255, 0.92);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.6);
-    --glass-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8), var(--elevation-card);
+    --glass-bg: rgba(255, 255, 255, 0.96);
+    --glass-border: 1px solid rgba(226, 232, 240, 0.8);
+    --glass-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), var(--elevation-card);
+    --glass-card-bg: rgba(255, 255, 255, 0.96);
+    --glass-card-border: 1px solid rgba(226, 232, 240, 0.8);
+    --glass-card-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), var(--elevation-card);
 
     /* Spring Motion & Timing Tokens */
     --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -56,14 +75,40 @@
     --spring-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.glass-card {
+.glass-card,
+.glass-surface-card {
     background-color: var(--glass-bg);
     border: var(--glass-border);
     box-shadow: var(--glass-shadow);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border-radius: 1.5rem;
+    border-radius: 1.25rem;
     background-clip: padding-box;
+}
+
+/* Fluid Metric Headline Clamping */
+.fluid-metric-headline {
+    font-size: clamp(1.75rem, 1.25rem + 2.25vw, 2.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+    color: var(--color-text-primary);
+}
+
+/* Micro-Interaction Recalculation Pulse */
+@keyframes ambientPulse {
+    0% {
+        background-color: rgba(16, 185, 129, 0.08);
+        border-color: rgba(16, 185, 129, 0.3);
+    }
+    100% {
+        background-color: var(--glass-bg);
+        border-color: rgba(226, 232, 240, 0.8);
+    }
+}
+
+.metric-pulse-active {
+    animation: ambientPulse 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Specular Shimmer Sweep Effect */
