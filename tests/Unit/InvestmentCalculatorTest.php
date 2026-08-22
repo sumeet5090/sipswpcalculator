@@ -568,4 +568,53 @@ class InvestmentCalculatorTest extends TestCase
         $this->assertGreaterThan(5000000.0, $corpus);
         $this->assertLessThan(15000000.0, $corpus);
     }
+
+    /**
+     * Test Case 20: Extreme 50% Step-Up Upper Boundary Compounding Stability
+     */
+    public function testExtremeStepUpUpperBoundaryCompounding(): void
+    {
+        $calculator = new InvestmentCalculator();
+        $inputs = $this->createInputs([
+            'sip' => 25000,
+            'years' => 30,
+            'rate' => 15.0,
+            'stepup' => 50.0, // Max 50% annual hike
+            'enable_swp' => false
+        ]);
+
+        $results = $calculator->calculate($inputs);
+        $this->assertCount(30, $results);
+
+        // Assert monotonically increasing balances without NaN/INF
+        $prevTotal = 0.0;
+        foreach ($results as $row) {
+            $this->assertIsFloat($row['combined_total']);
+            $this->assertGreaterThan($prevTotal, $row['combined_total']);
+            $this->assertFalse(is_nan($row['combined_total']));
+            $this->assertFalse(is_infinite($row['combined_total']));
+            $prevTotal = $row['combined_total'];
+        }
+    }
+
+    /**
+     * Test Case 21: Zero-Target, Zero-Horizon & Lumpsum-Sufficiency Inversion Resilience
+     */
+    public function testRequiredSipInversionEdgeCases(): void
+    {
+        $calculator = new InvestmentCalculator();
+
+        // 1. Zero target corpus returns 0.0
+        $inputs = InvestmentInputs::fromValues(0.0, 15, 12.0, 10.0, false, 0.0, 0.0, 0, 0.0);
+        $this->assertEquals(0.0, $calculator->calculateRequiredSip($inputs, 0.0));
+
+        // 2. Zero horizon returns 0.0
+        $inputsZeroHorizon = InvestmentInputs::fromValues(0.0, 0, 12.0, 10.0, false, 0.0, 0.0, 0, 0.0);
+        $this->assertEquals(0.0, $calculator->calculateRequiredSip($inputsZeroHorizon, 10000000.0));
+
+        // 3. Lumpsum alone exceeds target corpus -> returns 0.0
+        $inputsWithLumpsum = InvestmentInputs::fromValues(0.0, 10, 12.0, 0.0, false, 0.0, 0.0, 0, 5000000.0);
+        // 50 Lakhs at 12% over 10 years grows to ~1.55 Crore (> 1 Crore target)
+        $this->assertEquals(0.0, $calculator->calculateRequiredSip($inputsWithLumpsum, 10000000.0));
+    }
 }

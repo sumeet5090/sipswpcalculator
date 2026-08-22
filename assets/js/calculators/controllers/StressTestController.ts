@@ -94,21 +94,21 @@ export class StressTestController {
 
         const scenario = STRESS_SCENARIOS[this.activeScenario] || STRESS_SCENARIOS.baseline;
         const lastRow = this.currentResults[this.currentResults.length - 1];
-        const normalFinal = lastRow.combined_total;
+        const normalFinal = lastRow?.combined_total ?? 0;
 
         const drawdownEl = this.dom.getElement('stress-preview-drawdown');
         const recoveryEl = this.dom.getElement('stress-preview-recovery');
         const finalEl = this.dom.getElement('stress-preview-final');
         const lessonEl = this.dom.getElement('stress-lesson-text');
 
-        if (scenario.dropPct === 0 || scenario.crashYear === 0 || scenario.crashYear > this.currentResults.length) {
+        if (scenario.dropPct === 0 || scenario.crashYear === 0 || scenario.crashYear > this.currentResults.length || normalFinal <= 0) {
             if (drawdownEl) drawdownEl.textContent = '₹ 0 (0%)';
             if (recoveryEl) recoveryEl.textContent = '0 Months (No Drop)';
             if (finalEl) finalEl.textContent = this.formatter.format(normalFinal);
         } else {
             const crashIdx = Math.min(scenario.crashYear - 1, this.currentResults.length - 1);
             const crashRow = this.currentResults[crashIdx];
-            const preCrashBalance = crashRow.combined_total;
+            const preCrashBalance = crashRow?.combined_total ?? 0;
             const drawdownAmt = (scenario.dropPct / 100) * preCrashBalance;
 
             // Rebound modeling: Rupee Cost Averaging dip-buying achieves ~92-96% of standard baseline

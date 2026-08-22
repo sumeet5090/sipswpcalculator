@@ -31,8 +31,8 @@ class CurrencyHelper implements CurrencyFormatterInterface
     public function formatDynamic(float|int $amount, string $currency = 'INR'): string
     {
         $rounded = round((float) $amount);
-        $isNegative = $rounded < 0;
         $absAmount = abs($rounded);
+        $isNegative = ($absAmount > 0.0) && ($rounded < 0.0);
         $sym = $this->getSymbol($currency);
         $prefix = $isNegative ? "-{$sym}" : $sym;
 

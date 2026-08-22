@@ -46,15 +46,23 @@ export class CompoundInterestCalculator {
         const rawT = parseInt(this.dom.getValue('ci-years') || '0', 10) || 0;
         const rawN = parseInt(this.dom.getValue('ci-frequency') || '12', 10) || 12;
 
-        const P = this.validator.validate('lumpsum', rawP);
-        const r = (this.validator.validate('rate', rawR)) / 100;
-        const t = this.validator.validate('years', rawT);
-        const n = rawN > 0 ? rawN : 12;
+        const P = Math.max(0, this.validator.validate('lumpsum', rawP));
+        const validatedRate = Math.max(0, this.validator.validate('rate', rawR));
+        const r = validatedRate / 100;
+        const t = Math.max(0, this.validator.validate('years', rawT));
+        const n = Math.max(1, rawN);
 
-        const A = P * Math.pow(1 + r / n, n * t);
-        const interest = A - P;
-        const effectiveRate = (Math.pow(1 + r / n, n) - 1) * 100;
-        const rule72Years = r > 0 ? (72 / (r * 100)).toFixed(1) : '∞';
+        let A = P;
+        let interest = 0;
+        let effectiveRate = 0;
+        let rule72Years = '∞';
+
+        if (P > 0 && t > 0 && r > 0) {
+            A = P * Math.pow(1 + r / n, n * t);
+            interest = Math.max(0, A - P);
+            effectiveRate = (Math.pow(1 + r / n, n) - 1) * 100;
+            rule72Years = (72 / (r * 100)).toFixed(1);
+        }
 
         const finalEl = this.dom.getElement('ci-final');
         const interestEl = this.dom.getElement('ci-interest');
