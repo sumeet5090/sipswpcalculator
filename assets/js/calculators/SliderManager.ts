@@ -7,6 +7,7 @@ interface SliderPair {
     range: HTMLInputElement;
     fieldId: string;
     defaultSliderMax: number;
+    initialDefaultValue: number;
 }
 
 /**
@@ -46,8 +47,30 @@ export class SliderManager {
         if (!input || !range) return;
 
         const defaultSliderMax = parseFloat(range.getAttribute('max') || '100000');
+        const initialDefaultValue = parseFloat(input.value) || 0;
 
-        this.pairs.push({ input, range, fieldId: inputId, defaultSliderMax });
+        this.pairs.push({ input, range, fieldId: inputId, defaultSliderMax, initialDefaultValue });
+
+        // Double-click & double-tap label reset
+        const labelEl = this.dom.getElement(`${inputId}_label`) || document.querySelector(`label[for="${inputId}"]`);
+        if (labelEl) {
+            labelEl.addEventListener('dblclick', (e) => {
+                e.preventDefault();
+                this.updateFieldValue(inputId, initialDefaultValue);
+            });
+
+            let lastTap = 0;
+            labelEl.addEventListener('touchend', (e) => {
+                const now = Date.now();
+                if (now - lastTap < 350 && now - lastTap > 0) {
+                    e.preventDefault();
+                    this.updateFieldValue(inputId, initialDefaultValue);
+                    lastTap = 0;
+                } else {
+                    lastTap = now;
+                }
+            });
+        }
 
         // Initialize preset chips for this field
         this._initPresetChips(inputId, input, range);
@@ -244,6 +267,15 @@ export class SliderManager {
             this._updateTrackProgress(range);
             this._updateSubtext(fieldId, val);
             this._updatePresetChips(fieldId, val);
+        });
+    }
+
+    /**
+     * Reset all registered input fields to their initial factory default values.
+     */
+    resetAllToDefaults(): void {
+        this.pairs.forEach(({ fieldId, initialDefaultValue }) => {
+            this.updateFieldValue(fieldId, initialDefaultValue);
         });
     }
 

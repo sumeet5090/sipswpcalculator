@@ -29,7 +29,7 @@
             {{ labelHtml|raw }}
         {% else %}
             <div class="flex items-center justify-between mb-1.5">
-                <label for="{{ id }}" id="{{ id }}_label" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">
+                <label for="{{ id }}" id="{{ id }}_label" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block select-none cursor-pointer hover:text-emerald-700 transition-colors" title="Double-click to reset to default">
                     {{ label }}
                 </label>
                 <span class="text-[10px] font-semibold text-slate-400 font-mono tracking-tight select-none">

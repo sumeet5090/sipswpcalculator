@@ -156,6 +156,29 @@ export class CalculatorApp {
         this.qrShareModalController = new QrShareModalController(
             this.dom
         );
+
+        this.initGlobalShortcuts();
+    }
+
+    private initGlobalShortcuts(): void {
+        if (typeof window === 'undefined') return;
+        window.addEventListener('keydown', (e: KeyboardEvent) => {
+            // Alt + R or Option + R: Reset all fields to factory defaults
+            if (e.altKey && (e.key === 'r' || e.key === 'R')) {
+                e.preventDefault();
+                this.resetToDefaults();
+            }
+        });
+    }
+
+    /**
+     * Reset all calculator inputs and sliders to factory benchmark defaults.
+     */
+    resetToDefaults(): void {
+        this.sliderManager.resetAllToDefaults();
+        this.audioController.playTick(280, 0.05);
+        this.audioController.vibrate([12, 24, 12]);
+        this.triggerCalculation();
     }
 
     /**
