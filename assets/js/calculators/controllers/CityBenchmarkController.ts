@@ -14,6 +14,7 @@ export class CityBenchmarkController {
     private sliderManager: SliderManager;
     private formatter: CurrencyFormatter;
     private onApply: () => void;
+    private activeInflation: number = 7.5;
     private activeData: CityData = {
         city: 'mumbai',
         expense: 85000,
@@ -54,7 +55,22 @@ export class CityBenchmarkController {
                 btn.classList.add('border-emerald-500', 'border-2', 'bg-white', 'shadow-sm');
                 btn.classList.remove('border-slate-200', 'bg-slate-50/90');
 
+                // Auto-sync inflation preference based on metro vs tier-2
+                if (city === 'tier2' || city === 'pune') {
+                    this.setInflation(6);
+                } else {
+                    this.setInflation(7.5);
+                }
+
                 this.updatePreviews();
+            });
+        });
+
+        const inflationBtns = card.querySelectorAll<HTMLButtonElement>('.city-inflation-btn');
+        inflationBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const inf = parseFloat(btn.dataset.inflation || '6');
+                this.setInflation(inf);
             });
         });
 
@@ -66,6 +82,24 @@ export class CityBenchmarkController {
         }
 
         this.updatePreviews();
+    }
+
+    private setInflation(inf: number): void {
+        this.activeInflation = inf;
+        const standardBtn = this.dom.getElement('city-inflation-standard-btn');
+        const metroBtn = this.dom.getElement('city-inflation-metro-btn');
+
+        if (inf === 6) {
+            standardBtn?.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs');
+            standardBtn?.classList.remove('text-slate-600');
+            metroBtn?.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs');
+            metroBtn?.classList.add('text-slate-600');
+        } else {
+            metroBtn?.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs');
+            metroBtn?.classList.remove('text-slate-600');
+            standardBtn?.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs');
+            standardBtn?.classList.add('text-slate-600');
+        }
     }
 
     private updatePreviews(): void {
@@ -83,6 +117,7 @@ export class CityBenchmarkController {
         this.sliderManager.updateFieldValue('years', 15);
         this.sliderManager.updateFieldValue('rate', 12);
         this.sliderManager.updateFieldValue('stepup', 10);
+        this.sliderManager.updateFieldValue('inflation', this.activeInflation);
 
         const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
         if (swpToggle) {
@@ -96,9 +131,9 @@ export class CityBenchmarkController {
 
         this.onApply();
 
-        const calcSection = this.dom.getElement('calculator-section');
+        const calcSection = this.dom.getElement('calculator-section') || this.dom.getElement('calculator-app');
         if (calcSection) {
-            calcSection.scrollIntoView({ behavior: 'smooth' });
+            window.scrollTo({ top: calcSection.offsetTop, behavior: 'smooth' });
         }
     }
 }

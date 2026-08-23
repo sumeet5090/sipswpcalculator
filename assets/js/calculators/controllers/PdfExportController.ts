@@ -84,6 +84,23 @@ export class PdfExportController {
             });
         }
 
+        // Live Proposal Header Preview Listeners
+        const clientInput = this.dom.getElement<HTMLInputElement>('clientName');
+        const advisorInput = this.dom.getElement<HTMLInputElement>('advisorName');
+        const previewClient = this.dom.getElement('preview-client-name');
+        const previewAdvisor = this.dom.getElement('preview-advisor-name');
+
+        if (clientInput && previewClient) {
+            clientInput.addEventListener('input', () => {
+                previewClient.textContent = clientInput.value.trim() || 'Valued Investor';
+            });
+        }
+        if (advisorInput && previewAdvisor) {
+            advisorInput.addEventListener('input', () => {
+                previewAdvisor.textContent = advisorInput.value.trim() || 'Financial Advisor';
+            });
+        }
+
         const fastInstantPdfBtn = this.dom.getElement('fastInstantPdfBtn');
         if (fastInstantPdfBtn && pdfForm) {
             fastInstantPdfBtn.addEventListener('click', () => {

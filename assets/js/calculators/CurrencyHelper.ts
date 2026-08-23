@@ -149,10 +149,17 @@ export class CurrencyFormatter {
 
         if (fieldId === 'rate') {
             let assetContext = '';
-            if (value >= 14) assetContext = ' • Aggressive Mid/Small Cap';
-            else if (value >= 11) assetContext = ' • Nifty 50 15Y Benchmark';
-            else if (value >= 8) assetContext = ' • Balanced Hybrid';
-            else assetContext = ' • Conservative Debt / FD';
+            if (value > 15) {
+                assetContext = ' • ⚠️ Exceeds Nifty 50 15Y Baseline (12-13.5%)';
+            } else if (value >= 13.5) {
+                assetContext = ' • Aggressive Mid/Small Cap Equity';
+            } else if (value >= 11) {
+                assetContext = ' • Nifty 50 15Y Benchmark (12.0–13.5% CAGR)';
+            } else if (value >= 8) {
+                assetContext = ' • Balanced Hybrid Allocation';
+            } else {
+                assetContext = ' • Conservative Debt / FD';
+            }
             return `${value.toFixed(1).replace(/\.0$/, '')}% p.a.${assetContext}`;
         }
 

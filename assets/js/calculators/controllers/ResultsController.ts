@@ -224,9 +224,20 @@ export class ResultsController {
         // Render Mobile Milestone Cards
         if (mobileContainer) {
             const mobileFragment = document.createDocumentFragment();
+            const maxInterest = Math.max(1, ...data.map(r => r.interest));
+
             filteredData.forEach((row) => {
                 const card = document.createElement('div');
+                const isMilestone = row.year === 1 || row.year % 5 === 0 || row.year === data.length;
+                const isFinal = row.year === data.length;
+
                 card.className = "p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-2.5 transition-all";
+
+                if (this.heatmapEnabled && row.interest > 0) {
+                    const intensity = Math.min(1, row.interest / maxInterest);
+                    card.style.backgroundColor = `rgba(16, 185, 129, ${(0.04 + intensity * 0.12).toFixed(2)})`;
+                    card.style.borderColor = `rgba(16, 185, 129, ${(0.2 + intensity * 0.3).toFixed(2)})`;
+                }
 
                 let finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
                 if (inputs.inflation > 0) {
@@ -237,10 +248,14 @@ export class ResultsController {
                     );
                 }
 
+                const badgeLabel = isFinal
+                    ? `🏁 Year ${row.year} (Maturity)`
+                    : (this.density === '5y' && isMilestone ? `🎯 Year ${row.year} Milestone` : `Year ${row.year}`);
+
                 const headerRow = document.createElement('div');
                 headerRow.className = "flex items-center justify-between";
                 headerRow.innerHTML = `
-                    <span class="text-xs font-extrabold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md">Year ${row.year}</span>
+                    <span class="text-xs font-extrabold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md">${badgeLabel}</span>
                     <div class="text-right">
                         <span class="text-[10px] text-slate-400 font-sans block">Ending Balance</span>
                         <strong class="text-sm font-extrabold text-slate-900 font-mono">${this.formatter.format(finalCorpus)}</strong>

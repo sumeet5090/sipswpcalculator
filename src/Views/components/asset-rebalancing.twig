@@ -49,14 +49,20 @@
             </div>
         </div>
 
-        <!-- Action Recommendation Banner -->
-        <div class="p-3 rounded-2xl bg-indigo-50/90 border border-indigo-200/80 flex items-start gap-2.5 text-indigo-950">
-            <span class="text-sm">🛡️</span>
-            <div>
-                <div class="text-xs font-bold text-indigo-900">Tax-Free Cashflow Rebalancing Recommendation</div>
-                <p id="rebalance-action-text" class="text-[11px] text-slate-700 mt-0.5">
+        <!-- Action Recommendation Banner with 5% Drift Guard -->
+        <div class="p-3.5 rounded-2xl bg-indigo-50/90 border border-indigo-200/80 flex items-start gap-2.5 text-indigo-950">
+            <span class="text-base shrink-0">🛡️</span>
+            <div class="w-full">
+                <div class="flex flex-wrap items-center justify-between gap-1 text-xs font-bold text-indigo-900">
+                    <span>Tax-Free Cashflow Rebalancing (±5% Drift Guard)</span>
+                    <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200">0% Tax Drag</span>
+                </div>
+                <p id="rebalance-action-text" class="text-[11px] text-slate-700 mt-1 leading-relaxed">
                     Allocate monthly SIP: <strong class="text-slate-900">₹17,500 into Equity</strong> and <strong class="text-slate-900">₹7,500 into Debt</strong> funds to maintain exact 70/30 asset balance without triggering any capital gains tax.
                 </p>
+                <div class="text-[10px] text-indigo-900/80 font-medium mt-1">
+                    💡 <em>Rule of Thumb: Rebalance only when portfolio allocation drifts by &gt;5% from target to minimize portfolio friction.</em>
+                </div>
             </div>
         </div>
     </div>
