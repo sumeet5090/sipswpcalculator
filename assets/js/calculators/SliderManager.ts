@@ -95,8 +95,8 @@ export class SliderManager {
         const showTooltip = (val: number) => {
             const min = parseFloat(range.min) || 0;
             const max = parseFloat(range.max) || 100;
-            const pct = max > min ? (val - min) / (max - min) : 0;
-            tooltip.style.left = `${Math.min(Math.max(pct * 100, 3), 97)}%`;
+            const pct = max > min ? ((val - min) / (max - min)) * 100 : 0;
+            tooltip.style.left = `clamp(28px, ${pct.toFixed(2)}%, calc(100% - 28px))`;
             if (inputId === 'sip' || inputId === 'lumpsum' || inputId === 'target_corpus' || inputId === 'swp_withdrawal') {
                 tooltip.textContent = this.formatter.formatDynamic(val);
             } else if (inputId === 'years' || inputId === 'swp_years') {
@@ -223,16 +223,18 @@ export class SliderManager {
                 this._updateSubtext(inputId, val);
                 this._updatePresetChips(inputId, val);
                 this.triggerFn();
-            } else if (e.key === 'ArrowUp' && e.shiftKey) {
+            } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
                 const step = parseFloat(range.step) || 1;
+                const multiplier = (e.metaKey || e.ctrlKey) ? 10 : (e.shiftKey ? 5 : 1);
                 const current = parseFloat(input.value) || 0;
-                this.updateFieldValue(inputId, current + step * 10);
-            } else if (e.key === 'ArrowDown' && e.shiftKey) {
+                this.updateFieldValue(inputId, current + step * multiplier);
+            } else if (e.key === 'ArrowDown') {
                 e.preventDefault();
                 const step = parseFloat(range.step) || 1;
+                const multiplier = (e.metaKey || e.ctrlKey) ? 10 : (e.shiftKey ? 5 : 1);
                 const current = parseFloat(input.value) || 0;
-                this.updateFieldValue(inputId, Math.max(0, current - step * 10));
+                this.updateFieldValue(inputId, Math.max(0, current - step * multiplier));
             }
         });
     }
@@ -371,11 +373,18 @@ export class SliderManager {
         });
     }
 
+    private _debounceAriaTimer: ReturnType<typeof setTimeout> | null = null;
+
     private _updateAria(rangeEl: HTMLInputElement, val: number | string): void {
         rangeEl.setAttribute('aria-valuenow', String(val));
         const fieldId = rangeEl.id.replace(/_range$/, '');
-        const readableText = this.formatter.formatAriaAnnouncement(fieldId, Number(val));
-        rangeEl.setAttribute('aria-valuetext', readableText);
+        if (this._debounceAriaTimer !== null) {
+            clearTimeout(this._debounceAriaTimer);
+        }
+        this._debounceAriaTimer = setTimeout(() => {
+            const readableText = this.formatter.formatAriaAnnouncement(fieldId, Number(val));
+            rangeEl.setAttribute('aria-valuetext', readableText);
+        }, 300);
     }
 
     private _showError(fieldId: string, message: string): void {

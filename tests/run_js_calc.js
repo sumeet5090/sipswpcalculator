@@ -2,12 +2,41 @@ import { MathEngine } from '../assets/js/calculators/MathEngine.ts';
 import { CurrencyFormatter } from '../assets/js/calculators/CurrencyHelper.ts';
 import { QrCodeGenerator } from '../assets/js/utils/QrCodeGenerator.ts';
 import { IndianNumberParser } from '../assets/js/calculators/helpers/IndianNumberParser.ts';
+import { SliderCurveHelper } from '../assets/js/calculators/helpers/SliderCurveHelper.ts';
 
 try {
     // Read input parameters JSON from command line arguments
     const inputArgs = JSON.parse(process.argv[2]);
 
-    if (inputArgs.action === 'parse_indian_number') {
+    if (inputArgs.action === 'slider_curve_test') {
+        const { min, max, step, curve } = inputArgs;
+        const posToVal0 = SliderCurveHelper.positionToValue(0, min, max, step, curve);
+        const posToVal50 = SliderCurveHelper.positionToValue(50, min, max, step, curve);
+        const posToVal100 = SliderCurveHelper.positionToValue(100, min, max, step, curve);
+        const valToPosMin = SliderCurveHelper.valueToPosition(min, min, max, curve);
+        const valToPosMax = SliderCurveHelper.valueToPosition(max, min, max, curve);
+        
+        let monotonic = true;
+        let lastVal = -Infinity;
+        for (let p = 0; p <= 100; p += 5) {
+            const v = SliderCurveHelper.positionToValue(p, min, max, step, curve);
+            if (v < lastVal) {
+                monotonic = false;
+                break;
+            }
+            lastVal = v;
+        }
+
+        console.log(JSON.stringify({
+            success: true,
+            posToVal0,
+            posToVal50,
+            posToVal100,
+            valToPosMin,
+            valToPosMax,
+            monotonic
+        }));
+    } else if (inputArgs.action === 'parse_indian_number') {
         const results = {};
         for (const [key, val] of Object.entries(inputArgs.inputs)) {
             results[key] = IndianNumberParser.parse(val);

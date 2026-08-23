@@ -134,11 +134,27 @@ export class ChartManager {
         const milestones: Milestone[] = [];
         const targets = this.validator.getMilestoneTargets().map(t => ({ ...t, reached: false }));
         let swpCovered = false;
+        let crossoverReached = false;
 
         for (let i = 0; i < results.length; i++) {
             const row = results[i];
             const postTaxVal = row.post_tax_total ?? row.combined_total;
             const activeCorpusValue = showPostTax ? postTaxVal : row.combined_total;
+            const interest = Math.max(0, activeCorpusValue - row.cumulative_invested);
+
+            // Compounding Crossover Point
+            if (!crossoverReached && interest > row.cumulative_invested && row.cumulative_invested > 0) {
+                crossoverReached = true;
+                milestones.push({
+                    type: 'wealth',
+                    label: 'Compounding Crossover ⚡',
+                    description: `Year ${row.year}: Interest earnings (${this.formatter.formatDynamic(interest)}) have surpassed total invested capital (${this.formatter.formatDynamic(row.cumulative_invested)})!`,
+                    year: row.year,
+                    icon: '⚡',
+                    value: activeCorpusValue,
+                    index: i
+                });
+            }
 
             for (const target of targets) {
                 if (!target.reached && activeCorpusValue >= target.value) {
@@ -515,6 +531,7 @@ export class ChartManager {
 
         const ctx = ctxEl.getContext('2d');
         if (!ctx) return;
+        ctxEl.style.touchAction = 'pan-y';
 
         const years = results.map(r => `Yr ${r.year}`);
         const calcApp = document.querySelector<HTMLElement>('[data-js="calculator-app"]');

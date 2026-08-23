@@ -124,16 +124,18 @@ export class CurrencyFormatter {
 
         if (fieldId === 'sip') {
             const annual = value * 12;
+            const daily = Math.round(value / 30);
             const annualFormatted = this.formatDynamic(annual);
             const monthlyFormatted = this.formatDynamic(value);
-            return `${monthlyFormatted} / mo • ${annualFormatted} / yr`;
+            return `${monthlyFormatted}/mo • ₹${daily.toLocaleString('en-IN')}/day • ${annualFormatted}/yr`;
         }
 
         if (fieldId === 'swp' || fieldId === 'swp_withdrawal' || fieldId === 'swp_amount') {
             const annual = value * 12;
+            const daily = Math.round(value / 30);
             const annualFormatted = this.formatDynamic(annual);
             const monthlyFormatted = this.formatDynamic(value);
-            return `${monthlyFormatted} / mo • ${annualFormatted} / yr`;
+            return `${monthlyFormatted}/mo • ₹${daily.toLocaleString('en-IN')}/day payout • ${annualFormatted}/yr`;
         }
 
         if (fieldId === 'lumpsum' || fieldId === 'corpus' || fieldId === 'initial_corpus' || fieldId === 'target_corpus') {
@@ -145,8 +147,29 @@ export class CurrencyFormatter {
             return `${value} Year${value > 1 ? 's' : ''} (${months} Months)`;
         }
 
-        if (fieldId === 'rate' || fieldId === 'swp_rate' || fieldId === 'inflation' || fieldId === 'stepup') {
-            return `${value.toFixed(1).replace(/\.0$/, '')}% per annum`;
+        if (fieldId === 'rate') {
+            let assetContext = '';
+            if (value >= 14) assetContext = ' • Aggressive Mid/Small Cap';
+            else if (value >= 11) assetContext = ' • Nifty 50 15Y Benchmark';
+            else if (value >= 8) assetContext = ' • Balanced Hybrid';
+            else assetContext = ' • Conservative Debt / FD';
+            return `${value.toFixed(1).replace(/\.0$/, '')}% p.a.${assetContext}`;
+        }
+
+        if (fieldId === 'swp_rate') {
+            let assetContext = '';
+            if (value >= 10) assetContext = ' • Hybrid Equity';
+            else if (value >= 7) assetContext = ' • Conservative Debt/Arbitrage';
+            else assetContext = ' • Capital Preservation';
+            return `${value.toFixed(1).replace(/\.0$/, '')}% p.a.${assetContext}`;
+        }
+
+        if (fieldId === 'stepup') {
+            return `${value.toFixed(1).replace(/\.0$/, '')}% annual top-up with salary hike`;
+        }
+
+        if (fieldId === 'inflation') {
+            return `${value.toFixed(1).replace(/\.0$/, '')}% p.a. purchasing power discount`;
         }
 
         return '';

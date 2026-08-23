@@ -1,0 +1,80 @@
+<dialog id="sebiBenchmarkModal" class="rounded-3xl p-0 backdrop:bg-slate-900/40 backdrop:backdrop-blur-xs bg-transparent max-w-xl w-full mx-auto shadow-2xl border-0 overflow-hidden" aria-labelledby="sebi-modal-title">
+    <div class="bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 text-slate-700 max-h-[90vh] overflow-y-auto custom-scrollbar">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div class="flex items-center gap-2.5">
+                <span class="p-2 rounded-xl bg-emerald-50 text-emerald-700 text-lg border border-emerald-100">⚖️</span>
+                <div>
+                    <h3 id="sebi-modal-title" class="text-base sm:text-lg font-extrabold text-slate-900 leading-tight">
+                        Statutory Modeling & Benchmark Standards
+                    </h3>
+                    <p class="text-xs text-slate-500 font-medium">AMFI & SEBI Regulatory Educational Guidelines</p>
+                </div>
+            </div>
+            <button type="button" id="closeSebiModalBtn" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer" aria-label="Close modal">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Privacy & Offline Sandboxing Callout -->
+        <div class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-4 flex items-start gap-3">
+            <span class="text-lg">🔒</span>
+            <div class="text-xs leading-relaxed text-emerald-950">
+                <strong class="font-bold text-emerald-900 block mb-0.5">100% Client-Side Sandbox Guarantee</strong>
+                All calculations, cashflow projections, and tax estimations run locally in your web browser. No personal income, SIP amount, or corpus data is ever sent, stored, or tracked on any server.
+            </div>
+        </div>
+
+        <!-- Asset Class Benchmark Table -->
+        <div class="space-y-2.5">
+            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Indian Asset Class Historical Returns (15Y CAGR Reference)</h4>
+            <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 font-bold text-slate-600 border-b border-slate-200">
+                        <tr>
+                            <th class="p-3">Asset Class</th>
+                            <th class="p-3">Benchmark Index</th>
+                            <th class="p-3 text-right">Historical CAGR</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 font-medium">
+                        <tr>
+                            <td class="p-3 font-bold text-slate-900">Large Cap Equities</td>
+                            <td class="p-3 text-slate-600">NIFTY 50 TRI</td>
+                            <td class="p-3 text-right font-mono font-bold text-emerald-700">~12.0% – 13.5%</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-slate-900">Mid & Small Cap</td>
+                            <td class="p-3 text-slate-600">NIFTY Midcap 150</td>
+                            <td class="p-3 text-right font-mono font-bold text-emerald-700">~14.5% – 16.0%</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-slate-900">Hybrid / Balanced</td>
+                            <td class="p-3 text-slate-600">CRISIL Hybrid 50+50</td>
+                            <td class="p-3 text-right font-mono font-bold text-slate-700">~10.0% – 11.5%</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-slate-900">Conservative Debt</td>
+                            <td class="p-3 text-slate-600">Fixed Deposit / Liquid</td>
+                            <td class="p-3 text-right font-mono font-bold text-slate-700">~6.5% – 7.2%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Statutory Notice -->
+        <div class="text-[11px] text-slate-500 leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-200/70 space-y-1.5">
+            <p><strong>Statutory Disclaimer:</strong> Mutual fund investments are subject to market risks. Please read all scheme-related documents carefully before investing. Historical performance benchmarks do not guarantee future compounding returns.</p>
+            <p>Calculations provided by this tool are mathematical simulations for educational and retirement planning awareness only.</p>
+        </div>
+
+        <div class="flex justify-end pt-2">
+            <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.close()"
+                class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-sm cursor-pointer">
+                Understood
+            </button>
+        </div>
+    </div>
+</dialog>

@@ -84,6 +84,17 @@ export class PdfExportController {
             });
         }
 
+        const fastInstantPdfBtn = this.dom.getElement('fastInstantPdfBtn');
+        if (fastInstantPdfBtn && pdfForm) {
+            fastInstantPdfBtn.addEventListener('click', () => {
+                const clientInput = this.dom.getElement<HTMLInputElement>('clientName');
+                if (clientInput && !clientInput.value) {
+                    clientInput.value = 'Valued Investor';
+                }
+                pdfForm.requestSubmit();
+            });
+        }
+
         if (pdfForm) {
             pdfForm.addEventListener('submit', (e) => {
                 e.preventDefault();

@@ -69,14 +69,19 @@ export class ShareController {
 
                 const showCopiedFeedback = () => {
                     const btnText = this.dom.getElement('shareBtnText');
-                    if (btnText) btnText.textContent = 'Copied!';
+                    if (btnText) btnText.innerHTML = '<span class="animate-bounce inline-block">✅</span> <span>Link Copied!</span>';
                     shareBtn.classList.remove('text-emerald-600', 'border-indigo-200');
-                    shareBtn.classList.add('text-emerald-700', 'border-emerald-300', 'bg-emerald-50');
+                    shareBtn.classList.add('text-emerald-800', 'border-emerald-400', 'bg-emerald-100/90', 'shadow-sm');
+
+                    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+                        navigator.vibrate([15, 30, 15]);
+                    }
+
                     setTimeout(() => {
                         if (btnText) btnText.textContent = 'Share';
                         shareBtn.classList.add('text-emerald-600', 'border-indigo-200');
-                        shareBtn.classList.remove('text-emerald-700', 'border-emerald-300', 'bg-emerald-50');
-                    }, 2000);
+                        shareBtn.classList.remove('text-emerald-800', 'border-emerald-400', 'bg-emerald-100/90', 'shadow-sm');
+                    }, 2200);
                 };
 
                 this.dom.copyToClipboard(shareUrl, showCopiedFeedback);
