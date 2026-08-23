@@ -78,90 +78,88 @@
     ]
 }) }}
 
-<details class="group mt-4 border-t border-slate-100 pt-3" id="sip-advanced-details">
-    <summary class="flex items-center justify-between text-[10px] font-bold text-slate-400 hover:text-slate-600 uppercase tracking-widest cursor-pointer select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 rounded py-1.5 transition-colors">
-        <span>Advanced Settings</span>
-        <svg class="w-3.5 h-3.5 transition-transform duration-200 group-open:rotate-180 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+<!-- Expected Return -->
+{% set rateLabelHtml %}
+<div class="flex items-center justify-between mb-1.5">
+    <label for="rate" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+        Expected Return
+    </label>
+    <!-- Smart Nudge trigger -->
+    <button type="button" id="rate-nudge-btn"
+        class="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-500 hover:text-emerald-700 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 rounded cursor-pointer"
+        aria-haspopup="true" aria-expanded="false"
+        aria-controls="rate-nudge-popover">
+        <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
-    </summary>
-    <div class="space-y-4 mt-3 pt-1">
-        <!-- Expected Return -->
-        {% set rateLabelHtml %}
-        <div class="flex items-center justify-between mb-1.5">
-            <label for="rate" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                Expected Return
-            </label>
-            <!-- Smart Nudge trigger -->
-            <button type="button" id="rate-nudge-btn"
-                class="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-500 hover:text-emerald-700 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 rounded"
-                aria-haspopup="true" aria-expanded="false"
-                aria-controls="rate-nudge-popover">
-                <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                Not sure?
-            </button>
-        </div>
-        {% endset %}
+        Not sure?
+    </button>
+</div>
+{% endset %}
 
-        {{ inputs.renderInputRangePair({
-            'id': 'rate',
-            'label': calc_config.rate.label,
-            'label_html': rateLabelHtml,
-            'min': calc_config.rate.min,
-            'max': calc_config.rate.max,
-            'slider_max': calc_config.rate.slider_max,
-            'step': calc_config.rate.step,
-            'value': rate,
-            'suffix': '%',
-            'theme': 'emerald',
-            'input_text_color': 'text-slate-700 focus:border-emerald-500 focus:ring-emerald-500/30 focus:ring-1',
-            'presets': [
-                {'label': '10%', 'value': 10},
-                {'label': '12%', 'value': 12},
-                {'label': '14%', 'value': 14},
-                {'label': '15%', 'value': 15}
-            ]
-        }) }}
+{{ inputs.renderInputRangePair({
+    'id': 'rate',
+    'label': calc_config.rate.label,
+    'label_html': rateLabelHtml,
+    'min': calc_config.rate.min,
+    'max': calc_config.rate.max,
+    'slider_max': calc_config.rate.slider_max,
+    'step': calc_config.rate.step,
+    'value': rate,
+    'suffix': '%',
+    'theme': 'emerald',
+    'input_text_color': 'text-slate-700 focus:border-emerald-500 focus:ring-emerald-500/30 focus:ring-1',
+    'presets': [
+        {'label': '10%', 'value': 10},
+        {'label': '12%', 'value': 12},
+        {'label': '14%', 'value': 14},
+        {'label': '15%', 'value': 15}
+    ]
+}) }}
 
-        <!-- Yearly Step-up -->
-        {{ inputs.renderInputRangePair({
-            'id': 'stepup',
-            'label': calc_config.stepup.label,
-            'min': calc_config.stepup.min,
-            'max': calc_config.stepup.max,
-            'slider_max': calc_config.stepup.slider_max,
-            'step': calc_config.stepup.step,
-            'value': stepup,
-            'suffix': '%',
-            'theme': 'emerald',
-            'presets': [
-                {'label': '0%', 'value': 0},
-                {'label': '5%', 'value': 5},
-                {'label': '10%', 'value': 10},
-                {'label': '15%', 'value': 15}
-            ]
-        }) }}
-
-        <!-- Expected Inflation -->
-        {{ inputs.renderInputRangePair({
-            'id': 'inflation',
-            'label': calc_config.inflation.label|default('Expected Inflation'),
-            'min': calc_config.inflation.min|default(0),
-            'max': calc_config.inflation.max|default(15),
-            'slider_max': calc_config.inflation.slider_max|default(12),
-            'step': calc_config.inflation.step|default(0.5),
-            'value': inflation|default(0),
-            'suffix': '%',
-            'theme': 'emerald',
-            'presets': [
-                {'label': '0%', 'value': 0},
-                {'label': '6%', 'value': 6},
-                {'label': '7%', 'value': 7},
-                {'label': '8%', 'value': 8}
-            ]
-        }) }}
+<!-- Adjustments & Inflation Options -->
+<div class="space-y-4 pt-3 border-t border-slate-100/90">
+    <div class="flex items-center gap-2">
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Adjustments & Inflation</span>
+        <div class="h-px flex-1 bg-slate-100"></div>
     </div>
-</details>
+
+    <!-- Yearly Step-up -->
+    {{ inputs.renderInputRangePair({
+        'id': 'stepup',
+        'label': calc_config.stepup.label,
+        'min': calc_config.stepup.min,
+        'max': calc_config.stepup.max,
+        'slider_max': calc_config.stepup.slider_max,
+        'step': calc_config.stepup.step,
+        'value': stepup,
+        'suffix': '%',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '0%', 'value': 0},
+            {'label': '5%', 'value': 5},
+            {'label': '10%', 'value': 10},
+            {'label': '15%', 'value': 15}
+        ]
+    }) }}
+
+    <!-- Expected Inflation -->
+    {{ inputs.renderInputRangePair({
+        'id': 'inflation',
+        'label': calc_config.inflation.label|default('Expected Inflation'),
+        'min': calc_config.inflation.min|default(0),
+        'max': calc_config.inflation.max|default(15),
+        'slider_max': calc_config.inflation.slider_max|default(12),
+        'step': calc_config.inflation.step|default(0.5),
+        'value': inflation|default(0),
+        'suffix': '%',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '0%', 'value': 0},
+            {'label': '6%', 'value': 6},
+            {'label': '7%', 'value': 7},
+            {'label': '8%', 'value': 8}
+        ]
+    }) }}
+</div>
