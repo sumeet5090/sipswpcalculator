@@ -1,9 +1,11 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { CurrencyFormatter } from '../CurrencyHelper';
 import { YearResult } from '../../types';
+import { ChartManager } from '../ChartManager';
 
 export interface StressScenario {
     id: string;
+    label: string;
     dropPct: number;
     recoveryMonths: number;
     crashYear: number;
@@ -13,6 +15,7 @@ export interface StressScenario {
 export const STRESS_SCENARIOS: Record<string, StressScenario> = {
     baseline: {
         id: 'baseline',
+        label: 'Normal Growth',
         dropPct: 0,
         recoveryMonths: 0,
         crashYear: 0,
@@ -20,6 +23,7 @@ export const STRESS_SCENARIOS: Record<string, StressScenario> = {
     },
     lehman: {
         id: 'lehman',
+        label: '2008 Lehman Shock (-52%)',
         dropPct: 52,
         recoveryMonths: 24,
         crashYear: 3,
@@ -27,6 +31,7 @@ export const STRESS_SCENARIOS: Record<string, StressScenario> = {
     },
     covid: {
         id: 'covid',
+        label: '2020 COVID Flash Crash (-38%)',
         dropPct: 38,
         recoveryMonths: 8,
         crashYear: 5,
@@ -34,6 +39,7 @@ export const STRESS_SCENARIOS: Record<string, StressScenario> = {
     },
     dotcom: {
         id: 'dotcom',
+        label: '2000 Dot-Com Bear Cycle (-30%)',
         dropPct: 30,
         recoveryMonths: 36,
         crashYear: 2,
@@ -44,12 +50,19 @@ export const STRESS_SCENARIOS: Record<string, StressScenario> = {
 export class StressTestController {
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
+    private chartManager?: ChartManager;
     private activeScenario: string = 'baseline';
     private currentResults: YearResult[] = [];
+    private isChartPlotActive: boolean = false;
 
-    constructor(dom: DOMAdapter, formatter: CurrencyFormatter) {
+    constructor(dom: DOMAdapter, formatter: CurrencyFormatter, chartManager?: ChartManager) {
         this.dom = dom;
         this.formatter = formatter;
+        this.chartManager = chartManager;
+    }
+
+    setChartManager(chartManager: ChartManager): void {
+        this.chartManager = chartManager;
     }
 
     init(): void {
@@ -63,6 +76,15 @@ export class StressTestController {
                 this.setScenario(scenario);
             });
         });
+
+        const togglePlotBtn = this.dom.getElement('toggle-plot-shock-btn');
+        if (togglePlotBtn) {
+            togglePlotBtn.addEventListener('click', () => {
+                this.isChartPlotActive = !this.isChartPlotActive;
+                this.syncPlotButton();
+                this.syncChartOverlay();
+            });
+        }
     }
 
     setScenario(scenarioId: string): void {
@@ -120,5 +142,58 @@ export class StressTestController {
         }
 
         if (lessonEl) lessonEl.textContent = scenario.lesson;
+
+        if (this.isChartPlotActive) {
+            this.syncChartOverlay();
+        }
+    }
+
+    private syncPlotButton(): void {
+        const togglePlotBtn = this.dom.getElement('toggle-plot-shock-btn');
+        if (!togglePlotBtn) return;
+
+        if (this.isChartPlotActive) {
+            togglePlotBtn.classList.add('bg-rose-600', 'text-white', 'border-rose-700', 'shadow-xs');
+            togglePlotBtn.classList.remove('bg-slate-100', 'text-slate-700', 'border-slate-200');
+            togglePlotBtn.innerHTML = '<span>📉 Shock Plotted on Chart</span> <span class="text-[10px] opacity-80">(Click to hide)</span>';
+        } else {
+            togglePlotBtn.classList.remove('bg-rose-600', 'text-white', 'border-rose-700', 'shadow-xs');
+            togglePlotBtn.classList.add('bg-slate-100', 'text-slate-700', 'border-slate-200');
+            togglePlotBtn.innerHTML = '<span>📉 Plot Shock Trajectory on Chart</span>';
+        }
+    }
+
+    private syncChartOverlay(): void {
+        if (!this.chartManager) return;
+
+        if (!this.isChartPlotActive || this.activeScenario === 'baseline' || this.currentResults.length === 0) {
+            this.chartManager.setShockOverlay(null);
+            return;
+        }
+
+        const scenario = STRESS_SCENARIOS[this.activeScenario] || STRESS_SCENARIOS.baseline;
+        const crashIdx = Math.min(scenario.crashYear - 1, this.currentResults.length - 1);
+        const recoveryIdx = Math.min(crashIdx + Math.ceil(scenario.recoveryMonths / 12), this.currentResults.length - 1);
+
+        const shockData = this.currentResults.map((r, i) => {
+            const normalVal = r.combined_total;
+            if (i < crashIdx) {
+                return normalVal;
+            } else if (i === crashIdx) {
+                return Math.round(normalVal * (1 - scenario.dropPct / 100));
+            } else if (i > crashIdx && i <= recoveryIdx) {
+                const progress = (i - crashIdx) / Math.max(1, (recoveryIdx - crashIdx));
+                const trough = normalVal * (1 - scenario.dropPct / 100);
+                return Math.round(trough + (normalVal - trough) * progress);
+            } else {
+                return Math.round(normalVal * (1 - (scenario.dropPct / 400)));
+            }
+        });
+
+        this.chartManager.setShockOverlay({
+            label: `${scenario.label} Path`,
+            data: shockData,
+            crashIndex: crashIdx
+        });
     }
 }

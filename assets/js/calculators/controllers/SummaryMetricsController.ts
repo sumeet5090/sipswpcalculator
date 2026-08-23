@@ -242,12 +242,18 @@ export class SummaryMetricsController {
         const taxTaxable = this.dom.getElement('tax-modal-taxable-gains');
         const taxAmount = this.dom.getElement('tax-modal-tax-amount');
         const taxNet = this.dom.getElement('tax-modal-net-corpus');
+        const taxHarvestSavings = this.dom.getElement('tax-modal-harvest-savings');
+        const taxHarvestEffective = this.dom.getElement('tax-modal-harvest-effective');
 
         const ltcgExemption = inputs.ltcg_exemption ?? 125000;
         if (taxGross) taxGross.textContent = this.formatter.format(preTaxGains);
         if (taxTaxable) taxTaxable.textContent = this.formatter.format(Math.max(0, preTaxGains - ltcgExemption));
         if (taxAmount) taxAmount.textContent = `- ${this.formatter.format(lastRow.ltcg_tax ?? 0)}`;
         if (taxNet) taxNet.textContent = this.formatter.format(lastRow.post_tax_total ?? preTaxCorpus);
+
+        const harvestAlpha = MathEngine.calculateTaxHarvestingSavings(inputs, data);
+        if (taxHarvestSavings) taxHarvestSavings.textContent = `Save ${this.formatter.format(harvestAlpha.cumulativeSavings)}`;
+        if (taxHarvestEffective) taxHarvestEffective.textContent = this.formatter.format(harvestAlpha.harvestedTax);
 
         this.fitSummaryCards();
     }

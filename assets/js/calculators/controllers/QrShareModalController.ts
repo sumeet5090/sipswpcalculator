@@ -51,9 +51,52 @@ export class QrShareModalController {
             copyBtn.addEventListener('click', () => this.copyUrl());
         }
 
+        const downloadImgBtn = this.dom.getElement('download-qr-image-btn');
+        if (downloadImgBtn) {
+            downloadImgBtn.addEventListener('click', () => this.downloadQrImage());
+        }
+
+        const copyImgBtn = this.dom.getElement('copy-qr-image-btn');
+        if (copyImgBtn) {
+            copyImgBtn.addEventListener('click', () => this.copyQrImage());
+        }
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
                 this.closeModal();
+            }
+        });
+    }
+
+    private downloadQrImage(): void {
+        const canvas = this.dom.getElement<HTMLCanvasElement>('#qr-code-canvas-container canvas');
+        if (!canvas) return;
+
+        const link = document.createElement('a');
+        link.download = 'SIP_SWP_Plan_QR.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
+    private copyQrImage(): void {
+        const canvas = this.dom.getElement<HTMLCanvasElement>('#qr-code-canvas-container canvas');
+        const copyImgBtn = this.dom.getElement('copy-qr-image-btn');
+        if (!canvas) return;
+
+        canvas.toBlob((blob) => {
+            if (!blob) return;
+            if (navigator.clipboard && 'write' in navigator.clipboard && typeof window.ClipboardItem !== 'undefined') {
+                navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]).then(() => {
+                    if (copyImgBtn) {
+                        const orig = copyImgBtn.innerHTML;
+                        copyImgBtn.innerHTML = '<span>✓ Copied Image!</span>';
+                        setTimeout(() => { copyImgBtn.innerHTML = orig; }, 2000);
+                    }
+                }).catch(() => {
+                    this.downloadQrImage();
+                });
+            } else {
+                this.downloadQrImage();
             }
         });
     }

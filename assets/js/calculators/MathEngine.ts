@@ -223,4 +223,41 @@ export class MathEngine {
         }
         return Math.round(bestCorpus);
     }
+
+    /**
+     * Calculate potential Section 112A Tax-Harvesting alpha savings.
+     * Systematically realizing up to ₹1,25,000 of LTCG per year tax-free resets the cost basis.
+     */
+    static calculateTaxHarvestingSavings(inp: InvestmentInputs, results: YearResult[]): {
+        standardTax: number;
+        harvestedTax: number;
+        cumulativeSavings: number;
+        totalHarvestedGains: number;
+    } {
+        if (!results || results.length === 0) {
+            return { standardTax: 0, harvestedTax: 0, cumulativeSavings: 0, totalHarvestedGains: 0 };
+        }
+
+        const lastRow = results[results.length - 1];
+        const standardTax = lastRow.ltcg_tax ?? 0;
+        const exemptionPerYear = inp.ltcg_exemption ?? 125000;
+        const taxRate = inp.ltcg_tax_rate ?? 0.125;
+
+        // Cumulative exemption harvested across holding years
+        const totalYears = results.length;
+        const maxHarvestable = totalYears * exemptionPerYear;
+        const totalGains = Math.max(0, (lastRow.combined_total + (lastRow.cumulative_withdrawals ?? 0)) - lastRow.cumulative_invested);
+        const actualHarvestedGains = Math.min(totalGains, maxHarvestable);
+
+        const remainingTaxable = Math.max(0, totalGains - actualHarvestedGains);
+        const harvestedTax = Math.round(remainingTaxable * taxRate);
+        const cumulativeSavings = Math.max(0, standardTax - harvestedTax);
+
+        return {
+            standardTax,
+            harvestedTax,
+            cumulativeSavings,
+            totalHarvestedGains: actualHarvestedGains
+        };
+    }
 }

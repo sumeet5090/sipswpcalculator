@@ -11,16 +11,19 @@ export interface ScenarioSnapshot {
 export class ScenarioDiffController {
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
+    private getInputs?: () => InvestmentInputs;
     private snapshot: ScenarioSnapshot | null = null;
 
-    constructor(dom: DOMAdapter, formatter: CurrencyFormatter) {
+    constructor(dom: DOMAdapter, formatter: CurrencyFormatter, getInputs?: () => InvestmentInputs) {
         this.dom = dom;
         this.formatter = formatter;
+        this.getInputs = getInputs;
     }
 
     init(): void {
         const snapshotBtn = this.dom.getElement('snapshot-scenario-btn');
         const clearBtn = this.dom.getElement('scenario-clear-btn');
+        const shareDiffBtn = this.dom.getElement('scenario-share-diff-btn');
 
         if (snapshotBtn) {
             snapshotBtn.addEventListener('click', () => {
@@ -31,6 +34,28 @@ export class ScenarioDiffController {
         if (clearBtn) {
             clearBtn.addEventListener('click', () => {
                 this.clearSnapshot();
+            });
+        }
+
+        if (shareDiffBtn) {
+            shareDiffBtn.addEventListener('click', () => {
+                if (!this.snapshot) return;
+                const activeInputs = this.getInputs ? this.getInputs() : this.snapshot.inputs;
+                const params = new URLSearchParams();
+                params.set('base_sip', String(this.snapshot.inputs.sip));
+                params.set('base_yr', String(this.snapshot.inputs.years));
+                params.set('base_rate', String(this.snapshot.inputs.rate));
+                params.set('act_sip', String(activeInputs.sip));
+                params.set('act_yr', String(activeInputs.years));
+                params.set('act_rate', String(activeInputs.rate));
+                params.set('diff', '1');
+
+                const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+                this.dom.copyToClipboard(shareUrl, () => {
+                    const orig = shareDiffBtn.innerHTML;
+                    shareDiffBtn.innerHTML = '<span>✓ Copied Comparison!</span>';
+                    setTimeout(() => { shareDiffBtn.innerHTML = orig; }, 2000);
+                });
             });
         }
     }

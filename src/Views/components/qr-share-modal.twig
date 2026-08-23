@@ -27,15 +27,25 @@
             </div>
         </div>
 
-        <p class="text-[11px] text-slate-600 mt-2 mb-4 relative z-10">
+        <p class="text-[11px] text-slate-600 mt-2 mb-3 relative z-10">
             Scan with your smartphone camera to open and manipulate this financial plan on mobile with zero loss of data.
         </p>
+
+        <!-- QR Image Actions -->
+        <div class="grid grid-cols-2 gap-2 mb-3 relative z-10">
+            <button type="button" id="download-qr-image-btn" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs">
+                <span>📥</span> <span>Save Image</span>
+            </button>
+            <button type="button" id="copy-qr-image-btn" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs">
+                <span>🖼️</span> <span>Copy Image</span>
+            </button>
+        </div>
 
         <!-- Copy URL Button -->
         <div class="flex items-center gap-2 relative z-10">
             <input type="text" id="qr-share-url-input" readonly class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-[11px] text-slate-700 font-mono truncate focus:outline-none" value="" aria-label="Plan URL">
             <button type="button" id="copy-qr-url-btn" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md shadow-emerald-600/20 transition-all cursor-pointer whitespace-nowrap">
-                <span>📋 Copy</span>
+                <span>📋 Copy Link</span>
             </button>
         </div>
     </div>

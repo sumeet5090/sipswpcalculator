@@ -116,7 +116,8 @@ export class CalculatorApp {
 
         this.scenarioDiffController = new ScenarioDiffController(
             this.dom,
-            this.formatter
+            this.formatter,
+            () => this.getInputs()
         );
 
         this.celebrationController = new MilestoneCelebrationController(
@@ -136,7 +137,8 @@ export class CalculatorApp {
 
         this.stressTestController = new StressTestController(
             this.dom,
-            this.formatter
+            this.formatter,
+            this.chartManager
         );
 
         this.assetRebalanceController = new AssetRebalanceController(

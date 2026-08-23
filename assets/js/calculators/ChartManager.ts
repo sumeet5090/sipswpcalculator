@@ -327,6 +327,26 @@ export class ChartManager {
             });
         }
 
+        if (this.shockOverlayData) {
+            const crashIdx = this.shockOverlayCrashIndex;
+            datasets.push({
+                label: this.shockOverlayData.label,
+                data: this.shockOverlayData.data,
+                borderColor: '#be123c',
+                backgroundColor: 'rgba(190, 18, 60, 0.05)',
+                borderWidth: 2.5,
+                borderDash: [6, 4],
+                tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
+                fill: false,
+                pointBackgroundColor: '#be123c',
+                pointBorderColor: THEME_COLORS.chart.pointBgWhite,
+                pointRadius: results.map((_, idx) => (crashIdx !== null && idx === crashIdx) ? 6 : (isSinglePoint ? 4 : 0)),
+                pointHoverRadius: 7,
+                order: 0,
+            });
+        }
+
         return datasets;
     }
 
@@ -335,6 +355,19 @@ export class ChartManager {
     private currentChartType: 'line' | 'doughnut' | null = null;
     private lastResults: YearResult[] = [];
     private lastEnableSwp: boolean = true;
+    private shockOverlayData: { label: string; data: number[] } | null = null;
+    private shockOverlayCrashIndex: number | null = null;
+
+    /**
+     * Plot or clear historical market shock trajectory overlay.
+     */
+    setShockOverlay(overlay: { label: string; data: number[]; crashIndex: number } | null): void {
+        this.shockOverlayData = overlay ? { label: overlay.label, data: overlay.data } : null;
+        this.shockOverlayCrashIndex = overlay ? overlay.crashIndex : null;
+        if (this.lastResults.length > 0) {
+            this.updateChart(this.lastResults, this.lastEnableSwp);
+        }
+    }
 
     /**
      * Switch active historical benchmark comparison (Nifty 50, Gold, FD, or None).

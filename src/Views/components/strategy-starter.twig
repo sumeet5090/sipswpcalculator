@@ -76,7 +76,12 @@
 
             <!-- Step 2: Monthly Capacity -->
             <div id="quiz-step-2" class="quiz-step space-y-2.5 hidden">
-                <h5 class="text-xs font-bold text-slate-800">2. How much can you comfortably invest every month?</h5>
+                <div class="flex items-center justify-between">
+                    <h5 class="text-xs font-bold text-slate-800">2. How much can you comfortably invest every month?</h5>
+                    <button type="button" class="quiz-back-btn text-[11px] font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1 cursor-pointer" data-target-step="1">
+                        <span>←</span> <span>Back</span>
+                    </button>
+                </div>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                     <button type="button" class="quiz-choice p-3 rounded-2xl bg-slate-50 border border-slate-200 hover:border-emerald-500 hover:bg-white text-left transition-all cursor-pointer" data-sip="5000">
                         <strong class="text-xs text-slate-900 block">₹5,000 / mo</strong>
@@ -99,7 +104,12 @@
 
             <!-- Step 3: Horizon & Execution -->
             <div id="quiz-step-3" class="quiz-step space-y-2.5 hidden">
-                <h5 class="text-xs font-bold text-slate-800">3. Select your target accumulation tenure:</h5>
+                <div class="flex items-center justify-between">
+                    <h5 class="text-xs font-bold text-slate-800">3. Select your target accumulation tenure:</h5>
+                    <button type="button" class="quiz-back-btn text-[11px] font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1 cursor-pointer" data-target-step="2">
+                        <span>←</span> <span>Back</span>
+                    </button>
+                </div>
                 <div class="grid grid-cols-3 gap-2.5 mb-3">
                     <button type="button" class="quiz-choice p-3 rounded-2xl bg-slate-50 border border-slate-200 hover:border-emerald-500 hover:bg-white text-center transition-all cursor-pointer" data-tenure="5">
                         <strong class="text-xs text-slate-900 block">5 Years</strong>

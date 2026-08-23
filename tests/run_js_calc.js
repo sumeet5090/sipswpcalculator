@@ -3,12 +3,20 @@ import { CurrencyFormatter } from '../assets/js/calculators/CurrencyHelper.ts';
 import { QrCodeGenerator } from '../assets/js/utils/QrCodeGenerator.ts';
 import { IndianNumberParser } from '../assets/js/calculators/helpers/IndianNumberParser.ts';
 import { SliderCurveHelper } from '../assets/js/calculators/helpers/SliderCurveHelper.ts';
+import { NaturalLanguageQueryParser } from '../assets/js/calculators/helpers/NaturalLanguageQueryParser.ts';
 
 try {
     // Read input parameters JSON from command line arguments
     const inputArgs = JSON.parse(process.argv[2]);
 
-    if (inputArgs.action === 'slider_curve_test') {
+    if (inputArgs.action === 'calculate_tax_harvesting') {
+        const results = MathEngine.calculate(inputArgs.inputs);
+        const harvest = MathEngine.calculateTaxHarvestingSavings(inputArgs.inputs, results);
+        console.log(JSON.stringify({ success: true, harvest }));
+    } else if (inputArgs.action === 'parse_nlp_query') {
+        const result = NaturalLanguageQueryParser.parse(inputArgs.query);
+        console.log(JSON.stringify({ success: true, result }));
+    } else if (inputArgs.action === 'slider_curve_test') {
         const { min, max, step, curve } = inputArgs;
         const posToVal0 = SliderCurveHelper.positionToValue(0, min, max, step, curve);
         const posToVal50 = SliderCurveHelper.positionToValue(50, min, max, step, curve);

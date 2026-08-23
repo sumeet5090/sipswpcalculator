@@ -90,4 +90,20 @@ export class IndianNumberParser {
         const parsed = parseFloat(cleaned);
         return isNaN(parsed) ? NaN : parsed;
     }
+
+    /**
+     * Format a numeric amount cleanly into Indian shorthand notation (e.g. ₹25,000, ₹1.5 Lakh, ₹1 Crore).
+     */
+    static format(val: number): string {
+        if (isNaN(val) || !isFinite(val)) return '₹0';
+        if (val >= 10000000) {
+            const cr = (val / 10000000).toFixed(2).replace(/\.00$/, '').replace(/\.0$/, '');
+            return `₹${cr} Crore`;
+        }
+        if (val >= 100000) {
+            const l = (val / 100000).toFixed(2).replace(/\.00$/, '').replace(/\.0$/, '');
+            return `₹${l} Lakh`;
+        }
+        return `₹${Math.round(val).toLocaleString('en-IN')}`;
+    }
 }
