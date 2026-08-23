@@ -120,6 +120,31 @@
         {% endfor %}
     {% endif %}
     
+    <!-- Ergonomic Mobile Sticky Action Dock (Visible only on <sm viewports) -->
+    <div id="mobile-action-dock" class="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] px-4 py-2 flex items-center justify-around gap-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+        <button type="button" onclick="document.getElementById('openPdfModalBtn')?.click()"
+            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-bold active:scale-95 transition-all cursor-pointer">
+            <span class="text-xs">📄</span>
+            <span>PDF Plan</span>
+        </button>
+        <button type="button" onclick="document.getElementById('shareCalcBtn')?.click()"
+            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-[11px] font-bold active:scale-95 transition-all cursor-pointer">
+            <span class="text-xs">🔗</span>
+            <span>Share</span>
+        </button>
+        <button type="button" onclick="document.getElementById('snapshot-scenario-btn')?.click()"
+            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-bold active:scale-95 transition-all cursor-pointer">
+            <span class="text-xs">📸</span>
+            <span>Snapshot</span>
+        </button>
+        <button type="button" onclick="document.getElementById('calculator-section')?.scrollIntoView({behavior: 'smooth'})"
+            class="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] font-bold active:scale-95 transition-all cursor-pointer"
+            aria-label="Scroll to calculator inputs">
+            <span class="text-xs">↑</span>
+            <span>Top</span>
+        </button>
+    </div>
+
     {% include 'components/command-palette.twig' %}
     {% include 'components/tax-waterfall-modal.twig' %}
     {% include 'components/goal-commitment-modal.twig' %}

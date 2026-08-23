@@ -1,12 +1,19 @@
 import { MathEngine } from '../assets/js/calculators/MathEngine.ts';
 import { CurrencyFormatter } from '../assets/js/calculators/CurrencyHelper.ts';
 import { QrCodeGenerator } from '../assets/js/utils/QrCodeGenerator.ts';
+import { IndianNumberParser } from '../assets/js/calculators/helpers/IndianNumberParser.ts';
 
 try {
     // Read input parameters JSON from command line arguments
     const inputArgs = JSON.parse(process.argv[2]);
 
-    if (inputArgs.action === 'format_currency_test') {
+    if (inputArgs.action === 'parse_indian_number') {
+        const results = {};
+        for (const [key, val] of Object.entries(inputArgs.inputs)) {
+            results[key] = IndianNumberParser.parse(val);
+        }
+        console.log(JSON.stringify({ success: true, results }));
+    } else if (inputArgs.action === 'format_currency_test') {
         const formatter = new CurrencyFormatter();
         let allMatched = true;
         for (const [val, expected] of Object.entries(inputArgs.values)) {

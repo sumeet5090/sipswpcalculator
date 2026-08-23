@@ -806,9 +806,20 @@ input[type=range]::-moz-range-track {
     box-shadow: 0 1px 3px rgba(225, 29, 72, 0.25);
 }
 
-/* Micro-Stepper Buttons */
+/* Micro-Stepper Buttons & Touch Target Enlargement (WCAG & Apple HIG 44px) */
 .stepper-btn {
+    min-width: 30px;
+    min-height: 30px;
+    position: relative;
+    touch-action: manipulation;
     transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stepper-btn::before {
+    content: '';
+    position: absolute;
+    inset: -7px;
+    cursor: pointer;
 }
 
 .stepper-btn:hover {
@@ -818,6 +829,20 @@ input[type=range]::-moz-range-track {
 
 .stepper-btn:active {
     transform: scale(0.88);
+}
+
+.preset-chip {
+    min-height: 30px;
+    padding: 4px 8px;
+    touch-action: manipulation;
+    position: relative;
+}
+
+.preset-chip::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    cursor: pointer;
 }
 
 /* Custom Scrollbar for Table */

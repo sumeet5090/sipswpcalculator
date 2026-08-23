@@ -1,6 +1,7 @@
 import { InputValidator } from './InputValidator';
 import { DOMAdapter } from '../adapters/DOMAdapter';
 import { CurrencyFormatter } from './CurrencyHelper';
+import { IndianNumberParser } from './helpers/IndianNumberParser';
 
 interface SliderPair {
     input: HTMLInputElement;
@@ -147,7 +148,7 @@ export class SliderManager {
             this.isInternalSyncing = true;
             let validated: number;
             try {
-                const rawVal = parseFloat(input.value);
+                const rawVal = IndianNumberParser.parse(input.value);
                 const fieldName = inputId;
                 validated = this.validator.validate(fieldName, input.value);
 
@@ -193,10 +194,12 @@ export class SliderManager {
                 clearTimeout(this._inputDebounceTimer);
                 this._inputDebounceTimer = null;
             }
-            const val = parseFloat(input.value) || 0;
+            const validated = this.validator.validate(inputId, input.value);
+            input.value = String(validated);
             this._updateTrackProgress(range);
-            this._updateSubtext(inputId, val);
-            this._updatePresetChips(inputId, val);
+            this._updateSubtext(inputId, validated);
+            this._updateWordBadge(inputId, validated);
+            this._updatePresetChips(inputId, validated);
             this.triggerFn();
         });
 
@@ -370,6 +373,9 @@ export class SliderManager {
 
     private _updateAria(rangeEl: HTMLInputElement, val: number | string): void {
         rangeEl.setAttribute('aria-valuenow', String(val));
+        const fieldId = rangeEl.id.replace(/_range$/, '');
+        const readableText = this.formatter.formatAriaAnnouncement(fieldId, Number(val));
+        rangeEl.setAttribute('aria-valuetext', readableText);
     }
 
     private _showError(fieldId: string, message: string): void {

@@ -1,4 +1,5 @@
 import defaultsConfig from '../../../content/calculator_defaults.json';
+import { IndianNumberParser } from './helpers/IndianNumberParser';
 
 export interface FieldConstraint {
     min: number;
@@ -90,10 +91,10 @@ export class InputValidator {
      * @returns Sanitized value within bounds, or default if NaN.
      */
     validate(field: string, val: number | string): number {
+        const parsed = IndianNumberParser.parse(val);
         const limits = this.constraints[field];
-        if (!limits) return parseFloat(String(val)) || 0;
+        if (!limits) return isNaN(parsed) ? 0 : parsed;
 
-        const parsed = parseFloat(String(val));
         if (isNaN(parsed)) {
             return limits.default;
         }

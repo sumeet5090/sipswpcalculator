@@ -151,4 +151,34 @@ export class CurrencyFormatter {
 
         return '';
     }
+
+    /**
+     * Format screen-reader accessible verbalization of field value.
+     */
+    formatAriaAnnouncement(fieldId: string, value: number): string {
+        if (isNaN(value)) return '0';
+        if (fieldId === 'sip') {
+            return `${this.formatDynamic(value)} per month investment`;
+        }
+        if (fieldId === 'swp_withdrawal' || fieldId === 'swp') {
+            return `${this.formatDynamic(value)} per month systematic withdrawal`;
+        }
+        if (fieldId === 'lumpsum' || fieldId === 'corpus' || fieldId === 'target_corpus') {
+            return `${this.formatDynamic(value)} corpus`;
+        }
+        if (fieldId === 'years' || fieldId === 'swp_years') {
+            return `${value} Year${value === 1 ? '' : 's'} duration`;
+        }
+        if (fieldId === 'rate' || fieldId === 'swp_rate') {
+            return `${value} Percent expected return`;
+        }
+        if (fieldId === 'stepup' || fieldId === 'swp_stepup') {
+            return `${value} Percent annual step up`;
+        }
+        if (fieldId === 'inflation') {
+            return `${value} Percent expected inflation`;
+        }
+        return `${value}`;
+    }
 }
+

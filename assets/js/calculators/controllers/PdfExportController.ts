@@ -90,7 +90,7 @@ export class PdfExportController {
                 const generatePdfBtn = this.dom.getElement<HTMLButtonElement>('generatePdfBtn');
                 if (generatePdfBtn) {
                     generatePdfBtn.disabled = true;
-                    generatePdfBtn.textContent = 'Generating...';
+                    generatePdfBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Generating PDF...`;
                 }
 
                 const chartInst = this.chartManager.getChartInstance();
@@ -98,28 +98,9 @@ export class PdfExportController {
                 if (chartInst && chartInst.canvas) {
                     try {
                         chartInst.stop();
-                        chartInst.render();
-
-                        const srcCanvas = chartInst.canvas;
-                        const maxW = 1200;
-                        const scale = srcCanvas.width > maxW ? (maxW / srcCanvas.width) : 1;
-                        const targetW = Math.round(srcCanvas.width * scale);
-                        const targetH = Math.round(srcCanvas.height * scale);
-
-                        const offscreen = document.createElement('canvas');
-                        offscreen.width = targetW;
-                        offscreen.height = targetH;
-                        const offCtx = offscreen.getContext('2d');
-                        if (offCtx) {
-                            offCtx.fillStyle = '#ffffff';
-                            offCtx.fillRect(0, 0, targetW, targetH);
-                            offCtx.drawImage(srcCanvas, 0, 0, targetW, targetH);
-                            chartDataURL = offscreen.toDataURL('image/png', 0.92);
-                        } else {
-                            chartDataURL = srcCanvas.toDataURL('image/png');
-                        }
-                    } catch (_err) {
-                        chartDataURL = '';
+                        chartDataURL = chartInst.toBase64Image('image/png', 1.0);
+                    } catch (e) {
+                        console.warn("Could not capture chart as Base64 image:", e);
                     }
                 }
                 const resultsTable = this.dom.getElement('results-table');
@@ -177,7 +158,7 @@ export class PdfExportController {
 
                         if (generatePdfBtn) {
                             generatePdfBtn.disabled = false;
-                            generatePdfBtn.textContent = 'Download PDF';
+                            generatePdfBtn.innerHTML = 'Download PDF';
                         }
                         closeModalFn(pdfModal);
                         a.remove();
@@ -200,7 +181,7 @@ export class PdfExportController {
                         console.error('PDF generation failed:', err.message);
                         if (generatePdfBtn) {
                             generatePdfBtn.disabled = false;
-                            generatePdfBtn.textContent = 'Download PDF';
+                            generatePdfBtn.innerHTML = 'Download PDF';
                         }
                     });
             });
