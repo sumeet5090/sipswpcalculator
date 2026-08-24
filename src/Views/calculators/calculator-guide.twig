@@ -95,8 +95,7 @@
          data-mode="{{ calculator_type }}"
          class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Left Column: Form -->
-        <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar"
-            style="top: 120px;">
+        <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:self-start" style="top: 100px;">
             <div class="glass-card p-4 sm:p-5">
                 <form id="calculator-form" class="space-y-6" onsubmit="event.preventDefault();">
                     {% if calculator_type == 'all' or calculator_type == 'combo' %}

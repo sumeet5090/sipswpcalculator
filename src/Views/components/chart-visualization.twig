@@ -110,50 +110,67 @@
     </div>
 
     <!-- Chart Card -->
-    <div class="relative z-10 bg-white/95 rounded-3xl border border-slate-200/90 shadow-xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-4 sm:p-5">
+    <div class="relative z-10 bg-white/95 rounded-3xl border border-slate-200/90 shadow-sm backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-md p-4 sm:p-5">
         
         <!-- ========================================================================= -->
         <!-- TIER 1: UNIFIED MASTER COMMAND DOCK (Identity · Mode · Lenses · Actions) -->
         <!-- ========================================================================= -->
-        <header class="flex flex-wrap items-center justify-between gap-2.5 pb-3 border-b border-slate-100">
+        <header class="flex flex-col gap-3 pb-3.5 border-b border-slate-100">
             
-            <!-- Left Cluster: Identity & Institutional Micro-Seal -->
-            <div class="flex items-center gap-2">
-                <div class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.7)] animate-pulse"></span>
-                    <h3 class="text-xs font-extrabold text-slate-900 tracking-wider uppercase">Projection</h3>
+            <!-- Top Row: Identity, View Mode & Action Tools -->
+            <div class="flex items-center justify-between gap-3">
+                <!-- Left: Identity & Regulatory Seal -->
+                <div class="flex items-center gap-2 min-w-0">
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse"></span>
+                        <h3 class="text-xs sm:text-sm font-black text-slate-900 tracking-tight uppercase">
+                            Wealth Growth Projection
+                        </h3>
+                    </div>
+                    
+                    <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.showModal()"
+                        class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100/90 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-[10px] text-slate-600 hover:text-emerald-900 transition-all cursor-pointer shadow-2xs"
+                        title="Click to view AMFI/SEBI regulatory modeling assumptions">
+                        <span class="font-bold">AMFI Aligned</span>
+                        <span class="text-slate-400 text-[9px]">ℹ️</span>
+                    </button>
                 </div>
-                
-                <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.showModal()"
-                    class="group inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-[10px] text-slate-600 hover:text-emerald-900 transition-all cursor-pointer shadow-2xs"
-                    title="Click to view AMFI/SEBI regulatory modeling assumptions">
-                    <span class="font-bold">AMFI Aligned</span>
-                    <span class="text-slate-400 group-hover:text-emerald-600 text-[9px]">ℹ️</span>
-                </button>
 
-                <span id="active-lens-indicator" class="hidden sm:inline-flex items-center text-[10px] font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70">
-                    Standard View
-                </span>
+                <!-- Right: View Switcher & Action Tools -->
+                <div class="flex items-center gap-2 shrink-0">
+                    <!-- Segmented View Mode Switcher -->
+                    <div class="inline-flex bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 shadow-2xs" role="tablist" aria-label="Chart View Mode">
+                        <button type="button" id="chart-view-line" role="tab" aria-selected="true"
+                            class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 bg-white text-emerald-900 shadow-2xs border border-slate-200/60 cursor-pointer">
+                            📈 Line
+                        </button>
+                        <button type="button" id="chart-view-donut" role="tab" aria-selected="false"
+                            class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-900 cursor-pointer">
+                            🍩 Split
+                        </button>
+                    </div>
+
+                    <!-- Utility Action Buttons -->
+                    <div class="inline-flex items-center gap-1">
+                        <button type="button" id="snapshot-scenario-btn" 
+                            class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-2xs"
+                            title="Snapshot scenario for comparison">
+                            <span class="text-xs">📸</span>
+                        </button>
+                        <button type="button" id="open-tax-waterfall-btn" 
+                            class="p-1.5 rounded-xl border border-violet-200/80 bg-violet-50/80 hover:bg-violet-100 text-violet-800 transition-all active:scale-95 cursor-pointer shadow-2xs"
+                            title="Open Section 112A Tax Waterfall Modal">
+                            <span class="text-xs">⚖️</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            <!-- Center/Right Cluster: View Switcher, Analytical Lenses & Actions -->
-            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                
-                <!-- Segmented View Mode Switcher -->
-                <div class="inline-flex bg-slate-100 p-0.5 rounded-xl border border-slate-200/80 shadow-2xs" role="tablist" aria-label="Chart View Mode">
-                    <button type="button" id="chart-view-line" role="tab" aria-selected="true"
-                        class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 bg-white text-emerald-800 shadow-2xs border border-slate-200/60 cursor-pointer">
-                        📈 Line
-                    </button>
-                    <button type="button" id="chart-view-donut" role="tab" aria-selected="false"
-                        class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-900 cursor-pointer">
-                        🍩 Split
-                    </button>
-                </div>
+            <!-- Bottom Row: Analytical Lenses Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                <div class="flex flex-wrap items-center gap-1.5" role="group" aria-label="Analytical Projection Lenses">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mr-1">Lenses:</span>
 
-                <!-- Integrated Analytical Lenses Strip -->
-                <div class="inline-flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200/80 shadow-2xs gap-0.5" role="group" aria-label="Analytical Projection Lenses">
-                    
                     <!-- Lens: Corridor -->
                     <label id="overlay-chip-corridor" 
                         class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-[11px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-emerald-900 has-checked:shadow-2xs has-checked:border-emerald-200 has-checked:font-bold" 
@@ -185,19 +202,9 @@
                     </label>
                 </div>
 
-                <!-- Utility Action Buttons -->
-                <div class="inline-flex items-center gap-1">
-                    <button type="button" id="snapshot-scenario-btn" 
-                        class="p-1.5 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-2xs"
-                        title="Snapshot scenario for comparison">
-                        <span class="text-xs">📸</span>
-                    </button>
-                    <button type="button" id="open-tax-waterfall-btn" 
-                        class="p-1.5 rounded-xl border border-violet-200/80 bg-violet-50/80 hover:bg-violet-100 text-violet-800 transition-all active:scale-95 cursor-pointer shadow-2xs"
-                        title="Open Section 112A Tax Waterfall Modal">
-                        <span class="text-xs">⚖️</span>
-                    </button>
-                </div>
+                <span id="active-lens-indicator" class="hidden sm:inline-flex items-center text-[10px] font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70">
+                    Standard View
+                </span>
             </div>
         </header>
 
@@ -205,27 +212,29 @@
         <!-- TIER 2: ZERO-CLS DYNAMIC TELEMETRY HUD (Cross-Fading Resting vs Scrutiny) -->
         <!-- ========================================================================= -->
         <div id="chart-telemetry-hud" 
-            class="h-8 my-2 px-3 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between gap-3 text-xs select-none transition-all duration-150">
+            class="h-9 my-2.5 px-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-2 text-xs select-none transition-all duration-150 shadow-2xs">
             
             <!-- Live Horizon / Scrutiny Year Badge -->
             <div class="flex items-center gap-1.5 min-w-0">
-                <span id="hud-status-dot" class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                <span id="ribbon-inspect-year" class="font-extrabold text-slate-900 font-mono text-[11px] uppercase tracking-wide truncate">Final Year Projection</span>
+                <span id="hud-status-dot" class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]"></span>
+                <span id="ribbon-inspect-year" class="font-extrabold text-slate-900 font-mono text-[11px] uppercase tracking-wide truncate">
+                    Final Year Projection
+                </span>
             </div>
 
             <!-- Metric Stream (Invested · Gains · Value) -->
-            <div class="flex items-center gap-3 sm:gap-4 font-mono text-[11px]">
+            <div class="flex items-center gap-2 sm:gap-3.5 font-mono text-[11px]">
                 <div class="hidden sm:inline-flex items-center gap-1 text-slate-500">
                     <span>Invested:</span>
                     <strong id="ribbon-inspect-invested" class="text-slate-800 font-bold">₹ --</strong>
                 </div>
-                <div class="inline-flex items-center gap-1 text-emerald-700">
+                <div class="inline-flex items-center gap-1 text-emerald-800">
                     <span class="text-slate-500">Gains:</span>
                     <strong id="ribbon-inspect-gains" class="font-bold">+₹ --</strong>
                 </div>
                 <div class="inline-flex items-center gap-1 text-slate-900 bg-white px-2 py-0.5 rounded-md border border-slate-200/80 shadow-2xs">
                     <span class="text-slate-500">Corpus:</span>
-                    <strong id="ribbon-inspect-corpus" class="text-emerald-900 font-extrabold">₹ --</strong>
+                    <strong id="ribbon-inspect-corpus" class="text-emerald-950 font-extrabold">₹ --</strong>
                 </div>
             </div>
         </div>
@@ -243,16 +252,16 @@
         </div>
 
         <!-- Mobile Tactile Thumb Scrubber (Decoupled from canvas to prevent thumb occlusion) -->
-        <div id="mobile-chart-scrubber-container" class="sm:hidden mt-2.5 px-1 py-1.5 bg-slate-50 rounded-xl border border-slate-200/70">
+        <div id="mobile-chart-scrubber-container" class="sm:hidden mt-2.5 px-2 py-2 bg-slate-50 rounded-2xl border border-slate-200/80 shadow-2xs">
             <div class="flex items-center justify-between text-[10px] font-mono text-slate-600 mb-1 px-1">
-                <span>Yr 1</span>
-                <span id="scrubber-active-indicator" class="font-extrabold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200 shadow-2xs">
+                <span class="font-bold">Yr 1</span>
+                <span id="scrubber-active-indicator" class="font-black text-emerald-900 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200 shadow-2xs">
                     Scrub Timeline
                 </span>
-                <span id="scrubber-max-indicator">Yr --</span>
+                <span id="scrubber-max-indicator" class="font-bold">Yr --</span>
             </div>
             <input type="range" id="mobile-chart-scrubber" min="1" max="30" value="30" step="1"
-                class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
+                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
                 aria-label="Scrub through investment timeline years">
         </div>
 

@@ -898,7 +898,12 @@ a:focus-visible,
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #047857 !important;
 }
 
-/* Custom Scrollbar for Table */
+/* Custom Scrollbar for Containers and Tables */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
     height: 6px;
