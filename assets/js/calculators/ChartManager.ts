@@ -583,24 +583,27 @@ export class ChartManager {
     };
 
     /**
-     * Update pinned Heads-Up Display (HUD) inspection ribbon.
+     * Update persistent Zero-CLS Heads-Up Display (HUD) telemetry console.
      */
     public updateInspectionRibbon(row: YearResult): void {
-        const ribbon = this.dom.getElement('chart-inspection-ribbon');
         const rYear = this.dom.getElement('ribbon-inspect-year');
         const rInvested = this.dom.getElement('ribbon-inspect-invested');
         const rGains = this.dom.getElement('ribbon-inspect-gains');
         const rCorpus = this.dom.getElement('ribbon-inspect-corpus');
+        const statusDot = this.dom.getElement('hud-status-dot');
 
-        if (ribbon && row) {
-            if (rYear) rYear.textContent = `Year ${row.year}`;
+        if (row) {
+            const totalYears = this.lastResults?.length || row.year;
+            if (rYear) rYear.textContent = `Year ${row.year} of ${totalYears}`;
             if (rInvested) rInvested.textContent = this.formatter.format(row.cumulative_invested);
             if (rCorpus) rCorpus.textContent = this.formatter.format(row.combined_total);
             if (rGains) {
                 const gains = Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested);
                 rGains.textContent = `+${this.formatter.format(gains)}`;
             }
-            ribbon.classList.remove('hidden');
+            if (statusDot) {
+                statusDot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
+            }
         }
     }
 
@@ -1068,6 +1071,18 @@ export class ChartManager {
         this.chartInstance = new ChartClass(ctx, config) as unknown as Chart<'line'>;
         this.currentChartType = 'line';
         this.renderMilestoneGrid(milestones);
+
+        // Initialize persistent HUD with final year projection summary
+        if (results.length > 0) {
+            const finalRow = results[results.length - 1];
+            if (finalRow) {
+                this.updateInspectionRibbon(finalRow);
+                const statusDot = this.dom.getElement('hud-status-dot');
+                if (statusDot) {
+                    statusDot.className = 'w-1.5 h-1.5 rounded-full bg-slate-400';
+                }
+            }
+        }
     }
 
     /**

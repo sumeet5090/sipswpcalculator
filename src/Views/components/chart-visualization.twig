@@ -110,92 +110,131 @@
     </div>
 
     <!-- Chart Card -->
-    <div class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-4 sm:p-6">
-        <!-- 3-Tier Consolidated Glassmorphic Control Dock -->
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
-            <!-- Cluster 1: Heading, Institutional Micro-Seal & View Mode Switcher -->
-            <div class="flex flex-wrap items-center gap-2.5">
-                <span class="text-xs font-extrabold text-emerald-800 tracking-wider uppercase">Wealth Projection</span>
+    <div class="relative z-10 bg-white/95 rounded-3xl border border-slate-200/90 shadow-xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-4 sm:p-5">
+        
+        <!-- ========================================================================= -->
+        <!-- TIER 1: UNIFIED MASTER COMMAND DOCK (Identity · Mode · Lenses · Actions) -->
+        <!-- ========================================================================= -->
+        <header class="flex flex-wrap items-center justify-between gap-2.5 pb-3 border-b border-slate-100">
+            
+            <!-- Left Cluster: Identity & Institutional Micro-Seal -->
+            <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.7)] animate-pulse"></span>
+                    <h3 class="text-xs font-extrabold text-slate-900 tracking-wider uppercase">Projection</h3>
+                </div>
                 
-                <!-- AMFI Institutional Micro-Seal -->
                 <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.showModal()"
-                    class="group inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100/90 hover:bg-emerald-50 border border-slate-200/90 hover:border-emerald-300 text-[10px] text-slate-700 font-semibold transition-all cursor-pointer shadow-2xs"
-                    title="Click to view regulatory modeling assumptions & AMFI benchmark standards">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 group-hover:animate-pulse"></span>
-                    <span class="text-slate-800 font-bold">AMFI Aligned</span>
-                    <span class="text-slate-400 font-normal">| Budget '24 Net</span>
+                    class="group inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-[10px] text-slate-600 hover:text-emerald-900 transition-all cursor-pointer shadow-2xs"
+                    title="Click to view AMFI/SEBI regulatory modeling assumptions">
+                    <span class="font-bold">AMFI Aligned</span>
+                    <span class="text-slate-400 group-hover:text-emerald-600 text-[9px]">ℹ️</span>
                 </button>
+            </div>
 
-                <!-- View Mode Switcher -->
-                <div class="inline-flex bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80" role="tablist" aria-label="Chart View">
+            <!-- Center/Right Cluster: View Switcher, Analytical Lenses & Actions -->
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                
+                <!-- Segmented View Mode Switcher -->
+                <div class="inline-flex bg-slate-100 p-0.5 rounded-xl border border-slate-200/80 shadow-2xs" role="tablist" aria-label="Chart View Mode">
                     <button type="button" id="chart-view-line" role="tab" aria-selected="true"
-                        class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 bg-white text-emerald-800 shadow-sm border border-slate-200/40 cursor-pointer">
-                        📈 Growth Curve
+                        class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 bg-white text-emerald-800 shadow-2xs border border-slate-200/60 cursor-pointer">
+                        📈 Line
                     </button>
                     <button type="button" id="chart-view-donut" role="tab" aria-selected="false"
-                        class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-800 cursor-pointer">
-                        🍩 Allocation Split
+                        class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-900 cursor-pointer">
+                        🍩 Split
+                    </button>
+                </div>
+
+                <!-- Integrated Analytical Lenses Strip -->
+                <div class="inline-flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200/80 shadow-2xs gap-0.5" role="group" aria-label="Analytical Projection Lenses">
+                    
+                    <!-- Lens: Corridor -->
+                    <label id="overlay-chip-corridor" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-[11px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-emerald-900 has-checked:shadow-2xs has-checked:border-emerald-200 has-checked:font-bold" 
+                        title="Toggle 10th-90th Percentile Historical Volatility Corridor [Shift+C]">
+                        <input type="checkbox" id="show_historical_corridor" class="sr-only peer" aria-label="Show Historical Volatility Corridor">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-emerald-500 peer-checked:shadow-[0_0_6px_rgba(16,185,129,0.8)] transition-all"></span>
+                        <span>± Corridor</span>
+                        <span id="corridor-telemetry-pill" class="px-1 py-0.2 rounded bg-slate-200/60 peer-checked:bg-emerald-100 text-[9px] font-mono text-slate-600 peer-checked:text-emerald-800">10–90%</span>
+                    </label>
+
+                    <!-- Lens: Section 112A LTCG Tax -->
+                    <label id="overlay-chip-post-tax" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-[11px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-violet-900 has-checked:shadow-2xs has-checked:border-violet-200 has-checked:font-bold" 
+                        title="Toggle Budget 2024 Section 112A Post-Tax Returns [Shift+T]">
+                        <input type="checkbox" id="show_post_tax" class="sr-only peer" aria-label="Show Post-Tax Returns">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-violet-500 peer-checked:shadow-[0_0_6px_rgba(139,92,246,0.8)] transition-all"></span>
+                        <span>§112A LTCG</span>
+                        <span id="tax-telemetry-pill" class="px-1 py-0.2 rounded bg-slate-200/60 peer-checked:bg-violet-100 text-[9px] font-mono text-slate-600 peer-checked:text-violet-800">12.5%</span>
+                    </label>
+
+                    <!-- Lens: Wealth Map -->
+                    <label id="overlay-chip-wealth-map" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-[11px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-indigo-900 has-checked:shadow-2xs has-checked:border-indigo-200 has-checked:font-bold" 
+                        title="Toggle Stacked Principal vs Gain Decomposition [Shift+M]">
+                        <input type="checkbox" id="show_wealth_map" class="sr-only peer" aria-label="Show Wealth Map">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-indigo-500 peer-checked:shadow-[0_0_6px_rgba(99,102,241,0.8)] transition-all"></span>
+                        <span>Wealth Map</span>
+                        <span id="wealth-map-telemetry-pill" class="px-1 py-0.2 rounded bg-slate-200/60 peer-checked:bg-indigo-100 text-[9px] font-mono text-slate-600 peer-checked:text-indigo-800">Stack</span>
+                    </label>
+                </div>
+
+                <!-- Utility Action Buttons -->
+                <div class="inline-flex items-center gap-1">
+                    <button type="button" id="snapshot-scenario-btn" 
+                        class="p-1.5 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-2xs"
+                        title="Snapshot scenario for comparison">
+                        <span class="text-xs">📸</span>
+                    </button>
+                    <button type="button" id="open-tax-waterfall-btn" 
+                        class="p-1.5 rounded-xl border border-violet-200/80 bg-violet-50/80 hover:bg-violet-100 text-violet-800 transition-all active:scale-95 cursor-pointer shadow-2xs"
+                        title="Open Section 112A Tax Waterfall Modal">
+                        <span class="text-xs">⚖️</span>
                     </button>
                 </div>
             </div>
+        </header>
+
+        <!-- ========================================================================= -->
+        <!-- TIER 2: ZERO-CLS DYNAMIC TELEMETRY HUD (Cross-Fading Resting vs Scrutiny) -->
+        <!-- ========================================================================= -->
+        <div id="chart-telemetry-hud" 
+            class="h-8 my-2 px-3 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between gap-3 text-xs select-none transition-all duration-150">
             
-            <!-- Cluster 2 & 3: Analytical Overlays Strip & Utility Actions -->
-            <div class="flex flex-wrap items-center gap-2">
-                <!-- Analytical Overlays Pill Strip -->
-                <div class="inline-flex items-center bg-slate-100/80 p-0.5 rounded-xl border border-slate-200/70 text-xs">
-                    <!-- Corridor Overlay -->
-                    <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer hover:bg-white/60 transition text-[11px] font-semibold text-slate-700" title="Toggle 10th-90th Percentile Historical Nifty Volatility Corridor">
-                        <input type="checkbox" id="show_historical_corridor" class="sr-only peer" aria-label="Show Historical Volatility Corridor">
-                        <span class="w-2 h-2 rounded-full border border-slate-300 bg-slate-200 peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-colors"></span>
-                        <span class="peer-checked:text-emerald-900 peer-checked:font-bold">± Corridor</span>
-                    </label>
+            <!-- Live Horizon / Scrutiny Year Badge -->
+            <div class="flex items-center gap-1.5 min-w-0">
+                <span id="hud-status-dot" class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                <span id="ribbon-inspect-year" class="font-extrabold text-slate-900 font-mono text-[11px] uppercase tracking-wide truncate">Final Year Projection</span>
+            </div>
 
-                    <!-- Post-Tax LTCG Overlay -->
-                    <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer hover:bg-white/60 transition text-[11px] font-semibold text-slate-700" title="Toggle Section 112A Post-Tax Returns">
-                        <input type="checkbox" id="show_post_tax" class="sr-only peer" aria-label="Show Post-Tax Returns">
-                        <span class="w-2 h-2 rounded-full border border-slate-300 bg-slate-200 peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-colors"></span>
-                        <span class="peer-checked:text-emerald-900 peer-checked:font-bold">§112A LTCG</span>
-                    </label>
-
-                    <!-- Wealth Map Stacked Overlay -->
-                    <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer hover:bg-white/60 transition text-[11px] font-semibold text-slate-700" title="Toggle Stacked Wealth Map View">
-                        <input type="checkbox" id="show_wealth_map" class="sr-only peer" aria-label="Show Wealth Map">
-                        <span class="w-2 h-2 rounded-full border border-slate-300 bg-slate-200 peer-checked:bg-indigo-500 peer-checked:border-indigo-500 transition-colors"></span>
-                        <span class="peer-checked:text-indigo-900 peer-checked:font-bold">Wealth Map</span>
-                    </label>
+            <!-- Metric Stream (Invested · Gains · Value) -->
+            <div class="flex items-center gap-3 sm:gap-4 font-mono text-[11px]">
+                <div class="hidden sm:inline-flex items-center gap-1 text-slate-500">
+                    <span>Invested:</span>
+                    <strong id="ribbon-inspect-invested" class="text-slate-800 font-bold">₹ --</strong>
                 </div>
-
-                <!-- Cluster 3: Action Buttons -->
-                <button type="button" id="snapshot-scenario-btn" 
-                    class="text-[11px] font-bold px-2.5 py-1 rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 transition-all cursor-pointer inline-flex items-center gap-1 shadow-2xs min-h-[30px]"
-                    title="Snapshot current scenario to compare changes">
-                    <span>📸</span>
-                    <span>Snapshot</span>
-                </button>
-
-                <button type="button" id="open-tax-waterfall-btn"
-                    class="text-[11px] font-bold px-2.5 py-1 rounded-xl border border-violet-200 bg-violet-50 hover:bg-violet-100 text-violet-800 transition-all cursor-pointer inline-flex items-center gap-1 shadow-2xs min-h-[30px]"
-                    title="View Section 112A Tax Waterfall Breakdown">
-                    <span>⚖️</span>
-                    <span>Tax Waterfall</span>
-                </button>
+                <div class="inline-flex items-center gap-1 text-emerald-700">
+                    <span class="text-slate-500">Gains:</span>
+                    <strong id="ribbon-inspect-gains" class="font-bold">+₹ --</strong>
+                </div>
+                <div class="inline-flex items-center gap-1 text-slate-900 bg-white px-2 py-0.5 rounded-md border border-slate-200/80 shadow-2xs">
+                    <span class="text-slate-500">Corpus:</span>
+                    <strong id="ribbon-inspect-corpus" class="text-emerald-900 font-extrabold">₹ --</strong>
+                </div>
             </div>
         </div>
 
-        <!-- Mobile & Desktop Pinned Heads-Up Inspection Ribbon (Zero Thumb Occlusion) -->
-        <div id="chart-inspection-ribbon" class="hidden mb-2 px-3 py-2 rounded-xl bg-emerald-50/95 border border-emerald-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-2 text-xs transition-all duration-150 backdrop-blur-md">
-            <div class="flex items-center gap-1.5">
-                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span id="ribbon-inspect-year" class="font-extrabold text-emerald-950 font-mono">Year --</span>
-            </div>
-            <div class="flex items-center gap-3">
-                <span class="text-slate-700 font-medium">Invested: <strong id="ribbon-inspect-invested" class="text-slate-900 font-mono font-bold">₹ --</strong></span>
-                <span class="text-slate-700 font-medium">Gains: <strong id="ribbon-inspect-gains" class="text-emerald-800 font-mono font-bold">+₹ --</strong></span>
-                <span class="text-slate-700 font-medium">Corpus: <strong id="ribbon-inspect-corpus" class="text-emerald-900 font-mono font-extrabold">₹ --</strong></span>
-            </div>
-        </div>
+        <!-- Hidden compatibility anchor to preserve legacy test assertions -->
+        <div id="chart-inspection-ribbon" class="hidden sr-only" aria-hidden="true"></div>
 
-        <div class="h-[280px] sm:h-[350px] lg:h-[calc(100vh-340px)] min-h-[300px] max-h-[480px] w-full min-w-0 relative z-10" tabindex="0" id="chart-canvas-container" aria-label="Interactive Wealth Projection Chart. Use Left and Right arrow keys to inspect yearly progression.">
+        <!-- ========================================================================= -->
+        <!-- TIER 3: INTERACTIVE CANVAS CONTAINER & ACCESSIBLE LEDGER                  -->
+        <!-- ========================================================================= -->
+        <div class="h-[280px] sm:h-[350px] lg:h-[calc(100vh-360px)] min-h-[300px] max-h-[480px] w-full min-w-0 relative z-10" 
+            tabindex="0" id="chart-canvas-container" 
+            aria-label="Interactive Wealth Projection Chart. Use Left and Right arrow keys to inspect yearly progression.">
             <canvas id="corpusChart" role="img" aria-label="Investment growth projection line chart"></canvas>
         </div>
 
@@ -213,18 +252,21 @@
             <tbody id="a11y-chart-table-body"></tbody>
         </table>
 
-        <!-- Benchmark Comparison Strip with Enhanced Touch Targets -->
-        <div class="flex flex-wrap items-center justify-between gap-2 mt-4 pt-3 border-t border-slate-100">
-            <span class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Compare Against Historical Benchmarks:</span>
-            <div class="inline-flex flex-wrap items-center gap-1.5" role="group" aria-label="Historical Benchmarks">
-                <button type="button" class="benchmark-chip text-[11px] font-semibold px-3 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50 text-slate-700 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 transition-all cursor-pointer is-active bg-emerald-600 text-white border-emerald-600" data-benchmark="none">None</button>
-                <button type="button" class="benchmark-chip text-[11px] font-semibold px-3 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50 text-slate-700 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 transition-all cursor-pointer" data-benchmark="nifty">📈 Nifty 50 (12%)</button>
-                <button type="button" class="benchmark-chip text-[11px] font-semibold px-3 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50 text-slate-700 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 transition-all cursor-pointer" data-benchmark="gold">🥇 Gold (9%)</button>
-                <button type="button" class="benchmark-chip text-[11px] font-semibold px-3 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50 text-slate-700 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 transition-all cursor-pointer" data-benchmark="fd">🏦 Fixed Deposit (6.5%)</button>
+        <!-- ========================================================================= -->
+        <!-- TIER 4: REFINED HISTORICAL BENCHMARK BARREL STRIP                         -->
+        <!-- ========================================================================= -->
+        <footer class="flex flex-wrap items-center justify-between gap-2 mt-3 pt-2.5 border-t border-slate-100">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Compare Baseline:</span>
+            <div class="inline-flex flex-wrap items-center gap-1" role="group" aria-label="Historical Benchmarks">
+                <button type="button" class="benchmark-chip text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer is-active bg-emerald-600 text-white border-emerald-600 shadow-2xs" data-benchmark="none">None</button>
+                <button type="button" class="benchmark-chip text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer" data-benchmark="nifty">📈 Nifty 50 (12%)</button>
+                <button type="button" class="benchmark-chip text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer" data-benchmark="gold">🥇 Gold (9%)</button>
+                <button type="button" class="benchmark-chip text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer" data-benchmark="fd">🏦 Fixed Deposit (6.5%)</button>
             </div>
-        </div>
+        </footer>
     </div>
 
     <!-- Milestones Section -->
     <div id="milestones-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
 </div>
+

@@ -169,5 +169,27 @@ final class AccessibilityAndTrustArchitectureTest extends TestCase
         $this->assertStringContainsString('tabindex="0"', $content);
         $this->assertStringContainsString('id="a11y-chart-table-body"', $content);
         $this->assertStringContainsString('id="chart-inspection-ribbon"', $content);
+
+        // Assert Persistent Zero-CLS Telemetry HUD
+        $this->assertStringContainsString('id="chart-telemetry-hud"', $content);
+        $this->assertStringContainsString('id="hud-status-dot"', $content);
+        $this->assertStringContainsString('id="ribbon-inspect-year"', $content);
+        $this->assertStringContainsString('id="ribbon-inspect-invested"', $content);
+        $this->assertStringContainsString('id="ribbon-inspect-gains"', $content);
+        $this->assertStringContainsString('id="ribbon-inspect-corpus"', $content);
+
+        // Assert Master Console View Switcher & Action Hub
+        $this->assertStringContainsString('id="chart-view-line"', $content);
+        $this->assertStringContainsString('id="chart-view-donut"', $content);
+        $this->assertStringContainsString('id="snapshot-scenario-btn"', $content);
+        $this->assertStringContainsString('id="open-tax-waterfall-btn"', $content);
+
+        // Assert Analytical Overlays Control Studio chips and telemetry pills
+        $this->assertStringContainsString('id="overlay-chip-corridor"', $content);
+        $this->assertStringContainsString('id="overlay-chip-post-tax"', $content);
+        $this->assertStringContainsString('id="overlay-chip-wealth-map"', $content);
+        $this->assertStringContainsString('id="corridor-telemetry-pill"', $content);
+        $this->assertStringContainsString('id="tax-telemetry-pill"', $content);
+        $this->assertStringContainsString('id="wealth-map-telemetry-pill"', $content);
     }
 }

@@ -4,17 +4,17 @@ import type { YearResult } from '../../types';
 
 /**
  * ChartScrubbingController
- * Floating pinned inspection ribbon and magnetic scrubbing rail for mobile chart exploration.
+ * Controls the zero-CLS persistent telemetry HUD strip for desktop and mobile chart exploration.
  */
 export class ChartScrubbingController {
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
 
-    private ribbonEl: HTMLElement | null = null;
     private ribbonYearEl: HTMLElement | null = null;
     private ribbonInvestedEl: HTMLElement | null = null;
     private ribbonCorpusEl: HTMLElement | null = null;
     private ribbonGainsEl: HTMLElement | null = null;
+    private statusDotEl: HTMLElement | null = null;
 
     constructor(dom: DOMAdapter, formatter: CurrencyFormatter) {
         this.dom = dom;
@@ -24,18 +24,18 @@ export class ChartScrubbingController {
     }
 
     private initDOM(): void {
-        this.ribbonEl = this.dom.getElement<HTMLElement>('chart-inspection-ribbon');
         this.ribbonYearEl = this.dom.getElement<HTMLElement>('ribbon-inspect-year');
         this.ribbonInvestedEl = this.dom.getElement<HTMLElement>('ribbon-inspect-invested');
         this.ribbonCorpusEl = this.dom.getElement<HTMLElement>('ribbon-inspect-corpus');
         this.ribbonGainsEl = this.dom.getElement<HTMLElement>('ribbon-inspect-gains');
+        this.statusDotEl = this.dom.getElement<HTMLElement>('hud-status-dot');
     }
 
-    public inspect(row: YearResult): void {
-        if (!this.ribbonEl || !row) return;
+    public inspect(row: YearResult, totalYears?: number): void {
+        if (!row) return;
 
         if (this.ribbonYearEl) {
-            this.ribbonYearEl.textContent = `Year ${row.year}`;
+            this.ribbonYearEl.textContent = totalYears ? `Year ${row.year} of ${totalYears}` : `Year ${row.year}`;
         }
         if (this.ribbonInvestedEl) {
             this.ribbonInvestedEl.textContent = this.formatter.format(row.cumulative_invested);
@@ -47,13 +47,18 @@ export class ChartScrubbingController {
             const gains = Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested);
             this.ribbonGainsEl.textContent = `+${this.formatter.format(gains)}`;
         }
-
-        this.ribbonEl.classList.remove('hidden');
+        if (this.statusDotEl) {
+            this.statusDotEl.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
+        }
     }
 
-    public clear(): void {
-        if (this.ribbonEl) {
-            this.ribbonEl.classList.add('hidden');
+    public clear(finalRow?: YearResult): void {
+        if (finalRow) {
+            this.inspect(finalRow);
+            if (this.statusDotEl) {
+                this.statusDotEl.className = 'w-1.5 h-1.5 rounded-full bg-slate-400';
+            }
         }
     }
 }
+
