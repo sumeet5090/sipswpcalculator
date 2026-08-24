@@ -267,6 +267,10 @@ export class CalculatorApp {
         if (this.activeGoalMode === 'target_corpus' || this.activeGoalMode === 'target') {
             this.dom.setValue('sip', inputs.sip);
             this.dom.setValue('sip_range', inputs.sip);
+            const targetDisplay = this.dom.getElement('target_calculated_sip_display');
+            if (targetDisplay) {
+                targetDisplay.textContent = `${this.formatter.format(inputs.sip)} / mo`;
+            }
         }
 
         eventBus.publish('input:changed', inputs);
@@ -366,6 +370,7 @@ export class CalculatorApp {
                 targetBtn.setAttribute('aria-checked', 'false');
             }
             if (sipContainer) {
+                sipContainer.style.display = 'block';
                 sipContainer.style.opacity = '1';
                 sipContainer.style.pointerEvents = 'auto';
                 sipContainer.removeAttribute('aria-hidden');
@@ -387,7 +392,8 @@ export class CalculatorApp {
                 growBtn.setAttribute('aria-checked', 'false');
             }
             if (sipContainer) {
-                sipContainer.style.opacity = '0.65';
+                sipContainer.style.display = 'none';
+                sipContainer.style.opacity = '0';
                 sipContainer.style.pointerEvents = 'none';
                 sipContainer.setAttribute('aria-hidden', 'true');
                 const sipInputs = sipContainer.querySelectorAll<HTMLInputElement>('input');
@@ -788,6 +794,10 @@ export class CalculatorApp {
             if (this.activeGoalMode === 'target_corpus' || this.activeGoalMode === 'target') {
                 this.dom.setValue('sip', initialInputs.sip);
                 this.dom.setValue('sip_range', initialInputs.sip);
+                const targetDisplay = this.dom.getElement('target_calculated_sip_display');
+                if (targetDisplay) {
+                    targetDisplay.textContent = `${this.formatter.format(initialInputs.sip)} / mo`;
+                }
             }
 
             const swpEnabledOnLoad = initialInputs.enable_swp;

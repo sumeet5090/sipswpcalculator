@@ -5,7 +5,7 @@ import { InvestmentInputs, YearResult } from '../../types';
 import type { ChartManager } from '../ChartManager';
 
 const TABLE_ROW_CLASS = "hover:bg-emerald-50/40 border-b border-slate-100 transition-colors cursor-default";
-const CELL_YEAR_CLASS = "px-6 py-4 font-bold text-slate-700 whitespace-nowrap";
+const CELL_YEAR_CLASS = "px-6 py-4 font-bold text-slate-800 whitespace-nowrap sticky left-0 bg-white/95 backdrop-blur-md z-10 shadow-[1px_0_4px_rgba(0,0,0,0.04)]";
 const CELL_MONO_CLASS = "px-6 py-4 text-right font-mono text-slate-600 whitespace-nowrap";
 const CELL_EMERALD_CLASS = "px-6 py-4 text-right text-emerald-700 font-medium font-mono whitespace-nowrap";
 const CELL_MUTED_CLASS = "px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap";

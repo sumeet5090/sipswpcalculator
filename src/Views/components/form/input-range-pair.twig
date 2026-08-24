@@ -35,14 +35,14 @@
                     </label>
                     <span id="{{ id }}_word_badge" class="hidden text-[10px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-1.5 py-0.2 rounded font-sans transition-all"></span>
                 </div>
-                <span class="text-[10px] font-semibold text-slate-400 font-mono tracking-tight select-none">
+                <span class="text-[10px] font-semibold text-slate-500 font-mono tracking-tight select-none">
                     {{ prefix }}{{ min }}{{ suffix }} – {{ prefix }}{{ sliderMax }}{{ suffix }}
                 </span>
             </div>
         {% endif %}
         <div class="relative flex items-center">
             <button type="button" 
-                class="stepper-btn stepper-dec absolute left-1.5 z-10 w-8 h-8 sm:w-7 sm:h-7 flex items-center justify-center rounded-md bg-slate-100/90 text-slate-600 hover:bg-slate-200 hover:text-slate-900 active:scale-90 transition-all text-xs font-black select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 cursor-pointer before:absolute before:-inset-2 before:content-['']"
+                class="stepper-btn stepper-dec absolute left-1.5 z-10 w-8 h-8 sm:w-7 sm:h-7 flex items-center justify-center rounded-md bg-slate-100/90 text-slate-600 hover:bg-slate-200 hover:text-slate-900 active:scale-90 transition-all text-xs font-black select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer before:absolute before:-inset-2 before:content-['']"
                 data-step-action="dec"
                 data-step-for="{{ id }}"
                 data-step-val="{{ step }}"
@@ -50,7 +50,7 @@
                 −
             </button>
             {% if prefix %}
-                <span class="currency-symbol absolute left-11 sm:left-10 top-1/2 -translate-y-1/2 text-[11px] font-bold text-slate-400 pointer-events-none">{{ prefix }}</span>
+                <span class="currency-symbol absolute left-11 sm:left-10 top-1/2 -translate-y-1/2 text-[11px] font-bold text-slate-500 pointer-events-none">{{ prefix }}</span>
             {% endif %}
             <input type="text" inputmode="decimal" id="{{ id }}" name="{{ name }}"
                 class="w-full bg-white border border-slate-200 rounded-lg {{ prefix ? 'pl-14' : 'pl-10' }} {{ suffix ? 'pr-14' : 'pr-10' }} py-2.5 sm:py-1.5 text-center text-sm font-bold {{ textClass }} focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
@@ -58,10 +58,10 @@
                 autocomplete="off" spellcheck="false"
                 aria-describedby="{{ id }}_error">
             {% if suffix %}
-                <span class="absolute right-11 sm:right-10 top-1/2 -translate-y-1/2 text-[11px] font-bold text-slate-400 pointer-events-none">{{ suffix }}</span>
+                <span class="absolute right-11 sm:right-10 top-1/2 -translate-y-1/2 text-[11px] font-bold text-slate-500 pointer-events-none">{{ suffix }}</span>
             {% endif %}
             <button type="button" 
-                class="stepper-btn stepper-inc absolute right-1.5 z-10 w-8 h-8 sm:w-7 sm:h-7 flex items-center justify-center rounded-md bg-slate-100/90 text-slate-600 hover:bg-slate-200 hover:text-slate-900 active:scale-90 transition-all text-xs font-black select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 cursor-pointer before:absolute before:-inset-2 before:content-['']"
+                class="stepper-btn stepper-inc absolute right-1.5 z-10 w-8 h-8 sm:w-7 sm:h-7 flex items-center justify-center rounded-md bg-slate-100/90 text-slate-600 hover:bg-slate-200 hover:text-slate-900 active:scale-90 transition-all text-xs font-black select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer before:absolute before:-inset-2 before:content-['']"
                 data-step-action="inc"
                 data-step-for="{{ id }}"
                 data-step-val="{{ step }}"
@@ -74,7 +74,7 @@
            class="hidden text-[10px] font-semibold text-rose-500 mt-0.5 field-error"></p>
         
         {# Dynamic Live Subtext Hint (e.g. ₹25,000 / mo • ₹3.0 Lakh / yr) #}
-        <div id="{{ id }}_subtext" class="field-unit-hint text-[11px] font-medium text-slate-400 mt-1 min-h-[16px] transition-all"></div>
+        <div id="{{ id }}_subtext" class="field-unit-hint text-[11px] font-semibold text-slate-600 mt-1 min-h-[16px] transition-all"></div>
 
         <input type="range" id="{{ id }}_range" min="{{ min }}" max="{{ sliderMax }}" step="{{ sliderStep }}"
             value="{{ value }}"
@@ -90,7 +90,7 @@
                     {% set p_label = preset.label|default(preset) %}
                     {% set p_val = preset.value|default(preset) %}
                     <button type="button" 
-                        class="preset-chip text-[10px] font-semibold px-2 py-0.5 rounded-md border border-slate-200/90 bg-slate-50/90 text-slate-600 hover:border-slate-300 hover:bg-slate-100/90 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 transition-all cursor-pointer select-none active:scale-95 {{ value == p_val ? activeChipClass : '' }}"
+                        class="preset-chip text-[10px] font-semibold px-2 py-0.5 rounded-md border border-slate-200/90 bg-slate-50/90 text-slate-600 hover:border-slate-300 hover:bg-slate-100/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 transition-all cursor-pointer select-none active:scale-95 {{ value == p_val ? activeChipClass : '' }}"
                         data-preset-for="{{ id }}"
                         data-preset-val="{{ p_val }}"
                         aria-pressed="{{ value == p_val ? 'true' : 'false' }}">

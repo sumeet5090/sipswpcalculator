@@ -24,6 +24,7 @@ export class SliderManager {
     private formatter: CurrencyFormatter;
     private pairs: SliderPair[] = [];
     private _inputDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+    private _lastHapticTime: number = 0;
 
     constructor(
         triggerFn: () => void,
@@ -131,10 +132,17 @@ export class SliderManager {
                 this._clearError(inputId);
                 showTooltip(numericVal);
 
-                // Tactile Haptic Vibration at major intervals
+                // Tactile Haptic Vibration at major landmark intervals
                 if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-                    if (numericVal % 10000 === 0 || (inputId === 'years' && numericVal % 5 === 0)) {
-                        navigator.vibrate(6);
+                    const now = Date.now();
+                    if (now - this._lastHapticTime > 300) {
+                        const isLandmark = (numericVal >= 100000 && numericVal % 2500000 === 0) || 
+                                           (inputId === 'years' && numericVal % 5 === 0) ||
+                                           (inputId === 'rate' && Number.isInteger(numericVal) && numericVal % 2 === 0);
+                        if (isLandmark) {
+                            navigator.vibrate(8);
+                            this._lastHapticTime = now;
+                        }
                     }
                 }
             } finally {
@@ -165,37 +173,41 @@ export class SliderManager {
                     this._clearError(inputId);
                 }
 
-                // Dynamically scale slider max if validated exceeds default slider max
                 if (validated > defaultSliderMax) {
                     range.max = String(validated);
                 } else {
                     range.max = String(defaultSliderMax);
                 }
-
                 range.value = String(validated);
                 this._updateAria(range, validated);
                 this._updateTrackProgress(range);
-                this._updateSubtext(inputId, isNaN(rawVal) ? validated : rawVal);
-                this._updateWordBadge(inputId, isNaN(rawVal) ? validated : rawVal);
-                this._updatePresetChips(inputId, isNaN(rawVal) ? validated : rawVal);
             } finally {
                 this.isInternalSyncing = false;
             }
 
-            // Debounce text input to prevent jank during rapid typing
+            // Debounce subtext updates and calculation trigger on raw text input
             if (this._inputDebounceTimer !== null) {
                 clearTimeout(this._inputDebounceTimer);
             }
-            this._inputDebounceTimer = setTimeout(() => this.triggerFn(), 150);
+            this._inputDebounceTimer = setTimeout(() => {
+                this._updateSubtext(inputId, validated);
+                this._updateWordBadge(inputId, validated);
+                this._updatePresetChips(inputId, validated);
+                this.triggerFn();
+            }, 100);
         });
 
         input.addEventListener('change', () => {
-            if (this._inputDebounceTimer !== null) {
-                clearTimeout(this._inputDebounceTimer);
-                this._inputDebounceTimer = null;
-            }
-            const validated = this.validator.validate(inputId, input.value);
+            const rawVal = IndianNumberParser.parse(input.value);
+            const validated = this.validator.validate(inputId, isNaN(rawVal) ? range.value : rawVal);
             input.value = String(validated);
+            if (validated > defaultSliderMax) {
+                range.max = String(validated);
+            } else {
+                range.max = String(defaultSliderMax);
+            }
+            range.value = String(validated);
+            this._updateAria(range, validated);
             this._updateTrackProgress(range);
             this._updateSubtext(inputId, validated);
             this._updateWordBadge(inputId, validated);
@@ -210,6 +222,23 @@ export class SliderManager {
         });
         input.addEventListener('blur', () => {
             range.classList.remove('ring-2', 'ring-emerald-400/50');
+        });
+
+        range.addEventListener('mouseenter', () => {
+            input.classList.add('border-emerald-400', 'bg-emerald-50/20');
+        });
+        range.addEventListener('mouseleave', () => {
+            if (document.activeElement !== input) {
+                input.classList.remove('border-emerald-400', 'bg-emerald-50/20');
+            }
+        });
+        range.addEventListener('pointerdown', () => {
+            input.classList.add('border-emerald-500', 'ring-2', 'ring-emerald-500/20');
+        });
+        window.addEventListener('pointerup', () => {
+            if (document.activeElement !== input) {
+                input.classList.remove('border-emerald-500', 'ring-2', 'ring-emerald-500/20');
+            }
         });
 
         input.addEventListener('keydown', (e: KeyboardEvent) => {

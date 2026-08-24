@@ -22,11 +22,32 @@ export class SmartNudgeController {
         if (nudgeBtn && nudgePopover) {
             this.isInitialized = true;
 
+            const syncActiveOption = () => {
+                const currentRate = parseFloat(this.dom.getValue('rate') || '12');
+                const rateOptions = nudgePopover.querySelectorAll<HTMLButtonElement>('.smart-rate-option');
+                rateOptions.forEach(opt => {
+                    const optRate = parseFloat(opt.dataset.rate || '12');
+                    if (Math.abs(optRate - currentRate) < 0.1) {
+                        opt.classList.add('bg-emerald-50', 'border-emerald-300', 'ring-1', 'ring-emerald-400/40');
+                        opt.classList.remove('bg-slate-50', 'border-slate-200/80');
+                    } else {
+                        opt.classList.remove('bg-emerald-50', 'border-emerald-300', 'ring-1', 'ring-emerald-400/40');
+                        opt.classList.add('bg-slate-50', 'border-slate-200/80');
+                    }
+                });
+            };
+
             nudgeBtn.addEventListener('click', e => {
                 e.stopPropagation();
                 const isHidden = nudgePopover.classList.contains('hidden');
-                nudgePopover.classList.toggle('hidden', !isHidden);
-                nudgeBtn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+                if (isHidden) {
+                    syncActiveOption();
+                    nudgePopover.classList.remove('hidden');
+                    nudgeBtn.setAttribute('aria-expanded', 'true');
+                } else {
+                    nudgePopover.classList.add('hidden');
+                    nudgeBtn.setAttribute('aria-expanded', 'false');
+                }
             });
             if (nudgeClose) {
                 nudgeClose.addEventListener('click', () => {
