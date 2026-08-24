@@ -137,19 +137,20 @@ export class ChartManager {
      * Formats axis tick numbers cleanly into Indian (Cr/L/k) or Western (B/M/k) scales.
      */
     formatAxisTick(value: number): string {
-        if (isNaN(value) || !isFinite(value)) return '';
+        if (isNaN(value) || !isFinite(value) || value < 0) return '';
 
         const symbol = this.formatter.getSymbol();
         const currency = this.formatter.getCurrency();
 
         if (currency === 'INR') {
+            if (value === 0) return `${symbol}0`;
             if (value >= 10000000) {
                 const cr = value / 10000000;
-                return `${symbol}${cr >= 10 ? cr.toFixed(0) : cr.toFixed(1)} Cr`;
+                return `${symbol}${Number.isInteger(cr) || cr >= 10 ? cr.toFixed(0) : cr.toFixed(1)} Cr`;
             }
             if (value >= 100000) {
                 const l = value / 100000;
-                return `${symbol}${l >= 10 ? l.toFixed(0) : l.toFixed(1)} L`;
+                return `${symbol}${Number.isInteger(l) || l >= 10 ? l.toFixed(0) : l.toFixed(1)} L`;
             }
             if (value >= 1000) {
                 return `${symbol}${(value / 1000).toFixed(0)}k`;
@@ -305,7 +306,7 @@ export class ChartManager {
                 borderDash: [4, 4],
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
-                fill: 1, // Fill between dataset 1 (Pre-tax) and dataset 2 (Post-tax)
+                fill: 1,
                 pointStyle: ChartPatternHelper.getPointStyle('postTax'),
                 pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
                 pointBorderColor: THEME_COLORS.financial.postTax,
@@ -316,7 +317,32 @@ export class ChartManager {
             }
         ];
 
-        // Historical Volatility Corridor (Suppressed when Post-Tax is active to prevent color clutter)
+        // Real Purchasing Power Phantom Spline (when inflation > 0)
+        const inflationInput = this.dom.getElement<HTMLInputElement>('inflation');
+        const inflationRate = inflationInput ? parseFloat(inflationInput.value) : 0;
+        if (inflationRate > 0 && !showWealthMap && results.length > 1) {
+            const realValues = results.map(r => {
+                const discountFactor = Math.pow(1 + (inflationRate / 100), r.year);
+                return Math.round(r.combined_total / discountFactor);
+            });
+
+            datasets.push({
+                label: `Real Value (${inflationRate}% Inflation Adj)`,
+                data: realValues,
+                borderColor: '#0284c7', // Sky-600
+                backgroundColor: 'rgba(2, 132, 199, 0.04)',
+                borderWidth: 2,
+                borderDash: [5, 4],
+                tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
+                fill: 1, // Fills between nominal corpus and real purchasing power
+                pointRadius: 0,
+                pointHoverRadius: 5,
+                order: 2
+            });
+        }
+
+        // Historical Volatility Corridor (Suppressed when Post-Tax is active to prevent visual clutter)
         if (this.showHistoricalCorridor && !showWealthMap && !showPostTax && results.length > 1) {
             const lowerCorridor = this.computeBenchmarkCurve(results, 10.2);
             const upperCorridor = this.computeBenchmarkCurve(results, 15.8);
@@ -373,7 +399,7 @@ export class ChartManager {
                     label: 'Flat SIP Baseline (0% Step-Up)',
                     data: flatData,
                     borderColor: '#94a3b8',
-                    backgroundColor: 'transparent',
+                    backgroundColor: 'rgba(148, 163, 184, 0.04)',
                     borderWidth: 2,
                     borderDash: [4, 4],
                     tension: 0.4,
@@ -615,6 +641,75 @@ export class ChartManager {
             ctx.font = '700 9px Inter, sans-serif';
             ctx.fillStyle = '#047857';
             ctx.fillText('⚡ GAINS OUTPACE SIP', xPos + 6, top + 14);
+            ctx.restore();
+        }
+    };
+
+    /**
+     * ₹1 Crore Golden Milestone Guideline Plugin.
+     */
+    private croreMilestoneLinePlugin = {
+        id: 'croreMilestoneLine',
+        afterDraw: (chart: any) => {
+            if (chart.config.type !== 'line' || !chart.scales?.y || !chart.chartArea) return;
+            const yScale = chart.scales.y;
+            const targetVal = 10000000; // 1 Crore
+            if (yScale.max < targetVal) return;
+
+            const yPos = yScale.getPixelForValue(targetVal);
+            const { left, right } = chart.chartArea;
+            const ctx = chart.ctx;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.setLineDash([6, 4]);
+            ctx.moveTo(left, yPos);
+            ctx.lineTo(right, yPos);
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = 'rgba(217, 119, 6, 0.45)'; // Amber-600 gold
+            ctx.stroke();
+
+            ctx.font = '700 9px Inter, sans-serif';
+            ctx.fillStyle = '#b45309';
+            ctx.fillText('👑 ₹1 Crore Milestone', right - 105, yPos - 5);
+            ctx.restore();
+        }
+    };
+
+    /**
+     * Bank FD Alpha Delta Terminal Bracket Plugin.
+     */
+    private fdAlphaDeltaPlugin = {
+        id: 'fdAlphaDelta',
+        afterDraw: (chart: any) => {
+            if (chart.config.type !== 'line' || this.activeBenchmark !== 'fd' || !chart.chartArea) return;
+            const results = this.lastResults;
+            if (results.length < 2) return;
+
+            const sipCorpus = results[results.length - 1].combined_total;
+            const fdCurve = this.computeBenchmarkCurve(results, 6.5);
+            const fdCorpus = fdCurve[fdCurve.length - 1];
+            const delta = sipCorpus - fdCorpus;
+            if (delta <= 0) return;
+
+            const metaSip = chart.getDatasetMeta(1);
+            if (!metaSip || !metaSip.data || metaSip.data.length === 0) return;
+            const finalPoint = metaSip.data[metaSip.data.length - 1];
+
+            const ctx = chart.ctx;
+            ctx.save();
+            const badgeText = `+${this.formatter.format(delta)} FD Alpha`;
+            ctx.font = '700 10px Inter, sans-serif';
+            const width = ctx.measureText(badgeText).width + 12;
+
+            ctx.fillStyle = '#065f46';
+            ctx.beginPath();
+            ctx.roundRect(finalPoint.x - width, finalPoint.y - 24, width, 18, 4);
+            ctx.fill();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(badgeText, finalPoint.x - width + 6, finalPoint.y - 15);
             ctx.restore();
         }
     };
@@ -1156,6 +1251,8 @@ export class ChartManager {
                 this.crosshairPlugin,
                 this.splineMilestonesPlugin,
                 this.compoundingIgnitionPlugin,
+                this.croreMilestoneLinePlugin,
+                this.fdAlphaDeltaPlugin,
                 this.spatialCursorBadgePlugin
             ],
             options: {

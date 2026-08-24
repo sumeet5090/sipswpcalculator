@@ -168,4 +168,60 @@ final class CanvasVisualizerTest extends TestCase
 
         $this->assertSame(2.5, $clampedDpr, 'DPR must be clamped to 2.5 to prevent mobile GPU thermal throttling');
     }
+
+    public function testRealPurchasingPowerInflationDiscountingFormula(): void
+    {
+        // ₹1 Crore nominal corpus in 20 years at 6% inflation
+        $nominalCorpus = 10000000.0;
+        $years = 20;
+        $inflation = 6.0;
+
+        $discountFactor = pow(1.0 + ($inflation / 100.0), $years);
+        $realPurchasingPower = round($nominalCorpus / $discountFactor);
+
+        // At 6% inflation, ₹1 Crore in 20 years is worth approximately ₹31.18 Lakhs today
+        $this->assertGreaterThan(3000000.0, $realPurchasingPower);
+        $this->assertLessThan(3300000.0, $realPurchasingPower);
+    }
+
+    public function testFixedDepositAlphaDeltaComputation(): void
+    {
+        // 25,000 / mo over 15 years @ 12% equity vs 6.5% bank FD
+        $sipInputs = InvestmentInputs::fromValues(
+            25000.0,
+            15,
+            12.0,
+            0.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            0.0,
+            0.0
+        );
+
+        $results = $this->calculator->calculate($sipInputs);
+        $finalSipCorpus = end($results)['combined_total'];
+
+        // Compute 6.5% FD
+        $fdInputs = InvestmentInputs::fromValues(
+            25000.0,
+            15,
+            6.5,
+            0.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            0.0,
+            0.0
+        );
+
+        $fdResults = $this->calculator->calculate($fdInputs);
+        $finalFdCorpus = end($fdResults)['combined_total'];
+
+        $alphaDelta = $finalSipCorpus - $finalFdCorpus;
+        $this->assertGreaterThan(4500000.0, $alphaDelta, "Equity SIP must generate substantial Alpha Delta over Bank FD");
+        $this->assertGreaterThan($finalFdCorpus, $finalSipCorpus);
+    }
 }
