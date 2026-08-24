@@ -103,7 +103,8 @@ export class CalculatorApp {
         // Strategy instances
         this.strategies = {
             'grow': new GrowStrategy(this.dom, this.validator),
-            'target': new TargetCorpusStrategy(this.dom, this.validator)
+            'target': new TargetCorpusStrategy(this.dom, this.validator),
+            'target_corpus': new TargetCorpusStrategy(this.dom, this.validator)
         };
 
         this.sliderManager = new SliderManager(
@@ -543,10 +544,13 @@ export class CalculatorApp {
      * Initialize app lifecycle.
      */
     init(): void {
+        const appEl = this.dom.getElement('calculator-app');
+        const mode = appEl?.dataset?.mode || 'sip';
         const urlParams = new URLSearchParams(window.location.search);
         const urlGoal = urlParams.get('goal');
-        if (urlGoal === 'target_corpus' || urlGoal === 'target') {
-            this.activeGoalMode = 'target';
+
+        if (mode === 'target_corpus' || mode === 'target' || urlGoal === 'target_corpus' || urlGoal === 'target') {
+            this.activeGoalMode = 'target_corpus';
         }
 
         this.initSliderSync();

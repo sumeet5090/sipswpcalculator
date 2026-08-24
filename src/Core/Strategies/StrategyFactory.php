@@ -16,6 +16,7 @@ class StrategyFactory
         'lumpsum-calculator'        => LumpsumStrategy::class,
         'retirement-calculator'     => ComboStrategy::class,
         'my-first-crore-calculator' => TargetCorpusStrategy::class,
+        'target-corpus-calculator'  => TargetCorpusStrategy::class,
     ];
 
     private ConfigServiceInterface $configService;

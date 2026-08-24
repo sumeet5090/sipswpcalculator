@@ -2,19 +2,31 @@
 
 <!-- Hidden inputs to satisfy MathEngine JS -->
 <input type="hidden" id="sip" name="sip" value="0">
-<input type="hidden" id="stepup" name="stepup" value="0">
 <input type="hidden" id="lumpsum" name="lumpsum" value="0">
+
+<!-- Computed Required Monthly SIP Hero Result Card -->
+<div id="target_sip_result_card" class="mb-5 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border border-emerald-200/90 shadow-sm text-left">
+    <div class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 flex items-center justify-between">
+        <span class="flex items-center gap-1.5">
+            <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>⚡ Required Monthly SIP</span>
+        </span>
+        <span class="text-[9px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">Inverse Math Solved</span>
+    </div>
+    <div id="target_calculated_sip_display" class="text-2xl sm:text-3xl font-black text-emerald-700 font-mono mt-1.5 tabular-nums">₹ 11,516 / mo</div>
+    <p class="text-[11px] text-slate-600 mt-1">Systematically required monthly investment to achieve your target corpus.</p>
+</div>
 
 <div class="space-y-4">
     <!-- Target Corpus -->
     {{ inputs.renderInputRangePair({
         'id': 'target_corpus',
         'label': 'Target Goal Amount (Corpus)',
-        'min': 1000000,
-        'max': 100000000,
+        'min': 100000,
+        'max': 1000000000,
         'slider_max': 50000000,
-        'step': 500000,
-        'value': 10000000,
+        'step': 100000,
+        'value': target_corpus|default(10000000),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [
@@ -34,7 +46,7 @@
         'max': 40,
         'slider_max': 40,
         'step': 1,
-        'value': 10,
+        'value': years|default(15),
         'suffix': ' Yrs',
         'theme': 'emerald',
         'presets': [
@@ -47,20 +59,92 @@
     }) }}
 
     <!-- Expected Return Rate (%) -->
+    <div class="relative">
+        {{ inputs.renderInputRangePair({
+            'id': 'rate',
+            'label': 'Expected Return Rate (p.a)',
+            'min': 1,
+            'max': 30,
+            'slider_max': 20,
+            'step': 0.5,
+            'value': rate|default(12),
+            'suffix': '%',
+            'theme': 'emerald',
+            'presets': [
+                {'label': '10%', 'value': 10},
+                {'label': '12%', 'value': 12},
+                {'label': '14%', 'value': 14},
+                {'label': '15%', 'value': 15}
+            ]
+        }) }}
+
+        <button type="button" id="rate-nudge-btn"
+            class="absolute top-0 right-0 text-[11px] text-emerald-700 font-semibold flex items-center gap-1 hover:text-emerald-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded px-1 cursor-pointer"
+            aria-expanded="false"
+            aria-controls="rate-nudge-popover">
+            <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Not sure?
+        </button>
+
+        <!-- Rate Nudge AMFI Guidelines Popover -->
+        <div id="rate-nudge-popover" class="hidden absolute right-0 sm:right-auto sm:left-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-2.5rem)] p-3.5 bg-white/98 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-2xl z-50 text-left space-y-2.5 animate-in fade-in zoom-in-95 duration-150" role="dialog" aria-label="Historical Return Guidance">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                <span class="text-xs font-bold text-slate-900 flex items-center gap-1">
+                    <span>📈</span> <span>AMFI Category Guidance</span>
+                </span>
+                <button type="button" id="rate-nudge-close" class="text-slate-400 hover:text-slate-700 p-1 text-xs cursor-pointer" aria-label="Close Popover">✕</button>
+            </div>
+            <div class="space-y-1.5 text-[11px]">
+                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200/80 hover:border-emerald-300 text-left transition-all cursor-pointer flex items-center justify-between shadow-2xs" data-rate="12">
+                    <div>
+                        <strong class="text-slate-900 block font-bold text-xs">12% • Large Cap / Index</strong>
+                        <span class="text-[10px] text-slate-500">Nifty 50 15Y historical benchmark</span>
+                    </div>
+                    <span class="text-xs font-extrabold text-emerald-700">12%</span>
+                </button>
+                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200/80 hover:border-emerald-300 text-left transition-all cursor-pointer flex items-center justify-between shadow-2xs" data-rate="14">
+                    <div>
+                        <strong class="text-slate-900 block font-bold text-xs">14% • Flexi / Mid Cap</strong>
+                        <span class="text-[10px] text-slate-500">Active equity portfolio growth</span>
+                    </div>
+                    <span class="text-xs font-extrabold text-emerald-700">14%</span>
+                </button>
+                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200/80 hover:border-emerald-300 text-left transition-all cursor-pointer flex items-center justify-between shadow-2xs" data-rate="9">
+                    <div>
+                        <strong class="text-slate-900 block font-bold text-xs">9% • Balanced Advantage</strong>
+                        <span class="text-[10px] text-slate-500">Dynamic equity/debt hybrid</span>
+                    </div>
+                    <span class="text-xs font-extrabold text-teal-700">9%</span>
+                </button>
+                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200/80 hover:border-emerald-300 text-left transition-all cursor-pointer flex items-center justify-between shadow-2xs" data-rate="7">
+                    <div>
+                        <strong class="text-slate-900 block font-bold text-xs">7% • Conservative Debt</strong>
+                        <span class="text-[10px] text-slate-500">Fixed income capital preservation</span>
+                    </div>
+                    <span class="text-xs font-extrabold text-slate-700">7%</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Annual Step-Up (%) -->
     {{ inputs.renderInputRangePair({
-        'id': 'rate',
-        'label': 'Expected Return Rate (p.a)',
-        'min': 1,
-        'max': 30,
-        'slider_max': 20,
-        'step': 0.5,
-        'value': 12,
+        'id': 'stepup',
+        'label': 'Annual Step-Up (Optional)',
+        'min': 0,
+        'max': 50,
+        'slider_max': 25,
+        'step': 1,
+        'value': stepup|default(10),
         'suffix': '%',
         'theme': 'emerald',
         'presets': [
+            {'label': '0%', 'value': 0},
+            {'label': '5%', 'value': 5},
             {'label': '10%', 'value': 10},
-            {'label': '12%', 'value': 12},
-            {'label': '14%', 'value': 14},
             {'label': '15%', 'value': 15}
         ]
     }) }}
