@@ -92,18 +92,6 @@ export class ChartManager {
         return this.chartModulePromise;
     }
 
-    /**
-     * Configures hardware-accelerated canvas sizing capped at 2.5x DPR to prevent mobile GPU throttling.
-     */
-    private configureCanvasDPI(canvas: HTMLCanvasElement): void {
-        const dpr = Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2.5);
-        const rect = canvas.getBoundingClientRect();
-        if (rect.width > 0 && rect.height > 0) {
-            canvas.width = Math.round(rect.width * dpr);
-            canvas.height = Math.round(rect.height * dpr);
-        }
-    }
-
     private cachedGradientBucket: number = -1;
     private cachedGradients: GradientBundle | null = null;
 
@@ -1091,8 +1079,6 @@ export class ChartManager {
         const ctxEl = this.dom.getElement<HTMLCanvasElement>('corpusChart');
         if (!ctxEl || !document.body.contains(ctxEl)) return;
 
-        this.configureCanvasDPI(ctxEl);
-
         let ChartClass: typeof Chart;
         try {
             ChartClass = await this.loadChartModule();
@@ -1158,6 +1144,7 @@ export class ChartManager {
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    devicePixelRatio: Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2.5),
                     cutout: '70%',
                     animation: {
                         duration: isDragging ? 0 : 500,
@@ -1259,6 +1246,7 @@ export class ChartManager {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                devicePixelRatio: Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2.5),
                 onHover: (_event: any, activeElements: any[]) => {
                     if (activeElements && activeElements.length > 0) {
                         const index = activeElements[0].index;

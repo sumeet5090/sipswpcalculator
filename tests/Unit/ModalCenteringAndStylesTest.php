@@ -32,7 +32,7 @@ final class ModalCenteringAndStylesTest extends TestCase
     {
         $content = (string) file_get_contents(__DIR__ . '/../../src/Views/components/tax-waterfall-modal.twig');
         $this->assertStringContainsString('id="tax-waterfall-modal"', $content);
-        $this->assertStringContainsString('fixed inset-0 m-auto', $content);
+        $this->assertStringContainsString('md:inset-0 md:m-auto', $content);
         $this->assertStringContainsString('z-50', $content);
     }
 
@@ -40,7 +40,7 @@ final class ModalCenteringAndStylesTest extends TestCase
     {
         $content = (string) file_get_contents(__DIR__ . '/../../src/Views/components/command-palette.twig');
         $this->assertStringContainsString('id="command-palette-modal"', $content);
-        $this->assertStringContainsString('fixed inset-0 m-auto', $content);
+        $this->assertStringContainsString('md:m-auto', $content);
         $this->assertStringContainsString('z-50', $content);
     }
 
@@ -63,7 +63,10 @@ final class ModalCenteringAndStylesTest extends TestCase
         $goalContent = (string) file_get_contents(__DIR__ . '/../../src/Views/components/goal-commitment-modal.twig');
         $qrContent = (string) file_get_contents(__DIR__ . '/../../src/Views/components/qr-share-modal.twig');
 
-        $this->assertStringContainsString('fixed inset-0 z-50 flex items-center justify-center', $goalContent);
-        $this->assertStringContainsString('fixed inset-0 z-50 flex items-center justify-center', $qrContent);
+        $this->assertStringContainsString('md:inset-0 md:m-auto', $goalContent);
+        $this->assertStringContainsString('z-50', $goalContent);
+
+        $this->assertStringContainsString('md:inset-0 md:m-auto', $qrContent);
+        $this->assertStringContainsString('z-50', $qrContent);
     }
 }

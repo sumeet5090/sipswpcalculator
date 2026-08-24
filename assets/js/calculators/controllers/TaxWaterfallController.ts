@@ -1,6 +1,7 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { CurrencyFormatter } from '../CurrencyHelper';
 import { MathEngine } from '../MathEngine';
+import { ModalScrollLockHelper } from '../helpers/ModalScrollLockHelper';
 import type { InvestmentInputs, YearResult } from '../../types';
 
 /**
@@ -24,6 +25,8 @@ export class TaxWaterfallController {
     private netCorpusEl: HTMLElement | null = null;
     private harvestSavingsEl: HTMLElement | null = null;
     private harvestEffectiveEl: HTMLElement | null = null;
+    private retentionPctEl: HTMLElement | null = null;
+    private effectiveRateEl: HTMLElement | null = null;
 
     constructor(
         dom: DOMAdapter,
@@ -50,6 +53,8 @@ export class TaxWaterfallController {
         this.netCorpusEl = this.dom.getElement<HTMLElement>('tax-modal-net-corpus');
         this.harvestSavingsEl = this.dom.getElement<HTMLElement>('tax-modal-harvest-savings');
         this.harvestEffectiveEl = this.dom.getElement<HTMLElement>('tax-modal-harvest-effective');
+        this.retentionPctEl = this.dom.getElement<HTMLElement>('tax-modal-retention-pct');
+        this.effectiveRateEl = this.dom.getElement<HTMLElement>('tax-modal-effective-rate');
     }
 
     private bindEvents(): void {
@@ -57,6 +62,7 @@ export class TaxWaterfallController {
             this.openBtn.addEventListener('click', () => {
                 if (this.modal && typeof this.modal.showModal === 'function') {
                     this.modal.showModal();
+                    ModalScrollLockHelper.lock(this.openBtn);
                 }
             });
         }
@@ -74,10 +80,9 @@ export class TaxWaterfallController {
             this.closeFooterBtn.addEventListener('click', closeModal);
         }
         if (this.modal) {
-            this.modal.addEventListener('click', (e) => {
-                if (e.target === this.modal) {
-                    closeModal();
-                }
+            ModalScrollLockHelper.bindDialogBackdropClick(this.modal);
+            this.modal.addEventListener('close', () => {
+                ModalScrollLockHelper.unlock();
             });
         }
     }
@@ -108,6 +113,16 @@ export class TaxWaterfallController {
         }
         if (this.netCorpusEl) {
             this.netCorpusEl.textContent = this.formatter.format(netCorpus);
+        }
+
+        const retentionPct = total > 0 ? ((netCorpus / total) * 100).toFixed(1) : '100.0';
+        const effectiveRate = total > 0 ? ((taxAmount / total) * 100).toFixed(1) : '0.0';
+
+        if (this.retentionPctEl) {
+            this.retentionPctEl.textContent = `${retentionPct}%`;
+        }
+        if (this.effectiveRateEl) {
+            this.effectiveRateEl.textContent = `${effectiveRate}%`;
         }
 
         const harvest = MathEngine.calculateTaxHarvestingSavings(inputs, results);

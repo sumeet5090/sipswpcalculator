@@ -27,6 +27,7 @@ export class GoalCommitmentController {
         const copyBtn = this.dom.getElement('copy-pledge-btn');
         const savePngBtn = this.dom.getElement('save-pledge-png-btn');
         const printBtn = this.dom.getElement('print-pledge-btn');
+        const whatsappBtn = this.dom.getElement('whatsapp-pledge-share-btn');
         const modal = this.dom.getElement('goal-commitment-modal');
 
         if (openBtn) {
@@ -39,7 +40,12 @@ export class GoalCommitmentController {
             });
         }
 
-        if (modal) {
+        if (modal instanceof HTMLDialogElement) {
+            ModalScrollLockHelper.bindDialogBackdropClick(modal);
+            modal.addEventListener('close', () => {
+                ModalScrollLockHelper.unlock();
+            });
+        } else if (modal) {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     this.closeModal();
@@ -55,6 +61,10 @@ export class GoalCommitmentController {
             savePngBtn.addEventListener('click', () => this.exportCertificateAsPng());
         }
 
+        if (whatsappBtn) {
+            whatsappBtn.addEventListener('click', () => this.shareOnWhatsApp());
+        }
+
         if (printBtn) {
             printBtn.addEventListener('click', () => {
                 window.print();
@@ -62,8 +72,12 @@ export class GoalCommitmentController {
         }
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
-                this.closeModal();
+            if (e.key === 'Escape' && modal) {
+                if (modal instanceof HTMLDialogElement && modal.open) {
+                    this.closeModal();
+                } else if (!modal.classList.contains('hidden')) {
+                    this.closeModal();
+                }
             }
         });
     }
@@ -181,25 +195,54 @@ export class GoalCommitmentController {
     private cleanupFocusTrap: (() => void) | null = null;
 
     openModal(triggerElement?: HTMLElement): void {
-        const modal = this.dom.getElement('goal-commitment-modal');
+        const modal = this.dom.getElement<HTMLDialogElement>('goal-commitment-modal');
         if (!modal) return;
 
         this.populateMetrics();
-        modal.classList.remove('hidden');
+        if (typeof modal.showModal === 'function') {
+            modal.showModal();
+        } else {
+            modal.classList.remove('hidden');
+        }
         ModalScrollLockHelper.lock(triggerElement);
         this.cleanupFocusTrap = ModalScrollLockHelper.bindFocusTrap(modal);
     }
 
     closeModal(): void {
-        const modal = this.dom.getElement('goal-commitment-modal');
+        const modal = this.dom.getElement<HTMLDialogElement>('goal-commitment-modal');
         if (modal) {
-            modal.classList.add('hidden');
+            if (typeof modal.close === 'function' && modal.open) {
+                modal.close();
+            } else {
+                modal.classList.add('hidden');
+            }
             if (this.cleanupFocusTrap) {
                 this.cleanupFocusTrap();
                 this.cleanupFocusTrap = null;
             }
             ModalScrollLockHelper.unlock();
         }
+    }
+
+    private shareOnWhatsApp(): void {
+        const nameInput = this.dom.getElement<HTMLInputElement>('pledge-investor-name');
+        const name = nameInput?.value?.trim() || 'Disciplined Investor';
+        const inputs = this.getInputsCallback();
+        const results = this.getResultsCallback();
+        const lastRow = results && results.length > 0 ? results[results.length - 1] : null;
+
+        const sipVal = inputs.sip ?? 25000;
+        const yearsVal = inputs.years ?? 15;
+        const finalCorpus = lastRow ? lastRow.combined_total : 0;
+        const currentUrl = window.location.href;
+
+        const text = `📜 *INVESTOR GOAL COMMITMENT CERTIFICATE*\n\n` +
+            `I, *${name}*, have pledged to systematically invest *${this.formatter.formatDynamic(sipVal)}/month* for *${yearsVal} years* to achieve my target corpus of *${this.formatter.formatDynamic(finalCorpus)}*.\n\n` +
+            `🎯 *Plan Details:* ${currentUrl}\n\n` +
+            `_"Market volatility is the fee for exceptional long-term wealth compounding."_`;
+
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     }
 
     private populateMetrics(): void {
