@@ -87,6 +87,17 @@ export class WealthQuizController {
             });
         });
 
+        // Back button listeners
+        const drawer = this.dom.getElement('wealth-guided-wizard-drawer');
+        if (drawer) {
+            drawer.querySelectorAll<HTMLButtonElement>('.quiz-back-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetStep = parseInt(btn.dataset.targetStep || '1', 10);
+                    this.goToStep(targetStep);
+                });
+            });
+        }
+
         // Apply plan button
         const applyBtn = document.getElementById('apply-quiz-plan-btn');
         if (applyBtn) {

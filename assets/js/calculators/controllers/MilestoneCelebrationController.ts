@@ -1,5 +1,5 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
-
+import { YearResult } from '../../types';
 import { THEME_COLORS } from '../constants/ThemeTokens.ts';
 
 export class MilestoneCelebrationController {
@@ -14,7 +14,7 @@ export class MilestoneCelebrationController {
         this.celebratedMilestones.clear();
     }
 
-    checkMilestones(corpus: number): void {
+    checkMilestones(corpus: number, results: YearResult[] = []): void {
         const milestones = [
             { threshold: 2500000, label: '₹25 Lakh' },
             { threshold: 5000000, label: '₹50 Lakh' },
@@ -22,8 +22,8 @@ export class MilestoneCelebrationController {
             { threshold: 50000000, label: '₹5 Crore' }
         ];
 
-        // Update roadmap checkpoints
-        this.updateRoadmap(corpus);
+        // Update roadmap checkpoints with dynamic ETAs
+        this.updateRoadmap(corpus, results);
 
         // Check if a major threshold was just crossed
         milestones.forEach(m => {
@@ -38,13 +38,14 @@ export class MilestoneCelebrationController {
         });
     }
 
-    private updateRoadmap(corpus: number): void {
+    private updateRoadmap(corpus: number, results: YearResult[] = []): void {
         const checkpoints = this.dom.getElements<HTMLElement>('.roadmap-checkpoint');
         checkpoints.forEach(cp => {
             const target = parseFloat(cp.dataset.target || '0');
             const icon = cp.querySelector('.checkpoint-icon');
             const bar = cp.querySelector<HTMLElement>('.checkpoint-bar');
             const status = cp.querySelector('.checkpoint-status');
+            const etaEl = cp.querySelector('.checkpoint-eta');
 
             const pct = target > 0 ? Math.min(Math.round((corpus / target) * 100), 100) : 0;
 
@@ -62,6 +63,32 @@ export class MilestoneCelebrationController {
                 } else {
                     status.textContent = '0%';
                     status.className = 'checkpoint-status text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-slate-200/80 text-slate-600';
+                }
+            }
+
+            // Find crossover year from results
+            const crossoverRow = results.find(r => r.combined_total >= target);
+            if (etaEl) {
+                if (crossoverRow) {
+                    etaEl.textContent = `🎯 Achieved Year ${crossoverRow.year}`;
+                    etaEl.className = 'checkpoint-eta text-[10px] font-extrabold text-emerald-800 mt-1';
+                } else if (corpus > 0 && target > corpus) {
+                    const finalRow = results.length > 0 ? results[results.length - 1] : null;
+                    const finalCorpus = finalRow ? finalRow.combined_total : corpus;
+                    const gap = target - finalCorpus;
+                    if (gap > 0) {
+                        const gapFormatted = gap >= 10000000
+                            ? `₹${(gap / 10000000).toFixed(1)} Cr`
+                            : `₹${(gap / 100000).toFixed(1)} L`;
+                        etaEl.textContent = `Gap: ${gapFormatted}`;
+                        etaEl.className = 'checkpoint-eta text-[10px] font-semibold text-slate-400 mt-1';
+                    } else {
+                        etaEl.textContent = 'ETA: --';
+                        etaEl.className = 'checkpoint-eta text-[10px] font-semibold text-slate-400 mt-1';
+                    }
+                } else {
+                    etaEl.textContent = 'ETA: --';
+                    etaEl.className = 'checkpoint-eta text-[10px] font-semibold text-slate-400 mt-1';
                 }
             }
 

@@ -37,6 +37,8 @@ import { GoalCommitmentController } from './controllers/GoalCommitmentController
 import { DailyAccrualController } from './controllers/DailyAccrualController';
 import { QrShareModalController } from './controllers/QrShareModalController';
 import { StudioTabController } from './controllers/StudioTabController';
+import { SessionStorageController } from './controllers/SessionStorageController';
+import { UndoRedoController } from './controllers/UndoRedoController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -62,6 +64,9 @@ export class CalculatorApp {
     private goalCommitmentController: GoalCommitmentController;
     private dailyAccrualController: DailyAccrualController;
     private qrShareModalController: QrShareModalController;
+    private sessionStorageController: SessionStorageController;
+    private undoRedoController: UndoRedoController;
+    private glossaryController: GlossaryController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -112,7 +117,8 @@ export class CalculatorApp {
 
         this.scenarioDiffController = new ScenarioDiffController(
             this.dom,
-            this.formatter
+            this.formatter,
+            () => this.getInputs()
         );
 
         this.celebrationController = new MilestoneCelebrationController(
@@ -132,7 +138,8 @@ export class CalculatorApp {
 
         this.stressTestController = new StressTestController(
             this.dom,
-            this.formatter
+            this.formatter,
+            this.chartManager
         );
 
         this.assetRebalanceController = new AssetRebalanceController(
@@ -159,7 +166,41 @@ export class CalculatorApp {
             () => this.getInputs()
         );
 
+        this.sessionStorageController = new SessionStorageController();
+        this.undoRedoController = new UndoRedoController((target) => {
+            this.applyRestoredInputs(target);
+        });
+        
+        this.glossaryController = new GlossaryController(() => this.getInputs(), () => this.latestResults);
+
         this.initGlobalShortcuts();
+    }
+
+    /**
+     * Reapply a restored set of parameters across form inputs and trigger recalculation.
+     */
+    applyRestoredInputs(inputs: InvestmentInputs): void {
+        if (inputs.sip !== undefined) this.sliderManager.updateFieldValue('sip', inputs.sip);
+        if (inputs.years !== undefined) this.sliderManager.updateFieldValue('years', inputs.years);
+        if (inputs.rate !== undefined) this.sliderManager.updateFieldValue('rate', inputs.rate);
+        if (inputs.stepup !== undefined) this.sliderManager.updateFieldValue('stepup', inputs.stepup);
+        if (inputs.inflation !== undefined) this.sliderManager.updateFieldValue('inflation', inputs.inflation);
+        if (inputs.lumpsum !== undefined) {
+            this.sliderManager.updateFieldValue('lumpsum', inputs.lumpsum);
+            this.sliderManager.updateFieldValue('corpus', inputs.lumpsum);
+        }
+        if (inputs.swp_withdrawal !== undefined) this.sliderManager.updateFieldValue('swp_withdrawal', inputs.swp_withdrawal);
+        if (inputs.swp_years !== undefined) this.sliderManager.updateFieldValue('swp_years', inputs.swp_years);
+        if (inputs.swp_rate !== undefined) this.sliderManager.updateFieldValue('swp_rate', inputs.swp_rate);
+        if (inputs.swp_stepup !== undefined) this.sliderManager.updateFieldValue('swp_stepup', inputs.swp_stepup);
+
+        const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
+        if (swpToggle && swpToggle.checked !== inputs.enable_swp) {
+            swpToggle.checked = inputs.enable_swp;
+            this.syncSwpToggleState();
+        }
+
+        this.triggerCalculation();
     }
 
     private initGlobalShortcuts(): void {
@@ -177,6 +218,7 @@ export class CalculatorApp {
      * Reset all calculator inputs and sliders to factory benchmark defaults.
      */
     resetToDefaults(): void {
+        this.sessionStorageController.clearDraft();
         this.sliderManager.resetAllToDefaults();
         this.audioController.playTick(280, 0.05);
         this.audioController.vibrate([12, 24, 12]);
@@ -419,7 +461,7 @@ export class CalculatorApp {
             () => this.getInputs()
         ).init();
         new ShareController(this.dom, () => this.getInputs()).init();
-        new GlossaryController().init();
+        this.glossaryController.init();
         this.audioController.init();
         this.cityBenchmarkController.init();
         this.summaryMetricsController.initTaxWaterfallModal(() => this.analytics.setTaxWaterfallOpened());
@@ -671,6 +713,9 @@ export class CalculatorApp {
 
     private initEventBusSubscribers(): void {
         eventBus.subscribe('input:changed', (inputs: InvestmentInputs) => {
+            this.sessionStorageController.persistDraft(inputs);
+            this.undoRedoController.pushState(inputs);
+
             const combined = MathEngine.calculate(inputs);
             this.latestResults = combined;
             this.updateTable(combined, inputs.enable_swp);
@@ -679,12 +724,13 @@ export class CalculatorApp {
 
             const lastRow = combined[combined.length - 1];
             if (lastRow) {
-                this.celebrationController.checkMilestones(lastRow.combined_total);
+                this.celebrationController.checkMilestones(lastRow.combined_total, combined);
             }
 
             this.stressTestController.updateResults(combined);
             this.assetRebalanceController.updateInputs(inputs);
             this.dailyAccrualController.updateResults(combined);
+            this.glossaryController.updateArithmeticProof(inputs, combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 
@@ -705,7 +751,17 @@ export class CalculatorApp {
 
     private initInitialCalculation(): void {
         const runInitCalc = () => {
-            const urlSwpOn = (new URLSearchParams(window.location.search)).get('swp_on') === '1';
+            const urlParams = new URLSearchParams(window.location.search);
+            const hasUrlParams = Array.from(urlParams.keys()).length > 0;
+            if (!hasUrlParams) {
+                const savedDraft = this.sessionStorageController.loadDraft();
+                if (savedDraft) {
+                    this.applyRestoredInputs(savedDraft);
+                    return;
+                }
+            }
+
+            const urlSwpOn = urlParams.get('swp_on') === '1';
             const initialSwpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
             const isSwpMode = (this.dom.getElement('calculator-app')?.dataset?.mode === 'swp');
 

@@ -134,11 +134,27 @@ export class ChartManager {
         const milestones: Milestone[] = [];
         const targets = this.validator.getMilestoneTargets().map(t => ({ ...t, reached: false }));
         let swpCovered = false;
+        let crossoverReached = false;
 
         for (let i = 0; i < results.length; i++) {
             const row = results[i];
             const postTaxVal = row.post_tax_total ?? row.combined_total;
             const activeCorpusValue = showPostTax ? postTaxVal : row.combined_total;
+            const interest = Math.max(0, activeCorpusValue - row.cumulative_invested);
+
+            // Compounding Crossover Point
+            if (!crossoverReached && interest > row.cumulative_invested && row.cumulative_invested > 0) {
+                crossoverReached = true;
+                milestones.push({
+                    type: 'wealth',
+                    label: 'Compounding Crossover ⚡',
+                    description: `Year ${row.year}: Interest earnings (${this.formatter.formatDynamic(interest)}) have surpassed total invested capital (${this.formatter.formatDynamic(row.cumulative_invested)})!`,
+                    year: row.year,
+                    icon: '⚡',
+                    value: activeCorpusValue,
+                    index: i
+                });
+            }
 
             for (const target of targets) {
                 if (!target.reached && activeCorpusValue >= target.value) {
@@ -257,6 +273,42 @@ export class ChartManager {
             }
         ];
 
+        const hasStepUp = !enableSwp && results.length > 1 && ((results[1].annual_contribution ?? 0) > (results[0].annual_contribution ?? 0));
+        if (hasStepUp && !showWealthMap) {
+            const yr1 = results[0];
+            const baseMonthlySip = yr1.annual_contribution ? (yr1.annual_contribution / 12) : 0;
+            if (baseMonthlySip > 0) {
+                const yr1Interest = yr1.interest ?? 0;
+                const approxAnnualRate = yr1.annual_contribution > 0 ? ((yr1Interest * 2) / yr1.annual_contribution) : 0.12;
+                const rm = approxAnnualRate / 12;
+
+                const flatData = results.map(r => {
+                    const months = r.year * 12;
+                    if (rm > 0) {
+                        return Math.round(baseMonthlySip * ((Math.pow(1 + rm, months) - 1) / rm) * (1 + rm));
+                    }
+                    return Math.round(baseMonthlySip * months);
+                });
+
+                datasets.push({
+                    label: 'Flat SIP Baseline (0% Step-Up)',
+                    data: flatData,
+                    borderColor: '#94a3b8',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    borderDash: [4, 4],
+                    tension: 0.4,
+                    cubicInterpolationMode: 'monotone' as const,
+                    fill: false,
+                    pointRadius: isSinglePoint ? 4 : 0,
+                    pointHoverRadius: 5,
+                    pointHoverBorderColor: '#94a3b8',
+                    pointHoverBackgroundColor: '#ffffff',
+                    order: 3,
+                });
+            }
+        }
+
         if (mode !== 'sip' || enableSwp) {
             datasets.push({
                 label: 'Annual Withdrawal',
@@ -311,6 +363,26 @@ export class ChartManager {
             });
         }
 
+        if (this.shockOverlayData) {
+            const crashIdx = this.shockOverlayCrashIndex;
+            datasets.push({
+                label: this.shockOverlayData.label,
+                data: this.shockOverlayData.data,
+                borderColor: '#be123c',
+                backgroundColor: 'rgba(190, 18, 60, 0.05)',
+                borderWidth: 2.5,
+                borderDash: [6, 4],
+                tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
+                fill: false,
+                pointBackgroundColor: '#be123c',
+                pointBorderColor: THEME_COLORS.chart.pointBgWhite,
+                pointRadius: results.map((_, idx) => (crashIdx !== null && idx === crashIdx) ? 6 : (isSinglePoint ? 4 : 0)),
+                pointHoverRadius: 7,
+                order: 0,
+            });
+        }
+
         return datasets;
     }
 
@@ -319,6 +391,19 @@ export class ChartManager {
     private currentChartType: 'line' | 'doughnut' | null = null;
     private lastResults: YearResult[] = [];
     private lastEnableSwp: boolean = true;
+    private shockOverlayData: { label: string; data: number[] } | null = null;
+    private shockOverlayCrashIndex: number | null = null;
+
+    /**
+     * Plot or clear historical market shock trajectory overlay.
+     */
+    setShockOverlay(overlay: { label: string; data: number[]; crashIndex: number } | null): void {
+        this.shockOverlayData = overlay ? { label: overlay.label, data: overlay.data } : null;
+        this.shockOverlayCrashIndex = overlay ? overlay.crashIndex : null;
+        if (this.lastResults.length > 0) {
+            this.updateChart(this.lastResults, this.lastEnableSwp);
+        }
+    }
 
     /**
      * Switch active historical benchmark comparison (Nifty 50, Gold, FD, or None).
@@ -515,6 +600,7 @@ export class ChartManager {
 
         const ctx = ctxEl.getContext('2d');
         if (!ctx) return;
+        ctxEl.style.touchAction = 'pan-y';
 
         const years = results.map(r => `Yr ${r.year}`);
         const calcApp = document.querySelector<HTMLElement>('[data-js="calculator-app"]');

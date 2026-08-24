@@ -1,5 +1,6 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { ModalScrollLockHelper } from '../helpers/ModalScrollLockHelper';
+import { NaturalLanguageQueryParser } from '../helpers/NaturalLanguageQueryParser';
 
 export interface CommandItem {
     id: string;
@@ -177,45 +178,29 @@ export class CommandPaletteController {
     }
 
     private parseNaturalLanguage(query: string): CommandItem | null {
-        const q = query.trim().toLowerCase().replace(/,/g, '').replace(/₹/g, '');
-        
-        // Match queries containing "sip" or numeric investment shorthands
-        if (!q.includes('sip') && !q.match(/^\d+(?:\.\d+)?\s*(?:k|l|lakh|cr|crore)/i)) {
-            return null;
-        }
+        const parsed = NaturalLanguageQueryParser.parse(query);
+        if (!parsed.isValid) return null;
 
-        const nlpPattern = /(?:sip\s+)?(\d+(?:\.\d+)?\s*(?:k|l|lakh|lakhs|cr|crore|crores)?)\s*(?:sip)?(?:\s+(?:for\s+)?(\d+(?:\.\d+)?)\s*(?:y|yr|yrs|year|years)?)?(?:\s*(?:@|at\s*)?(\d+(?:\.\d+)?)\s*%)?/i;
-        const match = q.match(nlpPattern);
-
-        if (match && match[1]) {
-            const rawAmount = match[1].trim();
-            let amount = parseFloat(rawAmount);
-            if (isNaN(amount) || amount <= 0) return null;
-
-            if (rawAmount.endsWith('k')) amount *= 1000;
-            else if (rawAmount.includes('lakh') || rawAmount.endsWith('l')) amount *= 100000;
-            else if (rawAmount.includes('crore') || rawAmount.includes('cr')) amount *= 10000000;
-
-            const sipNum = Math.max(500, Math.min(1000000, Math.round(amount)));
-            const rawYears = match[2] ? parseFloat(match[2]) : 15;
-            const years = Math.max(1, Math.min(50, Math.round(rawYears)));
-            const rawRate = match[3] ? parseFloat(match[3]) : 12;
-            const rate = Math.max(1, Math.min(30, Math.round(rawRate * 10) / 10));
-
-            return {
-                id: 'dynamic-nlp-sip',
-                title: `⚡ Quick-Apply: Monthly SIP ₹${sipNum.toLocaleString('en-IN')} for ${years} Years (@${rate}%)`,
-                description: 'Instant natural language prompt execution',
-                category: 'Calculator',
-                icon: '🚀',
-                action: () => {
-                    if (this.onQuickApply) {
-                        this.onQuickApply({ sip: sipNum, years, rate });
-                    }
+        return {
+            id: 'dynamic-nlp-action',
+            title: `⚡ Quick-Apply: ${parsed.summaryText || 'Calculated Scenario'}`,
+            description: 'Instant natural language parameter execution',
+            category: 'Calculator',
+            icon: '🚀',
+            action: () => {
+                if (this.onQuickApply) {
+                    this.onQuickApply({
+                        sip: parsed.sip,
+                        years: parsed.years,
+                        rate: parsed.rate
+                    });
                 }
-            };
-        }
-        return null;
+                const calcSection = document.getElementById('calculator-section') || document.getElementById('calculator-app');
+                if (calcSection) {
+                    window.scrollTo({ top: calcSection.offsetTop, behavior: 'smooth' });
+                }
+            }
+        };
     }
 
     private filter(query: string): void {

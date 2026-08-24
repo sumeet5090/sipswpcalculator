@@ -806,9 +806,20 @@ input[type=range]::-moz-range-track {
     box-shadow: 0 1px 3px rgba(225, 29, 72, 0.25);
 }
 
-/* Micro-Stepper Buttons */
+/* Micro-Stepper Buttons & Touch Target Enlargement (WCAG & Apple HIG 44px) */
 .stepper-btn {
+    min-width: 30px;
+    min-height: 30px;
+    position: relative;
+    touch-action: manipulation;
     transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stepper-btn::before {
+    content: '';
+    position: absolute;
+    inset: -7px;
+    cursor: pointer;
 }
 
 .stepper-btn:hover {
@@ -818,6 +829,69 @@ input[type=range]::-moz-range-track {
 
 .stepper-btn:active {
     transform: scale(0.88);
+}
+
+.preset-chip {
+    min-height: 30px;
+    padding: 4px 8px;
+    touch-action: manipulation;
+    position: relative;
+}
+
+.preset-chip::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    cursor: pointer;
+}
+
+/* Floating Dynamic Tooltip above Range Thumb */
+.slider-floating-tooltip {
+    position: absolute;
+    top: -34px;
+    transform: translateX(-50%) scale(0.85);
+    background: #064e3b;
+    color: #ffffff;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: -0.02em;
+    padding: 2px 7px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px -2px rgba(4, 120, 87, 0.35);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 30;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.12s ease, visibility 0.12s ease;
+    white-space: nowrap;
+}
+
+.slider-floating-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 4px 4px 0 4px;
+    border-style: solid;
+    border-color: #064e3b transparent transparent transparent;
+}
+
+.slider-floating-tooltip.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+}
+
+/* High-Contrast Double-Ring Focus System (WCAG 2.1 AA/AAA) */
+input:focus-visible,
+button:focus-visible,
+select:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #047857 !important;
 }
 
 /* Custom Scrollbar for Table */

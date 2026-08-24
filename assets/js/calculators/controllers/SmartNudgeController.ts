@@ -41,6 +41,12 @@ export class SmartNudgeController {
                 nudgeBtn.focus();
             };
 
+            const rateOptions = nudgePopover.querySelectorAll<HTMLButtonElement>('.smart-rate-option');
+            rateOptions.forEach(opt => {
+                const rate = parseFloat(opt.dataset.rate || '12');
+                opt.addEventListener('click', () => applyRateAndClose(rate));
+            });
+
             const indiaBtn = this.dom.getElement('use-india-rate');
             const usBtn = this.dom.getElement('use-us-rate');
             if (indiaBtn) {

@@ -7,9 +7,9 @@ import type { ChartManager } from '../ChartManager';
 const TABLE_ROW_CLASS = "hover:bg-emerald-50/40 border-b border-slate-100 transition-colors cursor-default";
 const CELL_YEAR_CLASS = "px-6 py-4 font-bold text-slate-700 whitespace-nowrap";
 const CELL_MONO_CLASS = "px-6 py-4 text-right font-mono text-slate-600 whitespace-nowrap";
-const CELL_EMERALD_CLASS = "px-6 py-4 text-right text-emerald-600 font-medium font-mono whitespace-nowrap";
+const CELL_EMERALD_CLASS = "px-6 py-4 text-right text-emerald-700 font-medium font-mono whitespace-nowrap";
 const CELL_MUTED_CLASS = "px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap";
-const CELL_ROSE_CLASS = "px-6 py-4 text-right text-rose-500 font-medium font-mono whitespace-nowrap";
+const CELL_ROSE_CLASS = "px-6 py-4 text-right text-rose-700 font-medium font-mono whitespace-nowrap";
 const CELL_BOLD_CLASS = "px-6 py-4 text-right font-bold text-slate-800 font-mono whitespace-nowrap";
 
 export class ResultsController {
@@ -53,6 +53,10 @@ export class ResultsController {
                 heatmapBtn.classList.toggle('bg-emerald-100', this.heatmapEnabled);
                 heatmapBtn.classList.toggle('text-emerald-800', this.heatmapEnabled);
                 heatmapBtn.classList.toggle('border-emerald-300', this.heatmapEnabled);
+                const legend = this.dom.getElement('heatmap-legend');
+                if (legend) {
+                    legend.classList.toggle('hidden', !this.heatmapEnabled);
+                }
                 if (this.lastData.length > 0) {
                     this.updateTable(this.lastData, this.lastEnableSwp);
                 }
@@ -108,7 +112,8 @@ export class ResultsController {
         this.lastEnableSwp = enableSwp;
 
         const tbody = this.dom.getElement('breakdown-body');
-        if (!tbody) return;
+        const mobileContainer = this.dom.getElement('mobile-breakdown-cards');
+        if (!tbody && !mobileContainer) return;
 
         const fragment = document.createDocumentFragment();
         const postTaxToggle = this.dom.getElement<HTMLInputElement>('show_post_tax');
@@ -215,7 +220,87 @@ export class ResultsController {
             fragment.appendChild(tr);
         });
 
-        tbody.innerHTML = '';
-        tbody.appendChild(fragment);
+        if (tbody) {
+            tbody.innerHTML = '';
+            tbody.appendChild(fragment);
+        }
+
+        // Render Mobile Milestone Cards
+        if (mobileContainer) {
+            const mobileFragment = document.createDocumentFragment();
+            const maxInterest = Math.max(1, ...data.map(r => r.interest));
+
+            filteredData.forEach((row) => {
+                const card = document.createElement('div');
+                const isMilestone = row.year === 1 || row.year % 5 === 0 || row.year === data.length;
+                const isFinal = row.year === data.length;
+
+                card.className = "p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-2.5 transition-all";
+
+                if (this.heatmapEnabled && row.interest > 0) {
+                    const intensity = Math.min(1, row.interest / maxInterest);
+                    card.style.backgroundColor = `rgba(16, 185, 129, ${(0.04 + intensity * 0.12).toFixed(2)})`;
+                    card.style.borderColor = `rgba(16, 185, 129, ${(0.2 + intensity * 0.3).toFixed(2)})`;
+                }
+
+                let finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
+                if (inputs.inflation > 0) {
+                    finalCorpus = MathEngine.calculateInflationDiscount(
+                        finalCorpus,
+                        row.year,
+                        inputs.inflation
+                    );
+                }
+
+                const badgeLabel = isFinal
+                    ? `🏁 Year ${row.year} (Maturity)`
+                    : (this.density === '5y' && isMilestone ? `🎯 Year ${row.year} Milestone` : `Year ${row.year}`);
+
+                const headerRow = document.createElement('div');
+                headerRow.className = "flex items-center justify-between";
+                headerRow.innerHTML = `
+                    <span class="text-xs font-extrabold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md">${badgeLabel}</span>
+                    <div class="text-right">
+                        <span class="text-[10px] text-slate-400 font-sans block">Ending Balance</span>
+                        <strong class="text-sm font-extrabold text-slate-900 font-mono">${this.formatter.format(finalCorpus)}</strong>
+                    </div>
+                `;
+                card.appendChild(headerRow);
+
+                const grid = document.createElement('div');
+                grid.className = "grid grid-cols-2 gap-2 text-[11px] pt-2 border-t border-slate-100 font-mono";
+
+                const col1 = document.createElement('div');
+                col1.innerHTML = `
+                    <span class="text-slate-400 font-sans block text-[10px] uppercase">Invested</span>
+                    <span class="text-slate-700 font-bold">${this.formatter.format(row.cumulative_invested)}</span>
+                `;
+                grid.appendChild(col1);
+
+                const col2 = document.createElement('div');
+                col2.className = "text-right";
+                col2.innerHTML = `
+                    <span class="text-slate-400 font-sans block text-[10px] uppercase">Year Interest</span>
+                    <span class="text-emerald-700 font-bold">+${this.formatter.format(row.interest)}</span>
+                `;
+                grid.appendChild(col2);
+
+                if (enableSwp && row.annual_withdrawal && row.annual_withdrawal > 0) {
+                    const col3 = document.createElement('div');
+                    col3.className = "col-span-2 flex items-center justify-between pt-1 border-t border-slate-50";
+                    col3.innerHTML = `
+                        <span class="text-slate-400 font-sans text-[10px] uppercase">SWP Payout</span>
+                        <span class="text-rose-700 font-bold">−${this.formatter.format(row.annual_withdrawal)}</span>
+                    `;
+                    grid.appendChild(col3);
+                }
+
+                card.appendChild(grid);
+                mobileFragment.appendChild(card);
+            });
+
+            mobileContainer.innerHTML = '';
+            mobileContainer.appendChild(mobileFragment);
+        }
     }
 }

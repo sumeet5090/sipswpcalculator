@@ -20,7 +20,7 @@
                 <div class="flex items-center justify-between gap-2 mb-3">
                     <h4 id="sip-calculator-formula" class="text-sm sm:text-base font-bold text-slate-900">1. Monthly SIP Future Value (Annuity Due)</h4>
                     <div class="flex items-center gap-1.5 flex-shrink-0">
-                        <span class="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md">Compound Interest</span>
+                        <button type="button" class="copy-live-proof-btn text-[10px] font-bold px-2 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition-all cursor-pointer shadow-2xs" title="Copy with active values substituted">📐 Live Proof</button>
                         <button type="button" class="copy-formula-btn text-xs font-bold px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-2xs" data-formula="FV = P × [ ( (1 + r)^n - 1 ) / r ] × (1 + r)" title="Copy Formula">📋</button>
                     </div>
                 </div>
@@ -95,5 +95,40 @@
                 <li><strong class="font-semibold text-slate-900">Tax Rate</strong> = 12.5% on long-term capital gains exceeding exemption</li>
             </ul>
         </div>
+    </div>
+
+    <!-- Interactive Step-by-Step Arithmetic Proof Breakdown -->
+    <div id="math-step-by-step-box" class="mt-6 p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200/90 text-left">
+        <details class="group cursor-pointer">
+            <summary class="flex items-center justify-between text-xs sm:text-sm font-bold text-slate-800 focus:outline-none list-none select-none">
+                <span class="flex items-center gap-2">
+                    <span class="text-emerald-700">🔍</span>
+                    <span>Live Step-by-Step Arithmetic Calculation Breakdown</span>
+                </span>
+                <span class="text-xs text-slate-400 group-open:rotate-180 transition-transform duration-200">▼</span>
+            </summary>
+            <div class="mt-4 pt-3 border-t border-slate-200/80 space-y-2.5 text-xs font-mono text-slate-700">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 p-2.5 rounded-xl bg-white border border-slate-200/80">
+                    <span class="text-slate-500 font-sans">Step 1: Monthly Compounding Rate (r)</span>
+                    <span id="proof-step-r" class="font-bold text-emerald-800 font-mono">r = 12% ÷ 1200 = 0.010000</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 p-2.5 rounded-xl bg-white border border-slate-200/80">
+                    <span class="text-slate-500 font-sans">Step 2: Total Compounding Months (n)</span>
+                    <span id="proof-step-n" class="font-bold text-emerald-800 font-mono">n = 15 yrs × 12 = 180 months</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 p-2.5 rounded-xl bg-white border border-slate-200/80">
+                    <span class="text-slate-500 font-sans">Step 3: Compounding Growth Multiplier (1 + r)^n</span>
+                    <span id="proof-step-multiplier" class="font-bold text-emerald-800 font-mono">(1 + 0.010000)^180 = 5.995802</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 p-2.5 rounded-xl bg-white border border-slate-200/80">
+                    <span class="text-slate-500 font-sans">Step 4: Annuity Factor [ ((1+r)^n - 1) / r ] × (1+r)</span>
+                    <span id="proof-step-factor" class="font-bold text-emerald-800 font-mono">[ 4.995802 ÷ 0.010000 ] × 1.01 = 504.5760</span>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+                    <span class="text-emerald-900 font-sans font-bold">Step 5: Maturity Corpus (P × Factor)</span>
+                    <span id="proof-step-corpus" class="font-black text-emerald-800 font-mono">₹25,000 × 504.576 = ₹1,26,14,400</span>
+                </div>
+            </div>
+        </details>
     </div>
 </div>

@@ -44,7 +44,17 @@ export const GLOSSARY_TERMS: Record<string, GlossaryTerm> = {
     }
 };
 
+import { InvestmentInputs, YearResult } from '../../types';
+
 export class GlossaryController {
+    private getInputs?: () => InvestmentInputs;
+    private getResults?: () => YearResult[];
+
+    constructor(getInputs?: () => InvestmentInputs, getResults?: () => YearResult[]) {
+        this.getInputs = getInputs;
+        this.getResults = getResults;
+    }
+
     init(): void {
         const terms = document.querySelectorAll<HTMLElement>('[data-glossary]');
         terms.forEach(el => {
@@ -74,5 +84,63 @@ export class GlossaryController {
                 }
             });
         });
+
+        // Initialize live formula proof copy buttons
+        const liveProofBtns = document.querySelectorAll<HTMLButtonElement>('.copy-live-proof-btn');
+        liveProofBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const inputs = this.getInputs?.();
+                const results = this.getResults?.();
+                if (!inputs) return;
+
+                const sip = inputs.sip ?? 25000;
+                const rate = inputs.rate ?? 12;
+                const years = inputs.years ?? 15;
+                const r = (rate / 12 / 100);
+                const n = years * 12;
+                const lastRow = results && results.length > 0 ? results[results.length - 1] : null;
+                const finalCorpus = lastRow ? lastRow.combined_total : 0;
+
+                const proofText = `FV = ₹${sip.toLocaleString('en-IN')} × [ { (1 + ${r.toFixed(4)})^${n} - 1 } / ${r.toFixed(4)} ] × (1 + ${r.toFixed(4)}) = ₹${Math.round(finalCorpus).toLocaleString('en-IN')}`;
+
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(proofText).then(() => {
+                        const originalText = btn.textContent;
+                        btn.textContent = '✓ Copied Live Proof!';
+                        btn.classList.add('text-emerald-700', 'bg-emerald-100');
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.classList.remove('text-emerald-700', 'bg-emerald-100');
+                        }, 2000);
+                    });
+                }
+            });
+        });
+    }
+
+    updateArithmeticProof(inputs: InvestmentInputs, results: YearResult[]): void {
+        const stepR = document.getElementById('proof-step-r');
+        const stepN = document.getElementById('proof-step-n');
+        const stepMultiplier = document.getElementById('proof-step-multiplier');
+        const stepFactor = document.getElementById('proof-step-factor');
+        const stepCorpus = document.getElementById('proof-step-corpus');
+
+        if (!stepR || !stepN || !stepMultiplier || !stepFactor || !stepCorpus) return;
+
+        const sip = inputs.sip ?? 25000;
+        const rate = inputs.rate ?? 12;
+        const years = inputs.years ?? 15;
+        const r = (rate / 12 / 100);
+        const n = years * 12;
+        const mult = Math.pow(1 + r, n);
+        const factor = r > 0 ? ((mult - 1) / r) * (1 + r) : n;
+        const lastRow = results.length > 0 ? results[results.length - 1] : null;
+        const finalCorpus = lastRow ? lastRow.combined_total : sip * factor;
+
+        stepR.textContent = `r = ${rate}% ÷ 1200 = ${r.toFixed(6)}`;
+        stepN.textContent = `n = ${years} yrs × 12 = ${n} months`;
+        stepMultiplier.textContent = `(1 + ${r.toFixed(6)})^${n} = ${mult.toFixed(6)}`;
+        stepFactor.textContent = `[ ${(mult - 1).toFixed(6)} ÷ ${r.toFixed(6)} ] × ${(1 + r).toFixed(4)} = ${factor.toFixed(4)}`;
+        stepCorpus.textContent = `₹${sip.toLocaleString('en-IN')} × ${factor.toFixed(3)} = ₹${Math.round(finalCorpus).toLocaleString('en-IN')}`;
     }
 }
