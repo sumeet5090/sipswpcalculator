@@ -184,9 +184,36 @@
                 </div>
             </div>
         </div>
+        <!-- Mobile & Desktop Pinned Heads-Up Inspection Ribbon (Zero Thumb Occlusion) -->
+        <div id="chart-inspection-ribbon" class="hidden mb-2 px-3 py-1.5 rounded-xl bg-emerald-50/90 border border-emerald-200/90 shadow-2xs flex flex-wrap items-center justify-between gap-2 text-xs transition-all duration-150 backdrop-blur-md">
+            <div class="flex items-center gap-1.5">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span id="ribbon-inspect-year" class="font-extrabold text-emerald-950 font-mono">Year --</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-slate-600 font-medium">Invested: <strong id="ribbon-inspect-invested" class="text-slate-900 font-mono font-bold">₹ --</strong></span>
+                <span class="text-slate-600 font-medium">Gains: <strong id="ribbon-inspect-gains" class="text-emerald-700 font-mono font-bold">+₹ --</strong></span>
+                <span class="text-slate-600 font-medium">Corpus: <strong id="ribbon-inspect-corpus" class="text-emerald-800 font-mono font-extrabold">₹ --</strong></span>
+            </div>
+        </div>
+
         <div class="h-[280px] sm:h-[350px] lg:h-[calc(100vh-340px)] min-h-[300px] max-h-[480px] w-full min-w-0 relative z-10">
             <canvas id="corpusChart" role="img" aria-label="Investment growth projection line chart"></canvas>
         </div>
+
+        <!-- Accessible Semantic Screen-Reader Data Ledger (WCAG 1.1.1 & 4.1.2) -->
+        <table class="sr-only" aria-label="Investment Growth Cashflow Ledger">
+            <caption>Annual wealth progression projection table for assistive technologies</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Year</th>
+                    <th scope="col">Invested Principal</th>
+                    <th scope="col">Estimated Gains</th>
+                    <th scope="col">Projected Corpus</th>
+                </tr>
+            </thead>
+            <tbody id="a11y-chart-table-body"></tbody>
+        </table>
 
         <!-- Benchmark Comparison Toggle -->
         <div class="flex flex-wrap items-center justify-between gap-2 mt-4 pt-3 border-t border-slate-100/80">

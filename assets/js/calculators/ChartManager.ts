@@ -62,22 +62,23 @@ export class ChartManager {
     }
 
     /**
-     * Compute dynamic linear gradients strictly bounded to actual canvas pixel height.
+     * Compute dynamic linear gradients strictly bounded to active Y-axis scale bounds.
      */
-    private createGradients(ctx: CanvasRenderingContext2D, height: number): GradientBundle {
-        const safeHeight = Math.max(height, 200);
+    private createGradients(ctx: CanvasRenderingContext2D, top: number = 0, bottom: number = 400): GradientBundle {
+        const safeTop = Math.max(0, top);
+        const safeBottom = Math.max(safeTop + 60, bottom);
 
-        const gradientInvested = ctx.createLinearGradient(0, 0, 0, safeHeight);
+        const gradientInvested = ctx.createLinearGradient(0, safeTop, 0, safeBottom);
         gradientInvested.addColorStop(0, THEME_COLORS.chart.gradientInvestedTop);
         gradientInvested.addColorStop(0.7, THEME_COLORS.chart.gradientInvestedMid);
         gradientInvested.addColorStop(1, THEME_COLORS.chart.gradientInvestedBottom);
 
-        const gradientCorpus = ctx.createLinearGradient(0, 0, 0, safeHeight);
+        const gradientCorpus = ctx.createLinearGradient(0, safeTop, 0, safeBottom);
         gradientCorpus.addColorStop(0, THEME_COLORS.chart.gradientCorpusTop);
         gradientCorpus.addColorStop(0.6, THEME_COLORS.chart.gradientCorpusMid);
         gradientCorpus.addColorStop(1, THEME_COLORS.chart.gradientCorpusBottom);
 
-        const gradientPostTax = ctx.createLinearGradient(0, 0, 0, safeHeight);
+        const gradientPostTax = ctx.createLinearGradient(0, safeTop, 0, safeBottom);
         gradientPostTax.addColorStop(0, THEME_COLORS.chart.gradientPostTaxTop);
         gradientPostTax.addColorStop(0.7, THEME_COLORS.chart.gradientPostTaxMid);
         gradientPostTax.addColorStop(1, THEME_COLORS.chart.gradientPostTaxBottom);
@@ -508,6 +509,76 @@ export class ChartManager {
         }
     };
 
+    private donutCenterTextPlugin = {
+        id: 'donutCenterText',
+        afterDraw: (chart: any) => {
+            if (chart.config.type !== 'doughnut') return;
+            const ctx = chart.ctx;
+            const chartArea = chart.chartArea;
+            if (!chartArea) return;
+
+            const datasets = chart.data.datasets;
+            if (!datasets || datasets.length === 0) return;
+
+            const data = datasets[0].data as number[];
+            if (!data || data.length < 2) return;
+
+            const totalInvested = data[0] || 0;
+            const totalGains = data[1] || 0;
+            const totalWithdrawals = (data.length > 2 ? data[2] : 0) || 0;
+            const finalValue = totalGains + totalInvested + totalWithdrawals;
+            const multiplier = totalInvested > 0 ? (finalValue / totalInvested).toFixed(1) : '1.0';
+
+            const centerX = (chartArea.left + chartArea.right) / 2;
+            const centerY = (chartArea.top + chartArea.bottom) / 2;
+
+            ctx.save();
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            ctx.font = `800 22px ${THEME_FONTS.heading}`;
+            ctx.fillStyle = '#047857'; // Emerald-700
+            ctx.fillText(`${multiplier}×`, centerX, centerY - 7);
+
+            ctx.font = `700 9px ${THEME_FONTS.heading}`;
+            ctx.fillStyle = '#64748b'; // Slate-500
+            ctx.fillText('ROI MULTIPLIER', centerX, centerY + 12);
+            ctx.restore();
+        }
+    };
+
+    private crossoverBeaconPlugin = {
+        id: 'crossoverBeacon',
+        afterDatasetsDraw: (chart: any) => {
+            if (chart.config.type !== 'line') return;
+            const crossoverRow = (this.lastResults || []).find(r => (r.annual_contribution ?? 0) > 0 && (r.interest ?? 0) > (r.annual_contribution ?? 0));
+            if (!crossoverRow) return;
+
+            const crossoverIdx = crossoverRow.year - 1;
+            const meta = chart.getDatasetMeta(1); // Combined Corpus dataset
+            if (!meta || !meta.data || !meta.data[crossoverIdx]) return;
+
+            const point = meta.data[crossoverIdx];
+            const ctx = chart.ctx;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 5.5, 0, Math.PI * 2);
+            ctx.fillStyle = '#10b981';
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#ffffff';
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 11, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.35)';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            ctx.restore();
+        }
+    };
+
     /**
      * Compute benchmark projection dataset (Nifty 50, Gold, or FD) for the same cashflow sequence.
      */
@@ -630,10 +701,12 @@ export class ChartManager {
         });
     }
 
+    private rafId: number | null = null;
+
     /**
      * Initialize or update the chart.
      */
-    async updateChart(results: YearResult[], enableSwp: boolean = true): Promise<void> {
+    async updateChart(results: YearResult[], enableSwp: boolean = true, isDragging: boolean = false): Promise<void> {
         this.initControls();
         this.lastResults = results;
         this.lastEnableSwp = enableSwp;
@@ -701,12 +774,13 @@ export class ChartManager {
                         hoverOffset: 6
                     }]
                 },
+                plugins: [this.donutCenterTextPlugin],
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     cutout: '70%',
                     animation: {
-                        duration: 600,
+                        duration: isDragging ? 0 : 500,
                         easing: 'easeOutQuart'
                     },
                     plugins: {
@@ -755,8 +829,9 @@ export class ChartManager {
         }
 
         // ── LINE CHART VIEW (Growth Projection) ──
-        const canvasHeight = ctxEl.clientHeight || 400;
-        const gradients = this.createGradients(ctx, canvasHeight);
+        const yTop = this.chartInstance?.scales?.y?.top ?? 0;
+        const yBottom = this.chartInstance?.scales?.y?.bottom ?? (ctxEl.clientHeight || 400);
+        const gradients = this.createGradients(ctx, yTop, yBottom);
 
         // Update in-place if chartInstance is alive and still a line chart
         if (this.chartInstance && this.currentChartType === 'line' && this.chartInstance.ctx.canvas === ctxEl) {
@@ -768,7 +843,16 @@ export class ChartManager {
                 this.chartInstance.options.scales.y.stacked = showWealthMap;
             }
 
-            this.chartInstance.update();
+            if (isDragging) {
+                if (this.rafId) cancelAnimationFrame(this.rafId);
+                this.rafId = requestAnimationFrame(() => {
+                    if (this.chartInstance) {
+                        this.chartInstance.update('none');
+                    }
+                });
+            } else {
+                this.chartInstance.update();
+            }
             this.renderMilestoneGrid(milestones);
             return;
         }
@@ -786,12 +870,12 @@ export class ChartManager {
                 labels: years,
                 datasets: datasets
             },
-            plugins: [this.crosshairPlugin],
+            plugins: [this.crosshairPlugin, this.crossoverBeaconPlugin],
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 animation: {
-                    duration: 750,
+                    duration: 650,
                     easing: 'easeOutQuart',
                 },
                 interaction: {
