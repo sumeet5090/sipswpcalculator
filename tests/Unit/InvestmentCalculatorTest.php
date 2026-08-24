@@ -788,4 +788,32 @@ class InvestmentCalculatorTest extends TestCase
         $this->assertEquals($expectedTax, $lastAbove['ltcg_tax']);
         $this->assertEquals($lastAbove['combined_total'] - $expectedTax, $lastAbove['post_tax_total']);
     }
+
+    /**
+     * Test Case 28: Section 112A Tax Harvesting Strategy Alpha Savings
+     */
+    public function testTaxHarvestingAlphaCalculation(): void
+    {
+        $calculator = new InvestmentCalculator();
+        $inp = InvestmentInputs::fromValues(10000.0, 10, 12.0, 0.0, false, 0.0, 0.0, 0, 0.0);
+        $results = $calculator->calculate($inp);
+
+        $harvesting = $calculator->calculateTaxHarvestingSavings($inp, $results);
+
+        $this->assertArrayHasKey('standardTax', $harvesting);
+        $this->assertArrayHasKey('harvestedTax', $harvesting);
+        $this->assertArrayHasKey('cumulativeSavings', $harvesting);
+        $this->assertArrayHasKey('totalHarvestedGains', $harvesting);
+
+        // 10 years * 1,25,000 = 12,50,000 max harvestable
+        // Total pre-tax gain: 11,23,391 <= 12,50,000 -> 100% of gains harvested tax-free!
+        $this->assertEquals(1123391.0, $harvesting['totalHarvestedGains']);
+        $this->assertEquals(0.0, $harvesting['harvestedTax']);
+        $this->assertEquals(124799.0, $harvesting['standardTax']);
+        $this->assertEquals(124799.0, $harvesting['cumulativeSavings']);
+
+        // Empty results edge case
+        $emptyHarvesting = $calculator->calculateTaxHarvestingSavings($inp, []);
+        $this->assertEquals(0.0, $emptyHarvesting['cumulativeSavings']);
+    }
 }

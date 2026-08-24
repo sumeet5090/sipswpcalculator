@@ -9,7 +9,6 @@ use Core\CurrencyHelper;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Middleware\AdminCsrfMiddleware;
-use Core\Middleware\CsrfHoneypotMiddleware;
 use Core\Middleware\HoneypotMiddleware;
 use Core\PdfTemplateInterface;
 use Core\SchemaHelper;
@@ -239,7 +238,14 @@ class SecurityTest extends TestCase
     public function testCsrfHoneypotMiddlewareAllowsPublicExportAndBlocksBots(): void
     {
         $sessionManager = new SessionManager();
-        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
+        $honeypot = new HoneypotMiddleware();
+        $adminCsrf = new AdminCsrfMiddleware($sessionManager);
+
+        $pipeline = function (Request $req, callable $coreAction) use ($honeypot, $adminCsrf): Response {
+            return $honeypot->process($req, function (Request $r) use ($adminCsrf, $coreAction): Response {
+                return $adminCsrf->process($r, $coreAction);
+            });
+        };
 
         $nextCalled = false;
         $next = function (Request $req) use (&$nextCalled): Response {
@@ -249,7 +255,7 @@ class SecurityTest extends TestCase
 
         // 1. Clean public export POST should pass through without CSRF requirement
         $publicReq = new Request([], ['sip' => '25000', 'years' => '10'], ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/download-csv']);
-        $resp = $middleware->process($publicReq, $next);
+        $resp = $pipeline($publicReq, $next);
         $this->assertTrue($nextCalled);
         $this->assertEquals(200, $resp->getStatusCode());
 
@@ -260,7 +266,7 @@ class SecurityTest extends TestCase
             return new Response('OK', 200);
         };
         $botReq = new Request([], ['website_url' => 'https://spam.com', 'sip' => '25000'], ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/download-csv']);
-        $botResp = $middleware->process($botReq, $botNext);
+        $botResp = $pipeline($botReq, $botNext);
         $this->assertFalse($botCalled);
         $this->assertEquals(403, $botResp->getStatusCode());
         $this->assertStringContainsString('Automated request detected', $botResp->getBody());
@@ -272,7 +278,7 @@ class SecurityTest extends TestCase
             return new Response('OK', 200);
         };
         $adminReq = new Request([], ['password' => 'secret'], ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/admin_insights/login']);
-        $adminResp = $middleware->process($adminReq, $adminNext);
+        $adminResp = $pipeline($adminReq, $adminNext);
         $this->assertFalse($adminCalled);
         $this->assertEquals(403, $adminResp->getStatusCode());
         $this->assertStringContainsString('Invalid security token', $adminResp->getBody());

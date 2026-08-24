@@ -94,9 +94,12 @@ class Response
 
     public static function csv(string $csvContent, string $filename = 'export.csv', int $statusCode = 200): self
     {
+        $sanitized = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $filename) ?: 'export.csv';
+        $encoded = rawurlencode($filename);
+
         return new self($csvContent, $statusCode, [
             'Content-Type' => 'text/csv; charset=utf-8',
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Disposition' => "attachment; filename=\"{$sanitized}\"; filename*=UTF-8''{$encoded}",
             'Content-Length' => (string) strlen($csvContent),
             'Cache-Control' => 'no-cache, must-revalidate',
             'Pragma' => 'no-cache',

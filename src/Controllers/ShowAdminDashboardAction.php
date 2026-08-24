@@ -11,7 +11,7 @@ use Core\Http\Request;
 use Core\Http\Response;
 use Core\InsightRepository;
 use Core\ViewRenderer;
-use Services\SessionManager;
+use Services\SessionManagerInterface;
 
 /**
  * ShowAdminDashboardAction
@@ -23,14 +23,14 @@ class ShowAdminDashboardAction
     private AdminAuthService $authService;
     private AdminDashboardPresenter $presenter;
     private ViewRenderer $viewRenderer;
-    private SessionManager $sessionManager;
+    private SessionManagerInterface $sessionManager;
 
     public function __construct(
         InsightRepository $insightRepository,
         AdminAuthService $authService,
         AdminDashboardPresenter $presenter,
         ViewRenderer $viewRenderer,
-        SessionManager $sessionManager
+        SessionManagerInterface $sessionManager
     ) {
         $this->insightRepository = $insightRepository;
         $this->authService = $authService;

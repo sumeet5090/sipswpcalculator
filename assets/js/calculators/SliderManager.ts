@@ -20,6 +20,23 @@ interface SliderPair {
  * Strictly adheres to SOLID, DRY, and POLA principles.
  */
 export class SliderManager {
+    private static globalTooltipListenersInitialized = false;
+
+    private static initGlobalTooltipDismissal(): void {
+        if (typeof window === 'undefined' || SliderManager.globalTooltipListenersInitialized) return;
+        SliderManager.globalTooltipListenersInitialized = true;
+
+        const hideAllTooltips = () => {
+            document.querySelectorAll('.calc-slider-tooltip.is-active').forEach(el => {
+                el.classList.remove('is-active');
+            });
+        };
+
+        window.addEventListener('pointerup', hideAllTooltips);
+        window.addEventListener('touchend', hideAllTooltips, { passive: true });
+        window.addEventListener('touchcancel', hideAllTooltips, { passive: true });
+    }
+
     private triggerFn: () => void;
     private validator: InputValidator;
     private dom: DOMAdapter;
@@ -150,15 +167,9 @@ export class SliderManager {
             tooltip.classList.add('is-active');
         };
 
-        const hideTooltip = () => {
-            tooltip.classList.remove('is-active');
-        };
-
+        SliderManager.initGlobalTooltipDismissal();
         range.addEventListener('pointerdown', () => showTooltip(parseFloat(range.value) || 0));
         range.addEventListener('touchstart', () => showTooltip(parseFloat(range.value) || 0), { passive: true });
-        window.addEventListener('pointerup', hideTooltip);
-        window.addEventListener('touchend', hideTooltip);
-        window.addEventListener('touchcancel', hideTooltip);
 
         // Range Slider Input Sync
         range.addEventListener('input', () => {

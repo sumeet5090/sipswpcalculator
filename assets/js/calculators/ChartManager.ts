@@ -556,39 +556,43 @@ export class ChartManager {
         }
     }
 
+    private controlsInitialized = false;
+
+    /**
+     * Bind view switcher buttons and benchmark comparison chips once during initialization.
+     */
+    public initControls(): void {
+        if (this.controlsInitialized) return;
+        this.controlsInitialized = true;
+
+        const lineBtn = this.dom.getElement('chart-view-line');
+        const donutBtn = this.dom.getElement('chart-view-donut');
+        if (lineBtn) {
+            lineBtn.addEventListener('click', () => this.setViewType('line'));
+        }
+        if (donutBtn) {
+            donutBtn.addEventListener('click', () => this.setViewType('donut'));
+        }
+
+        const benchmarkChips = this.dom.getElements<HTMLButtonElement>('.benchmark-chip');
+        benchmarkChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                const bm = (chip.dataset.benchmark || 'none') as 'none' | 'nifty' | 'gold' | 'fd';
+                this.setBenchmark(bm);
+            });
+        });
+    }
+
     /**
      * Initialize or update the chart.
      */
     async updateChart(results: YearResult[], enableSwp: boolean = true): Promise<void> {
+        this.initControls();
         this.lastResults = results;
         this.lastEnableSwp = enableSwp;
 
         const ctxEl = this.dom.getElement<HTMLCanvasElement>('corpusChart');
         if (!ctxEl || !document.body.contains(ctxEl)) return;
-
-        // Wire view switcher buttons once
-        const lineBtn = this.dom.getElement('chart-view-line');
-        const donutBtn = this.dom.getElement('chart-view-donut');
-        if (lineBtn && !lineBtn.dataset.wired) {
-            lineBtn.dataset.wired = 'true';
-            lineBtn.addEventListener('click', () => this.setViewType('line'));
-        }
-        if (donutBtn && !donutBtn.dataset.wired) {
-            donutBtn.dataset.wired = 'true';
-            donutBtn.addEventListener('click', () => this.setViewType('donut'));
-        }
-
-        // Wire benchmark comparison chips
-        const benchmarkChips = this.dom.getElements<HTMLButtonElement>('.benchmark-chip');
-        benchmarkChips.forEach(chip => {
-            if (!chip.dataset.wired) {
-                chip.dataset.wired = 'true';
-                chip.addEventListener('click', () => {
-                    const bm = (chip.dataset.benchmark || 'none') as 'none' | 'nifty' | 'gold' | 'fd';
-                    this.setBenchmark(bm);
-                });
-            }
-        });
 
         let ChartClass: typeof Chart;
         try {

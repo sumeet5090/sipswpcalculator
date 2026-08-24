@@ -63,14 +63,24 @@ class ViewRenderer
 
     /**
      * Render a template file and return the string content.
+     *
+     * @param string $view Template path/name
+     * @param array<string, mixed> $data Template context variables
+     * @param \Core\Http\Request|null $request Optional request instance
+     * @return string Rendered HTML
      */
-    public function render(string $view, array $data = []): string
+    public function render(string $view, array $data = [], ?\Core\Http\Request $request = null): string
     {
         $csrfToken = $data['csrf_token'] ?? '';
+        $effectiveRequest = $request ?? ($data['request'] ?? null);
+        if ($effectiveRequest === null) {
+            $effectiveRequest = \Core\Http\Request::createFromGlobals();
+        }
+
         $renderData = array_merge([
             'csrf_token' => $csrfToken,
             'app' => ['session' => ['csrf_token' => $csrfToken]],
-            'request' => \Core\Http\Request::createFromGlobals(),
+            'request' => $effectiveRequest,
         ], $data);
 
         $resolvedView = $this->normalizeViewName($view);

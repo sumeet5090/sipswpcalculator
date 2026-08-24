@@ -324,18 +324,39 @@ export class ResultsController {
                 grid.className = "grid grid-cols-2 gap-2 text-xs pt-1 border-t border-slate-100";
 
                 const investedCol = document.createElement('div');
-                investedCol.innerHTML = `<span class="text-slate-600 block text-[10px]">Total Invested</span><span class="font-bold font-mono text-slate-800">${this.formatter.format(row.cumulative_invested)}</span>`;
+                const investedLabel = document.createElement('span');
+                investedLabel.className = "text-slate-600 block text-[10px]";
+                investedLabel.textContent = "Total Invested";
+                const investedVal = document.createElement('span');
+                investedVal.className = "font-bold font-mono text-slate-800";
+                investedVal.textContent = this.formatter.format(row.cumulative_invested);
+                investedCol.appendChild(investedLabel);
+                investedCol.appendChild(investedVal);
                 grid.appendChild(investedCol);
 
                 const interestCol = document.createElement('div');
                 interestCol.className = "text-right";
-                interestCol.innerHTML = `<span class="text-emerald-700 block text-[10px]">Interest / Yr</span><span class="font-bold font-mono text-emerald-700">+${this.formatter.format(row.interest)}</span>`;
+                const interestLabel = document.createElement('span');
+                interestLabel.className = "text-emerald-700 block text-[10px]";
+                interestLabel.textContent = "Interest / Yr";
+                const interestVal = document.createElement('span');
+                interestVal.className = "font-bold font-mono text-emerald-700";
+                interestVal.textContent = `+${this.formatter.format(row.interest)}`;
+                interestCol.appendChild(interestLabel);
+                interestCol.appendChild(interestVal);
                 grid.appendChild(interestCol);
 
                 if (enableSwp && (row.cumulative_withdrawals ?? 0) > 0) {
                     const withCol = document.createElement('div');
                     withCol.className = "col-span-2 pt-1 border-t border-slate-100 flex items-center justify-between text-xs";
-                    withCol.innerHTML = `<span class="text-rose-700 text-[10px]">Total Withdrawn</span><span class="font-bold font-mono text-rose-700">${this.formatter.format(row.cumulative_withdrawals ?? 0)}</span>`;
+                    const withLabel = document.createElement('span');
+                    withLabel.className = "text-rose-700 text-[10px]";
+                    withLabel.textContent = "Total Withdrawn";
+                    const withVal = document.createElement('span');
+                    withVal.className = "font-bold font-mono text-rose-700";
+                    withVal.textContent = this.formatter.format(row.cumulative_withdrawals ?? 0);
+                    withCol.appendChild(withLabel);
+                    withCol.appendChild(withVal);
                     grid.appendChild(withCol);
                 }
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Core\Strategies;
 
 use Psr\Container\ContainerInterface;
-use Services\ConfigService;
+use Services\ConfigServiceInterface;
 
 class StrategyFactory
 {
@@ -18,12 +18,12 @@ class StrategyFactory
         'my-first-crore-calculator' => TargetCorpusStrategy::class,
     ];
 
-    private ConfigService $configService;
+    private ConfigServiceInterface $configService;
     private array $strategyMap;
     private ?ContainerInterface $container;
 
     public function __construct(
-        ConfigService $configService,
+        ConfigServiceInterface $configService,
         ?array $strategyMap = null,
         ?ContainerInterface $container = null
     ) {

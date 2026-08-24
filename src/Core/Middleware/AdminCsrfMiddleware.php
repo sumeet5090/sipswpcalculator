@@ -7,7 +7,7 @@ namespace Core\Middleware;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\ViewRenderer;
-use Services\SessionManager;
+use Services\SessionManagerInterface;
 
 /**
  * AdminCsrfMiddleware
@@ -15,10 +15,10 @@ use Services\SessionManager;
  */
 class AdminCsrfMiddleware implements MiddlewareInterface
 {
-    private SessionManager $sessionManager;
+    private SessionManagerInterface $sessionManager;
     private ?ViewRenderer $viewRenderer;
 
-    public function __construct(SessionManager $sessionManager, ?ViewRenderer $viewRenderer = null)
+    public function __construct(SessionManagerInterface $sessionManager, ?ViewRenderer $viewRenderer = null)
     {
         $this->sessionManager = $sessionManager;
         $this->viewRenderer = $viewRenderer;

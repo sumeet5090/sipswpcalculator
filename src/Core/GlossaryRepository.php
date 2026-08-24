@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core;
 
-use Services\ConfigService;
+use Services\ConfigServiceInterface;
 
 /**
  * GlossaryRepository
@@ -14,12 +14,12 @@ class GlossaryRepository
 {
     private ?array $terms = null;
     private string $jsonPath;
-    private ConfigService $configService;
+    private ConfigServiceInterface $configService;
 
-    public function __construct(string $jsonPath, ?ConfigService $configService = null)
+    public function __construct(string $jsonPath, ?ConfigServiceInterface $configService = null)
     {
         $this->jsonPath = $jsonPath;
-        $this->configService = $configService ?? new ConfigService();
+        $this->configService = $configService ?? new \Services\ConfigService();
     }
 
     private function load(): void

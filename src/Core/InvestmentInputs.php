@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Services\ConfigServiceInterface;
+
 /**
  * InvestmentInputs
  * Encapsulates and sanitizes user input parameters for calculations.
@@ -61,9 +63,9 @@ class InvestmentInputs
     }
 
     /**
-     * Helper to load the JSON defaults via ConfigService or Container.
+     * Helper to load the JSON defaults via ConfigServiceInterface or Container.
      */
-    private static function loadDefaults(\Services\ConfigService $config): array
+    private static function loadDefaults(ConfigServiceInterface $config): array
     {
         return $config->getCalculatorDefaults();
     }
@@ -98,10 +100,10 @@ class InvestmentInputs
      * Bounds and defaults are read from the central calculator_defaults.json config.
      *
      * @param array $data Typically $_POST or $_GET payload
-     * @param \Services\ConfigService $config ConfigService instance
+     * @param ConfigServiceInterface $config ConfigServiceInterface instance
      * @return self
      */
-    public static function fromRequest(array $data, \Services\ConfigService $config): self
+    public static function fromRequest(array $data, ConfigServiceInterface $config): self
     {
         // Load the single source of truth for all bounds and defaults.
         $cfg = self::loadDefaults($config);
@@ -146,10 +148,10 @@ class InvestmentInputs
      * This is the industry-standard Named Constructor pattern: one input shape → one factory.
      *
      * @param array $data POST/GET payload from the SWP calculator form
-     * @param \Services\ConfigService $config ConfigService instance
+     * @param ConfigServiceInterface $config ConfigServiceInterface instance
      * @return self
      */
-    public static function fromSwpRequest(array $data, \Services\ConfigService $config): self
+    public static function fromSwpRequest(array $data, ConfigServiceInterface $config): self
     {
         $cfg = self::loadDefaults($config);
 
@@ -183,10 +185,10 @@ class InvestmentInputs
      * Named constructor for the Lumpsum-only calculator.
      *
      * @param array $data POST/GET payload from the Lumpsum calculator form
-     * @param \Services\ConfigService $config ConfigService instance
+     * @param ConfigServiceInterface $config ConfigServiceInterface instance
      * @return self
      */
-    public static function fromLumpsumRequest(array $data, \Services\ConfigService $config): self
+    public static function fromLumpsumRequest(array $data, ConfigServiceInterface $config): self
     {
         $cfg = self::loadDefaults($config);
 

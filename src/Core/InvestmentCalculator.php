@@ -265,4 +265,45 @@ class InvestmentCalculator
 
         return round($bestCorpus);
     }
+
+    /**
+     * Calculate potential Section 112A Tax-Harvesting alpha savings.
+     * Systematically realizing up to ₹1,25,000 of LTCG per year tax-free resets the cost basis.
+     *
+     * @param InvestmentInputs $inputs
+     * @param array<int, array<string, mixed>> $results
+     * @return array{standardTax: float, harvestedTax: float, cumulativeSavings: float, totalHarvestedGains: float}
+     */
+    public function calculateTaxHarvestingSavings(InvestmentInputs $inputs, array $results): array
+    {
+        if (empty($results)) {
+            return [
+                'standardTax' => 0.0,
+                'harvestedTax' => 0.0,
+                'cumulativeSavings' => 0.0,
+                'totalHarvestedGains' => 0.0
+            ];
+        }
+
+        $lastRow = $results[count($results) - 1];
+        $standardTax = (float) ($lastRow['ltcg_tax'] ?? 0);
+        $exemptionPerYear = $inputs->getLtcgExemption();
+        $taxRate = $inputs->getLtcgTaxRate();
+
+        $totalYears = count($results);
+        $maxHarvestable = $totalYears * $exemptionPerYear;
+        $totalGains = max(0.0, ((float) $lastRow['combined_total'] + (float) ($lastRow['cumulative_withdrawals'] ?? 0)) - (float) $lastRow['cumulative_invested']);
+        $actualHarvestedGains = min($totalGains, $maxHarvestable);
+
+        $remainingTaxable = max(0.0, $totalGains - $actualHarvestedGains);
+        $harvestedTax = round($remainingTaxable * $taxRate);
+        $cumulativeSavings = max(0.0, $standardTax - $harvestedTax);
+
+        return [
+            'standardTax' => $standardTax,
+            'harvestedTax' => $harvestedTax,
+            'cumulativeSavings' => $cumulativeSavings,
+            'totalHarvestedGains' => $actualHarvestedGains,
+        ];
+    }
 }

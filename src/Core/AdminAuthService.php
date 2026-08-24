@@ -6,7 +6,7 @@ namespace Core;
 
 use Core\Exceptions\AuthenticationException;
 use Core\Exceptions\ConfigurationException;
-use Services\SessionManager;
+use Services\SessionManagerInterface;
 
 /**
  * AdminAuthService
@@ -14,10 +14,10 @@ use Services\SessionManager;
  */
 class AdminAuthService
 {
-    private SessionManager $sessionManager;
+    private SessionManagerInterface $sessionManager;
     private string $adminPassword;
 
-    public function __construct(SessionManager $sessionManager, string $adminPassword = '')
+    public function __construct(SessionManagerInterface $sessionManager, string $adminPassword = '')
     {
         $this->sessionManager = $sessionManager;
         $this->adminPassword = $adminPassword;

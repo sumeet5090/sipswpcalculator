@@ -166,7 +166,8 @@ export class CalculatorApp {
 
         this.qrShareModalController = new QrShareModalController(
             this.dom,
-            () => this.getInputs()
+            () => this.getInputs(),
+            () => this.analytics.setQrModalOpened()
         );
 
         this.sessionStorageController = new SessionStorageController();
@@ -207,8 +208,11 @@ export class CalculatorApp {
         this.triggerCalculation();
     }
 
+    private shortcutsInitialized = false;
+
     private initGlobalShortcuts(): void {
-        if (typeof window === 'undefined') return;
+        if (typeof window === 'undefined' || this.shortcutsInitialized) return;
+        this.shortcutsInitialized = true;
         window.addEventListener('keydown', (e: KeyboardEvent) => {
             // Alt + R or Option + R: Reset all fields to factory defaults
             if (e.altKey && (e.key === 'r' || e.key === 'R')) {
@@ -474,13 +478,6 @@ export class CalculatorApp {
         this.initSwpHandlers();
         this.initToggles();
         this.initLifecycleBridge();
-
-        this.qrShareModalController = new QrShareModalController(
-            this.dom,
-            () => this.getInputs(),
-            () => this.analytics.setQrModalOpened()
-        );
-
         this.initGlobalShortcuts();
 
         new TabController(this.dom, () => {

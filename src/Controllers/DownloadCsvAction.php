@@ -9,7 +9,7 @@ use Core\Http\Request;
 use Core\Http\Response;
 use Core\InvestmentCalculator;
 use Core\InvestmentInputs;
-use Services\ConfigService;
+use Services\ConfigServiceInterface;
 use Services\CsvExportService;
 
 /**
@@ -19,13 +19,13 @@ use Services\CsvExportService;
 class DownloadCsvAction
 {
     private InvestmentCalculator $calculator;
-    private ConfigService $configService;
+    private ConfigServiceInterface $configService;
     private CsvExportService $csvExportService;
     private CurrencyFormatterInterface $currencyFormatter;
 
     public function __construct(
         InvestmentCalculator $calculator,
-        ConfigService $configService,
+        ConfigServiceInterface $configService,
         CsvExportService $csvExportService,
         ?CurrencyFormatterInterface $currencyFormatter = null
     ) {

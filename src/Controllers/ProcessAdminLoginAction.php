@@ -11,9 +11,9 @@ use Core\Exceptions\RateLimitExceededException;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\ViewRenderer;
-use Services\ConfigService;
+use Services\ConfigServiceInterface;
 use Services\RateLimiter;
-use Services\SessionManager;
+use Services\SessionManagerInterface;
 
 /**
  * ProcessAdminLoginAction
@@ -23,16 +23,16 @@ class ProcessAdminLoginAction
 {
     private AdminAuthService $authService;
     private ViewRenderer $viewRenderer;
-    private SessionManager $sessionManager;
+    private SessionManagerInterface $sessionManager;
     private RateLimiter $rateLimiter;
-    private ConfigService $configService;
+    private ConfigServiceInterface $configService;
 
     public function __construct(
         AdminAuthService $authService,
         ViewRenderer $viewRenderer,
-        SessionManager $sessionManager,
+        SessionManagerInterface $sessionManager,
         RateLimiter $rateLimiter,
-        ConfigService $configService
+        ConfigServiceInterface $configService
     ) {
         $this->authService = $authService;
         $this->viewRenderer = $viewRenderer;

@@ -11,19 +11,19 @@ use Core\Http\Response;
 use Core\InvestmentInputs;
 use Core\MetaManager;
 use Core\ViewRenderer;
-use Services\ConfigService;
+use Services\ConfigServiceInterface;
 
 class RenderHomeAction
 {
     private MetaManager $metaManager;
-    private ConfigService $configService;
+    private ConfigServiceInterface $configService;
     private FaqRepository $faqRepository;
     private ViewRenderer $viewRenderer;
     private SchemaFactory $schemaFactory;
 
     public function __construct(
         MetaManager $metaManager,
-        ConfigService $configService,
+        ConfigServiceInterface $configService,
         FaqRepository $faqRepository,
         ViewRenderer $viewRenderer,
         SchemaFactory $schemaFactory
