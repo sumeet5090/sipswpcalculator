@@ -63,4 +63,11 @@ export class A11yAnnouncer {
 
         this.announce(summary, 800);
     }
+
+    /**
+     * Helper to broadcast year-by-year cashflow milestone inspection for keyboard and touch navigation.
+     */
+    public static announceYearInspection(year: number, invested: string, corpus: string, gains: string): void {
+        this.announce(`Year ${year}: Total Invested ${invested}, Compound Gains ${gains}, Projected Corpus ${corpus}.`, 150);
+    }
 }

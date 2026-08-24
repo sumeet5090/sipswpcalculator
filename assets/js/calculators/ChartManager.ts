@@ -4,6 +4,7 @@ import { DOMAdapter } from '../adapters/DOMAdapter';
 import { YearResult } from '../types';
 import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens.ts';
 import { ChartPatternHelper } from './helpers/ChartPatternHelper.ts';
+import { A11yAnnouncer } from './helpers/A11yAnnouncer.ts';
 import type { Chart, ChartDataset, ChartConfiguration, TooltipItem } from 'chart.js';
 
 export interface Milestone {
@@ -259,12 +260,12 @@ export class ChartManager {
                 label: 'Post-Tax Corpus',
                 data: postTaxCorpus,
                 borderColor: THEME_COLORS.financial.postTax,
-                backgroundColor: gradients.postTax,
+                backgroundColor: 'rgba(139, 92, 246, 0.08)',
                 borderWidth: 2,
                 borderDash: [4, 4],
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
-                fill: 'origin',
+                fill: 1, // Fill between dataset 1 (Pre-tax Corpus) and dataset 2 (Post-tax Corpus)
                 pointStyle: ChartPatternHelper.getPointStyle('postTax'),
                 pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
                 pointBorderColor: THEME_COLORS.financial.postTax,
@@ -547,37 +548,74 @@ export class ChartManager {
         }
     };
 
-    private crossoverBeaconPlugin = {
-        id: 'crossoverBeacon',
+    private splineMilestonesPlugin = {
+        id: 'splineMilestones',
         afterDatasetsDraw: (chart: any) => {
             if (chart.config.type !== 'line') return;
-            const crossoverRow = (this.lastResults || []).find(r => (r.annual_contribution ?? 0) > 0 && (r.interest ?? 0) > (r.annual_contribution ?? 0));
-            if (!crossoverRow) return;
-
-            const crossoverIdx = crossoverRow.year - 1;
             const meta = chart.getDatasetMeta(1); // Combined Corpus dataset
-            if (!meta || !meta.data || !meta.data[crossoverIdx]) return;
+            if (!meta || !meta.data) return;
 
-            const point = meta.data[crossoverIdx];
             const ctx = chart.ctx;
+            const milestones = this.currentMilestones || [];
 
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(point.x, point.y, 5.5, 0, Math.PI * 2);
-            ctx.fillStyle = '#10b981';
-            ctx.fill();
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#ffffff';
-            ctx.stroke();
+            milestones.forEach(m => {
+                if (m.index === undefined || !meta.data[m.index]) return;
+                const point = meta.data[m.index];
 
-            ctx.beginPath();
-            ctx.arc(point.x, point.y, 11, 0, Math.PI * 2);
-            ctx.strokeStyle = 'rgba(16, 185, 129, 0.35)';
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-            ctx.restore();
+                ctx.save();
+                // Outer subtle glowing halo
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 11, 0, Math.PI * 2);
+                ctx.fillStyle = m.type === 'security' ? 'rgba(245, 158, 11, 0.22)' : 'rgba(16, 185, 129, 0.22)';
+                ctx.fill();
+
+                // Inner beacon core
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 5.5, 0, Math.PI * 2);
+                ctx.fillStyle = m.type === 'security' ? '#d97706' : '#10b981';
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#ffffff';
+                ctx.stroke();
+                ctx.restore();
+            });
         }
     };
+
+    /**
+     * Update pinned Heads-Up Display (HUD) inspection ribbon.
+     */
+    public updateInspectionRibbon(row: YearResult): void {
+        const ribbon = this.dom.getElement('chart-inspection-ribbon');
+        const rYear = this.dom.getElement('ribbon-inspect-year');
+        const rInvested = this.dom.getElement('ribbon-inspect-invested');
+        const rGains = this.dom.getElement('ribbon-inspect-gains');
+        const rCorpus = this.dom.getElement('ribbon-inspect-corpus');
+
+        if (ribbon && row) {
+            if (rYear) rYear.textContent = `Year ${row.year}`;
+            if (rInvested) rInvested.textContent = this.formatter.format(row.cumulative_invested);
+            if (rCorpus) rCorpus.textContent = this.formatter.format(row.combined_total);
+            if (rGains) {
+                const gains = Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested);
+                rGains.textContent = `+${this.formatter.format(gains)}`;
+            }
+            ribbon.classList.remove('hidden');
+        }
+    }
+
+    /**
+     * Announce current data point for assistive technologies and update HUD.
+     */
+    private announceCurrentPoint(index: number): void {
+        const row = this.lastResults[index];
+        if (!row) return;
+        const invested = this.formatter.format(row.cumulative_invested);
+        const corpus = this.formatter.format(row.combined_total);
+        const gains = this.formatter.format(Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested));
+        A11yAnnouncer.announceYearInspection(row.year, invested, corpus, gains);
+        this.updateInspectionRibbon(row);
+    }
 
     /**
      * Compute benchmark projection dataset (Nifty 50, Gold, or FD) for the same cashflow sequence.
@@ -699,6 +737,37 @@ export class ChartManager {
                 this.setBenchmark(bm);
             });
         });
+
+        const canvasContainer = this.dom.getElement<HTMLElement>('chart-canvas-container');
+        if (canvasContainer) {
+            let activeKeyboardIndex = 0;
+            canvasContainer.addEventListener('keydown', (e: KeyboardEvent) => {
+                if (!this.lastResults || this.lastResults.length === 0) return;
+                const maxIndex = this.lastResults.length - 1;
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    activeKeyboardIndex = Math.min(maxIndex, activeKeyboardIndex + 1);
+                    this.highlightYear(activeKeyboardIndex);
+                    this.announceCurrentPoint(activeKeyboardIndex);
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    activeKeyboardIndex = Math.max(0, activeKeyboardIndex - 1);
+                    this.highlightYear(activeKeyboardIndex);
+                    this.announceCurrentPoint(activeKeyboardIndex);
+                } else if (e.key === 'Home') {
+                    e.preventDefault();
+                    activeKeyboardIndex = 0;
+                    this.highlightYear(activeKeyboardIndex);
+                    this.announceCurrentPoint(activeKeyboardIndex);
+                } else if (e.key === 'End') {
+                    e.preventDefault();
+                    activeKeyboardIndex = maxIndex;
+                    this.highlightYear(activeKeyboardIndex);
+                    this.announceCurrentPoint(activeKeyboardIndex);
+                }
+            });
+        }
     }
 
     private rafId: number | null = null;
@@ -870,10 +939,26 @@ export class ChartManager {
                 labels: years,
                 datasets: datasets
             },
-            plugins: [this.crosshairPlugin, this.crossoverBeaconPlugin],
+            plugins: [this.crosshairPlugin, this.splineMilestonesPlugin],
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                onHover: (_event: any, activeElements: any[]) => {
+                    if (activeElements && activeElements.length > 0) {
+                        const index = activeElements[0].index;
+                        const row = this.lastResults[index];
+                        if (row) {
+                            this.updateInspectionRibbon(row);
+                            if (typeof navigator !== 'undefined' && 'vibrate' in navigator && (row.year % 5 === 0 || row.year === this.lastResults.length)) {
+                                try {
+                                    navigator.vibrate(10);
+                                } catch {
+                                    // Silent ignore
+                                }
+                            }
+                        }
+                    }
+                },
                 animation: {
                     duration: 650,
                     easing: 'easeOutQuart',
@@ -986,7 +1071,7 @@ export class ChartManager {
     }
 
     /**
-     * Cross-browser safe celebratory milestone badge renderer.
+     * Cross-browser safe celebratory milestone badge renderer with bidirectional chart highlight sync.
      */
     renderMilestoneGrid(milestones: Milestone[]): void {
         const container = this.dom.getElement('milestones-container');
@@ -1007,7 +1092,11 @@ export class ChartManager {
 
         milestones.forEach(m => {
             const card = document.createElement('div');
-            card.className = 'bg-gradient-to-r from-amber-50/90 via-white to-emerald-50/50 p-3.5 rounded-2xl border border-amber-200/80 shadow-sm flex items-center gap-3 transition-all duration-200 hover:shadow-md hover:border-amber-300';
+            card.className = 'bg-gradient-to-r from-amber-50/90 via-white to-emerald-50/50 p-3.5 rounded-2xl border border-amber-200/80 shadow-sm flex items-center gap-3 transition-all duration-200 hover:shadow-md hover:border-amber-300 cursor-pointer';
+
+            // Two-way interactive hover sync with Chart Spline Beacon
+            card.addEventListener('mouseenter', () => this.highlightYear(m.index));
+            card.addEventListener('mouseleave', () => this.clearHighlight());
 
             const iconDiv = document.createElement('div');
             iconDiv.className = 'flex items-center justify-center w-10 h-10 rounded-xl bg-amber-100/80 text-xl shrink-0 shadow-sm';

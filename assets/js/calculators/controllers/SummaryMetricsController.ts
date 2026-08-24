@@ -20,6 +20,27 @@ export class SummaryMetricsController {
         this.formatter = formatter;
         this.getInputs = getInputs;
         this.odometer = new OdometerController(dom, formatter);
+        this.initDrawer();
+    }
+
+    /**
+     * Bind Alpha Beacon secondary insights expandable drawer toggle.
+     */
+    private initDrawer(): void {
+        const toggleBtn = this.dom.getElement<HTMLButtonElement>('alpha-drawer-toggle');
+        const drawer = this.dom.getElement('alpha-secondary-insights');
+        if (toggleBtn && drawer) {
+            toggleBtn.addEventListener('click', () => {
+                const isOpen = !drawer.classList.contains('hidden');
+                drawer.classList.toggle('hidden', isOpen);
+                drawer.classList.toggle('flex', !isOpen);
+                toggleBtn.setAttribute('aria-expanded', String(!isOpen));
+                const svg = toggleBtn.querySelector('svg');
+                if (svg) {
+                    svg.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+                }
+            });
+        }
     }
 
     /**
@@ -127,6 +148,19 @@ export class SummaryMetricsController {
 
         if (interestTitle) interestTitle.textContent = interestLabel;
         if (corpusTitle) corpusTitle.textContent = corpusLabel;
+
+        // Dynamic Morphological Summary Cards Grid (SIP: 3-column, SWP: 4-column)
+        const summaryGrid = this.dom.getElement('summary-cards-grid');
+        const cardWithdrawn = this.dom.getElement('card-withdrawn');
+        if (summaryGrid && cardWithdrawn) {
+            if (inputs.enable_swp) {
+                summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-4 gap-3 transition-all duration-300';
+                cardWithdrawn.classList.remove('hidden');
+            } else {
+                summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-3 gap-3 transition-all duration-300';
+                cardWithdrawn.classList.add('hidden');
+            }
+        }
 
         // Statutory Budget 2024 Post-Tax Indicator on Corpus Card
         const postTaxPill = this.dom.getElement('post-tax-statutory-pill');

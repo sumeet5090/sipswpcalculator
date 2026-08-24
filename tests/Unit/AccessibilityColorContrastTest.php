@@ -82,4 +82,13 @@ final class AccessibilityColorContrastTest extends TestCase
         $this->assertGreaterThanOrEqual(4.5, $this->getContrastRatio($principal, '#ffffff'));
         $this->assertGreaterThanOrEqual(4.5, $this->getContrastRatio($tax, '#ffffff'));
     }
+
+    public function testBrandDarkAndTextPrimaryMeetWcagAaaOnWhite(): void
+    {
+        $brandDark = ThemeConstants::COLOR_BRAND_800; // #065f46
+        $textPrimary = ThemeConstants::COLOR_TEXT_PRIMARY; // #0f172a
+
+        $this->assertGreaterThanOrEqual(7.0, $this->getContrastRatio($brandDark, '#ffffff'), "Brand dark must meet WCAG AAA (>= 7:1)");
+        $this->assertGreaterThanOrEqual(7.0, $this->getContrastRatio($textPrimary, '#ffffff'), "Text primary must meet WCAG AAA (>= 7:1)");
+    }
 }

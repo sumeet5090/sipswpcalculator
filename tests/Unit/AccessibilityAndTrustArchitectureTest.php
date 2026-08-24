@@ -143,11 +143,31 @@ final class AccessibilityAndTrustArchitectureTest extends TestCase
         $safeWithdrawal = $this->calculator->calculateSafeSwpWithdrawal($inputs, 5000000.0);
         $this->assertGreaterThan(25000.0, $safeWithdrawal);
         $this->assertLessThan(45000.0, $safeWithdrawal);
+    }
 
-        // Nifty corridor boundaries
-        $lowerCagr = 10.2;
-        $upperCagr = 15.8;
-        $this->assertGreaterThan(0.0, $lowerCagr);
-        $this->assertGreaterThan($lowerCagr, $upperCagr);
+    public function testChartVisualizationAccessibilityAndTrustArchitecture(): void
+    {
+        $templatePath = dirname(__DIR__, 2) . '/src/Views/components/chart-visualization.twig';
+        $this->assertFileExists($templatePath);
+        $content = (string) file_get_contents($templatePath);
+
+        // Assert morphological grid IDs
+        $this->assertStringContainsString('id="summary-cards-grid"', $content);
+        $this->assertStringContainsString('id="card-withdrawn"', $content);
+        $this->assertStringContainsString('id="summary-invested"', $content);
+        $this->assertStringContainsString('id="summary-interest"', $content);
+        $this->assertStringContainsString('id="summary-corpus"', $content);
+
+        // Assert AMFI Institutional Seal and Alpha Beacon dock
+        $this->assertStringContainsString('AMFI Aligned', $content);
+        $this->assertStringContainsString('id="contextual-alpha-radar"', $content);
+        $this->assertStringContainsString('id="alpha-drawer-toggle"', $content);
+        $this->assertStringContainsString('id="alpha-secondary-insights"', $content);
+
+        // Assert keyboard accessible canvas container and screen reader ledger table
+        $this->assertStringContainsString('id="chart-canvas-container"', $content);
+        $this->assertStringContainsString('tabindex="0"', $content);
+        $this->assertStringContainsString('id="a11y-chart-table-body"', $content);
+        $this->assertStringContainsString('id="chart-inspection-ribbon"', $content);
     }
 }
