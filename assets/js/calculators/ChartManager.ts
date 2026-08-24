@@ -391,19 +391,22 @@ export class ChartManager {
         const hasStepUp = !enableSwp && results.length > 1 && ((results[1].annual_contribution ?? 0) > (results[0].annual_contribution ?? 0));
         if (hasStepUp && !showWealthMap) {
             const yr1 = results[0];
-            const baseMonthlySip = yr1.annual_contribution ? (yr1.annual_contribution / 12) : 0;
-            if (baseMonthlySip > 0) {
-                const yr1Interest = yr1.interest ?? 0;
-                const approxAnnualRate = yr1.annual_contribution > 0 ? ((yr1Interest * 2) / yr1.annual_contribution) : 0.12;
-                const rm = approxAnnualRate / 12;
+            const baseMonthlySip = yr1.sip_monthly ?? (yr1.annual_contribution ? (yr1.annual_contribution / 12) : 0);
+            if (baseMonthlySip > 0 || (yr1.begin_balance ?? 0) > 0) {
+                const rateInput = this.dom.getElement<HTMLInputElement>('rate');
+                const userRate = rateInput ? (parseFloat(rateInput.value) || 12) : 12;
+                const rm = userRate / 100 / 12;
+                const initialLumpsum = yr1.begin_balance ?? 0;
 
-                const flatData = results.map(r => {
-                    const months = r.year * 12;
-                    if (rm > 0) {
-                        return Math.round(baseMonthlySip * ((Math.pow(1 + rm, months) - 1) / rm) * (1 + rm));
+                let flatBalance = initialLumpsum;
+                const flatData: number[] = [];
+
+                for (let i = 0; i < results.length; i++) {
+                    for (let m = 0; m < 12; m++) {
+                        flatBalance = (flatBalance + baseMonthlySip) * (1 + rm);
                     }
-                    return Math.round(baseMonthlySip * months);
-                });
+                    flatData.push(Math.round(flatBalance));
+                }
 
                 datasets.push({
                     label: 'Flat SIP Baseline (0% Step-Up)',

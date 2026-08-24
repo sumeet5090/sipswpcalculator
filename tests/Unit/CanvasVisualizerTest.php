@@ -302,4 +302,47 @@ final class CanvasVisualizerTest extends TestCase
         $this->assertSame(['Y1', 'Y5', 'Y10', 'Y15', 'Y20', 'Y25', 'Y30'], $shownTicks);
         $this->assertCount(7, $shownTicks, "Mobile X-axis must thin 30 ticks down to 7 readable benchmark steps");
     }
+
+    public function testFlatSipBaselineWithLumpsumDoesNotExplode(): void
+    {
+        // ₹40 Lakh Lumpsum, ₹1 Lakh/mo SIP, 40 years @ 25% CAGR, 25% step-up
+        $inputs = InvestmentInputs::fromValues(
+            100000.0,
+            40,
+            25.0,
+            25.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            4000000.0,
+            0.0
+        );
+
+        $results = $this->calculator->calculate($inputs);
+        $this->assertCount(40, $results);
+
+        // Flat SIP baseline (0% step-up) simulation
+        $initialLumpsum = 4000000.0;
+        $monthlySip = 100000.0;
+        $rate = 25.0;
+        $rm = $rate / 100 / 12;
+
+        $flatBalance = $initialLumpsum;
+        $flatData = [];
+
+        for ($i = 0; $i < count($results); $i++) {
+            for ($m = 0; $m < 12; $m++) {
+                $flatBalance = ($flatBalance + $monthlySip) * (1 + $rm);
+            }
+            $flatData[] = round($flatBalance);
+        }
+
+        $finalFlatCorpus = end($flatData);
+
+        // Final flat corpus over 40 years @ 25% must be finite and less than 1,000,000 Crores (1e13)
+        $this->assertGreaterThan(0, $finalFlatCorpus);
+        $this->assertLessThan(1.0e14, $finalFlatCorpus, "Flat SIP baseline must not produce astronomical values");
+        $this->assertLessThan($results[39]['combined_total'], $finalFlatCorpus, "Flat SIP baseline must be strictly less than stepped-up corpus");
+    }
 }
