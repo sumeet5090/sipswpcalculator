@@ -1,55 +1,65 @@
 <div class="space-y-4">
     <!-- Fluid Quantum Wealth Ribbon Grid (Zero-CLS 4-column responsive container) -->
-    <div id="summary-cards-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-3 transition-all duration-300">
+    <div id="summary-cards-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 transition-all duration-300">
         <!-- Card 1: Total Invested -->
-        <div class="bg-white/95 rounded-2xl border border-slate-200/90 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.04)] p-3.5 sm:p-4 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-slate-300 group">
-            <div class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
+        <div class="bg-white/95 rounded-2xl border border-slate-200/90 shadow-[0_2px_10px_-2px_rgba(0,0,0,0.03)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-slate-300 group flex flex-col justify-between">
+            <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span class="text-xs">💰</span>
                 <span>Total Invested</span>
             </div>
-            <div id="summary-invested" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-slate-900 font-mono tabular-nums transition-numbers truncate">
+            <div id="summary-invested" class="text-sm sm:text-base md:text-lg xl:text-xl font-black text-slate-900 font-mono tabular-nums transition-numbers truncate py-0.5">
                 ₹ --
+            </div>
+            <div class="text-[9px] sm:text-[10px] font-bold text-slate-400 font-mono">
+                Principal Capital
             </div>
         </div>
 
         <!-- Card 2: Compounding Gains -->
-        <div class="bg-white/95 rounded-2xl border border-emerald-200/90 shadow-[0_2px_12px_-2px_rgba(4,120,87,0.06)] p-3.5 sm:p-4 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-emerald-300 group">
+        <div class="bg-white/95 rounded-2xl border border-emerald-200/90 shadow-[0_2px_12px_-2px_rgba(16,185,129,0.08)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-emerald-300 group flex flex-col justify-between relative">
             <div id="title-interest-container" class="flex items-center justify-center gap-1 mb-1">
                 <span id="title-interest" class="text-[10px] sm:text-xs font-bold text-emerald-800 uppercase tracking-wider leading-tight flex items-center gap-0.5">
                     <span>↗</span>
                     <span>Compound Gains</span>
                 </span>
-                <span id="summary-gain-badge" class="hidden sm:inline-flex items-center text-[9px] font-black px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200/80">
+            </div>
+            <div id="summary-interest" class="text-sm sm:text-base md:text-lg xl:text-xl font-black text-emerald-700 font-mono tabular-nums transition-numbers truncate py-0.5">
+                ₹ --
+            </div>
+            <div class="flex items-center justify-center gap-1">
+                <span id="summary-gain-badge" class="inline-flex items-center text-[9px] font-black px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-200">
                     +0%
                 </span>
-            </div>
-            <div id="summary-interest" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-emerald-700 font-mono tabular-nums transition-numbers truncate">
-                ₹ --
             </div>
         </div>
 
         <!-- Card 3: Total Withdrawn (Morphs visible only in SWP mode) -->
-        <div id="card-withdrawn" class="hidden bg-white/95 rounded-2xl border border-rose-200/90 shadow-[0_2px_12px_-2px_rgba(190,18,60,0.06)] p-3.5 sm:p-4 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-rose-300 group">
+        <div id="card-withdrawn" class="hidden bg-white/95 rounded-2xl border border-rose-200/90 shadow-[0_2px_12px_-2px_rgba(244,63,94,0.08)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-rose-300 group flex flex-col justify-between">
             <div class="text-[10px] sm:text-xs font-bold text-rose-800 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-0.5">
                 <span>↘</span>
                 <span>Total Payouts</span>
             </div>
-            <div id="summary-withdrawn" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-rose-700 font-mono tabular-nums transition-numbers truncate">
+            <div id="summary-withdrawn" class="text-sm sm:text-base md:text-lg xl:text-xl font-black text-rose-700 font-mono tabular-nums transition-numbers truncate py-0.5">
                 ₹ --
+            </div>
+            <div class="text-[9px] sm:text-[10px] font-bold text-rose-400 font-mono">
+                Systematic Cashflow
             </div>
         </div>
 
         <!-- Card 4: Final Corpus / Net Wealth -->
-        <div class="bg-white/95 rounded-2xl border-2 border-emerald-600/80 shadow-[0_4px_20px_-2px_rgba(4,120,87,0.12)] p-3.5 sm:p-4 text-center overflow-hidden transition-all duration-200 hover:shadow-xl hover:border-emerald-700 relative group">
-            <div id="title-corpus" class="text-[10px] sm:text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
+        <div class="bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl border-2 border-emerald-600/90 shadow-[0_4px_16px_-2px_rgba(16,185,129,0.15)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-xl hover:border-emerald-700 relative group flex flex-col justify-between">
+            <div id="title-corpus" class="text-[10px] sm:text-xs font-bold text-emerald-900 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span>💎</span>
-                <span>Final Corpus</span>
+                <span>Final Wealth Corpus</span>
             </div>
-            <div id="summary-corpus" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-emerald-800 font-mono tabular-nums transition-numbers truncate">
+            <div id="summary-corpus" class="text-base sm:text-lg md:text-xl xl:text-2xl font-black text-emerald-950 font-mono tabular-nums transition-numbers truncate py-0.5">
                 ₹ --
             </div>
-            <div id="post-tax-statutory-pill" class="hidden mt-1 text-[10px] font-bold text-violet-800 bg-violet-50 border border-violet-200/90 px-2 py-0.5 rounded-md truncate">
-                ⚖️ Budget 2024 §112A Net
+            <div class="flex items-center justify-center gap-1">
+                <div id="post-tax-statutory-pill" class="hidden text-[9px] font-black text-violet-900 bg-violet-100/90 border border-violet-200 px-1.5 py-0.2 rounded truncate">
+                    ⚖️ §112A Net
+                </div>
             </div>
         </div>
     </div>
@@ -62,7 +72,7 @@
         </div>
         <div class="flex items-center gap-2 shrink-0">
             <button type="button" id="alpha-drawer-toggle" 
-                class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-bold text-slate-600 bg-slate-100/80 hover:bg-slate-200/80 border border-slate-200/80 transition cursor-pointer"
+                class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold text-slate-600 bg-slate-100/80 hover:bg-slate-200/80 border border-slate-200/80 transition cursor-pointer"
                 aria-expanded="false" aria-controls="alpha-secondary-insights" title="View all financial compounding insights">
                 <span>Insights</span>
                 <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -72,7 +82,7 @@
     </div>
 
     <!-- Expandable Secondary Insights Drawer (Preserves all DOM IDs for telemetry & parity) -->
-    <div id="alpha-secondary-insights" class="hidden flex-wrap items-center gap-2 px-1 py-2 bg-slate-50/80 rounded-xl border border-slate-200/60 -mt-2 transition-all">
+    <div id="alpha-secondary-insights" class="hidden flex-wrap items-center gap-1.5 px-2.5 py-2 bg-slate-50/80 rounded-xl border border-slate-200/60 -mt-2 transition-all">
         <div id="daily-lifestyle-multiplier-badge" class="hidden items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-900 border border-emerald-200/90 shadow-2xs">
             <span>⚡</span>
             <span id="daily-accrual-amount" class="font-extrabold font-mono text-emerald-800">₹0 / day</span>
@@ -115,7 +125,7 @@
         <!-- ========================================================================= -->
         <!-- TIER 1: UNIFIED MASTER COMMAND DOCK (Identity · Mode · Lenses · Actions) -->
         <!-- ========================================================================= -->
-        <header class="flex flex-col gap-3 pb-3.5 border-b border-slate-100">
+        <header class="flex flex-col gap-2.5 pb-3 border-b border-slate-100">
             
             <!-- Top Row: Identity, View Mode & Action Tools -->
             <div class="flex items-center justify-between gap-3">
@@ -137,7 +147,7 @@
                 </div>
 
                 <!-- Right: View Switcher & Action Tools -->
-                <div class="flex items-center gap-2 shrink-0">
+                <div class="flex items-center gap-1.5 shrink-0">
                     <!-- Segmented View Mode Switcher -->
                     <div class="inline-flex bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 shadow-2xs" role="tablist" aria-label="Chart View Mode">
                         <button type="button" id="chart-view-line" role="tab" aria-selected="true"
@@ -167,13 +177,13 @@
             </div>
 
             <!-- Bottom Row: Analytical Lenses Bar -->
-            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
-                <div class="flex flex-wrap items-center gap-1.5" role="group" aria-label="Analytical Projection Lenses">
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+                <div class="flex flex-wrap items-center gap-1" role="group" aria-label="Analytical Projection Lenses">
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mr-1">Lenses:</span>
 
                     <!-- Lens: Corridor -->
                     <label id="overlay-chip-corridor" 
-                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-[11px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-emerald-900 has-checked:shadow-2xs has-checked:border-emerald-200 has-checked:font-bold" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg cursor-pointer select-none transition-all duration-150 text-[10.5px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-emerald-900 has-checked:shadow-2xs has-checked:border-emerald-200 has-checked:font-bold" 
                         title="Toggle 10th-90th Percentile Historical Volatility Corridor [Shift+C]">
                         <input type="checkbox" id="show_historical_corridor" class="sr-only peer" aria-label="Show Historical Volatility Corridor">
                         <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-emerald-500 peer-checked:shadow-[0_0_6px_rgba(16,185,129,0.8)] transition-all"></span>
@@ -183,7 +193,7 @@
 
                     <!-- Lens: Section 112A LTCG Tax -->
                     <label id="overlay-chip-post-tax" 
-                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-[11px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-violet-900 has-checked:shadow-2xs has-checked:border-violet-200 has-checked:font-bold" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg cursor-pointer select-none transition-all duration-150 text-[10.5px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-violet-900 has-checked:shadow-2xs has-checked:border-violet-200 has-checked:font-bold" 
                         title="Toggle Budget 2024 Section 112A Post-Tax Returns [Shift+T]">
                         <input type="checkbox" id="show_post_tax" class="sr-only peer" aria-label="Show Post-Tax Returns">
                         <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-violet-500 peer-checked:shadow-[0_0_6px_rgba(139,92,246,0.8)] transition-all"></span>
@@ -193,7 +203,7 @@
 
                     <!-- Lens: Wealth Map -->
                     <label id="overlay-chip-wealth-map" 
-                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-[11px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-indigo-900 has-checked:shadow-2xs has-checked:border-indigo-200 has-checked:font-bold" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg cursor-pointer select-none transition-all duration-150 text-[10.5px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-indigo-900 has-checked:shadow-2xs has-checked:border-indigo-200 has-checked:font-bold" 
                         title="Toggle Stacked Principal vs Gain Decomposition [Shift+M]">
                         <input type="checkbox" id="show_wealth_map" class="sr-only peer" aria-label="Show Wealth Map">
                         <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-indigo-500 peer-checked:shadow-[0_0_6px_rgba(99,102,241,0.8)] transition-all"></span>
@@ -212,7 +222,7 @@
         <!-- TIER 2: ZERO-CLS DYNAMIC TELEMETRY HUD (Cross-Fading Resting vs Scrutiny) -->
         <!-- ========================================================================= -->
         <div id="chart-telemetry-hud" 
-            class="h-9 my-2.5 px-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-2 text-xs select-none transition-all duration-150 shadow-2xs">
+            class="h-8 my-2 px-3 rounded-xl bg-slate-50/90 border border-slate-200/80 flex items-center justify-between gap-2 text-xs select-none transition-all duration-150 shadow-2xs">
             
             <!-- Live Horizon / Scrutiny Year Badge -->
             <div class="flex items-center gap-1.5 min-w-0">
@@ -296,4 +306,5 @@
     <!-- Milestones Section -->
     <div id="milestones-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
 </div>
+
 

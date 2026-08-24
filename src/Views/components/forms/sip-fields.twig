@@ -46,10 +46,10 @@
 
 <!-- Expected Return -->
 {% set rateLabelHtml %}
-<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center justify-between mb-2">
     <div class="flex items-center gap-1.5 min-w-0">
-        <label for="rate" id="rate_label" class="text-xs font-black text-slate-900 tracking-tight block select-none cursor-pointer hover:text-emerald-700 transition-colors" title="Double-click to reset to default">
-            Expected Return
+        <label for="rate" id="rate_label" class="text-xs font-black text-slate-800 tracking-tight block select-none cursor-pointer hover:text-emerald-700 transition-colors" title="Double-click to reset to default">
+            Expected Return (CAGR)
         </label>
         <span id="rate_word_badge" class="hidden text-[10px] font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-md font-mono transition-all truncate"></span>
     </div>
@@ -122,21 +122,21 @@
     'theme': 'emerald',
     'input_text_color': 'text-slate-900 focus:border-emerald-500 focus:ring-emerald-500/20',
     'presets': [
-        {'label': '10%', 'value': 10},
-        {'label': '12%', 'value': 12},
-        {'label': '14%', 'value': 14},
-        {'label': '15%', 'value': 15}
+        {'label': '7% Debt', 'value': 7},
+        {'label': '9% Hybrid', 'value': 9},
+        {'label': '12% Large Cap', 'value': 12},
+        {'label': '14% Mid Cap', 'value': 14}
     ]
 }) }}
 
 <!-- Adjustments & Inflation Options -->
-<div class="bg-white/95 p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 space-y-3 shadow-2xs mt-1">
+<div class="rounded-2xl bg-slate-50/70 border border-slate-200/90 p-3 sm:p-3.5 space-y-3 shadow-2xs mt-1">
     <div class="flex items-center justify-between gap-2">
-        <span class="text-[11px] font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+        <span class="text-[11px] font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
             <span>⚡</span>
-            <span>Wealth Accelerators</span>
+            <span>Adjustments & Inflation</span>
         </span>
-        <span class="text-[10px] font-extrabold text-emerald-900 bg-emerald-100 border border-emerald-200 px-2.5 py-0.5 rounded-full shadow-2xs">
+        <span class="text-[10px] font-extrabold text-emerald-900 bg-emerald-100 border border-emerald-200 px-2 py-0.5 rounded-full shadow-2xs">
             Step-Up & Inflation
         </span>
     </div>
@@ -190,4 +190,5 @@
         ]
     }) }}
 </div>
+
 
