@@ -9,7 +9,11 @@ try {
     // Read input parameters JSON from command line arguments
     const inputArgs = JSON.parse(process.argv[2]);
 
-    if (inputArgs.action === 'format_rate_subtext') {
+    if (inputArgs.action === 'format_stepup_subtext') {
+        const formatter = new CurrencyFormatter('INR', 'en-IN');
+        const subtext = formatter.formatSubtext('stepup', inputArgs.stepup, { sip: inputArgs.sip });
+        console.log(JSON.stringify({ success: true, subtext }));
+    } else if (inputArgs.action === 'format_rate_subtext') {
         const formatter = new CurrencyFormatter('INR', 'en-IN');
         const subtext = formatter.formatSubtext('rate', inputArgs.rate);
         console.log(JSON.stringify({ success: true, subtext }));

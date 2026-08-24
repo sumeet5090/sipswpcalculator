@@ -119,8 +119,9 @@ export class CurrencyFormatter {
     /**
      * Format contextual subtext for inputs (e.g., SIP amount, Lumpsum, Target Corpus, SWP).
      */
-    formatSubtext(fieldId: string, value: number): string {
-        if (isNaN(value) || value <= 0) return '';
+    formatSubtext(fieldId: string, value: number, context?: { sip?: number }): string {
+        if (isNaN(value) || value < 0) return '';
+        if (value === 0 && fieldId !== 'stepup') return '';
 
         if (fieldId === 'sip') {
             const annual = value * 12;
@@ -172,6 +173,14 @@ export class CurrencyFormatter {
         }
 
         if (fieldId === 'stepup') {
+            if (value <= 0) {
+                return '0% • Constant SIP without annual step-up';
+            }
+            if (context?.sip && context.sip > 0) {
+                const delta = Math.round(context.sip * (value / 100));
+                const nextYearSip = context.sip + delta;
+                return `${value.toFixed(1).replace(/\.0$/, '')}% p.a. (+${this.formatDynamic(delta)}/mo in Yr 2 • ${this.formatDynamic(nextYearSip)}/mo)`;
+            }
             return `${value.toFixed(1).replace(/\.0$/, '')}% annual top-up with salary hike`;
         }
 

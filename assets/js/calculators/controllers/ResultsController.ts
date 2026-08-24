@@ -53,6 +53,10 @@ export class ResultsController {
                 heatmapBtn.classList.toggle('bg-emerald-100', this.heatmapEnabled);
                 heatmapBtn.classList.toggle('text-emerald-800', this.heatmapEnabled);
                 heatmapBtn.classList.toggle('border-emerald-300', this.heatmapEnabled);
+                const legend = this.dom.getElement('heatmap-legend');
+                if (legend) {
+                    legend.classList.toggle('hidden', !this.heatmapEnabled);
+                }
                 if (this.lastData.length > 0) {
                     this.updateTable(this.lastData, this.lastEnableSwp);
                 }

@@ -337,8 +337,17 @@ export class SliderManager {
     private _updateSubtext(fieldId: string, val: number): void {
         const subtextEl = this.dom.getElement(`${fieldId}_subtext`);
         if (!subtextEl) return;
-        const text = this.formatter.formatSubtext(fieldId, val);
+        const sipVal = parseFloat(this.dom.getValue('sip') || '0') || 0;
+        const text = this.formatter.formatSubtext(fieldId, val, { sip: sipVal });
         subtextEl.textContent = text;
+
+        if (fieldId === 'sip') {
+            const stepupEl = this.dom.getElement('stepup_subtext');
+            if (stepupEl) {
+                const stepupVal = parseFloat(this.dom.getValue('stepup') || '0') || 0;
+                stepupEl.textContent = this.formatter.formatSubtext('stepup', stepupVal, { sip: val });
+            }
+        }
     }
 
     private _updateWordBadge(fieldId: string, val: number): void {

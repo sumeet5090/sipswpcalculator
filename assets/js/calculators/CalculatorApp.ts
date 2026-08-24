@@ -458,7 +458,7 @@ export class CalculatorApp {
             () => this.getInputs()
         ).init();
         new ShareController(this.dom, () => this.getInputs()).init();
-        new GlossaryController().init();
+        new GlossaryController(() => this.getInputs(), () => this.latestResults).init();
         this.audioController.init();
         this.cityBenchmarkController.init();
         this.summaryMetricsController.initTaxWaterfallModal(() => this.analytics.setTaxWaterfallOpened());
@@ -721,7 +721,7 @@ export class CalculatorApp {
 
             const lastRow = combined[combined.length - 1];
             if (lastRow) {
-                this.celebrationController.checkMilestones(lastRow.combined_total);
+                this.celebrationController.checkMilestones(lastRow.combined_total, combined);
             }
 
             this.stressTestController.updateResults(combined);

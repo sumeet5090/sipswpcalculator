@@ -44,7 +44,17 @@ export const GLOSSARY_TERMS: Record<string, GlossaryTerm> = {
     }
 };
 
+import { InvestmentInputs, YearResult } from '../../types';
+
 export class GlossaryController {
+    private getInputs?: () => InvestmentInputs;
+    private getResults?: () => YearResult[];
+
+    constructor(getInputs?: () => InvestmentInputs, getResults?: () => YearResult[]) {
+        this.getInputs = getInputs;
+        this.getResults = getResults;
+    }
+
     init(): void {
         const terms = document.querySelectorAll<HTMLElement>('[data-glossary]');
         terms.forEach(el => {
@@ -70,6 +80,38 @@ export class GlossaryController {
                             btn.textContent = originalText;
                             btn.classList.remove('text-emerald-700', 'bg-emerald-50');
                         }, 1500);
+                    });
+                }
+            });
+        });
+
+        // Initialize live formula proof copy buttons
+        const liveProofBtns = document.querySelectorAll<HTMLButtonElement>('.copy-live-proof-btn');
+        liveProofBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const inputs = this.getInputs?.();
+                const results = this.getResults?.();
+                if (!inputs) return;
+
+                const sip = inputs.sip ?? 25000;
+                const rate = inputs.rate ?? 12;
+                const years = inputs.years ?? 15;
+                const r = (rate / 12 / 100);
+                const n = years * 12;
+                const lastRow = results && results.length > 0 ? results[results.length - 1] : null;
+                const finalCorpus = lastRow ? lastRow.combined_total : 0;
+
+                const proofText = `FV = ₹${sip.toLocaleString('en-IN')} × [ { (1 + ${r.toFixed(4)})^${n} - 1 } / ${r.toFixed(4)} ] × (1 + ${r.toFixed(4)}) = ₹${Math.round(finalCorpus).toLocaleString('en-IN')}`;
+
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(proofText).then(() => {
+                        const originalText = btn.textContent;
+                        btn.textContent = '✓ Copied Live Proof!';
+                        btn.classList.add('text-emerald-700', 'bg-emerald-100');
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.classList.remove('text-emerald-700', 'bg-emerald-100');
+                        }, 2000);
                     });
                 }
             });
