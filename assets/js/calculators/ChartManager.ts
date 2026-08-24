@@ -6,6 +6,7 @@ import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens.ts';
 import { ChartPatternHelper } from './helpers/ChartPatternHelper.ts';
 import { A11yAnnouncer } from './helpers/A11yAnnouncer.ts';
 import type { ChartScrubbingController } from './controllers/ChartScrubbingController';
+import type { ResultsController } from './controllers/ResultsController';
 import type { Chart, ChartDataset, ChartConfiguration } from 'chart.js';
 
 export interface Milestone {
@@ -38,6 +39,7 @@ export class ChartManager {
     private chartModulePromise: Promise<typeof Chart> | null = null;
     private showHistoricalCorridor: boolean = false;
     private scrubbingController: ChartScrubbingController | null = null;
+    private resultsController: ResultsController | null = null;
 
     private activeBenchmark: 'none' | 'nifty' | 'gold' | 'fd' = 'none';
     private activeViewType: 'line' | 'donut' = 'line';
@@ -63,6 +65,13 @@ export class ChartManager {
     }
 
     /**
+     * Injects the dedicated results table controller for bi-directional synchronization.
+     */
+    public setResultsController(resultsController: ResultsController): void {
+        this.resultsController = resultsController;
+    }
+
+    /**
      * Injects the dedicated scrubbing controller for bi-directional synchronization.
      */
     public setScrubbingController(scrubbingController: ChartScrubbingController): void {
@@ -74,6 +83,7 @@ export class ChartManager {
                 this.highlightYear(index);
                 this.announceCurrentPoint(index);
             }
+            this.resultsController?.highlightTableRow(index, false);
         });
     }
 
@@ -961,6 +971,7 @@ export class ChartManager {
                 this.chartInstance.tooltip.setActiveElements([{ datasetIndex: 1, index }], { x: 0, y: 0 });
             }
             this.chartInstance.update('none');
+            this.resultsController?.highlightTableRow(index, false);
         } catch {
             // Ignore if chart is updating
         }

@@ -194,3 +194,13 @@ input[type="range"]::-moz-range-thumb {
   background-color: rgba(248, 250, 252, 0.98);
   z-index: 20;
 }
+
+#results-table th.text-right,
+#results-table td.text-right {
+  text-align: right !important;
+}
+
+#results-table th.text-left,
+#results-table td.text-left {
+  text-align: left !important;
+}

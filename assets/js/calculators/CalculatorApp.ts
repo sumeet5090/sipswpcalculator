@@ -129,6 +129,7 @@ export class CalculatorApp {
             () => this.getInputs(),
             this.chartManager
         );
+        this.chartManager.setResultsController(this.resultsController);
 
         this.summaryMetricsController = new SummaryMetricsController(
             this.dom,

@@ -559,7 +559,7 @@ th {
     font-size: 0.875rem;
     font-weight: 600;
     padding: 0.875rem 1rem;
-    text-align: left;
+    text-align: inherit;
     border-bottom: 1px solid var(--color-slate-300, #cbd5e1);
 }
 

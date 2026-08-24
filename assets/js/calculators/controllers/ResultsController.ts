@@ -4,13 +4,13 @@ import { MathEngine } from '../MathEngine';
 import { InvestmentInputs, YearResult } from '../../types';
 import type { ChartManager } from '../ChartManager';
 
-const TABLE_ROW_CLASS = "hover:bg-emerald-50/40 border-b border-slate-100 transition-colors cursor-default";
-const CELL_YEAR_CLASS = "px-6 py-4 font-bold text-slate-800 whitespace-nowrap sticky left-0 bg-white/95 backdrop-blur-md z-10 shadow-[1px_0_4px_rgba(0,0,0,0.04)]";
-const CELL_MONO_CLASS = "px-6 py-4 text-right font-mono text-slate-600 whitespace-nowrap";
-const CELL_EMERALD_CLASS = "px-6 py-4 text-right text-emerald-700 font-medium font-mono whitespace-nowrap";
-const CELL_MUTED_CLASS = "px-6 py-4 text-right text-slate-600 font-mono whitespace-nowrap";
-const CELL_ROSE_CLASS = "px-6 py-4 text-right text-rose-700 font-medium font-mono whitespace-nowrap";
-const CELL_BOLD_CLASS = "px-6 py-4 text-right font-bold text-slate-800 font-mono whitespace-nowrap";
+const TABLE_ROW_CLASS = "hover:bg-emerald-50/50 border-b border-slate-100 transition-colors cursor-pointer";
+const CELL_YEAR_CLASS = "px-4 sm:px-6 py-3.5 text-left font-extrabold text-slate-900 whitespace-nowrap sticky left-0 bg-white/98 backdrop-blur-md z-10 shadow-[2px_0_6px_-2px_rgba(0,0,0,0.08)] border-b border-slate-100";
+const CELL_MONO_CLASS = "px-4 sm:px-6 py-3.5 text-right font-mono tabular-nums text-slate-600 whitespace-nowrap";
+const CELL_EMERALD_CLASS = "px-4 sm:px-6 py-3.5 text-right text-emerald-700 font-semibold font-mono tabular-nums whitespace-nowrap";
+const CELL_MUTED_CLASS = "px-4 sm:px-6 py-3.5 text-right text-slate-600 font-mono tabular-nums whitespace-nowrap";
+const CELL_ROSE_CLASS = "px-4 sm:px-6 py-3.5 text-right text-rose-700 font-semibold font-mono tabular-nums whitespace-nowrap";
+const CELL_BOLD_CLASS = "px-4 sm:px-6 py-3.5 text-right font-bold text-slate-900 font-mono tabular-nums whitespace-nowrap";
 
 export class ResultsController {
     private dom: DOMAdapter;
@@ -23,6 +23,7 @@ export class ResultsController {
     private lastData: YearResult[] = [];
     private lastEnableSwp: boolean = true;
     private heatmapEnabled: boolean = false;
+    private mobileExpanded: boolean = false;
 
     constructor(
         dom: DOMAdapter,
@@ -66,6 +67,7 @@ export class ResultsController {
                 const legend = this.dom.getElement('heatmap-legend');
                 if (legend) {
                     legend.classList.toggle('hidden', !this.heatmapEnabled);
+                    legend.classList.toggle('flex', this.heatmapEnabled);
                 }
                 if (this.lastData.length > 0) {
                     this.updateTable(this.lastData, this.lastEnableSwp);
@@ -83,9 +85,23 @@ export class ResultsController {
                 }
             });
         }
+
+        const mobileExpandBtn = this.dom.getElement('mobile-expand-all-years-btn');
+        if (mobileExpandBtn) {
+            mobileExpandBtn.addEventListener('click', () => {
+                this.mobileExpanded = !this.mobileExpanded;
+                const textEl = this.dom.getElement('expand-btn-text');
+                if (textEl) {
+                    textEl.textContent = this.mobileExpanded ? 'Collapse to 5Y Milestones' : 'Show All Years Breakdown';
+                }
+                if (this.lastData.length > 0) {
+                    this.updateTable(this.lastData, this.lastEnableSwp);
+                }
+            });
+        }
     }
 
-    setColumnDensity(mode: 'essential' | 'audit'): void {
+    public setColumnDensity(mode: 'essential' | 'audit'): void {
         if (this.colDensity === mode) return;
         this.colDensity = mode;
 
@@ -93,34 +109,28 @@ export class ResultsController {
         const auditBtn = this.dom.getElement('table-col-audit');
         if (essentialBtn && auditBtn) {
             if (mode === 'essential') {
-                essentialBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                essentialBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                essentialBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                essentialBtn.classList.remove('text-slate-600', 'hover:text-slate-900');
                 essentialBtn.setAttribute('aria-selected', 'true');
-                auditBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                auditBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                auditBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                auditBtn.classList.add('text-slate-600', 'hover:text-slate-900');
                 auditBtn.setAttribute('aria-selected', 'false');
             } else {
-                auditBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                auditBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                auditBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                auditBtn.classList.remove('text-slate-600', 'hover:text-slate-900');
                 auditBtn.setAttribute('aria-selected', 'true');
-                essentialBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                essentialBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                essentialBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                essentialBtn.classList.add('text-slate-600', 'hover:text-slate-900');
                 essentialBtn.setAttribute('aria-selected', 'false');
             }
         }
-
-        // Toggle secondary column visibility in header
-        const secondaryHeaders = this.dom.getElements<HTMLElement>('th.col-secondary');
-        secondaryHeaders.forEach(th => {
-            th.style.display = (mode === 'essential') ? 'none' : '';
-        });
 
         if (this.lastData.length > 0) {
             this.updateTable(this.lastData, this.lastEnableSwp);
         }
     }
 
-    setDensity(density: 'all' | '5y'): void {
+    public setDensity(density: 'all' | '5y'): void {
         if (this.density === density) return;
         this.density = density;
 
@@ -128,18 +138,18 @@ export class ResultsController {
         const fiveYBtn = this.dom.getElement('table-density-5y');
         if (allBtn && fiveYBtn) {
             if (density === 'all') {
-                allBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                allBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                allBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                allBtn.classList.remove('text-slate-600', 'hover:text-slate-900');
                 allBtn.setAttribute('aria-selected', 'true');
-                fiveYBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                fiveYBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                fiveYBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                fiveYBtn.classList.add('text-slate-600', 'hover:text-slate-900');
                 fiveYBtn.setAttribute('aria-selected', 'false');
             } else {
-                fiveYBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                fiveYBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                fiveYBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                fiveYBtn.classList.remove('text-slate-600', 'hover:text-slate-900');
                 fiveYBtn.setAttribute('aria-selected', 'true');
-                allBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                allBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                allBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                allBtn.classList.add('text-slate-600', 'hover:text-slate-900');
                 allBtn.setAttribute('aria-selected', 'false');
             }
         }
@@ -150,9 +160,27 @@ export class ResultsController {
     }
 
     /**
+     * Highlights matching table row during bi-directional Chart scrubbing.
+     */
+    public highlightTableRow(yearIndex: number, scrollIntoView: boolean = false): void {
+        const rows = this.dom.getElements<HTMLTableRowElement>('#breakdown-body tr.stagger-row');
+        rows.forEach((r) => {
+            const rowYr = parseInt(r.dataset.year || '0', 10);
+            if (rowYr === yearIndex + 1) {
+                r.classList.add('bg-emerald-50/90', 'ring-1', 'ring-emerald-400/40');
+                if (scrollIntoView) {
+                    r.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            } else {
+                r.classList.remove('bg-emerald-50/90', 'ring-1', 'ring-emerald-400/40');
+            }
+        });
+    }
+
+    /**
      * Draw years breakdown logs securely using DOM node construction.
      */
-    updateTable(data: YearResult[], enableSwp: boolean): void {
+    public updateTable(data: YearResult[], enableSwp: boolean): void {
         this.lastData = data;
         this.lastEnableSwp = enableSwp;
 
@@ -165,11 +193,49 @@ export class ResultsController {
         const showPostTax = postTaxToggle?.checked || false;
         const inputs = this.getInputs();
 
-        // Update secondary headers display based on column density mode
-        const secondaryHeaders = this.dom.getElements<HTMLElement>('th.col-secondary');
-        secondaryHeaders.forEach(th => {
-            th.style.display = (this.colDensity === 'essential') ? 'none' : '';
-        });
+        const isAudit = this.colDensity === 'audit';
+        const showBeginBalance = isAudit;
+        const showSipMonthly = isAudit;
+        const showAnnualSip = isAudit;
+        const showTotalInvested = true;
+        const showSwpMonthly = enableSwp && isAudit;
+        const showAnnualSwp = enableSwp && isAudit;
+        const showTotalWithdrawn = enableSwp;
+        const showInterest = true;
+        const showTax = showPostTax && isAudit;
+        const showEndCorpus = true;
+
+        // Synchronize <thead> headers strictly with active column visibility
+        const setHeaderVisibility = (id: string, isVisible: boolean) => {
+            const th = this.dom.getElement<HTMLElement>(id);
+            if (th) {
+                th.style.display = isVisible ? '' : 'none';
+            }
+        };
+
+        setHeaderVisibility('th-year', true);
+        setHeaderVisibility('th-begin-balance', showBeginBalance);
+        setHeaderVisibility('th-sip-monthly', showSipMonthly);
+        setHeaderVisibility('th-annual-sip', showAnnualSip);
+        setHeaderVisibility('th-total-invested', showTotalInvested);
+        setHeaderVisibility('th-swp-monthly', showSwpMonthly);
+        setHeaderVisibility('th-annual-swp', showAnnualSwp);
+        setHeaderVisibility('th-total-withdrawn', showTotalWithdrawn);
+        setHeaderVisibility('th-interest', showInterest);
+        setHeaderVisibility('th-tax', showTax);
+        setHeaderVisibility('th-end-corpus', showEndCorpus);
+
+        const visibleColsCount = 1 
+            + (showBeginBalance ? 1 : 0)
+            + (showSipMonthly ? 1 : 0)
+            + (showAnnualSip ? 1 : 0)
+            + (showTotalInvested ? 1 : 0)
+            + (showSwpMonthly ? 1 : 0)
+            + (showAnnualSwp ? 1 : 0)
+            + (showTotalWithdrawn ? 1 : 0)
+            + (showInterest ? 1 : 0)
+            + (showTax ? 1 : 0)
+            + (showEndCorpus ? 1 : 0);
 
         let filteredData = data;
         if (this.searchYear !== null) {
@@ -178,23 +244,9 @@ export class ResultsController {
             filteredData = data.filter(r => r.year === 1 || r.year % 5 === 0 || r.year === data.length);
         }
 
+        let ignitionRendered = false;
+
         filteredData.forEach((row, index) => {
-            const tr = document.createElement('tr');
-            tr.className = `${TABLE_ROW_CLASS} stagger-row`;
-            tr.style.setProperty('--row-index', String(index));
-
-            // Hover sync with Chart
-            if (this.chartManager) {
-                const yearIndex = row.year - 1;
-                tr.addEventListener('mouseenter', () => this.chartManager?.highlightYear(yearIndex));
-                tr.addEventListener('mouseleave', () => this.chartManager?.clearHighlight());
-            }
-
-            const fmt = (v: number | null | undefined) => (v !== null && v !== undefined) ? this.formatter.format(v) : '-';
-            const swpDisplay = enableSwp ? (this.colDensity === 'essential' ? 'none' : '') : 'none';
-            const taxDisplay = showPostTax ? (this.colDensity === 'essential' ? 'none' : '') : 'none';
-            const secondaryDisplay = (this.colDensity === 'essential') ? 'none' : '';
-
             let finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
             const ltcgTax = row.ltcg_tax ?? 0;
 
@@ -206,68 +258,105 @@ export class ResultsController {
                 );
             }
 
-            const createCell = (text: string, className: string, displayStyle: string = ''): HTMLTableCellElement => {
+            // Detect and inject Compounding Ignition Inflection Ribbon Row
+            if (!ignitionRendered && (row.interest ?? 0) >= (row.annual_contribution ?? 0) && row.year > 1 && row.cumulative_invested > 0) {
+                ignitionRendered = true;
+                const inflectionTr = document.createElement('tr');
+                inflectionTr.className = 'bg-emerald-50/80 border-y border-emerald-300/80 font-sans';
+                
+                const td = document.createElement('td');
+                td.colSpan = visibleColsCount;
+                td.className = 'px-4 sm:px-6 py-2 text-center text-xs font-bold text-emerald-950 shadow-2xs';
+
+                const badge = document.createElement('span');
+                badge.className = 'inline-flex items-center gap-1.5 flex-wrap justify-center';
+                badge.innerHTML = `<span class="text-sm">⚡</span> <strong>Year ${row.year} Compounding Ignition:</strong> Annual interest (+${this.formatter.format(row.interest)}) has surpassed annual SIP contributions (${this.formatter.format(row.annual_contribution)})!`;
+                td.appendChild(badge);
+                inflectionTr.appendChild(td);
+                fragment.appendChild(inflectionTr);
+            }
+
+            const tr = document.createElement('tr');
+            tr.className = `${TABLE_ROW_CLASS} stagger-row`;
+            tr.dataset.year = String(row.year);
+            tr.style.setProperty('--row-index', String(index));
+
+            // Bi-directional Hover & Click sync with Chart
+            if (this.chartManager) {
+                const yearIndex = row.year - 1;
+                tr.addEventListener('mouseenter', () => this.chartManager?.highlightYear(yearIndex));
+                tr.addEventListener('mouseleave', () => this.chartManager?.clearHighlight());
+                tr.addEventListener('click', () => {
+                    this.chartManager?.highlightYear(yearIndex);
+                    this.chartManager?.updateInspectionRibbon(row);
+                });
+            }
+
+            const fmt = (v: number | null | undefined) => (v !== null && v !== undefined) ? this.formatter.format(v) : '-';
+
+            const createCell = (text: string, className: string): HTMLTableCellElement => {
                 const td = document.createElement('td');
                 td.className = className;
-                if (displayStyle !== '') {
-                    td.style.display = displayStyle;
-                }
                 td.textContent = text;
                 return td;
             };
 
+            // 1. Year Column (always visible)
             tr.appendChild(createCell(String(row.year), CELL_YEAR_CLASS));
-            tr.appendChild(createCell(this.formatter.format(row.begin_balance), CELL_MONO_CLASS + " col-secondary", secondaryDisplay));
-            tr.appendChild(createCell(fmt(row.sip_monthly), CELL_EMERALD_CLASS + " col-secondary", secondaryDisplay));
-            tr.appendChild(createCell(this.formatter.format(row.annual_contribution), CELL_EMERALD_CLASS + " col-secondary", secondaryDisplay));
-            tr.appendChild(createCell(this.formatter.format(row.cumulative_invested), CELL_MUTED_CLASS));
 
-            // SWP Columns
-            tr.appendChild(createCell(fmt(row.swp_monthly), CELL_ROSE_CLASS + " swp-col col-secondary", swpDisplay));
-            tr.appendChild(createCell(fmt(row.annual_withdrawal), CELL_ROSE_CLASS + " swp-col col-secondary", swpDisplay));
-            tr.appendChild(createCell(fmt(row.cumulative_withdrawals), CELL_MUTED_CLASS + " swp-col", enableSwp ? '' : 'none'));
+            // 2. Secondary SIP Breakdown Columns (Audit mode only)
+            if (showBeginBalance) tr.appendChild(createCell(this.formatter.format(row.begin_balance), CELL_MONO_CLASS));
+            if (showSipMonthly) tr.appendChild(createCell(fmt(row.sip_monthly), CELL_EMERALD_CLASS));
+            if (showAnnualSip) tr.appendChild(createCell(this.formatter.format(row.annual_contribution), CELL_EMERALD_CLASS));
 
-            const interestCell = createCell(this.formatter.format(row.interest), CELL_EMERALD_CLASS);
-            if (this.heatmapEnabled && row.interest > 0) {
-                const maxInterest = Math.max(1, ...data.map(r => r.interest));
-                const intensity = Math.min(1, row.interest / maxInterest);
-                interestCell.style.backgroundColor = `rgba(16, 185, 129, ${(0.06 + intensity * 0.24).toFixed(2)})`;
-            }
-            tr.appendChild(interestCell);
+            // 3. Total Invested Column (always visible)
+            if (showTotalInvested) tr.appendChild(createCell(this.formatter.format(row.cumulative_invested), CELL_MUTED_CLASS));
 
-            // Tax Column
-            tr.appendChild(createCell(this.formatter.format(Math.round(ltcgTax)), CELL_ROSE_CLASS + " tax-col col-secondary", taxDisplay));
+            // 4. SWP Columns (SWP enabled only)
+            if (showSwpMonthly) tr.appendChild(createCell(fmt(row.swp_monthly), CELL_ROSE_CLASS));
+            if (showAnnualSwp) tr.appendChild(createCell(fmt(row.annual_withdrawal), CELL_ROSE_CLASS));
+            if (showTotalWithdrawn) tr.appendChild(createCell(fmt(row.cumulative_withdrawals), CELL_MUTED_CLASS));
 
-            // Final Corpus Column
-            const corpusCell = document.createElement('td');
-            corpusCell.className = CELL_BOLD_CLASS + " end-corpus-col";
-
-            const corpusValDiv = document.createElement('div');
-            corpusValDiv.textContent = this.formatter.format(finalCorpus);
-            corpusCell.appendChild(corpusValDiv);
-
-            if (row.cumulative_invested > 0 && finalCorpus > 0) {
-                const investedRatio = Math.min((row.cumulative_invested / finalCorpus) * 100, 100);
-                const gainsRatio = Math.max(100 - investedRatio, 0);
-
-                const miniBar = document.createElement('div');
-                miniBar.className = "w-full bg-slate-200/80 rounded-full h-1 mt-1 flex overflow-hidden";
-                miniBar.title = `Invested: ${investedRatio.toFixed(0)}% • Gains: ${gainsRatio.toFixed(0)}%`;
-
-                const investedSeg = document.createElement('div');
-                investedSeg.className = "bg-slate-400 h-full";
-                investedSeg.style.width = `${investedRatio}%`;
-
-                const gainsSeg = document.createElement('div');
-                gainsSeg.className = "bg-emerald-500 h-full";
-                gainsSeg.style.width = `${gainsRatio}%`;
-
-                miniBar.appendChild(investedSeg);
-                miniBar.appendChild(gainsSeg);
-                corpusCell.appendChild(miniBar);
+            // 5. Annual Gain (always visible)
+            if (showInterest) {
+                const interestCell = createCell(`+${this.formatter.format(row.interest)}`, CELL_EMERALD_CLASS);
+                if (this.heatmapEnabled && row.interest > 0) {
+                    const maxInterest = Math.max(1, ...data.map(r => r.interest));
+                    const intensity = Math.min(1, row.interest / maxInterest);
+                    interestCell.style.backgroundColor = `rgba(16, 185, 129, ${(0.06 + intensity * 0.22).toFixed(2)})`;
+                }
+                tr.appendChild(interestCell);
             }
 
-            tr.appendChild(corpusCell);
+            // 6. LTCG Tax Column (Post-tax + Audit mode only)
+            if (showTax) {
+                tr.appendChild(createCell(this.formatter.format(Math.round(ltcgTax)), CELL_ROSE_CLASS));
+            }
+
+            // 7. End Corpus Column (always visible, with wealth multiplier badge)
+            if (showEndCorpus) {
+                const corpusCell = document.createElement('td');
+                corpusCell.className = CELL_BOLD_CLASS;
+
+                const corpusWrap = document.createElement('div');
+                corpusWrap.className = 'flex items-center justify-end gap-1.5 font-mono';
+
+                const corpusValDiv = document.createElement('span');
+                corpusValDiv.className = 'font-extrabold text-slate-900';
+                corpusValDiv.textContent = this.formatter.format(finalCorpus);
+                corpusWrap.appendChild(corpusValDiv);
+
+                if (row.cumulative_invested > 0 && finalCorpus > 0) {
+                    const multiplier = (finalCorpus / row.cumulative_invested).toFixed(1);
+                    const multiplierBadge = document.createElement('span');
+                    multiplierBadge.className = 'px-1.5 py-0.2 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/90 text-[10px] font-extrabold shadow-2xs';
+                    multiplierBadge.textContent = `${multiplier}×`;
+                    corpusWrap.appendChild(multiplierBadge);
+                }
+                corpusCell.appendChild(corpusWrap);
+                tr.appendChild(corpusCell);
+            }
+
             fragment.appendChild(tr);
         });
 
@@ -281,7 +370,14 @@ export class ResultsController {
             const mobileFragment = document.createDocumentFragment();
             const maxInterest = Math.max(1, ...data.map(r => r.interest));
 
-            filteredData.forEach((row) => {
+            let mobileData = data;
+            if (this.searchYear !== null) {
+                mobileData = data.filter(r => r.year === this.searchYear);
+            } else if (this.density === '5y' && !this.mobileExpanded) {
+                mobileData = data.filter(r => r.year === 1 || r.year % 5 === 0 || r.year === data.length);
+            }
+
+            mobileData.forEach((row) => {
                 const card = document.createElement('div');
                 const isMilestone = row.year === 1 || row.year % 5 === 0 || row.year === data.length;
                 const isFinal = row.year === data.length;
@@ -290,8 +386,8 @@ export class ResultsController {
 
                 if (this.heatmapEnabled && row.interest > 0) {
                     const intensity = Math.min(1, row.interest / maxInterest);
-                    card.style.backgroundColor = `rgba(16, 185, 129, ${(0.04 + intensity * 0.12).toFixed(2)})`;
-                    card.style.borderColor = `rgba(16, 185, 129, ${(0.2 + intensity * 0.3).toFixed(2)})`;
+                    card.style.backgroundColor = `rgba(16, 185, 129, ${(0.04 + intensity * 0.10).toFixed(2)})`;
+                    card.style.borderColor = `rgba(16, 185, 129, ${(0.2 + intensity * 0.25).toFixed(2)})`;
                 }
 
                 let finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
@@ -308,24 +404,36 @@ export class ResultsController {
 
                 const yearBadge = document.createElement('span');
                 yearBadge.className = isFinal
-                    ? "px-2.5 py-0.5 rounded-lg text-xs font-black bg-emerald-600 text-white"
-                    : (isMilestone ? "px-2 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800" : "text-xs font-bold text-slate-700");
+                    ? "px-2.5 py-0.5 rounded-lg text-xs font-black bg-emerald-600 text-white shadow-2xs"
+                    : (isMilestone ? "px-2 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200/80" : "text-xs font-bold text-slate-700");
                 yearBadge.textContent = `Year ${row.year}${isFinal ? ' (Maturity)' : ''}`;
                 header.appendChild(yearBadge);
+
+                const corpusWrap = document.createElement('div');
+                corpusWrap.className = 'flex items-center gap-1.5';
 
                 const corpusVal = document.createElement('span');
                 corpusVal.className = "text-sm font-black font-mono text-slate-900";
                 corpusVal.textContent = this.formatter.format(finalCorpus);
-                header.appendChild(corpusVal);
+                corpusWrap.appendChild(corpusVal);
 
+                if (row.cumulative_invested > 0 && finalCorpus > 0) {
+                    const multiplier = (finalCorpus / row.cumulative_invested).toFixed(1);
+                    const multiplierBadge = document.createElement('span');
+                    multiplierBadge.className = 'px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-extrabold';
+                    multiplierBadge.textContent = `${multiplier}×`;
+                    corpusWrap.appendChild(multiplierBadge);
+                }
+
+                header.appendChild(corpusWrap);
                 card.appendChild(header);
 
                 const grid = document.createElement('div');
-                grid.className = "grid grid-cols-2 gap-2 text-xs pt-1 border-t border-slate-100";
+                grid.className = "grid grid-cols-2 gap-2 text-xs pt-1.5 border-t border-slate-100";
 
                 const investedCol = document.createElement('div');
                 const investedLabel = document.createElement('span');
-                investedLabel.className = "text-slate-600 block text-[10px]";
+                investedLabel.className = "text-slate-500 block text-[10px] font-bold";
                 investedLabel.textContent = "Total Invested";
                 const investedVal = document.createElement('span');
                 investedVal.className = "font-bold font-mono text-slate-800";
@@ -337,8 +445,8 @@ export class ResultsController {
                 const interestCol = document.createElement('div');
                 interestCol.className = "text-right";
                 const interestLabel = document.createElement('span');
-                interestLabel.className = "text-emerald-700 block text-[10px]";
-                interestLabel.textContent = "Interest / Yr";
+                interestLabel.className = "text-emerald-700 block text-[10px] font-bold";
+                interestLabel.textContent = "Annual Gain";
                 const interestVal = document.createElement('span');
                 interestVal.className = "font-bold font-mono text-emerald-700";
                 interestVal.textContent = `+${this.formatter.format(row.interest)}`;
@@ -350,7 +458,7 @@ export class ResultsController {
                     const withCol = document.createElement('div');
                     withCol.className = "col-span-2 pt-1 border-t border-slate-100 flex items-center justify-between text-xs";
                     const withLabel = document.createElement('span');
-                    withLabel.className = "text-rose-700 text-[10px]";
+                    withLabel.className = "text-rose-700 text-[10px] font-bold";
                     withLabel.textContent = "Total Withdrawn";
                     const withVal = document.createElement('span');
                     withVal.className = "font-bold font-mono text-rose-700";
