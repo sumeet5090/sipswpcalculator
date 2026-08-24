@@ -6,7 +6,7 @@ import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens.ts';
 import { ChartPatternHelper } from './helpers/ChartPatternHelper.ts';
 import { A11yAnnouncer } from './helpers/A11yAnnouncer.ts';
 import type { ChartScrubbingController } from './controllers/ChartScrubbingController';
-import type { Chart, ChartDataset, ChartConfiguration, TooltipItem } from 'chart.js';
+import type { Chart, ChartDataset, ChartConfiguration } from 'chart.js';
 
 export interface Milestone {
     type: 'wealth' | 'security';
@@ -104,12 +104,21 @@ export class ChartManager {
         }
     }
 
+    private cachedGradientBucket: number = -1;
+    private cachedGradients: GradientBundle | null = null;
+
     /**
-     * Compute dynamic linear gradients strictly bounded to active Y-axis scale bounds.
+     * Compute dynamic linear gradients with 30px quantizing bucket cache to eliminate GPU thrashing on resize.
      */
     private createGradients(ctx: CanvasRenderingContext2D, top: number = 0, bottom: number = 400): GradientBundle {
         const safeTop = Math.max(0, top);
         const safeBottom = Math.max(safeTop + 60, bottom);
+        const heightSpan = safeBottom - safeTop;
+        const bucket = Math.round(heightSpan / 30) * 30;
+
+        if (this.cachedGradients && this.cachedGradientBucket === bucket) {
+            return this.cachedGradients;
+        }
 
         const gradientInvested = ctx.createLinearGradient(0, safeTop, 0, safeBottom);
         gradientInvested.addColorStop(0, THEME_COLORS.chart.gradientInvestedTop);
@@ -126,11 +135,14 @@ export class ChartManager {
         gradientPostTax.addColorStop(0.7, THEME_COLORS.chart.gradientPostTaxMid);
         gradientPostTax.addColorStop(1, THEME_COLORS.chart.gradientPostTaxBottom);
 
-        return {
+        this.cachedGradients = {
             invested: gradientInvested,
             corpus: gradientCorpus,
             postTax: gradientPostTax
         };
+        this.cachedGradientBucket = bucket;
+
+        return this.cachedGradients;
     }
 
     /**
@@ -620,10 +632,10 @@ export class ChartManager {
             const { top, bottom, right } = chart.chartArea;
 
             ctx.save();
-            // Ambient aurora ignition glow
+            // Ambient soft light aurora ignition glow
             const gradient = ctx.createLinearGradient(xPos, 0, right, 0);
             gradient.addColorStop(0, 'rgba(16, 185, 129, 0.08)');
-            gradient.addColorStop(1, 'rgba(16, 185, 129, 0.02)');
+            gradient.addColorStop(1, 'rgba(20, 184, 166, 0.02)');
 
             ctx.fillStyle = gradient;
             ctx.fillRect(xPos, top, right - xPos, bottom - top);
@@ -637,10 +649,28 @@ export class ChartManager {
             ctx.strokeStyle = '#059669';
             ctx.stroke();
 
-            // Ignition Pill annotation
-            ctx.font = '700 9px Inter, sans-serif';
+            // Pure Light Ignition Pill annotation
+            const tagText = '⚡ GAINS OUTPACE SIP';
+            ctx.font = '700 9px "Plus Jakarta Sans", "Inter", sans-serif';
+            const textWidth = ctx.measureText(tagText).width;
+            const pillWidth = textWidth + 12;
+            const pillX = Math.min(xPos + 4, right - pillWidth - 4);
+
+            ctx.fillStyle = '#ecfdf5';
+            ctx.strokeStyle = '#a7f3d0';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            if (typeof ctx.roundRect === 'function') {
+                ctx.roundRect(pillX, top + 6, pillWidth, 18, 4);
+            } else {
+                ctx.rect(pillX, top + 6, pillWidth, 18);
+            }
+            ctx.fill();
+            ctx.stroke();
+
             ctx.fillStyle = '#047857';
-            ctx.fillText('⚡ GAINS OUTPACE SIP', xPos + 6, top + 14);
+            ctx.textBaseline = 'middle';
+            ctx.fillText(tagText, pillX + 6, top + 15);
             ctx.restore();
         }
     };
@@ -669,15 +699,15 @@ export class ChartManager {
             ctx.strokeStyle = 'rgba(217, 119, 6, 0.45)'; // Amber-600 gold
             ctx.stroke();
 
-            ctx.font = '700 9px Inter, sans-serif';
+            ctx.font = '700 9px "Plus Jakarta Sans", "Inter", sans-serif';
             ctx.fillStyle = '#b45309';
-            ctx.fillText('👑 ₹1 Crore Milestone', right - 105, yPos - 5);
+            ctx.fillText('👑 ₹1 Crore Milestone', right - 110, yPos - 5);
             ctx.restore();
         }
     };
 
     /**
-     * Bank FD Alpha Delta Terminal Bracket Plugin.
+     * Bank FD Alpha Delta Terminal Bracket Plugin with right-edge clamping.
      */
     private fdAlphaDeltaPlugin = {
         id: 'fdAlphaDelta',
@@ -699,63 +729,24 @@ export class ChartManager {
             const ctx = chart.ctx;
             ctx.save();
             const badgeText = `+${this.formatter.format(delta)} FD Alpha`;
-            ctx.font = '700 10px Inter, sans-serif';
+            ctx.font = '700 10px "Plus Jakarta Sans", "Inter", sans-serif';
             const width = ctx.measureText(badgeText).width + 12;
+
+            const clampedX = Math.min(finalPoint.x - width, chart.chartArea.right - width - 2);
+            const clampedY = Math.max(chart.chartArea.top + 4, finalPoint.y - 24);
 
             ctx.fillStyle = '#065f46';
             ctx.beginPath();
-            ctx.roundRect(finalPoint.x - width, finalPoint.y - 24, width, 18, 4);
-            ctx.fill();
-
-            ctx.fillStyle = '#ffffff';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(badgeText, finalPoint.x - width + 6, finalPoint.y - 15);
-            ctx.restore();
-        }
-    };
-
-    /**
-     * Spatial Cursor Badge Plugin: Pins a dynamic, edge-clamped coordinate badge directly above active point.
-     */
-    private spatialCursorBadgePlugin = {
-        id: 'spatialCursorBadge',
-        afterDatasetsDraw: (chart: any) => {
-            if (chart.config.type !== 'line' || !chart.tooltip?.getActiveElements()?.length || !chart.chartArea) return;
-
-            const activePoint = chart.tooltip.getActiveElements()[0];
-            const { ctx, chartArea } = chart;
-            const { x, y } = activePoint.element;
-            const dataIndex = activePoint.index;
-            const row = this.lastResults[dataIndex];
-            if (!row) return;
-
-            ctx.save();
-            const text = `Yr ${row.year}: ${this.formatter.format(row.combined_total)}`;
-            ctx.font = '700 11px Inter, sans-serif';
-            const textWidth = ctx.measureText(text).width;
-            const badgeWidth = textWidth + 16;
-            const badgeHeight = 22;
-
-            let badgeX = x - (badgeWidth / 2);
-            if (badgeX < chartArea.left + 4) badgeX = chartArea.left + 4;
-            if (badgeX + badgeWidth > chartArea.right - 4) badgeX = chartArea.right - 4 - badgeWidth;
-
-            let badgeY = y - 28;
-            if (badgeY < chartArea.top + 4) badgeY = y + 12;
-
-            ctx.fillStyle = '#0f172a';
-            ctx.beginPath();
             if (typeof ctx.roundRect === 'function') {
-                ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, 6);
+                ctx.roundRect(clampedX, clampedY, width, 18, 4);
             } else {
-                ctx.rect(badgeX, badgeY, badgeWidth, badgeHeight);
+                ctx.rect(clampedX, clampedY, width, 18);
             }
             ctx.fill();
 
             ctx.fillStyle = '#ffffff';
-            ctx.textAlign = 'left';
             ctx.textBaseline = 'middle';
-            ctx.fillText(text, badgeX + 8, badgeY + (badgeHeight / 2));
+            ctx.fillText(badgeText, clampedX + 6, clampedY + 9);
             ctx.restore();
         }
     };
@@ -763,22 +754,16 @@ export class ChartManager {
     private donutCenterTextPlugin = {
         id: 'donutCenterText',
         afterDraw: (chart: any) => {
-            if (chart.config.type !== 'doughnut') return;
-            const ctx = chart.ctx;
-            const chartArea = chart.chartArea;
-            if (!chartArea) return;
-
+            if (chart.config.type !== 'doughnut' || !chart.chartArea) return;
+            const { ctx, chartArea } = chart;
             const datasets = chart.data.datasets;
             if (!datasets || datasets.length === 0) return;
 
-            const data = datasets[0].data as number[];
-            if (!data || data.length < 2) return;
-
-            const totalInvested = data[0] || 0;
-            const totalGains = data[1] || 0;
-            const totalWithdrawals = (data.length > 2 ? data[2] : 0) || 0;
-            const finalValue = totalGains + totalInvested + totalWithdrawals;
-            const multiplier = totalInvested > 0 ? (finalValue / totalInvested).toFixed(1) : '1.0';
+            const results = this.lastResults;
+            const activeYear = this.activeDonutScrubYear || results.length;
+            const currentRow = results.find(r => r.year === activeYear) || results[results.length - 1];
+            
+            const isDepleted = currentRow && (currentRow.combined_total <= 0) && (currentRow.annual_withdrawal ?? 0) > 0;
 
             const centerX = (chartArea.left + chartArea.right) / 2;
             const centerY = (chartArea.top + chartArea.bottom) / 2;
@@ -787,14 +772,31 @@ export class ChartManager {
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
 
-            ctx.font = `800 22px ${THEME_FONTS.heading}`;
-            ctx.fillStyle = '#047857';
-            ctx.fillText(`${multiplier}×`, centerX, centerY - 7);
+            if (isDepleted) {
+                ctx.font = `800 18px ${THEME_FONTS.heading}`;
+                ctx.fillStyle = '#be123c'; // Rose-700
+                ctx.fillText('DEPLETED', centerX, centerY - 6);
 
-            ctx.font = `700 9px ${THEME_FONTS.heading}`;
-            ctx.fillStyle = '#64748b';
-            const yearLabel = this.activeDonutScrubYear ? `YR ${this.activeDonutScrubYear} ROI` : 'ROI MULTIPLIER';
-            ctx.fillText(yearLabel, centerX, centerY + 12);
+                ctx.font = `700 9px ${THEME_FONTS.mono}`;
+                ctx.fillStyle = '#9f1239';
+                ctx.fillText(`AT YEAR ${currentRow.year}`, centerX, centerY + 12);
+            } else {
+                const data = datasets[0].data as number[];
+                const totalInvested = data[0] || 0;
+                const totalGains = data[1] || 0;
+                const totalWithdrawals = (data.length > 2 ? data[2] : 0) || 0;
+                const finalValue = totalGains + totalInvested + totalWithdrawals;
+                const multiplier = totalInvested > 0 ? (finalValue / totalInvested).toFixed(1) : '1.0';
+
+                ctx.font = `800 24px ${THEME_FONTS.mono}`;
+                ctx.fillStyle = '#047857'; // Emerald-700
+                ctx.fillText(`${multiplier}×`, centerX, centerY - 6);
+
+                ctx.font = `700 9px ${THEME_FONTS.heading}`;
+                ctx.fillStyle = '#64748b';
+                const yearLabel = this.activeDonutScrubYear ? `YR ${this.activeDonutScrubYear} ROI` : 'ROI MULTIPLIER';
+                ctx.fillText(yearLabel, centerX, centerY + 13);
+            }
             ctx.restore();
         }
     };
@@ -1252,8 +1254,7 @@ export class ChartManager {
                 this.splineMilestonesPlugin,
                 this.compoundingIgnitionPlugin,
                 this.croreMilestoneLinePlugin,
-                this.fdAlphaDeltaPlugin,
-                this.spatialCursorBadgePlugin
+                this.fdAlphaDeltaPlugin
             ],
             options: {
                 responsive: true,
@@ -1300,43 +1301,14 @@ export class ChartManager {
                         }
                     },
                     tooltip: {
-                        backgroundColor: THEME_COLORS.chart.tooltipBg,
-                        titleColor: THEME_COLORS.chart.tooltipTitle,
-                        titleFont: {
-                            family: fontFamily,
-                            size: 14,
-                            weight: 'bold'
-                        },
-                        bodyColor: THEME_COLORS.chart.tooltipBody,
-                        bodyFont: {
-                            family: fontFamily,
-                            size: 13
-                        },
-                        borderColor: THEME_COLORS.chart.tooltipBorder,
-                        borderWidth: 1,
-                        padding: 12,
-                        boxPadding: 4,
-                        cornerRadius: 12,
-                        usePointStyle: true,
-                        callbacks: {
-                            label: (context: TooltipItem<'line'>) => {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null && context.parsed.y !== undefined) {
-                                    label += this.formatter.format(context.parsed.y);
-                                }
-                                return label;
-                            },
-                            afterBody: (tooltipItems: TooltipItem<'line'>[]) => {
-                                if (!tooltipItems || tooltipItems.length === 0) return '';
-                                const index = tooltipItems[0].dataIndex;
-                                const reached = (this.currentMilestones || []).filter(m => m.index === index);
-                                if (reached.length > 0) {
-                                    return reached.map(m => `\n${m.icon} ${m.label} Reached!`).join('');
-                                }
-                                return '';
+                        enabled: false,
+                        external: (context) => {
+                            const { tooltip } = context;
+                            if (!tooltip || !tooltip.dataPoints || tooltip.dataPoints.length === 0) return;
+                            const index = tooltip.dataPoints[0].dataIndex;
+                            const row = this.lastResults[index];
+                            if (row) {
+                                this.updateInspectionRibbon(row);
                             }
                         }
                     }
@@ -1351,25 +1323,37 @@ export class ChartManager {
                             color: textColor,
                             font: {
                                 family: fontFamily,
-                                size: 11,
-                                weight: 500
+                                size: 10,
+                                weight: 600
                             },
-                            maxRotation: 0
+                            maxRotation: 0,
+                            autoSkip: true,
+                            maxTicksLimit: typeof window !== 'undefined' && window.innerWidth < 640 ? 6 : 10,
+                            callback: function(val: string | number) {
+                                const label = this.getLabelForValue(val as number);
+                                const yearNum = parseInt(label.replace('Yr ', ''), 10);
+                                if (yearNum === 1 || yearNum % 5 === 0 || yearNum === results.length) {
+                                    return `Y${yearNum}`;
+                                }
+                                return '';
+                            }
                         }
                     },
                     y: {
+                        position: 'right',
                         stacked: showWealthMap,
                         grid: {
                             color: gridColor,
-                            tickBorderDash: [5, 5]
+                            tickBorderDash: [4, 4]
                         },
                         ticks: {
                             color: textColor,
                             font: {
-                                family: fontFamily,
-                                size: 11,
+                                family: THEME_FONTS.mono,
+                                size: 10,
                                 weight: 500
                             },
+                            padding: 6,
                             callback: (value: string | number) => {
                                 return this.formatAxisTick(typeof value === 'number' ? value : Number(value));
                             }

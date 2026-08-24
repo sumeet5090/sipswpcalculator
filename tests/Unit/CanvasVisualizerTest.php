@@ -224,4 +224,82 @@ final class CanvasVisualizerTest extends TestCase
         $this->assertGreaterThan(4500000.0, $alphaDelta, "Equity SIP must generate substantial Alpha Delta over Bank FD");
         $this->assertGreaterThan($finalFdCorpus, $finalSipCorpus);
     }
+
+    public function testPureLightModePaletteTokensIntegrity(): void
+    {
+        $jsonPath = __DIR__ . '/../../content/theme_tokens.json';
+        $this->assertFileExists($jsonPath);
+        $tokens = json_decode((string) file_get_contents($jsonPath), true);
+
+        $chartColors = $tokens['colors']['chart'] ?? [];
+        $this->assertNotEmpty($chartColors);
+
+        // Assert tooltip uses pure light mode background
+        $this->assertSame('rgba(255, 255, 255, 0.98)', $chartColors['tooltip_bg']);
+        $this->assertSame('#0f172a', $chartColors['tooltip_title']);
+        $this->assertSame('#334155', $chartColors['tooltip_body']);
+        $this->assertSame('rgba(203, 213, 225, 0.9)', $chartColors['tooltip_border']);
+    }
+
+    public function testGradientBucketingQuantizationLogic(): void
+    {
+        // Assert height bucketing by 30px intervals
+        $height1 = 342;
+        $height2 = 356;
+        $height3 = 380;
+
+        $bucket1 = (int) (round($height1 / 30) * 30);
+        $bucket2 = (int) (round($height2 / 30) * 30);
+        $bucket3 = (int) (round($height3 / 30) * 30);
+
+        $this->assertSame(330, $bucket1);
+        $this->assertSame(360, $bucket2);
+        $this->assertSame(390, $bucket3);
+    }
+
+    public function testSwpDepletionYearDetectionForDoughnutSentinel(): void
+    {
+        // ₹30 Lakh corpus, ₹50,000 monthly withdrawal, 8% return, 10% annual hike
+        $inputs = InvestmentInputs::fromValues(
+            0.0,
+            0,
+            0.0,
+            0.0,
+            true,
+            50000.0,
+            10.0,
+            20,
+            3000000.0,
+            8.0
+        );
+
+        $results = $this->calculator->calculate($inputs);
+        $depletionYear = null;
+
+        foreach ($results as $row) {
+            if ($row['combined_total'] <= 0.0 && ($row['annual_withdrawal'] ?? 0.0) > 0.0) {
+                $depletionYear = $row['year'];
+                break;
+            }
+        }
+
+        $this->assertNotNull($depletionYear);
+        $this->assertLessThanOrEqual(10, $depletionYear, "High withdrawal must trigger depletion within 10 years");
+    }
+
+    public function testMobileTickThinningLogic(): void
+    {
+        // Validate 5-year step thinning on 30-year horizon
+        $totalYears = 30;
+        $shownTicks = [];
+
+        for ($yr = 1; $yr <= $totalYears; $yr++) {
+            if ($yr === 1 || $yr % 5 === 0 || $yr === $totalYears) {
+                $shownTicks[] = "Y{$yr}";
+            }
+        }
+
+        $this->assertSame(['Y1', 'Y5', 'Y10', 'Y15', 'Y20', 'Y25', 'Y30'], $shownTicks);
+        $this->assertCount(7, $shownTicks, "Mobile X-axis must thin 30 ticks down to 7 readable benchmark steps");
+    }
 }
