@@ -273,6 +273,42 @@ export class ChartManager {
             }
         ];
 
+        const hasStepUp = !enableSwp && results.length > 1 && ((results[1].annual_contribution ?? 0) > (results[0].annual_contribution ?? 0));
+        if (hasStepUp && !showWealthMap) {
+            const yr1 = results[0];
+            const baseMonthlySip = yr1.annual_contribution ? (yr1.annual_contribution / 12) : 0;
+            if (baseMonthlySip > 0) {
+                const yr1Interest = yr1.interest ?? 0;
+                const approxAnnualRate = yr1.annual_contribution > 0 ? ((yr1Interest * 2) / yr1.annual_contribution) : 0.12;
+                const rm = approxAnnualRate / 12;
+
+                const flatData = results.map(r => {
+                    const months = r.year * 12;
+                    if (rm > 0) {
+                        return Math.round(baseMonthlySip * ((Math.pow(1 + rm, months) - 1) / rm) * (1 + rm));
+                    }
+                    return Math.round(baseMonthlySip * months);
+                });
+
+                datasets.push({
+                    label: 'Flat SIP Baseline (0% Step-Up)',
+                    data: flatData,
+                    borderColor: '#94a3b8',
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    borderDash: [4, 4],
+                    tension: 0.4,
+                    cubicInterpolationMode: 'monotone' as const,
+                    fill: false,
+                    pointRadius: isSinglePoint ? 4 : 0,
+                    pointHoverRadius: 5,
+                    pointHoverBorderColor: '#94a3b8',
+                    pointHoverBackgroundColor: '#ffffff',
+                    order: 3,
+                });
+            }
+        }
+
         if (mode !== 'sip' || enableSwp) {
             datasets.push({
                 label: 'Annual Withdrawal',

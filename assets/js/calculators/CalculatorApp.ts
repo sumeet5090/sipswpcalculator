@@ -66,6 +66,7 @@ export class CalculatorApp {
     private qrShareModalController: QrShareModalController;
     private sessionStorageController: SessionStorageController;
     private undoRedoController: UndoRedoController;
+    private glossaryController: GlossaryController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -169,6 +170,8 @@ export class CalculatorApp {
         this.undoRedoController = new UndoRedoController((target) => {
             this.applyRestoredInputs(target);
         });
+        
+        this.glossaryController = new GlossaryController(() => this.getInputs(), () => this.latestResults);
 
         this.initGlobalShortcuts();
     }
@@ -458,7 +461,7 @@ export class CalculatorApp {
             () => this.getInputs()
         ).init();
         new ShareController(this.dom, () => this.getInputs()).init();
-        new GlossaryController(() => this.getInputs(), () => this.latestResults).init();
+        this.glossaryController.init();
         this.audioController.init();
         this.cityBenchmarkController.init();
         this.summaryMetricsController.initTaxWaterfallModal(() => this.analytics.setTaxWaterfallOpened());
@@ -727,6 +730,7 @@ export class CalculatorApp {
             this.stressTestController.updateResults(combined);
             this.assetRebalanceController.updateInputs(inputs);
             this.dailyAccrualController.updateResults(combined);
+            this.glossaryController.updateArithmeticProof(inputs, combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 

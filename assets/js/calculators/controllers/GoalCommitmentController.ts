@@ -178,6 +178,8 @@ export class GoalCommitmentController {
         link.click();
     }
 
+    private cleanupFocusTrap: (() => void) | null = null;
+
     openModal(triggerElement?: HTMLElement): void {
         const modal = this.dom.getElement('goal-commitment-modal');
         if (!modal) return;
@@ -185,12 +187,17 @@ export class GoalCommitmentController {
         this.populateMetrics();
         modal.classList.remove('hidden');
         ModalScrollLockHelper.lock(triggerElement);
+        this.cleanupFocusTrap = ModalScrollLockHelper.bindFocusTrap(modal);
     }
 
     closeModal(): void {
         const modal = this.dom.getElement('goal-commitment-modal');
         if (modal) {
             modal.classList.add('hidden');
+            if (this.cleanupFocusTrap) {
+                this.cleanupFocusTrap();
+                this.cleanupFocusTrap = null;
+            }
             ModalScrollLockHelper.unlock();
         }
     }

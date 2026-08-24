@@ -44,23 +44,23 @@ export class DailyAccrualController {
     }
 
     private getLifestyleEquivalent(dailyInterest: number): string {
-        if (dailyInterest >= 20000) {
-            return 'Equal to a 5-Star Luxury Suite every single day';
-        }
         if (dailyInterest >= 10000) {
-            return 'Equal to a Weekend Getaway funded every day';
+            return '🌴 Full Financial Independence (₹3.0L+/mo passive cashflow)';
         }
-        if (dailyInterest >= 4000) {
-            return 'Equal to 4 Premium Family Dinners funded every day';
+        if (dailyInterest >= 5000) {
+            return '🏡 Fully covers monthly Home Rent / EMI (₹1.5L/mo passive)';
         }
-        if (dailyInterest >= 1500) {
-            return 'Equal to your Complete Daily Household Expenses covered';
+        if (dailyInterest >= 2000) {
+            return '🛒 Complete Monthly Household Groceries & Utilities (₹60k/mo passive)';
         }
-        if (dailyInterest >= 600) {
-            return 'Equal to Daily Gourmet Meals & Commute covered';
+        if (dailyInterest >= 800) {
+            return '🍽️ Daily Family Dining & Commute funded by interest (₹24k/mo)';
         }
-        if (dailyInterest >= 200) {
-            return 'Equal to Daily Premium Coffee & Fuel funded by interest';
+        if (dailyInterest >= 250) {
+            return '☕ Daily Gourmet Coffee & Fuel funded purely by interest';
+        }
+        if (dailyInterest > 0) {
+            return '🌱 Early Wealth Seed (Daily compounding acceleration)';
         }
         return 'Daily compounding velocity at maturity';
     }

@@ -9,7 +9,12 @@ try {
     // Read input parameters JSON from command line arguments
     const inputArgs = JSON.parse(process.argv[2]);
 
-    if (inputArgs.action === 'format_stepup_subtext') {
+    if (inputArgs.action === 'calculate_delay_cost') {
+        const delayCost = MathEngine.calculateDelayCost(inputArgs.inputs);
+        const formatter = new CurrencyFormatter('INR', 'en-IN');
+        const formatted = formatter.format(delayCost);
+        console.log(JSON.stringify({ success: true, delayCost, formatted }));
+    } else if (inputArgs.action === 'format_stepup_subtext') {
         const formatter = new CurrencyFormatter('INR', 'en-IN');
         const subtext = formatter.formatSubtext('stepup', inputArgs.stepup, { sip: inputArgs.sip });
         console.log(JSON.stringify({ success: true, subtext }));

@@ -117,4 +117,30 @@ export class GlossaryController {
             });
         });
     }
+
+    updateArithmeticProof(inputs: InvestmentInputs, results: YearResult[]): void {
+        const stepR = document.getElementById('proof-step-r');
+        const stepN = document.getElementById('proof-step-n');
+        const stepMultiplier = document.getElementById('proof-step-multiplier');
+        const stepFactor = document.getElementById('proof-step-factor');
+        const stepCorpus = document.getElementById('proof-step-corpus');
+
+        if (!stepR || !stepN || !stepMultiplier || !stepFactor || !stepCorpus) return;
+
+        const sip = inputs.sip ?? 25000;
+        const rate = inputs.rate ?? 12;
+        const years = inputs.years ?? 15;
+        const r = (rate / 12 / 100);
+        const n = years * 12;
+        const mult = Math.pow(1 + r, n);
+        const factor = r > 0 ? ((mult - 1) / r) * (1 + r) : n;
+        const lastRow = results.length > 0 ? results[results.length - 1] : null;
+        const finalCorpus = lastRow ? lastRow.combined_total : sip * factor;
+
+        stepR.textContent = `r = ${rate}% ÷ 1200 = ${r.toFixed(6)}`;
+        stepN.textContent = `n = ${years} yrs × 12 = ${n} months`;
+        stepMultiplier.textContent = `(1 + ${r.toFixed(6)})^${n} = ${mult.toFixed(6)}`;
+        stepFactor.textContent = `[ ${(mult - 1).toFixed(6)} ÷ ${r.toFixed(6)} ] × ${(1 + r).toFixed(4)} = ${factor.toFixed(4)}`;
+        stepCorpus.textContent = `₹${sip.toLocaleString('en-IN')} × ${factor.toFixed(3)} = ₹${Math.round(finalCorpus).toLocaleString('en-IN')}`;
+    }
 }

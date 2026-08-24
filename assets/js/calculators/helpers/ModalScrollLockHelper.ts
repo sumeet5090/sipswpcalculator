@@ -32,4 +32,41 @@ export class ModalScrollLockHelper {
             }
         }
     }
+
+    /**
+     * Traps Tab / Shift+Tab keyboard focus strictly within modalElement.
+     * Returns a cleanup function to remove the listener on modal close.
+     */
+    static bindFocusTrap(modalElement: HTMLElement): () => void {
+        const focusableSelector = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+        const handleKeydown = (e: KeyboardEvent) => {
+            if (e.key !== 'Tab') return;
+
+            const focusables = Array.from(modalElement.querySelectorAll<HTMLElement>(focusableSelector))
+                .filter(el => el.offsetParent !== null);
+
+            if (focusables.length === 0) return;
+
+            const firstEl = focusables[0];
+            const lastEl = focusables[focusables.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === firstEl || !modalElement.contains(document.activeElement)) {
+                    e.preventDefault();
+                    lastEl.focus();
+                }
+            } else {
+                if (document.activeElement === lastEl || !modalElement.contains(document.activeElement)) {
+                    e.preventDefault();
+                    firstEl.focus();
+                }
+            }
+        };
+
+        modalElement.addEventListener('keydown', handleKeydown);
+        return () => {
+            modalElement.removeEventListener('keydown', handleKeydown);
+        };
+    }
 }

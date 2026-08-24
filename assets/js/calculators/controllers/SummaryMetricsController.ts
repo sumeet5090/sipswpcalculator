@@ -168,6 +168,22 @@ export class SummaryMetricsController {
             }
         }
 
+        // Live Cost of 1-Year Delay (SIP mode)
+        const delayBadge = this.dom.getElement('summary-delay-cost-badge');
+        if (delayBadge) {
+            if (inputs.sip > 0 && !inputs.enable_swp && inputs.years > 1) {
+                const delayCost = MathEngine.calculateDelayCost(inputs);
+                if (delayCost > 0) {
+                    delayBadge.textContent = `⏳ Cost of 1-Yr Delay: -${this.formatter.format(delayCost)}`;
+                    delayBadge.style.display = 'inline-flex';
+                } else {
+                    delayBadge.style.display = 'none';
+                }
+            } else {
+                delayBadge.style.display = 'none';
+            }
+        }
+
         // SWP Retirement Longevity Feasibility (Benchmarked against starting retirement corpus)
         const longevityBadge = this.dom.getElement('summary-longevity-badge');
         if (longevityBadge) {
@@ -177,19 +193,22 @@ export class SummaryMetricsController {
                     : (inputs.lumpsum || 0);
                 const initialAnnualSwp = inputs.swp_withdrawal * 12;
                 const swrRate = startingRetirementCorpus > 0 ? (initialAnnualSwp / startingRetirementCorpus) * 100 : 99;
-                const finalYearCorpus = lastRow.combined_total;
 
-                if (finalYearCorpus <= 0) {
-                    longevityBadge.textContent = '🚨 Depletes Before Horizon';
+                // Find exact year when corpus reaches 0
+                const depletedRow = data.find(r => r.year > inputs.years && r.combined_total <= 0);
+                const safeMonthlySwp = startingRetirementCorpus > 0 ? Math.round((startingRetirementCorpus * 0.04) / 12) : 0;
+
+                if (depletedRow) {
+                    longevityBadge.textContent = `🚨 Depletes in Year ${depletedRow.year} • Safe SWP: ${this.formatter.format(safeMonthlySwp)}/mo (4% SWR)`;
                     longevityBadge.className = 'inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-200';
                 } else if (swrRate <= 4.0) {
                     longevityBadge.textContent = '🛡️ Highly Sustainable (Safe 4% Rule)';
                     longevityBadge.className = 'inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200';
                 } else if (swrRate <= 6.0) {
-                    longevityBadge.textContent = '⚠️ Moderate Depletion Risk';
+                    longevityBadge.textContent = '⚠️ Moderate Depletion Risk (4-6% SWR)';
                     longevityBadge.className = 'inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-200';
                 } else {
-                    longevityBadge.textContent = '🚨 High Depletion Risk';
+                    longevityBadge.textContent = '🚨 High Depletion Risk (>6% SWR)';
                     longevityBadge.className = 'inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-200';
                 }
                 longevityBadge.style.display = 'inline-flex';
@@ -266,8 +285,13 @@ export class SummaryMetricsController {
 
         if (!modal) return;
 
+        let cleanupFocusTrap: (() => void) | null = null;
         const closeModal = () => {
             modal.close();
+            if (cleanupFocusTrap) {
+                cleanupFocusTrap();
+                cleanupFocusTrap = null;
+            }
             ModalScrollLockHelper.unlock();
         };
 
@@ -275,6 +299,7 @@ export class SummaryMetricsController {
             openBtn.addEventListener('click', () => {
                 modal.showModal();
                 ModalScrollLockHelper.lock(openBtn);
+                cleanupFocusTrap = ModalScrollLockHelper.bindFocusTrap(modal);
                 onOpen?.();
             });
         }
@@ -288,6 +313,10 @@ export class SummaryMetricsController {
             if (e.target === modal) closeModal();
         });
         modal.addEventListener('cancel', () => {
+            if (cleanupFocusTrap) {
+                cleanupFocusTrap();
+                cleanupFocusTrap = null;
+            }
             ModalScrollLockHelper.unlock();
         });
     }
