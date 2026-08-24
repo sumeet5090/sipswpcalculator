@@ -163,7 +163,8 @@ export class CalculatorApp {
         this.stressTestController = new StressTestController(
             this.dom,
             this.formatter,
-            this.chartManager
+            this.chartManager,
+            (scenario) => this.analytics.setStressTestScenario(scenario.slice(0, 64))
         );
 
         this.assetRebalanceController = new AssetRebalanceController(
@@ -900,9 +901,9 @@ export class CalculatorApp {
                 );
             }
 
-            this.stressTestController.updateResults(combined);
+            this.stressTestController.updateResults(combined, inputs);
             this.cityBenchmarkController.updateResults(combined, inputs);
-            this.assetRebalanceController.updateInputs(inputs);
+            this.assetRebalanceController.updateInputs(inputs, combined);
             this.dailyAccrualController.updateResults(combined);
             this.glossaryController.updateArithmeticProof(inputs, combined);
             this.floatingHudController.updateResults(combined);
