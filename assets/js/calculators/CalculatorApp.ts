@@ -145,7 +145,8 @@ export class CalculatorApp {
         );
 
         this.celebrationController = new MilestoneCelebrationController(
-            this.dom
+            this.dom,
+            this.formatter
         );
 
         this.audioController = new AudioFeedbackController(
@@ -881,7 +882,7 @@ export class CalculatorApp {
 
             const lastRow = combined[combined.length - 1];
             if (lastRow) {
-                this.celebrationController.checkMilestones(lastRow.combined_total, combined);
+                this.celebrationController.checkMilestones(lastRow.combined_total, combined, inputs);
                 
                 // Update accumulation bridge preview
                 const bridgeValEl = this.dom.getElement('bridge-matured-corpus-val');
@@ -942,8 +943,8 @@ export class CalculatorApp {
         // Mumbai benchmark target is ₹2.55 Cr (2,55,00,000)
         const fireCoverage = Math.min(100, (finalCorpus / 25500000) * 100);
 
-        // Milestone checkpoints: 25L, 50L, 1Cr, 5Cr
-        const milestoneCheckpoints = [2500000, 5000000, 10000000, 50000000];
+        // Milestone checkpoints: 10L, 25L, 50L, 1Cr, 5Cr
+        const milestoneCheckpoints = [1000000, 2500000, 5000000, 10000000, 50000000];
         const unlockedCount = milestoneCheckpoints.filter(target => finalCorpus >= target).length;
 
         // Context scenario caption update
