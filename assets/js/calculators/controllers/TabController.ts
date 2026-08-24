@@ -2,9 +2,11 @@ import { DOMAdapter } from '../../adapters/DOMAdapter';
 
 export class TabController {
     private dom: DOMAdapter;
+    private onSwpModeActivated?: () => void;
 
-    constructor(dom: DOMAdapter = new DOMAdapter()) {
+    constructor(dom: DOMAdapter = new DOMAdapter(), onSwpModeActivated?: () => void) {
         this.dom = dom;
+        this.onSwpModeActivated = onSwpModeActivated;
     }
 
     init(): void {
@@ -59,6 +61,24 @@ export class TabController {
                 sipTab.setAttribute('tabindex', '-1');
                 swpTab.setAttribute('aria-selected', 'true');
                 swpTab.setAttribute('tabindex', '0');
+
+                // Auto-engage SWP mode when user explicitly enters SWP tab
+                const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
+                const swpFields = this.dom.getElement('swp-fields');
+                if (swpToggle && !swpToggle.checked) {
+                    swpToggle.checked = true;
+                    swpToggle.setAttribute('aria-expanded', 'true');
+                    if (swpFields) {
+                        swpFields.style.display = 'block';
+                        swpFields.style.opacity = '1';
+                        swpFields.style.pointerEvents = 'auto';
+                        swpFields.setAttribute('aria-hidden', 'false');
+                        const childInputs = swpFields.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select');
+                        childInputs.forEach(input => { input.disabled = false; });
+                    }
+                    this.onSwpModeActivated?.();
+                }
+
                 if (shouldFocus) swpTab.focus();
             }
         };

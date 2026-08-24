@@ -82,6 +82,7 @@
 </head>
 <body class="{{ page_config.body_class|default('bg-gray-50 text-gray-800 font-sans antialiased') }} overflow-x-hidden" style="{{ page_config.body_style|default('background-image: var(--gradient-surface); background-attachment: fixed;') }}">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:p-3 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:shadow-xl focus:z-[100] font-bold transition-all">Skip to main content</a>
+    <div id="calculator-a11y-live-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
     
     {% include 'layouts/header.twig' %}
     

@@ -56,9 +56,9 @@ final class StudioTabControllerTest extends TestCase
         }
     }
 
-    public function testCityFireBenchmarkIsDefaultActiveTab(): void
+    public function testYearlyBreakdownIsDefaultActiveTab(): void
     {
-        $this->assertStringContainsString('id="tab-city-benchmark" aria-controls="panel-city-benchmark" aria-selected="true"', $this->studioTwigContent);
-        $this->assertStringContainsString('id="panel-city-benchmark" role="tabpanel" aria-labelledby="tab-city-benchmark" class="studio-tab-panel"', $this->studioTwigContent);
+        $this->assertStringContainsString('id="tab-yearly-breakdown" aria-controls="panel-yearly-breakdown" aria-selected="true"', $this->studioTwigContent);
+        $this->assertStringContainsString('id="panel-yearly-breakdown" role="tabpanel" aria-labelledby="tab-yearly-breakdown" class="studio-tab-panel"', $this->studioTwigContent);
     }
 }

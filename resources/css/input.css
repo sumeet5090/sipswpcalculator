@@ -76,3 +76,91 @@
   --ease-spring-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+/* ── Custom Range Slider Tactile Thumbs & Touch Ergonomics ── */
+input[type="range"] {
+  touch-action: pan-y;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 3px solid #059669;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(5, 150, 105, 0.2);
+  cursor: grab;
+  transition: transform 0.12s var(--ease-spring-snappy), box-shadow 0.12s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.18);
+  cursor: grabbing;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 3px solid #059669;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  cursor: grab;
+}
+
+/* ── Milestone Compounding Luminous Sheen Animation ── */
+@keyframes milestoneSheenSweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.milestone-sheen-active {
+  position: relative;
+  overflow: hidden;
+}
+
+.milestone-sheen-active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(16, 185, 129, 0.18) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: milestoneSheenSweep 0.65s ease-out forwards;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ── Toast Notification Container ── */
+.calc-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.calc-toast {
+  pointer-events: auto;
+  animation: toastFadeIn 0.25s var(--ease-spring-smooth) forwards;
+}
+
+@keyframes toastFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

@@ -393,7 +393,12 @@ export class SliderManager {
         this._debounceAriaTimer = setTimeout(() => {
             const readableText = this.formatter.formatAriaAnnouncement(fieldId, Number(val));
             rangeEl.setAttribute('aria-valuetext', readableText);
-        }, 300);
+
+            const liveAnnouncer = this.dom.getElement('calculator-a11y-live-announcer');
+            if (liveAnnouncer) {
+                liveAnnouncer.textContent = readableText;
+            }
+        }, 400);
     }
 
     private _showError(fieldId: string, message: string): void {

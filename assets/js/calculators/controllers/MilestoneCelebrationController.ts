@@ -31,11 +31,25 @@ export class MilestoneCelebrationController {
                 this.celebratedMilestones.add(m.threshold);
                 if (m.threshold >= 10000000) {
                     this.triggerMicroBurst();
+                    this.triggerSheenSweep();
                 }
             } else if (corpus < m.threshold && this.celebratedMilestones.has(m.threshold)) {
                 this.celebratedMilestones.delete(m.threshold);
             }
         });
+    }
+
+    private triggerSheenSweep(): void {
+        if (typeof window === 'undefined') return;
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        const corpusCard = this.dom.getElement('summary-corpus')?.closest('.bg-white\\/95') as HTMLElement | null;
+        if (corpusCard) {
+            corpusCard.classList.add('milestone-sheen-active');
+            setTimeout(() => {
+                corpusCard.classList.remove('milestone-sheen-active');
+            }, 700);
+        }
     }
 
     private updateRoadmap(corpus: number, results: YearResult[] = []): void {

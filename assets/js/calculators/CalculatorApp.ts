@@ -436,7 +436,9 @@ export class CalculatorApp {
 
         this.initGlobalShortcuts();
 
-        new TabController(this.dom).init();
+        new TabController(this.dom, () => {
+            this.syncSwpToggleState();
+        }).init();
         new StudioTabController(this.dom, (tabId) => this.analytics.setActiveStudioTab(tabId)).init();
         new StepperController(
             this.dom,
