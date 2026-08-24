@@ -17,7 +17,7 @@ export class ResultsController {
     private formatter: CurrencyFormatter;
     private getInputs: () => InvestmentInputs;
     private chartManager: ChartManager | null;
-    private density: 'all' | '5y' = 'all';
+    private density: 'all' | '5y' = '5y';
     private colDensity: 'essential' | 'audit' = 'essential';
     private searchYear: number | null = null;
     private lastData: YearResult[] = [];
