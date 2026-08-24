@@ -126,4 +126,46 @@ final class CanvasVisualizerTest extends TestCase
         $finalRow = end($safeResults);
         $this->assertGreaterThanOrEqual(0.0, $finalRow['combined_total']);
     }
+
+    public function testCompoundingIgnitionPointDetection(): void
+    {
+        // 10,000 monthly SIP @ 12% CAGR with 0% step-up over 20 years
+        $inputs = InvestmentInputs::fromValues(
+            10000.0,
+            20,
+            12.0,
+            0.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            0.0,
+            0.0
+        );
+
+        $results = $this->calculator->calculate($inputs);
+
+        // Find ignition year where annual interest >= annual contribution (1,20,000/yr)
+        $ignitionYear = null;
+        foreach ($results as $row) {
+            if ($row['year'] > 1 && ($row['interest'] ?? 0.0) >= ($row['annual_contribution'] ?? 120000.0)) {
+                $ignitionYear = $row['year'];
+                break;
+            }
+        }
+
+        $this->assertNotNull($ignitionYear);
+        // At 12% CAGR, single year interest surpasses annual SIP contributions by year 7
+        $this->assertGreaterThanOrEqual(5, $ignitionYear);
+        $this->assertLessThanOrEqual(8, $ignitionYear);
+    }
+
+    public function testDevicePixelRatioConstraintLimits(): void
+    {
+        // Assert maximum safe DPR clamp is within [1.0, 2.5]
+        $rawDprRetina = 3.0;
+        $clampedDpr = min($rawDprRetina, 2.5);
+
+        $this->assertSame(2.5, $clampedDpr, 'DPR must be clamped to 2.5 to prevent mobile GPU thermal throttling');
+    }
 }

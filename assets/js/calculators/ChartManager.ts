@@ -5,6 +5,7 @@ import { YearResult } from '../types';
 import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens.ts';
 import { ChartPatternHelper } from './helpers/ChartPatternHelper.ts';
 import { A11yAnnouncer } from './helpers/A11yAnnouncer.ts';
+import type { ChartScrubbingController } from './controllers/ChartScrubbingController';
 import type { Chart, ChartDataset, ChartConfiguration, TooltipItem } from 'chart.js';
 
 export interface Milestone {
@@ -25,7 +26,7 @@ interface GradientBundle {
 
 /**
  * ChartManager.ts
- * Manages instantiation, dataset state transitions, and responsive rendering of Chart.js.
+ * Manages instantiation, dataset state transitions, High-DPI scaling, and responsive rendering of Chart.js.
  * Strictly adheres to SOLID, DRY, and POLA principles.
  */
 export class ChartManager {
@@ -36,6 +37,20 @@ export class ChartManager {
     private currentMilestones: Milestone[] = [];
     private chartModulePromise: Promise<typeof Chart> | null = null;
     private showHistoricalCorridor: boolean = false;
+    private scrubbingController: ChartScrubbingController | null = null;
+
+    private activeBenchmark: 'none' | 'nifty' | 'gold' | 'fd' = 'none';
+    private activeViewType: 'line' | 'donut' = 'line';
+    private currentChartType: 'line' | 'doughnut' | null = null;
+    private lastResults: YearResult[] = [];
+    private lastEnableSwp: boolean = true;
+    private shockOverlayData: { label: string; data: number[] } | null = null;
+    private shockOverlayCrashIndex: number | null = null;
+    private activeDonutScrubYear: number | null = null;
+
+    private rafId: number | null = null;
+    private renderQueueId: number | null = null;
+    private controlsInitialized: boolean = false;
 
     constructor(
         formatter: CurrencyFormatter,
@@ -45,6 +60,21 @@ export class ChartManager {
         this.formatter = formatter;
         this.validator = validator;
         this.dom = dom;
+    }
+
+    /**
+     * Injects the dedicated scrubbing controller for bi-directional synchronization.
+     */
+    public setScrubbingController(scrubbingController: ChartScrubbingController): void {
+        this.scrubbingController = scrubbingController;
+        this.scrubbingController.setOnScrubCallback((index: number) => {
+            if (this.activeViewType === 'donut') {
+                this.updateDonutForYear(index);
+            } else {
+                this.highlightYear(index);
+                this.announceCurrentPoint(index);
+            }
+        });
     }
 
     /**
@@ -60,6 +90,18 @@ export class ChartManager {
         })();
 
         return this.chartModulePromise;
+    }
+
+    /**
+     * Configures hardware-accelerated canvas sizing capped at 2.5x DPR to prevent mobile GPU throttling.
+     */
+    private configureCanvasDPI(canvas: HTMLCanvasElement): void {
+        const dpr = Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2.5);
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+            canvas.width = Math.round(rect.width * dpr);
+            canvas.height = Math.round(rect.height * dpr);
+        }
     }
 
     /**
@@ -172,7 +214,6 @@ export class ChartManager {
 
             if (enableSwp && !swpCovered && (row.annual_withdrawal ?? 0) > 0) {
                 const tenYearsWithdrawal = (row.annual_withdrawal ?? 0) * 10;
-                // Verify sustainability: corpus must cover 10 years of withdrawals and portfolio doesn't deplete to 0 within 10 years
                 const isSustainable = activeCorpusValue >= tenYearsWithdrawal;
                 if (isSustainable) {
                     swpCovered = true;
@@ -193,7 +234,7 @@ export class ChartManager {
     }
 
     /**
-     * Build semantic dataset collection based on active UI toggles.
+     * Builds synthesized datasets adhering to mutual exclusivity and clean visual layering.
      */
     private buildDatasets(
         results: YearResult[],
@@ -212,7 +253,6 @@ export class ChartManager {
         const milestoneIndices = milestones.map(m => m.index);
         const isSinglePoint = results.length === 1;
 
-        // 0-Year singularity guard: when results.length === 1, ensure point is visible
         const pointRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 6 : (isSinglePoint ? 4 : 0));
         const pointHoverRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 10 : (isSinglePoint ? 8 : 6));
         const pointBgColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? THEME_COLORS.financial.milestoneGold : THEME_COLORS.financial.growth);
@@ -236,7 +276,7 @@ export class ChartManager {
                 pointBorderColor: THEME_COLORS.financial.invested,
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
-                order: 2,
+                order: 3,
             },
             {
                 label: showWealthMap ? 'Interest Earned' : 'Pre-Tax Corpus',
@@ -246,7 +286,7 @@ export class ChartManager {
                 borderWidth: 3,
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
-                fill: showWealthMap ? true : 0,
+                fill: showWealthMap ? true : (showPostTax ? '+1' : 0),
                 pointStyle: ChartPatternHelper.getPointStyle('corpus'),
                 pointBackgroundColor: pointBgColors,
                 pointBorderColor: pointBorderColors,
@@ -257,27 +297,27 @@ export class ChartManager {
                 order: 1,
             },
             {
-                label: 'Post-Tax Corpus',
+                label: 'Post-Tax Corpus (§112A Net)',
                 data: postTaxCorpus,
                 borderColor: THEME_COLORS.financial.postTax,
-                backgroundColor: 'rgba(139, 92, 246, 0.08)',
+                backgroundColor: 'rgba(139, 92, 246, 0.09)',
                 borderWidth: 2,
                 borderDash: [4, 4],
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
-                fill: 1, // Fill between dataset 1 (Pre-tax Corpus) and dataset 2 (Post-tax Corpus)
+                fill: 1, // Fill between dataset 1 (Pre-tax) and dataset 2 (Post-tax)
                 pointStyle: ChartPatternHelper.getPointStyle('postTax'),
                 pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
                 pointBorderColor: THEME_COLORS.financial.postTax,
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
                 hidden: !showPostTax || showWealthMap,
-                order: 1,
+                order: 2,
             }
         ];
 
-        // Historical Volatility Corridor (10th to 90th percentile rolling Nifty returns: 10.2% - 15.8%)
-        if (this.showHistoricalCorridor && !showWealthMap && results.length > 1) {
+        // Historical Volatility Corridor (Suppressed when Post-Tax is active to prevent color clutter)
+        if (this.showHistoricalCorridor && !showWealthMap && !showPostTax && results.length > 1) {
             const lowerCorridor = this.computeBenchmarkCurve(results, 10.2);
             const upperCorridor = this.computeBenchmarkCurve(results, 15.8);
 
@@ -290,7 +330,7 @@ export class ChartManager {
                 borderDash: [2, 2],
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
-                fill: '+1', // Fill between lower and upper corridor
+                fill: '+1',
                 pointRadius: 0,
                 pointHoverRadius: 4,
                 order: 4,
@@ -425,13 +465,30 @@ export class ChartManager {
         return datasets;
     }
 
-    private activeBenchmark: 'none' | 'nifty' | 'gold' | 'fd' = 'none';
-    private activeViewType: 'line' | 'donut' = 'line';
-    private currentChartType: 'line' | 'doughnut' | null = null;
-    private lastResults: YearResult[] = [];
-    private lastEnableSwp: boolean = true;
-    private shockOverlayData: { label: string; data: number[] } | null = null;
-    private shockOverlayCrashIndex: number | null = null;
+    /**
+     * Updates active lens text indicator in the header dock.
+     */
+    public updateActiveLensIndicator(): void {
+        const indicator = this.dom.getElement('active-lens-indicator');
+        if (!indicator) return;
+
+        const showCorridor = this.dom.getElement<HTMLInputElement>('show_historical_corridor')?.checked || false;
+        const showPostTax = this.dom.getElement<HTMLInputElement>('show_post_tax')?.checked || false;
+        const showWealthMap = this.dom.getElement<HTMLInputElement>('show_wealth_map')?.checked || false;
+
+        const active: string[] = [];
+        if (showCorridor) active.push('Corridor');
+        if (showPostTax) active.push('§112A Tax');
+        if (showWealthMap) active.push('Decomp');
+
+        if (active.length === 0) {
+            indicator.textContent = 'Standard View';
+            indicator.className = 'hidden sm:inline-flex items-center text-[10px] font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70';
+        } else {
+            indicator.textContent = active.join(' + ');
+            indicator.className = 'hidden sm:inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-full border border-emerald-200/80 shadow-2xs';
+        }
+    }
 
     /**
      * Plot or clear historical market shock trajectory overlay.
@@ -449,6 +506,7 @@ export class ChartManager {
      */
     setHistoricalCorridor(show: boolean): void {
         this.showHistoricalCorridor = show;
+        this.updateActiveLensIndicator();
         if (this.lastResults.length > 0) {
             this.updateChart(this.lastResults, this.lastEnableSwp);
         }
@@ -480,7 +538,6 @@ export class ChartManager {
         afterDraw: (chart: any) => {
             if (chart.config.type !== 'line' || !chart.scales?.x || !chart.scales?.y) return;
 
-            // Draw active bi-directional crosshair on hover
             if (chart.tooltip?.getActiveElements()?.length) {
                 const activePoint = chart.tooltip.getActiveElements()[0];
                 const ctx = chart.ctx;
@@ -507,6 +564,104 @@ export class ChartManager {
                 ctx.stroke();
                 ctx.restore();
             }
+        }
+    };
+
+    /**
+     * Compounding Ignition Zone Plugin: Illuminates the inflection zone where annual interest surpasses annual SIP contributions.
+     */
+    private compoundingIgnitionPlugin = {
+        id: 'compoundingIgnitionZone',
+        beforeDatasetsDraw: (chart: any) => {
+            if (chart.config.type !== 'line' || !chart.chartArea) return;
+            const meta = chart.getDatasetMeta(1);
+            if (!meta || !meta.data || meta.data.length === 0) return;
+
+            const results = this.lastResults;
+            if (results.length < 2) return;
+
+            const crossoverIdx = results.findIndex((r, idx) => {
+                if (idx === 0) return false;
+                const annualInterest = r.interest || 0;
+                const annualContribution = r.annual_contribution || 0;
+                return annualInterest >= annualContribution && annualContribution > 0;
+            });
+
+            if (crossoverIdx === -1 || !meta.data[crossoverIdx]) return;
+
+            const ctx = chart.ctx;
+            const xPos = meta.data[crossoverIdx].x;
+            const { top, bottom, right } = chart.chartArea;
+
+            ctx.save();
+            // Ambient aurora ignition glow
+            const gradient = ctx.createLinearGradient(xPos, 0, right, 0);
+            gradient.addColorStop(0, 'rgba(16, 185, 129, 0.08)');
+            gradient.addColorStop(1, 'rgba(16, 185, 129, 0.02)');
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(xPos, top, right - xPos, bottom - top);
+
+            // Demarcation dotted line
+            ctx.beginPath();
+            ctx.setLineDash([3, 3]);
+            ctx.moveTo(xPos, top);
+            ctx.lineTo(xPos, bottom);
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = '#059669';
+            ctx.stroke();
+
+            // Ignition Pill annotation
+            ctx.font = '700 9px Inter, sans-serif';
+            ctx.fillStyle = '#047857';
+            ctx.fillText('⚡ GAINS OUTPACE SIP', xPos + 6, top + 14);
+            ctx.restore();
+        }
+    };
+
+    /**
+     * Spatial Cursor Badge Plugin: Pins a dynamic, edge-clamped coordinate badge directly above active point.
+     */
+    private spatialCursorBadgePlugin = {
+        id: 'spatialCursorBadge',
+        afterDatasetsDraw: (chart: any) => {
+            if (chart.config.type !== 'line' || !chart.tooltip?.getActiveElements()?.length || !chart.chartArea) return;
+
+            const activePoint = chart.tooltip.getActiveElements()[0];
+            const { ctx, chartArea } = chart;
+            const { x, y } = activePoint.element;
+            const dataIndex = activePoint.index;
+            const row = this.lastResults[dataIndex];
+            if (!row) return;
+
+            ctx.save();
+            const text = `Yr ${row.year}: ${this.formatter.format(row.combined_total)}`;
+            ctx.font = '700 11px Inter, sans-serif';
+            const textWidth = ctx.measureText(text).width;
+            const badgeWidth = textWidth + 16;
+            const badgeHeight = 22;
+
+            let badgeX = x - (badgeWidth / 2);
+            if (badgeX < chartArea.left + 4) badgeX = chartArea.left + 4;
+            if (badgeX + badgeWidth > chartArea.right - 4) badgeX = chartArea.right - 4 - badgeWidth;
+
+            let badgeY = y - 28;
+            if (badgeY < chartArea.top + 4) badgeY = y + 12;
+
+            ctx.fillStyle = '#0f172a';
+            ctx.beginPath();
+            if (typeof ctx.roundRect === 'function') {
+                ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, 6);
+            } else {
+                ctx.rect(badgeX, badgeY, badgeWidth, badgeHeight);
+            }
+            ctx.fill();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, badgeX + 8, badgeY + (badgeHeight / 2));
+            ctx.restore();
         }
     };
 
@@ -538,12 +693,13 @@ export class ChartManager {
             ctx.textBaseline = 'middle';
 
             ctx.font = `800 22px ${THEME_FONTS.heading}`;
-            ctx.fillStyle = '#047857'; // Emerald-700
+            ctx.fillStyle = '#047857';
             ctx.fillText(`${multiplier}×`, centerX, centerY - 7);
 
             ctx.font = `700 9px ${THEME_FONTS.heading}`;
-            ctx.fillStyle = '#64748b'; // Slate-500
-            ctx.fillText('ROI MULTIPLIER', centerX, centerY + 12);
+            ctx.fillStyle = '#64748b';
+            const yearLabel = this.activeDonutScrubYear ? `YR ${this.activeDonutScrubYear} ROI` : 'ROI MULTIPLIER';
+            ctx.fillText(yearLabel, centerX, centerY + 12);
             ctx.restore();
         }
     };
@@ -552,7 +708,7 @@ export class ChartManager {
         id: 'splineMilestones',
         afterDatasetsDraw: (chart: any) => {
             if (chart.config.type !== 'line') return;
-            const meta = chart.getDatasetMeta(1); // Combined Corpus dataset
+            const meta = chart.getDatasetMeta(1);
             if (!meta || !meta.data) return;
 
             const ctx = chart.ctx;
@@ -563,13 +719,11 @@ export class ChartManager {
                 const point = meta.data[m.index];
 
                 ctx.save();
-                // Outer subtle glowing halo
                 ctx.beginPath();
                 ctx.arc(point.x, point.y, 11, 0, Math.PI * 2);
                 ctx.fillStyle = m.type === 'security' ? 'rgba(245, 158, 11, 0.22)' : 'rgba(16, 185, 129, 0.22)';
                 ctx.fill();
 
-                // Inner beacon core
                 ctx.beginPath();
                 ctx.arc(point.x, point.y, 5.5, 0, Math.PI * 2);
                 ctx.fillStyle = m.type === 'security' ? '#d97706' : '#10b981';
@@ -586,6 +740,11 @@ export class ChartManager {
      * Update persistent Zero-CLS Heads-Up Display (HUD) telemetry console.
      */
     public updateInspectionRibbon(row: YearResult): void {
+        if (this.scrubbingController) {
+            this.scrubbingController.inspect(row, this.lastResults.length);
+            return;
+        }
+
         const rYear = this.dom.getElement('ribbon-inspect-year');
         const rInvested = this.dom.getElement('ribbon-inspect-invested');
         const rGains = this.dom.getElement('ribbon-inspect-gains');
@@ -656,23 +815,22 @@ export class ChartManager {
         const donutBtn = this.dom.getElement('chart-view-donut');
         if (lineBtn && donutBtn) {
             if (type === 'line') {
-                lineBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                lineBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                lineBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                lineBtn.classList.remove('text-slate-600', 'hover:text-slate-900');
                 lineBtn.setAttribute('aria-selected', 'true');
-                donutBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                donutBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                donutBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                donutBtn.classList.add('text-slate-600', 'hover:text-slate-900');
                 donutBtn.setAttribute('aria-selected', 'false');
             } else {
-                donutBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                donutBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                donutBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                donutBtn.classList.remove('text-slate-600', 'hover:text-slate-900');
                 donutBtn.setAttribute('aria-selected', 'true');
-                lineBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                lineBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                lineBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                lineBtn.classList.add('text-slate-600', 'hover:text-slate-900');
                 lineBtn.setAttribute('aria-selected', 'false');
             }
         }
 
-        // Destroy existing chart instance to allow fresh type instantiation
         if (this.chartInstance) {
             this.chartInstance.destroy();
             this.chartInstance = null;
@@ -684,7 +842,31 @@ export class ChartManager {
     }
 
     /**
-     * Highlight specific data point on hover from external components (e.g. breakdown table).
+     * Morphs donut proportions for any selected year with zero chart re-instantiation.
+     */
+    public updateDonutForYear(yearIndex: number): void {
+        if (!this.chartInstance || this.currentChartType !== 'doughnut') return;
+        const row = this.lastResults[yearIndex];
+        if (!row) return;
+
+        const showPostTax = this.dom.getElement<HTMLInputElement>('show_post_tax')?.checked || false;
+        const invested = row.cumulative_invested || 0;
+        const finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
+        const withdrawals = row.cumulative_withdrawals || 0;
+        const gains = Math.max(0, (finalCorpus + withdrawals) - invested);
+
+        const dataset = this.chartInstance.data.datasets[0];
+        if (dataset) {
+            dataset.data = withdrawals > 0 ? [invested, gains, withdrawals] : [invested, gains];
+            this.activeDonutScrubYear = row.year;
+            this.chartInstance.update('none');
+        }
+
+        this.updateInspectionRibbon(row);
+    }
+
+    /**
+     * Highlight specific data point on hover from external components.
      */
     highlightYear(index: number): void {
         if (!this.chartInstance || this.activeViewType !== 'line') return;
@@ -715,8 +897,6 @@ export class ChartManager {
         }
     }
 
-    private controlsInitialized = false;
-
     /**
      * Bind view switcher buttons and benchmark comparison chips once during initialization.
      */
@@ -739,6 +919,19 @@ export class ChartManager {
                 const bm = (chip.dataset.benchmark || 'none') as 'none' | 'nifty' | 'gold' | 'fd';
                 this.setBenchmark(bm);
             });
+        });
+
+        // Overlay chips sync
+        const corridorInput = this.dom.getElement<HTMLInputElement>('show_historical_corridor');
+        const postTaxInput = this.dom.getElement<HTMLInputElement>('show_post_tax');
+        const wealthMapInput = this.dom.getElement<HTMLInputElement>('show_wealth_map');
+
+        [corridorInput, postTaxInput, wealthMapInput].forEach(input => {
+            if (input) {
+                input.addEventListener('change', () => {
+                    this.updateActiveLensIndicator();
+                });
+            }
         });
 
         const canvasContainer = this.dom.getElement<HTMLElement>('chart-canvas-container');
@@ -773,7 +966,18 @@ export class ChartManager {
         }
     }
 
-    private rafId: number | null = null;
+    /**
+     * Throttled chart rendering queue via requestAnimationFrame.
+     */
+    public updateChartThrottled(results: YearResult[], enableSwp: boolean = true): void {
+        if (this.renderQueueId) {
+            cancelAnimationFrame(this.renderQueueId);
+        }
+        this.renderQueueId = requestAnimationFrame(() => {
+            this.updateChart(results, enableSwp, true);
+            this.renderQueueId = null;
+        });
+    }
 
     /**
      * Initialize or update the chart.
@@ -783,8 +987,14 @@ export class ChartManager {
         this.lastResults = results;
         this.lastEnableSwp = enableSwp;
 
+        if (this.scrubbingController) {
+            this.scrubbingController.syncResults(results);
+        }
+
         const ctxEl = this.dom.getElement<HTMLCanvasElement>('corpusChart');
         if (!ctxEl || !document.body.contains(ctxEl)) return;
+
+        this.configureCanvasDPI(ctxEl);
 
         let ChartClass: typeof Chart;
         try {
@@ -806,6 +1016,7 @@ export class ChartManager {
 
         const milestones = this.computeMilestones(results, enableSwp, showPostTax);
         this.currentMilestones = milestones;
+        this.updateActiveLensIndicator();
 
         const fontFamily = THEME_FONTS.heading;
         const gridColor = THEME_COLORS.chart.gridLine;
@@ -819,9 +1030,9 @@ export class ChartManager {
             }
 
             const lastRow = results[results.length - 1];
-            const totalInvested = lastRow.cumulative_invested || 0;
-            const finalCorpus = showPostTax ? (lastRow.post_tax_total ?? lastRow.combined_total) : lastRow.combined_total;
-            const totalWithdrawn = lastRow.cumulative_withdrawals || 0;
+            const totalInvested = lastRow?.cumulative_invested || 0;
+            const finalCorpus = showPostTax ? (lastRow?.post_tax_total ?? lastRow?.combined_total ?? 0) : (lastRow?.combined_total ?? 0);
+            const totalWithdrawn = lastRow?.cumulative_withdrawals || 0;
             const totalGains = Math.max(0, (finalCorpus + totalWithdrawn) - totalInvested);
 
             const labels: string[] = ['Total Invested', 'Compounding Gains'];
@@ -905,7 +1116,6 @@ export class ChartManager {
         const yBottom = this.chartInstance?.scales?.y?.bottom ?? (ctxEl.clientHeight || 400);
         const gradients = this.createGradients(ctx, yTop, yBottom);
 
-        // Update in-place if chartInstance is alive and still a line chart
         if (this.chartInstance && this.currentChartType === 'line' && this.chartInstance.ctx.canvas === ctxEl) {
             const datasets = this.buildDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
             this.chartInstance.data.labels = years;
@@ -942,7 +1152,12 @@ export class ChartManager {
                 labels: years,
                 datasets: datasets
             },
-            plugins: [this.crosshairPlugin, this.splineMilestonesPlugin],
+            plugins: [
+                this.crosshairPlugin,
+                this.splineMilestonesPlugin,
+                this.compoundingIgnitionPlugin,
+                this.spatialCursorBadgePlugin
+            ],
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -1072,7 +1287,6 @@ export class ChartManager {
         this.currentChartType = 'line';
         this.renderMilestoneGrid(milestones);
 
-        // Initialize persistent HUD with final year projection summary
         if (results.length > 0) {
             const finalRow = results[results.length - 1];
             if (finalRow) {
@@ -1092,7 +1306,6 @@ export class ChartManager {
         const container = this.dom.getElement('milestones-container');
         if (!container) return;
 
-        // Legacy-safe DOM clearance
         while (container.firstChild) {
             container.removeChild(container.firstChild);
         }
@@ -1109,7 +1322,6 @@ export class ChartManager {
             const card = document.createElement('div');
             card.className = 'bg-gradient-to-r from-amber-50/90 via-white to-emerald-50/50 p-3.5 rounded-2xl border border-amber-200/80 shadow-sm flex items-center gap-3 transition-all duration-200 hover:shadow-md hover:border-amber-300 cursor-pointer';
 
-            // Two-way interactive hover sync with Chart Spline Beacon
             card.addEventListener('mouseenter', () => this.highlightYear(m.index));
             card.addEventListener('mouseleave', () => this.clearHighlight());
 
@@ -1149,6 +1361,14 @@ export class ChartManager {
      * Explicit cleanup to prevent memory leaks and detached event listeners.
      */
     destroy(): void {
+        if (this.rafId) {
+            cancelAnimationFrame(this.rafId);
+            this.rafId = null;
+        }
+        if (this.renderQueueId) {
+            cancelAnimationFrame(this.renderQueueId);
+            this.renderQueueId = null;
+        }
         if (this.chartInstance) {
             this.chartInstance.destroy();
             this.chartInstance = null;
@@ -1159,4 +1379,3 @@ export class ChartManager {
         return this.chartInstance;
     }
 }
-

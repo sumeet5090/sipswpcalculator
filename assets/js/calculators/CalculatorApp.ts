@@ -46,6 +46,7 @@ import { LifecycleBridgeController } from './controllers/LifecycleBridgeControll
 import { MobileErgonomicDeckController } from './controllers/MobileErgonomicDeckController';
 import { KeyboardViewportController } from './controllers/KeyboardViewportController';
 import { KeyboardNavigationController } from './controllers/KeyboardNavigationController';
+import { ChartScrubbingController } from './controllers/ChartScrubbingController';
 import { A11yAnnouncer } from './helpers/A11yAnnouncer';
 
 export class CalculatorApp {
@@ -53,6 +54,7 @@ export class CalculatorApp {
     private formatter: CurrencyFormatter;
     private validator: InputValidator;
     private chartManager: ChartManager;
+    private chartScrubbingController: ChartScrubbingController;
     private analytics: AnalyticsService;
     private userHasInteracted: boolean;
     private interactionCount: number;
@@ -94,6 +96,8 @@ export class CalculatorApp {
         this.formatter = formatter;
         this.validator = validator;
         this.chartManager = chartManager ?? new ChartManager(this.formatter, this.validator, this.dom);
+        this.chartScrubbingController = new ChartScrubbingController(this.dom, this.formatter);
+        this.chartManager.setScrubbingController(this.chartScrubbingController);
         this.analytics = analytics;
         this.userHasInteracted = false;
         this.interactionCount = 0;

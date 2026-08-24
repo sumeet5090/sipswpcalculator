@@ -191,5 +191,11 @@ final class AccessibilityAndTrustArchitectureTest extends TestCase
         $this->assertStringContainsString('id="corridor-telemetry-pill"', $content);
         $this->assertStringContainsString('id="tax-telemetry-pill"', $content);
         $this->assertStringContainsString('id="wealth-map-telemetry-pill"', $content);
+        $this->assertStringContainsString('id="active-lens-indicator"', $content);
+
+        // Assert Mobile Ergonomic Thumb Scrubber Container
+        $this->assertStringContainsString('id="mobile-chart-scrubber-container"', $content);
+        $this->assertStringContainsString('id="mobile-chart-scrubber"', $content);
+        $this->assertStringContainsString('id="scrubber-active-indicator"', $content);
     }
 }

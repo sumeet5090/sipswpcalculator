@@ -130,6 +130,10 @@
                     <span class="font-bold">AMFI Aligned</span>
                     <span class="text-slate-400 group-hover:text-emerald-600 text-[9px]">ℹ️</span>
                 </button>
+
+                <span id="active-lens-indicator" class="hidden sm:inline-flex items-center text-[10px] font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70">
+                    Standard View
+                </span>
             </div>
 
             <!-- Center/Right Cluster: View Switcher, Analytical Lenses & Actions -->
@@ -236,6 +240,20 @@
             tabindex="0" id="chart-canvas-container" 
             aria-label="Interactive Wealth Projection Chart. Use Left and Right arrow keys to inspect yearly progression.">
             <canvas id="corpusChart" role="img" aria-label="Investment growth projection line chart"></canvas>
+        </div>
+
+        <!-- Mobile Tactile Thumb Scrubber (Decoupled from canvas to prevent thumb occlusion) -->
+        <div id="mobile-chart-scrubber-container" class="sm:hidden mt-2.5 px-1 py-1.5 bg-slate-50 rounded-xl border border-slate-200/70">
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-600 mb-1 px-1">
+                <span>Yr 1</span>
+                <span id="scrubber-active-indicator" class="font-extrabold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200 shadow-2xs">
+                    Scrub Timeline
+                </span>
+                <span id="scrubber-max-indicator">Yr --</span>
+            </div>
+            <input type="range" id="mobile-chart-scrubber" min="1" max="30" value="30" step="1"
+                class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
+                aria-label="Scrub through investment timeline years">
         </div>
 
         <!-- Accessible Semantic Screen-Reader Data Ledger (WCAG 1.1.1 & 4.1.2) -->
