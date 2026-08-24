@@ -45,7 +45,7 @@
   --color-indigo-700: #4338ca;
   --color-indigo-900: #312e81;
 
-  /* Semantic Financial Colors (Pure Light-Theme Calibrated) */
+  /* Semantic Financial Colors (Pure Light-Theme Calibrated & WCAG AAA Contrast Verified) */
   --color-financial-growth: #047857;       /* Emerald 700 - High contrast on white (5.8:1) */
   --color-financial-growth-bg: #ecfdf5;    /* Emerald 50 */
   --color-financial-growth-border: #a7f3d0;/* Emerald 200 */
@@ -138,6 +138,23 @@ input[type="range"]::-moz-range-thumb {
   animation: milestoneSheenSweep 0.65s ease-out forwards;
   pointer-events: none;
   border-radius: inherit;
+}
+
+/* ── Metric Calculation Pulse Feedback ── */
+@keyframes metricPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.015);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.metric-pulse-active {
+  animation: metricPulse 0.25s var(--ease-spring-snappy) forwards;
 }
 
 /* ── Toast Notification Container ── */

@@ -128,6 +128,12 @@ export class SummaryMetricsController {
         if (interestTitle) interestTitle.textContent = interestLabel;
         if (corpusTitle) corpusTitle.textContent = corpusLabel;
 
+        // Statutory Budget 2024 Post-Tax Indicator on Corpus Card
+        const postTaxPill = this.dom.getElement('post-tax-statutory-pill');
+        if (postTaxPill) {
+            postTaxPill.style.display = showPostTax ? 'block' : 'none';
+        }
+
         // Odometer spring animation for KPI numbers
         this.odometer.animateValue('summary-invested', totalInvested);
         this.odometer.animateValue('summary-interest', finalGains);
@@ -184,7 +190,7 @@ export class SummaryMetricsController {
             }
         }
 
-        // SWP Retirement Longevity Feasibility (Benchmarked against starting retirement corpus)
+        // SWP Retirement Longevity Feasibility
         const longevityBadge = this.dom.getElement('summary-longevity-badge');
         if (longevityBadge) {
             if (inputs.enable_swp && inputs.swp_withdrawal > 0) {
@@ -194,7 +200,6 @@ export class SummaryMetricsController {
                 const initialAnnualSwp = inputs.swp_withdrawal * 12;
                 const swrRate = startingRetirementCorpus > 0 ? (initialAnnualSwp / startingRetirementCorpus) * 100 : 99;
 
-                // Find exact year when corpus reaches 0
                 const depletedRow = data.find(r => r.year > inputs.years && r.combined_total <= 0);
                 const safeMonthlySwp = startingRetirementCorpus > 0 ? Math.round((startingRetirementCorpus * 0.04) / 12) : 0;
 
@@ -256,6 +261,9 @@ export class SummaryMetricsController {
             }
         }
 
+        // Contextual Alpha Radar (Priority-Ranked Single Insight)
+        this._updateContextualRadar(data, inputs, totalInvested, finalGains);
+
         // Populate Tax Waterfall Modal values
         const taxGross = this.dom.getElement('tax-modal-gross-gains');
         const taxTaxable = this.dom.getElement('tax-modal-taxable-gains');
@@ -275,6 +283,61 @@ export class SummaryMetricsController {
         if (taxHarvestEffective) taxHarvestEffective.textContent = this.formatter.format(harvestAlpha.harvestedTax);
 
         this.fitSummaryCards();
+    }
+
+    /**
+     * Determine single highest-priority contextual insight for progressive disclosure.
+     */
+    private _updateContextualRadar(data: YearResult[], inputs: InvestmentInputs, totalInvested: number, finalGains: number): void {
+        const radarContainer = this.dom.getElement('contextual-alpha-radar');
+        const radarIcon = this.dom.getElement('contextual-radar-icon');
+        const radarText = this.dom.getElement('contextual-radar-text');
+        if (!radarContainer || !radarText) return;
+
+        // 1. Priority 1: Depletion Risk in SWP Mode
+        if (inputs.enable_swp && inputs.swp_withdrawal > 0) {
+            const depletedRow = data.find(r => r.year > inputs.years && r.combined_total <= 0);
+            if (depletedRow) {
+                radarContainer.className = 'flex items-center justify-between p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-900 shadow-2xs mb-3 transition-all';
+                if (radarIcon) radarIcon.textContent = '🚨';
+                radarText.innerHTML = `<strong>Capital Exhaustion Warning:</strong> Portfolio depletes in Year ${depletedRow.year}. Consider safe-rate calibration.`;
+                radarContainer.style.display = 'flex';
+                return;
+            }
+        }
+
+        // 2. Priority 2: Wealth Crossover Point
+        const crossoverYear = data.find(r => r.annual_contribution > 0 && r.interest > r.annual_contribution)?.year;
+        if (crossoverYear) {
+            radarContainer.className = 'flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 text-emerald-900 shadow-2xs mb-3 transition-all';
+            if (radarIcon) radarIcon.textContent = '🚀';
+            radarText.innerHTML = `<strong>Wealth Crossover:</strong> In Year ${crossoverYear}, annual compounding gains surpass your annual invested principal.`;
+            radarContainer.style.display = 'flex';
+            return;
+        }
+
+        // 3. Priority 3: Milestone Doubling / Velocity
+        if (inputs.rate > 0 && finalGains > totalInvested) {
+            radarContainer.className = 'flex items-center justify-between p-3 rounded-2xl bg-indigo-50 border border-indigo-200 text-indigo-900 shadow-2xs mb-3 transition-all';
+            if (radarIcon) radarIcon.textContent = '💎';
+            const doublingYrs = (72 / inputs.rate).toFixed(1);
+            radarText.innerHTML = `<strong>Compounding Multiplier:</strong> Capital doubles every ${doublingYrs} years with ${Math.round((finalGains / totalInvested) * 100)}% net wealth expansion.`;
+            radarContainer.style.display = 'flex';
+            return;
+        }
+
+        // 4. Default: Daily Compounding Velocity
+        const lastRow = data[data.length - 1];
+        const dailyRate = Math.round((lastRow?.interest || 0) / 365);
+        if (dailyRate > 0) {
+            radarContainer.className = 'flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/90 text-slate-800 shadow-2xs mb-3 transition-all';
+            if (radarIcon) radarIcon.textContent = '⚡';
+            radarText.innerHTML = `<strong>Compounding Velocity:</strong> Generating <span class="font-mono font-bold text-emerald-700">${this.formatter.format(dailyRate)} / day</span> in passive interest at maturity.`;
+            radarContainer.style.display = 'flex';
+            return;
+        }
+
+        radarContainer.style.display = 'none';
     }
 
     initTaxWaterfallModal(onOpen?: () => void): void {

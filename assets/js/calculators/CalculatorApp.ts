@@ -39,6 +39,8 @@ import { QrShareModalController } from './controllers/QrShareModalController';
 import { StudioTabController } from './controllers/StudioTabController';
 import { SessionStorageController } from './controllers/SessionStorageController';
 import { UndoRedoController } from './controllers/UndoRedoController';
+import { FloatingHudController } from './controllers/FloatingHudController';
+import { A11yAnnouncer } from './helpers/A11yAnnouncer';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -67,6 +69,7 @@ export class CalculatorApp {
     private sessionStorageController: SessionStorageController;
     private undoRedoController: UndoRedoController;
     private glossaryController: GlossaryController;
+    private floatingHudController: FloatingHudController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -172,6 +175,7 @@ export class CalculatorApp {
         });
         
         this.glossaryController = new GlossaryController(() => this.getInputs(), () => this.latestResults);
+        this.floatingHudController = new FloatingHudController(this.dom, this.formatter);
 
         this.initGlobalShortcuts();
     }
@@ -420,6 +424,42 @@ export class CalculatorApp {
     }
 
     /**
+     * Wire 1-Click SIP Matured Corpus -> SWP Bridge transition
+     */
+    private initLifecycleBridge(): void {
+        const bridgeBtn = this.dom.getElement('apply-sip-to-swp-btn');
+        if (bridgeBtn) {
+            bridgeBtn.addEventListener('click', () => {
+                if (this.latestResults.length === 0) return;
+                const lastRow = this.latestResults[this.latestResults.length - 1];
+                const maturedCorpus = lastRow.combined_total;
+                if (maturedCorpus <= 0) return;
+
+                // Transfer matured corpus into SWP starting corpus
+                this.sliderManager.updateFieldValue('corpus', maturedCorpus);
+                this.sliderManager.updateFieldValue('lumpsum', maturedCorpus);
+
+                // Enable SWP if disabled
+                const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
+                if (swpToggle) {
+                    swpToggle.checked = true;
+                    this.syncSwpToggleState();
+                }
+
+                // Switch tab to SWP
+                const swpTab = this.dom.getElement('tab-swp');
+                if (swpTab) {
+                    swpTab.click();
+                }
+
+                this.audioController.playChime();
+                this.audioController.vibrate([15, 30, 15]);
+                A11yAnnouncer.announce(`Transferred matured SIP corpus of ${this.formatter.formatDynamic(maturedCorpus)} into SWP initial balance.`);
+            });
+        }
+    }
+
+    /**
      * Initialize app lifecycle.
      */
     init(): void {
@@ -433,6 +473,7 @@ export class CalculatorApp {
         this.initGoalModeControls();
         this.initSwpHandlers();
         this.initToggles();
+        this.initLifecycleBridge();
 
         this.qrShareModalController = new QrShareModalController(
             this.dom,
@@ -495,6 +536,8 @@ export class CalculatorApp {
         this.goalCommitmentController.init();
         this.dailyAccrualController.init();
         this.qrShareModalController.init();
+        this.floatingHudController.init();
+
         const snapshotBtn = this.dom.getElement('snapshot-scenario-btn');
         if (snapshotBtn) {
             snapshotBtn.addEventListener('click', () => {
@@ -733,12 +776,30 @@ export class CalculatorApp {
             const lastRow = combined[combined.length - 1];
             if (lastRow) {
                 this.celebrationController.checkMilestones(lastRow.combined_total, combined);
+                
+                // Update accumulation bridge preview
+                const bridgeValEl = this.dom.getElement('bridge-matured-corpus-val');
+                if (bridgeValEl) {
+                    bridgeValEl.textContent = this.formatter.formatDynamic(lastRow.combined_total);
+                }
+
+                // Announce calculation to screen reader with 700ms throttle
+                A11yAnnouncer.announceCalculation(
+                    inputs.enable_swp ? 'swp' : (this.activeGoalMode === 'target' ? 'target' : 'sip'),
+                    inputs.enable_swp ? 'SWP' : 'SIP',
+                    inputs.enable_swp ? inputs.swp_withdrawal : inputs.sip,
+                    inputs.years,
+                    inputs.rate,
+                    lastRow.combined_total,
+                    inputs.enable_swp ? (lastRow.cumulative_withdrawals || 0) : (lastRow.combined_total - lastRow.cumulative_invested)
+                );
             }
 
             this.stressTestController.updateResults(combined);
             this.assetRebalanceController.updateInputs(inputs);
             this.dailyAccrualController.updateResults(combined);
             this.glossaryController.updateArithmeticProof(inputs, combined);
+            this.floatingHudController.updateResults(combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 
@@ -813,6 +874,7 @@ export class CalculatorApp {
 
                 this.updateTable(existingData, swpEnabledOnLoad);
                 this.updateSummaryMetrics(existingData);
+                this.floatingHudController.updateResults(existingData);
 
                 this.chartManager.updateChart(existingData, swpEnabledOnLoad);
             }

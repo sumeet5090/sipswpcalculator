@@ -86,6 +86,19 @@
     
     {% include 'layouts/header.twig' %}
     
+    <!-- Compact Mobile Floating Mini-HUD (Glides in when primary summary cards scroll off-screen on mobile) -->
+    <div id="mobile-sticky-mini-hud" class="sm:hidden fixed top-16 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-emerald-200/80 px-4 py-2 flex items-center justify-between shadow-sm transform -translate-y-full opacity-0 pointer-events-none transition-all duration-300">
+        <div class="flex items-center gap-1.5">
+            <span class="text-xs">💎</span>
+            <span class="text-[11px] font-bold text-slate-600">Corpus:</span>
+            <span id="mini-hud-corpus" class="text-xs font-extrabold text-emerald-700 font-mono">₹ --</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+            <span class="text-[11px] font-bold text-slate-600">Gain:</span>
+            <span id="mini-hud-gain" class="text-xs font-extrabold text-emerald-700 font-mono">+₹ --</span>
+        </div>
+    </div>
+
     <!-- spacer to prevent content from being hidden behind fixed header -->
     <div class="h-16"></div>
     
@@ -109,6 +122,20 @@
                     hamburger.classList.toggle('hidden');
                     closeIcon.classList.toggle('hidden');
                     btn.setAttribute('aria-expanded', !isOpen);
+                });
+            }
+
+            // Mobile Soft-Keyboard Occlusion Defense for Action Dock
+            if (window.visualViewport) {
+                var dock = document.getElementById('mobile-action-dock');
+                var keyboardTimer = null;
+                window.visualViewport.addEventListener('resize', function () {
+                    if (keyboardTimer) clearTimeout(keyboardTimer);
+                    keyboardTimer = setTimeout(function () {
+                        if (!dock) return;
+                        var isKeyboardOpen = window.visualViewport.height < window.innerHeight * 0.75;
+                        dock.style.display = isKeyboardOpen ? 'none' : 'flex';
+                    }, 80);
                 });
             }
         });
