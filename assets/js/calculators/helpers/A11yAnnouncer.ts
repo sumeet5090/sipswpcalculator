@@ -13,9 +13,9 @@ export class A11yAnnouncer {
     /**
      * Broadcasts an announcement to assistive technologies via aria-live container.
      * @param message Text to be spoken
-     * @param delayMs Trailing debounce delay in milliseconds (default: 700ms)
+     * @param delayMs Trailing debounce delay in milliseconds (default: 350ms)
      */
-    public static announce(message: string, delayMs: number = 700): void {
+    public static announce(message: string, delayMs: number = 350): void {
         if (!message || message === this.lastAnnouncedMessage) return;
 
         if (this.debounceTimer) {

@@ -201,6 +201,17 @@
         ]
     }) }}
 
+    <!-- Corporate Salary Appraisal Step-Up Optimizer Callout -->
+    <div id="salary-stepup-nudge-box" class="p-2.5 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-2xs">
+        <div class="text-[11px] text-emerald-950 font-medium leading-tight">
+            <span>💡 <strong>Career Appraisal:</strong> Step up 10% annually</span>
+        </div>
+        <button type="button" id="apply-10pct-stepup-btn"
+            class="px-2.5 py-1 text-[10px] font-bold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-2xs transition-all active:scale-95 cursor-pointer whitespace-nowrap">
+            +10% Boost
+        </button>
+    </div>
+
     <!-- Expected Inflation -->
     {{ inputs.renderInputRangePair({
         'id': 'inflation',

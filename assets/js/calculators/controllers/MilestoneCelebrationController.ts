@@ -126,7 +126,7 @@ export class MilestoneCelebrationController {
 
     private lastBurstTime: number = 0;
 
-    private triggerMicroBurst(): void {
+    public triggerMicroBurst(): void {
         const now = Date.now();
         if (now - this.lastBurstTime < 2500) return;
         this.lastBurstTime = now;

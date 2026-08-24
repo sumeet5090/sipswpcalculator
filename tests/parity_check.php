@@ -475,6 +475,12 @@ $helperTests = [
         'name' => '1-Year Delay Cost (₹25k SIP, 15 yrs @ 12%, 10% stepup)',
         'action' => 'delay_cost',
         'inputs' => \Core\InvestmentInputs::fromValues(25000.0, 15, 12.0, 10.0, false, 0.0, 0.0, 0, 0.0),
+    ],
+    [
+        'name' => 'Safe SWP Monthly Withdrawal (₹1 Crore corpus, 20 yrs @ 8%, 5% stepup)',
+        'action' => 'safe_swp_withdrawal',
+        'inputs' => \Core\InvestmentInputs::fromValues(0.0, 0, 0.0, 0.0, true, 0.0, 5.0, 20, 10000000.0, 8.0),
+        'starting_corpus' => 10000000.0
     ]
 ];
 
@@ -532,6 +538,21 @@ foreach ($helperTests as $hTest) {
             'swp_stepup' => 0,
             'swp_rate' => 8
         ];
+    } elseif ($hTest['action'] === 'safe_swp_withdrawal') {
+        $phpVal = $phpCalc->calculateSafeSwpWithdrawal($hTest['inputs'], $hTest['starting_corpus']);
+        $jsPayload['inputs'] = [
+            'sip' => 0,
+            'years' => 0,
+            'rate' => 0,
+            'stepup' => 0,
+            'lumpsum' => $hTest['starting_corpus'],
+            'enable_swp' => true,
+            'swp_withdrawal' => 0,
+            'swp_years' => $hTest['inputs']->getSwpYears(),
+            'swp_stepup' => $hTest['inputs']->getSwpStepup(),
+            'swp_rate' => $hTest['inputs']->getSwpRate()
+        ];
+        $jsPayload['starting_corpus'] = $hTest['starting_corpus'];
     }
 
     $escapedJson = escapeshellarg(json_encode($jsPayload));

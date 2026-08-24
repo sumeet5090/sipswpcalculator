@@ -3,6 +3,7 @@ import { InputValidator } from './InputValidator';
 import { DOMAdapter } from '../adapters/DOMAdapter';
 import { YearResult } from '../types';
 import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens.ts';
+import { ChartPatternHelper } from './helpers/ChartPatternHelper.ts';
 import type { Chart, ChartDataset, ChartConfiguration, TooltipItem } from 'chart.js';
 
 export interface Milestone {
@@ -33,6 +34,7 @@ export class ChartManager {
     private chartInstance: Chart<'line'> | null = null;
     private currentMilestones: Milestone[] = [];
     private chartModulePromise: Promise<typeof Chart> | null = null;
+    private showHistoricalCorridor: boolean = false;
 
     constructor(
         formatter: CurrencyFormatter,
@@ -98,33 +100,29 @@ export class ChartManager {
 
         if (currency === 'INR') {
             if (value >= 10000000) {
-                const cr = (value / 10000000).toFixed(1).replace(/\.0$/, '');
-                return `${symbol}${cr}Cr`;
+                const cr = value / 10000000;
+                return `${symbol}${cr >= 10 ? cr.toFixed(0) : cr.toFixed(1)} Cr`;
             }
             if (value >= 100000) {
-                const l = (value / 100000).toFixed(1).replace(/\.0$/, '');
-                return `${symbol}${l}L`;
+                const l = value / 100000;
+                return `${symbol}${l >= 10 ? l.toFixed(0) : l.toFixed(1)} L`;
             }
             if (value >= 1000) {
-                const k = (value / 1000).toFixed(1).replace(/\.0$/, '');
-                return `${symbol}${k}k`;
+                return `${symbol}${(value / 1000).toFixed(0)}k`;
             }
-            return `${symbol}${Math.round(value)}`;
+            return `${symbol}${value.toFixed(0)}`;
         }
 
         if (value >= 1000000000) {
-            const b = (value / 1000000000).toFixed(1).replace(/\.0$/, '');
-            return `${symbol}${b}B`;
+            return `${symbol}${(value / 1000000000).toFixed(1)}B`;
         }
         if (value >= 1000000) {
-            const m = (value / 1000000).toFixed(1).replace(/\.0$/, '');
-            return `${symbol}${m}M`;
+            return `${symbol}${(value / 1000000).toFixed(1)}M`;
         }
         if (value >= 1000) {
-            const k = (value / 1000).toFixed(1).replace(/\.0$/, '');
-            return `${symbol}${k}k`;
+            return `${symbol}${(value / 1000).toFixed(0)}k`;
         }
-        return `${symbol}${Math.round(value)}`;
+        return `${symbol}${value.toFixed(0)}`;
     }
 
     /**
@@ -231,6 +229,7 @@ export class ChartManager {
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
                 fill: 'origin',
+                pointStyle: ChartPatternHelper.getPointStyle('invested'),
                 pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
                 pointBorderColor: THEME_COLORS.financial.invested,
                 pointRadius: isSinglePoint ? 4 : 0,
@@ -246,6 +245,7 @@ export class ChartManager {
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
                 fill: showWealthMap ? true : 0,
+                pointStyle: ChartPatternHelper.getPointStyle('corpus'),
                 pointBackgroundColor: pointBgColors,
                 pointBorderColor: pointBorderColors,
                 pointBorderWidth: pointBorderWidths,
@@ -264,6 +264,7 @@ export class ChartManager {
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
                 fill: 'origin',
+                pointStyle: ChartPatternHelper.getPointStyle('postTax'),
                 pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
                 pointBorderColor: THEME_COLORS.financial.postTax,
                 pointRadius: isSinglePoint ? 4 : 0,
@@ -272,6 +273,42 @@ export class ChartManager {
                 order: 1,
             }
         ];
+
+        // Historical Volatility Corridor (10th to 90th percentile rolling Nifty returns: 10.2% - 15.8%)
+        if (this.showHistoricalCorridor && !showWealthMap && results.length > 1) {
+            const lowerCorridor = this.computeBenchmarkCurve(results, 10.2);
+            const upperCorridor = this.computeBenchmarkCurve(results, 15.8);
+
+            datasets.push({
+                label: 'Historical 10th Percentile (10.2% CAGR)',
+                data: lowerCorridor,
+                borderColor: 'rgba(5, 150, 105, 0.4)',
+                backgroundColor: 'rgba(5, 150, 105, 0.06)',
+                borderWidth: 1.5,
+                borderDash: [2, 2],
+                tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
+                fill: '+1', // Fill between lower and upper corridor
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                order: 4,
+            });
+
+            datasets.push({
+                label: 'Historical 90th Percentile (15.8% CAGR)',
+                data: upperCorridor,
+                borderColor: 'rgba(5, 150, 105, 0.4)',
+                backgroundColor: 'transparent',
+                borderWidth: 1.5,
+                borderDash: [2, 2],
+                tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
+                fill: false,
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                order: 4,
+            });
+        }
 
         const hasStepUp = !enableSwp && results.length > 1 && ((results[1].annual_contribution ?? 0) > (results[0].annual_contribution ?? 0));
         if (hasStepUp && !showWealthMap) {
@@ -400,6 +437,16 @@ export class ChartManager {
     setShockOverlay(overlay: { label: string; data: number[]; crashIndex: number } | null): void {
         this.shockOverlayData = overlay ? { label: overlay.label, data: overlay.data } : null;
         this.shockOverlayCrashIndex = overlay ? overlay.crashIndex : null;
+        if (this.lastResults.length > 0) {
+            this.updateChart(this.lastResults, this.lastEnableSwp);
+        }
+    }
+
+    /**
+     * Toggle Historical Volatility Corridor (10th-90th percentile Nifty rolling band).
+     */
+    setHistoricalCorridor(show: boolean): void {
+        this.showHistoricalCorridor = show;
         if (this.lastResults.length > 0) {
             this.updateChart(this.lastResults, this.lastEnableSwp);
         }

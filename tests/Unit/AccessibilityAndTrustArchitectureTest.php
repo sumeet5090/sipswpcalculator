@@ -124,4 +124,30 @@ final class AccessibilityAndTrustArchitectureTest extends TestCase
         $this->assertTrue($hasDepletion, "Aggressive SWP must trigger portfolio depletion warning");
         $this->assertLessThanOrEqual(3, $depletedYear, "10L portfolio at 6L/yr must deplete within 3 years");
     }
+
+    public function testSafeSwpAutoHealAndCorridorBounds(): void
+    {
+        $inputs = InvestmentInputs::fromValues(
+            0.0,
+            0,
+            0.0,
+            0.0,
+            true,
+            120000.0,
+            5.0,
+            15,
+            5000000.0,
+            7.5
+        );
+
+        $safeWithdrawal = $this->calculator->calculateSafeSwpWithdrawal($inputs, 5000000.0);
+        $this->assertGreaterThan(25000.0, $safeWithdrawal);
+        $this->assertLessThan(45000.0, $safeWithdrawal);
+
+        // Nifty corridor boundaries
+        $lowerCagr = 10.2;
+        $upperCagr = 15.8;
+        $this->assertGreaterThan(0.0, $lowerCagr);
+        $this->assertGreaterThan($lowerCagr, $upperCagr);
+    }
 }

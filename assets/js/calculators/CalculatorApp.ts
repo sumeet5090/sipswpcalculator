@@ -40,6 +40,12 @@ import { StudioTabController } from './controllers/StudioTabController';
 import { SessionStorageController } from './controllers/SessionStorageController';
 import { UndoRedoController } from './controllers/UndoRedoController';
 import { FloatingHudController } from './controllers/FloatingHudController';
+import { LongevityGuardianController } from './controllers/LongevityGuardianController';
+import { TaxWaterfallController } from './controllers/TaxWaterfallController';
+import { LifecycleBridgeController } from './controllers/LifecycleBridgeController';
+import { MobileErgonomicDeckController } from './controllers/MobileErgonomicDeckController';
+import { KeyboardViewportController } from './controllers/KeyboardViewportController';
+import { KeyboardNavigationController } from './controllers/KeyboardNavigationController';
 import { A11yAnnouncer } from './helpers/A11yAnnouncer';
 
 export class CalculatorApp {
@@ -70,6 +76,12 @@ export class CalculatorApp {
     private undoRedoController: UndoRedoController;
     private glossaryController: GlossaryController;
     private floatingHudController: FloatingHudController;
+    private longevityGuardianController: LongevityGuardianController;
+    private taxWaterfallController: TaxWaterfallController;
+    private lifecycleBridgeController: LifecycleBridgeController;
+    private mobileDeckController: MobileErgonomicDeckController;
+    private keyboardViewportController: KeyboardViewportController;
+    private keyboardNavController: KeyboardNavigationController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -177,6 +189,70 @@ export class CalculatorApp {
         
         this.glossaryController = new GlossaryController(() => this.getInputs(), () => this.latestResults);
         this.floatingHudController = new FloatingHudController(this.dom, this.formatter);
+
+        this.longevityGuardianController = new LongevityGuardianController(
+            this.dom,
+            this.formatter,
+            () => this.getInputs(),
+            (safeAmount) => {
+                this.sliderManager.updateFieldValue('swp_withdrawal', safeAmount);
+                this.triggerCalculation();
+                this.audioController.playTick(520, 0.02);
+            }
+        );
+
+        this.taxWaterfallController = new TaxWaterfallController(
+            this.dom,
+            this.formatter,
+            () => this.getInputs()
+        );
+
+        this.lifecycleBridgeController = new LifecycleBridgeController(
+            this.dom,
+            this.formatter,
+            () => this.getInputs(),
+            (maturedCorpus, safeMonthlyWithdrawal) => {
+                const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
+                if (swpToggle) {
+                    swpToggle.checked = true;
+                    this.syncSwpToggleState();
+                }
+                this.sliderManager.updateFieldValue('lumpsum', maturedCorpus);
+                this.sliderManager.updateFieldValue('corpus', maturedCorpus);
+                this.sliderManager.updateFieldValue('swp_withdrawal', safeMonthlyWithdrawal);
+                this.setGoalMode('grow');
+                const tabSwp = this.dom.getElement<HTMLButtonElement>('tab-swp');
+                if (tabSwp) tabSwp.click();
+                this.triggerCalculation();
+                this.celebrationController.triggerMicroBurst();
+            }
+        );
+
+        this.mobileDeckController = new MobileErgonomicDeckController(
+            this.dom,
+            this.formatter,
+            (mode) => {
+                const tabBtn = this.dom.getElement<HTMLButtonElement>(`tab-${mode}`);
+                if (tabBtn) tabBtn.click();
+            },
+            () => {
+                new ShareController(this.dom, () => this.getInputs()).shareToWhatsApp(this.latestResults);
+            }
+        );
+
+        this.keyboardViewportController = new KeyboardViewportController(this.dom, this.formatter);
+
+        this.keyboardNavController = new KeyboardNavigationController(
+            this.dom,
+            () => {
+                const tabSip = this.dom.getElement<HTMLButtonElement>('tab-sip');
+                if (tabSip) tabSip.click();
+            },
+            () => {
+                const tabSwp = this.dom.getElement<HTMLButtonElement>('tab-swp');
+                if (tabSwp) tabSwp.click();
+            }
+        );
 
         this.initGlobalShortcuts();
     }
@@ -534,6 +610,24 @@ export class CalculatorApp {
         this.dailyAccrualController.init();
         this.qrShareModalController.init();
         this.floatingHudController.init();
+        this.keyboardNavController.init();
+
+        const corridorToggle = this.dom.getElement<HTMLInputElement>('show_historical_corridor');
+        if (corridorToggle) {
+            corridorToggle.addEventListener('change', () => {
+                this.chartManager.setHistoricalCorridor(corridorToggle.checked);
+            });
+        }
+
+        const stepupBoostBtn = this.dom.getElement<HTMLButtonElement>('apply-10pct-stepup-btn');
+        if (stepupBoostBtn) {
+            stepupBoostBtn.addEventListener('click', () => {
+                this.sliderManager.updateFieldValue('stepup', 10);
+                this.triggerCalculation();
+                this.celebrationController.triggerMicroBurst();
+                A11yAnnouncer.announce('Applied 10% annual salary appraisal step-up');
+            });
+        }
 
         const snapshotBtn = this.dom.getElement('snapshot-scenario-btn');
         if (snapshotBtn) {
@@ -797,6 +891,11 @@ export class CalculatorApp {
             this.dailyAccrualController.updateResults(combined);
             this.glossaryController.updateArithmeticProof(inputs, combined);
             this.floatingHudController.updateResults(combined);
+            this.longevityGuardianController.update(combined);
+            this.taxWaterfallController.update(combined);
+            this.lifecycleBridgeController.update(combined);
+            this.mobileDeckController.update(combined);
+            this.keyboardViewportController.update(combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 

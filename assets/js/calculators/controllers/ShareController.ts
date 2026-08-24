@@ -1,5 +1,5 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
-import { InvestmentInputs } from '../../types';
+import type { InvestmentInputs, YearResult } from '../../types';
 
 export class ShareController {
     private dom: DOMAdapter;
@@ -86,6 +86,51 @@ export class ShareController {
 
                 this.dom.copyToClipboard(shareUrl, showCopiedFeedback);
             });
+        }
+
+        const waBtns = document.querySelectorAll<HTMLButtonElement>('.whatsapp-share-btn');
+        waBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.shareToWhatsApp();
+            });
+        });
+    }
+
+    /**
+     * Dispatch structured investment plan proposal directly to WhatsApp.
+     */
+    shareToWhatsApp(results?: YearResult[]): void {
+        const inputs = this.getInputs();
+        const params = new URLSearchParams();
+        params.set('sip', String(inputs.sip));
+        params.set('years', String(inputs.years));
+        params.set('rate', String(inputs.rate));
+        params.set('stepup', String(inputs.stepup));
+        if (inputs.lumpsum > 0) params.set('lumpsum', String(inputs.lumpsum));
+        if (inputs.enable_swp) {
+            params.set('swp_on', '1');
+            params.set('swp', String(inputs.swp_withdrawal));
+            params.set('swp_years', String(inputs.swp_years));
+            params.set('swp_stepup', String(inputs.swp_stepup));
+            params.set('swp_rate', String(inputs.swp_rate));
+        }
+
+        const shareUrl = window.location.origin + window.location.pathname + '?' + params.toString();
+        let planSummary = `📊 *My Wealth Plan (${inputs.years} Years)*\n• Monthly SIP: ₹${inputs.sip.toLocaleString('en-IN')}\n• Annual Step-Up: ${inputs.stepup}%`;
+        
+        if (results && results.length > 0) {
+            const last = results[results.length - 1];
+            planSummary += `\n• Projected Corpus: ₹${Math.round(last.combined_total).toLocaleString('en-IN')}`;
+        }
+
+        if (inputs.enable_swp) {
+            planSummary += `\n• Monthly Retirement SWP: ₹${inputs.swp_withdrawal.toLocaleString('en-IN')}`;
+        }
+        
+        const text = `${planSummary}\n\n👉 View, test, or customize this exact calculation here:\n${shareUrl}`;
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+        if (typeof window !== 'undefined') {
+            window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
         }
     }
 }
