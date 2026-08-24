@@ -48,6 +48,7 @@ import { KeyboardViewportController } from './controllers/KeyboardViewportContro
 import { KeyboardNavigationController } from './controllers/KeyboardNavigationController';
 import { ChartScrubbingController } from './controllers/ChartScrubbingController';
 import { A11yAnnouncer } from './helpers/A11yAnnouncer';
+import { ModalScrollLockHelper } from './helpers/ModalScrollLockHelper';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -619,6 +620,7 @@ export class CalculatorApp {
         this.qrShareModalController.init();
         this.floatingHudController.init();
         this.keyboardNavController.init();
+        ModalScrollLockHelper.initGlobalDialogs();
 
         const corridorToggle = this.dom.getElement<HTMLInputElement>('show_historical_corridor');
         if (corridorToggle) {

@@ -93,5 +93,21 @@ export class ModalScrollLockHelper {
             dialog.removeEventListener('click', handleClick);
         };
     }
+
+    /**
+     * Auto-binds backdrop click dismiss and scroll lock teardown across all dialogs.
+     */
+    static initGlobalDialogs(): void {
+        const dialogs = document.querySelectorAll<HTMLDialogElement>('dialog');
+        dialogs.forEach(dialog => {
+            this.bindDialogBackdropClick(dialog);
+            dialog.addEventListener('close', () => {
+                this.unlock();
+            });
+            dialog.addEventListener('cancel', () => {
+                this.unlock();
+            });
+        });
+    }
 }
 

@@ -10,13 +10,10 @@
 @import "tailwindcss";
 
 /* ── Declare all template, content, and script paths for class scanning ── */
-@source "../../src/Views/**/*.twig";
-@source "../../src/Views/**/*.php";
-@source "../../src/Core/**/*.php";
-@source "../../src/Controllers/**/*.php";
-@source "../../content/**/*.md";
-@source "../../assets/js/**/*.ts";
-@source "../../resources/js/**/*.ts";
+@source "../../src";
+@source "../../content";
+@source "../../assets";
+@source "../../resources";
 
 /* ── Custom Theme: Brand typography tokens, semantic financial colors & curves ── */
 @theme {

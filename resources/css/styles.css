@@ -32,14 +32,19 @@ dialog {
     position: fixed;
     inset: 0;
     margin: auto;
+    width: min(calc(100vw - 2rem), 36rem);
     max-height: calc(100vh - 2rem);
     max-width: calc(100vw - 2rem);
     z-index: 50;
     box-sizing: border-box;
 }
 
+dialog:not([open]) {
+    display: none !important;
+}
+
 dialog[open] {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
 }
 

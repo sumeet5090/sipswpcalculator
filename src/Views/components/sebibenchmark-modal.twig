@@ -1,12 +1,7 @@
 <!-- Statutory Modeling & AMFI/SEBI Benchmark Standards Modal -->
 <dialog id="sebiBenchmarkModal" 
-    class="fixed inset-x-0 bottom-0 md:inset-0 md:m-auto z-50 p-0 w-full md:max-w-xl rounded-t-[32px] md:rounded-3xl border border-slate-200 bg-white/98 backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm shadow-2xl text-slate-700 max-h-[90dvh] md:max-h-[85vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom md:zoom-in-95 duration-200" 
+    class="rounded-3xl border border-slate-200 bg-white/98 backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm shadow-2xl text-slate-700 overflow-hidden" 
     aria-labelledby="sebi-modal-title">
-    
-    <!-- Mobile Tactile Sheet Grab Handle -->
-    <div class="md:hidden flex items-center justify-center pt-3 pb-1 shrink-0">
-        <div class="w-12 h-1.5 rounded-full bg-slate-300"></div>
-    </div>
 
     <!-- Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/80 shrink-0">
@@ -19,7 +14,7 @@
                 <p class="text-[11px] text-slate-500 font-medium">AMFI & SEBI Regulatory Educational Guidelines</p>
             </div>
         </div>
-        <button type="button" id="closeSebiModalBtn" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer" aria-label="Close modal">
+        <button type="button" id="closeSebiModalBtn" onclick="document.getElementById('sebiBenchmarkModal')?.close()" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer" aria-label="Close modal">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
