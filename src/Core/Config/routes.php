@@ -16,7 +16,8 @@ return [
         '/sip-step-up-calculator'    => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
         '/lumpsum-calculator'        => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
         '/retirement-calculator'     => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/my-first-crore-calculator' => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly']
+        '/my-first-crore-calculator' => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
+        '/target-corpus-calculator'  => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly']
     ],
     'pages' => [
         '/about'    => ['action' => [RenderAboutAction::class, '__invoke'], 'priority' => '0.5', 'changefreq' => 'yearly'],

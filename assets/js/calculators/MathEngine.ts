@@ -260,4 +260,60 @@ export class MathEngine {
             totalHarvestedGains: actualHarvestedGains
         };
     }
+
+    /**
+     * Binary Search to find the safe maximum monthly SWP withdrawal for a given corpus.
+     * Guarantees that the portfolio sustains the entire target tenure without depleting.
+     */
+    static calculateSafeSwpWithdrawal(inp: InvestmentInputs, startingCorpus?: number): number {
+        const corpus = startingCorpus ?? inp.lumpsum ?? 0;
+        if (corpus <= 0 || inp.swp_years <= 0) {
+            return 0;
+        }
+
+        const swpYears = inp.swp_years;
+        const swpRate = inp.swp_rate;
+        const swpStepup = inp.swp_stepup;
+
+        if (swpRate <= 0 && swpStepup <= 0) {
+            return Math.floor(corpus / (swpYears * 12));
+        }
+
+        let low = 0;
+        let high = Math.max(corpus / 12, 1000);
+        let bestWithdrawal = 0;
+
+        for (let i = 0; i < 40; i++) {
+            const mid = (low + high) / 2;
+            const testInp: InvestmentInputs = {
+                ...inp,
+                sip: 0,
+                years: 0,
+                enable_swp: true,
+                swp_withdrawal: mid,
+                swp_stepup: swpStepup,
+                swp_years: swpYears,
+                lumpsum: corpus,
+                swp_rate: swpRate
+            };
+
+            const results = this.calculate(testInp);
+            if (results.length === 0) break;
+
+            const finalBalance = results[results.length - 1].combined_total;
+            const ranOutEarly = results.some((r, idx) => idx < results.length - 1 && r.combined_total <= 0);
+
+            if (!ranOutEarly && finalBalance >= 0) {
+                bestWithdrawal = mid;
+                if (Math.abs(finalBalance) < 50) {
+                    break;
+                }
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+
+        return Math.floor(bestWithdrawal);
+    }
 }

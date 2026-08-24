@@ -148,6 +148,15 @@
         {% endfor %}
     {% endif %}
     
+    <!-- Keyboard-Aware Floating Micro-Preview Capsule (Glides above virtual keyboard during text typing on mobile) -->
+    <div id="keyboard-docked-preview" class="hidden opacity-0 pointer-events-none fixed z-50 left-4 right-4 bg-white/95 text-slate-900 border border-emerald-300 shadow-2xl rounded-2xl px-4 py-2.5 flex items-center justify-between transition-all duration-200 backdrop-blur-md">
+        <div class="flex items-center gap-2">
+            <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-xs font-semibold text-slate-700">Live Projected Corpus:</span>
+        </div>
+        <span id="keyboard-preview-corpus" class="text-sm font-extrabold text-emerald-700 font-mono">₹ --</span>
+    </div>
+
     <!-- Ergonomic Mobile Sticky Action Dock (Visible only on <sm viewports) -->
     <div id="mobile-action-dock" class="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] px-4 py-2 flex items-center justify-around gap-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
         <button type="button" id="dock-pdf-btn" onclick="document.getElementById('openPdfModalBtn')?.click()"
@@ -155,10 +164,15 @@
             <span class="text-xs">📄</span>
             <span>PDF Plan</span>
         </button>
+        <button type="button" class="whatsapp-share-btn flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-[11px] font-bold active:scale-95 transition-all cursor-pointer"
+            aria-label="Share plan directly on WhatsApp">
+            <span class="text-xs">💬</span>
+            <span>WhatsApp</span>
+        </button>
         <button type="button" id="dock-share-btn" onclick="document.getElementById('shareCalcBtn')?.click()"
-            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-[11px] font-bold active:scale-95 transition-all cursor-pointer">
+            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-bold active:scale-95 transition-all cursor-pointer">
             <span class="text-xs">🔗</span>
-            <span>Share</span>
+            <span>Link</span>
         </button>
         <button type="button" id="dock-snapshot-btn" onclick="document.getElementById('snapshot-scenario-btn')?.click()"
             class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-bold active:scale-95 transition-all cursor-pointer">

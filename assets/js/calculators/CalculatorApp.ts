@@ -40,13 +40,22 @@ import { StudioTabController } from './controllers/StudioTabController';
 import { SessionStorageController } from './controllers/SessionStorageController';
 import { UndoRedoController } from './controllers/UndoRedoController';
 import { FloatingHudController } from './controllers/FloatingHudController';
+import { LongevityGuardianController } from './controllers/LongevityGuardianController';
+import { TaxWaterfallController } from './controllers/TaxWaterfallController';
+import { LifecycleBridgeController } from './controllers/LifecycleBridgeController';
+import { MobileErgonomicDeckController } from './controllers/MobileErgonomicDeckController';
+import { KeyboardViewportController } from './controllers/KeyboardViewportController';
+import { KeyboardNavigationController } from './controllers/KeyboardNavigationController';
+import { ChartScrubbingController } from './controllers/ChartScrubbingController';
 import { A11yAnnouncer } from './helpers/A11yAnnouncer';
+import { ModalScrollLockHelper } from './helpers/ModalScrollLockHelper';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
     private validator: InputValidator;
     private chartManager: ChartManager;
+    private chartScrubbingController: ChartScrubbingController;
     private analytics: AnalyticsService;
     private userHasInteracted: boolean;
     private interactionCount: number;
@@ -70,6 +79,13 @@ export class CalculatorApp {
     private undoRedoController: UndoRedoController;
     private glossaryController: GlossaryController;
     private floatingHudController: FloatingHudController;
+    private longevityGuardianController: LongevityGuardianController;
+    private taxWaterfallController: TaxWaterfallController;
+    private lifecycleBridgeController: LifecycleBridgeController;
+    private mobileDeckController: MobileErgonomicDeckController;
+    private keyboardViewportController: KeyboardViewportController;
+    private keyboardNavController: KeyboardNavigationController;
+    private studioTabController: StudioTabController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -82,6 +98,8 @@ export class CalculatorApp {
         this.formatter = formatter;
         this.validator = validator;
         this.chartManager = chartManager ?? new ChartManager(this.formatter, this.validator, this.dom);
+        this.chartScrubbingController = new ChartScrubbingController(this.dom, this.formatter);
+        this.chartManager.setScrubbingController(this.chartScrubbingController);
         this.analytics = analytics;
         this.userHasInteracted = false;
         this.interactionCount = 0;
@@ -91,7 +109,8 @@ export class CalculatorApp {
         // Strategy instances
         this.strategies = {
             'grow': new GrowStrategy(this.dom, this.validator),
-            'target': new TargetCorpusStrategy(this.dom, this.validator)
+            'target': new TargetCorpusStrategy(this.dom, this.validator),
+            'target_corpus': new TargetCorpusStrategy(this.dom, this.validator)
         };
 
         this.sliderManager = new SliderManager(
@@ -111,6 +130,7 @@ export class CalculatorApp {
             () => this.getInputs(),
             this.chartManager
         );
+        this.chartManager.setResultsController(this.resultsController);
 
         this.summaryMetricsController = new SummaryMetricsController(
             this.dom,
@@ -125,7 +145,8 @@ export class CalculatorApp {
         );
 
         this.celebrationController = new MilestoneCelebrationController(
-            this.dom
+            this.dom,
+            this.formatter
         );
 
         this.audioController = new AudioFeedbackController(
@@ -136,13 +157,15 @@ export class CalculatorApp {
             this.dom,
             this.sliderManager,
             this.formatter,
-            () => this.triggerCalculation()
+            () => this.triggerCalculation(),
+            (city) => this.analytics.setCityBenchmarkCity(city.slice(0, 64))
         );
 
         this.stressTestController = new StressTestController(
             this.dom,
             this.formatter,
-            this.chartManager
+            this.chartManager,
+            (scenario) => this.analytics.setStressTestScenario(scenario.slice(0, 64))
         );
 
         this.assetRebalanceController = new AssetRebalanceController(
@@ -177,6 +200,71 @@ export class CalculatorApp {
         
         this.glossaryController = new GlossaryController(() => this.getInputs(), () => this.latestResults);
         this.floatingHudController = new FloatingHudController(this.dom, this.formatter);
+
+        this.longevityGuardianController = new LongevityGuardianController(
+            this.dom,
+            this.formatter,
+            () => this.getInputs(),
+            (safeAmount) => {
+                this.sliderManager.updateFieldValue('swp_withdrawal', safeAmount);
+                this.triggerCalculation();
+                this.audioController.playTick(520, 0.02);
+            }
+        );
+
+        this.taxWaterfallController = new TaxWaterfallController(
+            this.dom,
+            this.formatter,
+            () => this.getInputs()
+        );
+
+        this.lifecycleBridgeController = new LifecycleBridgeController(
+            this.dom,
+            this.formatter,
+            () => this.getInputs(),
+            (maturedCorpus, safeMonthlyWithdrawal) => {
+                const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
+                if (swpToggle) {
+                    swpToggle.checked = true;
+                    this.syncSwpToggleState();
+                }
+                this.sliderManager.updateFieldValue('lumpsum', maturedCorpus);
+                this.sliderManager.updateFieldValue('corpus', maturedCorpus);
+                this.sliderManager.updateFieldValue('swp_withdrawal', safeMonthlyWithdrawal);
+                this.setGoalMode('grow');
+                const tabSwp = this.dom.getElement<HTMLButtonElement>('tab-swp');
+                if (tabSwp) tabSwp.click();
+                this.triggerCalculation();
+                this.celebrationController.triggerMicroBurst();
+            }
+        );
+
+        this.mobileDeckController = new MobileErgonomicDeckController(
+            this.dom,
+            this.formatter,
+            (mode) => {
+                const tabBtn = this.dom.getElement<HTMLButtonElement>(`tab-${mode}`);
+                if (tabBtn) tabBtn.click();
+            },
+            () => {
+                new ShareController(this.dom, () => this.getInputs()).shareToWhatsApp(this.latestResults);
+            }
+        );
+
+        this.keyboardViewportController = new KeyboardViewportController(this.dom, this.formatter);
+        this.studioTabController = new StudioTabController(this.dom, (tabId) => this.analytics.setActiveStudioTab(tabId));
+
+        this.keyboardNavController = new KeyboardNavigationController(
+            this.dom,
+            () => {
+                const tabSip = this.dom.getElement<HTMLButtonElement>('tab-sip');
+                if (tabSip) tabSip.click();
+            },
+            () => {
+                const tabSwp = this.dom.getElement<HTMLButtonElement>('tab-swp');
+                if (tabSwp) tabSwp.click();
+            }
+        );
 
         this.initGlobalShortcuts();
     }
@@ -467,10 +555,13 @@ export class CalculatorApp {
      * Initialize app lifecycle.
      */
     init(): void {
+        const appEl = this.dom.getElement('calculator-app');
+        const mode = appEl?.dataset?.mode || 'sip';
         const urlParams = new URLSearchParams(window.location.search);
         const urlGoal = urlParams.get('goal');
-        if (urlGoal === 'target_corpus' || urlGoal === 'target') {
-            this.activeGoalMode = 'target';
+
+        if (mode === 'target_corpus' || mode === 'target' || urlGoal === 'target_corpus' || urlGoal === 'target') {
+            this.activeGoalMode = 'target_corpus';
         }
 
         this.initSliderSync();
@@ -483,7 +574,7 @@ export class CalculatorApp {
         new TabController(this.dom, () => {
             this.syncSwpToggleState();
         }).init();
-        new StudioTabController(this.dom, (tabId) => this.analytics.setActiveStudioTab(tabId)).init();
+        this.studioTabController.init();
         new StepperController(
             this.dom,
             this.validator,
@@ -534,6 +625,25 @@ export class CalculatorApp {
         this.dailyAccrualController.init();
         this.qrShareModalController.init();
         this.floatingHudController.init();
+        this.keyboardNavController.init();
+        ModalScrollLockHelper.initGlobalDialogs();
+
+        const corridorToggle = this.dom.getElement<HTMLInputElement>('show_historical_corridor');
+        if (corridorToggle) {
+            corridorToggle.addEventListener('change', () => {
+                this.chartManager.setHistoricalCorridor(corridorToggle.checked);
+            });
+        }
+
+        const stepupBoostBtn = this.dom.getElement<HTMLButtonElement>('apply-10pct-stepup-btn');
+        if (stepupBoostBtn) {
+            stepupBoostBtn.addEventListener('click', () => {
+                this.sliderManager.updateFieldValue('stepup', 10);
+                this.triggerCalculation();
+                this.celebrationController.triggerMicroBurst();
+                A11yAnnouncer.announce('Applied 10% annual salary appraisal step-up');
+            });
+        }
 
         const snapshotBtn = this.dom.getElement('snapshot-scenario-btn');
         if (snapshotBtn) {
@@ -772,7 +882,7 @@ export class CalculatorApp {
 
             const lastRow = combined[combined.length - 1];
             if (lastRow) {
-                this.celebrationController.checkMilestones(lastRow.combined_total, combined);
+                this.celebrationController.checkMilestones(lastRow.combined_total, combined, inputs);
                 
                 // Update accumulation bridge preview
                 const bridgeValEl = this.dom.getElement('bridge-matured-corpus-val');
@@ -792,11 +902,18 @@ export class CalculatorApp {
                 );
             }
 
-            this.stressTestController.updateResults(combined);
-            this.assetRebalanceController.updateInputs(inputs);
+            this.stressTestController.updateResults(combined, inputs);
+            this.cityBenchmarkController.updateResults(combined, inputs);
+            this.assetRebalanceController.updateInputs(inputs, combined);
             this.dailyAccrualController.updateResults(combined);
             this.glossaryController.updateArithmeticProof(inputs, combined);
             this.floatingHudController.updateResults(combined);
+            this.longevityGuardianController.update(combined);
+            this.taxWaterfallController.update(combined);
+            this.lifecycleBridgeController.update(combined);
+            this.mobileDeckController.update(combined);
+            this.keyboardViewportController.update(combined);
+            this.updateStudioTelemetry(inputs, combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 
@@ -812,6 +929,40 @@ export class CalculatorApp {
                 table_viewed: tableViewed,
                 device_type: deviceType
             });
+        });
+    }
+
+    /**
+     * Updates real-time telemetry metrics in the Multi-Mode Analytical Studio tab bar.
+     */
+    private updateStudioTelemetry(inputs: InvestmentInputs, results: YearResult[]): void {
+        if (!results || results.length === 0) return;
+        const lastRow = results[results.length - 1];
+        const finalCorpus = lastRow ? lastRow.combined_total : 0;
+
+        // Mumbai benchmark target is ₹2.55 Cr (2,55,00,000)
+        const fireCoverage = Math.min(100, (finalCorpus / 25500000) * 100);
+
+        // Milestone checkpoints: 10L, 25L, 50L, 1Cr, 5Cr
+        const milestoneCheckpoints = [1000000, 2500000, 5000000, 10000000, 50000000];
+        const unlockedCount = milestoneCheckpoints.filter(target => finalCorpus >= target).length;
+
+        // Context scenario caption update
+        const captionEl = this.dom.getElement('studio-active-scenario-caption');
+        if (captionEl) {
+            const formattedCorpus = this.formatter.formatDynamic(finalCorpus);
+            const modeLabel = inputs.enable_swp ? 'SWP Cashflow' : 'SIP Wealth Creation';
+            captionEl.textContent = `Simulating ${inputs.years} Yrs @ ${inputs.rate}% p.a. • Projecting ${formattedCorpus} (${modeLabel})`;
+        }
+
+        this.studioTabController.updateTelemetry({
+            years: inputs.years,
+            fireCoveragePercent: fireCoverage,
+            fireCityName: 'Mumbai',
+            milestonesUnlocked: unlockedCount,
+            totalMilestones: milestoneCheckpoints.length,
+            maxStressDrawdownPercent: 38,
+            targetEquitySplit: 80
         });
     }
 

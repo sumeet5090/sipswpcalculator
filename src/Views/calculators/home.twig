@@ -81,8 +81,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
 
         <!-- Left Column: Form -->
-        <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto pb-4 lg:pr-4 custom-scrollbar"
-            style="top: 120px;">
+        <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:self-start" style="top: 100px;">
             {% include 'components/calculator-form.twig' with {'container_id': 'homepage-calc'} %}
         </div> <!-- /left column -->
 
@@ -162,7 +161,7 @@
                     <span>1-Click Fast Download</span>
                 </button>
                 <div class="flex gap-2">
-                    <button type="button" id="closePdfModalBtn"
+                    <button type="button" id="closePdfModalBtn" onclick="document.getElementById('pdfModal')?.close()"
                         class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition text-xs cursor-pointer">Cancel</button>
                     <button type="submit" id="generatePdfBtn"
                         class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-md shadow-emerald-600/20 transition text-xs cursor-pointer">Download Custom PDF</button>

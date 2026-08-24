@@ -10,13 +10,10 @@
 @import "tailwindcss";
 
 /* ── Declare all template, content, and script paths for class scanning ── */
-@source "../../src/Views/**/*.twig";
-@source "../../src/Views/**/*.php";
-@source "../../src/Core/**/*.php";
-@source "../../src/Controllers/**/*.php";
-@source "../../content/**/*.md";
-@source "../../assets/js/**/*.ts";
-@source "../../resources/js/**/*.ts";
+@source "../../src";
+@source "../../content";
+@source "../../assets";
+@source "../../resources";
 
 /* ── Custom Theme: Brand typography tokens, semantic financial colors & curves ── */
 @theme {
@@ -196,4 +193,39 @@ input[type="range"]::-moz-range-thumb {
 #results-table thead th:first-child {
   background-color: rgba(248, 250, 252, 0.98);
   z-index: 20;
+}
+
+#results-table th.text-right,
+#results-table td.text-right {
+  text-align: right !important;
+}
+
+#results-table th.text-left,
+#results-table td.text-left {
+  text-align: left !important;
+}
+
+/* ── Cross-Browser Custom Scrollbar ── */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }

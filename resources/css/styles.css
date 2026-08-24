@@ -32,14 +32,19 @@ dialog {
     position: fixed;
     inset: 0;
     margin: auto;
+    width: min(calc(100vw - 2rem), 36rem);
     max-height: calc(100vh - 2rem);
     max-width: calc(100vw - 2rem);
     z-index: 50;
     box-sizing: border-box;
 }
 
+dialog:not([open]) {
+    display: none !important;
+}
+
 dialog[open] {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
 }
 
@@ -481,7 +486,6 @@ label {
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--color-text-secondary);
-    margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -555,7 +559,7 @@ th {
     font-size: 0.875rem;
     font-weight: 600;
     padding: 0.875rem 1rem;
-    text-align: left;
+    text-align: inherit;
     border-bottom: 1px solid var(--color-slate-300, #cbd5e1);
 }
 
@@ -894,7 +898,12 @@ a:focus-visible,
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #047857 !important;
 }
 
-/* Custom Scrollbar for Table */
+/* Custom Scrollbar for Containers and Tables */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
     height: 6px;

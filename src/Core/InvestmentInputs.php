@@ -273,6 +273,27 @@ class InvestmentInputs
         return $clone;
     }
 
+    public function withSwpWithdrawal(float $swpWithdrawal): self
+    {
+        $clone = clone $this;
+        $clone->swpWithdrawal = $swpWithdrawal;
+        return $clone;
+    }
+
+    public function withSwpYears(int $swpYears): self
+    {
+        $clone = clone $this;
+        $clone->swpYears = $swpYears;
+        return $clone;
+    }
+
+    public function withEnableSwp(bool $enableSwp): self
+    {
+        $clone = clone $this;
+        $clone->enableSwp = $enableSwp;
+        return $clone;
+    }
+
     /**
      * Clamp a numeric value to constraints.
      */

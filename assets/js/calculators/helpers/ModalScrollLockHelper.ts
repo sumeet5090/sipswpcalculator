@@ -69,4 +69,45 @@ export class ModalScrollLockHelper {
             modalElement.removeEventListener('keydown', handleKeydown);
         };
     }
+
+    /**
+     * Binds native backdrop click-to-dismiss behavior on <dialog> elements.
+     * Returns a cleanup function to remove the listener on teardown.
+     */
+    static bindDialogBackdropClick(dialog: HTMLDialogElement): () => void {
+        const handleClick = (event: MouseEvent) => {
+            const rect = dialog.getBoundingClientRect();
+            const isInDialog = (
+                rect.top <= event.clientY &&
+                event.clientY <= rect.top + rect.height &&
+                rect.left <= event.clientX &&
+                event.clientX <= rect.left + rect.width
+            );
+            if (!isInDialog) {
+                dialog.close();
+            }
+        };
+
+        dialog.addEventListener('click', handleClick);
+        return () => {
+            dialog.removeEventListener('click', handleClick);
+        };
+    }
+
+    /**
+     * Auto-binds backdrop click dismiss and scroll lock teardown across all dialogs.
+     */
+    static initGlobalDialogs(): void {
+        const dialogs = document.querySelectorAll<HTMLDialogElement>('dialog');
+        dialogs.forEach(dialog => {
+            this.bindDialogBackdropClick(dialog);
+            dialog.addEventListener('close', () => {
+                this.unlock();
+            });
+            dialog.addEventListener('cancel', () => {
+                this.unlock();
+            });
+        });
+    }
 }
+

@@ -102,7 +102,7 @@ export class ScenarioDiffController {
         }
 
         const toast = document.createElement('div');
-        toast.className = 'calc-toast flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-900/90 backdrop-blur-md text-white text-xs font-bold shadow-xl border border-slate-700/60 mb-2';
+        toast.className = 'calc-toast flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/98 backdrop-blur-md text-slate-900 text-xs font-bold shadow-2xl border border-slate-200/90 mb-2';
         toast.textContent = message;
 
         container.appendChild(toast);
@@ -133,14 +133,33 @@ export class ScenarioDiffController {
 
         const pctEl = this.dom.getElement('scenario-diff-pct');
         const textEl = this.dom.getElement('scenario-diff-text');
+        const baselineCorpusEl = this.dom.getElement('scenario-baseline-corpus');
+        const activeCorpusEl = this.dom.getElement('scenario-active-corpus');
+        const deltaValEl = this.dom.getElement('scenario-delta-val');
+
+        if (baselineCorpusEl) {
+            baselineCorpusEl.textContent = this.formatter.format(this.snapshot.finalCorpus);
+        }
+        if (activeCorpusEl) {
+            activeCorpusEl.textContent = this.formatter.format(currentCorpus);
+        }
+        if (deltaValEl) {
+            const sign = deltaCorpus >= 0 ? '+' : '-';
+            deltaValEl.textContent = `${sign}${this.formatter.format(Math.abs(deltaCorpus))}`;
+            if (deltaCorpus >= 0) {
+                deltaValEl.className = 'text-emerald-700 font-black';
+            } else {
+                deltaValEl.className = 'text-rose-700 font-black';
+            }
+        }
 
         if (pctEl) {
             const sign = pct >= 0 ? '+' : '';
             pctEl.textContent = `${sign}${pct.toFixed(1)}%`;
             if (pct >= 0) {
-                pctEl.className = 'text-[10px] font-extrabold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200';
+                pctEl.className = 'text-xs font-black px-2.5 py-0.5 rounded-lg bg-emerald-600 text-white shadow-2xs';
             } else {
-                pctEl.className = 'text-[10px] font-extrabold px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-200';
+                pctEl.className = 'text-xs font-black px-2.5 py-0.5 rounded-lg bg-rose-600 text-white shadow-2xs';
             }
         }
 

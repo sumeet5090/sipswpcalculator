@@ -306,4 +306,74 @@ class InvestmentCalculator
             'totalHarvestedGains' => $actualHarvestedGains,
         ];
     }
+
+    /**
+     * Binary Search to find the safe maximum monthly SWP withdrawal for a given corpus.
+     * Guarantees that the portfolio sustains the entire target tenure without depleting.
+     */
+    public function calculateSafeSwpWithdrawal(InvestmentInputs $inputs, ?float $startingCorpus = null): float
+    {
+        $corpus = $startingCorpus ?? $inputs->getLumpsum();
+        if ($corpus <= 0.0 || $inputs->getSwpYears() <= 0) {
+            return 0.0;
+        }
+
+        $swpYears = $inputs->getSwpYears();
+        $swpRate = $inputs->getSwpRate();
+        $swpStepup = $inputs->getSwpStepup();
+
+        if ($swpRate <= 0.0 && $swpStepup <= 0.0) {
+            return floor($corpus / ($swpYears * 12.0));
+        }
+
+        $low = 0.0;
+        $high = max($corpus / 12.0, 1000.0);
+        $bestWithdrawal = 0.0;
+
+        for ($i = 0; $i < 40; $i++) {
+            $mid = ($low + $high) / 2.0;
+            $testInp = InvestmentInputs::fromValues(
+                0.0,
+                0,
+                $inputs->getRate(),
+                $inputs->getStepup(),
+                true,
+                $mid,
+                $swpStepup,
+                $swpYears,
+                $corpus,
+                $swpRate,
+                $inputs->getInflation(),
+                $inputs->getLtcgExemption(),
+                $inputs->getLtcgTaxRate()
+            );
+
+            $results = $this->calculate($testInp);
+            if (empty($results)) {
+                break;
+            }
+
+            $finalBalance = (float) $results[count($results) - 1]['combined_total'];
+            $ranOutEarly = false;
+            $resCount = count($results);
+            for ($rIdx = 0; $rIdx < $resCount - 1; $rIdx++) {
+                if ($results[$rIdx]['combined_total'] <= 0) {
+                    $ranOutEarly = true;
+                    break;
+                }
+            }
+
+            if (!$ranOutEarly && $finalBalance >= 0.0) {
+                $bestWithdrawal = $mid;
+                if (abs($finalBalance) < 50.0) {
+                    break;
+                }
+                $low = $mid;
+            } else {
+                $high = $mid;
+            }
+        }
+
+        return floor($bestWithdrawal);
+    }
 }

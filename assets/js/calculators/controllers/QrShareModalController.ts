@@ -39,7 +39,12 @@ export class QrShareModalController {
             });
         }
 
-        if (modal) {
+        if (modal instanceof HTMLDialogElement) {
+            ModalScrollLockHelper.bindDialogBackdropClick(modal);
+            modal.addEventListener('close', () => {
+                ModalScrollLockHelper.unlock();
+            });
+        } else if (modal) {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     this.closeModal();
@@ -62,8 +67,12 @@ export class QrShareModalController {
         }
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
-                this.closeModal();
+            if (e.key === 'Escape' && modal) {
+                if (modal instanceof HTMLDialogElement && modal.open) {
+                    this.closeModal();
+                } else if (!modal.classList.contains('hidden')) {
+                    this.closeModal();
+                }
             }
         });
     }
@@ -172,7 +181,7 @@ export class QrShareModalController {
     }
 
     openModal(triggerElement?: HTMLElement): void {
-        const modal = this.dom.getElement('qr-share-modal');
+        const modal = this.dom.getElement<HTMLDialogElement>('qr-share-modal');
         const container = this.dom.getElement('qr-code-canvas-container');
         const urlInput = this.dom.getElement<HTMLInputElement>('qr-share-url-input');
 
@@ -192,15 +201,23 @@ export class QrShareModalController {
 
         QrCodeGenerator.renderToCanvas(canvas, shareUrl, THEME_COLORS.slate[900], THEME_COLORS.chart.pointBgWhite);
 
-        modal.classList.remove('hidden');
+        if (typeof modal.showModal === 'function') {
+            modal.showModal();
+        } else {
+            modal.classList.remove('hidden');
+        }
         ModalScrollLockHelper.lock(triggerElement);
         this.onOpen?.();
     }
 
     closeModal(): void {
-        const modal = this.dom.getElement('qr-share-modal');
+        const modal = this.dom.getElement<HTMLDialogElement>('qr-share-modal');
         if (modal) {
-            modal.classList.add('hidden');
+            if (typeof modal.close === 'function' && modal.open) {
+                modal.close();
+            } else {
+                modal.classList.add('hidden');
+            }
             ModalScrollLockHelper.unlock();
         }
     }

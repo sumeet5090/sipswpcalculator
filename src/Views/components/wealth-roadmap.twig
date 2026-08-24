@@ -1,79 +1,172 @@
 <!-- Wealth Milestone Roadmap Progress -->
-<div id="wealth-milestone-roadmap" class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
-    <div class="flex items-center justify-between gap-3 mb-5">
-        <div class="flex items-center gap-2.5">
-            <span class="flex items-center justify-center w-7 h-7 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold text-xs">🗺️</span>
-            <div>
-                <h4 class="text-xs sm:text-sm font-extrabold text-slate-900">Wealth Milestone Roadmap</h4>
-                <p class="text-[11px] text-slate-500">Live progress tracking across major Indian financial milestones</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-2">
-            <button type="button" id="open-goal-pledge-btn" class="inline-flex items-center gap-1.5 text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-slate-200 hover:border-emerald-300 transition-all cursor-pointer shadow-2xs">
-                <span>📜 Goal Pledge</span>
-            </button>
-            <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80">
-                Real-Time Tracking
-            </span>
-        </div>
-    </div>
+<div id="wealth-milestone-roadmap" class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md relative overflow-hidden">
+    <!-- Ambient Aurora Glow (Pure Light Mode: Emerald & Teal Accents) -->
+    <div class="absolute -right-16 -top-16 w-56 h-56 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -left-16 -bottom-16 w-56 h-56 bg-teal-400/8 rounded-full blur-3xl pointer-events-none"></div>
 
-    <!-- Milestones Progress Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 relative">
-        <!-- Milestone 1: ₹25 Lakh -->
-        <div class="roadmap-checkpoint flex flex-col p-3 rounded-2xl border border-slate-200/90 bg-slate-50/80 transition-all duration-300 shadow-2xs" data-target="2500000">
-            <div class="flex items-center justify-between mb-2">
-                <span class="checkpoint-icon flex items-center justify-center w-7 h-7 rounded-xl bg-white text-slate-400 border border-slate-200 text-xs font-black transition-all shadow-2xs">🥉</span>
-                <span class="checkpoint-status text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-slate-200/80 text-slate-600">0%</span>
+    <div class="relative z-10 space-y-5">
+        
+        <!-- ========================================================================= -->
+        <!-- HEADER DOCK: TITLE, LIVE VELOCITY BADGE & GOAL PLEDGE TRIGGER            -->
+        <!-- ========================================================================= -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <!-- Left: Module Identifier -->
+            <div class="flex items-center gap-3">
+                <div class="flex items-center justify-center w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-2xs shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <h4 class="text-sm sm:text-base font-black text-slate-900 tracking-tight">
+                            Wealth Milestone Roadmap &amp; Compounding Velocity
+                        </h4>
+                        <span id="milestone-hit-counter" class="inline-flex items-center text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
+                            0/5 Milestones Hit
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">
+                        Track your portfolio crossing critical Indian wealth thresholds and watch compounding velocity accelerate over time
+                    </p>
+                </div>
             </div>
-            <strong class="text-xs font-bold text-slate-900">₹25.0 Lakh</strong>
-            <span class="text-[10px] text-slate-500">Seed Corpus</span>
-            <div class="checkpoint-eta text-[10px] font-semibold text-slate-500 mt-1">ETA: --</div>
-            <div class="w-full bg-slate-200/90 rounded-full h-1.5 mt-2 overflow-hidden">
-                <div class="checkpoint-bar bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
-            </div>
-        </div>
 
-        <!-- Milestone 2: ₹50 Lakh -->
-        <div class="roadmap-checkpoint flex flex-col p-3 rounded-2xl border border-slate-200/90 bg-slate-50/80 transition-all duration-300 shadow-2xs" data-target="5000000">
-            <div class="flex items-center justify-between mb-2">
-                <span class="checkpoint-icon flex items-center justify-center w-7 h-7 rounded-xl bg-white text-slate-400 border border-slate-200 text-xs font-black transition-all shadow-2xs">🥈</span>
-                <span class="checkpoint-status text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-slate-200/80 text-slate-600">0%</span>
-            </div>
-            <strong class="text-xs font-bold text-slate-900">₹50.0 Lakh</strong>
-            <span class="text-[10px] text-slate-500">Half-Crore Waypoint</span>
-            <div class="checkpoint-eta text-[10px] font-semibold text-slate-500 mt-1">ETA: --</div>
-            <div class="w-full bg-slate-200/90 rounded-full h-1.5 mt-2 overflow-hidden">
-                <div class="checkpoint-bar bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+            <!-- Right: Action Controls -->
+            <div class="flex items-center gap-2 self-start lg:self-center">
+                <button type="button" id="open-goal-pledge-btn"
+                    class="inline-flex items-center gap-1.5 text-xs font-extrabold px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-900 border border-slate-200 hover:border-emerald-300 transition-all cursor-pointer shadow-2xs active:scale-95">
+                    <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Pledge Milestone Goal</span>
+                </button>
             </div>
         </div>
 
-        <!-- Milestone 3: ₹1 Crore -->
-        <div class="roadmap-checkpoint flex flex-col p-3 rounded-2xl border border-slate-200/90 bg-slate-50/80 transition-all duration-300 shadow-2xs" data-target="10000000">
-            <div class="flex items-center justify-between mb-2">
-                <span class="checkpoint-icon flex items-center justify-center w-7 h-7 rounded-xl bg-white text-slate-400 border border-slate-200 text-xs font-black transition-all shadow-2xs">🥇</span>
-                <span class="checkpoint-status text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-slate-200/80 text-slate-600">0%</span>
+        <!-- ========================================================================= -->
+        <!-- 5-TIER ADAPTIVE WEALTH CHECKPOINT CARDS                                   -->
+        <!-- ========================================================================= -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 relative">
+            
+            <!-- Milestone 1: ₹10 Lakh (Seed Corpus) -->
+            <div class="roadmap-checkpoint flex flex-col justify-between p-3.5 rounded-2xl border border-slate-200/90 bg-slate-50/80 transition-all duration-300 shadow-2xs hover:shadow-xs" data-target="1000000">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="checkpoint-icon flex items-center justify-center w-7 h-7 rounded-xl bg-white text-slate-500 border border-slate-200 text-xs font-black transition-all shadow-2xs">
+                            🌱
+                        </span>
+                        <span class="checkpoint-status text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-slate-200/80 text-slate-600">0%</span>
+                    </div>
+                    <strong class="text-xs sm:text-sm font-black text-slate-900 block font-mono">₹10.0 Lakh</strong>
+                    <span class="text-[10px] text-slate-500 font-semibold block">Seed Momentum</span>
+                    <span class="checkpoint-real-value text-[9px] text-slate-500 font-medium block mt-0.5">Real: ₹--</span>
+                </div>
+                <div class="mt-3">
+                    <div class="checkpoint-eta text-[10.5px] font-bold text-slate-600">ETA: --</div>
+                    <div class="w-full bg-slate-200/90 rounded-full h-1.5 mt-1.5 overflow-hidden">
+                        <div class="checkpoint-bar bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+                    </div>
+                </div>
             </div>
-            <strong class="text-xs font-bold text-slate-900">₹1.00 Crore</strong>
-            <span class="text-[10px] text-slate-500">First Crore Club</span>
-            <div class="checkpoint-eta text-[10px] font-semibold text-slate-500 mt-1">ETA: --</div>
-            <div class="w-full bg-slate-200/90 rounded-full h-1.5 mt-2 overflow-hidden">
-                <div class="checkpoint-bar bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+
+            <!-- Milestone 2: ₹25 Lakh (Ignition Point) -->
+            <div class="roadmap-checkpoint flex flex-col justify-between p-3.5 rounded-2xl border border-slate-200/90 bg-slate-50/80 transition-all duration-300 shadow-2xs hover:shadow-xs" data-target="2500000">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="checkpoint-icon flex items-center justify-center w-7 h-7 rounded-xl bg-white text-slate-500 border border-slate-200 text-xs font-black transition-all shadow-2xs">
+                            🥉
+                        </span>
+                        <span class="checkpoint-status text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-slate-200/80 text-slate-600">0%</span>
+                    </div>
+                    <strong class="text-xs sm:text-sm font-black text-slate-900 block font-mono">₹25.0 Lakh</strong>
+                    <span class="text-[10px] text-slate-500 font-semibold block">Compounding Ignition</span>
+                    <span class="checkpoint-real-value text-[9px] text-slate-500 font-medium block mt-0.5">Real: ₹--</span>
+                </div>
+                <div class="mt-3">
+                    <div class="checkpoint-eta text-[10.5px] font-bold text-slate-600">ETA: --</div>
+                    <div class="w-full bg-slate-200/90 rounded-full h-1.5 mt-1.5 overflow-hidden">
+                        <div class="checkpoint-bar bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Milestone 3: ₹50 Lakh (Half-Crore Waypoint) -->
+            <div class="roadmap-checkpoint flex flex-col justify-between p-3.5 rounded-2xl border border-slate-200/90 bg-slate-50/80 transition-all duration-300 shadow-2xs hover:shadow-xs" data-target="5000000">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="checkpoint-icon flex items-center justify-center w-7 h-7 rounded-xl bg-white text-slate-500 border border-slate-200 text-xs font-black transition-all shadow-2xs">
+                            🥈
+                        </span>
+                        <span class="checkpoint-status text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-slate-200/80 text-slate-600">0%</span>
+                    </div>
+                    <strong class="text-xs sm:text-sm font-black text-slate-900 block font-mono">₹50.0 Lakh</strong>
+                    <span class="text-[10px] text-slate-500 font-semibold block">Half-Crore Waypoint</span>
+                    <span class="checkpoint-real-value text-[9px] text-slate-500 font-medium block mt-0.5">Real: ₹--</span>
+                </div>
+                <div class="mt-3">
+                    <div class="checkpoint-eta text-[10.5px] font-bold text-slate-600">ETA: --</div>
+                    <div class="w-full bg-slate-200/90 rounded-full h-1.5 mt-1.5 overflow-hidden">
+                        <div class="checkpoint-bar bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Milestone 4: ₹1 Crore (First Crore Club) -->
+            <div class="roadmap-checkpoint flex flex-col justify-between p-3.5 rounded-2xl border border-slate-200/90 bg-slate-50/80 transition-all duration-300 shadow-2xs hover:shadow-xs" data-target="10000000">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="checkpoint-icon flex items-center justify-center w-7 h-7 rounded-xl bg-white text-slate-500 border border-slate-200 text-xs font-black transition-all shadow-2xs">
+                            🥇
+                        </span>
+                        <span class="checkpoint-status text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-slate-200/80 text-slate-600">0%</span>
+                    </div>
+                    <strong class="text-xs sm:text-sm font-black text-slate-900 block font-mono">₹1.00 Crore</strong>
+                    <span class="text-[10px] text-slate-500 font-semibold block">First Crore Club</span>
+                    <span class="checkpoint-real-value text-[9px] text-slate-500 font-medium block mt-0.5">Real: ₹--</span>
+                </div>
+                <div class="mt-3">
+                    <div class="checkpoint-eta text-[10.5px] font-bold text-slate-600">ETA: --</div>
+                    <div class="w-full bg-slate-200/90 rounded-full h-1.5 mt-1.5 overflow-hidden">
+                        <div class="checkpoint-bar bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Milestone 5: ₹5 Crore (Financial Freedom) -->
+            <div class="roadmap-checkpoint flex flex-col justify-between p-3.5 rounded-2xl border border-slate-200/90 bg-slate-50/80 transition-all duration-300 shadow-2xs hover:shadow-xs sm:col-span-2 lg:col-span-1" data-target="50000000">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="checkpoint-icon flex items-center justify-center w-7 h-7 rounded-xl bg-white text-slate-500 border border-slate-200 text-xs font-black transition-all shadow-2xs">
+                            💎
+                        </span>
+                        <span class="checkpoint-status text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-slate-200/80 text-slate-600">0%</span>
+                    </div>
+                    <strong class="text-xs sm:text-sm font-black text-slate-900 block font-mono">₹5.00 Crore</strong>
+                    <span class="text-[10px] text-slate-500 font-semibold block">Financial Freedom</span>
+                    <span class="checkpoint-real-value text-[9px] text-slate-500 font-medium block mt-0.5">Real: ₹--</span>
+                </div>
+                <div class="mt-3">
+                    <div class="checkpoint-eta text-[10.5px] font-bold text-slate-600">ETA: --</div>
+                    <div class="w-full bg-slate-200/90 rounded-full h-1.5 mt-1.5 overflow-hidden">
+                        <div class="checkpoint-bar bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Milestone 4: ₹5 Crore -->
-        <div class="roadmap-checkpoint flex flex-col p-3 rounded-2xl border border-slate-200/90 bg-slate-50/80 transition-all duration-300 shadow-2xs" data-target="50000000">
-            <div class="flex items-center justify-between mb-2">
-                <span class="checkpoint-icon flex items-center justify-center w-7 h-7 rounded-xl bg-white text-slate-400 border border-slate-200 text-xs font-black transition-all shadow-2xs">💎</span>
-                <span class="checkpoint-status text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-slate-200/80 text-slate-600">0%</span>
-            </div>
-            <strong class="text-xs font-bold text-slate-900">₹5.00 Crore</strong>
-            <span class="text-[10px] text-slate-500">Financial Freedom</span>
-            <div class="checkpoint-eta text-[10px] font-semibold text-slate-500 mt-1">ETA: --</div>
-            <div class="w-full bg-slate-200/90 rounded-full h-1.5 mt-2 overflow-hidden">
-                <div class="checkpoint-bar bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+        <!-- ========================================================================= -->
+        <!-- COMPOUNDING VELOCITY INSIGHT BANNER                                       -->
+        <!-- ========================================================================= -->
+        <div id="milestone-velocity-banner" class="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200/80 flex items-start gap-2.5 text-emerald-950 text-xs">
+            <span class="flex items-center justify-center w-5 h-5 rounded-lg bg-emerald-100 text-emerald-800 font-bold shrink-0 mt-0.5">⚡</span>
+            <div class="leading-relaxed">
+                <strong class="font-extrabold text-emerald-900 block">The Compounding Velocity Secret</strong>
+                <span id="milestone-velocity-text">
+                    The first ₹1 Crore takes the longest (~13 years). The second ₹1 Crore typically arrives in under 5 years because your accumulated capital earns more than your annual salary!
+                </span>
             </div>
         </div>
     </div>
 </div>
+

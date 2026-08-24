@@ -3,7 +3,11 @@ import { InputValidator } from './InputValidator';
 import { DOMAdapter } from '../adapters/DOMAdapter';
 import { YearResult } from '../types';
 import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens.ts';
-import type { Chart, ChartDataset, ChartConfiguration, TooltipItem } from 'chart.js';
+import { ChartPatternHelper } from './helpers/ChartPatternHelper.ts';
+import { A11yAnnouncer } from './helpers/A11yAnnouncer.ts';
+import type { ChartScrubbingController } from './controllers/ChartScrubbingController';
+import type { ResultsController } from './controllers/ResultsController';
+import type { Chart, ChartDataset, ChartConfiguration } from 'chart.js';
 
 export interface Milestone {
     type: 'wealth' | 'security';
@@ -23,7 +27,7 @@ interface GradientBundle {
 
 /**
  * ChartManager.ts
- * Manages instantiation, dataset state transitions, and responsive rendering of Chart.js.
+ * Manages instantiation, dataset state transitions, High-DPI scaling, and responsive rendering of Chart.js.
  * Strictly adheres to SOLID, DRY, and POLA principles.
  */
 export class ChartManager {
@@ -33,6 +37,22 @@ export class ChartManager {
     private chartInstance: Chart<'line'> | null = null;
     private currentMilestones: Milestone[] = [];
     private chartModulePromise: Promise<typeof Chart> | null = null;
+    private showHistoricalCorridor: boolean = false;
+    private scrubbingController: ChartScrubbingController | null = null;
+    private resultsController: ResultsController | null = null;
+
+    private activeBenchmark: 'none' | 'nifty' | 'gold' | 'fd' = 'none';
+    private activeViewType: 'line' | 'donut' = 'line';
+    private currentChartType: 'line' | 'doughnut' | null = null;
+    private lastResults: YearResult[] = [];
+    private lastEnableSwp: boolean = true;
+    private shockOverlayData: { label: string; data: number[] } | null = null;
+    private shockOverlayCrashIndex: number | null = null;
+    private activeDonutScrubYear: number | null = null;
+
+    private rafId: number | null = null;
+    private renderQueueId: number | null = null;
+    private controlsInitialized: boolean = false;
 
     constructor(
         formatter: CurrencyFormatter,
@@ -42,6 +62,29 @@ export class ChartManager {
         this.formatter = formatter;
         this.validator = validator;
         this.dom = dom;
+    }
+
+    /**
+     * Injects the dedicated results table controller for bi-directional synchronization.
+     */
+    public setResultsController(resultsController: ResultsController): void {
+        this.resultsController = resultsController;
+    }
+
+    /**
+     * Injects the dedicated scrubbing controller for bi-directional synchronization.
+     */
+    public setScrubbingController(scrubbingController: ChartScrubbingController): void {
+        this.scrubbingController = scrubbingController;
+        this.scrubbingController.setOnScrubCallback((index: number) => {
+            if (this.activeViewType === 'donut') {
+                this.updateDonutForYear(index);
+            } else {
+                this.highlightYear(index);
+                this.announceCurrentPoint(index);
+            }
+            this.resultsController?.highlightTableRow(index, false);
+        });
     }
 
     /**
@@ -59,72 +102,82 @@ export class ChartManager {
         return this.chartModulePromise;
     }
 
-    /**
-     * Compute dynamic linear gradients strictly bounded to actual canvas pixel height.
-     */
-    private createGradients(ctx: CanvasRenderingContext2D, height: number): GradientBundle {
-        const safeHeight = Math.max(height, 200);
+    private cachedGradientBucket: number = -1;
+    private cachedGradients: GradientBundle | null = null;
 
-        const gradientInvested = ctx.createLinearGradient(0, 0, 0, safeHeight);
+    /**
+     * Compute dynamic linear gradients with 30px quantizing bucket cache to eliminate GPU thrashing on resize.
+     */
+    private createGradients(ctx: CanvasRenderingContext2D, top: number = 0, bottom: number = 400): GradientBundle {
+        const safeTop = Math.max(0, top);
+        const safeBottom = Math.max(safeTop + 60, bottom);
+        const heightSpan = safeBottom - safeTop;
+        const bucket = Math.round(heightSpan / 30) * 30;
+
+        if (this.cachedGradients && this.cachedGradientBucket === bucket) {
+            return this.cachedGradients;
+        }
+
+        const gradientInvested = ctx.createLinearGradient(0, safeTop, 0, safeBottom);
         gradientInvested.addColorStop(0, THEME_COLORS.chart.gradientInvestedTop);
         gradientInvested.addColorStop(0.7, THEME_COLORS.chart.gradientInvestedMid);
         gradientInvested.addColorStop(1, THEME_COLORS.chart.gradientInvestedBottom);
 
-        const gradientCorpus = ctx.createLinearGradient(0, 0, 0, safeHeight);
+        const gradientCorpus = ctx.createLinearGradient(0, safeTop, 0, safeBottom);
         gradientCorpus.addColorStop(0, THEME_COLORS.chart.gradientCorpusTop);
         gradientCorpus.addColorStop(0.6, THEME_COLORS.chart.gradientCorpusMid);
         gradientCorpus.addColorStop(1, THEME_COLORS.chart.gradientCorpusBottom);
 
-        const gradientPostTax = ctx.createLinearGradient(0, 0, 0, safeHeight);
+        const gradientPostTax = ctx.createLinearGradient(0, safeTop, 0, safeBottom);
         gradientPostTax.addColorStop(0, THEME_COLORS.chart.gradientPostTaxTop);
         gradientPostTax.addColorStop(0.7, THEME_COLORS.chart.gradientPostTaxMid);
         gradientPostTax.addColorStop(1, THEME_COLORS.chart.gradientPostTaxBottom);
 
-        return {
+        this.cachedGradients = {
             invested: gradientInvested,
             corpus: gradientCorpus,
             postTax: gradientPostTax
         };
+        this.cachedGradientBucket = bucket;
+
+        return this.cachedGradients;
     }
 
     /**
      * Formats axis tick numbers cleanly into Indian (Cr/L/k) or Western (B/M/k) scales.
      */
     formatAxisTick(value: number): string {
-        if (isNaN(value) || !isFinite(value)) return '';
+        if (isNaN(value) || !isFinite(value) || value < 0) return '';
 
         const symbol = this.formatter.getSymbol();
         const currency = this.formatter.getCurrency();
 
         if (currency === 'INR') {
+            if (value === 0) return `${symbol}0`;
             if (value >= 10000000) {
-                const cr = (value / 10000000).toFixed(1).replace(/\.0$/, '');
-                return `${symbol}${cr}Cr`;
+                const cr = value / 10000000;
+                return `${symbol}${Number.isInteger(cr) || cr >= 10 ? cr.toFixed(0) : cr.toFixed(1)} Cr`;
             }
             if (value >= 100000) {
-                const l = (value / 100000).toFixed(1).replace(/\.0$/, '');
-                return `${symbol}${l}L`;
+                const l = value / 100000;
+                return `${symbol}${Number.isInteger(l) || l >= 10 ? l.toFixed(0) : l.toFixed(1)} L`;
             }
             if (value >= 1000) {
-                const k = (value / 1000).toFixed(1).replace(/\.0$/, '');
-                return `${symbol}${k}k`;
+                return `${symbol}${(value / 1000).toFixed(0)}k`;
             }
-            return `${symbol}${Math.round(value)}`;
+            return `${symbol}${value.toFixed(0)}`;
         }
 
         if (value >= 1000000000) {
-            const b = (value / 1000000000).toFixed(1).replace(/\.0$/, '');
-            return `${symbol}${b}B`;
+            return `${symbol}${(value / 1000000000).toFixed(1)}B`;
         }
         if (value >= 1000000) {
-            const m = (value / 1000000).toFixed(1).replace(/\.0$/, '');
-            return `${symbol}${m}M`;
+            return `${symbol}${(value / 1000000).toFixed(1)}M`;
         }
         if (value >= 1000) {
-            const k = (value / 1000).toFixed(1).replace(/\.0$/, '');
-            return `${symbol}${k}k`;
+            return `${symbol}${(value / 1000).toFixed(0)}k`;
         }
-        return `${symbol}${Math.round(value)}`;
+        return `${symbol}${value.toFixed(0)}`;
     }
 
     /**
@@ -172,7 +225,6 @@ export class ChartManager {
 
             if (enableSwp && !swpCovered && (row.annual_withdrawal ?? 0) > 0) {
                 const tenYearsWithdrawal = (row.annual_withdrawal ?? 0) * 10;
-                // Verify sustainability: corpus must cover 10 years of withdrawals and portfolio doesn't deplete to 0 within 10 years
                 const isSustainable = activeCorpusValue >= tenYearsWithdrawal;
                 if (isSustainable) {
                     swpCovered = true;
@@ -193,7 +245,7 @@ export class ChartManager {
     }
 
     /**
-     * Build semantic dataset collection based on active UI toggles.
+     * Builds synthesized datasets adhering to mutual exclusivity and clean visual layering.
      */
     private buildDatasets(
         results: YearResult[],
@@ -212,7 +264,6 @@ export class ChartManager {
         const milestoneIndices = milestones.map(m => m.index);
         const isSinglePoint = results.length === 1;
 
-        // 0-Year singularity guard: when results.length === 1, ensure point is visible
         const pointRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 6 : (isSinglePoint ? 4 : 0));
         const pointHoverRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 10 : (isSinglePoint ? 8 : 6));
         const pointBgColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? THEME_COLORS.financial.milestoneGold : THEME_COLORS.financial.growth);
@@ -231,11 +282,12 @@ export class ChartManager {
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
                 fill: 'origin',
+                pointStyle: ChartPatternHelper.getPointStyle('invested'),
                 pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
                 pointBorderColor: THEME_COLORS.financial.invested,
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
-                order: 2,
+                order: 3,
             },
             {
                 label: showWealthMap ? 'Interest Earned' : 'Pre-Tax Corpus',
@@ -245,7 +297,8 @@ export class ChartManager {
                 borderWidth: 3,
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
-                fill: showWealthMap ? true : 0,
+                fill: showWealthMap ? true : (showPostTax ? '+1' : 0),
+                pointStyle: ChartPatternHelper.getPointStyle('corpus'),
                 pointBackgroundColor: pointBgColors,
                 pointBorderColor: pointBorderColors,
                 pointBorderWidth: pointBorderWidths,
@@ -255,46 +308,111 @@ export class ChartManager {
                 order: 1,
             },
             {
-                label: 'Post-Tax Corpus',
+                label: 'Post-Tax Corpus (§112A Net)',
                 data: postTaxCorpus,
                 borderColor: THEME_COLORS.financial.postTax,
-                backgroundColor: gradients.postTax,
+                backgroundColor: 'rgba(139, 92, 246, 0.09)',
                 borderWidth: 2,
                 borderDash: [4, 4],
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
-                fill: 'origin',
+                fill: 1,
+                pointStyle: ChartPatternHelper.getPointStyle('postTax'),
                 pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
                 pointBorderColor: THEME_COLORS.financial.postTax,
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
                 hidden: !showPostTax || showWealthMap,
-                order: 1,
+                order: 2,
             }
         ];
+
+        // Real Purchasing Power Phantom Spline (when inflation > 0)
+        const inflationInput = this.dom.getElement<HTMLInputElement>('inflation');
+        const inflationRate = inflationInput ? parseFloat(inflationInput.value) : 0;
+        if (inflationRate > 0 && !showWealthMap && results.length > 1) {
+            const realValues = results.map(r => {
+                const discountFactor = Math.pow(1 + (inflationRate / 100), r.year);
+                return Math.round(r.combined_total / discountFactor);
+            });
+
+            datasets.push({
+                label: `Real Value (${inflationRate}% Inflation Adj)`,
+                data: realValues,
+                borderColor: '#0284c7', // Sky-600
+                backgroundColor: 'rgba(2, 132, 199, 0.04)',
+                borderWidth: 2,
+                borderDash: [5, 4],
+                tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
+                fill: 1, // Fills between nominal corpus and real purchasing power
+                pointRadius: 0,
+                pointHoverRadius: 5,
+                order: 2
+            });
+        }
+
+        // Historical Volatility Corridor (Suppressed when Post-Tax is active to prevent visual clutter)
+        if (this.showHistoricalCorridor && !showWealthMap && !showPostTax && results.length > 1) {
+            const lowerCorridor = this.computeBenchmarkCurve(results, 10.2);
+            const upperCorridor = this.computeBenchmarkCurve(results, 15.8);
+
+            datasets.push({
+                label: 'Historical 10th Percentile (10.2% CAGR)',
+                data: lowerCorridor,
+                borderColor: 'rgba(5, 150, 105, 0.4)',
+                backgroundColor: 'rgba(5, 150, 105, 0.06)',
+                borderWidth: 1.5,
+                borderDash: [2, 2],
+                tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
+                fill: '+1',
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                order: 4,
+            });
+
+            datasets.push({
+                label: 'Historical 90th Percentile (15.8% CAGR)',
+                data: upperCorridor,
+                borderColor: 'rgba(5, 150, 105, 0.4)',
+                backgroundColor: 'transparent',
+                borderWidth: 1.5,
+                borderDash: [2, 2],
+                tension: 0.4,
+                cubicInterpolationMode: 'monotone' as const,
+                fill: false,
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                order: 4,
+            });
+        }
 
         const hasStepUp = !enableSwp && results.length > 1 && ((results[1].annual_contribution ?? 0) > (results[0].annual_contribution ?? 0));
         if (hasStepUp && !showWealthMap) {
             const yr1 = results[0];
-            const baseMonthlySip = yr1.annual_contribution ? (yr1.annual_contribution / 12) : 0;
-            if (baseMonthlySip > 0) {
-                const yr1Interest = yr1.interest ?? 0;
-                const approxAnnualRate = yr1.annual_contribution > 0 ? ((yr1Interest * 2) / yr1.annual_contribution) : 0.12;
-                const rm = approxAnnualRate / 12;
+            const baseMonthlySip = yr1.sip_monthly ?? (yr1.annual_contribution ? (yr1.annual_contribution / 12) : 0);
+            if (baseMonthlySip > 0 || (yr1.begin_balance ?? 0) > 0) {
+                const rateInput = this.dom.getElement<HTMLInputElement>('rate');
+                const userRate = rateInput ? (parseFloat(rateInput.value) || 12) : 12;
+                const rm = userRate / 100 / 12;
+                const initialLumpsum = yr1.begin_balance ?? 0;
 
-                const flatData = results.map(r => {
-                    const months = r.year * 12;
-                    if (rm > 0) {
-                        return Math.round(baseMonthlySip * ((Math.pow(1 + rm, months) - 1) / rm) * (1 + rm));
+                let flatBalance = initialLumpsum;
+                const flatData: number[] = [];
+
+                for (let i = 0; i < results.length; i++) {
+                    for (let m = 0; m < 12; m++) {
+                        flatBalance = (flatBalance + baseMonthlySip) * (1 + rm);
                     }
-                    return Math.round(baseMonthlySip * months);
-                });
+                    flatData.push(Math.round(flatBalance));
+                }
 
                 datasets.push({
                     label: 'Flat SIP Baseline (0% Step-Up)',
                     data: flatData,
                     borderColor: '#94a3b8',
-                    backgroundColor: 'transparent',
+                    backgroundColor: 'rgba(148, 163, 184, 0.04)',
                     borderWidth: 2,
                     borderDash: [4, 4],
                     tension: 0.4,
@@ -386,13 +504,30 @@ export class ChartManager {
         return datasets;
     }
 
-    private activeBenchmark: 'none' | 'nifty' | 'gold' | 'fd' = 'none';
-    private activeViewType: 'line' | 'donut' = 'line';
-    private currentChartType: 'line' | 'doughnut' | null = null;
-    private lastResults: YearResult[] = [];
-    private lastEnableSwp: boolean = true;
-    private shockOverlayData: { label: string; data: number[] } | null = null;
-    private shockOverlayCrashIndex: number | null = null;
+    /**
+     * Updates active lens text indicator in the header dock.
+     */
+    public updateActiveLensIndicator(): void {
+        const indicator = this.dom.getElement('active-lens-indicator');
+        if (!indicator) return;
+
+        const showCorridor = this.dom.getElement<HTMLInputElement>('show_historical_corridor')?.checked || false;
+        const showPostTax = this.dom.getElement<HTMLInputElement>('show_post_tax')?.checked || false;
+        const showWealthMap = this.dom.getElement<HTMLInputElement>('show_wealth_map')?.checked || false;
+
+        const active: string[] = [];
+        if (showCorridor) active.push('Corridor');
+        if (showPostTax) active.push('§112A Tax');
+        if (showWealthMap) active.push('Decomp');
+
+        if (active.length === 0) {
+            indicator.textContent = 'Standard View';
+            indicator.className = 'hidden sm:inline-flex items-center text-[10px] font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70';
+        } else {
+            indicator.textContent = active.join(' + ');
+            indicator.className = 'hidden sm:inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-full border border-emerald-200/80 shadow-2xs';
+        }
+    }
 
     /**
      * Plot or clear historical market shock trajectory overlay.
@@ -400,6 +535,17 @@ export class ChartManager {
     setShockOverlay(overlay: { label: string; data: number[]; crashIndex: number } | null): void {
         this.shockOverlayData = overlay ? { label: overlay.label, data: overlay.data } : null;
         this.shockOverlayCrashIndex = overlay ? overlay.crashIndex : null;
+        if (this.lastResults.length > 0) {
+            this.updateChart(this.lastResults, this.lastEnableSwp);
+        }
+    }
+
+    /**
+     * Toggle Historical Volatility Corridor (10th-90th percentile Nifty rolling band).
+     */
+    setHistoricalCorridor(show: boolean): void {
+        this.showHistoricalCorridor = show;
+        this.updateActiveLensIndicator();
         if (this.lastResults.length > 0) {
             this.updateChart(this.lastResults, this.lastEnableSwp);
         }
@@ -431,7 +577,6 @@ export class ChartManager {
         afterDraw: (chart: any) => {
             if (chart.config.type !== 'line' || !chart.scales?.x || !chart.scales?.y) return;
 
-            // Draw active bi-directional crosshair on hover
             if (chart.tooltip?.getActiveElements()?.length) {
                 const activePoint = chart.tooltip.getActiveElements()[0];
                 const ctx = chart.ctx;
@@ -460,6 +605,277 @@ export class ChartManager {
             }
         }
     };
+
+    /**
+     * Compounding Ignition Zone Plugin: Illuminates the inflection zone where annual interest surpasses annual SIP contributions.
+     */
+    private compoundingIgnitionPlugin = {
+        id: 'compoundingIgnitionZone',
+        beforeDatasetsDraw: (chart: any) => {
+            if (chart.config.type !== 'line' || !chart.chartArea) return;
+            const meta = chart.getDatasetMeta(1);
+            if (!meta || !meta.data || meta.data.length === 0) return;
+
+            const results = this.lastResults;
+            if (results.length < 2) return;
+
+            const crossoverIdx = results.findIndex((r, idx) => {
+                if (idx === 0) return false;
+                const annualInterest = r.interest || 0;
+                const annualContribution = r.annual_contribution || 0;
+                return annualInterest >= annualContribution && annualContribution > 0;
+            });
+
+            if (crossoverIdx === -1 || !meta.data[crossoverIdx]) return;
+
+            const ctx = chart.ctx;
+            const xPos = meta.data[crossoverIdx].x;
+            const { top, bottom, right } = chart.chartArea;
+
+            ctx.save();
+            // Ambient soft light aurora ignition glow
+            const gradient = ctx.createLinearGradient(xPos, 0, right, 0);
+            gradient.addColorStop(0, 'rgba(16, 185, 129, 0.08)');
+            gradient.addColorStop(1, 'rgba(20, 184, 166, 0.02)');
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(xPos, top, right - xPos, bottom - top);
+
+            // Demarcation dotted line
+            ctx.beginPath();
+            ctx.setLineDash([3, 3]);
+            ctx.moveTo(xPos, top);
+            ctx.lineTo(xPos, bottom);
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = '#059669';
+            ctx.stroke();
+
+            // Pure Light Ignition Pill annotation
+            const tagText = '⚡ GAINS OUTPACE SIP';
+            ctx.font = '700 9px "Plus Jakarta Sans", "Inter", sans-serif';
+            const textWidth = ctx.measureText(tagText).width;
+            const pillWidth = textWidth + 12;
+            const pillX = Math.min(xPos + 4, right - pillWidth - 4);
+
+            ctx.fillStyle = '#ecfdf5';
+            ctx.strokeStyle = '#a7f3d0';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            if (typeof ctx.roundRect === 'function') {
+                ctx.roundRect(pillX, top + 6, pillWidth, 18, 4);
+            } else {
+                ctx.rect(pillX, top + 6, pillWidth, 18);
+            }
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#047857';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(tagText, pillX + 6, top + 15);
+            ctx.restore();
+        }
+    };
+
+    /**
+     * ₹1 Crore Golden Milestone Guideline Plugin.
+     */
+    private croreMilestoneLinePlugin = {
+        id: 'croreMilestoneLine',
+        afterDraw: (chart: any) => {
+            if (chart.config.type !== 'line' || !chart.scales?.y || !chart.chartArea) return;
+            const yScale = chart.scales.y;
+            const targetVal = 10000000; // 1 Crore
+            if (yScale.max < targetVal) return;
+
+            const yPos = yScale.getPixelForValue(targetVal);
+            const { left, right } = chart.chartArea;
+            const ctx = chart.ctx;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.setLineDash([6, 4]);
+            ctx.moveTo(left, yPos);
+            ctx.lineTo(right, yPos);
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = 'rgba(217, 119, 6, 0.45)'; // Amber-600 gold
+            ctx.stroke();
+
+            ctx.font = '700 9px "Plus Jakarta Sans", "Inter", sans-serif';
+            ctx.fillStyle = '#b45309';
+            ctx.fillText('👑 ₹1 Crore Milestone', right - 110, yPos - 5);
+            ctx.restore();
+        }
+    };
+
+    /**
+     * Bank FD Alpha Delta Terminal Bracket Plugin with right-edge clamping.
+     */
+    private fdAlphaDeltaPlugin = {
+        id: 'fdAlphaDelta',
+        afterDraw: (chart: any) => {
+            if (chart.config.type !== 'line' || this.activeBenchmark !== 'fd' || !chart.chartArea) return;
+            const results = this.lastResults;
+            if (results.length < 2) return;
+
+            const sipCorpus = results[results.length - 1].combined_total;
+            const fdCurve = this.computeBenchmarkCurve(results, 6.5);
+            const fdCorpus = fdCurve[fdCurve.length - 1];
+            const delta = sipCorpus - fdCorpus;
+            if (delta <= 0) return;
+
+            const metaSip = chart.getDatasetMeta(1);
+            if (!metaSip || !metaSip.data || metaSip.data.length === 0) return;
+            const finalPoint = metaSip.data[metaSip.data.length - 1];
+
+            const ctx = chart.ctx;
+            ctx.save();
+            const badgeText = `+${this.formatter.format(delta)} FD Alpha`;
+            ctx.font = '700 10px "Plus Jakarta Sans", "Inter", sans-serif';
+            const width = ctx.measureText(badgeText).width + 12;
+
+            const clampedX = Math.min(finalPoint.x - width, chart.chartArea.right - width - 2);
+            const clampedY = Math.max(chart.chartArea.top + 4, finalPoint.y - 24);
+
+            ctx.fillStyle = '#065f46';
+            ctx.beginPath();
+            if (typeof ctx.roundRect === 'function') {
+                ctx.roundRect(clampedX, clampedY, width, 18, 4);
+            } else {
+                ctx.rect(clampedX, clampedY, width, 18);
+            }
+            ctx.fill();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(badgeText, clampedX + 6, clampedY + 9);
+            ctx.restore();
+        }
+    };
+
+    private donutCenterTextPlugin = {
+        id: 'donutCenterText',
+        afterDraw: (chart: any) => {
+            if (chart.config.type !== 'doughnut' || !chart.chartArea) return;
+            const { ctx, chartArea } = chart;
+            const datasets = chart.data.datasets;
+            if (!datasets || datasets.length === 0) return;
+
+            const results = this.lastResults;
+            const activeYear = this.activeDonutScrubYear || results.length;
+            const currentRow = results.find(r => r.year === activeYear) || results[results.length - 1];
+            
+            const isDepleted = currentRow && (currentRow.combined_total <= 0) && (currentRow.annual_withdrawal ?? 0) > 0;
+
+            const centerX = (chartArea.left + chartArea.right) / 2;
+            const centerY = (chartArea.top + chartArea.bottom) / 2;
+
+            ctx.save();
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            if (isDepleted) {
+                ctx.font = `800 18px ${THEME_FONTS.heading}`;
+                ctx.fillStyle = '#be123c'; // Rose-700
+                ctx.fillText('DEPLETED', centerX, centerY - 6);
+
+                ctx.font = `700 9px ${THEME_FONTS.mono}`;
+                ctx.fillStyle = '#9f1239';
+                ctx.fillText(`AT YEAR ${currentRow.year}`, centerX, centerY + 12);
+            } else {
+                const data = datasets[0].data as number[];
+                const totalInvested = data[0] || 0;
+                const totalGains = data[1] || 0;
+                const totalWithdrawals = (data.length > 2 ? data[2] : 0) || 0;
+                const finalValue = totalGains + totalInvested + totalWithdrawals;
+                const multiplier = totalInvested > 0 ? (finalValue / totalInvested).toFixed(1) : '1.0';
+
+                ctx.font = `800 24px ${THEME_FONTS.mono}`;
+                ctx.fillStyle = '#047857'; // Emerald-700
+                ctx.fillText(`${multiplier}×`, centerX, centerY - 6);
+
+                ctx.font = `700 9px ${THEME_FONTS.heading}`;
+                ctx.fillStyle = '#64748b';
+                const yearLabel = this.activeDonutScrubYear ? `YR ${this.activeDonutScrubYear} ROI` : 'ROI MULTIPLIER';
+                ctx.fillText(yearLabel, centerX, centerY + 13);
+            }
+            ctx.restore();
+        }
+    };
+
+    private splineMilestonesPlugin = {
+        id: 'splineMilestones',
+        afterDatasetsDraw: (chart: any) => {
+            if (chart.config.type !== 'line') return;
+            const meta = chart.getDatasetMeta(1);
+            if (!meta || !meta.data) return;
+
+            const ctx = chart.ctx;
+            const milestones = this.currentMilestones || [];
+
+            milestones.forEach(m => {
+                if (m.index === undefined || !meta.data[m.index]) return;
+                const point = meta.data[m.index];
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 11, 0, Math.PI * 2);
+                ctx.fillStyle = m.type === 'security' ? 'rgba(245, 158, 11, 0.22)' : 'rgba(16, 185, 129, 0.22)';
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 5.5, 0, Math.PI * 2);
+                ctx.fillStyle = m.type === 'security' ? '#d97706' : '#10b981';
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#ffffff';
+                ctx.stroke();
+                ctx.restore();
+            });
+        }
+    };
+
+    /**
+     * Update persistent Zero-CLS Heads-Up Display (HUD) telemetry console.
+     */
+    public updateInspectionRibbon(row: YearResult): void {
+        if (this.scrubbingController) {
+            this.scrubbingController.inspect(row, this.lastResults.length);
+            return;
+        }
+
+        const rYear = this.dom.getElement('ribbon-inspect-year');
+        const rInvested = this.dom.getElement('ribbon-inspect-invested');
+        const rGains = this.dom.getElement('ribbon-inspect-gains');
+        const rCorpus = this.dom.getElement('ribbon-inspect-corpus');
+        const statusDot = this.dom.getElement('hud-status-dot');
+
+        if (row) {
+            const totalYears = this.lastResults?.length || row.year;
+            if (rYear) rYear.textContent = `Year ${row.year} of ${totalYears}`;
+            if (rInvested) rInvested.textContent = this.formatter.format(row.cumulative_invested);
+            if (rCorpus) rCorpus.textContent = this.formatter.format(row.combined_total);
+            if (rGains) {
+                const gains = Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested);
+                rGains.textContent = `+${this.formatter.format(gains)}`;
+            }
+            if (statusDot) {
+                statusDot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
+            }
+        }
+    }
+
+    /**
+     * Announce current data point for assistive technologies and update HUD.
+     */
+    private announceCurrentPoint(index: number): void {
+        const row = this.lastResults[index];
+        if (!row) return;
+        const invested = this.formatter.format(row.cumulative_invested);
+        const corpus = this.formatter.format(row.combined_total);
+        const gains = this.formatter.format(Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested));
+        A11yAnnouncer.announceYearInspection(row.year, invested, corpus, gains);
+        this.updateInspectionRibbon(row);
+    }
 
     /**
      * Compute benchmark projection dataset (Nifty 50, Gold, or FD) for the same cashflow sequence.
@@ -497,23 +913,22 @@ export class ChartManager {
         const donutBtn = this.dom.getElement('chart-view-donut');
         if (lineBtn && donutBtn) {
             if (type === 'line') {
-                lineBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                lineBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                lineBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                lineBtn.classList.remove('text-slate-600', 'hover:text-slate-900');
                 lineBtn.setAttribute('aria-selected', 'true');
-                donutBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                donutBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                donutBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                donutBtn.classList.add('text-slate-600', 'hover:text-slate-900');
                 donutBtn.setAttribute('aria-selected', 'false');
             } else {
-                donutBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                donutBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                donutBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                donutBtn.classList.remove('text-slate-600', 'hover:text-slate-900');
                 donutBtn.setAttribute('aria-selected', 'true');
-                lineBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
-                lineBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                lineBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                lineBtn.classList.add('text-slate-600', 'hover:text-slate-900');
                 lineBtn.setAttribute('aria-selected', 'false');
             }
         }
 
-        // Destroy existing chart instance to allow fresh type instantiation
         if (this.chartInstance) {
             this.chartInstance.destroy();
             this.chartInstance = null;
@@ -525,7 +940,31 @@ export class ChartManager {
     }
 
     /**
-     * Highlight specific data point on hover from external components (e.g. breakdown table).
+     * Morphs donut proportions for any selected year with zero chart re-instantiation.
+     */
+    public updateDonutForYear(yearIndex: number): void {
+        if (!this.chartInstance || this.currentChartType !== 'doughnut') return;
+        const row = this.lastResults[yearIndex];
+        if (!row) return;
+
+        const showPostTax = this.dom.getElement<HTMLInputElement>('show_post_tax')?.checked || false;
+        const invested = row.cumulative_invested || 0;
+        const finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
+        const withdrawals = row.cumulative_withdrawals || 0;
+        const gains = Math.max(0, (finalCorpus + withdrawals) - invested);
+
+        const dataset = this.chartInstance.data.datasets[0];
+        if (dataset) {
+            dataset.data = withdrawals > 0 ? [invested, gains, withdrawals] : [invested, gains];
+            this.activeDonutScrubYear = row.year;
+            this.chartInstance.update('none');
+        }
+
+        this.updateInspectionRibbon(row);
+    }
+
+    /**
+     * Highlight specific data point on hover from external components.
      */
     highlightYear(index: number): void {
         if (!this.chartInstance || this.activeViewType !== 'line') return;
@@ -535,6 +974,7 @@ export class ChartManager {
                 this.chartInstance.tooltip.setActiveElements([{ datasetIndex: 1, index }], { x: 0, y: 0 });
             }
             this.chartInstance.update('none');
+            this.resultsController?.highlightTableRow(index, false);
         } catch {
             // Ignore if chart is updating
         }
@@ -555,8 +995,6 @@ export class ChartManager {
             // Ignore if chart is updating
         }
     }
-
-    private controlsInitialized = false;
 
     /**
      * Bind view switcher buttons and benchmark comparison chips once during initialization.
@@ -581,15 +1019,76 @@ export class ChartManager {
                 this.setBenchmark(bm);
             });
         });
+
+        // Overlay chips sync
+        const corridorInput = this.dom.getElement<HTMLInputElement>('show_historical_corridor');
+        const postTaxInput = this.dom.getElement<HTMLInputElement>('show_post_tax');
+        const wealthMapInput = this.dom.getElement<HTMLInputElement>('show_wealth_map');
+
+        [corridorInput, postTaxInput, wealthMapInput].forEach(input => {
+            if (input) {
+                input.addEventListener('change', () => {
+                    this.updateActiveLensIndicator();
+                });
+            }
+        });
+
+        const canvasContainer = this.dom.getElement<HTMLElement>('chart-canvas-container');
+        if (canvasContainer) {
+            let activeKeyboardIndex = 0;
+            canvasContainer.addEventListener('keydown', (e: KeyboardEvent) => {
+                if (!this.lastResults || this.lastResults.length === 0) return;
+                const maxIndex = this.lastResults.length - 1;
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    activeKeyboardIndex = Math.min(maxIndex, activeKeyboardIndex + 1);
+                    this.highlightYear(activeKeyboardIndex);
+                    this.announceCurrentPoint(activeKeyboardIndex);
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    activeKeyboardIndex = Math.max(0, activeKeyboardIndex - 1);
+                    this.highlightYear(activeKeyboardIndex);
+                    this.announceCurrentPoint(activeKeyboardIndex);
+                } else if (e.key === 'Home') {
+                    e.preventDefault();
+                    activeKeyboardIndex = 0;
+                    this.highlightYear(activeKeyboardIndex);
+                    this.announceCurrentPoint(activeKeyboardIndex);
+                } else if (e.key === 'End') {
+                    e.preventDefault();
+                    activeKeyboardIndex = maxIndex;
+                    this.highlightYear(activeKeyboardIndex);
+                    this.announceCurrentPoint(activeKeyboardIndex);
+                }
+            });
+        }
+    }
+
+    /**
+     * Throttled chart rendering queue via requestAnimationFrame.
+     */
+    public updateChartThrottled(results: YearResult[], enableSwp: boolean = true): void {
+        if (this.renderQueueId) {
+            cancelAnimationFrame(this.renderQueueId);
+        }
+        this.renderQueueId = requestAnimationFrame(() => {
+            this.updateChart(results, enableSwp, true);
+            this.renderQueueId = null;
+        });
     }
 
     /**
      * Initialize or update the chart.
      */
-    async updateChart(results: YearResult[], enableSwp: boolean = true): Promise<void> {
+    async updateChart(results: YearResult[], enableSwp: boolean = true, isDragging: boolean = false): Promise<void> {
         this.initControls();
         this.lastResults = results;
         this.lastEnableSwp = enableSwp;
+
+        if (this.scrubbingController) {
+            this.scrubbingController.syncResults(results);
+        }
 
         const ctxEl = this.dom.getElement<HTMLCanvasElement>('corpusChart');
         if (!ctxEl || !document.body.contains(ctxEl)) return;
@@ -614,6 +1113,7 @@ export class ChartManager {
 
         const milestones = this.computeMilestones(results, enableSwp, showPostTax);
         this.currentMilestones = milestones;
+        this.updateActiveLensIndicator();
 
         const fontFamily = THEME_FONTS.heading;
         const gridColor = THEME_COLORS.chart.gridLine;
@@ -627,9 +1127,9 @@ export class ChartManager {
             }
 
             const lastRow = results[results.length - 1];
-            const totalInvested = lastRow.cumulative_invested || 0;
-            const finalCorpus = showPostTax ? (lastRow.post_tax_total ?? lastRow.combined_total) : lastRow.combined_total;
-            const totalWithdrawn = lastRow.cumulative_withdrawals || 0;
+            const totalInvested = lastRow?.cumulative_invested || 0;
+            const finalCorpus = showPostTax ? (lastRow?.post_tax_total ?? lastRow?.combined_total ?? 0) : (lastRow?.combined_total ?? 0);
+            const totalWithdrawn = lastRow?.cumulative_withdrawals || 0;
             const totalGains = Math.max(0, (finalCorpus + totalWithdrawn) - totalInvested);
 
             const labels: string[] = ['Total Invested', 'Compounding Gains'];
@@ -654,12 +1154,14 @@ export class ChartManager {
                         hoverOffset: 6
                     }]
                 },
+                plugins: [this.donutCenterTextPlugin],
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    devicePixelRatio: Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2.5),
                     cutout: '70%',
                     animation: {
-                        duration: 600,
+                        duration: isDragging ? 0 : 500,
                         easing: 'easeOutQuart'
                     },
                     plugins: {
@@ -708,10 +1210,10 @@ export class ChartManager {
         }
 
         // ── LINE CHART VIEW (Growth Projection) ──
-        const canvasHeight = ctxEl.clientHeight || 400;
-        const gradients = this.createGradients(ctx, canvasHeight);
+        const yTop = this.chartInstance?.scales?.y?.top ?? 0;
+        const yBottom = this.chartInstance?.scales?.y?.bottom ?? (ctxEl.clientHeight || 400);
+        const gradients = this.createGradients(ctx, yTop, yBottom);
 
-        // Update in-place if chartInstance is alive and still a line chart
         if (this.chartInstance && this.currentChartType === 'line' && this.chartInstance.ctx.canvas === ctxEl) {
             const datasets = this.buildDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
             this.chartInstance.data.labels = years;
@@ -721,7 +1223,16 @@ export class ChartManager {
                 this.chartInstance.options.scales.y.stacked = showWealthMap;
             }
 
-            this.chartInstance.update();
+            if (isDragging) {
+                if (this.rafId) cancelAnimationFrame(this.rafId);
+                this.rafId = requestAnimationFrame(() => {
+                    if (this.chartInstance) {
+                        this.chartInstance.update('none');
+                    }
+                });
+            } else {
+                this.chartInstance.update();
+            }
             this.renderMilestoneGrid(milestones);
             return;
         }
@@ -739,12 +1250,35 @@ export class ChartManager {
                 labels: years,
                 datasets: datasets
             },
-            plugins: [this.crosshairPlugin],
+            plugins: [
+                this.crosshairPlugin,
+                this.splineMilestonesPlugin,
+                this.compoundingIgnitionPlugin,
+                this.croreMilestoneLinePlugin,
+                this.fdAlphaDeltaPlugin
+            ],
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                devicePixelRatio: Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2.5),
+                onHover: (_event: any, activeElements: any[]) => {
+                    if (activeElements && activeElements.length > 0) {
+                        const index = activeElements[0].index;
+                        const row = this.lastResults[index];
+                        if (row) {
+                            this.updateInspectionRibbon(row);
+                            if (typeof navigator !== 'undefined' && 'vibrate' in navigator && (row.year % 5 === 0 || row.year === this.lastResults.length)) {
+                                try {
+                                    navigator.vibrate(10);
+                                } catch {
+                                    // Silent ignore
+                                }
+                            }
+                        }
+                    }
+                },
                 animation: {
-                    duration: 750,
+                    duration: 650,
                     easing: 'easeOutQuart',
                 },
                 interaction: {
@@ -769,43 +1303,14 @@ export class ChartManager {
                         }
                     },
                     tooltip: {
-                        backgroundColor: THEME_COLORS.chart.tooltipBg,
-                        titleColor: THEME_COLORS.chart.tooltipTitle,
-                        titleFont: {
-                            family: fontFamily,
-                            size: 14,
-                            weight: 'bold'
-                        },
-                        bodyColor: THEME_COLORS.chart.tooltipBody,
-                        bodyFont: {
-                            family: fontFamily,
-                            size: 13
-                        },
-                        borderColor: THEME_COLORS.chart.tooltipBorder,
-                        borderWidth: 1,
-                        padding: 12,
-                        boxPadding: 4,
-                        cornerRadius: 12,
-                        usePointStyle: true,
-                        callbacks: {
-                            label: (context: TooltipItem<'line'>) => {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null && context.parsed.y !== undefined) {
-                                    label += this.formatter.format(context.parsed.y);
-                                }
-                                return label;
-                            },
-                            afterBody: (tooltipItems: TooltipItem<'line'>[]) => {
-                                if (!tooltipItems || tooltipItems.length === 0) return '';
-                                const index = tooltipItems[0].dataIndex;
-                                const reached = (this.currentMilestones || []).filter(m => m.index === index);
-                                if (reached.length > 0) {
-                                    return reached.map(m => `\n${m.icon} ${m.label} Reached!`).join('');
-                                }
-                                return '';
+                        enabled: false,
+                        external: (context) => {
+                            const { tooltip } = context;
+                            if (!tooltip || !tooltip.dataPoints || tooltip.dataPoints.length === 0) return;
+                            const index = tooltip.dataPoints[0].dataIndex;
+                            const row = this.lastResults[index];
+                            if (row) {
+                                this.updateInspectionRibbon(row);
                             }
                         }
                     }
@@ -820,25 +1325,37 @@ export class ChartManager {
                             color: textColor,
                             font: {
                                 family: fontFamily,
-                                size: 11,
-                                weight: 500
+                                size: 10,
+                                weight: 600
                             },
-                            maxRotation: 0
+                            maxRotation: 0,
+                            autoSkip: true,
+                            maxTicksLimit: typeof window !== 'undefined' && window.innerWidth < 640 ? 6 : 10,
+                            callback: function(val: string | number) {
+                                const label = this.getLabelForValue(val as number);
+                                const yearNum = parseInt(label.replace('Yr ', ''), 10);
+                                if (yearNum === 1 || yearNum % 5 === 0 || yearNum === results.length) {
+                                    return `Y${yearNum}`;
+                                }
+                                return '';
+                            }
                         }
                     },
                     y: {
+                        position: 'right',
                         stacked: showWealthMap,
                         grid: {
                             color: gridColor,
-                            tickBorderDash: [5, 5]
+                            tickBorderDash: [4, 4]
                         },
                         ticks: {
                             color: textColor,
                             font: {
-                                family: fontFamily,
-                                size: 11,
+                                family: THEME_FONTS.mono,
+                                size: 10,
                                 weight: 500
                             },
+                            padding: 6,
                             callback: (value: string | number) => {
                                 return this.formatAxisTick(typeof value === 'number' ? value : Number(value));
                             }
@@ -852,16 +1369,26 @@ export class ChartManager {
         this.chartInstance = new ChartClass(ctx, config) as unknown as Chart<'line'>;
         this.currentChartType = 'line';
         this.renderMilestoneGrid(milestones);
+
+        if (results.length > 0) {
+            const finalRow = results[results.length - 1];
+            if (finalRow) {
+                this.updateInspectionRibbon(finalRow);
+                const statusDot = this.dom.getElement('hud-status-dot');
+                if (statusDot) {
+                    statusDot.className = 'w-1.5 h-1.5 rounded-full bg-slate-400';
+                }
+            }
+        }
     }
 
     /**
-     * Cross-browser safe celebratory milestone badge renderer.
+     * Cross-browser safe celebratory milestone badge renderer with bidirectional chart highlight sync.
      */
     renderMilestoneGrid(milestones: Milestone[]): void {
         const container = this.dom.getElement('milestones-container');
         if (!container) return;
 
-        // Legacy-safe DOM clearance
         while (container.firstChild) {
             container.removeChild(container.firstChild);
         }
@@ -876,7 +1403,10 @@ export class ChartManager {
 
         milestones.forEach(m => {
             const card = document.createElement('div');
-            card.className = 'bg-gradient-to-r from-amber-50/90 via-white to-emerald-50/50 p-3.5 rounded-2xl border border-amber-200/80 shadow-sm flex items-center gap-3 transition-all duration-200 hover:shadow-md hover:border-amber-300';
+            card.className = 'bg-gradient-to-r from-amber-50/90 via-white to-emerald-50/50 p-3.5 rounded-2xl border border-amber-200/80 shadow-sm flex items-center gap-3 transition-all duration-200 hover:shadow-md hover:border-amber-300 cursor-pointer';
+
+            card.addEventListener('mouseenter', () => this.highlightYear(m.index));
+            card.addEventListener('mouseleave', () => this.clearHighlight());
 
             const iconDiv = document.createElement('div');
             iconDiv.className = 'flex items-center justify-center w-10 h-10 rounded-xl bg-amber-100/80 text-xl shrink-0 shadow-sm';
@@ -914,6 +1444,14 @@ export class ChartManager {
      * Explicit cleanup to prevent memory leaks and detached event listeners.
      */
     destroy(): void {
+        if (this.rafId) {
+            cancelAnimationFrame(this.rafId);
+            this.rafId = null;
+        }
+        if (this.renderQueueId) {
+            cancelAnimationFrame(this.renderQueueId);
+            this.renderQueueId = null;
+        }
         if (this.chartInstance) {
             this.chartInstance.destroy();
             this.chartInstance = null;
@@ -924,4 +1462,3 @@ export class ChartManager {
         return this.chartInstance;
     }
 }
-

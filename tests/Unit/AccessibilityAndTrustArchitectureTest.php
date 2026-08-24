@@ -124,4 +124,78 @@ final class AccessibilityAndTrustArchitectureTest extends TestCase
         $this->assertTrue($hasDepletion, "Aggressive SWP must trigger portfolio depletion warning");
         $this->assertLessThanOrEqual(3, $depletedYear, "10L portfolio at 6L/yr must deplete within 3 years");
     }
+
+    public function testSafeSwpAutoHealAndCorridorBounds(): void
+    {
+        $inputs = InvestmentInputs::fromValues(
+            0.0,
+            0,
+            0.0,
+            0.0,
+            true,
+            120000.0,
+            5.0,
+            15,
+            5000000.0,
+            7.5
+        );
+
+        $safeWithdrawal = $this->calculator->calculateSafeSwpWithdrawal($inputs, 5000000.0);
+        $this->assertGreaterThan(25000.0, $safeWithdrawal);
+        $this->assertLessThan(45000.0, $safeWithdrawal);
+    }
+
+    public function testChartVisualizationAccessibilityAndTrustArchitecture(): void
+    {
+        $templatePath = dirname(__DIR__, 2) . '/src/Views/components/chart-visualization.twig';
+        $this->assertFileExists($templatePath);
+        $content = (string) file_get_contents($templatePath);
+
+        // Assert morphological grid IDs
+        $this->assertStringContainsString('id="summary-cards-grid"', $content);
+        $this->assertStringContainsString('id="card-withdrawn"', $content);
+        $this->assertStringContainsString('id="summary-invested"', $content);
+        $this->assertStringContainsString('id="summary-interest"', $content);
+        $this->assertStringContainsString('id="summary-corpus"', $content);
+
+        // Assert AMFI Institutional Seal and Alpha Beacon dock
+        $this->assertStringContainsString('AMFI Aligned', $content);
+        $this->assertStringContainsString('id="contextual-alpha-radar"', $content);
+        $this->assertStringContainsString('id="alpha-drawer-toggle"', $content);
+        $this->assertStringContainsString('id="alpha-secondary-insights"', $content);
+
+        // Assert keyboard accessible canvas container and screen reader ledger table
+        $this->assertStringContainsString('id="chart-canvas-container"', $content);
+        $this->assertStringContainsString('tabindex="0"', $content);
+        $this->assertStringContainsString('id="a11y-chart-table-body"', $content);
+        $this->assertStringContainsString('id="chart-inspection-ribbon"', $content);
+
+        // Assert Persistent Zero-CLS Telemetry HUD
+        $this->assertStringContainsString('id="chart-telemetry-hud"', $content);
+        $this->assertStringContainsString('id="hud-status-dot"', $content);
+        $this->assertStringContainsString('id="ribbon-inspect-year"', $content);
+        $this->assertStringContainsString('id="ribbon-inspect-invested"', $content);
+        $this->assertStringContainsString('id="ribbon-inspect-gains"', $content);
+        $this->assertStringContainsString('id="ribbon-inspect-corpus"', $content);
+
+        // Assert Master Console View Switcher & Action Hub
+        $this->assertStringContainsString('id="chart-view-line"', $content);
+        $this->assertStringContainsString('id="chart-view-donut"', $content);
+        $this->assertStringContainsString('id="snapshot-scenario-btn"', $content);
+        $this->assertStringContainsString('id="open-tax-waterfall-btn"', $content);
+
+        // Assert Analytical Overlays Control Studio chips and telemetry pills
+        $this->assertStringContainsString('id="overlay-chip-corridor"', $content);
+        $this->assertStringContainsString('id="overlay-chip-post-tax"', $content);
+        $this->assertStringContainsString('id="overlay-chip-wealth-map"', $content);
+        $this->assertStringContainsString('id="corridor-telemetry-pill"', $content);
+        $this->assertStringContainsString('id="tax-telemetry-pill"', $content);
+        $this->assertStringContainsString('id="wealth-map-telemetry-pill"', $content);
+        $this->assertStringContainsString('id="active-lens-indicator"', $content);
+
+        // Assert Mobile Ergonomic Thumb Scrubber Container
+        $this->assertStringContainsString('id="mobile-chart-scrubber-container"', $content);
+        $this->assertStringContainsString('id="mobile-chart-scrubber"', $content);
+        $this->assertStringContainsString('id="scrubber-active-indicator"', $content);
+    }
 }

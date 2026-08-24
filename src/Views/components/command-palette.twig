@@ -1,33 +1,37 @@
 <!-- Universal Financial Command Palette Modal (Cmd + K / Ctrl + K) -->
 <dialog id="command-palette-modal" 
-    class="fixed inset-0 m-auto z-50 rounded-3xl shadow-2xl p-0 w-full max-w-xl border border-slate-200 bg-white/95 backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm overflow-hidden text-slate-800"
+    class="rounded-3xl border border-slate-200 bg-white/98 backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm shadow-2xl text-slate-800 overflow-hidden"
     aria-labelledby="command-palette-title">
     
+    <!-- Accessible Screen Reader Heading -->
+    <h2 id="command-palette-title" class="sr-only">Universal Financial Command Palette</h2>
+    
     <!-- Search Bar Header -->
-    <div class="flex items-center px-4 py-3.5 border-b border-slate-100 gap-3">
-        <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="flex items-center px-4 py-3.5 border-b border-slate-100 gap-3 bg-slate-50/70">
+        <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
+        <!-- 16px text-base on mobile to eliminate iOS Safari viewport auto-zoom -->
         <input type="text" id="command-palette-input" 
             placeholder="Search calculators, guides, formulas, or tax rules (e.g. 'SWP', '112A')..." 
-            class="w-full bg-transparent text-sm sm:text-base font-semibold text-slate-800 placeholder-slate-400 focus:outline-none"
+            class="w-full bg-transparent text-base md:text-sm font-semibold text-slate-800 placeholder-slate-400 focus:outline-none"
             autocomplete="off"
             aria-autocomplete="list"
             aria-controls="command-palette-results">
-        <kbd class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-500">ESC</kbd>
+        <kbd class="text-[10px] font-bold px-2 py-1 rounded-lg bg-white border border-slate-200 text-slate-500 shadow-2xs">ESC</kbd>
     </div>
 
-    <!-- Results List -->
-    <div id="command-palette-results" class="max-h-[60vh] overflow-y-auto p-2 space-y-1 custom-scrollbar" role="listbox">
+    <!-- Results List (Dynamic) -->
+    <div id="command-palette-results" class="max-h-[50dvh] md:max-h-[55vh] overflow-y-auto p-2 space-y-1 custom-scrollbar" role="listbox">
         <!-- Results will be dynamically filtered and rendered by CommandPaletteController -->
     </div>
 
     <!-- Keyboard Shortcuts Footer -->
     <div class="flex items-center justify-between px-4 py-2.5 bg-slate-50 border-t border-slate-100 text-[11px] font-semibold text-slate-400">
         <div class="flex items-center gap-3">
-            <span><kbd class="px-1 py-0.5 bg-white rounded border border-slate-200 text-slate-600">↑</kbd> <kbd class="px-1 py-0.5 bg-white rounded border border-slate-200 text-slate-600">↓</kbd> Navigate</span>
-            <span><kbd class="px-1.5 py-0.5 bg-white rounded border border-slate-200 text-slate-600">↵</kbd> Open</span>
+            <span><kbd class="px-1.5 py-0.5 bg-white rounded border border-slate-200 text-slate-600 shadow-2xs">↑</kbd> <kbd class="px-1.5 py-0.5 bg-white rounded border border-slate-200 text-slate-600 shadow-2xs">↓</kbd> Navigate</span>
+            <span><kbd class="px-1.5 py-0.5 bg-white rounded border border-slate-200 text-slate-600 shadow-2xs">↵</kbd> Open</span>
         </div>
-        <span>Instant Local Search</span>
+        <span class="font-mono text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Local Instant Search</span>
     </div>
 </dialog>

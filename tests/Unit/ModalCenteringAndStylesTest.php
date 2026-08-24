@@ -25,23 +25,26 @@ final class ModalCenteringAndStylesTest extends TestCase
         $this->assertStringContainsString('position: fixed;', $this->stylesCss);
         $this->assertStringContainsString('inset: 0;', $this->stylesCss);
         $this->assertStringContainsString('margin: auto;', $this->stylesCss);
+        $this->assertStringContainsString('width: min(calc(100vw - 2rem), 36rem);', $this->stylesCss);
+        $this->assertStringContainsString('dialog:not([open]) {', $this->stylesCss);
+        $this->assertStringContainsString('display: none !important;', $this->stylesCss);
+        $this->assertStringContainsString('dialog[open] {', $this->stylesCss);
+        $this->assertStringContainsString('display: flex !important;', $this->stylesCss);
         $this->assertStringContainsString('dialog::backdrop', $this->stylesCss);
     }
 
-    public function testTaxWaterfallModalHasCenteringClasses(): void
+    public function testTaxWaterfallModalHasDialogMarkup(): void
     {
         $content = (string) file_get_contents(__DIR__ . '/../../src/Views/components/tax-waterfall-modal.twig');
         $this->assertStringContainsString('id="tax-waterfall-modal"', $content);
-        $this->assertStringContainsString('fixed inset-0 m-auto', $content);
-        $this->assertStringContainsString('z-50', $content);
+        $this->assertStringContainsString('<dialog', $content);
     }
 
-    public function testCommandPaletteModalHasCenteringClasses(): void
+    public function testCommandPaletteModalHasDialogMarkup(): void
     {
         $content = (string) file_get_contents(__DIR__ . '/../../src/Views/components/command-palette.twig');
         $this->assertStringContainsString('id="command-palette-modal"', $content);
-        $this->assertStringContainsString('fixed inset-0 m-auto', $content);
-        $this->assertStringContainsString('z-50', $content);
+        $this->assertStringContainsString('<dialog', $content);
     }
 
     public function testPdfModalsHaveCenteringClasses(): void
@@ -58,12 +61,15 @@ final class ModalCenteringAndStylesTest extends TestCase
         $this->assertStringContainsString('z-50', $guideContent);
     }
 
-    public function testGoalCommitmentAndQrModalsHaveCenteringClasses(): void
+    public function testGoalCommitmentAndQrModalsHaveDialogMarkup(): void
     {
         $goalContent = (string) file_get_contents(__DIR__ . '/../../src/Views/components/goal-commitment-modal.twig');
         $qrContent = (string) file_get_contents(__DIR__ . '/../../src/Views/components/qr-share-modal.twig');
 
-        $this->assertStringContainsString('fixed inset-0 z-50 flex items-center justify-center', $goalContent);
-        $this->assertStringContainsString('fixed inset-0 z-50 flex items-center justify-center', $qrContent);
+        $this->assertStringContainsString('id="goal-commitment-modal"', $goalContent);
+        $this->assertStringContainsString('<dialog', $goalContent);
+
+        $this->assertStringContainsString('id="qr-share-modal"', $qrContent);
+        $this->assertStringContainsString('<dialog', $qrContent);
     }
 }

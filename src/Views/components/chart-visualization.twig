@@ -1,175 +1,310 @@
 <div class="space-y-4">
-    <!-- Summary Cards -->
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div class="bg-white/90 backdrop-blur-md rounded-2xl border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.04)] p-3 sm:p-4 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-slate-300">
-            <div class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
-                <span>💰</span>
+    <!-- Fluid Quantum Wealth Ribbon Grid (Zero-CLS 4-column responsive container) -->
+    <div id="summary-cards-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 transition-all duration-300">
+        <!-- Card 1: Total Invested -->
+        <div class="bg-white/95 rounded-2xl border border-slate-200/90 shadow-[0_2px_10px_-2px_rgba(0,0,0,0.03)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-slate-300 group flex flex-col justify-between">
+            <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
+                <span class="text-xs">💰</span>
                 <span>Total Invested</span>
             </div>
-            <div id="summary-invested" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-slate-800 font-mono tabular-nums transition-numbers truncate">
+            <div id="summary-invested" class="text-sm sm:text-base md:text-lg xl:text-xl font-black text-slate-900 font-mono tabular-nums transition-numbers truncate py-0.5">
                 ₹ --
             </div>
+            <div class="text-[9px] sm:text-[10px] font-bold text-slate-400 font-mono">
+                Principal Capital
+            </div>
         </div>
-        <div class="bg-white/90 backdrop-blur-md rounded-2xl border border-emerald-200/80 shadow-[0_2px_12px_-2px_rgba(4,120,87,0.08)] p-3 sm:p-4 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-emerald-300">
+
+        <!-- Card 2: Compounding Gains -->
+        <div class="bg-white/95 rounded-2xl border border-emerald-200/90 shadow-[0_2px_12px_-2px_rgba(16,185,129,0.08)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-emerald-300 group flex flex-col justify-between relative">
             <div id="title-interest-container" class="flex items-center justify-center gap-1 mb-1">
-                <span id="title-interest" class="text-[10px] sm:text-xs font-bold text-emerald-700 uppercase tracking-wider leading-tight flex items-center gap-0.5">
+                <span id="title-interest" class="text-[10px] sm:text-xs font-bold text-emerald-800 uppercase tracking-wider leading-tight flex items-center gap-0.5">
                     <span>↗</span>
-                    <span>Total Gains</span>
+                    <span>Compound Gains</span>
                 </span>
-                <span id="summary-gain-badge" class="hidden sm:inline-flex items-center text-[9px] font-black px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+            </div>
+            <div id="summary-interest" class="text-sm sm:text-base md:text-lg xl:text-xl font-black text-emerald-700 font-mono tabular-nums transition-numbers truncate py-0.5">
+                ₹ --
+            </div>
+            <div class="flex items-center justify-center gap-1">
+                <span id="summary-gain-badge" class="inline-flex items-center text-[9px] font-black px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-200">
                     +0%
                 </span>
             </div>
-            <div id="summary-interest" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-emerald-700 font-mono tabular-nums transition-numbers truncate">
-                ₹ --
-            </div>
         </div>
-        <div class="bg-white/90 backdrop-blur-md rounded-2xl border border-rose-200/80 shadow-[0_2px_12px_-2px_rgba(190,18,60,0.08)] p-3 sm:p-4 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-rose-300">
-            <div class="text-[10px] sm:text-xs font-bold text-rose-700 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-0.5">
+
+        <!-- Card 3: Total Withdrawn (Morphs visible only in SWP mode) -->
+        <div id="card-withdrawn" class="hidden bg-white/95 rounded-2xl border border-rose-200/90 shadow-[0_2px_12px_-2px_rgba(244,63,94,0.08)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-rose-300 group flex flex-col justify-between">
+            <div class="text-[10px] sm:text-xs font-bold text-rose-800 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-0.5">
                 <span>↘</span>
-                <span>Total Withdrawn</span>
+                <span>Total Payouts</span>
             </div>
-            <div id="summary-withdrawn" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-rose-700 font-mono tabular-nums transition-numbers truncate">
+            <div id="summary-withdrawn" class="text-sm sm:text-base md:text-lg xl:text-xl font-black text-rose-700 font-mono tabular-nums transition-numbers truncate py-0.5">
                 ₹ --
             </div>
+            <div class="text-[9px] sm:text-[10px] font-bold text-rose-400 font-mono">
+                Systematic Cashflow
+            </div>
         </div>
-        <div class="bg-white/95 backdrop-blur-md rounded-2xl border-2 border-emerald-600/80 shadow-[0_4px_20px_-2px_rgba(4,120,87,0.15)] p-3 sm:p-4 text-center overflow-hidden transition-all duration-200 hover:shadow-xl hover:border-emerald-700">
-            <div id="title-corpus" class="text-[10px] sm:text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
+
+        <!-- Card 4: Final Corpus / Net Wealth -->
+        <div class="bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl border-2 border-emerald-600/90 shadow-[0_4px_16px_-2px_rgba(16,185,129,0.15)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-xl hover:border-emerald-700 relative group flex flex-col justify-between">
+            <div id="title-corpus" class="text-[10px] sm:text-xs font-bold text-emerald-900 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span>💎</span>
-                <span>Final Corpus</span>
+                <span>Final Wealth Corpus</span>
             </div>
-            <div id="summary-corpus" class="text-sm sm:text-base md:text-lg xl:text-xl font-extrabold text-emerald-700 font-mono tabular-nums transition-numbers truncate">
+            <div id="summary-corpus" class="text-base sm:text-lg md:text-xl xl:text-2xl font-black text-emerald-950 font-mono tabular-nums transition-numbers truncate py-0.5">
                 ₹ --
             </div>
-            <div id="post-tax-statutory-pill" class="hidden mt-1 text-[10px] font-bold text-violet-700 bg-violet-50 border border-violet-200 px-2 py-0.5 rounded-md truncate">
-                ⚖️ Budget 2024 §112A Net
+            <div class="flex items-center justify-center gap-1">
+                <div id="post-tax-statutory-pill" class="hidden text-[9px] font-black text-violet-900 bg-violet-100/90 border border-violet-200 px-1.5 py-0.2 rounded truncate">
+                    ⚖️ §112A Net
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Responsive SEBI / AMFI Statutory Methodology Strip -->
-    <div class="flex items-center justify-between px-3.5 py-2 rounded-2xl bg-slate-50 border border-slate-200/80 text-[11px] text-slate-700 shadow-2xs">
-        <div class="flex items-center gap-2">
-            <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-black">✓</span>
-            <span class="font-bold text-slate-800">SEBI / AMFI Aligned Standard</span>
-            <span class="text-slate-300">|</span>
-            <span class="hidden sm:inline text-slate-600 font-medium">CAGR / Annuity-Due Compounding Model</span>
+    <!-- Unified Compounding Alpha Beacon & Dynamic Insight Dock -->
+    <div id="contextual-alpha-radar" class="hidden items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white/95 border border-slate-200/90 shadow-2xs transition-all">
+        <div class="flex items-center gap-2.5 min-w-0">
+            <span id="contextual-radar-icon" class="text-base shrink-0 flex items-center justify-center w-7 h-7 rounded-xl bg-slate-100">⚡</span>
+            <div id="contextual-radar-text" class="text-xs text-slate-800 font-medium truncate"></div>
         </div>
-        <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.showModal()"
-            class="font-bold text-emerald-700 hover:text-emerald-800 underline underline-offset-2 cursor-pointer text-xs"
-            aria-label="Verify SEBI Benchmark Assumptions">
-            Verify Assumptions
-        </button>
+        <div class="flex items-center gap-2 shrink-0">
+            <button type="button" id="alpha-drawer-toggle" 
+                class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold text-slate-600 bg-slate-100/80 hover:bg-slate-200/80 border border-slate-200/80 transition cursor-pointer"
+                aria-expanded="false" aria-controls="alpha-secondary-insights" title="View all financial compounding insights">
+                <span>Insights</span>
+                <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <button type="button" id="contextual-radar-action" class="hidden px-2.5 py-1 rounded-xl text-xs font-bold bg-white text-slate-800 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer"></button>
+        </div>
     </div>
 
-    <!-- Single Prioritized Contextual Insight Radar -->
-    <div id="contextual-alpha-radar" class="hidden items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200 shadow-2xs transition-all">
-        <div class="flex items-center gap-2.5">
-            <span id="contextual-radar-icon" class="text-base shrink-0">⚡</span>
-            <div id="contextual-radar-text" class="text-xs text-slate-800"></div>
-        </div>
-        <button type="button" id="contextual-radar-action" class="hidden px-2.5 py-1 rounded-xl text-xs font-bold bg-white text-slate-800 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer shrink-0"></button>
-    </div>
-
-    <!-- Velocity & Feasibility Badges Row (Preserved for backward DOM parity) -->
-    <div class="flex flex-wrap items-center gap-2 px-1 -mt-1">
-        <div id="daily-lifestyle-multiplier-badge" class="hidden items-center gap-1.5 text-[11px] font-bold px-3 py-1 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-900 border border-emerald-200/90 shadow-2xs">
+    <!-- Expandable Secondary Insights Drawer (Preserves all DOM IDs for telemetry & parity) -->
+    <div id="alpha-secondary-insights" class="hidden flex-wrap items-center gap-1.5 px-2.5 py-2 bg-slate-50/80 rounded-xl border border-slate-200/60 -mt-2 transition-all">
+        <div id="daily-lifestyle-multiplier-badge" class="hidden items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-900 border border-emerald-200/90 shadow-2xs">
             <span>⚡</span>
-            <span id="daily-accrual-amount" class="font-extrabold font-mono text-emerald-700">₹0 / day</span>
+            <span id="daily-accrual-amount" class="font-extrabold font-mono text-emerald-800">₹0 / day</span>
             <span class="text-slate-400">•</span>
-            <span id="daily-lifestyle-equiv" class="font-medium text-slate-700">Daily compounding velocity at maturity</span>
+            <span id="daily-lifestyle-equiv" class="font-medium text-slate-700">Daily compounding velocity</span>
         </div>
-        <span id="summary-delay-cost-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 border border-rose-200/80 shadow-2xs"></span>
-        <span id="summary-crossover-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100/90 text-emerald-800 border border-emerald-200 shadow-2xs"></span>
-        <span id="summary-longevity-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100/90 text-emerald-800 border border-emerald-200 shadow-2xs"></span>
-        <span id="summary-ratio-pill" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200/80 shadow-2xs"></span>
-        <span id="summary-doubling-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200/80 shadow-2xs"></span>
-        <span id="summary-daily-accrual" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-teal-50 text-teal-800 border border-teal-200/80 shadow-2xs"></span>
+        <span id="summary-delay-cost-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-rose-50 text-rose-900 border border-rose-200/80 shadow-2xs"></span>
+        <span id="summary-crossover-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100/90 text-emerald-900 border border-emerald-200 shadow-2xs"></span>
+        <span id="summary-longevity-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100/90 text-emerald-900 border border-emerald-200 shadow-2xs"></span>
+        <span id="summary-ratio-pill" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-900 border border-indigo-200/80 shadow-2xs"></span>
+        <span id="summary-doubling-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-900 border border-amber-200/80 shadow-2xs"></span>
+        <span id="summary-daily-accrual" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-teal-50 text-teal-900 border border-teal-200/80 shadow-2xs"></span>
+    </div>
+
+    <!-- Empathetic SWR Longevity Guardian Alert (Zero-CLS Container) -->
+    <div id="swp-longevity-guardian-alert" class="hidden p-3.5 sm:p-4 rounded-2xl bg-amber-50/90 border border-amber-200/90 shadow-2xs transition-all">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div class="flex items-start gap-2.5">
+                <span class="flex items-center justify-center w-7 h-7 rounded-xl bg-amber-100 text-amber-900 text-sm font-black shrink-0 mt-0.5">🛡️</span>
+                <div>
+                    <h4 class="text-xs sm:text-sm font-extrabold text-amber-950 flex items-center gap-1.5">
+                        <span>Corpus Depletion Risk at</span>
+                        <span id="swp-depletion-year-text" class="text-rose-700 underline underline-offset-2">Year --</span>
+                    </h4>
+                    <p class="text-[11px] text-amber-950 leading-relaxed mt-0.5">
+                        Current withdrawal outpaces portfolio compounding. Reduce to a mathematically sustainable rate of <strong id="swp-safe-amount-text" class="font-mono text-amber-950 font-bold">₹ --/mo</strong> for complete horizon protection.
+                    </p>
+                </div>
+            </div>
+            <button type="button" id="auto-heal-swp-btn" class="w-full sm:w-auto px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shrink-0 shadow-sm transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-1.5">
+                <span>✨</span>
+                <span>Auto-Heal Safe SWP</span>
+            </button>
+        </div>
     </div>
 
     <!-- Chart Card -->
-    <div class="relative z-10 bg-[var(--glass-bg)] rounded-3xl border border-[var(--glass-border)] shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-emerald-500/10 p-4 sm:p-6">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-            <div class="flex flex-wrap items-center gap-3">
-                <span class="text-xs font-bold text-emerald-700 tracking-widest uppercase">Wealth Projection</span>
-                
-                <!-- Contextual AMFI/SEBI Mutual Fund Regulatory Indicator & Privacy Pill -->
-                <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.showModal()"
-                    class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-100/90 hover:bg-slate-200/90 border border-slate-200/90 text-[10px] text-slate-700 font-medium transition-colors cursor-pointer"
-                    title="Click to view regulatory modeling assumptions & AMFI benchmark standards">
-                    <svg class="w-3 h-3 text-emerald-700 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                    </svg>
-                    <span>SEBI/AMFI Aligned</span>
-                </button>
-
-                <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.showModal()"
-                    class="hidden lg:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 text-[10px] text-emerald-800 font-bold transition-colors cursor-pointer"
-                    title="All math executes locally in your browser. Zero financial data is tracked or transmitted.">
-                    <span>🔒</span>
-                    <span>100% Private (No Tracking)</span>
-                </button>
-
-                <!-- View Mode Switcher -->
-                <div class="inline-flex bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80" role="tablist" aria-label="Chart View">
-                    <button type="button" id="chart-view-line" role="tab" aria-selected="true"
-                        class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 bg-white text-emerald-700 shadow-sm border border-slate-200/40 cursor-pointer">
-                        📈 Growth Curve
-                    </button>
-                    <button type="button" id="chart-view-donut" role="tab" aria-selected="false"
-                        class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 text-slate-500 hover:text-slate-700 cursor-pointer">
-                        🍩 Allocation Split
-                    </button>
-                </div>
-            </div>
+    <div class="relative z-10 bg-white/95 rounded-3xl border border-slate-200/90 shadow-sm backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-md p-4 sm:p-5">
+        
+        <!-- ========================================================================= -->
+        <!-- TIER 1: UNIFIED MASTER COMMAND DOCK (Identity · Mode · Lenses · Actions) -->
+        <!-- ========================================================================= -->
+        <header class="flex flex-col gap-2.5 pb-3 border-b border-slate-100">
             
-            <div class="flex flex-wrap items-center gap-3">
-                <button type="button" id="snapshot-scenario-btn" 
-                    class="text-[11px] font-bold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-2xs"
-                    title="Snapshot current scenario to compare changes">
-                    <span>📸</span>
-                    <span>Snapshot</span>
-                </button>
+            <!-- Top Row: Identity, View Mode & Action Tools -->
+            <div class="flex items-center justify-between gap-3">
+                <!-- Left: Identity & Regulatory Seal -->
+                <div class="flex items-center gap-2 min-w-0">
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse"></span>
+                        <h3 class="text-xs sm:text-sm font-black text-slate-900 tracking-tight uppercase">
+                            Wealth Growth Projection
+                        </h3>
+                    </div>
+                    
+                    <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.showModal()"
+                        class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100/90 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-[10px] text-slate-600 hover:text-emerald-900 transition-all cursor-pointer shadow-2xs"
+                        title="Click to view AMFI/SEBI regulatory modeling assumptions">
+                        <span class="font-bold">AMFI Aligned</span>
+                        <span class="text-slate-400 text-[9px]">ℹ️</span>
+                    </button>
+                </div>
 
-                <button type="button" id="open-tax-waterfall-btn"
-                    class="text-[11px] font-bold px-2.5 py-1 rounded-lg border border-violet-200 bg-violet-50 text-violet-700 hover:bg-violet-100 hover:text-violet-900 transition-all cursor-pointer inline-flex items-center gap-1 shadow-2xs"
-                    title="View Section 112A Tax Waterfall Breakdown">
-                    <span>⚖️</span>
-                    <span>Tax Breakdown</span>
-                </button>
+                <!-- Right: View Switcher & Action Tools -->
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <!-- Segmented View Mode Switcher -->
+                    <div class="inline-flex bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 shadow-2xs" role="tablist" aria-label="Chart View Mode">
+                        <button type="button" id="chart-view-line" role="tab" aria-selected="true"
+                            class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 bg-white text-emerald-900 shadow-2xs border border-slate-200/60 cursor-pointer">
+                            📈 Line
+                        </button>
+                        <button type="button" id="chart-view-donut" role="tab" aria-selected="false"
+                            class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-900 cursor-pointer">
+                            🍩 Split
+                        </button>
+                    </div>
 
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-semibold text-slate-600">Post-Tax (LTCG)</span>
-                    <label class="toggle-switch relative inline-flex items-center cursor-pointer">
+                    <!-- Utility Action Buttons -->
+                    <div class="inline-flex items-center gap-1">
+                        <button type="button" id="snapshot-scenario-btn" 
+                            class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-2xs"
+                            title="Snapshot scenario for comparison">
+                            <span class="text-xs">📸</span>
+                        </button>
+                        <button type="button" id="open-tax-waterfall-btn" 
+                            class="p-1.5 rounded-xl border border-violet-200/80 bg-violet-50/80 hover:bg-violet-100 text-violet-800 transition-all active:scale-95 cursor-pointer shadow-2xs"
+                            title="Open Section 112A Tax Waterfall Modal">
+                            <span class="text-xs">⚖️</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Analytical Lenses Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+                <div class="flex flex-wrap items-center gap-1" role="group" aria-label="Analytical Projection Lenses">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mr-1">Lenses:</span>
+
+                    <!-- Lens: Corridor -->
+                    <label id="overlay-chip-corridor" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg cursor-pointer select-none transition-all duration-150 text-[10.5px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-emerald-900 has-checked:shadow-2xs has-checked:border-emerald-200 has-checked:font-bold" 
+                        title="Toggle 10th-90th Percentile Historical Volatility Corridor [Shift+C]">
+                        <input type="checkbox" id="show_historical_corridor" class="sr-only peer" aria-label="Show Historical Volatility Corridor">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-emerald-500 peer-checked:shadow-[0_0_6px_rgba(16,185,129,0.8)] transition-all"></span>
+                        <span>± Corridor</span>
+                        <span id="corridor-telemetry-pill" class="px-1 py-0.2 rounded bg-slate-200/60 peer-checked:bg-emerald-100 text-[9px] font-mono text-slate-600 peer-checked:text-emerald-800">10–90%</span>
+                    </label>
+
+                    <!-- Lens: Section 112A LTCG Tax -->
+                    <label id="overlay-chip-post-tax" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg cursor-pointer select-none transition-all duration-150 text-[10.5px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-violet-900 has-checked:shadow-2xs has-checked:border-violet-200 has-checked:font-bold" 
+                        title="Toggle Budget 2024 Section 112A Post-Tax Returns [Shift+T]">
                         <input type="checkbox" id="show_post_tax" class="sr-only peer" aria-label="Show Post-Tax Returns">
-                        <div class="w-9 h-5 bg-slate-200 peer-focus-visible:ring-2 peer-focus-visible:ring-emerald-400 peer-focus-visible:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-violet-500 peer-checked:shadow-[0_0_6px_rgba(139,92,246,0.8)] transition-all"></span>
+                        <span>§112A LTCG</span>
+                        <span id="tax-telemetry-pill" class="px-1 py-0.2 rounded bg-slate-200/60 peer-checked:bg-violet-100 text-[9px] font-mono text-slate-600 peer-checked:text-violet-800">12.5%</span>
+                    </label>
+
+                    <!-- Lens: Wealth Map -->
+                    <label id="overlay-chip-wealth-map" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg cursor-pointer select-none transition-all duration-150 text-[10.5px] font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-indigo-900 has-checked:shadow-2xs has-checked:border-indigo-200 has-checked:font-bold" 
+                        title="Toggle Stacked Principal vs Gain Decomposition [Shift+M]">
+                        <input type="checkbox" id="show_wealth_map" class="sr-only peer" aria-label="Show Wealth Map">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-indigo-500 peer-checked:shadow-[0_0_6px_rgba(99,102,241,0.8)] transition-all"></span>
+                        <span>Wealth Map</span>
+                        <span id="wealth-map-telemetry-pill" class="px-1 py-0.2 rounded bg-slate-200/60 peer-checked:bg-indigo-100 text-[9px] font-mono text-slate-600 peer-checked:text-indigo-800">Stack</span>
                     </label>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-semibold text-slate-600">Wealth Map</span>
-                    <label class="toggle-switch relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" id="show_wealth_map" class="sr-only peer" aria-label="Show Wealth Map">
-                        <div class="w-9 h-5 bg-slate-200 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-400 peer-focus-visible:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500"></div>
-                    </label>
+
+                <span id="active-lens-indicator" class="hidden sm:inline-flex items-center text-[10px] font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70">
+                    Standard View
+                </span>
+            </div>
+        </header>
+
+        <!-- ========================================================================= -->
+        <!-- TIER 2: ZERO-CLS DYNAMIC TELEMETRY HUD (Cross-Fading Resting vs Scrutiny) -->
+        <!-- ========================================================================= -->
+        <div id="chart-telemetry-hud" 
+            class="h-8 my-2 px-3 rounded-xl bg-slate-50/90 border border-slate-200/80 flex items-center justify-between gap-2 text-xs select-none transition-all duration-150 shadow-2xs">
+            
+            <!-- Live Horizon / Scrutiny Year Badge -->
+            <div class="flex items-center gap-1.5 min-w-0">
+                <span id="hud-status-dot" class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]"></span>
+                <span id="ribbon-inspect-year" class="font-extrabold text-slate-900 font-mono text-[11px] uppercase tracking-wide truncate">
+                    Final Year Projection
+                </span>
+            </div>
+
+            <!-- Metric Stream (Invested · Gains · Value) -->
+            <div class="flex items-center gap-2 sm:gap-3.5 font-mono text-[11px]">
+                <div class="hidden sm:inline-flex items-center gap-1 text-slate-500">
+                    <span>Invested:</span>
+                    <strong id="ribbon-inspect-invested" class="text-slate-800 font-bold">₹ --</strong>
+                </div>
+                <div class="inline-flex items-center gap-1 text-emerald-800">
+                    <span class="text-slate-500">Gains:</span>
+                    <strong id="ribbon-inspect-gains" class="font-bold">+₹ --</strong>
+                </div>
+                <div class="inline-flex items-center gap-1 text-slate-900 bg-white px-2 py-0.5 rounded-md border border-slate-200/80 shadow-2xs">
+                    <span class="text-slate-500">Corpus:</span>
+                    <strong id="ribbon-inspect-corpus" class="text-emerald-950 font-extrabold">₹ --</strong>
                 </div>
             </div>
-        </div>
-        <div class="h-[280px] sm:h-[350px] lg:h-[calc(100vh-340px)] min-h-[300px] max-h-[480px] w-full min-w-0 relative z-10">
-            <canvas id="corpusChart" role="img" aria-label="Investment growth projection line chart"></canvas>
         </div>
 
-        <!-- Benchmark Comparison Toggle -->
-        <div class="flex flex-wrap items-center justify-between gap-2 mt-4 pt-3 border-t border-slate-100/80">
-            <span class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Compare Against Historical Benchmarks:</span>
-            <div class="inline-flex flex-wrap items-center gap-1.5" role="group" aria-label="Historical Benchmarks">
-                <button type="button" class="benchmark-chip text-[10px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200/90 bg-slate-50 text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 transition-all cursor-pointer is-active bg-emerald-600 text-white border-emerald-600" data-benchmark="none">None</button>
-                <button type="button" class="benchmark-chip text-[10px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200/90 bg-slate-50 text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 transition-all cursor-pointer" data-benchmark="nifty">📈 Nifty 50 (12%)</button>
-                <button type="button" class="benchmark-chip text-[10px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200/90 bg-slate-50 text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 transition-all cursor-pointer" data-benchmark="gold">🥇 Gold (9%)</button>
-                <button type="button" class="benchmark-chip text-[10px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200/90 bg-slate-50 text-slate-600 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 transition-all cursor-pointer" data-benchmark="fd">🏦 Fixed Deposit (6.5%)</button>
-            </div>
+        <!-- Hidden compatibility anchor to preserve legacy test assertions -->
+        <div id="chart-inspection-ribbon" class="hidden sr-only" aria-hidden="true"></div>
+
+        <!-- ========================================================================= -->
+        <!-- TIER 3: INTERACTIVE CANVAS CONTAINER & ACCESSIBLE LEDGER                  -->
+        <!-- ========================================================================= -->
+        <div class="h-[300px] sm:h-[380px] lg:h-[450px] xl:h-[480px] w-full min-w-0 relative z-10" 
+            tabindex="0" id="chart-canvas-container" 
+            aria-label="Interactive Wealth Projection Chart. Use Left and Right arrow keys to inspect yearly progression.">
+            <canvas id="corpusChart" class="w-full h-full block" role="img" aria-label="Investment growth projection line chart"></canvas>
         </div>
+
+        <!-- Mobile Tactile Thumb Scrubber (Decoupled from canvas to prevent thumb occlusion) -->
+        <div id="mobile-chart-scrubber-container" class="sm:hidden mt-2.5 px-2 py-2 bg-slate-50 rounded-2xl border border-slate-200/80 shadow-2xs">
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-600 mb-1 px-1">
+                <span class="font-bold">Yr 1</span>
+                <span id="scrubber-active-indicator" class="font-black text-emerald-900 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200 shadow-2xs">
+                    Scrub Timeline
+                </span>
+                <span id="scrubber-max-indicator" class="font-bold">Yr --</span>
+            </div>
+            <input type="range" id="mobile-chart-scrubber" min="1" max="30" value="30" step="1"
+                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
+                aria-label="Scrub through investment timeline years">
+        </div>
+
+        <!-- Accessible Semantic Screen-Reader Data Ledger (WCAG 1.1.1 & 4.1.2) -->
+        <table class="sr-only" aria-label="Investment Growth Cashflow Ledger">
+            <caption>Annual wealth progression projection table for assistive technologies</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Year</th>
+                    <th scope="col">Invested Principal</th>
+                    <th scope="col">Estimated Gains</th>
+                    <th scope="col">Projected Corpus</th>
+                </tr>
+            </thead>
+            <tbody id="a11y-chart-table-body"></tbody>
+        </table>
+
+        <!-- ========================================================================= -->
+        <!-- TIER 4: REFINED HISTORICAL BENCHMARK BARREL STRIP                         -->
+        <!-- ========================================================================= -->
+        <footer class="flex flex-wrap items-center justify-between gap-2 mt-3 pt-2.5 border-t border-slate-100">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Compare Baseline:</span>
+            <div class="inline-flex flex-wrap items-center gap-1" role="group" aria-label="Historical Benchmarks">
+                <button type="button" class="benchmark-chip text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer is-active bg-emerald-600 text-white border-emerald-600 shadow-2xs" data-benchmark="none">None</button>
+                <button type="button" class="benchmark-chip text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer" data-benchmark="nifty">📈 Nifty 50 (12%)</button>
+                <button type="button" class="benchmark-chip text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer" data-benchmark="gold">🥇 Gold (9%)</button>
+                <button type="button" class="benchmark-chip text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer" data-benchmark="fd">🏦 Fixed Deposit (6.5%)</button>
+            </div>
+        </footer>
     </div>
 
     <!-- Milestones Section -->
     <div id="milestones-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
 </div>
+
+

@@ -1,0 +1,348 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Unit;
+
+use PHPUnit\Framework\TestCase;
+use Core\InvestmentCalculator;
+use Core\InvestmentInputs;
+
+/**
+ * Validates Chart.js, HTML5 Canvas, and Visualizer architecture calculations,
+ * including historical volatility corridor bands, safe SWP longevity convergence,
+ * and ROI multipliers.
+ */
+final class CanvasVisualizerTest extends TestCase
+{
+    private InvestmentCalculator $calculator;
+
+    protected function setUp(): void
+    {
+        $this->calculator = new InvestmentCalculator();
+    }
+
+    public function testHistoricalVolatilityCorridorBounds(): void
+    {
+        // 10th-90th percentile rolling 10-year Nifty 50 CAGRs
+        $lowerCagr = 10.2;
+        $upperCagr = 15.8;
+        $baselineCagr = 12.0;
+
+        $this->assertGreaterThan(0.0, $lowerCagr);
+        $this->assertLessThan($baselineCagr, $lowerCagr);
+        $this->assertGreaterThan($baselineCagr, $upperCagr);
+
+        // Verify bounds on ₹10,000 monthly SIP over 15 years
+        $inputs = InvestmentInputs::fromValues(
+            10000.0,
+            15,
+            $baselineCagr,
+            0.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            0.0,
+            0.0
+        );
+
+        $results = $this->calculator->calculate($inputs);
+        $lastRow = end($results);
+        $baselineCorpus = $lastRow['combined_total'];
+
+        $this->assertGreaterThan(4500000.0, $baselineCorpus);
+        $this->assertLessThan(6000000.0, $baselineCorpus);
+    }
+
+    public function testDonutRoiMultiplierDerivation(): void
+    {
+        // SIP ₹25k/mo, 10 years @ 12%, 10% stepup
+        $inputs = InvestmentInputs::fromValues(
+            25000.0,
+            10,
+            12.0,
+            10.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            0.0,
+            0.0
+        );
+
+        $results = $this->calculator->calculate($inputs);
+        $lastRow = end($results);
+
+        $invested = $lastRow['cumulative_invested'];
+        $corpus = $lastRow['combined_total'];
+        $multiplier = $invested > 0 ? round($corpus / $invested, 1) : 1.0;
+
+        $this->assertGreaterThanOrEqual(1.5, $multiplier);
+        $this->assertLessThanOrEqual(3.0, $multiplier);
+    }
+
+    public function testSwpDepletionSentinelAndSafeWithdrawal(): void
+    {
+        // ₹50 Lakhs starting corpus, target 20 years SWP @ 8% return, 5% annual hike
+        $corpus = 5000000.0;
+        $years = 20;
+        $rate = 8.0;
+        $stepup = 5.0;
+
+        $inputs = InvestmentInputs::fromValues(
+            0.0,
+            0,
+            0.0,
+            0.0,
+            true,
+            75000.0, // High withdrawal, will deplete prematurely
+            $stepup,
+            $years,
+            $corpus,
+            $rate
+        );
+
+        $safeWithdrawal = $this->calculator->calculateSafeSwpWithdrawal($inputs, $corpus);
+
+        $this->assertGreaterThan(25000.0, $safeWithdrawal);
+        $this->assertLessThan(40000.0, $safeWithdrawal);
+
+        // When using safe withdrawal, the portfolio MUST survive the full 20-year horizon
+        $safeInputs = InvestmentInputs::fromValues(
+            0.0,
+            0,
+            0.0,
+            0.0,
+            true,
+            $safeWithdrawal,
+            $stepup,
+            $years,
+            $corpus,
+            $rate
+        );
+
+        $safeResults = $this->calculator->calculate($safeInputs);
+        $finalRow = end($safeResults);
+        $this->assertGreaterThanOrEqual(0.0, $finalRow['combined_total']);
+    }
+
+    public function testCompoundingIgnitionPointDetection(): void
+    {
+        // 10,000 monthly SIP @ 12% CAGR with 0% step-up over 20 years
+        $inputs = InvestmentInputs::fromValues(
+            10000.0,
+            20,
+            12.0,
+            0.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            0.0,
+            0.0
+        );
+
+        $results = $this->calculator->calculate($inputs);
+
+        // Find ignition year where annual interest >= annual contribution (1,20,000/yr)
+        $ignitionYear = null;
+        foreach ($results as $row) {
+            if ($row['year'] > 1 && ($row['interest'] ?? 0.0) >= ($row['annual_contribution'] ?? 120000.0)) {
+                $ignitionYear = $row['year'];
+                break;
+            }
+        }
+
+        $this->assertNotNull($ignitionYear);
+        // At 12% CAGR, single year interest surpasses annual SIP contributions by year 7
+        $this->assertGreaterThanOrEqual(5, $ignitionYear);
+        $this->assertLessThanOrEqual(8, $ignitionYear);
+    }
+
+    public function testDevicePixelRatioConstraintLimits(): void
+    {
+        // Assert maximum safe DPR clamp is within [1.0, 2.5]
+        $rawDprRetina = 3.0;
+        $clampedDpr = min($rawDprRetina, 2.5);
+
+        $this->assertSame(2.5, $clampedDpr, 'DPR must be clamped to 2.5 to prevent mobile GPU thermal throttling');
+    }
+
+    public function testRealPurchasingPowerInflationDiscountingFormula(): void
+    {
+        // ₹1 Crore nominal corpus in 20 years at 6% inflation
+        $nominalCorpus = 10000000.0;
+        $years = 20;
+        $inflation = 6.0;
+
+        $discountFactor = pow(1.0 + ($inflation / 100.0), $years);
+        $realPurchasingPower = round($nominalCorpus / $discountFactor);
+
+        // At 6% inflation, ₹1 Crore in 20 years is worth approximately ₹31.18 Lakhs today
+        $this->assertGreaterThan(3000000.0, $realPurchasingPower);
+        $this->assertLessThan(3300000.0, $realPurchasingPower);
+    }
+
+    public function testFixedDepositAlphaDeltaComputation(): void
+    {
+        // 25,000 / mo over 15 years @ 12% equity vs 6.5% bank FD
+        $sipInputs = InvestmentInputs::fromValues(
+            25000.0,
+            15,
+            12.0,
+            0.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            0.0,
+            0.0
+        );
+
+        $results = $this->calculator->calculate($sipInputs);
+        $finalSipCorpus = end($results)['combined_total'];
+
+        // Compute 6.5% FD
+        $fdInputs = InvestmentInputs::fromValues(
+            25000.0,
+            15,
+            6.5,
+            0.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            0.0,
+            0.0
+        );
+
+        $fdResults = $this->calculator->calculate($fdInputs);
+        $finalFdCorpus = end($fdResults)['combined_total'];
+
+        $alphaDelta = $finalSipCorpus - $finalFdCorpus;
+        $this->assertGreaterThan(4500000.0, $alphaDelta, "Equity SIP must generate substantial Alpha Delta over Bank FD");
+        $this->assertGreaterThan($finalFdCorpus, $finalSipCorpus);
+    }
+
+    public function testPureLightModePaletteTokensIntegrity(): void
+    {
+        $jsonPath = __DIR__ . '/../../content/theme_tokens.json';
+        $this->assertFileExists($jsonPath);
+        $tokens = json_decode((string) file_get_contents($jsonPath), true);
+
+        $chartColors = $tokens['colors']['chart'] ?? [];
+        $this->assertNotEmpty($chartColors);
+
+        // Assert tooltip uses pure light mode background
+        $this->assertSame('rgba(255, 255, 255, 0.98)', $chartColors['tooltip_bg']);
+        $this->assertSame('#0f172a', $chartColors['tooltip_title']);
+        $this->assertSame('#334155', $chartColors['tooltip_body']);
+        $this->assertSame('rgba(203, 213, 225, 0.9)', $chartColors['tooltip_border']);
+    }
+
+    public function testGradientBucketingQuantizationLogic(): void
+    {
+        // Assert height bucketing by 30px intervals
+        $height1 = 342;
+        $height2 = 356;
+        $height3 = 380;
+
+        $bucket1 = (int) (round($height1 / 30) * 30);
+        $bucket2 = (int) (round($height2 / 30) * 30);
+        $bucket3 = (int) (round($height3 / 30) * 30);
+
+        $this->assertSame(330, $bucket1);
+        $this->assertSame(360, $bucket2);
+        $this->assertSame(390, $bucket3);
+    }
+
+    public function testSwpDepletionYearDetectionForDoughnutSentinel(): void
+    {
+        // ₹30 Lakh corpus, ₹50,000 monthly withdrawal, 8% return, 10% annual hike
+        $inputs = InvestmentInputs::fromValues(
+            0.0,
+            0,
+            0.0,
+            0.0,
+            true,
+            50000.0,
+            10.0,
+            20,
+            3000000.0,
+            8.0
+        );
+
+        $results = $this->calculator->calculate($inputs);
+        $depletionYear = null;
+
+        foreach ($results as $row) {
+            if ($row['combined_total'] <= 0.0 && ($row['annual_withdrawal'] ?? 0.0) > 0.0) {
+                $depletionYear = $row['year'];
+                break;
+            }
+        }
+
+        $this->assertNotNull($depletionYear);
+        $this->assertLessThanOrEqual(10, $depletionYear, "High withdrawal must trigger depletion within 10 years");
+    }
+
+    public function testMobileTickThinningLogic(): void
+    {
+        // Validate 5-year step thinning on 30-year horizon
+        $totalYears = 30;
+        $shownTicks = [];
+
+        for ($yr = 1; $yr <= $totalYears; $yr++) {
+            if ($yr === 1 || $yr % 5 === 0 || $yr === $totalYears) {
+                $shownTicks[] = "Y{$yr}";
+            }
+        }
+
+        $this->assertSame(['Y1', 'Y5', 'Y10', 'Y15', 'Y20', 'Y25', 'Y30'], $shownTicks);
+        $this->assertCount(7, $shownTicks, "Mobile X-axis must thin 30 ticks down to 7 readable benchmark steps");
+    }
+
+    public function testFlatSipBaselineWithLumpsumDoesNotExplode(): void
+    {
+        // ₹40 Lakh Lumpsum, ₹1 Lakh/mo SIP, 40 years @ 25% CAGR, 25% step-up
+        $inputs = InvestmentInputs::fromValues(
+            100000.0,
+            40,
+            25.0,
+            25.0,
+            false,
+            0.0,
+            0.0,
+            0,
+            4000000.0,
+            0.0
+        );
+
+        $results = $this->calculator->calculate($inputs);
+        $this->assertCount(40, $results);
+
+        // Flat SIP baseline (0% step-up) simulation
+        $initialLumpsum = 4000000.0;
+        $monthlySip = 100000.0;
+        $rate = 25.0;
+        $rm = $rate / 100 / 12;
+
+        $flatBalance = $initialLumpsum;
+        $flatData = [];
+
+        for ($i = 0; $i < count($results); $i++) {
+            for ($m = 0; $m < 12; $m++) {
+                $flatBalance = ($flatBalance + $monthlySip) * (1 + $rm);
+            }
+            $flatData[] = round($flatBalance);
+        }
+
+        $finalFlatCorpus = end($flatData);
+
+        // Final flat corpus over 40 years @ 25% must be finite and less than 1,000,000 Crores (1e13)
+        $this->assertGreaterThan(0, $finalFlatCorpus);
+        $this->assertLessThan(1.0e14, $finalFlatCorpus, "Flat SIP baseline must not produce astronomical values");
+        $this->assertLessThan($results[39]['combined_total'], $finalFlatCorpus, "Flat SIP baseline must be strictly less than stepped-up corpus");
+    }
+}

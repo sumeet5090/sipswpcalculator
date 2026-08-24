@@ -1,71 +1,199 @@
 <!-- Historical Black Swan Stress-Testing & Crash Recovery Simulator -->
-<div id="stress-test-simulator-card" class="p-5 sm:p-6 rounded-3xl bg-white/95 backdrop-blur-md text-slate-800 border border-slate-200 shadow-xl relative overflow-hidden spotlight-card">
-    <!-- Ambient Glow -->
-    <div class="absolute -left-16 -top-16 w-56 h-56 bg-rose-500/5 rounded-full blur-3xl pointer-events-none"></div>
+<div id="stress-test-simulator-card" class="p-5 sm:p-6 rounded-3xl bg-white/95 backdrop-blur-md text-slate-900 border border-slate-200/90 shadow-sm relative overflow-hidden">
+    <!-- Ambient Aurora Glow (Pure Light Mode: Rose & Emerald Accents) -->
+    <div class="absolute -left-16 -top-16 w-56 h-56 bg-rose-400/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -right-16 -bottom-16 w-56 h-56 bg-emerald-400/8 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="relative z-10">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-            <div class="flex items-center gap-2.5">
-                <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-rose-50 text-rose-600 border border-rose-200 text-sm font-black">📉</span>
+    <div class="relative z-10 space-y-5">
+        
+        <!-- ========================================================================= -->
+        <!-- HEADER DOCK: TITLE, CRASH EPOCH SELECTOR & BEHAVIORAL SENTINEL           -->
+        <!-- ========================================================================= -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <!-- Left: Module Identifier -->
+            <div class="flex items-center gap-3">
+                <div class="flex items-center justify-center w-10 h-10 rounded-2xl bg-rose-50 text-rose-700 border border-rose-200/80 shadow-2xs shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>
+                    </svg>
+                </div>
                 <div>
-                    <h4 class="text-xs sm:text-sm font-extrabold text-slate-900">Historical Black Swan Crash Simulator</h4>
-                    <p class="text-[11px] text-slate-500">Stress-test your portfolio against major Indian market shocks</p>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <h4 class="text-sm sm:text-base font-black text-slate-900 tracking-tight">
+                            Historical Market Crash &amp; Recovery Simulator
+                        </h4>
+                        <span id="stress-mode-badge" class="inline-flex items-center text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
+                            RCA Multiplier Engine
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">
+                        Stress-test your portfolio against major Indian market shocks and verify the power of disciplined SIP compounding
+                    </p>
                 </div>
             </div>
-            <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
-                Stress-Test Engine
+
+            <!-- Right: Crash Timing Epoch Selector -->
+            <div class="flex flex-wrap items-center gap-2 self-start lg:self-center">
+                <span class="text-[11px] font-bold text-slate-600">Crash Timing:</span>
+                <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 text-[11px] font-bold text-slate-600" role="group" aria-label="Crash Timing">
+                    <button type="button" class="crash-epoch-btn px-2.5 py-1 rounded-lg bg-white text-rose-900 shadow-2xs border border-slate-200/60 transition-all cursor-pointer font-bold" data-epoch="early">
+                        Early (Yr 3)
+                    </button>
+                    <button type="button" class="crash-epoch-btn px-2.5 py-1 rounded-lg text-slate-500 hover:text-slate-900 transition-all cursor-pointer font-medium" data-epoch="mid">
+                        Mid (Yr 7)
+                    </button>
+                    <button type="button" class="crash-epoch-btn px-2.5 py-1 rounded-lg text-slate-500 hover:text-slate-900 transition-all cursor-pointer font-medium" data-epoch="late">
+                        Late (Yr 12)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- SCENARIO SELECTOR BUTTONS (4 ICONIC INDIAN MARKET SHOCKS)                 -->
+        <!-- ========================================================================= -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" role="tablist" aria-label="Black Swan Scenarios">
+            
+            <!-- Scenario 1: Normal Growth (Active Default) -->
+            <button type="button" class="stress-choice-btn group p-3 rounded-2xl bg-white border-2 border-emerald-500 text-slate-900 text-left transition-all duration-200 cursor-pointer shadow-xs relative"
+                data-scenario="baseline" data-drop="0" data-recovery="0">
+                <div class="flex items-center justify-between mb-1">
+                    <strong class="text-xs font-black text-slate-900 group-hover:text-emerald-900">Steady Growth</strong>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                </div>
+                <div class="text-[11px] font-extrabold text-emerald-800 font-mono">0% Shock</div>
+                <div class="text-[9.5px] text-slate-500 font-medium">Linear Compounding</div>
+            </button>
+
+            <!-- Scenario 2: 2008 Lehman GFC -->
+            <button type="button" class="stress-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+                data-scenario="lehman" data-drop="52" data-recovery="24">
+                <div class="flex items-center justify-between mb-1">
+                    <strong class="text-xs font-black text-slate-900 group-hover:text-rose-900">2008 Lehman</strong>
+                    <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
+                </div>
+                <div class="text-[11px] font-extrabold text-rose-700 font-mono">-52% Shock</div>
+                <div class="text-[9.5px] text-slate-500 font-medium">24-Mo Rebound</div>
+            </button>
+
+            <!-- Scenario 3: 2020 COVID Flash Crash -->
+            <button type="button" class="stress-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+                data-scenario="covid" data-drop="38" data-recovery="8">
+                <div class="flex items-center justify-between mb-1">
+                    <strong class="text-xs font-black text-slate-900 group-hover:text-amber-900">2020 COVID</strong>
+                    <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
+                </div>
+                <div class="text-[11px] font-extrabold text-amber-700 font-mono">-38% Shock</div>
+                <div class="text-[9.5px] text-slate-500 font-medium">8-Mo V-Shape</div>
+            </button>
+
+            <!-- Scenario 4: 2015-16 Midcap Bear Market -->
+            <button type="button" class="stress-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+                data-scenario="midcap2015" data-drop="25" data-recovery="18">
+                <div class="flex items-center justify-between mb-1">
+                    <strong class="text-xs font-black text-slate-900 group-hover:text-indigo-900">2015-16 Bear</strong>
+                    <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
+                </div>
+                <div class="text-[11px] font-extrabold text-indigo-700 font-mono">-25% Chop</div>
+                <div class="text-[9.5px] text-slate-500 font-medium">18-Mo Grinding Trough</div>
+            </button>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- LIVE CRASH REACTION LEDGER & BEHAVIORAL CONTRAST COCKPIT                  -->
+        <!-- ========================================================================= -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-slate-50/90 border border-slate-200/90 space-y-4">
+            
+            <!-- Top Metric Ribbon: Behavioral Path Comparison (Stay Invested vs Panic) -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-slate-200/70">
+                <div>
+                    <div class="text-[10.5px] font-extrabold uppercase tracking-wider text-slate-500">
+                        The Conviction Multiplier (Cost of Panic Selling)
+                    </div>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span id="stress-conviction-gain" class="text-2xl sm:text-3xl font-black text-emerald-800 font-mono tracking-tight">
+                            +₹0.00
+                        </span>
+                        <div class="flex flex-col">
+                            <span id="stress-behavior-tag" class="inline-flex items-center text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/80">
+                                100% Corpus Retained
+                            </span>
+                            <span id="stress-rebound-timeline" class="text-[10px] text-slate-500 font-bold mt-0.5">
+                                Steady Compounding Baseline
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Path Comparison Summary Mini-Pill -->
+                <div class="flex items-center gap-2 self-start sm:self-center">
+                    <div class="px-3 py-1.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs text-left">
+                        <div class="text-[9.5px] font-bold text-slate-500 uppercase">Disciplined SIP</div>
+                        <div id="stress-path-disciplined" class="text-xs font-black text-emerald-800 font-mono">₹ --</div>
+                    </div>
+                    <div class="px-3 py-1.5 rounded-xl bg-white border border-slate-200/80 shadow-2xs text-left">
+                        <div class="text-[9.5px] font-bold text-slate-500 uppercase">Panic Exited</div>
+                        <div id="stress-path-panic" class="text-xs font-black text-rose-700 font-mono">₹ --</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3-Column Quantitative Shock Ledger Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
+                    <div class="text-[10px] uppercase font-bold text-slate-500">Max Temporary Drawdown</div>
+                    <div id="stress-preview-drawdown" class="text-sm sm:text-base font-black text-rose-700 font-mono mt-0.5">
+                        ₹ 0 (0%)
+                    </div>
+                    <span id="stress-drawdown-subtext" class="text-[9.5px] text-slate-500 font-medium">Temporary Paper Loss</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
+                    <div class="text-[10px] uppercase font-bold text-slate-500">Historical Breakeven Window</div>
+                    <div id="stress-preview-recovery" class="text-sm sm:text-base font-black text-emerald-800 font-mono mt-0.5">
+                        0 Months (No Drop)
+                    </div>
+                    <span class="text-[9.5px] text-slate-500 font-medium">New All-Time High Timeline</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
+                    <div class="text-[10px] uppercase font-bold text-slate-500">Final Wealth After Rebound</div>
+                    <div id="stress-preview-final" class="text-sm sm:text-base font-black text-slate-900 font-mono mt-0.5">
+                        ₹ --
+                    </div>
+                    <span class="text-[9.5px] text-slate-500 font-medium">With Discount NAV Units</span>
+                </div>
+            </div>
+
+            <!-- Rupee Cost Averaging Lesson Callout Banner -->
+            <div id="stress-lesson-callout" class="p-3 rounded-xl bg-emerald-50/80 border border-emerald-200/80 flex items-start gap-2.5 text-xs text-emerald-950">
+                <span class="flex items-center justify-center w-5 h-5 rounded-lg bg-emerald-100 text-emerald-800 font-bold shrink-0 mt-0.5">💡</span>
+                <div class="leading-relaxed">
+                    <strong class="font-extrabold text-emerald-900 block">Rupee Cost Averaging (RCA) Insight</strong>
+                    <span id="stress-lesson-text">
+                        In a steady compounding market, monthly SIP systematically accumulates wealth with standard compound interest.
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- ACTION ROW: VISUALIZE ON MASTER CHART WITH JUMP ANCHOR                    -->
+        <!-- ========================================================================= -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
+            <span class="text-xs text-slate-500 font-medium">
+                Overlay this historical crash trajectory directly onto your main interactive growth chart:
             </span>
-        </div>
-
-        <!-- Crash Selector Buttons -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4" role="tablist" aria-label="Black Swan Scenarios">
-            <button type="button" class="stress-choice-btn p-2.5 rounded-xl bg-white border-2 border-emerald-500 text-slate-900 text-left transition-all cursor-pointer shadow-sm" data-scenario="baseline" data-drop="0" data-recovery="0" data-year="0">
-                <strong class="text-xs block">Normal Growth</strong>
-                <span class="text-[10px] text-emerald-700 font-semibold">Steady Compounding</span>
-            </button>
-            <button type="button" class="stress-choice-btn p-2.5 rounded-xl bg-slate-50/90 border border-slate-200 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all cursor-pointer" data-scenario="lehman" data-drop="52" data-recovery="24" data-year="3">
-                <strong class="text-xs block">2008 Lehman</strong>
-                <span class="text-[10px] text-rose-600 font-semibold">-52% Drop (Yr 3)</span>
-            </button>
-            <button type="button" class="stress-choice-btn p-2.5 rounded-xl bg-slate-50/90 border border-slate-200 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all cursor-pointer" data-scenario="covid" data-drop="38" data-recovery="8" data-year="5">
-                <strong class="text-xs block">2020 COVID</strong>
-                <span class="text-[10px] text-amber-700 font-semibold">-38% Drop (Yr 5)</span>
-            </button>
-            <button type="button" class="stress-choice-btn p-2.5 rounded-xl bg-slate-50/90 border border-slate-200 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all cursor-pointer" data-scenario="dotcom" data-drop="30" data-recovery="36" data-year="2">
-                <strong class="text-xs block">2000 Dot-Com</strong>
-                <span class="text-[10px] text-indigo-700 font-semibold">3 Flat / Bear Yrs</span>
-            </button>
-        </div>
-
-        <!-- Stress Metrics Display -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/80 mb-3">
-            <div>
-                <div class="text-[10px] uppercase font-bold text-slate-500">Max Temporary Drawdown</div>
-                <div id="stress-preview-drawdown" class="text-sm font-extrabold text-rose-600 font-mono mt-0.5">₹ 0 (0%)</div>
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button type="button" id="toggle-plot-shock-btn"
+                    class="w-full sm:w-auto px-4 py-2.5 rounded-xl font-bold bg-white hover:bg-slate-50 text-slate-700 hover:text-rose-800 border border-slate-200/90 hover:border-rose-300 transition-all cursor-pointer text-xs shadow-2xs active:scale-95 flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>
+                    </svg>
+                    <span>Plot Shock Path on Chart</span>
+                </button>
             </div>
-            <div>
-                <div class="text-[10px] uppercase font-bold text-slate-500">Historical Breakeven Time</div>
-                <div id="stress-preview-recovery" class="text-sm font-extrabold text-emerald-700 font-mono mt-0.5">0 Months (No Drop)</div>
-            </div>
-            <div>
-                <div class="text-[10px] uppercase font-bold text-slate-500">Net Wealth After Rebound</div>
-                <div id="stress-preview-final" class="text-sm font-extrabold text-slate-900 font-mono mt-0.5">₹ --</div>
-            </div>
-        </div>
-
-        <!-- Rupee Cost Averaging Lesson Callout -->
-        <div id="stress-lesson-callout" class="text-[11px] text-slate-700 p-2.5 rounded-xl bg-amber-50/80 border border-amber-200/80 flex items-start gap-2 mb-3">
-            <span class="text-xs">💡</span>
-            <span id="stress-lesson-text" class="text-slate-700">In a steady compounding market, monthly SIP systematically accumulates wealth with standard compound interest.</span>
-        </div>
-
-        <!-- Action Row: Plot on Chart -->
-        <div class="flex items-center justify-between pt-1 border-t border-slate-100">
-            <span class="text-[11px] text-slate-500 font-medium">Visualize historical shock recovery on Growth Curve:</span>
-            <button type="button" id="toggle-plot-shock-btn"
-                class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-bold transition-all cursor-pointer shadow-2xs active:scale-95 flex items-center gap-1.5">
-                <span>📉 Plot Shock Trajectory on Chart</span>
-            </button>
         </div>
     </div>
 </div>
+

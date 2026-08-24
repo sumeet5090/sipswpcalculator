@@ -132,6 +132,9 @@ try {
     } else if (inputArgs.action === 'delay_cost') {
         const res = MathEngine.calculateDelayCost(inputArgs.inputs);
         console.log(JSON.stringify({ result: res }));
+    } else if (inputArgs.action === 'safe_swp_withdrawal') {
+        const res = MathEngine.calculateSafeSwpWithdrawal(inputArgs.inputs, inputArgs.starting_corpus);
+        console.log(JSON.stringify({ result: res }));
     } else if (inputArgs.action === 'generate_qr_test') {
         const matrix = QrCodeGenerator.generateMatrix(inputArgs.text);
         console.log(JSON.stringify({
