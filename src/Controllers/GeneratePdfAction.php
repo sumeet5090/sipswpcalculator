@@ -9,7 +9,7 @@ use Core\Http\Response;
 use Core\Exceptions\RateLimitExceededException;
 use Core\InvestmentCalculator;
 use Core\InvestmentInputs;
-use Services\ConfigService;
+use Services\ConfigServiceInterface;
 use Services\FileUploadService;
 use Services\HtmlSanitizer;
 use Core\CurrencyFormatterInterface;
@@ -21,7 +21,7 @@ class GeneratePdfAction
 {
     private RateLimiter $rateLimiter;
     private PdfGeneratorService $pdfGenerator;
-    private ConfigService $configService;
+    private ConfigServiceInterface $configService;
     private FileUploadService $fileUploadService;
     private HtmlSanitizer $sanitizer;
     private InvestmentCalculator $calculator;
@@ -31,7 +31,7 @@ class GeneratePdfAction
     public function __construct(
         RateLimiter $rateLimiter,
         PdfGeneratorService $pdfGenerator,
-        ConfigService $configService,
+        ConfigServiceInterface $configService,
         FileUploadService $fileUploadService,
         HtmlSanitizer $sanitizer,
         InvestmentCalculator $calculator,
@@ -72,12 +72,12 @@ class GeneratePdfAction
             $calcInputs = InvestmentInputs::fromRequest($post, $this->configService);
             $combined = $this->calculator->calculate($calcInputs);
 
-            // Derive verified server-side summary values from calculated schedule
+            // Derive verified server-side summary values from calculated schedule using exact closed-form delta reconciliation
             $lastRow = !empty($combined) ? $combined[count($combined) - 1] : [];
             $serverInvested = (float) ($lastRow['cumulative_invested'] ?? 0);
-            $serverInterest = (float) array_sum(array_column($combined, 'interest'));
             $serverWithdrawn = (float) ($lastRow['cumulative_withdrawals'] ?? 0);
             $serverCorpus = (float) ($lastRow['combined_total'] ?? 0);
+            $serverInterest = max(0.0, ($serverCorpus + $serverWithdrawn) - $serverInvested);
 
             $sym = $this->sanitizer->sanitizeText((string) ($post['currency_symbol'] ?? '₹'), 10);
             $formatter = $this->currencyFormatter;

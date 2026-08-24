@@ -25,7 +25,7 @@ class GuideViewModelBuilder
     private FaqRepository $faqRepository;
     private BlogRepository $blogRepository;
     private StrategyFactory $strategyFactory;
-    private ConfigService $configService;
+    private ConfigServiceInterface $configService;
 
     public function __construct(
         ContentManager $contentManager,
@@ -34,7 +34,7 @@ class GuideViewModelBuilder
         FaqRepository $faqRepository,
         BlogRepository $blogRepository,
         StrategyFactory $strategyFactory,
-        ConfigService $configService
+        ConfigServiceInterface $configService
     ) {
         $this->contentManager = $contentManager;
         $this->metaManager = $metaManager;

@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Core;
 
-use Services\ConfigService;
+use Services\ConfigServiceInterface;
 
 class FaqRepository
 {
     private ?array $faqs = null;
     private string $jsonPath;
     private array $defaultCategoryLabels;
-    private ConfigService $configService;
+    private ConfigServiceInterface $configService;
 
     public function __construct(
         string $jsonPath = 'content/faqs.json',
         array $defaultCategoryLabels = [],
-        ?ConfigService $configService = null
+        ?ConfigServiceInterface $configService = null
     ) {
         $this->jsonPath = $jsonPath;
-        $this->configService = $configService ?? new ConfigService();
+        $this->configService = $configService ?? new \Services\ConfigService();
         $this->defaultCategoryLabels = array_merge([
             'basics' => 'Basics',
             'strategies' => 'Strategies',

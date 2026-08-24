@@ -74,6 +74,45 @@ export class ScenarioDiffController {
             card.classList.remove('hidden');
         }
         this.updateDiff(results);
+
+        // Visual Feedback on Snapshot Button
+        const snapshotBtn = this.dom.getElement('snapshot-scenario-btn');
+        if (snapshotBtn) {
+            const originalHTML = snapshotBtn.innerHTML;
+            snapshotBtn.innerHTML = '<span>✓</span> <span>Baseline Saved</span>';
+            snapshotBtn.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-300');
+            setTimeout(() => {
+                snapshotBtn.innerHTML = originalHTML;
+                snapshotBtn.classList.remove('bg-emerald-50', 'text-emerald-800', 'border-emerald-300');
+            }, 2000);
+        }
+
+        // Show Toast Notification
+        this.showToast('📸 Scenario baseline captured! Adjust sliders to see live comparative diff.');
+    }
+
+    private showToast(message: string): void {
+        if (typeof document === 'undefined') return;
+
+        let container = document.querySelector('.calc-toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'calc-toast-container';
+            document.body.appendChild(container);
+        }
+
+        const toast = document.createElement('div');
+        toast.className = 'calc-toast flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-900/90 backdrop-blur-md text-white text-xs font-bold shadow-xl border border-slate-700/60 mb-2';
+        toast.textContent = message;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(10px)';
+            setTimeout(() => toast.remove(), 350);
+        }, 3200);
     }
 
     clearSnapshot(): void {

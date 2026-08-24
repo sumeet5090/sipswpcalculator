@@ -14,18 +14,18 @@
         <!-- Studio Segmented Tab Navigation -->
         <nav id="studio-tabs-nav" role="tablist" aria-label="Analytical Studio Modules"
             class="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 border border-slate-200/80 overflow-x-auto max-w-full custom-scrollbar">
-            <!-- Tab 1: City FIRE Benchmark (Default Active) -->
-            <button type="button" role="tab" id="tab-city-benchmark" aria-controls="panel-city-benchmark" aria-selected="true" tabindex="0"
+            <!-- Tab 1: Yearly Breakdown Table (Default Active) -->
+            <button type="button" role="tab" id="tab-yearly-breakdown" aria-controls="panel-yearly-breakdown" aria-selected="true" tabindex="0"
                 class="studio-tab-btn px-3 py-1.5 rounded-xl text-xs whitespace-nowrap transition-all cursor-pointer bg-white text-emerald-800 shadow-xs border border-slate-200/90 font-bold flex items-center gap-1.5">
-                <span>🏙️</span>
-                <span>City FIRE Benchmark</span>
-            </button>
-
-            <!-- Tab 2: Yearly Breakdown -->
-            <button type="button" role="tab" id="tab-yearly-breakdown" aria-controls="panel-yearly-breakdown" aria-selected="false" tabindex="-1"
-                class="studio-tab-btn px-3 py-1.5 rounded-xl text-xs whitespace-nowrap transition-all cursor-pointer text-slate-500 hover:text-slate-800 font-medium border border-transparent flex items-center gap-1.5">
                 <span>📊</span>
                 <span>Yearly Breakdown</span>
+            </button>
+
+            <!-- Tab 2: City FIRE Benchmark -->
+            <button type="button" role="tab" id="tab-city-benchmark" aria-controls="panel-city-benchmark" aria-selected="false" tabindex="-1"
+                class="studio-tab-btn px-3 py-1.5 rounded-xl text-xs whitespace-nowrap transition-all cursor-pointer text-slate-500 hover:text-slate-800 font-medium border border-transparent flex items-center gap-1.5">
+                <span>🏙️</span>
+                <span>City FIRE Benchmark</span>
             </button>
 
             <!-- Tab 3: Milestone Roadmap -->
@@ -53,14 +53,14 @@
 
     <!-- Studio Tab Panels (All server-rendered in DOM for complete search indexing) -->
     <div class="space-y-4">
-        <!-- Panel 1: City FIRE Benchmark (Default Active) -->
-        <div id="panel-city-benchmark" role="tabpanel" aria-labelledby="tab-city-benchmark" class="studio-tab-panel">
-            {% include 'components/city-fire-benchmark.twig' %}
+        <!-- Panel 1: Yearly Breakdown Table (Default Active) -->
+        <div id="panel-yearly-breakdown" role="tabpanel" aria-labelledby="tab-yearly-breakdown" class="studio-tab-panel">
+            {% include 'components/yearly-breakdown-table.twig' %}
         </div>
 
-        <!-- Panel 2: Yearly Breakdown Table -->
-        <div id="panel-yearly-breakdown" role="tabpanel" aria-labelledby="tab-yearly-breakdown" class="studio-tab-panel hidden">
-            {% include 'components/yearly-breakdown-table.twig' %}
+        <!-- Panel 2: City FIRE Benchmark -->
+        <div id="panel-city-benchmark" role="tabpanel" aria-labelledby="tab-city-benchmark" class="studio-tab-panel hidden">
+            {% include 'components/city-fire-benchmark.twig' %}
         </div>
 
         <!-- Panel 3: Milestone Roadmap -->

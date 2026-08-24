@@ -305,7 +305,7 @@ class PdfReportTemplate implements PdfTemplateInterface
             " . nl2br($disclaimerText) . "
         </div>
         <div class='doc-footer'>
-            Generated securely via SIP & SWP Planner (https://sipswpcalculator.com) \| Proposal Ref: {$proposalId}
+            Generated securely via SIP & SWP Planner (https://sipswpcalculator.com) | Proposal Ref: {$proposalId}
         </div>";
     }
 

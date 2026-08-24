@@ -2,6 +2,7 @@ import { InputValidator } from './InputValidator';
 import { DOMAdapter } from '../adapters/DOMAdapter';
 import { CurrencyFormatter } from './CurrencyHelper';
 import { IndianNumberParser } from './helpers/IndianNumberParser';
+import { A11yAnnouncer } from './helpers/A11yAnnouncer';
 
 interface SliderPair {
     input: HTMLInputElement;
@@ -14,16 +15,36 @@ interface SliderPair {
 /**
  * SliderManager.ts
  * Encapsulates all range slider ↔ input synchronization logic,
+ * elastic dynamic scale expansion, WAI-ARIA extended keyboard controls,
  * dynamic progress track styling, quick-preset chips, and live subtext indicators.
  * Strictly adheres to SOLID, DRY, and POLA principles.
  */
 export class SliderManager {
+    private static globalTooltipListenersInitialized = false;
+
+    private static initGlobalTooltipDismissal(): void {
+        if (typeof window === 'undefined' || SliderManager.globalTooltipListenersInitialized) return;
+        SliderManager.globalTooltipListenersInitialized = true;
+
+        const hideAllTooltips = () => {
+            document.querySelectorAll('.calc-slider-tooltip.is-active').forEach(el => {
+                el.classList.remove('is-active');
+            });
+        };
+
+        window.addEventListener('pointerup', hideAllTooltips);
+        window.addEventListener('touchend', hideAllTooltips, { passive: true });
+        window.addEventListener('touchcancel', hideAllTooltips, { passive: true });
+    }
+
     private triggerFn: () => void;
     private validator: InputValidator;
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
     private pairs: SliderPair[] = [];
     private _inputDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+    private _lastHapticTime: number = 0;
+    private isInternalSyncing: boolean = false;
 
     constructor(
         triggerFn: () => void,
@@ -37,7 +58,41 @@ export class SliderManager {
         this.formatter = formatter;
     }
 
-    private isInternalSyncing: boolean = false;
+    /**
+     * Compute elastic slider upper bound when entered value exceeds default bounds.
+     */
+    private _computeElasticMax(val: number, defaultMax: number): number {
+        if (val <= defaultMax) {
+            return defaultMax;
+        }
+        const scaleFactor = 1.5;
+        const target = val * scaleFactor;
+        if (target >= 10000000) {
+            return Math.ceil(target / 5000000) * 5000000; // Step of 50 Lakhs
+        }
+        if (target >= 1000000) {
+            return Math.ceil(target / 500000) * 500000; // Step of 5 Lakhs
+        }
+        if (target >= 100000) {
+            return Math.ceil(target / 50000) * 50000; // Step of 50k
+        }
+        if (target >= 10000) {
+            return Math.ceil(target / 10000) * 10000; // Step of 10k
+        }
+        return Math.ceil(target);
+    }
+
+    /**
+     * Dynamically adjust slider upper boundary if manual input exceeds initial bounds.
+     */
+    public adjustSliderBoundary(fieldId: string, enteredValue: number): void {
+        const pair = this.pairs.find(p => p.fieldId === fieldId);
+        if (!pair) return;
+        const newMax = this._computeElasticMax(enteredValue, pair.defaultSliderMax);
+        pair.range.max = String(newMax);
+        pair.range.setAttribute('aria-valuemax', String(newMax));
+        this._updateTrackProgress(pair.range);
+    }
 
     /**
      * Register and wire a single input ↔ range pair.
@@ -78,6 +133,11 @@ export class SliderManager {
 
         // Initial visual sync
         const initialVal = parseFloat(input.value) || 0;
+        if (initialVal > defaultSliderMax) {
+            const elasticMax = this._computeElasticMax(initialVal, defaultSliderMax);
+            range.max = String(elasticMax);
+            range.setAttribute('aria-valuemax', String(elasticMax));
+        }
         this._updateTrackProgress(range);
         this._updateSubtext(inputId, initialVal);
         this._updateWordBadge(inputId, initialVal);
@@ -107,16 +167,11 @@ export class SliderManager {
             tooltip.classList.add('is-active');
         };
 
-        const hideTooltip = () => {
-            tooltip.classList.remove('is-active');
-        };
-
+        SliderManager.initGlobalTooltipDismissal();
         range.addEventListener('pointerdown', () => showTooltip(parseFloat(range.value) || 0));
         range.addEventListener('touchstart', () => showTooltip(parseFloat(range.value) || 0), { passive: true });
-        window.addEventListener('pointerup', hideTooltip);
-        window.addEventListener('touchend', hideTooltip);
-        window.addEventListener('touchcancel', hideTooltip);
 
+        // Range Slider Input Sync
         range.addEventListener('input', () => {
             if (this.isInternalSyncing) return;
             this.isInternalSyncing = true;
@@ -131,10 +186,19 @@ export class SliderManager {
                 this._clearError(inputId);
                 showTooltip(numericVal);
 
-                // Tactile Haptic Vibration at major intervals
+                // Tactile Haptic Vibration at major landmark intervals
                 if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-                    if (numericVal % 10000 === 0 || (inputId === 'years' && numericVal % 5 === 0)) {
-                        navigator.vibrate(6);
+                    const now = Date.now();
+                    if (now - this._lastHapticTime > 300) {
+                        const isLandmark = (numericVal >= 100000 && numericVal % 2500000 === 0) || 
+                                           (inputId === 'years' && numericVal % 5 === 0) ||
+                                           (inputId === 'rate' && Number.isInteger(numericVal) && numericVal % 2 === 0);
+                        if (isLandmark) {
+                            try {
+                                navigator.vibrate(8);
+                            } catch {}
+                            this._lastHapticTime = now;
+                        }
                     }
                 }
             } finally {
@@ -143,6 +207,37 @@ export class SliderManager {
             this.triggerFn();
         });
 
+        // WAI-ARIA Slider Keyboard Support (PageUp, PageDown, Home, End)
+        range.addEventListener('keydown', (e: KeyboardEvent) => {
+            const step = parseFloat(range.step) || 1;
+            const min = parseFloat(range.min) || 0;
+            const max = parseFloat(range.max) || 100;
+            let currentVal = parseFloat(range.value) || 0;
+            let handled = false;
+
+            if (e.key === 'PageUp') {
+                const largeJump = Math.max(step * 5, (max - min) * 0.1);
+                currentVal = Math.min(max, currentVal + largeJump);
+                handled = true;
+            } else if (e.key === 'PageDown') {
+                const largeJump = Math.max(step * 5, (max - min) * 0.1);
+                currentVal = Math.max(min, currentVal - largeJump);
+                handled = true;
+            } else if (e.key === 'Home') {
+                currentVal = min;
+                handled = true;
+            } else if (e.key === 'End') {
+                currentVal = max;
+                handled = true;
+            }
+
+            if (handled) {
+                e.preventDefault();
+                this.updateFieldValue(inputId, currentVal);
+            }
+        });
+
+        // Text Input Sync with Elastic Autoscaling
         input.addEventListener('input', () => {
             if (this.isInternalSyncing) return;
             this.isInternalSyncing = true;
@@ -152,7 +247,7 @@ export class SliderManager {
                 const fieldName = inputId;
                 validated = this.validator.validate(fieldName, input.value);
 
-                // Show inline error if out of bounds (and user has typed something)
+                // Show inline error if out of bounds
                 if (!isNaN(rawVal) && rawVal !== validated) {
                     const limits = this.validator.getConstraint(fieldName);
                     if (limits) {
@@ -165,37 +260,41 @@ export class SliderManager {
                     this._clearError(inputId);
                 }
 
-                // Dynamically scale slider max if validated exceeds default slider max
-                if (validated > defaultSliderMax) {
-                    range.max = String(validated);
-                } else {
-                    range.max = String(defaultSliderMax);
-                }
+                // Elastic dynamic autoscaling of range max
+                const elasticMax = this._computeElasticMax(validated, defaultSliderMax);
+                range.max = String(elasticMax);
+                range.setAttribute('aria-valuemax', String(elasticMax));
 
                 range.value = String(validated);
                 this._updateAria(range, validated);
                 this._updateTrackProgress(range);
-                this._updateSubtext(inputId, isNaN(rawVal) ? validated : rawVal);
-                this._updateWordBadge(inputId, isNaN(rawVal) ? validated : rawVal);
-                this._updatePresetChips(inputId, isNaN(rawVal) ? validated : rawVal);
             } finally {
                 this.isInternalSyncing = false;
             }
 
-            // Debounce text input to prevent jank during rapid typing
+            // Debounce subtext updates and calculation trigger on raw text input
             if (this._inputDebounceTimer !== null) {
                 clearTimeout(this._inputDebounceTimer);
             }
-            this._inputDebounceTimer = setTimeout(() => this.triggerFn(), 150);
+            this._inputDebounceTimer = setTimeout(() => {
+                this._updateSubtext(inputId, validated);
+                this._updateWordBadge(inputId, validated);
+                this._updatePresetChips(inputId, validated);
+                this.triggerFn();
+            }, 100);
         });
 
         input.addEventListener('change', () => {
-            if (this._inputDebounceTimer !== null) {
-                clearTimeout(this._inputDebounceTimer);
-                this._inputDebounceTimer = null;
-            }
-            const validated = this.validator.validate(inputId, input.value);
+            const rawVal = IndianNumberParser.parse(input.value);
+            const validated = this.validator.validate(inputId, isNaN(rawVal) ? range.value : rawVal);
             input.value = String(validated);
+            
+            const elasticMax = this._computeElasticMax(validated, defaultSliderMax);
+            range.max = String(elasticMax);
+            range.setAttribute('aria-valuemax', String(elasticMax));
+
+            range.value = String(validated);
+            this._updateAria(range, validated);
             this._updateTrackProgress(range);
             this._updateSubtext(inputId, validated);
             this._updateWordBadge(inputId, validated);
@@ -210,6 +309,23 @@ export class SliderManager {
         });
         input.addEventListener('blur', () => {
             range.classList.remove('ring-2', 'ring-emerald-400/50');
+        });
+
+        range.addEventListener('mouseenter', () => {
+            input.classList.add('border-emerald-400', 'bg-emerald-50/20');
+        });
+        range.addEventListener('mouseleave', () => {
+            if (document.activeElement !== input) {
+                input.classList.remove('border-emerald-400', 'bg-emerald-50/20');
+            }
+        });
+        range.addEventListener('pointerdown', () => {
+            input.classList.add('border-emerald-500', 'ring-2', 'ring-emerald-500/20');
+        });
+        window.addEventListener('pointerup', () => {
+            if (document.activeElement !== input) {
+                input.classList.remove('border-emerald-500', 'ring-2', 'ring-emerald-500/20');
+            }
         });
 
         input.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -249,7 +365,7 @@ export class SliderManager {
     }
 
     /**
-     * Programmatically update a field value from external controllers (e.g. StepperController).
+     * Programmatically update a field value from external controllers.
      */
     updateFieldValue(fieldId: string, val: number): void {
         const pair = this.pairs.find(p => p.fieldId === fieldId);
@@ -259,10 +375,9 @@ export class SliderManager {
         }
 
         const { input, range } = pair;
-        const defaultMax = pair.defaultSliderMax;
-        if (val > defaultMax) {
-            range.max = String(val);
-        }
+        const elasticMax = this._computeElasticMax(val, pair.defaultSliderMax);
+        range.max = String(elasticMax);
+        range.setAttribute('aria-valuemax', String(elasticMax));
 
         input.value = String(val);
         range.value = String(val);
@@ -279,8 +394,11 @@ export class SliderManager {
      * Recompute and update all visual elements (track progress, subtexts, chips).
      */
     refreshVisuals(): void {
-        this.pairs.forEach(({ input, range, fieldId }) => {
+        this.pairs.forEach(({ input, range, fieldId, defaultSliderMax }) => {
             const val = parseFloat(input.value) || 0;
+            const elasticMax = this._computeElasticMax(val, defaultSliderMax);
+            range.max = String(elasticMax);
+            range.setAttribute('aria-valuemax', String(elasticMax));
             this._updateTrackProgress(range);
             this._updateSubtext(fieldId, val);
             this._updateWordBadge(fieldId, val);
@@ -306,9 +424,9 @@ export class SliderManager {
                 if (isNaN(presetVal)) return;
 
                 const defaultMax = parseFloat(range.getAttribute('max') || '100000');
-                if (presetVal > defaultMax) {
-                    range.max = String(presetVal);
-                }
+                const elasticMax = this._computeElasticMax(presetVal, defaultMax);
+                range.max = String(elasticMax);
+                range.setAttribute('aria-valuemax', String(elasticMax));
 
                 input.value = String(presetVal);
                 range.value = String(presetVal);
@@ -382,18 +500,12 @@ export class SliderManager {
         });
     }
 
-    private _debounceAriaTimer: ReturnType<typeof setTimeout> | null = null;
-
     private _updateAria(rangeEl: HTMLInputElement, val: number | string): void {
         rangeEl.setAttribute('aria-valuenow', String(val));
         const fieldId = rangeEl.id.replace(/_range$/, '');
-        if (this._debounceAriaTimer !== null) {
-            clearTimeout(this._debounceAriaTimer);
-        }
-        this._debounceAriaTimer = setTimeout(() => {
-            const readableText = this.formatter.formatAriaAnnouncement(fieldId, Number(val));
-            rangeEl.setAttribute('aria-valuetext', readableText);
-        }, 300);
+        const readableText = this.formatter.formatAriaAnnouncement(fieldId, Number(val));
+        rangeEl.setAttribute('aria-valuetext', readableText);
+        A11yAnnouncer.announce(readableText, 700);
     }
 
     private _showError(fieldId: string, message: string): void {
@@ -420,4 +532,3 @@ export class SliderManager {
         }
     }
 }
-

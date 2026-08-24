@@ -8,7 +8,7 @@ use Core\AnonymizedInsightLogger;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\InsightPayload;
-use Services\ConfigService;
+use Services\ConfigServiceInterface;
 use Services\RateLimiter;
 
 /**
@@ -21,12 +21,12 @@ class LogInsightApiAction
 
     private AnonymizedInsightLogger $insightLogger;
     private RateLimiter $rateLimiter;
-    private ConfigService $configService;
+    private ConfigServiceInterface $configService;
 
     public function __construct(
         AnonymizedInsightLogger $insightLogger,
         RateLimiter $rateLimiter,
-        ConfigService $configService
+        ConfigServiceInterface $configService
     ) {
         $this->insightLogger = $insightLogger;
         $this->rateLimiter = $rateLimiter;

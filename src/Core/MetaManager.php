@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Core;
 
-use Services\ConfigService;
-
 /**
  * MetaManager
  * Encapsulates SEO page metadata generation and metadata mapping.

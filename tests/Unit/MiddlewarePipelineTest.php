@@ -7,7 +7,6 @@ namespace Tests\Unit;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Middleware\AdminCsrfMiddleware;
-use Core\Middleware\CsrfHoneypotMiddleware;
 use Core\Middleware\HoneypotMiddleware;
 use Core\Middleware\SessionMiddleware;
 use Core\Middleware\TrailingSlashRedirectMiddleware;
@@ -130,15 +129,18 @@ class MiddlewarePipelineTest extends TestCase
     public function testCsrfHoneypotBlocksSpam(): void
     {
         $sessionManager = new SessionManager();
-        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
+        $honeypot = new HoneypotMiddleware();
+        $adminCsrf = new AdminCsrfMiddleware($sessionManager);
 
         $request = new Request([], ['website_url' => 'http://spam-bot.com'], [
             'REQUEST_METHOD' => 'POST',
             'REQUEST_URI' => '/generate-pdf'
         ]);
 
-        $response = $middleware->process($request, function () {
-            return Response::html('should_not_reach');
+        $response = $honeypot->process($request, function ($req) use ($adminCsrf) {
+            return $adminCsrf->process($req, function () {
+                return Response::html('should_not_reach');
+            });
         });
 
         $this->assertSame(403, $response->getStatusCode());
@@ -149,15 +151,18 @@ class MiddlewarePipelineTest extends TestCase
     {
         $sessionManager = new SessionManager();
         $sessionManager->ensureCsrfToken();
-        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
+        $honeypot = new HoneypotMiddleware();
+        $adminCsrf = new AdminCsrfMiddleware($sessionManager);
 
         $request = new Request([], ['password' => 'secret'], [
             'REQUEST_METHOD' => 'POST',
             'REQUEST_URI' => '/admin_insights'
         ]);
 
-        $response = $middleware->process($request, function () {
-            return Response::html('should_not_reach');
+        $response = $honeypot->process($request, function ($req) use ($adminCsrf) {
+            return $adminCsrf->process($req, function () {
+                return Response::html('should_not_reach');
+            });
         });
 
         $this->assertSame(403, $response->getStatusCode());
@@ -168,15 +173,18 @@ class MiddlewarePipelineTest extends TestCase
     {
         $sessionManager = new SessionManager();
         $token = $sessionManager->ensureCsrfToken();
-        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
+        $honeypot = new HoneypotMiddleware();
+        $adminCsrf = new AdminCsrfMiddleware($sessionManager);
 
         $request = new Request([], ['csrf_token' => $token, 'password' => 'secret'], [
             'REQUEST_METHOD' => 'POST',
             'REQUEST_URI' => '/admin_insights'
         ]);
 
-        $response = $middleware->process($request, function () {
-            return Response::html('admin_login_processed');
+        $response = $honeypot->process($request, function ($req) use ($adminCsrf) {
+            return $adminCsrf->process($req, function () {
+                return Response::html('admin_login_processed');
+            });
         });
 
         $this->assertSame(200, $response->getStatusCode());
@@ -186,15 +194,18 @@ class MiddlewarePipelineTest extends TestCase
     public function testCsrfHoneypotAllowsNonAdminPostWithoutToken(): void
     {
         $sessionManager = new SessionManager();
-        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
+        $honeypot = new HoneypotMiddleware();
+        $adminCsrf = new AdminCsrfMiddleware($sessionManager);
 
         $request = new Request([], ['calc_type' => 'SIP', 'amount' => 5000], [
             'REQUEST_METHOD' => 'POST',
             'REQUEST_URI' => '/log_insight'
         ]);
 
-        $response = $middleware->process($request, function () {
-            return Response::html('log_insight_processed');
+        $response = $honeypot->process($request, function ($req) use ($adminCsrf) {
+            return $adminCsrf->process($req, function () {
+                return Response::html('log_insight_processed');
+            });
         });
 
         $this->assertSame(200, $response->getStatusCode());
@@ -204,15 +215,18 @@ class MiddlewarePipelineTest extends TestCase
     public function testCsrfHoneypotBlocksArraySpamPayload(): void
     {
         $sessionManager = new SessionManager();
-        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
+        $honeypot = new HoneypotMiddleware();
+        $adminCsrf = new AdminCsrfMiddleware($sessionManager);
 
         $request = new Request([], ['website_url' => ['malicious_array']], [
             'REQUEST_METHOD' => 'POST',
             'REQUEST_URI' => '/generate-pdf'
         ]);
 
-        $response = $middleware->process($request, function () {
-            return Response::html('should_not_reach');
+        $response = $honeypot->process($request, function ($req) use ($adminCsrf) {
+            return $adminCsrf->process($req, function () {
+                return Response::html('should_not_reach');
+            });
         });
 
         $this->assertSame(403, $response->getStatusCode());
@@ -223,15 +237,18 @@ class MiddlewarePipelineTest extends TestCase
     {
         $sessionManager = new SessionManager();
         $initialToken = $sessionManager->ensureCsrfToken();
-        $middleware = new CsrfHoneypotMiddleware(new HoneypotMiddleware(), new AdminCsrfMiddleware($sessionManager));
+        $honeypot = new HoneypotMiddleware();
+        $adminCsrf = new AdminCsrfMiddleware($sessionManager);
 
         $request = new Request([], ['csrf_token' => 'invalid_expired_token', 'password' => 'secret'], [
             'REQUEST_METHOD' => 'POST',
             'REQUEST_URI' => '/admin_insights'
         ]);
 
-        $response = $middleware->process($request, function () {
-            return Response::html('should_not_reach');
+        $response = $honeypot->process($request, function ($req) use ($adminCsrf) {
+            return $adminCsrf->process($req, function () {
+                return Response::html('should_not_reach');
+            });
         });
 
         $this->assertSame(403, $response->getStatusCode());

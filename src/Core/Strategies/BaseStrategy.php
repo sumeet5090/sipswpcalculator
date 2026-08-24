@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Core\Strategies;
 
 use Core\InvestmentInputs;
-use Services\ConfigService;
+use Services\ConfigServiceInterface;
 
 abstract class BaseStrategy implements CalculatorStrategyInterface
 {
-    protected ConfigService $configService;
+    protected ConfigServiceInterface $configService;
 
-    public function __construct(ConfigService $configService)
+    public function __construct(ConfigServiceInterface $configService)
     {
         $this->configService = $configService;
     }

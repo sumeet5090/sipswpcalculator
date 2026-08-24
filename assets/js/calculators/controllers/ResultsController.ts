@@ -5,10 +5,10 @@ import { InvestmentInputs, YearResult } from '../../types';
 import type { ChartManager } from '../ChartManager';
 
 const TABLE_ROW_CLASS = "hover:bg-emerald-50/40 border-b border-slate-100 transition-colors cursor-default";
-const CELL_YEAR_CLASS = "px-6 py-4 font-bold text-slate-700 whitespace-nowrap";
+const CELL_YEAR_CLASS = "px-6 py-4 font-bold text-slate-800 whitespace-nowrap sticky left-0 bg-white/95 backdrop-blur-md z-10 shadow-[1px_0_4px_rgba(0,0,0,0.04)]";
 const CELL_MONO_CLASS = "px-6 py-4 text-right font-mono text-slate-600 whitespace-nowrap";
 const CELL_EMERALD_CLASS = "px-6 py-4 text-right text-emerald-700 font-medium font-mono whitespace-nowrap";
-const CELL_MUTED_CLASS = "px-6 py-4 text-right text-slate-500 font-mono whitespace-nowrap";
+const CELL_MUTED_CLASS = "px-6 py-4 text-right text-slate-600 font-mono whitespace-nowrap";
 const CELL_ROSE_CLASS = "px-6 py-4 text-right text-rose-700 font-medium font-mono whitespace-nowrap";
 const CELL_BOLD_CLASS = "px-6 py-4 text-right font-bold text-slate-800 font-mono whitespace-nowrap";
 
@@ -18,6 +18,7 @@ export class ResultsController {
     private getInputs: () => InvestmentInputs;
     private chartManager: ChartManager | null;
     private density: 'all' | '5y' = 'all';
+    private colDensity: 'essential' | 'audit' = 'essential';
     private searchYear: number | null = null;
     private lastData: YearResult[] = [];
     private lastEnableSwp: boolean = true;
@@ -37,6 +38,15 @@ export class ResultsController {
     }
 
     private initControls(): void {
+        const essentialBtn = this.dom.getElement('table-col-essential');
+        const auditBtn = this.dom.getElement('table-col-audit');
+        if (essentialBtn) {
+            essentialBtn.addEventListener('click', () => this.setColumnDensity('essential'));
+        }
+        if (auditBtn) {
+            auditBtn.addEventListener('click', () => this.setColumnDensity('audit'));
+        }
+
         const allBtn = this.dom.getElement('table-density-all');
         const fiveYBtn = this.dom.getElement('table-density-5y');
         if (allBtn) {
@@ -72,6 +82,41 @@ export class ResultsController {
                     this.updateTable(this.lastData, this.lastEnableSwp);
                 }
             });
+        }
+    }
+
+    setColumnDensity(mode: 'essential' | 'audit'): void {
+        if (this.colDensity === mode) return;
+        this.colDensity = mode;
+
+        const essentialBtn = this.dom.getElement('table-col-essential');
+        const auditBtn = this.dom.getElement('table-col-audit');
+        if (essentialBtn && auditBtn) {
+            if (mode === 'essential') {
+                essentialBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                essentialBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                essentialBtn.setAttribute('aria-selected', 'true');
+                auditBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                auditBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                auditBtn.setAttribute('aria-selected', 'false');
+            } else {
+                auditBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                auditBtn.classList.remove('text-slate-500', 'hover:text-slate-700');
+                auditBtn.setAttribute('aria-selected', 'true');
+                essentialBtn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm', 'border', 'border-slate-200/40');
+                essentialBtn.classList.add('text-slate-500', 'hover:text-slate-700');
+                essentialBtn.setAttribute('aria-selected', 'false');
+            }
+        }
+
+        // Toggle secondary column visibility in header
+        const secondaryHeaders = this.dom.getElements<HTMLElement>('th.col-secondary');
+        secondaryHeaders.forEach(th => {
+            th.style.display = (mode === 'essential') ? 'none' : '';
+        });
+
+        if (this.lastData.length > 0) {
+            this.updateTable(this.lastData, this.lastEnableSwp);
         }
     }
 
@@ -120,6 +165,12 @@ export class ResultsController {
         const showPostTax = postTaxToggle?.checked || false;
         const inputs = this.getInputs();
 
+        // Update secondary headers display based on column density mode
+        const secondaryHeaders = this.dom.getElements<HTMLElement>('th.col-secondary');
+        secondaryHeaders.forEach(th => {
+            th.style.display = (this.colDensity === 'essential') ? 'none' : '';
+        });
+
         let filteredData = data;
         if (this.searchYear !== null) {
             filteredData = data.filter(r => r.year === this.searchYear);
@@ -140,8 +191,9 @@ export class ResultsController {
             }
 
             const fmt = (v: number | null | undefined) => (v !== null && v !== undefined) ? this.formatter.format(v) : '-';
-            const swpDisplay = enableSwp ? '' : 'none';
-            const taxDisplay = showPostTax ? '' : 'none';
+            const swpDisplay = enableSwp ? (this.colDensity === 'essential' ? 'none' : '') : 'none';
+            const taxDisplay = showPostTax ? (this.colDensity === 'essential' ? 'none' : '') : 'none';
+            const secondaryDisplay = (this.colDensity === 'essential') ? 'none' : '';
 
             let finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
             const ltcgTax = row.ltcg_tax ?? 0;
@@ -165,15 +217,15 @@ export class ResultsController {
             };
 
             tr.appendChild(createCell(String(row.year), CELL_YEAR_CLASS));
-            tr.appendChild(createCell(this.formatter.format(row.begin_balance), CELL_MONO_CLASS));
-            tr.appendChild(createCell(fmt(row.sip_monthly), CELL_EMERALD_CLASS));
-            tr.appendChild(createCell(this.formatter.format(row.annual_contribution), CELL_EMERALD_CLASS));
+            tr.appendChild(createCell(this.formatter.format(row.begin_balance), CELL_MONO_CLASS + " col-secondary", secondaryDisplay));
+            tr.appendChild(createCell(fmt(row.sip_monthly), CELL_EMERALD_CLASS + " col-secondary", secondaryDisplay));
+            tr.appendChild(createCell(this.formatter.format(row.annual_contribution), CELL_EMERALD_CLASS + " col-secondary", secondaryDisplay));
             tr.appendChild(createCell(this.formatter.format(row.cumulative_invested), CELL_MUTED_CLASS));
 
             // SWP Columns
-            tr.appendChild(createCell(fmt(row.swp_monthly), CELL_ROSE_CLASS + " swp-col", swpDisplay));
-            tr.appendChild(createCell(fmt(row.annual_withdrawal), CELL_ROSE_CLASS + " swp-col", swpDisplay));
-            tr.appendChild(createCell(fmt(row.cumulative_withdrawals), CELL_MUTED_CLASS + " swp-col", swpDisplay));
+            tr.appendChild(createCell(fmt(row.swp_monthly), CELL_ROSE_CLASS + " swp-col col-secondary", swpDisplay));
+            tr.appendChild(createCell(fmt(row.annual_withdrawal), CELL_ROSE_CLASS + " swp-col col-secondary", swpDisplay));
+            tr.appendChild(createCell(fmt(row.cumulative_withdrawals), CELL_MUTED_CLASS + " swp-col", enableSwp ? '' : 'none'));
 
             const interestCell = createCell(this.formatter.format(row.interest), CELL_EMERALD_CLASS);
             if (this.heatmapEnabled && row.interest > 0) {
@@ -184,7 +236,7 @@ export class ResultsController {
             tr.appendChild(interestCell);
 
             // Tax Column
-            tr.appendChild(createCell(this.formatter.format(Math.round(ltcgTax)), CELL_ROSE_CLASS + " tax-col", taxDisplay));
+            tr.appendChild(createCell(this.formatter.format(Math.round(ltcgTax)), CELL_ROSE_CLASS + " tax-col col-secondary", taxDisplay));
 
             // Final Corpus Column
             const corpusCell = document.createElement('td');
@@ -216,7 +268,6 @@ export class ResultsController {
             }
 
             tr.appendChild(corpusCell);
-
             fragment.appendChild(tr);
         });
 
@@ -252,47 +303,61 @@ export class ResultsController {
                     );
                 }
 
-                const badgeLabel = isFinal
-                    ? `🏁 Year ${row.year} (Maturity)`
-                    : (this.density === '5y' && isMilestone ? `🎯 Year ${row.year} Milestone` : `Year ${row.year}`);
+                const header = document.createElement('div');
+                header.className = "flex items-center justify-between";
 
-                const headerRow = document.createElement('div');
-                headerRow.className = "flex items-center justify-between";
-                headerRow.innerHTML = `
-                    <span class="text-xs font-extrabold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md">${badgeLabel}</span>
-                    <div class="text-right">
-                        <span class="text-[10px] text-slate-400 font-sans block">Ending Balance</span>
-                        <strong class="text-sm font-extrabold text-slate-900 font-mono">${this.formatter.format(finalCorpus)}</strong>
-                    </div>
-                `;
-                card.appendChild(headerRow);
+                const yearBadge = document.createElement('span');
+                yearBadge.className = isFinal
+                    ? "px-2.5 py-0.5 rounded-lg text-xs font-black bg-emerald-600 text-white"
+                    : (isMilestone ? "px-2 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800" : "text-xs font-bold text-slate-700");
+                yearBadge.textContent = `Year ${row.year}${isFinal ? ' (Maturity)' : ''}`;
+                header.appendChild(yearBadge);
+
+                const corpusVal = document.createElement('span');
+                corpusVal.className = "text-sm font-black font-mono text-slate-900";
+                corpusVal.textContent = this.formatter.format(finalCorpus);
+                header.appendChild(corpusVal);
+
+                card.appendChild(header);
 
                 const grid = document.createElement('div');
-                grid.className = "grid grid-cols-2 gap-2 text-[11px] pt-2 border-t border-slate-100 font-mono";
+                grid.className = "grid grid-cols-2 gap-2 text-xs pt-1 border-t border-slate-100";
 
-                const col1 = document.createElement('div');
-                col1.innerHTML = `
-                    <span class="text-slate-400 font-sans block text-[10px] uppercase">Invested</span>
-                    <span class="text-slate-700 font-bold">${this.formatter.format(row.cumulative_invested)}</span>
-                `;
-                grid.appendChild(col1);
+                const investedCol = document.createElement('div');
+                const investedLabel = document.createElement('span');
+                investedLabel.className = "text-slate-600 block text-[10px]";
+                investedLabel.textContent = "Total Invested";
+                const investedVal = document.createElement('span');
+                investedVal.className = "font-bold font-mono text-slate-800";
+                investedVal.textContent = this.formatter.format(row.cumulative_invested);
+                investedCol.appendChild(investedLabel);
+                investedCol.appendChild(investedVal);
+                grid.appendChild(investedCol);
 
-                const col2 = document.createElement('div');
-                col2.className = "text-right";
-                col2.innerHTML = `
-                    <span class="text-slate-400 font-sans block text-[10px] uppercase">Year Interest</span>
-                    <span class="text-emerald-700 font-bold">+${this.formatter.format(row.interest)}</span>
-                `;
-                grid.appendChild(col2);
+                const interestCol = document.createElement('div');
+                interestCol.className = "text-right";
+                const interestLabel = document.createElement('span');
+                interestLabel.className = "text-emerald-700 block text-[10px]";
+                interestLabel.textContent = "Interest / Yr";
+                const interestVal = document.createElement('span');
+                interestVal.className = "font-bold font-mono text-emerald-700";
+                interestVal.textContent = `+${this.formatter.format(row.interest)}`;
+                interestCol.appendChild(interestLabel);
+                interestCol.appendChild(interestVal);
+                grid.appendChild(interestCol);
 
-                if (enableSwp && row.annual_withdrawal && row.annual_withdrawal > 0) {
-                    const col3 = document.createElement('div');
-                    col3.className = "col-span-2 flex items-center justify-between pt-1 border-t border-slate-50";
-                    col3.innerHTML = `
-                        <span class="text-slate-400 font-sans text-[10px] uppercase">SWP Payout</span>
-                        <span class="text-rose-700 font-bold">−${this.formatter.format(row.annual_withdrawal)}</span>
-                    `;
-                    grid.appendChild(col3);
+                if (enableSwp && (row.cumulative_withdrawals ?? 0) > 0) {
+                    const withCol = document.createElement('div');
+                    withCol.className = "col-span-2 pt-1 border-t border-slate-100 flex items-center justify-between text-xs";
+                    const withLabel = document.createElement('span');
+                    withLabel.className = "text-rose-700 text-[10px]";
+                    withLabel.textContent = "Total Withdrawn";
+                    const withVal = document.createElement('span');
+                    withVal.className = "font-bold font-mono text-rose-700";
+                    withVal.textContent = this.formatter.format(row.cumulative_withdrawals ?? 0);
+                    withCol.appendChild(withLabel);
+                    withCol.appendChild(withVal);
+                    grid.appendChild(withCol);
                 }
 
                 card.appendChild(grid);

@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Core\Providers;
 
-use Controllers\AdminAuthAction;
-use Controllers\BlogController;
 use Controllers\DownloadCsvAction;
 use Controllers\ErrorController;
 use Controllers\GeneratePdfAction;
 use Controllers\ListResourcesAction;
 use Controllers\LogInsightApiAction;
-use Controllers\PageController;
 use Controllers\ProcessAdminLoginAction;
 use Controllers\ProcessAdminLogoutAction;
 use Controllers\RenderAboutAction;
@@ -164,10 +161,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new FileUploadService();
         });
 
-        $container->singleton(FilenameSanitizer::class, function () {
-            return new FilenameSanitizer();
-        });
-
         $container->singleton(GeneratePdfAction::class, function (Container $c) {
             return new GeneratePdfAction(
                 $c->get(RateLimiter::class),
@@ -233,14 +226,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
             );
         });
 
-        $container->singleton(BlogController::class, function (Container $c) {
-            return new BlogController(
-                $c->get(ListResourcesAction::class),
-                $c->get(ShowResourceCategoryAction::class),
-                $c->get(ShowResourcePostAction::class)
-            );
-        });
-
         $container->singleton(RenderAboutAction::class, function (Container $c) {
             return new RenderAboutAction(
                 $c->get(MetaManager::class),
@@ -278,24 +263,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(SchemaHelper::class),
                 $c->get(ViewRenderer::class),
                 $c->get(MetaManager::class)
-            );
-        });
-
-        $container->singleton(AdminAuthAction::class, function (Container $c) {
-            return new AdminAuthAction(
-                $c->get(ShowAdminLoginAction::class),
-                $c->get(ProcessAdminLoginAction::class),
-                $c->get(ProcessAdminLogoutAction::class)
-            );
-        });
-
-        $container->singleton(PageController::class, function (Container $c) {
-            return new PageController(
-                $c->get(RenderAboutAction::class),
-                $c->get(RenderFaqAction::class),
-                $c->get(RenderGlossaryAction::class),
-                $c->get(RenderPrivacyAction::class),
-                $c->get(RenderTermsAction::class)
             );
         });
 

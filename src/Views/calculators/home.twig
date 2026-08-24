@@ -5,40 +5,39 @@
 
 {% block content %}
 {% include 'components/theme-glow-blobs.twig' %}
-<header class="relative mb-6 sm:mb-10 text-center">
-    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 mb-4">
-        <span class="relative flex h-3 w-3">
+<header class="relative mb-4 sm:mb-6 text-center">
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 mb-3">
+        <span class="relative flex h-2.5 w-2.5">
             <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
         </span>
-        <span class="text-sm font-semibold text-emerald-700 tracking-wide uppercase">Financial Planning Tool</span>
+        <span class="text-xs font-semibold text-emerald-700 tracking-wide uppercase">Algorithmic Wealth Planning Engine</span>
     </div>
 
-    <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold pb-3 tracking-tight">
-        <span class="text-gradient block mb-2">SIP SWP Calculator Together</span>
-        <span class="text-gray-800 text-2xl sm:text-4xl md:text-5xl block">Step-Up SIP + Lumpsum + Inflation-Adjusted SWP Planner</span>
+    <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold pb-2 tracking-tight">
+        <span class="text-gradient block mb-1.5">SIP SWP Calculator Together</span>
+        <span class="text-slate-800 text-xl sm:text-3xl md:text-4xl block font-bold">Step-Up SIP + Lumpsum + Inflation-Adjusted SWP Planner</span>
     </h1>
     
-    <p class="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-6">
-        Use our SIP and SWP calculators <strong>together</strong> with <strong>step-up compounding</strong>,
-        <strong>lumpsum</strong> start, and <strong>inflation-adjusted</strong> withdrawals — all in one <strong>combo</strong> calculator.
+    <p class="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
+        Calculate your combined SIP accumulation and inflation-adjusted SWP retirement cashflows with step-up compounding in one zero-latency simulation studio.
     </p>
 
-    <!-- EEAT Trust Bar -->
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200/60 max-w-3xl mx-auto">
+    <!-- EEAT Institutional Trust Bar -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-500 mb-6 pb-4 border-b border-slate-200/60 max-w-3xl mx-auto">
         <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
             class="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
-                class="w-8 h-8 rounded-full shadow-sm border border-emerald-100 object-cover" width="32" height="32"
+                class="w-7 h-7 rounded-full shadow-sm border border-emerald-100 object-cover" width="28" height="28"
                 fetchpriority="high" decoding="async">
-            <span>By <strong class="text-slate-700">Sumeet Boga</strong>, Software Engineer &amp; Finance Enthusiast</span>
+            <span>Engineered by <strong class="text-slate-700 font-bold">Sumeet Boga</strong> (Software &amp; Algorithmic Finance)</span>
         </a>
         <span class="hidden sm:inline text-slate-300">|</span>
-        <div class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100 shadow-2xs">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            Verified for Accuracy: {{ "now"|date("F Y") }}
+            <span>Verified for Accuracy: {{ "now"|date("F Y") }}</span>
         </div>
     </div>
 </header>
@@ -110,7 +109,17 @@
 {% block modals %}
 <!-- PDF Generation Modal (native <dialog> with built-in focus trapping & centering) -->
 <dialog id="pdfModal" class="fixed inset-0 m-auto z-50 rounded-3xl shadow-2xl p-6 sm:p-8 w-full max-w-lg border border-slate-200 bg-white/95 max-h-[90vh] overflow-y-auto backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm text-slate-800" aria-labelledby="branded-pdf-report">
-        <h2 id="branded-pdf-report" class="text-xl sm:text-2xl font-bold text-slate-800 mb-6">Create Branded PDF Report</h2>
+        <h2 id="branded-pdf-report" class="text-xl sm:text-2xl font-bold text-slate-800 mb-4">Create Branded PDF Report</h2>
+        
+        <!-- Privacy & Client-Side Sandbox Assurance -->
+        <div class="mb-4 p-3 rounded-2xl bg-emerald-50/90 border border-emerald-200/80 flex items-start gap-2.5 text-left">
+            <span class="flex items-center justify-center w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-black shrink-0 mt-0.5">🔒</span>
+            <div class="text-[11px] text-emerald-950 leading-relaxed">
+                <strong class="font-bold text-emerald-900 block">100% Client-Side Private Generation</strong>
+                Advisor logo, client name, and customized proposals are processed purely within your browser memory. Zero financial data or uploaded files are sent to or stored on any server.
+            </div>
+        </div>
+
         <form id="pdfForm" class="space-y-4">
             <div>
                 <label for="clientName" class="block text-sm font-medium mb-1 text-slate-600">Client Name</label>

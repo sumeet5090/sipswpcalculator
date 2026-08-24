@@ -6,13 +6,13 @@ namespace Core\Middleware;
 
 use Core\Http\Request;
 use Core\Http\Response;
-use Services\SessionManager;
+use Services\SessionManagerInterface;
 
 class SessionMiddleware implements MiddlewareInterface
 {
-    private SessionManager $sessionManager;
+    private SessionManagerInterface $sessionManager;
 
-    public function __construct(SessionManager $sessionManager)
+    public function __construct(SessionManagerInterface $sessionManager)
     {
         $this->sessionManager = $sessionManager;
     }

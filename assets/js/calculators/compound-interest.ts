@@ -11,10 +11,14 @@ export class CompoundInterestCalculator {
     private formatter: CurrencyFormatter;
     private validator: InputValidator;
 
-    constructor() {
-        this.dom = new DOMAdapter();
-        this.formatter = new CurrencyFormatter();
-        this.validator = new InputValidator();
+    constructor(
+        dom: DOMAdapter = new DOMAdapter(),
+        formatter: CurrencyFormatter = new CurrencyFormatter(),
+        validator: InputValidator = new InputValidator()
+    ) {
+        this.dom = dom;
+        this.formatter = formatter;
+        this.validator = validator;
     }
 
     public init(): void {
@@ -78,11 +82,13 @@ export class CompoundInterestCalculator {
     }
 }
 
-// Auto-instantiate on DOM load
+// Auto-instantiate on DOM load if target calculator elements are present
 if (typeof document !== 'undefined') {
     const initCI = () => {
-        const calc = new CompoundInterestCalculator();
-        calc.init();
+        if (document.getElementById('ci-principal')) {
+            const calc = new CompoundInterestCalculator();
+            calc.init();
+        }
     };
 
     if (document.readyState === 'loading') {

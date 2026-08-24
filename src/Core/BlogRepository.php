@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core;
 
-use Services\ConfigService;
+use Services\ConfigServiceInterface;
 
 /**
  * BlogRepository
@@ -14,18 +14,18 @@ class BlogRepository
 {
     private ContentManager $contentManager;
     private string $categoriesJsonPath;
-    private ConfigService $configService;
+    private ConfigServiceInterface $configService;
     private ?array $cachedCategories = null;
     private ?array $cachedPosts = null;
 
     public function __construct(
         ContentManager $contentManager,
         ?string $categoriesJsonPath = null,
-        ?ConfigService $configService = null
+        ?ConfigServiceInterface $configService = null
     ) {
         $this->contentManager = $contentManager;
         $this->categoriesJsonPath = $categoriesJsonPath ?? (__DIR__ . '/../../content/categories.json');
-        $this->configService = $configService ?? new ConfigService($this->categoriesJsonPath);
+        $this->configService = $configService ?? new \Services\ConfigService($this->categoriesJsonPath);
     }
 
     public function getCategories(): array

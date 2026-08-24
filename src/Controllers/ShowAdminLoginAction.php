@@ -7,7 +7,7 @@ namespace Controllers;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\ViewRenderer;
-use Services\SessionManager;
+use Services\SessionManagerInterface;
 
 /**
  * ShowAdminLoginAction
@@ -16,11 +16,11 @@ use Services\SessionManager;
 class ShowAdminLoginAction
 {
     private ViewRenderer $viewRenderer;
-    private SessionManager $sessionManager;
+    private SessionManagerInterface $sessionManager;
 
     public function __construct(
         ViewRenderer $viewRenderer,
-        SessionManager $sessionManager
+        SessionManagerInterface $sessionManager
     ) {
         $this->viewRenderer = $viewRenderer;
         $this->sessionManager = $sessionManager;

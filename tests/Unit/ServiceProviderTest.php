@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use Controllers\AdminAuthAction;
-use Controllers\BlogController;
 use Controllers\DownloadCsvAction;
 use Controllers\ErrorController;
 use Controllers\GeneratePdfAction;
 use Controllers\LogInsightApiAction;
-use Controllers\PageController;
 use Controllers\RenderGuideAction;
 use Controllers\RenderHomeAction;
 use Controllers\ShowAdminDashboardAction;
@@ -31,7 +28,6 @@ use Core\GlossaryRepository;
 use Core\InsightRepository;
 use Core\InvestmentCalculator;
 use Core\MetaManager;
-use Core\Middleware\CsrfHoneypotMiddleware;
 use Core\PdfTemplateInterface;
 use Core\Router;
 use Core\SchemaHelper;
@@ -113,7 +109,6 @@ class ServiceProviderTest extends TestCase
     {
         $this->assertInstanceOf(\Core\Middleware\HoneypotMiddleware::class, $this->container->get(\Core\Middleware\HoneypotMiddleware::class));
         $this->assertInstanceOf(\Core\Middleware\AdminCsrfMiddleware::class, $this->container->get(\Core\Middleware\AdminCsrfMiddleware::class));
-        $this->assertInstanceOf(CsrfHoneypotMiddleware::class, $this->container->get(CsrfHoneypotMiddleware::class));
         $this->assertInstanceOf(RateLimitStorageInterface::class, $this->container->get(RateLimitStorageInterface::class));
         $this->assertInstanceOf(RateLimiter::class, $this->container->get(RateLimiter::class));
         $this->assertInstanceOf(PdfTemplateInterface::class, $this->container->get(PdfTemplateInterface::class));
@@ -121,18 +116,15 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(HtmlSanitizer::class, $this->container->get(HtmlSanitizer::class));
         $this->assertInstanceOf(FileUploadService::class, $this->container->get(FileUploadService::class));
         $this->assertInstanceOf(ShowAdminDashboardAction::class, $this->container->get(ShowAdminDashboardAction::class));
-        $this->assertInstanceOf(AdminAuthAction::class, $this->container->get(AdminAuthAction::class));
         $this->assertInstanceOf(LogInsightApiAction::class, $this->container->get(LogInsightApiAction::class));
         $this->assertInstanceOf(RenderHomeAction::class, $this->container->get(RenderHomeAction::class));
         $this->assertInstanceOf(DownloadCsvAction::class, $this->container->get(DownloadCsvAction::class));
         $this->assertInstanceOf(GeneratePdfAction::class, $this->container->get(GeneratePdfAction::class));
         $this->assertInstanceOf(SitemapController::class, $this->container->get(SitemapController::class));
         $this->assertInstanceOf(ErrorController::class, $this->container->get(ErrorController::class));
-        $this->assertInstanceOf(BlogController::class, $this->container->get(BlogController::class));
         $this->assertInstanceOf(\Controllers\ListResourcesAction::class, $this->container->get(\Controllers\ListResourcesAction::class));
         $this->assertInstanceOf(\Controllers\ShowResourceCategoryAction::class, $this->container->get(\Controllers\ShowResourceCategoryAction::class));
         $this->assertInstanceOf(\Controllers\ShowResourcePostAction::class, $this->container->get(\Controllers\ShowResourcePostAction::class));
-        $this->assertInstanceOf(PageController::class, $this->container->get(PageController::class));
         $this->assertInstanceOf(RenderGuideAction::class, $this->container->get(RenderGuideAction::class));
     }
 }
