@@ -156,7 +156,8 @@ export class CalculatorApp {
             this.dom,
             this.sliderManager,
             this.formatter,
-            () => this.triggerCalculation()
+            () => this.triggerCalculation(),
+            (city) => this.analytics.setCityBenchmarkCity(city.slice(0, 64))
         );
 
         this.stressTestController = new StressTestController(
@@ -900,6 +901,7 @@ export class CalculatorApp {
             }
 
             this.stressTestController.updateResults(combined);
+            this.cityBenchmarkController.updateResults(combined, inputs);
             this.assetRebalanceController.updateInputs(inputs);
             this.dailyAccrualController.updateResults(combined);
             this.glossaryController.updateArithmeticProof(inputs, combined);

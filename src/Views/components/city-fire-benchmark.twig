@@ -1,78 +1,216 @@
 <!-- Indian City Cost of Living & FIRE Retirement Benchmark Studio -->
-<div id="city-fire-benchmark-card" class="p-5 sm:p-6 rounded-3xl bg-white/95 backdrop-blur-md text-slate-800 border border-slate-200 shadow-xl relative overflow-hidden spotlight-card">
-    <!-- Ambient Glow -->
-    <div class="absolute -right-16 -top-16 w-56 h-56 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+<div id="city-fire-benchmark-card" class="p-5 sm:p-6 rounded-3xl bg-white/95 backdrop-blur-md text-slate-900 border border-slate-200/90 shadow-sm relative overflow-hidden">
+    <!-- Ambient Aurora Glow (Pure Light Mode) -->
+    <div class="absolute -right-16 -top-16 w-56 h-56 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -left-16 -bottom-16 w-56 h-56 bg-teal-400/8 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="relative z-10">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-            <div class="flex items-center gap-2.5">
-                <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 text-sm font-black">🏙️</span>
+    <div class="relative z-10 space-y-5">
+        
+        <!-- ========================================================================= -->
+        <!-- HEADER DOCK: TITLE, HOUSING TENURE & SWR MULTIPLIER SELECTOR             -->
+        <!-- ========================================================================= -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <!-- Left: Module Identifier -->
+            <div class="flex items-center gap-3">
+                <div class="flex items-center justify-center w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-2xs shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                </div>
                 <div>
-                    <h4 class="text-xs sm:text-sm font-extrabold text-slate-900">City Cost of Living &amp; FIRE Benchmark</h4>
-                    <p class="text-[11px] text-slate-500">Calculate exact FIRE retirement corpus for your city</p>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <h4 class="text-sm sm:text-base font-black text-slate-900 tracking-tight">
+                            Indian City FIRE Retirement Benchmark
+                        </h4>
+                        <span class="inline-flex items-center text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
+                            Geo-Arbitrage Engine
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">
+                        Evaluate your live portfolio readiness and financial freedom timeline across Indian cities
+                    </p>
                 </div>
             </div>
-            <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                25× Rule Matrix
-            </span>
-        </div>
 
-        <!-- City Selector Buttons -->
-        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-4" role="tablist" aria-label="City Selection">
-            <button type="button" class="city-choice-btn p-2.5 rounded-xl bg-white border-2 border-emerald-500 text-slate-900 text-left transition-all cursor-pointer shadow-sm" data-city="mumbai" data-expense="85000" data-corpus="25500000" data-sip="36800">
-                <strong class="text-xs block">Mumbai</strong>
-                <span class="text-[10px] text-slate-500">₹85k / mo exp</span>
-            </button>
-            <button type="button" class="city-choice-btn p-2.5 rounded-xl bg-slate-50/90 border border-slate-200 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all cursor-pointer" data-city="bengaluru" data-expense="75000" data-corpus="22500000" data-sip="32500">
-                <strong class="text-xs block">Bengaluru</strong>
-                <span class="text-[10px] text-slate-500">₹75k / mo exp</span>
-            </button>
-            <button type="button" class="city-choice-btn p-2.5 rounded-xl bg-slate-50/90 border border-slate-200 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all cursor-pointer" data-city="delhi" data-expense="70000" data-corpus="21000000" data-sip="30300">
-                <strong class="text-xs block">Delhi NCR</strong>
-                <span class="text-[10px] text-slate-500">₹70k / mo exp</span>
-            </button>
-            <button type="button" class="city-choice-btn p-2.5 rounded-xl bg-slate-50/90 border border-slate-200 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all cursor-pointer" data-city="pune" data-expense="60000" data-corpus="18000000" data-sip="26000">
-                <strong class="text-xs block">Pune / Hyd</strong>
-                <span class="text-[10px] text-slate-500">₹60k / mo exp</span>
-            </button>
-            <button type="button" class="city-choice-btn p-2.5 rounded-xl bg-slate-50/90 border border-slate-200 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all cursor-pointer col-span-2 sm:col-span-1" data-city="tier2" data-expense="45000" data-corpus="13500000" data-sip="19500">
-                <strong class="text-xs block">Tier-2 Cities</strong>
-                <span class="text-[10px] text-slate-500">₹45k / mo exp</span>
-            </button>
-        </div>
+            <!-- Right: Controls (Housing Status & Multiplier) -->
+            <div class="flex flex-wrap items-center gap-2 self-start lg:self-center">
+                <!-- Housing Tenure Toggle -->
+                <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 text-[11px] font-bold text-slate-600" role="group" aria-label="Housing Tenure">
+                    <button type="button" id="housing-rented-btn" class="housing-toggle-btn px-2.5 py-1 rounded-lg bg-white text-emerald-900 shadow-2xs border border-slate-200/60 transition-all cursor-pointer font-bold">
+                        🏢 Rented
+                    </button>
+                    <button type="button" id="housing-owned-btn" class="housing-toggle-btn px-2.5 py-1 rounded-lg text-slate-500 hover:text-slate-900 transition-all cursor-pointer font-medium">
+                        🏠 Own House (-35%)
+                    </button>
+                </div>
 
-        <!-- Inflation Benchmark Switch -->
-        <div class="flex flex-wrap items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 mb-3 text-xs">
-            <span class="font-bold text-slate-700 text-[11px]">Lifestyle Inflation Benchmark:</span>
-            <div class="inline-flex bg-slate-200/70 p-0.5 rounded-lg text-[10px] font-bold" role="group" aria-label="City Inflation Benchmark">
-                <button type="button" id="city-inflation-standard-btn" class="city-inflation-btn px-2 py-0.5 rounded-md transition-all bg-white text-emerald-800 shadow-2xs cursor-pointer" data-inflation="6">
-                    Tier-2 (6.0%)
-                </button>
-                <button type="button" id="city-inflation-metro-btn" class="city-inflation-btn px-2 py-0.5 rounded-md transition-all text-slate-600 hover:text-slate-900 cursor-pointer" data-inflation="7.5">
-                    Metro Premium (7.5%)
-                </button>
+                <!-- SWR Multiplier Selector -->
+                <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 text-[11px] font-bold text-slate-600" role="group" aria-label="SWR Multiplier">
+                    <button type="button" class="swr-multiplier-btn px-2 py-1 rounded-lg text-slate-500 hover:text-slate-900 transition-all cursor-pointer" data-multiplier="25">
+                        25× (Lean)
+                    </button>
+                    <button type="button" class="swr-multiplier-btn px-2.5 py-1 rounded-lg bg-white text-emerald-900 shadow-2xs border border-slate-200/60 transition-all cursor-pointer font-black" data-multiplier="30">
+                        30× (Standard)
+                    </button>
+                    <button type="button" class="swr-multiplier-btn px-2 py-1 rounded-lg text-slate-500 hover:text-slate-900 transition-all cursor-pointer" data-multiplier="35">
+                        35× (Fat FIRE)
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- Metrics Preview Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/80 mb-4">
-            <div>
-                <div class="text-[10px] uppercase font-bold text-slate-500">Monthly Living Cost</div>
-                <div id="city-preview-expense" class="text-sm font-extrabold text-slate-900 font-mono mt-0.5">₹85,000 / mo</div>
+        <!-- ========================================================================= -->
+        <!-- CITY SELECTOR CARDS (INTERACTIVE GEOGRAPHIC PRESETS)                      -->
+        <!-- ========================================================================= -->
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5" role="tablist" aria-label="City Selection">
+            <!-- Mumbai (Active Default) -->
+            <button type="button" class="city-choice-btn group p-3 rounded-2xl bg-white border-2 border-emerald-500 text-slate-900 text-left transition-all duration-200 cursor-pointer shadow-xs relative"
+                data-city="mumbai" data-base-expense="85000" data-inflation="7.5">
+                <div class="flex items-center justify-between mb-1">
+                    <strong class="text-xs font-black text-slate-900 group-hover:text-emerald-900">Mumbai</strong>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                </div>
+                <div class="text-[11px] font-extrabold text-emerald-800 font-mono city-expense-label">₹85k/mo</div>
+                <div class="text-[9.5px] text-slate-500 font-medium">Metro Tier-1A</div>
+            </button>
+
+            <!-- Bengaluru -->
+            <button type="button" class="city-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+                data-city="bengaluru" data-base-expense="75000" data-inflation="7.5">
+                <div class="flex items-center justify-between mb-1">
+                    <strong class="text-xs font-black text-slate-900 group-hover:text-emerald-900">Bengaluru</strong>
+                    <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
+                </div>
+                <div class="text-[11px] font-extrabold text-slate-700 font-mono city-expense-label">₹75k/mo</div>
+                <div class="text-[9.5px] text-slate-500 font-medium">Tech Capital</div>
+            </button>
+
+            <!-- Delhi NCR -->
+            <button type="button" class="city-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+                data-city="delhi" data-base-expense="70000" data-inflation="7.0">
+                <div class="flex items-center justify-between mb-1">
+                    <strong class="text-xs font-black text-slate-900 group-hover:text-emerald-900">Delhi NCR</strong>
+                    <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
+                </div>
+                <div class="text-[11px] font-extrabold text-slate-700 font-mono city-expense-label">₹70k/mo</div>
+                <div class="text-[9.5px] text-slate-500 font-medium">National Capital</div>
+            </button>
+
+            <!-- Pune / Hyderabad -->
+            <button type="button" class="city-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+                data-city="pune" data-base-expense="60000" data-inflation="6.5">
+                <div class="flex items-center justify-between mb-1">
+                    <strong class="text-xs font-black text-slate-900 group-hover:text-emerald-900">Pune / Hyd</strong>
+                    <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
+                </div>
+                <div class="text-[11px] font-extrabold text-slate-700 font-mono city-expense-label">₹60k/mo</div>
+                <div class="text-[9.5px] text-slate-500 font-medium">Growth Hubs</div>
+            </button>
+
+            <!-- Tier-2 Cities -->
+            <button type="button" class="city-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer col-span-2 sm:col-span-1"
+                data-city="tier2" data-base-expense="45000" data-inflation="6.0">
+                <div class="flex items-center justify-between mb-1">
+                    <strong class="text-xs font-black text-slate-900 group-hover:text-emerald-900">Tier-2 Cities</strong>
+                    <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
+                </div>
+                <div class="text-[11px] font-extrabold text-slate-700 font-mono city-expense-label">₹45k/mo</div>
+                <div class="text-[9.5px] text-slate-500 font-medium">Kochi/Indore/Jaipur</div>
+            </button>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- LIVE PERSONAL FIRE READINESS RADAR & TELEMETRY COCKPIT                    -->
+        <!-- ========================================================================= -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-slate-50/90 border border-slate-200/90 space-y-4">
+            
+            <!-- Top Metric Ribbon: Readiness Gauge & Surplus/Deficit Status -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-slate-200/70">
+                <div>
+                    <div class="text-[10.5px] font-extrabold uppercase tracking-wider text-slate-500">
+                        Live FIRE Readiness vs. Your Current Plan
+                    </div>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span id="fire-readiness-percent" class="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight">
+                            82%
+                        </span>
+                        <div class="flex flex-col">
+                            <span id="fire-status-badge" class="inline-flex items-center text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200/80">
+                                Deficit: ₹45.0 Lakh
+                            </span>
+                            <span id="fire-horizon-date" class="text-[10px] text-slate-500 font-bold mt-0.5">
+                                On Track for Freedom at Yr 17
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Visual Bar -->
+                <div class="w-full sm:w-48 flex flex-col gap-1.5 self-center">
+                    <div class="flex justify-between text-[10px] font-bold text-slate-500">
+                        <span>Readiness</span>
+                        <span id="fire-bar-pct-label">82%</span>
+                    </div>
+                    <div class="w-full h-2.5 rounded-full bg-slate-200 overflow-hidden relative">
+                        <div id="fire-progress-bar" class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full transition-all duration-500" style="width: 82%;"></div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <div class="text-[10px] uppercase font-bold text-slate-500">25× Target FIRE Corpus</div>
-                <div id="city-preview-corpus" class="text-sm font-extrabold text-emerald-700 font-mono mt-0.5">₹2.55 Crore</div>
+
+            <!-- 3-Column Quantitative Ledger Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
+                    <div class="text-[10px] uppercase font-bold text-slate-500">Monthly Expense</div>
+                    <div id="city-preview-expense" class="text-sm sm:text-base font-black text-slate-900 font-mono mt-0.5">
+                        ₹85,000 / mo
+                    </div>
+                    <span class="text-[9.5px] text-slate-500 font-medium">Inflation: 7.5% p.a.</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
+                    <div class="text-[10px] uppercase font-bold text-slate-500">Target FIRE Corpus (<span id="fire-multiplier-tag">30×</span>)</div>
+                    <div id="city-preview-corpus" class="text-sm sm:text-base font-black text-emerald-800 font-mono mt-0.5">
+                        ₹3.06 Crore
+                    </div>
+                    <span class="text-[9.5px] text-slate-500 font-medium">35-Yr Longevity Buffer</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
+                    <div class="text-[10px] uppercase font-bold text-slate-500">Benchmark SIP Required</div>
+                    <div id="city-preview-sip" class="text-sm sm:text-base font-black text-teal-800 font-mono mt-0.5">
+                        ₹44,200 / mo
+                    </div>
+                    <span class="text-[9.5px] text-slate-500 font-medium">15 Yrs @ 12% + 10% Step-Up</span>
+                </div>
             </div>
-            <div>
-                <div class="text-[10px] uppercase font-bold text-slate-500">15-Yr SIP Required (@12%)</div>
-                <div id="city-preview-sip" class="text-sm font-extrabold text-teal-700 font-mono mt-0.5">₹36,800 / mo</div>
+
+            <!-- Geo-Arbitrage Insight Banner -->
+            <div id="geo-arbitrage-banner" class="p-3 rounded-xl bg-emerald-50/80 border border-emerald-200/80 flex items-start gap-2.5 text-xs text-emerald-950">
+                <span class="flex items-center justify-center w-5 h-5 rounded-lg bg-emerald-100 text-emerald-800 font-bold shrink-0 mt-0.5">💡</span>
+                <div class="leading-relaxed">
+                    <strong class="font-extrabold text-emerald-900 block">Geo-Arbitrage Opportunity</strong>
+                    <span id="geo-arbitrage-text">
+                        Moving retirement from Mumbai to a Tier-2 city reduces required corpus by ₹1.44 Crore, pulling your Freedom Date forward by <strong>5.2 Years</strong>.
+                    </span>
+                </div>
             </div>
         </div>
 
-        <button type="button" id="apply-city-benchmark-btn"
-            class="w-full py-2.5 px-4 rounded-xl font-bold bg-emerald-600 hover:bg-emerald-500 active:scale-98 text-white shadow-md shadow-emerald-600/20 transition-all cursor-pointer text-xs flex items-center justify-center gap-2">
-            <span>⚡ Apply This City Strategy to Calculator</span>
-        </button>
+        <!-- ========================================================================= -->
+        <!-- ACTION POD: ADOPT TARGET AS SCENARIO GOAL (NON-DESTRUCTIVE CONFIRMATION)  -->
+        <!-- ========================================================================= -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
+            <p class="text-xs text-slate-500 font-medium">
+                Want to align your calculator inputs with this exact city retirement plan?
+            </p>
+            <button type="button" id="apply-city-benchmark-btn"
+                class="w-full sm:w-auto px-5 py-2.5 rounded-xl font-extrabold bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white shadow-sm transition-all cursor-pointer text-xs flex items-center justify-center gap-2">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span>Adopt This City FIRE Strategy</span>
+            </button>
+        </div>
     </div>
 </div>
+
