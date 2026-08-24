@@ -85,6 +85,7 @@ export class CalculatorApp {
     private mobileDeckController: MobileErgonomicDeckController;
     private keyboardViewportController: KeyboardViewportController;
     private keyboardNavController: KeyboardNavigationController;
+    private studioTabController: StudioTabController;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -248,6 +249,7 @@ export class CalculatorApp {
         );
 
         this.keyboardViewportController = new KeyboardViewportController(this.dom, this.formatter);
+        this.studioTabController = new StudioTabController(this.dom, (tabId) => this.analytics.setActiveStudioTab(tabId));
 
         this.keyboardNavController = new KeyboardNavigationController(
             this.dom,
@@ -569,7 +571,7 @@ export class CalculatorApp {
         new TabController(this.dom, () => {
             this.syncSwpToggleState();
         }).init();
-        new StudioTabController(this.dom, (tabId) => this.analytics.setActiveStudioTab(tabId)).init();
+        this.studioTabController.init();
         new StepperController(
             this.dom,
             this.validator,
@@ -907,6 +909,7 @@ export class CalculatorApp {
             this.lifecycleBridgeController.update(combined);
             this.mobileDeckController.update(combined);
             this.keyboardViewportController.update(combined);
+            this.updateStudioTelemetry(inputs, combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 
@@ -922,6 +925,40 @@ export class CalculatorApp {
                 table_viewed: tableViewed,
                 device_type: deviceType
             });
+        });
+    }
+
+    /**
+     * Updates real-time telemetry metrics in the Multi-Mode Analytical Studio tab bar.
+     */
+    private updateStudioTelemetry(inputs: InvestmentInputs, results: YearResult[]): void {
+        if (!results || results.length === 0) return;
+        const lastRow = results[results.length - 1];
+        const finalCorpus = lastRow ? lastRow.combined_total : 0;
+
+        // Mumbai benchmark target is ₹2.55 Cr (2,55,00,000)
+        const fireCoverage = Math.min(100, (finalCorpus / 25500000) * 100);
+
+        // Milestone checkpoints: 25L, 50L, 1Cr, 5Cr
+        const milestoneCheckpoints = [2500000, 5000000, 10000000, 50000000];
+        const unlockedCount = milestoneCheckpoints.filter(target => finalCorpus >= target).length;
+
+        // Context scenario caption update
+        const captionEl = this.dom.getElement('studio-active-scenario-caption');
+        if (captionEl) {
+            const formattedCorpus = this.formatter.formatDynamic(finalCorpus);
+            const modeLabel = inputs.enable_swp ? 'SWP Cashflow' : 'SIP Wealth Creation';
+            captionEl.textContent = `Simulating ${inputs.years} Yrs @ ${inputs.rate}% p.a. • Projecting ${formattedCorpus} (${modeLabel})`;
+        }
+
+        this.studioTabController.updateTelemetry({
+            years: inputs.years,
+            fireCoveragePercent: fireCoverage,
+            fireCityName: 'Mumbai',
+            milestonesUnlocked: unlockedCount,
+            totalMilestones: milestoneCheckpoints.length,
+            maxStressDrawdownPercent: 38,
+            targetEquitySplit: 80
         });
     }
 

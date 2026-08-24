@@ -1,20 +1,38 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 
+export interface StudioTelemetryData {
+    years: number;
+    fireCoveragePercent?: number;
+    fireCityName?: string;
+    milestonesUnlocked?: number;
+    totalMilestones?: number;
+    maxStressDrawdownPercent?: number;
+    targetEquitySplit?: number;
+}
+
 /**
  * StudioTabController
- * Coordinates tab switching within the Multi-Mode Analytical Studio
- * (Yearly Breakdown Table, Milestone Roadmap, Black Swan Stress-Test, City FIRE Benchmark, Asset Allocation).
+ * Coordinates tab switching, mobile scroll-centering, and real-time telemetry badging
+ * for the Multi-Mode Analytical Studio.
  */
 export class StudioTabController {
     private dom: DOMAdapter;
     private onTabChange?: (tabId: string) => void;
+
+    // Strict pure light-mode active and inactive class descriptors
+    private readonly activeClasses = [
+        'bg-white', 'text-emerald-900', 'shadow-xs', 'border-slate-200/90', 'font-black'
+    ];
+    private readonly inactiveClasses = [
+        'text-slate-600', 'hover:text-slate-900', 'hover:bg-white/60', 'font-bold', 'border-transparent'
+    ];
 
     constructor(dom: DOMAdapter = new DOMAdapter(), onTabChange?: (tabId: string) => void) {
         this.dom = dom;
         this.onTabChange = onTabChange;
     }
 
-    init(): void {
+    public init(): void {
         const tabContainer = this.dom.getElement('studio-tabs-nav');
         if (!tabContainer) return;
 
@@ -29,13 +47,33 @@ export class StudioTabController {
                 tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
                 tab.setAttribute('tabindex', isSelected ? '0' : '-1');
 
+                const statusDot = tab.querySelector<HTMLElement>('.w-2.h-2');
+                const badge = tab.querySelector<HTMLElement>('span[id^="tab-telemetry-"]');
+
                 if (isSelected) {
-                    tab.classList.add('bg-white', 'text-emerald-800', 'shadow-xs', 'border-slate-200/90', 'font-bold');
-                    tab.classList.remove('text-slate-500', 'hover:text-slate-800', 'font-medium', 'border-transparent');
+                    tab.classList.add(...this.activeClasses);
+                    tab.classList.remove(...this.inactiveClasses);
+
+                    if (statusDot) {
+                        statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500 shadow-2xs';
+                    }
+                    if (badge) {
+                        badge.className = 'text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/70';
+                    }
+
+                    // Smooth horizontal auto-center on mobile viewports
+                    tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     if (shouldFocus) tab.focus();
                 } else {
-                    tab.classList.remove('bg-white', 'text-emerald-800', 'shadow-xs', 'border-slate-200/90', 'font-bold');
-                    tab.classList.add('text-slate-500', 'hover:text-slate-800', 'font-medium', 'border-transparent');
+                    tab.classList.remove(...this.activeClasses);
+                    tab.classList.add(...this.inactiveClasses);
+
+                    if (statusDot) {
+                        statusDot.className = 'w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400';
+                    }
+                    if (badge) {
+                        badge.className = 'text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-md bg-slate-200/70 text-slate-700 group-hover:bg-emerald-50 group-hover:text-emerald-800 transition-colors';
+                    }
                 }
             });
 
@@ -75,5 +113,60 @@ export class StudioTabController {
                 }
             });
         });
+
+        const lakhBtn = this.dom.getElement('studio-unit-lakh');
+        const exactBtn = this.dom.getElement('studio-unit-exact');
+        if (lakhBtn && exactBtn) {
+            lakhBtn.addEventListener('click', () => {
+                lakhBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border-slate-200/60');
+                lakhBtn.classList.remove('text-slate-500');
+                exactBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border-slate-200/60');
+                exactBtn.classList.add('text-slate-500');
+            });
+            exactBtn.addEventListener('click', () => {
+                exactBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border-slate-200/60');
+                exactBtn.classList.remove('text-slate-500');
+                lakhBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border-slate-200/60');
+                lakhBtn.classList.add('text-slate-500');
+            });
+        }
+    }
+
+    /**
+     * Updates live telemetry indicators across tab badges in real-time
+     * when the calculation engine produces new results.
+     */
+    public updateTelemetry(data: StudioTelemetryData): void {
+        // 1. Yearly Breakdown Horizon
+        const breakdownTag = this.dom.getElement('tab-telemetry-breakdown');
+        if (breakdownTag && data.years !== undefined) {
+            breakdownTag.textContent = `${data.years} Yrs`;
+        }
+
+        // 2. City FIRE Readiness
+        const fireTag = this.dom.getElement('tab-telemetry-fire');
+        if (fireTag && data.fireCoveragePercent !== undefined) {
+            const cityName = data.fireCityName || 'FIRE';
+            fireTag.textContent = `${Math.round(data.fireCoveragePercent)}% ${cityName}`;
+        }
+
+        // 3. Milestone Hit Ratio
+        const milestoneTag = this.dom.getElement('tab-telemetry-milestones');
+        if (milestoneTag && data.milestonesUnlocked !== undefined && data.totalMilestones !== undefined) {
+            milestoneTag.textContent = `${data.milestonesUnlocked}/${data.totalMilestones} Hit`;
+        }
+
+        // 4. Stress Test Shock
+        const stressTag = this.dom.getElement('tab-telemetry-stress');
+        if (stressTag && data.maxStressDrawdownPercent !== undefined) {
+            stressTag.textContent = `-${Math.round(data.maxStressDrawdownPercent)}% Shock`;
+        }
+
+        // 5. Asset Rebalancing Ratio
+        const rebalanceTag = this.dom.getElement('tab-telemetry-rebalance');
+        if (rebalanceTag && data.targetEquitySplit !== undefined) {
+            rebalanceTag.textContent = `${data.targetEquitySplit}:${100 - data.targetEquitySplit}`;
+        }
     }
 }
+

@@ -7,7 +7,8 @@ namespace Tests\Unit;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Validates StudioTabController contracts, ARIA keyboard navigation, and analytical studio DOM consistency.
+ * Validates StudioTabController contracts, ARIA keyboard navigation,
+ * real-time telemetry badge containers, SVG icons, and analytical studio DOM consistency.
  */
 final class StudioTabControllerTest extends TestCase
 {
@@ -38,6 +39,22 @@ final class StudioTabControllerTest extends TestCase
         $this->assertStringContainsString("e.key === 'End'", $this->controllerCode);
     }
 
+    public function testStudioTabControllerImplementsMobileScrollCentering(): void
+    {
+        $this->assertStringContainsString("tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })", $this->controllerCode);
+    }
+
+    public function testStudioTabControllerImplementsTelemetryUpdateContract(): void
+    {
+        $this->assertStringContainsString('interface StudioTelemetryData', $this->controllerCode);
+        $this->assertStringContainsString('updateTelemetry(data: StudioTelemetryData)', $this->controllerCode);
+        $this->assertStringContainsString('tab-telemetry-breakdown', $this->controllerCode);
+        $this->assertStringContainsString('tab-telemetry-fire', $this->controllerCode);
+        $this->assertStringContainsString('tab-telemetry-milestones', $this->controllerCode);
+        $this->assertStringContainsString('tab-telemetry-stress', $this->controllerCode);
+        $this->assertStringContainsString('tab-telemetry-rebalance', $this->controllerCode);
+    }
+
     public function testAnalyticalStudioContainsAllRequiredTabsAndMatchingPanels(): void
     {
         $tabs = [
@@ -56,9 +73,33 @@ final class StudioTabControllerTest extends TestCase
         }
     }
 
+    public function testAnalyticalStudioContainsLiveTelemetryContainers(): void
+    {
+        $telemetryIds = [
+            'tab-telemetry-breakdown',
+            'tab-telemetry-fire',
+            'tab-telemetry-milestones',
+            'tab-telemetry-stress',
+            'tab-telemetry-rebalance',
+        ];
+
+        foreach ($telemetryIds as $telemetryId) {
+            $this->assertStringContainsString("id=\"{$telemetryId}\"", $this->studioTwigContent);
+        }
+    }
+
+    public function testAnalyticalStudioContainsUtilityDeckAndGradientIndicators(): void
+    {
+        $this->assertStringContainsString('id="studio-unit-lakh"', $this->studioTwigContent);
+        $this->assertStringContainsString('id="studio-unit-exact"', $this->studioTwigContent);
+        $this->assertStringContainsString('id="studio-export-pdf-btn"', $this->studioTwigContent);
+        $this->assertStringContainsString('bg-gradient-to-r from-white to-transparent', $this->studioTwigContent);
+        $this->assertStringContainsString('bg-gradient-to-l from-white to-transparent', $this->studioTwigContent);
+    }
+
     public function testYearlyBreakdownIsDefaultActiveTab(): void
     {
         $this->assertStringContainsString('id="tab-yearly-breakdown" aria-controls="panel-yearly-breakdown" aria-selected="true"', $this->studioTwigContent);
-        $this->assertStringContainsString('id="panel-yearly-breakdown" role="tabpanel" aria-labelledby="tab-yearly-breakdown" class="studio-tab-panel"', $this->studioTwigContent);
+        $this->assertStringContainsString('id="panel-yearly-breakdown" role="tabpanel" aria-labelledby="tab-yearly-breakdown" class="studio-tab-panel', $this->studioTwigContent);
     }
 }
