@@ -11,9 +11,9 @@
 
 {# Calculator CTA — links every blog post back to the core product #}
 <section class="mt-12 mb-8" aria-label="Try the Calculator">
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-700 p-8 sm:p-10 text-white shadow-lg">
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-700 p-8 sm:p-10 text-white shadow-card-hover">
         <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
-        <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div class="relative z-elevated flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div>
                 <h3 class="text-xl sm:text-2xl font-extrabold mb-2">Plan Your Investment Journey</h3>
                 <p class="text-emerald-100 text-sm sm:text-base max-w-xl leading-relaxed">
@@ -21,7 +21,7 @@
                 </p>
             </div>
             <a href="/"
-                class="inline-flex items-center gap-2 px-6 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-md hover:shadow-lg hover:bg-emerald-50 transition-all flex-shrink-0">
+                class="inline-flex items-center gap-2 px-6 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-card hover:shadow-card-hover hover:bg-emerald-50 transition-all flex-shrink-0">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                 </svg>
@@ -76,8 +76,8 @@
                 {% endif %}
 
                 <a href="{{ post.href }}"
-                    class="group block p-5 rounded-xl border border-slate-200/80 bg-white hover:shadow-md {{ border_hover }} transition-all duration-200">
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider {{ tag_badge }} mb-3">
+                    class="group block p-5 rounded-xl border border-slate-200/80 bg-white hover:shadow-card {{ border_hover }} transition-all duration-200">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-micro font-black uppercase tracking-wider {{ tag_badge }} mb-3">
                         {{ post.tag|default('Guide') }}
                     </span>
                     <h4 class="text-sm font-bold text-slate-800 {{ title_hover }} transition-colors leading-snug mb-2 line-clamp-2">

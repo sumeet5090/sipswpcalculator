@@ -42,11 +42,11 @@
   --text-heading-sm--line-height: 1.4;
   --text-heading-sm--letter-spacing: -0.015em;
 
-  --text-body: 0.9375rem;          /* 15px */
+  --text-body: 1rem;               /* 16px */
   --text-body--line-height: 1.5rem;    /* 24px */
   --text-body--letter-spacing: -0.01em;
 
-  --text-ui-sm: 0.8125rem;         /* 13px */
+  --text-ui-sm: 0.875rem;          /* 14px */
   --text-ui-sm--line-height: 1.25rem;  /* 20px */
   --text-ui-sm--letter-spacing: -0.005em;
 
@@ -122,31 +122,6 @@
   --color-border-default: rgba(226, 232, 240, 0.85);
   --color-border-strong: rgba(203, 213, 225, 0.95);
 
-  /* Backward Compatibility Aliases for Legacy Financial Tokens */
-  --color-financial-growth: var(--color-growth);
-  --color-financial-growth-bg: var(--color-growth-surface);
-  --color-financial-growth-border: var(--color-growth-border);
-
-  --color-financial-withdrawal: var(--color-payout);
-  --color-financial-withdrawal-bg: var(--color-payout-surface);
-  --color-financial-withdrawal-border: var(--color-payout-border);
-
-  --color-financial-principal: var(--color-principal);
-  --color-financial-principal-bg: var(--color-principal-surface);
-  --color-financial-principal-border: var(--color-principal-border);
-
-  --color-financial-tax: var(--color-tax);
-  --color-financial-tax-bg: var(--color-tax-surface);
-  --color-financial-tax-border: var(--color-tax-border);
-
-  --color-financial-inflation: var(--color-inflation);
-  --color-financial-inflation-bg: var(--color-inflation-surface);
-  --color-financial-inflation-border: var(--color-inflation-border);
-
-  --color-financial-gold: var(--color-gold);
-  --color-financial-gold-bg: var(--color-gold-surface);
-  --color-financial-gold-border: var(--color-gold-border);
-
   /* ── 5-Tier Composite Light-Mode Elevation Stack ── */
   --shadow-flat: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
   --shadow-subtle: 0 1px 2px 0 rgba(15, 23, 42, 0.03), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
@@ -156,6 +131,14 @@
   --shadow-modal: 0 16px 24px -6px rgba(15, 23, 42, 0.08), 0 32px 64px -12px rgba(15, 23, 42, 0.16);
   --shadow-glow-growth: 0 0 0 1px rgba(16, 185, 129, 0.15), 0 4px 16px -2px rgba(16, 185, 129, 0.12);
 
+  /* ── Z-Index Stratification Layers ── */
+  --z-behind: -1;
+  --z-elevated: 10;
+  --z-sticky: 30;
+  --z-header: 40;
+  --z-modal: 50;
+  --z-popover: 100;
+
   /* ── Kinetic Spring Timing Tokens ── */
   --ease-spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-spring-smooth: cubic-bezier(0.16, 1, 0.3, 1);
@@ -164,6 +147,13 @@
 }
 
 /* ── Custom Utilities for Glassmorphism, Interactive Rings, & Numeric Lining ── */
+@utility fluid-metric-headline {
+  font-size: clamp(1.75rem, 1.25rem + 2.25vw, 2.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  color: var(--color-slate-900, #0f172a);
+}
 @utility fintech-glass-card {
   background-color: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(226, 232, 240, 0.85);

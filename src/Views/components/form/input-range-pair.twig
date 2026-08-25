@@ -79,7 +79,7 @@
                         <span class="currency-symbol text-ui-xs sm:text-ui-sm font-extrabold text-slate-400 mr-1 select-none pointer-events-none">{{ prefix }}</span>
                     {% endif %}
                     <input type="text" inputmode="decimal" id="{{ id }}" name="{{ name }}"
-                        class="w-full bg-transparent text-center text-sm sm:text-base font-extrabold font-financial-mono tabular-nums text-slate-900 focus:outline-none tracking-tight"
+                        class="w-full bg-transparent text-center text-ui-sm sm:text-body font-extrabold font-financial-mono tabular-nums text-slate-900 focus:outline-none tracking-tight"
                         required value="{{ value }}" data-min="{{ min }}" data-max="{{ max }}" data-step="{{ step }}"
                         autocomplete="off" spellcheck="false"
                         aria-describedby="{{ id }}_error">

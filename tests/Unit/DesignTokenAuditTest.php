@@ -117,8 +117,8 @@ final class DesignTokenAuditTest extends TestCase
         );
         $this->assertStringContainsString(
             'font-variant-numeric: tabular-nums lining-nums',
-            $this->stylesCss,
-            'styles.css must enforce tabular lining figures'
+            $this->inputCss,
+            'input.css must enforce tabular lining figures'
         );
         $this->assertStringContainsString(
             'currency-affix',
@@ -229,7 +229,7 @@ final class DesignTokenAuditTest extends TestCase
         foreach ($files as $file) {
             if ($file->isFile() && $file->getExtension() === 'twig') {
                 $content = (string) file_get_contents($file->getPathname());
-                if (preg_match_all('/\btext-\[[0-9]+(?:\.[0-9]+)?(?:px|rem)?\]\b/', $content, $matches)) {
+                if (preg_match_all('/\btext-\[[0-9]+(?:\.[0-9]+)?(?:px|rem)?\]/', $content, $matches)) {
                     foreach ($matches[0] as $match) {
                         $violations[] = $file->getFilename() . ' (' . $match . ')';
                     }
@@ -254,7 +254,7 @@ final class DesignTokenAuditTest extends TestCase
         foreach ($files as $file) {
             if ($file->isFile() && $file->getExtension() === 'twig') {
                 $content = (string) file_get_contents($file->getPathname());
-                if (preg_match_all('/\bshadow-(?:2xs|xs)\b/', $content, $matches)) {
+                if (preg_match_all('/\bshadow-(?:2xs|xs|sm|md|lg|xl|2xl)\b/', $content, $matches)) {
                     foreach ($matches[0] as $match) {
                         $violations[] = $file->getFilename() . ' (' . $match . ')';
                     }
@@ -264,7 +264,108 @@ final class DesignTokenAuditTest extends TestCase
 
         $this->assertEmpty(
             $violations,
-            'Found legacy shadow-xs or shadow-2xs in Twig templates (use shadow-flat, shadow-subtle, shadow-card, shadow-modal): ' . implode(', ', $violations)
+            'Found legacy Tailwind shadow classes in Twig templates (use shadow-flat, shadow-subtle, shadow-card, shadow-card-hover, shadow-floating, shadow-modal): ' . implode(', ', $violations)
+        );
+    }
+
+    public function testZeroRawTailwindTextSizesInCoreCalculatorComponents(): void
+    {
+        // Core calculator components that MUST use semantic tokens exclusively
+        $coreComponents = [
+            'chart-visualization.twig',
+            'calculator-form.twig',
+            'input-range-pair.twig',
+            'sip-fields.twig',
+            'swp-fields.twig',
+            'lumpsum-only-fields.twig',
+            'target-corpus-fields.twig',
+            'yearly-breakdown-table.twig',
+            'analytical-studio.twig',
+            'stress-test-simulator.twig',
+            'asset-rebalancing.twig',
+            'wealth-roadmap.twig',
+            'city-fire-benchmark.twig',
+        ];
+
+        $violations = [];
+        $files      = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($this->viewsDir)
+        );
+
+        /** @var \SplFileInfo $file */
+        foreach ($files as $file) {
+            if (
+                $file->isFile()
+                && $file->getExtension() === 'twig'
+                && in_array($file->getFilename(), $coreComponents, true)
+            ) {
+                $content = (string) file_get_contents($file->getPathname());
+                if (
+                    preg_match_all(
+                        '/\btext-(?:xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)\b/',
+                        $content,
+                        $matches
+                    )
+                ) {
+                    foreach ($matches[0] as $match) {
+                        $violations[] = $file->getFilename() . ' (' . $match . ')';
+                    }
+                }
+            }
+        }
+
+        $this->assertEmpty(
+            $violations,
+            'Core calculator components must use semantic text tokens '
+            . '(text-display-*, text-heading-*, text-body, text-ui-sm, text-ui-xs, text-caption, text-micro): '
+            . implode(', ', $violations)
+        );
+    }
+
+    public function testZeroLegacyGlassCardInCoreComponents(): void
+    {
+        $coreComponents = [
+            'chart-visualization.twig',
+            'calculator-form.twig',
+            'input-range-pair.twig',
+            'sip-fields.twig',
+            'swp-fields.twig',
+            'lumpsum-only-fields.twig',
+            'target-corpus-fields.twig',
+            'yearly-breakdown-table.twig',
+            'analytical-studio.twig',
+            'stress-test-simulator.twig',
+            'asset-rebalancing.twig',
+            'wealth-roadmap.twig',
+            'city-fire-benchmark.twig',
+        ];
+
+        $violations = [];
+        $files      = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($this->viewsDir)
+        );
+
+        /** @var \SplFileInfo $file */
+        foreach ($files as $file) {
+            if (
+                $file->isFile()
+                && $file->getExtension() === 'twig'
+                && in_array($file->getFilename(), $coreComponents, true)
+            ) {
+                $content = (string) file_get_contents($file->getPathname());
+                // Match bare `glass-card` that is NOT preceded by `fintech-`
+                if (preg_match_all('/(?<!fintech-)\bglass-card\b/', $content, $matches)) {
+                    foreach ($matches[0] as $match) {
+                        $violations[] = $file->getFilename() . ' (' . $match . ')';
+                    }
+                }
+            }
+        }
+
+        $this->assertEmpty(
+            $violations,
+            'Core calculator components must use fintech-glass-card, not the deprecated glass-card: '
+            . implode(', ', $violations)
         );
     }
 }

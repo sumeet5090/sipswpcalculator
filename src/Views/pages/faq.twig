@@ -17,7 +17,7 @@
     border-radius: 24px;
     padding: 0.5rem 1.25rem;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.3s var(--ease-spring-smooth);
 }
 
 .faq-item:hover {
@@ -72,7 +72,7 @@
     justify-content: center;
     border-radius: 50%;
     background: #f1f5f9;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.3s var(--ease-spring-smooth);
 }
 
 .faq-chevron {
@@ -94,7 +94,7 @@
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    transition: max-height 0.4s var(--ease-spring-smooth), opacity 0.3s ease;
     opacity: 0;
 }
 
@@ -128,7 +128,7 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.3s var(--ease-spring-smooth);
     white-space: nowrap;
     outline: none;
 }
@@ -188,7 +188,7 @@
         </svg>
     </div>
     <input id="faqSearch" type="text" placeholder="Search questions..."
-        class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-sm transition-all text-sm font-medium">
+        class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-flat transition-all text-sm font-medium">
 </div>
 
 <!-- Category Filter Chips -->

@@ -45,7 +45,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse group">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 40px; height: 40px;"
-                class="rounded-xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
+                class="rounded-xl shadow-card-hover shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
                 role="img" aria-label="SIP SWP Calculator Logo">
                 <rect width="24" height="24" rx="6" fill="url(#logo-grad-header)" />
                 <defs>
@@ -77,7 +77,7 @@
                             {{ item.label }}
                             <svg class="w-4 h-4 nav-chevron transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
-                        <div role="menu" class="absolute left-0 mt-2 w-56 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 nav-dropdown-menu">
+                        <div role="menu" class="absolute left-0 mt-2 w-56 rounded-xl bg-white shadow-card-hover ring-1 ring-black ring-opacity-5 nav-dropdown-menu">
                             <div class="py-1">
                                 {% for sub in item.sub_items %}
                                     <a href="{{ sub.href }}" role="menuitem" class="block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 focus:bg-emerald-50 focus:text-emerald-600 focus:outline-none">{{ sub.label }}</a>
