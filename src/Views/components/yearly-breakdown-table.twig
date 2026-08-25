@@ -6,24 +6,24 @@
         <!-- Left Operational Dock (Title · Horizon Density · Column Mode) -->
         <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <div class="flex items-center gap-2 mr-1">
-                <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 text-sm border border-emerald-200 shadow-2xs font-black">📊</span>
+                <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-growth-surface text-growth-emphasis text-ui-sm border border-growth-border shadow-flat font-extrabold">📊</span>
                 <div>
-                    <h2 id="yearly-breakdown" class="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight leading-tight">
+                    <h2 id="yearly-breakdown" class="font-heading text-heading-sm sm:text-heading-md font-extrabold text-slate-900 tracking-tight leading-tight">
                         Yearly Cashflow Ledger
                     </h2>
-                    <p class="text-[10px] font-medium text-slate-600 hidden sm:block">Annual compounding progression & cashflows</p>
+                    <p class="text-caption font-medium text-slate-500 hidden sm:block">Annual compounding progression & cashflows</p>
                 </div>
             </div>
 
             <!-- Segmented Horizon & Column Density Strip -->
-            <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/90 shadow-2xs gap-0.5" role="tablist" aria-label="Table Density and Columns">
+            <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/90 shadow-flat gap-0.5" role="tablist" aria-label="Table Density and Columns">
                 <!-- Horizon Toggle -->
                 <button type="button" id="table-density-5y" role="tab" aria-selected="true"
-                    class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all bg-white text-emerald-800 shadow-2xs border border-slate-200/60 cursor-pointer">
+                    class="px-2.5 py-1 text-caption font-bold rounded-lg transition-all bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer">
                     5Y Milestones
                 </button>
                 <button type="button" id="table-density-all" role="tab" aria-selected="false"
-                    class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900 cursor-pointer">
+                    class="px-2.5 py-1 text-caption font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900 cursor-pointer">
                     All Years
                 </button>
 
@@ -31,11 +31,11 @@
 
                 <!-- Column Mode Toggle -->
                 <button type="button" id="table-col-essential" role="tab" aria-selected="true"
-                    class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all bg-white text-emerald-800 shadow-2xs border border-slate-200/60 cursor-pointer">
+                    class="px-2.5 py-1 text-caption font-bold rounded-lg transition-all bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer">
                     Summary (4 Col)
                 </button>
                 <button type="button" id="table-col-audit" role="tab" aria-selected="false"
-                    class="px-2.5 py-1 text-[11px] font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900 cursor-pointer">
+                    class="px-2.5 py-1 text-caption font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900 cursor-pointer">
                     Audit (11 Col)
                 </button>
             </div>
@@ -45,9 +45,9 @@
         <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-start sm:justify-end">
             <!-- CSV Export Button -->
             <button type="submit" id="downloadCsvBtn" name="action" value="download_csv" form="calculator-form" formaction="/download-csv"
-                class="px-3.5 py-2 rounded-xl bg-emerald-50/90 hover:bg-emerald-100/90 text-emerald-900 border border-emerald-300/90 text-xs font-extrabold transition-all duration-150 shadow-2xs hover:shadow-xs hover:border-emerald-400 active:scale-95 cursor-pointer flex items-center gap-1.5"
+                class="px-3.5 py-2 rounded-xl bg-growth-surface hover:bg-emerald-100 text-growth-emphasis border border-growth-border text-ui-xs font-extrabold transition-all duration-150 shadow-flat hover:shadow-subtle hover:border-emerald-300 active:scale-95 cursor-pointer flex items-center gap-1.5"
                 title="Export complete schedule to spreadsheet (.csv)">
-                <svg class="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg class="w-3.5 h-3.5 text-growth" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
                 <span>Export CSV</span>
@@ -56,15 +56,15 @@
             <!-- Branded Advisor Report Modal Trigger -->
             <button type="button" id="customizePdfModalBtn" aria-haspopup="dialog" aria-expanded="false"
                 aria-controls="pdfModal"
-                class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-violet-50/90 hover:bg-violet-100/90 text-violet-900 border border-violet-300/90 text-xs font-bold transition-all duration-150 shadow-2xs hover:shadow-xs hover:border-violet-400 active:scale-95 cursor-pointer"
+                class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-tax-surface hover:bg-violet-100 text-tax-emphasis border border-tax-border text-ui-xs font-bold transition-all duration-150 shadow-flat hover:shadow-subtle hover:border-violet-300 active:scale-95 cursor-pointer"
                 title="Add Client Name, Advisor Logo & Branding to PDF">
                 <span>🎨</span>
-                <span class="text-[11px]">Branded PDF</span>
+                <span class="text-caption font-bold">Branded PDF</span>
             </button>
 
             <!-- Share Scenario Button -->
             <button type="button" id="shareCalcBtn" aria-expanded="false"
-                class="px-3.5 py-2 rounded-xl bg-indigo-50/90 hover:bg-indigo-100/90 text-indigo-900 border border-indigo-300/90 text-xs font-extrabold transition-all duration-150 shadow-2xs hover:shadow-xs hover:border-indigo-400 active:scale-95 cursor-pointer flex items-center gap-1.5"
+                class="px-3.5 py-2 rounded-xl bg-indigo-50/90 hover:bg-indigo-100/90 text-indigo-900 border border-indigo-200 text-ui-xs font-extrabold transition-all duration-150 shadow-flat hover:shadow-subtle hover:border-indigo-300 active:scale-95 cursor-pointer flex items-center gap-1.5"
                 title="Share this investment calculation link or WhatsApp proposal">
                 <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
@@ -75,7 +75,7 @@
 
             <!-- 1-Click Fast PDF Download Hero Button -->
             <button type="button" id="openPdfModalBtn"
-                class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-extrabold transition-all duration-150 shadow-md shadow-emerald-600/25 hover:shadow-lg hover:shadow-emerald-600/35 hover:-translate-y-0.5 active:scale-95 cursor-pointer flex items-center gap-2"
+                class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-ui-xs font-extrabold transition-all duration-150 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 active:scale-95 cursor-pointer flex items-center gap-2"
                 title="Instant 1-Click Institutional PDF Report Download">
                 <svg class="w-4 h-4 text-emerald-100" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
@@ -89,27 +89,27 @@
     <!-- ========================================================================= -->
     <!-- TIER 2: INSTITUTIONAL HIGH-DENSITY LEDGER GRID                             -->
     <!-- ========================================================================= -->
-    <div class="bg-white/95 backdrop-blur-md rounded-3xl overflow-hidden border border-slate-200/80 shadow-md">
+    <div class="bg-white/95 backdrop-blur-md rounded-3xl overflow-hidden border border-slate-200/80 shadow-card">
         <!-- Desktop Table View with Sticky Year Pin Elevation -->
         <div id="table-scroll-wrapper" class="hidden sm:block max-h-[600px] overflow-y-auto overflow-x-auto custom-scrollbar">
-            <table id="results-table" class="w-full text-xs sm:text-sm relative border-separate border-spacing-0">
+            <table id="results-table" class="w-full text-ui-xs sm:text-ui-sm relative border-separate border-spacing-0">
                 <thead id="breakdown-head"
-                    class="bg-slate-50/98 backdrop-blur-md text-[11px] uppercase font-extrabold text-slate-600 sticky top-0 z-20 shadow-[0_1px_3px_rgba(0,0,0,0.05)] border-b border-slate-200">
+                    class="bg-slate-50/98 backdrop-blur-md text-caption uppercase font-extrabold text-slate-600 sticky top-0 z-20 shadow-[0_1px_3px_rgba(0,0,0,0.05)] border-b border-slate-200">
                     <tr>
-                        <th scope="col" id="th-year" class="px-4 sm:px-6 py-3.5 text-left sticky left-0 z-30 bg-slate-50 shadow-[2px_0_6px_-2px_rgba(0,0,0,0.08)] border-b border-slate-200 font-extrabold text-slate-900 whitespace-nowrap min-w-[5rem]">Year</th>
-                        <th scope="col" id="th-begin-balance" class="px-4 sm:px-6 py-3.5 text-right bg-slate-50 border-b border-slate-200 whitespace-nowrap">Start Corpus</th>
-                        <th scope="col" id="th-sip-monthly" class="px-4 sm:px-6 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Monthly SIP</th>
-                        <th scope="col" id="th-annual-sip" class="px-4 sm:px-6 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Annual SIP</th>
-                        <th scope="col" id="th-total-invested" class="px-4 sm:px-6 py-3.5 text-right bg-slate-50 border-b border-slate-200 whitespace-nowrap">Total Invested</th>
-                        <th scope="col" id="th-swp-monthly" class="px-4 sm:px-6 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-rose-700 whitespace-nowrap">Monthly SWP</th>
-                        <th scope="col" id="th-annual-swp" class="px-4 sm:px-6 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-rose-700 whitespace-nowrap">Annual SWP</th>
-                        <th scope="col" id="th-total-withdrawn" class="px-4 sm:px-6 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-slate-600 whitespace-nowrap">Total Withdrawn</th>
-                        <th scope="col" id="th-interest" class="px-4 sm:px-6 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-emerald-700 whitespace-nowrap">Annual Gain</th>
-                        <th scope="col" id="th-tax" class="px-4 sm:px-6 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-violet-700 whitespace-nowrap">LTCG Tax (§112A)</th>
-                        <th scope="col" id="th-end-corpus" class="px-4 sm:px-6 py-3.5 text-right bg-slate-50 border-b border-slate-200 font-extrabold text-slate-900 whitespace-nowrap">End Corpus</th>
+                        <th scope="col" id="th-year" class="px-4 sm:px-5 py-3.5 text-left sticky left-0 z-30 bg-slate-50 shadow-[3px_0_8px_-2px_rgba(15,23,42,0.05)] border-b border-slate-200 font-extrabold text-slate-900 whitespace-nowrap min-w-[5rem]">Year</th>
+                        <th scope="col" id="th-begin-balance" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 whitespace-nowrap">Start Corpus</th>
+                        <th scope="col" id="th-sip-monthly" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-growth whitespace-nowrap">Monthly SIP</th>
+                        <th scope="col" id="th-annual-sip" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-growth whitespace-nowrap">Annual SIP</th>
+                        <th scope="col" id="th-total-invested" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 whitespace-nowrap">Total Invested</th>
+                        <th scope="col" id="th-swp-monthly" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-payout whitespace-nowrap">Monthly SWP</th>
+                        <th scope="col" id="th-annual-swp" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-payout whitespace-nowrap">Annual SWP</th>
+                        <th scope="col" id="th-total-withdrawn" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-slate-600 whitespace-nowrap">Total Withdrawn</th>
+                        <th scope="col" id="th-interest" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-growth whitespace-nowrap">Annual Gain</th>
+                        <th scope="col" id="th-tax" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-tax whitespace-nowrap">LTCG Tax (§112A)</th>
+                        <th scope="col" id="th-end-corpus" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 font-extrabold text-slate-900 whitespace-nowrap">End Corpus</th>
                     </tr>
                 </thead>
-                <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600"></tbody>
+                <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600 font-financial-mono"></tbody>
             </table>
         </div>
 

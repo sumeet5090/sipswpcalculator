@@ -21,7 +21,48 @@
   --font-heading: "Plus Jakarta Sans", "Inter", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* Brand Emerald / Teal Primary Palette */
+  /* ── Modular Fluid Typography Scale & Tracking ── */
+  --text-display-2xl: clamp(2.25rem, 1.75rem + 2.5vw, 3.75rem); /* 36px -> 60px */
+  --text-display-2xl--line-height: 1.05;
+  --text-display-2xl--letter-spacing: -0.035em;
+
+  --text-display-xl: clamp(1.75rem, 1.35rem + 2vw, 2.75rem);   /* 28px -> 44px */
+  --text-display-xl--line-height: 1.1;
+  --text-display-xl--letter-spacing: -0.03em;
+
+  --text-heading-lg: 1.5rem;    /* 24px */
+  --text-heading-lg--line-height: 1.25;
+  --text-heading-lg--letter-spacing: -0.025em;
+
+  --text-heading-md: 1.25rem;   /* 20px */
+  --text-heading-md--line-height: 1.3;
+  --text-heading-md--letter-spacing: -0.02em;
+
+  --text-heading-sm: 1.0625rem; /* 17px */
+  --text-heading-sm--line-height: 1.35;
+  --text-heading-sm--letter-spacing: -0.015em;
+
+  --text-body: 0.9375rem;          /* 15px */
+  --text-body--line-height: 1.5rem;    /* 24px */
+  --text-body--letter-spacing: -0.01em;
+
+  --text-ui-sm: 0.8125rem;         /* 13px */
+  --text-ui-sm--line-height: 1.25rem;  /* 20px */
+  --text-ui-sm--letter-spacing: -0.005em;
+
+  --text-ui-xs: 0.75rem;           /* 12px */
+  --text-ui-xs--line-height: 1.125rem; /* 18px */
+  --text-ui-xs--letter-spacing: 0em;
+
+  --text-caption: 0.6875rem;       /* 11px */
+  --text-caption--line-height: 1rem;   /* 16px */
+  --text-caption--letter-spacing: 0.02em;
+
+  --text-micro: 0.625rem;          /* 10px */
+  --text-micro--line-height: 0.875rem; /* 14px */
+  --text-micro--letter-spacing: 0.04em;
+
+  /* ── Brand Emerald / Teal Primary Palette ── */
   --color-brand-50: #ecfdf5;
   --color-brand-100: #d1fae5;
   --color-brand-200: #a7f3d0;
@@ -33,7 +74,7 @@
   --color-brand-800: #065f46;
   --color-brand-900: #064e3b;
 
-  /* Indigo Secondary Palette */
+  /* ── Indigo Secondary Palette ── */
   --color-indigo-50: #eef2ff;
   --color-indigo-100: #e0e7ff;
   --color-indigo-200: #c7d2fe;
@@ -42,36 +83,118 @@
   --color-indigo-700: #4338ca;
   --color-indigo-900: #312e81;
 
-  /* Semantic Financial Colors (Pure Light-Theme Calibrated & WCAG AAA Contrast Verified) */
-  --color-financial-growth: #047857;       /* Emerald 700 - High contrast on white (5.8:1) */
-  --color-financial-growth-bg: #ecfdf5;    /* Emerald 50 */
-  --color-financial-growth-border: #a7f3d0;/* Emerald 200 */
+  /* ── Institutional Semantic Financial Colors (WCAG AAA Contrast Locked) ── */
+  --color-growth: #047857;            /* Emerald 700 - Contrast 5.8:1 */
+  --color-growth-emphasis: #064e3b;   /* Emerald 900 */
+  --color-growth-surface: #ecfdf5;    /* Emerald 50 */
+  --color-growth-border: #a7f3d0;     /* Emerald 200 */
 
-  --color-financial-withdrawal: #be123c;   /* Rose 700 - High contrast on white (5.4:1) */
-  --color-financial-withdrawal-bg: #fff1f2;/* Rose 50 */
-  --color-financial-withdrawal-border: #fecdd3;
+  --color-payout: #be123c;            /* Rose 700 - Contrast 5.4:1 */
+  --color-payout-emphasis: #881337;   /* Rose 900 */
+  --color-payout-surface: #fff1f2;    /* Rose 50 */
+  --color-payout-border: #fecdd3;     /* Rose 200 */
 
-  --color-financial-principal: #334155;    /* Slate 700 (9.2:1 contrast) */
-  --color-financial-principal-bg: #f8fafc; /* Slate 50 */
-  --color-financial-principal-border: #e2e8f0;
+  --color-principal: #334155;         /* Slate 700 - Contrast 9.2:1 */
+  --color-principal-emphasis: #0f172a;/* Slate 900 */
+  --color-principal-surface: #f8fafc; /* Slate 50 */
+  --color-principal-border: #e2e8f0;  /* Slate 200 */
 
-  --color-financial-tax: #6d28d9;          /* Purple 700 (6.1:1 contrast) */
-  --color-financial-tax-bg: #f5f3ff;
-  --color-financial-tax-border: #ddd6fe;
+  --color-tax: #6d28d9;               /* Violet 700 - Contrast 6.1:1 */
+  --color-tax-emphasis: #4c1d95;      /* Violet 900 */
+  --color-tax-surface: #f5f3ff;       /* Violet 50 */
+  --color-tax-border: #ddd6fe;        /* Violet 200 */
 
-  --color-financial-inflation: #c2410c;    /* Orange 700 (5.1:1 contrast) */
-  --color-financial-inflation-bg: #fff7ed;
-  --color-financial-inflation-border: #fed7aa;
+  --color-inflation: #c2410c;         /* Orange 700 - Contrast 5.1:1 */
+  --color-inflation-surface: #fff7ed;
+  --color-inflation-border: #fed7aa;
 
-  --color-financial-gold: #b45309;         /* Amber 700 (5.5:1 contrast) */
-  --color-financial-gold-bg: #fef3c7;
-  --color-financial-gold-border: #fde68a;
+  --color-warning: #b45309;           /* Amber 700 - Contrast 5.5:1 */
+  --color-warning-emphasis: #78350f;  /* Amber 900 */
+  --color-warning-surface: #fffbeb;   /* Amber 50 */
+  --color-warning-border: #fde68a;    /* Amber 200 */
 
-  /* Kinetic Spring Timing Tokens */
+  --color-gold: #b45309;              /* Amber 700 */
+  --color-gold-surface: #fef3c7;
+  --color-gold-border: #fde68a;
+
+  /* Backward Compatibility Aliases for Legacy Financial Tokens */
+  --color-financial-growth: var(--color-growth);
+  --color-financial-growth-bg: var(--color-growth-surface);
+  --color-financial-growth-border: var(--color-growth-border);
+
+  --color-financial-withdrawal: var(--color-payout);
+  --color-financial-withdrawal-bg: var(--color-payout-surface);
+  --color-financial-withdrawal-border: var(--color-payout-border);
+
+  --color-financial-principal: var(--color-principal);
+  --color-financial-principal-bg: var(--color-principal-surface);
+  --color-financial-principal-border: var(--color-principal-border);
+
+  --color-financial-tax: var(--color-tax);
+  --color-financial-tax-bg: var(--color-tax-surface);
+  --color-financial-tax-border: var(--color-tax-border);
+
+  --color-financial-inflation: var(--color-inflation);
+  --color-financial-inflation-bg: var(--color-inflation-surface);
+  --color-financial-inflation-border: var(--color-inflation-border);
+
+  --color-financial-gold: var(--color-gold);
+  --color-financial-gold-bg: var(--color-gold-surface);
+  --color-financial-gold-border: var(--color-gold-border);
+
+  /* ── 5-Tier Composite Light-Mode Elevation Stack ── */
+  --shadow-flat: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --shadow-subtle: 0 1px 2px 0 rgba(15, 23, 42, 0.03), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  --shadow-card: 0 1px 2px 0 rgba(15, 23, 42, 0.02), 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+  --shadow-card-hover: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 12px 24px -4px rgba(15, 23, 42, 0.08);
+  --shadow-floating: 0 8px 16px -4px rgba(15, 23, 42, 0.04), 0 20px 32px -6px rgba(15, 23, 42, 0.09);
+  --shadow-modal: 0 16px 24px -6px rgba(15, 23, 42, 0.08), 0 32px 64px -12px rgba(15, 23, 42, 0.16);
+  --shadow-glow-growth: 0 0 0 1px rgba(16, 185, 129, 0.15), 0 4px 16px -2px rgba(16, 185, 129, 0.12);
+
+  /* ── Kinetic Spring Timing Tokens ── */
   --ease-spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-spring-smooth: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ── Custom Utilities for Glassmorphism, Interactive Rings, & Numeric Lining ── */
+@utility fintech-glass-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), var(--shadow-card);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border-radius: 1.25rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@utility fintech-glass-card-hover {
+  &:hover {
+    border-color: rgba(203, 213, 225, 0.95);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), var(--shadow-card-hover);
+  }
+}
+
+@utility focus-fintech-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.18), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border-color: #059669 !important;
+}
+
+@utility focus-payout-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.18), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border-color: #e11d48 !important;
+}
+
+@utility font-financial-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1, "zero" 1;
+  letter-spacing: -0.02em;
 }
 
 /* ── Custom Range Slider Tactile Thumbs & Touch Ergonomics ── */
@@ -186,8 +309,11 @@ input[type="range"]::-moz-range-thumb {
   left: 0;
   background-color: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 5;
-  box-shadow: 2px 0 6px -2px rgba(0, 0, 0, 0.06);
+  border-right: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 3px 0 8px -2px rgba(15, 23, 42, 0.05);
+  background-clip: padding-box;
 }
 
 #results-table thead th:first-child {

@@ -100,8 +100,8 @@ final class TypographyAndThemeTokensTest extends TestCase
             $this->stylesCssContent,
             'styles.css must not use inverted dark surfaces for cards'
         );
-        $this->assertStringContainsString(
-            '--glass-card-bg: rgba(255, 255, 255, 0.96)',
+        $this->assertMatchesRegularExpression(
+            '/--glass-card-bg:\s*rgba\(255,\s*255,\s*255/',
             $this->stylesCssContent,
             'styles.css must use light surface glass background token'
         );

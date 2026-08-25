@@ -2,72 +2,72 @@
     <!-- Fluid Quantum Wealth Ribbon Grid (Zero-CLS 4-column responsive container) -->
     <div id="summary-cards-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 transition-all duration-300">
         <!-- Card 1: Total Invested -->
-        <div class="bg-white/95 rounded-2xl border border-slate-200/90 shadow-[0_2px_10px_-2px_rgba(0,0,0,0.03)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-slate-300 group flex flex-col justify-between">
-            <div class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
+        <div class="bg-white/95 rounded-2xl border border-slate-200/90 shadow-card p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-slate-300 group flex flex-col justify-between">
+            <div class="text-caption font-bold text-slate-500 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span class="text-xs">💰</span>
                 <span>Total Invested</span>
             </div>
-            <div id="summary-invested" class="text-sm sm:text-base md:text-lg xl:text-xl font-black text-slate-900 font-mono tabular-nums transition-numbers truncate py-0.5">
+            <div id="summary-invested" class="text-heading-md xl:text-heading-lg font-extrabold text-slate-900 font-financial-mono tabular-nums transition-numbers truncate py-0.5">
                 ₹ --
             </div>
-            <div class="text-[9px] sm:text-[10px] font-bold text-slate-400 font-mono">
+            <div class="text-micro font-bold text-slate-400 font-financial-mono tracking-tight">
                 Principal Capital
             </div>
         </div>
 
         <!-- Card 2: Compounding Gains -->
-        <div class="bg-white/95 rounded-2xl border border-emerald-200/90 shadow-[0_2px_12px_-2px_rgba(16,185,129,0.08)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-emerald-300 group flex flex-col justify-between relative">
+        <div class="bg-white/95 rounded-2xl border border-growth-border shadow-card p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-300 group flex flex-col justify-between relative">
             <div id="title-interest-container" class="flex items-center justify-center gap-1 mb-1">
-                <span id="title-interest" class="text-[10px] sm:text-xs font-bold text-emerald-800 uppercase tracking-wider leading-tight flex items-center gap-0.5">
+                <span id="title-interest" class="text-caption font-bold text-growth uppercase tracking-wider leading-tight flex items-center gap-0.5">
                     <span>↗</span>
                     <span>Compound Gains</span>
                 </span>
             </div>
-            <div id="summary-interest" class="text-sm sm:text-base md:text-lg xl:text-xl font-black text-emerald-700 font-mono tabular-nums transition-numbers truncate py-0.5">
+            <div id="summary-interest" class="text-heading-md xl:text-heading-lg font-extrabold text-growth-emphasis font-financial-mono tabular-nums transition-numbers truncate py-0.5">
                 ₹ --
             </div>
             <div class="flex items-center justify-center gap-1">
-                <span id="summary-gain-badge" class="inline-flex items-center text-[9px] font-black px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-200">
+                <span id="summary-gain-badge" class="inline-flex items-center text-micro font-bold px-2 py-0.5 rounded-full bg-growth-surface text-growth-emphasis border border-growth-border">
                     +0%
                 </span>
             </div>
         </div>
 
         <!-- Card 3: Total Withdrawn (Morphs visible only in SWP mode) -->
-        <div id="card-withdrawn" class="hidden bg-white/95 rounded-2xl border border-rose-200/90 shadow-[0_2px_12px_-2px_rgba(244,63,94,0.08)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-md hover:border-rose-300 group flex flex-col justify-between">
-            <div class="text-[10px] sm:text-xs font-bold text-rose-800 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-0.5">
+        <div id="card-withdrawn" class="hidden bg-white/95 rounded-2xl border border-payout-border shadow-card p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-rose-300 group flex flex-col justify-between">
+            <div class="text-caption font-bold text-payout uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-0.5">
                 <span>↘</span>
                 <span>Total Payouts</span>
             </div>
-            <div id="summary-withdrawn" class="text-sm sm:text-base md:text-lg xl:text-xl font-black text-rose-700 font-mono tabular-nums transition-numbers truncate py-0.5">
+            <div id="summary-withdrawn" class="text-heading-md xl:text-heading-lg font-extrabold text-payout-emphasis font-financial-mono tabular-nums transition-numbers truncate py-0.5">
                 ₹ --
             </div>
-            <div class="text-[9px] sm:text-[10px] font-bold text-rose-400 font-mono">
+            <div class="text-micro font-bold text-payout font-financial-mono tracking-tight">
                 Systematic Cashflow
             </div>
         </div>
 
         <!-- Card 4: Final Corpus / Net Wealth -->
-        <div class="bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl border-2 border-emerald-600/90 shadow-[0_4px_16px_-2px_rgba(16,185,129,0.15)] p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-xl hover:border-emerald-700 relative group flex flex-col justify-between">
-            <div id="title-corpus" class="text-[10px] sm:text-xs font-bold text-emerald-900 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
+        <div class="bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl border-2 border-emerald-600/90 shadow-glow-growth p-3 sm:p-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 relative group flex flex-col justify-between">
+            <div id="title-corpus" class="text-caption font-bold text-growth-emphasis uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span>💎</span>
                 <span>Final Wealth Corpus</span>
             </div>
-            <div id="summary-corpus" class="text-base sm:text-lg md:text-xl xl:text-2xl font-black text-emerald-950 font-mono tabular-nums transition-numbers truncate py-0.5">
+            <div id="summary-corpus" class="text-heading-lg xl:text-display-xl font-extrabold text-growth-emphasis font-financial-mono tabular-nums transition-numbers truncate py-0.5">
                 ₹ --
             </div>
             <div class="flex items-center justify-center gap-1">
-                <div id="post-tax-statutory-pill" class="hidden text-[9px] font-black text-violet-900 bg-violet-100/90 border border-violet-200 px-1.5 py-0.2 rounded truncate">
+                <div id="post-tax-statutory-pill" class="hidden text-micro font-bold text-tax-emphasis bg-tax-surface border border-tax-border px-1.5 py-0.5 rounded truncate">
                     ⚖️ §112A Net
                 </div>
                 <div class="relative inline-flex items-center group/tip shrink-0">
                     <button type="button" 
-                        class="w-3.5 h-3.5 rounded-full bg-slate-100 hover:bg-emerald-50 text-slate-400 hover:text-emerald-700 text-[9px] font-black inline-flex items-center justify-center border border-slate-200/80 transition-colors cursor-help focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                        class="w-3.5 h-3.5 rounded-full bg-slate-100 hover:bg-emerald-50 text-slate-400 hover:text-emerald-700 text-micro font-bold inline-flex items-center justify-center border border-slate-200/80 transition-colors cursor-help focus:outline-none focus:ring-1 focus:ring-emerald-500"
                         aria-label="What is Section 112A Tax?">
                         ℹ
                     </button>
                     <div role="tooltip" 
-                        class="absolute right-0 sm:left-1/2 sm:-translate-x-1/2 bottom-full mb-2 hidden group-hover/tip:block group-focus-within/tip:block w-64 max-w-[80vw] p-2.5 bg-white/98 backdrop-blur-md text-slate-700 text-[11px] leading-relaxed rounded-xl shadow-xl border border-slate-200/90 z-50 pointer-events-none transition-all">
+                        class="absolute right-0 sm:left-1/2 sm:-translate-x-1/2 bottom-full mb-2 hidden group-hover/tip:block group-focus-within/tip:block w-64 max-w-[80vw] p-2.5 bg-white/98 backdrop-blur-md text-slate-700 text-caption leading-relaxed rounded-xl shadow-modal border border-slate-200/90 z-50 pointer-events-none transition-all">
                         <strong class="text-slate-900 block font-bold mb-0.5">Budget 2024 §112A LTCG Tax:</strong>
                         First ₹1.25 Lakh annual gains are 100% tax-free. Remaining long-term equity profits are taxed at 12.5% on redemption.
                     </div>

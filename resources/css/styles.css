@@ -5,11 +5,21 @@
 .numeral-tabular,
 .metric-value,
 .table-numeral,
+.font-financial-mono,
 input[type="number"],
 input[type="text"].numeral-input {
     font-variant-numeric: tabular-nums lining-nums;
-    font-feature-settings: "tnum" 1, "lnum" 1;
-    letter-spacing: -0.015em;
+    font-feature-settings: "tnum" 1, "lnum" 1, "zero" 1;
+    letter-spacing: -0.02em;
+}
+
+.currency-affix {
+    display: inline-block;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: var(--color-slate-400, #94a3b8);
+    user-select: none;
+    margin-right: 0.125rem;
 }
 
 /* ── Remove up/down spinner arrows inside SIP & SWP form number inputs ── */
@@ -49,7 +59,7 @@ dialog[open] {
 }
 
 dialog::backdrop {
-    background-color: rgba(15, 23, 42, 0.45);
+    background-color: rgba(15, 23, 42, 0.35);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
 }
@@ -64,15 +74,16 @@ dialog::backdrop {
     --gradient-primary: linear-gradient(135deg, var(--color-brand-600, #059669) 0%, var(--color-brand-700, #047857) 100%);
 
     /* Semantic Financial Color Tokens (Aliased to input.css @theme) */
-    --color-growth: var(--color-financial-growth, #047857);
-    --color-withdrawal: var(--color-financial-withdrawal, #be123c);
-    --color-principal: var(--color-financial-principal, #334155);
-    --color-tax: var(--color-financial-tax, #6d28d9);
-    --color-gold: var(--color-financial-gold, #b45309);
+    --color-growth: var(--color-growth, #047857);
+    --color-payout: var(--color-payout, #be123c);
+    --color-withdrawal: var(--color-payout, #be123c);
+    --color-principal: var(--color-principal, #334155);
+    --color-tax: var(--color-tax, #6d28d9);
+    --color-gold: var(--color-gold, #b45309);
 
     /* Legacy Accents */
-    --color-acc-growth: var(--color-financial-growth, #047857);
-    --color-acc-withdraw: var(--color-financial-withdrawal, #be123c);
+    --color-acc-growth: var(--color-growth, #047857);
+    --color-acc-withdraw: var(--color-payout, #be123c);
 
     /* Base Typography & Surfaces */
     --color-text-primary: var(--color-slate-900, #0f172a);
@@ -82,19 +93,19 @@ dialog::backdrop {
     --color-bg: var(--color-slate-50, #f8fafc);
 
     /* Multi-Tier Composite Elevation Tokens */
-    --elevation-flat: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
-    --elevation-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px -4px rgba(15, 23, 42, 0.05);
-    --elevation-floating: 0 4px 6px -1px rgba(15, 23, 42, 0.03), 0 20px 40px -8px rgba(15, 23, 42, 0.08);
-    --elevation-modal: 0 24px 48px -12px rgba(15, 23, 42, 0.18);
-    --shadow-glow: 0 0 20px rgba(5, 150, 105, 0.12);
+    --elevation-flat: var(--shadow-flat, 0 1px 2px 0 rgba(15, 23, 42, 0.04));
+    --elevation-card: var(--shadow-card, 0 1px 2px 0 rgba(15, 23, 42, 0.02), 0 4px 12px -2px rgba(15, 23, 42, 0.05));
+    --elevation-floating: var(--shadow-floating, 0 8px 16px -4px rgba(15, 23, 42, 0.04), 0 20px 32px -6px rgba(15, 23, 42, 0.09));
+    --elevation-modal: var(--shadow-modal, 0 16px 24px -6px rgba(15, 23, 42, 0.08), 0 32px 64px -12px rgba(15, 23, 42, 0.16));
+    --shadow-glow: var(--shadow-glow-growth, 0 0 0 1px rgba(16, 185, 129, 0.15), 0 4px 16px -2px rgba(16, 185, 129, 0.12));
 
     /* Glassmorphism & Chiseled Edge Highlights */
-    --glass-bg: rgba(255, 255, 255, 0.96);
-    --glass-border: 1px solid rgba(226, 232, 240, 0.8);
-    --glass-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), var(--elevation-card);
-    --glass-card-bg: rgba(255, 255, 255, 0.96);
-    --glass-card-border: 1px solid rgba(226, 232, 240, 0.8);
-    --glass-card-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), var(--elevation-card);
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --glass-border: 1px solid rgba(226, 232, 240, 0.85);
+    --glass-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), var(--shadow-card);
+    --glass-card-bg: rgba(255, 255, 255, 0.95);
+    --glass-card-border: 1px solid rgba(226, 232, 240, 0.85);
+    --glass-card-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), var(--shadow-card);
 
     /* Spring Motion & Timing Tokens */
     --spring-bounce: var(--ease-spring-bounce, cubic-bezier(0.34, 1.56, 0.64, 1));
@@ -107,8 +118,8 @@ dialog::backdrop {
     background-color: var(--glass-bg);
     border: var(--glass-border);
     box-shadow: var(--glass-shadow);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
     border-radius: 1.25rem;
     background-clip: padding-box;
 }
