@@ -119,29 +119,14 @@
             "icon": "💎"
         },
         {
-            "label": "₹25 Crores",
-            "value": 250000000,
-            "icon": "🌠"
-        },
-        {
             "label": "₹50 Crores",
             "value": 500000000,
             "icon": "🚀"
         },
         {
-            "label": "₹75 Crores",
-            "value": 750000000,
-            "icon": "🪐"
-        },
-        {
             "label": "₹100 Crores",
             "value": 1000000000,
             "icon": "🌌"
-        },
-        {
-            "label": "₹200 Crores",
-            "value": 2000000000,
-            "icon": "🌠"
         },
         {
             "label": "₹500 Crores",
