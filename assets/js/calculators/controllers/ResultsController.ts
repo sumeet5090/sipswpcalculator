@@ -413,14 +413,14 @@ export class ResultsController {
                 corpusWrap.className = 'flex items-center gap-1.5';
 
                 const corpusVal = document.createElement('span');
-                corpusVal.className = "text-sm font-black font-mono text-slate-900";
+                corpusVal.className = "text-sm font-black font-financial-mono tabular-nums text-slate-900 whitespace-nowrap";
                 corpusVal.textContent = this.formatter.format(finalCorpus);
                 corpusWrap.appendChild(corpusVal);
 
                 if (row.cumulative_invested > 0 && finalCorpus > 0) {
                     const multiplier = (finalCorpus / row.cumulative_invested).toFixed(1);
                     const multiplierBadge = document.createElement('span');
-                    multiplierBadge.className = 'px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-extrabold';
+                    multiplierBadge.className = 'px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-extrabold shrink-0';
                     multiplierBadge.textContent = `${multiplier}×`;
                     corpusWrap.appendChild(multiplierBadge);
                 }
@@ -436,7 +436,7 @@ export class ResultsController {
                 investedLabel.className = "text-slate-500 block text-[10px] font-bold";
                 investedLabel.textContent = "Total Invested";
                 const investedVal = document.createElement('span');
-                investedVal.className = "font-bold font-mono text-slate-800";
+                investedVal.className = "font-bold font-financial-mono tabular-nums text-slate-800 whitespace-nowrap";
                 investedVal.textContent = this.formatter.format(row.cumulative_invested);
                 investedCol.appendChild(investedLabel);
                 investedCol.appendChild(investedVal);
@@ -448,7 +448,7 @@ export class ResultsController {
                 interestLabel.className = "text-emerald-700 block text-[10px] font-bold";
                 interestLabel.textContent = "Annual Gain";
                 const interestVal = document.createElement('span');
-                interestVal.className = "font-bold font-mono text-emerald-700";
+                interestVal.className = "font-bold font-financial-mono tabular-nums text-emerald-700 whitespace-nowrap";
                 interestVal.textContent = `+${this.formatter.format(row.interest)}`;
                 interestCol.appendChild(interestLabel);
                 interestCol.appendChild(interestVal);
@@ -461,7 +461,7 @@ export class ResultsController {
                     withLabel.className = "text-rose-700 text-[10px] font-bold";
                     withLabel.textContent = "Total Withdrawn";
                     const withVal = document.createElement('span');
-                    withVal.className = "font-bold font-mono text-rose-700";
+                    withVal.className = "font-bold font-financial-mono tabular-nums text-rose-700 whitespace-nowrap";
                     withVal.textContent = this.formatter.format(row.cumulative_withdrawals ?? 0);
                     withCol.appendChild(withLabel);
                     withCol.appendChild(withVal);

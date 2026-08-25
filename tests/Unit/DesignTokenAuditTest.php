@@ -140,4 +140,53 @@ final class DesignTokenAuditTest extends TestCase
             'input.css must declare background-clip: padding-box on sticky column cells to prevent sub-pixel seam bleed'
         );
     }
+
+    public function testSummaryCardsAndMetricsGuaranteedNonTruncated(): void
+    {
+        $chartViz = (string) file_get_contents($this->viewsDir . '/components/chart-visualization.twig');
+        $inputPair = (string) file_get_contents($this->viewsDir . '/components/form/input-range-pair.twig');
+
+        $metricIds = ['summary-invested', 'summary-interest', 'summary-withdrawn', 'summary-corpus'];
+        foreach ($metricIds as $metricId) {
+            $this->assertMatchesRegularExpression(
+                '/<div id="' . preg_quote($metricId, '/') . '" class="[^"]*whitespace-nowrap[^"]*"/',
+                $chartViz,
+                "Metric #{$metricId} must include whitespace-nowrap and must not truncate"
+            );
+            $this->assertDoesNotMatchRegularExpression(
+                '/<div id="' . preg_quote($metricId, '/') . '" class="[^"]*\btruncate\b[^"]*"/',
+                $chartViz,
+                "Metric #{$metricId} must NEVER have truncate class"
+            );
+        }
+
+        $this->assertDoesNotMatchRegularExpression(
+            '/<span id="\{\{\s*id\s*\}\}_word_badge"[^>]*\btruncate\b/',
+            $inputPair,
+            'input-range-pair.twig word badges must never contain truncate class'
+        );
+
+        $this->assertDoesNotMatchRegularExpression(
+            '/<div id="\{\{\s*id\s*\}\}_subtext"[^>]*\btruncate\b/',
+            $inputPair,
+            'input-range-pair.twig subtext hints must never contain truncate class'
+        );
+    }
+
+    public function testTableAndHudMetricsAreNonClipping(): void
+    {
+        $yearlyTable = (string) file_get_contents($this->viewsDir . '/components/yearly-breakdown-table.twig');
+        $this->assertStringContainsString('whitespace-nowrap min-w-[5rem]', $yearlyTable);
+
+        $this->assertMatchesRegularExpression(
+            '/<span id="mini-hud-corpus" class="[^"]*whitespace-nowrap[^"]*"/',
+            $this->baseTwig,
+            'Mobile mini-hud corpus must be whitespace-nowrap'
+        );
+        $this->assertMatchesRegularExpression(
+            '/<span id="mini-hud-gain" class="[^"]*whitespace-nowrap[^"]*"/',
+            $this->baseTwig,
+            'Mobile mini-hud gain must be whitespace-nowrap'
+        );
+    }
 }
