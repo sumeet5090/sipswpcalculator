@@ -54,34 +54,42 @@ export class SummaryMetricsController {
 
         if (cardElms.length === 0) return;
 
-        // 1. Reset Phase
+        // 1. Reset Phase & Length Classification
         cardElms.forEach(el => {
             el.style.whiteSpace = 'nowrap';
-            el.style.overflow = 'hidden';
-            if (!el.dataset.baseFont) {
-                el.dataset.baseFont = getComputedStyle(el).fontSize;
+            const text = el.textContent?.trim() || '';
+            const len = text.length;
+            el.classList.remove('metric-len-normal', 'metric-len-medium', 'metric-len-long', 'metric-len-huge');
+            if (len <= 11) {
+                el.classList.add('metric-len-normal');
+            } else if (len <= 13) {
+                el.classList.add('metric-len-medium');
+            } else if (len <= 15) {
+                el.classList.add('metric-len-long');
+            } else {
+                el.classList.add('metric-len-huge');
             }
-            const basePx = parseFloat(el.dataset.baseFont);
-            el.style.fontSize = basePx + 'px';
+            el.style.fontSize = '';
+            el.style.letterSpacing = '';
         });
 
-        // 2. Query Phase (batch all DOM measurements together to prevent layout thrashing)
+        // 2. Query Phase (batch DOM measurements)
         const measurements = cardElms.map(el => {
             const parent = el.parentElement;
             if (!parent) return null;
             const cs = getComputedStyle(parent);
-            const availableW = parent.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+            const availableW = parent.clientWidth - parseFloat(cs.paddingLeft || '0') - parseFloat(cs.paddingRight || '0');
             const textW = el.scrollWidth;
-            const basePx = parseFloat(el.dataset.baseFont || '16');
-            return { el, basePx, availableW, textW };
+            const currentFontSize = parseFloat(getComputedStyle(el).fontSize || '16');
+            return { el, currentFontSize, availableW, textW };
         }).filter((item): item is NonNullable<typeof item> => item !== null);
 
-        // 3. Command Phase (batch all style mutations together)
-        measurements.forEach(({ el, basePx, availableW, textW }) => {
+        // 3. Command Phase (batch exact downscaling mutations)
+        measurements.forEach(({ el, currentFontSize, availableW, textW }) => {
             if (textW > availableW && availableW > 0) {
-                el.style.fontSize = Math.max((availableW / textW) * basePx, 10) + 'px';
-            } else {
-                el.style.fontSize = basePx + 'px';
+                const scaled = Math.floor((availableW / textW) * currentFontSize * 0.96);
+                el.style.fontSize = Math.max(scaled, 9) + 'px';
+                el.style.letterSpacing = '-0.04em';
             }
         });
     }
@@ -173,6 +181,7 @@ export class SummaryMetricsController {
         this.odometer.animateValue('summary-interest', finalGains);
         this.odometer.animateValue('summary-withdrawn', totalWithdrawn);
         this.odometer.animateValue('summary-corpus', finalCorpus);
+        this.fitSummaryCards();
 
         // Flash ambient recalculation indicator on primary corpus card
         const corpusCard = this.dom.getElement('summary-corpus')?.closest('.glass-card, [class*="rounded-2xl"]');
