@@ -18,6 +18,7 @@ export interface StudioTelemetryData {
 export class StudioTabController {
     private dom: DOMAdapter;
     private onTabChange?: (tabId: string) => void;
+    private onDenominationChange?: (mode: 'exact' | 'lakh') => void;
 
     // Strict pure light-mode active and inactive class descriptors
     private readonly activeClasses = [
@@ -27,9 +28,14 @@ export class StudioTabController {
         'text-slate-600', 'hover:text-slate-900', 'hover:bg-white/60', 'font-bold', 'border-transparent'
     ];
 
-    constructor(dom: DOMAdapter = new DOMAdapter(), onTabChange?: (tabId: string) => void) {
+    constructor(
+        dom: DOMAdapter = new DOMAdapter(), 
+        onTabChange?: (tabId: string) => void,
+        onDenominationChange?: (mode: 'exact' | 'lakh') => void
+    ) {
         this.dom = dom;
         this.onTabChange = onTabChange;
+        this.onDenominationChange = onDenominationChange;
     }
 
     public init(): void {
@@ -118,16 +124,26 @@ export class StudioTabController {
         const exactBtn = this.dom.getElement('studio-unit-exact');
         if (lakhBtn && exactBtn) {
             lakhBtn.addEventListener('click', () => {
-                lakhBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border-slate-200/60');
+                lakhBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
                 lakhBtn.classList.remove('text-slate-500');
-                exactBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border-slate-200/60');
+                lakhBtn.setAttribute('aria-pressed', 'true');
+
+                exactBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
                 exactBtn.classList.add('text-slate-500');
+                exactBtn.setAttribute('aria-pressed', 'false');
+
+                this.onDenominationChange?.('lakh');
             });
             exactBtn.addEventListener('click', () => {
-                exactBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border-slate-200/60');
+                exactBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
                 exactBtn.classList.remove('text-slate-500');
-                lakhBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border-slate-200/60');
+                exactBtn.setAttribute('aria-pressed', 'true');
+
+                lakhBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
                 lakhBtn.classList.add('text-slate-500');
+                lakhBtn.setAttribute('aria-pressed', 'false');
+
+                this.onDenominationChange?.('exact');
             });
         }
     }
