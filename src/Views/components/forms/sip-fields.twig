@@ -48,15 +48,15 @@
 {% set rateLabelHtml %}
 <div class="flex items-center justify-between mb-2">
     <div class="flex items-center gap-1.5 min-w-0">
-        <label for="rate" id="rate_label" class="text-xs font-black text-slate-800 tracking-tight block select-none cursor-pointer hover:text-emerald-700 transition-colors" title="Double-click to reset to default">
+        <label for="rate" id="rate_label" class="text-ui-xs font-bold text-slate-800 tracking-tight block select-none cursor-pointer hover:text-growth transition-colors" title="Double-click to reset to default">
             Expected Return (CAGR)
         </label>
-        <span id="rate_word_badge" class="hidden text-[10px] font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-md font-mono transition-all truncate"></span>
+        <span id="rate_word_badge" class="hidden text-micro font-bold text-growth-emphasis bg-growth-surface border border-growth-border px-2 py-0.5 rounded-md font-financial-mono transition-all whitespace-nowrap shrink-0"></span>
     </div>
     <!-- Smart Nudge trigger -->
     <div class="relative">
         <button type="button" id="rate-nudge-btn"
-            class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 px-2 py-0.5 rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer shadow-2xs"
+            class="inline-flex items-center gap-1 text-micro font-bold text-growth hover:text-growth-emphasis bg-growth-surface hover:bg-emerald-100 border border-growth-border px-2.5 py-0.5 rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer shadow-flat"
             aria-haspopup="true" aria-expanded="false"
             aria-controls="rate-nudge-popover">
             <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,41 +67,41 @@
         </button>
 
         <!-- Rate Nudge AMFI Guidelines Popover -->
-        <div id="rate-nudge-popover" class="hidden absolute right-0 sm:right-auto sm:left-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-2.5rem)] p-3.5 bg-white/98 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-2xl z-50 text-left space-y-2.5 animate-in fade-in zoom-in-95 duration-150" role="dialog" aria-label="Historical Return Guidance">
+        <div id="rate-nudge-popover" class="hidden absolute right-0 sm:right-auto sm:left-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-2.5rem)] p-3.5 bg-white/98 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-modal z-50 text-left space-y-2.5 animate-in fade-in zoom-in-95 duration-150" role="dialog" aria-label="Historical Return Guidance">
             <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
-                <span class="text-xs font-bold text-slate-900 flex items-center gap-1">
+                <span class="text-ui-xs font-bold text-slate-900 flex items-center gap-1">
                     <span>📈</span> <span>AMFI Category Guidance</span>
                 </span>
-                <button type="button" id="rate-nudge-close" class="text-slate-400 hover:text-slate-700 p-1 text-xs cursor-pointer" aria-label="Close Popover">✕</button>
+                <button type="button" id="rate-nudge-close" class="text-slate-400 hover:text-slate-700 p-1 text-ui-xs cursor-pointer" aria-label="Close Popover">✕</button>
             </div>
-            <div class="space-y-1.5 text-[11px]">
-                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200/80 hover:border-emerald-300 text-left transition-all cursor-pointer flex items-center justify-between shadow-2xs" data-rate="12">
+            <div class="space-y-1.5 text-caption">
+                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-growth-surface border border-slate-200/80 hover:border-growth-border text-left transition-all cursor-pointer flex items-center justify-between shadow-flat" data-rate="12">
                     <div>
-                        <strong class="text-slate-900 block font-bold text-xs">12% • Large Cap / Index</strong>
-                        <span class="text-[10px] text-slate-500">Nifty 50 15Y historical benchmark</span>
+                        <strong class="text-slate-900 block font-bold text-ui-xs">12% • Large Cap / Index</strong>
+                        <span class="text-micro text-slate-500">Nifty 50 15Y historical benchmark</span>
                     </div>
-                    <span class="text-xs font-extrabold text-emerald-700">12%</span>
+                    <span class="text-ui-xs font-extrabold text-growth-emphasis font-financial-mono">12%</span>
                 </button>
-                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200/80 hover:border-emerald-300 text-left transition-all cursor-pointer flex items-center justify-between shadow-2xs" data-rate="14">
+                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-growth-surface border border-slate-200/80 hover:border-growth-border text-left transition-all cursor-pointer flex items-center justify-between shadow-flat" data-rate="14">
                     <div>
-                        <strong class="text-slate-900 block font-bold text-xs">14% • Flexi / Mid Cap</strong>
-                        <span class="text-[10px] text-slate-500">Active equity portfolio growth</span>
+                        <strong class="text-slate-900 block font-bold text-ui-xs">14% • Flexi / Mid Cap</strong>
+                        <span class="text-micro text-slate-500">Active equity portfolio growth</span>
                     </div>
-                    <span class="text-xs font-extrabold text-emerald-700">14%</span>
+                    <span class="text-ui-xs font-extrabold text-growth-emphasis font-financial-mono">14%</span>
                 </button>
-                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200/80 hover:border-emerald-300 text-left transition-all cursor-pointer flex items-center justify-between shadow-2xs" data-rate="9">
+                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-growth-surface border border-slate-200/80 hover:border-growth-border text-left transition-all cursor-pointer flex items-center justify-between shadow-flat" data-rate="9">
                     <div>
-                        <strong class="text-slate-900 block font-bold text-xs">9% • Balanced Advantage</strong>
-                        <span class="text-[10px] text-slate-500">Dynamic equity/debt hybrid</span>
+                        <strong class="text-slate-900 block font-bold text-ui-xs">9% • Balanced Advantage</strong>
+                        <span class="text-micro text-slate-500">Dynamic equity/debt hybrid</span>
                     </div>
-                    <span class="text-xs font-extrabold text-teal-700">9%</span>
+                    <span class="text-ui-xs font-extrabold text-teal-700 font-financial-mono">9%</span>
                 </button>
-                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200/80 hover:border-emerald-300 text-left transition-all cursor-pointer flex items-center justify-between shadow-2xs" data-rate="7">
+                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-growth-surface border border-slate-200/80 hover:border-growth-border text-left transition-all cursor-pointer flex items-center justify-between shadow-flat" data-rate="7">
                     <div>
-                        <strong class="text-slate-900 block font-bold text-xs">7% • Conservative Debt</strong>
-                        <span class="text-[10px] text-slate-500">Fixed income capital preservation</span>
+                        <strong class="text-slate-900 block font-bold text-ui-xs">7% • Conservative Debt</strong>
+                        <span class="text-micro text-slate-500">Fixed income capital preservation</span>
                     </div>
-                    <span class="text-xs font-extrabold text-slate-700">7%</span>
+                    <span class="text-ui-xs font-extrabold text-slate-700 font-financial-mono">7%</span>
                 </button>
             </div>
         </div>
@@ -130,13 +130,13 @@
 }) }}
 
 <!-- Adjustments & Inflation Options -->
-<div class="rounded-2xl bg-slate-50/70 border border-slate-200/90 p-2.5 space-y-2 shadow-2xs mt-1">
+<div class="rounded-2xl bg-slate-50/70 border border-slate-200/90 p-2.5 space-y-2 shadow-subtle mt-1">
     <div class="flex items-center justify-between gap-2">
-        <span class="text-[11px] font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+        <span class="text-caption font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
             <span>⚡</span>
             <span>Adjustments & Inflation</span>
         </span>
-        <span class="text-[10px] font-extrabold text-emerald-900 bg-emerald-100 border border-emerald-200 px-2 py-0.5 rounded-full shadow-2xs">
+        <span class="text-micro font-bold text-growth-emphasis bg-growth-surface border border-growth-border px-2 py-0.5 rounded-full shadow-flat">
             Step-Up & Inflation
         </span>
     </div>
@@ -145,6 +145,7 @@
     {{ inputs.renderInputRangePair({
         'id': 'stepup',
         'label': calc_config.stepup.label,
+        'tooltip': 'Increases your monthly SIP by X% every year to match your salary increments, boosting long-term wealth exponentially.',
         'min': calc_config.stepup.min,
         'max': calc_config.stepup.max,
         'slider_max': calc_config.stepup.slider_max,
@@ -161,12 +162,12 @@
     }) }}
 
     <!-- Corporate Salary Appraisal Step-Up Optimizer Callout -->
-    <div id="salary-stepup-nudge-box" class="p-2 rounded-xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50/80 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-2xs">
-        <div class="text-[10.5px] text-emerald-950 font-medium leading-tight min-w-0">
+    <div id="salary-stepup-nudge-box" class="p-2 rounded-xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50/80 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-flat">
+        <div class="text-caption text-emerald-950 font-medium leading-tight min-w-0">
             <span>💡 <strong>Career Appraisal:</strong> Step up 10% annually</span>
         </div>
         <button type="button" id="apply-10pct-stepup-btn"
-            class="px-2 py-0.5 text-[10px] font-extrabold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-2xs transition-all active:scale-95 cursor-pointer whitespace-nowrap shrink-0">
+            class="px-2 py-0.5 text-micro font-extrabold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-flat transition-all active:scale-95 cursor-pointer whitespace-nowrap shrink-0">
             +10% Boost
         </button>
     </div>
@@ -175,6 +176,7 @@
     {{ inputs.renderInputRangePair({
         'id': 'inflation',
         'label': calc_config.inflation.label|default('Expected Inflation'),
+        'tooltip': 'Discounts future nominal maturity wealth into today\'s purchasing power using your chosen inflation rate (typically ~6% in India).',
         'min': calc_config.inflation.min|default(0),
         'max': calc_config.inflation.max|default(15),
         'slider_max': calc_config.inflation.slider_max|default(12),

@@ -1,12 +1,12 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
 <!-- Lifecycle Accumulation Bridge (Transfer Matured SIP Corpus to SWP Starting Corpus) -->
-<div id="swp-accumulation-bridge" class="p-2.5 sm:p-3 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-2xs">
+<div id="swp-accumulation-bridge" class="p-2.5 sm:p-3 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-subtle">
     <div class="min-w-0">
-        <div class="text-[10px] font-black text-emerald-900 uppercase tracking-wider">SIP Matured Corpus Bridge</div>
-        <div class="text-xs font-bold text-slate-800 truncate">Seed with Matured Corpus (<span id="bridge-matured-corpus-val" class="font-mono text-emerald-800 font-black">₹ --</span>)?</div>
+        <div class="text-micro font-bold text-growth-emphasis uppercase tracking-wider">SIP Matured Corpus Bridge</div>
+        <div class="text-ui-xs font-bold text-slate-800 flex-wrap">Seed with Matured Corpus (<span id="bridge-matured-corpus-val" class="font-financial-mono text-growth-emphasis font-extrabold whitespace-nowrap">₹ --</span>)?</div>
     </div>
-    <button type="button" id="apply-sip-to-swp-btn" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold shadow-2xs active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0">
+    <button type="button" id="apply-sip-to-swp-btn" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-ui-xs font-extrabold shadow-flat active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0">
         Sync Corpus
     </button>
 </div>
@@ -74,13 +74,13 @@
 }) }}
 
 <!-- SWP Inflation Escalation -->
-<div class="rounded-2xl bg-slate-50/70 border border-slate-200/90 p-2.5 space-y-2 shadow-2xs mt-1">
+<div class="rounded-2xl bg-slate-50/70 border border-slate-200/90 p-2.5 space-y-2 shadow-subtle mt-1">
     <div class="flex items-center justify-between gap-2">
-        <span class="text-[11px] font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+        <span class="text-caption font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
             <span>🛡️</span>
             <span>Inflation Escalation</span>
         </span>
-        <span class="text-[10px] font-extrabold text-rose-900 bg-rose-100 border border-rose-200 px-2.5 py-0.5 rounded-full shadow-2xs">
+        <span class="text-micro font-bold text-payout-emphasis bg-payout-surface border border-payout-border px-2.5 py-0.5 rounded-full shadow-flat">
             Annual Hikes
         </span>
     </div>
@@ -89,6 +89,7 @@
     {{ inputs.renderInputRangePair({
         'id': 'swp_stepup',
         'label': calc_config.swp_stepup.label,
+        'tooltip': 'Increases your monthly withdrawal by X% each year to counter inflation and preserve your living standard in retirement.',
         'min': calc_config.swp_stepup.min,
         'max': calc_config.swp_stepup.max,
         'slider_max': calc_config.swp_stepup.slider_max,

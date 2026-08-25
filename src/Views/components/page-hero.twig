@@ -4,16 +4,16 @@
 
     <div class="relative z-10">
         {% if hero.badge is defined and hero.badge %}
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/90 text-emerald-800 border border-emerald-200/80 shadow-[0_2px_8px_-2px_rgba(16,185,129,0.15)] mb-4 backdrop-blur-md">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-micro font-bold bg-white/90 text-emerald-800 border border-emerald-200/80 shadow-subtle mb-4 backdrop-blur-md">
                 <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
-                <span class="tracking-wide uppercase text-[11px]">{{ hero.badge }}</span>
+                <span class="tracking-wider uppercase">{{ hero.badge }}</span>
             </div>
         {% endif %}
 
-        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 pb-2">
+        <h1 class="font-heading text-display-xl font-extrabold tracking-tight text-slate-900 pb-2">
             {{ hero.title_prefix|default('') }}
             {% if hero.title_highlight is defined and hero.title_highlight %}
                 <span class="bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600 bg-clip-text text-transparent">{{ hero.title_highlight }}</span>
@@ -22,20 +22,20 @@
         </h1>
 
         {% if hero.description is defined and hero.description %}
-            <p class="mt-2 text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            <p class="mt-2 text-ui-sm sm:text-body text-slate-600 max-w-2xl mx-auto leading-relaxed">
                 {{ hero.description }}
             </p>
         {% endif %}
 
         <!-- Feature Trust Micro-Badges -->
-        <div class="flex flex-wrap items-center justify-center gap-2 mt-4 text-[11px] font-bold text-slate-500">
-            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100/90 border border-slate-200/70 text-slate-700 shadow-2xs">
+        <div class="flex flex-wrap items-center justify-center gap-2 mt-4 text-micro font-bold text-slate-500">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100/90 border border-slate-200/70 text-slate-700 shadow-flat">
                 <span>🛡️</span> SEBI &amp; AMFI Compliant
             </span>
-            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100/90 border border-slate-200/70 text-slate-700 shadow-2xs">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100/90 border border-slate-200/70 text-slate-700 shadow-flat">
                 <span>⚖️</span> Budget 2024 §112A Tax
             </span>
-            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100/90 border border-slate-200/70 text-slate-700 shadow-2xs">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100/90 border border-slate-200/70 text-slate-700 shadow-flat">
                 <span>⚡</span> Instant Zero-Lag Math
             </span>
         </div>

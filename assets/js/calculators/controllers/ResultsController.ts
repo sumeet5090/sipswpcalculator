@@ -19,6 +19,7 @@ export class ResultsController {
     private chartManager: ChartManager | null;
     private density: 'all' | '5y' = '5y';
     private colDensity: 'essential' | 'audit' = 'essential';
+    private denominationMode: 'exact' | 'lakh' = 'exact';
     private searchYear: number | null = null;
     private lastData: YearResult[] = [];
     private lastEnableSwp: boolean = true;
@@ -36,6 +37,14 @@ export class ResultsController {
         this.getInputs = getInputs;
         this.chartManager = chartManager;
         this.initControls();
+    }
+
+    public setDenominationMode(mode: 'exact' | 'lakh'): void {
+        if (this.denominationMode === mode) return;
+        this.denominationMode = mode;
+        if (this.lastData.length > 0) {
+            this.updateTable(this.lastData, this.lastEnableSwp);
+        }
     }
 
     private initControls(): void {
@@ -292,7 +301,10 @@ export class ResultsController {
                 });
             }
 
-            const fmt = (v: number | null | undefined) => (v !== null && v !== undefined) ? this.formatter.format(v) : '-';
+            const fmt = (v: number | null | undefined): string => {
+                if (v === null || v === undefined) return '-';
+                return this.denominationMode === 'lakh' ? this.formatter.formatDynamic(v) : this.formatter.format(v);
+            };
 
             const createCell = (text: string, className: string): HTMLTableCellElement => {
                 const td = document.createElement('td');
@@ -305,12 +317,12 @@ export class ResultsController {
             tr.appendChild(createCell(String(row.year), CELL_YEAR_CLASS));
 
             // 2. Secondary SIP Breakdown Columns (Audit mode only)
-            if (showBeginBalance) tr.appendChild(createCell(this.formatter.format(row.begin_balance), CELL_MONO_CLASS));
+            if (showBeginBalance) tr.appendChild(createCell(fmt(row.begin_balance), CELL_MONO_CLASS));
             if (showSipMonthly) tr.appendChild(createCell(fmt(row.sip_monthly), CELL_EMERALD_CLASS));
-            if (showAnnualSip) tr.appendChild(createCell(this.formatter.format(row.annual_contribution), CELL_EMERALD_CLASS));
+            if (showAnnualSip) tr.appendChild(createCell(fmt(row.annual_contribution), CELL_EMERALD_CLASS));
 
             // 3. Total Invested Column (always visible)
-            if (showTotalInvested) tr.appendChild(createCell(this.formatter.format(row.cumulative_invested), CELL_MUTED_CLASS));
+            if (showTotalInvested) tr.appendChild(createCell(fmt(row.cumulative_invested), CELL_MUTED_CLASS));
 
             // 4. SWP Columns (SWP enabled only)
             if (showSwpMonthly) tr.appendChild(createCell(fmt(row.swp_monthly), CELL_ROSE_CLASS));
@@ -319,7 +331,7 @@ export class ResultsController {
 
             // 5. Annual Gain (always visible)
             if (showInterest) {
-                const interestCell = createCell(`+${this.formatter.format(row.interest)}`, CELL_EMERALD_CLASS);
+                const interestCell = createCell(`+${fmt(row.interest)}`, CELL_EMERALD_CLASS);
                 if (this.heatmapEnabled && row.interest > 0) {
                     const maxInterest = Math.max(1, ...data.map(r => r.interest));
                     const intensity = Math.min(1, row.interest / maxInterest);
@@ -330,7 +342,7 @@ export class ResultsController {
 
             // 6. LTCG Tax Column (Post-tax + Audit mode only)
             if (showTax) {
-                tr.appendChild(createCell(this.formatter.format(Math.round(ltcgTax)), CELL_ROSE_CLASS));
+                tr.appendChild(createCell(fmt(Math.round(ltcgTax)), CELL_ROSE_CLASS));
             }
 
             // 7. End Corpus Column (always visible, with wealth multiplier badge)
@@ -343,7 +355,7 @@ export class ResultsController {
 
                 const corpusValDiv = document.createElement('span');
                 corpusValDiv.className = 'font-extrabold text-slate-900';
-                corpusValDiv.textContent = this.formatter.format(finalCorpus);
+                corpusValDiv.textContent = fmt(finalCorpus);
                 corpusWrap.appendChild(corpusValDiv);
 
                 if (row.cumulative_invested > 0 && finalCorpus > 0) {
@@ -412,15 +424,20 @@ export class ResultsController {
                 const corpusWrap = document.createElement('div');
                 corpusWrap.className = 'flex items-center gap-1.5';
 
+                const fmt = (v: number | null | undefined): string => {
+                    if (v === null || v === undefined) return '-';
+                    return this.denominationMode === 'lakh' ? this.formatter.formatDynamic(v) : this.formatter.format(v);
+                };
+
                 const corpusVal = document.createElement('span');
-                corpusVal.className = "text-sm font-black font-mono text-slate-900";
-                corpusVal.textContent = this.formatter.format(finalCorpus);
+                corpusVal.className = "text-sm font-black font-financial-mono tabular-nums text-slate-900 whitespace-nowrap";
+                corpusVal.textContent = fmt(finalCorpus);
                 corpusWrap.appendChild(corpusVal);
 
                 if (row.cumulative_invested > 0 && finalCorpus > 0) {
                     const multiplier = (finalCorpus / row.cumulative_invested).toFixed(1);
                     const multiplierBadge = document.createElement('span');
-                    multiplierBadge.className = 'px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-extrabold';
+                    multiplierBadge.className = 'px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-extrabold shrink-0';
                     multiplierBadge.textContent = `${multiplier}×`;
                     corpusWrap.appendChild(multiplierBadge);
                 }
@@ -436,8 +453,8 @@ export class ResultsController {
                 investedLabel.className = "text-slate-500 block text-[10px] font-bold";
                 investedLabel.textContent = "Total Invested";
                 const investedVal = document.createElement('span');
-                investedVal.className = "font-bold font-mono text-slate-800";
-                investedVal.textContent = this.formatter.format(row.cumulative_invested);
+                investedVal.className = "font-bold font-financial-mono tabular-nums text-slate-800 whitespace-nowrap";
+                investedVal.textContent = fmt(row.cumulative_invested);
                 investedCol.appendChild(investedLabel);
                 investedCol.appendChild(investedVal);
                 grid.appendChild(investedCol);
@@ -448,8 +465,8 @@ export class ResultsController {
                 interestLabel.className = "text-emerald-700 block text-[10px] font-bold";
                 interestLabel.textContent = "Annual Gain";
                 const interestVal = document.createElement('span');
-                interestVal.className = "font-bold font-mono text-emerald-700";
-                interestVal.textContent = `+${this.formatter.format(row.interest)}`;
+                interestVal.className = "font-bold font-financial-mono tabular-nums text-emerald-700 whitespace-nowrap";
+                interestVal.textContent = `+${fmt(row.interest)}`;
                 interestCol.appendChild(interestLabel);
                 interestCol.appendChild(interestVal);
                 grid.appendChild(interestCol);
@@ -461,8 +478,8 @@ export class ResultsController {
                     withLabel.className = "text-rose-700 text-[10px] font-bold";
                     withLabel.textContent = "Total Withdrawn";
                     const withVal = document.createElement('span');
-                    withVal.className = "font-bold font-mono text-rose-700";
-                    withVal.textContent = this.formatter.format(row.cumulative_withdrawals ?? 0);
+                    withVal.className = "font-bold font-financial-mono tabular-nums text-rose-700 whitespace-nowrap";
+                    withVal.textContent = fmt(row.cumulative_withdrawals ?? 0);
                     withCol.appendChild(withLabel);
                     withCol.appendChild(withVal);
                     grid.appendChild(withCol);

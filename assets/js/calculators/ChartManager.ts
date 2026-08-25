@@ -1180,11 +1180,20 @@ export class ChartManager {
                             }
                         },
                         tooltip: {
-                            backgroundColor: THEME_COLORS.chart.tooltipBg,
-                            titleFont: { family: fontFamily, size: 13, weight: 'bold' },
-                            bodyFont: { family: fontFamily, size: 12 },
-                            padding: 12,
-                            cornerRadius: 10,
+                            enabled: true,
+                            backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                            titleColor: '#0f172a',
+                            titleFont: { family: fontFamily, size: 12, weight: 'bold' },
+                            bodyColor: '#334155',
+                            bodyFont: { family: THEME_FONTS.mono, size: 11, weight: 500 },
+                            borderColor: 'rgba(203, 213, 225, 0.9)',
+                            borderWidth: 1,
+                            padding: { top: 10, right: 14, bottom: 10, left: 14 },
+                            cornerRadius: 12,
+                            boxPadding: 6,
+                            usePointStyle: true,
+                            boxWidth: 8,
+                            boxHeight: 8,
                             callbacks: {
                                 label: (item) => {
                                     const val = Number(item.raw) || 0;
@@ -1303,16 +1312,72 @@ export class ChartManager {
                         }
                     },
                     tooltip: {
-                        enabled: false,
-                        external: (context) => {
-                            const { tooltip } = context;
-                            if (!tooltip || !tooltip.dataPoints || tooltip.dataPoints.length === 0) return;
-                            const index = tooltip.dataPoints[0].dataIndex;
-                            const row = this.lastResults[index];
-                            if (row) {
-                                this.updateInspectionRibbon(row);
+                        enabled: true,
+                        backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                        titleColor: '#0f172a',
+                        titleFont: {
+                            family: fontFamily,
+                            size: 12,
+                            weight: 'bold'
+                        },
+                        titleSpacing: 6,
+                        bodyColor: '#334155',
+                        bodyFont: {
+                            family: THEME_FONTS.mono,
+                            size: 11,
+                            weight: 500
+                        },
+                        bodySpacing: 5,
+                        borderColor: 'rgba(203, 213, 225, 0.9)',
+                        borderWidth: 1,
+                        cornerRadius: 12,
+                        padding: {
+                            top: 10,
+                            right: 14,
+                            bottom: 10,
+                            left: 14
+                        },
+                        boxPadding: 6,
+                        usePointStyle: true,
+                        boxWidth: 8,
+                        boxHeight: 8,
+                        callbacks: {
+                            title: (tooltipItems) => {
+                                if (!tooltipItems || tooltipItems.length === 0) return '';
+                                const idx = tooltipItems[0].dataIndex;
+                                const row = results[idx];
+                                if (!row) return '';
+                                const isFinal = row.year === results.length;
+                                return `Year ${row.year}${isFinal ? ' • Maturity Horizon' : ''}`;
+                            },
+                            label: (context) => {
+                                const datasetLabel = context.dataset.label || '';
+                                const rawVal = context.raw;
+                                const val = typeof rawVal === 'number' ? rawVal : Number(rawVal);
+                                if (isNaN(val)) return '';
+                                return ` ${datasetLabel}: ${this.formatter.format(val)}`;
+                            },
+                            footer: (tooltipItems) => {
+                                if (!tooltipItems || tooltipItems.length === 0) return '';
+                                const idx = tooltipItems[0].dataIndex;
+                                const row = results[idx];
+                                if (!row) return '';
+                                if (row.cumulative_invested > 0 && row.combined_total > 0) {
+                                    const multiplier = (row.combined_total / row.cumulative_invested).toFixed(1);
+                                    const gains = Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested);
+                                    return `Net Gains: +${this.formatter.format(gains)} (${multiplier}× Multiplier)`;
+                                }
+                                return '';
                             }
-                        }
+                        },
+                        footerColor: '#047857',
+                        footerFont: {
+                            family: fontFamily,
+                            size: 10.5,
+                            weight: 'bold'
+                        },
+                        footerSpacing: 6,
+                        footerMarginTop: 6
                     }
                 },
                 scales: {

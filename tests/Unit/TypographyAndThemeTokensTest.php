@@ -47,9 +47,9 @@ final class TypographyAndThemeTokensTest extends TestCase
         $tokens = ThemeConstants::getTokens();
         $this->assertArrayHasKey('fonts', $tokens);
         $this->assertArrayHasKey('colors', $tokens);
-        $this->assertSame('#047857', $tokens['colors']['financial']['growth_dark']);
-        $this->assertSame('#10b981', $tokens['colors']['financial']['growth']);
-        $this->assertSame('#be123c', $tokens['colors']['financial']['withdrawal_dark']);
+        $this->assertSame('#064e3b', $tokens['colors']['financial']['growth_dark']);
+        $this->assertSame('#047857', $tokens['colors']['financial']['growth']);
+        $this->assertSame('#881337', $tokens['colors']['financial']['withdrawal_dark']);
     }
 
     public function testTailwindV4ThemeContainsRequiredSemanticColorTokens(): void
@@ -58,13 +58,13 @@ final class TypographyAndThemeTokensTest extends TestCase
             '--font-sans',
             '--font-heading',
             '--font-mono',
-            '--color-financial-growth',
-            '--color-financial-growth-bg',
-            '--color-financial-withdrawal',
-            '--color-financial-principal',
-            '--color-financial-tax',
-            '--color-financial-inflation',
-            '--color-financial-gold',
+            '--color-growth',
+            '--color-growth-surface',
+            '--color-payout',
+            '--color-principal',
+            '--color-tax',
+            '--color-inflation',
+            '--color-gold',
             '--ease-spring-bounce',
             '--ease-spring-smooth',
         ];
@@ -82,12 +82,12 @@ final class TypographyAndThemeTokensTest extends TestCase
     {
         $this->assertStringContainsString(
             'font-variant-numeric: tabular-nums lining-nums',
-            $this->stylesCssContent,
+            $this->inputCssContent,
             'styles.css must enforce tabular and lining numerals'
         );
         $this->assertStringContainsString(
             'font-feature-settings: "tnum" 1, "lnum" 1',
-            $this->stylesCssContent,
+            $this->inputCssContent,
             'styles.css must set OpenType tnum and lnum feature settings'
         );
     }
@@ -100,9 +100,9 @@ final class TypographyAndThemeTokensTest extends TestCase
             $this->stylesCssContent,
             'styles.css must not use inverted dark surfaces for cards'
         );
-        $this->assertStringContainsString(
-            '--glass-card-bg: rgba(255, 255, 255, 0.96)',
-            $this->stylesCssContent,
+        $this->assertMatchesRegularExpression(
+            '/@utility\s+fintech-glass-card\s*\{[^}]*background-color:\s*rgba\(255,\s*255,\s*255/',
+            $this->inputCssContent,
             'styles.css must use light surface glass background token'
         );
     }

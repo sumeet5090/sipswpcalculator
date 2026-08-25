@@ -1,16 +1,16 @@
 <!-- Interactive Goal Commitment & Investor Pledge Studio Modal -->
 <dialog id="goal-commitment-modal" 
     role="dialog" aria-modal="true"
-    class="rounded-3xl border border-slate-200 bg-white/98 backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm shadow-2xl text-slate-800 overflow-hidden" 
+    class="rounded-3xl border border-slate-200 bg-white/98 backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm shadow-modal text-slate-800 overflow-hidden" 
     aria-labelledby="pledge-modal-title">
 
     <!-- Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/80 shrink-0">
         <div class="flex items-center gap-2.5">
-            <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 text-sm font-black shadow-2xs">📜</span>
+            <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-growth-surface text-growth-emphasis border border-growth-border text-sm font-black shadow-flat">📜</span>
             <div>
                 <h3 id="pledge-modal-title" class="text-sm sm:text-base font-extrabold text-slate-900">Investor Goal Commitment Certificate</h3>
-                <p class="text-[11px] text-slate-500 font-medium">Anchor your compounding discipline with a certified goal pledge</p>
+                <p class="text-caption text-slate-500 font-medium">Anchor your compounding discipline with a certified goal pledge</p>
             </div>
         </div>
         <button type="button" id="close-pledge-modal-btn" onclick="document.getElementById('goal-commitment-modal')?.close()" class="text-slate-400 hover:text-slate-700 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition-all cursor-pointer" aria-label="Close Modal">
@@ -24,7 +24,7 @@
     <div class="p-5 sm:p-7 overflow-y-auto custom-scrollbar flex-1 space-y-5">
         <!-- Certificate Card -->
         <div id="pledge-certificate-card" class="p-5 sm:p-6 rounded-2xl bg-slate-50 border-2 border-emerald-500/40 relative shadow-inner text-center space-y-4">
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-extrabold uppercase tracking-wider shadow-2xs">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-growth-surface text-growth-emphasis border border-growth-border text-micro font-extrabold uppercase tracking-wider shadow-flat">
                 🛡️ SOVEREIGN DISCIPLINE CONTRACT
             </div>
 
@@ -32,29 +32,29 @@
             <div class="text-xs sm:text-sm font-medium text-slate-700 leading-relaxed">
                 I, 
                 <input type="text" id="pledge-investor-name" value="Disciplined Investor" 
-                    class="text-center font-extrabold text-slate-900 bg-white border-b-2 border-emerald-500 px-3 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400/40 transition-all text-base md:text-sm inline-block max-w-[220px] shadow-2xs" 
+                    class="text-center font-extrabold text-slate-900 bg-white border-b-2 border-emerald-500 px-3 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400/40 transition-all text-base md:text-sm inline-block max-w-[220px] shadow-flat" 
                     placeholder="Enter Your Name" 
                     aria-label="Investor Name">, 
                 hereby pledge to systematically invest:
             </div>
 
             <div class="py-2">
-                <div id="pledge-sip-display" class="text-2xl sm:text-3xl font-black text-emerald-700 font-mono tracking-tight">₹25,000 / month</div>
-                <div class="text-[11px] text-slate-500 mt-1 font-medium">Every month without emotional interruption</div>
+                <div id="pledge-sip-display" class="text-2xl sm:text-3xl font-black text-growth-emphasis font-financial-mono tracking-tight">₹25,000 / month</div>
+                <div class="text-caption text-slate-500 mt-1 font-medium">Every month without emotional interruption</div>
             </div>
 
             <div class="grid grid-cols-2 gap-3 text-left pt-3 border-t border-slate-200">
-                <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                    <div class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Target Horizon</div>
-                    <div id="pledge-horizon-display" class="text-xs sm:text-sm font-extrabold text-slate-900 font-mono mt-0.5">15 Years</div>
+                <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-flat">
+                    <div class="text-micro uppercase font-bold text-slate-500 tracking-wider">Target Horizon</div>
+                    <div id="pledge-horizon-display" class="text-xs sm:text-sm font-extrabold text-slate-900 font-financial-mono mt-0.5">15 Years</div>
                 </div>
-                <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                    <div class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Target Corpus</div>
-                    <div id="pledge-target-display" class="text-xs sm:text-sm font-extrabold text-emerald-700 font-mono mt-0.5">₹1.26 Crore</div>
+                <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-flat">
+                    <div class="text-micro uppercase font-bold text-slate-500 tracking-wider">Target Corpus</div>
+                    <div id="pledge-target-display" class="text-xs sm:text-sm font-extrabold text-growth-emphasis font-financial-mono mt-0.5">₹1.26 Crore</div>
                 </div>
             </div>
 
-            <div class="text-[11px] text-slate-500 italic pt-1">
+            <div class="text-caption text-slate-500 italic pt-1">
                 "Market volatility is the fee for exceptional long-term wealth compounding."
             </div>
         </div>
@@ -62,21 +62,21 @@
         <!-- Action Toolbar with WhatsApp Intent -->
         <div class="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-slate-100">
             <div class="flex items-center gap-2">
-                <button type="button" id="copy-pledge-btn" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs active:scale-95">
+                <button type="button" id="copy-pledge-btn" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center gap-1.5 shadow-flat active:scale-95">
                     <span>📋</span> <span class="hidden sm:inline">Copy Text</span>
                 </button>
-                <button type="button" id="save-pledge-png-btn" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs active:scale-95">
+                <button type="button" id="save-pledge-png-btn" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center gap-1.5 shadow-flat active:scale-95">
                     <span>📥</span> <span class="hidden sm:inline">Save Image</span>
                 </button>
             </div>
 
             <div class="flex items-center gap-2">
                 <button type="button" id="whatsapp-pledge-share-btn" 
-                    class="px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-extrabold transition-all active:scale-95 cursor-pointer flex items-center gap-1.5 shadow-2xs">
+                    class="px-3.5 py-2 rounded-xl bg-growth-surface hover:bg-emerald-100 text-growth-emphasis border border-growth-border text-xs font-extrabold transition-all active:scale-95 cursor-pointer flex items-center gap-1.5 shadow-flat">
                     <span>💬</span> <span>Share on WhatsApp</span>
                 </button>
                 <button type="button" id="print-pledge-btn" 
-                    class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold shadow-md shadow-emerald-600/20 transition-all active:scale-95 cursor-pointer flex items-center gap-1.5">
+                    class="px-4 py-2 rounded-xl bg-growth hover:bg-growth-emphasis text-white text-xs font-extrabold shadow-flat transition-all active:scale-95 cursor-pointer flex items-center gap-1.5">
                     <span>🖨️</span> <span>Certificate PDF</span>
                 </button>
             </div>

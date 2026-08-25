@@ -41,11 +41,11 @@
     }
 </style>
 
-<nav class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/80 backdrop-blur-md transition-all duration-300 shadow-sm">
+<nav class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/80 backdrop-blur-md transition-all duration-300 shadow-flat">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse group">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 40px; height: 40px;"
-                class="rounded-xl shadow-lg shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
+                class="rounded-xl shadow-card-hover shadow-emerald-500/30 transition-transform duration-300 group-hover:scale-105"
                 role="img" aria-label="SIP SWP Calculator Logo">
                 <rect width="24" height="24" rx="6" fill="url(#logo-grad-header)" />
                 <defs>
@@ -63,7 +63,7 @@
                 <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
                     stroke-opacity="0.25" d="M4 21l5-5 3.5 3.5 7.5-7.5" />
             </svg>
-            <span class="self-center text-xl font-extrabold whitespace-nowrap tracking-tight text-slate-800">SIP &amp;
+            <span class="self-center text-xl font-heading font-extrabold whitespace-nowrap tracking-tight text-slate-800">SIP &amp;
                 SWP <span class="text-emerald-500 font-medium">Calculator</span></span>
         </a>
 
@@ -77,7 +77,7 @@
                             {{ item.label }}
                             <svg class="w-4 h-4 nav-chevron transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
-                        <div role="menu" class="absolute left-0 mt-2 w-56 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 nav-dropdown-menu">
+                        <div role="menu" class="absolute left-0 mt-2 w-56 rounded-xl bg-white shadow-card-hover ring-1 ring-black ring-opacity-5 nav-dropdown-menu">
                             <div class="py-1">
                                 {% for sub in item.sub_items %}
                                     <a href="{{ sub.href }}" role="menuitem" class="block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 focus:bg-emerald-50 focus:text-emerald-600 focus:outline-none">{{ sub.label }}</a>
@@ -97,29 +97,29 @@
         <!-- Actions (Search, QR & Audio Toggle) -->
         <div class="hidden sm:flex items-center gap-2">
             <button type="button" id="open-qr-modal-btn"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-500 hover:text-slate-800 text-xs font-semibold shadow-2xs transition-all cursor-pointer"
+                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-500 hover:text-slate-800 text-xs font-semibold shadow-flat transition-all cursor-pointer"
                 title="Scan Plan on Mobile"
                 aria-label="Scan Plan on Mobile">
                 <span class="text-xs">📱</span>
-                <span class="hidden xl:inline text-[11px]">QR Sync</span>
+                <span class="hidden xl:inline text-caption">QR Sync</span>
             </button>
 
             <button type="button" id="open-command-palette-btn"
-                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-500 hover:text-slate-800 text-xs font-semibold shadow-2xs transition-all cursor-pointer group"
+                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-500 hover:text-slate-800 text-xs font-semibold shadow-flat transition-all cursor-pointer group"
                 aria-label="Open Command Palette (Cmd + K)">
                 <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
                 <span>Search...</span>
-                <kbd class="hidden md:inline-block text-[10px] font-bold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-400 shadow-2xs">⌘K</kbd>
+                <kbd class="hidden md:inline-block text-micro font-bold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-400 shadow-flat">⌘K</kbd>
             </button>
 
             <button type="button" id="sound-toggle-btn"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-400 hover:text-slate-700 text-xs font-semibold shadow-2xs transition-all cursor-pointer"
+                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-400 hover:text-slate-700 text-xs font-semibold shadow-flat transition-all cursor-pointer"
                 title="Toggle UI Sound Effects"
                 aria-label="Toggle UI Sound Effects">
                 <span class="sound-icon text-xs">🔇</span>
-                <span class="sound-text hidden lg:inline text-[11px]">Muted</span>
+                <span class="sound-text hidden lg:inline text-caption">Muted</span>
             </button>
         </div>
 
@@ -161,7 +161,7 @@
             <!-- Mobile Quick Actions -->
             <div class="pt-2 border-t border-slate-200/80 flex items-center gap-2">
                 <button type="button"
-                    class="open-qr-modal-btn w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-800 text-sm font-bold shadow-2xs transition-all cursor-pointer"
+                    class="open-qr-modal-btn w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-800 text-sm font-bold shadow-flat transition-all cursor-pointer"
                     aria-label="Scan or Share Plan via QR Code">
                     <span>📱</span>
                     <span>Scan / Share Plan (QR)</span>

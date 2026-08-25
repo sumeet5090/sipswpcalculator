@@ -26,6 +26,7 @@ final class ThemeConstants
     public const COLOR_BRAND_600 = '#059669';
     public const COLOR_BRAND_700 = '#047857';
     public const COLOR_BRAND_800 = '#065f46';
+    public const COLOR_BRAND_900 = '#064e3b';
 
     // Secondary Indigo
     public const COLOR_INDIGO_500 = '#6366f1';
@@ -41,6 +42,7 @@ final class ThemeConstants
 
     // Semantic Financial Colors
     public const COLOR_FINANCIAL_GROWTH = '#047857';
+    public const COLOR_FINANCIAL_GROWTH_EMPHASIS = '#064e3b';
     public const COLOR_FINANCIAL_GROWTH_BG = '#ecfdf5';
     public const COLOR_FINANCIAL_GROWTH_BORDER = '#a7f3d0';
 

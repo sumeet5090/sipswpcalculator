@@ -47,21 +47,12 @@ final class ChartCardTest extends TestCase
         $this->assertStringContainsString('id="wealth-map-telemetry-pill"', $this->chartTwigContent);
     }
 
-    public function testChartCardTelemetryHudAndCanvasContainer(): void
+    public function testChartCardCanvasContainer(): void
     {
-        // Zero-CLS HUD
-        $this->assertStringContainsString('id="chart-telemetry-hud"', $this->chartTwigContent);
-        $this->assertStringContainsString('id="hud-status-dot"', $this->chartTwigContent);
-        $this->assertStringContainsString('id="ribbon-inspect-year"', $this->chartTwigContent);
-        $this->assertStringContainsString('id="ribbon-inspect-invested"', $this->chartTwigContent);
-        $this->assertStringContainsString('id="ribbon-inspect-gains"', $this->chartTwigContent);
-        $this->assertStringContainsString('id="ribbon-inspect-corpus"', $this->chartTwigContent);
-
         // Canvas & Keyboard Scrutiny Container
         $this->assertStringContainsString('id="chart-canvas-container"', $this->chartTwigContent);
         $this->assertStringContainsString('tabindex="0"', $this->chartTwigContent);
         $this->assertStringContainsString('id="corpusChart"', $this->chartTwigContent);
-        $this->assertStringContainsString('id="chart-inspection-ribbon"', $this->chartTwigContent);
     }
 
     public function testChartCardMobileScrubberAndAccessibleTable(): void

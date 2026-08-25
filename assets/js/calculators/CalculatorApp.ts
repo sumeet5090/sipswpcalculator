@@ -252,7 +252,11 @@ export class CalculatorApp {
         );
 
         this.keyboardViewportController = new KeyboardViewportController(this.dom, this.formatter);
-        this.studioTabController = new StudioTabController(this.dom, (tabId) => this.analytics.setActiveStudioTab(tabId));
+        this.studioTabController = new StudioTabController(
+            this.dom,
+            (tabId) => this.analytics.setActiveStudioTab(tabId),
+            (denomination) => this.resultsController.setDenominationMode(denomination)
+        );
 
         this.keyboardNavController = new KeyboardNavigationController(
             this.dom,

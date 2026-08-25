@@ -54,11 +54,11 @@ final class ModalCenteringAndStylesTest extends TestCase
 
         $this->assertStringContainsString('id="pdfModal"', $homeContent);
         $this->assertStringContainsString('fixed inset-0 m-auto', $homeContent);
-        $this->assertStringContainsString('z-50', $homeContent);
+        $this->assertStringContainsString('z-modal', $homeContent);
 
         $this->assertStringContainsString('id="pdfModal"', $guideContent);
         $this->assertStringContainsString('fixed inset-0 m-auto', $guideContent);
-        $this->assertStringContainsString('z-50', $guideContent);
+        $this->assertStringContainsString('z-modal', $guideContent);
     }
 
     public function testGoalCommitmentAndQrModalsHaveDialogMarkup(): void

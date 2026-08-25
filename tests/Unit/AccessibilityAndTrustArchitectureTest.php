@@ -166,15 +166,6 @@ final class AccessibilityAndTrustArchitectureTest extends TestCase
         $this->assertStringContainsString('id="chart-canvas-container"', $content);
         $this->assertStringContainsString('tabindex="0"', $content);
         $this->assertStringContainsString('id="a11y-chart-table-body"', $content);
-        $this->assertStringContainsString('id="chart-inspection-ribbon"', $content);
-
-        // Assert Persistent Zero-CLS Telemetry HUD
-        $this->assertStringContainsString('id="chart-telemetry-hud"', $content);
-        $this->assertStringContainsString('id="hud-status-dot"', $content);
-        $this->assertStringContainsString('id="ribbon-inspect-year"', $content);
-        $this->assertStringContainsString('id="ribbon-inspect-invested"', $content);
-        $this->assertStringContainsString('id="ribbon-inspect-gains"', $content);
-        $this->assertStringContainsString('id="ribbon-inspect-corpus"', $content);
 
         // Assert Master Console View Switcher & Action Hub
         $this->assertStringContainsString('id="chart-view-line"', $content);

@@ -31,7 +31,7 @@
         }
 
         .glossary-card {
-            animation: fadeInUpScale 0.7s cubic-bezier(0.19, 1, 0.22, 1) backwards;
+            animation: fadeInUpScale 0.7s var(--ease-spring-smooth) backwards;
         }
 
         html {
@@ -64,13 +64,13 @@
             </svg>
         </div>
         <input id="glossarySearch" type="text" placeholder="Search glossary terms or definitions..."
-            class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-sm transition-all text-sm font-medium">
+            class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-flat transition-all text-sm font-medium">
     </div>
 
     <!-- A-Z Navigation (No-Fail-Spacing with Padding) -->
     <nav class="sticky top-24 z-50 mb-16 py-4 flex justify-center">
         <div
-            class="nav-pill flex flex-wrap justify-center items-center bg-white/95 backdrop-blur-xl border border-slate-200/60 rounded-full px-4 py-3 shadow-2xl shadow-emerald-500/10 gap-x-1 sm:gap-x-4">
+            class="nav-pill flex flex-wrap justify-center items-center bg-white/95 backdrop-blur-xl border border-slate-200/60 rounded-full px-4 py-3 shadow-modal shadow-emerald-500/10 gap-x-1 sm:gap-x-4">
             {% for letter in letters %}
             <a href="#letter-{{ letter }}"
                 class="letter-link min-w-[40px] h-10 sm:min-w-[48px] sm:h-12 flex items-center justify-center rounded-full text-lg sm:text-xl font-black text-slate-400 hover:text-white hover:bg-emerald-600 transition-all duration-300">
@@ -111,11 +111,11 @@
 
             <!-- Premium Glossary Card -->
             <article
-                class="glossary-card glass-card bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-3xl hover:border-emerald-500/10 hover:-translate-y-4 transition-all duration-500 group relative flex flex-col h-full overflow-hidden"
+                class="glossary-card fintech-glass-card bg-white rounded-3xl p-6 border border-slate-100 shadow-flat hover:shadow-floating hover:border-emerald-500/10 hover:-translate-y-4 transition-all duration-500 group relative flex flex-col h-full overflow-hidden"
                 data-term="{{ term.q|lower }}" data-desc="{{ term.a|lower }}">
 
                 <div class="relative z-10 flex flex-col h-full">
-                    <span class="inline-flex self-start px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-50 text-slate-500 border border-slate-100 uppercase tracking-wider mb-4">
+                    <span class="inline-flex self-start px-2.5 py-1 rounded-full text-micro font-bold bg-slate-50 text-slate-500 border border-slate-100 uppercase tracking-wider mb-4">
                         {{ term.category }}
                     </span>
                     <h3

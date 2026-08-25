@@ -22,29 +22,44 @@
     
     {% set presets = config.presets|default(null) %}
     {% set activeChipClass = theme == 'rose' 
-        ? 'is-active-rose bg-rose-600 text-white border-rose-600 shadow-2xs' 
-        : 'is-active bg-emerald-600 text-white border-emerald-600 shadow-2xs' %}
+        ? 'is-active-rose bg-rose-600 text-white border-rose-600 shadow-flat' 
+        : 'is-active bg-emerald-600 text-white border-emerald-600 shadow-flat' %}
+    {% set tooltip = config.tooltip|default(null) %}
     
-    <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 transition-all duration-200 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.03)] hover:shadow-md" data-field-id="{{ id }}">
+    <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 transition-all duration-200 shadow-subtle hover:shadow-card" data-field-id="{{ id }}">
         {% if labelHtml %}
             {{ labelHtml|raw }}
         {% else %}
             <!-- Field Header: Label & Live Range Constraints -->
-            <div class="flex items-center justify-between mb-1.5">
-                <div class="flex items-center gap-1.5 min-w-0">
-                    <label for="{{ id }}" id="{{ id }}_label" class="text-xs font-black tracking-tight text-slate-800 select-none cursor-pointer hover:text-emerald-700 transition-colors" title="Double-click to reset to default">
+            <div class="flex flex-wrap items-center justify-between mb-1.5 gap-x-1.5 gap-y-0.5">
+                <div class="flex items-center gap-1.5 flex-wrap min-w-0">
+                    <label for="{{ id }}" id="{{ id }}_label" class="text-ui-xs font-bold tracking-tight text-slate-800 select-none cursor-pointer hover:text-growth transition-colors" title="Double-click to reset to default">
                         {{ label }}
                     </label>
-                    <span id="{{ id }}_word_badge" class="hidden text-[10px] font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-md font-mono transition-all truncate"></span>
+                    {% if tooltip %}
+                        <div class="relative inline-flex items-center group/tip shrink-0">
+                            <button type="button" 
+                                class="w-3.5 h-3.5 rounded-full bg-slate-100 hover:bg-growth-surface text-slate-400 hover:text-growth text-micro font-bold inline-flex items-center justify-center border border-slate-200/80 transition-colors cursor-help focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                                aria-label="Help: {{ label }}">
+                                ℹ
+                            </button>
+                            <div role="tooltip" 
+                                class="absolute left-0 sm:left-1/2 sm:-translate-x-1/2 bottom-full mb-2 hidden group-hover/tip:block group-focus-within/tip:block w-64 max-w-[80vw] p-2.5 bg-white/98 backdrop-blur-md text-slate-700 text-caption leading-relaxed rounded-xl shadow-modal border border-slate-200/90 z-50 pointer-events-none transition-all">
+                                <strong class="text-slate-900 block font-bold mb-0.5">{{ label }}</strong>
+                                {{ tooltip }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <span id="{{ id }}_word_badge" class="hidden text-micro font-bold text-growth-emphasis bg-growth-surface border border-growth-border px-2 py-0.5 rounded-md font-financial-mono transition-all whitespace-nowrap shrink-0"></span>
                 </div>
-                <span class="text-[10px] font-mono font-bold text-slate-400 tracking-tight shrink-0 select-none">
+                <span class="text-micro font-financial-mono font-bold text-slate-400 tracking-tight shrink-0 select-none hidden sm:inline-block ml-auto">
                     {{ prefix }}{{ min }}{{ suffix }} – {{ prefix }}{{ sliderMax }}{{ suffix }}
                 </span>
             </div>
         {% endif %}
 
         <!-- Refined Integrated Capsule Stepper Dock -->
-        <div class="relative flex items-stretch rounded-xl bg-slate-50/90 border border-slate-200/90 {{ inputFocusBorder }} focus-within:bg-white focus-within:ring-2 transition-all overflow-hidden shadow-2xs">
+        <div class="relative flex items-stretch rounded-xl bg-slate-50/90 border border-slate-200/90 {{ inputFocusBorder }} focus-within:bg-white focus-within:ring-2 transition-all overflow-hidden shadow-flat">
             <!-- Decrement Stepper Button -->
             <button type="button" 
                 class="stepper-btn stepper-dec w-9 sm:w-10 flex items-center justify-center bg-slate-100/70 hover:bg-slate-200/80 text-slate-600 hover:text-slate-900 active:bg-slate-300/80 active:scale-95 transition-all select-none cursor-pointer border-r border-slate-200/80 focus:outline-none shrink-0"
@@ -61,20 +76,20 @@
             <div class="relative flex-1 flex flex-col justify-center py-1 px-2.5 min-w-0">
                 <div class="flex items-center justify-center">
                     {% if prefix %}
-                        <span class="currency-symbol text-xs sm:text-sm font-extrabold text-slate-400 mr-1 select-none pointer-events-none">{{ prefix }}</span>
+                        <span class="currency-symbol text-ui-xs sm:text-ui-sm font-extrabold text-slate-400 mr-1 select-none pointer-events-none">{{ prefix }}</span>
                     {% endif %}
                     <input type="text" inputmode="decimal" id="{{ id }}" name="{{ name }}"
-                        class="w-full bg-transparent text-center text-sm sm:text-base font-black font-mono tabular-nums text-slate-900 focus:outline-none tracking-tight"
+                        class="w-full bg-transparent text-center text-ui-sm sm:text-body font-extrabold font-financial-mono tabular-nums text-slate-900 focus:outline-none tracking-tight"
                         required value="{{ value }}" data-min="{{ min }}" data-max="{{ max }}" data-step="{{ step }}"
                         autocomplete="off" spellcheck="false"
                         aria-describedby="{{ id }}_error">
                     {% if suffix %}
-                        <span class="text-xs sm:text-sm font-bold text-slate-400 ml-1 select-none pointer-events-none">{{ suffix }}</span>
+                        <span class="text-ui-xs sm:text-ui-sm font-bold text-slate-400 ml-1 select-none pointer-events-none">{{ suffix }}</span>
                     {% endif %}
                 </div>
                 
                 <!-- Dynamic Live Subtext Hint (Zero-CLS reserved height) -->
-                <div id="{{ id }}_subtext" class="field-unit-hint text-[10px] font-semibold text-emerald-800/90 text-center truncate min-h-[14px] leading-tight select-none"></div>
+                <div id="{{ id }}_subtext" class="field-unit-hint text-micro font-semibold text-growth-emphasis text-center min-h-[14px] leading-tight select-none whitespace-normal break-words"></div>
             </div>
 
             <!-- Increment Stepper Button -->
@@ -92,7 +107,7 @@
 
         {# Inline validation error #}
         <p id="{{ id }}_error" role="alert" aria-live="polite"
-           class="hidden text-[10px] font-bold text-rose-600 mt-1 field-error"></p>
+           class="hidden text-micro font-bold text-payout mt-1 field-error"></p>
 
         <!-- Seamless Integrated Range Slider Track -->
         <div class="mt-2 px-0.5">
@@ -111,7 +126,7 @@
                     {% set p_label = preset.label|default(preset) %}
                     {% set p_val = preset.value|default(preset) %}
                     <button type="button" 
-                        class="preset-chip text-[9.5px] font-bold px-2 py-0.5 rounded-md border border-slate-200/90 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-2xs {{ value == p_val ? activeChipClass : '' }}"
+                        class="preset-chip text-micro font-bold px-2 py-0.5 rounded-md border border-slate-200/90 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-flat {{ value == p_val ? activeChipClass : '' }}"
                         data-preset-for="{{ id }}"
                         data-preset-val="{{ p_val }}"
                         aria-pressed="{{ value == p_val ? 'true' : 'false' }}">
