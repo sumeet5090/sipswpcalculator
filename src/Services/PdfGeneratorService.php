@@ -56,22 +56,25 @@ class PdfGeneratorService
      */
     public function generate(array $inputs): string
     {
-        $html = $this->template->render($inputs);
-
-        $options = new Options();
-        $options->set('isRemoteEnabled', false);
-        $options->set('defaultFont', 'Helvetica');
-        $options->set('isFontSubsettingEnabled', true);
-        $options->set('isPhpEnabled', false);
-        $options->set('isJavascriptEnabled', false);
-        $options->set('fontDir', $this->fontDir);
-        $options->set('fontCache', $this->fontDir);
-        $options->set('tempDir', $this->tempDir);
-
         $initialLevel = ob_get_level();
         ob_start();
 
+        $previousDisplayErrors = ini_get('display_errors');
+        @ini_set('display_errors', '0');
+
         try {
+            $html = $this->template->render($inputs);
+
+            $options = new Options();
+            $options->set('isRemoteEnabled', false);
+            $options->set('defaultFont', 'Helvetica');
+            $options->set('isFontSubsettingEnabled', true);
+            $options->set('isPhpEnabled', false);
+            $options->set('isJavascriptEnabled', false);
+            $options->set('fontDir', $this->fontDir);
+            $options->set('fontCache', $this->fontDir);
+            $options->set('tempDir', $this->tempDir);
+
             $dompdf = new Dompdf($options);
             $dompdf->loadHtml($html);
             $dompdf->setPaper('A4', 'portrait');
@@ -80,6 +83,9 @@ class PdfGeneratorService
 
             return (string) $pdfBinary;
         } finally {
+            if ($previousDisplayErrors !== false) {
+                @ini_set('display_errors', (string) $previousDisplayErrors);
+            }
             while (ob_get_level() > $initialLevel) {
                 ob_end_clean();
             }

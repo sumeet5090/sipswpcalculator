@@ -221,7 +221,7 @@ export class PdfExportController {
                 interaction_count: this.getInteractionCount()
             });
 
-            setTimeout(() => window.URL.revokeObjectURL(url), 100);
+            setTimeout(() => window.URL.revokeObjectURL(url), 60000);
             if (onComplete) onComplete();
         } catch (err) {
             console.error('PDF generation failed:', err);
