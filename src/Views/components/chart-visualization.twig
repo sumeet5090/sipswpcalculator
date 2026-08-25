@@ -64,39 +64,6 @@
         </div>
     </div>
 
-    <!-- Unified Compounding Alpha Beacon & Dynamic Insight Dock -->
-    <div id="contextual-alpha-radar" class="hidden items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-white/95 border border-slate-200/90 shadow-2xs transition-all">
-        <div class="flex items-center gap-2.5 min-w-0">
-            <span id="contextual-radar-icon" class="text-base shrink-0 flex items-center justify-center w-7 h-7 rounded-xl bg-slate-100">⚡</span>
-            <div id="contextual-radar-text" class="text-xs text-slate-800 font-medium truncate"></div>
-        </div>
-        <div class="flex items-center gap-2 shrink-0">
-            <button type="button" id="alpha-drawer-toggle" 
-                class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold text-slate-600 bg-slate-100/80 hover:bg-slate-200/80 border border-slate-200/80 transition cursor-pointer"
-                aria-expanded="false" aria-controls="alpha-secondary-insights" title="View all financial compounding insights">
-                <span>Insights</span>
-                <svg class="w-3 h-3 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-            </button>
-            <button type="button" id="contextual-radar-action" class="hidden px-2.5 py-1 rounded-xl text-xs font-bold bg-white text-slate-800 border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer"></button>
-        </div>
-    </div>
-
-    <!-- Expandable Secondary Insights Drawer (Preserves all DOM IDs for telemetry & parity) -->
-    <div id="alpha-secondary-insights" class="hidden flex-wrap items-center gap-1.5 px-2.5 py-2 bg-slate-50/80 rounded-xl border border-slate-200/60 -mt-2 transition-all">
-        <div id="daily-lifestyle-multiplier-badge" class="hidden items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-900 border border-emerald-200/90 shadow-2xs">
-            <span>⚡</span>
-            <span id="daily-accrual-amount" class="font-extrabold font-mono text-emerald-800">₹0 / day</span>
-            <span class="text-slate-400">•</span>
-            <span id="daily-lifestyle-equiv" class="font-medium text-slate-700">Daily compounding velocity</span>
-        </div>
-        <span id="summary-delay-cost-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-rose-50 text-rose-900 border border-rose-200/80 shadow-2xs"></span>
-        <span id="summary-crossover-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100/90 text-emerald-900 border border-emerald-200 shadow-2xs"></span>
-        <span id="summary-longevity-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-100/90 text-emerald-900 border border-emerald-200 shadow-2xs"></span>
-        <span id="summary-ratio-pill" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-900 border border-indigo-200/80 shadow-2xs"></span>
-        <span id="summary-doubling-badge" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-900 border border-amber-200/80 shadow-2xs"></span>
-        <span id="summary-daily-accrual" class="hidden items-center text-[11px] font-bold px-2.5 py-1 rounded-lg bg-teal-50 text-teal-900 border border-teal-200/80 shadow-2xs"></span>
-    </div>
-
     <!-- Empathetic SWR Longevity Guardian Alert (Zero-CLS Container) -->
     <div id="swp-longevity-guardian-alert" class="hidden p-3.5 sm:p-4 rounded-2xl bg-amber-50/90 border border-amber-200/90 shadow-2xs transition-all">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -120,7 +87,7 @@
     </div>
 
     <!-- Chart Card -->
-    <div class="relative z-10 bg-white/95 rounded-3xl border border-slate-200/90 shadow-sm backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-md p-4 sm:p-5">
+    <div id="chart-card" class="relative z-10 bg-white/95 rounded-3xl border border-slate-200/90 shadow-sm backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-md p-4 sm:p-5">
         
         <!-- ========================================================================= -->
         <!-- TIER 1: UNIFIED MASTER COMMAND DOCK (Identity · Mode · Lenses · Actions) -->

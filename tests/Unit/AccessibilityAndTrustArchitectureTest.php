@@ -158,11 +158,9 @@ final class AccessibilityAndTrustArchitectureTest extends TestCase
         $this->assertStringContainsString('id="summary-interest"', $content);
         $this->assertStringContainsString('id="summary-corpus"', $content);
 
-        // Assert AMFI Institutional Seal and Alpha Beacon dock
+        // Assert AMFI Institutional Seal and Chart Card
         $this->assertStringContainsString('AMFI Aligned', $content);
-        $this->assertStringContainsString('id="contextual-alpha-radar"', $content);
-        $this->assertStringContainsString('id="alpha-drawer-toggle"', $content);
-        $this->assertStringContainsString('id="alpha-secondary-insights"', $content);
+        $this->assertStringContainsString('id="chart-card"', $content);
 
         // Assert keyboard accessible canvas container and screen reader ledger table
         $this->assertStringContainsString('id="chart-canvas-container"', $content);
