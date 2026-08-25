@@ -1,5 +1,5 @@
 <!-- Dynamic Asset Allocation & Tax-Free Cashflow Rebalancing Router -->
-<div id="asset-rebalancing-card" class="p-5 sm:p-6 rounded-3xl bg-white/95 backdrop-blur-md text-slate-900 border border-slate-200/90 shadow-sm relative overflow-hidden">
+<div id="asset-rebalancing-card" class="p-5 sm:p-6 rounded-3xl bg-white/95 backdrop-blur-md text-slate-900 border border-slate-200/90 shadow-card relative overflow-hidden">
     <!-- Ambient Aurora Glow (Pure Light Mode: Indigo & Emerald Accents) -->
     <div class="absolute -right-16 -bottom-16 w-56 h-56 bg-indigo-400/10 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute -left-16 -top-16 w-56 h-56 bg-emerald-400/8 rounded-full blur-3xl pointer-events-none"></div>
@@ -12,21 +12,21 @@
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
             <!-- Left: Module Identifier -->
             <div class="flex items-center gap-3">
-                <div class="flex items-center justify-center w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-700 border border-indigo-200/80 shadow-2xs shrink-0">
+                <div class="flex items-center justify-center w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-700 border border-indigo-200/80 shadow-flat shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
                     </svg>
                 </div>
                 <div>
                     <div class="flex flex-wrap items-center gap-2">
-                        <h4 class="text-sm sm:text-base font-black text-slate-900 tracking-tight">
+                        <h4 class="text-ui-sm sm:text-ui-base font-extrabold text-slate-900 tracking-tight">
                             Asset Allocation &amp; Smart Cashflow Rebalancing
                         </h4>
-                        <span id="rebalance-mode-badge" class="inline-flex items-center text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-800 border border-indigo-200/80 shadow-2xs">
+                        <span id="rebalance-mode-badge" class="inline-flex items-center text-micro font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-800 border border-indigo-200/80 shadow-flat">
                             0% Tax Friction
                         </span>
                     </div>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">
+                    <p class="text-caption text-slate-500 font-medium mt-0.5">
                         Maintain target portfolio equilibrium and eliminate Section 112A capital gains tax using smart SIP cashflow routing
                     </p>
                 </div>
@@ -34,9 +34,9 @@
 
             <!-- Right: Simulated Drift Scenario Toggle -->
             <div class="flex flex-wrap items-center gap-2 self-start lg:self-center">
-                <span class="text-[11px] font-bold text-slate-600">Market Drift State:</span>
-                <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 text-[11px] font-bold text-slate-600" role="group" aria-label="Market Drift State">
-                    <button type="button" class="drift-state-btn px-2.5 py-1 rounded-lg bg-white text-indigo-900 shadow-2xs border border-slate-200/60 transition-all cursor-pointer font-bold" data-drift="normal">
+                <span class="text-caption font-bold text-slate-600">Market Drift State:</span>
+                <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 text-caption font-bold text-slate-600" role="group" aria-label="Market Drift State">
+                    <button type="button" class="drift-state-btn px-2.5 py-1 rounded-lg bg-white text-indigo-900 shadow-flat border border-slate-200/60 transition-all cursor-pointer font-bold" data-drift="normal">
                         ⚖️ Target
                     </button>
                     <button type="button" class="drift-state-btn px-2.5 py-1 rounded-lg text-slate-500 hover:text-slate-900 transition-all cursor-pointer font-medium" data-drift="bull">
@@ -55,47 +55,47 @@
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" role="tablist" aria-label="Asset Allocation Profiles">
             
             <!-- Profile 1: 80/20 Aggressive -->
-            <button type="button" class="rebalance-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+            <button type="button" class="rebalance-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer shadow-flat"
                 data-equity="80" data-debt="20" data-gold="0" data-profile="aggressive">
                 <div class="flex items-center justify-between mb-1">
-                    <strong class="text-xs font-black text-slate-900 group-hover:text-indigo-900">80/20 Aggressive</strong>
+                    <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-indigo-900">80/20 Aggressive</strong>
                     <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
                 </div>
-                <div class="text-[11px] font-extrabold text-slate-700 font-mono">80% Eq • 20% Debt</div>
-                <div class="text-[9.5px] text-slate-500 font-medium">Age 20–35 (Max Growth)</div>
+                <div class="text-caption font-extrabold text-slate-700 font-financial-mono">80% Eq • 20% Debt</div>
+                <div class="text-micro text-slate-500 font-medium">Age 20–35 (Max Growth)</div>
             </button>
 
             <!-- Profile 2: 70/30 Balanced (Active Default) -->
-            <button type="button" class="rebalance-choice-btn group p-3 rounded-2xl bg-white border-2 border-indigo-600 text-slate-900 text-left transition-all duration-200 cursor-pointer shadow-xs relative"
+            <button type="button" class="rebalance-choice-btn group p-3 rounded-2xl bg-white border-2 border-indigo-600 text-slate-900 text-left transition-all duration-200 cursor-pointer shadow-flat relative"
                 data-equity="70" data-debt="30" data-gold="0" data-profile="balanced">
                 <div class="flex items-center justify-between mb-1">
-                    <strong class="text-xs font-black text-slate-900 group-hover:text-indigo-900">70/30 Balanced</strong>
+                    <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-indigo-900">70/30 Balanced</strong>
                     <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
                 </div>
-                <div class="text-[11px] font-extrabold text-indigo-700 font-mono">70% Eq • 30% Debt</div>
-                <div class="text-[9.5px] text-slate-500 font-medium">Age 30–45 (All-Rounder)</div>
+                <div class="text-caption font-extrabold text-indigo-700 font-financial-mono">70% Eq • 30% Debt</div>
+                <div class="text-micro text-slate-500 font-medium">Age 30–45 (All-Rounder)</div>
             </button>
 
             <!-- Profile 3: 60/25/15 All-Weather India -->
-            <button type="button" class="rebalance-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+            <button type="button" class="rebalance-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer shadow-flat"
                 data-equity="60" data-debt="25" data-gold="15" data-profile="allweather">
                 <div class="flex items-center justify-between mb-1">
-                    <strong class="text-xs font-black text-slate-900 group-hover:text-amber-900">All-Weather India</strong>
+                    <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-amber-900">All-Weather India</strong>
                     <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
                 </div>
-                <div class="text-[11px] font-extrabold text-amber-700 font-mono">60% Eq • 25% D • 15% Au</div>
-                <div class="text-[9.5px] text-slate-500 font-medium">Tri-Asset Inflation Shield</div>
+                <div class="text-caption font-extrabold text-amber-700 font-financial-mono">60% Eq • 25% D • 15% Au</div>
+                <div class="text-micro text-slate-500 font-medium">Tri-Asset Inflation Shield</div>
             </button>
 
             <!-- Profile 4: 50/35/15 Capital Shield -->
-            <button type="button" class="rebalance-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+            <button type="button" class="rebalance-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer shadow-flat"
                 data-equity="50" data-debt="35" data-gold="15" data-profile="conservative">
                 <div class="flex items-center justify-between mb-1">
-                    <strong class="text-xs font-black text-slate-900 group-hover:text-teal-900">Capital Shield</strong>
+                    <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-teal-900">Capital Shield</strong>
                     <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
                 </div>
-                <div class="text-[11px] font-extrabold text-teal-700 font-mono">50% Eq • 35% D • 15% Au</div>
-                <div class="text-[9.5px] text-slate-500 font-medium">Age 45+ (Pre-Retirement)</div>
+                <div class="text-caption font-extrabold text-teal-700 font-financial-mono">50% Eq • 35% D • 15% Au</div>
+                <div class="text-micro text-slate-500 font-medium">Age 45+ (Pre-Retirement)</div>
             </button>
         </div>
 
@@ -106,16 +106,16 @@
             
             <!-- Stacked Tri-Asset Progress Bar -->
             <div class="space-y-1.5">
-                <div class="flex items-center justify-between text-xs font-bold">
+                <div class="flex items-center justify-between text-caption font-bold">
                     <span class="text-slate-600">Active Asset Weighting:</span>
-                    <span id="rebalance-ratio-label" class="font-mono text-indigo-950">70% Equity • 30% Debt • 0% Gold</span>
+                    <span id="rebalance-ratio-label" class="font-financial-mono text-indigo-950">70% Equity • 30% Debt • 0% Gold</span>
                 </div>
                 <div class="w-full h-3 rounded-full bg-slate-200 overflow-hidden flex shadow-inner">
                     <div id="rebalance-bar-equity" class="h-full bg-emerald-500 transition-all duration-500" style="width: 70%;" title="Equity"></div>
                     <div id="rebalance-bar-debt" class="h-full bg-indigo-500 transition-all duration-500" style="width: 30%;" title="Debt"></div>
                     <div id="rebalance-bar-gold" class="h-full bg-amber-400 transition-all duration-500" style="width: 0%;" title="Gold"></div>
                 </div>
-                <div class="flex items-center justify-between text-[10px] text-slate-500 font-medium pt-0.5">
+                <div class="flex items-center justify-between text-micro text-slate-500 font-medium pt-0.5">
                     <div class="flex items-center gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                         <span>Equity (<span id="rebalance-pct-equity">70%</span>)</span>
@@ -133,28 +133,28 @@
 
             <!-- 3-Column Quantitative Allocation Ledger Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
-                    <div class="text-[10px] uppercase font-bold text-slate-500">Blended Portfolio CAGR</div>
-                    <div id="rebalance-preview-cagr" class="text-sm sm:text-base font-black text-emerald-800 font-mono mt-0.5">
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-flat">
+                    <div class="text-micro uppercase font-bold text-slate-500">Blended Portfolio CAGR</div>
+                    <div id="rebalance-preview-cagr" class="text-ui-sm sm:text-ui-base font-extrabold text-growth-emphasis font-financial-mono mt-0.5">
                         10.5% p.a.
                     </div>
-                    <span class="text-[9.5px] text-slate-500 font-medium">Blended Expectation</span>
+                    <span class="text-micro text-slate-500 font-medium">Blended Expectation</span>
                 </div>
 
-                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
-                    <div class="text-[10px] uppercase font-bold text-slate-500">Volatility Reduction</div>
-                    <div id="rebalance-preview-volatility" class="text-sm sm:text-base font-black text-indigo-700 font-mono mt-0.5">
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-flat">
+                    <div class="text-micro uppercase font-bold text-slate-500">Volatility Reduction</div>
+                    <div id="rebalance-preview-volatility" class="text-ui-sm sm:text-ui-base font-extrabold text-indigo-700 font-financial-mono mt-0.5">
                         -24% vs Pure Equity
                     </div>
-                    <span class="text-[9.5px] text-slate-500 font-medium">Smoother Growth Curve</span>
+                    <span class="text-micro text-slate-500 font-medium">Smoother Growth Curve</span>
                 </div>
 
-                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
-                    <div class="text-[10px] uppercase font-bold text-slate-500">Tax Alpha Saved (15 Yrs)</div>
-                    <div id="rebalance-tax-savings" class="text-sm sm:text-base font-black text-teal-800 font-mono mt-0.5">
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 shadow-flat">
+                    <div class="text-micro uppercase font-bold text-slate-500">Tax Alpha Saved (15 Yrs)</div>
+                    <div id="rebalance-tax-savings" class="text-ui-sm sm:text-ui-base font-extrabold text-teal-800 font-financial-mono mt-0.5">
                         +₹2,45,000
                     </div>
-                    <span class="text-[9.5px] text-slate-500 font-medium">0% LTCG &amp; Exit Load Drag</span>
+                    <span class="text-micro text-slate-500 font-medium">0% LTCG &amp; Exit Load Drag</span>
                 </div>
             </div>
 
@@ -162,16 +162,16 @@
             <div id="rebalance-action-banner" class="p-3.5 rounded-2xl bg-indigo-50/90 border border-indigo-200/80 flex items-start gap-2.5 text-indigo-950">
                 <span class="flex items-center justify-center w-5 h-5 rounded-lg bg-indigo-100 text-indigo-800 font-bold shrink-0 mt-0.5">🛡️</span>
                 <div class="w-full leading-relaxed">
-                    <div class="flex flex-wrap items-center justify-between gap-1 text-xs font-black text-indigo-900">
+                    <div class="flex flex-wrap items-center justify-between gap-1 text-ui-xs font-extrabold text-indigo-900">
                         <span>Smart Cashflow Rebalancing Directive</span>
-                        <span id="rebalance-status-chip" class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200">
+                        <span id="rebalance-status-chip" class="text-micro font-bold px-2 py-0.5 rounded-md bg-growth-surface text-growth-emphasis border border-growth-border">
                             Equilibrium Maintained
                         </span>
                     </div>
-                    <p id="rebalance-action-text" class="text-xs text-slate-700 mt-1 leading-relaxed">
+                    <p id="rebalance-action-text" class="text-caption text-slate-700 mt-1 leading-relaxed">
                         Allocate monthly SIP: <strong class="text-slate-900">₹17,500 into Equity</strong> and <strong class="text-slate-900">₹7,500 into Debt</strong> funds to maintain exact 70/30 balance with 0% capital gains tax.
                     </p>
-                    <div class="text-[10.5px] text-indigo-900/80 font-medium mt-1.5 pt-1.5 border-t border-indigo-200/60">
+                    <div class="text-caption text-indigo-900/80 font-medium mt-1.5 pt-1.5 border-t border-indigo-200/60">
                         💡 <em>Golden Rule: Rebalance via new SIP inflows only when asset allocation drifts by &gt;5% from target to preserve compounding momentum.</em>
                     </div>
                 </div>

@@ -1,16 +1,16 @@
 <!-- Instant Client Proposal QR Code & Mobile Sync Studio Modal -->
 <dialog id="qr-share-modal" 
     role="dialog" aria-modal="true"
-    class="rounded-3xl border border-slate-200 bg-white/98 backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm shadow-2xl text-slate-800 overflow-hidden" 
+    class="rounded-3xl border border-slate-200 bg-white/98 backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm shadow-modal text-slate-800 overflow-hidden" 
     aria-labelledby="qr-modal-title">
 
     <!-- Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/80 shrink-0">
         <div class="flex items-center gap-2.5 text-left">
-            <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 text-xs font-black shadow-2xs">📱</span>
+            <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-growth-surface text-growth-emphasis border border-growth-border text-xs font-black shadow-flat">📱</span>
             <div>
                 <h3 id="qr-modal-title" class="text-sm sm:text-base font-extrabold text-slate-900">Scan on Mobile</h3>
-                <p class="text-[11px] text-slate-500 font-medium">Instant zero-loss proposal & scenario sync</p>
+                <p class="text-caption text-slate-500 font-medium">Instant zero-loss proposal & scenario sync</p>
             </div>
         </div>
         <button type="button" id="close-qr-modal-btn" onclick="document.getElementById('qr-share-modal')?.close()" class="text-slate-400 hover:text-slate-700 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition-all cursor-pointer" aria-label="Close Modal">
@@ -30,7 +30,7 @@
         </div>
 
         <div>
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-mono font-extrabold shadow-2xs mb-2">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-growth-surface text-growth-emphasis border border-growth-border text-micro font-financial-mono font-bold shadow-flat mb-2">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span>Zero-Loss Bi-Directional State Encoded</span>
             </div>
@@ -41,10 +41,10 @@
 
         <!-- QR Image Actions -->
         <div class="grid grid-cols-2 gap-2.5">
-            <button type="button" id="download-qr-image-btn" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs active:scale-95">
+            <button type="button" id="download-qr-image-btn" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-flat active:scale-95">
                 <span>📥</span> <span>Save Image</span>
             </button>
-            <button type="button" id="copy-qr-image-btn" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs active:scale-95">
+            <button type="button" id="copy-qr-image-btn" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-flat active:scale-95">
                 <span>🖼️</span> <span>Copy Image</span>
             </button>
         </div>
@@ -52,10 +52,10 @@
         <!-- Copy URL Input & Action -->
         <div class="flex items-center gap-2 pt-1">
             <input type="text" id="qr-share-url-input" readonly 
-                class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs text-slate-700 font-mono truncate focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-2xs" 
+                class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs text-slate-700 font-financial-mono truncate focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-flat" 
                 value="" aria-label="Plan URL">
             <button type="button" id="copy-qr-url-btn" 
-                class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold shadow-md shadow-emerald-600/20 transition-all active:scale-95 cursor-pointer whitespace-nowrap">
+                class="px-4 py-2.5 rounded-xl bg-growth hover:bg-growth-emphasis text-white text-xs font-extrabold shadow-flat transition-all active:scale-95 cursor-pointer whitespace-nowrap">
                 <span>📋 Copy Link</span>
             </button>
         </div>

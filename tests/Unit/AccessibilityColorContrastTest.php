@@ -63,6 +63,13 @@ final class AccessibilityColorContrastTest extends TestCase
         $this->assertGreaterThanOrEqual(4.5, $ratioSlate, "Growth color {$growth} must meet WCAG 2.1 AA (>= 4.5:1) on slate-50");
     }
 
+    public function testGrowthEmphasisMeetsWcagAaaOnWhite(): void
+    {
+        $growthEmphasis = ThemeConstants::COLOR_FINANCIAL_GROWTH_EMPHASIS; // #064e3b
+        $ratioWhite = $this->getContrastRatio($growthEmphasis, '#ffffff');
+        $this->assertGreaterThanOrEqual(7.0, $ratioWhite, "Growth emphasis color {$growthEmphasis} must meet WCAG 2.1 AAA (>= 7.0:1) on white");
+    }
+
     public function testWithdrawalColorMeetsWcagAaOnWhiteAndSlate50(): void
     {
         $withdrawal = ThemeConstants::COLOR_FINANCIAL_WITHDRAWAL; // #be123c
@@ -86,9 +93,11 @@ final class AccessibilityColorContrastTest extends TestCase
     public function testBrandDarkAndTextPrimaryMeetWcagAaaOnWhite(): void
     {
         $brandDark = ThemeConstants::COLOR_BRAND_800; // #065f46
+        $brand900 = ThemeConstants::COLOR_BRAND_900; // #064e3b
         $textPrimary = ThemeConstants::COLOR_TEXT_PRIMARY; // #0f172a
 
         $this->assertGreaterThanOrEqual(7.0, $this->getContrastRatio($brandDark, '#ffffff'), "Brand dark must meet WCAG AAA (>= 7:1)");
+        $this->assertGreaterThanOrEqual(7.0, $this->getContrastRatio($brand900, '#ffffff'), "Brand 900 must meet WCAG AAA (>= 7:1)");
         $this->assertGreaterThanOrEqual(7.0, $this->getContrastRatio($textPrimary, '#ffffff'), "Text primary must meet WCAG AAA (>= 7:1)");
     }
 }

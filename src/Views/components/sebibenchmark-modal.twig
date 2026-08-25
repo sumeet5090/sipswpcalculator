@@ -1,17 +1,17 @@
 <!-- Statutory Modeling & AMFI/SEBI Benchmark Standards Modal -->
 <dialog id="sebiBenchmarkModal" 
-    class="rounded-3xl border border-slate-200 bg-white/98 backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm shadow-2xl text-slate-700 overflow-hidden" 
+    class="rounded-3xl border border-slate-200 bg-white/98 backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm shadow-modal text-slate-700 overflow-hidden" 
     aria-labelledby="sebi-modal-title">
 
     <!-- Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/80 shrink-0">
         <div class="flex items-center gap-2.5">
-            <span class="p-2 rounded-xl bg-emerald-50 text-emerald-700 text-base border border-emerald-100 shadow-2xs">⚖️</span>
+            <span class="p-2 rounded-xl bg-growth-surface text-growth-emphasis text-base border border-growth-border shadow-flat">⚖️</span>
             <div>
                 <h3 id="sebi-modal-title" class="text-sm sm:text-base font-extrabold text-slate-900 leading-tight">
                     Statutory Modeling & Benchmark Standards
                 </h3>
-                <p class="text-[11px] text-slate-500 font-medium">AMFI & SEBI Regulatory Educational Guidelines</p>
+                <p class="text-caption text-slate-500 font-medium">AMFI & SEBI Regulatory Educational Guidelines</p>
             </div>
         </div>
         <button type="button" id="closeSebiModalBtn" onclick="document.getElementById('sebiBenchmarkModal')?.close()" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer" aria-label="Close modal">
@@ -24,18 +24,18 @@
     <!-- Modal Body (Scrollable) -->
     <div class="p-5 sm:p-7 space-y-5 overflow-y-auto custom-scrollbar flex-1 text-slate-700">
         <!-- Privacy & Offline Sandboxing Callout -->
-        <div class="bg-emerald-50/90 border border-emerald-200/90 rounded-2xl p-4 flex items-start gap-3 shadow-2xs">
+        <div class="bg-growth-surface border border-growth-border rounded-2xl p-4 flex items-start gap-3 shadow-flat">
             <span class="text-lg">🔒</span>
-            <div class="text-xs leading-relaxed text-emerald-950">
-                <strong class="font-bold text-emerald-900 block mb-0.5">100% Client-Side Sandbox Guarantee</strong>
+            <div class="text-caption leading-relaxed text-emerald-950">
+                <strong class="font-bold text-growth-emphasis block mb-0.5">100% Client-Side Sandbox Guarantee</strong>
                 All calculations, cashflow projections, and tax estimations run locally in your web browser. No personal income, SIP amount, or corpus data is ever sent, stored, or tracked on any external server.
             </div>
         </div>
 
         <!-- Asset Class Benchmark Table -->
         <div class="space-y-2">
-            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Indian Asset Class Historical Returns (15Y CAGR Reference)</h4>
-            <div class="border border-slate-200 rounded-2xl overflow-x-auto text-xs shadow-2xs">
+            <h4 class="text-micro font-bold text-slate-800 uppercase tracking-wider">Indian Asset Class Historical Returns (15Y CAGR Reference)</h4>
+            <div class="border border-slate-200 rounded-2xl overflow-x-auto text-xs shadow-flat">
                 <table class="w-full text-left min-w-[320px]">
                     <thead class="bg-slate-50 font-bold text-slate-600 border-b border-slate-200">
                         <tr>
@@ -48,22 +48,22 @@
                         <tr class="hover:bg-slate-50/50 transition-colors">
                             <td class="p-3 font-bold text-slate-900">Large Cap Equities</td>
                             <td class="p-3 text-slate-600">NIFTY 50 TRI</td>
-                            <td class="p-3 text-right font-mono font-bold text-emerald-700">~12.0% – 13.5%</td>
+                            <td class="p-3 text-right font-financial-mono font-bold text-growth-emphasis">~12.0% – 13.5%</td>
                         </tr>
                         <tr class="hover:bg-slate-50/50 transition-colors">
                             <td class="p-3 font-bold text-slate-900">Mid & Small Cap</td>
                             <td class="p-3 text-slate-600">NIFTY Midcap 150</td>
-                            <td class="p-3 text-right font-mono font-bold text-emerald-700">~14.5% – 16.0%</td>
+                            <td class="p-3 text-right font-financial-mono font-bold text-growth-emphasis">~14.5% – 16.0%</td>
                         </tr>
                         <tr class="hover:bg-slate-50/50 transition-colors">
                             <td class="p-3 font-bold text-slate-900">Hybrid / Balanced</td>
                             <td class="p-3 text-slate-600">CRISIL Hybrid 50+50</td>
-                            <td class="p-3 text-right font-mono font-bold text-slate-700">~10.0% – 11.5%</td>
+                            <td class="p-3 text-right font-financial-mono font-bold text-slate-700">~10.0% – 11.5%</td>
                         </tr>
                         <tr class="hover:bg-slate-50/50 transition-colors">
                             <td class="p-3 font-bold text-slate-900">Conservative Debt</td>
                             <td class="p-3 text-slate-600">Fixed Deposit / Liquid</td>
-                            <td class="p-3 text-right font-mono font-bold text-slate-700">~6.5% – 7.2%</td>
+                            <td class="p-3 text-right font-financial-mono font-bold text-slate-700">~6.5% – 7.2%</td>
                         </tr>
                     </tbody>
                 </table>
@@ -71,7 +71,7 @@
         </div>
 
         <!-- Statutory Notice -->
-        <div class="text-[11px] text-slate-500 leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-1.5 shadow-2xs">
+        <div class="text-caption text-slate-500 leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-1.5 shadow-flat">
             <p><strong>Statutory Disclaimer:</strong> Mutual fund investments are subject to market risks. Please read all scheme-related documents carefully before investing. Historical performance benchmarks do not guarantee future compounding returns.</p>
             <p>Calculations provided by this tool are mathematical simulations for educational and retirement planning awareness only.</p>
         </div>
@@ -80,7 +80,7 @@
     <!-- Modal Footer with High-Contrast Emerald CTA -->
     <div class="px-6 py-3.5 bg-slate-50 border-t border-slate-100 flex items-center justify-end shrink-0">
         <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.close()"
-            class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold transition-all shadow-md shadow-emerald-600/20 active:scale-95 cursor-pointer flex items-center justify-center gap-1.5">
+            class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-growth hover:bg-growth-emphasis text-white text-xs font-extrabold transition-all shadow-flat active:scale-95 cursor-pointer flex items-center justify-center gap-1.5">
             <span>✓</span>
             <span>Acknowledge Guidelines</span>
         </button>

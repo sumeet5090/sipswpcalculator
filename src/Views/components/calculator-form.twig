@@ -7,7 +7,7 @@
 <div id="{{ container_id|default('calculator-app') }}"
      data-js="calculator-app"
      data-mode="sip"
-     class="bg-white/95 rounded-3xl border border-slate-200/90 shadow-sm backdrop-blur-xl p-3.5 sm:p-4 relative">
+     class="bg-white/95 rounded-3xl border border-slate-200/90 shadow-card backdrop-blur-xl p-3.5 sm:p-4 relative">
     <!-- Ambient Aurora Glow (Pure Light Mode: Emerald & Teal Accents) -->
     <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-400/8 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -19,12 +19,12 @@
         </div>
 
         <!-- Privacy & Client-Side Sandbox Seal -->
-        <div class="flex flex-wrap items-center justify-between px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200/80 text-[11px] gap-2">
+        <div class="flex flex-wrap items-center justify-between px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200/80 text-caption gap-2">
             <div class="flex items-center gap-1.5 text-slate-700 min-w-0">
                 <span class="text-xs shrink-0">🔒</span>
                 <span class="font-extrabold text-slate-800 truncate">100% Client-Side Private</span>
             </div>
-            <span class="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60 whitespace-nowrap shrink-0"
+            <span class="text-micro text-growth-emphasis font-bold bg-growth-surface px-2 py-0.5 rounded-md border border-growth-border whitespace-nowrap shrink-0"
                   title="Calculations execute entirely in your browser sandbox. Zero PII transmitted.">
                 Zero PII Transmitted
             </span>
@@ -33,13 +33,13 @@
         <!-- Segmented Tab Bar (Wealth Creation vs Retirement Income) -->
         <div class="flex bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70" role="tablist">
             <button type="button" id="tab-sip" role="tab" aria-selected="true"
-                class="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-200 bg-white text-emerald-900 shadow-2xs border border-slate-200/60 cursor-pointer">
-                <span class="flex items-center justify-center w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-black">⚡</span>
+                class="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-ui-xs font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer">
+                <span class="flex items-center justify-center w-4 h-4 rounded-full bg-growth-surface text-growth-emphasis text-micro font-extrabold">⚡</span>
                 <span>SIP Wealth</span>
             </button>
             <button type="button" id="tab-swp" role="tab" aria-selected="false"
-                class="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-900 cursor-pointer">
-                <span class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-200 text-slate-600 text-[9px] font-black">🛡️</span>
+                class="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-900 cursor-pointer">
+                <span class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-200 text-slate-600 text-micro font-extrabold">🛡️</span>
                 <span>SWP Cashflow</span>
             </button>
         </div>
@@ -57,8 +57,8 @@
         <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="hidden space-y-3">
             <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/80">
                 <div>
-                    <span class="text-xs font-black text-rose-800 tracking-tight uppercase block">Enable SWP Mode</span>
-                    <span class="text-[10px] text-slate-500 font-medium">Switch from accumulation to regular monthly cashflow</span>
+                    <span class="text-ui-xs font-extrabold text-payout uppercase tracking-tight block">Enable SWP Mode</span>
+                    <span class="text-caption text-slate-500 font-medium">Switch from accumulation to regular monthly cashflow</span>
                 </div>
                 <label class="toggle-switch relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" id="enable_swp" name="enable_swp"

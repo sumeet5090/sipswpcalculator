@@ -4,7 +4,7 @@
     <!-- ========================================================================= -->
     <!-- STUDIO COMMAND HEADER & LIVE CONTEXT RIBBON                               -->
     <!-- ========================================================================= -->
-    <div class="p-4 sm:p-5 rounded-3xl bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md mb-4 relative overflow-hidden">
+    <div class="p-4 sm:p-5 rounded-3xl bg-white/95 border border-slate-200/90 shadow-card backdrop-blur-md mb-4 relative overflow-hidden">
         <!-- Ambient Aurora Glow (Pure Light Mode: Soft Emerald & Teal) -->
         <div class="absolute -right-20 -top-20 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-teal-400/8 rounded-full blur-3xl pointer-events-none"></div>
@@ -13,7 +13,7 @@
             
             <!-- Left: Studio Title & Live Scenario Telemetry Indicator -->
             <div class="flex items-center gap-3">
-                <div class="flex items-center justify-center w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-2xs shrink-0">
+                <div class="flex items-center justify-center w-10 h-10 rounded-2xl bg-growth-surface text-growth border border-growth-border shadow-flat shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg>
@@ -23,7 +23,7 @@
                         <h3 class="font-heading text-heading-sm sm:text-heading-md font-extrabold text-slate-900 tracking-tight">
                             Interactive Analytical Studio
                         </h3>
-                        <span class="inline-flex items-center gap-1.5 text-micro font-bold uppercase px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/90 shadow-flat">
+                        <span class="inline-flex items-center gap-1.5 text-micro font-bold uppercase px-2.5 py-0.5 rounded-full bg-growth-surface text-growth-emphasis border border-growth-border shadow-flat">
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                             Live Engine
                         </span>
@@ -38,7 +38,7 @@
             <div class="flex items-center gap-2 self-start lg:self-center shrink-0">
                 <!-- Currency Denomination Mode -->
                 <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 text-caption font-bold text-slate-600" role="group" aria-label="Denomination Unit">
-                    <button type="button" id="studio-unit-exact" class="px-2.5 py-1 rounded-lg bg-white text-emerald-800 shadow-2xs border border-slate-200/60 transition-all cursor-pointer" aria-pressed="true">
+                    <button type="button" id="studio-unit-exact" class="px-2.5 py-1 rounded-lg bg-white text-growth-emphasis shadow-flat border border-slate-200/60 transition-all cursor-pointer" aria-pressed="true">
                         Exact (₹)
                     </button>
                     <button type="button" id="studio-unit-lakh" class="px-2.5 py-1 rounded-lg text-slate-500 hover:text-slate-900 transition-all cursor-pointer" aria-pressed="false">
@@ -48,8 +48,8 @@
 
                 <!-- Export / PDF Trigger -->
                 <button type="button" id="studio-export-pdf-btn" onclick="document.getElementById('pdfModal').showModal()"
-                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 hover:text-emerald-800 border border-slate-200/90 hover:border-emerald-300 transition-all text-xs font-bold shadow-2xs cursor-pointer">
-                    <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 hover:text-growth-emphasis border border-slate-200/90 hover:border-growth-border transition-all text-ui-xs font-bold shadow-flat cursor-pointer">
+                    <svg class="w-3.5 h-3.5 text-growth" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
                     <span>Export Plan</span>
@@ -70,65 +70,65 @@
 
                 <!-- Tab 1: Yearly Breakdown Table (Default Active) -->
                 <button type="button" role="tab" id="tab-yearly-breakdown" aria-controls="panel-yearly-breakdown" aria-selected="true" tabindex="0"
-                    class="studio-tab-btn group relative px-3 py-2 rounded-xl text-xs whitespace-nowrap transition-all duration-200 cursor-pointer bg-white text-emerald-900 shadow-xs border border-slate-200/90 font-black flex items-center gap-2">
+                    class="studio-tab-btn group relative px-3 py-2 rounded-xl text-ui-xs whitespace-nowrap transition-all duration-200 cursor-pointer bg-white text-growth-emphasis shadow-flat border border-slate-200/90 font-extrabold flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    <svg class="w-4 h-4 text-emerald-700 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 text-growth shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                     </svg>
                     <span>Yearly Ledger</span>
-                    <span id="tab-telemetry-breakdown" class="text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/60">
+                    <span id="tab-telemetry-breakdown" class="text-micro font-financial-mono font-bold px-1.5 py-0.5 rounded-md bg-growth-surface text-growth-emphasis border border-growth-border">
                         20 Yrs
                     </span>
                 </button>
 
                 <!-- Tab 2: City FIRE Benchmark -->
                 <button type="button" role="tab" id="tab-city-benchmark" aria-controls="panel-city-benchmark" aria-selected="false" tabindex="-1"
-                    class="studio-tab-btn group relative px-3 py-2 rounded-xl text-xs whitespace-nowrap transition-all duration-200 cursor-pointer text-slate-600 hover:text-slate-900 hover:bg-white/60 font-bold border border-transparent flex items-center gap-2">
+                    class="studio-tab-btn group relative px-3 py-2 rounded-xl text-ui-xs whitespace-nowrap transition-all duration-200 cursor-pointer text-slate-600 hover:text-slate-900 hover:bg-white/60 font-bold border border-transparent flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
-                    <svg class="w-4 h-4 text-slate-400 group-hover:text-emerald-700 shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 text-slate-400 group-hover:text-growth shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                     </svg>
                     <span>City FIRE Target</span>
-                    <span id="tab-telemetry-fire" class="text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-md bg-slate-200/70 text-slate-700 group-hover:bg-emerald-50 group-hover:text-emerald-800 transition-colors">
+                    <span id="tab-telemetry-fire" class="text-micro font-financial-mono font-bold px-1.5 py-0.5 rounded-md bg-slate-200/70 text-slate-700 group-hover:bg-growth-surface group-hover:text-growth-emphasis transition-colors">
                         FIRE 25×
                     </span>
                 </button>
 
                 <!-- Tab 3: Milestone Roadmap -->
                 <button type="button" role="tab" id="tab-milestone-roadmap" aria-controls="panel-milestone-roadmap" aria-selected="false" tabindex="-1"
-                    class="studio-tab-btn group relative px-3 py-2 rounded-xl text-xs whitespace-nowrap transition-all duration-200 cursor-pointer text-slate-600 hover:text-slate-900 hover:bg-white/60 font-bold border border-transparent flex items-center gap-2">
+                    class="studio-tab-btn group relative px-3 py-2 rounded-xl text-ui-xs whitespace-nowrap transition-all duration-200 cursor-pointer text-slate-600 hover:text-slate-900 hover:bg-white/60 font-bold border border-transparent flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
                     <svg class="w-4 h-4 text-slate-400 group-hover:text-teal-700 shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                     </svg>
                     <span>Milestone Path</span>
-                    <span id="tab-telemetry-milestones" class="text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-md bg-slate-200/70 text-slate-700 group-hover:bg-teal-50 group-hover:text-teal-800 transition-colors">
+                    <span id="tab-telemetry-milestones" class="text-micro font-financial-mono font-bold px-1.5 py-0.5 rounded-md bg-slate-200/70 text-slate-700 group-hover:bg-teal-50 group-hover:text-teal-800 transition-colors">
                         Roadmap
                     </span>
                 </button>
 
                 <!-- Tab 4: Stress-Test Simulator -->
                 <button type="button" role="tab" id="tab-stress-test" aria-controls="panel-stress-test" aria-selected="false" tabindex="-1"
-                    class="studio-tab-btn group relative px-3 py-2 rounded-xl text-xs whitespace-nowrap transition-all duration-200 cursor-pointer text-slate-600 hover:text-slate-900 hover:bg-white/60 font-bold border border-transparent flex items-center gap-2">
+                    class="studio-tab-btn group relative px-3 py-2 rounded-xl text-ui-xs whitespace-nowrap transition-all duration-200 cursor-pointer text-slate-600 hover:text-slate-900 hover:bg-white/60 font-bold border border-transparent flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
-                    <svg class="w-4 h-4 text-slate-400 group-hover:text-rose-700 shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 text-slate-400 group-hover:text-payout shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>
                     </svg>
                     <span>Crash Stress-Test</span>
-                    <span id="tab-telemetry-stress" class="text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-md bg-slate-200/70 text-slate-700 group-hover:bg-rose-50 group-hover:text-rose-800 transition-colors">
+                    <span id="tab-telemetry-stress" class="text-micro font-financial-mono font-bold px-1.5 py-0.5 rounded-md bg-slate-200/70 text-slate-700 group-hover:bg-payout-surface group-hover:text-payout-emphasis transition-colors">
                         Shock Test
                     </span>
                 </button>
 
                 <!-- Tab 5: Asset Allocation -->
                 <button type="button" role="tab" id="tab-asset-rebalance" aria-controls="panel-asset-rebalance" aria-selected="false" tabindex="-1"
-                    class="studio-tab-btn group relative px-3 py-2 rounded-xl text-xs whitespace-nowrap transition-all duration-200 cursor-pointer text-slate-600 hover:text-slate-900 hover:bg-white/60 font-bold border border-transparent flex items-center gap-2">
+                    class="studio-tab-btn group relative px-3 py-2 rounded-xl text-ui-xs whitespace-nowrap transition-all duration-200 cursor-pointer text-slate-600 hover:text-slate-900 hover:bg-white/60 font-bold border border-transparent flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400"></span>
                     <svg class="w-4 h-4 text-slate-400 group-hover:text-indigo-700 shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                     </svg>
                     <span>Asset Rebalance</span>
-                    <span id="tab-telemetry-rebalance" class="text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-md bg-slate-200/70 text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-800 transition-colors">
+                    <span id="tab-telemetry-rebalance" class="text-micro font-financial-mono font-bold px-1.5 py-0.5 rounded-md bg-slate-200/70 text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-800 transition-colors">
                         Tax-Free
                     </span>
                 </button>

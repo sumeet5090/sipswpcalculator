@@ -189,4 +189,82 @@ final class DesignTokenAuditTest extends TestCase
             'Mobile mini-hud gain must be whitespace-nowrap'
         );
     }
+
+    public function testFinancialDomainColorTokensDeclared(): void
+    {
+        $financialColorTokens = [
+            '--color-growth:',
+            '--color-growth-emphasis:',
+            '--color-growth-surface:',
+            '--color-growth-border:',
+            '--color-payout:',
+            '--color-payout-emphasis:',
+            '--color-payout-surface:',
+            '--color-payout-border:',
+            '--color-principal:',
+            '--color-principal-emphasis:',
+            '--color-tax:',
+            '--color-tax-emphasis:',
+            '--color-inflation:',
+            '--color-warning:',
+        ];
+
+        foreach ($financialColorTokens as $colorToken) {
+            $this->assertStringContainsString(
+                $colorToken,
+                $this->inputCss,
+                "input.css must declare financial domain token: {$colorToken}"
+            );
+        }
+    }
+
+    public function testZeroArbitraryBracketFontClassesInTwigTemplates(): void
+    {
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($this->viewsDir)
+        );
+
+        $violations = [];
+        /** @var \SplFileInfo $file */
+        foreach ($files as $file) {
+            if ($file->isFile() && $file->getExtension() === 'twig') {
+                $content = (string) file_get_contents($file->getPathname());
+                if (preg_match_all('/\btext-\[[0-9]+(?:\.[0-9]+)?(?:px|rem)?\]\b/', $content, $matches)) {
+                    foreach ($matches[0] as $match) {
+                        $violations[] = $file->getFilename() . ' (' . $match . ')';
+                    }
+                }
+            }
+        }
+
+        $this->assertEmpty(
+            $violations,
+            'Found arbitrary bracket text classes in Twig templates (use modular scale tokens e.g. text-micro, text-caption, text-ui-xs): ' . implode(', ', $violations)
+        );
+    }
+
+    public function testZeroLegacyShadowClassesInTwigTemplates(): void
+    {
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($this->viewsDir)
+        );
+
+        $violations = [];
+        /** @var \SplFileInfo $file */
+        foreach ($files as $file) {
+            if ($file->isFile() && $file->getExtension() === 'twig') {
+                $content = (string) file_get_contents($file->getPathname());
+                if (preg_match_all('/\bshadow-(?:2xs|xs)\b/', $content, $matches)) {
+                    foreach ($matches[0] as $match) {
+                        $violations[] = $file->getFilename() . ' (' . $match . ')';
+                    }
+                }
+            }
+        }
+
+        $this->assertEmpty(
+            $violations,
+            'Found legacy shadow-xs or shadow-2xs in Twig templates (use shadow-flat, shadow-subtle, shadow-card, shadow-modal): ' . implode(', ', $violations)
+        );
+    }
 }

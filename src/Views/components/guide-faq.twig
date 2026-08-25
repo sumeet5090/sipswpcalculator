@@ -8,7 +8,7 @@
         {% for faq in homeFaqs|default([]) %}
             {% set isLastOdd = (loop.last and loop.length is odd) %}
             {% set colSpan = isLastOdd ? 'md:col-span-2' : '' %}
-            <div class="{{ colSpan }} p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs">
+            <div class="{{ colSpan }} p-4 rounded-2xl bg-white border border-slate-200/90 shadow-flat">
                 <h3 id="faq-{{ loop.index }}" class="text-sm sm:text-base font-bold text-slate-900 mb-1.5">{{ loop.index }}. {{ faq.q }}</h3>
                 <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ faq.a }}</p>
             </div>
@@ -17,16 +17,16 @@
 </div>
 
 <p class="text-center text-xs sm:text-sm text-slate-600 mt-8">Use our <a href="/#calculator-section"
-        class="text-emerald-700 hover:text-emerald-800 hover:underline font-semibold">advanced
+        class="text-growth hover:text-growth-emphasis hover:underline font-semibold">advanced
         SIP &amp; SWP calculator</a> to model your investments and plan your
     withdrawals.
-    <a href="/faq" class="text-emerald-700 hover:text-emerald-800 hover:underline font-semibold block sm:inline mt-1 sm:mt-0">Have more questions? Check our FAQ →</a>
+    <a href="/faq" class="text-growth hover:text-growth-emphasis hover:underline font-semibold block sm:inline mt-1 sm:mt-0">Have more questions? Check our FAQ →</a>
 </p>
 
-<div class="mt-8 p-5 bg-slate-50 border border-slate-200/90 rounded-2xl text-center max-w-2xl mx-auto shadow-xs">
+<div class="mt-8 p-5 bg-slate-50 border border-slate-200/90 rounded-2xl text-center max-w-2xl mx-auto shadow-flat">
     <p class="font-bold text-slate-900 text-sm sm:text-base mb-1">Cite This Calculator</p>
     <p class="text-slate-600 text-xs mb-3">Writing an article, blog post, or research paper? You can cite this tool using the following format.</p>
-    <div class="bg-white p-3 border border-slate-200 rounded-xl text-left text-xs text-slate-700 font-mono overflow-x-auto select-all">
+    <div class="bg-white p-3 border border-slate-200 rounded-xl text-left text-xs text-slate-700 font-financial-mono overflow-x-auto select-all">
         Boga, S. (2026). Advanced SIP &amp; SWP Calculator. sipswpcalculator.com. Retrieved from
         https://sipswpcalculator.com/
     </div>
