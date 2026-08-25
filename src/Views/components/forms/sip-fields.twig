@@ -145,6 +145,7 @@
     {{ inputs.renderInputRangePair({
         'id': 'stepup',
         'label': calc_config.stepup.label,
+        'tooltip': 'Increases your monthly SIP by X% every year to match your salary increments, boosting long-term wealth exponentially.',
         'min': calc_config.stepup.min,
         'max': calc_config.stepup.max,
         'slider_max': calc_config.stepup.slider_max,
@@ -175,6 +176,7 @@
     {{ inputs.renderInputRangePair({
         'id': 'inflation',
         'label': calc_config.inflation.label|default('Expected Inflation'),
+        'tooltip': 'Discounts future nominal maturity wealth into today\'s purchasing power using your chosen inflation rate (typically ~6% in India).',
         'min': calc_config.inflation.min|default(0),
         'max': calc_config.inflation.max|default(15),
         'slider_max': calc_config.inflation.slider_max|default(12),

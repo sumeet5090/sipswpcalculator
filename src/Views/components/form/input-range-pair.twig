@@ -24,6 +24,7 @@
     {% set activeChipClass = theme == 'rose' 
         ? 'is-active-rose bg-rose-600 text-white border-rose-600 shadow-2xs' 
         : 'is-active bg-emerald-600 text-white border-emerald-600 shadow-2xs' %}
+    {% set tooltip = config.tooltip|default(null) %}
     
     <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 transition-all duration-200 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.03)] hover:shadow-md" data-field-id="{{ id }}">
         {% if labelHtml %}
@@ -35,6 +36,20 @@
                     <label for="{{ id }}" id="{{ id }}_label" class="text-xs font-black tracking-tight text-slate-800 select-none cursor-pointer hover:text-emerald-700 transition-colors" title="Double-click to reset to default">
                         {{ label }}
                     </label>
+                    {% if tooltip %}
+                        <div class="relative inline-flex items-center group/tip shrink-0">
+                            <button type="button" 
+                                class="w-3.5 h-3.5 rounded-full bg-slate-100 hover:bg-emerald-50 text-slate-400 hover:text-emerald-700 text-[9px] font-black inline-flex items-center justify-center border border-slate-200/80 transition-colors cursor-help focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                                aria-label="Help: {{ label }}">
+                                ℹ
+                            </button>
+                            <div role="tooltip" 
+                                class="absolute left-0 sm:left-1/2 sm:-translate-x-1/2 bottom-full mb-2 hidden group-hover/tip:block group-focus-within/tip:block w-64 max-w-[80vw] p-2.5 bg-white/98 backdrop-blur-md text-slate-700 text-[11px] leading-relaxed rounded-xl shadow-xl border border-slate-200/90 z-50 pointer-events-none transition-all">
+                                <strong class="text-slate-900 block font-bold mb-0.5">{{ label }}</strong>
+                                {{ tooltip }}
+                            </div>
+                        </div>
+                    {% endif %}
                     <span id="{{ id }}_word_badge" class="hidden text-[10px] font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-md font-mono transition-all truncate"></span>
                 </div>
                 <span class="text-[10px] font-mono font-bold text-slate-400 tracking-tight shrink-0 select-none">
