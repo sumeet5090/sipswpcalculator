@@ -213,6 +213,19 @@
   letter-spacing: -0.025em;
 }
 
+/* ── Mobile Viewport Horizontal Scroll Prevention ── */
+html {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+  position: relative;
+}
+
 /* ── Custom Range Slider Tactile Thumbs & Touch Ergonomics ── */
 input[type="range"] {
   touch-action: pan-y;
