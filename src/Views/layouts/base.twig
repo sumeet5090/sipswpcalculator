@@ -133,10 +133,16 @@
         {% block content %}{% endblock %}
     </main>
 
+    <!-- Bottom spacer for mobile action dock occlusion prevention (F5.1) -->
+    <div class="sm:hidden h-16"></div>
+
     {% include 'layouts/footer.twig' %}
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Enable :active pseudo-class on iOS Safari (F6.2)
+            document.addEventListener('touchstart', function() {}, { passive: true });
+
             // Mobile Menu Toggle
             var btn = document.getElementById('mobile-menu-btn');
             var menu = document.getElementById('mobile-menu');
@@ -152,16 +158,33 @@
                 });
             }
 
-            // Mobile Soft-Keyboard Occlusion Defense for Action Dock
+            // Mobile Soft-Keyboard Occlusion Defense for Action Dock & Keyboard Preview (F3.1, F3.4)
             if (window.visualViewport) {
                 var dock = document.getElementById('mobile-action-dock');
+                var preview = document.getElementById('keyboard-docked-preview');
                 var keyboardTimer = null;
                 window.visualViewport.addEventListener('resize', function () {
                     if (keyboardTimer) clearTimeout(keyboardTimer);
                     keyboardTimer = setTimeout(function () {
-                        if (!dock) return;
-                        var isKeyboardOpen = window.visualViewport.height < window.innerHeight * 0.75;
-                        dock.style.display = isKeyboardOpen ? 'none' : 'flex';
+                        var keyboardHeight = window.innerHeight - window.visualViewport.height;
+                        var isKeyboardOpen = keyboardHeight > 150;
+                        if (dock) {
+                            dock.style.display = isKeyboardOpen ? 'none' : 'flex';
+                        }
+                        if (preview) {
+                            if (isKeyboardOpen) {
+                                preview.classList.remove('hidden');
+                                preview.style.bottom = keyboardHeight + 8 + 'px';
+                                requestAnimationFrame(function() {
+                                    preview.classList.remove('opacity-0', 'pointer-events-none');
+                                });
+                            } else {
+                                preview.classList.add('opacity-0', 'pointer-events-none');
+                                setTimeout(function() {
+                                    preview.classList.add('hidden');
+                                }, 200);
+                            }
+                        }
                     }, 80);
                 });
             }
@@ -206,13 +229,39 @@
             <span class="text-xs">📸</span>
             <span>Snapshot</span>
         </button>
-        <button type="button" id="dock-top-btn" onclick="document.getElementById('calculator-section')?.scrollIntoView({behavior: 'smooth'})"
-            class="flex flex-col items-center justify-center py-1.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-caption font-bold active:scale-95 transition-all cursor-pointer"
-            aria-label="Scroll to calculator inputs">
-            <span class="text-xs">↑</span>
-            <span>Top</span>
+        <button type="button" id="dock-tax-btn" onclick="document.getElementById('open-tax-waterfall-btn')?.click()"
+            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-violet-50 hover:bg-violet-100 border border-violet-200 text-violet-800 text-caption font-bold active:scale-95 transition-all cursor-pointer">
+            <span class="text-xs">⚖️</span>
+            <span>Tax</span>
         </button>
     </div>
+
+    <!-- Floating Scroll-to-Top FAB (replaces dock slot, appears after scroll) -->
+    <button type="button" id="mobile-scroll-top-fab"
+        class="sm:hidden fixed bottom-20 right-4 z-sticky w-10 h-10 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-card text-slate-600 text-sm font-bold flex items-center justify-center active:scale-90 transition-all cursor-pointer opacity-0 pointer-events-none"
+        onclick="document.getElementById('calculator-section')?.scrollIntoView({behavior: 'smooth'})"
+        aria-label="Scroll to calculator inputs">
+        ↑
+    </button>
+    <script>
+        // Show FAB after 300px scroll, hide near top
+        (function() {
+            var fab = document.getElementById('mobile-scroll-top-fab');
+            if (!fab) return;
+            var lastScroll = 0;
+            window.addEventListener('scroll', function() {
+                var st = window.scrollY;
+                if (st > 300) {
+                    fab.style.opacity = '1';
+                    fab.style.pointerEvents = 'auto';
+                } else {
+                    fab.style.opacity = '0';
+                    fab.style.pointerEvents = 'none';
+                }
+                lastScroll = st;
+            }, { passive: true });
+        })();
+    </script>
 
     {% include 'components/command-palette.twig' %}
     {% include 'components/tax-waterfall-modal.twig' %}

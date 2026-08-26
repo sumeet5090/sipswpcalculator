@@ -48,7 +48,7 @@
         </div>
 
         <!-- Card 4: Final Corpus / Net Wealth -->
-        <div class="bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl border-2 border-emerald-600/90 shadow-glow-growth px-2 sm:px-2.5 py-2.5 sm:py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 relative group flex flex-col justify-between min-w-0">
+        <div id="card-corpus" class="col-span-2 sm:col-span-1 bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl border-2 border-emerald-600/90 shadow-glow-growth px-2 sm:px-2.5 py-2.5 sm:py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 relative group flex flex-col justify-between min-w-0">
             <div id="title-corpus" class="text-caption font-bold text-growth-emphasis uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span>💎</span>
                 <span>Final Wealth Corpus</span>
@@ -141,8 +141,8 @@
                         </button>
                     </div>
 
-                    <!-- Utility Action Buttons -->
-                    <div class="inline-flex items-center gap-1">
+                    <!-- Utility Action Buttons (hidden on mobile, available in dock) -->
+                    <div class="hidden sm:inline-flex items-center gap-1">
                         <button type="button" id="snapshot-scenario-btn" 
                             class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-flat"
                             title="Snapshot scenario for comparison">
@@ -240,12 +240,12 @@
         <!-- TIER 4: REFINED HISTORICAL BENCHMARK BARREL STRIP                         -->
         <!-- ========================================================================= -->
         <footer class="flex flex-wrap items-center justify-between gap-2 mt-3 pt-2.5 border-t border-slate-100">
-            <span class="text-micro font-bold text-slate-400 uppercase tracking-widest">Compare Baseline:</span>
-            <div class="inline-flex flex-wrap items-center gap-1" role="group" aria-label="Historical Benchmarks">
-                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer is-active bg-emerald-600 text-white border-emerald-600 shadow-flat" data-benchmark="none">None</button>
-                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer" data-benchmark="nifty">📈 Nifty 50 (12%)</button>
-                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer" data-benchmark="gold">🥇 Gold (9%)</button>
-                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer" data-benchmark="fd">🏦 Fixed Deposit (6.5%)</button>
+            <span class="text-micro font-bold text-slate-400 uppercase tracking-widest shrink-0">Compare Baseline:</span>
+            <div class="inline-flex items-center gap-1.5 sm:gap-1 overflow-x-auto max-w-full scrollbar-none sm:flex-wrap" role="group" aria-label="Historical Benchmarks" style="scrollbar-width: none; -webkit-overflow-scrolling: touch;">
+                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1.5 sm:py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 min-h-[40px] sm:min-h-0 is-active bg-emerald-600 text-white border-emerald-600 shadow-flat" data-benchmark="none">None</button>
+                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1.5 sm:py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 min-h-[40px] sm:min-h-0" data-benchmark="nifty">📈 Nifty 50 (12%)</button>
+                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1.5 sm:py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 min-h-[40px] sm:min-h-0" data-benchmark="gold">🥇 Gold (9%)</button>
+                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1.5 sm:py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 min-h-[40px] sm:min-h-0" data-benchmark="fd">🏦 FD (6.5%)</button>
             </div>
         </footer>
     </div>

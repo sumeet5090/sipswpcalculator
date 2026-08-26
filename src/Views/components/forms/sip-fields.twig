@@ -162,12 +162,12 @@
     }) }}
 
     <!-- Corporate Salary Appraisal Step-Up Optimizer Callout -->
-    <div id="salary-stepup-nudge-box" class="p-2 rounded-xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50/80 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-flat">
+    <div id="salary-stepup-nudge-box" class="p-2.5 sm:p-2 rounded-xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50/80 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-flat cursor-pointer active:scale-[0.98] transition-all" onclick="document.getElementById('apply-10pct-stepup-btn')?.click()">
         <div class="text-caption text-emerald-950 font-medium leading-tight min-w-0">
             <span>💡 <strong>Career Appraisal:</strong> Step up 10% annually</span>
         </div>
         <button type="button" id="apply-10pct-stepup-btn"
-            class="px-2 py-0.5 text-micro font-extrabold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-flat transition-all active:scale-95 cursor-pointer whitespace-nowrap shrink-0">
+            class="px-3 sm:px-2 py-1.5 sm:py-0.5 text-ui-xs sm:text-micro font-extrabold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-flat transition-all active:scale-95 cursor-pointer whitespace-nowrap shrink-0 min-h-[40px] sm:min-h-0">
             +10% Boost
         </button>
     </div>
@@ -184,6 +184,7 @@
         'value': inflation|default(0),
         'suffix': '%',
         'theme': 'emerald',
+        'enterkeyhint': 'done',
         'presets': [
             {'label': '0%', 'value': 0},
             {'label': '6%', 'value': 6},

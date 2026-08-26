@@ -10,6 +10,8 @@
     {% set value = config.value|default(0) %}
     {% set prefix = config.prefix|default(null) %}
     {% set suffix = config.suffix|default(null) %}
+    {% set enterKeyHint = config.enterkeyhint|default('next') %}
+    {% set inputMode = prefix == '₹' ? 'numeric' : 'decimal' %}
     
     {% set theme = config.theme|default('emerald') %}
     
@@ -39,7 +41,7 @@
                     {% if tooltip %}
                         <div class="relative inline-flex items-center group/tip shrink-0">
                             <button type="button" 
-                                class="w-3.5 h-3.5 rounded-full bg-slate-100 hover:bg-growth-surface text-slate-400 hover:text-growth text-micro font-bold inline-flex items-center justify-center border border-slate-200/80 transition-colors cursor-help focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                                class="relative w-5 h-5 sm:w-3.5 sm:h-3.5 rounded-full bg-slate-100 hover:bg-growth-surface text-slate-400 hover:text-growth text-micro font-bold inline-flex items-center justify-center border border-slate-200/80 transition-colors cursor-help focus:outline-none focus:ring-1 focus:ring-emerald-500 before:content-[''] before:absolute before:-inset-2.5 before:z-[1]"
                                 aria-label="Help: {{ label }}">
                                 ℹ
                             </button>
@@ -78,7 +80,7 @@
                     {% if prefix %}
                         <span class="currency-symbol text-ui-xs sm:text-ui-sm font-extrabold text-slate-400 mr-1 select-none pointer-events-none">{{ prefix }}</span>
                     {% endif %}
-                    <input type="text" inputmode="decimal" id="{{ id }}" name="{{ name }}"
+                    <input type="text" inputmode="{{ inputMode }}" enterkeyhint="{{ enterKeyHint }}" id="{{ id }}" name="{{ name }}"
                         class="w-full bg-transparent text-center text-ui-sm sm:text-body font-extrabold font-financial-mono tabular-nums text-slate-900 focus:outline-none tracking-tight"
                         required value="{{ value }}" data-min="{{ min }}" data-max="{{ max }}" data-step="{{ step }}"
                         autocomplete="off" spellcheck="false"
@@ -121,12 +123,12 @@
         </div>
 
         {% if presets %}
-            <div class="flex flex-wrap items-center gap-1 mt-1.5" role="group" aria-label="{{ label }} quick presets">
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-1 mt-1.5" role="group" aria-label="{{ label }} quick presets">
                 {% for preset in presets %}
                     {% set p_label = preset.label|default(preset) %}
                     {% set p_val = preset.value|default(preset) %}
                     <button type="button" 
-                        class="preset-chip text-micro font-bold px-2 py-0.5 rounded-md border border-slate-200/90 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-flat {{ value == p_val ? activeChipClass : '' }}"
+                        class="preset-chip text-ui-xs sm:text-micro font-bold px-2.5 sm:px-2 py-2 sm:py-0.5 min-h-[44px] sm:min-h-0 rounded-lg sm:rounded-md border border-slate-200/90 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-flat {{ value == p_val ? activeChipClass : '' }}"
                         data-preset-for="{{ id }}"
                         data-preset-val="{{ p_val }}"
                         aria-pressed="{{ value == p_val ? 'true' : 'false' }}">

@@ -219,8 +219,8 @@ input[type="range"] {
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   border-radius: 9999px;
   background: #ffffff;
   border: 3px solid #059669;
@@ -236,13 +236,39 @@ input[type="range"]::-webkit-slider-thumb:active {
 }
 
 input[type="range"]::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   border-radius: 9999px;
   background: #ffffff;
   border: 3px solid #059669;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   cursor: grab;
+}
+
+/* ── Mobile Slider Thumb Expansion (30px for fat-finger tolerance) ── */
+@media (max-width: 639px) {
+  input[type="range"]::-webkit-slider-thumb {
+    width: 30px;
+    height: 30px;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+  }
+  input[type="range"] {
+    height: 6px;
+  }
+}
+
+/* ── Mobile Chart Canvas Scroll Trap Prevention ── */
+@media (max-width: 639px) {
+  #chart-canvas-container {
+    touch-action: pan-y;
+    pointer-events: none;
+  }
+  #chart-canvas-container canvas {
+    pointer-events: none;
+  }
 }
 
 /* ── Milestone Compounding Luminous Sheen Animation ── */
