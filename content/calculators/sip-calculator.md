@@ -1,7 +1,7 @@
 ---
 title: "SIP Calculator 2026 - Free Step-Up Mutual Fund Return Calculator India"
 subtitle: "Free SIP calculator with step-up (top-up) compounding for Indian mutual funds. Calculate SIP returns, view interactive charts, and export PDF reports — no signup needed."
-meta_desc: "Free SIP calculator with step-up compounding. Calculate mutual fund returns for 1-50 years, view interactive charts & export PDF reports. Updated with 2026 Indian tax rules."
+meta_desc: "Free SIP calculator with step-up compounding. Calculate mutual fund returns, view interactive charts & export PDF reports. Updated with 2026 Indian tax rules."
 keywords: "sip calculator, free sip calculator, sip return calculator, step up sip calculator, mutual fund sip calculator india, sip calculation formula, sip tax rules 2026"
 seo_category: "growth"
 type: "calculator"
