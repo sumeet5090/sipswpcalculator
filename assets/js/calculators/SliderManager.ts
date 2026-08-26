@@ -43,6 +43,7 @@ export class SliderManager {
     private formatter: CurrencyFormatter;
     private pairs: SliderPair[] = [];
     private _inputDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+    private _tooltipDismissTimer: ReturnType<typeof setTimeout> | null = null;
     private _lastHapticTime: number = 0;
     private isInternalSyncing: boolean = false;
 
@@ -186,13 +187,18 @@ export class SliderManager {
                 this._clearError(inputId);
                 showTooltip(numericVal);
 
-                // Tactile Haptic Vibration at major landmark intervals
+                // Tactile Haptic Vibration at tiered landmark intervals (F6.3)
                 if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
                     const now = Date.now();
                     if (now - this._lastHapticTime > 300) {
-                        const isLandmark = (numericVal >= 100000 && numericVal % 2500000 === 0) || 
-                                           (inputId === 'years' && numericVal % 5 === 0) ||
-                                           (inputId === 'rate' && Number.isInteger(numericVal) && numericVal % 2 === 0);
+                        const isLandmark = 
+                            (inputId === 'sip' && numericVal % 5000 === 0 && numericVal > 0) ||
+                            (inputId === 'lumpsum' && numericVal % 100000 === 0 && numericVal > 0) ||
+                            (inputId === 'target_corpus' && numericVal % 500000 === 0 && numericVal > 0) ||
+                            (inputId === 'swp_withdrawal' && numericVal % 10000 === 0 && numericVal > 0) ||
+                            (inputId === 'years' && numericVal % 5 === 0) ||
+                            (inputId === 'swp_years' && numericVal % 5 === 0) ||
+                            ((inputId === 'rate' || inputId === 'stepup' || inputId === 'inflation' || inputId === 'swp_rate') && Number.isInteger(numericVal));
                         if (isLandmark) {
                             try {
                                 navigator.vibrate(8);
@@ -201,6 +207,14 @@ export class SliderManager {
                         }
                     }
                 }
+
+                // Auto-dismiss tooltip after 800ms of inactivity (F6.1)
+                if (this._tooltipDismissTimer !== null) {
+                    clearTimeout(this._tooltipDismissTimer);
+                }
+                this._tooltipDismissTimer = setTimeout(() => {
+                    tooltip.classList.remove('is-active');
+                }, 800);
             } finally {
                 this.isInternalSyncing = false;
             }
