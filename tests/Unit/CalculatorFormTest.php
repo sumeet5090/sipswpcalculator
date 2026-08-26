@@ -69,6 +69,9 @@ final class CalculatorFormTest extends TestCase
 
     public function testSwpFieldsAndAccumulationBridge(): void
     {
+        // Lifecycle Bridge Gate
+        $this->assertStringContainsString("{% if calculator_type != 'swp' %}", $this->swpContent);
+
         // Lifecycle Bridge
         $this->assertStringContainsString('id="swp-accumulation-bridge"', $this->swpContent);
         $this->assertStringContainsString('id="bridge-matured-corpus-val"', $this->swpContent);
@@ -79,6 +82,47 @@ final class CalculatorFormTest extends TestCase
         $this->assertStringContainsString("'id': 'swp_years'", $this->swpContent);
         $this->assertStringContainsString("'id': 'swp_rate'", $this->swpContent);
         $this->assertStringContainsString("'id': 'swp_stepup'", $this->swpContent);
+    }
+
+    public function testSwpAccumulationBridgeConditionalRendering(): void
+    {
+        $renderer = new \Core\ViewRenderer(
+            new \Core\ViteHelper('testing'),
+            'testing',
+            'https://sipswpcalculator.com',
+            __DIR__ . '/../../src/Views'
+        );
+
+        $calcConfig = [
+            'swp_withdrawal' => ['label' => 'Monthly Withdrawal', 'min' => 1000, 'max' => 1000000, 'slider_max' => 200000, 'step' => 1000],
+            'swp_years' => ['label' => 'Withdrawal Duration', 'min' => 1, 'max' => 40, 'slider_max' => 30, 'step' => 1],
+            'swp_rate' => ['label' => 'Expected Return Rate', 'min' => 1, 'max' => 30, 'slider_max' => 18, 'step' => 0.5],
+            'swp_stepup' => ['label' => 'Annual Step-Up', 'min' => 0, 'max' => 25, 'slider_max' => 15, 'step' => 1],
+        ];
+
+        // Standalone SWP: Bridge MUST NOT be rendered
+        $swpHtml = $renderer->render('components/forms/swp-fields', [
+            'calculator_type' => 'swp',
+            'calc_config' => $calcConfig,
+            'swp_withdrawal' => 25000,
+            'swp_years_input' => 15,
+            'swp_rate' => 8,
+            'swp_stepup' => 0,
+        ]);
+        $this->assertStringNotContainsString('id="swp-accumulation-bridge"', $swpHtml);
+        $this->assertStringNotContainsString('id="apply-sip-to-swp-btn"', $swpHtml);
+
+        // Combined Mode: Bridge MUST be rendered
+        $comboHtml = $renderer->render('components/forms/swp-fields', [
+            'calculator_type' => 'all',
+            'calc_config' => $calcConfig,
+            'swp_withdrawal' => 25000,
+            'swp_years_input' => 15,
+            'swp_rate' => 8,
+            'swp_stepup' => 0,
+        ]);
+        $this->assertStringContainsString('id="swp-accumulation-bridge"', $comboHtml);
+        $this->assertStringContainsString('id="apply-sip-to-swp-btn"', $comboHtml);
     }
 
     public function testInputRangePairMacroContracts(): void

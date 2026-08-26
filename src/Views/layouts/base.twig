@@ -37,6 +37,9 @@
     <meta name="twitter:image" content="{{ page_config.og_image|default(site_url ~ '/assets/og-image-main.jpg') }}">
 
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="shortcut icon" href="/favicon.ico">
     <link rel="manifest" href="/manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,6 +49,30 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     </noscript>
 
+    <!-- Speculation Rules: Instant Hover Prefetch for Calculators & Instant Home Navigation -->
+    <script type="speculationrules">
+    {
+      "prefetch": [
+        {
+          "source": "list",
+          "urls": ["/"],
+          "eagerness": "eager"
+        },
+        {
+          "source": "document",
+          "where": {
+            "and": [
+              { "href_matches": "/*" },
+              { "not": { "href_matches": "/admin/*" } },
+              { "not": { "href_matches": "/api/*" } }
+            ]
+          },
+          "eagerness": "moderate"
+        }
+      ]
+    }
+    </script>
+
     {# ── Vite Asset Integration: HMR client (dev) & compiled CSS links (prod) ── #}
     {{ vite_client() }}
     {{ vite_css('resources/js/app.ts') }}
@@ -54,7 +81,7 @@
 
     {% if env == 'production' %}
         <!-- Sentry Error Monitoring -->
-        <script src="https://js-de.sentry-cdn.com/475d8af2dda1d5fc4e23fd8923e5f908.min.js" crossorigin="anonymous"></script>
+        <script src="https://js-de.sentry-cdn.com/475d8af2dda1d5fc4e23fd8923e5f908.min.js" crossorigin="anonymous" defer></script>
 
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-C3P1ZCY6GR"></script>

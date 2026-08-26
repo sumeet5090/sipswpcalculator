@@ -1,5 +1,6 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
+{% if calculator_type != 'swp' %}
 <!-- Lifecycle Accumulation Bridge (Transfer Matured SIP Corpus to SWP Starting Corpus) -->
 <div id="swp-accumulation-bridge" class="p-2.5 sm:p-3 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-subtle">
     <div class="min-w-0">
@@ -10,6 +11,7 @@
         Sync Corpus
     </button>
 </div>
+{% endif %}
 
 <!-- Monthly Withdrawal -->
 {{ inputs.renderInputRangePair({
