@@ -1,7 +1,7 @@
 ---
 title: "Retirement Calculator India 2026 - SIP to SWP Pension & Corpus Planner"
 subtitle: "Free retirement calculator for India. Model your SIP accumulation phase and SWP pension drawdown in one tool. See exactly how long your corpus lasts using the 4% safe withdrawal rule."
-meta_desc: "Free retirement calculator India. Plan your SIP accumulation and SWP drawdown phases together. See how long your corpus lasts, model the 4% rule, and plan inflation-adjusted pension income."
+meta_desc: "Free retirement calculator India. Plan SIP accumulation & SWP drawdown together. See how long your corpus lasts, model the 4% rule & plan pension income."
 keywords: "retirement calculator india, retirement planning calculator, swp retirement calculator, retirement corpus calculator, pension planning calculator, mutual fund retirement calculator, retirement fund calculator"
 seo_category: "retirement"
 type: "calculator"
