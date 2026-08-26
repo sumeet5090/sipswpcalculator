@@ -49,6 +49,30 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     </noscript>
 
+    <!-- Speculation Rules: Instant Hover Prefetch for Calculators & Instant Home Navigation -->
+    <script type="speculationrules">
+    {
+      "prefetch": [
+        {
+          "source": "list",
+          "urls": ["/"],
+          "eagerness": "eager"
+        },
+        {
+          "source": "document",
+          "where": {
+            "and": [
+              { "href_matches": "/*" },
+              { "not": { "href_matches": "/admin/*" } },
+              { "not": { "href_matches": "/api/*" } }
+            ]
+          },
+          "eagerness": "moderate"
+        }
+      ]
+    }
+    </script>
+
     {# ── Vite Asset Integration: HMR client (dev) & compiled CSS links (prod) ── #}
     {{ vite_client() }}
     {{ vite_css('resources/js/app.ts') }}
@@ -57,7 +81,7 @@
 
     {% if env == 'production' %}
         <!-- Sentry Error Monitoring -->
-        <script src="https://js-de.sentry-cdn.com/475d8af2dda1d5fc4e23fd8923e5f908.min.js" crossorigin="anonymous"></script>
+        <script src="https://js-de.sentry-cdn.com/475d8af2dda1d5fc4e23fd8923e5f908.min.js" crossorigin="anonymous" defer></script>
 
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-C3P1ZCY6GR"></script>
