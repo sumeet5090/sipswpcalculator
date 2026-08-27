@@ -94,21 +94,23 @@
          data-js="calculator-app"
          data-mode="{{ calculator_type }}"
          class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Left Column: Form -->
-        <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:self-start" style="top: 100px;">
+        <!-- Left Column: Form (Smooth natural scrolling for long forms) -->
+        <div class="lg:col-span-1 flex flex-col gap-4">
             <div class="glass-card p-4 sm:p-5">
                 <form id="calculator-form" class="space-y-6" onsubmit="event.preventDefault();">
                     {% if calculator_type == 'all' or calculator_type == 'combo' %}
                         <!-- Combo Form (SIP + SWP Tabs) -->
-                        <div class="flex rounded-xl overflow-hidden border border-slate-200 mb-4" role="tablist">
-                            <button type="button" id="tab-sip" role="tab" aria-selected="true"
-                                class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-emerald-500 text-white">
-                                SIP Details
-                            </button>
-                            <button type="button" id="tab-swp" role="tab" aria-selected="false"
-                                class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-500 hover:bg-rose-50 hover:text-rose-500">
-                                SWP Details
-                            </button>
+                        <div class="sticky top-[84px] z-20 bg-white/95 backdrop-blur-md py-1 -my-1 mb-4 rounded-xl">
+                            <div class="flex rounded-xl overflow-hidden border border-slate-200 shadow-flat" role="tablist">
+                                <button type="button" id="tab-sip" role="tab" aria-selected="true"
+                                    class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-emerald-500 text-white">
+                                    SIP Details
+                                </button>
+                                <button type="button" id="tab-swp" role="tab" aria-selected="false"
+                                    class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-500 hover:bg-rose-50 hover:text-rose-500">
+                                    SWP Details
+                                </button>
+                            </div>
                         </div>
                         
                         <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip">
@@ -120,12 +122,14 @@
                         
                         <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="hidden">
                             <div class="space-y-4">
-                                <div class="flex items-center justify-between mb-4">
-                                    <span class="text-xs font-bold text-rose-400 tracking-widest uppercase">Enable SWP</span>
-                                    <label class="toggle-switch relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" id="enable_swp" name="enable_swp" class="sr-only peer" aria-label="Enable Systematic Withdrawal Plan (SWP)" aria-controls="swp-fields" aria-expanded="{{ enable_swp ? 'true' : 'false' }}" {% if enable_swp %}checked{% endif %}>
-                                        <div class="w-9 h-5 bg-slate-200 peer-focus-visible:ring-2 peer-focus-visible:ring-rose-400 peer-focus-visible:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500"></div>
-                                    </label>
+                                <div class="sticky top-[134px] z-10 bg-white/95 backdrop-blur-md py-1 -my-1 mb-4 rounded-xl">
+                                    <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-flat">
+                                        <span class="text-ui-xs font-extrabold text-rose-600 uppercase tracking-tight">Enable SWP Mode</span>
+                                        <label class="toggle-switch relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="enable_swp" name="enable_swp" class="sr-only peer" aria-label="Enable Systematic Withdrawal Plan (SWP)" aria-controls="swp-fields" aria-expanded="{{ enable_swp ? 'true' : 'false' }}" {% if enable_swp %}checked{% endif %}>
+                                            <div class="w-9 h-5 bg-slate-200 peer-focus-visible:ring-2 peer-focus-visible:ring-rose-400 peer-focus-visible:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500"></div>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div id="swp-fields" {% if not enable_swp %}style="display: none; opacity: 0.5; pointer-events: none;" aria-hidden="true"{% endif %}>
                                     {% include 'components/forms/swp-fields.twig' %}
@@ -175,7 +179,8 @@
             </div>
         </div>
 
-        <div class="lg:col-span-2 space-y-4 lg:sticky lg:top-[90px] lg:self-start">
+        <!-- Right Column: Floating Summary & Chart Visualization -->
+        <div class="lg:col-span-2 space-y-4 lg:sticky lg:top-[84px] lg:self-start z-20">
             {% include 'components/chart-visualization.twig' %}
         </div>
     </div>

@@ -80,13 +80,13 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
 
-        <!-- Left Column: Form -->
-        <div class="lg:col-span-1 flex flex-col gap-4 lg:sticky lg:self-start" style="top: 100px;">
+        <!-- Left Column: Form (Smooth natural scrolling for long forms) -->
+        <div class="lg:col-span-1 flex flex-col gap-4">
             {% include 'components/calculator-form.twig' with {'container_id': 'homepage-calc'} %}
         </div> <!-- /left column -->
 
-        <!-- Right Column: Visualization & Scenario Diff -->
-        <div class="lg:col-span-2 space-y-4 lg:sticky lg:top-[90px] lg:self-start">
+        <!-- Right Column: Floating Summary & Chart Visualization -->
+        <div class="lg:col-span-2 space-y-4 lg:sticky lg:top-[84px] lg:self-start z-20">
             {% include 'components/chart-visualization.twig' %}
             
             <!-- Side-by-Side Scenario Diff Comparison (Unhides when snapshot baseline is taken) -->
