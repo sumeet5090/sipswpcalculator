@@ -108,11 +108,13 @@
     {% block head %}{% endblock %}
 </head>
 <body class="{{ page_config.body_class|default('bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emerald-500/20 selection:text-emerald-900') }} overflow-x-clip max-w-full relative" style="{{ page_config.body_style|default('background-image: var(--gradient-surface); background-attachment: fixed;') }}">
+    {% set is_calculator_route = is_calculator|default(false) or (active_page|default('') in ['home', 'sip-calculator', 'swp-calculator', 'sip-step-up-calculator', 'lumpsum-calculator', 'retirement-calculator', 'my-first-crore-calculator', 'target-corpus-calculator']) %}
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:p-3 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:shadow-floating focus:z-popover font-bold transition-all">Skip to main content</a>
     <div id="calculator-a11y-live-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
     
     {% include 'layouts/header.twig' %}
     
+    {% if is_calculator_route %}
     <!-- Compact Mobile Floating Mini-HUD (Glides in when primary summary cards scroll off-screen on mobile) -->
     <div id="mobile-sticky-mini-hud" class="sm:hidden fixed top-16 left-0 right-0 z-header bg-white/95 backdrop-blur-md border-b border-emerald-200/80 px-4 py-2 flex items-center justify-between shadow-flat transform -translate-y-full opacity-0 pointer-events-none transition-all duration-300">
         <div class="flex items-center gap-1.5 min-w-0">
@@ -125,6 +127,7 @@
             <span id="mini-hud-gain" class="text-xs font-extrabold text-emerald-700 font-financial-mono tabular-nums whitespace-nowrap shrink-0">+₹ --</span>
         </div>
     </div>
+    {% endif %}
 
     <!-- spacer to prevent content from being hidden behind fixed header -->
     <div class="h-16"></div>
@@ -133,8 +136,10 @@
         {% block content %}{% endblock %}
     </main>
 
+    {% if is_calculator_route %}
     <!-- Bottom spacer for mobile action dock occlusion prevention (F5.1) -->
     <div class="sm:hidden h-16"></div>
+    {% endif %}
 
     {% include 'layouts/footer.twig' %}
 
@@ -198,6 +203,7 @@
         {% endfor %}
     {% endif %}
     
+    {% if is_calculator_route %}
     <!-- Keyboard-Aware Floating Micro-Preview Capsule (Glides above virtual keyboard during text typing on mobile) -->
     <div id="keyboard-docked-preview" class="hidden opacity-0 pointer-events-none fixed z-modal left-4 right-4 bg-white/95 text-slate-900 border border-emerald-300 shadow-modal rounded-2xl px-4 py-2.5 flex items-center justify-between transition-all duration-200 backdrop-blur-md">
         <div class="flex items-center gap-2">
@@ -207,7 +213,7 @@
         <span id="keyboard-preview-corpus" class="text-sm font-extrabold text-emerald-700 font-mono">₹ --</span>
     </div>
 
-    <!-- Ergonomic Mobile Sticky Action Dock (Visible only on <sm viewports) -->
+    <!-- Ergonomic Mobile Sticky Action Dock (Visible only on <sm viewports on calculator pages) -->
     <div id="mobile-action-dock" class="sm:hidden fixed bottom-0 left-0 right-0 z-header bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] px-4 py-2 flex items-center justify-around gap-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
         <button type="button" id="dock-pdf-btn" onclick="document.getElementById('openPdfModalBtn')?.click()"
             class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-caption font-bold active:scale-95 transition-all cursor-pointer">
@@ -235,12 +241,13 @@
             <span>Tax</span>
         </button>
     </div>
+    {% endif %}
 
-    <!-- Floating Scroll-to-Top FAB (replaces dock slot, appears after scroll) -->
+    <!-- Floating Scroll-to-Top FAB (appears after scroll) -->
     <button type="button" id="mobile-scroll-top-fab"
-        class="sm:hidden fixed bottom-20 right-4 z-sticky w-10 h-10 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-card text-slate-600 text-sm font-bold flex items-center justify-center active:scale-90 transition-all cursor-pointer opacity-0 pointer-events-none"
-        onclick="document.getElementById('calculator-section')?.scrollIntoView({behavior: 'smooth'})"
-        aria-label="Scroll to calculator inputs">
+        class="sm:hidden fixed {% if is_calculator_route %}bottom-20{% else %}bottom-6{% endif %} right-4 z-sticky w-10 h-10 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-card text-slate-600 text-sm font-bold flex items-center justify-center active:scale-90 transition-all cursor-pointer opacity-0 pointer-events-none"
+        onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+        aria-label="Scroll to top">
         ↑
     </button>
     <script>

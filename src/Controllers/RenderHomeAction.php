@@ -57,6 +57,7 @@ class RenderHomeAction
 
         $templateData = array_merge($inputs->toTemplateData(), [
             'active_page'         => 'home',
+            'is_calculator'       => true,
             'page_config'         => $page_config,
             'homeFaqs'            => $homeFaqs,
             'calc_config'         => $calcConfig,
