@@ -98,6 +98,7 @@ class GuideViewModelBuilder
             'content_metadata'    => $meta,
             'page_config'         => $page_config,
             'active_page'         => $slug,
+            'is_calculator'       => ($type === 'calculator'),
             'seo_category'        => $seo_category,
             'calculator_type'     => $calculator_type,
             'calc_config'         => $calcDefaults,

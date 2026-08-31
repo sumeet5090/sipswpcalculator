@@ -181,7 +181,7 @@
 {% include 'components/page-hero.twig' %}
 
 <!-- Search Bar -->
-<div class="relative max-w-xl mx-auto mb-8">
+<div class="relative max-w-xl mx-auto mb-6 sm:mb-8">
     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
         <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -191,11 +191,11 @@
         class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-flat transition-all text-sm font-medium">
 </div>
 
-<!-- Category Filter Chips -->
-<div class="flex flex-wrap justify-center items-center gap-2.5 mb-12">
-    <button data-category="all" class="category-chip active">All</button>
+<!-- Category Filter Chips (Single-line swipe carousel on mobile, centered grid on desktop) -->
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-1 -mx-1 sm:mx-0 sm:flex-wrap sm:justify-center mb-8 sm:mb-12 touch-pan-x">
+    <button data-category="all" class="category-chip active flex-shrink-0">All</button>
     {% for cat in faq_categories %}
-    <button data-category="{{ cat.id }}" class="category-chip">{{ cat.label }}</button>
+    <button data-category="{{ cat.id }}" class="category-chip flex-shrink-0">{{ cat.label }}</button>
     {% endfor %}
 </div>
 
