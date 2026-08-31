@@ -1,0 +1,156 @@
+{
+    "sip-calculator": [
+        {
+            "href": "/sip-step-up-calculator",
+            "title": "Step-Up SIP Calculator",
+            "description": "Model annual top-up increments to compound your mutual fund corpus faster against inflation."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Plan regular systematic monthly withdrawals and retirement income streams from your accumulated corpus."
+        },
+        {
+            "href": "/lumpsum-calculator",
+            "title": "Lumpsum Calculator",
+            "description": "Calculate returns on one-time mutual fund investments and compare lumpsum vs SIP growth."
+        },
+        {
+            "href": "/my-first-crore-calculator",
+            "title": "1 Crore SIP Calculator",
+            "description": "Reverse-engineer the exact monthly SIP needed to reach ₹1 Crore across 5, 10, 15, or 20 years."
+        }
+    ],
+    "swp-calculator": [
+        {
+            "href": "/",
+            "title": "SIP & SWP Calculator Together",
+            "description": "Plan your complete investment lifecycle from SIP accumulation to SWP retirement cash flows in one unified tool."
+        },
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Calculate retirement corpus requirements, pension drawdown periods, and the 4% safe withdrawal rule."
+        },
+        {
+            "href": "/sip-step-up-calculator",
+            "title": "Step-Up SIP Calculator",
+            "description": "Build your initial retirement corpus faster by stepping up your annual monthly investment."
+        },
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator",
+            "description": "Calculate standalone Systematic Investment Plan returns with customizable duration and rates."
+        }
+    ],
+    "sip-step-up-calculator": [
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator",
+            "description": "Compare regular flat monthly SIP compounding with step-up top-up returns."
+        },
+        {
+            "href": "/my-first-crore-calculator",
+            "title": "1 Crore SIP Calculator",
+            "description": "See how adding a 10% step-up cuts 5 years off your timeline to reach ₹1 Crore."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Model post-accumulation monthly retirement withdrawals with step-up inflation adjustment."
+        },
+        {
+            "href": "/target-corpus-calculator",
+            "title": "Target Corpus Calculator",
+            "description": "Calculate the starting SIP required to hit your target financial corpus using annual top-ups."
+        }
+    ],
+    "lumpsum-calculator": [
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator",
+            "description": "Compare one-time lumpsum investment returns against disciplined monthly SIP compounding."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Deploy a lump sum into mutual funds and calculate sustainable monthly SWP cash flows."
+        },
+        {
+            "href": "/target-corpus-calculator",
+            "title": "Target Corpus Calculator",
+            "description": "Calculate required investment amounts to bridge the gap toward your future wealth goals."
+        },
+        {
+            "href": "/my-first-crore-calculator",
+            "title": "1 Crore SIP Calculator",
+            "description": "Determine whether lumpsum or SIP is more efficient for accumulating your first ₹1 Crore."
+        }
+    ],
+    "retirement-calculator": [
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Simulate detailed month-by-month systematic withdrawals, longevity, and capital gains tax impact."
+        },
+        {
+            "href": "/",
+            "title": "SIP & SWP Calculator Together",
+            "description": "Model your accumulation years alongside retirement drawdown in an integrated simulation."
+        },
+        {
+            "href": "/sip-step-up-calculator",
+            "title": "Step-Up SIP Calculator",
+            "description": "Accelerate your retirement corpus buildup by stepping up annual contributions with salary hikes."
+        },
+        {
+            "href": "/target-corpus-calculator",
+            "title": "Target Corpus Calculator",
+            "description": "Calculate the precise target corpus required based on your anticipated post-retirement expenses."
+        }
+    ],
+    "my-first-crore-calculator": [
+        {
+            "href": "/sip-step-up-calculator",
+            "title": "Step-Up SIP Calculator",
+            "description": "Reach ₹1 Crore 5 years faster by increasing your monthly investment by 10% each year."
+        },
+        {
+            "href": "/target-corpus-calculator",
+            "title": "Target Corpus Calculator",
+            "description": "Calculate required SIPs for higher wealth targets like ₹2 Crore, ₹5 Crore, or ₹10 Crore."
+        },
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator",
+            "description": "Simulate returns and interest growth for flexible monthly investment installments."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Calculate how much regular monthly pension income ₹1 Crore can generate during retirement."
+        }
+    ],
+    "target-corpus-calculator": [
+        {
+            "href": "/my-first-crore-calculator",
+            "title": "1 Crore SIP Calculator",
+            "description": "Explore targeted milestone plans for reaching ₹1 Crore in 5, 10, 15, or 20 years."
+        },
+        {
+            "href": "/sip-step-up-calculator",
+            "title": "Step-Up SIP Calculator",
+            "description": "Reduce your required starting monthly SIP by applying an annual top-up increment."
+        },
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Estimate your target retirement corpus and configure inflation-protected SWP pensions."
+        },
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator",
+            "description": "Standard mutual fund SIP calculator for flexible contribution and duration modeling."
+        }
+    ]
+}

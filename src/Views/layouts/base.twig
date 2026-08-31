@@ -13,7 +13,7 @@
     {% set current_uri = request.server('REQUEST_URI', '/') %}
     {% set canonical_url = page_config.canonical|default(site_url ~ current_uri) %}
     <link rel="canonical" href="{{ canonical_url }}">
-    <meta name="robots" content="{{ page_config.robots|default('index, follow') }}">
+    <meta name="robots" content="{{ page_config.robots|default('index, follow, max-snippet:160') }}">
 
     <meta name="author" content="{{ page_config.author|default('Sumeet Boga') }}">
 

@@ -91,6 +91,7 @@ class GuideViewModelBuilder
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
 
         $all_posts = $this->blogRepository->getAllPosts();
+        $related_calculators = $this->loadRelatedCalculators($slug);
 
         $data = array_merge($initialInputs->toTemplateData(), [
             'content_html'        => $content['html'],
@@ -103,11 +104,37 @@ class GuideViewModelBuilder
             'show_lumpsum'        => $show_lumpsum,
             'faqs'                => $faqs,
             'all_posts'           => $all_posts,
+            'related_calculators' => $related_calculators,
         ]);
 
         return [
             'layout' => $layout,
             'data'   => $data,
         ];
+    }
+
+    /**
+     * Load contextual related calculators from content mapping.
+     *
+     * @return array<int, array{href: string, title: string, description: string}>
+     */
+    private function loadRelatedCalculators(string $slug): array
+    {
+        $linksPath = __DIR__ . '/../../content/calculator_links.json';
+        if (!file_exists($linksPath)) {
+            return [];
+        }
+
+        $raw = file_get_contents($linksPath);
+        if ($raw === false) {
+            return [];
+        }
+
+        $decoded = json_decode($raw, true);
+        if (!is_array($decoded) || !isset($decoded[$slug]) || !is_array($decoded[$slug])) {
+            return [];
+        }
+
+        return $decoded[$slug];
     }
 }

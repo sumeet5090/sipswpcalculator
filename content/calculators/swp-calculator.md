@@ -2,7 +2,8 @@
 title: "SWP Calculator India 2026 — Free Step-Up Systematic Withdrawal Planner"
 subtitle: "Free SWP calculator with step-up withdrawals & inflation protection for Indian mutual funds. See how long your corpus lasts, plan retirement income & export yearly tables."
 meta_desc: "Free SWP calculator with step-up withdrawals for Indian mutual funds. Plan inflation-adjusted retirement income & export yearly tables. Updated for 2026."
-keywords: "swp calculator, step up swp calculator, swp calculator with step up, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, best swp calculator, swp retirement calculator 2026"
+keywords: "swp calculator, step up swp calculator, swp calculator with step up, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, best swp calculator, swp retirement calculator 2026, swp tax calculator, swp calculator in mutual fund"
+schema_name: "SWP Calculator India — Free Step-Up Systematic Withdrawal Planner"
 seo_category: "retirement"
 type: "calculator"
 date: "2026-07-05"
@@ -203,6 +204,25 @@ The globally recognized **4% Rule** (from the Trinity Study) suggests withdrawin
 | **5%** (Moderate) | ₹41,667/month | 22–25 years |
 | **6%** (Aggressive) | ₹50,000/month | 18–20 years |
 
+## SWP Calculator: Feature Comparison vs Standard Indian Tools
+
+| Feature | sipswpcalculator.com | Groww / Cleartax / ET Money |
+|---|---|---|
+| **Annual Step-Up Withdrawals** | ✅ **Yes (0% to 50% yearly hike)** | ❌ Flat withdrawal only |
+| **Combined SIP Accumulation to SWP** | ✅ **Yes (End-to-end simulation)** | ❌ SWP only or SIP only |
+| **Month-by-Month Compound Amortization** | ✅ **Yes (Exact mathematical precision)** | ⚠️ Simplified annual approximation |
+| **Post-Tax LTCG/STCG Gain Tracking** | ✅ **Yes (FY 2024-26 tax slabs)** | ❌ Pre-tax only |
+| **Zero-Latency Client-Side Engine** | ✅ **Yes (0ms slider feedback)** | ⚠️ Server roundtrips |
+| **Branded PDF & CSV Export** | ✅ **Yes (Free instant download)** | ❌ Restricted or unavailable |
+
+## SWP Tax Rules in India (Updated for FY 2024-25 & 2026)
+
+When redeeming mutual funds via an SWP, tax is calculated **only on the capital gains component** of each monthly installment, not on the principal:
+
+- **Equity-Oriented Funds (>65% Equity):** Long-Term Capital Gains (LTCG) on units held for more than 12 months are exempt up to **₹1.25 Lakh per financial year**. Gains exceeding ₹1.25 Lakh are taxed at **12.5%** (without indexation). Short-Term Capital Gains (STCG on units held ≤12 months) are taxed at **20%**.
+- **Debt-Oriented Funds:** For investments made after April 1, 2023, all capital gains from debt funds are treated as short-term and taxed at your applicable **marginal income tax slab rate**.
+- **First-In First-Out (FIFO) Accounting:** Indian tax authorities mandate that the oldest mutual fund units purchased are redeemed first during an SWP. This maximizes the proportion of withdrawals qualifying for favorable LTCG rates.
+
 Use our [SIP to SWP calculator](/#calculator-section) above to model your exact scenario with step-up withdrawals and different return rates.
 
 ## How to Start an SWP in India (Step-by-Step)
@@ -226,25 +246,28 @@ For most investors, yes. SWP from mutual funds offers better returns (8–10% vs
 **What happens if the market crashes during my SWP?**
 This is called "Sequence of Returns Risk." If markets fall early in your SWP phase, your corpus depletes faster. To mitigate: (1) Keep 2 years of expenses in a liquid fund buffer, (2) Reduce withdrawal temporarily during drawdowns, (3) Use a conservative fund (hybrid/arbitrage) for the SWP corpus.
 
-<div class="mt-12 bg-indigo-50/50 p-6 rounded-xl border border-indigo-100">
-<h3 class="text-xl font-bold text-gray-800 mb-4">Related Calculators & Guides</h3>
+<div class="mt-12 bg-emerald-50/60 p-6 rounded-2xl border border-emerald-200/80">
+<h3 class="text-xl font-bold text-slate-800 mb-4">Related Calculators & Guides</h3>
 <ul class="space-y-2 text-sm">
-<li><a href="/" class="text-indigo-600 hover:underline font-medium">SIP &amp; SWP Calculator</a> — Plan your complete SIP-to-SWP mutual fund journey</li>
-<li><a href="/sip-calculator" class="text-indigo-600 hover:underline font-medium">SIP Calculator Guide</a> — Master SIP compounding with step-up strategy</li>
-<li><a href="/sip-step-up-calculator" class="text-indigo-600 hover:underline font-medium">Step-Up SIP Calculator</a> — Grow your SIP amount annually to beat inflation</li>
-<li><a href="/retirement-calculator" class="text-indigo-600 hover:underline font-medium">Retirement Calculator</a> — Plan your complete accumulation-to-income journey</li>
-<li><a href="/lumpsum-calculator" class="text-indigo-600 hover:underline font-medium">Lumpsum Calculator</a> — Calculate returns on one-time investments</li>
-<li><a href="/resource/retirement/swp-retirement-planning" class="text-indigo-600 hover:underline font-medium">SWP Retirement Planning Guide</a> — Complete retirement income strategy</li>
-<li><a href="/resource/retirement/retirement-planning-4-percent-swp-rule" class="text-indigo-600 hover:underline font-medium">The 4% Rule Explained</a> — Is it still valid for Indian retirees?</li>
-<li><a href="/resource/comparison/swp-vs-fixed-deposit" class="text-indigo-600 hover:underline font-medium">SWP vs Fixed Deposit</a> — Which is better for retirement income?</li>
+<li><a href="/" class="text-emerald-700 hover:underline font-medium">SIP &amp; SWP Calculator</a> — Plan your complete SIP-to-SWP mutual fund journey</li>
+<li><a href="/sip-calculator" class="text-emerald-700 hover:underline font-medium">SIP Calculator Guide</a> — Master SIP compounding with step-up strategy</li>
+<li><a href="/sip-step-up-calculator" class="text-emerald-700 hover:underline font-medium">Step-Up SIP Calculator</a> — Grow your SIP amount annually to beat inflation</li>
+<li><a href="/retirement-calculator" class="text-emerald-700 hover:underline font-medium">Retirement Calculator</a> — Plan your complete accumulation-to-income journey</li>
+<li><a href="/lumpsum-calculator" class="text-emerald-700 hover:underline font-medium">Lumpsum Calculator</a> — Calculate returns on one-time investments</li>
+<li><a href="/resource/retirement/swp-retirement-planning" class="text-emerald-700 hover:underline font-medium">SWP Retirement Planning Guide</a> — Complete retirement income strategy</li>
+<li><a href="/resource/retirement/retirement-planning-4-percent-swp-rule" class="text-emerald-700 hover:underline font-medium">The 4% Rule Explained</a> — Is it still valid for Indian retirees?</li>
+<li><a href="/resource/comparison/swp-vs-fixed-deposit" class="text-emerald-700 hover:underline font-medium">SWP vs Fixed Deposit</a> — Which is better for retirement income?</li>
 </ul>
 </div>
 
-<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-rose-100 shadow-xl bg-gradient-to-br from-rose-600 to-rose-800 p-8 sm:p-10 text-center text-white">
-  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">Model Your SWP Now</h2>
-  <p class="text-rose-100 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">Enter your starting corpus, set your monthly withdrawal, add a yearly hike for inflation — and see exactly how long your money will last.</p>
+<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-200/90 shadow-card bg-gradient-to-br from-emerald-50 via-white to-teal-50/60 p-8 sm:p-10 text-center text-slate-900">
+  <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-4 border border-emerald-200">
+    ⚡ Live Simulation
+  </div>
+  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight text-slate-900">Model Your SWP Cash Flows Instantly</h2>
+  <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Enter your starting corpus, set your monthly withdrawal, add an annual step-up for inflation — and see exactly how long your money will last.</p>
   <a href="/#calculator-section"
-     class="inline-flex items-center gap-2 px-8 py-3 bg-white text-rose-700 font-bold rounded-xl shadow-lg hover:bg-rose-50 transition-all duration-200 text-sm sm:text-base">
+     class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm sm:text-base cursor-pointer">
     Open SIP &amp; SWP Planner
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
   </a>

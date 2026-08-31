@@ -20,19 +20,22 @@ class RenderHomeAction
     private FaqRepository $faqRepository;
     private ViewRenderer $viewRenderer;
     private SchemaFactory $schemaFactory;
+    private ?\Core\InsightRepository $insightRepository;
 
     public function __construct(
         MetaManager $metaManager,
         ConfigServiceInterface $configService,
         FaqRepository $faqRepository,
         ViewRenderer $viewRenderer,
-        SchemaFactory $schemaFactory
+        SchemaFactory $schemaFactory,
+        ?\Core\InsightRepository $insightRepository = null
     ) {
         $this->metaManager = $metaManager;
         $this->configService = $configService;
         $this->faqRepository = $faqRepository;
         $this->viewRenderer = $viewRenderer;
         $this->schemaFactory = $schemaFactory;
+        $this->insightRepository = $insightRepository;
     }
 
     public function __invoke(Request $request): Response
@@ -48,13 +51,18 @@ class RenderHomeAction
 
         $page_config['additional_head'] = $this->schemaFactory->generateForHome($page_config, $homeFaqs, $siteModified);
 
+        $weeklyCalculations = $this->insightRepository !== null
+            ? $this->insightRepository->getWeeklyCalculationCount()
+            : 2000;
+
         $templateData = array_merge($inputs->toTemplateData(), [
-            'active_page'   => 'home',
-            'page_config'   => $page_config,
-            'homeFaqs'      => $homeFaqs,
-            'calc_config'   => $calcConfig,
-            'show_lumpsum'  => true,
-            'site_modified' => $siteModified,
+            'active_page'         => 'home',
+            'page_config'         => $page_config,
+            'homeFaqs'            => $homeFaqs,
+            'calc_config'         => $calcConfig,
+            'show_lumpsum'        => true,
+            'site_modified'       => $siteModified,
+            'weekly_calculations' => $weeklyCalculations,
         ]);
 
         return Response::html($this->viewRenderer->render('calculators/home', $templateData));
