@@ -205,38 +205,39 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Documentation Callouts */
-.callout-pro-tip {
-    background-color: #eff6ff;
-    border: 1px solid #bfdbfe;
-    border-radius: 0.5rem;
-    padding: 1.25rem;
-    font-size: 0.875rem;
-    color: #1e3a8a;
+.callout-pro-tip,
+.pro-tip {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    font-size: 0.95rem;
+    color: #334155;
     margin: 1.5rem 0;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
-.callout-pro-tip strong {
-    display: block;
+.callout-pro-tip strong,
+.pro-tip strong {
     font-weight: 700;
-    margin-bottom: 0.5rem;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
-
-
-
-
-
 
 /* ── Custom Documentation Grid (Fallback for missing Tailwind Utilities) ── */
 .doc-layout-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0;
     width: 100%;
+    min-width: 0;
 }
 
 @media (min-width: 768px) {
     .doc-layout-grid {
-        grid-template-columns: repeat(12, 1fr);
+        grid-template-columns: repeat(12, minmax(0, 1fr));
     }
 }
 
@@ -267,6 +268,9 @@ h1, h2, h3, h4, h5, h6 {
 .doc-main-content {
     grid-column: span 1 / span 1;
     width: 100%;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 @media (min-width: 768px) {
@@ -345,19 +349,14 @@ h6 {
     box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08);
 }
 
-/* Inputs */
-input[type="number"],
-input[type="text"],
-select,
-textarea {
-    /* width: 100%;  Removed to allow specific width classes */
+/* Inputs: Use :where() for zero specificity so Tailwind utility classes always take precedence */
+:where(input[type="number"], input[type="text"], select, textarea) {
     padding: 0.75rem 1rem;
     font-size: 0.95rem;
     line-height: 1.5;
     color: var(--color-text-primary);
     background-color: #fff;
     border: 1px solid #cbd5e1;
-    /* Slate 300 */
     border-radius: 0.5rem;
     transition: all 0.2s ease-in-out;
     box-shadow: var(--shadow-sm);
@@ -1328,6 +1327,29 @@ input[type=range]::-moz-range-track {
 
 .prose tr:hover td {
     background-color: rgba(241, 245, 249, 0.4) !important;
+}
+
+/* ── Mobile Article Formatting & Justification Fix ── */
+@media (max-width: 640px) {
+    .prose .text-justify,
+    .entry-content .text-justify {
+        text-align: left !important;
+    }
+    
+    .prose pre,
+    .prose code,
+    .entry-content pre,
+    .entry-content code {
+        word-break: break-word !important;
+        overflow-wrap: anywhere !important;
+    }
+
+    .prose table {
+        display: block !important;
+        overflow-x: auto !important;
+        max-width: 100% !important;
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 /* Global decorative glowing blur background blobs */

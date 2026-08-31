@@ -16,7 +16,7 @@ date: "July 2026"
             <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             The Age 25 Advantage
         </h2>
-        <p class="text-slate-700 leading-relaxed text-justify">
+        <p class="text-slate-700 leading-relaxed text-left">
             Starting your career in India with a moderate income of ₹30,000/month is a powerful launchpad. While it may feel small after paying for rent and expenses in major cities, your greatest asset isn't the size of your paycheck—<strong>it is time</strong>. Every single rupee you invest today has 30 to 40 years to compound. This guide provides a direct, mathematically proven blueprint to turn a modest monthly contribution into a <a href="/my-first-crore-calculator" class="text-indigo-600 font-bold hover:underline">crore-plus retirement corpus</a>.
         </p>
     </div>

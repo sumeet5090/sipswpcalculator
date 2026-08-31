@@ -16,7 +16,7 @@ date: "March 2026"
             <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             TL;DR: Which Asset Wins?
         </h2>
-        <div class="space-y-3 text-slate-700 text-justify leading-relaxed">
+        <div class="space-y-3 text-slate-700 text-left leading-relaxed">
             <p><strong>For Wealth Creation (7+ Years):</strong> Equity SIPs are mathematically superior — <span class="text-emerald-600 font-semibold">12-15% historical returns</span> crush inflation and outpace every other instrument.</p>
             <p><strong>For Guaranteed Safety:</strong> PPF is the gold standard — <span class="text-emerald-600 font-semibold">7.1% completely tax-free</span> with sovereign guarantee.</p>
             <p><strong>For Emergency Liquidity (0-3 Years):</strong> FDs are necessary for emergencies, but <span class="text-rose-600 font-semibold">lose real wealth (-1.1% real return)</span> after tax and inflation.</p>
