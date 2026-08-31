@@ -16,7 +16,7 @@ date: "July 2026"
             <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             TL;DR: SIP vs Lumpsum — The Bottom Line
         </h2>
-        <div class="space-y-3 text-slate-700 text-justify leading-relaxed">
+        <div class="space-y-3 text-slate-700 text-left leading-relaxed">
             <p><strong>In a Continuous Bull Market:</strong> <span class="text-emerald-600 font-semibold">Lumpsum wins</span> because your entire capital earns compound returns from Day 1.</p>
             <p><strong>In a Volatile or Bear Market:</strong> <span class="text-emerald-600 font-semibold">SIP wins</span> due to <em>Rupee Cost Averaging</em>, acquiring more NAV units at market lows.</p>
             <p><strong>For Salaried Investors:</strong> <span class="text-emerald-600 font-semibold">Step-Up SIP</span> is mathematically superior as it aligns with monthly income and annual salary increments.</p>

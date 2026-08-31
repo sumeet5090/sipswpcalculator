@@ -243,29 +243,38 @@
     </div>
     {% endif %}
 
-    <!-- Floating Scroll-to-Top FAB (appears after scroll) -->
+    <!-- Floating Scroll-to-Top FAB (appears on scroll up to prevent text occlusion) -->
     <button type="button" id="mobile-scroll-top-fab"
-        class="sm:hidden fixed {% if is_calculator_route %}bottom-20{% else %}bottom-6{% endif %} right-4 z-sticky w-10 h-10 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-card text-slate-600 text-sm font-bold flex items-center justify-center active:scale-90 transition-all cursor-pointer opacity-0 pointer-events-none"
+        class="sm:hidden fixed {% if is_calculator_route %}bottom-20{% else %}bottom-8{% endif %} right-3.5 z-sticky w-9 h-9 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-card text-slate-600 text-xs font-black flex items-center justify-center active:scale-90 transition-all duration-300 cursor-pointer opacity-0 pointer-events-none translate-y-2"
         onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
         aria-label="Scroll to top">
         ↑
     </button>
     <script>
-        // Show FAB after 300px scroll, hide near top
+        // Direction-aware FAB: shows on upward scroll or deep in page to never occlude reading content
         (function() {
             var fab = document.getElementById('mobile-scroll-top-fab');
             if (!fab) return;
             var lastScroll = 0;
+            var ticking = false;
             window.addEventListener('scroll', function() {
-                var st = window.scrollY;
-                if (st > 300) {
-                    fab.style.opacity = '1';
-                    fab.style.pointerEvents = 'auto';
-                } else {
-                    fab.style.opacity = '0';
-                    fab.style.pointerEvents = 'none';
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        var st = window.scrollY;
+                        var isScrollingUp = st < lastScroll - 5;
+                        var isDeepInPage = st > 1200;
+                        if (st > 350 && (isScrollingUp || isDeepInPage)) {
+                            fab.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+                            fab.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                        } else {
+                            fab.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+                            fab.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                        }
+                        lastScroll = st;
+                        ticking = false;
+                    });
+                    ticking = true;
                 }
-                lastScroll = st;
             }, { passive: true });
         })();
     </script>

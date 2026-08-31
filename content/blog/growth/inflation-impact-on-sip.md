@@ -16,7 +16,7 @@ date: "March 2026"
             <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             Quick Summary: The Invisible Tax on Your SIP
         </h2>
-        <div class="space-y-3 text-slate-700 text-justify leading-relaxed">
+        <div class="space-y-3 text-slate-700 text-left leading-relaxed">
             <p><strong>Inflation silently erodes SIP returns.</strong> At 6% inflation, ₹1,00,000 today is worth only <span class="text-rose-600 font-semibold">₹55,839 in 10 years</span> and <span class="text-rose-600 font-semibold">₹31,180 in 20 years</span>.</p>
             <p>Even a 12% SIP return gives only <strong>5.66% real return</strong> after inflation adjustment using the Fisher equation: <em>Real Return = ((1 + 0.12) / (1 + 0.06)) - 1 = 5.66%</em>.</p>
             <p>A flat ₹10,000/month SIP for 20 years yields ₹1 crore nominally but only <strong>₹31 lakh in today's purchasing power</strong>.</p>

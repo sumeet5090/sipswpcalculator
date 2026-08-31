@@ -17,10 +17,10 @@
         <!-- 1. SIP Formula -->
         <div class="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/90 shadow-flat relative group flex flex-col justify-between">
             <div>
-                <div class="flex items-center justify-between gap-2 mb-3">
-                    <h4 id="sip-calculator-formula" class="text-sm sm:text-base font-bold text-slate-900">1. Monthly SIP Future Value (Annuity Due)</h4>
-                    <div class="flex items-center gap-1.5 flex-shrink-0">
-                        <button type="button" class="copy-live-proof-btn text-micro font-bold px-2 py-1 rounded-lg bg-growth-surface border border-growth-border text-growth-emphasis hover:bg-emerald-100 transition-all cursor-pointer shadow-flat" title="Copy with active values substituted">📐 Live Proof</button>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 mb-3">
+                    <h4 id="sip-calculator-formula" class="text-sm sm:text-base font-bold text-slate-900 leading-snug">1. Monthly SIP Future Value (Annuity Due)</h4>
+                    <div class="flex items-center gap-1.5 self-start sm:self-auto flex-shrink-0">
+                        <button type="button" class="copy-live-proof-btn text-micro font-bold px-2.5 py-1 rounded-lg bg-growth-surface border border-growth-border text-growth-emphasis hover:bg-emerald-100 transition-all cursor-pointer shadow-flat" title="Copy with active values substituted">📐 Live Proof</button>
                         <button type="button" class="copy-formula-btn text-ui-xs font-bold px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-flat" data-formula="FV = P × [ ( (1 + r)^n - 1 ) / r ] × (1 + r)" title="Copy Formula">📋</button>
                     </div>
                 </div>
@@ -38,9 +38,9 @@
         <!-- 2. SWP Formula -->
         <div class="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/90 shadow-flat relative group flex flex-col justify-between">
             <div>
-                <div class="flex items-center justify-between gap-2 mb-3">
-                    <h4 class="text-sm sm:text-base font-bold text-slate-900">2. Systematic Withdrawal Cashflow (SWP)</h4>
-                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 mb-3">
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900 leading-snug">2. Systematic Withdrawal Cashflow (SWP)</h4>
+                    <div class="flex items-center gap-1.5 self-start sm:self-auto flex-shrink-0">
                         <span class="text-micro font-financial-mono font-bold bg-payout-surface text-payout-emphasis px-2 py-0.5 rounded-md border border-payout-border">Depletion / Longevity</span>
                         <button type="button" class="copy-formula-btn text-ui-xs font-bold px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-flat" data-formula="Balance_{m} = (Balance_{m-1} - W_{m}) × (1 + r)" title="Copy Formula">📋</button>
                     </div>
@@ -59,9 +59,9 @@
         <!-- 3. Step-Up SIP -->
         <div class="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/90 shadow-flat relative group flex flex-col justify-between">
             <div>
-                <div class="flex items-center justify-between gap-2 mb-3">
-                    <h4 class="text-sm sm:text-base font-bold text-slate-900">3. Annual Step-Up Compounding (Top-Up)</h4>
-                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 mb-3">
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900 leading-snug">3. Annual Step-Up Compounding (Top-Up)</h4>
+                    <div class="flex items-center gap-1.5 self-start sm:self-auto flex-shrink-0">
                         <span class="text-micro font-financial-mono font-bold bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-md">Geometric Gradient</span>
                         <button type="button" class="copy-formula-btn text-ui-xs font-bold px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-flat" data-formula="SIP_{Year k} = SIP_{Initial} × (1 + g)^{k-1}" title="Copy Formula">📋</button>
                     </div>
@@ -79,9 +79,9 @@
         <!-- 4. Budget 2024 LTCG Section 112A -->
         <div class="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/90 shadow-flat relative group flex flex-col justify-between">
             <div>
-                <div class="flex items-center justify-between gap-2 mb-3">
-                    <h4 class="text-sm sm:text-base font-bold text-slate-900">4. Equity LTCG Tax (Budget 2024 §112A)</h4>
-                    <div class="flex items-center gap-1.5 flex-shrink-0">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 mb-3">
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900 leading-snug">4. Equity LTCG Tax (Budget 2024 §112A)</h4>
+                    <div class="flex items-center gap-1.5 self-start sm:self-auto flex-shrink-0">
                         <span class="text-micro font-financial-mono font-bold bg-tax-surface text-tax-emphasis px-2 py-0.5 rounded-md border border-tax-border">Statutory Rules</span>
                         <button type="button" class="copy-formula-btn text-ui-xs font-bold px-2 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-flat" data-formula="Tax = Max(0, Gains - ₹1,25,000) × 12.5%" title="Copy Formula">📋</button>
                     </div>
