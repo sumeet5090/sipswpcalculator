@@ -216,7 +216,19 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
         $this->assertInstanceOf(\DOMElement::class, $authorNode);
         $this->assertNotEmpty(trim($authorNode->getAttribute('content')), "SEO Rule Violation: author meta is empty on page '$path'.");
 
-        // 6. JSON-LD Schema.org Validation
+        // 6. Robots Directive Validation
+        $robots = $xpath->query('//meta[@name="robots"]');
+        $this->assertGreaterThanOrEqual(1, $robots->length, "SEO Rule Violation: Missing meta name=robots on page '$path'.");
+        $robotsNode = $robots->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $robotsNode);
+        $robotsContent = trim($robotsNode->getAttribute('content'));
+        if (in_array($path, ['/privacy', '/terms'], true)) {
+            $this->assertStringContainsString('noindex', $robotsContent, "Page '$path' should be noindex.");
+        } else {
+            $this->assertStringContainsString('max-snippet:160', $robotsContent, "Page '$path' missing max-snippet:160 directive.");
+        }
+
+        // 7. JSON-LD Schema.org Validation
         $schemas = $xpath->query('//script[@type="application/ld+json"]');
         $this->assertGreaterThanOrEqual(
             1,
@@ -224,6 +236,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
             "SEO Rule Violation: Page '$path' must contain at least one structured JSON-LD schema script."
         );
 
+        $schemaTypes = [];
         foreach ($schemas as $schemaNode) {
             $json = trim($schemaNode->textContent);
             $this->assertJson($json, "JSON-LD Validation Error: Invalid JSON syntax on page '$path'.");
@@ -236,6 +249,21 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
                 "JSON-LD Validation Error: '@context' must be 'https://schema.org' on page '$path'."
             );
             $this->assertArrayHasKey('@type', $data, "JSON-LD Validation Error: Missing '@type' key on page '$path'.");
+            $schemaTypes[] = $data['@type'];
+        }
+
+        // Calculator routes must have SoftwareApplication and FAQPage schemas
+        if (str_contains($path, 'calculator') || $path === '/') {
+            $this->assertContains(
+                'SoftwareApplication',
+                $schemaTypes,
+                "Calculator page '$path' is missing SoftwareApplication schema."
+            );
+            $this->assertContains(
+                'FAQPage',
+                $schemaTypes,
+                "Calculator page '$path' is missing FAQPage schema."
+            );
         }
     }
 }

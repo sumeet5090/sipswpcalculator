@@ -1,0 +1,22 @@
+# sipswpcalculator.com
+
+> Free SIP & SWP Calculator with step-up compounding for Indian mutual fund investors.
+
+## Calculators
+- [SIP & SWP Calculator](https://sipswpcalculator.com/): Combined SIP accumulation and SWP retirement withdrawal planner with step-up compounding
+- [SWP Calculator](https://sipswpcalculator.com/swp-calculator): Standalone Systematic Withdrawal Plan calculator with annual step-up withdrawals
+- [SIP Calculator](https://sipswpcalculator.com/sip-calculator): Standalone Systematic Investment Plan calculator with step-up top-up compounding
+- [Step-Up SIP Calculator](https://sipswpcalculator.com/sip-step-up-calculator): Top-up SIP compounding calculator to model annual increment impacts
+- [Lumpsum Calculator](https://sipswpcalculator.com/lumpsum-calculator): One-time mutual fund investment compound interest return calculator
+- [Retirement Calculator](https://sipswpcalculator.com/retirement-calculator): Dual-phase SIP accumulation to SWP pension drawdown planner
+- [1 Crore SIP Calculator](https://sipswpcalculator.com/my-first-crore-calculator): Reverse-engineer required monthly SIP to reach ₹1 Crore
+- [Target Corpus Calculator](https://sipswpcalculator.com/target-corpus-calculator): Calculate required monthly SIP for custom financial wealth goals
+
+## Core Features & Mechanics
+- All financial calculations execute client-side in the browser with zero latency and zero server roundtrips
+- Full Indian Rupee (₹) localization with Lakh and Crore formatting conventions
+- Annual Step-Up Compounding: 0% to 50% annual top-up on monthly SIP investments
+- Month-by-month financial simulation parity between PHP and TypeScript engines
+- Post-tax capital gains estimation incorporating Indian LTCG and STCG tax rules
+- Inflation-adjusted real corpus and real purchasing power projections
+- Free instant CSV data export and branded PDF projection report downloads

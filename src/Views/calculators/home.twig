@@ -40,6 +40,22 @@
             <span>Verified for Accuracy: {{ "now"|date("F Y") }}</span>
         </div>
     </div>
+
+    <!-- Above-The-Fold Interactive Activation CTA & Social Proof -->
+    <div class="flex flex-col items-center justify-center gap-2.5 mb-6 not-prose">
+        <a href="#calculator-heading"
+           class="inline-flex items-center gap-2 px-7 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 hover:shadow-card-hover hover:-translate-y-0.5 transition-all text-sm sm:text-base cursor-pointer"
+           aria-label="Start SIP and SWP calculation">
+            <span>Start Free Calculation</span>
+            <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </a>
+        <p class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+            <span class="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+            <span><strong class="font-bold text-slate-700 font-financial-mono">{{ weekly_calculations|number_format(0, '.', ',') }}+</strong> calculations run this week</span>
+        </p>
+    </div>
 </header>
 
 <!-- Quick Answer Box for AI extraction / Featured Snippet -->

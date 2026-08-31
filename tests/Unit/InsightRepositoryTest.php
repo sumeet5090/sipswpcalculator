@@ -114,4 +114,23 @@ class InsightRepositoryTest extends TestCase
         $this->assertArrayHasKey('avgScrollDepth', $data);
         $this->assertArrayHasKey('avgDwellTime', $data);
     }
+
+    public function testGetWeeklyCalculationCountReturnsCountOrFloor(): void
+    {
+        // With empty table, should return floor (2000)
+        $count = $this->repository->getWeeklyCalculationCount();
+        $this->assertGreaterThanOrEqual(2000, $count);
+
+        // Insert 2500 calculations in past 2 days
+        $stmt = $this->pdo->prepare("
+            INSERT INTO user_calculations (calc_type, amount, duration, created_at)
+            VALUES ('sip', 10000, 15, datetime('now', '-2 days'))
+        ");
+        for ($i = 0; $i < 2050; $i++) {
+            $stmt->execute();
+        }
+
+        $countWithData = $this->repository->getWeeklyCalculationCount();
+        $this->assertEquals(2050, $countWithData);
+    }
 }
