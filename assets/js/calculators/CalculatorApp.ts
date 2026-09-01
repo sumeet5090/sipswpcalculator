@@ -277,19 +277,19 @@ export class CalculatorApp {
      * Reapply a restored set of parameters across form inputs and trigger recalculation.
      */
     applyRestoredInputs(inputs: InvestmentInputs): void {
-        if (inputs.sip !== undefined) this.sliderManager.updateFieldValue('sip', inputs.sip);
-        if (inputs.years !== undefined) this.sliderManager.updateFieldValue('years', inputs.years);
-        if (inputs.rate !== undefined) this.sliderManager.updateFieldValue('rate', inputs.rate);
-        if (inputs.stepup !== undefined) this.sliderManager.updateFieldValue('stepup', inputs.stepup);
-        if (inputs.inflation !== undefined) this.sliderManager.updateFieldValue('inflation', inputs.inflation);
+        if (inputs.sip !== undefined) this.sliderManager.updateFieldValue('sip', inputs.sip, true);
+        if (inputs.years !== undefined) this.sliderManager.updateFieldValue('years', inputs.years, true);
+        if (inputs.rate !== undefined) this.sliderManager.updateFieldValue('rate', inputs.rate, true);
+        if (inputs.stepup !== undefined) this.sliderManager.updateFieldValue('stepup', inputs.stepup, true);
+        if (inputs.inflation !== undefined) this.sliderManager.updateFieldValue('inflation', inputs.inflation, true);
         if (inputs.lumpsum !== undefined) {
-            this.sliderManager.updateFieldValue('lumpsum', inputs.lumpsum);
-            this.sliderManager.updateFieldValue('corpus', inputs.lumpsum);
+            this.sliderManager.updateFieldValue('lumpsum', inputs.lumpsum, true);
+            this.sliderManager.updateFieldValue('corpus', inputs.lumpsum, true);
         }
-        if (inputs.swp_withdrawal !== undefined) this.sliderManager.updateFieldValue('swp_withdrawal', inputs.swp_withdrawal);
-        if (inputs.swp_years !== undefined) this.sliderManager.updateFieldValue('swp_years', inputs.swp_years);
-        if (inputs.swp_rate !== undefined) this.sliderManager.updateFieldValue('swp_rate', inputs.swp_rate);
-        if (inputs.swp_stepup !== undefined) this.sliderManager.updateFieldValue('swp_stepup', inputs.swp_stepup);
+        if (inputs.swp_withdrawal !== undefined) this.sliderManager.updateFieldValue('swp_withdrawal', inputs.swp_withdrawal, true);
+        if (inputs.swp_years !== undefined) this.sliderManager.updateFieldValue('swp_years', inputs.swp_years, true);
+        if (inputs.swp_rate !== undefined) this.sliderManager.updateFieldValue('swp_rate', inputs.swp_rate, true);
+        if (inputs.swp_stepup !== undefined) this.sliderManager.updateFieldValue('swp_stepup', inputs.swp_stepup, true);
 
         const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
         if (swpToggle && swpToggle.checked !== inputs.enable_swp) {

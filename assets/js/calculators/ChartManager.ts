@@ -1302,6 +1302,7 @@ export class ChartManager {
                         labels: {
                             filter: (legendItem, chartData) => {
                                 if (typeof legendItem.datasetIndex !== 'number') return true;
+                                if (!chartData || !chartData.datasets) return true;
                                 const ds = chartData.datasets[legendItem.datasetIndex];
                                 return ds !== undefined && !ds.hidden;
                             },

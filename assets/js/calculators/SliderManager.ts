@@ -130,7 +130,7 @@ export class SliderManager {
         }
 
         // Initialize preset chips for this field
-        this._initPresetChips(inputId, input, range);
+        this._initPresetChips(inputId);
 
         // Initial visual sync
         const initialVal = parseFloat(input.value) || 0;
@@ -381,10 +381,10 @@ export class SliderManager {
     /**
      * Programmatically update a field value from external controllers.
      */
-    updateFieldValue(fieldId: string, val: number): void {
+    updateFieldValue(fieldId: string, val: number, silent: boolean = false): void {
         const pair = this.pairs.find(p => p.fieldId === fieldId);
         if (!pair) {
-            this.triggerFn();
+            if (!silent) this.triggerFn();
             return;
         }
 
@@ -401,7 +401,9 @@ export class SliderManager {
         this._updateWordBadge(fieldId, val);
         this._updatePresetChips(fieldId, val);
         this._clearError(fieldId);
-        this.triggerFn();
+        if (!silent) {
+            this.triggerFn();
+        }
     }
 
     /**
@@ -429,7 +431,7 @@ export class SliderManager {
         });
     }
 
-    private _initPresetChips(fieldId: string, input: HTMLInputElement, range: HTMLInputElement): void {
+    private _initPresetChips(fieldId: string): void {
         const chips = this.dom.getElements<HTMLButtonElement>(`button[data-preset-for="${fieldId}"]`);
         chips.forEach(chip => {
             chip.addEventListener('click', (e) => {
@@ -437,21 +439,7 @@ export class SliderManager {
                 const presetVal = parseFloat(chip.dataset.presetVal || '');
                 if (isNaN(presetVal)) return;
 
-                const defaultMax = parseFloat(range.getAttribute('max') || '100000');
-                const elasticMax = this._computeElasticMax(presetVal, defaultMax);
-                range.max = String(elasticMax);
-                range.setAttribute('aria-valuemax', String(elasticMax));
-
-                input.value = String(presetVal);
-                range.value = String(presetVal);
-
-                this._updateAria(range, presetVal);
-                this._updateTrackProgress(range);
-                this._updateSubtext(fieldId, presetVal);
-                this._updatePresetChips(fieldId, presetVal);
-                this._clearError(fieldId);
-
-                this.triggerFn();
+                this.updateFieldValue(fieldId, presetVal);
             });
         });
     }
