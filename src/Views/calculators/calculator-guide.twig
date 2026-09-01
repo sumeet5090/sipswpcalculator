@@ -97,7 +97,7 @@
         <!-- Left Column: Form (Smooth natural scrolling for long forms) -->
         <div class="lg:col-span-1 flex flex-col gap-4">
             <div class="glass-card p-4 sm:p-5">
-                <form id="calculator-form" class="space-y-6" onsubmit="event.preventDefault();">
+                <form id="calculator-form" class="space-y-6 lg:max-h-[540px] xl:max-h-[580px] lg:overflow-y-auto lg:overflow-x-hidden custom-scrollbar pr-1 scroll-smooth" onsubmit="event.preventDefault();">
                     {% if calculator_type == 'all' or calculator_type == 'combo' %}
                         <!-- Combo Form (SIP + SWP Tabs) -->
                         <div class="sticky top-[84px] z-20 bg-white/95 backdrop-blur-md py-1 -my-1 mb-4 rounded-xl">
