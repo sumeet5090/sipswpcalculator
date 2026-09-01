@@ -134,10 +134,10 @@
     </div>
 
     <!-- Default 1-Click Persona Blueprint Cards Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <div class="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
         <!-- 1. First ₹1 Crore Rush -->
         <button type="button" 
-            class="persona-btn text-left p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-emerald-50/50 hover:border-emerald-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group"
+            class="persona-btn text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-emerald-50/50 hover:border-emerald-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
             data-persona="first_crore"
             data-sip="25000"
             data-years="9"
@@ -145,17 +145,19 @@
             data-stepup="10"
             data-lumpsum="0"
             data-enable-swp="false">
-            <div class="flex items-center justify-between mb-1.5">
-                <span class="text-lg">🎯</span>
-                <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200 group-hover:bg-emerald-600 group-hover:text-white transition-colors">9 Yrs Target</span>
+            <div>
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-base sm:text-lg">🎯</span>
+                    <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200 group-hover:bg-emerald-600 group-hover:text-white transition-colors">9 Yrs Target</span>
+                </div>
+                <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-emerald-800 transition-colors leading-snug">First ₹1 Crore Rush</h4>
+                <p class="text-caption text-slate-500 mt-1 line-clamp-2">₹25k/mo SIP @ 12% CAGR with 10% annual top-up to cross ₹1 Cr fast.</p>
             </div>
-            <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-emerald-800 transition-colors">First ₹1 Crore Rush</h4>
-            <p class="text-caption text-slate-500 mt-1 line-clamp-2">₹25k/mo SIP @ 12% CAGR with 10% annual top-up to cross ₹1 Cr fast.</p>
         </button>
 
         <!-- 2. FIRE Early Retirement -->
         <button type="button" 
-            class="persona-btn text-left p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-rose-50/50 hover:border-rose-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group"
+            class="persona-btn text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-rose-50/50 hover:border-rose-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
             data-persona="fire_retirement"
             data-sip="50000"
             data-years="15"
@@ -167,17 +169,19 @@
             data-swp-years="25"
             data-swp-rate="8"
             data-swp-hike="6">
-            <div class="flex items-center justify-between mb-1.5">
-                <span class="text-lg">🏖️</span>
-                <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-200 group-hover:bg-rose-600 group-hover:text-white transition-colors">FIRE Plan</span>
+            <div>
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-base sm:text-lg">🏖️</span>
+                    <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-200 group-hover:bg-rose-600 group-hover:text-white transition-colors">FIRE Plan</span>
+                </div>
+                <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-rose-800 transition-colors leading-snug">FIRE Early Retirement</h4>
+                <p class="text-caption text-slate-500 mt-1 line-clamp-2">15 Yrs Accumulation → 25 Yrs of inflation-adjusted monthly pension.</p>
             </div>
-            <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-rose-800 transition-colors">FIRE Early Retirement</h4>
-            <p class="text-caption text-slate-500 mt-1 line-clamp-2">15 Yrs Accumulation → 25 Yrs of inflation-adjusted monthly pension.</p>
         </button>
 
         <!-- 3. Child Higher Education -->
         <button type="button" 
-            class="persona-btn text-left p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-indigo-50/50 hover:border-indigo-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group"
+            class="persona-btn text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-indigo-50/50 hover:border-indigo-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
             data-persona="child_education"
             data-sip="15000"
             data-years="18"
@@ -185,17 +189,19 @@
             data-stepup="10"
             data-lumpsum="100000"
             data-enable-swp="false">
-            <div class="flex items-center justify-between mb-1.5">
-                <span class="text-lg">🎓</span>
-                <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-indigo-100 text-indigo-800 border border-indigo-200 group-hover:bg-indigo-600 group-hover:text-white transition-colors">18 Yrs Goal</span>
+            <div>
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-base sm:text-lg">🎓</span>
+                    <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-indigo-100 text-indigo-800 border border-indigo-200 group-hover:bg-indigo-600 group-hover:text-white transition-colors">18 Yrs Goal</span>
+                </div>
+                <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-indigo-800 transition-colors leading-snug">Child Higher Education</h4>
+                <p class="text-caption text-slate-500 mt-1 line-clamp-2">₹15k/mo SIP + ₹1L seed corpus compounding to ₹1.5+ Cr for college fees.</p>
             </div>
-            <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-indigo-800 transition-colors">Child Higher Education</h4>
-            <p class="text-caption text-slate-500 mt-1 line-clamp-2">₹15k/mo SIP + ₹1L seed corpus compounding to ₹1.5+ Cr for college fees.</p>
         </button>
 
         <!-- 4. Senior Capital Preservation -->
         <button type="button" 
-            class="persona-btn text-left p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-amber-50/50 hover:border-amber-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group"
+            class="persona-btn text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-amber-50/50 hover:border-amber-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
             data-persona="capital_preservation"
             data-sip="0"
             data-years="0"
@@ -208,12 +214,14 @@
             data-swp-years="20"
             data-swp-rate="8"
             data-swp-hike="0">
-            <div class="flex items-center justify-between mb-1.5">
-                <span class="text-lg">🛡️</span>
-                <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-200 group-hover:bg-amber-600 group-hover:text-white transition-colors">Monthly SWP</span>
+            <div>
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-base sm:text-lg">🛡️</span>
+                    <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-200 group-hover:bg-amber-600 group-hover:text-white transition-colors">Monthly SWP</span>
+                </div>
+                <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-amber-800 transition-colors leading-snug">Senior Citizen Monthly Income</h4>
+                <p class="text-caption text-slate-500 mt-1 line-clamp-2">₹50 Lakh corpus generating ₹35,000/mo steady tax-efficient retirement cashflow.</p>
             </div>
-            <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-amber-800 transition-colors">Senior Citizen Monthly Income</h4>
-            <p class="text-caption text-slate-500 mt-1 line-clamp-2">₹50 Lakh corpus generating ₹35,000/mo steady tax-efficient retirement cashflow.</p>
         </button>
     </div>
 </div>

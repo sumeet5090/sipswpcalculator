@@ -1,4 +1,4 @@
-<footer class="mt-16 text-ui-sm text-slate-600 fintech-glass-card p-8 sm:p-10">
+<footer class="mt-16 text-ui-sm text-slate-600 fintech-glass-card p-6 sm:p-10 {% if is_calculator_route %}pb-24 sm:pb-10{% else %}pb-8 sm:pb-10{% endif %}">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
         <div>
             <h3 class="font-heading font-bold text-base mb-3 text-slate-900">Top Calculators</h3>
@@ -51,13 +51,12 @@
             </p>
         </div>
 
-        <div class="text-center">
+        <div class="text-center space-y-1.5 pb-2">
             <p class="text-caption text-slate-500 font-medium">Verified for Accuracy: {{ "now"|date("F Y") }}</p>
-            <p class="text-caption mt-2">&copy;
-                {{ "now"|date("Y") }} SIP/SWP Calculator. All rights reserved.
+            <p class="text-caption text-slate-600 font-semibold">
+                &copy; {{ "now"|date("Y") }} SIP/SWP Calculator. All rights reserved.
             </p>
-            <p class="text-caption mt-2">Built with care for Indian investors • <span class="text-growth font-medium">No
-                    tracking • No ads • Free forever</span></p>
+            <p class="text-caption text-slate-500">Built with care for Indian investors • <span class="text-growth font-bold">No tracking • No ads • Free forever</span></p>
         </div>
     </div>
 </footer>

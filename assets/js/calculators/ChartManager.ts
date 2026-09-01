@@ -1300,6 +1300,11 @@ export class ChartManager {
                         align: 'center',
                         onClick: () => {},
                         labels: {
+                            filter: (legendItem, chartData) => {
+                                if (typeof legendItem.datasetIndex !== 'number') return true;
+                                const ds = chartData.datasets[legendItem.datasetIndex];
+                                return ds !== undefined && !ds.hidden;
+                            },
                             usePointStyle: true,
                             boxWidth: 6,
                             color: textColor,
@@ -1308,7 +1313,7 @@ export class ChartManager {
                                 size: 10.5,
                                 weight: 600
                             },
-                            padding: 16
+                            padding: 14
                         }
                     },
                     tooltip: {
