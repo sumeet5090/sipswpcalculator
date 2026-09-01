@@ -123,12 +123,14 @@
         </div>
 
         {% if presets %}
-            <div class="flex flex-wrap items-center gap-1.5 sm:gap-1 mt-1.5" role="group" aria-label="{{ label }} quick presets">
+            {% set presetCount = presets|length %}
+            {% set gridClass = presetCount == 4 ? 'grid grid-cols-2 xs:grid-cols-4 sm:flex sm:flex-wrap' : (presetCount == 3 ? 'grid grid-cols-3 sm:flex sm:flex-wrap' : 'flex flex-wrap') %}
+            <div class="{{ gridClass }} items-center gap-1.5 sm:gap-1 mt-1.5" role="group" aria-label="{{ label }} quick presets">
                 {% for preset in presets %}
                     {% set p_label = preset.label|default(preset) %}
                     {% set p_val = preset.value|default(preset) %}
                     <button type="button" 
-                        class="preset-chip text-ui-xs sm:text-micro font-bold px-2.5 sm:px-2 py-2 sm:py-0.5 min-h-[44px] sm:min-h-0 rounded-lg sm:rounded-md border border-slate-200/90 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-flat {{ value == p_val ? activeChipClass : '' }}"
+                        class="preset-chip text-ui-xs sm:text-micro font-bold px-2 sm:px-2 py-2 sm:py-0.5 min-h-[42px] sm:min-h-0 rounded-lg sm:rounded-md border border-slate-200/90 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-flat text-center justify-center flex items-center {{ value == p_val ? activeChipClass : '' }}"
                         data-preset-for="{{ id }}"
                         data-preset-val="{{ p_val }}"
                         aria-pressed="{{ value == p_val ? 'true' : 'false' }}">
