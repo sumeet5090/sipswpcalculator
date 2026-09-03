@@ -8,6 +8,8 @@ import { CompoundInterestEngine } from '../assets/js/calculators/engines/Compoun
 import { CagrEngine } from '../assets/js/calculators/engines/CagrEngine.ts';
 import { EmiEngine } from '../assets/js/calculators/engines/EmiEngine.ts';
 import { InflationEngine } from '../assets/js/calculators/engines/InflationEngine.ts';
+import { PpfEngine } from '../assets/js/calculators/engines/PpfEngine.ts';
+import { FdEngine } from '../assets/js/calculators/engines/FdEngine.ts';
 
 try {
     // Read input parameters JSON from command line arguments
@@ -166,6 +168,23 @@ try {
             inputArgs.present_value,
             inputArgs.inflation_rate,
             inputArgs.years
+        );
+        console.log(JSON.stringify(res));
+    } else if (inputArgs.action === 'ppf') {
+        const res = PpfEngine.calculate(
+            inputArgs.yearly_deposit,
+            inputArgs.interest_rate,
+            inputArgs.tenure_years,
+            inputArgs.deposit_timing || 'beginning'
+        );
+        console.log(JSON.stringify(res));
+    } else if (inputArgs.action === 'fd') {
+        const res = FdEngine.calculate(
+            inputArgs.principal,
+            inputArgs.annual_rate,
+            inputArgs.duration_years,
+            inputArgs.is_senior_citizen || false,
+            inputArgs.payout_frequency || 'cumulative'
         );
         console.log(JSON.stringify(res));
     } else if (inputArgs.action === 'generate_qr_test') {

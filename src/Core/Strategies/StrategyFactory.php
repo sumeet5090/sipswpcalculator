@@ -21,6 +21,8 @@ class StrategyFactory
         'cagr-calculator'              => CagrStrategy::class,
         'emi-calculator'               => EmiStrategy::class,
         'inflation-calculator'         => InflationStrategy::class,
+        'ppf-calculator'               => PpfStrategy::class,
+        'fd-calculator'                => FdStrategy::class,
     ];
 
     private ConfigServiceInterface $configService;

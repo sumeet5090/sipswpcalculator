@@ -240,5 +240,49 @@
             "title": "Compound Interest Calculator",
             "description": "Calculate how compounding accelerates wealth growth faster than the rate of inflation."
         }
+    ],
+    "ppf-calculator": [
+        {
+            "href": "/fd-calculator",
+            "title": "Fixed Deposit Calculator",
+            "description": "Compare risk-free sovereign PPF returns with quarterly compounding commercial bank fixed deposits."
+        },
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator India",
+            "description": "Pair safe PPF debt allocation with wealth-creating equity mutual fund SIPs for optimal asset allocation."
+        },
+        {
+            "href": "/compound-interest-calculator",
+            "title": "Compound Interest Calculator",
+            "description": "Analyze how annual compounding in PPF accelerates wealth accumulation over 15 to 30 year horizons."
+        },
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Factor your sovereign tax-free PPF maturity corpus into your comprehensive Indian retirement plan."
+        }
+    ],
+    "fd-calculator": [
+        {
+            "href": "/ppf-calculator",
+            "title": "PPF Calculator India",
+            "description": "Compare taxable bank fixed deposit yields with 100% tax-free Public Provident Fund returns."
+        },
+        {
+            "href": "/compound-interest-calculator",
+            "title": "Compound Interest Calculator",
+            "description": "See how quarterly compounding in bank FDs compares with monthly and annual compounding schedules."
+        },
+        {
+            "href": "/inflation-calculator",
+            "title": "Inflation Calculator",
+            "description": "Calculate your post-tax real rate of return on bank FDs after accounting for Indian CPI inflation."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Compare regular monthly FD interest payouts with tax-efficient mutual fund Systematic Withdrawal Plans."
+        }
     ]
 }

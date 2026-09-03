@@ -621,5 +621,65 @@
         ],
         "q": "Which Indian asset classes provide the best hedge against inflation?",
         "a": "Historically, diversified equity mutual funds (averaging 12% to 14% long-term CAGR) and sovereign gold bonds (8% to 10% CAGR) provide the strongest inflation-beating real returns in India, whereas cash and traditional bank fixed deposits struggle to outpace inflation post-tax."
+    },
+    {
+        "id": "ppf-5th-of-month-rule",
+        "category": "tax",
+        "tags": [
+            "faq-page",
+            "ppf-calculator"
+        ],
+        "q": "Why must PPF deposits be made on or before the 5th of the month?",
+        "a": "Under statutory PPF rules, interest is calculated on the minimum balance in the account between the close of the 5th day and the end of each calendar month. Depositing on or after the 6th means that money earns zero interest for that entire month, starting to earn only from the following month."
+    },
+    {
+        "id": "ppf-extension-rules",
+        "category": "retirement",
+        "tags": [
+            "faq-page",
+            "ppf-calculator"
+        ],
+        "q": "Can I extend my PPF account after 15 years, and do I need to keep contributing?",
+        "a": "Yes, you can extend your PPF account indefinitely in blocks of 5 years. You have two options: extend with contribution (continue depositing and claiming Section 80C deductions) or extend without contribution (your accumulated balance continues earning 7.1% tax-free interest while permitting one withdrawal per year)."
+    },
+    {
+        "id": "ppf-tax-exemption",
+        "category": "tax",
+        "tags": [
+            "faq-page",
+            "ppf-calculator"
+        ],
+        "q": "Is PPF maturity money completely tax-free under Indian income tax laws?",
+        "a": "Yes, PPF enjoys sovereign Exempt-Exempt-Exempt (EEE) status. The annual investment qualifies for Section 80C deductions, the annual interest accrues 100% tax-free, and the final maturity amount is completely exempt from income tax under Section 10(11)."
+    },
+    {
+        "id": "fd-quarterly-compounding",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "fd-calculator"
+        ],
+        "q": "How often is interest compounded in an Indian bank fixed deposit?",
+        "a": "Under Reserve Bank of India (RBI) master directions, Indian commercial banks compound fixed deposit interest on a quarterly basis (every 3 months) for all tenures of 6 months or longer. This quarterly compounding produces an effective annual yield higher than the stated nominal rate."
+    },
+    {
+        "id": "fd-tds-rules-section-194a",
+        "category": "tax",
+        "tags": [
+            "faq-page",
+            "fd-calculator"
+        ],
+        "q": "What are the TDS rules on bank fixed deposit interest in India?",
+        "a": "Banks deduct 10% TDS under Section 194A if total annual interest across branches exceeds ₹40,000 for regular depositors or ₹50,000 for senior citizens (20% if PAN is not linked). Depositors with zero net taxable income can submit Form 15G or Form 15H to prevent TDS."
+    },
+    {
+        "id": "fd-senior-citizen-benefit",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "fd-calculator"
+        ],
+        "q": "What extra interest benefits do senior citizens get on bank FDs?",
+        "a": "Indian banks provide an additional interest rate bonus of +0.50% p.a. for senior citizens (aged 60 and above) across tenures. Many banks offer an additional +0.75% to +0.80% for super senior citizens (aged 80+), alongside a higher ₹50,000 TDS exemption threshold."
     }
 ]

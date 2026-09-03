@@ -15,6 +15,8 @@
 - [CAGR Calculator](https://sipswpcalculator.com/cagr-calculator): Calculate compound annual growth rate, absolute returns, and wealth multipliers for investments
 - [EMI Calculator](https://sipswpcalculator.com/emi-calculator): Calculate monthly loan EMIs and complete year-by-year amortization schedules for home and car loans
 - [Inflation Calculator](https://sipswpcalculator.com/inflation-calculator): Project future cost of living and purchasing power loss over 5 to 30 year horizons
+- [PPF Calculator](https://sipswpcalculator.com/ppf-calculator): Calculate Public Provident Fund interest, 5th-of-the-month rules, and 15 to 30 year block extension schedules
+- [FD Calculator](https://sipswpcalculator.com/fd-calculator): Calculate bank fixed deposit interest, quarterly compounding, senior citizen bonuses, and Section 194A TDS
 
 ## Core Features & Mechanics
 - All financial calculations execute client-side in the browser with zero latency and zero server roundtrips

@@ -734,6 +734,95 @@ foreach ($inflationCases as $idx => $infParams) {
     }
 }
 
+// -------------------------------------------------------------
+// 6. Cross-Runtime Parity: PPF Engine
+// -------------------------------------------------------------
+echo "\nTesting PPF Engine Parity (PHP vs TypeScript)...\n";
+$ppfCases = [
+    ['yearly_deposit' => 150000.0, 'interest_rate' => 7.1, 'tenure_years' => 15, 'deposit_timing' => 'beginning'],
+    ['yearly_deposit' => 50000.0, 'interest_rate' => 7.1, 'tenure_years' => 20, 'deposit_timing' => 'beginning'],
+    ['yearly_deposit' => 120000.0, 'interest_rate' => 7.1, 'tenure_years' => 15, 'deposit_timing' => 'monthly'],
+];
+
+foreach ($ppfCases as $idx => $pParams) {
+    echo "PPF Parity Case " . ($idx + 1) . ": ";
+    $phpRes = \Core\Math\PpfEngine::calculate(
+        $pParams['yearly_deposit'],
+        $pParams['interest_rate'],
+        $pParams['tenure_years'],
+        $pParams['deposit_timing']
+    );
+
+    $cmd = "node tests/run_js_calc.js " . escapeshellarg(json_encode([
+        'action' => 'ppf',
+        'yearly_deposit' => $pParams['yearly_deposit'],
+        'interest_rate' => $pParams['interest_rate'],
+        'tenure_years' => $pParams['tenure_years'],
+        'deposit_timing' => $pParams['deposit_timing']
+    ]));
+    $jsRes = json_decode((string)shell_exec($cmd), true);
+
+    $fields = ['total_invested', 'total_interest', 'maturity_amount'];
+    $mismatch = false;
+    foreach ($fields as $f) {
+        if (abs((float)$phpRes[$f] - (float)$jsRes[$f]) > 0.05) {
+            echo "FAIL: Field {$f} mismatch. PHP: {$phpRes[$f]}, JS: {$jsRes[$f]}\n";
+            $failed = true;
+            $mismatch = true;
+            break;
+        }
+    }
+    if (!$mismatch) {
+        echo "PASS\n";
+    }
+}
+
+// -------------------------------------------------------------
+// 7. Cross-Runtime Parity: FD Engine
+// -------------------------------------------------------------
+echo "\nTesting Fixed Deposit (FD) Engine Parity (PHP vs TypeScript)...\n";
+$fdCases = [
+    ['principal' => 100000.0, 'annual_rate' => 7.0, 'duration_years' => 1.0, 'is_senior_citizen' => false, 'payout_frequency' => 'cumulative'],
+    ['principal' => 500000.0, 'annual_rate' => 7.5, 'duration_years' => 3.0, 'is_senior_citizen' => true, 'payout_frequency' => 'cumulative'],
+    ['principal' => 1000000.0, 'annual_rate' => 8.0, 'duration_years' => 2.0, 'is_senior_citizen' => false, 'payout_frequency' => 'quarterly'],
+    ['principal' => 200000.0, 'annual_rate' => 6.5, 'duration_years' => 5.0, 'is_senior_citizen' => false, 'payout_frequency' => 'monthly'],
+];
+
+foreach ($fdCases as $idx => $fParams) {
+    echo "FD Parity Case " . ($idx + 1) . ": ";
+    $phpRes = \Core\Math\FdEngine::calculate(
+        $fParams['principal'],
+        $fParams['annual_rate'],
+        $fParams['duration_years'],
+        $fParams['is_senior_citizen'],
+        $fParams['payout_frequency']
+    );
+
+    $cmd = "node tests/run_js_calc.js " . escapeshellarg(json_encode([
+        'action' => 'fd',
+        'principal' => $fParams['principal'],
+        'annual_rate' => $fParams['annual_rate'],
+        'duration_years' => $fParams['duration_years'],
+        'is_senior_citizen' => $fParams['is_senior_citizen'],
+        'payout_frequency' => $fParams['payout_frequency']
+    ]));
+    $jsRes = json_decode((string)shell_exec($cmd), true);
+
+    $fields = ['principal', 'effective_rate', 'maturity_amount', 'total_interest', 'periodic_payout', 'estimated_annual_tds'];
+    $mismatch = false;
+    foreach ($fields as $f) {
+        if (abs((float)$phpRes[$f] - (float)$jsRes[$f]) > 0.05) {
+            echo "FAIL: Field {$f} mismatch. PHP: {$phpRes[$f]}, JS: {$jsRes[$f]}\n";
+            $failed = true;
+            $mismatch = true;
+            break;
+        }
+    }
+    if (!$mismatch) {
+        echo "PASS\n";
+    }
+}
+
 echo "\n";
 if ($failed) {
     echo "=== CALCULATOR ENGINE PARITY TESTS FAILED ===\n";
