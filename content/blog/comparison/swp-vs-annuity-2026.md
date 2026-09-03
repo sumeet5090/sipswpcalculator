@@ -1,6 +1,7 @@
 ---
 title: "SWP vs Annuity 2026: Which Is Better for Retirement Income?"
 subtitle: "The complete guide to choosing between Mutual Fund SWP and Annuity Plans — with worked examples, tax analysis, and the optimal hybrid strategy"
+meta_desc: "Mutual fund SWP vs life insurance annuity: compare post-tax returns, inflation protection, capital access, and discover the optimal hybrid retirement strategy."
 tag: "Comparison"
 tag_color: "amber"
 featured: false

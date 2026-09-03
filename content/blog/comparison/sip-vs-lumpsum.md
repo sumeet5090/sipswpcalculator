@@ -1,6 +1,7 @@
 ---
-title: "SIP vs Lumpsum Mutual Fund Investment: Which Strategy Gives Higher Returns in 2026?"
+title: "SIP vs Lumpsum (2026): Which Gives Higher Returns in India?"
 subtitle: "Compare Systematic Investment Plans (SIP) against Lumpsum deployment. Learn historical returns, tax rules, and the best strategy for your financial goals in India."
+meta_desc: "Compare SIP vs Lumpsum mutual fund returns in India. Learn historical performance, tax rules, and the best wealth strategy for your financial goals in 2026."
 tag: "Comparison"
 tag_color: "amber"
 featured: true

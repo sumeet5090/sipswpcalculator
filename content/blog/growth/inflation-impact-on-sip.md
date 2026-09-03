@@ -1,6 +1,7 @@
 ---
-title: "The Math of Inflation: How It Silently Destroys Your SIP Returns (2026 Analysis)"
+title: "The Math of Inflation: How It Destroys SIP Returns (2026)"
 subtitle: "A mathematical deep-dive into inflation\'s impact on investment purchasing power — with the Fisher Equation, worked examples, and the step-up SIP antidote"
+meta_desc: "Learn how inflation erodes mutual fund purchasing power in India. Mathematical deep dive with Fisher equation examples and the step-up SIP antidote for 2026."
 tag: "Inflation"
 tag_color: "emerald"
 featured: false

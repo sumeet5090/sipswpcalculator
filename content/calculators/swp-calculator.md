@@ -1,9 +1,9 @@
 ---
-title: "SWP Calculator India 2026 — Free Step-Up Systematic Withdrawal Planner"
+title: "SWP Calculator India (2026) — Step-Up Withdrawal Planner"
 subtitle: "Free SWP calculator with step-up withdrawals & inflation protection for Indian mutual funds. See how long your corpus lasts, plan retirement income & export yearly tables."
 meta_desc: "Free SWP calculator with step-up withdrawals for Indian mutual funds. Plan inflation-adjusted retirement income & export yearly tables. Updated for 2026."
 keywords: "swp calculator, step up swp calculator, swp calculator with step up, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, best swp calculator, swp retirement calculator 2026, swp tax calculator, swp calculator in mutual fund"
-schema_name: "SWP Calculator India — Free Step-Up Systematic Withdrawal Planner"
+schema_name: "SWP Calculator India (2026) — Step-Up Withdrawal Planner"
 seo_category: "retirement"
 type: "calculator"
 date: "2026-07-05"

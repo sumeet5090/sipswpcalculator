@@ -118,9 +118,9 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
             "SEO Rule Violation: Title '$titleText' on page '$path' is too short (Length: " . strlen($titleText) . ", min: 10)."
         );
         $this->assertLessThanOrEqual(
-            85,
+            65,
             strlen($titleText),
-            "SEO Rule Violation: Title '$titleText' on page '$path' is too long (Length: " . strlen($titleText) . ", max: 85)."
+            "SEO Rule Violation: Title '$titleText' on page '$path' is too long (Length: " . strlen($titleText) . ", max: 65)."
         );
 
         // 3. Meta Description tag Validation
@@ -225,7 +225,8 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
         if (in_array($path, ['/privacy', '/terms'], true)) {
             $this->assertStringContainsString('noindex', $robotsContent, "Page '$path' should be noindex.");
         } else {
-            $this->assertStringContainsString('max-snippet:160', $robotsContent, "Page '$path' missing max-snippet:160 directive.");
+            $this->assertStringContainsString('max-image-preview:large', $robotsContent, "Page '$path' missing max-image-preview:large directive.");
+            $this->assertStringContainsString('max-snippet:-1', $robotsContent, "Page '$path' missing max-snippet:-1 directive.");
         }
 
         // 7. JSON-LD Schema.org Validation

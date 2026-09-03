@@ -1,6 +1,7 @@
 ---
-title: "SWP vs Fixed Deposit 2026: Which Gives Better Retirement Income?"
+title: "SWP vs Fixed Deposit (2026): Which Gives Better Pension Income?"
 subtitle: "The definitive side-by-side comparison of Systematic Withdrawal Plans and Fixed Deposits — with real numbers, tax math, and a clear verdict"
+meta_desc: "Compare Mutual Fund SWP vs Bank Fixed Deposit for retirement income in India. Real numbers, post-tax cashflow math, and a clear verdict for 2026 investors."
 tag: "Comparison"
 tag_color: "amber"
 featured: false

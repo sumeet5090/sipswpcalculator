@@ -1,6 +1,7 @@
 ---
-title: "SIP vs SWP: Building and Enjoying Your Corpus — The Complete Lifecycle Strategy"
+title: "SIP vs SWP Strategy: Complete Wealth Lifecycle Guide (2026)"
 subtitle: "How to smoothly transition from the accumulation phase (SIP) to the distribution phase (SWP) — with the Retirement Red Zone, Bucket Strategy, and a full 50-year lifecycle worked example"
+meta_desc: "Transition seamlessly from mutual fund accumulation (SIP) to retirement distribution (SWP). Master the Retirement Red Zone and 50-year lifecycle cashflow model."
 tag: "Lifecycle"
 tag_color: "indigo"
 featured: false

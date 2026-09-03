@@ -1,6 +1,7 @@
 ---
-title: "20-Year Step-Up SIP Wealth Blueprint: Beat Inflation & Build Wealth"
+title: "20-Year Step-Up SIP Wealth Blueprint: Beat Inflation (2026)"
 subtitle: "How increasing your monthly investment by just 10% every year can transform ₹10,000/month into ₹2.4 crore — the most powerful wealth strategy nobody talks about"
+meta_desc: "See how a 10% annual step-up transforms a ₹10,000 monthly SIP into ₹2.4 Crore over 20 years. Master the top-up compounding formula for long-term Indian wealth."
 tag: "Strategy"
 tag_color: "emerald"
 featured: false

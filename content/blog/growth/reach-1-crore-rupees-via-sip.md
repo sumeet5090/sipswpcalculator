@@ -1,6 +1,7 @@
 ---
-title: "How to Reach ₹1 Crore via SIP in India — Exact Math & Timelines 2026"
+title: "How to Reach ₹1 Crore via SIP in India — Exact Math (2026)"
 subtitle: "The exact monthly SIP amounts, return rates, and step-up strategies needed to hit ₹1 Crore, ₹5 Crore, and ₹10 Crore milestones with Indian Mutual Funds."
+meta_desc: "Calculate the exact monthly SIP amount and timeline needed to build ₹1 Crore in Indian mutual funds. Includes step-up tables for 5, 10, 15, and 20 years."
 tag: "Milestone"
 tag_color: "emerald"
 featured: false

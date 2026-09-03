@@ -5,8 +5,8 @@
 
 {% block content %}
 {% include 'components/theme-glow-blobs.twig' %}
-<header class="relative mb-4 sm:mb-6 text-center">
-    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 mb-3">
+<header class="relative mb-3 sm:mb-5 text-center">
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 mb-2.5">
         <span class="relative flex h-2.5 w-2.5">
             <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
@@ -19,12 +19,12 @@
         <span class="text-slate-800 text-xl sm:text-3xl md:text-4xl block font-bold">Step-Up SIP + Lumpsum + Inflation-Adjusted SWP Planner</span>
     </h1>
     
-    <p class="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
+    <p class="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-3">
         Calculate your combined SIP accumulation and inflation-adjusted SWP retirement cashflows with step-up compounding in one zero-latency simulation studio.
     </p>
 
     <!-- EEAT Institutional Trust Bar -->
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-500 mb-6 pb-4 border-b border-slate-200/60 max-w-3xl mx-auto">
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-500 mb-4 pb-3 border-b border-slate-200/60 max-w-3xl mx-auto">
         <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
             class="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
@@ -42,7 +42,7 @@
     </div>
 
     <!-- Above-The-Fold Interactive Activation CTA & Social Proof -->
-    <div class="flex flex-col items-center justify-center gap-2.5 mb-6 not-prose">
+    <div class="flex flex-col items-center justify-center gap-2 mb-4 not-prose">
         <a href="#calculator-heading"
            class="inline-flex items-center gap-2 px-7 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 hover:shadow-card-hover hover:-translate-y-0.5 transition-all text-sm sm:text-base cursor-pointer"
            aria-label="Start SIP and SWP calculation">
@@ -55,6 +55,12 @@
             <span class="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
             <span><strong class="font-bold text-slate-700 font-financial-mono">{{ weekly_calculations|number_format(0, '.', ',') }}+</strong> calculations run this week</span>
         </p>
+        <div class="inline-flex items-center gap-2 mt-1 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-micro font-bold text-emerald-800">
+            <span>📊</span>
+            <span>Includes Free Excel &amp; CSV Amortization Export</span>
+            <span class="text-slate-300">•</span>
+            <span>Zero Sign-Up</span>
+        </div>
     </div>
 </header>
 

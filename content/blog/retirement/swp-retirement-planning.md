@@ -1,6 +1,7 @@
 ---
 title: "Retirement Planning with SWP 2026: The Complete Masterclass"
 subtitle: "How to build a sustainable retirement income using Systematic Withdrawal Plans — with the Magic Number formula, 3-Bucket Strategy, and year-by-year worked examples"
+meta_desc: "Master retirement planning using Systematic Withdrawal Plans (SWP) in India. Learn the 3-bucket strategy, tax optimization, and year-by-year cashflow models."
 tag: "Planning"
 tag_color: "indigo"
 featured: false
