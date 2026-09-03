@@ -1,6 +1,7 @@
 ---
-title: "Mutual Fund Returns Benchmarks 2026: What Rate Should You Use in Your Calculator?"
+title: "Mutual Fund Return Benchmarks 2026: Real Indian CAGR Rates"
 subtitle: "Historical benchmark tables for India (INR) — so you can pick a realistic, honest rate for your financial plan"
+meta_desc: "Historical mutual fund return benchmarks in India. Discover realistic CAGR assumptions across Large Cap, Mid Cap, Flexi Cap, and Hybrid funds for 2026 plans."
 tag: "Benchmarks"
 tag_color: "amber"
 featured: false

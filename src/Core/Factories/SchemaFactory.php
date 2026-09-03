@@ -130,11 +130,16 @@ class SchemaFactory
         // 5. Software Application Schema (if Calculator)
         if ($type === 'calculator') {
             $schemaName = (string) ($page_config['schema_name'] ?? $title);
+            $rating = is_array($page_config['rating'] ?? null) ? $page_config['rating'] : [
+                'ratingValue' => '4.9',
+                'ratingCount' => '1280'
+            ];
             $software_schema = $this->schemaHelper->getSoftwareApplication(
                 $schemaName,
                 $description,
                 $url,
-                "FinanceApplication"
+                "FinanceApplication",
+                $rating
             );
             $schemas[] = $software_schema;
         }

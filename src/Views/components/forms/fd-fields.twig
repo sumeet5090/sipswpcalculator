@@ -1,0 +1,100 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+
+<!-- Hidden legacy fields to prevent JS errors -->
+<input type="hidden" id="sip" name="sip" value="0">
+<input type="hidden" id="stepup" name="stepup" value="0">
+<input type="hidden" id="lumpsum" name="lumpsum" value="0">
+
+<div class="space-y-4">
+    <div class="mb-2">
+        <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">Fixed Deposit Details</span>
+    </div>
+
+    <!-- Deposit Amount -->
+    {{ inputs.renderInputRangePair({
+        'id': 'fd_principal',
+        'label': 'Total Deposit Amount',
+        'min': 10000,
+        'max': 10000000,
+        'slider_max': 2500000,
+        'step': 10000,
+        'value': 500000,
+        'prefix': '₹',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '₹50k', 'value': 50000},
+            {'label': '₹1L', 'value': 100000},
+            {'label': '₹5L', 'value': 500000},
+            {'label': '₹10L', 'value': 1000000},
+            {'label': '₹25L', 'value': 2500000}
+        ]
+    }) }}
+
+    <!-- Annual Interest Rate -->
+    {{ inputs.renderInputRangePair({
+        'id': 'fd_rate',
+        'label': 'Card Interest Rate (% p.a.)',
+        'min': 3.0,
+        'max': 12.0,
+        'slider_max': 10.0,
+        'step': 0.1,
+        'value': 7.0,
+        'suffix': '%',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '6.5%', 'value': 6.5},
+            {'label': '7.0%', 'value': 7.0},
+            {'label': '7.25%', 'value': 7.25},
+            {'label': '7.5%', 'value': 7.5},
+            {'label': '8.0%', 'value': 8.0}
+        ]
+    }) }}
+
+    <!-- Deposit Duration (Years) -->
+    {{ inputs.renderInputRangePair({
+        'id': 'fd_years',
+        'label': 'Deposit Horizon',
+        'min': 0.25,
+        'max': 10.0,
+        'slider_max': 10.0,
+        'step': 0.25,
+        'value': 3.0,
+        'suffix': 'Yrs',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '1Y', 'value': 1.0},
+            {'label': '2Y', 'value': 2.0},
+            {'label': '3Y', 'value': 3.0},
+            {'label': '5Y', 'value': 5.0},
+            {'label': '10Y', 'value': 10.0}
+        ]
+    }) }}
+
+    <!-- Senior Citizen Privilege Toggle -->
+    <div class="flex items-center justify-between p-3 rounded-2xl bg-white/95 border border-slate-200/90 shadow-subtle hover:border-slate-300 transition-all">
+        <div>
+            <span class="block text-ui-xs font-bold text-slate-800 tracking-tight">Senior Citizen (+0.50% Bonus)</span>
+            <span class="block text-micro text-slate-500 font-medium">Age 60 years or older depositors</span>
+        </div>
+        <label class="toggle-switch relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="fd_senior" name="fd_senior" class="sr-only peer" aria-label="Senior Citizen Interest Bonus">
+            <div class="w-9 h-5 bg-slate-200 peer-focus-visible:ring-2 peer-focus-visible:ring-emerald-400 peer-focus-visible:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+        </label>
+    </div>
+
+    <!-- Payout Frequency Selector -->
+    <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 transition-all duration-200 shadow-subtle hover:shadow-card">
+        <label for="fd_frequency" class="block text-ui-xs font-bold tracking-tight text-slate-800 select-none mb-2">
+            Interest Payout Option
+        </label>
+        <select id="fd_frequency" name="fd_frequency" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl px-3 py-2 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all cursor-pointer">
+            <option value="cumulative" selected>Cumulative (Quarterly Compounding Reinvestment)</option>
+            <option value="monthly">Monthly Payout (Discounted Regular Income)</option>
+            <option value="quarterly">Quarterly Payout (Simple Interest)</option>
+            <option value="annual">Annual Payout</option>
+        </select>
+        <p class="text-micro text-slate-500 mt-1 font-medium">
+            Cumulative mode maximizes wealth through quarterly compounding.
+        </p>
+    </div>
+</div>

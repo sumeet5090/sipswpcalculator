@@ -1,6 +1,7 @@
 ---
-title: "Mutual Fund Tax Rules 2026: The Complete LTCG, STCG & Tax-Efficient Withdrawal Guide"
+title: "Mutual Fund Tax Rules 2026: Complete LTCG & STCG Guide"
 subtitle: "Your definitive guide to mutual fund taxation in India and globally — with worked examples, strategies, and common mistakes to avoid"
+meta_desc: "Master mutual fund tax rules in India for 2026. Understand the ₹1.25L LTCG exemption, 12.5% tax slab, STCG rates, and tax-efficient SWP redemption strategies."
 tag: "Tax"
 tag_color: "amber"
 featured: false

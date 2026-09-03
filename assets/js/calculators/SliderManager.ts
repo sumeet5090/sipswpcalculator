@@ -59,6 +59,10 @@ export class SliderManager {
         this.formatter = formatter;
     }
 
+    public setTriggerFn(fn: () => void): void {
+        this.triggerFn = fn;
+    }
+
     /**
      * Compute elastic slider upper bound when entered value exceeds default bounds.
      */
@@ -401,6 +405,7 @@ export class SliderManager {
         this._updateWordBadge(fieldId, val);
         this._updatePresetChips(fieldId, val);
         this._clearError(fieldId);
+        input.dispatchEvent(new Event('input', { bubbles: true }));
         if (!silent) {
             this.triggerFn();
         }

@@ -13,7 +13,7 @@
     {% set current_uri = request.server('REQUEST_URI', '/') %}
     {% set canonical_url = page_config.canonical|default(site_url ~ current_uri) %}
     <link rel="canonical" href="{{ canonical_url }}">
-    <meta name="robots" content="{{ page_config.robots|default('index, follow, max-snippet:160') }}">
+    <meta name="robots" content="{{ page_config.robots|default('index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1') }}">
 
     <meta name="author" content="{{ page_config.author|default('Sumeet Boga') }}">
 
@@ -92,23 +92,39 @@
             gtag('config', 'G-C3P1ZCY6GR');
         </script>
 
-        <!-- Ahrefs Webmaster Analytics -->
-        <script src="https://analytics.ahrefs.com/analytics.js" data-key="V/q2C7ChUAUvu14EWk7USQ" async></script>
-
-        <!-- Microsoft Clarity -->
-        <script type="text/javascript">
+        <!-- Deferred Analytics (Ahrefs & Microsoft Clarity via requestIdleCallback to protect FCP & TBT) -->
+        <script>
             (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "y1ed7um9dp");
+            })(window, document, "clarity");
+
+            function loadDeferredAnalytics() {
+                var clarityScript = document.createElement("script");
+                clarityScript.async = true;
+                clarityScript.src = "https://www.clarity.ms/tag/y1ed7um9dp";
+                document.head.appendChild(clarityScript);
+
+                var ahrefsScript = document.createElement("script");
+                ahrefsScript.async = true;
+                ahrefsScript.src = "https://analytics.ahrefs.com/analytics.js";
+                ahrefsScript.setAttribute("data-key", "V/q2C7ChUAUvu14EWk7USQ");
+                document.head.appendChild(ahrefsScript);
+            }
+
+            if ('requestIdleCallback' in window) {
+                window.requestIdleCallback(loadDeferredAnalytics, { timeout: 3000 });
+            } else {
+                window.addEventListener('load', function() {
+                    setTimeout(loadDeferredAnalytics, 2000);
+                });
+            }
         </script>
     {% endif %}
     
     {% block head %}{% endblock %}
 </head>
 <body class="{{ page_config.body_class|default('bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emerald-500/20 selection:text-emerald-900') }} overflow-x-clip max-w-full relative" style="{{ page_config.body_style|default('background-image: var(--gradient-surface); background-attachment: fixed;') }}">
-    {% set is_calculator_route = is_calculator|default(false) or (active_page|default('') in ['home', 'sip-calculator', 'swp-calculator', 'sip-step-up-calculator', 'lumpsum-calculator', 'retirement-calculator', 'my-first-crore-calculator', 'target-corpus-calculator']) %}
+    {% set is_calculator_route = is_calculator|default(false) or (active_page|default('') in ['home', 'sip-calculator', 'swp-calculator', 'sip-step-up-calculator', 'lumpsum-calculator', 'retirement-calculator', 'my-first-crore-calculator', 'target-corpus-calculator', 'compound-interest-calculator', 'cagr-calculator', 'emi-calculator', 'inflation-calculator', 'ppf-calculator', 'fd-calculator']) %}
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:p-3 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:shadow-floating focus:z-popover font-bold transition-all">Skip to main content</a>
     <div id="calculator-a11y-live-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
     

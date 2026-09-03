@@ -1,6 +1,7 @@
 ---
-title: "SIP for Beginners 2026: The Complete Step-by-Step Guide to Start Investing"
+title: "SIP for Beginners 2026: Complete Step-by-Step Guide India"
 subtitle: "Everything you need to know about Systematic Investment Plans — from your very first ₹500 to building a crore-plus corpus"
+meta_desc: "The definitive beginner guide to Systematic Investment Plans (SIP) in India. Learn rupee cost averaging, power of compounding, fund types, and how to start."
 tag: "Beginner"
 tag_color: "emerald"
 featured: true

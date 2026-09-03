@@ -1,6 +1,7 @@
 ---
-title: "The 4% SWP Rule Explained: How to Make Your Retirement Money Last Forever"
+title: "The 4% SWP Rule Explained: Make Retirement Money Last (2026)"
 subtitle: "A complete guide to the 4% Safe Withdrawal Rate — its origins, the math behind it, when to use 3.5% instead, and how to stress-test your plan against sequence-of-returns risk"
+meta_desc: "Understand the 4% safe withdrawal rate for Indian retirees. Math breakdown, sequence of returns risk, and why 3.5% with step-up SWP works better in India."
 tag: "Strategy"
 tag_color: "indigo"
 featured: false

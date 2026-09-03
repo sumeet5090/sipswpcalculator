@@ -19,7 +19,6 @@
         "sip-to-swp-transition-guide": "retirement/sip-vs-swp-wealth-creation-withdrawal-strategy"
     },
     "stubs": {
-        "/compound-interest-calculator": "/sip-calculator",
         "/dollar-cost-averaging-tool": "/sip-calculator",
         "/mutual-fund-calculator": "/sip-calculator",
         "/retirement-drawdown-planner": "/swp-calculator",

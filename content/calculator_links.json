@@ -152,5 +152,137 @@
             "title": "SIP Calculator",
             "description": "Standard mutual fund SIP calculator for flexible contribution and duration modeling."
         }
+    ],
+    "compound-interest-calculator": [
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator",
+            "description": "Compare one-time compound interest growth with monthly disciplined SIP wealth accumulation."
+        },
+        {
+            "href": "/lumpsum-calculator",
+            "title": "Lumpsum Calculator",
+            "description": "Calculate returns on one-time mutual fund investments with market-linked CAGR projections."
+        },
+        {
+            "href": "/cagr-calculator",
+            "title": "CAGR Calculator",
+            "description": "Calculate the exact annualized compound growth rate delivered by your investment portfolio."
+        },
+        {
+            "href": "/inflation-calculator",
+            "title": "Inflation Calculator",
+            "description": "Calculate real post-inflation purchasing power on your compounded investment corpus."
+        }
+    ],
+    "cagr-calculator": [
+        {
+            "href": "/compound-interest-calculator",
+            "title": "Compound Interest Calculator",
+            "description": "Model periodic compounding growth across annual, quarterly, and monthly frequencies."
+        },
+        {
+            "href": "/lumpsum-calculator",
+            "title": "Lumpsum Calculator",
+            "description": "Simulate future maturity values for single one-time mutual fund investments."
+        },
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator",
+            "description": "Calculate future wealth created through recurring monthly SIP investments."
+        },
+        {
+            "href": "/inflation-calculator",
+            "title": "Inflation Calculator",
+            "description": "Determine your real rate of return by factoring annual inflation into your CAGR."
+        }
+    ],
+    "emi-calculator": [
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator",
+            "description": "Start an investment SIP alongside your loan EMI to create wealth and offset interest costs."
+        },
+        {
+            "href": "/compound-interest-calculator",
+            "title": "Compound Interest Calculator",
+            "description": "See how investing the same monthly amount in compounding assets compares to paying interest."
+        },
+        {
+            "href": "/target-corpus-calculator",
+            "title": "Target Corpus Calculator",
+            "description": "Plan your loan prepayment corpus by setting a specific financial milestone."
+        },
+        {
+            "href": "/inflation-calculator",
+            "title": "Inflation Calculator",
+            "description": "Understand how inflation reduces the real financial burden of fixed EMIs over time."
+        }
+    ],
+    "inflation-calculator": [
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Model inflation-adjusted monthly systematic withdrawals for sustainable retirement cash flow."
+        },
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Calculate target retirement corpus while factoring in future healthcare and lifestyle inflation."
+        },
+        {
+            "href": "/sip-step-up-calculator",
+            "title": "Step-Up SIP Calculator",
+            "description": "Beat inflation by increasing your monthly mutual fund investments by 10% each year."
+        },
+        {
+            "href": "/compound-interest-calculator",
+            "title": "Compound Interest Calculator",
+            "description": "Calculate how compounding accelerates wealth growth faster than the rate of inflation."
+        }
+    ],
+    "ppf-calculator": [
+        {
+            "href": "/fd-calculator",
+            "title": "Fixed Deposit Calculator",
+            "description": "Compare risk-free sovereign PPF returns with quarterly compounding commercial bank fixed deposits."
+        },
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator India",
+            "description": "Pair safe PPF debt allocation with wealth-creating equity mutual fund SIPs for optimal asset allocation."
+        },
+        {
+            "href": "/compound-interest-calculator",
+            "title": "Compound Interest Calculator",
+            "description": "Analyze how annual compounding in PPF accelerates wealth accumulation over 15 to 30 year horizons."
+        },
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Factor your sovereign tax-free PPF maturity corpus into your comprehensive Indian retirement plan."
+        }
+    ],
+    "fd-calculator": [
+        {
+            "href": "/ppf-calculator",
+            "title": "PPF Calculator India",
+            "description": "Compare taxable bank fixed deposit yields with 100% tax-free Public Provident Fund returns."
+        },
+        {
+            "href": "/compound-interest-calculator",
+            "title": "Compound Interest Calculator",
+            "description": "See how quarterly compounding in bank FDs compares with monthly and annual compounding schedules."
+        },
+        {
+            "href": "/inflation-calculator",
+            "title": "Inflation Calculator",
+            "description": "Calculate your post-tax real rate of return on bank FDs after accounting for Indian CPI inflation."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Compare regular monthly FD interest payouts with tax-efficient mutual fund Systematic Withdrawal Plans."
+        }
     ]
 }

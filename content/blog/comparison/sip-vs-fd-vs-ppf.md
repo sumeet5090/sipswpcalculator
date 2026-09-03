@@ -1,6 +1,7 @@
 ---
-title: "SIP vs FD vs PPF 2026: Compare Mutual Fund Returns (Tax Math)"
+title: "SIP vs FD vs PPF 2026: Compare Real Returns & Tax Math India"
 subtitle: "The complete guide to choosing between Equity SIP, Bank Fixed Deposit, and PPF — with real numbers, tax math, and the ideal allocation strategy by age"
+meta_desc: "Compare Equity SIP, Bank Fixed Deposit, and PPF in India. Discover post-tax returns, lock-in rules, inflation impact, and optimal age-based asset allocation."
 tag: "Comparison"
 tag_color: "amber"
 featured: true

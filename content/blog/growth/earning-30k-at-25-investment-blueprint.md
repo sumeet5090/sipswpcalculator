@@ -1,6 +1,7 @@
 ---
-title: "Earning ₹30,000/Month at Age 25? Investment Blueprint India (2026)"
+title: "Earning ₹30K at Age 25? Investment Blueprint India (2026)"
 subtitle: "A step-by-step financial plan to start investing for long-term compounding. Build a crore-plus corpus using Step-Up SIPs and emergency funds in India."
+meta_desc: "Step-by-step investment blueprint for young professionals earning ₹30,000/month in India. Build a ₹1 Crore+ corpus with emergency funds and Step-Up SIPs."
 tag: "Blueprint"
 tag_color: "emerald"
 featured: false

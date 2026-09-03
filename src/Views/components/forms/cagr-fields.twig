@@ -1,0 +1,72 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+
+<!-- Hidden legacy fields to prevent JS errors -->
+<input type="hidden" id="sip" name="sip" value="0">
+<input type="hidden" id="stepup" name="stepup" value="0">
+<input type="hidden" id="lumpsum" name="lumpsum" value="0">
+
+<div class="space-y-4">
+    <div class="mb-2">
+        <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">CAGR Inputs</span>
+    </div>
+
+    <!-- Initial Investment Value (V_begin) -->
+    {{ inputs.renderInputRangePair({
+        'id': 'cagr_initial',
+        'label': 'Initial Investment (Starting Value)',
+        'min': 1000,
+        'max': 10000000,
+        'slider_max': 2500000,
+        'step': 5000,
+        'value': 100000,
+        'prefix': '₹',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '₹25k', 'value': 25000},
+            {'label': '₹50k', 'value': 50000},
+            {'label': '₹1L', 'value': 100000},
+            {'label': '₹5L', 'value': 500000},
+            {'label': '₹10L', 'value': 1000000}
+        ]
+    }) }}
+
+    <!-- Final Investment Value (V_final) -->
+    {{ inputs.renderInputRangePair({
+        'id': 'cagr_final',
+        'label': 'Final Value (Current Portfolio / Target)',
+        'min': 1000,
+        'max': 50000000,
+        'slider_max': 10000000,
+        'step': 10000,
+        'value': 250000,
+        'prefix': '₹',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '₹1L', 'value': 100000},
+            {'label': '₹2.5L', 'value': 250000},
+            {'label': '₹5L', 'value': 500000},
+            {'label': '₹10L', 'value': 1000000},
+            {'label': '₹25L', 'value': 2500000}
+        ]
+    }) }}
+
+    <!-- Holding Duration (Years) -->
+    {{ inputs.renderInputRangePair({
+        'id': 'cagr_years',
+        'label': 'Holding Tenure (Years)',
+        'min': 0.5,
+        'max': 40,
+        'slider_max': 25,
+        'step': 0.5,
+        'value': 5.0,
+        'suffix': 'Yrs',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '1Y', 'value': 1.0},
+            {'label': '3Y', 'value': 3.0},
+            {'label': '5Y', 'value': 5.0},
+            {'label': '7Y', 'value': 7.0},
+            {'label': '10Y', 'value': 10.0}
+        ]
+    }) }}
+</div>

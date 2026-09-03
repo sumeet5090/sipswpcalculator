@@ -163,15 +163,39 @@
 
                             {% if calculator_type == 'swp' %}
                                 <div class="mb-2">
-                                    <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">Your Corpus</span>
+                                     <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">Your Corpus</span>
                                 </div>
                                 {% include 'components/forms/corpus-field.twig' %}
                                 <div class="mb-2 mt-4">
-                                    <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">SWP Details</span>
+                                     <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">SWP Details</span>
                                 </div>
                                 <div id="swp-fields">
-                                    {% include 'components/forms/swp-fields.twig' %}
+                                     {% include 'components/forms/swp-fields.twig' %}
                                 </div>
+                            {% endif %}
+
+                            {% if calculator_type == 'compound_interest' %}
+                                {% include 'components/forms/compound-interest-fields.twig' %}
+                            {% endif %}
+
+                            {% if calculator_type == 'cagr' %}
+                                {% include 'components/forms/cagr-fields.twig' %}
+                            {% endif %}
+
+                            {% if calculator_type == 'emi' %}
+                                {% include 'components/forms/emi-fields.twig' %}
+                            {% endif %}
+
+                            {% if calculator_type == 'inflation' %}
+                                {% include 'components/forms/inflation-fields.twig' %}
+                            {% endif %}
+
+                            {% if calculator_type == 'ppf' %}
+                                {% include 'components/forms/ppf-fields.twig' %}
+                            {% endif %}
+
+                            {% if calculator_type == 'fd' %}
+                                {% include 'components/forms/fd-fields.twig' %}
                             {% endif %}
                         </div>
                     {% endif %}

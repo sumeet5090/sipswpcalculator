@@ -14,9 +14,15 @@ class StrategyFactory
         'swp-calculator'            => SwpStrategy::class,
         'sip-step-up-calculator'    => SipStrategy::class,
         'lumpsum-calculator'        => LumpsumStrategy::class,
-        'retirement-calculator'     => ComboStrategy::class,
-        'my-first-crore-calculator' => TargetCorpusStrategy::class,
-        'target-corpus-calculator'  => TargetCorpusStrategy::class,
+        'retirement-calculator'        => ComboStrategy::class,
+        'my-first-crore-calculator'    => TargetCorpusStrategy::class,
+        'target-corpus-calculator'     => TargetCorpusStrategy::class,
+        'compound-interest-calculator' => CompoundInterestStrategy::class,
+        'cagr-calculator'              => CagrStrategy::class,
+        'emi-calculator'               => EmiStrategy::class,
+        'inflation-calculator'         => InflationStrategy::class,
+        'ppf-calculator'               => PpfStrategy::class,
+        'fd-calculator'                => FdStrategy::class,
     ];
 
     private ConfigServiceInterface $configService;
