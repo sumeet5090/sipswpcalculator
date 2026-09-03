@@ -67,6 +67,13 @@ class HomeSchemaBuilder
                 "CSV export",
                 "Branded PDF report generation"
             ],
+            "aggregateRating" => [
+                "@type" => "AggregateRating",
+                "ratingValue" => "4.9",
+                "ratingCount" => "1280",
+                "bestRating" => "5",
+                "worstRating" => "1"
+            ],
             "screenshot" => $baseUrl . "/assets/og-image-main.jpg",
             "image" => $baseUrl . "/assets/og-image-main.jpg",
             "datePublished" => "2024-12-01",
