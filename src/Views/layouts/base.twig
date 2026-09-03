@@ -124,7 +124,7 @@
     {% block head %}{% endblock %}
 </head>
 <body class="{{ page_config.body_class|default('bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emerald-500/20 selection:text-emerald-900') }} overflow-x-clip max-w-full relative" style="{{ page_config.body_style|default('background-image: var(--gradient-surface); background-attachment: fixed;') }}">
-    {% set is_calculator_route = is_calculator|default(false) or (active_page|default('') in ['home', 'sip-calculator', 'swp-calculator', 'sip-step-up-calculator', 'lumpsum-calculator', 'retirement-calculator', 'my-first-crore-calculator', 'target-corpus-calculator']) %}
+    {% set is_calculator_route = is_calculator|default(false) or (active_page|default('') in ['home', 'sip-calculator', 'swp-calculator', 'sip-step-up-calculator', 'lumpsum-calculator', 'retirement-calculator', 'my-first-crore-calculator', 'target-corpus-calculator', 'compound-interest-calculator', 'cagr-calculator', 'emi-calculator', 'inflation-calculator']) %}
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:p-3 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:shadow-floating focus:z-popover font-bold transition-all">Skip to main content</a>
     <div id="calculator-a11y-live-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
     

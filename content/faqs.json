@@ -501,5 +501,125 @@
         ],
         "q": "How does inflation affect my target corpus calculation?",
         "a": "An expense of \u20b950,000/month today will require ~\u20b91.60 Lakh/month in 20 years assuming 6% annual inflation. Financial planning requires setting your target corpus in future-inflated terms so that your accumulated capital retains full purchasing power when reaching the goal date."
+    },
+    {
+        "id": "ci-frequency-impact",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "compound-interest-calculator"
+        ],
+        "q": "How does compounding frequency affect my investment returns?",
+        "a": "The more frequently interest compounds (e.g. monthly vs annually), the higher your Effective Annual Rate (EAR). For example, 12% annual interest compounded monthly yields an effective annual return of 12.68% because interest earned in Month 1 begins generating its own returns in Month 2."
+    },
+    {
+        "id": "ci-rule-of-72",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "compound-interest-calculator"
+        ],
+        "q": "What is the Rule of 72 in compound interest?",
+        "a": "The Rule of 72 is a quick financial shortcut to estimate how many years it will take to double your money. Divide 72 by your expected annual return rate. At 12% p.a., your capital doubles in approximately 6 years (72 / 12 = 6)."
+    },
+    {
+        "id": "cagr-vs-absolute",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "cagr-calculator"
+        ],
+        "q": "What is the difference between CAGR and Absolute Return?",
+        "a": "Absolute Return measures the total percentage gain or loss without considering time duration, while CAGR (Compound Annual Growth Rate) annualizes your return over the entire investment holding period. A 100% absolute return sounds impressive, but over 10 years it equals a modest CAGR of 7.18%."
+    },
+    {
+        "id": "cagr-for-sip",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "cagr-calculator"
+        ],
+        "q": "Can I use CAGR to calculate returns on my SIP investments?",
+        "a": "No, CAGR only works for one-time point-to-point lump sum investments. Because SIP installments enter the market on different dates at varying NAVs, you must use XIRR (Extended Internal Rate of Return) to accurately measure SIP performance."
+    },
+    {
+        "id": "emi-reducing-vs-flat",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "emi-calculator"
+        ],
+        "q": "What is the difference between Reducing Balance and Flat Rate EMI?",
+        "a": "Under a reducing balance loan (standard for home and car loans in India), interest is calculated only on the remaining unpaid principal each month. Under a flat rate loan, interest is calculated on the original total loan amount throughout the tenure, making flat rate loans significantly more expensive in reality."
+    },
+    {
+        "id": "emi-prepayment-benefit",
+        "category": "strategies",
+        "tags": [
+            "faq-page",
+            "emi-calculator"
+        ],
+        "q": "How does loan prepayment reduce total EMI interest?",
+        "a": "Prepayments go directly toward reducing your outstanding principal balance rather than interest. By lowering the principal early in the loan tenure, future compounding interest charges decrease substantially, cutting years off your loan repayment schedule."
+    },
+    {
+        "id": "inflation-real-rate",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "inflation-calculator"
+        ],
+        "q": "What is the real rate of return after inflation in India?",
+        "a": "The real rate of return equals your nominal investment return minus the inflation rate and tax. If a fixed deposit earns 7% interest and inflation is 6%, your real pre-tax return is only 1%. After paying 30% slab tax, your net real return becomes negative, eroding your purchasing power."
+    },
+    {
+        "id": "inflation-rule-of-70",
+        "category": "retirement",
+        "tags": [
+            "faq-page",
+            "inflation-calculator"
+        ],
+        "q": "How does inflation impact retirement planning?",
+        "a": "At an average Indian consumer inflation rate of 6% p.a., monthly living expenses double every 12 years. A family needing \u20b950,000 per month today will require over \u20b91,60,000 per month in 20 years just to maintain the exact same standard of living."
+    },
+    {
+        "id": "ci-vs-simple-interest",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "compound-interest-calculator"
+        ],
+        "q": "What is the main difference between simple and compound interest?",
+        "a": "Simple interest is calculated exclusively on the initial deposit throughout the tenure. Compound interest is calculated on the principal plus all accumulated interest from previous periods, causing wealth to grow exponentially over time rather than linearly."
+    },
+    {
+        "id": "cagr-negative-returns",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "cagr-calculator"
+        ],
+        "q": "Can CAGR be negative?",
+        "a": "Yes, if an investment's final value is lower than its initial purchase price, the resulting CAGR is negative, indicating an annualized capital loss. A complete loss of capital (value drops to zero) results in a -100% CAGR."
+    },
+    {
+        "id": "emi-tenure-impact",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "emi-calculator"
+        ],
+        "q": "How does loan tenure affect my monthly EMI and total interest?",
+        "a": "A longer loan tenure reduces your monthly EMI payment, making it more affordable in the short term, but drastically increases the total cumulative interest paid over the life of the loan. A shorter tenure requires higher monthly EMIs but saves lakhs in interest."
+    },
+    {
+        "id": "inflation-hedging-assets",
+        "category": "strategies",
+        "tags": [
+            "faq-page",
+            "inflation-calculator"
+        ],
+        "q": "Which Indian asset classes provide the best hedge against inflation?",
+        "a": "Historically, diversified equity mutual funds (averaging 12% to 14% long-term CAGR) and sovereign gold bonds (8% to 10% CAGR) provide the strongest inflation-beating real returns in India, whereas cash and traditional bank fixed deposits struggle to outpace inflation post-tax."
     }
 ]

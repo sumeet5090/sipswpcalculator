@@ -4,6 +4,10 @@ import { QrCodeGenerator } from '../assets/js/utils/QrCodeGenerator.ts';
 import { IndianNumberParser } from '../assets/js/calculators/helpers/IndianNumberParser.ts';
 import { SliderCurveHelper } from '../assets/js/calculators/helpers/SliderCurveHelper.ts';
 import { NaturalLanguageQueryParser } from '../assets/js/calculators/helpers/NaturalLanguageQueryParser.ts';
+import { CompoundInterestEngine } from '../assets/js/calculators/engines/CompoundInterestEngine.ts';
+import { CagrEngine } from '../assets/js/calculators/engines/CagrEngine.ts';
+import { EmiEngine } from '../assets/js/calculators/engines/EmiEngine.ts';
+import { InflationEngine } from '../assets/js/calculators/engines/InflationEngine.ts';
 
 try {
     // Read input parameters JSON from command line arguments
@@ -135,6 +139,35 @@ try {
     } else if (inputArgs.action === 'safe_swp_withdrawal') {
         const res = MathEngine.calculateSafeSwpWithdrawal(inputArgs.inputs, inputArgs.starting_corpus);
         console.log(JSON.stringify({ result: res }));
+    } else if (inputArgs.action === 'compound_interest') {
+        const res = CompoundInterestEngine.calculate(
+            inputArgs.principal,
+            inputArgs.annual_rate,
+            inputArgs.years,
+            inputArgs.compounding_frequency
+        );
+        console.log(JSON.stringify(res));
+    } else if (inputArgs.action === 'cagr') {
+        const res = CagrEngine.calculate(
+            inputArgs.beginning_value,
+            inputArgs.ending_value,
+            inputArgs.years
+        );
+        console.log(JSON.stringify(res));
+    } else if (inputArgs.action === 'emi') {
+        const res = EmiEngine.calculate(
+            inputArgs.principal,
+            inputArgs.annual_rate,
+            inputArgs.tenure_years
+        );
+        console.log(JSON.stringify(res));
+    } else if (inputArgs.action === 'inflation') {
+        const res = InflationEngine.calculate(
+            inputArgs.present_value,
+            inputArgs.inflation_rate,
+            inputArgs.years
+        );
+        console.log(JSON.stringify(res));
     } else if (inputArgs.action === 'generate_qr_test') {
         const matrix = QrCodeGenerator.generateMatrix(inputArgs.text);
         console.log(JSON.stringify({
