@@ -66,4 +66,74 @@ class EmiEngineTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->engine->calculate(500000.0, 9.0, 0);
     }
+
+    public function testMaximumThirtyYearsHomeLoanConvergence(): void
+    {
+        // 30-year home loan: ₹50 Lakh at 9%
+        $principal = 5000000.0;
+        $result = $this->engine->calculate($principal, 9.0, 30);
+
+        $this->assertEquals(30, $result['tenure_years']);
+        $this->assertCount(30, $result['schedule']);
+        $this->assertEquals(0.0, $result['schedule'][29]['closing_balance']);
+
+        $sumPrincipal = 0.0;
+        $sumInterest = 0.0;
+        for ($i = 0; $i < 30; $i++) {
+            $row = $result['schedule'][$i];
+            $sumPrincipal += $row['principal_paid'];
+            $sumInterest += $row['interest_paid'];
+            $this->assertEqualsWithDelta($row['opening_balance'] - $row['principal_paid'], $row['closing_balance'], 0.05);
+
+            if ($i > 0) {
+                $this->assertEqualsWithDelta($result['schedule'][$i - 1]['closing_balance'], $row['opening_balance'], 0.05);
+            }
+        }
+
+        $this->assertEqualsWithDelta($principal, $sumPrincipal, 0.05);
+        $this->assertEqualsWithDelta($result['total_interest'], $sumInterest, 0.05);
+    }
+
+    public function testShortOneYearLoan(): void
+    {
+        // 1-year consumer loan: ₹6 Lakh at 12%
+        $result = $this->engine->calculate(600000.0, 12.0, 1);
+
+        $this->assertEquals(1, $result['tenure_years']);
+        $this->assertCount(1, $result['schedule']);
+        $this->assertEquals(53309.27, $result['monthly_emi']);
+        $this->assertEquals(0.0, $result['schedule'][0]['closing_balance']);
+        $this->assertEquals(600000.0, $result['schedule'][0]['principal_paid']);
+    }
+
+    public function testHighInterestPersonalLoan(): void
+    {
+        // Unsecured personal loan: ₹5 Lakh at 21% for 3 years
+        $result = $this->engine->calculate(500000.0, 21.0, 3);
+
+        $this->assertEquals(18837.53, $result['monthly_emi']);
+        $this->assertGreaterThan(170000.0, $result['total_interest']);
+        $this->assertGreaterThan(30.0, $result['interest_ratio_percentage']);
+    }
+
+    public function testLowInterestSubsidizedLoan(): void
+    {
+        // Priority sector agricultural/education loan: ₹10 Lakh at 4.5% for 10 years
+        $result = $this->engine->calculate(1000000.0, 4.5, 10);
+
+        $this->assertEquals(10363.84, $result['monthly_emi']);
+        $this->assertLessThan(250000.0, $result['total_interest']);
+        $this->assertEquals(0.0, $result['schedule'][9]['closing_balance']);
+    }
+
+    public function testInstitutionalCommercialLoan(): void
+    {
+        // ₹10 Crore commercial mortgage at 8.75% for 15 years
+        $principal = 100000000.0;
+        $result = $this->engine->calculate($principal, 8.75, 15);
+
+        $this->assertEquals($principal, $result['principal']);
+        $this->assertGreaterThan(990000.0, $result['monthly_emi']);
+        $this->assertEquals(0.0, $result['schedule'][14]['closing_balance']);
+    }
 }

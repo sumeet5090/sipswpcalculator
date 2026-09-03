@@ -578,7 +578,11 @@ $ciCases = [
     ['principal' => 100000.0, 'annual_rate' => 10.0, 'years' => 5, 'compounding_frequency' => 1],
     ['principal' => 50000.0, 'annual_rate' => 12.0, 'years' => 3, 'compounding_frequency' => 12],
     ['principal' => 200000.0, 'annual_rate' => 8.0, 'years' => 2, 'compounding_frequency' => 4],
-    ['principal' => 1500000.0, 'annual_rate' => 14.5, 'years' => 15, 'compounding_frequency' => 1]
+    ['principal' => 1500000.0, 'annual_rate' => 14.5, 'years' => 15, 'compounding_frequency' => 1],
+    ['principal' => 1000000.0, 'annual_rate' => 7.0, 'years' => 1, 'compounding_frequency' => 365],
+    ['principal' => 500000.0, 'annual_rate' => 9.0, 'years' => 3, 'compounding_frequency' => 2],
+    ['principal' => 750000.0, 'annual_rate' => 8.375, 'years' => 4, 'compounding_frequency' => 12],
+    ['principal' => 1000000.0, 'annual_rate' => 12.0, 'years' => 30, 'compounding_frequency' => 12]
 ];
 
 foreach ($ciCases as $idx => $ciParams) {
@@ -620,7 +624,11 @@ $cagrCases = [
     ['beginning_value' => 100000.0, 'ending_value' => 200000.0, 'years' => 5.0],
     ['beginning_value' => 50000.0, 'ending_value' => 75000.0, 'years' => 2.5],
     ['beginning_value' => 100000.0, 'ending_value' => 60000.0, 'years' => 3.0],
-    ['beginning_value' => 2500000.0, 'ending_value' => 15000000.0, 'years' => 12.0]
+    ['beginning_value' => 2500000.0, 'ending_value' => 15000000.0, 'years' => 12.0],
+    ['beginning_value' => 100000.0, 'ending_value' => 100000.0, 'years' => 5.0],
+    ['beginning_value' => 100000.0, 'ending_value' => 5000000.0, 'years' => 7.0],
+    ['beginning_value' => 100000.0, 'ending_value' => 105000.0, 'years' => 0.25],
+    ['beginning_value' => 100000.0, 'ending_value' => 1.0, 'years' => 5.0]
 ];
 
 foreach ($cagrCases as $idx => $cagrParams) {
@@ -660,7 +668,11 @@ $emiCases = [
     ['principal' => 2500000.0, 'annual_rate' => 8.5, 'tenure_years' => 20],
     ['principal' => 800000.0, 'annual_rate' => 9.2, 'tenure_years' => 7],
     ['principal' => 500000.0, 'annual_rate' => 11.5, 'tenure_years' => 3],
-    ['principal' => 5000000.0, 'annual_rate' => 8.0, 'tenure_years' => 30]
+    ['principal' => 5000000.0, 'annual_rate' => 8.0, 'tenure_years' => 30],
+    ['principal' => 600000.0, 'annual_rate' => 12.0, 'tenure_years' => 1],
+    ['principal' => 500000.0, 'annual_rate' => 21.0, 'tenure_years' => 3],
+    ['principal' => 1000000.0, 'annual_rate' => 4.5, 'tenure_years' => 10],
+    ['principal' => 100000000.0, 'annual_rate' => 8.75, 'tenure_years' => 15]
 ];
 
 foreach ($emiCases as $idx => $emiParams) {
@@ -700,7 +712,10 @@ $inflationCases = [
     ['present_value' => 1000000.0, 'inflation_rate' => 6.0, 'years' => 10],
     ['present_value' => 500000.0, 'inflation_rate' => 7.0, 'years' => 20],
     ['present_value' => 2500000.0, 'inflation_rate' => 5.5, 'years' => 25],
-    ['present_value' => 50000.0, 'inflation_rate' => 8.0, 'years' => 5]
+    ['present_value' => 50000.0, 'inflation_rate' => 8.0, 'years' => 5],
+    ['present_value' => 100000.0, 'inflation_rate' => 20.0, 'years' => 10],
+    ['present_value' => 50000.0, 'inflation_rate' => 6.5, 'years' => 40],
+    ['present_value' => 250000.0, 'inflation_rate' => 5.85, 'years' => 15]
 ];
 
 foreach ($inflationCases as $idx => $infParams) {
@@ -742,6 +757,9 @@ $ppfCases = [
     ['yearly_deposit' => 150000.0, 'interest_rate' => 7.1, 'tenure_years' => 15, 'deposit_timing' => 'beginning'],
     ['yearly_deposit' => 50000.0, 'interest_rate' => 7.1, 'tenure_years' => 20, 'deposit_timing' => 'beginning'],
     ['yearly_deposit' => 120000.0, 'interest_rate' => 7.1, 'tenure_years' => 15, 'deposit_timing' => 'monthly'],
+    ['yearly_deposit' => 500.0, 'interest_rate' => 7.1, 'tenure_years' => 15, 'deposit_timing' => 'beginning'],
+    ['yearly_deposit' => 150000.0, 'interest_rate' => 7.1, 'tenure_years' => 35, 'deposit_timing' => 'beginning'],
+    ['yearly_deposit' => 100000.0, 'interest_rate' => 8.0, 'tenure_years' => 15, 'deposit_timing' => 'monthly']
 ];
 
 foreach ($ppfCases as $idx => $pParams) {
@@ -786,6 +804,11 @@ $fdCases = [
     ['principal' => 500000.0, 'annual_rate' => 7.5, 'duration_years' => 3.0, 'is_senior_citizen' => true, 'payout_frequency' => 'cumulative'],
     ['principal' => 1000000.0, 'annual_rate' => 8.0, 'duration_years' => 2.0, 'is_senior_citizen' => false, 'payout_frequency' => 'quarterly'],
     ['principal' => 200000.0, 'annual_rate' => 6.5, 'duration_years' => 5.0, 'is_senior_citizen' => false, 'payout_frequency' => 'monthly'],
+    ['principal' => 1200000.0, 'annual_rate' => 7.5, 'duration_years' => 2.0, 'is_senior_citizen' => false, 'payout_frequency' => 'monthly'],
+    ['principal' => 1000000.0, 'annual_rate' => 7.0, 'duration_years' => 3.0, 'is_senior_citizen' => false, 'payout_frequency' => 'annual'],
+    ['principal' => 800000.0, 'annual_rate' => 7.0, 'duration_years' => 1.0, 'is_senior_citizen' => true, 'payout_frequency' => 'cumulative'],
+    ['principal' => 100000.0, 'annual_rate' => 8.0, 'duration_years' => 0.25, 'is_senior_citizen' => false, 'payout_frequency' => 'cumulative'],
+    ['principal' => 1000000.0, 'annual_rate' => 7.0, 'duration_years' => 10.0, 'is_senior_citizen' => false, 'payout_frequency' => 'cumulative']
 ];
 
 foreach ($fdCases as $idx => $fParams) {

@@ -60,6 +60,60 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertSame('combo', $strategy->getType());
     }
 
+    public function testCreateCompoundInterestStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('compound-interest-calculator');
+        $this->assertInstanceOf(\Core\Strategies\CompoundInterestStrategy::class, $strategy);
+        $this->assertSame('compound_interest', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+    }
+
+    public function testCreateCagrStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('cagr-calculator');
+        $this->assertInstanceOf(\Core\Strategies\CagrStrategy::class, $strategy);
+        $this->assertSame('cagr', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+    }
+
+    public function testCreateEmiStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('emi-calculator');
+        $this->assertInstanceOf(\Core\Strategies\EmiStrategy::class, $strategy);
+        $this->assertSame('emi', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+    }
+
+    public function testCreateInflationStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('inflation-calculator');
+        $this->assertInstanceOf(\Core\Strategies\InflationStrategy::class, $strategy);
+        $this->assertSame('inflation', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+    }
+
+    public function testCreatePpfStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('ppf-calculator');
+        $this->assertInstanceOf(\Core\Strategies\PpfStrategy::class, $strategy);
+        $this->assertSame('ppf', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+    }
+
+    public function testCreateFdStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('fd-calculator');
+        $this->assertInstanceOf(\Core\Strategies\FdStrategy::class, $strategy);
+        $this->assertSame('fd', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+    }
+
     public function testCreateThrowsForUnmappedSlug(): void
     {
         $this->expectException(\DomainException::class);

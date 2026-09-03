@@ -79,4 +79,87 @@ class SpecializedCalculatorsMarkupTest extends IntegrationTestCase
             );
         }
     }
+
+    #[DataProvider('specializedCalculatorsProvider')]
+    public function testSpecializedCalculatorHasNoDuplicateElementIds(string $route, array $expectedFieldIds = []): void
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'http://127.0.0.1:9007' . $route);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        $html = (string)curl_exec($ch);
+
+        $dom = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($html);
+        libxml_clear_errors();
+
+        $xpath = new \DOMXPath($dom);
+        $elementsWithId = $xpath->query('//*[@id]');
+        $this->assertNotFalse($elementsWithId);
+
+        $ids = [];
+        foreach ($elementsWithId as $element) {
+            if ($element instanceof \DOMElement) {
+                $id = $element->getAttribute('id');
+                if ($id !== '') {
+                    $ids[] = $id;
+                }
+            }
+        }
+
+        $uniqueIds = array_unique($ids);
+        $duplicates = array_diff_assoc($ids, $uniqueIds);
+
+        $this->assertEmpty(
+            $duplicates,
+            sprintf(
+                "Page '%s' contains duplicate element IDs: [%s]",
+                $route,
+                implode(', ', array_unique($duplicates))
+            )
+        );
+    }
+
+    #[DataProvider('specializedCalculatorsProvider')]
+    public function testSpecializedCalculatorHasValidJsonLdSchemas(string $route, array $expectedFieldIds = []): void
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'http://127.0.0.1:9007' . $route);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        $html = (string)curl_exec($ch);
+
+        $this->assertMatchesRegularExpression('/"@type"\s*:\s*"SoftwareApplication"/', $html, "Page {$route} missing SoftwareApplication JSON-LD schema");
+        $this->assertMatchesRegularExpression('/"@type"\s*:\s*"FAQPage"/', $html, "Page {$route} missing FAQPage JSON-LD schema");
+    }
+
+    #[DataProvider('specializedCalculatorsProvider')]
+    public function testSpecializedCalculatorInteractiveAttributes(string $route, array $expectedFieldIds = []): void
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'http://127.0.0.1:9007' . $route);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        $html = (string)curl_exec($ch);
+
+        // Assert all range sliders have min, max, step
+        preg_match_all('/<input[^>]+type="range"[^>]*>/i', $html, $matches);
+        $this->assertNotEmpty($matches[0], "Page {$route} has no range sliders");
+
+        foreach ($matches[0] as $sliderHtml) {
+            $this->assertMatchesRegularExpression('/min="[0-9.]+"/', $sliderHtml, "Slider missing min attribute: {$sliderHtml}");
+            $this->assertMatchesRegularExpression('/max="[0-9.]+"/', $sliderHtml, "Slider missing max attribute: {$sliderHtml}");
+            $this->assertMatchesRegularExpression('/step="[0-9.]+"/', $sliderHtml, "Slider missing step attribute: {$sliderHtml}");
+        }
+
+        // Assert preset chips (if present) have valid numeric data-preset-val
+        preg_match_all('/data-preset-val="([^"]+)"/i', $html, $chipMatches);
+        if (!empty($chipMatches[1])) {
+            foreach ($chipMatches[1] as $presetVal) {
+                $this->assertTrue(is_numeric($presetVal), "Invalid non-numeric preset value '{$presetVal}' in {$route}");
+                $this->assertGreaterThan(0, (float)$presetVal);
+            }
+        }
+    }
 }

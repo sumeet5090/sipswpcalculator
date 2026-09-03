@@ -67,4 +67,61 @@ class PpfEngineTest extends TestCase
         $this->assertEquals(0.0, $zeroDeposit['total_invested']);
         $this->assertEquals(0.0, $zeroDeposit['maturity_amount']);
     }
+
+    public function testStatutoryMinimumDepositFiveHundred(): void
+    {
+        // Minimum deposit ₹500/year
+        $result = PpfEngine::calculate(500.0, 7.1, 15);
+
+        $this->assertEquals(7500.0, $result['total_invested']);
+        $this->assertCount(15, $result['schedule']);
+        $this->assertGreaterThan(7500.0, $result['maturity_amount']);
+        $this->assertEqualsWithDelta($result['total_invested'] + $result['total_interest'], $result['maturity_amount'], 0.05);
+    }
+
+    public function testMaximumThirtyFiveYearsExtension(): void
+    {
+        // 35 years: 15 base + 4 extensions of 5 years
+        $result = PpfEngine::calculate(150000.0, 7.1, 35);
+
+        $this->assertEquals(35, $result['tenure_years']);
+        $this->assertCount(35, $result['schedule']);
+        $this->assertEquals(150000.0 * 35, $result['total_invested']);
+        $this->assertGreaterThan(20000000.0, $result['maturity_amount']); // > ₹2 Crore
+        $this->assertEqualsWithDelta($result['schedule'][34]['closing_balance'], $result['maturity_amount'], 0.05);
+    }
+
+    public function testRateSensitivity(): void
+    {
+        $res71 = PpfEngine::calculate(100000.0, 7.1, 15);
+        $res75 = PpfEngine::calculate(100000.0, 7.5, 15);
+        $res80 = PpfEngine::calculate(100000.0, 8.0, 15);
+        $res85 = PpfEngine::calculate(100000.0, 8.5, 15);
+
+        $this->assertGreaterThan($res71['maturity_amount'], $res75['maturity_amount']);
+        $this->assertGreaterThan($res75['maturity_amount'], $res80['maturity_amount']);
+        $this->assertGreaterThan($res80['maturity_amount'], $res85['maturity_amount']);
+    }
+
+    public function testLedgerAccountingIdentity(): void
+    {
+        $result = PpfEngine::calculate(120000.0, 7.1, 20, 'monthly');
+
+        $this->assertCount(20, $result['schedule']);
+        $sumInterest = 0.0;
+
+        for ($i = 0; $i < 20; $i++) {
+            $row = $result['schedule'][$i];
+            $this->assertEquals($i + 1, $row['year']);
+            $this->assertEqualsWithDelta($row['opening_balance'] + $row['annual_deposit'] + $row['interest_earned'], $row['closing_balance'], 0.05);
+
+            if ($i > 0) {
+                $this->assertEqualsWithDelta($result['schedule'][$i - 1]['closing_balance'], $row['opening_balance'], 0.05);
+            }
+            $sumInterest += $row['interest_earned'];
+        }
+
+        $this->assertEqualsWithDelta($result['total_interest'], $sumInterest, 0.05);
+        $this->assertEqualsWithDelta($result['total_invested'] + $result['total_interest'], $result['maturity_amount'], 0.05);
+    }
 }

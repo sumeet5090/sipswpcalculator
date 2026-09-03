@@ -67,4 +67,72 @@ class FdEngineTest extends TestCase
         $this->assertEquals(0.0, $clamped['effective_rate']);
         $this->assertEquals(0.25, $clamped['duration_years']); // Min 0.25 yrs (3 months)
     }
+
+    public function testNonCumulativeMonthlyPayoutFormula(): void
+    {
+        // ₹12 Lakh at 7.5% with monthly discounted payout
+        $principal = 1200000.0;
+        $rate = 7.5;
+        $result = FdEngine::calculate($principal, $rate, 2.0, false, 'monthly');
+
+        $this->assertEquals($principal, $result['maturity_amount']); // Principal returned
+        $this->assertGreaterThan(7400.0, $result['periodic_payout']);
+        $this->assertLessThan(7500.0, $result['periodic_payout']);
+        // 24 months of monthly payout
+        $this->assertEqualsWithDelta($result['periodic_payout'] * 24, $result['total_interest'], 0.10);
+    }
+
+    public function testNonCumulativeAnnualPayout(): void
+    {
+        // ₹10 Lakh at 7.0% for 3 years with annual simple interest payout
+        $result = FdEngine::calculate(1000000.0, 7.0, 3.0, false, 'annual');
+
+        $this->assertEquals(1000000.0, $result['maturity_amount']);
+        $this->assertEquals(70000.0, $result['periodic_payout']);
+        $this->assertEquals(210000.0, $result['total_interest']);
+        $this->assertCount(3, $result['yearly_schedule']);
+    }
+
+    public function testSeniorCitizenTdsThresholdFiftyThousand(): void
+    {
+        // Senior threshold is ₹50,000
+        // ₹6 Lakh @ 7.5% produces ~₹46,310 interest (below ₹50,000 threshold) -> TDS = 0
+        $below = FdEngine::calculate(600000.0, 7.0, 1.0, true, 'cumulative'); // 7.0% + 0.5% = 7.5%
+        $this->assertEquals(0.0, $below['estimated_annual_tds']);
+
+        // ₹8 Lakh @ 7.5% produces ~₹61,747 interest (above ₹50,000 threshold) -> TDS = 10%
+        $above = FdEngine::calculate(800000.0, 7.0, 1.0, true, 'cumulative');
+        $this->assertGreaterThan(6000.0, $above['estimated_annual_tds']);
+        $this->assertEqualsWithDelta($above['total_interest'] * 0.10, $above['estimated_annual_tds'], 0.05);
+    }
+
+    public function testPostTaxYield30PercentSlab(): void
+    {
+        $result = FdEngine::calculate(500000.0, 7.0, 3.0, false, 'cumulative');
+
+        $this->assertGreaterThan(4.8, $result['post_tax_yield_30_percent']);
+        $this->assertLessThan(5.1, $result['post_tax_yield_30_percent']);
+    }
+
+    public function testShortTenureThreeMonthsQuarterly(): void
+    {
+        // 0.25 years (3 months = 1 quarter)
+        $result = FdEngine::calculate(100000.0, 8.0, 0.25, false, 'cumulative');
+
+        $this->assertEquals(0.25, $result['duration_years']);
+        $this->assertEquals(102000.0, $result['maturity_amount']);
+        $this->assertEquals(2000.0, $result['total_interest']);
+        $this->assertCount(1, $result['yearly_schedule']);
+    }
+
+    public function testTenYearsMaxTenureSchedule(): void
+    {
+        // 10 years = 40 compounding quarters
+        $result = FdEngine::calculate(1000000.0, 7.0, 10.0, false, 'cumulative');
+
+        $this->assertEquals(10.0, $result['duration_years']);
+        $this->assertCount(10, $result['yearly_schedule']);
+        $this->assertGreaterThan(2000000.0, $result['maturity_amount']); // > 2x doubling
+        $this->assertEqualsWithDelta(1000000.0 + $result['total_interest'], $result['maturity_amount'], 0.05);
+    }
 }
