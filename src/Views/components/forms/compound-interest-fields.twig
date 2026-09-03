@@ -1,0 +1,88 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+
+<!-- Hidden legacy fields to prevent JS errors -->
+<input type="hidden" id="sip" name="sip" value="0">
+<input type="hidden" id="stepup" name="stepup" value="0">
+<input type="hidden" id="lumpsum" name="lumpsum" value="0">
+
+<div class="space-y-4">
+    <div class="mb-2">
+        <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">Compound Interest Inputs</span>
+    </div>
+
+    <!-- Principal Deposit Amount -->
+    {{ inputs.renderInputRangePair({
+        'id': 'ci_principal',
+        'label': 'Initial Principal Deposit',
+        'min': 10000,
+        'max': 10000000,
+        'slider_max': 5000000,
+        'step': 10000,
+        'value': 500000,
+        'prefix': '₹',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '₹50k', 'value': 50000},
+            {'label': '₹1L', 'value': 100000},
+            {'label': '₹5L', 'value': 500000},
+            {'label': '₹10L', 'value': 1000000},
+            {'label': '₹25L', 'value': 2500000}
+        ]
+    }) }}
+
+    <!-- Annual Interest Rate -->
+    {{ inputs.renderInputRangePair({
+        'id': 'ci_rate',
+        'label': 'Expected Annual Return Rate',
+        'min': 1,
+        'max': 30,
+        'slider_max': 25,
+        'step': 0.5,
+        'value': 12,
+        'suffix': '%',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '6%', 'value': 6},
+            {'label': '8%', 'value': 8},
+            {'label': '10%', 'value': 10},
+            {'label': '12%', 'value': 12},
+            {'label': '15%', 'value': 15}
+        ]
+    }) }}
+
+    <!-- Time Period (Years) -->
+    {{ inputs.renderInputRangePair({
+        'id': 'ci_years',
+        'label': 'Investment Duration',
+        'min': 1,
+        'max': 40,
+        'slider_max': 30,
+        'step': 1,
+        'value': 10,
+        'suffix': 'Yrs',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '5Y', 'value': 5},
+            {'label': '10Y', 'value': 10},
+            {'label': '15Y', 'value': 15},
+            {'label': '20Y', 'value': 20},
+            {'label': '25Y', 'value': 25}
+        ]
+    }) }}
+
+    <!-- Compounding Frequency Selector -->
+    <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 transition-all duration-200 shadow-subtle hover:shadow-card">
+        <label for="ci_frequency" class="block text-ui-xs font-bold tracking-tight text-slate-800 select-none mb-2">
+            Compounding Frequency
+        </label>
+        <select id="ci_frequency" name="ci_frequency" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl px-3 py-2 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all cursor-pointer">
+            <option value="1">Annually (1 time/year)</option>
+            <option value="2">Semi-Annually (2 times/year)</option>
+            <option value="4">Quarterly (4 times/year - Bank FD Standard)</option>
+            <option value="12" selected>Monthly (12 times/year)</option>
+        </select>
+        <p class="text-micro text-slate-500 mt-1 font-medium">
+            Higher frequencies accelerate compounding yield.
+        </p>
+    </div>
+</div>

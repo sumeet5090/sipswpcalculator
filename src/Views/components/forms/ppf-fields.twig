@@ -1,0 +1,85 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+
+<!-- Hidden legacy fields to prevent JS errors -->
+<input type="hidden" id="sip" name="sip" value="0">
+<input type="hidden" id="stepup" name="stepup" value="0">
+<input type="hidden" id="lumpsum" name="lumpsum" value="0">
+
+<div class="space-y-4">
+    <div class="mb-2">
+        <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">PPF Account Details</span>
+    </div>
+
+    <!-- Annual PPF Deposit -->
+    {{ inputs.renderInputRangePair({
+        'id': 'ppf_deposit',
+        'label': 'Yearly PPF Contribution',
+        'min': 500,
+        'max': 150000,
+        'slider_max': 150000,
+        'step': 500,
+        'value': 150000,
+        'prefix': '₹',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '₹10k', 'value': 10000},
+            {'label': '₹25k', 'value': 25000},
+            {'label': '₹50k', 'value': 50000},
+            {'label': '₹1L', 'value': 100000},
+            {'label': '₹1.5L (Max)', 'value': 150000}
+        ]
+    }) }}
+
+    <!-- Statutory Interest Rate -->
+    {{ inputs.renderInputRangePair({
+        'id': 'ppf_rate',
+        'label': 'Statutory Interest Rate (% p.a.)',
+        'min': 5.0,
+        'max': 12.0,
+        'slider_max': 10.0,
+        'step': 0.1,
+        'value': 7.1,
+        'suffix': '%',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '7.1% (Govt Rate)', 'value': 7.1},
+            {'label': '7.5%', 'value': 7.5},
+            {'label': '7.9%', 'value': 7.9},
+            {'label': '8.0%', 'value': 8.0}
+        ]
+    }) }}
+
+    <!-- Tenure with 5-Year Extensions -->
+    {{ inputs.renderInputRangePair({
+        'id': 'ppf_years',
+        'label': 'Investment Duration',
+        'min': 15,
+        'max': 35,
+        'slider_max': 35,
+        'step': 5,
+        'value': 15,
+        'suffix': 'Yrs',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '15Y (Base)', 'value': 15},
+            {'label': '20Y (+1 Block)', 'value': 20},
+            {'label': '25Y (+2 Blocks)', 'value': 25},
+            {'label': '30Y (+3 Blocks)', 'value': 30},
+            {'label': '35Y (+4 Blocks)', 'value': 35}
+        ]
+    }) }}
+
+    <!-- Deposit Timing Option -->
+    <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 transition-all duration-200 shadow-subtle hover:shadow-card">
+        <label for="ppf_timing" class="block text-ui-xs font-bold tracking-tight text-slate-800 select-none mb-2">
+            Deposit Timing (5th of the Month Rule)
+        </label>
+        <select id="ppf_timing" name="ppf_timing" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl px-3 py-2 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all cursor-pointer">
+            <option value="beginning" selected>Lump Sum before April 5th (Max 12-month interest)</option>
+            <option value="monthly">Monthly Installments (before 5th of each month)</option>
+        </select>
+        <p class="text-micro text-slate-500 mt-1 font-medium">
+            Deposits made before the 5th earn interest for that full month.
+        </p>
+    </div>
+</div>

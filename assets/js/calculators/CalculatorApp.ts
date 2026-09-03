@@ -49,6 +49,7 @@ import { KeyboardNavigationController } from './controllers/KeyboardNavigationCo
 import { ChartScrubbingController } from './controllers/ChartScrubbingController';
 import { A11yAnnouncer } from './helpers/A11yAnnouncer';
 import { ModalScrollLockHelper } from './helpers/ModalScrollLockHelper';
+import { SpecializedCalculatorController } from './controllers/SpecializedCalculatorController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -86,6 +87,7 @@ export class CalculatorApp {
     private keyboardViewportController: KeyboardViewportController;
     private keyboardNavController: KeyboardNavigationController;
     private studioTabController: StudioTabController;
+    private specializedController: SpecializedCalculatorController | null = null;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -356,6 +358,11 @@ export class CalculatorApp {
      * Publish inputs to calculation event queue.
      */
     triggerCalculation(): void {
+        if (this.specializedController) {
+            this.specializedController.calculate();
+            return;
+        }
+
         let inputs = this.getInputs();
 
         // Execute Strategy based on goal mode
@@ -561,6 +568,33 @@ export class CalculatorApp {
     init(): void {
         const appEl = this.dom.getElement('calculator-app');
         const mode = appEl?.dataset?.mode || 'sip';
+        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
+
+        if (specializedModes.includes(mode)) {
+            new StepperController(
+                this.dom,
+                this.validator,
+                (fieldId, val) => this.sliderManager.updateFieldValue(fieldId, val),
+                this.audioController
+            ).init();
+            this.initGlobalShortcuts();
+            this.initPassiveSeoClickListeners();
+            this.initResizeListeners();
+            ModalScrollLockHelper.initGlobalDialogs();
+
+            this.specializedController = new SpecializedCalculatorController(
+                mode,
+                this.dom,
+                this.formatter,
+                this.sliderManager,
+                this.chartManager,
+                this.resultsController,
+                this.summaryMetricsController
+            );
+            this.specializedController.init();
+            return;
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         const urlGoal = urlParams.get('goal');
 
