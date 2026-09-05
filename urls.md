@@ -1,11 +1,17 @@
 https://sipswpcalculator.com/
 https://sipswpcalculator.com/sip-calculator
-https://sipswpcalculator.com/retirement-calculator
 https://sipswpcalculator.com/swp-calculator
 https://sipswpcalculator.com/sip-step-up-calculator
 https://sipswpcalculator.com/lumpsum-calculator
-https://sipswpcalculator.com/target-corpus-calculator
+https://sipswpcalculator.com/retirement-calculator
 https://sipswpcalculator.com/my-first-crore-calculator
+https://sipswpcalculator.com/target-corpus-calculator
+https://sipswpcalculator.com/compound-interest-calculator
+https://sipswpcalculator.com/cagr-calculator
+https://sipswpcalculator.com/emi-calculator
+https://sipswpcalculator.com/inflation-calculator
+https://sipswpcalculator.com/ppf-calculator
+https://sipswpcalculator.com/fd-calculator
 https://sipswpcalculator.com/resource/growth/sip-for-beginners
 https://sipswpcalculator.com/resource/growth/earning-30k-at-25-investment-blueprint
 https://sipswpcalculator.com/resource/growth/reach-1-crore-rupees-via-sip
@@ -20,6 +26,7 @@ https://sipswpcalculator.com/resource/comparison/mf-returns-benchmarks
 https://sipswpcalculator.com/resource/comparison/mutual-fund-tax-2026
 https://sipswpcalculator.com/resource/comparison/swp-vs-annuity-2026
 https://sipswpcalculator.com/resource/comparison/swp-vs-fixed-deposit
+https://sipswpcalculator.com/resources
 https://sipswpcalculator.com/about
 https://sipswpcalculator.com/faq
 https://sipswpcalculator.com/glossary
