@@ -272,5 +272,11 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(GuideRenderer::class)
             );
         });
+
+        $container->singleton(\Controllers\RenderEmbedAction::class, function (Container $c) {
+            return new \Controllers\RenderEmbedAction(
+                $c->get(GuideRenderer::class)
+            );
+        });
     }
 }

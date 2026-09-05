@@ -35,4 +35,14 @@ class GuideRenderer
 
         return Response::html($this->viewRenderer->render($viewModel['layout'], $viewModel['data']));
     }
+
+    /**
+     * Render a lightweight embeddable calculator widget template for iframes.
+     */
+    public function renderEmbed(string $slug): Response
+    {
+        $viewModel = $this->viewModelBuilder->build($slug);
+
+        return Response::html($this->viewRenderer->render('calculators/embed', $viewModel['data']));
+    }
 }

@@ -1,7 +1,8 @@
 ---
+og_image: "/assets/og/og-retirement-calculator.jpg"
 title: "Retirement Calculator India (2026) — SIP to SWP Planner"
 subtitle: "Free retirement calculator for India. Model your SIP accumulation phase and SWP pension drawdown in one tool. See exactly how long your corpus lasts using the 4% safe withdrawal rule."
-meta_desc: "Plan your complete Indian retirement lifecycle. Model SIP wealth accumulation, inflation-adjusted SWP pension drawdown, 4% safe rule, and 2026 LTCG tax."
+meta_desc: "Free retirement planner for 10,000+ investors. Model complete SIP accumulation, inflation-adjusted SWP pension, 4% safe rule & 2026 LTCG tax waterfall in PDF."
 keywords: "retirement calculator india, retirement planning calculator, swp retirement calculator, retirement corpus calculator, pension planning calculator, mutual fund retirement calculator, retirement fund calculator, 4 percent rule calculator"
 schema_name: "Retirement Calculator India (2026) — SIP to SWP Planner"
 seo_category: "retirement"

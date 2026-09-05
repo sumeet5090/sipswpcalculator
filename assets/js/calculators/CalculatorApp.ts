@@ -635,7 +635,7 @@ export class CalculatorApp {
             this.analytics,
             () => this.getInputs()
         ).init();
-        new ShareController(this.dom, () => this.getInputs()).init();
+        new ShareController(this.dom, () => this.getInputs(), () => this.latestResults).init();
         this.glossaryController.init();
         this.audioController.init();
         this.cityBenchmarkController.init();

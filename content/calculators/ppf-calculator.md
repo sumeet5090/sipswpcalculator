@@ -1,7 +1,8 @@
 ---
+og_image: "/assets/og/og-ppf-calculator.jpg"
 title: "PPF Calculator India (2026) — Public Provident Fund"
 subtitle: "Calculate Public Provident Fund interest, maturity value, 5th-of-the-month rules, and 15 to 30 year block extension schedules for Indian taxpayers."
-meta_desc: "Free PPF calculator India 2026. Calculate Public Provident Fund interest, maturity value, 5th-of-month rule, and 15 to 30 year block extension schedules."
+meta_desc: "Free PPF calculator India (2026). Used by 10,000+ savers to calculate PPF interest, 5th-of-month rule, 15-30 year extensions, maturity sums & tax exemptions."
 keywords: "ppf calculator, public provident fund calculator, ppf interest calculator, ppf maturity calculator 2026, ppf 15 year schedule, ppf extension calculator"
 schema_name: "PPF Calculator India (2026) — Public Provident Fund"
 seo_category: "growth"

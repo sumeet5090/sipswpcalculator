@@ -300,6 +300,15 @@
     {% include 'components/goal-commitment-modal.twig' %}
     {% include 'components/qr-share-modal.twig' %}
     {% include 'components/sebibenchmark-modal.twig' %}
+    <script>
+        if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').catch(function(err) {
+                    console.debug('SW registration skipped:', err);
+                });
+            });
+        }
+    </script>
     {% block modals %}{% endblock %}
     {% block scripts %}{% endblock %}
 </body>

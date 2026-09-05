@@ -56,6 +56,12 @@ class SitemapGeneratorTest extends TestCase
             $this->assertArrayHasKey('changefreq', $url);
             $this->assertArrayHasKey('priority', $url);
             $this->assertMatchesRegularExpression('/^\d{4}-\d{2}-\d{2}$/', $url['lastmod']);
+
+            if (isset($url['image'])) {
+                $this->assertArrayHasKey('loc', $url['image']);
+                $this->assertArrayHasKey('title', $url['image']);
+                $this->assertStringStartsWith('https://sipswpcalculator.com/', $url['image']['loc']);
+            }
         }
     }
 }

@@ -140,6 +140,9 @@ class App
             $this->router->post($calc, $action);
         }
 
+        // Embeddable Calculator Widgets
+        $this->router->get('/embed/{slug}', [\Controllers\RenderEmbedAction::class, '__invoke']);
+
         // Dynamic Pages Registration
         foreach ($this->routesConfig['pages'] as $uri => $config) {
             $action = is_array($config) && isset($config['action']) ? $config['action'] : $config;

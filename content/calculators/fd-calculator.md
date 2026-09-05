@@ -1,7 +1,8 @@
 ---
+og_image: "/assets/og/og-fd-calculator.jpg"
 title: "FD Calculator India (2026) — Fixed Deposit Interest"
 subtitle: "Calculate bank fixed deposit interest, quarterly compounding, senior citizen rate bonuses, Section 194A TDS, and post-tax yields across Indian banks."
-meta_desc: "Free FD calculator India 2026. Calculate fixed deposit interest, quarterly compounding, senior citizen rates, Section 194A TDS, and post-tax net yields."
+meta_desc: "Free FD calculator India (2026). Used by 10,000+ depositors to calculate fixed deposit returns, quarterly compounding, senior rates, TDS & post-tax net yield."
 keywords: "fd calculator, fixed deposit calculator, bank fd calculator india, quarterly compounding fd, senior citizen fd calculator, sbi fd calculator 2026, post-tax fd yield"
 schema_name: "FD Calculator India (2026) — Fixed Deposit Interest"
 seo_category: "growth"

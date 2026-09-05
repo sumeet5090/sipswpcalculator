@@ -12,6 +12,16 @@ https://sipswpcalculator.com/emi-calculator
 https://sipswpcalculator.com/inflation-calculator
 https://sipswpcalculator.com/ppf-calculator
 https://sipswpcalculator.com/fd-calculator
+https://sipswpcalculator.com/goal/reach-1-crore-via-sip
+https://sipswpcalculator.com/goal/reach-5-crore-via-sip
+https://sipswpcalculator.com/plan/sip-5000-per-month
+https://sipswpcalculator.com/plan/sip-10000-per-month
+https://sipswpcalculator.com/resource/growth/what-is-sip
+https://sipswpcalculator.com/resource/growth/what-is-compound-interest
+https://sipswpcalculator.com/resource/growth/what-is-cagr
+https://sipswpcalculator.com/resource/growth/what-is-emi
+https://sipswpcalculator.com/resource/comparison/what-is-ppf
+https://sipswpcalculator.com/resource/comparison/what-is-fd
 https://sipswpcalculator.com/resource/growth/sip-for-beginners
 https://sipswpcalculator.com/resource/growth/earning-30k-at-25-investment-blueprint
 https://sipswpcalculator.com/resource/growth/reach-1-crore-rupees-via-sip

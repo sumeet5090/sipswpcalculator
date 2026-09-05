@@ -38,7 +38,7 @@ class SitemapGenerator
     /**
      * Generate an array of sitemap URL objects.
      *
-     * @return array<int, array{loc: string, lastmod: string, changefreq: string, priority: string}>
+     * @return array<int, array{loc: string, lastmod: string, changefreq: string, priority: string, image?: array{loc: string, title: string}}>
      */
     public function generateUrlNodes(): array
     {
@@ -52,22 +52,41 @@ class SitemapGenerator
             'loc' => $baseUrl . '/',
             'lastmod' => $this->viewRenderer->getTemplateModifiedDate('calculators/home'),
             'changefreq' => 'weekly',
-            'priority' => '1.0'
+            'priority' => '1.0',
+            'image' => [
+                'loc' => $baseUrl . '/assets/og-image-main.jpg',
+                'title' => 'SIP & SWP Calculator Together — Dual Planner'
+            ]
         ];
 
-        // 2. Calculators
+        // 2. Calculators & Milestone Goal Plans
         foreach ($routesConfig['calculators'] ?? [] as $path => $config) {
             $slug = ltrim($path, '/');
-            $lastmod = $this->contentManager->getFileModifiedDate('calculators/' . $slug);
+            $fileSlug = basename($slug);
+            $lastmod = $this->contentManager->getFileModifiedDate('calculators/' . $fileSlug);
             $priority = is_array($config) && isset($config['priority']) ? (string) $config['priority'] : '0.8';
             $changefreq = is_array($config) && isset($config['changefreq']) ? (string) $config['changefreq'] : 'monthly';
 
-            $urls[] = [
+            $node = [
                 'loc' => $baseUrl . $path,
                 'lastmod' => $lastmod,
                 'changefreq' => $changefreq,
                 'priority' => $priority
             ];
+
+            try {
+                $meta = $this->contentManager->getMetadataOnly('calculators/' . $fileSlug);
+                $ogImage = $meta['og_image'] ?? '/assets/og/og-' . $fileSlug . '.jpg';
+                $imgUrl = str_starts_with($ogImage, 'http') ? $ogImage : $baseUrl . '/' . ltrim($ogImage, '/');
+                $node['image'] = [
+                    'loc' => $imgUrl,
+                    'title' => $meta['title'] ?? ucfirst(str_replace('-', ' ', $fileSlug))
+                ];
+            } catch (\Throwable) {
+                // Keep node without image if metadata cannot be read
+            }
+
+            $urls[] = $node;
         }
 
         // 3. Blog Posts
@@ -76,11 +95,18 @@ class SitemapGenerator
             $slug = basename($post['href']);
             $lastmod = $this->blogRepository->getPostModifiedDate($post['seo_category'], $slug);
 
+            $ogImage = $post['og_image'] ?? '/assets/og-image-main.jpg';
+            $imgUrl = str_starts_with($ogImage, 'http') ? $ogImage : $baseUrl . '/' . ltrim($ogImage, '/');
+
             $urls[] = [
                 'loc' => $baseUrl . $post['href'],
                 'lastmod' => $lastmod,
                 'changefreq' => 'monthly',
-                'priority' => '0.8'
+                'priority' => '0.8',
+                'image' => [
+                    'loc' => $imgUrl,
+                    'title' => $post['title'] ?? ''
+                ]
             ];
         }
 
@@ -89,7 +115,11 @@ class SitemapGenerator
             'loc' => $baseUrl . '/resources',
             'lastmod' => $this->viewRenderer->getTemplateModifiedDate('pages/resources'),
             'changefreq' => 'weekly',
-            'priority' => '0.7'
+            'priority' => '0.7',
+            'image' => [
+                'loc' => $baseUrl . '/assets/og-image-main.jpg',
+                'title' => 'Financial Planning Resources & Calculators'
+            ]
         ];
 
         // 5. Static Pages
