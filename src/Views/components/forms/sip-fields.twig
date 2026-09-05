@@ -1,5 +1,42 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
+<!-- Aspirational Investor Archetype Chips (Zero-Cognitive Instant Injection) -->
+<div class="mb-5 pb-3.5 border-b border-slate-200/80">
+    <div class="flex items-center justify-between mb-2">
+        <span class="text-micro font-extrabold uppercase tracking-wider text-slate-500">⚡ Fast-Track Archetypes</span>
+        <span class="text-micro text-slate-400 font-medium">1-Tap Blueprint</span>
+    </div>
+    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1" role="toolbar" aria-label="Investment Archetypes">
+        <button type="button" class="archetype-chip group flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-emerald-50/80 text-slate-700 hover:text-emerald-800 text-ui-xs font-medium transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-flat"
+            data-archetype="fresher"
+            aria-pressed="false">
+            <span class="text-ui-sm">🎓</span>
+            <span>Tech Fresher <strong class="text-slate-900 group-hover:text-emerald-900 font-bold">₹10K</strong></span>
+        </button>
+
+        <button type="button" class="archetype-chip group flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-emerald-50/80 text-slate-700 hover:text-emerald-800 text-ui-xs font-medium transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-flat"
+            data-archetype="lead"
+            aria-pressed="false">
+            <span class="text-ui-sm">🚀</span>
+            <span>Mid-Career <strong class="text-slate-900 group-hover:text-emerald-900 font-bold">₹50K</strong></span>
+        </button>
+
+        <button type="button" class="archetype-chip group flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-emerald-50/80 text-slate-700 hover:text-emerald-800 text-ui-xs font-medium transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-flat"
+            data-archetype="fire"
+            aria-pressed="false">
+            <span class="text-ui-sm">🔥</span>
+            <span>FIRE Hunter <strong class="text-slate-900 group-hover:text-emerald-900 font-bold">₹1.5L</strong></span>
+        </button>
+
+        <button type="button" class="archetype-chip group flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-emerald-50/80 text-slate-700 hover:text-emerald-800 text-ui-xs font-medium transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-flat"
+            data-archetype="legacy"
+            aria-pressed="false">
+            <span class="text-ui-sm">🏡</span>
+            <span>Family Legacy <strong class="text-slate-900 group-hover:text-emerald-900 font-bold">₹25K</strong></span>
+        </button>
+    </div>
+</div>
+
 <!-- Monthly Investment -->
 <div id="sip_container">
 {{ inputs.renderInputRangePair({

@@ -1,6 +1,7 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import type { InvestmentInputs, YearResult } from '../../types';
 import { CanvasExportHelper } from '../helpers/CanvasExportHelper';
+import { WealthPassCanvasRenderer } from '../helpers/WealthPassCanvasRenderer';
 
 export class ShareController {
     private dom: DOMAdapter;
@@ -108,7 +109,17 @@ export class ShareController {
                 this.downloadSocialCard();
             });
         }
+
+        const wealthPassBtn = this.dom.getElement('shareWealthPassBtn');
+        if (wealthPassBtn) {
+            wealthPassBtn.addEventListener('click', () => {
+                const discreetToggle = this.dom.getElement<HTMLInputElement>('discreet-share-toggle');
+                const isDiscreet = discreetToggle ? discreetToggle.checked : false;
+                this.shareWealthPass(isDiscreet);
+            });
+        }
     }
+
 
     /**
      * Generate and download a branded 1080x1080 social card.
@@ -176,6 +187,60 @@ export class ShareController {
                 btnText.textContent = 'Share Card';
             }, 2000);
         }
+    }
+
+    /**
+     * Share or download the sleek Wealth Horizon Pass with Web Share API and Discreet Privacy Mode.
+     */
+    async shareWealthPass(isDiscreetMode: boolean = false): Promise<void> {
+        const inputs = this.getInputs();
+        const results = this.getResults ? this.getResults() : [];
+        let totalInvested = 0;
+        let totalGains = 0;
+        let finalCorpus = 0;
+
+        if (results && results.length > 0) {
+            const last = results[results.length - 1];
+            totalInvested = last.cumulative_invested;
+            finalCorpus = last.combined_total;
+            totalGains = Math.max(0, finalCorpus - totalInvested);
+        }
+
+        const blob = await WealthPassCanvasRenderer.generatePassBlob({
+            inputs,
+            finalCorpus,
+            totalInvested,
+            totalGains,
+            isDiscreetMode,
+            goalTitle: finalCorpus >= 10000000 ? 'Destination: Crorepati Sovereign' : 'Destination: Financial Freedom'
+        });
+
+        if (!blob) return;
+
+        const file = new File([blob], `Wealth-Horizon-Pass-${inputs.years}Y.png`, { type: 'image/png' });
+
+        if (typeof navigator !== 'undefined' && 'canShare' in navigator && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    title: 'My Wealth Horizon Pass',
+                    text: `Mapped my ${inputs.years}-year wealth blueprint on sipswpcalculator.com`,
+                    files: [file]
+                });
+                return;
+            } catch {
+                // User cancelled or share failed; fallback to direct download below
+            }
+        }
+
+        // Direct Download Fallback
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `wealth-horizon-pass-${inputs.years}Y.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     }
 
     /**

@@ -50,6 +50,7 @@ import { ChartScrubbingController } from './controllers/ChartScrubbingController
 import { A11yAnnouncer } from './helpers/A11yAnnouncer';
 import { ModalScrollLockHelper } from './helpers/ModalScrollLockHelper';
 import { SpecializedCalculatorController } from './controllers/SpecializedCalculatorController';
+import { ArchetypeInjectorController } from './controllers/ArchetypeInjectorController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -620,6 +621,7 @@ export class CalculatorApp {
             this.audioController
         ).init();
         new SmartNudgeController(this.dom, (rate) => this.setSmartNudgeRate(rate)).init();
+        new ArchetypeInjectorController(this.dom, this.sliderManager);
         new PdfExportController(
             this.dom,
             this.chartManager,
