@@ -27,7 +27,7 @@ date: "January 2026"
 <p>A crore rupees. It feels like an impossibly large number. But when you break it down into daily or monthly chunks, and let compound interest work in your favour, it becomes highly achievable — even on a modest salary.</p>
 
 <p>Here's the compounding equation that makes it possible:</p>
-<div class="bg-slate-900 border border-slate-700 text-emerald-400 p-6 rounded-xl font-mono text-center my-8 shadow-xl">
+<div class="bg-emerald-50/50 border border-emerald-200/80 text-emerald-950 p-6 rounded-xl font-mono font-bold text-center my-8 shadow-sm">
     Small Monthly Amount × Time × Compounding = Crore Plus Corpus
 </div>
 

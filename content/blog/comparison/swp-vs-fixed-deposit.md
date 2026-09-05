@@ -370,19 +370,21 @@ date: "January 2026"
 <h3>Should NRIs use SWP or FD?</h3>
 <p>For NRIs, SWP has an additional advantage: lower TDS rates. NRI SWP from equity funds attracts TDS at capital gains rates (12.5% LTCG / 20% STCG), while NRI FD interest attracts TDS at 30%. However, NRIs must consider cross-border tax implications and DTAA provisions. An NRI in Singapore or UAE (zero capital gains tax jurisdictions) would find Indian equity SWP extremely tax-efficient.</p>
 
-<div class="bg-slate-900 border border-slate-800 p-12 rounded-3xl text-center my-14 not-prose shadow-2xl relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, #4f46e5 1px, transparent 0); background-size: 24px 24px;"></div>
-    <div class="relative z-10">
-        <h3 class="text-3xl font-bold mb-6 text-white">Find Your Perfect Retirement Income Mix</h3>
-        <p class="mb-10 text-slate-400 text-lg max-w-2xl mx-auto">Model your SWP with step-up withdrawals and compare it against FD income side-by-side — see exactly how much more you'll earn after taxes.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/retirement-drawdown-planner" class="inline-flex items-center gap-3 px-10 py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-500 transition-all">
-                Open Retirement Planner
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-            </a>
-            <a href="/resource/comparison/swp-vs-annuity-2026" class="inline-flex items-center gap-3 px-10 py-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all">
-                Read: SWP vs Annuity →
-            </a>
-        </div>
-    </div>
+<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-200/90 shadow-card bg-gradient-to-br from-emerald-50 via-white to-teal-50/60 p-8 sm:p-10 text-center text-slate-900">
+  <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-4 border border-emerald-200">
+    ⚡ Live Retirement Simulation
+  </div>
+  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight text-slate-900">Find Your Perfect Retirement Income Mix</h2>
+  <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Model your SWP with step-up withdrawals and compare it against FD income side-by-side — see exactly how much more you'll earn after taxes.</p>
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+    <a href="/retirement-calculator"
+       class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm sm:text-base cursor-pointer">
+      Open Retirement Planner
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+    </a>
+    <a href="/resource/comparison/swp-vs-annuity-2026"
+       class="inline-flex items-center gap-2 px-8 py-3.5 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-bold rounded-xl border border-slate-200 shadow-sm transition-all duration-200 text-sm sm:text-base cursor-pointer">
+      Read: SWP vs Annuity →
+    </a>
+  </div>
 </div>

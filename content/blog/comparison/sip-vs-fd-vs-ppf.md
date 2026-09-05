@@ -412,8 +412,8 @@ initWidget();
 
 <h3>The Real Return Math</h3>
 
-<div class="bg-slate-900 border border-slate-700 text-emerald-400 p-6 rounded-xl font-mono text-center my-8 shadow-xl">
-    FD Real Return = 7.0% (Gross) − 2.1% (30% Tax) − 6.0% (Inflation) = <span class="text-rose-400 font-bold">−1.1%</span>
+<div class="bg-rose-50/50 border border-rose-200/80 text-slate-800 p-6 rounded-xl font-mono font-bold text-center my-8 shadow-sm">
+    FD Real Return = 7.0% (Gross) − 2.1% (30% Tax) − 6.0% (Inflation) = <span class="text-rose-600 font-extrabold">−1.1%</span>
 </div>
 
 <p>You are <strong>losing 1.1% of your purchasing power every year</strong> with an FD in the 30% tax bracket. A ₹10 lakh FD is worth only ₹8,95,000 in real terms after one year. Over 15 years, you've lost nearly <strong>₹1.5 lakh in real value</strong> — while the bank statement shows a "profit."</p>

@@ -40,7 +40,7 @@ date: "March 2026"
 
 <p>The most important question in retirement planning is: <strong>"How large must my corpus be to sustain my lifestyle for 25-30 years?"</strong> Here's the formula:</p>
 
-<div class="bg-slate-900 border border-slate-700 text-emerald-400 p-6 rounded-xl font-mono text-center my-8 shadow-xl">
+<div class="bg-emerald-50/50 border border-emerald-200/80 text-emerald-950 p-6 rounded-xl font-mono font-bold text-center my-8 shadow-sm">
     Magic Number = Annual Expenses ÷ Safe Withdrawal Rate (SWR)
 </div>
 
@@ -274,19 +274,21 @@ date: "March 2026"
 <h3>What if I need a lump sum for a medical emergency?</h3>
 <p>This is where SWP's liquidity advantage shines. Unlike annuities (locked forever) or FDs (early withdrawal penalties), you can withdraw <strong>any additional amount from your mutual fund at any time</strong>. Simply submit a redemption request and receive the money within 1-3 business days. This is why we recommend keeping Bucket 1 in liquid/ultra-short-term funds — even faster settlement (T+1).</p>
 
-<div class="bg-slate-900 text-white p-12 rounded-3xl text-center my-14 not-prose border border-slate-800 shadow-2xl relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, #4f46e5 1px, transparent 0); background-size: 24px 24px;"></div>
-    <div class="relative z-10">
-        <h3 class="text-3xl font-bold mb-6 text-white">Is Your Retirement Plan Sustainable?</h3>
-        <p class="mb-10 text-slate-400 text-lg max-w-2xl mx-auto">Our SWP simulator models annual inflation step-ups, multi-decade compounding, and sequence-of-returns risk. Stress-test your Magic Number across bull and bear scenarios.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/retirement-drawdown-planner" class="inline-flex items-center gap-3 px-10 py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-500 transition-all">
-                Open Retirement Planner
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-            </a>
-            <a href="/resource/retirement/retirement-planning-4-percent-swp-rule" class="inline-flex items-center gap-3 px-10 py-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all">
-                Read: The 4% Rule Explained →
-            </a>
-        </div>
-    </div>
+<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-200/90 shadow-card bg-gradient-to-br from-emerald-50 via-white to-teal-50/60 p-8 sm:p-10 text-center text-slate-900">
+  <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-4 border border-emerald-200">
+    ⚡ Live Retirement Simulation
+  </div>
+  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight text-slate-900">Is Your Retirement Plan Sustainable?</h2>
+  <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Our SWP simulator models annual inflation step-ups, multi-decade compounding, and sequence-of-returns risk. Stress-test your Magic Number across bull and bear scenarios.</p>
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+    <a href="/retirement-calculator"
+       class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm sm:text-base cursor-pointer">
+      Open Retirement Planner
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+    </a>
+    <a href="/resource/retirement/retirement-planning-4-percent-swp-rule"
+       class="inline-flex items-center gap-2 px-8 py-3.5 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-bold rounded-xl border border-slate-200 shadow-sm transition-all duration-200 text-sm sm:text-base cursor-pointer">
+      Read: The 4% Rule Explained →
+    </a>
+  </div>
 </div>

@@ -335,19 +335,21 @@ date: "January 2026"
 <h3>At what age should I buy an annuity?</h3>
 <p>Annuity payout rates increase with age (because your life expectancy is shorter). A 60-year-old might get 6% payout, while a 70-year-old might get 7.5%. If you're considering an annuity, <strong>delaying purchase to age 70-75</strong> gives you a higher rate. In the meantime, use SWP for the first 10-15 years when your corpus is large enough to absorb market volatility. This is another argument for the Floor-and-Upside approach.</p>
 
-<div class="bg-slate-900 text-white p-12 rounded-3xl text-center my-14 not-prose border border-slate-800 shadow-2xl overflow-hidden relative">
-    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, #4f46e5 1px, transparent 0); background-size: 24px 24px;"></div>
-    <div class="relative z-10">
-        <h3 class="text-3xl font-extrabold mb-6 text-white">Model Your Perfect Retirement Income</h3>
-        <p class="mb-10 text-slate-400 text-lg max-w-2xl mx-auto">Simulate an SWP with inflation step-ups and see exactly how its net-of-tax cash flow evolves over time — then decide how much to allocate to annuity vs SWP.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/retirement-drawdown-planner" class="inline-flex items-center gap-3 px-10 py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-500 transition-all">
-                Open Retirement Planner
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-            </a>
-            <a href="/resource/comparison/swp-vs-fixed-deposit" class="inline-flex items-center gap-3 px-10 py-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all">
-                Read: SWP vs Fixed Deposit →
-            </a>
-        </div>
-    </div>
+<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-200/90 shadow-card bg-gradient-to-br from-emerald-50 via-white to-teal-50/60 p-8 sm:p-10 text-center text-slate-900">
+  <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-4 border border-emerald-200">
+    ⚡ Live Retirement Simulation
+  </div>
+  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight text-slate-900">Model Your Perfect Retirement Income</h2>
+  <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Simulate an SWP with inflation step-ups and see exactly how its net-of-tax cash flow evolves over time — then decide how much to allocate to annuity vs SWP.</p>
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+    <a href="/retirement-calculator"
+       class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm sm:text-base cursor-pointer">
+      Open Retirement Planner
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+    </a>
+    <a href="/resource/comparison/swp-vs-fixed-deposit"
+       class="inline-flex items-center gap-2 px-8 py-3.5 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-bold rounded-xl border border-slate-200 shadow-sm transition-all duration-200 text-sm sm:text-base cursor-pointer">
+      Read: SWP vs Fixed Deposit →
+    </a>
+  </div>
 </div>
