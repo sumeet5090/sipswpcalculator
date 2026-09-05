@@ -90,7 +90,9 @@ export class MathEngine {
             const ltcgTaxRate = inp.ltcg_tax_rate ?? 0.125;
             let taxableGains = Math.max(0, preTaxGains - ltcgExemption);
             let ltcgTax = taxableGains * ltcgTaxRate;
-            let postTaxCorpus = Math.max(0, netBalance - ltcgTax);
+            const roundedCombinedTotal = Math.round(netBalance);
+            const roundedLtcgTax = Math.round(ltcgTax);
+            const postTaxCorpus = Math.max(0, roundedCombinedTotal - roundedLtcgTax);
 
             results.push({
                 year: y,
@@ -102,9 +104,9 @@ export class MathEngine {
                 annual_withdrawal: (inp.enable_swp && y >= swpStartYear) ? annualWithdrawal : null,
                 cumulative_withdrawals: (inp.enable_swp && y >= swpStartYear) ? cumulativeWithdrawals : 0,
                 interest: Math.round(interestEarned),
-                combined_total: Math.round(netBalance),
-                ltcg_tax: Math.round(ltcgTax),
-                post_tax_total: Math.round(postTaxCorpus)
+                combined_total: roundedCombinedTotal,
+                ltcg_tax: roundedLtcgTax,
+                post_tax_total: postTaxCorpus
             });
         }
 

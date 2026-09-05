@@ -40,7 +40,7 @@ class PdfGeneratorServiceTest extends TestCase
 
     public function testInitializesCustomDirectories(): void
     {
-        $template = $this->createMock(PdfTemplateInterface::class);
+        $template = $this->createStub(PdfTemplateInterface::class);
         $service = new PdfGeneratorService($template, $this->tempFontDir, $this->tempDompdfDir);
 
         $this->assertSame($this->tempFontDir, $service->getFontDir());

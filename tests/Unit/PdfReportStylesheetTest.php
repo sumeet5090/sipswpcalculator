@@ -28,6 +28,7 @@ class PdfReportStylesheetTest extends TestCase
         $this->assertStringContainsString('tr { page-break-inside: avoid; }', $css);
         $this->assertStringContainsString('.chart-box { text-align: center;', $css);
         $this->assertStringContainsString('@page { margin: 24px 32px 28px 32px; }', $css);
+        $this->assertStringNotContainsString('object-fit', $css);
     }
 
     public function testGetStylesForMultiDecadeSchedulesOver25Years(): void

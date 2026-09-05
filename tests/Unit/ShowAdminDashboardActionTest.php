@@ -11,25 +11,26 @@ use Core\Http\Request;
 use Core\InsightRepository;
 use Core\ViewRenderer;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Services\SessionManager;
 
 class ShowAdminDashboardActionTest extends TestCase
 {
-    private InsightRepository&MockObject $insightRepo;
-    private AdminAuthService&MockObject $authService;
-    private AdminDashboardPresenter&MockObject $presenter;
+    private InsightRepository&Stub $insightRepo;
+    private AdminAuthService&Stub $authService;
+    private AdminDashboardPresenter&Stub $presenter;
     private ViewRenderer&MockObject $viewRenderer;
-    private SessionManager&MockObject $sessionManager;
+    private SessionManager&Stub $sessionManager;
     private ShowAdminDashboardAction $action;
 
     protected function setUp(): void
     {
-        $this->insightRepo = $this->createMock(InsightRepository::class);
-        $this->authService = $this->createMock(AdminAuthService::class);
-        $this->presenter = $this->createMock(AdminDashboardPresenter::class);
+        $this->insightRepo = $this->createStub(InsightRepository::class);
+        $this->authService = $this->createStub(AdminAuthService::class);
+        $this->presenter = $this->createStub(AdminDashboardPresenter::class);
         $this->viewRenderer = $this->createMock(ViewRenderer::class);
-        $this->sessionManager = $this->createMock(SessionManager::class);
+        $this->sessionManager = $this->createStub(SessionManager::class);
 
         $this->sessionManager->method('ensureCsrfToken')->willReturn('mock_csrf_token_123');
 

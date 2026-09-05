@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use Core\PdfReportStylesheet;
 use PHPUnit\Framework\TestCase;
 use Services\HtmlSanitizer;
 
@@ -48,15 +47,5 @@ class ChartSanitizerTest extends TestCase
         $result = $this->sanitizer->extractChartData($corrupt);
 
         $this->assertSame('', $result);
-    }
-
-    public function testPdfReportStylesheetGeneratesValidStyles(): void
-    {
-        $stylesheet = new PdfReportStylesheet();
-        $css = $stylesheet->getStyles(20);
-
-        $this->assertStringContainsString('.chart-box', $css);
-        $this->assertStringContainsString('page-break-inside: avoid', $css);
-        $this->assertStringNotContainsString('object-fit', $css);
     }
 }
