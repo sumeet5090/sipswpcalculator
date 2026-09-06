@@ -27,7 +27,7 @@ export class SliderManager {
         SliderManager.globalTooltipListenersInitialized = true;
 
         const hideAllTooltips = () => {
-            document.querySelectorAll('.calc-slider-tooltip.is-active').forEach(el => {
+            document.querySelectorAll('.calc-slider-tooltip.is-active, .slider-floating-tooltip.is-active').forEach(el => {
                 el.classList.remove('is-active');
             });
         };
@@ -161,7 +161,7 @@ export class SliderManager {
             const min = parseFloat(range.min) || 0;
             const max = parseFloat(range.max) || 100;
             const pct = max > min ? ((val - min) / (max - min)) * 100 : 0;
-            tooltip.style.left = `clamp(28px, ${pct.toFixed(2)}%, calc(100% - 28px))`;
+            tooltip.style.left = `clamp(32px, ${pct.toFixed(2)}%, calc(100% - 32px))`;
             if (inputId === 'sip' || inputId === 'lumpsum' || inputId === 'target_corpus' || inputId === 'swp_withdrawal') {
                 tooltip.textContent = this.formatter.formatDynamic(val);
             } else if (inputId === 'years' || inputId === 'swp_years') {
@@ -172,9 +172,16 @@ export class SliderManager {
             tooltip.classList.add('is-active');
         };
 
+        const hideTooltip = () => {
+            tooltip.classList.remove('is-active');
+        };
+
         SliderManager.initGlobalTooltipDismissal();
         range.addEventListener('pointerdown', () => showTooltip(parseFloat(range.value) || 0));
         range.addEventListener('touchstart', () => showTooltip(parseFloat(range.value) || 0), { passive: true });
+        range.addEventListener('pointerup', hideTooltip);
+        range.addEventListener('touchend', hideTooltip, { passive: true });
+        range.addEventListener('touchcancel', hideTooltip, { passive: true });
 
         // Range Slider Input Sync
         range.addEventListener('input', () => {

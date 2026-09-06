@@ -197,8 +197,12 @@
             <span id="keyboard-preview-corpus" class="text-ui-xs sm:text-ui-sm font-black text-emerald-800 font-financial-mono tabular-nums whitespace-nowrap truncate">₹ --</span>
         </div>
         <div class="flex items-center gap-1.5 shrink-0 ml-2">
-            <button type="button" id="keyboard-prev-input" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-ui-xs flex items-center justify-center active:scale-95 transition-all cursor-pointer border border-slate-200/80" aria-label="Previous Field">↑</button>
-            <button type="button" id="keyboard-next-input" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-ui-xs flex items-center justify-center active:scale-95 transition-all cursor-pointer border border-slate-200/80" aria-label="Next Field">↓</button>
+            <button type="button" id="keyboard-prev-input" class="touch-target-expanded w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-ui-xs flex items-center justify-center active:scale-95 transition-all cursor-pointer border border-slate-200/80" aria-label="Previous Field">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button type="button" id="keyboard-next-input" class="touch-target-expanded w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-ui-xs flex items-center justify-center active:scale-95 transition-all cursor-pointer border border-slate-200/80" aria-label="Next Field">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
             <button type="button" id="keyboard-done-btn" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-ui-xs shadow-flat active:scale-95 transition-all cursor-pointer">Done</button>
         </div>
     </div>

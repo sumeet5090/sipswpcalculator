@@ -64,6 +64,13 @@ export class KeyboardViewportController {
                 }, 280);
             });
 
+            input.addEventListener('keydown', (e: KeyboardEvent) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.navigateInput(1);
+                }
+            });
+
             input.addEventListener('blur', () => {
                 // Defer hide so clicking 'Done' or 'Next' inside the capsule registers
                 setTimeout(() => {
@@ -74,6 +81,10 @@ export class KeyboardViewportController {
                 }, 150);
             });
         });
+
+        const preventBlur = (e: Event) => {
+            e.preventDefault();
+        };
 
         if (this.doneBtn) {
             this.doneBtn.addEventListener('click', (e) => {
@@ -87,6 +98,8 @@ export class KeyboardViewportController {
         }
 
         if (this.nextBtn) {
+            this.nextBtn.addEventListener('pointerdown', preventBlur);
+            this.nextBtn.addEventListener('mousedown', preventBlur);
             this.nextBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.navigateInput(1);
@@ -94,6 +107,8 @@ export class KeyboardViewportController {
         }
 
         if (this.prevBtn) {
+            this.prevBtn.addEventListener('pointerdown', preventBlur);
+            this.prevBtn.addEventListener('mousedown', preventBlur);
             this.prevBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.navigateInput(-1);
@@ -127,7 +142,12 @@ export class KeyboardViewportController {
         const target = inputs[nextIndex];
         if (target) {
             target.focus();
-            target.select();
+            try {
+                target.select();
+            } catch {
+                // Silent fallback
+            }
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
 

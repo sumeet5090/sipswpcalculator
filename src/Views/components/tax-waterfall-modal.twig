@@ -46,32 +46,47 @@
             <div id="tax-modal-gross-gains" class="font-extrabold text-slate-900 font-financial-mono">₹ --</div>
         </div>
 
-        <!-- Step 2 -->
-        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-growth-surface border border-growth-border shadow-flat">
-            <div>
-                <div class="font-bold text-growth-emphasis">2. Less: Statutory Annual Exemption</div>
-                <div class="text-caption text-growth-emphasis">Section 112A tax-free threshold</div>
-            </div>
-            <div class="font-extrabold text-growth-emphasis font-financial-mono">- ₹1,25,000</div>
-        </div>
+        <!-- Progressive Statutory Deductions Disclosure (Steps 2–4) -->
+        <details id="tax-statutory-steps-disclosure" class="group/tax rounded-2xl border border-slate-200/90 bg-slate-50/60 overflow-hidden transition-all shadow-flat">
+            <summary class="flex items-center justify-between p-3.5 cursor-pointer select-none font-bold text-slate-800 hover:text-slate-900 transition-colors">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs sm:text-sm font-extrabold text-slate-800">Statutory Deductions (Steps 2–4)</span>
+                    <span class="text-micro font-financial-mono font-bold text-tax-emphasis bg-tax-surface border border-tax-border px-1.5 py-0.5 rounded-md">12.5% LTCG</span>
+                </div>
+                <div class="flex items-center gap-1 text-caption font-bold text-emerald-700">
+                    <span class="group-open/tax:hidden">Inspect ↓</span>
+                    <span class="hidden group-open/tax:inline">Hide ↑</span>
+                </div>
+            </summary>
+            <div class="p-3.5 pt-1 space-y-3 border-t border-slate-200/60 bg-white/50">
+                <!-- Step 2 -->
+                <div class="flex items-center justify-between p-3 rounded-xl bg-growth-surface border border-growth-border shadow-flat">
+                    <div>
+                        <div class="font-bold text-growth-emphasis">2. Less: Statutory Annual Exemption</div>
+                        <div class="text-caption text-growth-emphasis">Section 112A tax-free threshold</div>
+                    </div>
+                    <div class="font-extrabold text-growth-emphasis font-financial-mono">- ₹1,25,000</div>
+                </div>
 
-        <!-- Step 3 -->
-        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-flat">
-            <div>
-                <div class="font-bold text-slate-800">3. Net Taxable Capital Gains</div>
-                <div class="text-caption text-slate-500">Gains exceeding the ₹1.25L exemption</div>
-            </div>
-            <div id="tax-modal-taxable-gains" class="font-extrabold text-slate-900 font-financial-mono">₹ --</div>
-        </div>
+                <!-- Step 3 -->
+                <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200/80 shadow-flat">
+                    <div>
+                        <div class="font-bold text-slate-800">3. Net Taxable Capital Gains</div>
+                        <div class="text-caption text-slate-500">Gains exceeding the ₹1.25L exemption</div>
+                    </div>
+                    <div id="tax-modal-taxable-gains" class="font-extrabold text-slate-900 font-financial-mono">₹ --</div>
+                </div>
 
-        <!-- Step 4 -->
-        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-payout-surface border border-payout-border shadow-flat">
-            <div>
-                <div class="font-bold text-payout-emphasis">4. Statutory Tax Payable @ 12.5%</div>
-                <div class="text-caption text-payout">Budget 2024 LTCG equity mutual fund rate</div>
+                <!-- Step 4 -->
+                <div class="flex items-center justify-between p-3 rounded-xl bg-payout-surface border border-payout-border shadow-flat">
+                    <div>
+                        <div class="font-bold text-payout-emphasis">4. Statutory Tax Payable @ 12.5%</div>
+                        <div class="text-caption text-payout">Budget 2024 LTCG equity mutual fund rate</div>
+                    </div>
+                    <div id="tax-modal-tax-amount" class="font-extrabold text-payout font-financial-mono">- ₹ --</div>
+                </div>
             </div>
-            <div id="tax-modal-tax-amount" class="font-extrabold text-payout font-financial-mono">- ₹ --</div>
-        </div>
+        </details>
 
         <!-- Step 5 -->
         <div class="flex items-center justify-between p-4 rounded-2xl bg-tax-surface border border-tax-border shadow-flat">

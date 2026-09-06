@@ -110,11 +110,7 @@ export class ChartScrubbingController {
                 const rect = container.getBoundingClientRect();
                 const xPercent = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
                 const targetIndex = Math.round(xPercent * (this.currentResults.length - 1));
-                const hud = document.getElementById('chart-inspection-hud');
-                if (hud) {
-                    hud.classList.remove('hidden');
-                    hud.classList.add('ring-2', 'ring-emerald-400/60', 'bg-white', 'shadow-subtle');
-                }
+                this.elevateHud();
                 const row = this.currentResults[targetIndex];
 
                 if (row) {
@@ -141,14 +137,26 @@ export class ChartScrubbingController {
 
         const endScrubbing = () => {
             isScrubbing = false;
-            const hud = document.getElementById('chart-inspection-hud');
-            if (hud) {
-                hud.classList.remove('ring-2', 'ring-emerald-400/60', 'bg-white', 'shadow-subtle');
-            }
+            this.resetHud();
         };
 
         container.addEventListener('touchend', endScrubbing, { passive: true });
         container.addEventListener('touchcancel', endScrubbing, { passive: true });
+    }
+
+    private elevateHud(): void {
+        const hud = document.getElementById('chart-inspection-hud');
+        if (hud) {
+            hud.classList.remove('hidden');
+            hud.classList.add('ring-2', 'ring-emerald-400/60', 'bg-white', 'shadow-subtle');
+        }
+    }
+
+    private resetHud(): void {
+        const hud = document.getElementById('chart-inspection-hud');
+        if (hud) {
+            hud.classList.remove('ring-2', 'ring-emerald-400/60', 'bg-white', 'shadow-subtle');
+        }
     }
 
     /**
@@ -158,7 +166,18 @@ export class ChartScrubbingController {
         if (!this.mobileScrubberEl || this.isInitialized) return;
         this.isInitialized = true;
 
+        const onStart = () => this.elevateHud();
+        const onEnd = () => this.resetHud();
+
+        this.mobileScrubberEl.addEventListener('pointerdown', onStart);
+        this.mobileScrubberEl.addEventListener('touchstart', onStart, { passive: true });
+        this.mobileScrubberEl.addEventListener('pointerup', onEnd);
+        this.mobileScrubberEl.addEventListener('touchend', onEnd, { passive: true });
+        this.mobileScrubberEl.addEventListener('touchcancel', onEnd, { passive: true });
+        this.mobileScrubberEl.addEventListener('change', onEnd);
+
         this.mobileScrubberEl.addEventListener('input', (e) => {
+            this.elevateHud();
             const target = e.target as HTMLInputElement;
             const year = parseInt(target.value, 10);
             if (isNaN(year) || this.currentResults.length === 0) return;

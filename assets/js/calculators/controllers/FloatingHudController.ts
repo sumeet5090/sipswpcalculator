@@ -47,6 +47,42 @@ export class FloatingHudController {
         });
 
         this.observer.observe(targetCard);
+
+        this.initDiscoveryHudScrollListener();
+    }
+
+    private initDiscoveryHudScrollListener(): void {
+        const discoveryHud = this.dom.getElement('floating-discovery-hud');
+        if (!discoveryHud) return;
+
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const currentScrollY = window.scrollY;
+                    const delta = currentScrollY - lastScrollY;
+                    
+                    const keyboardCapsule = document.getElementById('keyboard-docked-preview');
+                    const isKeyboardOpen = keyboardCapsule && !keyboardCapsule.classList.contains('hidden') && !keyboardCapsule.classList.contains('opacity-0');
+
+                    if (!isKeyboardOpen) {
+                        if (delta > 20 && currentScrollY > 150) {
+                            discoveryHud.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+                            discoveryHud.classList.remove('translate-y-0');
+                        } else if (delta < -10 || currentScrollY < 100) {
+                            discoveryHud.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+                            discoveryHud.classList.add('translate-y-0');
+                        }
+                    }
+
+                    lastScrollY = currentScrollY;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
     }
 
     public updateResults(results: YearResult[]): void {

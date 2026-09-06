@@ -63,8 +63,21 @@ export class BottomSheetGestureController {
 
         handle.style.touchAction = 'pan-y';
 
+        const isContentScrolled = (target: EventTarget | null): boolean => {
+            if (dialog.scrollTop > 0) return true;
+            if (target instanceof HTMLElement) {
+                const scrollable = target.closest('.overflow-y-auto, .overflow-auto');
+                if (scrollable && scrollable.scrollTop > 0) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
         const onTouchStart = (e: TouchEvent) => {
             if (!dialog.open || e.touches.length !== 1) return;
+            if (isContentScrolled(e.target)) return;
+
             const touch = e.touches[0];
             this.activeDialog = dialog;
             this.startY = touch.clientY;
@@ -77,6 +90,11 @@ export class BottomSheetGestureController {
 
         const onTouchMove = (e: TouchEvent) => {
             if (!this.isDragging || this.activeDialog !== dialog || e.touches.length !== 1) return;
+            if (isContentScrolled(e.target)) {
+                this.isDragging = false;
+                dialog.style.transform = '';
+                return;
+            }
             const touch = e.touches[0];
             const deltaY = touch.clientY - this.startY;
             const deltaX = touch.clientX - this.startX;
