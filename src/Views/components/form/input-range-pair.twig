@@ -64,12 +64,12 @@
         <div class="relative flex items-stretch rounded-xl bg-slate-50/90 border border-slate-200/90 {{ inputFocusBorder }} focus-within:bg-white focus-within:ring-2 transition-all overflow-hidden shadow-flat">
             <!-- Decrement Stepper Button -->
             <button type="button" 
-                class="stepper-btn stepper-dec w-9 sm:w-10 flex items-center justify-center bg-slate-100/70 hover:bg-slate-200/80 text-slate-600 hover:text-slate-900 active:bg-slate-300/80 active:scale-95 transition-all select-none cursor-pointer border-r border-slate-200/80 focus:outline-none shrink-0"
+                class="stepper-btn stepper-dec w-11 sm:w-10 min-h-[44px] flex items-center justify-center bg-slate-100/70 hover:bg-slate-200/80 text-slate-600 hover:text-slate-900 active:bg-slate-300/80 active:scale-95 transition-all select-none cursor-pointer border-r border-slate-200/80 focus:outline-none shrink-0"
                 data-step-action="dec"
                 data-step-for="{{ id }}"
                 data-step-val="{{ step }}"
                 aria-label="Decrease {{ label }}">
-                <svg class="w-3.5 h-3.5 stroke-[2.5] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 stroke-[2.5] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5"/>
                 </svg>
             </button>
@@ -96,12 +96,12 @@
 
             <!-- Increment Stepper Button -->
             <button type="button" 
-                class="stepper-btn stepper-inc w-9 sm:w-10 flex items-center justify-center bg-slate-100/70 hover:bg-slate-200/80 text-slate-600 hover:text-slate-900 active:bg-slate-300/80 active:scale-95 transition-all select-none cursor-pointer border-l border-slate-200/80 focus:outline-none shrink-0"
+                class="stepper-btn stepper-inc w-11 sm:w-10 min-h-[44px] flex items-center justify-center bg-slate-100/70 hover:bg-slate-200/80 text-slate-600 hover:text-slate-900 active:bg-slate-300/80 active:scale-95 transition-all select-none cursor-pointer border-l border-slate-200/80 focus:outline-none shrink-0"
                 data-step-action="inc"
                 data-step-for="{{ id }}"
                 data-step-val="{{ step }}"
                 aria-label="Increase {{ label }}">
-                <svg class="w-3.5 h-3.5 stroke-[2.5] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 stroke-[2.5] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"/>
                 </svg>
             </button>
@@ -124,13 +124,13 @@
 
         {% if presets %}
             {% set presetCount = presets|length %}
-            {% set gridClass = presetCount == 4 ? 'grid grid-cols-2 xs:grid-cols-4 sm:flex sm:flex-wrap' : (presetCount == 3 ? 'grid grid-cols-3 sm:flex sm:flex-wrap' : 'flex flex-wrap') %}
+            {% set gridClass = presetCount == 4 ? 'grid grid-cols-2 xs:grid-cols-4 sm:flex sm:flex-wrap' : (presetCount == 3 ? 'grid grid-cols-3 sm:flex sm:flex-wrap' : (presetCount >= 5 ? 'grid grid-cols-3 xs:grid-cols-6 sm:flex sm:flex-wrap' : 'flex flex-wrap')) %}
             <div class="{{ gridClass }} items-center gap-1.5 sm:gap-1 mt-1.5" role="group" aria-label="{{ label }} quick presets">
                 {% for preset in presets %}
                     {% set p_label = preset.label|default(preset) %}
                     {% set p_val = preset.value|default(preset) %}
                     <button type="button" 
-                        class="preset-chip text-ui-xs sm:text-micro font-bold px-2 sm:px-2 py-2 sm:py-0.5 min-h-[42px] sm:min-h-0 rounded-lg sm:rounded-md border border-slate-200/90 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-flat text-center justify-center flex items-center {{ value == p_val ? activeChipClass : '' }}"
+                        class="preset-chip text-ui-xs sm:text-micro font-bold px-2 sm:px-2 py-2 sm:py-0.5 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-md border border-slate-200/90 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-flat text-center justify-center flex items-center {{ value == p_val ? activeChipClass : '' }}"
                         data-preset-for="{{ id }}"
                         data-preset-val="{{ p_val }}"
                         aria-pressed="{{ value == p_val ? 'true' : 'false' }}">

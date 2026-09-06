@@ -126,15 +126,15 @@ export class MobileErgonomicDeckController {
 
     public setActiveTab(mode: 'sip' | 'swp'): void {
         if (mode === 'sip') {
-            this.btnSip?.classList.add('bg-white', 'text-emerald-700', 'shadow-2xs');
-            this.btnSip?.classList.remove('text-slate-600');
-            this.btnSwp?.classList.remove('bg-white', 'text-emerald-700', 'shadow-2xs');
-            this.btnSwp?.classList.add('text-slate-600');
+            this.btnSip?.classList.add('bg-emerald-600', 'text-white', 'shadow-flat');
+            this.btnSip?.classList.remove('bg-slate-200/80', 'text-slate-600');
+            this.btnSwp?.classList.remove('bg-rose-600', 'text-white', 'shadow-flat');
+            this.btnSwp?.classList.add('bg-slate-200/80', 'text-slate-600');
         } else {
-            this.btnSwp?.classList.add('bg-white', 'text-rose-700', 'shadow-2xs');
-            this.btnSwp?.classList.remove('text-slate-600');
-            this.btnSip?.classList.remove('bg-white', 'text-emerald-700', 'shadow-2xs');
-            this.btnSip?.classList.add('text-slate-600');
+            this.btnSwp?.classList.add('bg-rose-600', 'text-white', 'shadow-flat');
+            this.btnSwp?.classList.remove('bg-slate-200/80', 'text-slate-600');
+            this.btnSip?.classList.remove('bg-emerald-600', 'text-white', 'shadow-flat');
+            this.btnSip?.classList.add('bg-slate-200/80', 'text-slate-600');
         }
     }
 

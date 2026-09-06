@@ -64,10 +64,79 @@ export class ChartScrubbingController {
         this.scrubberMaxIndicatorEl = this.dom.getElement<HTMLElement>('scrubber-max-indicator');
 
         this.bindMobileScrubber();
+        this.bindCanvasTouchScrubbing();
     }
 
     public setOnScrubCallback(cb: ScrubCallback): void {
         this.onScrubCallback = cb;
+    }
+
+    /**
+     * Binds directional slope-locked touch gestures directly to the chart canvas container.
+     * Preserves smooth vertical page scrolling while unlocking direct horizontal timeline scrubbing.
+     */
+    private bindCanvasTouchScrubbing(): void {
+        const container = this.dom.getElement<HTMLElement>('chart-canvas-container');
+        if (!container) return;
+
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let isScrubbing = false;
+
+        container.addEventListener('touchstart', (e: TouchEvent) => {
+            if (e.touches.length !== 1 || this.currentResults.length === 0) return;
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            isScrubbing = false;
+        }, { passive: true });
+
+        container.addEventListener('touchmove', (e: TouchEvent) => {
+            if (e.touches.length !== 1 || this.currentResults.length === 0) return;
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - touchStartX;
+            const deltaY = touch.clientY - touchStartY;
+
+            // Directional slope lock: only scrub if horizontal delta clearly dominates (>1.2 ratio)
+            if (!isScrubbing) {
+                if (Math.abs(deltaX) > 10 && Math.abs(deltaX) / (Math.abs(deltaY) || 1) > 1.2) {
+                    isScrubbing = true;
+                } else if (Math.abs(deltaY) > 10) {
+                    return;
+                }
+            }
+
+            if (isScrubbing) {
+                const rect = container.getBoundingClientRect();
+                const xPercent = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
+                const targetIndex = Math.round(xPercent * (this.currentResults.length - 1));
+                const row = this.currentResults[targetIndex];
+
+                if (row) {
+                    this.inspect(row, this.currentResults.length);
+                    if (this.mobileScrubberEl) {
+                        this.mobileScrubberEl.value = String(row.year);
+                    }
+                    if (this.scrubberActiveIndicatorEl) {
+                        this.scrubberActiveIndicatorEl.textContent = `Yr ${row.year}: ${this.formatter.format(row.combined_total)}`;
+                    }
+                    if (this.onScrubCallback) {
+                        this.onScrubCallback(targetIndex);
+                    }
+                    if (typeof navigator !== 'undefined' && 'vibrate' in navigator && (row.year % 5 === 0 || row.year === this.currentResults.length)) {
+                        try {
+                            navigator.vibrate(6);
+                        } catch {
+                            // Silent ignore
+                        }
+                    }
+                }
+            }
+        }, { passive: true });
+
+        container.addEventListener('touchend', () => {
+            isScrubbing = false;
+        }, { passive: true });
     }
 
     /**
