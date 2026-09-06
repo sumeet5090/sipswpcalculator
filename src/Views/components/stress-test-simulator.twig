@@ -50,12 +50,12 @@
         </div>
 
         <!-- ========================================================================= -->
-        <!-- SCENARIO SELECTOR BUTTONS (4 ICONIC INDIAN MARKET SHOCKS)                 -->
+        <!-- SCENARIO SELECTOR BUTTONS (4 ICONIC INDIAN MARKET SHOCKS - SNAP RAIL ON MOBILE) -->
         <!-- ========================================================================= -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" role="tablist" aria-label="Black Swan Scenarios">
+        <div class="flex sm:grid sm:grid-cols-4 gap-2.5 overflow-x-auto no-scrollbar snap-x snap-mandatory -mx-3 px-3 sm:mx-0 sm:px-0 py-1" role="tablist" aria-label="Black Swan Scenarios">
             
             <!-- Scenario 1: Normal Growth (Active Default) -->
-            <button type="button" class="stress-choice-btn group p-3 rounded-2xl bg-white border-2 border-emerald-500 text-slate-900 text-left transition-all duration-200 cursor-pointer shadow-flat relative"
+            <button type="button" class="stress-choice-btn min-w-[155px] snap-center shrink-0 sm:min-w-0 sm:w-auto group p-3 rounded-2xl bg-white border-2 border-emerald-500 text-slate-900 text-left transition-all duration-200 cursor-pointer shadow-flat relative"
                 data-scenario="baseline" data-drop="0" data-recovery="0">
                 <div class="flex items-center justify-between mb-1">
                     <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-growth-emphasis">Steady Growth</strong>
@@ -66,7 +66,7 @@
             </button>
 
             <!-- Scenario 2: 2008 Lehman GFC -->
-            <button type="button" class="stress-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+            <button type="button" class="stress-choice-btn min-w-[155px] snap-center shrink-0 sm:min-w-0 sm:w-auto group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
                 data-scenario="lehman" data-drop="52" data-recovery="24">
                 <div class="flex items-center justify-between mb-1">
                     <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-payout">2008 Lehman</strong>
@@ -77,7 +77,7 @@
             </button>
 
             <!-- Scenario 3: 2020 COVID Flash Crash -->
-            <button type="button" class="stress-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+            <button type="button" class="stress-choice-btn min-w-[155px] snap-center shrink-0 sm:min-w-0 sm:w-auto group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
                 data-scenario="covid" data-drop="38" data-recovery="8">
                 <div class="flex items-center justify-between mb-1">
                     <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-warning-emphasis">2020 COVID</strong>
@@ -88,7 +88,7 @@
             </button>
 
             <!-- Scenario 4: 2015-16 Midcap Bear Market -->
-            <button type="button" class="stress-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+            <button type="button" class="stress-choice-btn min-w-[155px] snap-center shrink-0 sm:min-w-0 sm:w-auto group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
                 data-scenario="midcap2015" data-drop="25" data-recovery="18">
                 <div class="flex items-center justify-between mb-1">
                     <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-indigo-900">2015-16 Bear</strong>

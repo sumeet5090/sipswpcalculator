@@ -118,7 +118,72 @@ export class ShareController {
                 this.shareWealthPass(isDiscreet);
             });
         }
+
+        const mobileNativeShareBtn = this.dom.getElement('mobile-native-share-btn');
+        if (mobileNativeShareBtn) {
+            mobileNativeShareBtn.addEventListener('click', () => {
+                void this.tryNativeShare();
+            });
+        }
     }
+
+    /**
+     * Dispatch native OS share sheet with financial proposal summary and calculation URL.
+     * Discriminates AbortError silently as standard user cancellation.
+     */
+    async tryNativeShare(): Promise<boolean> {
+        const inputs = this.getInputs();
+        const results = this.getResults ? this.getResults() : [];
+        const params = new URLSearchParams();
+        params.set('sip', String(inputs.sip));
+        params.set('years', String(inputs.years));
+        params.set('rate', String(inputs.rate));
+        params.set('stepup', String(inputs.stepup));
+        if (inputs.lumpsum > 0) params.set('lumpsum', String(inputs.lumpsum));
+        if (inputs.enable_swp) {
+            params.set('swp_on', '1');
+            params.set('swp', String(inputs.swp_withdrawal));
+            params.set('swp_years', String(inputs.swp_years));
+            params.set('swp_stepup', String(inputs.swp_stepup));
+            params.set('swp_rate', String(inputs.swp_rate));
+        }
+
+        const shareUrl = window.location.origin + window.location.pathname + '?' + params.toString();
+        let planSummary = `Wealth Plan (${inputs.years} Years) • Monthly SIP: ₹${inputs.sip.toLocaleString('en-IN')}`;
+        if (results && results.length > 0) {
+            const last = results[results.length - 1];
+            planSummary += ` • Projected Corpus: ₹${Math.round(last.combined_total).toLocaleString('en-IN')}`;
+        }
+
+        if (typeof navigator !== 'undefined' && 'share' in navigator) {
+            try {
+                await navigator.share({
+                    title: 'SIP & SWP Wealth Plan',
+                    text: planSummary,
+                    url: shareUrl
+                });
+                return true;
+            } catch (err: unknown) {
+                if (err instanceof Error && err.name === 'AbortError') {
+                    return false;
+                }
+            }
+        }
+
+        // Fallback: Copy link with feedback
+        this.dom.copyToClipboard(shareUrl, () => {
+            const nativeBtn = this.dom.getElement('mobile-native-share-btn');
+            if (nativeBtn) {
+                const originalHtml = nativeBtn.innerHTML;
+                nativeBtn.innerHTML = '<span>✅ Link Copied!</span>';
+                setTimeout(() => {
+                    nativeBtn.innerHTML = originalHtml;
+                }, 2000);
+            }
+        });
+        return false;
+    }
+
 
 
     /**

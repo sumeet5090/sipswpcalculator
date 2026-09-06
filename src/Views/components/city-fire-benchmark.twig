@@ -60,11 +60,11 @@
         </div>
 
         <!-- ========================================================================= -->
-        <!-- CITY SELECTOR CARDS (INTERACTIVE GEOGRAPHIC PRESETS)                      -->
+        <!-- CITY SELECTOR CARDS (INTERACTIVE GEOGRAPHIC PRESETS - SNAP RAIL ON MOBILE)-->
         <!-- ========================================================================= -->
-        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5" role="tablist" aria-label="City Selection">
+        <div class="flex sm:grid sm:grid-cols-5 gap-2.5 overflow-x-auto no-scrollbar snap-x snap-mandatory -mx-3 px-3 sm:mx-0 sm:px-0 py-1" role="tablist" aria-label="City Selection">
             <!-- Mumbai (Active Default) -->
-            <button type="button" class="city-choice-btn group p-3 rounded-2xl bg-white border-2 border-emerald-500 text-slate-900 text-left transition-all duration-200 cursor-pointer shadow-flat relative"
+            <button type="button" class="city-choice-btn min-w-[145px] snap-center shrink-0 sm:min-w-0 sm:w-auto group p-3 rounded-2xl bg-white border-2 border-emerald-500 text-slate-900 text-left transition-all duration-200 cursor-pointer shadow-flat relative"
                 data-city="mumbai" data-base-expense="85000" data-inflation="7.5">
                 <div class="flex items-center justify-between mb-1">
                     <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-growth-emphasis">Mumbai</strong>
@@ -75,7 +75,7 @@
             </button>
 
             <!-- Bengaluru -->
-            <button type="button" class="city-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+            <button type="button" class="city-choice-btn min-w-[145px] snap-center shrink-0 sm:min-w-0 sm:w-auto group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
                 data-city="bengaluru" data-base-expense="75000" data-inflation="7.5">
                 <div class="flex items-center justify-between mb-1">
                     <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-growth-emphasis">Bengaluru</strong>
@@ -86,7 +86,7 @@
             </button>
 
             <!-- Delhi NCR -->
-            <button type="button" class="city-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+            <button type="button" class="city-choice-btn min-w-[145px] snap-center shrink-0 sm:min-w-0 sm:w-auto group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
                 data-city="delhi" data-base-expense="70000" data-inflation="7.0">
                 <div class="flex items-center justify-between mb-1">
                     <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-growth-emphasis">Delhi NCR</strong>
@@ -97,7 +97,7 @@
             </button>
 
             <!-- Pune / Hyderabad -->
-            <button type="button" class="city-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
+            <button type="button" class="city-choice-btn min-w-[145px] snap-center shrink-0 sm:min-w-0 sm:w-auto group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
                 data-city="pune" data-base-expense="60000" data-inflation="6.5">
                 <div class="flex items-center justify-between mb-1">
                     <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-growth-emphasis">Pune / Hyd</strong>
@@ -108,7 +108,7 @@
             </button>
 
             <!-- Tier-2 Cities -->
-            <button type="button" class="city-choice-btn group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer col-span-2 sm:col-span-1"
+            <button type="button" class="city-choice-btn min-w-[145px] snap-center shrink-0 sm:min-w-0 sm:w-auto group p-3 rounded-2xl bg-slate-50/90 border border-slate-200/90 hover:border-slate-300 hover:bg-white text-slate-700 text-left transition-all duration-200 cursor-pointer"
                 data-city="tier2" data-base-expense="45000" data-inflation="6.0">
                 <div class="flex items-center justify-between mb-1">
                     <strong class="text-ui-xs font-bold text-slate-900 group-hover:text-growth-emphasis">Tier-2 Cities</strong>

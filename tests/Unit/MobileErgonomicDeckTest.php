@@ -125,4 +125,81 @@ final class MobileErgonomicDeckTest extends TestCase
         $stepperCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/StepperController.ts');
         $this->assertStringContainsString('WebHapticEngine.triggerTick', $stepperCode);
     }
+
+    public function testMobileSharePolymorphismAndQrCollapsible(): void
+    {
+        $qrModalTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/qr-share-modal.twig');
+        $this->assertStringContainsString('id="mobile-native-share-btn"', $qrModalTwig);
+        $this->assertStringContainsString('id="mobile-qr-disclosure"', $qrModalTwig);
+        $this->assertStringContainsString('modal-drag-handle', $qrModalTwig);
+
+        $shareCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/ShareController.ts');
+        $this->assertStringContainsString('tryNativeShare(): Promise<boolean>', $shareCode);
+        $this->assertStringContainsString('err.name === \'AbortError\'', $shareCode);
+        $this->assertStringContainsString('mobile-native-share-btn', $shareCode);
+    }
+
+    public function testBottomSheetGestureControllerContracts(): void
+    {
+        $gestureCode = (string) file_get_contents(
+            __DIR__ . '/../../assets/js/calculators/controllers/BottomSheetGestureController.ts'
+        );
+        $this->assertStringContainsString('bindSheetGestures(dialog: HTMLDialogElement, handle: HTMLElement): void', $gestureCode);
+        $this->assertStringContainsString('deltaY > 80', $gestureCode);
+        $this->assertStringContainsString('WebHapticEngine.triggerTick', $gestureCode);
+        $this->assertStringContainsString('requestAnimationFrame', $gestureCode);
+
+        $ergoCode = (string) file_get_contents(
+            __DIR__ . '/../../assets/js/calculators/subsystems/ErgonomicsSubsystem.ts'
+        );
+        $this->assertStringContainsString('BottomSheetGestureController', $ergoCode);
+        $this->assertStringContainsString('this.bottomSheetGestureController.init()', $ergoCode);
+
+        $baseTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/base.twig');
+        $this->assertStringContainsString('modal-drag-handle', $baseTwig);
+    }
+
+    public function testCityFireBenchmarkHorizontalSnapRail(): void
+    {
+        $cityTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/city-fire-benchmark.twig');
+        $this->assertStringContainsString('overflow-x-auto', $cityTwig);
+        $this->assertStringContainsString('snap-x', $cityTwig);
+        $this->assertStringContainsString('snap-mandatory', $cityTwig);
+        $this->assertStringContainsString('snap-center shrink-0', $cityTwig);
+    }
+
+    public function testStressTestSimulatorHorizontalSnapRail(): void
+    {
+        $stressTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/stress-test-simulator.twig');
+        $this->assertStringContainsString('overflow-x-auto', $stressTwig);
+        $this->assertStringContainsString('snap-x', $stressTwig);
+        $this->assertStringContainsString('snap-mandatory', $stressTwig);
+        $this->assertStringContainsString('snap-center shrink-0', $stressTwig);
+    }
+
+    public function testAssetRebalancingMicroRatioBars(): void
+    {
+        $assetTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/asset-rebalancing.twig');
+        $this->assertStringContainsString('Micro Proportional Bar', $assetTwig);
+        $this->assertStringContainsString('bg-emerald-500', $assetTwig);
+        $this->assertStringContainsString('bg-indigo-500', $assetTwig);
+    }
+
+    public function testMobileDiscoveryHudPlacementAndAnchors(): void
+    {
+        $hudTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/floating-discovery-hud.twig');
+        $this->assertStringContainsString('bottom-[74px]', $hudTwig);
+        $this->assertStringContainsString('z-30', $hudTwig);
+        $this->assertStringContainsString('#calculator-section', $hudTwig);
+        $this->assertStringContainsString('#breakdown-studio', $hudTwig);
+        $this->assertStringContainsString('#math-formulas', $hudTwig);
+    }
+
+    public function testMobileMenuScrollContainment(): void
+    {
+        $headerTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/header.twig');
+        $this->assertStringContainsString('max-h-[calc(100vh-4.5rem)]', $headerTwig);
+        $this->assertStringContainsString('overflow-y-auto', $headerTwig);
+        $this->assertStringContainsString('overscroll-contain', $headerTwig);
+    }
 }

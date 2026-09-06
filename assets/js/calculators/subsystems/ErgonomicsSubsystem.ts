@@ -10,6 +10,7 @@ import { CommandPaletteController } from '../controllers/CommandPaletteControlle
 import { GlossaryController } from '../controllers/GlossaryController.ts';
 import { FloatingHudController } from '../controllers/FloatingHudController.ts';
 import { StudioTabController } from '../controllers/StudioTabController.ts';
+import { BottomSheetGestureController } from '../controllers/BottomSheetGestureController.ts';
 import { InvestmentInputs, YearResult } from '../../types';
 
 export interface ErgonomicsSubsystemConfig {
@@ -41,6 +42,7 @@ export class ErgonomicsSubsystem {
     private glossaryController: GlossaryController;
     private floatingHudController: FloatingHudController;
     private studioTabController: StudioTabController;
+    private bottomSheetGestureController: BottomSheetGestureController;
 
     constructor(config: ErgonomicsSubsystemConfig) {
         this.dom = config.dom;
@@ -83,6 +85,7 @@ export class ErgonomicsSubsystem {
 
         this.glossaryController = new GlossaryController(this.getInputs, this.getLatestResults);
         this.floatingHudController = new FloatingHudController(this.dom, this.formatter);
+        this.bottomSheetGestureController = new BottomSheetGestureController(this.dom);
 
         this.commandPaletteController = new CommandPaletteController(this.dom, (params) => {
             if (params.sip !== undefined) this.sliderManager.updateFieldValue('sip', params.sip);
@@ -100,6 +103,7 @@ export class ErgonomicsSubsystem {
         this.commandPaletteController.init();
         this.floatingHudController.init();
         this.keyboardNavController.init();
+        this.bottomSheetGestureController.init();
     }
 
     public updateResults(combined: YearResult[], inputs: InvestmentInputs): void {

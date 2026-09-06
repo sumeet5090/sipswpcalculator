@@ -142,8 +142,8 @@
         </button>
     </div>
 
-    <!-- Mobile menu dropdown -->
-    <div id="mobile-menu" class="sm:hidden hidden border-t border-slate-200 bg-white/95 backdrop-blur-md">
+    <!-- Mobile menu dropdown (Contained Scroll to eliminate page pushdown) -->
+    <div id="mobile-menu" class="sm:hidden hidden border-t border-slate-200 bg-white/98 backdrop-blur-md max-h-[calc(100vh-4.5rem)] overflow-y-auto custom-scrollbar shadow-modal overscroll-contain">
         <div class="px-4 py-3 space-y-1">
             {% for item in nav_items %}
                 {% set is_active = (active_page|default('') == item.id) or (active_page|default('') == (item.id ~ '.php')) or (item.id == 'resources' and active_page|default('') == 'blog_post') %}
