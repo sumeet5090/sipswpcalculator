@@ -45,8 +45,9 @@ export class RollingOdometerView {
      * e.g. "₹ 1,24,56,789"
      */
     public render(formattedText: string, instant: boolean = false): void {
-        // Maintain clean screen reader readout
+        // Maintain clean screen reader readout & length caching
         this.element.setAttribute('aria-label', formattedText);
+        this.element.dataset.formattedText = formattedText;
 
         if (this.isReducedMotion) {
             this.element.textContent = formattedText;
@@ -79,7 +80,7 @@ export class RollingOdometerView {
 
                     for (let i = 0; i <= 9; i++) {
                         const digitEl = document.createElement('span');
-                        digitEl.className = 'inline-block text-center';
+                        digitEl.className = 'odometer-digit inline-block text-center';
                         digitEl.textContent = String(i);
                         ribbonEl.appendChild(digitEl);
                     }

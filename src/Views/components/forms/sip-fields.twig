@@ -1,39 +1,16 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
-<!-- Aspirational Investor Archetype Chips (Zero-Cognitive Instant Injection) -->
-<div class="mb-5 pb-3.5 border-b border-slate-200/80">
-    <div class="flex items-center justify-between mb-2">
-        <span class="text-micro font-extrabold uppercase tracking-wider text-slate-500">⚡ Fast-Track Archetypes</span>
-        <span class="text-micro text-slate-400 font-medium">1-Tap Blueprint</span>
-    </div>
-    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1" role="toolbar" aria-label="Investment Archetypes">
-        <button type="button" class="archetype-chip group flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-emerald-50/80 text-slate-700 hover:text-emerald-800 text-ui-xs font-medium transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-flat"
-            data-archetype="fresher"
-            aria-pressed="false">
-            <span class="text-ui-sm">🎓</span>
-            <span>Tech Fresher <strong class="text-slate-900 group-hover:text-emerald-900 font-bold">₹10K</strong></span>
-        </button>
-
-        <button type="button" class="archetype-chip group flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-emerald-50/80 text-slate-700 hover:text-emerald-800 text-ui-xs font-medium transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-flat"
-            data-archetype="lead"
-            aria-pressed="false">
-            <span class="text-ui-sm">🚀</span>
-            <span>Mid-Career <strong class="text-slate-900 group-hover:text-emerald-900 font-bold">₹50K</strong></span>
-        </button>
-
-        <button type="button" class="archetype-chip group flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-emerald-50/80 text-slate-700 hover:text-emerald-800 text-ui-xs font-medium transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-flat"
-            data-archetype="fire"
-            aria-pressed="false">
-            <span class="text-ui-sm">🔥</span>
-            <span>FIRE Hunter <strong class="text-slate-900 group-hover:text-emerald-900 font-bold">₹1.5L</strong></span>
-        </button>
-
-        <button type="button" class="archetype-chip group flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-emerald-50/80 text-slate-700 hover:text-emerald-800 text-ui-xs font-medium transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-flat"
-            data-archetype="legacy"
-            aria-pressed="false">
-            <span class="text-ui-sm">🏡</span>
-            <span>Family Legacy <strong class="text-slate-900 group-hover:text-emerald-900 font-bold">₹25K</strong></span>
-        </button>
+<!-- Conversational Mad Libs Live Narrative Strip -->
+<div id="conversational-narrative-strip" class="p-2.5 sm:p-3 rounded-2xl bg-gradient-to-r from-slate-50 via-emerald-50/40 to-slate-50 border border-slate-200/90 shadow-flat mb-3 text-ui-xs text-slate-700 leading-relaxed transition-all">
+    <div class="flex items-center gap-1.5 flex-wrap">
+        <span class="font-extrabold text-slate-900 shrink-0">🧭 Plan:</span>
+        <span id="narrative-strategy-badge" class="hidden font-bold text-micro px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-flat shrink-0 items-center gap-1"></span>
+        <span>Investing</span>
+        <span class="font-financial-mono font-extrabold text-emerald-800 bg-white px-2 py-0.5 rounded-lg border border-emerald-300/80 shadow-flat" id="narrative-sip">₹{{ (sip|default(10000))|number_format }}</span>
+        <span>/mo for</span>
+        <span class="font-financial-mono font-extrabold text-slate-900 bg-white px-2 py-0.5 rounded-lg border border-slate-300 shadow-flat" id="narrative-years">{{ years|default(15) }} yrs</span>
+        <span>at</span>
+        <span class="font-financial-mono font-extrabold text-growth-emphasis bg-growth-surface px-2 py-0.5 rounded-lg border border-growth-border shadow-flat" id="narrative-rate">{{ rate|default(12) }}% CAGR</span>
     </div>
 </div>
 
@@ -165,6 +142,9 @@
         {'label': '14% Mid Cap', 'value': 14}
     ]
 }) }}
+
+<!-- Initial Lumpsum (Optional Starting Capital) -->
+{% include 'components/forms/lumpsum-fields.twig' %}
 
 <!-- Adjustments & Inflation Options -->
 <div class="rounded-2xl bg-slate-50/70 border border-slate-200/90 p-2.5 space-y-2 shadow-subtle mt-1">

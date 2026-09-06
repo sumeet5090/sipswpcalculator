@@ -198,17 +198,20 @@
   align-items: baseline;
   justify-content: flex-end;
   font-variant-numeric: tabular-nums lining-nums;
-  line-height: 1.1;
+  line-height: 1.15em;
   contain: layout style;
 }
 
 @utility odometer-digit-slot {
   display: inline-block;
   overflow: hidden;
+  width: 1ch;
   height: 1.15em;
+  line-height: 1.15em;
   position: relative;
   vertical-align: baseline;
-  contain: strict;
+  text-align: center;
+  contain: paint;
 }
 
 @utility odometer-ribbon {
@@ -218,10 +221,20 @@
   will-change: transform;
 }
 
+@utility odometer-digit {
+  display: inline-block;
+  width: 1ch;
+  height: 1.15em;
+  line-height: 1.15em;
+  text-align: center;
+  box-sizing: border-box;
+}
+
 @utility odometer-static {
   display: inline-block;
   height: 1.15em;
   line-height: 1.15em;
+  vertical-align: baseline;
 }
 
 /* ── Pure Light-Mode Pastel Aurora Wealth Scale Ambience ── */
