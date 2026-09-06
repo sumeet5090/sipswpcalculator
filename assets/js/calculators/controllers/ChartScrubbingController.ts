@@ -21,6 +21,12 @@ export class ChartScrubbingController {
     private ribbonGainsEl: HTMLElement | null = null;
     private statusDotEl: HTMLElement | null = null;
 
+    private hudYearLabelEl: HTMLElement | null = null;
+    private hudInvestedEl: HTMLElement | null = null;
+    private hudGainsEl: HTMLElement | null = null;
+    private hudTotalEl: HTMLElement | null = null;
+    private hudTimelineIndicatorEl: HTMLElement | null = null;
+
     private mobileScrubberEl: HTMLInputElement | null = null;
     private scrubberActiveIndicatorEl: HTMLElement | null = null;
     private scrubberMaxIndicatorEl: HTMLElement | null = null;
@@ -46,6 +52,12 @@ export class ChartScrubbingController {
         this.ribbonCorpusEl = this.dom.getElement<HTMLElement>('ribbon-inspect-corpus');
         this.ribbonGainsEl = this.dom.getElement<HTMLElement>('ribbon-inspect-gains');
         this.statusDotEl = this.dom.getElement<HTMLElement>('hud-status-dot');
+
+        this.hudYearLabelEl = this.dom.getElement<HTMLElement>('hud-year-label');
+        this.hudInvestedEl = this.dom.getElement<HTMLElement>('hud-invested-metric');
+        this.hudGainsEl = this.dom.getElement<HTMLElement>('hud-gains-metric');
+        this.hudTotalEl = this.dom.getElement<HTMLElement>('hud-total-metric');
+        this.hudTimelineIndicatorEl = this.dom.getElement<HTMLElement>('hud-timeline-indicator');
 
         this.mobileScrubberEl = this.dom.getElement<HTMLInputElement>('mobile-chart-scrubber');
         this.scrubberActiveIndicatorEl = this.dom.getElement<HTMLElement>('scrubber-active-indicator');
@@ -114,6 +126,9 @@ export class ChartScrubbingController {
             if (this.statusDotEl) {
                 this.statusDotEl.className = 'w-1.5 h-1.5 rounded-full bg-slate-400';
             }
+            if (this.hudTimelineIndicatorEl) {
+                this.hudTimelineIndicatorEl.className = 'w-2 h-2 rounded-full bg-emerald-500 shrink-0';
+            }
             if (this.scrubberActiveIndicatorEl) {
                 this.scrubberActiveIndicatorEl.textContent = `Yr ${finalRow.year}: ${this.formatter.format(finalRow.combined_total)}`;
             }
@@ -146,6 +161,22 @@ export class ChartScrubbingController {
             this.statusDotEl.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
         }
 
+        if (this.hudYearLabelEl) {
+            this.hudYearLabelEl.textContent = `Year ${row.year} of ${maxYears}`;
+        }
+        if (this.hudInvestedEl) {
+            this.hudInvestedEl.textContent = `Invested: ${investedStr}`;
+        }
+        if (this.hudGainsEl) {
+            this.hudGainsEl.textContent = `Gains: +${gainsStr}`;
+        }
+        if (this.hudTotalEl) {
+            this.hudTotalEl.textContent = `Total: ${corpusStr}`;
+        }
+        if (this.hudTimelineIndicatorEl) {
+            this.hudTimelineIndicatorEl.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0';
+        }
+
         if (announce) {
             A11yAnnouncer.announceYearInspection(row.year, investedStr, corpusStr, gainsStr);
         }
@@ -156,6 +187,9 @@ export class ChartScrubbingController {
             this.inspect(finalRow, this.currentResults.length);
             if (this.statusDotEl) {
                 this.statusDotEl.className = 'w-1.5 h-1.5 rounded-full bg-slate-400';
+            }
+            if (this.hudTimelineIndicatorEl) {
+                this.hudTimelineIndicatorEl.className = 'w-2 h-2 rounded-full bg-emerald-500 shrink-0';
             }
         }
     }
