@@ -13,6 +13,12 @@ class ContentManager
     private string $contentDir;
     private HtmlHeadingEnhancer $headingEnhancer;
 
+    /** @var array<string, array{metadata: array<string, mixed>, html: string}|null> */
+    private array $parsedContentCache = [];
+
+    /** @var array<string, array<string, mixed>|null> */
+    private array $metadataOnlyCache = [];
+
     public function __construct(
         Parsedown $parsedown,
         string $contentDir,
@@ -74,6 +80,10 @@ class ContentManager
             return null;
         }
 
+        if (array_key_exists($fullPath, $this->parsedContentCache)) {
+            return $this->parsedContentCache[$fullPath];
+        }
+
         $rawContent = (string) file_get_contents($fullPath);
 
         $metadata = [];
@@ -88,10 +98,15 @@ class ContentManager
         $html = $this->parsedown->text($body);
         $html = $this->headingEnhancer->enhanceHeadings($html);
 
-        return [
+        $result = [
             'metadata' => $metadata,
             'html' => $html
         ];
+
+        $this->parsedContentCache[$fullPath] = $result;
+        $this->metadataOnlyCache[$fullPath] = $metadata;
+
+        return $result;
     }
 
     /**
@@ -105,16 +120,22 @@ class ContentManager
             return null;
         }
 
+        if (array_key_exists($fullPath, $this->metadataOnlyCache)) {
+            return $this->metadataOnlyCache[$fullPath];
+        }
+
         $rawContent = file_get_contents($fullPath);
         if ($rawContent === false) {
             return null;
         }
 
+        $metadata = [];
         if (preg_match('/\A\s*---\r?\n(.*?)\r?\n---/s', $rawContent, $matches)) {
-            return $this->parseFrontMatter($matches[1]);
+            $metadata = $this->parseFrontMatter($matches[1]);
         }
 
-        return [];
+        $this->metadataOnlyCache[$fullPath] = $metadata;
+        return $metadata;
     }
 
     private function parseFrontMatter(string $frontMatter): array

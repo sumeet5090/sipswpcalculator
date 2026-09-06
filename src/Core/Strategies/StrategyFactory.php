@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Core\Strategies;
 
-use Psr\Container\ContainerInterface;
 use Services\ConfigServiceInterface;
 
 class StrategyFactory
@@ -30,17 +29,24 @@ class StrategyFactory
     ];
 
     private ConfigServiceInterface $configService;
+    /** @var array<string, class-string<CalculatorStrategyInterface>> */
     private array $strategyMap;
-    private ?ContainerInterface $container;
+    /** @var (callable(string): ?CalculatorStrategyInterface)|null */
+    private $strategyResolver;
 
+    /**
+     * @param ConfigServiceInterface $configService
+     * @param array<string, class-string<CalculatorStrategyInterface>>|null $strategyMap
+     * @param (callable(string): ?CalculatorStrategyInterface)|null $strategyResolver
+     */
     public function __construct(
         ConfigServiceInterface $configService,
         ?array $strategyMap = null,
-        ?ContainerInterface $container = null
+        ?callable $strategyResolver = null
     ) {
         $this->configService = $configService;
         $this->strategyMap = $strategyMap ?? self::DEFAULT_STRATEGY_MAP;
-        $this->container = $container;
+        $this->strategyResolver = $strategyResolver;
     }
 
     public function create(string $slug): CalculatorStrategyInterface
@@ -54,10 +60,11 @@ class StrategyFactory
         }
         $strategyClass = $this->strategyMap[$key];
 
-        if ($this->container !== null && $this->container->has($strategyClass)) {
-            /** @var CalculatorStrategyInterface $strategy */
-            $strategy = $this->container->get($strategyClass);
-            return $strategy;
+        if ($this->strategyResolver !== null) {
+            $strategy = ($this->strategyResolver)($strategyClass);
+            if ($strategy instanceof CalculatorStrategyInterface) {
+                return $strategy;
+            }
         }
 
         return new $strategyClass($this->configService);

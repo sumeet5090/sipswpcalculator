@@ -58,6 +58,11 @@ class DummyActionController
     {
         return Response::html("id:{$id}|rate:{$rate}|active:" . ($active ? '1' : '0'));
     }
+
+    public function mixedParamsAction(Request $request, string $category, string $unmatchedPositional, string $optional = 'fallback'): Response
+    {
+        return Response::html("cat:{$category}|unmatched:{$unmatchedPositional}|opt:{$optional}");
+    }
 }
 
 class ActionDispatcherTest extends TestCase
@@ -179,5 +184,14 @@ class ActionDispatcherTest extends TestCase
         $response = $this->dispatcher->dispatch(DummyActionController::class, ['slug' => 'shorthand_slug'], $request);
 
         $this->assertSame('invoked_shorthand_slug', $response->getContent());
+    }
+
+    public function testMixedNamedAndPositionalParameterResolutionWithoutPointerSkew(): void
+    {
+        $request = new Request([], [], ['REQUEST_URI' => '/test']);
+        $params = ['category' => 'growth', 'slug' => 'what-is-sip'];
+        $response = $this->dispatcher->dispatch([DummyActionController::class, 'mixedParamsAction'], $params, $request);
+
+        $this->assertSame('cat:growth|unmatched:what-is-sip|opt:fallback', $response->getContent());
     }
 }

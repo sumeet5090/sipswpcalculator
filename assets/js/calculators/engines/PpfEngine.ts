@@ -3,6 +3,8 @@
  * Strict mathematical parity twin of src/Core/Math/PpfEngine.php.
  */
 
+import { MathPrecisionHelper } from '../helpers/MathPrecisionHelper.ts';
+
 export interface PpfScheduleEntry {
     year: number;
     opening_balance: number;
@@ -66,13 +68,13 @@ export class PpfEngine {
                 closingBalance = balanceForInterest + annualInterest;
             }
 
-            const roundedInterest = Math.round(annualInterest * 100) / 100;
-            const roundedClosing = Math.round(closingBalance * 100) / 100;
+            const roundedInterest = MathPrecisionHelper.round2(annualInterest);
+            const roundedClosing = MathPrecisionHelper.round2(closingBalance);
 
             schedule.push({
                 year,
-                opening_balance: Math.round(yearOpening * 100) / 100,
-                annual_deposit: Math.round(yearDeposit * 100) / 100,
+                opening_balance: MathPrecisionHelper.round2(yearOpening),
+                annual_deposit: MathPrecisionHelper.round2(yearDeposit),
                 interest_earned: roundedInterest,
                 closing_balance: roundedClosing
             });
@@ -82,9 +84,9 @@ export class PpfEngine {
         }
 
         return {
-            total_invested: Math.round(totalInvested * 100) / 100,
-            total_interest: Math.round(totalInterest * 100) / 100,
-            maturity_amount: Math.round(openingBalance * 100) / 100,
+            total_invested: MathPrecisionHelper.round2(totalInvested),
+            total_interest: MathPrecisionHelper.round2(totalInterest),
+            maturity_amount: MathPrecisionHelper.round2(openingBalance),
             interest_rate: rate,
             tenure_years: years,
             schedule

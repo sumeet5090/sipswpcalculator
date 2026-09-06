@@ -72,7 +72,8 @@ class ShowAdminDashboardActionTest extends TestCase
             ->method('render')
             ->with('admin/dashboard', $this->callback(function (array $data) {
                 return isset($data['csrf_token']) && $data['csrf_token'] === 'mock_csrf_token_123'
-                    && isset($data['current_range_key']) && $data['current_range_key'] === '24h';
+                    && isset($data['current_range_key']) && $data['current_range_key'] === '24h'
+                    && isset($data['is_authenticated']) && $data['is_authenticated'] === true;
             }))
             ->willReturn('<html>Dashboard Overview</html>');
 

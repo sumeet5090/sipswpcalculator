@@ -10,7 +10,7 @@
     <meta name="keywords" content="{{ page_config.keywords }}">
     {% endif %}
     
-    {% set current_uri = request.server('REQUEST_URI', '/') %}
+    {% set current_uri = request.getUri() %}
     {% set canonical_url = page_config.canonical|default(site_url ~ current_uri) %}
     <link rel="canonical" href="{{ canonical_url }}">
     <meta name="robots" content="{{ page_config.robots|default('index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1') }}">

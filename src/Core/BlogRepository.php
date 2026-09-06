@@ -132,18 +132,22 @@ class BlogRepository
     }
 
     /**
-     * Retrieve metadata for a single blog post by category and slug without scanning all files.
+     * Retrieve metadata for a single blog post by category and slug.
+     *
+     * @param string $category
+     * @param string $slug
+     * @param array{metadata?: array<string, mixed>, html?: string}|null $preParsedContent
+     * @return array<string, mixed>|null
      */
-    public function getPostBySlug(string $category, string $slug): ?array
+    public function getPostBySlug(string $category, string $slug, ?array $preParsedContent = null): ?array
     {
-        $path = '/blog/' . $category . '/' . $slug;
-        $content = $this->contentManager->getParsedContent($path);
+        $content = $preParsedContent ?? $this->contentManager->getParsedContent('/blog/' . $category . '/' . $slug);
 
         if (!$content) {
             return null;
         }
 
-        $meta = $content['metadata'];
+        $meta = $content['metadata'] ?? [];
         $readTime = (string) ($meta['read_time'] ?? '5 min');
 
         return $this->buildPostData($category, $slug, $meta, $readTime);

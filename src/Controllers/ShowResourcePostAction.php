@@ -55,7 +55,7 @@ class ShowResourcePostAction
             throw new RouteNotFoundException("Blog post not found: {$category}/{$cleanSlug}");
         }
 
-        $postMetadata = $this->blogRepository->getPostBySlug($category, $cleanSlug);
+        $postMetadata = $this->blogRepository->getPostBySlug($category, $cleanSlug, $content);
         $allPosts = $this->blogRepository->getAllPosts();
 
         $pageConfig = $this->metaManager->buildFromMetadata($content['metadata'], '/resource/' . $category . '/' . $cleanSlug);

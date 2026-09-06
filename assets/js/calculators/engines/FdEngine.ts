@@ -3,6 +3,8 @@
  * Strict mathematical parity twin of src/Core/Math/FdEngine.php.
  */
 
+import { MathPrecisionHelper } from '../helpers/MathPrecisionHelper.ts';
+
 export interface FdScheduleEntry {
     year: number;
     opening_balance: number;
@@ -73,10 +75,10 @@ export class FdEngine {
         const annualInterestApprox = t > 0 ? (totalInterest / t) : 0.0;
         const tdsThreshold = isSeniorCitizen ? FdEngine.TDS_THRESHOLD_SENIOR : FdEngine.TDS_THRESHOLD_GENERAL;
         const estimatedAnnualTds = (annualInterestApprox > tdsThreshold)
-            ? Math.round(annualInterestApprox * FdEngine.TDS_RATE_STANDARD * 100) / 100
+            ? MathPrecisionHelper.round2(annualInterestApprox * FdEngine.TDS_RATE_STANDARD)
             : 0.0;
 
-        const postTaxYield30 = Math.round(effectiveRate * (1.0 - 0.312) * 100) / 100;
+        const postTaxYield30 = MathPrecisionHelper.round2(effectiveRate * (1.0 - 0.312));
 
         const schedule: FdScheduleEntry[] = [];
         let runningBalance = p;
@@ -106,20 +108,20 @@ export class FdEngine {
 
             schedule.push({
                 year: yr,
-                opening_balance: Math.round(yrOpening * 100) / 100,
-                interest_earned: Math.round(yrInterest * 100) / 100,
-                payout_withdrawn: Math.round(yrPayout * 100) / 100,
-                closing_balance: Math.round(runningBalance * 100) / 100
+                opening_balance: MathPrecisionHelper.round2(yrOpening),
+                interest_earned: MathPrecisionHelper.round2(yrInterest),
+                payout_withdrawn: MathPrecisionHelper.round2(yrPayout),
+                closing_balance: MathPrecisionHelper.round2(runningBalance)
             });
         }
 
         return {
-            principal: Math.round(p * 100) / 100,
-            effective_rate: Math.round(effectiveRate * 100) / 100,
-            duration_years: Math.round(t * 100) / 100,
-            maturity_amount: Math.round(maturityAmount * 100) / 100,
-            total_interest: Math.round(totalInterest * 100) / 100,
-            periodic_payout: Math.round(periodicPayout * 100) / 100,
+            principal: MathPrecisionHelper.round2(p),
+            effective_rate: MathPrecisionHelper.round2(effectiveRate),
+            duration_years: MathPrecisionHelper.round2(t),
+            maturity_amount: MathPrecisionHelper.round2(maturityAmount),
+            total_interest: MathPrecisionHelper.round2(totalInterest),
+            periodic_payout: MathPrecisionHelper.round2(periodicPayout),
             payout_frequency: payoutFrequency,
             is_senior_citizen: isSeniorCitizen,
             estimated_annual_tds: estimatedAnnualTds,
