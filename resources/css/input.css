@@ -283,8 +283,13 @@ body {
 
 /* ── Custom Range Slider Tactile Thumbs & Touch Ergonomics ── */
 input[type="range"] {
-  touch-action: pan-y;
+  touch-action: manipulation;
 }
+
+.stepper-btn {
+  touch-action: manipulation;
+}
+
 
 input[type="range"]::-webkit-slider-thumb {
   width: 28px;
@@ -542,4 +547,10 @@ th.table-sticky-col-0 {
   touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
+}
+
+/* ── Horizontal Table Scroll Boundary Alpha Mask (Affordance Cue) ── */
+.table-scroll-mask-end {
+  mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
 }

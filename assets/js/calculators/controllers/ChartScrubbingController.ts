@@ -110,6 +110,11 @@ export class ChartScrubbingController {
                 const rect = container.getBoundingClientRect();
                 const xPercent = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
                 const targetIndex = Math.round(xPercent * (this.currentResults.length - 1));
+                const hud = document.getElementById('chart-inspection-hud');
+                if (hud) {
+                    hud.classList.remove('hidden');
+                    hud.classList.add('ring-2', 'ring-emerald-400/60', 'bg-white', 'shadow-subtle');
+                }
                 const row = this.currentResults[targetIndex];
 
                 if (row) {
@@ -134,9 +139,16 @@ export class ChartScrubbingController {
             }
         }, { passive: true });
 
-        container.addEventListener('touchend', () => {
+        const endScrubbing = () => {
             isScrubbing = false;
-        }, { passive: true });
+            const hud = document.getElementById('chart-inspection-hud');
+            if (hud) {
+                hud.classList.remove('ring-2', 'ring-emerald-400/60', 'bg-white', 'shadow-subtle');
+            }
+        };
+
+        container.addEventListener('touchend', endScrubbing, { passive: true });
+        container.addEventListener('touchcancel', endScrubbing, { passive: true });
     }
 
     /**

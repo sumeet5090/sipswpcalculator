@@ -202,4 +202,52 @@ final class MobileErgonomicDeckTest extends TestCase
         $this->assertStringContainsString('overflow-y-auto', $headerTwig);
         $this->assertStringContainsString('overscroll-contain', $headerTwig);
     }
+
+    public function testStepperButtonsAndRangeInputsHaveTouchActionManipulation(): void
+    {
+        $this->assertStringContainsString('touch-action: manipulation', $this->inputCss);
+        $this->assertStringContainsString('input[type="range"]', $this->inputCss);
+        $this->assertStringContainsString('.stepper-btn', $this->inputCss);
+    }
+
+    public function testSafeAreaInsetBottomClampingOnMobileDock(): void
+    {
+        $baseTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/base.twig');
+        $this->assertStringContainsString('pb-[max(0.625rem,env(safe-area-inset-bottom))]', $baseTwig);
+    }
+
+    public function testKeyboardControllerCoordinatesFloatingHudAndFocusSelection(): void
+    {
+        $keyboardCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/KeyboardViewportController.ts');
+        $this->assertStringContainsString('floating-discovery-hud', $keyboardCode);
+        $this->assertStringContainsString('pointer-events-none', $keyboardCode);
+        $this->assertStringContainsString('input.select()', $keyboardCode);
+    }
+
+    public function testTaxWaterfallModalHasDragHandle(): void
+    {
+        $taxModalTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/tax-waterfall-modal.twig');
+        $this->assertStringContainsString('modal-drag-handle', $taxModalTwig);
+        $this->assertStringContainsString('bg-slate-300 rounded-full mx-auto mb-2 sm:hidden', $taxModalTwig);
+    }
+
+    public function testTableScrollBoundaryMaskUtilitiesAndMarkup(): void
+    {
+        $this->assertStringContainsString('.table-scroll-mask-end', $this->inputCss);
+        $this->assertStringContainsString('mask-image: linear-gradient(to right, black 85%, transparent 100%)', $this->inputCss);
+
+        $historicalTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/guide-historical-data.twig');
+        $this->assertStringContainsString('table-scroll-mask-end', $historicalTwig);
+
+        $risksTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/guide-risks.twig');
+        $this->assertStringContainsString('table-scroll-mask-end', $risksTwig);
+    }
+
+    public function testChartScrubbingElevatesHudOnTouchInteraction(): void
+    {
+        $scrubberController = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/ChartScrubbingController.ts');
+        $this->assertStringContainsString('chart-inspection-hud', $scrubberController);
+        $this->assertStringContainsString('ring-emerald-400/60', $scrubberController);
+        $this->assertStringContainsString('touchcancel', $scrubberController);
+    }
 }

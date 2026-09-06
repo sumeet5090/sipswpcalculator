@@ -47,6 +47,15 @@ export class KeyboardViewportController {
                 this.activeInput = input;
                 this.showCapsule();
 
+                // Auto-select text on focus to prevent caret misplacement in formatted numerals
+                setTimeout(() => {
+                    try {
+                        input.select();
+                    } catch {
+                        // Silent fallback
+                    }
+                }, 50);
+
                 // Prevent sticky header occlusion by scrolling input into comfortable center view
                 setTimeout(() => {
                     if (this.activeInput === input) {
@@ -130,6 +139,13 @@ export class KeyboardViewportController {
                 this.capsule.classList.remove('opacity-0', 'pointer-events-none');
             }
         });
+
+        // Hide floating discovery HUD to prevent visual overlap
+        const hud = document.getElementById('floating-discovery-hud');
+        if (hud) {
+            hud.classList.add('opacity-0', 'pointer-events-none');
+        }
+
         this.repositionCapsule();
     }
 
@@ -141,6 +157,12 @@ export class KeyboardViewportController {
                 this.capsule.classList.add('hidden');
             }
         }, 220);
+
+        // Restore floating discovery HUD
+        const hud = document.getElementById('floating-discovery-hud');
+        if (hud) {
+            hud.classList.remove('opacity-0', 'pointer-events-none');
+        }
 
         if (this.actionDock) {
             this.actionDock.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
