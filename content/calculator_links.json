@@ -284,5 +284,93 @@
             "title": "SWP Calculator India",
             "description": "Compare regular monthly FD interest payouts with tax-efficient mutual fund Systematic Withdrawal Plans."
         }
+    ],
+    "reach-1-crore-via-sip": [
+        {
+            "href": "/reach-5-crore-via-sip",
+            "title": "5 Crore SIP Calculator",
+            "description": "See how your second crore arrives 3x faster and plan your complete financial freedom journey to ₹5 Crores."
+        },
+        {
+            "href": "/sip-step-up-calculator",
+            "title": "Step-Up SIP Calculator",
+            "description": "Calculate how adding a 10% annual salary step-up shaves 5 years off your timeline to reach ₹1 Crore."
+        },
+        {
+            "href": "/sip-10000-per-month",
+            "title": "₹10,000 Monthly SIP Plan",
+            "description": "Explore the exact 20-year milestone progression of a ₹10,000 monthly investment toward ₹1 Crore."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Model tax-efficient monthly income streams from your ₹1 Crore corpus using systematic withdrawals."
+        }
+    ],
+    "reach-5-crore-via-sip": [
+        {
+            "href": "/reach-1-crore-via-sip",
+            "title": "1 Crore SIP Goal Calculator",
+            "description": "Master the first and most critical milestone: the mathematics of escaping compounding friction."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Retirement Calculator",
+            "description": "Plan sustainable ₹1.66 Lakh monthly pension cash flows from your ₹5 Crore financial freedom portfolio."
+        },
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Test your ₹5 Crore corpus against 30-year retirement survival, 6% inflation, and sequence of returns risk."
+        },
+        {
+            "href": "/sip-step-up-calculator",
+            "title": "Step-Up SIP Calculator",
+            "description": "Accelerate your path to ₹5 Crores by stepping up your monthly investments with annual career bonuses."
+        }
+    ],
+    "sip-5000-per-month": [
+        {
+            "href": "/sip-10000-per-month",
+            "title": "₹10,000 Monthly SIP Plan",
+            "description": "Compare how doubling your monthly investment from ₹5,000 to ₹10,000 accelerates your wealth milestones."
+        },
+        {
+            "href": "/reach-1-crore-via-sip",
+            "title": "1 Crore SIP Goal Calculator",
+            "description": "See how a ₹5,000 SIP paired with a 10% annual step-up crosses ₹1 Crore in 20 years."
+        },
+        {
+            "href": "/sip-step-up-calculator",
+            "title": "Step-Up SIP Calculator",
+            "description": "Turn your ₹5,000 starting monthly investment into over ₹2.3 Crores with a disciplined 10% annual top-up."
+        },
+        {
+            "href": "/compound-interest-calculator",
+            "title": "Compound Interest Calculator",
+            "description": "Understand the discrete exponential compounding formulas that turn small ₹5,000 deposits into substantial wealth."
+        }
+    ],
+    "sip-10000-per-month": [
+        {
+            "href": "/reach-1-crore-via-sip",
+            "title": "1 Crore SIP Goal Calculator",
+            "description": "See how your ₹10,000 monthly investment hits the ₹1 Crore milestone in exactly 20 years."
+        },
+        {
+            "href": "/reach-5-crore-via-sip",
+            "title": "5 Crore SIP Calculator",
+            "description": "Plan the ultimate financial freedom roadmap from ₹10k/month to a multi-crore retirement portfolio."
+        },
+        {
+            "href": "/sip-5000-per-month",
+            "title": "₹5,000 Monthly SIP Plan",
+            "description": "Compare milestone timelines and return projections between ₹5,000 and ₹10,000 monthly commitments."
+        },
+        {
+            "href": "/sip-step-up-calculator",
+            "title": "Step-Up SIP Calculator",
+            "description": "See how stepping up ₹10,000 by 10% annually creates an extra ₹2.71 Crores in 25-year wealth."
+        }
     ]
 }

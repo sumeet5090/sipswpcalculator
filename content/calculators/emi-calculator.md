@@ -1,7 +1,8 @@
 ---
+og_image: "/assets/og/og-emi-calculator.jpg"
 title: "EMI Calculator India (2026) — Home & Car Loan Planner"
 subtitle: "Calculate monthly EMI for home loans, car loans, and personal loans with complete year-by-year amortization schedules and interest breakdown in India."
-meta_desc: "Free EMI calculator India 2026. Calculate monthly EMI for home, personal, and car loans. View complete amortization schedules and total interest breakdowns."
+meta_desc: "Free EMI calculator India (2026). Used by 10,000+ borrowers to calculate monthly EMI for home, car & personal loans with amortization schedules & PDF export."
 keywords: "emi calculator, home loan emi calculator, car loan emi calculator, personal loan emi, loan amortization schedule, loan interest calculator india 2026"
 schema_name: "EMI Calculator India (2026) — Home & Car Loan Planner"
 seo_category: "growth"

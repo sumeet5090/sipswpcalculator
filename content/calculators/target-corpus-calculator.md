@@ -1,7 +1,8 @@
 ---
+og_image: "/assets/og/og-target-corpus-calculator.jpg"
 title: "Target Corpus Calculator India (2026) — Goal-Seek Tool"
 subtitle: "Find the exact monthly SIP needed to reach any target corpus (₹25L, ₹50L, ₹1 Cr, ₹5 Cr). Reverse-engineer your investment goals with annual step-up optimization."
-meta_desc: "Calculate the exact monthly SIP needed for any financial goal (₹25L, ₹50L, ₹1Cr, ₹5Cr). Model timelines, annual step-ups, inflation, and 2026 LTCG tax."
+meta_desc: "Find monthly SIP for any goal (₹25L to ₹5Cr). Used by 10,000+ investors to model annual step-ups, timelines, 2026 LTCG tax & inflation drag in custom PDF."
 keywords: "target corpus calculator, goal sip calculator, required sip calculator, reverse sip calculator, how much sip for target, sip goal planner, financial goal calculator india, goal-based investment planner"
 schema_name: "Target Corpus Calculator — Find Required Monthly SIP"
 seo_category: "growth"

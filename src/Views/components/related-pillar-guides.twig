@@ -1,0 +1,65 @@
+{# Renders contextual cross-links to authoritative educational pillar guides #}
+{% if pillar_guides is defined and pillar_guides|length > 0 %}
+<section class="mt-12 mb-8" aria-label="Educational Pillar Guides">
+    <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200/80 flex items-center justify-center text-emerald-700 text-sm font-bold shadow-flat">
+                📚
+            </div>
+            <div>
+                <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Essential Educational Guides &amp; Deep Dives</h2>
+                <p class="text-xs text-slate-500 font-medium">Master the mathematics, taxation laws, and regulatory frameworks behind your investments</p>
+            </div>
+        </div>
+        <a href="/resources" class="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-800 hover:underline">
+            <span>View All Resources</span>
+            <span>→</span>
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose">
+        {% for guide in pillar_guides %}
+            {% set cat_color = guide.category|default('growth') %}
+            {% set tag_badge = 'bg-emerald-50 text-emerald-700 border-emerald-200/80' %}
+            {% set border_hover = 'hover:border-emerald-400' %}
+            {% set text_hover = 'group-hover:text-emerald-700' %}
+            {% set icon_color = 'text-emerald-600' %}
+
+            {% if cat_color == 'retirement' %}
+                {% set tag_badge = 'bg-indigo-50 text-indigo-700 border-indigo-200/80' %}
+                {% set border_hover = 'hover:border-indigo-400' %}
+                {% set text_hover = 'group-hover:text-indigo-700' %}
+                {% set icon_color = 'text-indigo-600' %}
+            {% elseif cat_color == 'comparison' %}
+                {% set tag_badge = 'bg-amber-50 text-amber-700 border-amber-200/80' %}
+                {% set border_hover = 'hover:border-amber-400' %}
+                {% set text_hover = 'group-hover:text-amber-700' %}
+                {% set icon_color = 'text-amber-600' %}
+            {% endif %}
+
+            <a href="{{ guide.href }}" class="group relative bg-white/95 border border-slate-200/90 rounded-2xl p-5 {{ border_hover }} hover:shadow-card-hover transition-all duration-200 flex flex-col justify-between overflow-hidden shadow-flat">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="text-micro font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full border {{ tag_badge }}">
+                            {{ guide.tag|default('Pillar Guide') }}
+                        </span>
+                        <span class="text-micro font-bold text-slate-400">
+                            {{ guide.read_time|default('8 min') }} read
+                        </span>
+                    </div>
+                    <h3 class="text-sm font-bold text-slate-900 {{ text_hover }} transition-colors leading-snug mb-2">
+                        {{ guide.title }}
+                    </h3>
+                    <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-4">
+                        {{ guide.description }}
+                    </p>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold {{ icon_color }}">
+                    <span>Read Full Guide</span>
+                    <span class="transform group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}

@@ -4,12 +4,14 @@ import { MathEngine } from '../MathEngine';
 import { InvestmentInputs, YearResult } from '../../types';
 import { OdometerController } from './OdometerController';
 import { ModalScrollLockHelper } from '../helpers/ModalScrollLockHelper';
+import { PurchasingPowerController } from './PurchasingPowerController';
 
 export class SummaryMetricsController {
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
     private getInputs: () => InvestmentInputs;
     private odometer: OdometerController;
+    private purchasingPower: PurchasingPowerController;
 
     constructor(
         dom: DOMAdapter,
@@ -20,6 +22,7 @@ export class SummaryMetricsController {
         this.formatter = formatter;
         this.getInputs = getInputs;
         this.odometer = new OdometerController(dom, formatter);
+        this.purchasingPower = new PurchasingPowerController(dom, formatter);
         this.initDrawer();
     }
 
@@ -57,7 +60,7 @@ export class SummaryMetricsController {
         // 1. Reset Phase & Length Classification
         cardElms.forEach(el => {
             el.style.whiteSpace = 'nowrap';
-            const text = el.textContent?.trim() || '';
+            const text = el.getAttribute('aria-label') || el.dataset.formattedText || el.textContent?.trim() || '';
             const len = text.length;
             el.classList.remove('metric-len-normal', 'metric-len-medium', 'metric-len-long', 'metric-len-huge');
             if (len <= 11) {
@@ -182,6 +185,10 @@ export class SummaryMetricsController {
         this.odometer.animateValue('summary-withdrawn', totalWithdrawn);
         this.odometer.animateValue('summary-corpus', finalCorpus);
         this.fitSummaryCards();
+
+        // Update real purchasing power and peace-of-mind telemetry
+        this.purchasingPower.updateDisplay(preTaxCorpus, inputs);
+        this.updateNarrative(inputs);
 
         // Flash ambient recalculation indicator on primary corpus card
         const corpusCard = this.dom.getElement('summary-corpus')?.closest('.glass-card, [class*="rounded-2xl"]');
@@ -426,4 +433,24 @@ export class SummaryMetricsController {
             ModalScrollLockHelper.unlock();
         });
     }
+
+    /**
+     * Update conversational live narrative strip tokens.
+     */
+    updateNarrative(inputs: InvestmentInputs): void {
+        const narrativeSip = this.dom.getElement('narrative-sip');
+        const narrativeYears = this.dom.getElement('narrative-years');
+        const narrativeRate = this.dom.getElement('narrative-rate');
+
+        if (narrativeSip) {
+            narrativeSip.textContent = this.formatter.format(inputs.sip);
+        }
+        if (narrativeYears) {
+            narrativeYears.textContent = `${inputs.years} yrs`;
+        }
+        if (narrativeRate) {
+            narrativeRate.textContent = `${inputs.rate}% CAGR`;
+        }
+    }
 }
+

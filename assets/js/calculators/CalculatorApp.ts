@@ -50,6 +50,7 @@ import { ChartScrubbingController } from './controllers/ChartScrubbingController
 import { A11yAnnouncer } from './helpers/A11yAnnouncer';
 import { ModalScrollLockHelper } from './helpers/ModalScrollLockHelper';
 import { SpecializedCalculatorController } from './controllers/SpecializedCalculatorController';
+import { StrategyBlueprintController } from './controllers/StrategyBlueprintController';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -87,6 +88,7 @@ export class CalculatorApp {
     private keyboardViewportController: KeyboardViewportController;
     private keyboardNavController: KeyboardNavigationController;
     private studioTabController: StudioTabController;
+    private strategyBlueprintController!: StrategyBlueprintController;
     private specializedController: SpecializedCalculatorController | null = null;
 
     constructor(
@@ -364,6 +366,7 @@ export class CalculatorApp {
         }
 
         let inputs = this.getInputs();
+        this.strategyBlueprintController?.syncWithInputs(inputs);
 
         // Execute Strategy based on goal mode
         const strategy = this.strategies[this.activeGoalMode];
@@ -620,6 +623,14 @@ export class CalculatorApp {
             this.audioController
         ).init();
         new SmartNudgeController(this.dom, (rate) => this.setSmartNudgeRate(rate)).init();
+        this.strategyBlueprintController = new StrategyBlueprintController(
+            this.dom,
+            this.sliderManager,
+            this.analytics,
+            () => this.syncSwpToggleState(),
+            () => this.triggerCalculation()
+        );
+        this.strategyBlueprintController.init();
         new PdfExportController(
             this.dom,
             this.chartManager,
@@ -635,7 +646,7 @@ export class CalculatorApp {
             this.analytics,
             () => this.getInputs()
         ).init();
-        new ShareController(this.dom, () => this.getInputs()).init();
+        new ShareController(this.dom, () => this.getInputs(), () => this.latestResults).init();
         this.glossaryController.init();
         this.audioController.init();
         this.cityBenchmarkController.init();
@@ -691,7 +702,6 @@ export class CalculatorApp {
                 this.analytics.setScenarioDiffSaved();
             });
         }
-        this.initPersonaBlueprints();
         this.initPassiveSeoClickListeners();
         this.initResizeListeners();
         new UrlStateController(
@@ -703,45 +713,7 @@ export class CalculatorApp {
         this.initInitialCalculation();
     }
 
-    private initPersonaBlueprints(): void {
-        const buttons = document.querySelectorAll<HTMLButtonElement>('.persona-btn');
-        buttons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const persona = btn.dataset.persona || 'blueprint';
-                this.analytics.setStrategyStarterUsed(persona);
-
-                const sip = parseFloat(btn.dataset.sip || '0');
-                const years = parseFloat(btn.dataset.years || '0');
-                const rate = parseFloat(btn.dataset.rate || '0');
-                const stepup = parseFloat(btn.dataset.stepup || '0');
-                const lumpsum = parseFloat(btn.dataset.lumpsum || '0');
-                const enableSwp = btn.dataset.enableSwp === 'true';
-
-                if (btn.dataset.sip !== undefined) this.sliderManager.updateFieldValue('sip', sip);
-                if (btn.dataset.years !== undefined) this.sliderManager.updateFieldValue('years', years);
-                if (btn.dataset.rate !== undefined) this.sliderManager.updateFieldValue('rate', rate);
-                if (btn.dataset.stepup !== undefined) this.sliderManager.updateFieldValue('stepup', stepup);
-                if (btn.dataset.lumpsum !== undefined) this.sliderManager.updateFieldValue('lumpsum', lumpsum);
-                if (btn.dataset.corpus !== undefined) this.sliderManager.updateFieldValue('corpus', parseFloat(btn.dataset.corpus));
-
-                if (btn.dataset.swp !== undefined) this.sliderManager.updateFieldValue('swp_withdrawal', parseFloat(btn.dataset.swp));
-                if (btn.dataset.swpYears !== undefined) this.sliderManager.updateFieldValue('swp_years', parseFloat(btn.dataset.swpYears));
-                if (btn.dataset.swpRate !== undefined) this.sliderManager.updateFieldValue('swp_rate', parseFloat(btn.dataset.swpRate));
-                if (btn.dataset.swpHike !== undefined) this.sliderManager.updateFieldValue('swp_stepup', parseFloat(btn.dataset.swpHike));
-
-                const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
-                if (swpToggle) {
-                    swpToggle.checked = enableSwp;
-                    this.syncSwpToggleState();
-                }
-
-                this.triggerCalculation();
-            });
-        });
-    }
-
     private initPassiveSeoClickListeners(): void {
-        if (typeof document === 'undefined') return;
 
         // FAQ Details toggles
         document.querySelectorAll('details').forEach(details => {

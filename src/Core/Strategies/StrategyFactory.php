@@ -23,6 +23,10 @@ class StrategyFactory
         'inflation-calculator'         => InflationStrategy::class,
         'ppf-calculator'               => PpfStrategy::class,
         'fd-calculator'                => FdStrategy::class,
+        'reach-1-crore-via-sip'        => TargetCorpusStrategy::class,
+        'reach-5-crore-via-sip'        => TargetCorpusStrategy::class,
+        'sip-5000-per-month'           => SipStrategy::class,
+        'sip-10000-per-month'          => SipStrategy::class,
     ];
 
     private ConfigServiceInterface $configService;
@@ -41,7 +45,7 @@ class StrategyFactory
 
     public function create(string $slug): CalculatorStrategyInterface
     {
-        $key = ltrim($slug, '/');
+        $key = basename(ltrim($slug, '/'));
         if ($key === '') {
             $key = 'sip-calculator';
         }

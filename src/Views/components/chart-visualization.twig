@@ -64,6 +64,33 @@
         </div>
     </div>
 
+    <!-- Real Purchasing Power & Peace-of-Mind Telemetry Strip (Dynamic Risk Empathy) -->
+    <div id="purchasing-power-telemetry-strip" class="p-3 sm:p-3.5 rounded-2xl bg-white/95 border border-slate-200/90 shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-all">
+        <div class="flex items-start sm:items-center gap-3 min-w-0">
+            <div class="flex items-center justify-center w-8 h-8 rounded-xl bg-teal-50 border border-teal-200/80 text-teal-800 text-ui-sm font-extrabold shrink-0 shadow-flat">
+                ⚖️
+            </div>
+            <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-caption font-extrabold text-slate-500 uppercase tracking-wider">Inflation-Adjusted Reality:</span>
+                    <strong id="real-purchasing-corpus" class="text-ui-xs sm:text-ui-sm font-black font-financial-mono text-slate-900">₹ --</strong>
+                    <span id="peace-of-mind-badge" class="text-ui-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 whitespace-nowrap shadow-flat">
+                        🛡️ Bulletproof Resilience
+                    </span>
+                </div>
+                <p id="purchasing-power-anchor" class="text-caption text-slate-600 truncate sm:whitespace-normal font-medium mt-0.5">
+                    Perpetual sovereign wealth: provides ₹1,20,000/mo lifetime safe withdrawal with zero capital erosion.
+                </p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2 self-end sm:self-center shrink-0">
+            <div class="text-right">
+                <div class="text-micro font-extrabold uppercase tracking-wider text-slate-400">Peace-of-Mind</div>
+                <div id="peace-of-mind-score" class="text-ui-xs font-black font-financial-mono text-emerald-700">85/100</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Empathetic SWR Longevity Guardian Alert (Zero-CLS Container) -->
     <div id="swp-longevity-guardian-alert" class="hidden p-3.5 sm:p-4 rounded-2xl bg-amber-50/90 border border-amber-200/90 shadow-subtle transition-all">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -143,6 +170,12 @@
 
                     <!-- Utility Action Buttons (hidden on mobile, available in dock) -->
                     <div class="hidden sm:inline-flex items-center gap-1">
+                        <button type="button" id="header-share-btn" onclick="document.getElementById('qr-share-modal')?.showModal()"
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-200/90 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-ui-xs font-bold transition-all active:scale-95 cursor-pointer shadow-flat"
+                            title="Share Wealth Plan or Export Wealth Horizon Pass">
+                            <span class="text-ui-xs">✦</span>
+                            <span>Share Plan</span>
+                        </button>
                         <button type="button" id="snapshot-scenario-btn" 
                             class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-flat"
                             title="Snapshot scenario for comparison">
@@ -152,6 +185,12 @@
                             class="p-1.5 rounded-xl border border-tax-border bg-tax-surface hover:bg-violet-100 text-tax-emphasis transition-all active:scale-95 cursor-pointer shadow-flat"
                             title="Open Section 112A Tax Waterfall Modal">
                             <span class="text-ui-xs">⚖️</span>
+                        </button>
+                        <button type="button" id="open-embed-modal-btn" 
+                            onclick="document.getElementById('embedModal')?.showModal()"
+                            class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-flat"
+                            title="Embed this calculator widget on your website">
+                            <span class="text-ui-xs">🔗</span>
                         </button>
                     </div>
                 </div>

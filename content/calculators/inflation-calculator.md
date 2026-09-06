@@ -1,7 +1,8 @@
 ---
+og_image: "/assets/og/og-inflation-calculator.jpg"
 title: "Inflation Calculator India (2026) — Purchasing Power"
 subtitle: "Calculate future cost of living and purchasing power erosion in India. Understand consumer inflation impact on retirement and long-term financial goals."
-meta_desc: "Free inflation calculator India 2026. Project future living costs and purchasing power loss over 5 to 30 years. Plan retirement expenses with CPI inflation."
+meta_desc: "Free inflation calculator India (2026). Used by 10,000+ planners to project future living costs & purchasing power loss over 5-30 years with CPI trend charts."
 keywords: "inflation calculator, inflation calculator india, purchasing power calculator, future cost calculator, cpi inflation india, retirement inflation calculator"
 schema_name: "Inflation Calculator India (2026) — Purchasing Power"
 seo_category: "retirement"

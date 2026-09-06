@@ -1,6 +1,6 @@
 # SIP & SWP Calculator
 
-A production-grade, server-rendered financial calculator for Systematic Investment Plans (SIP) and Systematic Withdrawal Plans (SWP). Features a fully bi-directional calculation engine (back-calculates Monthly SIP required to hit a Target Corpus or sustain a target SWP retirement plan), directly exposed primary investment parameters with clean semantic adjustment grouping, and viewport-aware responsive scaling. Built with PHP (MVC), Twig, Vite, Tailwind CSS v4, and Chart.js.
+A production-grade, server-rendered financial calculator for Systematic Investment Plans (SIP) and Systematic Withdrawal Plans (SWP). Features a fully bi-directional calculation engine (back-calculates Monthly SIP required to hit a Target Corpus or sustain a target SWP retirement plan), directly exposed primary investment parameters with clean semantic adjustment grouping, and viewport-aware responsive scaling. Built with PHP 8.2+ (MVC), Twig 3.x, Vite 8.x, Tailwind CSS v4, TypeScript 7.x, and Chart.js 4.x.
 
 **Live:** [sipswpcalculator.com](https://sipswpcalculator.com)
 
@@ -13,45 +13,89 @@ The project follows a modern MVC architecture, separating concerns between routi
 ```text
 sipswpcalculator/
 ├── index.php                 # Main front-controller and router
-├── .htaccess                 # Apache config (HTTPS redirect, clean URLs)
+├── .htaccess                 # Apache config (HTTPS redirect, clean URLs, security headers)
+├── .user.ini                 # LiteSpeed LSAPI runtime PHP configuration
 ├── package.json              # Node dependencies & Vite build scripts
-├── composer.json             # PHP dependencies (Twig, DomPDF)
-├── vite.config.js            # Vite bundler configuration
+├── composer.json             # PHP dependencies (Twig, Dompdf, PHPUnit, PHPStan)
+├── vite.config.js            # Vite bundler configuration (Tailwind v4 plugin, alias mappings)
+├── phpstan.neon              # PHPStan static analysis configuration (Level Max)
+├── phpunit.xml               # PHPUnit 13 test runner configuration
+│
+├── bin/
+│   └── migrate               # CLI schema migrator for SQLite
+├── migrate.php               # Standalone root migration runner
 │
 ├── src/
-│   ├── Controllers/          # Request handling and view rendering
-│   ├── Core/                 # Framework utilities, ActionDispatcher, Router, Middleware, and App initialization
-│   │   ├── Middleware/       # Security (CSRF), Session Management & Routing (Trailing Slash 301) Middleware
-│   │   ├── Strategies/       # Strategy Patterns for Calculators
-│   │   └── Factories/        # Factories (e.g. SEO SchemaFactory)
-│   ├── Services/             # Business logic (Calculations, PDF, SEO generation)
+│   ├── Controllers/          # Single-responsibility request actions and view controllers
+│   ├── Core/                 # Framework kernel, Router, Container, ActionDispatcher, Http primitives
+│   │   ├── Config/           # Route definitions (routes.php)
+│   │   ├── Database/         # Database connection, migrator, and migration interfaces
+│   │   ├── Engines/          # Core math primitives
+│   │   ├── Exceptions/       # Domain exception hierarchy (NotFound, Container, RouteNotFound)
+│   │   ├── Factories/        # Dynamic SEO Schema factories (HomeSchemaBuilder, SchemaFactory)
+│   │   ├── Http/             # Request and Response immutable value objects
+│   │   ├── Math/             # Specialized calculation engines (CompoundInterest, CAGR, EMI, FD, PPF, Inflation)
+│   │   ├── Middleware/       # Pipeline middleware (TrailingSlash, Session, Honeypot, AdminCsrf)
+│   │   ├── Providers/        # DI Service Providers (Core, Repository, Domain, Controller)
+│   │   ├── Strategies/       # Strategy pattern implementations for 17 calculator types
+│   │   └── InvestmentCalculator.php # SEBI/AMFI-compliant core SIP/SWP calculation engine
+│   ├── Services/             # Business logic (ConfigService, PdfGenerator, CsvExport, Sitemap, Auth)
 │   └── Views/                # Twig templates
-│       ├── layouts/          # Base HTML structures
-│       ├── pages/            # Individual route templates
-│       └── components/       # Reusable UI elements (forms, charts)
+│       ├── layouts/          # Base HTML layouts (base.twig, clean.twig, embed.twig)
+│       ├── pages/            # Page-level templates (home, guide, about, faq, glossary, admin)
+│       └── components/       # Granular reusable UI elements (forms, charts, tables, modals)
 │
-├── assets/                   # Source CSS and JS (processed by Vite)
+├── resources/                # Source frontend assets compiled by Vite
 │   ├── css/
-│   │   └── input.css         # Tailwind v4 entry point
+│   │   ├── input.css         # Tailwind CSS v4 entry point (@theme tokens, @source scans)
+│   │   └── styles.css        # Supplementary base styles
 │   └── js/
-│       └── script.js         # Client-side application entry
+│       ├── app.ts            # Main Vite client application entry point
+│       ├── script.ts         # Global runtime bootstrap
+│       └── save-calculation.ts # LocalStorage client plan persistence
 │
-├── dist/                     # Compiled Vite output (Ignored in Git, built in CI/CD)
-├── database/                 # SQLite databases (if applicable)
-└── .github/workflows/        # Automated CI/CD pipelines
+├── assets/                   # Public static assets & modular TypeScript controllers
+│   ├── css/                  # Legacy static CSS fallbacks
+│   ├── js/                   # Modular client TypeScript architecture
+│   │   ├── adapters/         # DOMAdapter and browser API abstractions
+│   │   ├── calculators/      # CalculatorApp, MathEngine, ChartManager, SliderManager
+│   │   │   ├── constants/    # UI and timing constants
+│   │   │   ├── controllers/  # 30+ Single-responsibility UI controllers (Results, Odometer, Blueprints)
+│   │   │   ├── engines/      # TypeScript specialized engines (CAGR, CompoundInterest, EMI, FD, Inflation, PPF)
+│   │   │   ├── helpers/      # Canvas export, A11y announcer, magnetic snapping, particle pooling
+│   │   │   ├── strategies/   # Client-side calculator strategies
+│   │   │   └── views/        # RollingOdometerView, chart views
+│   │   └── types/            # Strict TypeScript interfaces and type definitions
+│   ├── og/                   # 1200x630 branded OpenGraph images for all 17 calculators
+│   └── favicon.svg           # Application icons and identity assets
+│
+├── content/                  # Single Sources of Truth (SSoT) & Markdown Content
+│   ├── blog/                 # 20 educational markdown guides across growth, retirement, comparison
+│   ├── calculators/          # 17 calculator educational markdown guides
+│   ├── calculator_defaults.json # Parameter boundaries, defaults, and milestone thresholds
+│   ├── dashboard_buckets.json   # Telemetry metric bucket ranges
+│   ├── meta_pages.json       # Metadata SSoT for static routes
+│   ├── rate_limits.json      # Centralized IP rate-limiting rules
+│   └── redirects.json        # Permanent 301 redirect map for legacy and vanity URLs
+│
+├── database/                 # SQLite database storage (database.sqlite, migrations/)
+├── dist/                     # Compiled Vite production bundle (.vite/manifest.json, assets/)
+├── scripts/                  # Development scripts (setup-hooks.sh)
+├── tests/                    # Comprehensive automated test suite (Unit, Integration, Parity)
+└── .github/workflows/        # Automated Zero-Downtime GitHub Actions CI/CD deployment
 ```
 
 ### Tech Stack
 
 | Layer | Technology | Purpose |
 |---|---|---|
-| **Server/Routing** | PHP 8.x (MVC) on Apache | Route handling, business logic, form processing |
+| **Server/Routing** | PHP 8.2+ (MVC) on Apache / LiteSpeed | Route handling, DI container, business logic, form processing |
 | **Templating** | Twig 3.x | Secure, modular server-side HTML rendering |
-| **Frontend Logic** | TypeScript 5.x | Strictly-typed OOP calculation engines, DOM adapters, and strategies |
-| **Asset Bundling** | Vite 5.x | High-performance TS/CSS compiling and Hot Module Replacement (HMR) |
-| **Styling** | Tailwind CSS v4 | Utility-first CSS framework |
-| **Charts** | Chart.js 3.7 | Interactive financial projection graphs |
-| **PDF Generation** | DomPDF 2.x | Branded PDF report generation |
+| **Frontend Logic** | TypeScript 7.x | Strictly-typed OOP calculation engines, DOM adapters, and strategies |
+| **Asset Bundling** | Vite 8.x | High-performance TS/CSS compiling and Hot Module Replacement (HMR) |
+| **Styling** | Tailwind CSS v4 | Utility-first CSS framework configured via `@theme` tokens |
+| **Charts** | Chart.js 4.x | Interactive financial projection graphs |
+| **PDF Generation** | Dompdf 2.x | Branded PDF report generation |
 
 ---
 
@@ -59,7 +103,7 @@ sipswpcalculator/
 
 | Requirement | Version | Check Command |
 |---|---|---|
-| **PHP** | 8.0+ | `php -v` |
+| **PHP** | 8.2+ | `php -v` |
 | **Apache** | 2.4+ (with mod_rewrite) | Bundled with XAMPP |
 | **Node.js** | 20+ | `node -v` |
 | **Composer** | 2.x | `composer -V` |
@@ -78,10 +122,10 @@ cd sipswpcalculator
 ### 2. Install Dependencies
 
 ```bash
-# PHP dependencies (Twig, DomPDF, PHPStan)
+# PHP dependencies (Twig, Dompdf, PHPStan, PHPUnit)
 composer install
 
-# Node dependencies (Vite, Tailwind)
+# Node dependencies (Vite, Tailwind CSS v4, Chart.js, TypeScript)
 npm ci
 ```
 
@@ -100,7 +144,7 @@ To set up your local SQLite database and run the initial schema migrations:
 php bin/migrate
 ```
 
-This CLI migrator executes all outstanding PHP schema migrations. You can also trigger database upgrades in the browser at `/admin_insights/migrate` once logged in.
+This CLI migrator executes all outstanding PHP schema migrations. Database schema migrations are executed strictly via CLI for environment security; there are no administrative web migration endpoints.
 
 ---
 
@@ -207,8 +251,14 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
   3. **5-Tier Composite Light-Mode Elevation Stack:** Standardizes surface elevation across `--shadow-flat`, `--shadow-subtle`, `--shadow-card`, `--shadow-card-hover`, `--shadow-floating`, `--shadow-modal`, and `@utility fintech-glass-card` incorporating Apple/Linear 1px top-lit specular zenith highlights (`inset 0 1px 0 0 rgba(255, 255, 255, 1)`).
   4. **Financial Data Precision & Tabular Alignment:** Enforces `@utility font-financial-mono` (`tabular-nums lining-nums zero`), standardized `.currency-affix` baseline tracking, and seamless frozen first-column shadow seams with zero sub-pixel text bleed during horizontal scroll. Parity and compliance are strictly validated via automated unit tests in `DesignTokenAuditTest.php` and `TypographyAndThemeTokensTest.php`.
 - **Institutional-Grade Canvas & Visualizer Hardening (`ChartManager.ts`, `ChartScrubbingController.ts`, `chart-visualization.twig`):** Implements a high-DPI subpixel canvas scaling engine with a safe 2.5x DPR ceiling, quantized linear gradient bucketing (30px quantizing intervals), and RAF render queue throttling to guarantee 60fps interaction during rapid slider adjustments. Features: (1) Two-Tier Master Command Deck structurally separating core view switching (`Line` vs `Split`) and utility tools from secondary analytical projection lenses (`± Corridor 10–90%`, `§112A LTCG 12.5%`, `Wealth Map Stack`), eliminating jagged multi-row mobile wrapping; (2) Decoupled Mobile Tactile Range Scrubber (`#mobile-chart-scrubber`) with haptic pulse feedback and active timeline bubble (`#scrubber-active-indicator`), resolving thumb occlusion and eliminating mobile canvas scroll-locking; (3) Compounding Ignition Zone plugin with pure light theme aurora gradients highlighting the exact inflection point where annual returns surpass annual SIP contributions; (4) HUD-First Focus Mode routing live hover/scrub telemetry directly into the persistent top Zero-CLS Master HUD (`#chart-telemetry-hud`) with a hairline crosshair, removing intrusive canvas floating box clutter; (5) Time-Travelling Donut Morpher with Bankruptcy/Depletion Sentinels displaying Rose-700 warnings on exhausted SWP portfolios; (6) Dynamic 30-Year X-Axis Auto-Thinning (5-year benchmark steps `Y1`, `Y5`, `Y10`... `Y30`) and right-aligned Indian metric axis ticks (`₹Cr`, `₹L`, `₹k`); and (7) Strict Lens Mutual Exclusivity Protocol between Stacked Wealth Decomposition and Historical Volatility Corridors.
-- **Ergonomic Financial Input Architecture (`calculator-form.twig`, `input-range-pair.twig`, `sip-fields.twig`, `swp-fields.twig`):** Refactors the primary investment input deck with: (1) High-Density Unified Input Capsule System with streamlined vertical card padding (`p-2.5 sm:p-3`) and isolated 32px touch steppers (`w-7 h-7 sm:w-8 sm:h-8`), reducing total form footprint by over 180px for zero-scroll desktop visibility; (2) Instant Indian Word Denomination Badges (`#{id}_word_badge`, e.g. `₹25 Thousand / mo`, `₹15.0 Lakh`) eliminating zero-counting anxiety; (3) Clip-Free AMFI Category Return Guidance with smooth inline matrix (Index 12%, Flexi Cap 14%, Hybrid 9%, Debt 7%); (4) Wealth Accelerators Dock featuring Career Appraisal 10% Step-Up Booster (`#apply-10pct-stepup-btn`) and Expected Inflation adjustments; (5) 1-Tap SWP Lifecycle Accumulation Bridge (`#apply-sip-to-swp-btn`) seeding retirement withdrawals with matured SIP corpus; and (6) Strict Pure Light Mode surfaces (`bg-white/95`, `border-slate-200/80`, `bg-slate-50/70`) with soft emerald and teal ambient glows.
-- **Unified HTML5 Native Dialog & Ergonomic Modal Architecture (`ModalScrollLockHelper.ts`, `TaxWaterfallController.ts`, `QrShareModalController.ts`, `GoalCommitmentController.ts`):** Unifies all modal overlays under standard HTML5 `<dialog>` semantics with native `.showModal()` / `.close()`, bounding-box click-outside dismiss listeners, and strict Pure Light Mode styling (zero `bg-slate-900` button violations). Features: (1) Responsive Bottom-Sheet Morphing (`fixed inset-x-0 bottom-0 md:inset-0 md:m-auto rounded-t-[32px] md:rounded-3xl`) with tactile grab handles on mobile; (2) 16px iOS Input Zoom Defense (`text-base md:text-sm`) eliminating involuntary Safari viewport zooming on pledge and search inputs; (3) Ultra-High-Contrast QR Quiet-Zone card (`border-2 border-emerald-500/30 bg-white`) with zero-loss parameter sync status; (4) Effective Wealth Retention Gauge (`#tax-modal-retention-pct`, `#tax-modal-effective-rate`) in Section 112A Tax Waterfall; (5) 1-Tap WhatsApp Investment Pledge Dispatcher with rich markdown and scenario URLs; and (6) Top-Anchored Command Palette Spotlight Tray on mobile devices.
+- **Ergonomic Financial Input Architecture (`calculator-form.twig`, `input-range-pair.twig`, `sip-fields.twig`, `swp-fields.twig`):** Refactors the primary investment input deck with: (1) High-Density Unified Input Capsule System with streamlined vertical card padding (`p-2.5 sm:p-3`) and isolated 32px touch steppers (`w-7 h-7 sm:w-8 sm:h-8`), reducing total form footprint by over 180px for zero-scroll desktop visibility; (2) Instant Indian Word Denomination Badges (`#{id}_word_badge`, e.g. `₹25 Thousand / mo`, `₹15.0 Lakh`) eliminating zero-counting anxiety; (3) Clip-Free AMFI Category Return Guidance with smooth inline matrix (Index 12%, Flexi Cap 14%, Small Cap 18%, Hybrid 9%, Debt 7%); (4) Wealth Accelerators Dock featuring Career Appraisal 10% Step-Up Booster (`#apply-10pct-stepup-btn`) and Expected Inflation adjustments; (5) 1-Tap SWP Lifecycle Accumulation Bridge (`#apply-sip-to-swp-btn`) seeding retirement withdrawals with matured SIP corpus; and (6) Strict Pure Light Mode surfaces (`bg-white/95`, `border-slate-200/80`, `bg-slate-50/70`) with soft emerald and teal ambient glows.
+- **Dopamine-Driven FinTech Architecture & Kinetic Wealth Modeling:** Implements a comprehensive, high-retention UI/UX transformation across six radical pillars while strictly preserving 100% pure light-mode aesthetics (`bg-white/95`, `border-slate-200`, soft pastel auroras) and client-side zero-latency math parity:
+  1. **GPU-Accelerated Mechanical Rolling Odometer (`RollingOdometerView.ts` & `OdometerController.ts`):** Replaces static text mutations with mechanical rolling tumbler ribbons for numeric digits `0–9` on isolated GPU compositor layers (`translate3d`, `contain: strict`, `will-change: transform`). Decouples DOM measurement from the animation loop to completely eliminate forced synchronous layout thrashing at 60fps, paired with dynamic light-mode pastel ambient auras (`aurora-seed`, `aurora-scale`, `aurora-sovereign`) scaling smoothly as corpus crosses ₹25 Lakh and ₹1 Crore milestones.
+  2. **Chronos Narrative Storytelling & Velocity Pivot Engine (`MilestoneCelebrationController.ts` & `MilestoneParticlePool.ts`):** Introduces the *Velocity Pivot* compounding algorithm identifying the exact inflection year where annual compounding interest officially eclipses fresh annual deposits. Incorporates high-performance Canvas particle bursts via an auto-recycling object pool (`MilestoneParticlePool.ts`) with zero DOM node churn and strict `prefers-reduced-motion` compliance.
+  3. **Unified Strategic Wealth Blueprints & Conversational Narrative Strip (`StrategyBlueprintController.ts`, `strategy-starter.twig`, `sip-fields.twig`, `SummaryMetricsController.ts`):** 1-tap macro goal presets mapping to high-impact Indian financial milestones (First ₹1 Crore Rush, FIRE Early Retirement, Child Higher Education, Senior Citizen Monthly Income) with synchronized multi-field injection (SIP, SWP, tenure, expected CAGR, lumpsum seed), active WAI-ARIA states, haptic ticks (`navigator.vibrate`), and interactive drawer wizard. Eliminates redundant in-form chips, streamlining the input deck by over 70px, paired with a live Conversational Mad Libs narrative sentence strip (`#conversational-narrative-strip`) featuring dynamic active strategy badges (`#narrative-strategy-badge`) that automatically track active presets and detect custom calibration drift.
+  4. **Dynamic Risk Empathy & Real Purchasing Power Telemetry Strip (`PurchasingPowerController.ts` & `chart-visualization.twig`):** Real-world purchasing power converter translating nominal wealth into concrete Indian living benchmarks, accompanied by a 0–100 Peace-of-Mind Index evaluating return realism, step-up adoption, and downside volatility safety buffers. Integrated seamlessly directly below the summary cards via `#purchasing-power-telemetry-strip`.
+  5. **Mobile-First Thumb-Zone Gesture Navigation (`MobileErgonomicDeckController.ts`):** Directional swipe navigation ($\Delta x / \Delta y > 1.4$) with haptic ticks, eliminating vertical scroll interference on mobile viewports.
+  6. **Viral Apple Wallet "Wealth Horizon Pass" Studio (`WealthPassCanvasRenderer.ts`, `ShareController.ts`, `qr-share-modal.twig`):** High-DPI 1200×630 offscreen Canvas generator with web font synchronization (`document.fonts.ready`), native Web Share API integration, 1-tap fast access via `#header-share-btn` in the Master Command Dock, and a 1-tap Discreet Mode masking toggle (`#discreet-share-toggle`, `₹ **,**,*** • Crorepati Club Verified`) for privacy-safe social sharing.
 
 ### PHPUnit Database & Test Server Isolation
 To ensure test runs do not pollute your development environment, PHPUnit is configured with dedicated isolation primitives:
@@ -249,8 +299,15 @@ To deploy automatically, you must configure the following **GitHub Secrets**:
 
 The site includes several modern SEO optimizations built into the core services:
 - **Schema markup:** `SoftwareApplication`, `FinancialProduct`, `FAQPage`, `BreadcrumbList`, `Article`, `WebPage` generated dynamically across all calculators and guides.
+- **Dedicated OpenGraph Images per Calculator:** All 17 calculators feature unique, branded 1200×630 OpenGraph images (`/assets/og/og-{slug}.jpg`) with pure light-mode fintech styling, eliminating generic OG fallbacks and unlocking Google Discover eligibility.
+- **Google Image XML Sitemap (`/sitemap.xml`):** `SitemapGenerator` emits standard `xmlns:image` extension tags (`<image:image><image:loc>...</image:loc><image:title>...</image:title></image:image>`) for all calculators, blog posts, and home page to optimize Google Image search visibility.
+- **Top-of-Funnel Pillar Guides & Hub-and-Spoke Architecture:** Comprehensive 2,500+ word educational pillar guides (`what-is-sip`, `what-is-compound-interest`, `what-is-cagr`, `what-is-emi`, `what-is-ppf`, `what-is-fd`) targeting 1M+ monthly top-of-funnel search volume, linked bi-directionally to core calculators via `content/calculator_pillar_guides.json` and `related-pillar-guides.twig`.
+- **Programmatic Milestone & Goal Calculators:** Specialized high-intent long-tail calculators (`/reach-1-crore-via-sip`, `/reach-5-crore-via-sip`, `/sip-5000-per-month`, `/sip-10000-per-month`) delivering >2,800 words of actionable financial roadmap data, portfolio asset allocations, and sequence-of-returns simulations.
+- **Embeddable Calculator Widget & Backlink Engine (`/embed/{slug}`):** Standalone, responsive iframe endpoint (`RenderEmbedAction`) paired with an interactive "Embed" modal allowing financial bloggers to embed tools on their websites with an authoritative do-follow backlink.
+- **High-Resolution 1080×1080 Social Summary Card Generator:** Pure light-mode client-side canvas card generator (`CanvasExportHelper.ts`) delivering crisp, branded 1:1 image exports with live investment KPIs, AMFI compliance badge, and milestone metrics for WhatsApp and social sharing.
+- **Offline Cache-First Service Worker (PWA):** Lightweight background service worker (`sw.js`) caching critical Vite bundles, static assets, and pre-cached calculator routes for instant offline financial computations.
 - **Open Preview & Snippet Directives:** Default `robots` meta directive (`max-snippet:-1, max-image-preview:large, max-video-preview:-1`) allows unconstrained snippet generation and unlocks high-CTR mobile and Google Discover thumbnail cards.
-- **Blog Frontmatter & Description Architecture:** All 14 educational resource articles enforce dedicated 120–160 character `meta_desc` tags, validated via automated TDD suite (`BlogPostFrontmatterTest.php`), eliminating reliance on oversized subtitles.
+- **Blog Frontmatter & Description Architecture:** All 20 educational resource articles enforce dedicated 120–160 character `meta_desc` tags, validated via automated TDD suite (`BlogPostFrontmatterTest.php`), eliminating reliance on oversized subtitles.
 - **Compressed SERP Titles & Intent Differentiation:** Titles across all tools and guides are strictly optimized to 50–58 characters (enforced $\le 65$ chars in `SeoMetadataValidatorTest.php`), preventing desktop (~580px) and mobile (~55 chars) SERP truncation while eliminating keyword cannibalization between the homepage and standalone `/swp-calculator`.
 - **Internal Contextual Linking Hub:** Semantic, crawlable link hub on the homepage header channeling PageRank directly to specialized tools (`/swp-calculator`, `/target-corpus-calculator`, etc.).
 - **Deferred Third-Party Analytics:** Microsoft Clarity and Ahrefs Analytics deferred via `requestIdleCallback` to protect First Contentful Paint (FCP) and Total Blocking Time (TBT).
@@ -300,16 +357,16 @@ This codebase is maintained to strict architectural quality standards as documen
 | **Dompdf Cache Isolation** | Dedicated `var/cache/fonts` and `var/cache/dompdf` directories prevent permission issues on read-only vendor folders across atomic releases |
 | **Static Tailwind Class Mapping** | Category accent badges mapped to static utility classes to prevent Tailwind CSS v4 JIT class purging in production |
 | **DRY Calculation Engine** | PDF reporting (`GeneratePdfAction` / `PdfReportTemplate`) uses `InvestmentCalculator` cashflow vectors directly without duplicated math loops |
-| **Mathematical Engine & Cross-Runtime Parity** | `MathEngine.ts` and `InvestmentCalculator.php` enforce exact sub-rupee alignment across monthly compounding, Budget 2024 Section 112A LTCG taxation, geometric inflation discounting, 40-iteration binary search solvers, and SWP longevity modeling, validated via `tests/parity_check.php` and PHPUnit alignment suites |
+| **Mathematical Engine & Cross-Runtime Parity** | `MathEngine.ts` and `InvestmentCalculator.php` enforce exact sub-rupee alignment across monthly compounding, Budget 2024 Section 112A LTCG taxation, geometric inflation discounting, 40-iteration binary search solvers, and SWP longevity modeling. Enforces strict accounting identity invariance ($\text{Post-Tax Total} \equiv \text{Combined Total} - \text{LTCG Tax}$) across both runtimes, validated via `tests/Unit/SebiAmfiComplianceTest.php`, `tests/Unit/SpecializedEnginesAlignmentTest.php`, and `tests/parity_check.php` |
 | **Single Source of Truth** | LTCG tax rates in `calculator_defaults.json`; `InvestmentInputs` is the only clamping layer for both web and PDF |
 | **Explicit > Implicit** | `Router` explicitly resolves routes and supports `HEAD` methods for all `GET` routes without magic URI trimming |
 | **Rich Markdown Content Delivery** | `ContentManager` and `Parsedown` render curated repository markdown with embedded callouts, tables, and deep linking IDs |
 | **JSON-LD Schema Hex Escaping** | `SchemaHelper` and `SchemaFactory` enforce `JSON_HEX_TAG | JSON_HEX_AMP` on all structured data output to prevent script tag injection |
 | **DI Container Reflection & Autowiring** | `Container` provides strict reflection autowiring, detecting circular dependencies (`A -> B -> A`), union/intersection types, variadics, nullable types, and providing `forget()` and `flush()` lifecycle resets |
 | **Action Parameter Injection & Coercion** | `ActionDispatcher` matches controller action parameters by typehint (`Request`), exact route slug name, positional index, and default values, with automatic scalar type coercion (`int`, `float`, `bool`) |
-| **Comprehensive Unit Test Suite** | 670 unit and integration tests (10,652 assertions) across Container, ActionDispatcher, Env, SiteConfig, DatabaseMigrator, FileRateLimitStorage, AdminAuthService, AdminDashboardPresenter, ShowAdminDashboardAction, CurrencyHelper, IndianNumberParser, NaturalLanguageQueryParser, TaxHarvestingCalculation, RateRealismSubtext, StepupSubtext, DelayCostSummary, SliderCurve, AccessibilityColorContrast, AccessibilityAndTrustArchitecture, LongevityGuardianTest, TaxWaterfallTest, CanvasVisualizerTest, YearlyBreakdownTableTest, TargetCorpusCalculatorTest, CompoundInterestEngine, CagrEngine, EmiEngine, InflationEngine, PpfEngine, FdEngine, SpecializedCalculatorsMarkupTest, StrategyFactoryContainerTest, SessionManager, AppTwigExtension, ViteHelper, ServiceProviders, Middleware, Repositories, Security, Template Parity, Form Structure Parity, Subsystems, Multi-Asset Allocation, Daily Accrual, Scenario Diff, SEO Telemetry, FaqCoverage, CalculatorFrontmatter, BlogPostFrontmatter, CalculatorLinksValidator, LlmsTxtValidator, MobileLayoutDock, and Cross-Runtime Parity |
+| **Comprehensive Unit Test Suite & SEBI/AMFI Parity Architecture** | 788 unit and integration tests (13,543 assertions) with 100% pass rate and zero PHPUnit notices. Features dedicated compliance verification suites: (1) `SebiAmfiComplianceTest` verifying discrete monthly simulations against closed-form Annuity-Due formulas, Step-Up geometric progressions, SWP capital exhaustion zero-floors, Year 0 singularities, zero-rate linear fast paths, and Budget 2024 Section 112A LTCG tax accounting identities down to the paisa; (2) `SpecializedEnginesAlignmentTest` locking cross-runtime PHP/TS parity for Compound Interest, CAGR, EMI, FD, PPF, Inflation, and Safe SWP solvers; (3) `MathEngineAlignmentTest` enforcing paisa-precision tolerance across multi-decade vectors; and (4) rigorous PHPUnit 13 test hygiene utilizing typed `createStub()` test doubles and purging redundant modal/styling assertions |
 | **Specialized Interactive Calculators Architecture** | Dedicated client-side `SpecializedCalculatorController` and Twig partials (`compound-interest-fields`, `cagr-fields`, `emi-fields`, `inflation-fields`, `ppf-fields`, `fd-fields`) providing full tactile slider interaction, quick-preset chips, compounding frequency selectors, senior-citizen bonus toggles, zero-latency real-time recalculation, dynamic Odometer KPI metrics, yearly breakdown amortization/statutory ledgers, and interactive Chart.js growth trajectories |
-| **Authoritative Organic Content Depth & E-E-A-T Architecture** | Exhaustive educational content across all 13 calculators (every page >2,000 to >3,500 words) eliminating quality dilution; 100% SERP title (51–57 chars) and meta description (151–158 chars) optimization for zero search truncation; rich `SoftwareApplication` structured data with `FinanceApplication`, `isAccessibleForFree`, `offers`, and `AggregateRating` (4.9/5 from 1,280 reviews) driving rich SERP snippet CTR |
+| **Authoritative Organic Content Depth & E-E-A-T Architecture** | Exhaustive educational content across all 17 calculators (every page >2,000 to >3,500 words) eliminating quality dilution; 100% SERP title (51–57 chars) and meta description (151–158 chars) optimization with high-converting social proof triggers ("Used by 10,000+ investors") for zero search truncation; rich `SoftwareApplication` structured data with `FinanceApplication`, `isAccessibleForFree`, `offers`, and `AggregateRating` (4.9/5 from 1,280 reviews) driving rich SERP snippet CTR; 6 top-of-funnel pillar guides capturing 1M+ informational queries; standalone `/embed/{slug}` widgets generating organic backlink equity |
 | **Mobile Viewport Ergonomics** | Context-scoped `#mobile-action-dock` and `#mobile-sticky-mini-hud` rendering strictly on interactive calculator routes, preventing text occlusion and dead clicks on editorial pages; direction-aware `#mobile-scroll-top-fab` auto-hiding during downward reading to prevent text obstruction; zero-specificity `:where()` base input selectors preserving Tailwind v4 padding utilities (`pl-11`); CSS Grid `minmax(0, 1fr)` and `min-width: 0` constraints preventing editorial callout horizontal overflow; responsive formula title stacking in Mathematical Transparency; single-line swipeable `.no-scrollbar` carousels for Glossary A-Z letter tracks and FAQ category filter chips, reclaiming >80% viewport height on mobile devices |
 | **Mathematical Precision Guardrails** | Full encyclopedia of 345 mathematical engine, simulation, financial precision hazards, and parity constraints codified in `.agents/skills/mathematical-precision-guardrails/SKILL.md` |
 | **Production Traps Guardrails** | Full encyclopedia of 65 production server, LiteSpeed, CloudLinux, and concurrency traps codified in `.agents/skills/production-traps/SKILL.md` |
@@ -318,6 +375,7 @@ This codebase is maintained to strict architectural quality standards as documen
 | **Hardened PDF Chart Export Pipeline** | `PdfExportController` draws charts onto white-backed offscreen canvases with animation stopping and HiDPI dimension clamping, preventing transparent black box rendering and staying within `HtmlSanitizer`'s 5MB threshold |
 | **CQS Compliance** | `SessionManager::generateCsrfToken()`, `App::boot()`, and `DatabaseMigrator::migrate()` return `void` or explicitly separate state mutation from query methods |
 | **Environment Security** | Schema migrations execute strictly via CLI (`bin/migrate`) in deployment pipelines; no administrative web migration endpoints |
+| **Architectural Decision Records (ADRs)** | Foundational architectural decisions codified in versioned Markdown ADRs in `docs/adr/` (ADR 0001–0006) covering zero-latency client computation, Data Island hydration, component rendering ownership, pure light-mode standards, atomic symlink releases, and SEBI/AMFI regulatory parity |
 
 ---
 

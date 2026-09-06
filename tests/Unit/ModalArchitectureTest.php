@@ -168,4 +168,33 @@ final class ModalArchitectureTest extends TestCase
         $this->assertStringContainsString(rawurlencode('INVESTOR GOAL COMMITMENT CERTIFICATE'), $whatsappUrl);
         $this->assertStringContainsString(rawurlencode($investorName), $whatsappUrl);
     }
+
+    public function testPdfModalsHaveCenteringClasses(): void
+    {
+        $homeContent = (string) file_get_contents(__DIR__ . '/../../src/Views/calculators/home.twig');
+        $guideContent = (string) file_get_contents(__DIR__ . '/../../src/Views/calculators/calculator-guide.twig');
+
+        $this->assertStringContainsString('id="pdfModal"', $homeContent);
+        $this->assertStringContainsString('fixed inset-0 m-auto', $homeContent);
+        $this->assertStringContainsString('z-modal', $homeContent);
+
+        $this->assertStringContainsString('id="pdfModal"', $guideContent);
+        $this->assertStringContainsString('fixed inset-0 m-auto', $guideContent);
+        $this->assertStringContainsString('z-modal', $guideContent);
+    }
+
+    public function testStylesCssContainsUniversalDialogCenteringRules(): void
+    {
+        $stylesCss = (string) file_get_contents(__DIR__ . '/../../resources/css/styles.css');
+        $this->assertStringContainsString('dialog {', $stylesCss);
+        $this->assertStringContainsString('position: fixed;', $stylesCss);
+        $this->assertStringContainsString('inset: 0;', $stylesCss);
+        $this->assertStringContainsString('margin: auto;', $stylesCss);
+        $this->assertStringContainsString('width: min(calc(100vw - 2rem), 36rem);', $stylesCss);
+        $this->assertStringContainsString('dialog:not([open]) {', $stylesCss);
+        $this->assertStringContainsString('display: none !important;', $stylesCss);
+        $this->assertStringContainsString('dialog[open] {', $stylesCss);
+        $this->assertStringContainsString('display: flex !important;', $stylesCss);
+        $this->assertStringContainsString('dialog::backdrop', $stylesCss);
+    }
 }

@@ -96,17 +96,21 @@ class MathEngineAlignmentTest extends TestCase
             $cumInvestedDelta = max(1.0, abs(($phpRow['cumulative_invested'] ?? 0.0) * 0.00001));
             $withdrawalDelta = max(1.0, abs(($phpRow['annual_withdrawal'] ?? 0.0) * 0.00001));
             $cumWithdrawalDelta = max(1.0, abs(($phpRow['cumulative_withdrawals'] ?? 0.0) * 0.00001));
+            $sipMonthlyDelta = max(0.01, abs(($phpRow['sip_monthly'] ?? 0.0) * 0.000000000001));
+            $swpMonthlyDelta = max(0.01, abs(($phpRow['swp_monthly'] ?? 0.0) * 0.000000000001));
 
             $this->assertEquals($phpRow['year'], $jsRow['year'], "Year mismatch at index $index");
             $this->assertEqualsWithDelta($phpRow['begin_balance'], $jsRow['begin_balance'], $balanceDelta, "begin_balance mismatch at year $year");
-            $this->assertEqualsWithDelta($phpRow['sip_monthly'], $jsRow['sip_monthly'], 1.0, "sip_monthly mismatch at year $year");
+            $this->assertEqualsWithDelta($phpRow['sip_monthly'], $jsRow['sip_monthly'], $sipMonthlyDelta, "sip_monthly mismatch at year $year");
             $this->assertEqualsWithDelta($phpRow['annual_contribution'], $jsRow['annual_contribution'], $contribDelta, "annual_contribution mismatch at year $year");
             $this->assertEqualsWithDelta($phpRow['cumulative_invested'], $jsRow['cumulative_invested'], $cumInvestedDelta, "cumulative_invested mismatch at year $year");
-            $this->assertEqualsWithDelta($phpRow['swp_monthly'], $jsRow['swp_monthly'], 1.0, "swp_monthly mismatch at year $year");
+            $this->assertEqualsWithDelta($phpRow['swp_monthly'], $jsRow['swp_monthly'], $swpMonthlyDelta, "swp_monthly mismatch at year $year");
             $this->assertEqualsWithDelta($phpRow['annual_withdrawal'], $jsRow['annual_withdrawal'], $withdrawalDelta, "annual_withdrawal mismatch at year $year");
             $this->assertEqualsWithDelta($phpRow['cumulative_withdrawals'], $jsRow['cumulative_withdrawals'], $cumWithdrawalDelta, "cumulative_withdrawals mismatch at year $year");
             $this->assertEqualsWithDelta($phpRow['interest'], $jsRow['interest'], $interestDelta, "interest mismatch at year $year");
             $this->assertEqualsWithDelta($phpRow['combined_total'], $jsRow['combined_total'], $totalDelta, "combined_total mismatch at year $year");
+            $this->assertEqualsWithDelta($phpRow['ltcg_tax'], $jsRow['ltcg_tax'], $totalDelta, "ltcg_tax mismatch at year $year");
+            $this->assertEqualsWithDelta($phpRow['post_tax_total'], $jsRow['post_tax_total'], $totalDelta, "post_tax_total mismatch at year $year");
         }
     }
 
@@ -238,6 +242,53 @@ class MathEngineAlignmentTest extends TestCase
         $jsDelayCost = (float) ($jsRes['result'] ?? -1);
 
         $this->assertEqualsWithDelta($phpDelayCost, $jsDelayCost, 1.0, "Delay cost mismatch between PHP and JS");
+    }
+
+    /**
+     * Verify alignment of Safe SWP Monthly Withdrawal inversion.
+     */
+    public function testSafeSwpWithdrawalAlignment(): void
+    {
+        $calculator = new InvestmentCalculator();
+        $inputs = InvestmentInputs::fromValues(
+            sip: 0.0,
+            years: 0,
+            rate: 0.0,
+            stepup: 0.0,
+            enableSwp: true,
+            swpWithdrawal: 0.0,
+            swpStepup: 5.0,
+            swpYears: 20,
+            lumpsum: 10000000.0,
+            swpRate: 8.0
+        );
+
+        $phpSafeSwp = $calculator->calculateSafeSwpWithdrawal($inputs, 10000000.0);
+
+        $runnerPath = __DIR__ . '/../run_js_calc.js';
+        $jsPayload = [
+            'action' => 'safe_swp_withdrawal',
+            'inputs' => [
+                'sip' => 0,
+                'years' => 0,
+                'rate' => 0,
+                'stepup' => 0,
+                'enable_swp' => true,
+                'swp_withdrawal' => 0,
+                'swp_stepup' => 5.0,
+                'swp_years' => 20,
+                'lumpsum' => 10000000.0,
+                'swp_rate' => 8.0
+            ],
+            'starting_corpus' => 10000000.0
+        ];
+
+        $jsonArg = escapeshellarg(json_encode($jsPayload));
+        $output = shell_exec("node " . escapeshellarg($runnerPath) . " {$jsonArg}");
+        $jsRes = json_decode((string) $output, true);
+        $jsSafeSwp = (float) ($jsRes['result'] ?? -1);
+
+        $this->assertEqualsWithDelta($phpSafeSwp, $jsSafeSwp, 1.0, "Safe SWP monthly withdrawal mismatch between PHP and JS");
     }
 
     public static function inputProvider(): array

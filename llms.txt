@@ -1,6 +1,6 @@
 # sipswpcalculator.com
 
-> Free SIP & SWP Calculator with step-up compounding for Indian mutual fund investors.
+> Free, production-grade SIP & SWP Calculator with step-up compounding and tax modeling for Indian mutual fund investors.
 
 ## Calculators
 - [SIP & SWP Calculator](https://sipswpcalculator.com/): Combined SIP accumulation and SWP retirement withdrawal planner with step-up compounding
@@ -15,14 +15,18 @@
 - [CAGR Calculator](https://sipswpcalculator.com/cagr-calculator): Calculate compound annual growth rate, absolute returns, and wealth multipliers for investments
 - [EMI Calculator](https://sipswpcalculator.com/emi-calculator): Calculate monthly loan EMIs and complete year-by-year amortization schedules for home and car loans
 - [Inflation Calculator](https://sipswpcalculator.com/inflation-calculator): Project future cost of living and purchasing power loss over 5 to 30 year horizons
-- [PPF Calculator](https://sipswpcalculator.com/ppf-calculator): Calculate Public Provident Fund interest, 5th-of-the-month rules, and 15 to 30 year block extension schedules
+- [PPF Calculator](https://sipswpcalculator.com/ppf-calculator): Calculate Public Provident Fund tax-free compounding, Section 80C deductions, and 15 to 30 year maturity corpus
 - [FD Calculator](https://sipswpcalculator.com/fd-calculator): Calculate bank fixed deposit interest, quarterly compounding, senior citizen bonuses, and Section 194A TDS
+- [1 Crore SIP Goal Calculator](https://sipswpcalculator.com/reach-1-crore-via-sip): Calculate exact monthly SIP, years, and step-up increments required to reach ₹1 Crore
+- [5 Crore SIP FIRE Calculator](https://sipswpcalculator.com/reach-5-crore-via-sip): Complete FIRE and financial freedom calculator to reach ₹5 Crores with 4% safe withdrawal simulation
+- [₹5,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-5000-per-month): Multi-decade ₹5,000 monthly SIP returns, 10% annual step-up compounding, and optimal 2-fund portfolio
+- [₹10,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-10000-per-month): Multi-decade ₹10,000 monthly SIP returns, ₹1 Crore milestone roadmap, and 3-fund core portfolio
 
 ## Core Features & Mechanics
 - All financial calculations execute client-side in the browser with zero latency and zero server roundtrips
 - Full Indian Rupee (₹) localization with Lakh and Crore formatting conventions
 - Annual Step-Up Compounding: 0% to 50% annual top-up on monthly SIP investments
 - Month-by-month financial simulation parity between PHP and TypeScript engines
-- Post-tax capital gains estimation incorporating Indian LTCG and STCG tax rules
+- Post-tax capital gains estimation incorporating Indian Budget 2024 Section 112A rules (12.5% LTCG on equity gains exceeding ₹1.25 Lakh)
 - Inflation-adjusted real corpus and real purchasing power projections
 - Free instant CSV data export and branded PDF projection report downloads

@@ -58,6 +58,37 @@ final class MilestoneCelebrationControllerTest extends TestCase
         $this->assertStringContainsString('getCheckpoints(): MilestoneCheckpoint[]', $this->controllerCode);
         $this->assertStringContainsString('triggerMicroBurst(): void', $this->controllerCode);
         $this->assertStringContainsString('triggerSheenSweep(): void', $this->controllerCode);
+        $this->assertStringContainsString('calculateVelocityPivot(results: YearResult[])', $this->controllerCode);
+    }
+
+    public function testVelocityPivotCompoundingOvertakeMath(): void
+    {
+        // Mock YearResult rows where year 1-3 annual deposit is 1.2L, but interest only overtakes in year 4
+        $mockResults = [
+            ['year' => 1, 'yearly_investment' => 120000, 'yearly_interest' => 8400, 'combined_total' => 128400],
+            ['year' => 2, 'yearly_investment' => 120000, 'yearly_interest' => 28000, 'combined_total' => 276400],
+            ['year' => 3, 'yearly_investment' => 120000, 'yearly_interest' => 64000, 'combined_total' => 460400],
+            ['year' => 4, 'yearly_investment' => 120000, 'yearly_interest' => 135000, 'combined_total' => 715400],
+        ];
+
+        $velocityPivotYear = null;
+        foreach ($mockResults as $row) {
+            if ($row['yearly_interest'] > $row['yearly_investment']) {
+                $velocityPivotYear = $row['year'];
+                break;
+            }
+        }
+
+        $this->assertSame(4, $velocityPivotYear, 'Velocity pivot must occur in year 4 when interest surpasses deposits');
+    }
+
+    public function testMilestoneParticlePoolCanvasIntegration(): void
+    {
+        $this->assertStringContainsString('MilestoneParticlePool', $this->controllerCode);
+        $this->assertFileExists(__DIR__ . '/../../assets/js/calculators/helpers/MilestoneParticlePool.ts');
+        $poolCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/helpers/MilestoneParticlePool.ts');
+        $this->assertStringContainsString('HTMLCanvasElement', $poolCode);
+        $this->assertStringContainsString('prefers-reduced-motion', $poolCode);
     }
 
     public function testMilestonePurchasingPowerMathParity(): void

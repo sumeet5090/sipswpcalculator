@@ -20,7 +20,6 @@ class LogInsightApiActionTest extends TestCase
     private AnonymizedInsightLogger $logger;
     private RateLimiter $rateLimiter;
     private ConfigService $configService;
-    /** @var RateLimitStorageInterface&\PHPUnit\Framework\MockObject\MockObject */
     private RateLimitStorageInterface $mockStorage;
 
     protected function setUp(): void
@@ -90,7 +89,7 @@ class LogInsightApiActionTest extends TestCase
         ");
 
         $this->logger = new AnonymizedInsightLogger($this->pdo);
-        $this->mockStorage = $this->createMock(RateLimitStorageInterface::class);
+        $this->mockStorage = $this->createStub(RateLimitStorageInterface::class);
         $this->rateLimiter = new RateLimiter($this->mockStorage);
         $this->configService = new ConfigService(__DIR__ . '/../../content/calculator_defaults.json');
     }
@@ -129,11 +128,13 @@ class LogInsightApiActionTest extends TestCase
 
     public function testRateLimitExceededReturns429(): void
     {
-        $this->mockStorage->expects($this->once())
+        $mockStorage = $this->createMock(RateLimitStorageInterface::class);
+        $mockStorage->expects($this->once())
             ->method('checkAndIncrement')
             ->willThrowException(new RateLimitExceededException('Rate limit exceeded.'));
+        $rateLimiter = new RateLimiter($mockStorage);
 
-        $action = new LogInsightApiAction($this->logger, $this->rateLimiter, $this->configService);
+        $action = new LogInsightApiAction($this->logger, $rateLimiter, $this->configService);
         $body = json_encode(['calc_type' => 'SIP', 'amount' => 5000, 'duration' => 10]);
         $request = new Request([], [], ['REQUEST_METHOD' => 'POST', 'REMOTE_ADDR' => '1.2.3.4'], [], (string) $body);
 

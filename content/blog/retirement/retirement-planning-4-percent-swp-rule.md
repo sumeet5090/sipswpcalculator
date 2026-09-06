@@ -72,7 +72,7 @@ date: "February 2026"
 
 <p>The mathematical constraint for SWP sustainability is:</p>
 
-<div class="bg-slate-900 border border-slate-700 text-emerald-400 p-6 rounded-xl font-mono text-center my-8 shadow-xl">
+<div class="bg-emerald-50/50 border border-emerald-200/80 text-emerald-950 p-6 rounded-xl font-mono font-bold text-center my-8 shadow-sm">
     Real Yield = Nominal CAGR − Inflation − Tax Drag ≥ Withdrawal Rate
 </div>
 
@@ -164,19 +164,21 @@ date: "February 2026"
 <h3>Does the 4% rule apply to SWP from debt funds?</h3>
 <p>The 4% rule was designed for portfolios containing 50-75% equities. A pure debt fund portfolio (6-7% return) with 6% inflation has a real yield of only 0-1% — the 4% rule would deplete it in approximately 20 years. For debt-heavy portfolios, use a <strong>2-3% withdrawal rate</strong>, or better yet, maintain at least 50% equity allocation to generate the growth needed for 30-year sustainability.</p>
 
-<div class="bg-slate-900 text-white p-12 rounded-3xl text-center my-14 not-prose border border-slate-800 shadow-2xl relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, #4f46e5 1px, transparent 0); background-size: 24px 24px;"></div>
-    <div class="relative z-10">
-        <h3 class="text-3xl font-bold mb-6 text-white">Stress-Test Your 4% Rule Plan</h3>
-        <p class="mb-10 text-slate-400 text-lg max-w-2xl mx-auto">Our retirement simulator models the 4% rule with inflation step-ups across 30-year horizons. Test your Magic Number against bull, base, and bear scenarios.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/retirement-drawdown-planner" class="inline-flex items-center gap-3 px-10 py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-500 transition-all">
-                Open Retirement Planner
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-            </a>
-            <a href="/resource/retirement/sip-vs-swp-wealth-creation-withdrawal-strategy" class="inline-flex items-center gap-3 px-10 py-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all">
-                Read: SIP to SWP Transition →
-            </a>
-        </div>
-    </div>
+<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-200/90 shadow-card bg-gradient-to-br from-emerald-50 via-white to-teal-50/60 p-8 sm:p-10 text-center text-slate-900">
+  <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-4 border border-emerald-200">
+    ⚡ Live Retirement Simulation
+  </div>
+  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight text-slate-900">Stress-Test Your 4% Rule Plan</h2>
+  <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Our retirement simulator models the 4% rule with inflation step-ups across 30-year horizons. Test your Magic Number against bull, base, and bear scenarios.</p>
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+    <a href="/retirement-calculator"
+       class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm sm:text-base cursor-pointer">
+      Open Retirement Planner
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+    </a>
+    <a href="/resource/retirement/sip-vs-swp-wealth-creation-withdrawal-strategy"
+       class="inline-flex items-center gap-2 px-8 py-3.5 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-bold rounded-xl border border-slate-200 shadow-sm transition-all duration-200 text-sm sm:text-base cursor-pointer">
+      Read: SIP to SWP Transition →
+    </a>
+  </div>
 </div>

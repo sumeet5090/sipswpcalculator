@@ -48,10 +48,10 @@ class AdminActionControllersTest extends TestCase
     public function testProcessAdminLoginActionRedirectsOnSuccessfulPassword(): void
     {
         $authService = $this->createMock(AdminAuthService::class);
-        $viewRenderer = $this->createMock(ViewRenderer::class);
-        $sessionManager = $this->createMock(SessionManager::class);
-        $rateLimiter = $this->createMock(RateLimiter::class);
-        $configService = $this->createMock(ConfigService::class);
+        $viewRenderer = $this->createStub(ViewRenderer::class);
+        $sessionManager = $this->createStub(SessionManager::class);
+        $rateLimiter = $this->createStub(RateLimiter::class);
+        $configService = $this->createStub(ConfigService::class);
 
         $configService->method('getJsonConfig')->willReturn([
             'admin_auth' => ['max_requests' => 5, 'window_seconds' => 300]

@@ -53,7 +53,10 @@ class GuideViewModelBuilder
      */
     public function build(string $slug): array
     {
-        $path = "/calculators/{$slug}";
+        $cleanSlug = ltrim($slug, '/');
+        $fileSlug = basename($cleanSlug);
+
+        $path = "/calculators/{$fileSlug}";
         $content = $this->contentManager->getParsedContent($path);
 
         if (!$content) {
@@ -65,19 +68,19 @@ class GuideViewModelBuilder
         $type = $meta['type'] ?? 'guide';
         $publishedDate = $meta['date'] ?? DateConstants::CONTENT_FALLBACK_DATE;
 
-        $page_config = $this->metaManager->buildFromMetadata($meta, '/' . $slug);
+        $page_config = $this->metaManager->buildFromMetadata($meta, '/' . $cleanSlug);
 
-        $strategy = $this->strategyFactory->create($slug);
+        $strategy = $this->strategyFactory->create($fileSlug);
         $calculator_type = 'all';
 
         if ($type === 'calculator') {
             $calculator_type = $strategy->getType();
         }
 
-        $faqs = $this->faqRepository->getByTag($slug);
+        $faqs = $this->faqRepository->getByTag($fileSlug);
 
         $page_config['additional_head'] = $this->schemaFactory->generateForPage(
-            $slug,
+            $cleanSlug,
             $type,
             $page_config,
             $publishedDate,
@@ -91,13 +94,14 @@ class GuideViewModelBuilder
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
 
         $all_posts = $this->blogRepository->getAllPosts();
-        $related_calculators = $this->loadRelatedCalculators($slug);
+        $related_calculators = $this->loadRelatedCalculators($fileSlug);
+        $pillar_guides = $this->loadPillarGuides($fileSlug);
 
         $data = array_merge($initialInputs->toTemplateData(), [
             'content_html'        => $content['html'],
             'content_metadata'    => $meta,
             'page_config'         => $page_config,
-            'active_page'         => $slug,
+            'active_page'         => $cleanSlug,
             'is_calculator'       => ($type === 'calculator'),
             'seo_category'        => $seo_category,
             'calculator_type'     => $calculator_type,
@@ -106,6 +110,7 @@ class GuideViewModelBuilder
             'faqs'                => $faqs,
             'all_posts'           => $all_posts,
             'related_calculators' => $related_calculators,
+            'pillar_guides'       => $pillar_guides,
         ]);
 
         return [
@@ -127,6 +132,31 @@ class GuideViewModelBuilder
         }
 
         $raw = file_get_contents($linksPath);
+        if ($raw === false) {
+            return [];
+        }
+
+        $decoded = json_decode($raw, true);
+        if (!is_array($decoded) || !isset($decoded[$slug]) || !is_array($decoded[$slug])) {
+            return [];
+        }
+
+        return $decoded[$slug];
+    }
+
+    /**
+     * Load educational pillar guides from content mapping.
+     *
+     * @return array<int, array{href: string, title: string, tag: string, read_time: string, category: string, category_name: string, description: string}>
+     */
+    private function loadPillarGuides(string $slug): array
+    {
+        $guidesPath = __DIR__ . '/../../content/calculator_pillar_guides.json';
+        if (!file_exists($guidesPath)) {
+            return [];
+        }
+
+        $raw = file_get_contents($guidesPath);
         if ($raw === false) {
             return [];
         }

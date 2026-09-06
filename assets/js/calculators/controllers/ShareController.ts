@@ -1,13 +1,21 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import type { InvestmentInputs, YearResult } from '../../types';
+import { CanvasExportHelper } from '../helpers/CanvasExportHelper';
+import { WealthPassCanvasRenderer } from '../helpers/WealthPassCanvasRenderer';
 
 export class ShareController {
     private dom: DOMAdapter;
     private getInputs: () => InvestmentInputs;
+    private getResults?: () => YearResult[];
 
-    constructor(dom: DOMAdapter, getInputs: () => InvestmentInputs) {
+    constructor(
+        dom: DOMAdapter,
+        getInputs: () => InvestmentInputs,
+        getResults?: () => YearResult[]
+    ) {
         this.dom = dom;
         this.getInputs = getInputs;
+        this.getResults = getResults;
     }
 
     init(): void {
@@ -94,6 +102,145 @@ export class ShareController {
                 this.shareToWhatsApp();
             });
         });
+
+        const socialCardBtn = this.dom.getElement('downloadSocialCardBtn');
+        if (socialCardBtn) {
+            socialCardBtn.addEventListener('click', () => {
+                this.downloadSocialCard();
+            });
+        }
+
+        const wealthPassBtn = this.dom.getElement('shareWealthPassBtn');
+        if (wealthPassBtn) {
+            wealthPassBtn.addEventListener('click', () => {
+                const discreetToggle = this.dom.getElement<HTMLInputElement>('discreet-share-toggle');
+                const isDiscreet = discreetToggle ? discreetToggle.checked : false;
+                this.shareWealthPass(isDiscreet);
+            });
+        }
+    }
+
+
+    /**
+     * Generate and download a branded 1080x1080 social card.
+     */
+    downloadSocialCard(): void {
+        const inputs = this.getInputs();
+        let totalInvested = 0;
+        let totalGains = 0;
+        let finalCorpus = 0;
+
+        const results = this.getResults ? this.getResults() : [];
+        if (results && results.length > 0) {
+            const last = results[results.length - 1];
+            totalInvested = last.cumulative_invested;
+            finalCorpus = last.combined_total;
+            totalGains = Math.max(0, finalCorpus - totalInvested);
+        } else {
+            // Fallback to DOM elements
+            const parseAmount = (id: string): number => {
+                const el = this.dom.getElement(id);
+                if (!el || !el.textContent) return 0;
+                const clean = el.textContent.replace(/[^0-9.]/g, '');
+                return parseFloat(clean) || 0;
+            };
+            totalInvested = parseAmount('summary-invested');
+            totalGains = parseAmount('summary-interest');
+            finalCorpus = parseAmount('summary-corpus');
+        }
+
+        const appEl = this.dom.getElement('calculator-app');
+        const mode = appEl?.dataset?.mode || 'sip';
+        const titleMap: Record<string, string> = {
+            'sip': 'SIP Wealth Accumulation Plan',
+            'swp': 'Retirement SWP Cash Flow Plan',
+            'stepup': 'Step-Up SIP Accelerated Plan',
+            'combo': 'SIP & SWP Comprehensive Plan',
+            'lumpsum': 'Lumpsum Investment Plan'
+        };
+        const planTitle = titleMap[mode] || 'Wealth Accumulation Plan';
+
+        const dataUrl = CanvasExportHelper.exportSocialSummaryCard(
+            inputs,
+            totalInvested,
+            totalGains,
+            finalCorpus,
+            planTitle
+        );
+
+        if (!dataUrl) return;
+
+        // Visual feedback
+        const btnText = this.dom.getElement('socialCardBtnText');
+        if (btnText) btnText.innerHTML = '<span>✅ Saved!</span>';
+
+        // Trigger file download
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = `wealth-plan-${inputs.years}yrs.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        if (btnText) {
+            setTimeout(() => {
+                btnText.textContent = 'Share Card';
+            }, 2000);
+        }
+    }
+
+    /**
+     * Share or download the sleek Wealth Horizon Pass with Web Share API and Discreet Privacy Mode.
+     */
+    async shareWealthPass(isDiscreetMode: boolean = false): Promise<void> {
+        const inputs = this.getInputs();
+        const results = this.getResults ? this.getResults() : [];
+        let totalInvested = 0;
+        let totalGains = 0;
+        let finalCorpus = 0;
+
+        if (results && results.length > 0) {
+            const last = results[results.length - 1];
+            totalInvested = last.cumulative_invested;
+            finalCorpus = last.combined_total;
+            totalGains = Math.max(0, finalCorpus - totalInvested);
+        }
+
+        const blob = await WealthPassCanvasRenderer.generatePassBlob({
+            inputs,
+            finalCorpus,
+            totalInvested,
+            totalGains,
+            isDiscreetMode,
+            goalTitle: finalCorpus >= 10000000 ? 'Destination: Crorepati Sovereign' : 'Destination: Financial Freedom'
+        });
+
+        if (!blob) return;
+
+        const file = new File([blob], `Wealth-Horizon-Pass-${inputs.years}Y.png`, { type: 'image/png' });
+
+        if (typeof navigator !== 'undefined' && 'canShare' in navigator && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    title: 'My Wealth Horizon Pass',
+                    text: `Mapped my ${inputs.years}-year wealth blueprint on sipswpcalculator.com`,
+                    files: [file]
+                });
+                return;
+            } catch {
+                // User cancelled or share failed; fallback to direct download below
+            }
+        }
+
+        // Direct Download Fallback
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `wealth-horizon-pass-${inputs.years}Y.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     }
 
     /**

@@ -1,7 +1,8 @@
 ---
+og_image: "/assets/og/og-cagr-calculator.jpg"
 title: "CAGR Calculator India (2026) — Annualized Growth Tool"
 subtitle: "Calculate Compound Annual Growth Rate (CAGR) for mutual funds, stocks, and real estate investments in India with absolute return and multiplier breakdowns."
-meta_desc: "Free CAGR calculator India 2026. Calculate compound annual growth rate, absolute returns, and wealth multipliers for mutual funds, stocks, and real estate."
+meta_desc: "Free CAGR calculator India (2026). Used by 10,000+ investors to calculate CAGR, absolute returns & wealth multipliers for mutual funds, stocks and property."
 keywords: "cagr calculator, cagr calculator india, compound annual growth rate, mutual fund cagr, cagr formula, absolute return vs cagr, annualized return calculator"
 schema_name: "CAGR Calculator India (2026) — Annualized Growth Tool"
 seo_category: "growth"

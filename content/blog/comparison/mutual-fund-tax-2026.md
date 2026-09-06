@@ -377,19 +377,21 @@ date: "January 2026"
 <h3>How do I report mutual fund gains in my ITR?</h3>
 <p>Mutual fund capital gains must be reported in your Income Tax Return. Use <strong>ITR-2</strong> (or ITR-3 if you have business income). List each redemption under <strong>Schedule CG (Capital Gains)</strong>. Your mutual fund AMC will provide a <strong>Capital Gains Statement</strong> (usually downloadable from their website or via CAMS/KFintech portals) that shows the exact purchase dates, sale dates, and computed gains for each transaction.</p>
 
-<div class="bg-slate-900 text-white p-10 rounded-3xl text-center my-14 not-prose border border-slate-800 shadow-2xl overflow-hidden relative">
-    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, #4f46e5 1px, transparent 0); background-size: 24px 24px;"></div>
-    <div class="relative z-10">
-        <h3 class="text-2xl font-bold mb-4 text-white">Model Your Post-Tax Retirement Income</h3>
-        <p class="mb-8 text-slate-400 text-lg max-w-2xl mx-auto">Use our SWP Tax Calculator to see exactly how much you'll take home after LTCG and STCG on your withdrawal plan.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/swp-tax-calculator" class="inline-flex items-center gap-3 px-10 py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-500 transition-all">
-                Open SWP Tax Calculator
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-            </a>
-            <a href="/resource/comparison/swp-vs-fixed-deposit" class="inline-flex items-center gap-3 px-10 py-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all">
-                Read: SWP vs Fixed Deposit →
-            </a>
-        </div>
-    </div>
+<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-200/90 shadow-card bg-gradient-to-br from-emerald-50 via-white to-teal-50/60 p-8 sm:p-10 text-center text-slate-900">
+  <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-4 border border-emerald-200">
+    ⚡ Live Tax Simulation
+  </div>
+  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight text-slate-900">Model Your Post-Tax Retirement Income</h2>
+  <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Use our SWP Calculator to see exactly how much you'll take home after Budget 2024 Section 112A LTCG tax on your withdrawal plan.</p>
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+    <a href="/swp-calculator"
+       class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm sm:text-base cursor-pointer">
+      Open SWP Calculator
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+    </a>
+    <a href="/resource/comparison/swp-vs-fixed-deposit"
+       class="inline-flex items-center gap-2 px-8 py-3.5 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-bold rounded-xl border border-slate-200 shadow-sm transition-all duration-200 text-sm sm:text-base cursor-pointer">
+      Read: SWP vs Fixed Deposit →
+    </a>
+  </div>
 </div>

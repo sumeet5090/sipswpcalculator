@@ -1,7 +1,7 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { YearResult, InvestmentInputs } from '../../types';
-import { THEME_COLORS } from '../constants/ThemeTokens.ts';
 import { CurrencyFormatter } from '../CurrencyHelper';
+import { MilestoneParticlePool } from '../helpers/MilestoneParticlePool';
 
 export interface MilestoneCheckpoint {
     threshold: number;
@@ -15,18 +15,21 @@ export class MilestoneCelebrationController {
     private celebratedMilestones: Set<number> = new Set();
     private currentInputs: InvestmentInputs | null = null;
     private lastBurstTime: number = 0;
+    private particlePool: MilestoneParticlePool;
 
     private readonly checkpoints: MilestoneCheckpoint[] = [
         { threshold: 1000000, label: '₹10.0 Lakh', description: 'Seed Momentum' },
-        { threshold: 2500000, label: '₹25.0 Lakh', description: 'Compounding Ignition' },
-        { threshold: 5000000, label: '₹50.0 Lakh', description: 'Half-Crore Waypoint' },
-        { threshold: 10000000, label: '₹1.00 Crore', description: 'First Crore Club' },
-        { threshold: 50000000, label: '₹5.00 Crore', description: 'Financial Freedom' }
+        { threshold: 2500000, label: '₹25.0 Lakh', description: 'Emergency Fortress' },
+        { threshold: 5000000, label: '₹50.0 Lakh', description: 'Velocity Pivot Waypoint' },
+        { threshold: 10000000, label: '₹1.00 Crore', description: 'Crorepati Club Unlocked' },
+        { threshold: 25000000, label: '₹2.50 Crore', description: 'Early FIRE Horizon' },
+        { threshold: 50000000, label: '₹5.00 Crore', description: 'Generational Sovereign' }
     ];
 
     constructor(dom: DOMAdapter, formatter?: CurrencyFormatter) {
         this.dom = dom;
         this.formatter = formatter || new CurrencyFormatter();
+        this.particlePool = new MilestoneParticlePool();
     }
 
     public init(): void {
@@ -35,6 +38,26 @@ export class MilestoneCelebrationController {
 
     public getCheckpoints(): MilestoneCheckpoint[] {
         return [...this.checkpoints];
+    }
+
+    /**
+     * Calculate the exact year and annual metrics where annual interest exceeds annual contributions.
+     */
+    public calculateVelocityPivot(results: YearResult[]): { year: number; annualInterest: number; annualDeposit: number } | null {
+        if (!results || results.length === 0) return null;
+
+        for (const row of results) {
+            const annualDeposit = row.annual_contribution ?? 0;
+            const annualInterest = row.interest ?? 0;
+            if (annualInterest > annualDeposit && annualDeposit > 0) {
+                return {
+                    year: row.year,
+                    annualInterest,
+                    annualDeposit
+                };
+            }
+        }
+        return null;
     }
 
     public checkMilestones(corpus: number, results: YearResult[] = [], inputs?: InvestmentInputs): void {
@@ -61,7 +84,7 @@ export class MilestoneCelebrationController {
         if (typeof window === 'undefined') return;
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-        const corpusCard = this.dom.getElement('summary-corpus')?.closest('.bg-white\\/95') as HTMLElement | null;
+        const corpusCard = this.dom.getElement('summary-corpus')?.closest('.bg-white\\/95, .fintech-glass-card') as HTMLElement | null;
         if (corpusCard) {
             corpusCard.classList.add('milestone-sheen-active');
             setTimeout(() => {
@@ -163,14 +186,17 @@ export class MilestoneCelebrationController {
             counterEl.textContent = `${unlockedCount}/${this.checkpoints.length} Milestones Hit`;
         }
 
-        // Dynamic Velocity Insight
+        // Dynamic Velocity Insight & Velocity Pivot Storytelling
         const velocityText = this.dom.getElement('milestone-velocity-text');
         if (velocityText && results.length > 0) {
+            const velocityPivot = this.calculateVelocityPivot(results);
             const y10L = results.find(r => r.combined_total >= 1000000)?.year;
             const y1Cr = results.find(r => r.combined_total >= 10000000)?.year;
             const y5Cr = results.find(r => r.combined_total >= 50000000)?.year;
 
-            if (y1Cr && y5Cr) {
+            if (velocityPivot) {
+                velocityText.innerHTML = `⚡ <strong>Velocity Pivot in Year ${velocityPivot.year}</strong>: Compounding returns (<strong>${this.formatter.format(Math.round(velocityPivot.annualInterest))}/yr</strong>) officially surpass your annual savings (<strong>${this.formatter.format(Math.round(velocityPivot.annualDeposit))}/yr</strong>)!`;
+            } else if (y1Cr && y5Cr) {
                 const deltaYears = y5Cr - y1Cr;
                 velocityText.innerHTML = `Your 1st Crore takes <strong>Year ${y1Cr}</strong>. Compounding accelerates 5× to reach <strong>₹5 Crore</strong> in just <strong>+${deltaYears} more years</strong>!`;
             } else if (y10L && y1Cr) {
@@ -199,29 +225,8 @@ export class MilestoneCelebrationController {
             }
         }
 
-        const colors = THEME_COLORS.celebration;
-
-        for (let i = 0; i < 16; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'celebration-particle fixed z-[200] pointer-events-none';
-
-            const angle = (Math.PI * 2 * i) / 16 + (Math.random() * 0.2 - 0.1);
-            const velocity = 40 + Math.random() * 45;
-            const dx = `${Math.cos(angle) * velocity}px`;
-            const dy = `${Math.sin(angle) * velocity}px`;
-
-            particle.style.left = `${originX}px`;
-            particle.style.top = `${originY}px`;
-            particle.style.setProperty('--dx', dx);
-            particle.style.setProperty('--dy', dy);
-            particle.style.backgroundColor = colors[i % colors.length];
-
-            document.body.appendChild(particle);
-
-            setTimeout(() => {
-                particle.remove();
-            }, 850);
-        }
+        this.particlePool.burst(originX, originY, 36);
     }
 }
+
 

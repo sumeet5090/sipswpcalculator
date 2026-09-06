@@ -681,5 +681,165 @@
         ],
         "q": "What extra interest benefits do senior citizens get on bank FDs?",
         "a": "Indian banks provide an additional interest rate bonus of +0.50% p.a. for senior citizens (aged 60 and above) across tenures. Many banks offer an additional +0.75% to +0.80% for super senior citizens (aged 80+), alongside a higher ₹50,000 TDS exemption threshold."
+    },
+    {
+        "id": "goal-1cr-10yrs-amount",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "reach-1-crore-via-sip"
+        ],
+        "q": "How much monthly SIP is needed to reach ₹1 Crore in 10 years in India?",
+        "a": "At a standard 12% annualized return (CAGR), an investor requires a monthly SIP of ₹43,041 for exactly 10 years (120 months) to accumulate ₹1 Crore. If the expected return is 14% CAGR, the required monthly commitment reduces to ₹38,241."
+    },
+    {
+        "id": "goal-1cr-stepup-benefit",
+        "category": "growth",
+        "tags": [
+            "faq-page",
+            "reach-1-crore-via-sip"
+        ],
+        "q": "How much time does a 10% annual step-up save in reaching ₹1 Crore?",
+        "a": "On a starting SIP of ₹15,000 per month at 12% CAGR, a flat SIP takes 17.2 years to reach ₹1 Crore. By adding a 10% annual step-up, the milestone is reached in just 11.8 years—saving over 5.4 years of investment time with only a modest gradual increase in outlay."
+    },
+    {
+        "id": "goal-5cr-retirement-enough",
+        "category": "retirement",
+        "tags": [
+            "faq-page",
+            "reach-5-crore-via-sip"
+        ],
+        "q": "Is ₹5 Crore enough to retire comfortably in India?",
+        "a": "Yes, for the vast majority of urban Indian families, ₹5 Crore is more than sufficient. Following a conservative 4% Safe Withdrawal Rate (SWR), a ₹5 Crore corpus generates ₹20 Lakhs per year (₹1.66 Lakhs per month) in regular income, while the remaining balance continues compounding at 9% to 10% in a balanced portfolio, preserving wealth against inflation."
+    },
+    {
+        "id": "goal-5cr-20yrs-sip",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "reach-5-crore-via-sip"
+        ],
+        "q": "How much monthly SIP is needed to reach ₹5 Crores in 20 years?",
+        "a": "At a 12% CAGR, an investor requires a monthly SIP of ₹50,046 for 20 years (240 installments) to accumulate ₹5 Crores. Alternatively, starting with ₹25,000 per month and applying a 10% annual step-up reaches ₹5 Crores in less than 20 years."
+    },
+    {
+        "id": "plan-5k-future-values",
+        "category": "growth",
+        "tags": [
+            "faq-page",
+            "sip-5000-per-month"
+        ],
+        "q": "How much will a ₹5,000 monthly SIP become in 10, 15, and 20 years?",
+        "a": "At an expected 12% CAGR, a ₹5,000 monthly SIP grows to ₹11.62 Lakhs in 10 years (on ₹6.0L invested), ₹25.23 Lakhs in 15 years (on ₹9.0L invested), and reaches ₹49.96 Lakhs—nearly half a crore—in 20 years (on ₹12.0L invested)."
+    },
+    {
+        "id": "plan-5k-how-many-funds",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "sip-5000-per-month"
+        ],
+        "q": "How many mutual funds should I select for a ₹5,000 monthly SIP?",
+        "a": "For a ₹5,000 monthly budget, experts strongly recommend limiting your portfolio to 1 or 2 high-conviction funds. An ideal split is ₹3,500/month in a diversified Flexi-Cap fund for large-cap core stability, and ₹1,500/month in a Mid-Cap fund for compounding alpha."
+    },
+    {
+        "id": "plan-10k-timeline-1cr",
+        "category": "growth",
+        "tags": [
+            "faq-page",
+            "sip-10000-per-month"
+        ],
+        "q": "How long does it take to reach ₹1 Crore with a ₹10,000 monthly SIP?",
+        "a": "With a flat ₹10,000 monthly SIP at 12% CAGR, you reach ₹1 Crore in 20 years (Month 240). By activating an annual 10% step-up (increasing the monthly investment by ₹1,000 each year), you reach ₹1 Crore in just 15.8 years, shaving over 4 years off your journey."
+    },
+    {
+        "id": "plan-10k-tax-rules",
+        "category": "tax",
+        "tags": [
+            "faq-page",
+            "sip-10000-per-month"
+        ],
+        "q": "How are capital gains taxed when redeeming a ₹10,000 monthly SIP portfolio?",
+        "a": "Under Budget 2024 Section 112A rules, equity fund units held for over 12 months are subject to 12.5% flat Long-Term Capital Gains (LTCG) tax on profits exceeding ₹1.25 Lakhs per financial year. Redemptions follow the First-In First-Out (FIFO) principle, meaning early accumulated units qualify for long-term treatment."
+    },
+    {
+        "id": "goal-1cr-delay-cost",
+        "category": "growth",
+        "tags": [
+            "faq-page",
+            "reach-1-crore-via-sip"
+        ],
+        "q": "What is the financial cost of delaying a ₹1 Crore SIP by just 3 years?",
+        "a": "Delaying your SIP start date significantly hurts wealth creation due to lost compounding. If an 25-year-old invests ₹10,000/month at 12% CAGR for 20 years, they accumulate ₹1.00 Crore. If they delay starting by just 3 years (investing for 17 years), their final corpus drops to ₹64.9 Lakhs—a staggering ₹35.1 Lakh loss in final wealth caused by waiting 36 months."
+    },
+    {
+        "id": "goal-1cr-asset-allocation",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "reach-1-crore-via-sip"
+        ],
+        "q": "What is the best mutual fund asset allocation to target ₹1 Crore?",
+        "a": "For a 10 to 15-year goal timeline, financial planners recommend an 80:20 or 85:15 Equity-to-Debt allocation. A balanced equity mix consists of 50% in a Nifty 50 Index or Flexi-Cap fund (large-cap stability), 30% in a Mid-Cap fund (high earnings growth), and 20% in a Small-Cap fund (compounding alpha). Shift 20% to liquid or short-duration debt funds 2 years before reaching your target."
+    },
+    {
+        "id": "goal-5cr-inflation-impact",
+        "category": "retirement",
+        "tags": [
+            "faq-page",
+            "reach-5-crore-via-sip"
+        ],
+        "q": "What will ₹5 Crores be worth in 20 years after accounting for inflation?",
+        "a": "At an average Indian retail inflation rate of 6% p.a., the purchasing power of money roughly halves every 12 years. In 20 years, a nominal ₹5 Crore corpus will have the real purchasing power of approximately ₹1.56 Crores in today's money. When planning for FIRE, factor in a 6% annual step-up during accumulation to beat lifestyle inflation."
+    },
+    {
+        "id": "goal-5cr-bucket-strategy",
+        "category": "retirement",
+        "tags": [
+            "faq-page",
+            "reach-5-crore-via-sip"
+        ],
+        "q": "How should I structure a ₹5 Crore retirement corpus using the 3-Bucket Strategy?",
+        "a": "To safeguard against sequence of returns risk: Bucket 1 (Emergency & Near-Term Cash) holds 3 years of living expenses (approx. ₹30–40 Lakhs) in liquid funds and high-interest savings. Bucket 2 (Income & Stability) holds 5–7 years of expenses (approx. ₹1–1.5 Crores) in conservative hybrid and corporate bond funds. Bucket 3 (Growth Engine) holds the remaining ₹3+ Crores in equity mutual funds to compound long-term and beat inflation."
+    },
+    {
+        "id": "plan-5k-stepup-wealth",
+        "category": "growth",
+        "tags": [
+            "faq-page",
+            "sip-5000-per-month"
+        ],
+        "q": "How much more wealth does a 10% annual step-up create on a ₹5,000 SIP?",
+        "a": "On a flat ₹5,000 monthly SIP for 25 years at 12% CAGR, you invest ₹15 Lakhs and build a corpus of ₹94.88 Lakhs. With a 10% annual step-up (adding just ₹500/month in year 2, ₹550/month in year 3), your total investment increases to ₹59.0 Lakhs, but your final maturity corpus surges to ₹2.37 Crores—generating an extra ₹1.42 Crores in pure compounding gain."
+    },
+    {
+        "id": "plan-5k-direct-vs-regular",
+        "category": "basics",
+        "tags": [
+            "faq-page",
+            "sip-5000-per-month"
+        ],
+        "q": "Should I invest my ₹5,000 monthly SIP in Direct or Regular mutual fund plans?",
+        "a": "Always choose Direct plans. Regular plans pay ongoing 0.5% to 1.2% annual distributor commissions out of your NAV. On a ₹5,000 monthly SIP compounding over 25 years at 12% CAGR, that seemingly tiny 1% expense ratio drag robs you of over ₹31 Lakhs in lost terminal wealth. Direct plans eliminate intermediary costs completely."
+    },
+    {
+        "id": "plan-10k-swp-pension",
+        "category": "retirement",
+        "tags": [
+            "faq-page",
+            "sip-10000-per-month"
+        ],
+        "q": "Can I generate a lifetime pension from a ₹10,000 monthly SIP corpus?",
+        "a": "Yes. Investing ₹10,000 per month with a 10% annual step-up for 20 years accumulates approximately ₹1.82 Crores. By parking this corpus into a conservative hybrid or balanced advantage fund and initiating a 6% annual SWP, you can generate a tax-efficient monthly pension of ₹91,000 while preserving your principal corpus against inflation."
+    },
+    {
+        "id": "plan-10k-lumpsum-combo",
+        "category": "growth",
+        "tags": [
+            "faq-page",
+            "sip-10000-per-month"
+        ],
+        "q": "Can I add annual lump sums or bonuses to my ₹10,000 monthly SIP?",
+        "a": "Yes. Adding an annual Diwali or performance bonus lump sum of ₹50,000 alongside your ₹10,000 monthly SIP significantly accelerates wealth creation. Over 20 years at 12% CAGR, the extra ₹50,000 annual lump sum contributes an additional ₹40.3 Lakhs to your terminal maturity corpus."
     }
 ]

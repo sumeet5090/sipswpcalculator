@@ -192,6 +192,64 @@
   letter-spacing: -0.02em;
 }
 
+/* ── Rolling Odometer Mechanical Tumbler Physics & Layout Containment ── */
+@utility odometer-container {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  font-variant-numeric: tabular-nums lining-nums;
+  line-height: 1.15em;
+  contain: layout style;
+}
+
+@utility odometer-digit-slot {
+  display: inline-block;
+  overflow: hidden;
+  width: 1ch;
+  height: 1.15em;
+  line-height: 1.15em;
+  position: relative;
+  vertical-align: baseline;
+  text-align: center;
+  contain: paint;
+}
+
+@utility odometer-ribbon {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+@utility odometer-digit {
+  display: inline-block;
+  width: 1ch;
+  height: 1.15em;
+  line-height: 1.15em;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+@utility odometer-static {
+  display: inline-block;
+  height: 1.15em;
+  line-height: 1.15em;
+  vertical-align: baseline;
+}
+
+/* ── Pure Light-Mode Pastel Aurora Wealth Scale Ambience ── */
+.aurora-seed {
+  background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+}
+
+.aurora-scale {
+  background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12) 0%, rgba(6, 182, 212, 0.08) 60%, transparent 100%);
+}
+
+.aurora-sovereign {
+  background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.10) 0%, rgba(16, 185, 129, 0.12) 50%, rgba(245, 158, 11, 0.08) 100%);
+}
+
 /* ── Dynamic Metric Length Auto-Fit Rules (Fluid Typography Math) ── */
 .metric-len-normal {
   font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.375rem); /* ~17px -> 22px */

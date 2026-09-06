@@ -19,7 +19,7 @@ final class TargetCorpusCalculatorTest extends TestCase
     protected function setUp(): void
     {
         $this->calculator = new InvestmentCalculator();
-        $this->configService = $this->createMock(ConfigServiceInterface::class);
+        $this->configService = $this->createStub(ConfigServiceInterface::class);
         $this->configService->method('getCalculatorDefaults')->willReturn([
             'sip'            => ['default' => 10000, 'min' => 500, 'max' => 1000000, 'slider_max' => 100000, 'step' => 500, 'label' => 'Monthly SIP', 'prefix' => '₹'],
             'years'          => ['default' => 15, 'min' => 1, 'max' => 40, 'slider_max' => 40, 'step' => 1, 'label' => 'Time to Goal', 'suffix' => 'Yrs'],

@@ -89,7 +89,8 @@ class SchemaFactory
             }
         } elseif ($this->contentManager !== null) {
             try {
-                $actualModifiedDate = $this->contentManager->getFileModifiedDate('calculators/' . ltrim($slug, '/'));
+                $fileSlug = basename(ltrim($slug, '/'));
+                $actualModifiedDate = $this->contentManager->getFileModifiedDate('calculators/' . $fileSlug);
             } catch (\Throwable) {
                 $actualModifiedDate = $publishedDate;
             }

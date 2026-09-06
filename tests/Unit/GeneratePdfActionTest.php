@@ -20,7 +20,6 @@ use Services\RateLimitStorageInterface;
 
 class GeneratePdfActionTest extends TestCase
 {
-    /** @var RateLimitStorageInterface&\PHPUnit\Framework\MockObject\MockObject */
     private RateLimitStorageInterface $mockStorage;
     private RateLimiter $rateLimiter;
     private ConfigService $configService;
@@ -30,7 +29,7 @@ class GeneratePdfActionTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->mockStorage = $this->createMock(RateLimitStorageInterface::class);
+        $this->mockStorage = $this->createStub(RateLimitStorageInterface::class);
         $this->rateLimiter = new RateLimiter($this->mockStorage);
         $this->configService = new ConfigService(__DIR__ . '/../../content/calculator_defaults.json');
         $this->fileUploadService = new FileUploadService();
@@ -60,15 +59,17 @@ class GeneratePdfActionTest extends TestCase
 
     public function testRateLimitExceededReturns429(): void
     {
-        $this->mockStorage->expects($this->once())
+        $mockStorage = $this->createMock(RateLimitStorageInterface::class);
+        $mockStorage->expects($this->once())
             ->method('checkAndIncrement')
             ->willThrowException(new RateLimitExceededException('Rate limit exceeded.'));
+        $rateLimiter = new RateLimiter($mockStorage);
 
         $template = new PdfReportTemplate(new CurrencyHelper());
         $pdfService = new PdfGeneratorService($template);
 
         $action = new GeneratePdfAction(
-            $this->rateLimiter,
+            $rateLimiter,
             $pdfService,
             $this->configService,
             $this->fileUploadService,

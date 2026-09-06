@@ -1,5 +1,19 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
+<!-- Conversational Mad Libs Live Narrative Strip -->
+<div id="conversational-narrative-strip" class="p-2.5 sm:p-3 rounded-2xl bg-gradient-to-r from-slate-50 via-emerald-50/40 to-slate-50 border border-slate-200/90 shadow-flat mb-3 text-ui-xs text-slate-700 leading-relaxed transition-all">
+    <div class="flex items-center gap-1.5 flex-wrap">
+        <span class="font-extrabold text-slate-900 shrink-0">🧭 Plan:</span>
+        <span id="narrative-strategy-badge" class="hidden font-bold text-micro px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-flat shrink-0 items-center gap-1"></span>
+        <span>Investing</span>
+        <span class="font-financial-mono font-extrabold text-emerald-800 bg-white px-2 py-0.5 rounded-lg border border-emerald-300/80 shadow-flat" id="narrative-sip">₹{{ (sip|default(10000))|number_format }}</span>
+        <span>/mo for</span>
+        <span class="font-financial-mono font-extrabold text-slate-900 bg-white px-2 py-0.5 rounded-lg border border-slate-300 shadow-flat" id="narrative-years">{{ years|default(15) }} yrs</span>
+        <span>at</span>
+        <span class="font-financial-mono font-extrabold text-growth-emphasis bg-growth-surface px-2 py-0.5 rounded-lg border border-growth-border shadow-flat" id="narrative-rate">{{ rate|default(12) }}% CAGR</span>
+    </div>
+</div>
+
 <!-- Monthly Investment -->
 <div id="sip_container">
 {{ inputs.renderInputRangePair({
@@ -75,12 +89,12 @@
                 <button type="button" id="rate-nudge-close" class="text-slate-400 hover:text-slate-700 p-1 text-ui-xs cursor-pointer" aria-label="Close Popover">✕</button>
             </div>
             <div class="space-y-1.5 text-caption">
-                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-growth-surface border border-slate-200/80 hover:border-growth-border text-left transition-all cursor-pointer flex items-center justify-between shadow-flat" data-rate="12">
+                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-growth-surface border border-slate-200/80 hover:border-growth-border text-left transition-all cursor-pointer flex items-center justify-between shadow-flat" data-rate="18">
                     <div>
-                        <strong class="text-slate-900 block font-bold text-ui-xs">12% • Large Cap / Index</strong>
-                        <span class="text-micro text-slate-500">Nifty 50 15Y historical benchmark</span>
+                        <strong class="text-slate-900 block font-bold text-ui-xs">18% • Small Cap Opportunities</strong>
+                        <span class="text-micro text-slate-500">Aggressive high-growth equities benchmark</span>
                     </div>
-                    <span class="text-ui-xs font-extrabold text-growth-emphasis font-financial-mono">12%</span>
+                    <span class="text-ui-xs font-extrabold text-growth-emphasis font-financial-mono">18%</span>
                 </button>
                 <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-growth-surface border border-slate-200/80 hover:border-growth-border text-left transition-all cursor-pointer flex items-center justify-between shadow-flat" data-rate="14">
                     <div>
@@ -88,6 +102,13 @@
                         <span class="text-micro text-slate-500">Active equity portfolio growth</span>
                     </div>
                     <span class="text-ui-xs font-extrabold text-growth-emphasis font-financial-mono">14%</span>
+                </button>
+                <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-growth-surface border border-slate-200/80 hover:border-growth-border text-left transition-all cursor-pointer flex items-center justify-between shadow-flat" data-rate="12">
+                    <div>
+                        <strong class="text-slate-900 block font-bold text-ui-xs">12% • Large Cap / Index</strong>
+                        <span class="text-micro text-slate-500">Nifty 50 15Y historical benchmark</span>
+                    </div>
+                    <span class="text-ui-xs font-extrabold text-growth-emphasis font-financial-mono">12%</span>
                 </button>
                 <button type="button" class="smart-rate-option w-full p-2 rounded-xl bg-slate-50 hover:bg-growth-surface border border-slate-200/80 hover:border-growth-border text-left transition-all cursor-pointer flex items-center justify-between shadow-flat" data-rate="9">
                     <div>
@@ -125,9 +146,13 @@
         {'label': '7% Debt', 'value': 7},
         {'label': '9% Hybrid', 'value': 9},
         {'label': '12% Large Cap', 'value': 12},
-        {'label': '14% Mid Cap', 'value': 14}
+        {'label': '14% Mid Cap', 'value': 14},
+        {'label': '18% Small Cap', 'value': 18}
     ]
 }) }}
+
+<!-- Initial Lumpsum (Optional Starting Capital) -->
+{% include 'components/forms/lumpsum-fields.twig' %}
 
 <!-- Adjustments & Inflation Options -->
 <div class="rounded-2xl bg-slate-50/70 border border-slate-200/90 p-2.5 space-y-2 shadow-subtle mt-1">

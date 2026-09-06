@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-IN" class="overflow-x-clip max-w-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light">
+    <title>{{ page_config.title|default('Financial Calculator') }} — Embed</title>
+    <meta name="robots" content="noindex, follow">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Critical CSS & Vite -->
+    {{ vite.css('assets/css/app.css')|raw }}
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+            color: #0f172a;
+            line-height: 1.5;
+            padding: 12px;
+            margin: 0;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-50 antialiased text-slate-900">
+    <div class="max-w-5xl mx-auto">
+        <!-- Embed Header Bar -->
+        <header class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 text-xs text-slate-500">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-md bg-emerald-600 text-white font-bold text-xs">⚡</span>
+                <span class="font-bold text-slate-800 text-sm">{{ page_config.title|default('Financial Calculator') }}</span>
+            </div>
+            <a href="{{ site_url }}/{{ active_page }}" target="_blank" rel="noopener" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1 text-xs">
+                <span>Full Screen</span>
+                <span>↗</span>
+            </a>
+        </header>
+
+        <!-- Calculator App Root -->
+        <section id="calculator-section" class="relative">
+            <script type="application/json" id="calculator-app-state">
+                {{ (calc_config|default({})|merge({'theme': theme_tokens}))|json_island }}
+            </script>
+            <div id="calculator-app"
+                 data-js="calculator-app"
+                 data-mode="{{ calculator_type }}"
+                 class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Left Column: Form Controls -->
+                <div class="lg:col-span-1 flex flex-col gap-4">
+                    <div class="bg-white rounded-2xl border border-slate-200/90 shadow-card p-4 sm:p-5">
+                        <form id="calculator-form" class="space-y-4 lg:max-h-[500px] lg:overflow-y-auto custom-scrollbar pr-1" onsubmit="event.preventDefault();">
+                            {% if calculator_type == 'all' or calculator_type == 'combo' %}
+                                <div class="py-1 mb-3">
+                                    <div class="flex rounded-xl overflow-hidden border border-slate-200 shadow-flat" role="tablist">
+                                        <button type="button" id="tab-sip" role="tab" aria-selected="true"
+                                            class="flex-1 py-2 text-xs font-bold uppercase tracking-wider bg-emerald-500 text-white">
+                                            SIP
+                                        </button>
+                                        <button type="button" id="tab-swp" role="tab" aria-selected="false"
+                                            class="flex-1 py-2 text-xs font-bold uppercase tracking-wider bg-white text-slate-500 hover:bg-rose-50 hover:text-rose-500">
+                                            SWP
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip">
+                                    <div class="space-y-4">
+                                        {% include 'components/forms/sip-fields.twig' %}
+                                    </div>
+                                </div>
+                                <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="hidden">
+                                    <div class="space-y-4">
+                                        <div id="swp-fields">
+                                            {% include 'components/forms/swp-fields.twig' %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <input type="hidden" id="enable_swp" name="enable_swp" value="{{ calculator_type == 'swp' ? '1' : '0' }}">
+                                <div class="space-y-4">
+                                    {% if calculator_type == 'sip' %}
+                                        {% include 'components/forms/sip-fields.twig' %}
+                                    {% endif %}
+                                    {% if calculator_type == 'lumpsum' %}
+                                        {% include 'components/forms/lumpsum-only-fields.twig' %}
+                                    {% endif %}
+                                    {% if calculator_type == 'target_corpus' %}
+                                        {% include 'components/forms/target-corpus-fields.twig' %}
+                                    {% endif %}
+                                    {% if calculator_type == 'swp' %}
+                                        {% include 'components/forms/corpus-field.twig' %}
+                                        <div id="swp-fields" class="mt-4">
+                                            {% include 'components/forms/swp-fields.twig' %}
+                                        </div>
+                                    {% endif %}
+                                    {% if calculator_type == 'compound_interest' %}
+                                        {% include 'components/forms/compound-interest-fields.twig' %}
+                                    {% endif %}
+                                    {% if calculator_type == 'cagr' %}
+                                        {% include 'components/forms/cagr-fields.twig' %}
+                                    {% endif %}
+                                    {% if calculator_type == 'emi' %}
+                                        {% include 'components/forms/emi-fields.twig' %}
+                                    {% endif %}
+                                    {% if calculator_type == 'inflation' %}
+                                        {% include 'components/forms/inflation-fields.twig' %}
+                                    {% endif %}
+                                    {% if calculator_type == 'ppf' %}
+                                        {% include 'components/forms/ppf-fields.twig' %}
+                                    {% endif %}
+                                    {% if calculator_type == 'fd' %}
+                                        {% include 'components/forms/fd-fields.twig' %}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Column: Results & Visualization -->
+                <div class="lg:col-span-2 space-y-4">
+                    {% include 'components/chart-visualization.twig' %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Embed Attribution Footer (Authoritative Backlink) -->
+        <footer class="mt-4 pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-500">
+            <div>
+                Powered by <a href="{{ site_url }}/{{ active_page }}" target="_blank" rel="noopener" class="font-bold text-emerald-700 hover:underline">SIP &amp; SWP Calculator</a> — Free Financial Planning in India
+            </div>
+            <div class="text-slate-400 text-micro">
+                🔒 100% Private in Browser • Zero Latency
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    {{ vite.js('assets/js/app.ts')|raw }}
+</body>
+</html>
