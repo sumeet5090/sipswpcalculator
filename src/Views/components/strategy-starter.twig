@@ -133,11 +133,11 @@
         </div>
     </div>
 
-    <!-- Default 1-Click Persona Blueprint Cards Grid -->
-    <div class="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3" role="toolbar" aria-label="Strategy Blueprints">
+    <!-- Default 1-Click Persona Blueprint Cards Carousel (Horizontal Snap on Mobile, Grid on Desktop) -->
+    <div class="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 overflow-x-auto sm:overflow-visible snap-x snap-mandatory -mx-3 px-3 sm:mx-0 sm:px-0 pb-2 sm:pb-0 custom-scrollbar scroll-smooth" role="toolbar" aria-label="Strategy Blueprints">
         <!-- 1. First ₹1 Crore Rush -->
         <button type="button" 
-            class="persona-btn text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-emerald-50/50 hover:border-emerald-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
+            class="persona-btn snap-center shrink-0 w-[80vw] max-w-[300px] sm:w-auto text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-emerald-50/50 hover:border-emerald-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
             data-persona="first_crore"
             data-title="🎯 First ₹1 Crore Rush"
             aria-pressed="false"
@@ -159,7 +159,7 @@
 
         <!-- 2. FIRE Early Retirement -->
         <button type="button" 
-            class="persona-btn text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-rose-50/50 hover:border-rose-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
+            class="persona-btn snap-center shrink-0 w-[80vw] max-w-[300px] sm:w-auto text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-rose-50/50 hover:border-rose-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
             data-persona="fire_retirement"
             data-title="🏖️ FIRE Early Retirement"
             aria-pressed="false"
@@ -185,7 +185,7 @@
 
         <!-- 3. Child Higher Education -->
         <button type="button" 
-            class="persona-btn text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-indigo-50/50 hover:border-indigo-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
+            class="persona-btn snap-center shrink-0 w-[80vw] max-w-[300px] sm:w-auto text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-indigo-50/50 hover:border-indigo-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
             data-persona="child_education"
             data-title="🎓 Child Higher Education"
             aria-pressed="false"
@@ -207,7 +207,7 @@
 
         <!-- 4. Senior Capital Preservation -->
         <button type="button" 
-            class="persona-btn text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-amber-50/50 hover:border-amber-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
+            class="persona-btn snap-center shrink-0 w-[80vw] max-w-[300px] sm:w-auto text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-amber-50/50 hover:border-amber-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
             data-persona="capital_preservation"
             data-title="🛡️ Senior Citizen Monthly Income"
             aria-pressed="false"

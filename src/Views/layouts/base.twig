@@ -209,12 +209,18 @@
         <div class="flex items-center justify-between px-2.5 py-1 bg-slate-50/90 rounded-xl border border-slate-200/70 text-ui-xs">
             <div class="flex items-center gap-1.5 min-w-0">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
-                <span class="text-micro font-bold text-slate-500 uppercase shrink-0">Projected:</span>
-                <span id="mobile-deck-corpus-val" class="text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums whitespace-nowrap truncate">₹ --</span>
+                <span class="text-micro font-bold text-slate-500 uppercase shrink-0">Corpus:</span>
+                <span id="dock-glance-corpus" class="text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums whitespace-nowrap truncate">₹ --</span>
+                <span id="mobile-deck-corpus-val" class="hidden">₹ --</span>
             </div>
-            <div class="flex items-center gap-1 shrink-0">
-                <button type="button" id="mobile-deck-sip-btn" class="px-2.5 py-0.5 rounded-lg text-micro font-extrabold bg-emerald-600 text-white shadow-flat cursor-pointer transition-all">SIP</button>
-                <button type="button" id="mobile-deck-swp-btn" class="px-2.5 py-0.5 rounded-lg text-micro font-bold bg-slate-200/80 text-slate-600 hover:text-slate-900 cursor-pointer transition-all">SWP</button>
+            <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" onclick="document.getElementById('summary-cards-grid')?.scrollIntoView({ behavior: 'smooth', block: 'center' })" class="text-micro font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-0.5 cursor-pointer bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">
+                    <span>Summary ↑</span>
+                </button>
+                <div class="flex items-center gap-0.5">
+                    <button type="button" id="mobile-deck-sip-btn" class="px-2 py-0.5 rounded-md text-micro font-extrabold bg-emerald-600 text-white shadow-flat cursor-pointer transition-all">SIP</button>
+                    <button type="button" id="mobile-deck-swp-btn" class="px-2 py-0.5 rounded-md text-micro font-bold bg-slate-200/80 text-slate-600 hover:text-slate-900 cursor-pointer transition-all">SWP</button>
+                </div>
             </div>
         </div>
 
@@ -252,25 +258,53 @@
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close()" class="text-slate-400 hover:text-slate-700 p-1 text-ui-xs cursor-pointer" aria-label="Close">✕</button>
             </div>
             <div class="grid grid-cols-2 gap-2">
+                <!-- CSV Export -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('downloadCsvBtn')?.click()"
+                    class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">📊</span>
+                    <span>Export CSV</span>
+                </button>
+                <!-- Save Plan -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('saveCalculationBtn')?.click()"
+                    class="p-2.5 rounded-xl bg-amber-50/70 hover:bg-amber-100/70 border border-amber-200 text-amber-900 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">💾</span>
+                    <span>Save Plan</span>
+                </button>
+                <!-- Social Card -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('downloadSocialCardBtn')?.click()"
+                    class="p-2.5 rounded-xl bg-teal-50/70 hover:bg-teal-100/70 border border-teal-200 text-teal-900 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">🖼️</span>
+                    <span>Share Card</span>
+                </button>
+                <!-- Copy Link -->
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('shareCalcBtn')?.click()"
-                    class="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
                     <span class="text-ui-sm">🔗</span>
                     <span>Copy Link</span>
                 </button>
+                <!-- Snapshot Scenario -->
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('snapshot-scenario-btn')?.click()"
-                    class="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
                     <span class="text-ui-sm">📸</span>
                     <span>Snapshot</span>
                 </button>
+                <!-- §112A Tax Waterfall -->
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('open-tax-waterfall-btn')?.click()"
-                    class="p-3 rounded-xl bg-violet-50 hover:bg-violet-100 border border-violet-200 text-violet-900 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    class="p-2.5 rounded-xl bg-violet-50 hover:bg-violet-100 border border-violet-200 text-violet-900 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
                     <span class="text-ui-sm">⚖️</span>
                     <span>§112A Tax</span>
                 </button>
+                <!-- Embed Calculator -->
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('open-embed-modal-btn')?.click()"
-                    class="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
                     <span class="text-ui-sm">💻</span>
                     <span>Embed</span>
+                </button>
+                <!-- AMFI Regulatory Rules -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('sebiBenchmarkModal')?.showModal()"
+                    class="p-2.5 rounded-xl bg-emerald-50/70 hover:bg-emerald-100/70 border border-emerald-200 text-emerald-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">📜</span>
+                    <span>AMFI Rules</span>
                 </button>
             </div>
         </div>

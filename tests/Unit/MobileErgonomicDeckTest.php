@@ -81,4 +81,48 @@ final class MobileErgonomicDeckTest extends TestCase
         $this->assertStringContainsString('bindCanvasTouchScrubbing(): void', $scrubberController);
         $this->assertStringContainsString('Math.abs(deltaX) / (Math.abs(deltaY) || 1) > 1.2', $scrubberController);
     }
+
+    public function testStrategyStarterMobileSnapCarouselMarkup(): void
+    {
+        $strategyTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/strategy-starter.twig');
+        $this->assertStringContainsString('snap-x', $strategyTwig);
+        $this->assertStringContainsString('snap-mandatory', $strategyTwig);
+        $this->assertStringContainsString('snap-center', $strategyTwig);
+        $this->assertStringContainsString('overflow-x-auto', $strategyTwig);
+    }
+
+    public function testStickyTableColumnUtilitiesAndMarkup(): void
+    {
+        $this->assertStringContainsString('.table-sticky-col-0', $this->inputCss);
+
+        $breakdownTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/yearly-breakdown-table.twig');
+        $this->assertStringContainsString('table-sticky-col-0', $breakdownTwig);
+
+        $historicalTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/guide-historical-data.twig');
+        $this->assertStringContainsString('table-sticky-col-0', $historicalTwig);
+
+        $risksTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/guide-risks.twig');
+        $this->assertStringContainsString('table-sticky-col-0', $risksTwig);
+    }
+
+    public function testMobileActionsSheetCompleteExportSuite(): void
+    {
+        $baseTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/base.twig');
+        $this->assertStringContainsString('id="dock-glance-corpus"', $baseTwig);
+        $this->assertStringContainsString('downloadCsvBtn', $baseTwig);
+        $this->assertStringContainsString('saveCalculationBtn', $baseTwig);
+        $this->assertStringContainsString('downloadSocialCardBtn', $baseTwig);
+        $this->assertStringContainsString('shareCalcBtn', $baseTwig);
+        $this->assertStringContainsString('sebiBenchmarkModal', $baseTwig);
+    }
+
+    public function testMilestoneHapticsAndStepperAcceleration(): void
+    {
+        $hapticCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/helpers/WebHapticEngine.ts');
+        $this->assertStringContainsString('checkCorpusMilestone', $hapticCode);
+        $this->assertStringContainsString('triggerMilestone', $hapticCode);
+
+        $stepperCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/StepperController.ts');
+        $this->assertStringContainsString('WebHapticEngine.triggerTick', $stepperCode);
+    }
 }

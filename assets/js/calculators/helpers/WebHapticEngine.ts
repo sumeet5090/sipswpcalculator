@@ -32,19 +32,44 @@ export class WebHapticEngine {
     }
 
     /**
-     * Firm 12ms vibration for significant milestones (5-year leaps, ₹1 Crore threshold).
+     * Firm milestone vibration (double-pulse notch feel) for significant thresholds (e.g. ₹1 Crore, 10/20 years).
      */
     public static triggerMilestone(): void {
         if (!this.isSupported()) return;
 
         const now = Date.now();
-        if (now - this.lastVibrationTime < 100) return;
+        if (now - this.lastVibrationTime < 180) return;
         this.lastVibrationTime = now;
 
         try {
-            navigator.vibrate(12);
+            navigator.vibrate([15, 30, 20]);
         } catch {
             // Silent fallback
+        }
+    }
+
+    /**
+     * Inspects previous and current corpus values and triggers a milestone haptic pulse
+     * when crossing key financial boundaries (₹10L, ₹25L, ₹50L, ₹1Cr, ₹2.5Cr, ₹5Cr, ₹10Cr).
+     */
+    public static checkCorpusMilestone(oldCorpus: number, newCorpus: number): void {
+        if (!this.isSupported() || oldCorpus <= 0 || newCorpus <= 0) return;
+
+        const MILESTONES = [
+            1_000_000,   // ₹10 Lakh
+            2_500_000,   // ₹25 Lakh
+            5_000_000,   // ₹50 Lakh
+            10_000_000,  // ₹1 Crore
+            25_000_000,  // ₹2.5 Crore
+            50_000_000,  // ₹5 Crore
+            100_000_000, // ₹10 Crore
+        ];
+
+        for (const threshold of MILESTONES) {
+            if ((oldCorpus < threshold && newCorpus >= threshold) || (oldCorpus >= threshold && newCorpus < threshold)) {
+                this.triggerMilestone();
+                break;
+            }
         }
     }
 

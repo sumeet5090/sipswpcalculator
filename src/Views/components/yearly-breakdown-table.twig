@@ -45,8 +45,22 @@
             </div>
         </div>
 
-        <!-- Right Dispatch & Conversion Hub (High-Prominence Action Pod) -->
-        <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-start sm:justify-end">
+        <!-- Mobile Dispatch & Conversion Hub (< sm) -->
+        <div class="flex sm:hidden items-center gap-2 w-full justify-between">
+            <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.showModal()"
+                class="flex-1 min-h-[44px] px-3.5 py-2 rounded-xl bg-growth-surface hover:bg-emerald-100 text-growth-emphasis border border-growth-border text-ui-xs font-extrabold transition-all shadow-flat flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer">
+                <span>📥</span>
+                <span>Export &amp; Plan Actions</span>
+                <span class="text-micro font-extrabold text-growth">•••</span>
+            </button>
+            <button type="button" onclick="document.getElementById('openPdfModalBtn')?.click()"
+                class="min-h-[44px] px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white text-ui-xs font-extrabold transition-all shadow-card flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer">
+                <span>📄 PDF</span>
+            </button>
+        </div>
+
+        <!-- Desktop Dispatch & Conversion Hub (High-Prominence Action Pod >= sm) -->
+        <div class="hidden sm:flex flex-wrap items-center gap-2 w-full sm:w-auto justify-start sm:justify-end">
             <!-- CSV Export Button -->
             <button type="submit" id="downloadCsvBtn" name="action" value="download_csv" form="calculator-form" formaction="/download-csv"
                 class="px-3.5 py-2 rounded-xl bg-growth-surface hover:bg-emerald-100 text-growth-emphasis border border-growth-border text-ui-xs font-extrabold transition-all duration-150 shadow-flat hover:shadow-subtle hover:border-emerald-300 active:scale-95 cursor-pointer flex items-center gap-1.5"
@@ -116,7 +130,7 @@
                 <thead id="breakdown-head"
                     class="bg-slate-50/98 backdrop-blur-md text-caption uppercase font-extrabold text-slate-600 sticky top-0 z-20 shadow-[0_1px_3px_rgba(0,0,0,0.05)] border-b border-slate-200">
                     <tr>
-                        <th scope="col" id="th-year" class="px-4 sm:px-5 py-3.5 text-left sticky left-0 z-30 bg-slate-50 shadow-[3px_0_8px_-2px_rgba(15,23,42,0.05)] border-b border-slate-200 font-extrabold text-slate-900 whitespace-nowrap min-w-[5rem]">Year</th>
+                        <th scope="col" id="th-year" class="px-4 sm:px-5 py-3.5 text-left sticky left-0 z-30 table-sticky-col-0 bg-slate-50 shadow-[3px_0_8px_-2px_rgba(15,23,42,0.05)] border-b border-slate-200 font-extrabold text-slate-900 whitespace-nowrap min-w-[5rem]">Year</th>
                         <th scope="col" id="th-begin-balance" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 whitespace-nowrap">Start Corpus</th>
                         <th scope="col" id="th-sip-monthly" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-growth whitespace-nowrap">Monthly SIP</th>
                         <th scope="col" id="th-annual-sip" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-growth whitespace-nowrap">Annual SIP</th>

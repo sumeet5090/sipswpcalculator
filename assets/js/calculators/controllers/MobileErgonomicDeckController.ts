@@ -1,5 +1,6 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { CurrencyFormatter } from '../CurrencyHelper';
+import { WebHapticEngine } from '../helpers/WebHapticEngine';
 import type { YearResult } from '../../types';
 
 /**
@@ -22,6 +23,7 @@ export class MobileErgonomicDeckController {
     private startY: number = 0;
     private activeDeckIndex: number = 0;
     private readonly totalDecks: number = 3;
+    private lastCorpus: number = 0;
 
     constructor(
         dom: DOMAdapter,
@@ -40,7 +42,7 @@ export class MobileErgonomicDeckController {
     }
 
     private initDOM(): void {
-        this.deckCorpusEl = this.dom.getElement<HTMLElement>('mobile-deck-corpus-val');
+        this.deckCorpusEl = this.dom.getElement<HTMLElement>('dock-glance-corpus') || this.dom.getElement<HTMLElement>('mobile-deck-corpus-val');
         this.btnSip = this.dom.getElement<HTMLButtonElement>('mobile-deck-sip-btn');
         this.btnSwp = this.dom.getElement<HTMLButtonElement>('mobile-deck-swp-btn');
         this.shareBtn = this.dom.getElement<HTMLButtonElement>('mobile-deck-share-btn');
@@ -141,9 +143,14 @@ export class MobileErgonomicDeckController {
     public update(results: YearResult[]): void {
         if (!results || results.length === 0) return;
         const lastRow = results[results.length - 1];
+        const newCorpus = lastRow.combined_total;
         if (this.deckCorpusEl) {
-            this.deckCorpusEl.textContent = this.formatter.format(lastRow.combined_total);
+            this.deckCorpusEl.textContent = this.formatter.format(newCorpus);
         }
+        if (this.lastCorpus > 0) {
+            WebHapticEngine.checkCorpusMilestone(this.lastCorpus, newCorpus);
+        }
+        this.lastCorpus = newCorpus;
     }
 }
 
