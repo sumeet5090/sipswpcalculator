@@ -28,6 +28,7 @@ export default defineConfig({
       // Overwrite default .html entry with modular TypeScript entry
       input: {
         app: resolve(__dirname, 'resources/js/app.ts'),
+        admin: resolve(__dirname, 'assets/js/admin/AdminDashboardApp.ts'),
       },
     },
   },

@@ -87,6 +87,14 @@ class ViteHelperTest extends TestCase
         $this->assertEquals($expectedCustomHtml, $helper->css('resources/css/custom.css'));
     }
 
+    public function testJsGeneratesModuleScriptTagFromManifest(): void
+    {
+        $helper = new ViteHelper('production', '127.0.0.1', 5173, $this->tempManifestPath);
+
+        $expectedHtml = '<script type="module" src="/dist/assets/app-12345678.js"></script>';
+        $this->assertEquals($expectedHtml, $helper->js('resources/js/app.ts'));
+    }
+
     public function testProductionMissingManifestEntryReturnsEmptyString(): void
     {
         $this->expectOutputRegex('/ViteHelper Warning: Manifest entry missing/');

@@ -14,15 +14,18 @@ class PdfReportTemplate implements PdfTemplateInterface
     private CurrencyFormatterInterface $currencyFormatter;
     private ?array $milestoneConfig;
     private PdfReportStylesheet $stylesheet;
+    private PdfReportTableBuilder $tableBuilder;
 
     public function __construct(
         CurrencyFormatterInterface $currencyFormatter,
         ?array $milestoneConfig = null,
-        ?PdfReportStylesheet $stylesheet = null
+        ?PdfReportStylesheet $stylesheet = null,
+        ?PdfReportTableBuilder $tableBuilder = null
     ) {
         $this->currencyFormatter = $currencyFormatter;
         $this->milestoneConfig = $milestoneConfig;
         $this->stylesheet = $stylesheet ?? new PdfReportStylesheet();
+        $this->tableBuilder = $tableBuilder ?? new PdfReportTableBuilder($this->currencyFormatter);
     }
 
     /**
@@ -36,7 +39,6 @@ class PdfReportTemplate implements PdfTemplateInterface
         $client_name = htmlspecialchars((string) ($inputs['client_name'] ?? 'Valued Client'));
         $advisor_name = htmlspecialchars((string) ($inputs['advisor_name'] ?? 'Your Financial Advisor'));
         $chart_base64 = (string) ($inputs['chart_base64'] ?? '');
-        $table_html = (string) ($inputs['table_html'] ?? '');
         $custom_disclaimer = htmlspecialchars((string) ($inputs['custom_disclaimer'] ?? ''));
 
         $multiplier = self::calculateMultiplier(
@@ -47,6 +49,14 @@ class PdfReportTemplate implements PdfTemplateInterface
 
         $proposal_id = 'SWP-' . strtoupper(substr(md5($client_name . date('Y-m-d')), 0, 8));
         $has_swp = ((int) ($inputs['swp_years'] ?? 0) > 0 || (float) ($inputs['swp_withdrawal'] ?? 0) > 0);
+        $sym = (string) ($inputs['currency_symbol'] ?? '₹');
+
+        if (!empty($inputs['combined_results']) && is_array($inputs['combined_results'])) {
+            $table_html = $this->tableBuilder->build($inputs['combined_results'], $sym, $has_swp);
+        } else {
+            $table_html = (string) ($inputs['table_html'] ?? '');
+        }
+
         $years_count = max(1, (int) ($inputs['years'] ?? 20));
 
         $styles = $this->stylesheet->getStyles($years_count);

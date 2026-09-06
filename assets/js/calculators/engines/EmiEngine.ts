@@ -4,6 +4,8 @@
  * Computes monthly EMI, total interest, and annual amortization schedule matching PHP parity.
  */
 
+import { MathPrecisionHelper } from '../helpers/MathPrecisionHelper.ts';
+
 export interface EmiScheduleRow {
     year: number;
     opening_balance: number;
@@ -85,22 +87,22 @@ export class EmiEngine {
 
             schedule.push({
                 year,
-                opening_balance: Number(yearOpening.toFixed(2)),
-                principal_paid: Number(yearPrincipal.toFixed(2)),
-                interest_paid: Number(yearInterest.toFixed(2)),
-                total_paid: Number((yearPrincipal + yearInterest).toFixed(2)),
-                closing_balance: Number(balance.toFixed(2))
+                opening_balance: MathPrecisionHelper.round2(yearOpening),
+                principal_paid: MathPrecisionHelper.round2(yearPrincipal),
+                interest_paid: MathPrecisionHelper.round2(yearInterest),
+                total_paid: MathPrecisionHelper.round2(yearPrincipal + yearInterest),
+                closing_balance: MathPrecisionHelper.round2(balance)
             });
         }
 
         return {
-            principal: Number(p.toFixed(2)),
-            annual_rate: Number(rAnnual.toFixed(2)),
+            principal: MathPrecisionHelper.round2(p),
+            annual_rate: MathPrecisionHelper.round2(rAnnual),
             tenure_years: tenureYears,
-            monthly_emi: Number(monthlyEmi.toFixed(2)),
-            total_amount_payable: Number(totalPayable.toFixed(2)),
-            total_interest: Number(totalInterest.toFixed(2)),
-            interest_ratio_percentage: Number(interestRatio.toFixed(2)),
+            monthly_emi: MathPrecisionHelper.round2(monthlyEmi),
+            total_amount_payable: MathPrecisionHelper.round2(totalPayable),
+            total_interest: MathPrecisionHelper.round2(totalInterest),
+            interest_ratio_percentage: MathPrecisionHelper.round2(interestRatio),
             schedule
         };
     }

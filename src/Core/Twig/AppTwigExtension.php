@@ -53,6 +53,7 @@ class AppTwigExtension extends AbstractExtension
             new TwigFunction('vite_asset', [$this->viteHelper, 'asset']),
             new TwigFunction('vite_client', [$this->viteHelper, 'client'], ['is_safe' => ['html']]),
             new TwigFunction('vite_css', [$this->viteHelper, 'css'], ['is_safe' => ['html']]),
+            new TwigFunction('vite_js', [$this->viteHelper, 'js'], ['is_safe' => ['html']]),
         ];
     }
 }

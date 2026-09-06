@@ -87,7 +87,6 @@ class GeneratePdfAction
                 'advisor_name'      => $this->sanitizer->sanitizeText((string) ($post['advisorName'] ?? 'N/A'), 100),
                 'custom_disclaimer' => $this->sanitizer->sanitizeText((string) ($post['customDisclaimer'] ?? ''), 1000),
                 'chart_base64'      => $this->sanitizer->extractChartData((string) ($post['chartData'] ?? '')),
-                'table_html'        => $this->sanitizer->sanitizeTableHtml((string) ($post['tableHtml'] ?? '')),
                 'logo_base64'       => $this->fileUploadService->processLogoUpload($request->files('advisorLogo')),
 
                 // Verified Summary Metrics

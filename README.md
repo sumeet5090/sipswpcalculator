@@ -58,12 +58,15 @@ sipswpcalculator/
 │   ├── css/                  # Legacy static CSS fallbacks
 │   ├── js/                   # Modular client TypeScript architecture
 │   │   ├── adapters/         # DOMAdapter and browser API abstractions
+│   │   ├── admin/            # AdminDashboardApp bundle (Chart.js hydration & pure light theme)
 │   │   ├── calculators/      # CalculatorApp, MathEngine, ChartManager, SliderManager
 │   │   │   ├── constants/    # UI and timing constants
-│   │   │   ├── controllers/  # 30+ Single-responsibility UI controllers (Results, Odometer, Blueprints)
+│   │   │   ├── controllers/  # Single-responsibility UI controllers (Results, Odometer, Blueprints)
+│   │   │   ├── drivers/      # Specialized calculator strategy drivers (ISpecializedDriver)
 │   │   │   ├── engines/      # TypeScript specialized engines (CAGR, CompoundInterest, EMI, FD, Inflation, PPF)
-│   │   │   ├── helpers/      # Canvas export, A11y announcer, magnetic snapping, particle pooling
+│   │   │   ├── helpers/      # MathPrecisionHelper, Canvas export, A11y announcer, particle pooling
 │   │   │   ├── strategies/   # Client-side calculator strategies
+│   │   │   ├── subsystems/   # Decomposed subsystems (Export, Engagement, Lifecycle, Ergonomics)
 │   │   │   └── views/        # RollingOdometerView, chart views
 │   │   └── types/            # Strict TypeScript interfaces and type definitions
 │   ├── og/                   # 1200x630 branded OpenGraph images for all 17 calculators
@@ -180,6 +183,13 @@ To ensure zero-latency feedback (60fps) and eliminate duplicated rendering logic
 
 ### Architecture & Service Decoupling
 - **Full PHP-TypeScript Calculation Parity:** Calculation math (`InvestmentCalculator.php` and `MathEngine.ts`) is strictly synchronized across PHP and TypeScript, including month-by-month compounding and LTCG tax calculations (12.5% tax on gains exceeding ₹1.25 Lakh). Calculation parity is continuously enforced via automated integration tests (`tests/parity_check.php`).
+- **Server-Side PDF Report Table Builder (`PdfReportTableBuilder`):** PDF generation (`GeneratePdfAction` and `PdfReportTemplate`) constructs the complete breakdown table server-side from validated calculation arrays (`$combined`) via `PdfReportTableBuilder.php`, establishing a strict trust boundary that eliminates client-supplied raw `tableHtml` and CSS string injections.
+- **High-Performance Consolidated SQLite Telemetry (`InsightRepository`):** Refactored 18 sequential scalar queries into a single, unified aggregation query (`getConsolidatedScalarMetrics`), eliminating SQLite database roundtrip latency on high-traffic analytics views.
+- **In-Memory Config & Content Memoization (`ConfigService` & `ContentManager`):** `ConfigService::getJsonConfig()` and `ContentManager` memoize JSON configurations and parsed Markdown ASTs/metadata in memory across request lifecycles, eliminating repeated filesystem read and frontmatter parsing overhead.
+- **Inversion of Control in StrategyFactory:** `StrategyFactory` decouples directly from PSR-11 container instances by accepting a typed callable `strategyResolver`, maintaining pristine dependency inversion and high testability without container mocks.
+- **Secure Data Island Admin Dashboard & Pure Light-Mode Vite Bundle:** Admin insights dashboard eliminates inline scripts and external CDN dependencies by hydrating Chart.js visualizations via a secure JSON Data Island (`#admin-dashboard-data`) and a dedicated Vite entry point (`assets/js/admin/AdminDashboardApp.ts`), styled with pure light-mode fintech color palettes (`#10b981`, `#0d9488`, `#6366f1`).
+- **Frontend Subsystem Decomposition & Driver Strategy Pattern:** Decomposed monolithic 1,050-line `CalculatorApp.ts` into four focused subsystems (`ExportSubsystem`, `EngagementSubsystem`, `LifecycleSubsystem`, `ErgonomicsSubsystem`). Specialized calculators dispatch through dedicated `ISpecializedDriver` strategy drivers (`CompoundInterestDriver`, `CagrDriver`, `EmiDriver`, `FdDriver`, `InflationDriver`, `PpfDriver`), eradicating God-Object coupling and repetitive `switch (mode)` branching.
+- **Mathematical Precision & IEEE-754 Guardrails (`MathPrecisionHelper`):** All specialized calculation engines across TypeScript (`CagrEngine`, `CompoundInterestEngine`, `EmiEngine`, `FdEngine`, `InflationEngine`, `PpfEngine`) utilize `MathPrecisionHelper.round2()` with epsilon-safe arithmetic, guaranteeing 100% mathematical parity against PHP engines.
 - **DRY Calculation Engine & Zero Duplicate Tax Equations:** Both `ChartManager.ts` and `CalculatorApp.ts` (`updateTable()` and `updateSummaryMetrics()`) directly access `row.ltcg_tax` and `row.post_tax_total` calculated by `MathEngine.ts`, removing duplicate LTCG tax equations across frontend components.
 - **Instance-Based Error Handling & Injection:** `ErrorController` provides constructor-injected instance methods (`render404()`, `render500()`) for controller DI dispatching (`BlogController`, `GuideRenderer`), while maintaining static fallbacks for top-level catches in `index.php` and `App.php`.
 - **Negative Currency Formatting & Postel's Law:** `CurrencyHelper::formatInr()` handles negative balance amounts and losses cleanly with leading minus signs (e.g. `-₹ 5,000`).

@@ -1,56 +1,39 @@
 /**
  * CalculatorApp.ts
- * Main frontend application controller class.
+ * Core frontend application orchestrator.
+ * Delegates specialized domains to cohesive Subsystems:
+ * - ExportSubsystem: PDF, CSV, QR, and social sharing
+ * - EngagementSubsystem: Quiz, milestones, audio feedback, nudges, city FIRE benchmarks
+ * - LifecycleSubsystem: Stress tests, rebalancing, tax waterfall, longevity guardian, and undo/redo
+ * - ErgonomicsSubsystem: Mobile deck, keyboards, command palette, glossary, and HUD
  */
-import { eventBus } from '../utils/EventBus';
-import { MathEngine } from './MathEngine';
-import { CurrencyFormatter } from './CurrencyHelper';
-import { InputValidator } from './InputValidator';
-import { ChartManager } from './ChartManager';
-import { AnalyticsService } from './AnalyticsLogger';
-import { SliderManager } from './SliderManager';
-import { DOMAdapter } from '../adapters/DOMAdapter';
-import { GrowStrategy } from './strategies/GrowStrategy';
-import { TargetCorpusStrategy } from './strategies/TargetCorpusStrategy';
-import { CalculatorStrategy } from './strategies/CalculatorStrategy';
+import { eventBus } from '../utils/EventBus.ts';
+import { MathEngine } from './MathEngine.ts';
+import { CurrencyFormatter } from './CurrencyHelper.ts';
+import { InputValidator } from './InputValidator.ts';
+import { ChartManager } from './ChartManager.ts';
+import { AnalyticsService } from './AnalyticsLogger.ts';
+import { SliderManager } from './SliderManager.ts';
+import { DOMAdapter } from '../adapters/DOMAdapter.ts';
+import { GrowStrategy } from './strategies/GrowStrategy.ts';
+import { TargetCorpusStrategy } from './strategies/TargetCorpusStrategy.ts';
+import { CalculatorStrategy } from './strategies/CalculatorStrategy.ts';
 import { InvestmentInputs, YearResult } from '../types';
-import { PdfExportController } from './controllers/PdfExportController';
-import { CsvExportController } from './controllers/CsvExportController';
-import { TabController } from './controllers/TabController';
-import { StepperController } from './controllers/StepperController';
-import { ShareController } from './controllers/ShareController';
-import { SmartNudgeController } from './controllers/SmartNudgeController';
-import { UrlStateController } from './controllers/UrlStateController';
-import { ResultsController } from './controllers/ResultsController';
-import { SummaryMetricsController } from './controllers/SummaryMetricsController';
-import { GlossaryController } from './controllers/GlossaryController';
-import { CommandPaletteController } from './controllers/CommandPaletteController';
-import { WealthQuizController } from './controllers/WealthQuizController';
-import { ScenarioDiffController } from './controllers/ScenarioDiffController';
-import { MilestoneCelebrationController } from './controllers/MilestoneCelebrationController';
-import { AudioFeedbackController } from './controllers/AudioFeedbackController';
-import { CityBenchmarkController } from './controllers/CityBenchmarkController';
-import { StressTestController } from './controllers/StressTestController';
-import { AssetRebalanceController } from './controllers/AssetRebalanceController';
-import { CardSpotlightController } from './controllers/CardSpotlightController';
-import { GoalCommitmentController } from './controllers/GoalCommitmentController';
-import { DailyAccrualController } from './controllers/DailyAccrualController';
-import { QrShareModalController } from './controllers/QrShareModalController';
-import { StudioTabController } from './controllers/StudioTabController';
-import { SessionStorageController } from './controllers/SessionStorageController';
-import { UndoRedoController } from './controllers/UndoRedoController';
-import { FloatingHudController } from './controllers/FloatingHudController';
-import { LongevityGuardianController } from './controllers/LongevityGuardianController';
-import { TaxWaterfallController } from './controllers/TaxWaterfallController';
-import { LifecycleBridgeController } from './controllers/LifecycleBridgeController';
-import { MobileErgonomicDeckController } from './controllers/MobileErgonomicDeckController';
-import { KeyboardViewportController } from './controllers/KeyboardViewportController';
-import { KeyboardNavigationController } from './controllers/KeyboardNavigationController';
-import { ChartScrubbingController } from './controllers/ChartScrubbingController';
-import { A11yAnnouncer } from './helpers/A11yAnnouncer';
-import { ModalScrollLockHelper } from './helpers/ModalScrollLockHelper';
-import { SpecializedCalculatorController } from './controllers/SpecializedCalculatorController';
-import { StrategyBlueprintController } from './controllers/StrategyBlueprintController';
+import { StepperController } from './controllers/StepperController.ts';
+import { TabController } from './controllers/TabController.ts';
+import { UrlStateController } from './controllers/UrlStateController.ts';
+import { ResultsController } from './controllers/ResultsController.ts';
+import { SummaryMetricsController } from './controllers/SummaryMetricsController.ts';
+import { ChartScrubbingController } from './controllers/ChartScrubbingController.ts';
+import { A11yAnnouncer } from './helpers/A11yAnnouncer.ts';
+import { ModalScrollLockHelper } from './helpers/ModalScrollLockHelper.ts';
+import { SpecializedCalculatorController } from './controllers/SpecializedCalculatorController.ts';
+import {
+    ExportSubsystem,
+    EngagementSubsystem,
+    LifecycleSubsystem,
+    ErgonomicsSubsystem
+} from './subsystems/index.ts';
 
 export class CalculatorApp {
     private dom: DOMAdapter;
@@ -67,29 +50,14 @@ export class CalculatorApp {
     private sliderManager: SliderManager;
     private resultsController: ResultsController;
     private summaryMetricsController: SummaryMetricsController;
-    private scenarioDiffController: ScenarioDiffController;
-    private celebrationController: MilestoneCelebrationController;
-    private audioController: AudioFeedbackController;
-    private cityBenchmarkController: CityBenchmarkController;
-    private stressTestController: StressTestController;
-    private assetRebalanceController: AssetRebalanceController;
-    private spotlightController: CardSpotlightController;
-    private goalCommitmentController: GoalCommitmentController;
-    private dailyAccrualController: DailyAccrualController;
-    private qrShareModalController: QrShareModalController;
-    private sessionStorageController: SessionStorageController;
-    private undoRedoController: UndoRedoController;
-    private glossaryController: GlossaryController;
-    private floatingHudController: FloatingHudController;
-    private longevityGuardianController: LongevityGuardianController;
-    private taxWaterfallController: TaxWaterfallController;
-    private lifecycleBridgeController: LifecycleBridgeController;
-    private mobileDeckController: MobileErgonomicDeckController;
-    private keyboardViewportController: KeyboardViewportController;
-    private keyboardNavController: KeyboardNavigationController;
-    private studioTabController: StudioTabController;
-    private strategyBlueprintController!: StrategyBlueprintController;
     private specializedController: SpecializedCalculatorController | null = null;
+
+    private exportSubsystem: ExportSubsystem;
+    private engagementSubsystem: EngagementSubsystem;
+    private lifecycleSubsystem: LifecycleSubsystem;
+    private ergonomicsSubsystem: ErgonomicsSubsystem;
+
+    private shortcutsInitialized = false;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -142,91 +110,46 @@ export class CalculatorApp {
             () => this.getInputs()
         );
 
-        this.scenarioDiffController = new ScenarioDiffController(
-            this.dom,
-            this.formatter,
-            () => this.getInputs()
-        );
-
-        this.celebrationController = new MilestoneCelebrationController(
-            this.dom,
-            this.formatter
-        );
-
-        this.audioController = new AudioFeedbackController(
-            this.dom
-        );
-
-        this.cityBenchmarkController = new CityBenchmarkController(
-            this.dom,
-            this.sliderManager,
-            this.formatter,
-            () => this.triggerCalculation(),
-            (city) => this.analytics.setCityBenchmarkCity(city.slice(0, 64))
-        );
-
-        this.stressTestController = new StressTestController(
-            this.dom,
-            this.formatter,
-            this.chartManager,
-            (scenario) => this.analytics.setStressTestScenario(scenario.slice(0, 64))
-        );
-
-        this.assetRebalanceController = new AssetRebalanceController(
-            this.dom,
-            this.formatter
-        );
-
-        this.spotlightController = new CardSpotlightController();
-
-        this.goalCommitmentController = new GoalCommitmentController(
-            this.dom,
-            this.formatter,
-            () => this.getInputs(),
-            () => this.latestResults
-        );
-
-        this.dailyAccrualController = new DailyAccrualController(
-            this.dom,
-            this.formatter
-        );
-
-        this.qrShareModalController = new QrShareModalController(
-            this.dom,
-            () => this.getInputs(),
-            () => this.analytics.setQrModalOpened()
-        );
-
-        this.sessionStorageController = new SessionStorageController();
-        this.undoRedoController = new UndoRedoController((target) => {
-            this.applyRestoredInputs(target);
+        // Subsystems orchestration
+        this.exportSubsystem = new ExportSubsystem({
+            dom: this.dom,
+            formatter: this.formatter,
+            chartManager: this.chartManager,
+            analytics: this.analytics,
+            getInputs: () => this.getInputs(),
+            getLatestResults: () => this.latestResults,
+            getActiveGoalMode: () => this.activeGoalMode,
+            getInteractionCount: () => this.interactionCount
         });
-        
-        this.glossaryController = new GlossaryController(() => this.getInputs(), () => this.latestResults);
-        this.floatingHudController = new FloatingHudController(this.dom, this.formatter);
 
-        this.longevityGuardianController = new LongevityGuardianController(
-            this.dom,
-            this.formatter,
-            () => this.getInputs(),
-            (safeAmount) => {
+        this.engagementSubsystem = new EngagementSubsystem({
+            dom: this.dom,
+            sliderManager: this.sliderManager,
+            formatter: this.formatter,
+            analytics: this.analytics,
+            triggerCalculation: () => this.triggerCalculation(),
+            getInputs: () => this.getInputs(),
+            getLatestResults: () => this.latestResults,
+            onSmartNudgeRate: (rate) => this.setSmartNudgeRate(rate)
+        });
+
+        this.lifecycleSubsystem = new LifecycleSubsystem({
+            dom: this.dom,
+            formatter: this.formatter,
+            sliderManager: this.sliderManager,
+            chartManager: this.chartManager,
+            analytics: this.analytics,
+            getInputs: () => this.getInputs(),
+            triggerCalculation: () => this.triggerCalculation(),
+            syncSwpToggleState: () => this.syncSwpToggleState(),
+            setGoalMode: (mode) => this.setGoalMode(mode),
+            applyRestoredInputs: (inputs) => this.applyRestoredInputs(inputs),
+            onSafeSwpAdjusted: (safeAmount) => {
                 this.sliderManager.updateFieldValue('swp_withdrawal', safeAmount);
                 this.triggerCalculation();
-                this.audioController.playTick(520, 0.02);
-            }
-        );
-
-        this.taxWaterfallController = new TaxWaterfallController(
-            this.dom,
-            this.formatter,
-            () => this.getInputs()
-        );
-
-        this.lifecycleBridgeController = new LifecycleBridgeController(
-            this.dom,
-            this.formatter,
-            () => this.getInputs(),
-            (maturedCorpus, safeMonthlyWithdrawal) => {
+                this.engagementSubsystem.playTick(520, 0.02);
+            },
+            onLifecycleTransferred: (maturedCorpus, safeMonthlyWithdrawal) => {
                 const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
                 if (swpToggle) {
                     swpToggle.checked = true;
@@ -239,40 +162,21 @@ export class CalculatorApp {
                 const tabSwp = this.dom.getElement<HTMLButtonElement>('tab-swp');
                 if (tabSwp) tabSwp.click();
                 this.triggerCalculation();
-                this.celebrationController.triggerMicroBurst();
+                this.engagementSubsystem.triggerMicroBurst();
             }
-        );
+        });
 
-        this.mobileDeckController = new MobileErgonomicDeckController(
-            this.dom,
-            this.formatter,
-            (mode) => {
-                const tabBtn = this.dom.getElement<HTMLButtonElement>(`tab-${mode}`);
-                if (tabBtn) tabBtn.click();
-            },
-            () => {
-                new ShareController(this.dom, () => this.getInputs()).shareToWhatsApp(this.latestResults);
-            }
-        );
-
-        this.keyboardViewportController = new KeyboardViewportController(this.dom, this.formatter);
-        this.studioTabController = new StudioTabController(
-            this.dom,
-            (tabId) => this.analytics.setActiveStudioTab(tabId),
-            (denomination) => this.resultsController.setDenominationMode(denomination)
-        );
-
-        this.keyboardNavController = new KeyboardNavigationController(
-            this.dom,
-            () => {
-                const tabSip = this.dom.getElement<HTMLButtonElement>('tab-sip');
-                if (tabSip) tabSip.click();
-            },
-            () => {
-                const tabSwp = this.dom.getElement<HTMLButtonElement>('tab-swp');
-                if (tabSwp) tabSwp.click();
-            }
-        );
+        this.ergonomicsSubsystem = new ErgonomicsSubsystem({
+            dom: this.dom,
+            formatter: this.formatter,
+            sliderManager: this.sliderManager,
+            resultsController: this.resultsController,
+            analytics: this.analytics,
+            getInputs: () => this.getInputs(),
+            getLatestResults: () => this.latestResults,
+            triggerCalculation: () => this.triggerCalculation(),
+            onWhatsAppShare: () => this.exportSubsystem.shareToWhatsApp(this.latestResults)
+        });
 
         this.initGlobalShortcuts();
     }
@@ -304,13 +208,10 @@ export class CalculatorApp {
         this.triggerCalculation();
     }
 
-    private shortcutsInitialized = false;
-
     private initGlobalShortcuts(): void {
         if (typeof window === 'undefined' || this.shortcutsInitialized) return;
         this.shortcutsInitialized = true;
         window.addEventListener('keydown', (e: KeyboardEvent) => {
-            // Alt + R or Option + R: Reset all fields to factory defaults
             if (e.altKey && (e.key === 'r' || e.key === 'R')) {
                 e.preventDefault();
                 this.resetToDefaults();
@@ -322,10 +223,10 @@ export class CalculatorApp {
      * Reset all calculator inputs and sliders to factory benchmark defaults.
      */
     resetToDefaults(): void {
-        this.sessionStorageController.clearDraft();
+        this.lifecycleSubsystem.clearDraft();
         this.sliderManager.resetAllToDefaults();
-        this.audioController.playTick(280, 0.05);
-        this.audioController.vibrate([12, 24, 12]);
+        this.engagementSubsystem.playTick(280, 0.05);
+        this.engagementSubsystem.vibrate([12, 24, 12]);
         this.triggerCalculation();
     }
 
@@ -366,7 +267,7 @@ export class CalculatorApp {
         }
 
         let inputs = this.getInputs();
-        this.strategyBlueprintController?.syncWithInputs(inputs);
+        this.lifecycleSubsystem.syncBlueprintWithInputs(inputs);
 
         // Execute Strategy based on goal mode
         const strategy = this.strategies[this.activeGoalMode];
@@ -541,25 +442,22 @@ export class CalculatorApp {
                 const maturedCorpus = lastRow.combined_total;
                 if (maturedCorpus <= 0) return;
 
-                // Transfer matured corpus into SWP starting corpus
                 this.sliderManager.updateFieldValue('corpus', maturedCorpus);
                 this.sliderManager.updateFieldValue('lumpsum', maturedCorpus);
 
-                // Enable SWP if disabled
                 const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
                 if (swpToggle) {
                     swpToggle.checked = true;
                     this.syncSwpToggleState();
                 }
 
-                // Switch tab to SWP
                 const swpTab = this.dom.getElement('tab-swp');
                 if (swpTab) {
                     swpTab.click();
                 }
 
-                this.audioController.playChime();
-                this.audioController.vibrate([15, 30, 15]);
+                this.engagementSubsystem.playChime();
+                this.engagementSubsystem.vibrate([15, 30, 15]);
                 A11yAnnouncer.announce(`Transferred matured SIP corpus of ${this.formatter.formatDynamic(maturedCorpus)} into SWP initial balance.`);
             });
         }
@@ -578,7 +476,7 @@ export class CalculatorApp {
                 this.dom,
                 this.validator,
                 (fieldId, val) => this.sliderManager.updateFieldValue(fieldId, val),
-                this.audioController
+                this.engagementSubsystem.getAudioController()
             ).init();
             this.initGlobalShortcuts();
             this.initPassiveSeoClickListeners();
@@ -615,66 +513,20 @@ export class CalculatorApp {
         new TabController(this.dom, () => {
             this.syncSwpToggleState();
         }).init();
-        this.studioTabController.init();
+
         new StepperController(
             this.dom,
             this.validator,
             (fieldId, val) => this.sliderManager.updateFieldValue(fieldId, val),
-            this.audioController
+            this.engagementSubsystem.getAudioController()
         ).init();
-        new SmartNudgeController(this.dom, (rate) => this.setSmartNudgeRate(rate)).init();
-        this.strategyBlueprintController = new StrategyBlueprintController(
-            this.dom,
-            this.sliderManager,
-            this.analytics,
-            () => this.syncSwpToggleState(),
-            () => this.triggerCalculation()
-        );
-        this.strategyBlueprintController.init();
-        new PdfExportController(
-            this.dom,
-            this.chartManager,
-            this.analytics,
-            () => this.getInputs(),
-            () => this.latestResults,
-            () => this.activeGoalMode,
-            () => this.interactionCount,
-            this.formatter
-        ).init();
-        new CsvExportController(
-            this.dom,
-            this.analytics,
-            () => this.getInputs()
-        ).init();
-        new ShareController(this.dom, () => this.getInputs(), () => this.latestResults).init();
-        this.glossaryController.init();
-        this.audioController.init();
-        this.cityBenchmarkController.init();
+
+        this.exportSubsystem.init();
+        this.engagementSubsystem.init();
+        this.lifecycleSubsystem.init();
+        this.ergonomicsSubsystem.init();
+
         this.summaryMetricsController.initTaxWaterfallModal(() => this.analytics.setTaxWaterfallOpened());
-        new CommandPaletteController(this.dom, (params) => {
-            if (params.sip !== undefined) this.sliderManager.updateFieldValue('sip', params.sip);
-            if (params.years !== undefined) this.sliderManager.updateFieldValue('years', params.years);
-            if (params.rate !== undefined) this.sliderManager.updateFieldValue('rate', params.rate);
-            this.triggerCalculation();
-            const sec = this.dom.getElement('calculator-section');
-            if (sec) sec.scrollIntoView({ behavior: 'smooth' });
-        }).init();
-        new WealthQuizController(
-            this.dom,
-            this.sliderManager,
-            () => this.triggerCalculation(),
-            () => this.analytics.setGuidedWizardCompleted()
-        ).init();
-        this.scenarioDiffController.init();
-        this.celebrationController.init();
-        this.stressTestController.init();
-        this.assetRebalanceController.init();
-        this.spotlightController.init();
-        this.goalCommitmentController.init();
-        this.dailyAccrualController.init();
-        this.qrShareModalController.init();
-        this.floatingHudController.init();
-        this.keyboardNavController.init();
         ModalScrollLockHelper.initGlobalDialogs();
 
         const corridorToggle = this.dom.getElement<HTMLInputElement>('show_historical_corridor');
@@ -689,7 +541,7 @@ export class CalculatorApp {
             stepupBoostBtn.addEventListener('click', () => {
                 this.sliderManager.updateFieldValue('stepup', 10);
                 this.triggerCalculation();
-                this.celebrationController.triggerMicroBurst();
+                this.engagementSubsystem.triggerMicroBurst();
                 A11yAnnouncer.announce('Applied 10% annual salary appraisal step-up');
             });
         }
@@ -698,23 +550,24 @@ export class CalculatorApp {
         if (snapshotBtn) {
             snapshotBtn.addEventListener('click', () => {
                 const inputs = this.getInputs();
-                this.scenarioDiffController.setSnapshot(inputs, this.latestResults);
-                this.analytics.setScenarioDiffSaved();
+                this.lifecycleSubsystem.saveScenarioDiffSnapshot(inputs, this.latestResults);
             });
         }
+
         this.initPassiveSeoClickListeners();
         this.initResizeListeners();
+
         new UrlStateController(
             this.dom,
             () => this.syncSwpToggleState(),
-            (mode) => this.setGoalMode(mode)
+            (goalMode) => this.setGoalMode(goalMode)
         ).init();
+
         this.initEventBusSubscribers();
         this.initInitialCalculation();
     }
 
     private initPassiveSeoClickListeners(): void {
-
         // FAQ Details toggles
         document.querySelectorAll('details').forEach(details => {
             details.addEventListener('toggle', () => {
@@ -881,26 +734,26 @@ export class CalculatorApp {
 
     private initEventBusSubscribers(): void {
         eventBus.subscribe('input:changed', (inputs: InvestmentInputs) => {
-            this.sessionStorageController.persistDraft(inputs);
-            this.undoRedoController.pushState(inputs);
+            this.lifecycleSubsystem.persistDraft(inputs);
+            this.lifecycleSubsystem.pushUndoState(inputs);
 
             const combined = MathEngine.calculate(inputs);
             this.latestResults = combined;
             this.updateTable(combined, inputs.enable_swp);
             this.updateSummaryMetrics(combined);
-            this.scenarioDiffController.updateDiff(combined);
+
+            this.engagementSubsystem.updateResults(combined, inputs);
+            this.lifecycleSubsystem.updateResults(combined, inputs);
+            this.ergonomicsSubsystem.updateResults(combined, inputs);
 
             const lastRow = combined[combined.length - 1];
             if (lastRow) {
-                this.celebrationController.checkMilestones(lastRow.combined_total, combined, inputs);
-                
-                // Update accumulation bridge preview
                 const bridgeValEl = this.dom.getElement('bridge-matured-corpus-val');
                 if (bridgeValEl) {
                     bridgeValEl.textContent = this.formatter.formatDynamic(lastRow.combined_total);
                 }
 
-                // Announce calculation to screen reader with 700ms throttle
+                // Announce calculation to screen reader with throttle
                 A11yAnnouncer.announceCalculation(
                     inputs.enable_swp ? 'swp' : (this.activeGoalMode === 'target' ? 'target' : 'sip'),
                     inputs.enable_swp ? 'SWP' : 'SIP',
@@ -911,19 +764,6 @@ export class CalculatorApp {
                     inputs.enable_swp ? (lastRow.cumulative_withdrawals || 0) : (lastRow.combined_total - lastRow.cumulative_invested)
                 );
             }
-
-            this.stressTestController.updateResults(combined, inputs);
-            this.cityBenchmarkController.updateResults(combined, inputs);
-            this.assetRebalanceController.updateInputs(inputs, combined);
-            this.dailyAccrualController.updateResults(combined);
-            this.glossaryController.updateArithmeticProof(inputs, combined);
-            this.floatingHudController.updateResults(combined);
-            this.longevityGuardianController.update(combined);
-            this.taxWaterfallController.update(combined);
-            this.lifecycleBridgeController.update(combined);
-            this.mobileDeckController.update(combined);
-            this.keyboardViewportController.update(combined);
-            this.updateStudioTelemetry(inputs, combined);
 
             this.chartManager.updateChart(combined, inputs.enable_swp);
 
@@ -942,46 +782,12 @@ export class CalculatorApp {
         });
     }
 
-    /**
-     * Updates real-time telemetry metrics in the Multi-Mode Analytical Studio tab bar.
-     */
-    private updateStudioTelemetry(inputs: InvestmentInputs, results: YearResult[]): void {
-        if (!results || results.length === 0) return;
-        const lastRow = results[results.length - 1];
-        const finalCorpus = lastRow ? lastRow.combined_total : 0;
-
-        // Mumbai benchmark target is ₹2.55 Cr (2,55,00,000)
-        const fireCoverage = Math.min(100, (finalCorpus / 25500000) * 100);
-
-        // Milestone checkpoints: 10L, 25L, 50L, 1Cr, 5Cr
-        const milestoneCheckpoints = [1000000, 2500000, 5000000, 10000000, 50000000];
-        const unlockedCount = milestoneCheckpoints.filter(target => finalCorpus >= target).length;
-
-        // Context scenario caption update
-        const captionEl = this.dom.getElement('studio-active-scenario-caption');
-        if (captionEl) {
-            const formattedCorpus = this.formatter.formatDynamic(finalCorpus);
-            const modeLabel = inputs.enable_swp ? 'SWP Cashflow' : 'SIP Wealth Creation';
-            captionEl.textContent = `Simulating ${inputs.years} Yrs @ ${inputs.rate}% p.a. • Projecting ${formattedCorpus} (${modeLabel})`;
-        }
-
-        this.studioTabController.updateTelemetry({
-            years: inputs.years,
-            fireCoveragePercent: fireCoverage,
-            fireCityName: 'Mumbai',
-            milestonesUnlocked: unlockedCount,
-            totalMilestones: milestoneCheckpoints.length,
-            maxStressDrawdownPercent: 38,
-            targetEquitySplit: 80
-        });
-    }
-
     private initInitialCalculation(): void {
         const runInitCalc = () => {
             const urlParams = new URLSearchParams(window.location.search);
             const hasUrlParams = Array.from(urlParams.keys()).length > 0;
             if (!hasUrlParams) {
-                const savedDraft = this.sessionStorageController.loadDraft();
+                const savedDraft = this.lifecycleSubsystem.loadDraft();
                 if (savedDraft) {
                     this.applyRestoredInputs(savedDraft);
                     return;
@@ -1032,7 +838,7 @@ export class CalculatorApp {
 
                 this.updateTable(existingData, swpEnabledOnLoad);
                 this.updateSummaryMetrics(existingData);
-                this.floatingHudController.updateResults(existingData);
+                this.ergonomicsSubsystem.updateFloatingHud(existingData);
 
                 this.chartManager.updateChart(existingData, swpEnabledOnLoad);
             }
@@ -1047,3 +853,4 @@ export class CalculatorApp {
         }
     }
 }
+

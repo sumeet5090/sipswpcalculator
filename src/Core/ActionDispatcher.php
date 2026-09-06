@@ -47,8 +47,7 @@ class ActionDispatcher
                 }
                 $reflection = $this->methodCache[$cacheKey];
                 $args = [];
-                $paramValues = array_values($params);
-                $paramIndex = 0;
+                $remainingParams = $params;
 
                 foreach ($reflection->getParameters() as $param) {
                     $name = $param->getName();
@@ -68,11 +67,13 @@ class ActionDispatcher
 
                     if ($isRequestType) {
                         $args[] = $request;
-                    } elseif (array_key_exists($name, $params)) {
-                        $args[] = $this->coerceParameterValue($params[$name], $type);
-                    } elseif (isset($paramValues[$paramIndex])) {
-                        $args[] = $this->coerceParameterValue($paramValues[$paramIndex], $type);
-                        $paramIndex++;
+                    } elseif (array_key_exists($name, $remainingParams)) {
+                        $args[] = $this->coerceParameterValue($remainingParams[$name], $type);
+                        unset($remainingParams[$name]);
+                    } elseif (!empty($remainingParams)) {
+                        $firstKey = array_key_first($remainingParams);
+                        $args[] = $this->coerceParameterValue($remainingParams[$firstKey], $type);
+                        unset($remainingParams[$firstKey]);
                     } elseif ($param->isDefaultValueAvailable()) {
                         $args[] = $param->getDefaultValue();
                     } else {

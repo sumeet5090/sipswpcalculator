@@ -93,6 +93,30 @@ class AdminDashboardPresenter
 
             'strategyStarterLabels' => $this->encodeJson(array_map($formatLabel, array_column($strategyStarterDist, 'preset'))),
             'strategyStarterData'   => $this->encodeJson(array_map('intval', array_column($strategyStarterDist, 'cnt'))),
+
+            // Structured Chart Payload for Data Island
+            'chartPayload' => [
+                'volumeLabels'          => array_column($dailyVolume, 'day'),
+                'volumeData'            => array_map('intval', array_column($dailyVolume, 'cnt')),
+                'currencyLabels'        => array_column($currencyDist, 'currency'),
+                'currencyData'          => array_map('intval', array_column($currencyDist, 'cnt')),
+                'currencyColors'        => $currencyColors,
+                'stepUpDoughnutData'    => [$stats['stepUpSIP'] ?? 0, $stats['flatSIP'] ?? 0],
+                'durationLabels'        => array_column($durationDist, 'bucket'),
+                'durationData'          => array_map('intval', array_column($durationDist, 'cnt')),
+                'ambitionLabels'        => array_column($ambitionBuckets, 'goal_bucket'),
+                'ambitionData'          => array_map('intval', array_column($ambitionBuckets, 'cnt')),
+                'deviceLabels'          => array_map('ucfirst', array_column($stats['deviceDist'] ?? [], 'device')),
+                'deviceData'            => array_map('intval', array_column($stats['deviceDist'] ?? [], 'cnt')),
+                'goalModeLabels'        => array_map('ucfirst', array_column($stats['goalModeDist'] ?? [], 'mode')),
+                'goalModeData'          => array_map('intval', array_column($stats['goalModeDist'] ?? [], 'cnt')),
+                'referrerLabels'        => array_map($formatLabel, array_column($referrerDist, 'ref')),
+                'referrerData'          => array_map('intval', array_column($referrerDist, 'cnt')),
+                'studioTabLabels'       => array_map($formatLabel, array_column($studioTabDist, 'tab')),
+                'studioTabData'         => array_map('intval', array_column($studioTabDist, 'cnt')),
+                'strategyStarterLabels' => array_map($formatLabel, array_column($strategyStarterDist, 'preset')),
+                'strategyStarterData'   => array_map('intval', array_column($strategyStarterDist, 'cnt')),
+            ],
         ];
     }
 

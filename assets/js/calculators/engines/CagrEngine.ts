@@ -14,6 +14,8 @@ export interface CagrResult {
     multiplier: number;
 }
 
+import { MathPrecisionHelper } from '../helpers/MathPrecisionHelper.ts';
+
 export class CagrEngine {
     public static calculate(
         beginningValue: number,
@@ -44,13 +46,13 @@ export class CagrEngine {
         }
 
         return {
-            beginning_value: Number(v0.toFixed(2)),
-            ending_value: Number(vt.toFixed(2)),
-            years: Number(t.toFixed(2)),
-            cagr_percentage: Number(cagr.toFixed(4)),
-            absolute_return_percentage: Number(absoluteReturn.toFixed(4)),
-            total_gain: Number(totalGain.toFixed(2)),
-            multiplier: Number(multiplier.toFixed(4))
+            beginning_value: MathPrecisionHelper.round2(v0),
+            ending_value: MathPrecisionHelper.round2(vt),
+            years: MathPrecisionHelper.round2(t),
+            cagr_percentage: MathPrecisionHelper.round4(cagr),
+            absolute_return_percentage: MathPrecisionHelper.round4(absoluteReturn),
+            total_gain: MathPrecisionHelper.round2(totalGain),
+            multiplier: MathPrecisionHelper.round4(multiplier)
         };
     }
 }

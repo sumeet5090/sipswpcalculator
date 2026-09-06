@@ -60,6 +60,7 @@ class ShowAdminDashboardAction
         $viewModels = $this->presenter->formatForView($stats);
 
         $payload = array_merge([
+            'is_authenticated'  => true,
             'current_range_key' => $current_range_key,
             'time_ranges'       => $time_ranges,
             'current_range'     => $current_range,

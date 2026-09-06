@@ -12,6 +12,8 @@ class ConfigService implements ConfigServiceInterface
 {
     private ?array $calculatorDefaults = null;
     private string $configPath;
+    /** @var array<string, array<string, mixed>> */
+    private array $jsonConfigs = [];
 
     public function __construct(?string $configPath = null)
     {
@@ -43,6 +45,11 @@ class ConfigService implements ConfigServiceInterface
         $fullPath = (str_starts_with($path, '/') || (DIRECTORY_SEPARATOR === '\\' && str_contains($path, ':')))
             ? $path
             : __DIR__ . '/../../' . ltrim($path, '/');
+
+        if (isset($this->jsonConfigs[$fullPath])) {
+            return $this->jsonConfigs[$fullPath];
+        }
+
         if (!file_exists($fullPath)) {
             return [];
         }
@@ -56,6 +63,7 @@ class ConfigService implements ConfigServiceInterface
             error_log("Failed to parse JSON config at {$fullPath}: " . json_last_error_msg());
             return [];
         }
-        return is_array($decoded) ? $decoded : [];
+        $this->jsonConfigs[$fullPath] = is_array($decoded) ? $decoded : [];
+        return $this->jsonConfigs[$fullPath];
     }
 }

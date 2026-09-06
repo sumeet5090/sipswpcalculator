@@ -4,6 +4,8 @@
  * Computes forward cost inflation FV = PV * (1 + i)^t and reverse purchasing power PV = FV / (1 + i)^t matching PHP parity.
  */
 
+import { MathPrecisionHelper } from '../helpers/MathPrecisionHelper.ts';
+
 export interface InflationScheduleRow {
     year: number;
     future_cost: number;
@@ -36,11 +38,11 @@ export class InflationEngine {
 
         if (pv === 0 || t === 0) {
             return {
-                present_value: Number(pv.toFixed(2)),
-                inflation_rate: Number(iPercent.toFixed(2)),
+                present_value: MathPrecisionHelper.round2(pv),
+                inflation_rate: MathPrecisionHelper.round2(iPercent),
                 years: t,
-                future_cost: Number(pv.toFixed(2)),
-                purchasing_power: Number(pv.toFixed(2)),
+                future_cost: MathPrecisionHelper.round2(pv),
+                purchasing_power: MathPrecisionHelper.round2(pv),
                 cost_increase: 0,
                 purchasing_power_loss_percentage: 0,
                 schedule: []
@@ -60,20 +62,20 @@ export class InflationEngine {
 
             schedule.push({
                 year,
-                future_cost: Number(yearFutureCost.toFixed(2)),
-                purchasing_power: Number(yearPower.toFixed(2)),
-                purchasing_power_loss_percentage: Number(yearLossPct.toFixed(2))
+                future_cost: MathPrecisionHelper.round2(yearFutureCost),
+                purchasing_power: MathPrecisionHelper.round2(yearPower),
+                purchasing_power_loss_percentage: MathPrecisionHelper.round2(yearLossPct)
             });
         }
 
         return {
-            present_value: Number(pv.toFixed(2)),
-            inflation_rate: Number(iPercent.toFixed(2)),
+            present_value: MathPrecisionHelper.round2(pv),
+            inflation_rate: MathPrecisionHelper.round2(iPercent),
             years: t,
-            future_cost: Number(futureCost.toFixed(2)),
-            purchasing_power: Number(purchasingPower.toFixed(2)),
-            cost_increase: Number(costIncrease.toFixed(2)),
-            purchasing_power_loss_percentage: Number(powerLossPct.toFixed(2)),
+            future_cost: MathPrecisionHelper.round2(futureCost),
+            purchasing_power: MathPrecisionHelper.round2(purchasingPower),
+            cost_increase: MathPrecisionHelper.round2(costIncrease),
+            purchasing_power_loss_percentage: MathPrecisionHelper.round2(powerLossPct),
             schedule
         };
     }

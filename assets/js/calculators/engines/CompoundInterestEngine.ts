@@ -4,6 +4,8 @@
  * Implements A = P * (1 + r/n)^(n*t) matching PHP parity.
  */
 
+import { MathPrecisionHelper } from '../helpers/MathPrecisionHelper.ts';
+
 export interface CompoundInterestScheduleRow {
     year: number;
     opening_balance: number;
@@ -37,11 +39,11 @@ export class CompoundInterestEngine {
         if (p === 0 || t === 0) {
             const ear = n > 0 && r > 0 ? (Math.pow(1.0 + (r / n), n) - 1.0) * 100.0 : 0.0;
             return {
-                principal: Number(p.toFixed(2)),
-                final_amount: Number(p.toFixed(2)),
+                principal: MathPrecisionHelper.round2(p),
+                final_amount: MathPrecisionHelper.round2(p),
                 total_interest: 0,
-                effective_annual_rate: Number(ear.toFixed(4)),
-                rule_of_72_years: rPercent > 0 ? Number((72.0 / rPercent).toFixed(2)) : null,
+                effective_annual_rate: MathPrecisionHelper.round4(ear),
+                rule_of_72_years: rPercent > 0 ? MathPrecisionHelper.round2(72.0 / rPercent) : null,
                 schedule: []
             };
         }
@@ -60,9 +62,9 @@ export class CompoundInterestEngine {
 
             schedule.push({
                 year,
-                opening_balance: Number(openingBalance.toFixed(2)),
-                interest_earned: Number(interestEarned.toFixed(2)),
-                closing_balance: Number(closingBalance.toFixed(2))
+                opening_balance: MathPrecisionHelper.round2(openingBalance),
+                interest_earned: MathPrecisionHelper.round2(interestEarned),
+                closing_balance: MathPrecisionHelper.round2(closingBalance)
             });
 
             currentBalance = closingBalance;
@@ -72,11 +74,11 @@ export class CompoundInterestEngine {
         const totalInterest = Math.max(0, finalAmount - p);
 
         return {
-            principal: Number(p.toFixed(2)),
-            final_amount: Number(finalAmount.toFixed(2)),
-            total_interest: Number(totalInterest.toFixed(2)),
-            effective_annual_rate: Number(effectiveAnnualRate.toFixed(4)),
-            rule_of_72_years: ruleOf72 !== null ? Number(ruleOf72.toFixed(2)) : null,
+            principal: MathPrecisionHelper.round2(p),
+            final_amount: MathPrecisionHelper.round2(finalAmount),
+            total_interest: MathPrecisionHelper.round2(totalInterest),
+            effective_annual_rate: MathPrecisionHelper.round4(effectiveAnnualRate),
+            rule_of_72_years: ruleOf72 !== null ? MathPrecisionHelper.round2(ruleOf72) : null,
             schedule
         };
     }

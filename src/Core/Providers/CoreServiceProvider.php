@@ -149,7 +149,11 @@ class CoreServiceProvider implements ServiceProviderInterface
         });
 
         $container->singleton(StrategyFactory::class, function (Container $c) {
-            return new StrategyFactory($c->get(ConfigService::class), null, $c);
+            return new StrategyFactory(
+                $c->get(ConfigService::class),
+                null,
+                fn(string $class) => $c->has($class) ? $c->get($class) : null
+            );
         });
 
         $container->singleton(\Core\Middleware\SessionMiddleware::class, function (Container $c) {

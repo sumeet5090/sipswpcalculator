@@ -21,8 +21,7 @@ class StrategyFactoryContainerTest extends TestCase
     protected function setUp(): void
     {
         $container = App::createContainer();
-        $configService = $container->get(ConfigService::class);
-        $this->factory = new StrategyFactory($configService, null, $container);
+        $this->factory = $container->get(StrategyFactory::class);
     }
 
     public function testCreateSipStrategyFromContainer(): void

@@ -118,6 +118,18 @@ class ViteHelper
     }
 
     /**
+     * Get the script tag for a JS/TS entry point.
+     */
+    public function js(string $entry): string
+    {
+        $url = $this->asset($entry);
+        if ($url === '') {
+            return '';
+        }
+        return "<script type=\"module\" src=\"{$url}\"></script>";
+    }
+
+    /**
      * Resolve a manifest entry by path, shorthand name, or bundled CSS association.
      * Implements Postel's Law (Robustness Principle) for asset discovery.
      */

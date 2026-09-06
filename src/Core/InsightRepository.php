@@ -73,43 +73,64 @@ class InsightRepository
         $whereClause = "WHERE created_at >= datetime('now', :interval)";
         $params = [':interval' => $interval];
 
-        $overview = $this->getOverviewMetrics($whereClause, $params);
+        $scalars = $this->getConsolidatedScalarMetrics($whereClause, $params);
+        $overview = $this->getOverviewMetrics($whereClause, $params, $scalars);
         $volume = $this->getVolumeSeries($unit, $cteStart, $interval);
-        $distributions = $this->getDistributionMetrics($whereClause, $params);
-        $engagement = $this->getEngagementMetrics($whereClause, $params, $overview['totalCalculations'], $overview['totalPdfDownloads'], $distributions['totalSWPEnabled']);
+        $distributions = $this->getDistributionMetrics($whereClause, $params, $scalars);
+        $engagement = $this->getEngagementMetrics($whereClause, $params, $scalars);
 
         return array_merge($overview, [
             'dailyVolume' => $volume,
         ], $distributions, $engagement);
     }
 
-    private function getOverviewMetrics(string $whereClause, array $params): array
+    private function getConsolidatedScalarMetrics(string $whereClause, array $params): array
     {
-        // 1. Total calculations in range
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause}");
+        $sql = "
+            SELECT
+                COUNT(*) AS total_in_range,
+                COALESCE(AVG(CASE WHEN step_up_pct > 0 THEN step_up_pct END), 0) AS avg_step_up,
+                COALESCE(SUM(CASE WHEN pdf_downloaded = 1 THEN 1 ELSE 0 END), 0) AS total_pdf_downloads,
+                COALESCE(SUM(CASE WHEN calc_type = 'SIP' THEN 1 ELSE 0 END), 0) AS total_sip,
+                COALESCE(SUM(CASE WHEN calc_type = 'SIP' AND step_up_pct > 0 THEN 1 ELSE 0 END), 0) AS step_up_sip,
+                COALESCE(AVG(CASE WHEN calc_type = 'SIP' THEN duration END), 0) AS avg_duration_sip,
+                COALESCE(AVG(CASE WHEN calc_type = 'SWP' THEN duration END), 0) AS avg_duration_swp,
+                COALESCE(AVG(CASE WHEN interest_rate > 0 THEN interest_rate END), 0) AS avg_interest_rate,
+                COALESCE(SUM(CASE WHEN swp_enabled = 1 THEN 1 ELSE 0 END), 0) AS total_swp_enabled,
+                COALESCE(AVG(CASE WHEN sip_amount > 0 THEN sip_amount END), 0) AS avg_sip_amount,
+                COALESCE(AVG(CASE WHEN swp_withdrawal > 0 THEN swp_withdrawal END), 0) AS avg_swp_withdrawal,
+                COALESCE(SUM(CASE WHEN table_viewed = 1 THEN 1 ELSE 0 END), 0) AS table_viewed_count,
+                COALESCE(AVG(CASE WHEN final_corpus > 0 THEN final_corpus END), 0) AS avg_final_corpus,
+                COALESCE(AVG(CASE WHEN wealth_multiplier > 0 THEN wealth_multiplier END), 0) AS avg_wealth_multiplier,
+                COALESCE(SUM(CASE WHEN pdf_has_custom_name = 1 THEN 1 ELSE 0 END), 0) AS b2b_count,
+                COALESCE(SUM(CASE WHEN inflation_enabled = 1 THEN 1 ELSE 0 END), 0) AS inflation_count,
+                COALESCE(AVG(CASE WHEN interaction_count > 0 THEN interaction_count END), 1) AS avg_iterations,
+                COALESCE(AVG(CASE WHEN scroll_depth_pct > 0 THEN scroll_depth_pct END), 0) AS avg_scroll_depth,
+                COALESCE(AVG(CASE WHEN dwell_time_seconds > 0 THEN dwell_time_seconds END), 0) AS avg_dwell_time
+            FROM user_calculations {$whereClause}
+        ";
+        $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
-        $totalInRange = (int) $stmt->fetchColumn();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return is_array($result) ? $result : [];
+    }
 
-        // 2. Average Step-Up % in range
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(step_up_pct), 0) FROM user_calculations {$whereClause} AND step_up_pct > :min_stepup");
-        $stmt->execute(array_merge($params, [':min_stepup' => 0]));
-        $avgStepUp = (float) $stmt->fetchColumn();
+    private function getOverviewMetrics(string $whereClause, array $params, array $scalars): array
+    {
+        $totalInRange = (int) ($scalars['total_in_range'] ?? 0);
+        $avgStepUp = (float) ($scalars['avg_step_up'] ?? 0);
+        $totalPdfDownloads = (int) ($scalars['total_pdf_downloads'] ?? 0);
+        $conversionRate = $totalInRange > 0 ? round(($totalPdfDownloads / $totalInRange) * 100, 1) : 0.0;
 
-        // 3. Total all-time calculations
+        // Total all-time calculations
         $totalAllTime = (int) $this->pdo->query("SELECT COUNT(*) FROM user_calculations")->fetchColumn();
 
-        // 4. Calculations breakdown by type
+        // Calculations breakdown by type
         $stmt = $this->pdo->prepare("SELECT calc_type, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY calc_type ORDER BY cnt DESC");
         $stmt->execute($params);
         $calcTypeBreakdown = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // 5. PDF Downloads count and conversion rate
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND pdf_downloaded = :pdf_flag");
-        $stmt->execute(array_merge($params, [':pdf_flag' => 1]));
-        $totalPdfDownloads = (int) $stmt->fetchColumn();
-        $conversionRate = $totalInRange > 0 ? round(($totalPdfDownloads / $totalInRange) * 100, 1) : 0.0;
-
-        // 6. Top 10 Referrers in range
+        // Top 10 Referrers in range
         $stmt = $this->pdo->prepare("
             SELECT
                 CASE
@@ -176,10 +197,10 @@ class InsightRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    private function getDistributionMetrics(string $whereClause, array $params): array
+    private function getDistributionMetrics(string $whereClause, array $params, array $scalars): array
     {
         $currencyAndCorpus = $this->getCurrencyAndCorpusMetrics($whereClause, $params);
-        $sipSwpAverages = $this->getSipAndSwpAverages($whereClause, $params);
+        $sipSwpAverages = $this->getSipAndSwpAverages($scalars);
         $buckets = $this->getBucketDistributions($whereClause, $params);
 
         return array_merge($currencyAndCorpus, $sipSwpAverages, $buckets);
@@ -214,54 +235,24 @@ class InsightRepository
         ];
     }
 
-    private function getSipAndSwpAverages(string $whereClause, array $params): array
+    private function getSipAndSwpAverages(array $scalars): array
     {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND calc_type = :sip_type");
-        $stmt->execute(array_merge($params, [':sip_type' => 'SIP']));
-        $totalSIP = (int) $stmt->fetchColumn();
-
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND calc_type = :sip_type AND step_up_pct > :min_stepup");
-        $stmt->execute(array_merge($params, [':sip_type' => 'SIP', ':min_stepup' => 0]));
-        $stepUpSIP = (int) $stmt->fetchColumn();
-
+        $totalSIP = (int) ($scalars['total_sip'] ?? 0);
+        $stepUpSIP = (int) ($scalars['step_up_sip'] ?? 0);
         $flatSIP = $totalSIP - $stepUpSIP;
         $stepUpAdoptionRate = $totalSIP > 0 ? round(($stepUpSIP / $totalSIP) * 100, 1) : 0.0;
-
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations {$whereClause} AND calc_type = :sip_type");
-        $stmt->execute(array_merge($params, [':sip_type' => 'SIP']));
-        $avgDurationSIP = (float) $stmt->fetchColumn();
-
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(duration), 0) FROM user_calculations {$whereClause} AND calc_type = :swp_type");
-        $stmt->execute(array_merge($params, [':swp_type' => 'SWP']));
-        $avgDurationSWP = (float) $stmt->fetchColumn();
-
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interest_rate), 0) FROM user_calculations {$whereClause} AND interest_rate > :min_rate");
-        $stmt->execute(array_merge($params, [':min_rate' => 0]));
-        $avgInterestRate = (float) $stmt->fetchColumn();
-
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND swp_enabled = :swp_flag");
-        $stmt->execute(array_merge($params, [':swp_flag' => 1]));
-        $totalSWPEnabled = (int) $stmt->fetchColumn();
-
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(sip_amount), 0) FROM user_calculations {$whereClause} AND sip_amount > :min_sip");
-        $stmt->execute(array_merge($params, [':min_sip' => 0]));
-        $avgSipAmount = (float) $stmt->fetchColumn();
-
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(swp_withdrawal), 0) FROM user_calculations {$whereClause} AND swp_withdrawal > :min_swp");
-        $stmt->execute(array_merge($params, [':min_swp' => 0]));
-        $avgSwpWithdrawal = (float) $stmt->fetchColumn();
 
         return [
             'totalSIP' => $totalSIP,
             'stepUpSIP' => $stepUpSIP,
             'flatSIP' => $flatSIP,
             'stepUpAdoptionRate' => $stepUpAdoptionRate,
-            'avgDurationSIP' => $avgDurationSIP,
-            'avgDurationSWP' => $avgDurationSWP,
-            'avgInterestRate' => $avgInterestRate,
-            'totalSWPEnabled' => $totalSWPEnabled,
-            'avgSipAmount' => $avgSipAmount,
-            'avgSwpWithdrawal' => $avgSwpWithdrawal,
+            'avgDurationSIP' => (float) ($scalars['avg_duration_sip'] ?? 0),
+            'avgDurationSWP' => (float) ($scalars['avg_duration_swp'] ?? 0),
+            'avgInterestRate' => (float) ($scalars['avg_interest_rate'] ?? 0),
+            'totalSWPEnabled' => (int) ($scalars['total_swp_enabled'] ?? 0),
+            'avgSipAmount' => (float) ($scalars['avg_sip_amount'] ?? 0),
+            'avgSwpWithdrawal' => (float) ($scalars['avg_swp_withdrawal'] ?? 0),
         ];
     }
 
@@ -327,9 +318,24 @@ class InsightRepository
         ];
     }
 
-    private function getEngagementMetrics(string $whereClause, array $params, int $totalInRange, int $totalPdfDownloads, int $totalSWPEnabled): array
+    private function getEngagementMetrics(string $whereClause, array $params, array $scalars): array
     {
+        $totalInRange = (int) ($scalars['total_in_range'] ?? 0);
+        $totalPdfDownloads = (int) ($scalars['total_pdf_downloads'] ?? 0);
+        $totalSWPEnabled = (int) ($scalars['total_swp_enabled'] ?? 0);
+
         $swpAdoptionRate = $totalInRange > 0 ? round(($totalSWPEnabled / $totalInRange) * 100, 1) : 0.0;
+        $tableViewedCount = (int) ($scalars['table_viewed_count'] ?? 0);
+        $tableViewEngagement = $totalInRange > 0 ? round(($tableViewedCount / $totalInRange) * 100, 1) : 0.0;
+        $avgFinalCorpus = (float) ($scalars['avg_final_corpus'] ?? 0);
+        $avgWealthMultiplier = (float) ($scalars['avg_wealth_multiplier'] ?? 0);
+        $b2bCount = (int) ($scalars['b2b_count'] ?? 0);
+        $b2bAdvisorRate = $totalPdfDownloads > 0 ? round(($b2bCount / $totalPdfDownloads) * 100, 1) : 0.0;
+        $inflationCount = (int) ($scalars['inflation_count'] ?? 0);
+        $inflationRate = $totalInRange > 0 ? round(($inflationCount / $totalInRange) * 100, 1) : 0.0;
+        $avgIterations = round((float) ($scalars['avg_iterations'] ?? 1), 1);
+        $avgScrollDepth = round((float) ($scalars['avg_scroll_depth'] ?? 0), 1);
+        $avgDwellTime = round((float) ($scalars['avg_dwell_time'] ?? 0), 1);
 
         $stmt = $this->pdo->prepare("SELECT COALESCE(device_type, 'desktop') AS device, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY device ORDER BY cnt DESC");
         $stmt->execute($params);
@@ -338,33 +344,6 @@ class InsightRepository
         $stmt = $this->pdo->prepare("SELECT COALESCE(goal_mode, 'grow') AS mode, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY mode ORDER BY cnt DESC");
         $stmt->execute($params);
         $goalModeDist = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND table_viewed = :viewed_flag");
-        $stmt->execute(array_merge($params, [':viewed_flag' => 1]));
-        $tableViewedCount = (int) $stmt->fetchColumn();
-        $tableViewEngagement = $totalInRange > 0 ? round(($tableViewedCount / $totalInRange) * 100, 1) : 0.0;
-
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(final_corpus), 0) FROM user_calculations {$whereClause} AND final_corpus > :min_corpus");
-        $stmt->execute(array_merge($params, [':min_corpus' => 0]));
-        $avgFinalCorpus = (float) $stmt->fetchColumn();
-
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(wealth_multiplier), 0) FROM user_calculations {$whereClause} AND wealth_multiplier > :min_mult");
-        $stmt->execute(array_merge($params, [':min_mult' => 0]));
-        $avgWealthMultiplier = (float) $stmt->fetchColumn();
-
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND pdf_has_custom_name = :custom_flag");
-        $stmt->execute(array_merge($params, [':custom_flag' => 1]));
-        $b2bCount = (int) $stmt->fetchColumn();
-        $b2bAdvisorRate = $totalPdfDownloads > 0 ? round(($b2bCount / $totalPdfDownloads) * 100, 1) : 0.0;
-
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_calculations {$whereClause} AND inflation_enabled = :inf_flag");
-        $stmt->execute(array_merge($params, [':inf_flag' => 1]));
-        $inflationCount = (int) $stmt->fetchColumn();
-        $inflationRate = $totalInRange > 0 ? round(($inflationCount / $totalInRange) * 100, 1) : 0.0;
-
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(interaction_count), 1) FROM user_calculations {$whereClause} AND interaction_count > :min_interaction");
-        $stmt->execute(array_merge($params, [':min_interaction' => 0]));
-        $avgIterations = round((float) $stmt->fetchColumn(), 1);
 
         $stmt = $this->pdo->prepare("SELECT COALESCE(referrer_category, 'direct') AS ref, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY ref ORDER BY cnt DESC LIMIT 10");
         $stmt->execute($params);
@@ -377,14 +356,6 @@ class InsightRepository
         $stmt = $this->pdo->prepare("SELECT COALESCE(strategy_starter_used, 'none') AS preset, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY preset ORDER BY cnt DESC");
         $stmt->execute($params);
         $strategyStarterDist = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(scroll_depth_pct), 0) FROM user_calculations {$whereClause} AND scroll_depth_pct > :min_scroll");
-        $stmt->execute(array_merge($params, [':min_scroll' => 0]));
-        $avgScrollDepth = round((float) $stmt->fetchColumn(), 1);
-
-        $stmt = $this->pdo->prepare("SELECT COALESCE(AVG(dwell_time_seconds), 0) FROM user_calculations {$whereClause} AND dwell_time_seconds > :min_dwell");
-        $stmt->execute(array_merge($params, [':min_dwell' => 0]));
-        $avgDwellTime = round((float) $stmt->fetchColumn(), 1);
 
         return [
             'swpAdoptionRate' => $swpAdoptionRate,
