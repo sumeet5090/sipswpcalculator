@@ -1,6 +1,6 @@
 # sipswpcalculator.com
 
-> Free SIP & SWP Calculator with step-up compounding for Indian mutual fund investors.
+> Free, production-grade SIP & SWP Calculator with step-up compounding and tax modeling for Indian mutual fund investors.
 
 ## Calculators
 - [SIP & SWP Calculator](https://sipswpcalculator.com/): Combined SIP accumulation and SWP retirement withdrawal planner with step-up compounding
@@ -27,6 +27,6 @@
 - Full Indian Rupee (₹) localization with Lakh and Crore formatting conventions
 - Annual Step-Up Compounding: 0% to 50% annual top-up on monthly SIP investments
 - Month-by-month financial simulation parity between PHP and TypeScript engines
-- Post-tax capital gains estimation incorporating Indian LTCG and STCG tax rules
+- Post-tax capital gains estimation incorporating Indian Budget 2024 Section 112A rules (12.5% LTCG on equity gains exceeding ₹1.25 Lakh)
 - Inflation-adjusted real corpus and real purchasing power projections
 - Free instant CSV data export and branded PDF projection report downloads

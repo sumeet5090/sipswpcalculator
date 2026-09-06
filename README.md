@@ -1,6 +1,6 @@
 # SIP & SWP Calculator
 
-A production-grade, server-rendered financial calculator for Systematic Investment Plans (SIP) and Systematic Withdrawal Plans (SWP). Features a fully bi-directional calculation engine (back-calculates Monthly SIP required to hit a Target Corpus or sustain a target SWP retirement plan), directly exposed primary investment parameters with clean semantic adjustment grouping, and viewport-aware responsive scaling. Built with PHP (MVC), Twig, Vite, Tailwind CSS v4, and Chart.js.
+A production-grade, server-rendered financial calculator for Systematic Investment Plans (SIP) and Systematic Withdrawal Plans (SWP). Features a fully bi-directional calculation engine (back-calculates Monthly SIP required to hit a Target Corpus or sustain a target SWP retirement plan), directly exposed primary investment parameters with clean semantic adjustment grouping, and viewport-aware responsive scaling. Built with PHP 8.2+ (MVC), Twig 3.x, Vite 8.x, Tailwind CSS v4, TypeScript 7.x, and Chart.js 4.x.
 
 **Live:** [sipswpcalculator.com](https://sipswpcalculator.com)
 
@@ -13,45 +13,89 @@ The project follows a modern MVC architecture, separating concerns between routi
 ```text
 sipswpcalculator/
 ├── index.php                 # Main front-controller and router
-├── .htaccess                 # Apache config (HTTPS redirect, clean URLs)
+├── .htaccess                 # Apache config (HTTPS redirect, clean URLs, security headers)
+├── .user.ini                 # LiteSpeed LSAPI runtime PHP configuration
 ├── package.json              # Node dependencies & Vite build scripts
-├── composer.json             # PHP dependencies (Twig, DomPDF)
-├── vite.config.js            # Vite bundler configuration
+├── composer.json             # PHP dependencies (Twig, Dompdf, PHPUnit, PHPStan)
+├── vite.config.js            # Vite bundler configuration (Tailwind v4 plugin, alias mappings)
+├── phpstan.neon              # PHPStan static analysis configuration (Level Max)
+├── phpunit.xml               # PHPUnit 13 test runner configuration
+│
+├── bin/
+│   └── migrate               # CLI schema migrator for SQLite
+├── migrate.php               # Standalone root migration runner
 │
 ├── src/
-│   ├── Controllers/          # Request handling and view rendering
-│   ├── Core/                 # Framework utilities, ActionDispatcher, Router, Middleware, and App initialization
-│   │   ├── Middleware/       # Security (CSRF), Session Management & Routing (Trailing Slash 301) Middleware
-│   │   ├── Strategies/       # Strategy Patterns for Calculators
-│   │   └── Factories/        # Factories (e.g. SEO SchemaFactory)
-│   ├── Services/             # Business logic (Calculations, PDF, SEO generation)
+│   ├── Controllers/          # Single-responsibility request actions and view controllers
+│   ├── Core/                 # Framework kernel, Router, Container, ActionDispatcher, Http primitives
+│   │   ├── Config/           # Route definitions (routes.php)
+│   │   ├── Database/         # Database connection, migrator, and migration interfaces
+│   │   ├── Engines/          # Core math primitives
+│   │   ├── Exceptions/       # Domain exception hierarchy (NotFound, Container, RouteNotFound)
+│   │   ├── Factories/        # Dynamic SEO Schema factories (HomeSchemaBuilder, SchemaFactory)
+│   │   ├── Http/             # Request and Response immutable value objects
+│   │   ├── Math/             # Specialized calculation engines (CompoundInterest, CAGR, EMI, FD, PPF, Inflation)
+│   │   ├── Middleware/       # Pipeline middleware (TrailingSlash, Session, Honeypot, AdminCsrf)
+│   │   ├── Providers/        # DI Service Providers (Core, Repository, Domain, Controller)
+│   │   ├── Strategies/       # Strategy pattern implementations for 17 calculator types
+│   │   └── InvestmentCalculator.php # SEBI/AMFI-compliant core SIP/SWP calculation engine
+│   ├── Services/             # Business logic (ConfigService, PdfGenerator, CsvExport, Sitemap, Auth)
 │   └── Views/                # Twig templates
-│       ├── layouts/          # Base HTML structures
-│       ├── pages/            # Individual route templates
-│       └── components/       # Reusable UI elements (forms, charts)
+│       ├── layouts/          # Base HTML layouts (base.twig, clean.twig, embed.twig)
+│       ├── pages/            # Page-level templates (home, guide, about, faq, glossary, admin)
+│       └── components/       # Granular reusable UI elements (forms, charts, tables, modals)
 │
-├── assets/                   # Source CSS and JS (processed by Vite)
+├── resources/                # Source frontend assets compiled by Vite
 │   ├── css/
-│   │   └── input.css         # Tailwind v4 entry point
+│   │   ├── input.css         # Tailwind CSS v4 entry point (@theme tokens, @source scans)
+│   │   └── styles.css        # Supplementary base styles
 │   └── js/
-│       └── script.js         # Client-side application entry
+│       ├── app.ts            # Main Vite client application entry point
+│       ├── script.ts         # Global runtime bootstrap
+│       └── save-calculation.ts # LocalStorage client plan persistence
 │
-├── dist/                     # Compiled Vite output (Ignored in Git, built in CI/CD)
-├── database/                 # SQLite databases (if applicable)
-└── .github/workflows/        # Automated CI/CD pipelines
+├── assets/                   # Public static assets & modular TypeScript controllers
+│   ├── css/                  # Legacy static CSS fallbacks
+│   ├── js/                   # Modular client TypeScript architecture
+│   │   ├── adapters/         # DOMAdapter and browser API abstractions
+│   │   ├── calculators/      # CalculatorApp, MathEngine, ChartManager, SliderManager
+│   │   │   ├── constants/    # UI and timing constants
+│   │   │   ├── controllers/  # 30+ Single-responsibility UI controllers (Results, Odometer, Blueprints)
+│   │   │   ├── engines/      # TypeScript specialized engines (CAGR, CompoundInterest, EMI, FD, Inflation, PPF)
+│   │   │   ├── helpers/      # Canvas export, A11y announcer, magnetic snapping, particle pooling
+│   │   │   ├── strategies/   # Client-side calculator strategies
+│   │   │   └── views/        # RollingOdometerView, chart views
+│   │   └── types/            # Strict TypeScript interfaces and type definitions
+│   ├── og/                   # 1200x630 branded OpenGraph images for all 17 calculators
+│   └── favicon.svg           # Application icons and identity assets
+│
+├── content/                  # Single Sources of Truth (SSoT) & Markdown Content
+│   ├── blog/                 # 20 educational markdown guides across growth, retirement, comparison
+│   ├── calculators/          # 17 calculator educational markdown guides
+│   ├── calculator_defaults.json # Parameter boundaries, defaults, and milestone thresholds
+│   ├── dashboard_buckets.json   # Telemetry metric bucket ranges
+│   ├── meta_pages.json       # Metadata SSoT for static routes
+│   ├── rate_limits.json      # Centralized IP rate-limiting rules
+│   └── redirects.json        # Permanent 301 redirect map for legacy and vanity URLs
+│
+├── database/                 # SQLite database storage (database.sqlite, migrations/)
+├── dist/                     # Compiled Vite production bundle (.vite/manifest.json, assets/)
+├── scripts/                  # Development scripts (setup-hooks.sh)
+├── tests/                    # Comprehensive automated test suite (Unit, Integration, Parity)
+└── .github/workflows/        # Automated Zero-Downtime GitHub Actions CI/CD deployment
 ```
 
 ### Tech Stack
 
 | Layer | Technology | Purpose |
 |---|---|---|
-| **Server/Routing** | PHP 8.x (MVC) on Apache | Route handling, business logic, form processing |
+| **Server/Routing** | PHP 8.2+ (MVC) on Apache / LiteSpeed | Route handling, DI container, business logic, form processing |
 | **Templating** | Twig 3.x | Secure, modular server-side HTML rendering |
-| **Frontend Logic** | TypeScript 5.x | Strictly-typed OOP calculation engines, DOM adapters, and strategies |
-| **Asset Bundling** | Vite 5.x | High-performance TS/CSS compiling and Hot Module Replacement (HMR) |
-| **Styling** | Tailwind CSS v4 | Utility-first CSS framework |
-| **Charts** | Chart.js 3.7 | Interactive financial projection graphs |
-| **PDF Generation** | DomPDF 2.x | Branded PDF report generation |
+| **Frontend Logic** | TypeScript 7.x | Strictly-typed OOP calculation engines, DOM adapters, and strategies |
+| **Asset Bundling** | Vite 8.x | High-performance TS/CSS compiling and Hot Module Replacement (HMR) |
+| **Styling** | Tailwind CSS v4 | Utility-first CSS framework configured via `@theme` tokens |
+| **Charts** | Chart.js 4.x | Interactive financial projection graphs |
+| **PDF Generation** | Dompdf 2.x | Branded PDF report generation |
 
 ---
 
@@ -59,7 +103,7 @@ sipswpcalculator/
 
 | Requirement | Version | Check Command |
 |---|---|---|
-| **PHP** | 8.0+ | `php -v` |
+| **PHP** | 8.2+ | `php -v` |
 | **Apache** | 2.4+ (with mod_rewrite) | Bundled with XAMPP |
 | **Node.js** | 20+ | `node -v` |
 | **Composer** | 2.x | `composer -V` |
@@ -78,10 +122,10 @@ cd sipswpcalculator
 ### 2. Install Dependencies
 
 ```bash
-# PHP dependencies (Twig, DomPDF, PHPStan)
+# PHP dependencies (Twig, Dompdf, PHPStan, PHPUnit)
 composer install
 
-# Node dependencies (Vite, Tailwind)
+# Node dependencies (Vite, Tailwind CSS v4, Chart.js, TypeScript)
 npm ci
 ```
 
@@ -100,7 +144,7 @@ To set up your local SQLite database and run the initial schema migrations:
 php bin/migrate
 ```
 
-This CLI migrator executes all outstanding PHP schema migrations. You can also trigger database upgrades in the browser at `/admin_insights/migrate` once logged in.
+This CLI migrator executes all outstanding PHP schema migrations. Database schema migrations are executed strictly via CLI for environment security; there are no administrative web migration endpoints.
 
 ---
 
@@ -320,9 +364,9 @@ This codebase is maintained to strict architectural quality standards as documen
 | **JSON-LD Schema Hex Escaping** | `SchemaHelper` and `SchemaFactory` enforce `JSON_HEX_TAG | JSON_HEX_AMP` on all structured data output to prevent script tag injection |
 | **DI Container Reflection & Autowiring** | `Container` provides strict reflection autowiring, detecting circular dependencies (`A -> B -> A`), union/intersection types, variadics, nullable types, and providing `forget()` and `flush()` lifecycle resets |
 | **Action Parameter Injection & Coercion** | `ActionDispatcher` matches controller action parameters by typehint (`Request`), exact route slug name, positional index, and default values, with automatic scalar type coercion (`int`, `float`, `bool`) |
-| **Comprehensive Unit Test Suite & SEBI/AMFI Parity Architecture** | 760 unit and integration tests (13,418 assertions) with 100% pass rate and zero PHPUnit notices. Features dedicated compliance verification suites: (1) `SebiAmfiComplianceTest` verifying discrete monthly simulations against closed-form Annuity-Due formulas, Step-Up geometric progressions, SWP capital exhaustion zero-floors, Year 0 singularities, zero-rate linear fast paths, and Budget 2024 Section 112A LTCG tax accounting identities down to the paisa; (2) `SpecializedEnginesAlignmentTest` locking cross-runtime PHP/TS parity for Compound Interest, CAGR, EMI, FD, PPF, Inflation, and Safe SWP solvers; (3) `MathEngineAlignmentTest` enforcing paisa-precision tolerance across multi-decade vectors; and (4) rigorous PHPUnit 13 test hygiene utilizing typed `createStub()` test doubles and purging redundant modal/styling assertions |
+| **Comprehensive Unit Test Suite & SEBI/AMFI Parity Architecture** | 788 unit and integration tests (13,543 assertions) with 100% pass rate and zero PHPUnit notices. Features dedicated compliance verification suites: (1) `SebiAmfiComplianceTest` verifying discrete monthly simulations against closed-form Annuity-Due formulas, Step-Up geometric progressions, SWP capital exhaustion zero-floors, Year 0 singularities, zero-rate linear fast paths, and Budget 2024 Section 112A LTCG tax accounting identities down to the paisa; (2) `SpecializedEnginesAlignmentTest` locking cross-runtime PHP/TS parity for Compound Interest, CAGR, EMI, FD, PPF, Inflation, and Safe SWP solvers; (3) `MathEngineAlignmentTest` enforcing paisa-precision tolerance across multi-decade vectors; and (4) rigorous PHPUnit 13 test hygiene utilizing typed `createStub()` test doubles and purging redundant modal/styling assertions |
 | **Specialized Interactive Calculators Architecture** | Dedicated client-side `SpecializedCalculatorController` and Twig partials (`compound-interest-fields`, `cagr-fields`, `emi-fields`, `inflation-fields`, `ppf-fields`, `fd-fields`) providing full tactile slider interaction, quick-preset chips, compounding frequency selectors, senior-citizen bonus toggles, zero-latency real-time recalculation, dynamic Odometer KPI metrics, yearly breakdown amortization/statutory ledgers, and interactive Chart.js growth trajectories |
-| **Authoritative Organic Content Depth & E-E-A-T Architecture** | Exhaustive educational content across all 13 calculators (every page >2,000 to >3,500 words) eliminating quality dilution; 100% SERP title (51–57 chars) and meta description (151–158 chars) optimization with high-converting social proof triggers ("Used by 10,000+ investors") for zero search truncation; rich `SoftwareApplication` structured data with `FinanceApplication`, `isAccessibleForFree`, `offers`, and `AggregateRating` (4.9/5 from 1,280 reviews) driving rich SERP snippet CTR; 6 top-of-funnel pillar guides capturing 1M+ informational queries; standalone `/embed/{slug}` widgets generating organic backlink equity |
+| **Authoritative Organic Content Depth & E-E-A-T Architecture** | Exhaustive educational content across all 17 calculators (every page >2,000 to >3,500 words) eliminating quality dilution; 100% SERP title (51–57 chars) and meta description (151–158 chars) optimization with high-converting social proof triggers ("Used by 10,000+ investors") for zero search truncation; rich `SoftwareApplication` structured data with `FinanceApplication`, `isAccessibleForFree`, `offers`, and `AggregateRating` (4.9/5 from 1,280 reviews) driving rich SERP snippet CTR; 6 top-of-funnel pillar guides capturing 1M+ informational queries; standalone `/embed/{slug}` widgets generating organic backlink equity |
 | **Mobile Viewport Ergonomics** | Context-scoped `#mobile-action-dock` and `#mobile-sticky-mini-hud` rendering strictly on interactive calculator routes, preventing text occlusion and dead clicks on editorial pages; direction-aware `#mobile-scroll-top-fab` auto-hiding during downward reading to prevent text obstruction; zero-specificity `:where()` base input selectors preserving Tailwind v4 padding utilities (`pl-11`); CSS Grid `minmax(0, 1fr)` and `min-width: 0` constraints preventing editorial callout horizontal overflow; responsive formula title stacking in Mathematical Transparency; single-line swipeable `.no-scrollbar` carousels for Glossary A-Z letter tracks and FAQ category filter chips, reclaiming >80% viewport height on mobile devices |
 | **Mathematical Precision Guardrails** | Full encyclopedia of 345 mathematical engine, simulation, financial precision hazards, and parity constraints codified in `.agents/skills/mathematical-precision-guardrails/SKILL.md` |
 | **Production Traps Guardrails** | Full encyclopedia of 65 production server, LiteSpeed, CloudLinux, and concurrency traps codified in `.agents/skills/production-traps/SKILL.md` |
@@ -331,6 +375,7 @@ This codebase is maintained to strict architectural quality standards as documen
 | **Hardened PDF Chart Export Pipeline** | `PdfExportController` draws charts onto white-backed offscreen canvases with animation stopping and HiDPI dimension clamping, preventing transparent black box rendering and staying within `HtmlSanitizer`'s 5MB threshold |
 | **CQS Compliance** | `SessionManager::generateCsrfToken()`, `App::boot()`, and `DatabaseMigrator::migrate()` return `void` or explicitly separate state mutation from query methods |
 | **Environment Security** | Schema migrations execute strictly via CLI (`bin/migrate`) in deployment pipelines; no administrative web migration endpoints |
+| **Architectural Decision Records (ADRs)** | Foundational architectural decisions codified in versioned Markdown ADRs in `docs/adr/` (ADR 0001–0006) covering zero-latency client computation, Data Island hydration, component rendering ownership, pure light-mode standards, atomic symlink releases, and SEBI/AMFI regulatory parity |
 
 ---
 
