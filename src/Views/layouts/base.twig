@@ -229,8 +229,8 @@
                     <span>Summary ↑</span>
                 </button>
                 <div class="flex items-center gap-0.5">
-                    <button type="button" id="mobile-deck-sip-btn" class="px-2.5 py-1.5 rounded-lg text-micro font-extrabold bg-emerald-600 text-white shadow-flat cursor-pointer transition-all">SIP</button>
-                    <button type="button" id="mobile-deck-swp-btn" class="px-2.5 py-1.5 rounded-lg text-micro font-bold bg-slate-200/80 text-slate-600 hover:text-slate-900 cursor-pointer transition-all">SWP</button>
+                    <button type="button" id="mobile-deck-sip-btn" class="px-2.5 py-1.5 rounded-lg text-micro font-extrabold {% if calculator_type == 'swp' %}bg-slate-200/80 text-slate-600 hover:text-slate-900{% else %}bg-emerald-600 text-white shadow-flat{% endif %} cursor-pointer transition-all">SIP</button>
+                    <button type="button" id="mobile-deck-swp-btn" class="px-2.5 py-1.5 rounded-lg text-micro font-bold {% if calculator_type == 'swp' %}bg-rose-600 text-white shadow-flat{% else %}bg-slate-200/80 text-slate-600 hover:text-slate-900{% endif %} cursor-pointer transition-all">SWP</button>
                 </div>
             </div>
         </div>

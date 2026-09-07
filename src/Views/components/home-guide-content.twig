@@ -97,4 +97,11 @@
             </div>
         </details>
     </div>
+    <script>
+        if (window.innerWidth >= 640) {
+            document.querySelectorAll('#master-financial-future ~ div details.fintech-accordion').forEach(function(el) {
+                el.setAttribute('open', '');
+            });
+        }
+    </script>
 </div>

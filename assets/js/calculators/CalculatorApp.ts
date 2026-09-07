@@ -237,10 +237,41 @@ export class CalculatorApp {
         const appEl = this.dom.getElement('calculator-app');
         const mode = appEl?.dataset?.mode ?? 'sip';
         const isSwpMode = (mode === 'swp');
+        const isLumpsumMode = (mode === 'lumpsum');
 
-        const lumpsumVal = isSwpMode
-            ? this.validator.validate('corpus', this.dom.getValue('corpus') || 0)
-            : this.validator.validate('lumpsum', this.dom.getValue('lumpsum') || 0);
+        if (isSwpMode) {
+            return {
+                sip: 0,
+                years: 0,
+                rate: 0,
+                stepup: 0,
+                inflation: this.validator.validate('inflation', this.dom.getValue('inflation') || 0),
+                lumpsum: this.validator.validate('corpus', this.dom.getValue('corpus') || 0),
+                enable_swp: true,
+                swp_withdrawal: this.validator.validate('swp_withdrawal', this.dom.getValue('swp_withdrawal') || 0),
+                swp_years: this.validator.validate('swp_years', this.dom.getValue('swp_years') || 0),
+                swp_stepup: this.validator.validate('swp_stepup', this.dom.getValue('swp_stepup') || 0),
+                swp_rate: this.validator.validate('swp_rate', this.dom.getValue('swp_rate') || 0)
+            };
+        }
+
+        if (isLumpsumMode) {
+            return {
+                sip: 0,
+                years: this.validator.validate('years', this.dom.getValue('years') || 0),
+                rate: this.validator.validate('rate', this.dom.getValue('rate') || 0),
+                stepup: 0,
+                inflation: this.validator.validate('inflation', this.dom.getValue('inflation') || 0),
+                lumpsum: this.validator.validate('lumpsum', this.dom.getValue('lumpsum') || 0),
+                enable_swp: false,
+                swp_withdrawal: 0,
+                swp_years: 0,
+                swp_stepup: 0,
+                swp_rate: 0
+            };
+        }
+
+        const lumpsumVal = this.validator.validate('lumpsum', this.dom.getValue('lumpsum') || 0);
 
         return {
             sip: this.validator.validate('sip', this.dom.getValue('sip') || 0),
@@ -249,7 +280,7 @@ export class CalculatorApp {
             stepup: this.validator.validate('stepup', this.dom.getValue('stepup') || 0),
             inflation: this.validator.validate('inflation', this.dom.getValue('inflation') || 0),
             lumpsum: lumpsumVal,
-            enable_swp: (this.dom.getElement<HTMLInputElement>('enable_swp')?.checked) || isSwpMode,
+            enable_swp: (this.dom.getElement<HTMLInputElement>('enable_swp')?.checked) || false,
             swp_withdrawal: this.validator.validate('swp_withdrawal', this.dom.getValue('swp_withdrawal') || 0),
             swp_years: this.validator.validate('swp_years', this.dom.getValue('swp_years') || 0),
             swp_stepup: this.validator.validate('swp_stepup', this.dom.getValue('swp_stepup') || 0),

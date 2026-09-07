@@ -289,9 +289,10 @@ export class SummaryMetricsController {
         // Rule of 72 Doubling Time Indicator
         const doublingBadge = this.dom.getElement('summary-doubling-badge');
         if (doublingBadge) {
-            if (inputs.rate > 0) {
-                const doublingYrs = (72 / inputs.rate).toFixed(1);
-                doublingBadge.textContent = `⏳ Capital doubles every ${doublingYrs} yrs (@${inputs.rate}%)`;
+            const effRate = inputs.years > 0 ? inputs.rate : (inputs.enable_swp ? inputs.swp_rate : inputs.rate);
+            if (effRate > 0) {
+                const doublingYrs = (72 / effRate).toFixed(1);
+                doublingBadge.textContent = `⏳ Capital doubles every ${doublingYrs} yrs (@${effRate}%)`;
                 doublingBadge.style.display = 'inline-flex';
             } else {
                 doublingBadge.style.display = 'none';
@@ -367,10 +368,11 @@ export class SummaryMetricsController {
         }
 
         // 3. Priority 3: Milestone Doubling / Velocity
-        if (inputs.rate > 0 && finalGains > totalInvested) {
+        const effRate = inputs.years > 0 ? inputs.rate : (inputs.enable_swp ? inputs.swp_rate : inputs.rate);
+        if (effRate > 0 && finalGains > totalInvested) {
             radarContainer.className = 'flex items-center justify-between p-3 rounded-2xl bg-indigo-50 border border-indigo-200 text-indigo-900 shadow-2xs mb-3 transition-all';
             if (radarIcon) radarIcon.textContent = '💎';
-            const doublingYrs = (72 / inputs.rate).toFixed(1);
+            const doublingYrs = (72 / effRate).toFixed(1);
             radarText.innerHTML = `<strong>Compounding Multiplier:</strong> Capital doubles every ${doublingYrs} years with ${Math.round((finalGains / totalInvested) * 100)}% net wealth expansion.`;
             radarContainer.style.display = 'flex';
             return;

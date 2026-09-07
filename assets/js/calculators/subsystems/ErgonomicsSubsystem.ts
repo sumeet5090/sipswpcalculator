@@ -59,7 +59,13 @@ export class ErgonomicsSubsystem {
             this.formatter,
             (mode) => {
                 const tabBtn = this.dom.getElement<HTMLButtonElement>(`tab-${mode}`);
-                if (tabBtn) tabBtn.click();
+                if (tabBtn) {
+                    tabBtn.click();
+                } else if (mode === 'sip') {
+                    window.location.href = '/sip-calculator';
+                } else if (mode === 'swp') {
+                    window.location.href = '/swp-calculator';
+                }
             },
             config.onWhatsAppShare
         );

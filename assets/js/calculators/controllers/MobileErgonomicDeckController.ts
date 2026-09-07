@@ -50,6 +50,11 @@ export class MobileErgonomicDeckController {
         this.btnSip = this.dom.getElement<HTMLButtonElement>('mobile-deck-sip-btn');
         this.btnSwp = this.dom.getElement<HTMLButtonElement>('mobile-deck-swp-btn');
         this.shareBtn = this.dom.getElement<HTMLButtonElement>('mobile-deck-share-btn');
+
+        const appEl = this.dom.getElement('calculator-app');
+        if (appEl?.dataset?.mode === 'swp') {
+            this.setActiveTab('swp');
+        }
     }
 
     private bindEvents(): void {

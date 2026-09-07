@@ -66,19 +66,19 @@
 {% block content %}
 {% include 'components/theme-glow-blobs.twig' %}
 <header class="relative mb-6 sm:mb-10 text-center border-b border-slate-100 pb-6">
-    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 mb-4">
-        <span class="relative flex h-3 w-3">
+    <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-emerald-50 border border-emerald-100 mb-3 sm:mb-4">
+        <span class="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3">
             <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-emerald-500"></span>
         </span>
-        <span class="text-sm font-semibold text-emerald-700 tracking-wide uppercase">Financial Planning Tool</span>
+        <span class="text-caption sm:text-ui-xs font-semibold text-emerald-700 tracking-wide uppercase">Financial Planning Tool</span>
     </div>
 
-    <h1 class="text-3xl sm:text-5xl font-extrabold pb-3 tracking-tight text-slate-900">
+    <h1 class="text-2xl sm:text-5xl font-extrabold pb-2 sm:pb-3 tracking-tight text-slate-900">
         {{ page_config.title }}
     </h1>
     {% if page_config.meta_desc %}
-        <p class="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-4">
+        <p class="text-ui-xs sm:text-body text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-3 sm:mb-4 line-clamp-3 sm:line-clamp-none">
             {{ page_config.meta_desc }}
         </p>
     {% endif %}
@@ -214,23 +214,43 @@
     </div>
 </section>
 
-<!-- Markdown Educational Guide -->
-<article class="markdown-content prose prose-slate max-w-4xl mx-auto border-t border-slate-200 pt-10">
-    {{ content_html|raw }}
-</article>
+<!-- Markdown Educational Guide with Progressive Disclosure on Mobile -->
+<section id="guide-section" class="mt-8 sm:mt-12 max-w-4xl mx-auto border-t border-slate-200 pt-8" aria-labelledby="guide-heading">
+    <details id="guide-accordion" class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
+        <summary class="flex sm:hidden items-center justify-between p-4 bg-slate-50/90 hover:bg-slate-100 cursor-pointer select-none border-b border-slate-200/80 font-bold text-slate-900 text-ui-xs">
+            <span class="flex items-center gap-2"><span>📖</span> <span>In-Depth Guide &amp; Technical Notes</span></span>
+            <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+        </summary>
+        <div class="p-3 sm:p-0">
+            <article class="markdown-content prose prose-slate max-w-4xl mx-auto">
+                {{ content_html|raw }}
+            </article>
+        </div>
+    </details>
+    <script>
+        if (window.innerWidth >= 640) {
+            document.getElementById('guide-accordion')?.setAttribute('open', '');
+        }
+    </script>
+</section>
 
 {% if faqs is not empty %}
-<section class="mt-12 max-w-4xl mx-auto border-t border-slate-200 pt-8 pb-10" aria-labelledby="faq-heading">
+<section id="faq-section" class="mt-8 sm:mt-12 max-w-4xl mx-auto border-t border-slate-200 pt-8 pb-10" aria-labelledby="faq-heading">
     <h2 id="faq-heading" class="text-xl sm:text-2xl font-extrabold text-slate-900 mb-6 tracking-tight flex items-center gap-2">
         <span>❓</span>
         <span>Frequently Asked Questions</span>
     </h2>
-    <div class="space-y-4">
+    <div class="space-y-3">
         {% for faq in faqs %}
-        <div class="fintech-glass-card p-5 border border-slate-200/90 rounded-2xl shadow-flat transition-all duration-300 hover:shadow-card">
-            <h3 class="text-sm sm:text-base font-bold text-slate-900 mb-2">{{ faq.q }}</h3>
-            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ faq.a }}</p>
-        </div>
+        <details class="fintech-accordion group rounded-2xl bg-white/95 border border-slate-200/90 shadow-subtle overflow-hidden transition-all duration-200 hover:shadow-card">
+            <summary class="flex items-center justify-between p-4 bg-slate-50/70 hover:bg-slate-100/70 cursor-pointer select-none font-bold text-slate-900 text-ui-xs sm:text-ui-sm">
+                <span class="pr-2">{{ faq.q }}</span>
+                <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform shrink-0">▼</span>
+            </summary>
+            <div class="p-4 pt-2 text-caption sm:text-ui-xs text-slate-600 leading-relaxed border-t border-slate-100/80">
+                <p>{{ faq.a }}</p>
+            </div>
+        </details>
         {% endfor %}
     </div>
 </section>
