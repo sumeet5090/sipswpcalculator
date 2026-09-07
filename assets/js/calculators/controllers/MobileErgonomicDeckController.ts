@@ -1,5 +1,6 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { CurrencyFormatter } from '../CurrencyHelper';
+import { WebHapticEngine } from '../helpers/WebHapticEngine';
 import type { YearResult } from '../../types';
 
 /**
@@ -22,6 +23,7 @@ export class MobileErgonomicDeckController {
     private startY: number = 0;
     private activeDeckIndex: number = 0;
     private readonly totalDecks: number = 3;
+    private lastCorpus: number = 0;
 
     constructor(
         dom: DOMAdapter,
@@ -40,7 +42,7 @@ export class MobileErgonomicDeckController {
     }
 
     private initDOM(): void {
-        this.deckCorpusEl = this.dom.getElement<HTMLElement>('mobile-deck-corpus-val');
+        this.deckCorpusEl = this.dom.getElement<HTMLElement>('dock-glance-corpus') || this.dom.getElement<HTMLElement>('mobile-deck-corpus-val');
         this.btnSip = this.dom.getElement<HTMLButtonElement>('mobile-deck-sip-btn');
         this.btnSwp = this.dom.getElement<HTMLButtonElement>('mobile-deck-swp-btn');
         this.shareBtn = this.dom.getElement<HTMLButtonElement>('mobile-deck-share-btn');
@@ -126,24 +128,29 @@ export class MobileErgonomicDeckController {
 
     public setActiveTab(mode: 'sip' | 'swp'): void {
         if (mode === 'sip') {
-            this.btnSip?.classList.add('bg-white', 'text-emerald-700', 'shadow-2xs');
-            this.btnSip?.classList.remove('text-slate-600');
-            this.btnSwp?.classList.remove('bg-white', 'text-emerald-700', 'shadow-2xs');
-            this.btnSwp?.classList.add('text-slate-600');
+            this.btnSip?.classList.add('bg-emerald-600', 'text-white', 'shadow-flat');
+            this.btnSip?.classList.remove('bg-slate-200/80', 'text-slate-600');
+            this.btnSwp?.classList.remove('bg-rose-600', 'text-white', 'shadow-flat');
+            this.btnSwp?.classList.add('bg-slate-200/80', 'text-slate-600');
         } else {
-            this.btnSwp?.classList.add('bg-white', 'text-rose-700', 'shadow-2xs');
-            this.btnSwp?.classList.remove('text-slate-600');
-            this.btnSip?.classList.remove('bg-white', 'text-emerald-700', 'shadow-2xs');
-            this.btnSip?.classList.add('text-slate-600');
+            this.btnSwp?.classList.add('bg-rose-600', 'text-white', 'shadow-flat');
+            this.btnSwp?.classList.remove('bg-slate-200/80', 'text-slate-600');
+            this.btnSip?.classList.remove('bg-emerald-600', 'text-white', 'shadow-flat');
+            this.btnSip?.classList.add('bg-slate-200/80', 'text-slate-600');
         }
     }
 
     public update(results: YearResult[]): void {
         if (!results || results.length === 0) return;
         const lastRow = results[results.length - 1];
+        const newCorpus = lastRow.combined_total;
         if (this.deckCorpusEl) {
-            this.deckCorpusEl.textContent = this.formatter.format(lastRow.combined_total);
+            this.deckCorpusEl.textContent = this.formatter.format(newCorpus);
         }
+        if (this.lastCorpus > 0) {
+            WebHapticEngine.checkCorpusMilestone(this.lastCorpus, newCorpus);
+        }
+        this.lastCorpus = newCorpus;
     }
 }
 

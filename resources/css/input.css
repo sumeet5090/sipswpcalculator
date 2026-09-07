@@ -283,8 +283,13 @@ body {
 
 /* ── Custom Range Slider Tactile Thumbs & Touch Ergonomics ── */
 input[type="range"] {
-  touch-action: pan-y;
+  touch-action: manipulation;
 }
+
+.stepper-btn {
+  touch-action: manipulation;
+}
+
 
 input[type="range"]::-webkit-slider-thumb {
   width: 28px;
@@ -328,14 +333,40 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* ── Mobile Chart Canvas Scroll Trap Prevention ── */
+/* ── Mobile Chart Canvas Touch & Gesture Ergonomics ── */
 @media (max-width: 639px) {
   #chart-canvas-container {
     touch-action: pan-y;
-    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
   }
   #chart-canvas-container canvas {
-    pointer-events: none;
+    touch-action: pan-y;
+  }
+}
+
+/* ── Universal Mobile Touch Ergonomics Utilities (Apple HIG 44px / MD3 48px) ── */
+@utility touch-target-hig {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@utility hitbox-expand-44 {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 44px;
+    min-height: 44px;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
   }
 }
 
@@ -475,4 +506,103 @@ input[type="range"]::-moz-range-thumb {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+
+/* ── Sticky First Column Elevation for Mobile Tables (Pure Light-Mode) ── */
+.table-sticky-col-0 {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 10 !important;
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  box-shadow: 3px 0 8px -2px rgba(15, 23, 42, 0.08) !important;
+}
+
+thead .table-sticky-col-0,
+th.table-sticky-col-0 {
+  z-index: 20 !important;
+  background-color: #f8fafc !important;
+}
+
+/* ── Transparent Pseudo-Element Hitbox Expander (Apple HIG 44x44pt) ── */
+.touch-target-expanded {
+  position: relative;
+}
+
+.touch-target-expanded::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 44px;
+  min-height: 44px;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Touch Bottom Sheet Drag Handle Ergonomics ── */
+.modal-drag-handle {
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── Horizontal Table Scroll Boundary Alpha Mask (Affordance Cue) ── */
+.table-scroll-mask-end {
+  mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+}
+
+/* ── Dynamic Floating Value Bubble above Range Thumb (Pure Light-Mode) ── */
+.slider-floating-tooltip {
+  position: absolute;
+  top: -36px;
+  transform: translateX(-50%) scale(0.88);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(16, 185, 129, 0.6);
+  color: #064e3b;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.6875rem;
+  letter-spacing: -0.02em;
+  padding: 3px 8px;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px -2px rgba(16, 185, 129, 0.25);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 30;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.12s ease, visibility 0.12s ease;
+  white-space: nowrap;
+}
+
+.slider-floating-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0 5px;
+  border-style: solid;
+  border-color: rgba(16, 185, 129, 0.6) transparent transparent transparent;
+}
+
+.slider-floating-tooltip.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}
+
+@media (max-width: 639px) {
+  .slider-floating-tooltip {
+    top: -44px;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 9px;
+    box-shadow: 0 6px 18px -2px rgba(16, 185, 129, 0.3);
+  }
 }

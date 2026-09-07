@@ -47,13 +47,13 @@
             </div>
         </div>
 
-        <!-- Card 4: Final Corpus / Net Wealth -->
-        <div id="card-corpus" class="col-span-2 sm:col-span-1 bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl border-2 border-emerald-600/90 shadow-glow-growth px-2 sm:px-2.5 py-2.5 sm:py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 relative group flex flex-col justify-between min-w-0">
-            <div id="title-corpus" class="text-caption font-bold text-growth-emphasis uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
+        <!-- Card 4: Final Corpus / Net Wealth (Mobile Asymmetric Hero Placement) -->
+        <div id="card-corpus" class="col-span-2 sm:col-span-1 order-first sm:order-none bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl border-2 border-emerald-600/90 shadow-glow-growth px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 relative group flex flex-col justify-between min-w-0">
+            <div id="title-corpus" class="text-caption font-extrabold text-growth-emphasis uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span>💎</span>
                 <span>Final Wealth Corpus</span>
             </div>
-            <div id="summary-corpus" class="metric-len-normal font-extrabold text-growth-emphasis font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
+            <div id="summary-corpus" class="metric-len-normal font-black text-growth-emphasis font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
                 ₹ --
             </div>
             <div class="flex items-center justify-center gap-1">
@@ -128,118 +128,102 @@
     </div>
 
     <!-- Chart Card -->
-    <div id="chart-card" class="relative z-10 bg-white/95 rounded-3xl border border-slate-200/90 shadow-card backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-card-hover p-4 sm:p-5">
+    <div id="chart-card" class="relative z-10 bg-white/95 rounded-3xl border border-slate-200/90 shadow-card backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-card-hover p-4 sm:p-5 flex flex-col gap-3">
         
         <!-- ========================================================================= -->
-        <!-- TIER 1: UNIFIED MASTER COMMAND DOCK (Identity · Mode · Lenses · Actions) -->
+        <!-- TIER 1: UNIFIED MASTER COMMAND DOCK (Identity · Mode · Headline Context)  -->
         <!-- ========================================================================= -->
-        <header class="flex flex-col gap-2.5 pb-3 border-b border-slate-100">
-            
-            <!-- Top Row: Identity, View Mode & Action Tools -->
-            <div class="flex items-center justify-between gap-3">
-                <!-- Left: Identity & Regulatory Seal -->
-                <div class="flex items-center gap-2 min-w-0">
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse"></span>
-                        <h3 class="font-heading text-heading-sm font-extrabold text-slate-900 tracking-tight">
-                            Wealth Growth Projection
-                        </h3>
-                    </div>
-                    
+        <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <!-- Left: Identity & Live Financial Context -->
+            <div class="flex flex-col gap-0.5 min-w-0">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse shrink-0"></span>
+                    <h3 class="font-heading text-ui-base sm:text-heading-sm font-extrabold text-slate-900 tracking-tight truncate">
+                        Wealth Growth Trajectory
+                    </h3>
                     <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.showModal()"
-                        class="hidden sm:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100/90 hover:bg-growth-surface border border-slate-200 hover:border-growth-border text-micro text-slate-600 hover:text-growth-emphasis transition-all cursor-pointer shadow-flat"
+                        class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100/90 hover:bg-growth-surface border border-slate-200 hover:border-growth-border text-micro text-slate-600 hover:text-growth-emphasis transition-all cursor-pointer shadow-flat shrink-0"
                         title="Click to view AMFI/SEBI regulatory modeling assumptions">
                         <span class="font-bold">AMFI Aligned</span>
                         <span class="text-slate-400 text-micro">ℹ️</span>
                     </button>
                 </div>
-
-                <!-- Right: View Switcher & Action Tools -->
-                <div class="flex items-center gap-1.5 shrink-0">
-                    <!-- Segmented View Mode Switcher -->
-                    <div class="inline-flex bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 shadow-flat" role="tablist" aria-label="Chart View Mode">
-                        <button type="button" id="chart-view-line" role="tab" aria-selected="true"
-                            class="px-2.5 py-1 text-caption font-bold rounded-lg transition-all duration-150 bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer">
-                            📈 Line
-                        </button>
-                        <button type="button" id="chart-view-donut" role="tab" aria-selected="false"
-                            class="px-2.5 py-1 text-caption font-bold rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-900 cursor-pointer">
-                            🍩 Split
-                        </button>
-                    </div>
-
-                    <!-- Utility Action Buttons (hidden on mobile, available in dock) -->
-                    <div class="hidden sm:inline-flex items-center gap-1">
-                        <button type="button" id="header-share-btn" onclick="document.getElementById('qr-share-modal')?.showModal()"
-                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-200/90 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-ui-xs font-bold transition-all active:scale-95 cursor-pointer shadow-flat"
-                            title="Share Wealth Plan or Export Wealth Horizon Pass">
-                            <span class="text-ui-xs">✦</span>
-                            <span>Share Plan</span>
-                        </button>
-                        <button type="button" id="snapshot-scenario-btn" 
-                            class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-flat"
-                            title="Snapshot scenario for comparison">
-                            <span class="text-ui-xs">📸</span>
-                        </button>
-                        <button type="button" id="open-tax-waterfall-btn" 
-                            class="p-1.5 rounded-xl border border-tax-border bg-tax-surface hover:bg-violet-100 text-tax-emphasis transition-all active:scale-95 cursor-pointer shadow-flat"
-                            title="Open Section 112A Tax Waterfall Modal">
-                            <span class="text-ui-xs">⚖️</span>
-                        </button>
-                        <button type="button" id="open-embed-modal-btn" 
-                            onclick="document.getElementById('embedModal')?.showModal()"
-                            class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-flat"
-                            title="Embed this calculator widget on your website">
-                            <span class="text-ui-xs">🔗</span>
-                        </button>
-                    </div>
+                <div class="flex items-center gap-2 text-ui-xs text-slate-500 font-medium">
+                    <span>Projected: <strong class="text-slate-900 font-financial-mono font-bold" id="chart-header-gross">₹ --</strong></span>
+                    <span class="text-slate-300">•</span>
+                    <span class="text-growth-emphasis font-bold font-financial-mono" id="chart-header-gain">+₹ -- Gains</span>
                 </div>
             </div>
 
-            <!-- Bottom Row: Analytical Lenses Bar -->
-            <div class="flex flex-wrap items-center justify-between gap-2 pt-0.5">
-                <div class="flex flex-wrap items-center gap-1" role="group" aria-label="Analytical Projection Lenses">
-                    <span class="text-micro font-bold text-slate-400 uppercase tracking-wider mr-1">Lenses:</span>
-
-                    <!-- Lens: Corridor -->
-                    <label id="overlay-chip-corridor" 
-                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg cursor-pointer select-none transition-all duration-150 text-caption font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-growth-emphasis has-checked:shadow-flat has-checked:border-growth-border has-checked:font-bold" 
-                        title="Toggle 10th-90th Percentile Historical Volatility Corridor [Shift+C]">
-                        <input type="checkbox" id="show_historical_corridor" class="sr-only peer" aria-label="Show Historical Volatility Corridor">
-                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-emerald-500 peer-checked:shadow-[0_0_6px_rgba(16,185,129,0.8)] transition-all"></span>
-                        <span>± Corridor</span>
-                        <span id="corridor-telemetry-pill" class="px-1.5 py-0.5 rounded bg-slate-200/60 peer-checked:bg-growth-surface text-micro font-financial-mono text-slate-600 peer-checked:text-growth-emphasis font-bold">10–90%</span>
-                    </label>
-
-                    <!-- Lens: Section 112A LTCG Tax -->
-                    <label id="overlay-chip-post-tax" 
-                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg cursor-pointer select-none transition-all duration-150 text-caption font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-tax-emphasis has-checked:shadow-flat has-checked:border-tax-border has-checked:font-bold" 
-                        title="Toggle Budget 2024 Section 112A Post-Tax Returns [Shift+T]">
-                        <input type="checkbox" id="show_post_tax" class="sr-only peer" aria-label="Show Post-Tax Returns">
-                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-violet-500 peer-checked:shadow-[0_0_6px_rgba(139,92,246,0.8)] transition-all"></span>
-                        <span>§112A LTCG</span>
-                        <span id="tax-telemetry-pill" class="px-1.5 py-0.5 rounded bg-slate-200/60 peer-checked:bg-tax-surface text-micro font-financial-mono text-slate-600 peer-checked:text-tax-emphasis font-bold">12.5%</span>
-                    </label>
-
-                    <!-- Lens: Wealth Map -->
-                    <label id="overlay-chip-wealth-map" 
-                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg cursor-pointer select-none transition-all duration-150 text-caption font-semibold text-slate-600 hover:text-slate-900 hover:bg-white/60 active:scale-95 border border-transparent has-checked:bg-white has-checked:text-indigo-900 has-checked:shadow-flat has-checked:border-indigo-200 has-checked:font-bold" 
-                        title="Toggle Stacked Principal vs Gain Decomposition [Shift+M]">
-                        <input type="checkbox" id="show_wealth_map" class="sr-only peer" aria-label="Show Wealth Map">
-                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-indigo-500 peer-checked:shadow-[0_0_6px_rgba(99,102,241,0.8)] transition-all"></span>
-                        <span>Wealth Map</span>
-                        <span id="wealth-map-telemetry-pill" class="px-1.5 py-0.5 rounded bg-slate-200/60 peer-checked:bg-indigo-100 text-micro font-financial-mono text-slate-600 peer-checked:text-indigo-800 font-bold">Stack</span>
-                    </label>
+            <!-- Right: View Mode Switcher & Primary Action Tools -->
+            <div class="flex items-center justify-between sm:justify-end gap-1.5 w-full sm:w-auto self-start sm:self-center shrink-0">
+                <!-- Segmented View Mode Switcher -->
+                <div class="inline-flex bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 shadow-flat" role="tablist" aria-label="Chart View Mode">
+                    <button type="button" id="chart-view-line" role="tab" aria-selected="true"
+                        class="px-2.5 py-1 text-caption font-bold rounded-lg transition-all duration-150 bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer">
+                        📈 Line
+                    </button>
+                    <button type="button" id="chart-view-donut" role="tab" aria-selected="false"
+                        class="px-2.5 py-1 text-caption font-bold rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-900 cursor-pointer">
+                        🍩 Split
+                    </button>
                 </div>
 
-                <span id="active-lens-indicator" class="hidden sm:inline-flex items-center text-micro font-bold text-slate-500 bg-slate-100/90 px-2.5 py-0.5 rounded-full border border-slate-200/70">
-                    Standard View
-                </span>
+                <!-- Mobile Quick Actions Sheet Trigger (< sm) -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.showModal()"
+                    class="sm:hidden inline-flex items-center gap-1 px-2.5 py-1 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 text-ui-xs font-bold transition-all active:scale-95 cursor-pointer shadow-flat"
+                    aria-label="Open Chart Actions and Tools">
+                    <span>⚡ Tools</span>
+                    <span class="text-micro font-extrabold text-slate-400">•••</span>
+                </button>
+
+                <!-- Desktop Primary & Utility Action Buttons (>= sm) -->
+                <div class="hidden sm:inline-flex items-center gap-1">
+                    <button type="button" id="header-share-btn" onclick="document.getElementById('qr-share-modal')?.showModal()"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-200/90 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-ui-xs font-bold transition-all active:scale-95 cursor-pointer shadow-flat"
+                        title="Share Wealth Plan or Export Wealth Horizon Pass">
+                        <span class="text-ui-xs">✦</span>
+                        <span>Share Plan</span>
+                    </button>
+                    <button type="button" id="snapshot-scenario-btn" 
+                        class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-flat"
+                        title="Snapshot scenario for comparison">
+                        <span class="text-ui-xs">📸</span>
+                    </button>
+                    <button type="button" id="open-tax-waterfall-btn" 
+                        class="p-1.5 rounded-xl border border-tax-border bg-tax-surface hover:bg-violet-100 text-tax-emphasis transition-all active:scale-95 cursor-pointer shadow-flat"
+                        title="Open Section 112A Tax Waterfall Modal">
+                        <span class="text-ui-xs">⚖️</span>
+                    </button>
+                    <button type="button" id="open-embed-modal-btn" 
+                        onclick="document.getElementById('embedModal')?.showModal()"
+                        class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-flat"
+                        title="Embed this calculator widget on your website">
+                        <span class="text-ui-xs">🔗</span>
+                    </button>
+                </div>
             </div>
         </header>
 
         <!-- ========================================================================= -->
-        <!-- TIER 2: INTERACTIVE CANVAS CONTAINER & ACCESSIBLE LEDGER                  -->
+        <!-- TIER 2: REAL-TIME TIMELINE INSPECTION HUD DOCK                            -->
+        <!-- ========================================================================= -->
+        <div id="chart-inspection-hud" class="flex flex-wrap items-center justify-between gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-50/90 border border-slate-200/80 text-ui-xs text-slate-600 transition-all">
+            <div class="flex items-center gap-2 min-w-0">
+                <span id="hud-timeline-indicator" class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span id="hud-year-label" class="font-bold text-slate-800 tracking-tight truncate">Interactive Timeline</span>
+            </div>
+            <div class="flex items-center gap-2 sm:gap-3 font-financial-mono text-caption sm:text-ui-xs shrink-0">
+                <span id="hud-invested-metric" class="text-slate-500 font-medium">Invested: ₹ --</span>
+                <span class="text-slate-300 hidden sm:inline">•</span>
+                <span id="hud-gains-metric" class="text-growth-emphasis font-bold">Gains: ₹ --</span>
+                <span class="text-slate-300 hidden sm:inline">•</span>
+                <span id="hud-total-metric" class="text-slate-900 font-black">Total: ₹ --</span>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TIER 3: INTERACTIVE CANVAS CONTAINER & ACCESSIBLE LEDGER                  -->
         <!-- ========================================================================= -->
         <div class="h-[300px] sm:h-[380px] lg:h-[370px] xl:h-[410px] w-full min-w-0 relative z-10" 
             tabindex="0" id="chart-canvas-container" 
@@ -276,15 +260,54 @@
         </table>
 
         <!-- ========================================================================= -->
-        <!-- TIER 4: REFINED HISTORICAL BENCHMARK BARREL STRIP                         -->
+        <!-- TIER 4: REFINED HISTORICAL BENCHMARK & ANALYTICAL LENSES FOOTER           -->
         <!-- ========================================================================= -->
-        <footer class="flex flex-wrap items-center justify-between gap-2 mt-3 pt-2.5 border-t border-slate-100">
-            <span class="text-micro font-bold text-slate-400 uppercase tracking-widest shrink-0">Compare Baseline:</span>
-            <div class="inline-flex items-center gap-1.5 sm:gap-1 overflow-x-auto max-w-full no-scrollbar py-0.5 px-0.5 sm:flex-wrap touch-pan-x" role="group" aria-label="Historical Benchmarks" style="scrollbar-width: none; -webkit-overflow-scrolling: touch;">
-                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1.5 sm:py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 min-h-[40px] sm:min-h-0 is-active bg-emerald-600 text-white border-emerald-600 shadow-flat" data-benchmark="none">None</button>
-                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1.5 sm:py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 min-h-[40px] sm:min-h-0" data-benchmark="nifty">📈 Nifty 50 (12%)</button>
-                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1.5 sm:py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 min-h-[40px] sm:min-h-0" data-benchmark="gold">🥇 Gold (9%)</button>
-                <button type="button" class="benchmark-chip text-caption font-semibold px-2.5 py-1.5 sm:py-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 min-h-[40px] sm:min-h-0" data-benchmark="fd">🏦 FD (6.5%)</button>
+        <footer class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 mt-1 pt-3 border-t border-slate-100">
+            <!-- Left: Opportunity Cost Historical Benchmarks -->
+            <div class="flex items-center gap-1.5 sm:gap-2 min-w-0 max-w-full overflow-x-auto no-scrollbar py-1">
+                <span class="text-micro font-bold text-slate-400 uppercase tracking-widest shrink-0">Benchmark:</span>
+                <div class="inline-flex items-center gap-1.5" role="group" aria-label="Historical Benchmarks">
+                    <button type="button" class="benchmark-chip text-caption font-semibold px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center is-active bg-emerald-600 text-white border-emerald-600 shadow-flat" data-benchmark="none">None</button>
+                    <button type="button" class="benchmark-chip text-caption font-semibold px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center" data-benchmark="nifty">📈 Nifty 50 (12%)</button>
+                    <button type="button" class="benchmark-chip text-caption font-semibold px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center" data-benchmark="gold">🥇 Gold (9%)</button>
+                    <button type="button" class="benchmark-chip text-caption font-semibold px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center" data-benchmark="fd">🏦 Bank FD (6.5%)</button>
+                </div>
+            </div>
+
+            <!-- Right: Lenses Toggles (Corridor, LTCG Tax, Wealth Map) -->
+            <div class="flex items-center gap-2 overflow-x-auto max-w-full no-scrollbar py-1 lg:self-center" role="group" aria-label="Analytical Projection Lenses">
+                <span class="text-micro font-bold text-slate-400 uppercase tracking-wider hidden sm:inline shrink-0">Lenses:</span>
+                <span id="active-lens-indicator" class="hidden sm:inline-flex items-center text-micro font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70 shrink-0">Standard View</span>
+
+                <!-- Lens: Section 112A LTCG Tax -->
+                <label id="overlay-chip-post-tax" 
+                    class="group relative inline-flex items-center gap-1.5 px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg cursor-pointer select-none transition-all duration-150 text-caption font-semibold text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-white active:scale-95 border border-slate-200/80 has-checked:bg-white has-checked:text-tax-emphasis has-checked:shadow-flat has-checked:border-tax-border has-checked:font-bold shrink-0" 
+                    title="Toggle Budget 2024 Section 112A Post-Tax Returns [Shift+T]">
+                    <input type="checkbox" id="show_post_tax" class="sr-only peer" aria-label="Show Post-Tax Returns">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-violet-500 peer-checked:shadow-[0_0_6px_rgba(139,92,246,0.8)] transition-all"></span>
+                    <span>§112A LTCG</span>
+                    <span id="tax-telemetry-pill" class="px-1.5 py-0.2 rounded bg-slate-200/60 peer-checked:bg-tax-surface text-micro font-financial-mono text-slate-600 peer-checked:text-tax-emphasis font-bold">12.5%</span>
+                </label>
+
+                <!-- Lens: Corridor -->
+                <label id="overlay-chip-corridor" 
+                    class="group relative inline-flex items-center gap-1.5 px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg cursor-pointer select-none transition-all duration-150 text-caption font-semibold text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-white active:scale-95 border border-slate-200/80 has-checked:bg-white has-checked:text-growth-emphasis has-checked:shadow-flat has-checked:border-growth-border has-checked:font-bold shrink-0" 
+                    title="Toggle 10th-90th Percentile Historical Volatility Corridor [Shift+C]">
+                    <input type="checkbox" id="show_historical_corridor" class="sr-only peer" aria-label="Show Historical Volatility Corridor">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-emerald-500 peer-checked:shadow-[0_0_6px_rgba(16,185,129,0.8)] transition-all"></span>
+                    <span>± Corridor</span>
+                    <span id="corridor-telemetry-pill" class="px-1.5 py-0.2 rounded bg-slate-200/60 peer-checked:bg-growth-surface text-micro font-financial-mono text-slate-600 peer-checked:text-growth-emphasis font-bold">10–90%</span>
+                </label>
+
+                <!-- Lens: Wealth Map -->
+                <label id="overlay-chip-wealth-map" 
+                    class="group relative inline-flex items-center gap-1.5 px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg cursor-pointer select-none transition-all duration-150 text-caption font-semibold text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-white active:scale-95 border border-slate-200/80 has-checked:bg-white has-checked:text-indigo-900 has-checked:shadow-flat has-checked:border-indigo-200 has-checked:font-bold shrink-0" 
+                    title="Toggle Stacked Principal vs Gain Decomposition [Shift+M]">
+                    <input type="checkbox" id="show_wealth_map" class="sr-only peer" aria-label="Show Wealth Map">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-indigo-500 peer-checked:shadow-[0_0_6px_rgba(99,102,241,0.8)] transition-all"></span>
+                    <span>Wealth Map</span>
+                    <span id="wealth-map-telemetry-pill" class="px-1.5 py-0.2 rounded bg-slate-200/60 peer-checked:bg-indigo-100 text-micro font-financial-mono text-slate-600 peer-checked:text-indigo-800 font-bold">Stack</span>
+                </label>
             </div>
         </footer>
     </div>

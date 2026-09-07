@@ -587,21 +587,24 @@ export class ChartManager {
                 const bottomY = chart.scales.y.bottom;
 
                 ctx.save();
-                ctx.beginPath();
-                ctx.setLineDash([4, 4]);
-                ctx.moveTo(x, topY);
-                ctx.lineTo(x, bottomY);
-                ctx.lineWidth = 1.5;
-                ctx.strokeStyle = THEME_COLORS.chart.milestoneLineActive;
-                ctx.stroke();
+                try {
+                    ctx.beginPath();
+                    ctx.setLineDash([4, 4]);
+                    ctx.moveTo(x, topY);
+                    ctx.lineTo(x, bottomY);
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeStyle = THEME_COLORS.chart.milestoneLineActive;
+                    ctx.stroke();
 
-                // Horizontal guide line to Y axis
-                ctx.beginPath();
-                ctx.moveTo(leftX, y);
-                ctx.lineTo(x, y);
-                ctx.strokeStyle = THEME_COLORS.chart.milestoneLineSubtle;
-                ctx.stroke();
-                ctx.restore();
+                    // Horizontal guide line to Y axis
+                    ctx.beginPath();
+                    ctx.moveTo(leftX, y);
+                    ctx.lineTo(x, y);
+                    ctx.strokeStyle = THEME_COLORS.chart.milestoneLineSubtle;
+                    ctx.stroke();
+                } finally {
+                    ctx.restore();
+                }
             }
         }
     };
@@ -633,51 +636,91 @@ export class ChartManager {
             const { top, bottom, right } = chart.chartArea;
 
             ctx.save();
-            // Ambient soft light aurora ignition glow
-            const gradient = ctx.createLinearGradient(xPos, 0, right, 0);
-            gradient.addColorStop(0, 'rgba(16, 185, 129, 0.08)');
-            gradient.addColorStop(1, 'rgba(20, 184, 166, 0.02)');
+            try {
+                // Ambient soft light aurora ignition glow
+                const gradient = ctx.createLinearGradient(xPos, 0, right, 0);
+                gradient.addColorStop(0, 'rgba(16, 185, 129, 0.08)');
+                gradient.addColorStop(0.35, 'rgba(20, 184, 166, 0.04)');
+                gradient.addColorStop(1, 'rgba(16, 185, 129, 0.01)');
 
-            ctx.fillStyle = gradient;
-            ctx.fillRect(xPos, top, right - xPos, bottom - top);
+                ctx.fillStyle = gradient;
+                ctx.fillRect(xPos, top, right - xPos, bottom - top);
 
-            // Demarcation dotted line
-            ctx.beginPath();
-            ctx.setLineDash([3, 3]);
-            ctx.moveTo(xPos, top);
-            ctx.lineTo(xPos, bottom);
-            ctx.lineWidth = 1.5;
-            ctx.strokeStyle = '#059669';
-            ctx.stroke();
+                // Demarcation dotted hairline
+                ctx.beginPath();
+                ctx.setLineDash([3, 3]);
+                ctx.moveTo(xPos, top);
+                ctx.lineTo(xPos, bottom);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = 'rgba(5, 150, 105, 0.4)';
+                ctx.stroke();
 
-            // Pure Light Ignition Pill annotation
-            const tagText = '⚡ GAINS OUTPACE SIP';
-            ctx.font = '700 9px "Plus Jakarta Sans", "Inter", sans-serif';
-            const textWidth = ctx.measureText(tagText).width;
-            const pillWidth = textWidth + 12;
-            const pillX = Math.min(xPos + 4, right - pillWidth - 4);
+                // Pure Light Ignition Beacon annotation (pinned to top edge)
+                const tagText = '⚡ Compounding Ignition';
+                ctx.font = '700 9px "Plus Jakarta Sans", "Inter", sans-serif';
+                const textWidth = ctx.measureText(tagText).width;
+                const pillWidth = textWidth + 14;
+                const pillX = Math.min(xPos + 4, right - pillWidth - 4);
 
-            ctx.fillStyle = '#ecfdf5';
-            ctx.strokeStyle = '#a7f3d0';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            if (typeof ctx.roundRect === 'function') {
-                ctx.roundRect(pillX, top + 6, pillWidth, 18, 4);
-            } else {
-                ctx.rect(pillX, top + 6, pillWidth, 18);
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#ecfdf5';
+                ctx.strokeStyle = '#a7f3d0';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                if (typeof ctx.roundRect === 'function') {
+                    ctx.roundRect(pillX, top + 4, pillWidth, 18, 4);
+                } else {
+                    ctx.rect(pillX, top + 4, pillWidth, 18);
+                }
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#047857';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(tagText, pillX + 7, top + 13);
+            } finally {
+                ctx.restore();
             }
-            ctx.fill();
-            ctx.stroke();
-
-            ctx.fillStyle = '#047857';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(tagText, pillX + 6, top + 15);
-            ctx.restore();
         }
     };
 
     /**
+     * Deterministic Harmonic Stride Tick Generator.
+     * Prevents decimation dropouts (e.g. Y1, Y5, Y15 skipping Y10) by computing
+     * a clean, human-intuitive decade/semi-decade milestone cadence.
+     */
+    public computeHarmonicYearTicks(totalYears: number): number[] {
+        if (totalYears <= 5) {
+            return Array.from({ length: totalYears }, (_, i) => i + 1);
+        }
+        if (totalYears <= 10) {
+            const ticks = [1];
+            for (let y = 2; y <= totalYears; y += 2) {
+                if (!ticks.includes(y)) ticks.push(y);
+            }
+            if (!ticks.includes(totalYears)) ticks.push(totalYears);
+            return ticks;
+        }
+        if (totalYears <= 20) {
+            const ticks = [1];
+            for (let y = 5; y <= totalYears; y += 5) {
+                if (!ticks.includes(y)) ticks.push(y);
+            }
+            if (!ticks.includes(totalYears)) ticks.push(totalYears);
+            return ticks;
+        }
+        const step = totalYears <= 30 ? 5 : 10;
+        const ticks = [1];
+        for (let y = step; y <= totalYears; y += step) {
+            if (!ticks.includes(y)) ticks.push(y);
+        }
+        if (!ticks.includes(totalYears)) ticks.push(totalYears);
+        return ticks;
+    }
+
+    /**
      * ₹1 Crore Golden Milestone Guideline Plugin.
+     * Renders a clean right-anchored pin badge without slicing text through curves.
      */
     private croreMilestoneLinePlugin = {
         id: 'croreMilestoneLine',
@@ -692,18 +735,45 @@ export class ChartManager {
             const ctx = chart.ctx;
 
             ctx.save();
-            ctx.beginPath();
-            ctx.setLineDash([6, 4]);
-            ctx.moveTo(left, yPos);
-            ctx.lineTo(right, yPos);
-            ctx.lineWidth = 1.5;
-            ctx.strokeStyle = 'rgba(217, 119, 6, 0.45)'; // Amber-600 gold
-            ctx.stroke();
+            try {
+                // Milestone badge geometry
+                const badgeText = '👑 ₹1 Crore Target';
+                ctx.font = '700 9.5px "Plus Jakarta Sans", "Inter", sans-serif';
+                const textWidth = ctx.measureText(badgeText).width;
+                const badgeW = textWidth + 16;
+                const badgeH = 18;
+                const badgeX = right - badgeW - 4;
+                const badgeY = yPos - (badgeH / 2);
 
-            ctx.font = '700 9px "Plus Jakarta Sans", "Inter", sans-serif';
-            ctx.fillStyle = '#b45309';
-            ctx.fillText('👑 ₹1 Crore Milestone', right - 110, yPos - 5);
-            ctx.restore();
+                // Subtle guideline stopping before the badge
+                ctx.beginPath();
+                ctx.setLineDash([4, 6]);
+                ctx.moveTo(left, yPos);
+                ctx.lineTo(badgeX - 4, yPos);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)'; // Delicate amber tint
+                ctx.stroke();
+
+                // Crisp light-mode amber milestone pill
+                ctx.setLineDash([]);
+                ctx.beginPath();
+                if (typeof ctx.roundRect === 'function') {
+                    ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 4);
+                } else {
+                    ctx.rect(badgeX, badgeY, badgeW, badgeH);
+                }
+                ctx.fillStyle = '#fffbeb'; // amber-50
+                ctx.strokeStyle = '#fde68a'; // amber-200
+                ctx.lineWidth = 1;
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#b45309'; // amber-700
+                ctx.textBaseline = 'middle';
+                ctx.fillText(badgeText, badgeX + 8, yPos);
+            } finally {
+                ctx.restore();
+            }
         }
     };
 
@@ -729,26 +799,30 @@ export class ChartManager {
 
             const ctx = chart.ctx;
             ctx.save();
-            const badgeText = `+${this.formatter.format(delta)} FD Alpha`;
-            ctx.font = '700 10px "Plus Jakarta Sans", "Inter", sans-serif';
-            const width = ctx.measureText(badgeText).width + 12;
+            try {
+                const badgeText = `+${this.formatter.format(delta)} FD Alpha`;
+                ctx.font = '700 10px "Plus Jakarta Sans", "Inter", sans-serif';
+                const width = ctx.measureText(badgeText).width + 12;
 
-            const clampedX = Math.min(finalPoint.x - width, chart.chartArea.right - width - 2);
-            const clampedY = Math.max(chart.chartArea.top + 4, finalPoint.y - 24);
+                const clampedX = Math.min(finalPoint.x - width, chart.chartArea.right - width - 2);
+                const clampedY = Math.max(chart.chartArea.top + 4, finalPoint.y - 24);
 
-            ctx.fillStyle = '#065f46';
-            ctx.beginPath();
-            if (typeof ctx.roundRect === 'function') {
-                ctx.roundRect(clampedX, clampedY, width, 18, 4);
-            } else {
-                ctx.rect(clampedX, clampedY, width, 18);
+                ctx.setLineDash([]);
+                ctx.fillStyle = '#065f46';
+                ctx.beginPath();
+                if (typeof ctx.roundRect === 'function') {
+                    ctx.roundRect(clampedX, clampedY, width, 18, 4);
+                } else {
+                    ctx.rect(clampedX, clampedY, width, 18);
+                }
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(badgeText, clampedX + 6, clampedY + 9);
+            } finally {
+                ctx.restore();
             }
-            ctx.fill();
-
-            ctx.fillStyle = '#ffffff';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(badgeText, clampedX + 6, clampedY + 9);
-            ctx.restore();
         }
     };
 
@@ -770,35 +844,38 @@ export class ChartManager {
             const centerY = (chartArea.top + chartArea.bottom) / 2;
 
             ctx.save();
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
+            try {
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
 
-            if (isDepleted) {
-                ctx.font = `800 18px ${THEME_FONTS.heading}`;
-                ctx.fillStyle = '#be123c'; // Rose-700
-                ctx.fillText('DEPLETED', centerX, centerY - 6);
+                if (isDepleted) {
+                    ctx.font = `800 18px ${THEME_FONTS.heading}`;
+                    ctx.fillStyle = '#be123c'; // Rose-700
+                    ctx.fillText('DEPLETED', centerX, centerY - 6);
 
-                ctx.font = `700 9px ${THEME_FONTS.mono}`;
-                ctx.fillStyle = '#9f1239';
-                ctx.fillText(`AT YEAR ${currentRow.year}`, centerX, centerY + 12);
-            } else {
-                const data = datasets[0].data as number[];
-                const totalInvested = data[0] || 0;
-                const totalGains = data[1] || 0;
-                const totalWithdrawals = (data.length > 2 ? data[2] : 0) || 0;
-                const finalValue = totalGains + totalInvested + totalWithdrawals;
-                const multiplier = totalInvested > 0 ? (finalValue / totalInvested).toFixed(1) : '1.0';
+                    ctx.font = `700 9px ${THEME_FONTS.mono}`;
+                    ctx.fillStyle = '#9f1239';
+                    ctx.fillText(`AT YEAR ${currentRow.year}`, centerX, centerY + 12);
+                } else {
+                    const data = datasets[0].data as number[];
+                    const totalInvested = data[0] || 0;
+                    const totalGains = data[1] || 0;
+                    const totalWithdrawals = (data.length > 2 ? data[2] : 0) || 0;
+                    const finalValue = totalGains + totalInvested + totalWithdrawals;
+                    const multiplier = totalInvested > 0 ? (finalValue / totalInvested).toFixed(1) : '1.0';
 
-                ctx.font = `800 24px ${THEME_FONTS.mono}`;
-                ctx.fillStyle = '#047857'; // Emerald-700
-                ctx.fillText(`${multiplier}×`, centerX, centerY - 6);
+                    ctx.font = `800 24px ${THEME_FONTS.mono}`;
+                    ctx.fillStyle = '#047857'; // Emerald-700
+                    ctx.fillText(`${multiplier}×`, centerX, centerY - 6);
 
-                ctx.font = `700 9px ${THEME_FONTS.heading}`;
-                ctx.fillStyle = '#64748b';
-                const yearLabel = this.activeDonutScrubYear ? `YR ${this.activeDonutScrubYear} ROI` : 'ROI MULTIPLIER';
-                ctx.fillText(yearLabel, centerX, centerY + 13);
+                    ctx.font = `700 9px ${THEME_FONTS.heading}`;
+                    ctx.fillStyle = '#64748b';
+                    const yearLabel = this.activeDonutScrubYear ? `YR ${this.activeDonutScrubYear} ROI` : 'ROI MULTIPLIER';
+                    ctx.fillText(yearLabel, centerX, centerY + 13);
+                }
+            } finally {
+                ctx.restore();
             }
-            ctx.restore();
         }
     };
 
@@ -817,19 +894,23 @@ export class ChartManager {
                 const point = meta.data[m.index];
 
                 ctx.save();
-                ctx.beginPath();
-                ctx.arc(point.x, point.y, 11, 0, Math.PI * 2);
-                ctx.fillStyle = m.type === 'security' ? 'rgba(245, 158, 11, 0.22)' : 'rgba(16, 185, 129, 0.22)';
-                ctx.fill();
+                try {
+                    ctx.setLineDash([]);
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 11, 0, Math.PI * 2);
+                    ctx.fillStyle = m.type === 'security' ? 'rgba(245, 158, 11, 0.22)' : 'rgba(16, 185, 129, 0.22)';
+                    ctx.fill();
 
-                ctx.beginPath();
-                ctx.arc(point.x, point.y, 5.5, 0, Math.PI * 2);
-                ctx.fillStyle = m.type === 'security' ? '#d97706' : '#10b981';
-                ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = '#ffffff';
-                ctx.stroke();
-                ctx.restore();
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 5.5, 0, Math.PI * 2);
+                    ctx.fillStyle = m.type === 'security' ? '#d97706' : '#10b981';
+                    ctx.fill();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.stroke();
+                } finally {
+                    ctx.restore();
+                }
             });
         }
     };
@@ -849,18 +930,30 @@ export class ChartManager {
         const rCorpus = this.dom.getElement('ribbon-inspect-corpus');
         const statusDot = this.dom.getElement('hud-status-dot');
 
+        const hudYearLabel = this.dom.getElement('hud-year-label');
+        const hudInvested = this.dom.getElement('hud-invested-metric');
+        const hudGains = this.dom.getElement('hud-gains-metric');
+        const hudTotal = this.dom.getElement('hud-total-metric');
+        const hudTimelineIndicator = this.dom.getElement('hud-timeline-indicator');
+
         if (row) {
             const totalYears = this.lastResults?.length || row.year;
+            const investedStr = this.formatter.format(row.cumulative_invested);
+            const corpusStr = this.formatter.format(row.combined_total);
+            const gains = Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested);
+            const gainsStr = this.formatter.format(gains);
+
             if (rYear) rYear.textContent = `Year ${row.year} of ${totalYears}`;
-            if (rInvested) rInvested.textContent = this.formatter.format(row.cumulative_invested);
-            if (rCorpus) rCorpus.textContent = this.formatter.format(row.combined_total);
-            if (rGains) {
-                const gains = Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested);
-                rGains.textContent = `+${this.formatter.format(gains)}`;
-            }
-            if (statusDot) {
-                statusDot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
-            }
+            if (rInvested) rInvested.textContent = investedStr;
+            if (rCorpus) rCorpus.textContent = corpusStr;
+            if (rGains) rGains.textContent = `+${gainsStr}`;
+            if (statusDot) statusDot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
+
+            if (hudYearLabel) hudYearLabel.textContent = `Year ${row.year} of ${totalYears}`;
+            if (hudInvested) hudInvested.textContent = `Invested: ${investedStr}`;
+            if (hudGains) hudGains.textContent = `Gains: +${gainsStr}`;
+            if (hudTotal) hudTotal.textContent = `Total: ${corpusStr}`;
+            if (hudTimelineIndicator) hudTimelineIndicator.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0';
         }
     }
 
@@ -1085,6 +1178,19 @@ export class ChartManager {
         this.initControls();
         this.lastResults = results;
         this.lastEnableSwp = enableSwp;
+
+        const finalRow = results[results.length - 1];
+        if (finalRow) {
+            const headerGrossEl = this.dom.getElement('chart-header-gross');
+            const headerGainEl = this.dom.getElement('chart-header-gain');
+            if (headerGrossEl) {
+                headerGrossEl.textContent = this.formatter.format(finalRow.combined_total);
+            }
+            if (headerGainEl) {
+                const netGains = Math.max(0, (finalRow.combined_total + (finalRow.cumulative_withdrawals ?? 0)) - finalRow.cumulative_invested);
+                headerGainEl.textContent = `+${this.formatter.format(netGains)} Gains`;
+            }
+        }
 
         if (this.scrubbingController) {
             this.scrubbingController.syncResults(results);
@@ -1400,13 +1506,14 @@ export class ChartManager {
                                 weight: 600
                             },
                             maxRotation: 0,
-                            autoSkip: true,
-                            maxTicksLimit: typeof window !== 'undefined' && window.innerWidth < 640 ? 6 : 10,
-                            callback: function(val: string | number) {
-                                const label = this.getLabelForValue(val as number);
+                            autoSkip: false,
+                            callback: (val: string | number) => {
+                                const label = years[Number(val)] ?? '';
                                 const yearNum = parseInt(label.replace('Yr ', ''), 10);
-                                if (yearNum === 1 || yearNum % 5 === 0 || yearNum === results.length) {
-                                    return `Y${yearNum}`;
+                                if (isNaN(yearNum)) return label;
+                                const allowedTicks = this.computeHarmonicYearTicks(this.lastResults.length);
+                                if (allowedTicks.includes(yearNum)) {
+                                    return `Yr ${yearNum}`;
                                 }
                                 return '';
                             }

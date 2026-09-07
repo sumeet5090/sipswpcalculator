@@ -1,6 +1,7 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { InputValidator } from '../InputValidator';
 import { AudioFeedbackController } from './AudioFeedbackController';
+import { WebHapticEngine } from '../helpers/WebHapticEngine';
 
 export class StepperController {
     private dom: DOMAdapter;
@@ -57,6 +58,7 @@ export class StepperController {
 
         this.audio?.playTick(multiplier > 1 ? 480 : 380, 0.012);
         this.audio?.vibrate(5);
+        WebHapticEngine.triggerTick(40);
         this.onValueChange(fieldId, validated);
     }
 

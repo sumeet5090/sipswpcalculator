@@ -45,5 +45,269 @@ final class MobileErgonomicDeckTest extends TestCase
     {
         // Must prevent mobile horizontal jitter without breaking position:sticky
         $this->assertStringContainsString('overflow-x: clip', $this->inputCss);
+        $this->assertStringContainsString('touch-target-hig', $this->inputCss);
+        $this->assertStringContainsString('hitbox-expand-44', $this->inputCss);
+    }
+
+    public function testMobileActionDockAndSheetMarkup(): void
+    {
+        $baseTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/base.twig');
+        $this->assertStringContainsString('id="mobile-action-dock"', $baseTwig);
+        $this->assertStringContainsString('id="mobile-deck-corpus-val"', $baseTwig);
+        $this->assertStringContainsString('id="mobile-deck-sip-btn"', $baseTwig);
+        $this->assertStringContainsString('id="mobile-deck-swp-btn"', $baseTwig);
+        $this->assertStringContainsString('id="mobile-deck-share-btn"', $baseTwig);
+        $this->assertStringContainsString('id="mobile-actions-sheet"', $baseTwig);
+        $this->assertStringContainsString('id="dock-pdf-btn"', $baseTwig);
+    }
+
+    public function testKeyboardAccessoryBarMarkupAndController(): void
+    {
+        $baseTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/base.twig');
+        $this->assertStringContainsString('id="keyboard-docked-preview"', $baseTwig);
+        $this->assertStringContainsString('id="keyboard-done-btn"', $baseTwig);
+        $this->assertStringContainsString('id="keyboard-prev-input"', $baseTwig);
+        $this->assertStringContainsString('id="keyboard-next-input"', $baseTwig);
+
+        $kvController = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/KeyboardViewportController.ts');
+        $this->assertStringContainsString('keyboard-done-btn', $kvController);
+        $this->assertStringContainsString('navigateInput', $kvController);
+        $this->assertStringContainsString('scrollIntoView', $kvController);
+    }
+
+    public function testCanvasTouchScrubbingContracts(): void
+    {
+        $scrubberController = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/ChartScrubbingController.ts');
+        $this->assertStringContainsString('bindCanvasTouchScrubbing(): void', $scrubberController);
+        $this->assertStringContainsString('Math.abs(deltaX) / (Math.abs(deltaY) || 1) > 1.2', $scrubberController);
+    }
+
+    public function testStrategyStarterMobileSnapCarouselMarkup(): void
+    {
+        $strategyTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/strategy-starter.twig');
+        $this->assertStringContainsString('snap-x', $strategyTwig);
+        $this->assertStringContainsString('snap-mandatory', $strategyTwig);
+        $this->assertStringContainsString('snap-center', $strategyTwig);
+        $this->assertStringContainsString('overflow-x-auto', $strategyTwig);
+    }
+
+    public function testStickyTableColumnUtilitiesAndMarkup(): void
+    {
+        $this->assertStringContainsString('.table-sticky-col-0', $this->inputCss);
+
+        $breakdownTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/yearly-breakdown-table.twig');
+        $this->assertStringContainsString('table-sticky-col-0', $breakdownTwig);
+
+        $historicalTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/guide-historical-data.twig');
+        $this->assertStringContainsString('table-sticky-col-0', $historicalTwig);
+
+        $risksTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/guide-risks.twig');
+        $this->assertStringContainsString('table-sticky-col-0', $risksTwig);
+    }
+
+    public function testMobileActionsSheetCompleteExportSuite(): void
+    {
+        $baseTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/base.twig');
+        $this->assertStringContainsString('id="dock-glance-corpus"', $baseTwig);
+        $this->assertStringContainsString('downloadCsvBtn', $baseTwig);
+        $this->assertStringContainsString('saveCalculationBtn', $baseTwig);
+        $this->assertStringContainsString('downloadSocialCardBtn', $baseTwig);
+        $this->assertStringContainsString('shareCalcBtn', $baseTwig);
+        $this->assertStringContainsString('sebiBenchmarkModal', $baseTwig);
+    }
+
+    public function testMilestoneHapticsAndStepperAcceleration(): void
+    {
+        $hapticCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/helpers/WebHapticEngine.ts');
+        $this->assertStringContainsString('checkCorpusMilestone', $hapticCode);
+        $this->assertStringContainsString('triggerMilestone', $hapticCode);
+
+        $stepperCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/StepperController.ts');
+        $this->assertStringContainsString('WebHapticEngine.triggerTick', $stepperCode);
+    }
+
+    public function testMobileSharePolymorphismAndQrCollapsible(): void
+    {
+        $qrModalTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/qr-share-modal.twig');
+        $this->assertStringContainsString('id="mobile-native-share-btn"', $qrModalTwig);
+        $this->assertStringContainsString('id="mobile-qr-disclosure"', $qrModalTwig);
+        $this->assertStringContainsString('modal-drag-handle', $qrModalTwig);
+
+        $shareCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/ShareController.ts');
+        $this->assertStringContainsString('tryNativeShare(): Promise<boolean>', $shareCode);
+        $this->assertStringContainsString('err.name === \'AbortError\'', $shareCode);
+        $this->assertStringContainsString('mobile-native-share-btn', $shareCode);
+    }
+
+    public function testBottomSheetGestureControllerContracts(): void
+    {
+        $gestureCode = (string) file_get_contents(
+            __DIR__ . '/../../assets/js/calculators/controllers/BottomSheetGestureController.ts'
+        );
+        $this->assertStringContainsString('bindSheetGestures(dialog: HTMLDialogElement, handle: HTMLElement): void', $gestureCode);
+        $this->assertStringContainsString('deltaY > 80', $gestureCode);
+        $this->assertStringContainsString('WebHapticEngine.triggerTick', $gestureCode);
+        $this->assertStringContainsString('requestAnimationFrame', $gestureCode);
+
+        $ergoCode = (string) file_get_contents(
+            __DIR__ . '/../../assets/js/calculators/subsystems/ErgonomicsSubsystem.ts'
+        );
+        $this->assertStringContainsString('BottomSheetGestureController', $ergoCode);
+        $this->assertStringContainsString('this.bottomSheetGestureController.init()', $ergoCode);
+
+        $baseTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/base.twig');
+        $this->assertStringContainsString('modal-drag-handle', $baseTwig);
+    }
+
+    public function testCityFireBenchmarkHorizontalSnapRail(): void
+    {
+        $cityTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/city-fire-benchmark.twig');
+        $this->assertStringContainsString('overflow-x-auto', $cityTwig);
+        $this->assertStringContainsString('snap-x', $cityTwig);
+        $this->assertStringContainsString('snap-mandatory', $cityTwig);
+        $this->assertStringContainsString('snap-center shrink-0', $cityTwig);
+    }
+
+    public function testStressTestSimulatorHorizontalSnapRail(): void
+    {
+        $stressTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/stress-test-simulator.twig');
+        $this->assertStringContainsString('overflow-x-auto', $stressTwig);
+        $this->assertStringContainsString('snap-x', $stressTwig);
+        $this->assertStringContainsString('snap-mandatory', $stressTwig);
+        $this->assertStringContainsString('snap-center shrink-0', $stressTwig);
+    }
+
+    public function testAssetRebalancingMicroRatioBars(): void
+    {
+        $assetTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/asset-rebalancing.twig');
+        $this->assertStringContainsString('Micro Proportional Bar', $assetTwig);
+        $this->assertStringContainsString('bg-emerald-500', $assetTwig);
+        $this->assertStringContainsString('bg-indigo-500', $assetTwig);
+    }
+
+    public function testMobileDiscoveryHudPlacementAndAnchors(): void
+    {
+        $hudTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/floating-discovery-hud.twig');
+        $this->assertStringContainsString('bottom-[74px]', $hudTwig);
+        $this->assertStringContainsString('z-30', $hudTwig);
+        $this->assertStringContainsString('#calculator-section', $hudTwig);
+        $this->assertStringContainsString('#breakdown-studio', $hudTwig);
+        $this->assertStringContainsString('#math-formulas', $hudTwig);
+    }
+
+    public function testMobileMenuScrollContainment(): void
+    {
+        $headerTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/header.twig');
+        $this->assertStringContainsString('max-h-[calc(100vh-4.5rem)]', $headerTwig);
+        $this->assertStringContainsString('overflow-y-auto', $headerTwig);
+        $this->assertStringContainsString('overscroll-contain', $headerTwig);
+    }
+
+    public function testStepperButtonsAndRangeInputsHaveTouchActionManipulation(): void
+    {
+        $this->assertStringContainsString('touch-action: manipulation', $this->inputCss);
+        $this->assertStringContainsString('input[type="range"]', $this->inputCss);
+        $this->assertStringContainsString('.stepper-btn', $this->inputCss);
+    }
+
+    public function testSafeAreaInsetBottomClampingOnMobileDock(): void
+    {
+        $baseTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/base.twig');
+        $this->assertStringContainsString('pb-[max(0.625rem,env(safe-area-inset-bottom))]', $baseTwig);
+    }
+
+    public function testKeyboardControllerCoordinatesFloatingHudAndFocusSelection(): void
+    {
+        $keyboardCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/KeyboardViewportController.ts');
+        $this->assertStringContainsString('floating-discovery-hud', $keyboardCode);
+        $this->assertStringContainsString('pointer-events-none', $keyboardCode);
+        $this->assertStringContainsString('input.select()', $keyboardCode);
+    }
+
+    public function testTaxWaterfallModalHasDragHandle(): void
+    {
+        $taxModalTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/tax-waterfall-modal.twig');
+        $this->assertStringContainsString('modal-drag-handle', $taxModalTwig);
+        $this->assertStringContainsString('bg-slate-300 rounded-full mx-auto mb-2 sm:hidden', $taxModalTwig);
+    }
+
+    public function testTableScrollBoundaryMaskUtilitiesAndMarkup(): void
+    {
+        $this->assertStringContainsString('.table-scroll-mask-end', $this->inputCss);
+        $this->assertStringContainsString('mask-image: linear-gradient(to right, black 85%, transparent 100%)', $this->inputCss);
+
+        $historicalTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/guide-historical-data.twig');
+        $this->assertStringContainsString('table-scroll-mask-end', $historicalTwig);
+
+        $risksTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/guide-risks.twig');
+        $this->assertStringContainsString('table-scroll-mask-end', $risksTwig);
+    }
+
+    public function testChartScrubbingElevatesHudOnTouchInteraction(): void
+    {
+        $scrubberController = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/ChartScrubbingController.ts');
+        $this->assertStringContainsString('chart-inspection-hud', $scrubberController);
+        $this->assertStringContainsString('ring-emerald-400/60', $scrubberController);
+        $this->assertStringContainsString('touchcancel', $scrubberController);
+    }
+
+    public function testSliderFloatingTooltipPureLightModeAndDismissalQuery(): void
+    {
+        $this->assertStringContainsString('.slider-floating-tooltip', $this->inputCss);
+        $this->assertStringContainsString('rgba(255, 255, 255, 0.98)', $this->inputCss);
+        $this->assertStringContainsString('rgba(16, 185, 129, 0.6)', $this->inputCss);
+
+        $sliderCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/SliderManager.ts');
+        $this->assertStringContainsString('.slider-floating-tooltip.is-active', $sliderCode);
+        $this->assertStringContainsString('clamp(32px', $sliderCode);
+        $this->assertStringContainsString('hideTooltip', $sliderCode);
+    }
+
+    public function testKeyboardViewportControllerEnterKeyAndPointerPreventDefault(): void
+    {
+        $keyboardCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/KeyboardViewportController.ts');
+        $this->assertStringContainsString('e.key === \'Enter\'', $keyboardCode);
+        $this->assertStringContainsString('preventBlur', $keyboardCode);
+        $this->assertStringContainsString('nextBtn.addEventListener(\'pointerdown\', preventBlur)', $keyboardCode);
+
+        $baseTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/base.twig');
+        $this->assertStringContainsString('touch-target-expanded w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200', $baseTwig);
+        $this->assertStringContainsString('id="keyboard-prev-input"', $baseTwig);
+        $this->assertStringContainsString('id="keyboard-next-input"', $baseTwig);
+    }
+
+    public function testChartScrubbingControllerElevatesHudOnMobileScrubber(): void
+    {
+        $scrubberCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/ChartScrubbingController.ts');
+        $this->assertStringContainsString('this.elevateHud()', $scrubberCode);
+        $this->assertStringContainsString('this.resetHud()', $scrubberCode);
+        $this->assertStringContainsString('this.mobileScrubberEl.addEventListener(\'pointerdown\', onStart)', $scrubberCode);
+        $this->assertStringContainsString('this.mobileScrubberEl.addEventListener(\'input\', (e) => {', $scrubberCode);
+    }
+
+    public function testFloatingHudControllerScrollDirectionCollapse(): void
+    {
+        $hudCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/FloatingHudController.ts');
+        $this->assertStringContainsString('initDiscoveryHudScrollListener', $hudCode);
+        $this->assertStringContainsString('floating-discovery-hud', $hudCode);
+        $this->assertStringContainsString('keyboard-docked-preview', $hudCode);
+        $this->assertStringContainsString('translate-y-12', $hudCode);
+    }
+
+    public function testTaxWaterfallModalProgressiveDisclosureAccordion(): void
+    {
+        $taxModalTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/tax-waterfall-modal.twig');
+        $this->assertStringContainsString('id="tax-statutory-steps-disclosure"', $taxModalTwig);
+        $this->assertStringContainsString('Statutory Deductions (Steps 2–4)', $taxModalTwig);
+        $this->assertStringContainsString('id="tax-modal-taxable-gains"', $taxModalTwig);
+        $this->assertStringContainsString('id="tax-modal-tax-amount"', $taxModalTwig);
+    }
+
+    public function testBottomSheetGestureControllerScrollTopBoundaryGating(): void
+    {
+        $sheetCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/BottomSheetGestureController.ts');
+        $this->assertStringContainsString('isContentScrolled', $sheetCode);
+        $this->assertStringContainsString('scrollTop > 0', $sheetCode);
+        $this->assertStringContainsString('overflow-y-auto', $sheetCode);
     }
 }

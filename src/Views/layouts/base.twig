@@ -178,37 +178,6 @@
                     btn.setAttribute('aria-expanded', !isOpen);
                 });
             }
-
-            // Mobile Soft-Keyboard Occlusion Defense for Action Dock & Keyboard Preview (F3.1, F3.4)
-            if (window.visualViewport) {
-                var dock = document.getElementById('mobile-action-dock');
-                var preview = document.getElementById('keyboard-docked-preview');
-                var keyboardTimer = null;
-                window.visualViewport.addEventListener('resize', function () {
-                    if (keyboardTimer) clearTimeout(keyboardTimer);
-                    keyboardTimer = setTimeout(function () {
-                        var keyboardHeight = window.innerHeight - window.visualViewport.height;
-                        var isKeyboardOpen = keyboardHeight > 150;
-                        if (dock) {
-                            dock.style.display = isKeyboardOpen ? 'none' : 'flex';
-                        }
-                        if (preview) {
-                            if (isKeyboardOpen) {
-                                preview.classList.remove('hidden');
-                                preview.style.bottom = keyboardHeight + 8 + 'px';
-                                requestAnimationFrame(function() {
-                                    preview.classList.remove('opacity-0', 'pointer-events-none');
-                                });
-                            } else {
-                                preview.classList.add('opacity-0', 'pointer-events-none');
-                                setTimeout(function() {
-                                    preview.classList.add('hidden');
-                                }, 200);
-                            }
-                        }
-                    }, 80);
-                });
-            }
         });
     </script>
     <script type="module" src="{{ vite_asset('resources/js/app.ts') }}"></script>
@@ -221,42 +190,131 @@
     
     {% if is_calculator_route %}
     <!-- Keyboard-Aware Floating Micro-Preview Capsule (Glides above virtual keyboard during text typing on mobile) -->
-    <div id="keyboard-docked-preview" class="hidden opacity-0 pointer-events-none fixed z-modal left-4 right-4 bg-white/95 text-slate-900 border border-emerald-300 shadow-modal rounded-2xl px-4 py-2.5 flex items-center justify-between transition-all duration-200 backdrop-blur-md">
-        <div class="flex items-center gap-2">
-            <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span class="text-xs font-semibold text-slate-700">Live Projected Corpus:</span>
+    <div id="keyboard-docked-preview" class="hidden opacity-0 pointer-events-none fixed z-modal left-2.5 right-2.5 sm:left-4 sm:right-4 bg-white/98 text-slate-900 border border-emerald-300 shadow-modal rounded-2xl px-3 sm:px-4 py-2 flex items-center justify-between transition-all duration-200 backdrop-blur-xl">
+        <div class="flex items-center gap-1.5 min-w-0">
+            <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+            <span class="text-micro font-bold text-slate-500 uppercase shrink-0">Live Corpus:</span>
+            <span id="keyboard-preview-corpus" class="text-ui-xs sm:text-ui-sm font-black text-emerald-800 font-financial-mono tabular-nums whitespace-nowrap truncate">₹ --</span>
         </div>
-        <span id="keyboard-preview-corpus" class="text-sm font-extrabold text-emerald-700 font-mono">₹ --</span>
+        <div class="flex items-center gap-1.5 shrink-0 ml-2">
+            <button type="button" id="keyboard-prev-input" class="touch-target-expanded w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-ui-xs flex items-center justify-center active:scale-95 transition-all cursor-pointer border border-slate-200/80" aria-label="Previous Field">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button type="button" id="keyboard-next-input" class="touch-target-expanded w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-ui-xs flex items-center justify-center active:scale-95 transition-all cursor-pointer border border-slate-200/80" aria-label="Next Field">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button type="button" id="keyboard-done-btn" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-ui-xs shadow-flat active:scale-95 transition-all cursor-pointer">Done</button>
+        </div>
     </div>
 
     <!-- Ergonomic Mobile Sticky Action Dock (Visible only on <sm viewports on calculator pages) -->
-    <div id="mobile-action-dock" class="sm:hidden fixed bottom-0 left-0 right-0 z-header bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] px-4 py-2 flex items-center justify-around gap-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
-        <button type="button" id="dock-pdf-btn" onclick="document.getElementById('openPdfModalBtn')?.click()"
-            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-caption font-bold active:scale-95 transition-all cursor-pointer">
-            <span class="text-xs">📄</span>
-            <span>PDF Plan</span>
-        </button>
-        <button type="button" class="whatsapp-share-btn flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-caption font-bold active:scale-95 transition-all cursor-pointer"
-            aria-label="Share plan directly on WhatsApp">
-            <span class="text-xs">💬</span>
-            <span>WhatsApp</span>
-        </button>
-        <button type="button" id="dock-share-btn" onclick="document.getElementById('shareCalcBtn')?.click()"
-            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-caption font-bold active:scale-95 transition-all cursor-pointer">
-            <span class="text-xs">🔗</span>
-            <span>Link</span>
-        </button>
-        <button type="button" id="dock-snapshot-btn" onclick="document.getElementById('snapshot-scenario-btn')?.click()"
-            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-caption font-bold active:scale-95 transition-all cursor-pointer">
-            <span class="text-xs">📸</span>
-            <span>Snapshot</span>
-        </button>
-        <button type="button" id="dock-tax-btn" onclick="document.getElementById('open-tax-waterfall-btn')?.click()"
-            class="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-violet-50 hover:bg-violet-100 border border-violet-200 text-violet-800 text-caption font-bold active:scale-95 transition-all cursor-pointer">
-            <span class="text-xs">⚖️</span>
-            <span>Tax</span>
-        </button>
+    <div id="mobile-action-dock" class="sm:hidden fixed bottom-0 left-0 right-0 z-header bg-white/95 backdrop-blur-xl border-t border-slate-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-3 py-2 flex flex-col gap-1.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] transition-all duration-200">
+        <!-- Live Financial Outcome & Strategy Bar -->
+        <div class="flex items-center justify-between px-2.5 py-1 bg-slate-50/90 rounded-xl border border-slate-200/70 text-ui-xs">
+            <div class="flex items-center gap-1.5 min-w-0">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+                <span class="text-micro font-bold text-slate-500 uppercase shrink-0">Corpus:</span>
+                <span id="dock-glance-corpus" class="text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums whitespace-nowrap truncate">₹ --</span>
+                <span id="mobile-deck-corpus-val" class="hidden">₹ --</span>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" onclick="document.getElementById('summary-cards-grid')?.scrollIntoView({ behavior: 'smooth', block: 'center' })" class="text-micro font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-0.5 cursor-pointer bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">
+                    <span>Summary ↑</span>
+                </button>
+                <div class="flex items-center gap-0.5">
+                    <button type="button" id="mobile-deck-sip-btn" class="px-2 py-0.5 rounded-md text-micro font-extrabold bg-emerald-600 text-white shadow-flat cursor-pointer transition-all">SIP</button>
+                    <button type="button" id="mobile-deck-swp-btn" class="px-2 py-0.5 rounded-md text-micro font-bold bg-slate-200/80 text-slate-600 hover:text-slate-900 cursor-pointer transition-all">SWP</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- High-Conversion Action Pod: 3-Zone Architecture (Apple HIG 44px minimum) -->
+        <div class="flex items-center gap-2">
+            <!-- 1. Hero Action: Institutional PDF Plan -->
+            <button type="button" id="dock-pdf-btn" onclick="document.getElementById('openPdfModalBtn')?.click()"
+                class="flex-[2] min-h-[44px] py-2 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-ui-xs font-extrabold active:scale-95 transition-all shadow-card flex items-center justify-center gap-1.5 cursor-pointer">
+                <span class="text-sm">📄</span>
+                <span>PDF Plan</span>
+            </button>
+            <!-- 2. Viral Indian FinTech Conversion: WhatsApp Proposal -->
+            <button type="button" id="mobile-deck-share-btn" class="whatsapp-share-btn flex-[1.4] min-h-[44px] py-2 px-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-ui-xs font-extrabold active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                aria-label="Share plan directly on WhatsApp">
+                <span class="text-sm">💬</span>
+                <span>WhatsApp</span>
+            </button>
+            <!-- 3. Secondary Hub Trigger: Native Bottom Sheet Drawer -->
+            <button type="button" id="mobile-more-actions-btn" onclick="document.getElementById('mobile-actions-sheet')?.showModal()"
+                class="w-11 min-h-[44px] rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200/90 text-slate-700 font-extrabold text-ui-xs active:scale-95 transition-all flex items-center justify-center cursor-pointer"
+                aria-label="More Options">
+                <span>•••</span>
+            </button>
+        </div>
     </div>
+
+    <!-- Mobile Secondary Action Drawer (Native Bottom Sheet) -->
+    <dialog id="mobile-actions-sheet" class="rounded-3xl border border-slate-200 bg-white/98 text-slate-800 p-0 overflow-hidden shadow-modal max-w-sm w-full">
+        <div class="p-4 space-y-3">
+            <div class="modal-drag-handle cursor-grab active:cursor-grabbing select-none pt-1 pb-2">
+                <div class="w-10 h-1 bg-slate-300 rounded-full mx-auto mb-2"></div>
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                    <span class="text-ui-xs font-extrabold text-slate-900 flex items-center gap-1.5">
+                        <span>⚡</span><span>Quick Financial Actions</span>
+                    </span>
+                    <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close()" class="text-slate-400 hover:text-slate-700 p-1 text-ui-xs cursor-pointer" aria-label="Close">✕</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <!-- CSV Export -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('downloadCsvBtn')?.click()"
+                    class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">📊</span>
+                    <span>Export CSV</span>
+                </button>
+                <!-- Save Plan -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('saveCalculationBtn')?.click()"
+                    class="p-2.5 rounded-xl bg-amber-50/70 hover:bg-amber-100/70 border border-amber-200 text-amber-900 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">💾</span>
+                    <span>Save Plan</span>
+                </button>
+                <!-- Social Card -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('downloadSocialCardBtn')?.click()"
+                    class="p-2.5 rounded-xl bg-teal-50/70 hover:bg-teal-100/70 border border-teal-200 text-teal-900 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">🖼️</span>
+                    <span>Share Card</span>
+                </button>
+                <!-- Copy Link -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('shareCalcBtn')?.click()"
+                    class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">🔗</span>
+                    <span>Copy Link</span>
+                </button>
+                <!-- Snapshot Scenario -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('snapshot-scenario-btn')?.click()"
+                    class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">📸</span>
+                    <span>Snapshot</span>
+                </button>
+                <!-- §112A Tax Waterfall -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('open-tax-waterfall-btn')?.click()"
+                    class="p-2.5 rounded-xl bg-violet-50 hover:bg-violet-100 border border-violet-200 text-violet-900 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">⚖️</span>
+                    <span>§112A Tax</span>
+                </button>
+                <!-- Embed Calculator -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('open-embed-modal-btn')?.click()"
+                    class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">💻</span>
+                    <span>Embed</span>
+                </button>
+                <!-- AMFI Regulatory Rules -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('sebiBenchmarkModal')?.showModal()"
+                    class="p-2.5 rounded-xl bg-emerald-50/70 hover:bg-emerald-100/70 border border-emerald-200 text-emerald-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">📜</span>
+                    <span>AMFI Rules</span>
+                </button>
+            </div>
+        </div>
+    </dialog>
     {% endif %}
 
     <!-- Floating Scroll-to-Top FAB (appears on scroll up to prevent text occlusion) -->

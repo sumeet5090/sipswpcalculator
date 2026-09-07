@@ -21,6 +21,12 @@ export class ChartScrubbingController {
     private ribbonGainsEl: HTMLElement | null = null;
     private statusDotEl: HTMLElement | null = null;
 
+    private hudYearLabelEl: HTMLElement | null = null;
+    private hudInvestedEl: HTMLElement | null = null;
+    private hudGainsEl: HTMLElement | null = null;
+    private hudTotalEl: HTMLElement | null = null;
+    private hudTimelineIndicatorEl: HTMLElement | null = null;
+
     private mobileScrubberEl: HTMLInputElement | null = null;
     private scrubberActiveIndicatorEl: HTMLElement | null = null;
     private scrubberMaxIndicatorEl: HTMLElement | null = null;
@@ -47,15 +53,110 @@ export class ChartScrubbingController {
         this.ribbonGainsEl = this.dom.getElement<HTMLElement>('ribbon-inspect-gains');
         this.statusDotEl = this.dom.getElement<HTMLElement>('hud-status-dot');
 
+        this.hudYearLabelEl = this.dom.getElement<HTMLElement>('hud-year-label');
+        this.hudInvestedEl = this.dom.getElement<HTMLElement>('hud-invested-metric');
+        this.hudGainsEl = this.dom.getElement<HTMLElement>('hud-gains-metric');
+        this.hudTotalEl = this.dom.getElement<HTMLElement>('hud-total-metric');
+        this.hudTimelineIndicatorEl = this.dom.getElement<HTMLElement>('hud-timeline-indicator');
+
         this.mobileScrubberEl = this.dom.getElement<HTMLInputElement>('mobile-chart-scrubber');
         this.scrubberActiveIndicatorEl = this.dom.getElement<HTMLElement>('scrubber-active-indicator');
         this.scrubberMaxIndicatorEl = this.dom.getElement<HTMLElement>('scrubber-max-indicator');
 
         this.bindMobileScrubber();
+        this.bindCanvasTouchScrubbing();
     }
 
     public setOnScrubCallback(cb: ScrubCallback): void {
         this.onScrubCallback = cb;
+    }
+
+    /**
+     * Binds directional slope-locked touch gestures directly to the chart canvas container.
+     * Preserves smooth vertical page scrolling while unlocking direct horizontal timeline scrubbing.
+     */
+    private bindCanvasTouchScrubbing(): void {
+        const container = this.dom.getElement<HTMLElement>('chart-canvas-container');
+        if (!container) return;
+
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let isScrubbing = false;
+
+        container.addEventListener('touchstart', (e: TouchEvent) => {
+            if (e.touches.length !== 1 || this.currentResults.length === 0) return;
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            isScrubbing = false;
+        }, { passive: true });
+
+        container.addEventListener('touchmove', (e: TouchEvent) => {
+            if (e.touches.length !== 1 || this.currentResults.length === 0) return;
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - touchStartX;
+            const deltaY = touch.clientY - touchStartY;
+
+            // Directional slope lock: only scrub if horizontal delta clearly dominates (>1.2 ratio)
+            if (!isScrubbing) {
+                if (Math.abs(deltaX) > 10 && Math.abs(deltaX) / (Math.abs(deltaY) || 1) > 1.2) {
+                    isScrubbing = true;
+                } else if (Math.abs(deltaY) > 10) {
+                    return;
+                }
+            }
+
+            if (isScrubbing) {
+                const rect = container.getBoundingClientRect();
+                const xPercent = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
+                const targetIndex = Math.round(xPercent * (this.currentResults.length - 1));
+                this.elevateHud();
+                const row = this.currentResults[targetIndex];
+
+                if (row) {
+                    this.inspect(row, this.currentResults.length);
+                    if (this.mobileScrubberEl) {
+                        this.mobileScrubberEl.value = String(row.year);
+                    }
+                    if (this.scrubberActiveIndicatorEl) {
+                        this.scrubberActiveIndicatorEl.textContent = `Yr ${row.year}: ${this.formatter.format(row.combined_total)}`;
+                    }
+                    if (this.onScrubCallback) {
+                        this.onScrubCallback(targetIndex);
+                    }
+                    if (typeof navigator !== 'undefined' && 'vibrate' in navigator && (row.year % 5 === 0 || row.year === this.currentResults.length)) {
+                        try {
+                            navigator.vibrate(6);
+                        } catch {
+                            // Silent ignore
+                        }
+                    }
+                }
+            }
+        }, { passive: true });
+
+        const endScrubbing = () => {
+            isScrubbing = false;
+            this.resetHud();
+        };
+
+        container.addEventListener('touchend', endScrubbing, { passive: true });
+        container.addEventListener('touchcancel', endScrubbing, { passive: true });
+    }
+
+    private elevateHud(): void {
+        const hud = document.getElementById('chart-inspection-hud');
+        if (hud) {
+            hud.classList.remove('hidden');
+            hud.classList.add('ring-2', 'ring-emerald-400/60', 'bg-white', 'shadow-subtle');
+        }
+    }
+
+    private resetHud(): void {
+        const hud = document.getElementById('chart-inspection-hud');
+        if (hud) {
+            hud.classList.remove('ring-2', 'ring-emerald-400/60', 'bg-white', 'shadow-subtle');
+        }
     }
 
     /**
@@ -65,7 +166,18 @@ export class ChartScrubbingController {
         if (!this.mobileScrubberEl || this.isInitialized) return;
         this.isInitialized = true;
 
+        const onStart = () => this.elevateHud();
+        const onEnd = () => this.resetHud();
+
+        this.mobileScrubberEl.addEventListener('pointerdown', onStart);
+        this.mobileScrubberEl.addEventListener('touchstart', onStart, { passive: true });
+        this.mobileScrubberEl.addEventListener('pointerup', onEnd);
+        this.mobileScrubberEl.addEventListener('touchend', onEnd, { passive: true });
+        this.mobileScrubberEl.addEventListener('touchcancel', onEnd, { passive: true });
+        this.mobileScrubberEl.addEventListener('change', onEnd);
+
         this.mobileScrubberEl.addEventListener('input', (e) => {
+            this.elevateHud();
             const target = e.target as HTMLInputElement;
             const year = parseInt(target.value, 10);
             if (isNaN(year) || this.currentResults.length === 0) return;
@@ -114,6 +226,9 @@ export class ChartScrubbingController {
             if (this.statusDotEl) {
                 this.statusDotEl.className = 'w-1.5 h-1.5 rounded-full bg-slate-400';
             }
+            if (this.hudTimelineIndicatorEl) {
+                this.hudTimelineIndicatorEl.className = 'w-2 h-2 rounded-full bg-emerald-500 shrink-0';
+            }
             if (this.scrubberActiveIndicatorEl) {
                 this.scrubberActiveIndicatorEl.textContent = `Yr ${finalRow.year}: ${this.formatter.format(finalRow.combined_total)}`;
             }
@@ -146,6 +261,22 @@ export class ChartScrubbingController {
             this.statusDotEl.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
         }
 
+        if (this.hudYearLabelEl) {
+            this.hudYearLabelEl.textContent = `Year ${row.year} of ${maxYears}`;
+        }
+        if (this.hudInvestedEl) {
+            this.hudInvestedEl.textContent = `Invested: ${investedStr}`;
+        }
+        if (this.hudGainsEl) {
+            this.hudGainsEl.textContent = `Gains: +${gainsStr}`;
+        }
+        if (this.hudTotalEl) {
+            this.hudTotalEl.textContent = `Total: ${corpusStr}`;
+        }
+        if (this.hudTimelineIndicatorEl) {
+            this.hudTimelineIndicatorEl.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0';
+        }
+
         if (announce) {
             A11yAnnouncer.announceYearInspection(row.year, investedStr, corpusStr, gainsStr);
         }
@@ -156,6 +287,9 @@ export class ChartScrubbingController {
             this.inspect(finalRow, this.currentResults.length);
             if (this.statusDotEl) {
                 this.statusDotEl.className = 'w-1.5 h-1.5 rounded-full bg-slate-400';
+            }
+            if (this.hudTimelineIndicatorEl) {
+                this.hudTimelineIndicatorEl.className = 'w-2 h-2 rounded-full bg-emerald-500 shrink-0';
             }
         }
     }
