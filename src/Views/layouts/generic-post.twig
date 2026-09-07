@@ -201,8 +201,13 @@
                     {{ content_html|raw }}
                 </div>
 
+                {# 1. Immediate Conversion: Interactive Wealth Sandbox CTA #}
+                {% include 'components/interactive-cta-banner.twig' with {
+                    seo_category: cat_slug
+                } %}
+
                 <!-- Author Bio Card -->
-                <footer class="mt-16 pt-8 border-t border-slate-200">
+                <footer class="mt-12 pt-8 border-t border-slate-200">
                     <div class="p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-200/60 flex flex-col sm:flex-row items-start sm:items-center gap-6">
                         <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga" class="w-20 h-20 rounded-full border border-slate-200 object-cover" width="80" height="80" loading="lazy" decoding="async">
                         <div>
@@ -214,7 +219,7 @@
                     </div>
                 </footer>
 
-                {# Related Resources & Calculator CTA — internal linking for SEO #}
+                {# 2. Discovery: Related Resources / Continue Reading #}
                 {% include 'components/related-resources.twig' with {
                     all_posts: all_posts,
                     seo_category: cat_slug

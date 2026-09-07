@@ -93,21 +93,49 @@ final class EditorialReadingErgonomicsTest extends TestCase
 
     public function testInteractiveWealthSandboxCtaStructure(): void
     {
-        $relatedResources = (string) file_get_contents(
-            __DIR__ . '/../../src/Views/components/related-resources.twig'
+        $interactiveCta = (string) file_get_contents(
+            __DIR__ . '/../../src/Views/components/interactive-cta-banner.twig'
         );
 
-        $this->assertStringContainsString('aria-label="Simulate Your Wealth Journey"', $relatedResources);
-        $this->assertStringContainsString('SEBI / AMFI Formula Certified', $relatedResources);
-        $this->assertStringContainsString('100% Client-Side Privacy', $relatedResources);
-        $this->assertStringContainsString('Simulate My Compounding Goals', $relatedResources);
-        $this->assertStringContainsString('Simulate My Retirement Drawdown', $relatedResources);
-        $this->assertStringContainsString('Launch Head-to-Head Comparison', $relatedResources);
-        $this->assertStringContainsString('shadow-card hover:shadow-card-hover', $relatedResources);
+        $this->assertStringContainsString('aria-label="Simulate Your Wealth Journey"', $interactiveCta);
+        $this->assertStringContainsString('SEBI / AMFI Formula Certified', $interactiveCta);
+        $this->assertStringContainsString('100% Client-Side Privacy', $interactiveCta);
+        $this->assertStringContainsString('Simulate My Compounding Goals', $interactiveCta);
+        $this->assertStringContainsString('Simulate My Retirement Drawdown', $interactiveCta);
+        $this->assertStringContainsString('Launch Head-to-Head Comparison', $interactiveCta);
+        $this->assertStringContainsString('shadow-card hover:shadow-card-hover', $interactiveCta);
+    }
+
+    public function testBlogPostBottomHierarchyOrder(): void
+    {
+        $genericPostLayout = (string) file_get_contents(
+            __DIR__ . '/../../src/Views/layouts/generic-post.twig'
+        );
+
+        $ctaPos = strpos($genericPostLayout, "components/interactive-cta-banner.twig");
+        $authorPos = strpos($genericPostLayout, "About the Author: Sumeet Boga");
+        $relatedPos = strpos($genericPostLayout, "components/related-resources.twig");
+
+        $this->assertNotFalse($ctaPos, 'interactive-cta-banner.twig must be included in generic-post.twig');
+        $this->assertNotFalse($authorPos, 'Author bio section must be present in generic-post.twig');
+        $this->assertNotFalse($relatedPos, 'related-resources.twig must be included in generic-post.twig');
+
+        $this->assertTrue(
+            $ctaPos < $authorPos,
+            'Interactive Wealth Sandbox CTA must appear BEFORE the Author Bio for peak intent conversion'
+        );
+        $this->assertTrue(
+            $authorPos < $relatedPos,
+            'Author Bio must appear BEFORE Related Resources (Continue Reading) to close the editorial section'
+        );
     }
 
     private function assertDoesNotMatchString(string $pattern, string $string): void
     {
-        $this->assertSame(0, preg_match($pattern, $string), "Failed asserting that string does not match regex {$pattern}");
+        $this->assertSame(
+            0,
+            preg_match($pattern, $string),
+            "Failed asserting that string does not match regex {$pattern}"
+        );
     }
 }
