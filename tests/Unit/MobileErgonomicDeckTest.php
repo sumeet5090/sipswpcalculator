@@ -53,12 +53,15 @@ final class MobileErgonomicDeckTest extends TestCase
     {
         $baseTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/base.twig');
         $this->assertStringContainsString('id="mobile-action-dock"', $baseTwig);
+        $this->assertStringContainsString('z-dock', $baseTwig);
+        $this->assertStringContainsString('h-36', $baseTwig);
         $this->assertStringContainsString('id="mobile-deck-corpus-val"', $baseTwig);
         $this->assertStringContainsString('id="mobile-deck-sip-btn"', $baseTwig);
         $this->assertStringContainsString('id="mobile-deck-swp-btn"', $baseTwig);
         $this->assertStringContainsString('id="mobile-deck-share-btn"', $baseTwig);
         $this->assertStringContainsString('id="mobile-actions-sheet"', $baseTwig);
         $this->assertStringContainsString('id="dock-pdf-btn"', $baseTwig);
+        $this->assertStringContainsString('@utility z-dock', $this->inputCss);
     }
 
     public function testKeyboardAccessoryBarMarkupAndController(): void

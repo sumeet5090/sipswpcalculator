@@ -147,6 +147,14 @@
 }
 
 /* ── Custom Utilities for Glassmorphism, Interactive Rings, & Numeric Lining ── */
+@utility z-behind { z-index: -1; }
+@utility z-elevated { z-index: 10; }
+@utility z-sticky { z-index: 30; }
+@utility z-header { z-index: 40; }
+@utility z-dock { z-index: 45; }
+@utility z-modal { z-index: 50; }
+@utility z-popover { z-index: 100; }
+
 @utility fluid-metric-headline {
   font-size: clamp(1.75rem, 1.25rem + 2.25vw, 2.75rem);
   line-height: 1.05;
