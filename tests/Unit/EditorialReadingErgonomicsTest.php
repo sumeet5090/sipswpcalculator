@@ -112,21 +112,30 @@ final class EditorialReadingErgonomicsTest extends TestCase
             __DIR__ . '/../../src/Views/layouts/generic-post.twig'
         );
 
+        $authorBylineLinkPos = strpos($genericPostLayout, '<a href="/about" class="group flex items-center gap-3');
+        $entryContentPos = strpos($genericPostLayout, 'class="entry-content');
         $ctaPos = strpos($genericPostLayout, "components/interactive-cta-banner.twig");
-        $authorPos = strpos($genericPostLayout, "About the Author: Sumeet Boga");
         $relatedPos = strpos($genericPostLayout, "components/related-resources.twig");
 
+        $this->assertNotFalse($authorBylineLinkPos, 'Author byline in header must link directly to /about');
         $this->assertNotFalse($ctaPos, 'interactive-cta-banner.twig must be included in generic-post.twig');
-        $this->assertNotFalse($authorPos, 'Author bio section must be present in generic-post.twig');
         $this->assertNotFalse($relatedPos, 'related-resources.twig must be included in generic-post.twig');
 
+        // Verify bottom author bio card has been cleaned up to eliminate redundancy
+        $this->assertStringNotContainsString(
+            'About the Author: Sumeet Boga',
+            $genericPostLayout,
+            'Redundant bottom author bio card should not exist in generic-post.twig'
+        );
+
+        // Verify streamlined flow: Entry Content -> Interactive CTA -> Related Resources
         $this->assertTrue(
-            $ctaPos < $authorPos,
-            'Interactive Wealth Sandbox CTA must appear BEFORE the Author Bio for peak intent conversion'
+            $entryContentPos < $ctaPos,
+            'Article body must appear before the Interactive Wealth Sandbox CTA'
         );
         $this->assertTrue(
-            $authorPos < $relatedPos,
-            'Author Bio must appear BEFORE Related Resources (Continue Reading) to close the editorial section'
+            $ctaPos < $relatedPos,
+            'Interactive Wealth Sandbox CTA must appear directly before Related Resources'
         );
     }
 

@@ -166,15 +166,15 @@
 
                     <!-- Author and Publish Details -->
                     <div class="relative z-elevated flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-5 border-t border-slate-100">
-                        <div class="flex items-center gap-3">
+                        <a href="/about" class="group flex items-center gap-3 transition-colors" title="Learn more about the author">
                             <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga"
-                                class="w-10 h-10 rounded-full shadow-flat border border-slate-100 object-cover shrink-0"
+                                class="w-10 h-10 rounded-full shadow-flat border border-slate-100 object-cover shrink-0 group-hover:border-emerald-300 transition-colors"
                                 width="40" height="40">
                             <div>
-                                <span class="block font-black text-slate-800 leading-tight text-sm sm:text-base">Sumeet Boga</span>
+                                <span class="block font-black text-slate-800 leading-tight text-sm sm:text-base group-hover:text-emerald-700 transition-colors">Sumeet Boga</span>
                                 <span class="text-caption text-slate-400 font-bold uppercase tracking-wider">Engineer &amp; Finance Analyst</span>
                             </div>
-                        </div>
+                        </a>
 
                         <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-ui-xs font-bold text-slate-400 uppercase tracking-wider">
                             <div class="flex items-center gap-1.5">
@@ -183,7 +183,7 @@
                             </div>
                             {% if date_modified and date_modified != date_published %}
                             <div class="flex items-center gap-1 text-micro text-slate-400">
-                                <svg class="w-3 h-3 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                <svg class="w-3 h-3 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                                 <span>Updated: {{ date_modified|date("M j, Y") }}</span>
                             </div>
                             {% endif %}
@@ -205,19 +205,6 @@
                 {% include 'components/interactive-cta-banner.twig' with {
                     seo_category: cat_slug
                 } %}
-
-                <!-- Author Bio Card -->
-                <footer class="mt-12 pt-8 border-t border-slate-200">
-                    <div class="p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-200/60 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                        <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga" class="w-20 h-20 rounded-full border border-slate-200 object-cover" width="80" height="80" loading="lazy" decoding="async">
-                        <div>
-                            <h4 class="text-lg font-black text-slate-800 mb-1">About the Author: Sumeet Boga</h4>
-                            <p class="text-sm text-slate-600 leading-relaxed">
-                                Sumeet is a Software Engineer and Finance Analyst specializing in mutual fund analysis, retirement algorithms, and tax planning. He builds free, transparent tools to help Indian investors reach their wealth milestones.
-                            </p>
-                        </div>
-                    </div>
-                </footer>
 
                 {# 2. Discovery: Related Resources / Continue Reading #}
                 {% include 'components/related-resources.twig' with {
