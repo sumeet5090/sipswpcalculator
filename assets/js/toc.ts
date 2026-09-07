@@ -1,20 +1,38 @@
-export function initToc(): void {
-    const mainContent = document.getElementById('main-content');
-    const tocList = document.getElementById('toc-list');
+import { WebHapticEngine } from './calculators/helpers/WebHapticEngine';
 
-    if (!mainContent || !tocList) return;
+/**
+ * toc.ts
+ * Generates and synchronizes Table of Contents for both desktop sidebars and mobile bottom sheets.
+ * Provides IntersectionObserver scroll-spy and tactile haptic feedback on navigation.
+ */
+export function initToc(): void {
+    const mainContent = document.querySelector('.entry-content') || document.getElementById('main-content');
+    const tocList = document.getElementById('toc-list');
+    const mobileTocList = document.getElementById('mobile-toc-list');
+
+    if (!mainContent || (!tocList && !mobileTocList)) return;
 
     const headings = mainContent.querySelectorAll<HTMLElement>('h2, h3');
     if (headings.length === 0) {
-        tocList.replaceChildren();
-        const emptyItem = document.createElement('li');
-        emptyItem.className = 'text-slate-400 italic';
-        emptyItem.textContent = 'No sections found.';
-        tocList.appendChild(emptyItem);
+        if (tocList) {
+            tocList.replaceChildren();
+            const emptyItem = document.createElement('li');
+            emptyItem.className = 'text-slate-400 italic text-sm';
+            emptyItem.textContent = 'No sections found.';
+            tocList.appendChild(emptyItem);
+        }
+        if (mobileTocList) {
+            mobileTocList.replaceChildren();
+            const emptyItem = document.createElement('li');
+            emptyItem.className = 'text-slate-400 italic text-sm';
+            emptyItem.textContent = 'No sections found.';
+            mobileTocList.appendChild(emptyItem);
+        }
         return;
     }
 
-    const fragment = document.createDocumentFragment();
+    const desktopFragment = document.createDocumentFragment();
+    const mobileFragment = document.createDocumentFragment();
     const tocItems: HTMLElement[] = [];
 
     headings.forEach((heading, index) => {
@@ -26,47 +44,124 @@ export function initToc(): void {
         }
 
         const level = parseInt(heading.tagName.substring(1), 10);
-        const li = document.createElement('li');
-        li.className = level === 3
-            ? 'toc-item-wrapper ml-4 border-l border-slate-200 pl-3 text-slate-500'
-            : 'toc-item-wrapper font-semibold text-slate-700';
+        const headingText = heading.textContent || '';
 
-        const a = document.createElement('a');
-        a.href = `#${heading.id}`;
-        a.className = 'toc-link block py-1 hover:text-emerald-600 transition-colors';
-        a.dataset.target = heading.id;
-        a.textContent = heading.textContent;
+        // Desktop item
+        if (tocList) {
+            const li = document.createElement('li');
+            li.className = level === 3
+                ? 'toc-item-wrapper ml-4 border-l border-slate-200 pl-3 text-slate-500'
+                : 'toc-item-wrapper font-semibold text-slate-700';
 
-        li.appendChild(a);
-        fragment.appendChild(li);
+            const a = document.createElement('a');
+            a.href = `#${heading.id}`;
+            a.className = 'toc-link block py-1 hover:text-emerald-600 transition-colors text-xs xl:text-sm';
+            a.dataset.target = heading.id;
+            a.textContent = headingText;
+
+            li.appendChild(a);
+            desktopFragment.appendChild(li);
+        }
+
+        // Mobile item
+        if (mobileTocList) {
+            const mLi = document.createElement('li');
+            mLi.className = level === 3
+                ? 'ml-3 border-l-2 border-slate-200 pl-2.5 text-slate-600'
+                : 'font-semibold text-slate-800';
+
+            const mA = document.createElement('a');
+            mA.href = `#${heading.id}`;
+            mA.className = 'mobile-toc-link block py-2.5 px-3 rounded-xl hover:bg-emerald-50 hover:text-emerald-700 text-sm transition-colors touch-manipulation text-slate-700';
+            mA.dataset.target = heading.id;
+            mA.textContent = headingText;
+
+            mLi.appendChild(mA);
+            mobileFragment.appendChild(mLi);
+        }
+
         tocItems.push(heading);
     });
 
-    tocList.replaceChildren(fragment);
+    if (tocList) {
+        tocList.replaceChildren(desktopFragment);
+    }
+    if (mobileTocList) {
+        mobileTocList.replaceChildren(mobileFragment);
+    }
 
+    // Mobile Sheet Controls
+    const mobileSheet = document.getElementById('mobile-toc-sheet') as HTMLDialogElement | null;
+    const openMobileBtn = document.getElementById('open-mobile-toc-btn');
+    const closeMobileBtn = document.getElementById('close-mobile-toc-btn');
+
+    const closeMobileSheet = () => {
+        if (mobileSheet && mobileSheet.open) {
+            mobileSheet.close();
+            openMobileBtn?.setAttribute('aria-expanded', 'false');
+        }
+    };
+
+    if (mobileSheet && openMobileBtn) {
+        openMobileBtn.addEventListener('click', () => {
+            WebHapticEngine.triggerTick(6);
+            mobileSheet.showModal();
+            openMobileBtn.setAttribute('aria-expanded', 'true');
+        });
+
+        closeMobileBtn?.addEventListener('click', () => {
+            WebHapticEngine.triggerTick(6);
+            closeMobileSheet();
+        });
+
+        mobileSheet.addEventListener('click', (e) => {
+            if (e.target === mobileSheet) {
+                closeMobileSheet();
+            }
+        });
+
+        mobileSheet.addEventListener('close', () => {
+            openMobileBtn.setAttribute('aria-expanded', 'false');
+        });
+    }
+
+    // IntersectionObserver scroll spy
     const observerOptions: IntersectionObserverInit = {
         root: null,
-        rootMargin: '0px 0px -80% 0px',
+        rootMargin: '0px 0px -75% 0px',
         threshold: 0
     };
 
-    const tocLinks = document.querySelectorAll<HTMLElement>('.toc-link');
+    const desktopTocLinks = document.querySelectorAll<HTMLElement>('.toc-link');
+    const mobileTocLinks = document.querySelectorAll<HTMLElement>('.mobile-toc-link');
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                tocLinks.forEach(link => {
-                    link.classList.remove('text-emerald-600', 'font-bold');
-                    link.classList.add('text-slate-600');
-                });
-
                 const safeTargetId = typeof CSS !== 'undefined' && typeof CSS.escape === 'function'
                     ? CSS.escape(entry.target.id)
                     : entry.target.id.replace(/["\\]/g, '\\$&');
-                const activeLink = document.querySelector<HTMLElement>(`#toc-list .toc-link[data-target="${safeTargetId}"]`);
-                if (activeLink) {
-                    activeLink.classList.remove('text-slate-600');
-                    activeLink.classList.add('text-emerald-600', 'font-bold');
+
+                // Update desktop links
+                desktopTocLinks.forEach(link => {
+                    link.classList.remove('text-emerald-600', 'font-bold');
+                    link.classList.add('text-slate-600');
+                });
+                const activeDesktop = document.querySelector<HTMLElement>(`#toc-list .toc-link[data-target="${safeTargetId}"]`);
+                if (activeDesktop) {
+                    activeDesktop.classList.remove('text-slate-600');
+                    activeDesktop.classList.add('text-emerald-600', 'font-bold');
+                }
+
+                // Update mobile links
+                mobileTocLinks.forEach(link => {
+                    link.classList.remove('text-emerald-700', 'bg-emerald-50', 'font-bold');
+                    link.classList.add('text-slate-700');
+                });
+                const activeMobile = document.querySelector<HTMLElement>(`#mobile-toc-list .mobile-toc-link[data-target="${safeTargetId}"]`);
+                if (activeMobile) {
+                    activeMobile.classList.remove('text-slate-700');
+                    activeMobile.classList.add('text-emerald-700', 'bg-emerald-50', 'font-bold');
                 }
             }
         });
@@ -74,9 +169,26 @@ export function initToc(): void {
 
     tocItems.forEach(item => observer.observe(item));
 
-    document.querySelectorAll<HTMLElement>('.toc-link').forEach(link => {
+    // Smooth scroll navigation
+    desktopTocLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
+            const href = link.getAttribute('href');
+            if (href) {
+                const targetId = href.substring(1);
+                const targetEl = document.getElementById(targetId);
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
+
+    mobileTocLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            WebHapticEngine.triggerTick(6);
+            closeMobileSheet();
             const href = link.getAttribute('href');
             if (href) {
                 const targetId = href.substring(1);
