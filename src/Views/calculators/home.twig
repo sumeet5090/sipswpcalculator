@@ -6,25 +6,25 @@
 {% block content %}
 {% include 'components/theme-glow-blobs.twig' %}
 <header class="relative mb-3 sm:mb-5 text-center">
-    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 mb-2.5">
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 mb-2">
         <span class="relative flex h-2.5 w-2.5">
             <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
         </span>
-        <span class="text-xs font-semibold text-emerald-700 tracking-wide uppercase">Algorithmic Wealth Planning Engine</span>
+        <span class="text-micro sm:text-xs font-semibold text-emerald-700 tracking-wide uppercase">Algorithmic Wealth Planning Engine</span>
     </div>
 
-    <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold pb-2 tracking-tight">
-        <span class="text-gradient block mb-1.5">SIP SWP Calculator Together</span>
-        <span class="text-slate-800 text-xl sm:text-3xl md:text-4xl block font-bold">Step-Up SIP + Lumpsum + Inflation-Adjusted SWP Planner</span>
+    <h1 class="text-2xl sm:text-5xl md:text-6xl font-extrabold pb-1.5 sm:pb-2 tracking-tight">
+        <span class="text-gradient block mb-1">SIP SWP Calculator Together</span>
+        <span class="text-slate-800 text-base sm:text-3xl md:text-4xl block font-bold">Step-Up SIP + Lumpsum + Inflation-Adjusted SWP Planner</span>
     </h1>
     
-    <p class="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-3">
+    <p class="text-sm sm:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-3 hidden sm:block">
         Calculate your combined SIP accumulation and inflation-adjusted SWP retirement cashflows with step-up compounding in one zero-latency simulation studio.
     </p>
 
-    <!-- EEAT Institutional Trust Bar -->
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-500 mb-4 pb-3 border-b border-slate-200/60 max-w-3xl mx-auto">
+    <!-- EEAT Institutional Trust Bar (Desktop View) -->
+    <div class="hidden sm:flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-500 mb-4 pb-3 border-b border-slate-200/60 max-w-3xl mx-auto">
         <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
             class="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
@@ -41,8 +41,8 @@
         </div>
     </div>
 
-    <!-- Above-The-Fold Interactive Activation CTA & Social Proof -->
-    <div class="flex flex-col items-center justify-center gap-2 mb-4 not-prose">
+    <!-- Above-The-Fold Interactive Activation CTA (Desktop View) -->
+    <div class="hidden sm:flex flex-col items-center justify-center gap-2 mb-4 not-prose">
         <a href="#calculator-heading"
            class="inline-flex items-center gap-2 px-7 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 hover:shadow-card-hover hover:-translate-y-0.5 transition-all text-sm sm:text-base cursor-pointer"
            aria-label="Start SIP and SWP calculation">
@@ -62,23 +62,52 @@
             <span>Zero Sign-Up</span>
         </div>
     </div>
+
+    <!-- Mobile Lean Methodology & Trust Bar (Accessible Expandable Disclosure) -->
+    <div class="sm:hidden mb-3">
+        <details class="fintech-accordion text-left rounded-2xl bg-white/95 border border-slate-200/90 shadow-subtle p-2.5 transition-all">
+            <summary class="flex items-center justify-between text-ui-xs font-bold text-slate-700 cursor-pointer select-none">
+                <div class="flex items-center gap-1.5">
+                    <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga" class="w-5 h-5 rounded-full object-cover border border-emerald-200" width="20" height="20">
+                    <span>Engineered by <strong>Sumeet Boga</strong></span>
+                    <span class="text-micro font-bold text-growth-emphasis bg-growth-surface px-1.5 py-0.5 rounded border border-growth-border">Verified {{ "now"|date("M Y") }}</span>
+                </div>
+                <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform ml-1">▼</span>
+            </summary>
+            <div class="pt-2 mt-2 border-t border-slate-100 text-caption text-slate-600 space-y-1.5">
+                <p>Calculate your combined SIP accumulation and inflation-adjusted SWP retirement cashflows with step-up compounding in one zero-latency simulation studio.</p>
+                <div class="flex items-center gap-2 text-micro font-bold text-emerald-800">
+                    <span>📊 Free CSV Export</span>
+                    <span>•</span>
+                    <span>🔒 100% Client-Side Private</span>
+                </div>
+            </div>
+        </details>
+    </div>
 </header>
 
 <!-- Quick Answer Box for AI extraction / Featured Snippet -->
-<div id="quick-answer" class="relative overflow-hidden bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-emerald-500/10 backdrop-blur-md border border-emerald-300/60 rounded-3xl p-6 sm:p-7 mb-8 max-w-2xl mx-auto shadow-card"
+<div id="quick-answer" class="relative overflow-hidden bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-emerald-500/10 backdrop-blur-md border border-emerald-300/60 rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 mb-4 sm:mb-8 max-w-2xl mx-auto shadow-card"
     role="complementary" aria-label="Quick Answer">
-    <div class="flex items-center justify-between gap-2 mb-2">
-        <span class="inline-flex items-center gap-1.5 text-micro font-bold text-growth-emphasis uppercase tracking-widest bg-growth-surface px-2.5 py-0.5 rounded-full border border-growth-border">
-            ⚡ Quick Summary
-        </span>
-        <span class="text-caption font-semibold text-growth-emphasis/80">AI Verified Estimate</span>
-    </div>
-    <h3 class="text-base sm:text-lg font-bold text-slate-800 mb-1">How much will a ₹10,000/month SIP grow in 20 years?</h3>
-    <p class="text-sm text-slate-600 leading-relaxed">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month SIP will
-        grow to approximately <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
-                data-amount-inr="19889000">₹1.99 Crore</span></strong> over 20 years. Total invested: <strong class="text-slate-700 font-financial-mono"><span
-            class="dynamic-amount" data-amount-inr="6873000">₹68.73 Lakh</span></strong> • Total compound gains: <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
-            data-amount-inr="13016000">₹1.30 Crore</span></strong>.</p>
+    <details class="sm:contents fintech-accordion group">
+        <summary class="flex items-center justify-between gap-2 cursor-pointer select-none sm:cursor-default sm:pointer-events-none mb-1 sm:mb-2">
+            <span class="inline-flex items-center gap-1.5 text-micro font-bold text-growth-emphasis uppercase tracking-widest bg-growth-surface px-2.5 py-0.5 rounded-full border border-growth-border">
+                ⚡ Quick Summary
+            </span>
+            <div class="flex items-center gap-1.5">
+                <span class="text-caption font-semibold text-growth-emphasis/80">AI Verified Estimate</span>
+                <span class="sm:hidden accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+            </div>
+        </summary>
+        <div class="mt-2 sm:mt-0">
+            <h3 class="text-sm sm:text-lg font-bold text-slate-800 mb-1">How much will a ₹10,000/month SIP grow in 20 years?</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month SIP will
+                grow to approximately <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
+                        data-amount-inr="19889000">₹1.99 Crore</span></strong> over 20 years. Total invested: <strong class="text-slate-700 font-financial-mono"><span
+                    class="dynamic-amount" data-amount-inr="6873000">₹68.73 Lakh</span></strong> • Total compound gains: <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
+                    data-amount-inr="13016000">₹1.30 Crore</span></strong>.</p>
+        </div>
+    </details>
 </div>
 <script type="application/ld+json">
 {
@@ -108,7 +137,7 @@
         </div> <!-- /left column -->
 
         <!-- Right Column: Floating Summary & Chart Visualization -->
-        <div class="lg:col-span-2 space-y-4 lg:sticky lg:top-[84px] lg:self-start z-20">
+        <div class="lg:col-span-2 space-y-4 lg:sticky lg:top-[84px] lg:self-start lg:z-20">
             {% include 'components/chart-visualization.twig' %}
             
             <!-- Side-by-Side Scenario Diff Comparison (Unhides when snapshot baseline is taken) -->

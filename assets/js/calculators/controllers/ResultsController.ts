@@ -394,7 +394,7 @@ export class ResultsController {
                 const isMilestone = row.year === 1 || row.year % 5 === 0 || row.year === data.length;
                 const isFinal = row.year === data.length;
 
-                card.className = "p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-2.5 transition-all";
+                card.className = "p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-subtle space-y-2 transition-all";
 
                 if (this.heatmapEnabled && row.interest > 0) {
                     const intensity = Math.min(1, row.interest / maxInterest);
@@ -416,8 +416,8 @@ export class ResultsController {
 
                 const yearBadge = document.createElement('span');
                 yearBadge.className = isFinal
-                    ? "px-2.5 py-0.5 rounded-lg text-xs font-black bg-emerald-600 text-white shadow-2xs"
-                    : (isMilestone ? "px-2 py-0.5 rounded-md text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200/80" : "text-xs font-bold text-slate-700");
+                    ? "px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-600 text-white shadow-flat"
+                    : (isMilestone ? "px-2.5 py-0.5 rounded-lg text-xs font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-200" : "text-xs font-bold text-slate-700");
                 yearBadge.textContent = `Year ${row.year}${isFinal ? ' (Maturity)' : ''}`;
                 header.appendChild(yearBadge);
 
@@ -430,14 +430,14 @@ export class ResultsController {
                 };
 
                 const corpusVal = document.createElement('span');
-                corpusVal.className = "text-sm font-black font-financial-mono tabular-nums text-slate-900 whitespace-nowrap";
+                corpusVal.className = "text-base font-black font-financial-mono tabular-nums text-slate-900 whitespace-nowrap";
                 corpusVal.textContent = fmt(finalCorpus);
                 corpusWrap.appendChild(corpusVal);
 
                 if (row.cumulative_invested > 0 && finalCorpus > 0) {
                     const multiplier = (finalCorpus / row.cumulative_invested).toFixed(1);
                     const multiplierBadge = document.createElement('span');
-                    multiplierBadge.className = 'px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-extrabold shrink-0';
+                    multiplierBadge.className = 'px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-black shrink-0 shadow-flat';
                     multiplierBadge.textContent = `${multiplier}×`;
                     corpusWrap.appendChild(multiplierBadge);
                 }
@@ -445,15 +445,38 @@ export class ResultsController {
                 header.appendChild(corpusWrap);
                 card.appendChild(header);
 
+                // Proportional Visual Progress Bar (Principal Invested vs Compound Gains)
+                if (finalCorpus > 0 && row.cumulative_invested > 0) {
+                    const investedPercent = Math.min(100, Math.max(5, (row.cumulative_invested / finalCorpus) * 100));
+                    const gainsPercent = Math.max(0, 100 - investedPercent);
+
+                    const barContainer = document.createElement('div');
+                    barContainer.className = 'w-full h-1.5 bg-slate-100 rounded-full overflow-hidden flex my-1';
+
+                    const investedSegment = document.createElement('div');
+                    investedSegment.className = 'bg-slate-300 h-full transition-all';
+                    investedSegment.style.width = `${investedPercent}%`;
+                    investedSegment.title = `Invested: ${investedPercent.toFixed(0)}%`;
+
+                    const gainSegment = document.createElement('div');
+                    gainSegment.className = 'bg-emerald-500 h-full transition-all';
+                    gainSegment.style.width = `${gainsPercent}%`;
+                    gainSegment.title = `Gains: ${gainsPercent.toFixed(0)}%`;
+
+                    barContainer.appendChild(investedSegment);
+                    barContainer.appendChild(gainSegment);
+                    card.appendChild(barContainer);
+                }
+
                 const grid = document.createElement('div');
                 grid.className = "grid grid-cols-2 gap-2 text-xs pt-1.5 border-t border-slate-100";
 
                 const investedCol = document.createElement('div');
                 const investedLabel = document.createElement('span');
-                investedLabel.className = "text-slate-500 block text-[10px] font-bold";
+                investedLabel.className = "text-slate-500 block text-caption font-semibold";
                 investedLabel.textContent = "Total Invested";
                 const investedVal = document.createElement('span');
-                investedVal.className = "font-bold font-financial-mono tabular-nums text-slate-800 whitespace-nowrap";
+                investedVal.className = "font-bold font-financial-mono tabular-nums text-slate-800 whitespace-nowrap text-ui-xs";
                 investedVal.textContent = fmt(row.cumulative_invested);
                 investedCol.appendChild(investedLabel);
                 investedCol.appendChild(investedVal);
@@ -462,10 +485,10 @@ export class ResultsController {
                 const interestCol = document.createElement('div');
                 interestCol.className = "text-right";
                 const interestLabel = document.createElement('span');
-                interestLabel.className = "text-emerald-700 block text-[10px] font-bold";
+                interestLabel.className = "text-emerald-700 block text-caption font-semibold";
                 interestLabel.textContent = "Annual Gain";
                 const interestVal = document.createElement('span');
-                interestVal.className = "font-bold font-financial-mono tabular-nums text-emerald-700 whitespace-nowrap";
+                interestVal.className = "font-extrabold font-financial-mono tabular-nums text-emerald-700 whitespace-nowrap text-ui-xs";
                 interestVal.textContent = `+${fmt(row.interest)}`;
                 interestCol.appendChild(interestLabel);
                 interestCol.appendChild(interestVal);
@@ -475,10 +498,10 @@ export class ResultsController {
                     const withCol = document.createElement('div');
                     withCol.className = "col-span-2 pt-1 border-t border-slate-100 flex items-center justify-between text-xs";
                     const withLabel = document.createElement('span');
-                    withLabel.className = "text-rose-700 text-[10px] font-bold";
+                    withLabel.className = "text-rose-700 text-caption font-semibold";
                     withLabel.textContent = "Total Withdrawn";
                     const withVal = document.createElement('span');
-                    withVal.className = "font-bold font-financial-mono tabular-nums text-rose-700 whitespace-nowrap";
+                    withVal.className = "font-extrabold font-financial-mono tabular-nums text-rose-700 whitespace-nowrap text-ui-xs";
                     withVal.textContent = fmt(row.cumulative_withdrawals ?? 0);
                     withCol.appendChild(withLabel);
                     withCol.appendChild(withVal);

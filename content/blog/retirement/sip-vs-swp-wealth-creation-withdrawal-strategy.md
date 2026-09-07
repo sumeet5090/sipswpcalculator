@@ -244,18 +244,3 @@ date: "February 2026"
 <h3>How long will my corpus last with SWP?</h3>
 <p>It depends on three variables: (1) initial withdrawal rate, (2) annual step-up, and (3) investment return. At 3.5% initial withdrawal, 5% step-up, and 10% return, a corpus typically lasts <strong>28-32 years</strong>. At 4% initial withdrawal, it lasts 24-28 years. At 3% (more conservative), it can last <strong>35-40+ years</strong>. Use our <a href="/retirement-drawdown-planner">Retirement Drawdown Planner</a> to model your exact scenario.</p>
 
-<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-100 shadow-xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 sm:p-10 text-center text-white">
-  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">Plan Your Complete Financial Lifecycle</h2>
-  <p class="text-emerald-100 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">Use the SIP planner for wealth accumulation and the SWP section for your retirement income phase — model your full 30-50 year financial journey in one tool.</p>
-  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-    <a href="/#calculator-section"
-       class="inline-flex items-center gap-2 px-8 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-all duration-200 text-sm sm:text-base">
-      Open SIP &amp; SWP Planner
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-    </a>
-    <a href="/retirement-drawdown-planner"
-       class="inline-flex items-center gap-2 px-8 py-3 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-200 text-sm sm:text-base">
-      Open Retirement Planner →
-    </a>
-  </div>
-</div>

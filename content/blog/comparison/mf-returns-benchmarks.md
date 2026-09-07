@@ -215,18 +215,3 @@ date: "July 2026"
 <h3>Can a mutual fund give 15% return consistently?</h3>
 <p>Over 15-20 year periods, many <strong>mid-cap and small-cap funds</strong> in India have delivered 15%+ CAGR. However, "consistently" is the wrong word — in any given year, these funds can lose 30-40%. The 15% is an average that includes spectacular up-years (30-50%) and painful down-years (-20-40%). You earn the 15% only if you stay invested through the entire cycle.</p>
 
-<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-100 shadow-xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 sm:p-10 text-center text-white">
-  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">Test These Rates in the Calculator</h2>
-  <p class="text-emerald-100 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">Plug in 10%, 12%, and 15% to see how dramatically your corpus changes. Use the step-up feature to model salary growth.</p>
-  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-    <a href="/#calculator-section"
-       class="inline-flex items-center gap-2 px-8 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-all duration-200 text-sm sm:text-base">
-      Open SIP &amp; SWP Planner
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-    </a>
-    <a href="/resource/comparison/sip-vs-fd-vs-ppf"
-       class="inline-flex items-center gap-2 px-8 py-3 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-200 text-sm sm:text-base">
-      Read: SIP vs FD vs PPF →
-    </a>
-  </div>
-</div>

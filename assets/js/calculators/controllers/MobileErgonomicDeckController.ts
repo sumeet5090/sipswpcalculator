@@ -15,6 +15,8 @@ export class MobileErgonomicDeckController {
     private onShareProposal: () => void;
 
     private deckCorpusEl: HTMLElement | null = null;
+    private deckInvestedEl: HTMLElement | null = null;
+    private deckGainsEl: HTMLElement | null = null;
     private btnSip: HTMLButtonElement | null = null;
     private btnSwp: HTMLButtonElement | null = null;
     private shareBtn: HTMLButtonElement | null = null;
@@ -43,9 +45,16 @@ export class MobileErgonomicDeckController {
 
     private initDOM(): void {
         this.deckCorpusEl = this.dom.getElement<HTMLElement>('dock-glance-corpus') || this.dom.getElement<HTMLElement>('mobile-deck-corpus-val');
+        this.deckInvestedEl = this.dom.getElement<HTMLElement>('dock-glance-invested');
+        this.deckGainsEl = this.dom.getElement<HTMLElement>('dock-glance-gains');
         this.btnSip = this.dom.getElement<HTMLButtonElement>('mobile-deck-sip-btn');
         this.btnSwp = this.dom.getElement<HTMLButtonElement>('mobile-deck-swp-btn');
         this.shareBtn = this.dom.getElement<HTMLButtonElement>('mobile-deck-share-btn');
+
+        const appEl = this.dom.getElement('calculator-app');
+        if (appEl?.dataset?.mode === 'swp') {
+            this.setActiveTab('swp');
+        }
     }
 
     private bindEvents(): void {
@@ -144,8 +153,17 @@ export class MobileErgonomicDeckController {
         if (!results || results.length === 0) return;
         const lastRow = results[results.length - 1];
         const newCorpus = lastRow.combined_total;
+        const invested = lastRow.cumulative_invested;
+        const gains = Math.max(0, newCorpus - invested);
+
         if (this.deckCorpusEl) {
             this.deckCorpusEl.textContent = this.formatter.format(newCorpus);
+        }
+        if (this.deckInvestedEl) {
+            this.deckInvestedEl.textContent = this.formatter.formatDynamic(invested);
+        }
+        if (this.deckGainsEl) {
+            this.deckGainsEl.textContent = `+${this.formatter.formatDynamic(gains)}`;
         }
         if (this.lastCorpus > 0) {
             WebHapticEngine.checkCorpusMilestone(this.lastCorpus, newCorpus);

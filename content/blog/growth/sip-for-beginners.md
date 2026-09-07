@@ -39,25 +39,25 @@ date: "March 2026"
 
 <p>This is SIP's secret weapon against market volatility. Here's how it works with a simple example:</p>
 
-<div class="overflow-x-auto border border-slate-200 rounded-xl mb-8 not-prose shadow-sm">
+<div class="overflow-x-auto border border-slate-200 rounded-xl mb-8 not-prose shadow-sm table-scroll-mask-end">
     <table class="min-w-full divide-y divide-slate-200 text-sm border-collapse">
         <thead class="bg-slate-50">
             <tr>
-                <th class="px-5 py-4 text-left font-extrabold text-slate-800">Month</th>
-                <th class="px-5 py-4 text-right font-extrabold text-slate-800">Market Status</th>
-                <th class="px-5 py-4 text-right font-extrabold text-slate-800">Fund NAV (Price)</th>
-                <th class="px-5 py-4 text-right font-extrabold text-slate-800">Your SIP (₹5,000)</th>
-                <th class="px-5 py-4 text-right font-extrabold text-indigo-700">Units Bought</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-left font-extrabold text-slate-800 table-sticky-col-0 bg-slate-50">Month</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-extrabold text-slate-800">Market Status</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-extrabold text-slate-800">Fund NAV (Price)</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-extrabold text-slate-800">Your SIP (₹5,000)</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-extrabold text-indigo-700">Units Bought</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-slate-100">
-            <tr><td class="px-5 py-4">January</td><td class="px-5 py-4 text-right">Market high</td><td class="px-5 py-4 text-right">₹100</td><td class="px-5 py-4 text-right">₹5,000</td><td class="px-5 py-4 text-right font-bold">50 units</td></tr>
-            <tr class="bg-slate-50/30"><td class="px-5 py-4">February</td><td class="px-5 py-4 text-right text-rose-600">Market crash!</td><td class="px-5 py-4 text-right">₹50</td><td class="px-5 py-4 text-right">₹5,000</td><td class="px-5 py-4 text-right font-bold text-emerald-600">100 units ✨</td></tr>
-            <tr><td class="px-5 py-4">March</td><td class="px-5 py-4 text-right">Recovery</td><td class="px-5 py-4 text-right">₹80</td><td class="px-5 py-4 text-right">₹5,000</td><td class="px-5 py-4 text-right font-bold">62.5 units</td></tr>
-            <tr class="bg-slate-50/30"><td class="px-5 py-4">April</td><td class="px-5 py-4 text-right">Normal</td><td class="px-5 py-4 text-right">₹100</td><td class="px-5 py-4 text-right">₹5,000</td><td class="px-5 py-4 text-right font-bold">50 units</td></tr>
+            <tr><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-semibold table-sticky-col-0">January</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right">Market high</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right">₹100</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right">₹5,000</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-bold">50 units</td></tr>
+            <tr class="bg-slate-50/30"><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-semibold text-rose-600 table-sticky-col-0">February</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right text-rose-600">Market crash!</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right">₹50</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right">₹5,000</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-bold text-emerald-600">100 units ✨</td></tr>
+            <tr><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-semibold table-sticky-col-0">March</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right">Recovery</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right">₹80</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right">₹5,000</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-bold">62.5 units</td></tr>
+            <tr class="bg-slate-50/30"><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-semibold table-sticky-col-0">April</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right">Normal</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right">₹100</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right">₹5,000</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-bold">50 units</td></tr>
             <tr class="bg-emerald-50/30">
-                <td class="px-5 py-4 font-bold" colspan="3">Total: ₹20,000 invested</td>
-                <td class="px-5 py-4 text-right font-bold" colspan="2">262.5 units @ avg cost ₹76.19</td>
+                <td class="px-3.5 sm:px-5 py-3 sm:py-4 font-bold table-sticky-col-0" colspan="3">Total: ₹20,000 invested</td>
+                <td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-bold" colspan="2">262.5 units @ avg cost ₹76.19</td>
             </tr>
         </tbody>
     </table>
@@ -72,32 +72,32 @@ date: "March 2026"
 <p>Albert Einstein reportedly called compound interest "the eighth wonder of the world." Here's why:</p>
 
 <ul>
-    <li><strong>Simple interest:</strong> You earn interest only on your original investment. <span class="dynamic-amount" data-amount-inr="100000"></span> at 12% = <span class="dynamic-amount" data-amount-inr="12000"></span>/year, every year. After 20 years: <span class="dynamic-amount" data-amount-inr="340000"></span>.</li>
-    <li><strong>Compound interest:</strong> You earn interest on your original investment AND on all previous interest. After 20 years: <strong><span class="dynamic-amount" data-amount-inr="965000"></span></strong> — nearly 3x more than simple interest.</li>
+    <li><strong>Simple interest:</strong> You earn interest only on your original investment. <span class="dynamic-amount" data-amount-inr="100000">₹1,00,000</span> at 12% = <span class="dynamic-amount" data-amount-inr="12000">₹12,000</span>/year, every year. After 20 years: <span class="dynamic-amount" data-amount-inr="340000">₹3,40,000</span>.</li>
+    <li><strong>Compound interest:</strong> You earn interest on your original investment AND on all previous interest. After 20 years: <strong><span class="dynamic-amount" data-amount-inr="965000">₹9,65,000</span></strong> — nearly 3x more than simple interest.</li>
 </ul>
 
 <p>Now combine compounding with monthly SIP contributions, and the effect becomes explosive:</p>
 
-<div class="overflow-x-auto border border-slate-200 rounded-xl mb-8 not-prose shadow-sm">
+<div class="overflow-x-auto border border-slate-200 rounded-xl mb-8 not-prose shadow-sm table-scroll-mask-end">
     <table class="min-w-full divide-y divide-slate-200 text-sm border-collapse">
         <thead class="bg-slate-50">
             <tr>
-                <th class="px-5 py-4 text-left font-extrabold text-slate-800">Year</th>
-                <th class="px-5 py-4 text-right font-extrabold text-slate-800">Total Invested</th>
-                <th class="px-5 py-4 text-right font-extrabold text-emerald-700">Corpus Value (@ 12%)</th>
-                <th class="px-5 py-4 text-right font-extrabold text-indigo-700">Gain</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-left font-extrabold text-slate-800 table-sticky-col-0 bg-slate-50">Year</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-extrabold text-slate-800">Total Invested</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-extrabold text-emerald-700">Corpus Value (@ 12%)</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-extrabold text-indigo-700">Gain</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-slate-100">
-            <tr><td class="px-5 py-4">Year 5</td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="600000"></span></td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="824856"></span></td><td class="px-5 py-4 text-right text-emerald-600">+<span class="dynamic-amount" data-amount-inr="224856"></span> (37%)</td></tr>
-            <tr class="bg-slate-50/30"><td class="px-5 py-4">Year 10</td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="1200000"></span></td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="2323391"></span></td><td class="px-5 py-4 text-right text-emerald-600">+<span class="dynamic-amount" data-amount-inr="1123391"></span> (94%)</td></tr>
-            <tr><td class="px-5 py-4">Year 15</td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="1800000"></span></td><td class="px-5 py-4 text-right"><span class="dynamic-amount" data-amount-inr="5045760"></span></td><td class="px-5 py-4 text-right font-bold text-emerald-600">+<span class="dynamic-amount" data-amount-inr="3245760"></span> (180%)</td></tr>
-            <tr class="bg-emerald-50/30"><td class="px-5 py-4 font-bold">Year 20</td><td class="px-5 py-4 text-right font-bold"><span class="dynamic-amount" data-amount-inr="2400000"></span></td><td class="px-5 py-4 text-right font-extrabold text-emerald-600"><span class="dynamic-amount" data-amount-inr="9991479"></span></td><td class="px-5 py-4 text-right font-bold text-emerald-600">+<span class="dynamic-amount" data-amount-inr="7591479"></span> (316%)</td></tr>
+            <tr><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-semibold table-sticky-col-0">Year 5</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right"><span class="dynamic-amount" data-amount-inr="600000">₹6,00,000</span></td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right"><span class="dynamic-amount" data-amount-inr="824856">₹8,24,856</span></td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right text-emerald-600">+<span class="dynamic-amount" data-amount-inr="224856">₹2,24,856</span> (37%)</td></tr>
+            <tr class="bg-slate-50/30"><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-semibold table-sticky-col-0">Year 10</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right"><span class="dynamic-amount" data-amount-inr="1200000">₹12,00,000</span></td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right"><span class="dynamic-amount" data-amount-inr="2323391">₹23,23,391</span></td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right text-emerald-600">+<span class="dynamic-amount" data-amount-inr="1123391">₹11,23,391</span> (94%)</td></tr>
+            <tr><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-semibold table-sticky-col-0">Year 15</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right"><span class="dynamic-amount" data-amount-inr="1800000">₹18,00,000</span></td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right"><span class="dynamic-amount" data-amount-inr="5045760">₹50,45,760</span></td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-bold text-emerald-600">+<span class="dynamic-amount" data-amount-inr="3245760">₹32,45,760</span> (180%)</td></tr>
+            <tr class="bg-emerald-50/30"><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-bold table-sticky-col-0">Year 20</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-bold"><span class="dynamic-amount" data-amount-inr="2400000">₹24,00,000</span></td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-extrabold text-emerald-600"><span class="dynamic-amount" data-amount-inr="9991479">₹99,91,479</span></td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-right font-bold text-emerald-600">+<span class="dynamic-amount" data-amount-inr="7591479">₹75,91,479</span> (316%)</td></tr>
         </tbody>
     </table>
 </div>
 
-<p>Notice the pattern: in the first 5 years, compounding earned you <span class="dynamic-amount" data-amount-inr="225000"></span>. But in the last 5 years alone (Year 15 to 20), it earned you <strong><span class="dynamic-amount" data-amount-inr="4946000"></span></strong>. That's the magic — compounding accelerates over time. The longer you stay invested, the more spectacular the growth. This is why <strong>starting early is the single most important financial decision</strong> you'll ever make.</p>
+<p>Notice the pattern: in the first 5 years, compounding earned you <span class="dynamic-amount" data-amount-inr="225000">₹2,25,000</span>. But in the last 5 years alone (Year 15 to 20), it earned you <strong><span class="dynamic-amount" data-amount-inr="4946000">₹49,46,000</span></strong>. That's the magic — compounding accelerates over time. The longer you stay invested, the more spectacular the growth. This is why <strong>starting early is the single most important financial decision</strong> you'll ever make.</p>
 
 <h2 id="how-to-start">The 5-Step Action Plan: Starting Your First SIP</h2>
 
@@ -208,26 +208,26 @@ date: "March 2026"
     <li><strong>"SIP guarantees returns"</strong> — False. SIP reduces timing risk through cost averaging, but mutual funds are still subject to market volatility. Short-term returns can be negative.</li>
     <li><strong>"Direct plans and regular plans give the same returns"</strong> — False. Regular plans include distributor commissions (0.5-1.5% annually) which are deducted from your NAV. Direct plans have zero commission, saving you lakhs over the long run.</li>
     <li><strong>"Market crash means I lose money"</strong> — Only if you panic and redeem. A market crash is actually a discount buying opportunity for active SIP mandates.</li>
-    <li><strong>"₹500/month SIP is too small to matter"</strong> — False. A starting <span class="dynamic-amount" data-amount-inr="500"></span>/month SIP at 12% for 30 years grows to over <strong><span class="dynamic-amount" data-amount-inr="1765000"></span></strong>. Small contributions compound into very significant corpuses over time.</li>
+    <li><strong>"₹500/month SIP is too small to matter"</strong> — False. A starting <span class="dynamic-amount" data-amount-inr="500">₹500</span>/month SIP at 12% for 30 years grows to over <strong><span class="dynamic-amount" data-amount-inr="1765000">₹17,65,000</span></strong>. Small contributions compound into very significant corpuses over time.</li>
 </ol>
 
 <h2 id="sip-vs-alternatives">SIP vs Other Saving Instruments in India</h2>
 
-<div class="overflow-x-auto border border-slate-200 rounded-xl mb-8 not-prose shadow-sm">
+<div class="overflow-x-auto border border-slate-200 rounded-xl mb-8 not-prose shadow-sm table-scroll-mask-end focus:outline-none" tabindex="0" role="region" aria-label="SIP vs Other Saving Instruments in India">
     <table class="min-w-full divide-y divide-slate-200 text-sm border-collapse">
         <thead class="bg-slate-50">
             <tr>
-                <th class="px-5 py-4 text-left font-bold text-slate-800">Instrument</th>
-                <th class="px-5 py-4 text-left font-bold text-slate-800">Return Rate (Approx.)</th>
-                <th class="px-5 py-4 text-left font-bold text-slate-800">Lock-in Period</th>
-                <th class="px-5 py-4 text-left font-bold text-slate-800">Tax Advantage</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-left font-bold text-slate-800 table-sticky-col-0">Instrument</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-left font-bold text-slate-800 whitespace-nowrap">Return Rate (Approx.)</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-left font-bold text-slate-800 whitespace-nowrap">Lock-in Period</th>
+                <th class="px-3.5 sm:px-5 py-3 sm:py-4 text-left font-bold text-slate-800 min-w-[200px]">Tax Advantage</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-slate-100">
-            <tr><td class="px-5 py-4 font-bold">Mutual Fund SIP</td><td class="px-5 py-4">12% - 15% (Market-linked)</td><td class="px-5 py-4">None (Except ELSS - 3 yrs)</td><td class="px-5 py-4">₹1.25L annual LTCG exemption</td></tr>
-            <tr class="bg-slate-50/30"><td class="px-5 py-4 font-bold">Public Provident Fund (PPF)</td><td class="px-5 py-4">7.1% (Fixed)</td><td class="px-5 py-4">15 Years</td><td class="px-5 py-4">100% tax-free maturity (EEE)</td></tr>
-            <tr><td class="px-5 py-4 font-bold">National Pension System (NPS)</td><td class="px-5 py-4">9% - 12% (Market-linked)</td><td class="px-5 py-4">Till age 60</td><td class="px-5 py-4">Additional ₹50,000 Sec 80CCD(1B) deduction</td></tr>
-            <tr class="bg-slate-50/30"><td class="px-5 py-4 font-bold">Bank Recurring Deposit (RD)</td><td class="px-5 py-4">6.0% - 7.0% (Fixed)</td><td class="px-5 py-4">None (Pre-fixed term)</td><td class="px-5 py-4">Interest fully taxable at slab rate</td></tr>
+            <tr><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-bold text-slate-900 table-sticky-col-0">Mutual Fund SIP</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 whitespace-nowrap">12% - 15% (Market-linked)</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 whitespace-nowrap">None (Except ELSS - 3 yrs)</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-xs sm:text-sm">₹1.25L annual LTCG exemption</td></tr>
+            <tr class="bg-slate-50/30"><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-bold text-slate-900 table-sticky-col-0">Public Provident Fund (PPF)</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 whitespace-nowrap">7.1% (Fixed)</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 whitespace-nowrap">15 Years</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-xs sm:text-sm">100% tax-free maturity (EEE)</td></tr>
+            <tr><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-bold text-slate-900 table-sticky-col-0">National Pension System (NPS)</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 whitespace-nowrap">9% - 12% (Market-linked)</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 whitespace-nowrap">Till age 60</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-xs sm:text-sm">Additional ₹50,000 Sec 80CCD(1B) deduction</td></tr>
+            <tr class="bg-slate-50/30"><td class="px-3.5 sm:px-5 py-3 sm:py-4 font-bold text-slate-900 table-sticky-col-0">Bank Recurring Deposit (RD)</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 whitespace-nowrap">6.0% - 7.0% (Fixed)</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 whitespace-nowrap">None (Pre-fixed term)</td><td class="px-3.5 sm:px-5 py-3 sm:py-4 text-xs sm:text-sm">Interest fully taxable at slab rate</td></tr>
         </tbody>
     </table>
 </div>
@@ -261,7 +261,7 @@ date: "March 2026"
 <p>Stop (or reduce) your SIP only when: (1) You've reached your financial goal; (2) You're within 2-3 years of needing the money (start shifting to safer instruments); or (3) You genuinely cannot afford it due to a financial emergency. <strong>Never stop SIP because "markets are down"</strong> — that's precisely when SIP is working hardest for you.</p>
 
 <h3>Which is better: SIP in direct plan or regular plan?</h3>
-<p><strong>Always choose the Direct Plan.</strong> Regular plans include distributor commissions (0.5-1.5% annually) embedded in a higher expense ratio. Over 20 years, this difference can cost you <span class="dynamic-amount" data-amount-inr="500000"></span> to <span class="dynamic-amount" data-amount-inr="1000000"></span> on a starting <span class="dynamic-amount" data-amount-inr="10000"></span>/month SIP. Direct plans are available through apps like Groww, Kuvera, and Zerodha Coin.</p>
+<p><strong>Always choose the Direct Plan.</strong> Regular plans include distributor commissions (0.5-1.5% annually) embedded in a higher expense ratio. Over 20 years, this difference can cost you <span class="dynamic-amount" data-amount-inr="500000">₹5,00,000</span> to <span class="dynamic-amount" data-amount-inr="1000000">₹10,00,000</span> on a starting <span class="dynamic-amount" data-amount-inr="10000">₹10,000</span>/month SIP. Direct plans are available through apps like Groww, Kuvera, and Zerodha Coin.</p>
 
 <h3>Should I do SIP in one fund or multiple funds?</h3>
 <p>For most beginners, <strong>one or two funds are sufficient</strong>. A single Nifty 50 Index Fund gives you exposure to 50 companies across all major sectors. Adding a Nifty Next 50 or a Flexi-Cap fund gives additional diversification. Avoid the mistake of investing in 8-10 funds — this actually reduces diversification benefit and makes tracking difficult.</p>
@@ -272,18 +272,3 @@ date: "March 2026"
 <h3>How is SIP taxed?</h3>
 <p>Each SIP installment is treated as a separate purchase. When you redeem, units are sold on FIFO (First-In-First-Out) basis. If units are held > 12 months: <strong>12.5% LTCG</strong> (with ₹1.25L annual exemption). If held < 12 months: <strong>20% STCG</strong>. Read our comprehensive <a href="/resource/comparison/mutual-fund-tax-2026">Mutual Fund Tax Guide 2026</a> for detailed examples.</p>
 
-<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-100 shadow-xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 sm:p-10 text-center text-white">
-  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">See Your SIP Grow</h2>
-  <p class="text-emerald-100 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">Enter your monthly amount, pick a return rate, and watch your wealth projection come alive with interactive charts and yearly breakdowns.</p>
-  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-    <a href="/#calculator-section"
-       class="inline-flex items-center gap-2 px-8 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-all duration-200 text-sm sm:text-base">
-      Open SIP &amp; SWP Planner
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-    </a>
-    <a href="/resource/growth/20-year-wealth-blueprint-step-up-sip"
-       class="inline-flex items-center gap-2 px-8 py-3 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-200 text-sm sm:text-base">
-      Read: Step-Up SIP Blueprint →
-    </a>
-  </div>
-</div>

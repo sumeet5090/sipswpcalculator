@@ -98,14 +98,3 @@ In your 20s, you have a long investment horizon (20+ years). You should focus on
 *   **Waiting for a "Better Salary":** Do not wait until you earn more to start. A smaller SIP started at age 25 compounds more than a much larger SIP started at age 35. Start small immediately.
 *   **Not Automating Your Savings:** Set your SIP auto-debit date to the day after your salary arrives. This forces you to invest first and spend what is left, rather than trying to save whatever is left at the end of the month.
 
----
-
-<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-100 shadow-xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 sm:p-10 text-center text-white">
-  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">Simulate Your Wealth Journey</h2>
-  <p class="text-emerald-100 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">See exactly how your savings grow over time. Test different return expectations, durations, and annual step-up configurations with our live calculator.</p>
-  <a href="/#calculator-section"
-     class="inline-flex items-center gap-2 px-8 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-all duration-200 text-sm sm:text-base">
-    Open SIP &amp; SWP Planner
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-  </a>
-</div>

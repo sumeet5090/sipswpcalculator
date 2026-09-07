@@ -1,21 +1,107 @@
-<div class="mt-12 fintech-glass-card p-6 sm:p-8">
-    <h2 id="master-financial-future" class="text-xl sm:text-2xl font-extrabold text-slate-900 text-center mb-3 tracking-tight">
+<div class="mt-8 sm:mt-12 fintech-glass-card p-4 sm:p-8">
+    <h2 id="master-financial-future" class="text-lg sm:text-2xl font-extrabold text-slate-900 text-center mb-2 sm:mb-3 tracking-tight">
         Why Combine a SIP with an SWP? (With Annual Step-Up Compounding)
     </h2>
-    <p class="text-sm sm:text-base text-slate-600 leading-relaxed text-center max-w-3xl mx-auto mb-8">
+    <p class="text-xs sm:text-base text-slate-600 leading-relaxed text-center max-w-3xl mx-auto mb-6 sm:mb-8">
         Understanding the tools at your disposal is the first step toward effective financial planning. Our
         <strong class="text-slate-900 font-semibold">mutual fund SIP to SWP calculator</strong> is designed to demystify two of the most powerful tools
         for Indian investors: the Systematic Investment Plan (SIP) for accumulation and the Systematic Withdrawal Plan (SWP) for systematic distribution.
     </p>
 
-    <div class="space-y-10">
-        {% include 'components/guide-definitions.twig' %}
-        {% include 'components/guide-how-to.twig' %}
-        {% include 'components/math-transparency.twig' %}
-        {% include 'components/guide-examples.twig' %}
-        {% include 'components/guide-historical-data.twig' %}
-        {% include 'components/guide-risks.twig' %}
-        {% include 'components/privacy-trust-badge.twig' %}
-        {% include 'components/guide-faq.twig' %}
+    <div class="space-y-3 sm:space-y-10">
+        <!-- 1. Definitions -->
+        <details class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent" open>
+            <summary class="flex sm:hidden items-center justify-between p-3.5 bg-slate-50/80 hover:bg-slate-100 cursor-pointer select-none border-b border-slate-200/80 font-bold text-slate-800 text-ui-xs">
+                <span class="flex items-center gap-2"><span>📖</span> <span>SIP &amp; SWP Core Definitions</span></span>
+                <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+            </summary>
+            <div class="p-2 sm:p-0">
+                {% include 'components/guide-definitions.twig' %}
+            </div>
+        </details>
+
+        <!-- 2. How To -->
+        <details class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
+            <summary class="flex sm:hidden items-center justify-between p-3.5 bg-slate-50/80 hover:bg-slate-100 cursor-pointer select-none border-b border-slate-200/80 font-bold text-slate-800 text-ui-xs">
+                <span class="flex items-center gap-2"><span>🛠️</span> <span>How to Use This Calculator</span></span>
+                <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+            </summary>
+            <div class="p-2 sm:p-0">
+                {% include 'components/guide-how-to.twig' %}
+            </div>
+        </details>
+
+        <!-- 3. Math Transparency -->
+        <details class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
+            <summary class="flex sm:hidden items-center justify-between p-3.5 bg-slate-50/80 hover:bg-slate-100 cursor-pointer select-none border-b border-slate-200/80 font-bold text-slate-800 text-ui-xs">
+                <span class="flex items-center gap-2"><span>🧮</span> <span>Mathematical Formulas &amp; Compounding</span></span>
+                <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+            </summary>
+            <div class="p-2 sm:p-0">
+                {% include 'components/math-transparency.twig' %}
+            </div>
+        </details>
+
+        <!-- 4. Real-World Examples -->
+        <details class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
+            <summary class="flex sm:hidden items-center justify-between p-3.5 bg-slate-50/80 hover:bg-slate-100 cursor-pointer select-none border-b border-slate-200/80 font-bold text-slate-800 text-ui-xs">
+                <span class="flex items-center gap-2"><span>💡</span> <span>Real-World Case Studies</span></span>
+                <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+            </summary>
+            <div class="p-2 sm:p-0">
+                {% include 'components/guide-examples.twig' %}
+            </div>
+        </details>
+
+        <!-- 5. Historical Data -->
+        <details class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
+            <summary class="flex sm:hidden items-center justify-between p-3.5 bg-slate-50/80 hover:bg-slate-100 cursor-pointer select-none border-b border-slate-200/80 font-bold text-slate-800 text-ui-xs">
+                <span class="flex items-center gap-2"><span>📊</span> <span>Historical Market Data &amp; Asset Returns</span></span>
+                <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+            </summary>
+            <div class="p-2 sm:p-0">
+                {% include 'components/guide-historical-data.twig' %}
+            </div>
+        </details>
+
+        <!-- 6. Risks & Taxation -->
+        <details class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
+            <summary class="flex sm:hidden items-center justify-between p-3.5 bg-slate-50/80 hover:bg-slate-100 cursor-pointer select-none border-b border-slate-200/80 font-bold text-slate-800 text-ui-xs">
+                <span class="flex items-center gap-2"><span>⚖️</span> <span>Taxation (§112A LTCG) &amp; Risk Guardrails</span></span>
+                <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+            </summary>
+            <div class="p-2 sm:p-0">
+                {% include 'components/guide-risks.twig' %}
+            </div>
+        </details>
+
+        <!-- 7. Privacy & Security -->
+        <details class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
+            <summary class="flex sm:hidden items-center justify-between p-3.5 bg-slate-50/80 hover:bg-slate-100 cursor-pointer select-none border-b border-slate-200/80 font-bold text-slate-800 text-ui-xs">
+                <span class="flex items-center gap-2"><span>🔒</span> <span>100% Client-Side Privacy Guarantee</span></span>
+                <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+            </summary>
+            <div class="p-2 sm:p-0">
+                {% include 'components/privacy-trust-badge.twig' %}
+            </div>
+        </details>
+
+        <!-- 8. FAQ -->
+        <details class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
+            <summary class="flex sm:hidden items-center justify-between p-3.5 bg-slate-50/80 hover:bg-slate-100 cursor-pointer select-none border-b border-slate-200/80 font-bold text-slate-800 text-ui-xs">
+                <span class="flex items-center gap-2"><span>❓</span> <span>Frequently Asked Questions</span></span>
+                <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+            </summary>
+            <div class="p-2 sm:p-0">
+                {% include 'components/guide-faq.twig' %}
+            </div>
+        </details>
     </div>
+    <script>
+        if (window.innerWidth >= 640) {
+            document.querySelectorAll('#master-financial-future ~ div details.fintech-accordion').forEach(function(el) {
+                el.setAttribute('open', '');
+            });
+        }
+    </script>
 </div>
