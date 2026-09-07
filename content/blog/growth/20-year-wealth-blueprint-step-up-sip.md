@@ -290,18 +290,3 @@ date: "February 2026"
 <h3>Step-up SIP vs lump sum top-up: which is better?</h3>
 <p>Both work. A step-up SIP increases your <em>regular monthly contribution</em>. A lump sum top-up adds a one-time extra investment (e.g., your annual bonus). The optimal strategy is <strong>both</strong>: step up your monthly SIP by 10% AND invest your annual bonus as a lump sum. The bonus investment gets the rupee-cost-averaging benefit of the next 12 months of SIP, while the step-up compounds for decades.</p>
 
-<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-100 shadow-xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 sm:p-10 text-center text-white">
-  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">Model Your Step-Up SIP Growth</h2>
-  <p class="text-emerald-100 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">Our calculator supports step-up SIP built-in. Enter your starting amount, step-up %, and return rate to see the dramatic difference in real-time.</p>
-  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-    <a href="/#calculator-section"
-       class="inline-flex items-center gap-2 px-8 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-all duration-200 text-sm sm:text-base">
-      Open SIP &amp; SWP Planner
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-    </a>
-    <a href="/resource/growth/inflation-impact-on-sip"
-       class="inline-flex items-center gap-2 px-8 py-3 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-200 text-sm sm:text-base">
-      Read: Inflation Impact on SIP →
-    </a>
-  </div>
-</div>

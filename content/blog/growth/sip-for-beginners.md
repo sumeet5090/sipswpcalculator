@@ -272,18 +272,3 @@ date: "March 2026"
 <h3>How is SIP taxed?</h3>
 <p>Each SIP installment is treated as a separate purchase. When you redeem, units are sold on FIFO (First-In-First-Out) basis. If units are held > 12 months: <strong>12.5% LTCG</strong> (with ₹1.25L annual exemption). If held < 12 months: <strong>20% STCG</strong>. Read our comprehensive <a href="/resource/comparison/mutual-fund-tax-2026">Mutual Fund Tax Guide 2026</a> for detailed examples.</p>
 
-<div class="mt-12 not-prose rounded-3xl overflow-hidden border border-emerald-100 shadow-xl bg-gradient-to-br from-emerald-600 to-teal-700 p-8 sm:p-10 text-center text-white">
-  <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">See Your SIP Grow</h2>
-  <p class="text-emerald-100 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">Enter your monthly amount, pick a return rate, and watch your wealth projection come alive with interactive charts and yearly breakdowns.</p>
-  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-    <a href="/#calculator-section"
-       class="inline-flex items-center gap-2 px-8 py-3 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-emerald-50 transition-all duration-200 text-sm sm:text-base">
-      Open SIP &amp; SWP Planner
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-    </a>
-    <a href="/resource/growth/20-year-wealth-blueprint-step-up-sip"
-       class="inline-flex items-center gap-2 px-8 py-3 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-200 text-sm sm:text-base">
-      Read: Step-Up SIP Blueprint →
-    </a>
-  </div>
-</div>
