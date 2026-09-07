@@ -270,6 +270,34 @@
                     <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close()" class="text-slate-400 hover:text-slate-700 p-1 text-ui-xs cursor-pointer" aria-label="Close">✕</button>
                 </div>
             </div>
+
+            <!-- In-Page Section Anchors -->
+            <div class="border-b border-slate-100 pb-2.5">
+                <span class="text-caption font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Jump to Section</span>
+                <div class="grid grid-cols-2 gap-1.5">
+                    <a href="#calculator-section" onclick="document.getElementById('mobile-actions-sheet')?.close()"
+                        class="px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 text-ui-xs font-bold border border-slate-200/80 transition-colors flex items-center gap-1.5">
+                        <span>⚡</span>
+                        <span>Calculator</span>
+                    </a>
+                    <a href="#breakdown-studio" onclick="document.getElementById('mobile-actions-sheet')?.close()"
+                        class="px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 text-ui-xs font-bold border border-slate-200/80 transition-colors flex items-center gap-1.5">
+                        <span>📊</span>
+                        <span>Breakdown</span>
+                    </a>
+                    <a href="#math-formulas" onclick="document.getElementById('mobile-actions-sheet')?.close()"
+                        class="px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 text-ui-xs font-bold border border-slate-200/80 transition-colors flex items-center gap-1.5">
+                        <span>📐</span>
+                        <span>Formulas</span>
+                    </a>
+                    <a href="#faq-section" onclick="document.getElementById('mobile-actions-sheet')?.close()"
+                        class="px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 text-ui-xs font-bold border border-slate-200/80 transition-colors flex items-center gap-1.5">
+                        <span>❓</span>
+                        <span>FAQs</span>
+                    </a>
+                </div>
+            </div>
+
             <div class="grid grid-cols-2 gap-2">
                 <!-- CSV Export -->
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('downloadCsvBtn')?.click()"
@@ -326,7 +354,7 @@
 
     <!-- Floating Scroll-to-Top FAB (appears on scroll up to prevent text occlusion) -->
     <button type="button" id="mobile-scroll-top-fab"
-        class="sm:hidden fixed {% if is_calculator_route or active_page|default('') == 'blog_post' %}bottom-20{% else %}bottom-8{% endif %} right-3.5 z-sticky w-9 h-9 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-card text-slate-600 text-xs font-black flex items-center justify-center active:scale-90 transition-all duration-300 cursor-pointer opacity-0 pointer-events-none translate-y-2"
+        class="sm:hidden fixed {% if is_calculator_route or active_page|default('') == 'blog_post' %}bottom-[140px]{% else %}bottom-8{% endif %} right-3.5 z-sticky w-9 h-9 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-card text-slate-600 text-xs font-black flex items-center justify-center active:scale-90 transition-all duration-300 cursor-pointer opacity-0 pointer-events-none translate-y-2"
         onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
         aria-label="Scroll to top">
         ↑

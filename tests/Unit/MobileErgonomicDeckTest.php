@@ -188,7 +188,8 @@ final class MobileErgonomicDeckTest extends TestCase
     public function testMobileDiscoveryHudPlacementAndAnchors(): void
     {
         $hudTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/components/floating-discovery-hud.twig');
-        $this->assertStringContainsString('bottom-[74px]', $hudTwig);
+        $this->assertStringContainsString('hidden sm:block', $hudTwig);
+        $this->assertStringContainsString('sm:bottom-5', $hudTwig);
         $this->assertStringContainsString('z-30', $hudTwig);
         $this->assertStringContainsString('#calculator-section', $hudTwig);
         $this->assertStringContainsString('#breakdown-studio', $hudTwig);
