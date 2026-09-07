@@ -91,6 +91,21 @@ final class EditorialReadingErgonomicsTest extends TestCase
         $this->assertStringContainsString('IntersectionObserver', $this->tocCode);
     }
 
+    public function testInteractiveWealthSandboxCtaStructure(): void
+    {
+        $relatedResources = (string) file_get_contents(
+            __DIR__ . '/../../src/Views/components/related-resources.twig'
+        );
+
+        $this->assertStringContainsString('aria-label="Simulate Your Wealth Journey"', $relatedResources);
+        $this->assertStringContainsString('SEBI / AMFI Formula Certified', $relatedResources);
+        $this->assertStringContainsString('100% Client-Side Privacy', $relatedResources);
+        $this->assertStringContainsString('Simulate My Compounding Goals', $relatedResources);
+        $this->assertStringContainsString('Simulate My Retirement Drawdown', $relatedResources);
+        $this->assertStringContainsString('Launch Head-to-Head Comparison', $relatedResources);
+        $this->assertStringContainsString('shadow-card hover:shadow-card-hover', $relatedResources);
+    }
+
     private function assertDoesNotMatchString(string $pattern, string $string): void
     {
         $this->assertSame(0, preg_match($pattern, $string), "Failed asserting that string does not match regex {$pattern}");
