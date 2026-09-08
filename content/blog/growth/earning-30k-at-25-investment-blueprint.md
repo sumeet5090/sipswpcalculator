@@ -6,6 +6,7 @@ tag: "Blueprint"
 tag_color: "emerald"
 featured: false
 date: "July 2026"
+cta_url: "/?sip=6000&years=25&rate=12&stepup=10&utm_source=blog_cta&utm_medium=growth#calculator-section"
 ---
 
 ---

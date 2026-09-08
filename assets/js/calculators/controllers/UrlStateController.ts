@@ -12,7 +12,11 @@ export class UrlStateController {
     }
 
     init(): void {
-        const urlParams = new URLSearchParams(window.location.search);
+        let searchStr = (typeof window !== 'undefined') ? window.location.search : '';
+        if (!searchStr && typeof window !== 'undefined' && window.location.hash.includes('?')) {
+            searchStr = '?' + window.location.hash.split('?')[1];
+        }
+        const urlParams = new URLSearchParams(searchStr);
         if (!urlParams.toString()) return;
 
         const appEl = this.dom.getElement('calculator-app');

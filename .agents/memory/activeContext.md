@@ -5,18 +5,17 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Balanced Hybrid Typography Normalization & Mobile Readability Milestone Completed.
-- **Audit & Implementation Findings:**
-  - Exhaustive git diff audit (`83b37c1..HEAD` and `11e212e..HEAD`) verified that all core SEO assets from the Claude Opus 4.6 `wealthnorth.in` competitive analysis remain 100% intact (all 9 JSON-LD schemas, meta tags, sitemaps, robots.txt, 13 calculator guides, 20 blog posts, and cross-runtime parity).
-  - Reintroduced 100% open Server-Side Rendering (SSR) for all 8 educational guide sections in `home-guide-content.twig` and the 2,000+ word guide in `calculator-guide.twig` (`<details open>`), eliminating collapsed states for Googlebot crawlers.
-  - Reintroduced hero subtitle `<p>` on mobile viewports (`text-ui-xs sm:text-base md:text-lg`) in `home.twig` ensuring 100% text parity under Mobile-First Indexing.
-  - Reintroduced `open` state on the `#quick-answer` Featured Snippet box on initial SSR.
-  - Resolved `aria-labelledby="guide-heading"` with an explicit `<h2 id="guide-heading" class="sr-only">` in `calculator-guide.twig`.
-  - **Balanced Hybrid Typography Normalization:** Resolved mobile readability disparity between homepage guide content and blog posts. Replaced cramped `text-xs sm:text-sm` (12px mobile / 14px desktop) with standard readable `text-sm sm:text-base` (14px mobile / 16px desktop body copy with 22px line height) across 8 guide components (`home-guide-content.twig`, `guide-definitions.twig`, `guide-how-to.twig`, `guide-examples.twig`, `guide-historical-data.twig`, `guide-risks.twig`, `guide-faq.twig`, and `privacy-trust-badge.twig`). Tool controls, steppers, and chips remain compact (`12px-13px`).
+- **Current Milestone:** Context-Aware Smart Prefill Architecture Milestone Completed.
+- **Implementation & Audit Findings:**
+  - **Context-Aware Smart Prefill Architecture:** Solved the disconnect between blog post CTAs and calculator initial state. In `interactive-cta-banner.twig` and the mobile reading dock in `generic-post.twig`, category-adaptive and article-tailored query parameters (`?sip=...`, `?corpus=...`, `?swp_withdrawal=...`, `?stepup=...`, `utm_source=...`) are now appended to target URLs, with the hash pointing directly to `#calculator-section`.
+  - **Resilient Query Parsing (Postel's Law):** Updated `UrlStateController.ts` and `CalculatorApp.ts` to parse query strings from `window.location.search` with fallback extraction from `window.location.hash`, guaranteeing that prefilled inputs instantly hydrate into the form, override stale `sessionStorage` drafts, and update charts/breakdown without manual user intervention.
+  - **Article-Level Granular Overrides:** Supported frontmatter `cta_url` in markdown blog posts (e.g., `earning-30k-at-25-investment-blueprint.md` now seamlessly pre-fills its exact ₹6,000/mo, 25-yr, 10% step-up scenario).
+  - **Balanced Hybrid Typography Normalization:** Resolved mobile readability disparity between homepage guide content and blog posts (`text-sm sm:text-base` across 8 components).
+  - **100% Open SSR & Mobile-First Parity:** Reintroduced open details on guides and quick-answer featured snippet box.
 - **System Health:** 
-  - Full check-all passed: PHPStan Level 8 (0 errors), PHPCS PSR-12 (0 errors), PHPUnit (836 tests / 13,756 assertions passed).
+  - Full check-all passed: PHPStan Level 8 (0 errors), PHPCS PSR-12 (0 errors), PHPUnit (837 tests / 13,765 assertions passed).
   - Parity check: 57 test cases passed (100% PHP/TS parity).
-  - Vite build: Clean production bundle compiled.
+  - Vite build: Clean production bundle compiled in 189ms.
 
 ---
 

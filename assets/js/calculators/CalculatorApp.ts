@@ -527,7 +527,11 @@ export class CalculatorApp {
             return;
         }
 
-        const urlParams = new URLSearchParams(window.location.search);
+        let searchStr = (typeof window !== 'undefined') ? window.location.search : '';
+        if (!searchStr && typeof window !== 'undefined' && window.location.hash.includes('?')) {
+            searchStr = '?' + window.location.hash.split('?')[1];
+        }
+        const urlParams = new URLSearchParams(searchStr);
         const urlGoal = urlParams.get('goal');
 
         if (mode === 'target_corpus' || mode === 'target' || urlGoal === 'target_corpus' || urlGoal === 'target') {
@@ -815,7 +819,11 @@ export class CalculatorApp {
 
     private initInitialCalculation(): void {
         const runInitCalc = () => {
-            const urlParams = new URLSearchParams(window.location.search);
+            let searchStr = (typeof window !== 'undefined') ? window.location.search : '';
+            if (!searchStr && typeof window !== 'undefined' && window.location.hash.includes('?')) {
+                searchStr = '?' + window.location.hash.split('?')[1];
+            }
+            const urlParams = new URLSearchParams(searchStr);
             const hasUrlParams = Array.from(urlParams.keys()).length > 0;
             if (!hasUrlParams) {
                 const savedDraft = this.lifecycleSubsystem.loadDraft();

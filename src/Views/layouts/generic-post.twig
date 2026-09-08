@@ -29,6 +29,21 @@
     {% set badge_classes = 'bg-amber-50 text-amber-700 border border-amber-100' %}
 {% endif %}
 
+{# Smart Contextual CTA URLs #}
+{% if content_metadata.cta_url is defined and content_metadata.cta_url %}
+    {% set post_cta_url = content_metadata.cta_url %}
+    {% set post_dock_cta_url = content_metadata.cta_url %}
+{% elseif cat_slug == 'retirement' %}
+    {% set post_cta_url = '/swp-calculator?corpus=10000000&swp_withdrawal=50000&swp_years=30&swp_rate=8&swp_stepup=5&utm_source=blog_cta&utm_medium=retirement' %}
+    {% set post_dock_cta_url = '/swp-calculator?corpus=10000000&swp_withdrawal=50000&swp_years=30&swp_rate=8&swp_stepup=5&utm_source=blog_dock&utm_medium=retirement' %}
+{% elseif cat_slug == 'comparison' %}
+    {% set post_cta_url = '/?sip=10000&years=10&rate=12&utm_source=blog_cta&utm_medium=comparison#calculator-section' %}
+    {% set post_dock_cta_url = '/?sip=10000&years=10&rate=12&utm_source=blog_dock&utm_medium=comparison#calculator-section' %}
+{% else %}
+    {% set post_cta_url = '/?sip=10000&years=15&rate=12&stepup=10&utm_source=blog_cta&utm_medium=growth#calculator-section' %}
+    {% set post_dock_cta_url = '/?sip=10000&years=15&rate=12&stepup=10&utm_source=blog_dock&utm_medium=growth#calculator-section' %}
+{% endif %}
+
 <div class="doc-layout-grid relative">
     <aside class="doc-sidebar doc-sidebar-left pl-4 pr-6">
         <div class="sticky top-28 pt-4 pb-8">
@@ -203,7 +218,8 @@
 
                 {# 1. Immediate Conversion: Interactive Wealth Sandbox CTA #}
                 {% include 'components/interactive-cta-banner.twig' with {
-                    seo_category: cat_slug
+                    seo_category: cat_slug,
+                    cta_url: post_cta_url
                 } %}
 
                 {# 2. Discovery: Related Resources / Continue Reading #}
@@ -229,7 +245,7 @@
     </div>
 
     <div class="flex items-center gap-2">
-        <a href="/#calculator-card" class="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 text-xs font-bold shadow-subtle transition-all min-h-[44px] touch-manipulation">
+        <a href="{{ post_dock_cta_url }}" class="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 text-xs font-bold shadow-subtle transition-all min-h-[44px] touch-manipulation">
             <span>⚡ Calculate</span>
         </a>
         <button id="mobile-reading-share-btn" type="button" class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all touch-manipulation" aria-label="Share this article">

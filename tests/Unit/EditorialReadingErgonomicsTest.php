@@ -139,6 +139,28 @@ final class EditorialReadingErgonomicsTest extends TestCase
         );
     }
 
+    public function testContextAwareSmartPrefillCtaUrls(): void
+    {
+        $interactiveCta = (string) file_get_contents(
+            __DIR__ . '/../../src/Views/components/interactive-cta-banner.twig'
+        );
+
+        $this->assertStringContainsString('target_cta_href', $interactiveCta);
+        $this->assertStringContainsString('utm_source=blog_cta&utm_medium=growth#calculator-section', $interactiveCta);
+        $this->assertStringContainsString('utm_source=blog_cta&utm_medium=retirement', $interactiveCta);
+        $this->assertStringContainsString('utm_source=blog_cta&utm_medium=comparison#calculator-section', $interactiveCta);
+        $this->assertStringContainsString('href="{{ target_cta_href }}"', $interactiveCta);
+
+        $genericPostLayout = (string) file_get_contents(
+            __DIR__ . '/../../src/Views/layouts/generic-post.twig'
+        );
+
+        $this->assertStringContainsString('post_cta_url', $genericPostLayout);
+        $this->assertStringContainsString('post_dock_cta_url', $genericPostLayout);
+        $this->assertStringContainsString('href="{{ post_dock_cta_url }}"', $genericPostLayout);
+        $this->assertStringContainsString('cta_url: post_cta_url', $genericPostLayout);
+    }
+
     private function assertDoesNotMatchString(string $pattern, string $string): void
     {
         $this->assertSame(
