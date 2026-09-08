@@ -28,12 +28,14 @@ Adhere to the following protocols for all development, design, and implementatio
 * **Approval Gate:** Always outline your implementation plan and obtain explicit user approval before beginning any coding or design task.
 * **Context Management:** Monitor the volume of data and the length of the conversation trail. If the conversation reaches a critical threshold or if the code complexity exceeds what a smaller model can reliably parse, immediately flag this to the user.
 * **Model-Centric Modularity:** Prioritize high modularity and extreme componentization. If a task requires complexity that risks model failure, suggest a refactor into smaller, isolated components first.
-* **Documentation Maintenance:** At the end of every successful task or implementation, update the `README.md` file to reflect any changes, new features, or architectural adjustments made. Keep the documentation as clean and current as the code itself.
+* **Documentation Maintenance & Anti-Drift Protocol:** Whenever any code, route, class, template, or configuration changes, immediately perform an audit of referencing documentation:
+  1. Check and update `README.md` to reflect new/modified behavior.
+  2. Check and update `.agents/ARCHITECTURE_MAP.md` if any route, controller, template, driver, engine, or subsystem coordinate shifted.
+  3. Search and rectify any obsolete references or deprecated patterns in `.agents/memory/`, `.agents/skills/`, and `docs/`. Never leave stale file paths or outdated architectural guidelines in the repository.
 * **"Trace the Data Flow" Protocol:** Before modifying any routing or rendering strategy, strictly trace the parameters back to their origin (e.g., `routes.php`) to understand their actual runtime values. Do not assume their intent based solely on variable names.
 
-### 6. Communication & Efficiency Protocol
-* **Zero-Padding Policy:** Avoid conversational filler, apologies, or clarifying your understanding of the context. Provide technical output directly.
-* **Explicit Context Anchoring:** The user should provide explicit file targets and constraints in the prompt. If a requirement is still ambiguous, the agent must not guess, but instead state: "Constraint check: [Topic]. Please confirm my assumption."
+* **Context Anchoring (Zero-Exploration Protocol):** Before performing broad directory searches or greps across the repository, ALWAYS consult `.agents/ARCHITECTURE_MAP.md` to identify exact route, controller, Twig template, and TypeScript engine paths. Check `.agents/memory/activeContext.md` and `.agents/memory/systemPatterns.md` for current project state and architectural invariants.
+* **Handoff Ledger Protocol:** At the conclusion of any feature, refactor, or multi-step milestone, update `.agents/memory/activeContext.md` with the latest task state and changes made, ensuring seamless continuity across subsequent conversations.
 * **State Compression:** If the conversation exceeds 20 turns, stop and summarize the project state into a concise context block before proceeding.
 * **Local Curl Verification:** Before declaring a task complete, mandate running a `curl` command on the local PHP server for any specific routes modified. Grep for expected DOM elements or JSON payloads to definitively verify the rendering success.
 
