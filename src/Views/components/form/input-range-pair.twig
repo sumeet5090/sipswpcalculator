@@ -29,12 +29,13 @@
     {% set tooltip = config.tooltip|default(null) %}
     
     <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 transition-all duration-200 shadow-subtle hover:shadow-card" data-field-id="{{ id }}">
-        {% if labelHtml %}
-            {{ labelHtml|raw }}
-        {% else %}
-            <!-- Field Header: Label & Live Range Constraints -->
-            <div class="flex flex-wrap items-center justify-between mb-1.5 gap-x-1.5 gap-y-0.5">
-                <div class="flex items-center gap-1.5 flex-wrap min-w-0">
+        <!-- Row 1: Label & Stepper Pill (Groww / Zerodha High-Density Inline Pattern) -->
+        <div class="flex items-center justify-between gap-2 min-w-0">
+            <!-- Left: Label, Tooltip & Word Badge -->
+            <div class="flex items-center gap-1.5 min-w-0 flex-wrap">
+                {% if labelHtml %}
+                    {{ labelHtml|raw }}
+                {% else %}
                     <label for="{{ id }}" id="{{ id }}_label" class="text-ui-xs font-bold tracking-tight text-slate-800 select-none cursor-pointer hover:text-growth transition-colors" title="Double-click to reset to default">
                         {{ label }}
                     </label>
@@ -52,84 +53,79 @@
                             </div>
                         </div>
                     {% endif %}
-                    <span id="{{ id }}_word_badge" class="hidden text-micro font-bold text-growth-emphasis bg-growth-surface border border-growth-border px-2 py-0.5 rounded-md font-financial-mono transition-all whitespace-nowrap shrink-0"></span>
-                </div>
-                <span class="text-micro font-financial-mono font-bold text-slate-400 tracking-tight shrink-0 select-none hidden sm:inline-block ml-auto">
-                    {{ prefix }}{{ min }}{{ suffix }} – {{ prefix }}{{ sliderMax }}{{ suffix }}
-                </span>
+                    <span id="{{ id }}_word_badge" class="hidden text-micro font-bold text-growth-emphasis bg-growth-surface border border-growth-border px-1.5 py-0.5 rounded-md font-financial-mono transition-all whitespace-nowrap shrink-0"></span>
+                {% endif %}
             </div>
-        {% endif %}
 
-        <!-- Refined Integrated Capsule Stepper Dock (48px Touch Target Enforcement) -->
-        <div class="relative flex items-stretch rounded-2xl bg-slate-50/90 border border-slate-200/90 {{ inputFocusBorder }} focus-within:bg-white focus-within:ring-2 transition-all overflow-hidden shadow-flat">
-            <!-- Decrement Stepper Button (48px Touch Target) -->
-            <button type="button" 
-                class="stepper-btn stepper-dec w-12 min-h-[48px] flex items-center justify-center bg-slate-100/80 hover:bg-slate-200 text-slate-600 hover:text-slate-900 active:bg-slate-300 active:scale-95 transition-all select-none cursor-pointer border-r border-slate-200/90 focus:outline-none shrink-0 touch-target-expanded"
-                data-step-action="dec"
-                data-step-for="{{ id }}"
-                data-step-val="{{ step }}"
-                aria-label="Decrease {{ label }}">
-                <svg class="w-4 h-4 stroke-[2.8] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5"/>
-                </svg>
-            </button>
+            <!-- Right: Integrated Stepper Capsule (Apple HIG 48px Touch Target Hitbox) -->
+            <div class="relative inline-flex items-center rounded-xl bg-slate-50/90 border border-slate-200/90 {{ inputFocusBorder }} focus-within:bg-white focus-within:ring-2 transition-all shadow-flat overflow-hidden shrink-0">
+                <!-- Decrement Stepper Button -->
+                <button type="button" 
+                    class="stepper-btn stepper-dec relative w-9 h-8 sm:w-8 sm:h-8 flex items-center justify-center bg-slate-100/90 hover:bg-slate-200 text-slate-600 hover:text-slate-900 active:bg-slate-300 active:scale-95 transition-all select-none cursor-pointer border-r border-slate-200/90 focus:outline-none shrink-0 touch-target-expanded before:content-[''] before:absolute before:-inset-2 before:z-[1]"
+                    data-step-action="dec"
+                    data-step-for="{{ id }}"
+                    data-step-val="{{ step }}"
+                    aria-label="Decrease {{ label }}">
+                    <svg class="w-3.5 h-3.5 stroke-[2.8] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5"/>
+                    </svg>
+                </button>
 
-            <!-- Main Input Well with Floating Subtext (text-body prevents iOS zoom) -->
-            <div class="relative flex-1 flex flex-col justify-center py-1.5 px-3 min-w-0">
-                <div class="flex items-center justify-center min-w-0">
+                <!-- Numeric Well (text-body prevents iOS Safari zoom) -->
+                <div class="flex items-center justify-center px-1.5 py-0.5 min-w-16 sm:min-w-20">
                     {% if prefix %}
-                        <span class="currency-symbol text-ui-sm sm:text-body font-black text-slate-400 mr-1 select-none pointer-events-none shrink-0">{{ prefix }}</span>
+                        <span class="currency-symbol text-caption sm:text-ui-xs font-black text-slate-400 mr-0.5 select-none pointer-events-none shrink-0">{{ prefix }}</span>
                     {% endif %}
                     <input type="text" inputmode="{{ inputMode }}" enterkeyhint="{{ enterKeyHint }}" id="{{ id }}" name="{{ name }}"
-                        class="w-full bg-transparent text-center text-body sm:text-heading-md font-black font-financial-mono tabular-nums text-slate-900 focus:outline-none tracking-tight min-w-0"
+                        class="w-full bg-transparent text-center text-body font-black font-financial-mono tabular-nums text-slate-900 focus:outline-none tracking-tight min-w-0"
                         required value="{{ value }}" data-min="{{ min }}" data-max="{{ max }}" data-step="{{ step }}"
                         autocomplete="off" spellcheck="false"
                         aria-describedby="{{ id }}_error">
                     {% if suffix %}
-                        <span class="text-ui-xs sm:text-ui-sm font-bold text-slate-400 ml-1 select-none pointer-events-none shrink-0">{{ suffix }}</span>
+                        <span class="text-caption font-bold text-slate-400 ml-0.5 select-none pointer-events-none shrink-0">{{ suffix }}</span>
                     {% endif %}
                 </div>
-                
-                <!-- Dynamic Live Subtext Hint (Zero-CLS reserved height) -->
-                <div id="{{ id }}_subtext" class="field-unit-hint text-caption sm:text-micro font-bold text-growth-emphasis text-center min-h-[16px] leading-tight select-none whitespace-normal break-words"></div>
-            </div>
 
-            <!-- Increment Stepper Button (48px Touch Target) -->
-            <button type="button" 
-                class="stepper-btn stepper-inc w-12 min-h-[48px] flex items-center justify-center bg-slate-100/80 hover:bg-slate-200 text-slate-600 hover:text-slate-900 active:bg-slate-300 active:scale-95 transition-all select-none cursor-pointer border-l border-slate-200/90 focus:outline-none shrink-0 touch-target-expanded"
-                data-step-action="inc"
-                data-step-for="{{ id }}"
-                data-step-val="{{ step }}"
-                aria-label="Increase {{ label }}">
-                <svg class="w-4 h-4 stroke-[2.8] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"/>
-                </svg>
-            </button>
+                <!-- Increment Stepper Button -->
+                <button type="button" 
+                    class="stepper-btn stepper-inc relative w-9 h-8 sm:w-8 sm:h-8 flex items-center justify-center bg-slate-100/90 hover:bg-slate-200 text-slate-600 hover:text-slate-900 active:bg-slate-300 active:scale-95 transition-all select-none cursor-pointer border-l border-slate-200/90 focus:outline-none shrink-0 touch-target-expanded before:content-[''] before:absolute before:-inset-2 before:z-[1]"
+                    data-step-action="inc"
+                    data-step-for="{{ id }}"
+                    data-step-val="{{ step }}"
+                    aria-label="Increase {{ label }}">
+                    <svg class="w-3.5 h-3.5 stroke-[2.8] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"/>
+                    </svg>
+                </button>
+            </div>
         </div>
+
+        <!-- Dynamic Live Subtext Hint (Indian words notation · Zero-CLS) -->
+        <div id="{{ id }}_subtext" class="field-unit-hint text-caption font-bold text-growth-emphasis min-h-[14px] leading-tight select-none mt-0.5 whitespace-normal break-words"></div>
 
         {# Inline validation error #}
         <p id="{{ id }}_error" role="alert" aria-live="polite"
-           class="hidden text-micro font-bold text-payout mt-1 field-error"></p>
+           class="hidden text-micro font-bold text-payout mt-0.5 field-error"></p>
 
-        <!-- Seamless Integrated Range Slider Track -->
-        <div class="mt-2.5 px-0.5">
+        <!-- Low-Profile Range Slider Track -->
+        <div class="mt-1 px-0.5">
             <input type="range" id="{{ id }}_range" min="{{ min }}" max="{{ sliderMax }}" step="{{ sliderStep }}"
                 value="{{ value }}"
                 aria-labelledby="{{ id }}_label"
                 aria-valuenow="{{ value }}"
                 aria-valuemin="{{ min }}"
                 aria-valuemax="{{ sliderMax }}"
-                class="w-full h-2.5 bg-slate-200 rounded-full appearance-none cursor-pointer {{ rangeColorClass }}">
+                class="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer {{ rangeColorClass }}">
         </div>
 
         {% if presets %}
             <!-- Mobile Horizontal Swipeable Strip / Desktop Flex Row -->
-            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 mt-2 sm:flex-wrap" role="group" aria-label="{{ label }} quick presets">
+            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 mt-1 sm:flex-wrap" role="group" aria-label="{{ label }} quick presets">
                 {% for preset in presets %}
                     {% set p_label = preset.label|default(preset) %}
                     {% set p_val = preset.value|default(preset) %}
                     <button type="button" 
-                        class="preset-chip text-ui-xs font-bold px-3 py-2 min-h-[44px] sm:min-h-[38px] rounded-xl sm:rounded-lg border border-slate-200/90 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-flat text-center justify-center flex items-center shrink-0 whitespace-nowrap {{ value == p_val ? activeChipClass : '' }}"
+                        class="preset-chip text-caption font-bold px-2 py-0.5 min-h-[36px] sm:min-h-[30px] rounded-lg border border-slate-200/90 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-flat text-center justify-center flex items-center shrink-0 whitespace-nowrap {{ value == p_val ? activeChipClass : '' }}"
                         data-preset-for="{{ id }}"
                         data-preset-val="{{ p_val }}"
                         aria-pressed="{{ value == p_val ? 'true' : 'false' }}">

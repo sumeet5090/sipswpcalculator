@@ -1,16 +1,16 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
 <!-- Conversational Mad Libs Live Narrative Strip -->
-<div id="conversational-narrative-strip" class="p-2.5 sm:p-3 rounded-2xl bg-gradient-to-r from-slate-50 via-emerald-50/40 to-slate-50 border border-slate-200/90 shadow-flat mb-3 text-ui-xs text-slate-700 leading-relaxed transition-all">
+<div id="conversational-narrative-strip" class="p-2 sm:p-2.5 rounded-xl bg-gradient-to-r from-slate-50 via-emerald-50/40 to-slate-50 border border-slate-200/90 shadow-flat mb-2 text-micro sm:text-ui-xs text-slate-700 leading-relaxed transition-all">
     <div class="flex items-center gap-1.5 flex-wrap">
         <span class="font-extrabold text-slate-900 shrink-0">🧭 Plan:</span>
         <span id="narrative-strategy-badge" class="hidden font-bold text-micro px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-flat shrink-0 items-center gap-1"></span>
         <span>Investing</span>
-        <span class="font-financial-mono font-extrabold text-emerald-800 bg-white px-2 py-0.5 rounded-lg border border-emerald-300/80 shadow-flat" id="narrative-sip">₹{{ (sip|default(10000))|number_format }}</span>
+        <span class="font-financial-mono font-extrabold text-emerald-800 bg-white px-1.5 py-0.5 rounded border border-emerald-300/80 shadow-flat" id="narrative-sip">₹{{ (sip|default(10000))|number_format }}</span>
         <span>/mo for</span>
-        <span class="font-financial-mono font-extrabold text-slate-900 bg-white px-2 py-0.5 rounded-lg border border-slate-300 shadow-flat" id="narrative-years">{{ years|default(15) }} yrs</span>
+        <span class="font-financial-mono font-extrabold text-slate-900 bg-white px-1.5 py-0.5 rounded border border-slate-300 shadow-flat" id="narrative-years">{{ years|default(15) }} yrs</span>
         <span>at</span>
-        <span class="font-financial-mono font-extrabold text-growth-emphasis bg-growth-surface px-2 py-0.5 rounded-lg border border-growth-border shadow-flat" id="narrative-rate">{{ rate|default(12) }}% CAGR</span>
+        <span class="font-financial-mono font-extrabold text-growth-emphasis bg-growth-surface px-1.5 py-0.5 rounded border border-growth-border shadow-flat" id="narrative-rate">{{ rate|default(12) }}% CAGR</span>
     </div>
 </div>
 

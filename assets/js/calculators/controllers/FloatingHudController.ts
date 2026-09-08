@@ -31,8 +31,9 @@ export class FloatingHudController {
 
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // If top summary cards are scrolled above the viewport on mobile
-                const isOffScreenAbove = !entry.isIntersecting && entry.boundingClientRect.top < 80;
+                // If top summary cards are scrolled above the viewport on tablet/desktop (>= 768px)
+                const isTabletOrDesktop = window.innerWidth >= 768;
+                const isOffScreenAbove = isTabletOrDesktop && !entry.isIntersecting && entry.boundingClientRect.top < 80;
                 if (isOffScreenAbove) {
                     hud.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
                     hud.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');

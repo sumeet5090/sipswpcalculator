@@ -15,48 +15,34 @@
                 </div>
             </div>
 
-            <!-- Segmented Horizon & Column Density Strip -->
-            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-1.5 sm:gap-0">
+            <!-- Segmented Horizon & Column Density Strip (Desktop / Tablet) -->
+            <div class="hidden sm:flex items-center gap-1.5">
                 <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/90 shadow-flat gap-0.5" role="tablist" aria-label="Table Row Density">
                     <!-- Horizon Toggle -->
                     <button type="button" id="table-density-5y" role="tab" aria-selected="true"
-                        class="px-3 py-1.5 sm:py-1 text-caption font-bold rounded-lg transition-all bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer min-h-[44px] sm:min-h-0 flex items-center justify-center">
+                        class="px-3 py-1 text-caption font-bold rounded-lg transition-all bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer flex items-center justify-center">
                         5Y Milestones
                     </button>
                     <button type="button" id="table-density-all" role="tab" aria-selected="false"
-                        class="px-3 py-1.5 sm:py-1 text-caption font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900 cursor-pointer min-h-[44px] sm:min-h-0 flex items-center justify-center">
+                        class="px-3 py-1 text-caption font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900 cursor-pointer flex items-center justify-center">
                         All Years
                     </button>
                 </div>
 
-                <span class="hidden sm:block w-px h-3.5 bg-slate-200 mx-1.5"></span>
+                <span class="w-px h-3.5 bg-slate-200 mx-1.5"></span>
 
                 <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/90 shadow-flat gap-0.5" role="tablist" aria-label="Table Column Density">
                     <!-- Column Mode Toggle -->
                     <button type="button" id="table-col-essential" role="tab" aria-selected="true"
-                        class="px-2.5 py-1.5 sm:py-1 text-caption font-bold rounded-lg transition-all bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer min-h-[40px] sm:min-h-0">
-                        <span class="sm:hidden">4 Col</span><span class="hidden sm:inline">Summary (4 Col)</span>
+                        class="px-2.5 py-1 text-caption font-bold rounded-lg transition-all bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer">
+                        Summary (4 Col)
                     </button>
                     <button type="button" id="table-col-audit" role="tab" aria-selected="false"
-                        class="px-2.5 py-1.5 sm:py-1 text-caption font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900 cursor-pointer min-h-[40px] sm:min-h-0">
-                        <span class="sm:hidden">11 Col</span><span class="hidden sm:inline">Audit (11 Col)</span>
+                        class="px-2.5 py-1 text-caption font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900 cursor-pointer">
+                        Audit (11 Col)
                     </button>
                 </div>
             </div>
-        </div>
-
-        <!-- Mobile Dispatch & Conversion Hub (< sm) -->
-        <div class="flex sm:hidden items-center gap-2 w-full justify-between">
-            <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.showModal()"
-                class="flex-1 min-h-[44px] px-3.5 py-2 rounded-xl bg-growth-surface hover:bg-emerald-100 text-growth-emphasis border border-growth-border text-ui-xs font-extrabold transition-all shadow-flat flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer">
-                <span>📥</span>
-                <span>Export &amp; Plan Actions</span>
-                <span class="text-micro font-extrabold text-growth">•••</span>
-            </button>
-            <button type="button" onclick="document.getElementById('openPdfModalBtn')?.click()"
-                class="min-h-[44px] px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white text-ui-xs font-extrabold transition-all shadow-card flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer">
-                <span>📄 PDF</span>
-            </button>
         </div>
 
         <!-- Desktop Dispatch & Conversion Hub (High-Prominence Action Pod >= sm) -->
