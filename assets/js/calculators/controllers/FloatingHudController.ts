@@ -35,10 +35,10 @@ export class FloatingHudController {
                 const isTabletOrDesktop = window.innerWidth >= 768;
                 const isOffScreenAbove = isTabletOrDesktop && !entry.isIntersecting && entry.boundingClientRect.top < 80;
                 if (isOffScreenAbove) {
-                    hud.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
+                    hud.classList.remove('-translate-y-4', '-translate-y-full', 'opacity-0', 'pointer-events-none');
                     hud.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
                 } else {
-                    hud.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
+                    hud.classList.add('-translate-y-4', 'opacity-0', 'pointer-events-none');
                     hud.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
                 }
             });

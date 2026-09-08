@@ -151,6 +151,7 @@ export function initToc(): void {
                 if (activeDesktop) {
                     activeDesktop.classList.remove('text-slate-600');
                     activeDesktop.classList.add('text-emerald-600', 'font-bold');
+                    activeDesktop.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
                 }
 
                 // Update mobile links

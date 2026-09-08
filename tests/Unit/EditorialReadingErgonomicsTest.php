@@ -49,6 +49,8 @@ final class EditorialReadingErgonomicsTest extends TestCase
         $this->assertStringContainsString('id="mobile-reading-share-btn"', $this->genericPostTemplate);
         $this->assertStringContainsString('modal-drag-handle', $this->genericPostTemplate);
         $this->assertStringContainsString('Back to {{ cat_name }}', $this->genericPostTemplate);
+        $this->assertStringContainsString('max-h-[46vh]', $this->genericPostTemplate);
+        $this->assertStringContainsString('custom-scrollbar', $this->genericPostTemplate);
     }
 
     public function testMarkdownTableErgonomicsAndStickyColumns(): void
@@ -89,6 +91,7 @@ final class EditorialReadingErgonomicsTest extends TestCase
         $this->assertStringContainsString('close-mobile-toc-btn', $this->tocCode);
         $this->assertStringContainsString('WebHapticEngine.triggerTick', $this->tocCode);
         $this->assertStringContainsString('IntersectionObserver', $this->tocCode);
+        $this->assertStringContainsString('activeDesktop.scrollIntoView', $this->tocCode);
     }
 
     public function testInteractiveWealthSandboxCtaStructure(): void

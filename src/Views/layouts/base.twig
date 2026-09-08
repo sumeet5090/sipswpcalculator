@@ -131,20 +131,42 @@
     {% include 'layouts/header.twig' %}
     
     {% if is_calculator_route %}
-    <!-- Compact Tablet/Desktop Floating Mini-HUD (Glides in when primary summary cards scroll off-screen on >= md viewports) -->
-    <div id="mobile-sticky-mini-hud" class="hidden md:flex fixed top-16 left-0 right-0 z-header bg-white/95 backdrop-blur-md border-b border-emerald-200/80 px-4 py-2 items-center justify-between shadow-flat transform -translate-y-full opacity-0 pointer-events-none transition-all duration-300">
-        <div class="flex items-center gap-2 min-w-0">
-            <span class="text-xs shrink-0">💎</span>
-            <span class="text-caption font-bold text-slate-600 shrink-0">Corpus:</span>
-            <span id="mini-hud-corpus" class="text-xs font-extrabold text-emerald-700 font-financial-mono tabular-nums whitespace-nowrap shrink-0">₹ --</span>
-        </div>
-        <div class="flex items-center gap-2 min-w-0">
-            <span class="text-caption font-bold text-slate-600 shrink-0">Returns:</span>
-            <span id="mini-hud-gain" class="text-xs font-extrabold text-emerald-700 font-financial-mono tabular-nums whitespace-nowrap shrink-0">+₹ --</span>
-        </div>
-        <div class="hidden sm:flex items-center gap-2 min-w-0">
-            <span class="text-caption font-bold text-slate-600 shrink-0">Invested:</span>
-            <span id="mini-hud-invested" class="text-xs font-bold text-slate-700 font-financial-mono tabular-nums whitespace-nowrap shrink-0">₹ --</span>
+    <!-- Compact Tablet/Desktop Floating Mini-HUD Capsule (Glides in when primary summary cards scroll off-screen on >= md viewports) -->
+    <div id="mini-hud-anchor" class="hidden md:flex fixed top-[4.25rem] inset-x-0 justify-center z-header pointer-events-none">
+        <div id="mobile-sticky-mini-hud" class="pointer-events-auto bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-floating hover:shadow-card-hover rounded-full px-4 sm:px-5 py-2 flex items-center gap-3 sm:gap-4 divide-x divide-slate-200/80 transform -translate-y-4 opacity-0 pointer-events-none transition-all duration-300 ease-out">
+            <!-- Live Signal Pulse -->
+            <div class="flex items-center gap-1.5 shrink-0 pr-1">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+                </span>
+                <span class="text-micro font-black uppercase text-slate-400 tracking-wider">Live</span>
+            </div>
+
+            <!-- Corpus Metric -->
+            <div class="flex items-center gap-2 pl-3 sm:pl-4 min-w-0">
+                <span class="text-caption font-bold text-slate-500 shrink-0">Corpus</span>
+                <span id="mini-hud-corpus" class="text-xs sm:text-sm font-black text-emerald-700 font-financial-mono tabular-nums whitespace-nowrap shrink-0">₹ --</span>
+            </div>
+
+            <!-- Gains / Returns Metric -->
+            <div class="flex items-center gap-2 pl-3 sm:pl-4 min-w-0">
+                <span class="text-caption font-bold text-slate-500 shrink-0">Gains</span>
+                <span id="mini-hud-gain" class="text-xs sm:text-sm font-extrabold text-teal-700 font-financial-mono tabular-nums whitespace-nowrap shrink-0">+₹ --</span>
+            </div>
+
+            <!-- Invested Metric (lg screens) -->
+            <div class="hidden lg:flex items-center gap-2 pl-3 sm:pl-4 min-w-0">
+                <span class="text-caption font-bold text-slate-500 shrink-0">Invested</span>
+                <span id="mini-hud-invested" class="text-xs sm:text-sm font-bold text-slate-700 font-financial-mono tabular-nums whitespace-nowrap shrink-0">₹ --</span>
+            </div>
+
+            <!-- Quick Jump to Calculator Form -->
+            <div class="pl-2.5 sm:pl-3 shrink-0">
+                <a href="#calculator-section" class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-100 hover:bg-emerald-50 text-slate-500 hover:text-emerald-700 transition-colors" title="Jump to Calculator Inputs" aria-label="Jump to Calculator Inputs">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                </a>
+            </div>
         </div>
     </div>
     {% endif %}

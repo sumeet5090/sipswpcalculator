@@ -5,17 +5,15 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Context-Aware Smart Prefill Architecture Milestone Completed.
+- **Current Milestone:** Floating Mini-HUD Redesign & Scrollable Blog TOC Milestone Completed.
 - **Implementation & Audit Findings:**
-  - **Context-Aware Smart Prefill Architecture:** Solved the disconnect between blog post CTAs and calculator initial state. In `interactive-cta-banner.twig` and the mobile reading dock in `generic-post.twig`, category-adaptive and article-tailored query parameters (`?sip=...`, `?corpus=...`, `?swp_withdrawal=...`, `?stepup=...`, `utm_source=...`) are now appended to target URLs, with the hash pointing directly to `#calculator-section`.
-  - **Resilient Query Parsing (Postel's Law):** Updated `UrlStateController.ts` and `CalculatorApp.ts` to parse query strings from `window.location.search` with fallback extraction from `window.location.hash`, guaranteeing that prefilled inputs instantly hydrate into the form, override stale `sessionStorage` drafts, and update charts/breakdown without manual user intervention.
-  - **Article-Level Granular Overrides:** Supported frontmatter `cta_url` in markdown blog posts (e.g., `earning-30k-at-25-investment-blueprint.md` now seamlessly pre-fills its exact ₹6,000/mo, 25-yr, 10% step-up scenario).
-  - **Balanced Hybrid Typography Normalization:** Resolved mobile readability disparity between homepage guide content and blog posts (`text-sm sm:text-base` across 8 components).
-  - **100% Open SSR & Mobile-First Parity:** Reintroduced open details on guides and quick-answer featured snippet box.
+  - **Floating Mini-HUD Capsule Redesign:** Completely redesigned `#mobile-sticky-mini-hud` in `base.twig` and `FloatingHudController.ts`. Replaced the previous 100vw edge-to-edge spanning bar with a centered, sleek floating pill capsule (Apple / Dynamic Island style: `bg-white/95`, `backdrop-blur-xl`, `border-slate-200/90`, `shadow-floating rounded-full`). Features an active emerald pulsing live indicator, bold financial mono Corpus and Returns metrics, and a 1-tap jump button back to `#calculator-section`. Eliminates awkward full-width viewport stretching on tablet and laptop screens.
+  - **Scrollable Blog Post Table of Contents:** Updated `#toc-list` in `generic-post.twig` with `max-h-[46vh]`, `overflow-y-auto`, `overscroll-contain`, and custom cross-browser light scrollbar styling (`custom-scrollbar`). In `assets/js/toc.ts`, added `activeDesktop.scrollIntoView({ block: 'nearest', behavior: 'smooth' })` so the highlighted TOC item automatically tracks and stays visible as readers scroll long articles.
+  - **Context-Aware Smart Prefill Architecture:** Preserved category and article-specific prefilled query links (`?sip=...`, `?corpus=...`, `?stepup=...`) from blog CTAs and reading dock to calculator.
 - **System Health:** 
-  - Full check-all passed: PHPStan Level 8 (0 errors), PHPCS PSR-12 (0 errors), PHPUnit (837 tests / 13,765 assertions passed).
+  - Full check-all passed: PHPStan Level 8 (0 errors), PHPCS PSR-12 (0 errors), PHPUnit (837 tests / 13,768 assertions passed).
   - Parity check: 57 test cases passed (100% PHP/TS parity).
-  - Vite build: Clean production bundle compiled in 189ms.
+  - Vite build: Clean production bundle compiled in 215ms.
 
 ---
 
