@@ -5,15 +5,16 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Floating Mini-HUD Redesign & Scrollable Blog TOC Milestone Completed.
+- **Current Milestone:** Scrollable Category Navigation & Mobile Share/Connect Strip Milestone Completed.
 - **Implementation & Audit Findings:**
-  - **Floating Mini-HUD Capsule Redesign:** Completely redesigned `#mobile-sticky-mini-hud` in `base.twig` and `FloatingHudController.ts`. Replaced the previous 100vw edge-to-edge spanning bar with a centered, sleek floating pill capsule (Apple / Dynamic Island style: `bg-white/95`, `backdrop-blur-xl`, `border-slate-200/90`, `shadow-floating rounded-full`). Features an active emerald pulsing live indicator, bold financial mono Corpus and Returns metrics, and a 1-tap jump button back to `#calculator-section`. Eliminates awkward full-width viewport stretching on tablet and laptop screens.
-  - **Scrollable Blog Post Table of Contents:** Updated `#toc-list` in `generic-post.twig` with `max-h-[46vh]`, `overflow-y-auto`, `overscroll-contain`, and custom cross-browser light scrollbar styling (`custom-scrollbar`). In `assets/js/toc.ts`, added `activeDesktop.scrollIntoView({ block: 'nearest', behavior: 'smooth' })` so the highlighted TOC item automatically tracks and stays visible as readers scroll long articles.
-  - **Context-Aware Smart Prefill Architecture:** Preserved category and article-specific prefilled query links (`?sip=...`, `?corpus=...`, `?stepup=...`) from blog CTAs and reading dock to calculator.
+  - **Scrollable Category Navigation:** Updated `nav[aria-label="Related Posts Navigation"] > ul` in `generic-post.twig` with `max-h-[35vh]`, `overflow-y-auto`, `overscroll-contain`, and `.custom-scrollbar`, ensuring category articles do not overflow the desktop sidebar.
+  - **In-Article Share & Connect Strip:** Added a responsive, pure light-mode "Share This Analysis & Connect" section directly beneath `.entry-content` in `generic-post.twig`, ensuring LinkedIn and Twitter sharing is immediately accessible to mobile readers (who previously could not see the hidden desktop sidebar).
+  - **Floating Mini-HUD Capsule Redesign:** Completely redesigned `#mobile-sticky-mini-hud` in `base.twig` into a centered, sleek floating pill capsule (`bg-white/95`, `backdrop-blur-xl`, `border-slate-200/90`, `shadow-floating rounded-full`).
+  - **Scrollable Table of Contents:** Updated `#toc-list` in `generic-post.twig` with `max-h-[46vh]`, `overflow-y-auto`, and auto-scroll tracking (`scrollIntoView`).
 - **System Health:** 
-  - Full check-all passed: PHPStan Level 8 (0 errors), PHPCS PSR-12 (0 errors), PHPUnit (837 tests / 13,768 assertions passed).
+  - Full check-all passed: PHPStan Level 8 (0 errors), PHPCS PSR-12 (0 errors), PHPUnit (838 tests / 13,774 assertions passed).
   - Parity check: 57 test cases passed (100% PHP/TS parity).
-  - Vite build: Clean production bundle compiled in 215ms.
+  - Vite build: Clean production bundle compiled in 222ms.
 
 ---
 

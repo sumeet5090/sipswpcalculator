@@ -164,6 +164,23 @@ final class EditorialReadingErgonomicsTest extends TestCase
         $this->assertStringContainsString('cta_url: post_cta_url', $genericPostLayout);
     }
 
+    public function testCategoryNavigationAndInArticleShareConnect(): void
+    {
+        $genericPostLayout = (string) file_get_contents(
+            __DIR__ . '/../../src/Views/layouts/generic-post.twig'
+        );
+
+        // Verify Category Navigation is scrollable
+        $this->assertStringContainsString('max-h-[35vh]', $genericPostLayout);
+        $this->assertStringContainsString('custom-scrollbar', $genericPostLayout);
+
+        // Verify In-Article Share & Connect strip exists
+        $this->assertStringContainsString('aria-label="Share Article & Connect"', $genericPostLayout);
+        $this->assertStringContainsString('Share This Analysis &amp; Connect', $genericPostLayout);
+        $this->assertStringContainsString('linkedin.com/sharing/share-offsite', $genericPostLayout);
+        $this->assertStringContainsString('twitter.com/intent/tweet', $genericPostLayout);
+    }
+
     private function assertDoesNotMatchString(string $pattern, string $string): void
     {
         $this->assertSame(
