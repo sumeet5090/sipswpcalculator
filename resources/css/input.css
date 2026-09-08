@@ -200,6 +200,36 @@
   letter-spacing: -0.02em;
 }
 
+@utility fluid-h1 {
+  font-size: clamp(1.375rem, 1.1rem + 1.6vw, 2.75rem);
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+}
+
+@utility fluid-h2 {
+  font-size: clamp(1.125rem, 0.95rem + 1.1vw, 2rem);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+@utility fluid-h3 {
+  font-size: clamp(0.95rem, 0.85rem + 0.6vw, 1.35rem);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+@utility carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+@utility carousel-item {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}
+
 /* ── Rolling Odometer Mechanical Tumbler Physics & Layout Containment ── */
 @utility odometer-container {
   display: inline-flex;

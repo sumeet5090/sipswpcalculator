@@ -94,12 +94,16 @@ export class FloatingHudController {
 
         const corpusEl = this.dom.getElement('mini-hud-corpus');
         const gainEl = this.dom.getElement('mini-hud-gain');
+        const investedEl = this.dom.getElement('mini-hud-invested');
 
         if (corpusEl) {
             corpusEl.textContent = this.formatter.formatDynamic(corpus);
         }
         if (gainEl) {
             gainEl.textContent = `+${this.formatter.formatDynamic(gains)}`;
+        }
+        if (investedEl) {
+            investedEl.textContent = this.formatter.formatDynamic(invested);
         }
     }
 

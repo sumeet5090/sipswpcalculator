@@ -14,9 +14,9 @@
         <span class="text-micro sm:text-xs font-semibold text-emerald-700 tracking-wide uppercase">Algorithmic Wealth Planning Engine</span>
     </div>
 
-    <h1 class="text-2xl sm:text-5xl md:text-6xl font-extrabold pb-1.5 sm:pb-2 tracking-tight">
+    <h1 class="fluid-h1 font-extrabold pb-1.5 sm:pb-2 tracking-tight">
         <span class="text-gradient block mb-1">SIP SWP Calculator Together</span>
-        <span class="text-slate-800 text-base sm:text-3xl md:text-4xl block font-bold">Step-Up SIP + Lumpsum + Inflation-Adjusted SWP Planner</span>
+        <span class="text-slate-800 text-base sm:text-2xl md:text-3xl block font-bold">Step-Up SIP + Lumpsum + Inflation-Adjusted SWP Planner</span>
     </h1>
     
     <p class="text-sm sm:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-3 hidden sm:block">
@@ -126,24 +126,32 @@
     aria-labelledby="calculator-heading">
     <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
     
-    <!-- Strategy Starter: 1-Click Blueprints & 3-Step Guided Wizard -->
-    {% include 'components/strategy-starter.twig' %}
+    <!-- Strategy Starter: 1-Click Blueprints & 3-Step Guided Wizard (Progressive on Mobile) -->
+    <details class="sm:contents fintech-accordion group" id="strategy-starter-accordion">
+        <summary class="flex sm:hidden items-center justify-between p-3 rounded-2xl bg-white/95 border border-slate-200/90 shadow-subtle cursor-pointer select-none mb-3 text-ui-xs font-bold text-slate-800">
+            <span class="flex items-center gap-2"><span>🚀</span> <span>1-Click Goal Blueprints &amp; Wizard</span></span>
+            <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+        </summary>
+        <div class="mt-1 sm:mt-0">
+            {% include 'components/strategy-starter.twig' %}
+        </div>
+    </details>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-8 mt-4 sm:mt-6">
 
         <!-- Left Column: Form (Smooth natural scrolling for long forms) -->
-        <div class="lg:col-span-1 flex flex-col gap-4">
+        <div class="md:col-span-5 lg:col-span-4 flex flex-col gap-4">
             {% include 'components/calculator-form.twig' with {'container_id': 'homepage-calc'} %}
         </div> <!-- /left column -->
 
         <!-- Right Column: Floating Summary & Chart Visualization -->
-        <div class="lg:col-span-2 space-y-4 lg:sticky lg:top-[84px] lg:self-start lg:z-20">
+        <div class="md:col-span-7 lg:col-span-8 space-y-4 md:sticky md:top-20 md:self-start md:z-20">
             {% include 'components/chart-visualization.twig' %}
             
             <!-- Side-by-Side Scenario Diff Comparison (Unhides when snapshot baseline is taken) -->
             {% include 'components/scenario-comparison.twig' %}
         </div>
-    </div><!-- /3-col grid -->
+    </div><!-- /12-col grid -->
 
     <!-- Multi-Mode Interactive Analytical Studio (Default: Yearly Breakdown Table) -->
     {% include 'components/analytical-studio.twig' %}

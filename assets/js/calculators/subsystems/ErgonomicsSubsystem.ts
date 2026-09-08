@@ -115,7 +115,7 @@ export class ErgonomicsSubsystem {
     public updateResults(combined: YearResult[], inputs: InvestmentInputs): void {
         this.glossaryController.updateArithmeticProof(inputs, combined);
         this.floatingHudController.updateResults(combined);
-        this.mobileDeckController.update(combined);
+        this.mobileDeckController.update(combined, inputs);
         this.keyboardViewportController.update(combined);
         this.updateStudioTelemetry(inputs, combined);
     }

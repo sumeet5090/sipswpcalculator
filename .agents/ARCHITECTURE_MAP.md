@@ -34,10 +34,10 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | **Stress Test Simulator** | `stress-test-simulator.twig` | `subsystems/LifecycleSubsystem.ts` | Historical crash modeling (2008 GFC, 2020 Covid, 2013 Taper Tantrum) with recovery projections |
 | **Tax Waterfall Modal** | `tax-waterfall-modal.twig` | `subsystems/LifecycleSubsystem.ts` | Union Budget 2024 equity LTCG (12.5% above ₹1.25L) & STCG (20%) tax net return impact |
 | **Asset Rebalancing** | `asset-rebalancing.twig` | `subsystems/LifecycleSubsystem.ts` | Equity/Debt drift rebalancing optimizer and trigger alerts |
-| **Yearly Breakdown Table** | `yearly-breakdown-table.twig` | `controllers/ResultsController.ts` | Amortization schedule, yearly SIP invested, returns, closing balances, and SWP drawdowns |
+| **Yearly Breakdown Table** | `yearly-breakdown-table.twig` | `controllers/ResultsController.ts` | Amortization schedule, yearly SIP invested, returns, closing balances, SWP drawdowns, swipeable mobile card carousel (`mobile-breakdown-cards`), and compact 3-col list toggle |
 | **Interactive Chart** | `chart-visualization.twig` | `ChartManager.ts`<br/>`controllers/ChartScrubbingController.ts` | Dual Chart.js donut and line graph with live scrub cursor |
-| **Command Palette & HUD** | `command-palette.twig`<br/>`floating-discovery-hud.twig` | `subsystems/ErgonomicsSubsystem.ts` | Keyboard navigation (`Cmd+K`), quick calculator switching, mobile floating action deck |
-| **Slider & Number Input** | `form/input-range-pair.twig` | `SliderManager.ts`<br/>`controllers/StepperController.ts` | Two-way synchronized range slider and currency text inputs with auto-step rounding |
+| **Command Palette & HUD** | `command-palette.twig`<br/>`floating-discovery-hud.twig`<br/>`layouts/base.twig` | `subsystems/ErgonomicsSubsystem.ts`<br/>`controllers/MobileErgonomicDeckController.ts`<br/>`controllers/FloatingHudController.ts` | Keyboard navigation (`Cmd+K`), quick calculator switching, 4-metric real-time mobile floating action dock, and sticky tablet/mobile mini-HUD |
+| **Slider & Number Input** | `form/input-range-pair.twig` | `SliderManager.ts`<br/>`controllers/StepperController.ts` | Two-way synchronized range slider and currency text inputs with 48px ergonomic touch stepper targets, preset chips, and auto-step rounding |
 | **QR Share & Socials** | `qr-share-modal.twig` | `subsystems/ExportSubsystem.ts` | Encoded URL state generation, canvas QR render, and native Web Share API trigger |
 | **SEBI Benchmark & Trust** | `sebibenchmark-modal.twig`<br/>`privacy-trust-badge.twig` | `subsystems/EngagementSubsystem.ts` | Regulatory disclosure compliance, index benchmark comparisons, privacy audit badges |
 

@@ -25,6 +25,7 @@ export class ResultsController {
     private lastEnableSwp: boolean = true;
     private heatmapEnabled: boolean = false;
     private mobileExpanded: boolean = false;
+    private mobileViewMode: 'carousel' | 'list' = 'carousel';
 
     constructor(
         dom: DOMAdapter,
@@ -45,6 +46,10 @@ export class ResultsController {
         if (this.lastData.length > 0) {
             this.updateTable(this.lastData, this.lastEnableSwp);
         }
+    }
+
+    public getMobileViewMode(): 'carousel' | 'list' {
+        return this.mobileViewMode;
     }
 
     private initControls(): void {
@@ -106,6 +111,41 @@ export class ResultsController {
                 if (this.lastData.length > 0) {
                     this.updateTable(this.lastData, this.lastEnableSwp);
                 }
+            });
+        }
+
+        const carouselBtn = this.dom.getElement('mobile-view-carousel-btn');
+        const listBtn = this.dom.getElement('mobile-view-list-btn');
+        const carouselWrapper = this.dom.getElement('mobile-breakdown-carousel-wrapper');
+        const listWrapper = this.dom.getElement('mobile-breakdown-list-wrapper');
+
+        if (carouselBtn && listBtn) {
+            carouselBtn.addEventListener('click', () => {
+                this.mobileViewMode = 'carousel';
+                carouselBtn.classList.add('bg-white', 'text-growth-emphasis', 'shadow-flat', 'border', 'border-slate-200/60');
+                carouselBtn.classList.remove('text-slate-600');
+                carouselBtn.setAttribute('aria-selected', 'true');
+
+                listBtn.classList.remove('bg-white', 'text-growth-emphasis', 'shadow-flat', 'border', 'border-slate-200/60');
+                listBtn.classList.add('text-slate-600');
+                listBtn.setAttribute('aria-selected', 'false');
+
+                carouselWrapper?.classList.remove('hidden');
+                listWrapper?.classList.add('hidden');
+            });
+
+            listBtn.addEventListener('click', () => {
+                this.mobileViewMode = 'list';
+                listBtn.classList.add('bg-white', 'text-growth-emphasis', 'shadow-flat', 'border', 'border-slate-200/60');
+                listBtn.classList.remove('text-slate-600');
+                listBtn.setAttribute('aria-selected', 'true');
+
+                carouselBtn.classList.remove('bg-white', 'text-growth-emphasis', 'shadow-flat', 'border', 'border-slate-200/60');
+                carouselBtn.classList.add('text-slate-600');
+                carouselBtn.setAttribute('aria-selected', 'false');
+
+                listWrapper?.classList.remove('hidden');
+                carouselWrapper?.classList.add('hidden');
             });
         }
     }
@@ -394,7 +434,7 @@ export class ResultsController {
                 const isMilestone = row.year === 1 || row.year % 5 === 0 || row.year === data.length;
                 const isFinal = row.year === data.length;
 
-                card.className = "p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-subtle space-y-2 transition-all";
+                card.className = "snap-center shrink-0 w-[84vw] max-w-[320px] p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-subtle space-y-2 transition-all flex flex-col justify-between";
 
                 if (this.heatmapEnabled && row.interest > 0) {
                     const intensity = Math.min(1, row.interest / maxInterest);
@@ -514,6 +554,67 @@ export class ResultsController {
 
             mobileContainer.innerHTML = '';
             mobileContainer.appendChild(mobileFragment);
+
+            // Populate Carousel Pagination Dots
+            const dotsContainer = this.dom.getElement('mobile-carousel-dots');
+            if (dotsContainer) {
+                dotsContainer.innerHTML = '';
+                const dotCount = Math.min(mobileData.length, 12);
+                for (let i = 0; i < dotCount; i++) {
+                    const dot = document.createElement('span');
+                    dot.className = i === 0
+                        ? "w-4 h-1.5 rounded-full bg-emerald-600 transition-all"
+                        : "w-1.5 h-1.5 rounded-full bg-slate-300 transition-all";
+                    dotsContainer.appendChild(dot);
+                }
+
+                if (!mobileContainer.dataset.scrollBound) {
+                    mobileContainer.dataset.scrollBound = 'true';
+                    mobileContainer.addEventListener('scroll', () => {
+                        const scrollLeft = mobileContainer.scrollLeft;
+                        const cardWidth = mobileContainer.firstElementChild?.clientWidth || 280;
+                        const activeIndex = Math.min(dotCount - 1, Math.round(scrollLeft / (cardWidth + 12)));
+                        const dots = dotsContainer.children;
+                        for (let i = 0; i < dots.length; i++) {
+                            if (i === activeIndex) {
+                                dots[i].className = "w-4 h-1.5 rounded-full bg-emerald-600 transition-all";
+                            } else {
+                                dots[i].className = "w-1.5 h-1.5 rounded-full bg-slate-300 transition-all";
+                            }
+                        }
+                    }, { passive: true });
+                }
+            }
+
+            // Populate Mobile Compact Table List
+            const listTbody = this.dom.getElement('mobile-compact-list-body');
+            if (listTbody) {
+                const listFragment = document.createDocumentFragment();
+                const fmt = (v: number | null | undefined): string => {
+                    if (v === null || v === undefined) return '-';
+                    return this.denominationMode === 'lakh' ? this.formatter.formatDynamic(v) : this.formatter.format(v);
+                };
+
+                mobileData.forEach((row) => {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-50 transition-colors";
+
+                    let finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
+                    if (inputs.inflation > 0) {
+                        finalCorpus = MathEngine.calculateInflationDiscount(finalCorpus, row.year, inputs.inflation);
+                    }
+
+                    tr.innerHTML = `
+                        <td class="py-2.5 px-2 font-bold text-slate-800 text-left">Yr ${row.year}</td>
+                        <td class="py-2.5 px-2 text-right text-slate-600 font-mono">${fmt(row.cumulative_invested)}</td>
+                        <td class="py-2.5 px-2 text-right text-emerald-700 font-bold font-mono">+${fmt(row.interest)}</td>
+                        <td class="py-2.5 px-2 text-right font-extrabold text-slate-900 font-mono">${fmt(finalCorpus)}</td>
+                    `;
+                    listFragment.appendChild(tr);
+                });
+                listTbody.innerHTML = '';
+                listTbody.appendChild(listFragment);
+            }
         }
     }
 }
