@@ -49,7 +49,7 @@ final class EditorialReadingErgonomicsTest extends TestCase
         $this->assertStringContainsString('id="mobile-reading-share-btn"', $this->genericPostTemplate);
         $this->assertStringContainsString('modal-drag-handle', $this->genericPostTemplate);
         $this->assertStringContainsString('Back to {{ cat_name }}', $this->genericPostTemplate);
-        $this->assertStringContainsString('max-h-[46vh]', $this->genericPostTemplate);
+        $this->assertStringContainsString('max-h-[calc(100vh-6.5rem)]', $this->genericPostTemplate);
         $this->assertStringContainsString('custom-scrollbar', $this->genericPostTemplate);
     }
 
@@ -170,9 +170,9 @@ final class EditorialReadingErgonomicsTest extends TestCase
             __DIR__ . '/../../src/Views/layouts/generic-post.twig'
         );
 
-        // Verify Category Navigation is scrollable
-        $this->assertStringContainsString('max-h-[35vh]', $genericPostLayout);
-        $this->assertStringContainsString('custom-scrollbar', $genericPostLayout);
+        // Verify Unified Sidebar Container is scrollable
+        $this->assertStringContainsString('max-h-[calc(100vh-6.5rem)]', $genericPostLayout);
+        $this->assertStringContainsString('overflow-y-auto overscroll-contain pr-2 custom-scrollbar', $genericPostLayout);
 
         // Verify In-Article Share & Connect strip exists
         $this->assertStringContainsString('aria-label="Share Article & Connect"', $genericPostLayout);

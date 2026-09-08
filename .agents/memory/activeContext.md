@@ -5,16 +5,16 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Scrollable Category Navigation & Mobile Share/Connect Strip Milestone Completed.
+- **Current Milestone:** Unified Editorial Sidebar Scrolling & Ergonomics Milestone Completed.
 - **Implementation & Audit Findings:**
-  - **Scrollable Category Navigation:** Updated `nav[aria-label="Related Posts Navigation"] > ul` in `generic-post.twig` with `max-h-[35vh]`, `overflow-y-auto`, `overscroll-contain`, and `.custom-scrollbar`, ensuring category articles do not overflow the desktop sidebar.
-  - **In-Article Share & Connect Strip:** Added a responsive, pure light-mode "Share This Analysis & Connect" section directly beneath `.entry-content` in `generic-post.twig`, ensuring LinkedIn and Twitter sharing is immediately accessible to mobile readers (who previously could not see the hidden desktop sidebar).
+  - **Unified Sidebar Scroll Container:** Replaced awkward nested scrollbars on `#toc-list` and the Category `ul` with a single, consolidated scroll container on the sticky sidebar wrapper in `generic-post.twig` (`max-h-[calc(100vh-6.5rem)] overflow-y-auto overscroll-contain pr-2 custom-scrollbar`). This matches Stripe/VitePress/Tailwind Docs conventions, prevents scroll traps, ensures the "Connect" widget is always accessible on all vertical screen heights, and lets `toc.ts` smooth-scroll cleanly.
+  - **In-Article Share & Connect Strip:** Responsive pure light-mode "Share This Analysis & Connect" section placed directly beneath `.entry-content` in `generic-post.twig`, ensuring mobile readers have instant 1-tap LinkedIn and Twitter sharing even though the desktop sidebar is hidden on small screens.
   - **Floating Mini-HUD Capsule Redesign:** Completely redesigned `#mobile-sticky-mini-hud` in `base.twig` into a centered, sleek floating pill capsule (`bg-white/95`, `backdrop-blur-xl`, `border-slate-200/90`, `shadow-floating rounded-full`).
-  - **Scrollable Table of Contents:** Updated `#toc-list` in `generic-post.twig` with `max-h-[46vh]`, `overflow-y-auto`, and auto-scroll tracking (`scrollIntoView`).
+  - **Context-Aware Smart Prefill:** Added query parameter derivation for interactive blog CTAs with robust fallback parsing in `UrlStateController.ts` and `CalculatorApp.ts`.
 - **System Health:** 
-  - Full check-all passed: PHPStan Level 8 (0 errors), PHPCS PSR-12 (0 errors), PHPUnit (838 tests / 13,774 assertions passed).
+  - Full check-all passed: PHPStan Level 8 (0 errors, 233/233 files), PHPCS PSR-12 (0 errors), PHPUnit (838 tests / 13,774 assertions passed).
   - Parity check: 57 test cases passed (100% PHP/TS parity).
-  - Vite build: Clean production bundle compiled in 222ms.
+  - Vite build: Clean production bundle compiled in 219ms.
 
 ---
 
