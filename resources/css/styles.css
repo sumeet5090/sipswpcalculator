@@ -488,6 +488,7 @@ label.field-label {
     display: inline-block;
     text-transform: none !important;
     letter-spacing: normal !important;
+    white-space: nowrap !important;
 }
 
 /* Buttons */

@@ -5,14 +5,13 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Single-Line Label Typography & Tablet Responsive Grid Balancing Completed.
+- **Current Milestone:** Single-Line Label Typography & Tablet Stepper Boundary Collision Resolution Completed.
 - **Active Workspace Context:**
-  - Layouts updated: `src/Views/calculators/home.twig`, `src/Views/calculators/calculator-guide.twig` (balanced tablet 6/6 split, 5/7 on desktop).
-  - Styles updated: `resources/css/styles.css` (scoped label to :where(label), removed uppercase, added .field-label reset).
-  - Components updated: `src/Views/components/form/input-range-pair.twig` (field-label and normal-case classes), `src/Views/components/forms/sip-fields.twig` (compact rate guidance trigger and single-line Expected Return label).
-  - Config updated: `content/calculator_defaults.json` (streamlined Initial Lumpsum label).
+  - Styles updated: `resources/css/styles.css` (enforced `white-space: nowrap !important;` on `.field-label`).
+  - Components updated: `src/Views/components/form/input-range-pair.twig` (`whitespace-nowrap` on `<label>`), `src/Views/components/forms/sip-fields.twig` (scoped `"Not sure?"` text to `hidden xl:inline` to render compact `[ ℹ ]` pill on mobile/tablet eliminating stepper collision; tightened nested Adjustments padding to `p-2 sm:p-2.5`), `src/Views/components/forms/target-corpus-fields.twig` (replaced absolute AMFI button with inline `rateLabelHtml`; streamlined labels).
+  - Config updated: `content/calculator_defaults.json` (standardized `swp_rate` label to "Expected Return").
   - Assets: Rebuilt with Vite (`npm run build`).
-- **System Health:** Clean lint, PHPStan, PHPUnit (836 tests / 13,756 assertions), cross-runtime math parity (100% pass), and browser visual verification confirmed across tablet (768px), mobile (390px), and ultra-compact (320px).
+- **System Health:** Clean lint, PHPStan (0 errors), PHPUnit (836 tests / 13,756 assertions), cross-runtime math parity (100% pass), and local curl verification confirmed.
 
 ---
 
