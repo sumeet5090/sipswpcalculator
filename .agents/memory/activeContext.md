@@ -5,10 +5,11 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Single-Line Label Typography & Tablet Stepper Boundary Collision Resolution Completed.
+- **Current Milestone:** Single-Line Label Typography, Tablet Stepper Boundary Collision & Floating HUD Fold Suppression Completed.
 - **Active Workspace Context:**
   - Styles updated: `resources/css/styles.css` (enforced `white-space: nowrap !important;` on `.field-label`).
-  - Components updated: `src/Views/components/form/input-range-pair.twig` (`whitespace-nowrap` on `<label>`), `src/Views/components/forms/sip-fields.twig` (scoped `"Not sure?"` text to `hidden xl:inline` to render compact `[ ℹ ]` pill on mobile/tablet eliminating stepper collision; tightened nested Adjustments padding to `p-2 sm:p-2.5`), `src/Views/components/forms/target-corpus-fields.twig` (replaced absolute AMFI button with inline `rateLabelHtml`; streamlined labels).
+  - Components updated: `src/Views/components/form/input-range-pair.twig` (`whitespace-nowrap` on `<label>`), `src/Views/components/forms/sip-fields.twig` (scoped `"Not sure?"` text to `hidden xl:inline` to render compact `[ ℹ ]` pill on mobile/tablet eliminating stepper collision; tightened nested Adjustments padding to `p-2 sm:p-2.5`), `src/Views/components/forms/target-corpus-fields.twig` (replaced absolute AMFI button with inline `rateLabelHtml`; streamlined labels), `src/Views/components/floating-discovery-hud.twig` (started HUD with `translate-y-12 opacity-0 pointer-events-none`).
+  - Scripts updated: `assets/js/calculators/controllers/FloatingHudController.ts` (suppressed HUD when scroll position is inside calculator hero fold `< 400px`).
   - Config updated: `content/calculator_defaults.json` (standardized `swp_rate` label to "Expected Return").
   - Assets: Rebuilt with Vite (`npm run build`).
 - **System Health:** Clean lint, PHPStan (0 errors), PHPUnit (836 tests / 13,756 assertions), cross-runtime math parity (100% pass), and local curl verification confirmed.

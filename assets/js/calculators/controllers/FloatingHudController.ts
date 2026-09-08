@@ -69,10 +69,10 @@ export class FloatingHudController {
                     const isKeyboardOpen = keyboardCapsule && !keyboardCapsule.classList.contains('hidden') && !keyboardCapsule.classList.contains('opacity-0');
 
                     if (!isKeyboardOpen) {
-                        if (delta > 20 && currentScrollY > 150) {
+                        if (currentScrollY < 400 || delta > 20) {
                             discoveryHud.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
                             discoveryHud.classList.remove('translate-y-0');
-                        } else if (delta < -10 || currentScrollY < 100) {
+                        } else if (delta < -10 && currentScrollY >= 400) {
                             discoveryHud.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
                             discoveryHud.classList.add('translate-y-0');
                         }
