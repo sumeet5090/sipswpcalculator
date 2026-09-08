@@ -108,11 +108,11 @@ export class CommandPaletteController {
             }
         });
 
-        // Trigger button
-        const openBtn = this.dom.getElement('open-command-palette-btn');
-        if (openBtn) {
-            openBtn.addEventListener('click', () => this.open(openBtn));
-        }
+        // Trigger buttons (Desktop pill & Mobile/Tablet menu action)
+        const openButtons = document.querySelectorAll('#open-command-palette-btn, .open-command-palette-btn');
+        openButtons.forEach((btn) => {
+            btn.addEventListener('click', () => this.open(btn as HTMLElement));
+        });
 
         // Close on backdrop click
         this.modal.addEventListener('click', (e) => {

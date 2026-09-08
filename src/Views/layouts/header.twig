@@ -73,8 +73,8 @@
                 SWP <span class="text-emerald-500 font-medium">Calculator</span></span>
         </a>
 
-        <!-- Desktop nav -->
-        <nav class="hidden sm:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
+        <!-- Desktop nav (visible on >= 1024px) -->
+        <nav class="hidden lg:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
             {% for item in nav_items %}
                 {% set is_active = (active_page|default('') == item.id) or (active_page|default('') == (item.id ~ '.php')) or (item.id == 'resources' and active_page|default('') == 'blog_post') %}
                 {% if item.sub_items is defined %}
@@ -100,8 +100,8 @@
             {% endfor %}
         </nav>
 
-        <!-- Actions (Search, QR & Audio Toggle) -->
-        <div class="hidden sm:flex items-center gap-2">
+        <!-- Actions (Search, QR & Audio Toggle - visible on >= 1024px) -->
+        <div class="hidden lg:flex items-center gap-2">
             <button type="button" id="open-qr-modal-btn"
                 class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-500 hover:text-slate-800 text-xs font-semibold shadow-flat transition-all cursor-pointer"
                 title="Scan Plan on Mobile"
@@ -129,9 +129,9 @@
             </button>
         </div>
 
-        <!-- Mobile hamburger button -->
+        <!-- Mobile & Tablet hamburger button (visible on < 1024px) -->
         <button id="mobile-menu-btn" type="button"
-            class="sm:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+            class="lg:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
             aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation menu">
             <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -142,8 +142,8 @@
         </button>
     </div>
 
-    <!-- Mobile menu dropdown (Contained Scroll to eliminate page pushdown) -->
-    <div id="mobile-menu" class="sm:hidden hidden border-t border-slate-200 bg-white/98 backdrop-blur-md max-h-[calc(100vh-4.5rem)] overflow-y-auto custom-scrollbar shadow-modal overscroll-contain">
+    <!-- Mobile & Tablet menu dropdown (Contained Scroll, visible on < 1024px) -->
+    <div id="mobile-menu" class="lg:hidden hidden border-t border-slate-200 bg-white/98 backdrop-blur-md max-h-[calc(100vh-4.5rem)] overflow-y-auto custom-scrollbar shadow-modal overscroll-contain">
         <div class="px-4 py-3 space-y-1">
             {% for item in nav_items %}
                 {% set is_active = (active_page|default('') == item.id) or (active_page|default('') == (item.id ~ '.php')) or (item.id == 'resources' and active_page|default('') == 'blog_post') %}
@@ -164,13 +164,19 @@
                 {% endif %}
             {% endfor %}
 
-            <!-- Mobile Quick Actions -->
-            <div class="pt-2 border-t border-slate-200/80 flex items-center gap-2">
+            <!-- Mobile & Tablet Quick Actions -->
+            <div class="pt-3 border-t border-slate-200/80 grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <button type="button"
-                    class="open-qr-modal-btn w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-800 text-sm font-bold shadow-flat transition-all cursor-pointer"
+                    class="open-qr-modal-btn flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-800 text-sm font-bold shadow-flat transition-all cursor-pointer touch-manipulation"
                     aria-label="Scan or Share Plan via QR Code">
                     <span>📱</span>
                     <span>Scan / Share Plan (QR)</span>
+                </button>
+                <button type="button"
+                    class="open-command-palette-btn flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold shadow-flat transition-all cursor-pointer touch-manipulation"
+                    aria-label="Search Calculators and Resources">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <span>Search Calculators...</span>
                 </button>
             </div>
         </div>

@@ -5,16 +5,16 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Unified Editorial Sidebar Scrolling & Ergonomics Milestone Completed.
+- **Current Milestone:** Tablet Navigation Bar Responsive Optimization Milestone Completed.
 - **Implementation & Audit Findings:**
-  - **Unified Sidebar Scroll Container:** Replaced awkward nested scrollbars on `#toc-list` and the Category `ul` with a single, consolidated scroll container on the sticky sidebar wrapper in `generic-post.twig` (`max-h-[calc(100vh-6.5rem)] overflow-y-auto overscroll-contain pr-2 custom-scrollbar`). This matches Stripe/VitePress/Tailwind Docs conventions, prevents scroll traps, ensures the "Connect" widget is always accessible on all vertical screen heights, and lets `toc.ts` smooth-scroll cleanly.
-  - **In-Article Share & Connect Strip:** Responsive pure light-mode "Share This Analysis & Connect" section placed directly beneath `.entry-content` in `generic-post.twig`, ensuring mobile readers have instant 1-tap LinkedIn and Twitter sharing even though the desktop sidebar is hidden on small screens.
-  - **Floating Mini-HUD Capsule Redesign:** Completely redesigned `#mobile-sticky-mini-hud` in `base.twig` into a centered, sleek floating pill capsule (`bg-white/95`, `backdrop-blur-xl`, `border-slate-200/90`, `shadow-floating rounded-full`).
-  - **Context-Aware Smart Prefill:** Added query parameter derivation for interactive blog CTAs with robust fallback parsing in `UrlStateController.ts` and `CalculatorApp.ts`.
+  - **Tablet Navigation Layout Resolution:** Fixed navbar crowding on iPads and tablets (viewports 640px to 1023px, e.g. 768px portrait) by migrating navbar breakpoint classes from `sm:` (640px) to `lg:` (1024px) in `header.twig`.
+  - **Clean Tablet Touch Menu:** Tablets now render the uncluttered hamburger button (`lg:hidden`) with full access to calculators, guides, search, and QR scan via the smooth slide-down menu (`#mobile-menu`), while desktop displays (`≥ 1024px` / `lg:`) enjoy spacious horizontal link and action pill placement.
+  - **Enriched Mobile/Tablet Quick Actions:** Added a dedicated Command Palette Search button inside `#mobile-menu` and updated `CommandPaletteController.ts` to support `.open-command-palette-btn` multiple trigger buttons.
+  - **Unified Sidebar Scroll Container:** Replaced awkward nested scrollbars on `#toc-list` and the Category `ul` with a single, consolidated scroll container on the sticky sidebar wrapper in `generic-post.twig` (`max-h-[calc(100vh-6.5rem)] overflow-y-auto overscroll-contain pr-2 custom-scrollbar`).
 - **System Health:** 
-  - Full check-all passed: PHPStan Level 8 (0 errors, 233/233 files), PHPCS PSR-12 (0 errors), PHPUnit (838 tests / 13,774 assertions passed).
+  - Full check-all passed: PHPStan Level 8 (0 errors, 233/233 files), PHPCS PSR-12 (0 errors), PHPUnit (838 tests / 13,776 assertions passed).
   - Parity check: 57 test cases passed (100% PHP/TS parity).
-  - Vite build: Clean production bundle compiled in 219ms.
+  - Vite build: Clean production bundle compiled in 187ms.
 
 ---
 
