@@ -50,7 +50,7 @@
         "max": 10000000,
         "slider_max": 2500000,
         "step": 5000,
-        "label": "Initial Lumpsum (Optional)",
+        "label": "Initial Lumpsum",
         "prefix": "₹"
     },
     "swp_withdrawal": {

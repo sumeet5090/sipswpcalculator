@@ -476,13 +476,18 @@ input.stepper-input:focus {
     }
 }
 
-label {
+:where(label) {
     display: block;
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--color-text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+}
+
+.field-label,
+label.field-label {
+    display: inline-block;
+    text-transform: none !important;
+    letter-spacing: normal !important;
 }
 
 /* Buttons */

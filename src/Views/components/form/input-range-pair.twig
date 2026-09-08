@@ -36,7 +36,7 @@
                 {% if labelHtml %}
                     {{ labelHtml|raw }}
                 {% else %}
-                    <label for="{{ id }}" id="{{ id }}_label" class="text-ui-xs font-bold tracking-tight text-slate-800 select-none cursor-pointer hover:text-growth transition-colors leading-snug" title="{{ label }} · Double-click to reset to default">
+                    <label for="{{ id }}" id="{{ id }}_label" class="field-label text-ui-xs font-bold tracking-tight text-slate-800 normal-case select-none cursor-pointer hover:text-growth transition-colors leading-snug" title="{{ label }} · Double-click to reset to default">
                         {{ label }}
                     </label>
                     {% if tooltip %}

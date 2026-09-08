@@ -118,12 +118,12 @@
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-8 mt-4 sm:mt-6">
 
         <!-- Left Column: Form (Smooth natural scrolling for long forms) -->
-        <div class="md:col-span-5 lg:col-span-4 flex flex-col gap-4">
+        <div class="md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col gap-4">
             {% include 'components/calculator-form.twig' with {'container_id': 'homepage-calc'} %}
         </div> <!-- /left column -->
 
         <!-- Right Column: Floating Summary & Chart Visualization -->
-        <div class="md:col-span-7 lg:col-span-8 space-y-4 md:sticky md:top-20 md:self-start md:z-20">
+        <div class="md:col-span-6 lg:col-span-7 xl:col-span-8 space-y-4 md:sticky md:top-20 md:self-start md:z-20">
             {% include 'components/chart-visualization.twig' %}
             
             <!-- Side-by-Side Scenario Diff Comparison (Unhides when snapshot baseline is taken) -->

@@ -5,12 +5,14 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Stepper Capsule Styling Isolation & Responsive Boundary Fix Completed.
+- **Current Milestone:** Single-Line Label Typography & Tablet Responsive Grid Balancing Completed.
 - **Active Workspace Context:**
-  - Styles updated: `resources/css/styles.css` (stepper-input isolation).
-  - Components updated: `src/Views/components/form/input-range-pair.twig` (stepper well width calibrated to w-16 sm:w-20, natural label wrapping, .stepper-input reset).
+  - Layouts updated: `src/Views/calculators/home.twig`, `src/Views/calculators/calculator-guide.twig` (balanced tablet 6/6 split, 5/7 on desktop).
+  - Styles updated: `resources/css/styles.css` (scoped label to :where(label), removed uppercase, added .field-label reset).
+  - Components updated: `src/Views/components/form/input-range-pair.twig` (field-label and normal-case classes), `src/Views/components/forms/sip-fields.twig` (compact rate guidance trigger and single-line Expected Return label).
+  - Config updated: `content/calculator_defaults.json` (streamlined Initial Lumpsum label).
   - Assets: Rebuilt with Vite (`npm run build`).
-- **System Health:** Clean lint, PHPStan, PHPUnit (836 tests / 13,756 assertions), cross-runtime math parity (100% pass), and browser visual verification confirmed across tablet (768px) and mobile (390px).
+- **System Health:** Clean lint, PHPStan, PHPUnit (836 tests / 13,756 assertions), cross-runtime math parity (100% pass), and browser visual verification confirmed across tablet (768px), mobile (390px), and ultra-compact (320px).
 
 ---
 

@@ -60,28 +60,24 @@
 
 <!-- Expected Return -->
 {% set rateLabelHtml %}
-<div class="flex items-center justify-between mb-2">
-    <div class="flex items-center gap-1.5 min-w-0">
-        <label for="rate" id="rate_label" class="text-ui-xs font-bold text-slate-800 tracking-tight block select-none cursor-pointer hover:text-growth transition-colors" title="Double-click to reset to default">
-            Expected Return (CAGR)
-        </label>
-        <span id="rate_word_badge" class="hidden text-micro font-bold text-growth-emphasis bg-growth-surface border border-growth-border px-2 py-0.5 rounded-md font-financial-mono transition-all whitespace-nowrap shrink-0"></span>
-    </div>
+<div class="flex items-center gap-1.5 min-w-0">
+    <label for="rate" id="rate_label" class="field-label text-ui-xs font-bold text-slate-800 tracking-tight normal-case select-none cursor-pointer hover:text-growth transition-colors leading-snug whitespace-nowrap" title="Double-click to reset to default">
+        Expected Return
+    </label>
+    <span id="rate_word_badge" class="hidden text-micro font-bold text-growth-emphasis bg-growth-surface border border-growth-border px-1.5 py-0.5 rounded-md font-financial-mono transition-all whitespace-nowrap shrink-0"></span>
     <!-- Smart Nudge trigger -->
-    <div class="relative">
+    <div class="relative inline-flex items-center shrink-0">
         <button type="button" id="rate-nudge-btn"
-            class="inline-flex items-center gap-1 text-micro font-bold text-growth hover:text-growth-emphasis bg-growth-surface hover:bg-emerald-100 border border-growth-border px-2.5 py-0.5 rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer shadow-flat"
+            class="inline-flex items-center gap-1 text-micro font-bold text-growth hover:text-growth-emphasis bg-growth-surface hover:bg-emerald-100 border border-growth-border px-1.5 py-0.5 rounded-md transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500 cursor-pointer shadow-flat shrink-0"
             aria-haspopup="true" aria-expanded="false"
-            aria-controls="rate-nudge-popover">
-            <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <span>Not sure?</span>
+            aria-controls="rate-nudge-popover"
+            title="AMFI Historical Return Guidance">
+            <span>ℹ</span>
+            <span class="hidden sm:inline">Not sure?</span>
         </button>
 
         <!-- Rate Nudge AMFI Guidelines Popover -->
-        <div id="rate-nudge-popover" class="hidden absolute right-0 sm:right-auto sm:left-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-2.5rem)] p-3.5 bg-white/98 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-modal z-50 text-left space-y-2.5 animate-in fade-in zoom-in-95 duration-150" role="dialog" aria-label="Historical Return Guidance">
+        <div id="rate-nudge-popover" class="hidden absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-2.5rem)] p-3.5 bg-white/98 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-modal z-50 text-left space-y-2.5 animate-in fade-in zoom-in-95 duration-150" role="dialog" aria-label="Historical Return Guidance">
             <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
                 <span class="text-ui-xs font-bold text-slate-900 flex items-center gap-1">
                     <span>📈</span> <span>AMFI Category Guidance</span>
