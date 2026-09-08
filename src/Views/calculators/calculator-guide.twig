@@ -216,7 +216,8 @@
 
 <!-- Markdown Educational Guide with Progressive Disclosure on Mobile -->
 <section id="guide-section" class="mt-8 sm:mt-12 max-w-4xl mx-auto border-t border-slate-200 pt-8" aria-labelledby="guide-heading">
-    <details id="guide-accordion" class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
+    <h2 id="guide-heading" class="sr-only">In-Depth Guide &amp; Technical Notes</h2>
+    <details id="guide-accordion" open class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
         <summary class="flex sm:hidden items-center justify-between p-4 bg-slate-50/90 hover:bg-slate-100 cursor-pointer select-none border-b border-slate-200/80 font-bold text-slate-900 text-ui-xs">
             <span class="flex items-center gap-2"><span>📖</span> <span>In-Depth Guide &amp; Technical Notes</span></span>
             <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
@@ -227,11 +228,6 @@
             </article>
         </div>
     </details>
-    <script>
-        if (window.innerWidth >= 640) {
-            document.getElementById('guide-accordion')?.setAttribute('open', '');
-        }
-    </script>
 </section>
 
 {% if faqs is not empty %}

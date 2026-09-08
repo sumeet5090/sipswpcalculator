@@ -5,14 +5,17 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Single-Line Label Typography, Tablet Stepper Boundary Collision & Floating HUD Fold Suppression Completed.
-- **Active Workspace Context:**
-  - Styles updated: `resources/css/styles.css` (enforced `white-space: nowrap !important;` on `.field-label`).
-  - Components updated: `src/Views/components/form/input-range-pair.twig` (`whitespace-nowrap` on `<label>`), `src/Views/components/forms/sip-fields.twig` (scoped `"Not sure?"` text to `hidden xl:inline` to render compact `[ ℹ ]` pill on mobile/tablet eliminating stepper collision; tightened nested Adjustments padding to `p-2 sm:p-2.5`), `src/Views/components/forms/target-corpus-fields.twig` (replaced absolute AMFI button with inline `rateLabelHtml`; streamlined labels), `src/Views/components/floating-discovery-hud.twig` (started HUD with `translate-y-12 opacity-0 pointer-events-none`).
-  - Scripts updated: `assets/js/calculators/controllers/FloatingHudController.ts` (suppressed HUD when scroll position is inside calculator hero fold `< 400px`).
-  - Config updated: `content/calculator_defaults.json` (standardized `swp_rate` label to "Expected Return").
-  - Assets: Rebuilt with Vite (`npm run build`).
-- **System Health:** Clean lint, PHPStan (0 errors), PHPUnit (836 tests / 13,756 assertions), cross-runtime math parity (100% pass), and local curl verification confirmed.
+- **Current Milestone:** SEO Verification & SSR Reintroduction Milestone Completed.
+- **Audit Findings:**
+  - Exhaustive git diff audit (`83b37c1..HEAD` and `11e212e..HEAD`) verified that all core SEO assets from the Claude Opus 4.6 `wealthnorth.in` competitive analysis remain 100% intact (all 9 JSON-LD schemas, meta tags, sitemaps, robots.txt, 13 calculator guides, 20 blog posts, and cross-runtime parity).
+  - Reintroduced 100% open Server-Side Rendering (SSR) for all 8 educational guide sections in `home-guide-content.twig` and the 2,000+ word guide in `calculator-guide.twig` (`<details open>`), eliminating collapsed states for Googlebot crawlers.
+  - Reintroduced hero subtitle `<p>` on mobile viewports (`text-ui-xs sm:text-base md:text-lg`) in `home.twig` ensuring 100% text parity under Mobile-First Indexing.
+  - Reintroduced `open` state on the `#quick-answer` Featured Snippet box on initial SSR.
+  - Resolved `aria-labelledby="guide-heading"` with an explicit `<h2 id="guide-heading" class="sr-only">` in `calculator-guide.twig`.
+- **System Health:** 
+  - Full check-all passed: PHPStan Level 8 (0 errors), PHPCS PSR-12 (0 errors), PHPUnit (836 tests / 13,756 assertions passed).
+  - Parity check: 57 test cases passed (100% PHP/TS parity).
+  - Vite build: Clean production bundle compiled.
 
 ---
 
