@@ -5,12 +5,12 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** High-Density Fintech Mobile Overhaul & First-Fold Reclamation Completed.
+- **Current Milestone:** Stepper Capsule Styling Isolation & Responsive Boundary Fix Completed.
 - **Active Workspace Context:**
-  - Layouts updated: `src/Views/calculators/home.twig`, `src/Views/layouts/base.twig`.
-  - Components updated: `src/Views/components/calculator-form.twig`, `src/Views/components/form/input-range-pair.twig`, `src/Views/components/forms/sip-fields.twig`, `src/Views/components/yearly-breakdown-table.twig`.
-  - Controllers updated: `FloatingHudController.ts`.
-- **System Health:** Clean lint, PHPStan, PHPUnit (836 tests / 13,756 assertions), cross-runtime math parity (40+ scenarios), and browser visual verification confirmed.
+  - Styles updated: `resources/css/styles.css` (stepper-input isolation).
+  - Components updated: `src/Views/components/form/input-range-pair.twig` (stepper well width calibrated to w-16 sm:w-20, natural label wrapping, .stepper-input reset).
+  - Assets: Rebuilt with Vite (`npm run build`).
+- **System Health:** Clean lint, PHPStan, PHPUnit (836 tests / 13,756 assertions), cross-runtime math parity (100% pass), and browser visual verification confirmed across tablet (768px) and mobile (390px).
 
 ---
 
