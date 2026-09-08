@@ -74,7 +74,7 @@
         <span class="text-caption sm:text-ui-xs font-semibold text-emerald-700 tracking-wide uppercase">Financial Planning Tool</span>
     </div>
 
-    <h1 class="text-2xl sm:text-5xl font-extrabold pb-2 sm:pb-3 tracking-tight text-slate-900">
+    <h1 class="fluid-h1 font-extrabold pb-2 sm:pb-3 tracking-tight text-slate-900">
         {{ page_config.title }}
     </h1>
     {% if page_config.meta_desc %}
@@ -93,9 +93,9 @@
     <div id="calculator-app"
          data-js="calculator-app"
          data-mode="{{ calculator_type }}"
-         class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+         class="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-8">
         <!-- Left Column: Form (Smooth natural scrolling for long forms) -->
-        <div class="lg:col-span-1 flex flex-col gap-4">
+        <div class="md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col gap-4">
             <div class="glass-card p-4 sm:p-5">
                 <form id="calculator-form" class="space-y-6 lg:max-h-[540px] xl:max-h-[580px] lg:overflow-y-auto lg:overflow-x-hidden custom-scrollbar pr-1 scroll-smooth" onsubmit="event.preventDefault();">
                     {% if calculator_type == 'all' or calculator_type == 'combo' %}
@@ -203,7 +203,7 @@
         </div>
 
         <!-- Right Column: Floating Summary & Chart Visualization -->
-        <div class="lg:col-span-2 space-y-4 lg:sticky lg:top-[84px] lg:self-start lg:z-20">
+        <div class="md:col-span-6 lg:col-span-7 xl:col-span-8 space-y-4 md:sticky md:top-20 md:self-start md:z-20">
             {% include 'components/chart-visualization.twig' %}
         </div>
     </div>
@@ -216,7 +216,8 @@
 
 <!-- Markdown Educational Guide with Progressive Disclosure on Mobile -->
 <section id="guide-section" class="mt-8 sm:mt-12 max-w-4xl mx-auto border-t border-slate-200 pt-8" aria-labelledby="guide-heading">
-    <details id="guide-accordion" class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
+    <h2 id="guide-heading" class="sr-only">In-Depth Guide &amp; Technical Notes</h2>
+    <details id="guide-accordion" open class="fintech-accordion group rounded-2xl bg-white border border-slate-200/90 shadow-subtle overflow-hidden sm:border-0 sm:shadow-none sm:bg-transparent">
         <summary class="flex sm:hidden items-center justify-between p-4 bg-slate-50/90 hover:bg-slate-100 cursor-pointer select-none border-b border-slate-200/80 font-bold text-slate-900 text-ui-xs">
             <span class="flex items-center gap-2"><span>📖</span> <span>In-Depth Guide &amp; Technical Notes</span></span>
             <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
@@ -227,11 +228,6 @@
             </article>
         </div>
     </details>
-    <script>
-        if (window.innerWidth >= 640) {
-            document.getElementById('guide-accordion')?.setAttribute('open', '');
-        }
-    </script>
 </section>
 
 {% if faqs is not empty %}

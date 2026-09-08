@@ -1,7 +1,7 @@
 import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { CurrencyFormatter } from '../CurrencyHelper';
 import { WebHapticEngine } from '../helpers/WebHapticEngine';
-import type { YearResult } from '../../types';
+import type { YearResult, InvestmentInputs } from '../../types';
 
 /**
  * MobileErgonomicDeckController
@@ -17,6 +17,8 @@ export class MobileErgonomicDeckController {
     private deckCorpusEl: HTMLElement | null = null;
     private deckInvestedEl: HTMLElement | null = null;
     private deckGainsEl: HTMLElement | null = null;
+    private deckCashflowEl: HTMLElement | null = null;
+    private deckCashflowLabelEl: HTMLElement | null = null;
     private btnSip: HTMLButtonElement | null = null;
     private btnSwp: HTMLButtonElement | null = null;
     private shareBtn: HTMLButtonElement | null = null;
@@ -47,6 +49,8 @@ export class MobileErgonomicDeckController {
         this.deckCorpusEl = this.dom.getElement<HTMLElement>('dock-glance-corpus') || this.dom.getElement<HTMLElement>('mobile-deck-corpus-val');
         this.deckInvestedEl = this.dom.getElement<HTMLElement>('dock-glance-invested');
         this.deckGainsEl = this.dom.getElement<HTMLElement>('dock-glance-gains');
+        this.deckCashflowEl = this.dom.getElement<HTMLElement>('dock-glance-cashflow');
+        this.deckCashflowLabelEl = this.dom.getElement<HTMLElement>('dock-glance-cashflow-label');
         this.btnSip = this.dom.getElement<HTMLButtonElement>('mobile-deck-sip-btn');
         this.btnSwp = this.dom.getElement<HTMLButtonElement>('mobile-deck-swp-btn');
         this.shareBtn = this.dom.getElement<HTMLButtonElement>('mobile-deck-share-btn');
@@ -149,7 +153,7 @@ export class MobileErgonomicDeckController {
         }
     }
 
-    public update(results: YearResult[]): void {
+    public update(results: YearResult[], inputs?: InvestmentInputs): void {
         if (!results || results.length === 0) return;
         const lastRow = results[results.length - 1];
         const newCorpus = lastRow.combined_total;
@@ -165,6 +169,26 @@ export class MobileErgonomicDeckController {
         if (this.deckGainsEl) {
             this.deckGainsEl.textContent = `+${this.formatter.formatDynamic(gains)}`;
         }
+
+        if (inputs && this.deckCashflowEl) {
+            if (inputs.enable_swp && inputs.swp_withdrawal > 0) {
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'SWP Out';
+                this.deckCashflowEl.textContent = `+${this.formatter.formatDynamic(inputs.swp_withdrawal)}/m`;
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-rose-700 font-financial-mono tabular-nums truncate';
+            } else if (inputs.sip > 0) {
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'SIP In';
+                this.deckCashflowEl.textContent = `${this.formatter.formatDynamic(inputs.sip)}/m`;
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums truncate';
+            } else if (inputs.lumpsum > 0) {
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Lumpsum';
+                this.deckCashflowEl.textContent = this.formatter.formatDynamic(inputs.lumpsum);
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-slate-800 font-financial-mono tabular-nums truncate';
+            } else {
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Cashflow';
+                this.deckCashflowEl.textContent = '₹ --';
+            }
+        }
+
         if (this.lastCorpus > 0) {
             WebHapticEngine.checkCorpusMilestone(this.lastCorpus, newCorpus);
         }

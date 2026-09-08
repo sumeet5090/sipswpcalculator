@@ -391,6 +391,27 @@ h6 {
     box-shadow: var(--shadow-sm);
 }
 
+/* Stepper Capsule Integrated Numeric Well Input Override */
+.stepper-input,
+input.stepper-input {
+    padding: 0 !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+}
+
+.stepper-input:focus,
+input.stepper-input:focus {
+    box-shadow: none !important;
+    border: 0 !important;
+    outline: none !important;
+}
+
 /* Input Groups */
 .input-group {
     position: relative;
@@ -455,13 +476,19 @@ h6 {
     }
 }
 
-label {
+:where(label) {
     display: block;
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--color-text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+}
+
+.field-label,
+label.field-label {
+    display: inline-block;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    white-space: nowrap !important;
 }
 
 /* Buttons */
