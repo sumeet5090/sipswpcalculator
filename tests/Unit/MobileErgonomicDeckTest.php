@@ -205,6 +205,8 @@ final class MobileErgonomicDeckTest extends TestCase
         $this->assertStringContainsString('max-h-[calc(100vh-4.5rem)]', $headerTwig);
         $this->assertStringContainsString('overflow-y-auto', $headerTwig);
         $this->assertStringContainsString('overscroll-contain', $headerTwig);
+        $this->assertStringContainsString('hidden lg:flex', $headerTwig);
+        $this->assertStringContainsString('lg:hidden', $headerTwig);
     }
 
     public function testStepperButtonsAndRangeInputsHaveTouchActionManipulation(): void

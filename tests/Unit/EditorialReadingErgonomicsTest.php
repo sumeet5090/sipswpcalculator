@@ -49,6 +49,8 @@ final class EditorialReadingErgonomicsTest extends TestCase
         $this->assertStringContainsString('id="mobile-reading-share-btn"', $this->genericPostTemplate);
         $this->assertStringContainsString('modal-drag-handle', $this->genericPostTemplate);
         $this->assertStringContainsString('Back to {{ cat_name }}', $this->genericPostTemplate);
+        $this->assertStringContainsString('max-h-[calc(100vh-6.5rem)]', $this->genericPostTemplate);
+        $this->assertStringContainsString('custom-scrollbar', $this->genericPostTemplate);
     }
 
     public function testMarkdownTableErgonomicsAndStickyColumns(): void
@@ -89,6 +91,7 @@ final class EditorialReadingErgonomicsTest extends TestCase
         $this->assertStringContainsString('close-mobile-toc-btn', $this->tocCode);
         $this->assertStringContainsString('WebHapticEngine.triggerTick', $this->tocCode);
         $this->assertStringContainsString('IntersectionObserver', $this->tocCode);
+        $this->assertStringContainsString('activeDesktop.scrollIntoView', $this->tocCode);
     }
 
     public function testInteractiveWealthSandboxCtaStructure(): void
@@ -137,6 +140,45 @@ final class EditorialReadingErgonomicsTest extends TestCase
             $ctaPos < $relatedPos,
             'Interactive Wealth Sandbox CTA must appear directly before Related Resources'
         );
+    }
+
+    public function testContextAwareSmartPrefillCtaUrls(): void
+    {
+        $interactiveCta = (string) file_get_contents(
+            __DIR__ . '/../../src/Views/components/interactive-cta-banner.twig'
+        );
+
+        $this->assertStringContainsString('target_cta_href', $interactiveCta);
+        $this->assertStringContainsString('utm_source=blog_cta&utm_medium=growth#calculator-section', $interactiveCta);
+        $this->assertStringContainsString('utm_source=blog_cta&utm_medium=retirement', $interactiveCta);
+        $this->assertStringContainsString('utm_source=blog_cta&utm_medium=comparison#calculator-section', $interactiveCta);
+        $this->assertStringContainsString('href="{{ target_cta_href }}"', $interactiveCta);
+
+        $genericPostLayout = (string) file_get_contents(
+            __DIR__ . '/../../src/Views/layouts/generic-post.twig'
+        );
+
+        $this->assertStringContainsString('post_cta_url', $genericPostLayout);
+        $this->assertStringContainsString('post_dock_cta_url', $genericPostLayout);
+        $this->assertStringContainsString('href="{{ post_dock_cta_url }}"', $genericPostLayout);
+        $this->assertStringContainsString('cta_url: post_cta_url', $genericPostLayout);
+    }
+
+    public function testCategoryNavigationAndInArticleShareConnect(): void
+    {
+        $genericPostLayout = (string) file_get_contents(
+            __DIR__ . '/../../src/Views/layouts/generic-post.twig'
+        );
+
+        // Verify Unified Sidebar Container is scrollable
+        $this->assertStringContainsString('max-h-[calc(100vh-6.5rem)]', $genericPostLayout);
+        $this->assertStringContainsString('overflow-y-auto overscroll-contain pr-2 custom-scrollbar', $genericPostLayout);
+
+        // Verify In-Article Share & Connect strip exists
+        $this->assertStringContainsString('aria-label="Share Article & Connect"', $genericPostLayout);
+        $this->assertStringContainsString('Share This Analysis &amp; Connect', $genericPostLayout);
+        $this->assertStringContainsString('linkedin.com/sharing/share-offsite', $genericPostLayout);
+        $this->assertStringContainsString('twitter.com/intent/tweet', $genericPostLayout);
     }
 
     private function assertDoesNotMatchString(string $pattern, string $string): void

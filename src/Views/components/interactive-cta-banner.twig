@@ -2,9 +2,20 @@
    Expected variables:
      - seo_category: current post's category slug (growth, retirement, comparison)
      - category: fallback category slug
+     - cta_url: optional full URL override
+     - cta_params: optional query params string or map
 #}
 
 {% set current_cat = seo_category|default(category|default('')) %}
+{% if cta_url is defined and cta_url %}
+    {% set target_cta_href = cta_url %}
+{% elseif current_cat == 'retirement' %}
+    {% set target_cta_href = '/swp-calculator?corpus=10000000&swp_withdrawal=50000&swp_years=30&swp_rate=8&swp_stepup=5&utm_source=blog_cta&utm_medium=retirement' %}
+{% elseif current_cat == 'comparison' %}
+    {% set target_cta_href = '/?sip=10000&years=10&rate=12&utm_source=blog_cta&utm_medium=comparison#calculator-section' %}
+{% else %}
+    {% set target_cta_href = '/?sip=10000&years=15&rate=12&stepup=10&utm_source=blog_cta&utm_medium=growth#calculator-section' %}
+{% endif %}
 
 <section class="mt-12 mb-8" aria-label="Simulate Your Wealth Journey">
     <div class="relative overflow-hidden rounded-3xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-card hover:shadow-card-hover transition-all duration-300 p-6 sm:p-8 md:p-10">
@@ -129,7 +140,7 @@
                     </span>
                 </div>
 
-                <a href="{% if current_cat == 'retirement' %}/swp-calculator{% else %}/#calculator-card{% endif %}"
+                <a href="{{ target_cta_href }}"
                     class="group inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-600 text-white font-extrabold text-sm sm:text-base shadow-card hover:shadow-card-hover transition-all duration-200 active:scale-[0.98] min-h-[48px] touch-manipulation">
                     <span>
                         {% if current_cat == 'retirement' %}

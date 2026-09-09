@@ -133,7 +133,7 @@
         <!-- ========================================================================= -->
         <!-- TIER 1: UNIFIED MASTER COMMAND DOCK (Identity · Mode · Headline Context)  -->
         <!-- ========================================================================= -->
-        <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+        <header class="flex flex-col xl:flex-row xl:items-center justify-between gap-3 pb-3 border-b border-slate-100">
             <!-- Left: Identity & Live Financial Context -->
             <div class="flex flex-col gap-0.5 min-w-0">
                 <div class="flex items-center gap-2">
@@ -148,7 +148,7 @@
                         <span class="text-slate-400 text-micro">ℹ️</span>
                     </button>
                 </div>
-                <div class="flex items-center gap-2 text-ui-xs text-slate-500 font-medium">
+                <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-ui-xs text-slate-500 font-medium">
                     <span>Projected: <strong class="text-slate-900 font-financial-mono font-bold" id="chart-header-gross">₹ --</strong></span>
                     <span class="text-slate-300">•</span>
                     <span class="text-growth-emphasis font-bold font-financial-mono" id="chart-header-gain">+₹ -- Gains</span>
@@ -156,7 +156,7 @@
             </div>
 
             <!-- Right: View Mode Switcher & Primary Action Tools -->
-            <div class="flex items-center justify-between sm:justify-end gap-1.5 w-full sm:w-auto self-start sm:self-center shrink-0">
+            <div class="flex items-center justify-between xl:justify-end gap-1.5 w-full xl:w-auto self-start xl:self-center shrink-0">
                 <!-- Segmented View Mode Switcher -->
                 <div class="inline-flex bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 shadow-flat" role="tablist" aria-label="Chart View Mode">
                     <button type="button" id="chart-view-line" role="tab" aria-selected="true"
@@ -169,16 +169,16 @@
                     </button>
                 </div>
 
-                <!-- Mobile Quick Actions Sheet Trigger (< sm) -->
+                <!-- Action Tools Sheet Trigger (< xl) -->
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.showModal()"
-                    class="sm:hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 min-h-[44px] rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 text-ui-xs font-bold transition-all active:scale-95 cursor-pointer shadow-flat"
+                    class="xl:hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 min-h-[44px] sm:min-h-0 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 text-ui-xs font-bold transition-all active:scale-95 cursor-pointer shadow-flat"
                     aria-label="Open Chart Actions and Tools">
                     <span>⚡ Tools</span>
                     <span class="text-micro font-extrabold text-slate-400">•••</span>
                 </button>
 
-                <!-- Desktop Primary & Utility Action Buttons (>= sm) -->
-                <div class="hidden sm:inline-flex items-center gap-1">
+                <!-- Desktop Primary & Utility Action Buttons (>= xl) -->
+                <div class="hidden xl:inline-flex items-center gap-1">
                     <button type="button" id="header-share-btn" onclick="document.getElementById('qr-share-modal')?.showModal()"
                         class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-200/90 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-ui-xs font-bold transition-all active:scale-95 cursor-pointer shadow-flat"
                         title="Share Wealth Plan or Export Wealth Horizon Pass">
@@ -208,17 +208,17 @@
         <!-- ========================================================================= -->
         <!-- TIER 2: REAL-TIME TIMELINE INSPECTION HUD DOCK                            -->
         <!-- ========================================================================= -->
-        <div id="chart-inspection-hud" class="flex flex-wrap items-center justify-between gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-50/90 border border-slate-200/80 text-ui-xs text-slate-600 transition-all">
-            <div class="flex items-center gap-2 min-w-0">
+        <div id="chart-inspection-hud" class="flex flex-col xl:flex-row xl:items-center justify-between gap-2 px-3.5 py-2.5 rounded-2xl bg-slate-50/90 border border-slate-200/80 text-ui-xs text-slate-600 transition-all">
+            <div class="flex items-center gap-2 shrink-0">
                 <span id="hud-timeline-indicator" class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
-                <span id="hud-year-label" class="font-bold text-slate-800 tracking-tight truncate">Interactive Timeline</span>
+                <span id="hud-year-label" class="font-bold text-slate-800 tracking-tight whitespace-nowrap">Interactive Timeline</span>
             </div>
-            <div class="flex items-center gap-2 sm:gap-3 font-financial-mono text-caption sm:text-ui-xs shrink-0">
-                <span id="hud-invested-metric" class="text-slate-500 font-medium">Invested: ₹ --</span>
-                <span class="text-slate-300 hidden sm:inline">•</span>
-                <span id="hud-gains-metric" class="text-growth-emphasis font-bold">Gains: ₹ --</span>
-                <span class="text-slate-300 hidden sm:inline">•</span>
-                <span id="hud-total-metric" class="text-slate-900 font-black">Total: ₹ --</span>
+            <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-financial-mono text-caption sm:text-ui-xs">
+                <span id="hud-invested-metric" class="text-slate-500 font-medium whitespace-nowrap">Invested: ₹ --</span>
+                <span class="text-slate-300 hidden sm:inline select-none" aria-hidden="true">•</span>
+                <span id="hud-gains-metric" class="text-growth-emphasis font-bold whitespace-nowrap">Gains: ₹ --</span>
+                <span class="text-slate-300 hidden sm:inline select-none" aria-hidden="true">•</span>
+                <span id="hud-total-metric" class="text-slate-900 font-black whitespace-nowrap">Total: ₹ --</span>
             </div>
         </div>
 
