@@ -208,17 +208,17 @@
         <!-- ========================================================================= -->
         <!-- TIER 2: REAL-TIME TIMELINE INSPECTION HUD DOCK                            -->
         <!-- ========================================================================= -->
-        <div id="chart-inspection-hud" class="flex flex-wrap items-center justify-between gap-2 px-3.5 py-1.5 rounded-2xl bg-slate-50/90 border border-slate-200/80 text-ui-xs text-slate-600 transition-all">
-            <div class="flex items-center gap-2 min-w-0">
+        <div id="chart-inspection-hud" class="flex flex-col xl:flex-row xl:items-center justify-between gap-2 px-3.5 py-2.5 rounded-2xl bg-slate-50/90 border border-slate-200/80 text-ui-xs text-slate-600 transition-all">
+            <div class="flex items-center gap-2 shrink-0">
                 <span id="hud-timeline-indicator" class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
-                <span id="hud-year-label" class="font-bold text-slate-800 tracking-tight truncate">Interactive Timeline</span>
+                <span id="hud-year-label" class="font-bold text-slate-800 tracking-tight whitespace-nowrap">Interactive Timeline</span>
             </div>
-            <div class="flex items-center gap-2 sm:gap-3 font-financial-mono text-caption sm:text-ui-xs shrink-0">
-                <span id="hud-invested-metric" class="text-slate-500 font-medium">Invested: ₹ --</span>
-                <span class="text-slate-300 hidden sm:inline">•</span>
-                <span id="hud-gains-metric" class="text-growth-emphasis font-bold">Gains: ₹ --</span>
-                <span class="text-slate-300 hidden sm:inline">•</span>
-                <span id="hud-total-metric" class="text-slate-900 font-black">Total: ₹ --</span>
+            <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-financial-mono text-caption sm:text-ui-xs">
+                <span id="hud-invested-metric" class="text-slate-500 font-medium whitespace-nowrap">Invested: ₹ --</span>
+                <span class="text-slate-300 hidden sm:inline select-none" aria-hidden="true">•</span>
+                <span id="hud-gains-metric" class="text-growth-emphasis font-bold whitespace-nowrap">Gains: ₹ --</span>
+                <span class="text-slate-300 hidden sm:inline select-none" aria-hidden="true">•</span>
+                <span id="hud-total-metric" class="text-slate-900 font-black whitespace-nowrap">Total: ₹ --</span>
             </div>
         </div>
 

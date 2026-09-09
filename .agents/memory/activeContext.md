@@ -5,8 +5,12 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Chart Header Responsive UI/UX Optimization Milestone Completed.
+- **Current Milestone:** Chart Inspection HUD Responsive Multi-Line Metric Wrapping & Year Truncation Resolution Milestone Completed.
 - **Implementation & Audit Findings:**
+  - **HUD Metric Clipping & Year Truncation Resolution:** Resolved clipping of large figures and year label truncation into `Y...` in `#chart-inspection-hud` ([chart-visualization.twig](file:///Users/sumeetboga/projects/sipswpcalculator/src/Views/components/chart-visualization.twig)).
+    - On tablet and split-view screens (`< xl`), the HUD container now cleanly stacks into two tiers (`flex flex-col xl:flex-row xl:items-center justify-between gap-2 px-3.5 py-2.5`).
+    - The year label container uses `shrink-0` and `#hud-year-label` uses `whitespace-nowrap` (with `truncate` removed), ensuring `Year X of Y` is never truncated into `Y...`.
+    - The metrics row uses `flex flex-wrap items-center gap-x-2.5 gap-y-1 font-financial-mono text-caption sm:text-ui-xs` with `whitespace-nowrap` on each metric pill (`#hud-invested-metric`, `#hud-gains-metric`, `#hud-total-metric`), ensuring complete multi-crore numbers wrap cleanly as discrete units without clipping.
   - **Chart Card Header Collision Resolution:** Fixed header overlap on tablet and desktop split columns (`< xl`, 640px to 1279px, e.g. iPad 768px portrait) where live multi-crore projected metrics (`#chart-header-gross`, `#chart-header-gain`) collided with the action button dock (`#chart-view-line`, `✦ Share Plan`, `📸`, etc.).
   - **Clean Breakpoint Hierarchy:** Header container re-aligned from `sm:flex-row` to `xl:flex-row`. On `< xl` (mobile, tablet portrait/landscape, and compact laptops), the header stacks cleanly into two breathing tiers:
     - Tier 1: "Wealth Growth Trajectory" title, AMFI Aligned badge, and wrap-safe live projected financial numbers (`flex flex-wrap items-center gap-x-2 gap-y-0.5`).
@@ -17,7 +21,7 @@
 - **System Health:** 
   - Full check-all passed: PHPStan Level 8 (0 errors, 233/233 files), PHPCS PSR-12 (0 errors), PHPUnit (838 tests / 13,776 assertions passed).
   - Parity check: 57 test cases passed (100% PHP/TS parity).
-  - Vite build: Clean production bundle compiled in 193ms (`dist/assets/app-CZ5JF6Zq.js`, `app-AbQl3gQD.css`).
+  - Vite build: Clean production bundle compiled in 221ms (`dist/assets/app-CpVwDKz2.js`, `app-2J5lIMwA.css`).
 
 ---
 
