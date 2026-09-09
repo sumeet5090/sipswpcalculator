@@ -5,16 +5,19 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Tablet Navigation Bar Responsive Optimization Milestone Completed.
+- **Current Milestone:** Chart Header Responsive UI/UX Optimization Milestone Completed.
 - **Implementation & Audit Findings:**
+  - **Chart Card Header Collision Resolution:** Fixed header overlap on tablet and desktop split columns (`< xl`, 640px to 1279px, e.g. iPad 768px portrait) where live multi-crore projected metrics (`#chart-header-gross`, `#chart-header-gain`) collided with the action button dock (`#chart-view-line`, `✦ Share Plan`, `📸`, etc.).
+  - **Clean Breakpoint Hierarchy:** Header container re-aligned from `sm:flex-row` to `xl:flex-row`. On `< xl` (mobile, tablet portrait/landscape, and compact laptops), the header stacks cleanly into two breathing tiers:
+    - Tier 1: "Wealth Growth Trajectory" title, AMFI Aligned badge, and wrap-safe live projected financial numbers (`flex flex-wrap items-center gap-x-2 gap-y-0.5`).
+    - Tier 2: Segmented View Mode Switcher (`📈 Line` / `🍩 Split`) + touch-friendly `⚡ Tools •••` button (`xl:hidden`). Clicking `⚡ Tools` opens the existing accessible native dialog sheet (`#mobile-actions-sheet`) containing all 1-tap action triggers.
+  - **Widescreen Mode (`≥ xl`):** Large desktop screens retain the full horizontal command dock (`hidden xl:inline-flex`) with expanded action buttons.
   - **Tablet Navigation Layout Resolution:** Fixed navbar crowding on iPads and tablets (viewports 640px to 1023px, e.g. 768px portrait) by migrating navbar breakpoint classes from `sm:` (640px) to `lg:` (1024px) in `header.twig`.
-  - **Clean Tablet Touch Menu:** Tablets now render the uncluttered hamburger button (`lg:hidden`) with full access to calculators, guides, search, and QR scan via the smooth slide-down menu (`#mobile-menu`), while desktop displays (`≥ 1024px` / `lg:`) enjoy spacious horizontal link and action pill placement.
-  - **Enriched Mobile/Tablet Quick Actions:** Added a dedicated Command Palette Search button inside `#mobile-menu` and updated `CommandPaletteController.ts` to support `.open-command-palette-btn` multiple trigger buttons.
-  - **Unified Sidebar Scroll Container:** Replaced awkward nested scrollbars on `#toc-list` and the Category `ul` with a single, consolidated scroll container on the sticky sidebar wrapper in `generic-post.twig` (`max-h-[calc(100vh-6.5rem)] overflow-y-auto overscroll-contain pr-2 custom-scrollbar`).
+  - **Unified Sidebar Scroll Container:** Consolidated scroll container on the sticky sidebar wrapper in `generic-post.twig`.
 - **System Health:** 
   - Full check-all passed: PHPStan Level 8 (0 errors, 233/233 files), PHPCS PSR-12 (0 errors), PHPUnit (838 tests / 13,776 assertions passed).
   - Parity check: 57 test cases passed (100% PHP/TS parity).
-  - Vite build: Clean production bundle compiled in 187ms.
+  - Vite build: Clean production bundle compiled in 193ms (`dist/assets/app-CZ5JF6Zq.js`, `app-AbQl3gQD.css`).
 
 ---
 
