@@ -186,3 +186,17 @@ For investors in the 30% tax bracket parking money for 12 to 36 months, Arbitrag
 4. **Senior Citizen Toggle:** Enable if the deposit is booked in the name of a senior citizen (aged 60+) to automatically incorporate the +0.50% rate bonus.
 5. **Payout Frequency:** Choose **Cumulative (Compounding)** for maximum maturity wealth, or select **Monthly / Quarterly Payout** if you require regular periodic income.
 6. **Inspect the Output:** Review your **Maturity Amount**, total **Aggregate Interest**, **Estimated Annual TDS**, and examine the year-by-year **Amortization Ledger**.
+
+---
+
+## Related Calculators & Financial Tools
+
+Explore alternatives and complementary investment options alongside fixed deposits:
+
+* [PPF Calculator](/ppf-calculator) — Compare FD returns against tax-free Public Provident Fund compounding with Section 80C deductions
+* [Compound Interest Calculator](/compound-interest-calculator) — Model different compounding frequencies and understand why quarterly FD compounding differs from monthly or annual
+* [SWP Calculator](/swp-calculator) — Compare FD periodic interest payouts against mutual fund SWP monthly withdrawals for superior post-tax retirement income
+* [Inflation Calculator](/inflation-calculator) — Check whether your FD interest rate beats CPI inflation to determine if you're earning a positive real return
+* [CAGR Calculator](/cagr-calculator) — Calculate the annualized growth rate of your FD and compare it against equity mutual fund long-term CAGR
+* [SIP & SWP Combined Planner](/) — Plan a diversified strategy combining safe FD allocations with growth-oriented SIP mutual fund investments
+

@@ -201,3 +201,17 @@ If your goal is to possess the equivalent purchasing power of ₹1 Crore today i
 3. **Set Up an Automated e-NACH Mandate:** Schedule your SIP debit on the **1st through 5th of each month**—immediately after salary credit—to automate the golden personal finance rule: *Savings = Income − Investments*, not *Savings = Income − Expenses*.
 4. **Enable an Annual 10% Step-Up Mandate:** Configure an automated annual step-up with your fund provider so your wealth pace keeps up with your career progress.
 5. **Review Annually, Never Daily:** Ignore daily market headlines, geopolitical noise, and quarterly corrections. Review fund performance once every 12 to 18 months against the category benchmark (e.g., Nifty 500 TRI).
+
+---
+
+## Related Calculators & Financial Tools
+
+Continue your ₹1 Crore journey with these planning tools:
+
+* [5 Crore FIRE Calculator](/reach-5-crore-via-sip) — After reaching ₹1 Crore, plan your next milestone toward complete financial independence at ₹5 Crores
+* [SIP Calculator](/sip-calculator) — Model detailed monthly SIP returns with step-up compounding and interactive growth charts
+* [Step-Up SIP Calculator](/sip-step-up-calculator) — See how annual top-ups of 10%–15% dramatically accelerate your journey to ₹1 Crore
+* [Target Corpus Calculator](/target-corpus-calculator) — Calculate the exact monthly SIP required for any custom financial goal amount
+* [CAGR Calculator](/cagr-calculator) — Verify the annualized growth rate of your existing investments to ensure you're on track for ₹1 Crore
+* [SIP & SWP Combined Planner](/) — After reaching ₹1 Crore, simulate how long your wealth lasts with systematic monthly retirement withdrawals
+

@@ -165,3 +165,17 @@ To ensure your future wealth preserves the full purchasing power of a ₹1 Crore
 2. **Automate e-Mandates for the 1st to 5th of Every Month:** Ensure your SIP debits directly from your bank account right after salary credit to institutionalize savings discipline.
 3. **Automate an Annual 10% Step-Up:** Lock in an automated top-up instruction on your investment dashboard so your SIP automatically increases by ₹1,000 each year.
 4. **Never Stop SIPs During Market Drawdowns:** When market corrections occur, remember that your ₹10,000 installment is purchasing more mutual fund units at discounted valuations. Stay invested through market cycles.
+
+---
+
+## Related Calculators & SIP Planning Tools
+
+Accelerate your ₹10,000 monthly SIP wealth journey:
+
+* [₹5,000 Monthly SIP Plan](/sip-5000-per-month) — Starting smaller? See how ₹5,000/month with 10% step-up compounds into serious wealth over 20+ years
+* [1 Crore SIP Calculator](/my-first-crore-calculator) — Calculate your exact timeline to reach ₹1 Crore with your ₹10,000 monthly SIP and annual step-ups
+* [Step-Up SIP Calculator](/sip-step-up-calculator) — Model the dramatic wealth difference between flat ₹10,000 SIPs and 10% annual step-up SIPs
+* [SWP Calculator](/swp-calculator) — Once your SIP corpus matures, plan systematic monthly retirement withdrawals with inflation protection
+* [Retirement Calculator](/retirement-calculator) — Model your complete lifecycle from ₹10,000 monthly SIP accumulation to pension-style SWP income
+* [SIP & SWP Combined Planner](/) — Simulate your full financial journey from ₹10,000 monthly investments to retirement withdrawal planning
+

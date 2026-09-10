@@ -134,9 +134,9 @@ class HomeSchemaBuilder
                 "@type" => "SearchAction",
                 "target" => [
                     "@type" => "EntryPoint",
-                    "urlTemplate" => $baseUrl . "/?sip={sip_amount}"
+                    "urlTemplate" => $baseUrl . "/glossary?q={search_term_string}"
                 ],
-                "query-input" => "required name=sip_amount"
+                "query-input" => "required name=search_term_string"
             ]
         ], SchemaHelper::JSON_FLAGS);
 

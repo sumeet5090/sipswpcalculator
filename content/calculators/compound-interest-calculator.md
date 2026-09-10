@@ -255,3 +255,17 @@ Even though Varun invested **nearly three times more capital** (₹33.6L vs ₹1
 3. **Time Period (Years):** Choose an investment horizon. For meaningful compounding, model horizons of 10 to 30 years.
 4. **Compounding Frequency:** Select Annual, Half-Yearly, Quarterly, or Monthly compounding depending on your instrument.
 5. **Analyze the Projections:** Review the interactive growth trajectory chart, check your Effective Annual Rate (EAR), verify your Rule of 72 doubling threshold, and inspect the yearly wealth ledger.
+
+---
+
+## Related Calculators & Financial Tools
+
+Explore more ways to model compounding and investment growth:
+
+* [CAGR Calculator](/cagr-calculator) — Calculate the annualized compound growth rate of any investment and compare performance across asset classes
+* [FD Calculator](/fd-calculator) — Calculate bank fixed deposit quarterly compounding returns with TDS estimation and senior citizen rate bonuses
+* [PPF Calculator](/ppf-calculator) — Model tax-free Public Provident Fund compounding over 15 to 35 year horizons with Section 80C deductions
+* [Lumpsum Calculator](/lumpsum-calculator) — Compare one-time mutual fund investment growth against periodic compounding scenarios
+* [SIP Calculator](/sip-calculator) — Project systematic monthly investment returns with annual step-up to see how periodic contributions compound differently than lump sums
+* [SIP & SWP Combined Planner](/) — Simulate your complete wealth accumulation and retirement withdrawal journey with step-up compounding
+

@@ -211,3 +211,17 @@ While CAGR is an indispensable benchmark, sophisticated investors must recognize
 2. **Final Value ($V_{\text{final}}$):** Enter the current portfolio balance, redemption value, or expected target corpus.
 3. **Duration (Years):** Enter the total holding period in years. You can use decimals for fractional periods (e.g., enter `3.5` for 3 years and 6 months).
 4. **Review Results:** The calculator instantly outputs the exact **CAGR percentage**, the total **Absolute Return (%)**, and the overall **Wealth Multiplier ($N\times$)**.
+
+---
+
+## Related Calculators & Investment Tools
+
+Planning your next move after analyzing CAGR? These tools complement your annualized return analysis:
+
+* [SIP Calculator](/sip-calculator) — Project future mutual fund returns with monthly step-up compounding and compare against your CAGR benchmark
+* [Lumpsum Calculator](/lumpsum-calculator) — Model one-time capital deployment growth and calculate the CAGR equivalent of your lumpsum investment
+* [Compound Interest Calculator](/compound-interest-calculator) — Compare compounding frequencies (monthly vs quarterly vs annual) and understand how they affect your effective CAGR
+* [Inflation Calculator](/inflation-calculator) — Subtract CPI inflation from your nominal CAGR to reveal the real purchasing power return on your investments
+* [SWP Calculator](/swp-calculator) — After accumulating wealth at your target CAGR, plan systematic monthly retirement withdrawals with inflation protection
+* [SIP & SWP Combined Planner](/) — Simulate your complete accumulation-to-retirement journey with step-up SIP compounding and SWP decumulation
+

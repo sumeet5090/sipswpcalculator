@@ -216,3 +216,17 @@ Even in cases of personal insolvency, bankruptcy, or business financial distress
 3. **Tenure (Years):** Select the baseline 15-year statutory period or extended blocks (20, 25, 30, or 35 years).
 4. **Deposit Timing:** Select whether contributions are made as a lump sum in April (maximizing 12 months interest) or spread monthly throughout the year.
 5. **Analyze the Results:** Review your total capital invested, total accumulated interest, final tax-free maturity corpus, and inspect the complete year-by-year **Statutory Ledger**.
+
+---
+
+## Related Calculators & Financial Tools
+
+Compare PPF against other investment instruments and build a diversified portfolio:
+
+* [FD Calculator](/fd-calculator) — Compare PPF's tax-free 7.1% against taxable bank FD returns with TDS estimation to see which yields more post-tax wealth
+* [Compound Interest Calculator](/compound-interest-calculator) — Model how PPF's annual compounding compares against monthly or quarterly compounding in other instruments
+* [SIP Calculator](/sip-calculator) — Compare PPF's guaranteed 7.1% return against equity mutual fund SIP projections at 12%–14% CAGR for growth-oriented investors
+* [Inflation Calculator](/inflation-calculator) — Check whether PPF's current interest rate provides a meaningful real return after adjusting for Indian CPI inflation
+* [Retirement Calculator](/retirement-calculator) — Include PPF as the safe debt allocation within a diversified retirement accumulation strategy
+* [SIP & SWP Combined Planner](/) — Build a comprehensive plan that combines safe PPF savings with growth-oriented mutual fund SIP investments
+

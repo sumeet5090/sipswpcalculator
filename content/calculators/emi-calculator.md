@@ -192,3 +192,17 @@ By investing just ₹3,500/month alongside your ₹34,713 EMI, your mutual fund 
 2. **Interest Rate (% p.a.):** Enter the prevailing annual percentage rate offered by your lender.
 3. **Loan Tenure (Years):** Specify your proposed repayment horizon in years.
 4. **Inspect the Output:** Review your exact **Monthly EMI**, total **Aggregate Interest Payable**, the **Principal vs. Interest distribution chart**, and examine the year-by-year **Amortization Ledger** to track your loan payoff milestone dates.
+
+---
+
+## Related Calculators & Financial Tools
+
+Make smarter borrowing and investment decisions with these complementary tools:
+
+* [FD Calculator](/fd-calculator) — Compare your loan interest rate against fixed deposit returns to decide whether to prepay or invest surplus funds
+* [Compound Interest Calculator](/compound-interest-calculator) — Understand how the same compounding mechanics that grow your EMI interest also work in your favour when investing
+* [Lumpsum Calculator](/lumpsum-calculator) — Model one-time capital growth to evaluate whether prepaying your loan or investing the lumpsum yields better net returns
+* [SIP Calculator](/sip-calculator) — Compare systematic monthly SIP investments against EMI payments to plan surplus capital deployment
+* [Inflation Calculator](/inflation-calculator) — Assess how inflation erodes the real cost of your fixed EMI over time, making long-tenure loans cheaper in purchasing power terms
+* [SIP & SWP Combined Planner](/) — Simulate your complete financial lifecycle from wealth building to retirement income planning
+

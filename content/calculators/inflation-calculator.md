@@ -171,3 +171,17 @@ To beat inflation consistently, capital must be allocated to assets that possess
    * **Future Estimated Cost:** The exact nominal amount of money required in the future to match today's standard.
    * **Purchasing Power of Current Sum:** What that same amount of cash will actually be worth in the future.
    * **Purchasing Power Loss (%):** The percentage of cash value destroyed by inflation over the chosen duration.
+
+---
+
+## Related Calculators & Financial Tools
+
+Use these tools to build an inflation-proof financial plan:
+
+* [SWP Calculator](/swp-calculator) — Plan inflation-adjusted systematic monthly withdrawals from your retirement corpus with annual step-up protection
+* [Retirement Calculator](/retirement-calculator) — Model your complete accumulation-to-withdrawal lifecycle with built-in inflation indexing
+* [CAGR Calculator](/cagr-calculator) — Subtract your inflation rate from investment CAGR to calculate the real purchasing power growth of your portfolio
+* [SIP Calculator](/sip-calculator) — Start monthly SIP investments with annual step-up to ensure your wealth creation outpaces CPI inflation
+* [Target Corpus Calculator](/target-corpus-calculator) — Calculate the inflation-adjusted target amount you need to save for future goals like children's education or retirement
+* [SIP & SWP Combined Planner](/) — Simulate your complete financial journey from inflation-beating SIP accumulation to inflation-protected SWP retirement income
+
