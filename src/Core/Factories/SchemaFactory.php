@@ -143,6 +143,9 @@ class SchemaFactory
                 $rating
             );
             $schemas[] = $software_schema;
+
+            // 6. HowTo Schema (Enables How-To rich snippets in search engines)
+            $schemas[] = $this->generateHowToForCalculator($schemaName, $description, $url);
         }
 
         $html = '';
@@ -151,6 +154,43 @@ class SchemaFactory
         }
 
         return $html;
+    }
+
+    /**
+     * Generates HowTo schema for interactive calculator pages.
+     */
+    private function generateHowToForCalculator(string $name, string $description, string $url): string
+    {
+        return (string) json_encode([
+            "@context" => "https://schema.org",
+            "@type" => "HowTo",
+            "name" => "How to Use the " . $name,
+            "description" => $description,
+            "totalTime" => "PT2M",
+            "step" => [
+                [
+                    "@type" => "HowToStep",
+                    "position" => 1,
+                    "name" => "Enter Financial Parameters",
+                    "text" => "Input your investment amount, tenure, expected rate of return, and optional step-up or inflation percentage using the synchronized sliders or numeric inputs.",
+                    "url" => $url . "#calculator-section"
+                ],
+                [
+                    "@type" => "HowToStep",
+                    "position" => 2,
+                    "name" => "Analyze Compounding Visualizations",
+                    "text" => "Review projected returns, wealth accumulation milestones, and capital distributions in the real-time interactive chart.",
+                    "url" => $url . "#results-section"
+                ],
+                [
+                    "@type" => "HowToStep",
+                    "position" => 3,
+                    "name" => "Inspect Cashflow Schedule & Export",
+                    "text" => "Examine the detailed month-by-month or year-by-year cashflow table and export free branded PDF reports or CSV data.",
+                    "url" => $url . "#yearly-breakdown"
+                ]
+            ]
+        ], SchemaHelper::JSON_FLAGS);
     }
 
     /**

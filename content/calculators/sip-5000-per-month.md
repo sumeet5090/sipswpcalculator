@@ -1,8 +1,8 @@
 ---
 og_image: "/assets/og/og-sip-5000-per-month.jpg"
-title: "₹5,000 Per Month SIP Plan (2026) — Returns & Corpus Guide"
+title: "Rs 5,000 Monthly SIP Plan — Returns & Corpus Guide"
 subtitle: "See how investing ₹5,000 every month in Indian mutual funds compounds into ₹50 Lakhs to ₹2.3 Crores across 5 to 25-year horizons."
-meta_desc: "Model ₹5,000 monthly SIP returns. Used by 10,000+ investors to project 5, 10, 15, 20 & 25-year corpus growth, 10% annual step-up, Section 112A tax & fund picks."
+meta_desc: "See how investing ₹5,000 monthly in mutual funds compounds into ₹50 Lakhs to ₹2.3 Crores. Model 10% annual step-up compounding & LTCG tax rules with free charts."
 keywords: "5000 sip per month, 5000 monthly sip returns, 5000 sip for 10 years, 5000 sip for 20 years, 5000 sip calculator india, best mutual fund for 5000 per month"
 schema_name: "₹5,000 Monthly SIP Investment Planner"
 seo_category: "growth"

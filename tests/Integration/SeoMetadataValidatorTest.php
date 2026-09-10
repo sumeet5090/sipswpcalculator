@@ -253,7 +253,14 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
             $schemaTypes[] = $data['@type'];
         }
 
-        // Calculator routes must have SoftwareApplication and FAQPage schemas
+        // Assert no duplicate schema types exist on the page
+        $this->assertEquals(
+            count($schemaTypes),
+            count(array_unique($schemaTypes)),
+            "SEO Rule Violation: Duplicate schema types detected on page '$path': " . implode(', ', array_diff_assoc($schemaTypes, array_unique($schemaTypes)))
+        );
+
+        // Calculator routes must have SoftwareApplication, FAQPage, and HowTo schemas
         if (str_contains($path, 'calculator') || $path === '/') {
             $this->assertContains(
                 'SoftwareApplication',
@@ -264,6 +271,11 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
                 'FAQPage',
                 $schemaTypes,
                 "Calculator page '$path' is missing FAQPage schema."
+            );
+            $this->assertContains(
+                'HowTo',
+                $schemaTypes,
+                "Calculator page '$path' is missing HowTo schema."
             );
         }
     }

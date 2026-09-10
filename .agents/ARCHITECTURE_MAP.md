@@ -98,9 +98,10 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 - **Strict Nullness Contract:** Accumulation years must have `swp_monthly: null` and `annual_withdrawal: null`. SWP years must have `sip_monthly: null`. Never emit `0` or `0.0` in place of `null`.
 - **40-Iteration Binary Search:** Goal-seeking solvers (`TargetCorpusStrategy.ts`) run a fixed 40-step binary search to guarantee exact convergence in $<5\text{ms}$ with zero risk of infinite looping.
 
-### D. SEO Metadata & Dual-Schema Contract
-- **Mandatory Schemas:** Every calculator route must output dual JSON-LD schemas: `SoftwareApplication` and `FAQPage` (via `SchemaFactory.php`).
-- **Title Length Limit:** Page `<title>` tags must strictly remain between **10 and 65 characters** (enforced by `SeoMetadataValidatorTest.php`).
+### D. SEO Metadata & Triple-Schema Contract
+- **Mandatory Schemas:** Every calculator route must output structured JSON-LD schemas: `SoftwareApplication`, `FAQPage`, and contextual `HowTo` (via `SchemaFactory.php` and `HomeSchemaBuilder.php`).
+- **Title Length Limit:** Page `<title>` tags must strictly remain between **10 and 65 characters** (enforced by `tests/Integration/SeoMetadataValidatorTest.php`).
+- **AI Crawlers & Discovery:** `llms.txt` and `llms-full.txt` served from web root; `robots.txt` explicitly allows `GPTBot`, `Google-Extended`, `PerplexityBot`, `ClaudeBot`, `Amazonbot`, `anthropic-ai`, `cohere-ai`, and `OAI-SearchBot`.
 
 ### E. Vite & Tailwind CSS v4 Pipeline
 - **Tailwind v4 Directive:** Configured exclusively in `resources/css/input.css` (`@theme`, `@source`). Never create `tailwind.config.js`.

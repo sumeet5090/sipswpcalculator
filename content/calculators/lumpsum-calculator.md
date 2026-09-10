@@ -1,9 +1,9 @@
 ---
-title: "Lumpsum Calculator India 2026 — Mutual Fund Return Tool"
+title: "Lumpsum Calculator India — One-Time Mutual Fund Return Planner"
 subtitle: "Free lumpsum investment calculator for Indian mutual funds. Calculate returns on your one-time investment with compound interest, compare SIP vs lumpsum, and view interactive growth charts."
-meta_desc: "Free lumpsum calculator for 10,000+ investors. Calculate one-time mutual fund returns, compare SIP vs lumpsum, model 2026 LTCG tax & export free PDF reports."
-keywords: "lumpsum calculator, one time investment calculator, mutual fund lumpsum calculator, lumpsum return calculator india, lumpsum vs sip calculator, lumpsum compound interest, lumpsum and sip calculator"
-schema_name: "Lumpsum Calculator India 2026 — Mutual Fund Return Tool"
+meta_desc: "Calculate maturity returns on one-time mutual fund investments in India. Compare Lumpsum vs SIP, model compounding growth & LTCG tax, and download free PDF report."
+keywords: "lumpsum calculator, one time investment calculator, mutual fund lumpsum calculator, lumpsum return calculator india, lumpsum vs sip calculator, lumpsum compound interest"
+schema_name: "Lumpsum Calculator India — Mutual Fund Return Planner"
 seo_category: "growth"
 type: "calculator"
 date: "2026-08-01"

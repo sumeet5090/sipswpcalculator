@@ -1,8 +1,8 @@
 ---
 og_image: "/assets/og/og-reach-5-crore-via-sip.jpg"
-title: "How to Reach ₹5 Crore via SIP (2026) — Financial Freedom Plan"
+title: "Reach 5 Crore via SIP — FIRE Retirement Corpus Plan"
 subtitle: "Calculate the exact monthly SIP, years, and step-up increments required to build a ₹5 Crore financial freedom corpus in Indian mutual funds."
-meta_desc: "Calculate how to reach ₹5 Crore via SIP. Used by 10,000+ investors to plan early retirement, step-up compounding, equity fund allocation & 2026 post-tax wealth."
+meta_desc: "Calculate exact monthly SIP required to build a ₹5 Crore financial freedom corpus in India. Model 4% safe withdrawal rules, step-up compounding & free PDF report."
 keywords: "reach 5 crore sip, 5 crore mutual fund calculator, how to get 5 crore in sip, 5 crore retirement plan india, sip for 5 crore, financial freedom corpus"
 schema_name: "5 Crore SIP Financial Freedom Calculator"
 seo_category: "growth"

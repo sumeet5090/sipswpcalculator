@@ -1,9 +1,9 @@
 ---
-title: "Step-Up SIP Calculator (2026) — Top-Up Compounding Tool"
+title: "Step-Up SIP Calculator India — Top-Up Wealth Planner"
 subtitle: "Free step-up (top-up) SIP calculator for Indian mutual funds. See how increasing your SIP by 5%, 10%, or 20% annually can nearly double your final corpus compared to a flat SIP."
-meta_desc: "Free step-up SIP calculator for 10,000+ investors. See how 5-20% annual hikes double wealth & beat inflation. Model 2026 LTCG tax & export custom PDF reports."
-keywords: "step up sip calculator, top up sip calculator, sip step up calculator india, annual step up sip, incremental sip calculator, step up vs regular sip, compounding calculator india, step up swp calculator"
-schema_name: "Step-Up SIP Calculator (2026) — Top-Up Compounding Tool"
+meta_desc: "Calculate returns with annual Step-Up (Top-Up) SIP. See how a 5% to 15% yearly increment dramatically boosts your mutual fund corpus. Free charts and instant PDF export."
+keywords: "step up sip calculator, top up sip calculator, sip step up calculator india, annual step up sip, incremental sip calculator, step up vs regular sip, compounding calculator india"
+schema_name: "Step-Up SIP Calculator India — Top-Up Compounding Planner"
 seo_category: "growth"
 type: "calculator"
 date: "2026-08-01"

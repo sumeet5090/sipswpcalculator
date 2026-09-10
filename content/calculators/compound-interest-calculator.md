@@ -1,10 +1,10 @@
 ---
 og_image: "/assets/og/og-compound-interest-calculator.jpg"
-title: "Compound Interest Calculator India (2026) — CI Tool"
+title: "Compound Interest Calculator India — Periodic Growth Planner"
 subtitle: "Calculate compound interest returns with annual, quarterly, and monthly compounding frequencies. See Rule of 72 doubling periods and interactive growth charts."
-meta_desc: "Free compound interest calculator India (2026). Used by 10,000+ investors to model daily, monthly & quarterly compounding, Rule of 72 & growth charts in PDF."
+meta_desc: "Calculate compound interest with annual, quarterly, and monthly compounding frequencies. Model Rule of 72 doubling timelines and growth with free charts and tables."
 keywords: "compound interest calculator, ci calculator india, compounding calculator, rule of 72 calculator, monthly compounding calculator, investment compounding"
-schema_name: "Compound Interest Calculator India (2026) — CI Tool"
+schema_name: "Compound Interest Calculator India — Periodic Growth Planner"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-01"

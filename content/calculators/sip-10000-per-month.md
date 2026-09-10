@@ -1,8 +1,8 @@
 ---
 og_image: "/assets/og/og-sip-10000-per-month.jpg"
-title: "₹10,000 Per Month SIP Plan (2026) — Returns & Wealth Guide"
+title: "Rs 10,000 Monthly SIP Plan — Returns & Wealth Guide"
 subtitle: "Calculate how a ₹10,000 monthly SIP in Indian mutual funds grows into ₹23 Lakhs in 10 years, ₹1 Crore in 20 years, and over ₹4.6 Crores with step-up."
-meta_desc: "Plan ₹10,000 monthly SIP returns. Used by 10,000+ investors to project 5 to 25-year corpus, 10% step-up wealth accelerator, 2026 LTCG tax & top mutual funds."
+meta_desc: "Calculate how a ₹10,000 monthly SIP in mutual funds grows into ₹1 Crore in 20 years, and over ₹4.6 Crores with step-up. Review asset allocation and free charts."
 keywords: "10000 sip per month, 10000 monthly sip returns, 10000 sip for 10 years, 10000 sip for 20 years, 10000 sip calculator india, best mutual fund for 10000 per month"
 schema_name: "₹10,000 Monthly SIP Investment Planner"
 seo_category: "growth"

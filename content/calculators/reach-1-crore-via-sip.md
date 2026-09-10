@@ -1,9 +1,9 @@
 ---
 og_image: "/assets/og/og-reach-1-crore-via-sip.jpg"
-title: "How to Reach ₹1 Crore via SIP (2026) — Exact Timelines & Plan"
+title: "Reach 1 Crore via SIP — Timelines & Monthly Plan"
 subtitle: "Calculate the exact monthly SIP, years, and step-up increments required to build your first ₹1 Crore portfolio in Indian equity mutual funds."
-meta_desc: "Calculate how to reach ₹1 Crore via SIP. Used by 10,000+ investors to model 5, 10 & 15-year timelines, 10% step-up compounding, 2026 LTCG tax & top fund picks."
-keywords: "reach 1 crore sip, how to get 1 crore in mutual fund, sip for 1 crore, 1 crore sip plan 2026, 1 crore target sip, monthly sip for 1 crore"
+meta_desc: "Discover how to reach ₹1 Crore via SIP in 5, 10, or 15 years. Model required monthly SIP amounts, 10% annual step-up compounding, and LTCG taxation with free PDF."
+keywords: "reach 1 crore sip, 1 crore in 5 years sip, how to get 1 crore in mutual fund, sip for 1 crore, 1 crore sip plan 2026, 1 crore target sip, monthly sip for 1 crore"
 schema_name: "1 Crore SIP Goal Planner & Target Calculator"
 seo_category: "growth"
 type: "calculator"

@@ -5,23 +5,21 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Chart Inspection HUD Responsive Multi-Line Metric Wrapping & Year Truncation Resolution Milestone Completed.
+- **Current Milestone:** Technical SEO Diagnostic, Duplicate Schema Eradication, AI Search Discoverability (llms-full.txt & Robots) & Standalone Metadata Optimization Milestone Completed.
 - **Implementation & Audit Findings:**
-  - **HUD Metric Clipping & Year Truncation Resolution:** Resolved clipping of large figures and year label truncation into `Y...` in `#chart-inspection-hud` ([chart-visualization.twig](file:///Users/sumeetboga/projects/sipswpcalculator/src/Views/components/chart-visualization.twig)).
-    - On tablet and split-view screens (`< xl`), the HUD container now cleanly stacks into two tiers (`flex flex-col xl:flex-row xl:items-center justify-between gap-2 px-3.5 py-2.5`).
-    - The year label container uses `shrink-0` and `#hud-year-label` uses `whitespace-nowrap` (with `truncate` removed), ensuring `Year X of Y` is never truncated into `Y...`.
-    - The metrics row uses `flex flex-wrap items-center gap-x-2.5 gap-y-1 font-financial-mono text-caption sm:text-ui-xs` with `whitespace-nowrap` on each metric pill (`#hud-invested-metric`, `#hud-gains-metric`, `#hud-total-metric`), ensuring complete multi-crore numbers wrap cleanly as discrete units without clipping.
-  - **Chart Card Header Collision Resolution:** Fixed header overlap on tablet and desktop split columns (`< xl`, 640px to 1279px, e.g. iPad 768px portrait) where live multi-crore projected metrics (`#chart-header-gross`, `#chart-header-gain`) collided with the action button dock (`#chart-view-line`, `✦ Share Plan`, `📸`, etc.).
-  - **Clean Breakpoint Hierarchy:** Header container re-aligned from `sm:flex-row` to `xl:flex-row`. On `< xl` (mobile, tablet portrait/landscape, and compact laptops), the header stacks cleanly into two breathing tiers:
-    - Tier 1: "Wealth Growth Trajectory" title, AMFI Aligned badge, and wrap-safe live projected financial numbers (`flex flex-wrap items-center gap-x-2 gap-y-0.5`).
-    - Tier 2: Segmented View Mode Switcher (`📈 Line` / `🍩 Split`) + touch-friendly `⚡ Tools •••` button (`xl:hidden`). Clicking `⚡ Tools` opens the existing accessible native dialog sheet (`#mobile-actions-sheet`) containing all 1-tap action triggers.
-  - **Widescreen Mode (`≥ xl`):** Large desktop screens retain the full horizontal command dock (`hidden xl:inline-flex`) with expanded action buttons.
-  - **Tablet Navigation Layout Resolution:** Fixed navbar crowding on iPads and tablets (viewports 640px to 1023px, e.g. 768px portrait) by migrating navbar breakpoint classes from `sm:` (640px) to `lg:` (1024px) in `header.twig`.
-  - **Unified Sidebar Scroll Container:** Consolidated scroll container on the sticky sidebar wrapper in `generic-post.twig`.
+  - **Duplicate Schema Elimination:** Identified and resolved a code-level structured data bug where `src/Views/calculators/calculator-guide.twig` was rendering `page_config.additional_head` inside `{% block head %}` while `src/Views/layouts/base.twig` was already rendering it in `<head>`. This caused duplicate JSON-LD schemas (`SoftwareApplication`, `FAQPage`, `Article`, `WebPage`, `BreadcrumbList`) across all 16 calculator sub-pages, corrupting Google Rich Results eligibility.
+  - **Contextual HowTo Schema:** Enhanced `src/Core/Factories/SchemaFactory.php` with `generateHowToForCalculator()` to automatically inject valid Schema.org `HowTo` structured data with 3 standardized workflow steps across all calculator sub-pages.
+  - **AI Search Discoverability:**
+    - Updated `robots.txt` with explicit `Allow: /` directives for `PerplexityBot`, `ClaudeBot`, `Amazonbot`, `anthropic-ai`, `cohere-ai`, and `OAI-SearchBot`.
+    - Created `llms-full.txt` at root providing complete mathematical formulations (nominal $r/12$, month-by-month compounding, annual step-up top-up, inflation-adjusted SWP), Union Budget 2024 Section 112A capital gains tax rules, and worked portfolio blueprints.
+    - Updated `llms.txt` with a pointer to `llms-full.txt`.
+  - **Standalone Head-Term Metadata & CTR Optimization:** Overhauled titles and meta descriptions across `content/meta_pages.json` (Home) and 16 calculator markdown files in `content/calculators/*.md` (`swp-calculator.md`, `cagr-calculator.md`, `inflation-calculator.md`, `my-first-crore-calculator.md`, `target-corpus-calculator.md`, `lumpsum-calculator.md`, `retirement-calculator.md`, `sip-step-up-calculator.md`, `ppf-calculator.md`, `fd-calculator.md`, `emi-calculator.md`, `compound-interest-calculator.md`, `reach-1-crore-via-sip.md`, `reach-5-crore-via-sip.md`, `sip-5000-per-month.md`, `sip-10000-per-month.md`, `sip-calculator.md`).
+    - Enforced strict title length ($\ge 10$ and $\le 65$ bytes, accounting for UTF-8 multibyte characters).
+    - Enforced strict meta description length ($\ge 40$ and $\le 200$ characters).
+  - **Defensive Regression Testing:** Added assertions to `tests/Integration/SeoMetadataValidatorTest.php` ensuring: (1) no duplicate schema types exist on any page, and (2) all calculator routes contain `SoftwareApplication`, `FAQPage`, and `HowTo` schemas.
 - **System Health:** 
-  - Full check-all passed: PHPStan Level 8 (0 errors, 233/233 files), PHPCS PSR-12 (0 errors), PHPUnit (838 tests / 13,776 assertions passed).
-  - Parity check: 57 test cases passed (100% PHP/TS parity).
-  - Vite build: Clean production bundle compiled in 221ms (`dist/assets/app-CpVwDKz2.js`, `app-2J5lIMwA.css`).
+  - Full check-all passed: PHPStan Level 8 (0 errors, 233/233 files), PHPCS PSR-12 (0 errors), PHPUnit (838 tests / 13,562 assertions passed).
+  - Local Curl verification: Verified live on local server for `/`, `/swp-calculator`, `/llms-full.txt`, and `/robots.txt`.
 
 ---
 
