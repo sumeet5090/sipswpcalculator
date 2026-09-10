@@ -1,6 +1,7 @@
 # sipswpcalculator.com
 
 > Free, production-grade SIP & SWP Calculator with step-up compounding and tax modeling for Indian mutual fund investors.
+> For the complete documentation, financial mathematics, and tax specifications, see [llms-full.txt](https://sipswpcalculator.com/llms-full.txt).
 
 ## Calculators
 - [SIP & SWP Calculator](https://sipswpcalculator.com/): Combined SIP accumulation and SWP retirement withdrawal planner with step-up compounding

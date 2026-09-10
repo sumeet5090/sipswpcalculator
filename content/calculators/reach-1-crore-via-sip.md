@@ -1,9 +1,9 @@
 ---
 og_image: "/assets/og/og-reach-1-crore-via-sip.jpg"
-title: "How to Reach ₹1 Crore via SIP (2026) — Exact Timelines & Plan"
+title: "Reach 1 Crore via SIP — Timelines & Monthly Plan"
 subtitle: "Calculate the exact monthly SIP, years, and step-up increments required to build your first ₹1 Crore portfolio in Indian equity mutual funds."
-meta_desc: "Calculate how to reach ₹1 Crore via SIP. Used by 10,000+ investors to model 5, 10 & 15-year timelines, 10% step-up compounding, 2026 LTCG tax & top fund picks."
-keywords: "reach 1 crore sip, how to get 1 crore in mutual fund, sip for 1 crore, 1 crore sip plan 2026, 1 crore target sip, monthly sip for 1 crore"
+meta_desc: "Discover how to reach ₹1 Crore via SIP in 5, 10, or 15 years. Model required monthly SIP amounts, 10% annual step-up compounding, and LTCG taxation with free PDF."
+keywords: "reach 1 crore sip, 1 crore in 5 years sip, how to get 1 crore in mutual fund, sip for 1 crore, 1 crore sip plan 2026, 1 crore target sip, monthly sip for 1 crore"
 schema_name: "1 Crore SIP Goal Planner & Target Calculator"
 seo_category: "growth"
 type: "calculator"
@@ -201,3 +201,17 @@ If your goal is to possess the equivalent purchasing power of ₹1 Crore today i
 3. **Set Up an Automated e-NACH Mandate:** Schedule your SIP debit on the **1st through 5th of each month**—immediately after salary credit—to automate the golden personal finance rule: *Savings = Income − Investments*, not *Savings = Income − Expenses*.
 4. **Enable an Annual 10% Step-Up Mandate:** Configure an automated annual step-up with your fund provider so your wealth pace keeps up with your career progress.
 5. **Review Annually, Never Daily:** Ignore daily market headlines, geopolitical noise, and quarterly corrections. Review fund performance once every 12 to 18 months against the category benchmark (e.g., Nifty 500 TRI).
+
+---
+
+## Related Calculators & Financial Tools
+
+Continue your ₹1 Crore journey with these planning tools:
+
+* [5 Crore FIRE Calculator](/reach-5-crore-via-sip) — After reaching ₹1 Crore, plan your next milestone toward complete financial independence at ₹5 Crores
+* [SIP Calculator](/sip-calculator) — Model detailed monthly SIP returns with step-up compounding and interactive growth charts
+* [Step-Up SIP Calculator](/sip-step-up-calculator) — See how annual top-ups of 10%–15% dramatically accelerate your journey to ₹1 Crore
+* [Target Corpus Calculator](/target-corpus-calculator) — Calculate the exact monthly SIP required for any custom financial goal amount
+* [CAGR Calculator](/cagr-calculator) — Verify the annualized growth rate of your existing investments to ensure you're on track for ₹1 Crore
+* [SIP & SWP Combined Planner](/) — After reaching ₹1 Crore, simulate how long your wealth lasts with systematic monthly retirement withdrawals
+

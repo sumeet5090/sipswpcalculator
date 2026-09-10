@@ -1,9 +1,9 @@
 ---
-title: "SWP Calculator India (2026) — Step-Up Withdrawal Planner"
+title: "SWP Calculator India — Monthly Withdrawal Planner 2026"
 subtitle: "Free SWP calculator with step-up withdrawals & inflation protection for Indian mutual funds. See how long your corpus lasts, plan retirement income & export yearly tables."
-meta_desc: "Free SWP calculator used by 10,000+ investors. Model inflation-adjusted step-up withdrawals, 4% safe rule, 2026 LTCG tax waterfall & export free PDF reports."
-keywords: "swp calculator, step up swp calculator, swp calculator with step up, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, best swp calculator, swp retirement calculator 2026, swp tax calculator, swp calculator in mutual fund"
-schema_name: "SWP Calculator India (2026) — Step-Up Withdrawal Planner"
+meta_desc: "Calculate monthly SWP payout, retirement corpus longevity, and post-tax returns for Indian mutual funds. Model inflation step-up withdrawals and download free PDF."
+keywords: "swp calculator, swp calculator india, step up swp calculator, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, best swp calculator, swp retirement calculator, swp tax calculator"
+schema_name: "SWP Calculator India — Monthly Withdrawal Planner"
 seo_category: "retirement"
 type: "calculator"
 date: "2026-07-05"

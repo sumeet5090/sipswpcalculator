@@ -1,8 +1,8 @@
 ---
 og_image: "/assets/og/og-sip-5000-per-month.jpg"
-title: "₹5,000 Per Month SIP Plan (2026) — Returns & Corpus Guide"
+title: "Rs 5,000 Monthly SIP Plan — Returns & Corpus Guide"
 subtitle: "See how investing ₹5,000 every month in Indian mutual funds compounds into ₹50 Lakhs to ₹2.3 Crores across 5 to 25-year horizons."
-meta_desc: "Model ₹5,000 monthly SIP returns. Used by 10,000+ investors to project 5, 10, 15, 20 & 25-year corpus growth, 10% annual step-up, Section 112A tax & fund picks."
+meta_desc: "See how investing ₹5,000 monthly in mutual funds compounds into ₹50 Lakhs to ₹2.3 Crores. Model 10% annual step-up compounding & LTCG tax rules with free charts."
 keywords: "5000 sip per month, 5000 monthly sip returns, 5000 sip for 10 years, 5000 sip for 20 years, 5000 sip calculator india, best mutual fund for 5000 per month"
 schema_name: "₹5,000 Monthly SIP Investment Planner"
 seo_category: "growth"
@@ -160,3 +160,17 @@ To protect your future purchasing power against inflation, always activate an **
 2. **Complete Instant Video-KYC:** Complete paperless e-KYC using your PAN, Aadhaar, and DigiLocker on any SEBI-registered platform (such as MF Central, Zerodha Coin, Groww, or Kuvera).
 3. **Set Up an e-NACH Auto-Debit:** Schedule your auto-debit between the **1st and 5th of the month**, immediately following your monthly salary credit.
 4. **Automate a 10% Annual Step-Up:** Instruct your platform to increase your SIP by 10% each year on your joining anniversary to ensure consistent compounding growth.
+
+---
+
+## Related Calculators & SIP Planning Tools
+
+Scale your ₹5,000 monthly SIP strategy with these tools:
+
+* [₹10,000 Monthly SIP Plan](/sip-10000-per-month) — Ready to double your investment? See how ₹10,000/month accelerates your wealth with a 3-fund core portfolio
+* [Step-Up SIP Calculator](/sip-step-up-calculator) — Model how increasing your ₹5,000 SIP by 10% annually transforms your corpus over 15 to 25 years
+* [1 Crore SIP Calculator](/my-first-crore-calculator) — Calculate exactly how long your ₹5,000 monthly SIP takes to reach the ₹1 Crore milestone
+* [SIP Calculator](/sip-calculator) — Run detailed projections with custom return rates, step-up percentages, and interactive growth charts
+* [SWP Calculator](/swp-calculator) — Plan how to withdraw from your accumulated SIP corpus as a monthly retirement pension
+* [SIP & SWP Combined Planner](/) — Simulate your complete journey from ₹5,000 monthly investments to retirement income
+

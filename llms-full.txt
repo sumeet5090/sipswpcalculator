@@ -1,0 +1,115 @@
+# sipswpcalculator.com — Full Knowledge Base & Computational Specification
+
+> Free, production-grade SIP (Systematic Investment Plan) and SWP (Systematic Withdrawal Plan) financial planning platform for Indian mutual fund investors. All computations run client-side in the browser with zero latency and mathematical parity with SEBI/AMFI regulatory guidelines.
+
+---
+
+## 1. Governing Financial Mathematics & Compounding Formulas
+
+### 1.1 SIP Compounding Mechanics (Month-by-Month Simulation)
+Most legacy calculators employ an oversimplified geometric annuity formula. In our engine, compounding occurs sequentially month-by-month to match actual Indian Mutual Fund asset management company (AMC) accounting:
+
+$$B_m = \left( B_{m-1} + C_m \right) \times \left(1 + \frac{r}{12}\right)$$
+
+Where:
+- $B_m$ = Invested corpus balance at the end of month $m$ ($B_0 = \text{Initial Lumpsum}$)
+- $C_m$ = Monthly SIP installment contributed at the beginning of month $m$
+- $r$ = Nominal annualized expected rate of return (decimal form, e.g. 12% = 0.12)
+- Monthly periodic rate = $r / 12$ (Indian mutual fund standard, not geometric $(1+r)^{1/12}-1$)
+
+### 1.2 Annual Step-Up (Top-Up) Compounding Expansion
+To model career salary increments and lifestyle wealth acceleration, monthly SIP installments increase annually by a fixed step-up rate $s$ (e.g., 10% = 0.10):
+
+$$C_m = C_1 \times (1 + s)^{\lfloor (m - 1) / 12 \rfloor}$$
+
+Where:
+- $C_1$ = Initial monthly SIP in Year 1
+- $\lfloor (m - 1) / 12 \rfloor$ = Floor integer representing completed years of investment
+
+### 1.3 SWP Decumulation Mechanics (Reverse Rupee Cost Averaging)
+In the retirement decumulation phase, capital undergoes systematic redemption:
+
+$$B_m = \left[ B_{m-1} \times \left(1 + \frac{r}{12}\right) \right] - W_m$$
+
+Where:
+- $W_m$ = Monthly cash withdrawal redeemed in month $m$
+- Compounding return accrues on the remaining balance prior to withdrawal deduction
+
+### 1.4 Inflation-Adjusted Step-Up SWP
+To protect purchasing power against 5.5%–6.5% Indian CPI inflation, monthly withdrawals increase annually by inflation rate $g$:
+
+$$W_m = W_1 \times (1 + g)^{\lfloor (m - 1) / 12 \rfloor}$$
+
+---
+
+## 2. Indian Capital Gains Tax Modeling (Union Budget 2024 Amendments)
+
+Our calculation models incorporate the latest Indian tax regime under Sections 111A and 112A of the Income Tax Act:
+
+### 2.1 Equity-Oriented Mutual Funds (>65% Indian Equities)
+- **Holding Period Threshold:** 12 Months
+- **Short-Term Capital Gains (STCG, $\le$ 12 Months):** Flat 20.0% (plus applicable surcharge & 4% Health & Education Cess)
+- **Long-Term Capital Gains (LTCG, > 12 Months):** Flat 12.5% on aggregate net long-term gains exceeding the annual statutory exemption limit of ₹1,25,000 (Section 112A)
+- **First-In, First-Out (FIFO) Rule:** Units redeemed via SWP are strictly liquidated in the chronological sequence they were purchased.
+
+### 2.2 Debt Mutual Funds (Purchased After April 1, 2023)
+- Under Section 50AA, all gains from specified mutual funds (investing $\le$ 35% in domestic equities) are treated as short-term capital gains and taxed at the investor's marginal income tax slab rate (up to 39% including maximum surcharge).
+
+---
+
+## 3. Directory of Specialized Calculators
+
+1. **Combined SIP & SWP Calculator (`https://sipswpcalculator.com/`)**
+   - Dual-phase financial modeling: Plan wealth accumulation via Step-Up SIP and subsequent retirement decumulation via SWP in a single unified studio.
+   - Outputs: Year-by-year cashflow schedule, interactive donut distribution, timeline growth chart, PDF report download.
+
+2. **SWP Calculator (`https://sipswpcalculator.com/swp-calculator`)**
+   - Standalone Systematic Withdrawal Plan simulator with step-up inflation protection, corpus longevity estimation, and 4% safe withdrawal rate validation.
+
+3. **SIP Calculator (`https://sipswpcalculator.com/sip-calculator`)**
+   - Standalone Systematic Investment Plan tool with step-up top-up compounding, total wealth projections, and post-tax net yield breakdowns.
+
+4. **1 Crore SIP Goal Calculator (`https://sipswpcalculator.com/my-first-crore-calculator` & `/reach-1-crore-via-sip`)**
+   - Reverse-engineers the exact monthly SIP and step-up increments required to reach ₹1 Crore across 5, 10, 15, and 20-year horizons.
+
+5. **Target Corpus Calculator (`https://sipswpcalculator.com/target-corpus-calculator`)**
+   - Goal-seek algorithm running a 40-step binary search to find exact monthly SIP requirements for any arbitrary financial target (₹25 Lakh to ₹10 Crore).
+
+6. **CAGR Calculator (`https://sipswpcalculator.com/cagr-calculator`)**
+   - Computes Compound Annual Growth Rate, absolute percentage return, and wealth multiplier between initial investment and final maturity value:
+   $$\text{CAGR} = \left( \frac{\text{Final Value}}{\text{Initial Investment}} \right)^{\frac{1}{n}} - 1$$
+
+7. **Inflation Calculator (`https://sipswpcalculator.com/inflation-calculator`)**
+   - Projects future purchasing power erosion and future cost of living based on Indian Consumer Price Index (CPI) inflation rates.
+
+8. **Lumpsum Calculator (`https://sipswpcalculator.com/lumpsum-calculator`)**
+   - One-time mutual fund investment compounding calculator comparing Lumpsum vs SIP returns.
+
+9. **Step-Up SIP Calculator (`https://sipswpcalculator.com/sip-step-up-calculator`)**
+   - Demonstrates the exponential impact of annual top-ups (5% to 20%) compared to flat, unchanging SIPs.
+
+10. **Retirement Planning Calculator (`https://sipswpcalculator.com/retirement-calculator`)**
+    - Seamless transition from accumulation to pension phase with life expectancy longevity buffers.
+
+11. **PPF Calculator (`https://sipswpcalculator.com/ppf-calculator`)**
+    - Public Provident Fund calculator modeling 15 to 30-year block extensions, Section 80C tax deductions, and the 5th-of-the-month deposit interest rule.
+
+12. **Fixed Deposit (FD) Calculator (`https://sipswpcalculator.com/fd-calculator`)**
+    - Bank fixed deposit maturity calculator with quarterly compounding, senior citizen bonus rates, and Section 194A TDS deductions.
+
+13. **EMI Calculator (`https://sipswpcalculator.com/emi-calculator`)**
+    - Home and car loan Equated Monthly Installment calculator with complete amortization breakdown.
+
+14. **5 Crore FIRE Calculator (`https://sipswpcalculator.com/reach-5-crore-via-sip`)**
+    - Financial Independence, Retire Early (FIRE) roadmap for modern urban Indian households.
+
+15. **₹5,000 & ₹10,000 Monthly SIP Blueprints (`https://sipswpcalculator.com/sip-5000-per-month` & `/sip-10000-per-month`)**
+    - Structured milestones, asset allocation strategies, and multi-decade wealth roadmaps.
+
+---
+
+## 4. Key Financial Heuristics & Rules of Thumb for India
+
+- **Safe Withdrawal Rate (SWR) in India:** Due to higher historical inflation (5.5%–6.5%), the American Trinity Study's 4% rule requires calibration. An initial withdrawal rate of 3.5% to 4.0% combined with a 50% equity / 50% debt asset allocation ensures 30+ year portfolio survival.
+- **Rule of 72:** Years to double wealth $\approx 72 / r$. At 12% equity mutual fund returns, capital doubles approximately every 6 years.
+- **Sequence of Returns Risk (SRR):** Liquidating equity units during bear market troughs creates permanent capital destruction. Retirees should maintain 3–5 years of living expenses in liquid or arbitrage funds.
