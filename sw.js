@@ -6,13 +6,14 @@
  * enabling offline calculations for mobile and desktop users.
  */
 
-const CACHE_NAME = 'sipswp-cache-v1';
+const CACHE_NAME = 'sipswp-cache-v2';
 const PRECACHE_ASSETS = [
     '/',
     '/manifest.json',
     '/assets/favicon.svg',
     '/assets/favicon.png',
     '/assets/logo.svg',
+    '/offline.html',
     '/sip-calculator',
     '/swp-calculator'
 ];
@@ -92,7 +93,7 @@ self.addEventListener('fetch', (event) => {
                     if (cachedResponse) {
                         return cachedResponse;
                     }
-                    return caches.match('/sip-calculator');
+                    return caches.match('/offline.html');
                 });
             })
         );
