@@ -6,7 +6,7 @@ if (php_sapi_name() === 'cli-server') {
     $filePath = __DIR__ . $rawPath;
 
     // Only allow specific static asset extensions from safe public directories
-    $allowedExts = ['css', 'js', 'jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'ico', 'woff', 'woff2', 'ttf', 'json', 'map'];
+    $allowedExts = ['css', 'js', 'jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'ico', 'woff', 'woff2', 'ttf', 'json', 'map', 'html'];
     $ext = strtolower((string) pathinfo($rawPath, PATHINFO_EXTENSION));
 
     if (in_array($ext, $allowedExts, true) && is_file($filePath)) {

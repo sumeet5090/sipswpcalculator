@@ -428,11 +428,21 @@
     {% include 'components/sebibenchmark-modal.twig' %}
     <script>
         if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').catch(function(err) {
-                    console.debug('SW registration skipped:', err);
+            var isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.endsWith('.local');
+            if (isLocalDev) {
+                // Ensure local development is never hijacked or polluted by stale SW caches
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    for (var i = 0; i < registrations.length; i++) {
+                        registrations[i].unregister();
+                    }
                 });
-            });
+            } else {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js').catch(function(err) {
+                        console.debug('SW registration skipped:', err);
+                    });
+                });
+            }
         }
     </script>
     {% block modals %}{% endblock %}

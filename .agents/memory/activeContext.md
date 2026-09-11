@@ -19,10 +19,16 @@
   - **Internal Linking Mesh (NEW):** Added "Related Calculators & Tools" cross-link sections to all 10 calculator guide pages that previously had zero internal links: `cagr-calculator.md`, `compound-interest-calculator.md`, `emi-calculator.md`, `fd-calculator.md`, `inflation-calculator.md`, `ppf-calculator.md`, `reach-1-crore-via-sip.md`, `reach-5-crore-via-sip.md`, `sip-5000-per-month.md`, `sip-10000-per-month.md`. Each section contains 6 semantically relevant cross-links with keyword-rich anchor text. Combined with the 7 pages that already had cross-links, all 17 calculator pages now have internal linking coverage.
   - **WebSite SearchAction Fix (NEW):** Corrected `HomeSchemaBuilder.php` WebSite schema `SearchAction` from `/?sip={sip_amount}` (a calculator parameter, not a search endpoint) to `/glossary?q={search_term_string}` (the actual search-capable glossary endpoint).
   - **Defensive Regression Testing:** Assertions in `tests/Integration/SeoMetadataValidatorTest.php` ensuring: (1) no duplicate schema types exist on any page, and (2) all calculator routes contain `SoftwareApplication`, `FAQPage`, and `HowTo` schemas.
+  - **Service Worker Offline Fallback & Localhost Guardrail (2026-09-11):**
+    - Identified root cause of local `/lumpsum-calculator` redirect: `sw.js` navigation fetch handler was blindly falling back to `/sip-calculator` whenever a network request failed, and `localhost:8080` was registering `sw.js` which polluted local testing.
+    - Updated `src/Views/layouts/base.twig` to guard SW registration: automatically detects `localhost`, `127.0.0.1`, or `.local` domains, skips registration, and automatically purges any existing SW registrations on development environments.
+    - Created a standalone, lightweight, zero-dependency offline fallback page (`offline.html`) adhering strictly to the pure light fintech aesthetic (`bg-slate-50`, `text-slate-900`, emerald accents) with links to precached tools.
+    - Updated `sw.js`: bumped cache name to `sipswp-cache-v2`, precached `/offline.html`, and replaced the fallback from `/sip-calculator` to `/offline.html`.
+    - Allowed `.html` static assets in `index.php` for the PHP built-in CLI server.
 - **System Health:** 
-  - Full test suite passed: 838 tests / 13,562 assertions, 0 failures.
-  - Local curl verification: All 10 newly cross-linked pages confirmed rendering internal links.
-  - SearchAction URL confirmed: `/glossary?q={search_term_string}`.
+  - Full test suite passed: 838 tests / 13,562 assertions, 0 failures (`composer check-all` clean).
+  - Local curl verification: `/lumpsum-calculator` returns HTTP 200 OK.
+  - Offline fallback verification: `/offline.html` returns HTTP 200 OK.
 
 ---
 
