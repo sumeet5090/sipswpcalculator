@@ -94,6 +94,9 @@ class AdminDashboardPresenter
             'strategyStarterLabels' => $this->encodeJson(array_map($formatLabel, array_column($strategyStarterDist, 'preset'))),
             'strategyStarterData'   => $this->encodeJson(array_map('intval', array_column($strategyStarterDist, 'cnt'))),
 
+            'calcTypeLabels'        => $this->encodeJson(array_column($stats['calcTypeBreakdown'] ?? [], 'calc_type')),
+            'calcTypeData'          => $this->encodeJson(array_map('intval', array_column($stats['calcTypeBreakdown'] ?? [], 'cnt'))),
+
             // Structured Chart Payload for Data Island
             'chartPayload' => [
                 'volumeLabels'          => array_column($dailyVolume, 'day'),
@@ -102,6 +105,8 @@ class AdminDashboardPresenter
                 'currencyData'          => array_map('intval', array_column($currencyDist, 'cnt')),
                 'currencyColors'        => $currencyColors,
                 'stepUpDoughnutData'    => [$stats['stepUpSIP'] ?? 0, $stats['flatSIP'] ?? 0],
+                'calcTypeLabels'        => array_column($stats['calcTypeBreakdown'] ?? [], 'calc_type'),
+                'calcTypeData'          => array_map('intval', array_column($stats['calcTypeBreakdown'] ?? [], 'cnt')),
                 'durationLabels'        => array_column($durationDist, 'bucket'),
                 'durationData'          => array_map('intval', array_column($durationDist, 'cnt')),
                 'ambitionLabels'        => array_column($ambitionBuckets, 'goal_bucket'),

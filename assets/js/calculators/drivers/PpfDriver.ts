@@ -67,4 +67,25 @@ export class PpfDriver implements ISpecializedDriver {
         ctx.chartManager.updateChart(combined, false);
         ctx.summaryMetricsController.fitSummaryCards();
     }
+
+    public getTelemetryPayload(ctx: DriverContext): Record<string, unknown> {
+        const deposit = Math.max(500, parseFloat(ctx.dom.getValue('ppf_deposit') || '150000') || 150000);
+        const rate = Math.max(1, parseFloat(ctx.dom.getValue('ppf_rate') || '7.1') || 7.1);
+        const years = Math.max(15, parseFloat(ctx.dom.getValue('ppf_years') || '15') || 15);
+        const timingSelect = ctx.dom.getElement<HTMLSelectElement>('ppf_timing');
+        const timing = timingSelect?.value === 'monthly' ? 'monthly' : 'beginning';
+        const res = PpfEngine.calculate(deposit, rate, years, timing);
+        const wealthMultiplier = res.total_invested > 0 ? parseFloat((res.maturity_amount / res.total_invested).toFixed(2)) : 1.0;
+
+        return {
+            calc_type: 'PPF',
+            amount: deposit,
+            duration: Math.round(years),
+            interest_rate: rate,
+            total_invested: res.total_invested,
+            final_corpus: res.maturity_amount,
+            wealth_multiplier: wealthMultiplier,
+            goal_mode: 'ppf'
+        };
+    }
 }

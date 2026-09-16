@@ -53,6 +53,8 @@ class AdminDashboardPresenterTest extends TestCase
         $this->assertSame('[]', $viewData['studioTabData']);
         $this->assertSame('[]', $viewData['strategyStarterLabels']);
         $this->assertSame('[]', $viewData['strategyStarterData']);
+        $this->assertSame('[]', $viewData['calcTypeLabels']);
+        $this->assertSame('[]', $viewData['calcTypeData']);
     }
 
     public function testFormatForViewWithPopulatedStats(): void
@@ -106,6 +108,10 @@ class AdminDashboardPresenterTest extends TestCase
                 ['preset' => 'first_crore', 'cnt' => '70'],
                 ['preset' => 'fire_retirement', 'cnt' => '50'],
             ],
+            'calcTypeBreakdown'   => [
+                ['calc_type' => 'SIP', 'cnt' => '80'],
+                ['calc_type' => 'Compound Interest', 'cnt' => '30'],
+            ],
         ];
 
         $viewData = $this->presenter->formatForView($stats);
@@ -136,6 +142,8 @@ class AdminDashboardPresenterTest extends TestCase
         $this->assertSame('[90,60]', $viewData['studioTabData']);
         $this->assertStringContainsString('First Crore', $viewData['strategyStarterLabels']);
         $this->assertSame('[70,50]', $viewData['strategyStarterData']);
+        $this->assertStringContainsString('Compound Interest', $viewData['calcTypeLabels']);
+        $this->assertSame('[80,30]', $viewData['calcTypeData']);
     }
 
     public function testJsonEncodingEscapesScriptBreakouts(): void

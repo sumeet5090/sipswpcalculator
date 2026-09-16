@@ -64,4 +64,25 @@ export class CompoundInterestDriver implements ISpecializedDriver {
         ctx.chartManager.updateChart(combined, false);
         ctx.summaryMetricsController.fitSummaryCards();
     }
+
+    public getTelemetryPayload(ctx: DriverContext): Record<string, unknown> {
+        const principal = Math.max(0, parseFloat(ctx.dom.getValue('ci_principal') || '500000') || 500000);
+        const rate = Math.max(0, parseFloat(ctx.dom.getValue('ci_rate') || '12') || 12);
+        const years = Math.max(1, parseFloat(ctx.dom.getValue('ci_years') || '10') || 10);
+        const freqSelect = ctx.dom.getElement<HTMLSelectElement>('ci_frequency');
+        const frequency = freqSelect ? parseInt(freqSelect.value, 10) || 12 : 12;
+        const res = CompoundInterestEngine.calculate(principal, rate, years, frequency);
+        const wealthMultiplier = principal > 0 ? parseFloat((res.final_amount / principal).toFixed(2)) : 1.0;
+
+        return {
+            calc_type: 'Compound Interest',
+            amount: principal,
+            duration: Math.round(years),
+            interest_rate: rate,
+            total_invested: principal,
+            final_corpus: res.final_amount,
+            wealth_multiplier: wealthMultiplier,
+            goal_mode: 'compound_interest'
+        };
+    }
 }

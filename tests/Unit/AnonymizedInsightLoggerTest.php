@@ -169,6 +169,9 @@ class AnonymizedInsightLoggerTest extends TestCase
 
     public function testLogCalculationCatchesAndSwallowsDatabaseExceptionsSilently(): void
     {
+        $tempLog = (string) tempnam(sys_get_temp_dir(), 'insight_err_');
+        ini_set('error_log', $tempLog);
+
         // Drop table to induce a database exception
         $this->pdo->exec("DROP TABLE user_calculations");
 
@@ -178,10 +181,15 @@ class AnonymizedInsightLoggerTest extends TestCase
             'duration' => 10,
         ]);
 
-        $this->expectOutputRegex('/AnonymizedInsightLogger Error:/');
-
         // Should not throw an uncaught exception
         $this->logger->logCalculation($payload);
+
+        $logOutput = file_exists($tempLog) ? (string) file_get_contents($tempLog) : '';
+        $this->assertStringContainsString('AnonymizedInsightLogger Error:', $logOutput);
+
+        if (file_exists($tempLog)) {
+            unlink($tempLog);
+        }
     }
 
     public function testLogCalculationPersistsSeoAndStudioParameters(): void

@@ -123,6 +123,12 @@
     } %}
 
     {% include 'admin/components/chart_card.twig' with {
+        title: 'Calculator Tool Popularity (All Types)',
+        description: 'Calculation share across SIP, SWP, Lumpsum, Compound Interest, CAGR, EMI, Inflation, PPF, and FD.',
+        canvas_id: 'calcTypeChart'
+    } %}
+
+    {% include 'admin/components/chart_card.twig' with {
         title: 'SIP Type Breakdown',
         description: 'Step-Up vs Flat SIP ratio. Shows user preference for active vs flat growth planning.',
         canvas_id: 'stepUpChart'

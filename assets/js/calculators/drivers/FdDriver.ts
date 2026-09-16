@@ -77,4 +77,27 @@ export class FdDriver implements ISpecializedDriver {
         ctx.chartManager.updateChart(combined, false);
         ctx.summaryMetricsController.fitSummaryCards();
     }
+
+    public getTelemetryPayload(ctx: DriverContext): Record<string, unknown> {
+        const principal = Math.max(1000, parseFloat(ctx.dom.getValue('fd_principal') || '500000') || 500000);
+        const rate = Math.max(0.1, parseFloat(ctx.dom.getValue('fd_rate') || '7.0') || 7.0);
+        const years = Math.max(0.25, parseFloat(ctx.dom.getValue('fd_years') || '3.0') || 3.0);
+        const seniorCheck = ctx.dom.getElement<HTMLInputElement>('fd_senior');
+        const isSenior = seniorCheck ? seniorCheck.checked : false;
+        const freqSelect = ctx.dom.getElement<HTMLSelectElement>('fd_frequency');
+        const frequency = (freqSelect?.value || 'cumulative') as 'cumulative' | 'monthly' | 'quarterly' | 'annual';
+        const res = FdEngine.calculate(principal, rate, years, isSenior, frequency);
+        const wealthMultiplier = principal > 0 ? parseFloat((res.maturity_amount / principal).toFixed(2)) : 1.0;
+
+        return {
+            calc_type: 'Fixed Deposit',
+            amount: principal,
+            duration: Math.max(1, Math.round(years)),
+            interest_rate: isSenior ? rate + 0.5 : rate,
+            total_invested: principal,
+            final_corpus: res.maturity_amount,
+            wealth_multiplier: wealthMultiplier,
+            goal_mode: 'fd'
+        };
+    }
 }
