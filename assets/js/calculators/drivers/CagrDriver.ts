@@ -67,4 +67,22 @@ export class CagrDriver implements ISpecializedDriver {
         ctx.chartManager.updateChart(combined, false);
         ctx.summaryMetricsController.fitSummaryCards();
     }
+
+    public getTelemetryPayload(ctx: DriverContext): Record<string, unknown> {
+        const initial = Math.max(1, parseFloat(ctx.dom.getValue('cagr_initial') || '100000') || 100000);
+        const finalVal = Math.max(1, parseFloat(ctx.dom.getValue('cagr_final') || '250000') || 250000);
+        const years = Math.max(0.1, parseFloat(ctx.dom.getValue('cagr_years') || '5') || 5);
+        const res = CagrEngine.calculate(initial, finalVal, years);
+
+        return {
+            calc_type: 'CAGR',
+            amount: initial,
+            duration: Math.max(1, Math.round(years)),
+            interest_rate: parseFloat(res.cagr_percentage.toFixed(2)),
+            total_invested: initial,
+            final_corpus: finalVal,
+            wealth_multiplier: parseFloat(res.multiplier.toFixed(2)),
+            goal_mode: 'cagr'
+        };
+    }
 }

@@ -458,5 +458,63 @@ export class AnalyticsService {
             this.flushPendingInsight();
         }, this.debounceMs);
     }
+
+    /**
+     * Log a pre-built custom calculation telemetry payload in a debounced fashion.
+     * Enriches the custom payload with global session, SEO, CWV, and device signals.
+     */
+    public logCustomPayload(
+        basePayload: Record<string, unknown>,
+        extraSignals: ExtraSignals = {}
+    ): void {
+        if (this.insightTimeout) {
+            clearTimeout(this.insightTimeout);
+        }
+
+        const landingPath = (typeof window !== 'undefined') ? window.location.pathname : '/';
+        const searchParams = (typeof window !== 'undefined') ? new URLSearchParams(window.location.search) : new URLSearchParams();
+        const deviceType = extraSignals.device_type ?? ((typeof window !== 'undefined' && window.innerWidth < 768) ? 'mobile' : 'desktop');
+
+        const fullPayload: Record<string, unknown> = {
+            currency: 'INR',
+            device_type: deviceType,
+            interaction_count: extraSignals.interaction_count || 1,
+            table_viewed: extraSignals.table_viewed ?? 0,
+            exit_action: extraSignals.exit_action || 'calc_only',
+            landing_path: extraSignals.landing_path || landingPath,
+            referrer_category: extraSignals.referrer_category || this.resolveReferrerCategory(),
+            utm_source: extraSignals.utm_source || searchParams.get('utm_source') || undefined,
+            utm_medium: extraSignals.utm_medium || searchParams.get('utm_medium') || undefined,
+            scroll_depth_pct: extraSignals.scroll_depth_pct ?? this.maxScrollDepthPct,
+            dwell_time_seconds: extraSignals.dwell_time_seconds ?? this.getDwellTimeSeconds(),
+            quick_answer_viewed: extraSignals.quick_answer_viewed ?? this.quickAnswerObserved,
+            faq_item_expanded: extraSignals.faq_item_expanded || this.lastFaqExpanded,
+            glossary_term_clicked: extraSignals.glossary_term_clicked || this.lastGlossaryClicked,
+            hud_shortcut_clicked: extraSignals.hud_shortcut_clicked || this.lastHudShortcut,
+            active_studio_tab: extraSignals.active_studio_tab || this.activeStudioTab,
+            strategy_starter_used: extraSignals.strategy_starter_used || this.strategyStarterUsed,
+            guided_wizard_completed: extraSignals.guided_wizard_completed ?? this.guidedWizardCompleted,
+            stress_test_scenario: extraSignals.stress_test_scenario || this.stressTestScenario,
+            city_benchmark_city: extraSignals.city_benchmark_city || this.cityBenchmarkCity,
+            scenario_diff_saved: extraSignals.scenario_diff_saved ?? this.scenarioDiffSaved,
+            csv_exported: extraSignals.csv_exported ? 1 : 0,
+            qr_modal_opened: extraSignals.qr_modal_opened ?? this.qrModalOpened,
+            tax_waterfall_opened: extraSignals.tax_waterfall_opened ?? this.taxWaterfallOpened,
+            goal_pledge_created: extraSignals.goal_pledge_created ?? this.goalPledgeCreated,
+            internal_hub_clicked: extraSignals.internal_hub_clicked || this.lastHubClicked,
+            cwv_lcp_ms: extraSignals.cwv_lcp_ms ?? (this.cwvLcpMs ?? undefined),
+            cwv_cls: extraSignals.cwv_cls ?? (this.cwvCls > 0 ? this.cwvCls : undefined),
+            cwv_inp_ms: extraSignals.cwv_inp_ms ?? (this.cwvInpMs ?? undefined),
+            connection_speed: extraSignals.connection_speed || this.resolveConnectionSpeed(),
+            viewport_bucket: extraSignals.viewport_bucket || this.resolveViewportBucket(),
+            ...basePayload
+        };
+
+        this.pendingPayload = fullPayload;
+
+        this.insightTimeout = setTimeout(() => {
+            this.flushPendingInsight();
+        }, this.debounceMs);
+    }
 }
 

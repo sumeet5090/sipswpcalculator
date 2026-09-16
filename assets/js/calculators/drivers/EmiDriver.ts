@@ -62,4 +62,23 @@ export class EmiDriver implements ISpecializedDriver {
         ctx.chartManager.updateChart(combined, false);
         ctx.summaryMetricsController.fitSummaryCards();
     }
+
+    public getTelemetryPayload(ctx: DriverContext): Record<string, unknown> {
+        const principal = Math.max(1000, parseFloat(ctx.dom.getValue('emi_principal') || '3000000') || 3000000);
+        const rate = Math.max(0.1, parseFloat(ctx.dom.getValue('emi_rate') || '8.5') || 8.5);
+        const years = Math.max(1, parseFloat(ctx.dom.getValue('emi_years') || '20') || 20);
+        const res = EmiEngine.calculate(principal, rate, years);
+
+        return {
+            calc_type: 'EMI',
+            amount: principal,
+            duration: Math.round(years),
+            interest_rate: rate,
+            sip_amount: Math.round(res.monthly_emi),
+            total_invested: principal,
+            final_corpus: principal + res.total_interest,
+            wealth_multiplier: principal > 0 ? parseFloat(((principal + res.total_interest) / principal).toFixed(2)) : 1.0,
+            goal_mode: 'emi'
+        };
+    }
 }

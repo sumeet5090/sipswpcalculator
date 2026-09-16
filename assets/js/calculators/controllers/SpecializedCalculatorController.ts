@@ -6,6 +6,7 @@ import type { ResultsController } from './ResultsController.ts';
 import type { SummaryMetricsController } from './SummaryMetricsController.ts';
 import { OdometerController } from './OdometerController.ts';
 import type { ISpecializedDriver, DriverContext } from '../drivers/index.ts';
+import type { AnalyticsService } from '../AnalyticsLogger.ts';
 import {
     CompoundInterestDriver,
     CagrDriver,
@@ -24,7 +25,9 @@ export class SpecializedCalculatorController {
     private resultsController: ResultsController;
     private summaryMetricsController: SummaryMetricsController;
     private odometer: OdometerController;
+    private analytics: AnalyticsService | null;
     private driver: ISpecializedDriver | null = null;
+    private userHasInteracted = false;
 
     private static readonly DRIVER_REGISTRY: Record<string, () => ISpecializedDriver> = {
         compound_interest: () => new CompoundInterestDriver(),
@@ -42,7 +45,8 @@ export class SpecializedCalculatorController {
         sliderManager: SliderManager,
         chartManager: ChartManager,
         resultsController: ResultsController,
-        summaryMetricsController: SummaryMetricsController
+        summaryMetricsController: SummaryMetricsController,
+        analytics: AnalyticsService | null = null
     ) {
         this.mode = mode;
         this.dom = dom;
@@ -52,6 +56,7 @@ export class SpecializedCalculatorController {
         this.resultsController = resultsController;
         this.summaryMetricsController = summaryMetricsController;
         this.odometer = new OdometerController(dom, formatter);
+        this.analytics = analytics;
 
         const driverFactory = SpecializedCalculatorController.DRIVER_REGISTRY[this.mode];
         if (driverFactory) {
@@ -60,7 +65,10 @@ export class SpecializedCalculatorController {
     }
 
     public init(): void {
-        this.sliderManager.setTriggerFn(() => this.calculate());
+        this.sliderManager.setTriggerFn(() => {
+            this.userHasInteracted = true;
+            this.calculate();
+        });
 
         if (this.driver) {
             const ctx = this.createDriverContext();
@@ -85,8 +93,14 @@ export class SpecializedCalculatorController {
     private bindFormListeners(): void {
         const form = this.dom.getElement('calculator-form');
         if (form) {
-            form.addEventListener('input', () => this.calculate());
-            form.addEventListener('change', () => this.calculate());
+            form.addEventListener('input', () => {
+                this.userHasInteracted = true;
+                this.calculate();
+            });
+            form.addEventListener('change', () => {
+                this.userHasInteracted = true;
+                this.calculate();
+            });
         }
     }
 
@@ -96,6 +110,18 @@ export class SpecializedCalculatorController {
         }
         const ctx = this.createDriverContext();
         this.driver.calculate(ctx);
+
+        if (this.userHasInteracted && this.analytics && typeof this.driver.getTelemetryPayload === 'function') {
+            const basePayload = this.driver.getTelemetryPayload(ctx);
+            const breakdownEl = this.dom.getElement('yearly-breakdown-section') || this.dom.getElement('breakdown-body');
+            const tableViewed = breakdownEl
+                ? (breakdownEl.getBoundingClientRect().top < this.dom.getViewportHeight() ? 1 : 0)
+                : 0;
+
+            this.analytics.logCustomPayload(basePayload, {
+                table_viewed: tableViewed
+            });
+        }
     }
 
     private createDriverContext(): DriverContext {
@@ -107,7 +133,10 @@ export class SpecializedCalculatorController {
             resultsController: this.resultsController,
             summaryMetricsController: this.summaryMetricsController,
             odometer: this.odometer,
-            recalculate: () => this.calculate()
+            recalculate: () => {
+                this.userHasInteracted = true;
+                this.calculate();
+            }
         };
     }
 }

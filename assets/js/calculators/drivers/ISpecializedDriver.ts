@@ -23,4 +23,5 @@ export interface ISpecializedDriver {
     bindAdditionalControls?(context: DriverContext): void;
     setupCardLabels(context: DriverContext): void;
     calculate(context: DriverContext): void;
+    getTelemetryPayload?(context: DriverContext): Record<string, unknown>;
 }

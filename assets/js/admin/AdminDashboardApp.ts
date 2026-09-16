@@ -15,6 +15,8 @@ interface AdminChartData {
     deviceData: number[];
     goalModeLabels: string[];
     goalModeData: number[];
+    calcTypeLabels?: string[];
+    calcTypeData?: number[];
     stepUpDoughnutData: number[];
     durationLabels: string[];
     durationData: number[];
@@ -219,7 +221,51 @@ export class AdminDashboardApp {
             });
         }
 
-        // 7. SIP Type Doughnut Chart
+        // 7. Calculator Tool Popularity (All Types) Doughnut Chart
+        const calcTypeEl = document.getElementById('calcTypeChart') as HTMLCanvasElement | null;
+        if (calcTypeEl) {
+            const calcData = data.calcTypeData || [];
+            const calcLabels = data.calcTypeLabels || [];
+            const calcTotal = calcData.reduce((a, b) => a + b, 0);
+            const hasCalcData = calcTotal > 0;
+
+            new Chart(calcTypeEl, {
+                type: 'doughnut',
+                data: {
+                    labels: hasCalcData ? calcLabels : ['No Activity Recorded'],
+                    datasets: [{
+                        data: hasCalcData ? calcData : [1],
+                        backgroundColor: hasCalcData
+                            ? [
+                                '#059669', // Emerald
+                                '#0d9488', // Teal
+                                '#0284c7', // Sky
+                                '#6366f1', // Indigo
+                                '#8b5cf6', // Violet
+                                '#ec4899', // Pink
+                                '#f59e0b', // Amber
+                                '#10b981', // Emerald 500
+                                '#14b8a6', // Teal 500
+                                '#64748b'  // Slate
+                            ]
+                            : ['#e2e8f0'],
+                        borderWidth: 0,
+                        hoverOffset: hasCalcData ? 4 : 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        ...commonPlugins,
+                        tooltip: { enabled: hasCalcData }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        // 8. SIP Type Doughnut Chart
         const stepUpEl = document.getElementById('stepUpChart') as HTMLCanvasElement | null;
         if (stepUpEl) {
             const stepUpData = data.stepUpDoughnutData || [];

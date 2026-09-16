@@ -59,4 +59,23 @@ export class InflationDriver implements ISpecializedDriver {
         ctx.chartManager.updateChart(combined, false);
         ctx.summaryMetricsController.fitSummaryCards();
     }
+
+    public getTelemetryPayload(ctx: DriverContext): Record<string, unknown> {
+        const amount = Math.max(1, parseFloat(ctx.dom.getValue('inf_amount') || '50000') || 50000);
+        const rate = Math.max(0, parseFloat(ctx.dom.getValue('inf_rate') || '6') || 6);
+        const years = Math.max(1, parseFloat(ctx.dom.getValue('inf_years') || '15') || 15);
+        const res = InflationEngine.calculate(amount, rate, years);
+
+        return {
+            calc_type: 'Inflation',
+            amount: amount,
+            duration: Math.round(years),
+            interest_rate: rate,
+            inflation_enabled: 1,
+            total_invested: amount,
+            final_corpus: res.future_cost,
+            wealth_multiplier: amount > 0 ? parseFloat((res.future_cost / amount).toFixed(2)) : 1.0,
+            goal_mode: 'inflation'
+        };
+    }
 }

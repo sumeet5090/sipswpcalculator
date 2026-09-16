@@ -521,7 +521,8 @@ export class CalculatorApp {
                 this.sliderManager,
                 this.chartManager,
                 this.resultsController,
-                this.summaryMetricsController
+                this.summaryMetricsController,
+                this.analytics
             );
             this.specializedController.init();
             return;
