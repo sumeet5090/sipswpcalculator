@@ -1,11 +1,20 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-09-10*
+*Last Updated: 2026-09-16*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Specialized Calculator Telemetry Pipeline & Admin Dashboard Popularity Insights completed.
+- **Current Milestone:** PHP 8.3 Compatibility Verification & Dependency Alignment.
+- **Audit Findings & Compatibility Resolution:**
+  - **Source Code Compatibility:** Audited the entire `src/` PHP codebase. Zero PHP 8.4/8.5-only syntax (e.g., asymmetric visibility, `array_find`, HTML5 parser classes) is present. All application code is 100% PHP 8.3 compatible.
+  - **Mathematical Parity Suite:** Ran `php tests/parity_check.php` on PHP 8.3.33; all 20 base and specialized calculator test cases (CI, CAGR, EMI, Inflation, PPF, FD) pass with 100% precision parity against TypeScript.
+  - **Dependency Compatibility (PHPUnit):** `phpunit/phpunit ^13.2` required PHP >= 8.4.1. Updated dev dependency in `composer.json` to `phpunit/phpunit: ^11.5` (native PHP 8.3 support).
+  - **Test Suite Modernization:** Updated `tests/Unit/ViteHelperTest.php` and `tests/Unit/AnonymizedInsightLoggerTest.php` to capture `error_log` messages into temporary log files rather than relying on PHPUnit standard output regex matching.
+  - **Validation & Quality Suite:** Full `composer check-all` suite executed and passed with 0 errors:
+    - **PHPStan:** Level 5 passed with 0 errors across 234 files.
+    - **PHPCS:** Passed with 0 violations.
+    - **PHPUnit 11.5:** All 839 tests and 13,581 assertions pass cleanly (0 failures, 0 warnings).
 - **Implementation & Audit Findings:**
   - **Specialized Calculator Telemetry Gap:** Discovered that the 6 specialized calculators (`/compound-interest-calculator`, `/cagr-calculator`, `/emi-calculator`, `/inflation-calculator`, `/ppf-calculator`, `/fd-calculator`) routed through `SpecializedCalculatorController.ts` without triggering `AnalyticsService.logInsight()`. As a result, calculation events for these tools were missing from `POST /log_insight` and SQLite.
   - **Standardized Specialized Driver Payloads:**

@@ -97,21 +97,39 @@ class ViteHelperTest extends TestCase
 
     public function testProductionMissingManifestEntryReturnsEmptyString(): void
     {
-        $this->expectOutputRegex('/ViteHelper Warning: Manifest entry missing/');
+        $tempLog = (string) tempnam(sys_get_temp_dir(), 'vite_err_');
+        ini_set('error_log', $tempLog);
+
         $helper = new ViteHelper('production', '127.0.0.1', 5173, $this->tempManifestPath);
 
         $this->assertEquals('', $helper->asset('nonexistent/entry.ts'));
         $this->assertEquals('', $helper->css('nonexistent/entry.ts'));
+
+        $logOutput = file_exists($tempLog) ? (string) file_get_contents($tempLog) : '';
+        $this->assertStringContainsString('ViteHelper Warning: Manifest entry missing', $logOutput);
+
+        if (file_exists($tempLog)) {
+            unlink($tempLog);
+        }
     }
 
     public function testProductionMissingManifestFileReturnsEmptyString(): void
     {
-        $this->expectOutputRegex('/ViteHelper Warning: Manifest entry missing/');
+        $tempLog = (string) tempnam(sys_get_temp_dir(), 'vite_err_');
+        ini_set('error_log', $tempLog);
+
         $nonExistentPath = sys_get_temp_dir() . '/missing_manifest_' . uniqid() . '.json';
         $helper = new ViteHelper('production', '127.0.0.1', 5173, $nonExistentPath);
 
         $this->assertEquals('', $helper->asset('resources/js/app.ts'));
         $this->assertEquals('', $helper->css('resources/js/app.ts'));
+
+        $logOutput = file_exists($tempLog) ? (string) file_get_contents($tempLog) : '';
+        $this->assertStringContainsString('ViteHelper Warning: Manifest entry missing', $logOutput);
+
+        if (file_exists($tempLog)) {
+            unlink($tempLog);
+        }
     }
 
     public function testTestingEnvironmentDisablesViteClientTag(): void
@@ -133,7 +151,9 @@ class ViteHelperTest extends TestCase
 
     public function testHandlesCorruptedOrInvalidJsonManifest(): void
     {
-        $this->expectOutputRegex('/ViteHelper Warning: Manifest entry missing/');
+        $tempLog = (string) tempnam(sys_get_temp_dir(), 'vite_err_');
+        ini_set('error_log', $tempLog);
+
         $corruptedPath = sys_get_temp_dir() . '/corrupted_manifest_' . uniqid() . '.json';
         file_put_contents($corruptedPath, '{ invalid json content !!!');
 
@@ -142,14 +162,22 @@ class ViteHelperTest extends TestCase
         $this->assertEquals('', $helper->asset('resources/js/app.ts'));
         $this->assertEquals('', $helper->css('resources/js/app.ts'));
 
+        $logOutput = file_exists($tempLog) ? (string) file_get_contents($tempLog) : '';
+        $this->assertStringContainsString('ViteHelper Warning: Manifest entry missing', $logOutput);
+
         if (file_exists($corruptedPath)) {
             unlink($corruptedPath);
+        }
+        if (file_exists($tempLog)) {
+            unlink($tempLog);
         }
     }
 
     public function testHandlesEmptyManifestArray(): void
     {
-        $this->expectOutputRegex('/ViteHelper Warning: Manifest entry missing/');
+        $tempLog = (string) tempnam(sys_get_temp_dir(), 'vite_err_');
+        ini_set('error_log', $tempLog);
+
         $emptyPath = sys_get_temp_dir() . '/empty_manifest_' . uniqid() . '.json';
         file_put_contents($emptyPath, json_encode([]));
 
@@ -158,8 +186,14 @@ class ViteHelperTest extends TestCase
         $this->assertEquals('', $helper->asset('resources/js/app.ts'));
         $this->assertEquals('', $helper->css('resources/js/app.ts'));
 
+        $logOutput = file_exists($tempLog) ? (string) file_get_contents($tempLog) : '';
+        $this->assertStringContainsString('ViteHelper Warning: Manifest entry missing', $logOutput);
+
         if (file_exists($emptyPath)) {
             unlink($emptyPath);
+        }
+        if (file_exists($tempLog)) {
+            unlink($tempLog);
         }
     }
 
