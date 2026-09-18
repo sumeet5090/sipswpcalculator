@@ -801,7 +801,7 @@ export class CalculatorApp {
                 );
             }
 
-            this.chartManager.updateChart(combined, inputs.enable_swp);
+            this.chartManager.updateChartThrottled(combined, inputs.enable_swp);
 
             if (!this.userHasInteracted) return;
 

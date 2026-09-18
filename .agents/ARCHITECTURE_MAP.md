@@ -40,6 +40,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | **Slider & Number Input** | `form/input-range-pair.twig` | `SliderManager.ts`<br/>`controllers/StepperController.ts` | Two-way synchronized range slider and currency text inputs with 48px ergonomic touch stepper targets, preset chips, and auto-step rounding |
 | **QR Share & Socials** | `qr-share-modal.twig` | `subsystems/ExportSubsystem.ts` | Encoded URL state generation, canvas QR render, and native Web Share API trigger |
 | **SEBI Benchmark & Trust** | `sebibenchmark-modal.twig`<br/>`privacy-trust-badge.twig` | `subsystems/EngagementSubsystem.ts` | Regulatory disclosure compliance, index benchmark comparisons, privacy audit badges |
+| **Scenario Benchmark Tables** | `scenario-benchmark-table.twig` | Static HTML / AMFI Matrix | Pre-calculated static benchmark matrices for Google rich answers and AI search engine extraction (Gemini / Copilot) |
 
 ---
 
@@ -100,8 +101,9 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 
 ### D. SEO Metadata & Triple-Schema Contract
 - **Mandatory Schemas:** Every calculator route must output structured JSON-LD schemas: `SoftwareApplication`, `FAQPage`, and contextual `HowTo` (via `SchemaFactory.php` and `HomeSchemaBuilder.php`).
+- **No Self-Served Ratings:** Self-served `AggregateRating` is strictly forbidden to prevent algorithmic suppression of rich results across Google Search Console.
 - **Title Length Limit:** Page `<title>` tags must strictly remain between **10 and 65 characters** (enforced by `tests/Integration/SeoMetadataValidatorTest.php`).
-- **AI Crawlers & Discovery:** `llms.txt` and `llms-full.txt` served from web root; `robots.txt` explicitly allows `GPTBot`, `Google-Extended`, `PerplexityBot`, `ClaudeBot`, `Amazonbot`, `anthropic-ai`, `cohere-ai`, and `OAI-SearchBot`.
+- **AI Crawlers & Discovery:** `llms.txt` and `llms-full.txt` served from web root; `robots.txt` explicitly allows `GPTBot`, `Google-Extended`, `PerplexityBot`, `ClaudeBot`, `Amazonbot`, `anthropic-ai`, `cohere-ai`, and `OAI-SearchBot`. Disallows phantom paths (`/0.6.10`, `/sipswpcalculator.com`).
 
 ### E. Vite & Tailwind CSS v4 Pipeline
 - **Tailwind v4 Directive:** Configured exclusively in `resources/css/input.css` (`@theme`, `@source`). Never create `tailwind.config.js`.

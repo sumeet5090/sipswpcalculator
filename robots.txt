@@ -6,6 +6,9 @@ Disallow: /src/
 Disallow: /generate-pdf
 Disallow: /admin_insights
 Disallow: /log_insight
+Disallow: /0.6.10
+Disallow: /sipswpcalculator.com
+Disallow: /sipswpcalculator.com/
 
 User-agent: GPTBot
 Allow: /

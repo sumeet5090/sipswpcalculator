@@ -215,3 +215,26 @@ date: "July 2026"
 <h3>Can a mutual fund give 15% return consistently?</h3>
 <p>Over 15-20 year periods, many <strong>mid-cap and small-cap funds</strong> in India have delivered 15%+ CAGR. However, "consistently" is the wrong word — in any given year, these funds can lose 30-40%. The 15% is an average that includes spectacular up-years (30-50%) and painful down-years (-20-40%). You earn the 15% only if you stay invested through the entire cycle.</p>
 
+<div class="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 not-prose">
+    <h3 class="text-base font-bold text-slate-800 mb-3">Model Your Portfolio Returns</h3>
+    <div class="grid sm:grid-cols-2 gap-3 text-sm">
+        <a href="/cagr-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>CAGR Return Calculator</span>
+            <span>→</span>
+        </a>
+        <a href="/lumpsum-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>Lumpsum Mutual Fund Planner</span>
+            <span>→</span>
+        </a>
+        <a href="/sip-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>SIP Calculator India</span>
+            <span>→</span>
+        </a>
+        <a href="/swp-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>SWP Retirement Planner</span>
+            <span>→</span>
+        </a>
+    </div>
+</div>
+
+

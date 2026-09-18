@@ -288,5 +288,28 @@ date: "February 2026"
 <p>For PPF, you can manually increase your annual contribution each year (up to the ₹1.5 lakh cap). There's no auto step-up feature. For FDs, the concept doesn't directly apply since FDs are one-time investments. The step-up concept is most powerful with equity/hybrid mutual fund SIPs where the compounding effect is highest.</p>
 
 <h3>Step-up SIP vs lump sum top-up: which is better?</h3>
-<p>Both work. A step-up SIP increases your <em>regular monthly contribution</em>. A lump sum top-up adds a one-time extra investment (e.g., your annual bonus). The optimal strategy is <strong>both</strong>: step up your monthly SIP by 10% AND invest your annual bonus as a lump sum. The bonus investment gets the rupee-cost-averaging benefit of the next 12 months of SIP, while the step-up compounds for decades.</p>
+<p>Both work. A step-up SIP increases your <em>regular monthly contribution</em>. A lump sum top-up adds a one-time extra investment (e.g., your annual bonus). The optimal strategy is <strong>both</strong>: step up your monthly SIP by 10% AND invest your annual bonus as a lump sum using our <a href="/lumpsum-calculator" class="text-emerald-700 font-bold underline">Lumpsum Calculator</a>. The bonus investment gets immediate market compounding, while the step-up compounds for decades.</p>
+
+<div class="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 not-prose">
+    <h3 class="text-base font-bold text-slate-800 mb-3">Interactive Planning Tools</h3>
+    <div class="grid sm:grid-cols-2 gap-3 text-sm">
+        <a href="/sip-step-up-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>Step-Up SIP Calculator</span>
+            <span>→</span>
+        </a>
+        <a href="/lumpsum-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>Lumpsum Mutual Fund Planner</span>
+            <span>→</span>
+        </a>
+        <a href="/cagr-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>CAGR Return Calculator</span>
+            <span>→</span>
+        </a>
+        <a href="/my-first-crore-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>1 Crore SIP Calculator</span>
+            <span>→</span>
+        </a>
+    </div>
+</div>
+
 
