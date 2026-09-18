@@ -1,8 +1,8 @@
 ---
 title: "SWP Calculator India — Monthly Withdrawal Planner 2026"
 subtitle: "Free SWP calculator with step-up withdrawals & inflation protection for Indian mutual funds. See how long your corpus lasts, plan retirement income & export yearly tables."
-meta_desc: "Calculate monthly SWP payout, retirement corpus longevity, and post-tax returns for Indian mutual funds. Model inflation step-up withdrawals and download free PDF."
-keywords: "swp calculator, swp calculator india, step up swp calculator, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, best swp calculator, swp retirement calculator, swp tax calculator"
+meta_desc: "Calculate monthly SWP payout, retirement corpus longevity, and post-tax returns for Indian mutual funds. Model 5 Lakh, 30 Lakh, 1 Cr & 5 Cr corpus scenarios with inflation step-up."
+keywords: "swp calculator, swp calculator india, step up swp calculator, 5 crore swp calculator, 1 crore swp calculator, 30 lakh swp calculator, 5 lakh swp calculator, best swp for monthly income, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, swp tax calculator"
 schema_name: "SWP Calculator India — Monthly Withdrawal Planner"
 seo_category: "retirement"
 type: "calculator"
@@ -168,24 +168,51 @@ Applying the 4% rule blindly in India without localization introduces fatal risk
 
 ## 5. Comprehensive SWP Sustainability Matrix across Corpus Sizes (2026)
 
-The table below illustrates how long various mutual fund retirement corpuses will sustain different monthly withdrawal levels assuming a conservative **8.5% annualized return** in a Hybrid portfolio and a **5% annual Step-Up** for inflation:
+The tables below illustrate how long various mutual fund retirement corpuses will sustain different monthly withdrawal levels assuming a conservative **8.5% annualized return** in a Hybrid portfolio and realistic inflation adjustments.
 
-### SWP Sustainability Modeling: 8.5% Portfolio CAGR with 5% Annual Step-Up
+### ₹5 Lakh & ₹10 Lakh SWP Calculator: Emergency Bridge & Short-Term Income Matrix
+> **Direct Answer (BLUF):** A ₹5 Lakh mutual fund corpus invested in a conservative hybrid fund earning 8% annualized can sustain a monthly SWP of **₹4,000 for 15+ years**, or **₹8,000 for 6.2 years** before full depletion. For a ₹10 Lakh corpus, a monthly withdrawal of **₹7,500** provides over **17 years of steady cashflow**, making it an ideal post-job transition or emergency income bridge.
 
-| Starting Retirement Corpus | Initial Monthly SWP (Year 1) | Annual Withdrawal (Year 1) | Effective Initial SWR | Projected Corpus Longevity | Terminal Value at 25 Years |
+| Initial Corpus | Monthly SWP | Expected Return | Annual Step-Up | Projected Longevity | Ideal Use Case |
+|:---|:---:|:---:|:---:|:---:|:---|
+| **₹5 Lakh** | ₹3,000 | 8.0% | 0% | **25+ Years** | Side-income supplement |
+| **₹5 Lakh** | ₹5,000 | 8.0% | 0% | **11.8 Years** | 10-year secondary pension |
+| **₹5 Lakh** | ₹8,000 | 8.0% | 0% | **6.2 Years** | Sabbatical / Career break |
+| **₹10 Lakh** | ₹5,000 | 8.5% | 5% | **21.4 Years** | Semi-retirement income |
+| **₹10 Lakh** | ₹7,500 | 8.5% | 0% | **17.5 Years** | Senior citizen monthly support |
+| **₹10 Lakh** | ₹10,000 | 8.5% | 0% | **11.5 Years** | Higher monthly drawdown |
+
+---
+
+### ₹30 Lakh SWP Calculator: Lean FIRE & Pre-Retirement Monthly Drawdown
+> **Direct Answer (BLUF):** With a ₹30 Lakh mutual fund corpus earning 8.5% CAGR, an investor can safely withdraw **₹15,000 per month with a 5% annual step-up** for over **24 years**. If choosing a fixed monthly withdrawal without step-up, a payout of **₹20,000 per month** will sustain for **23.8 years**, while keeping capital gains largely exempt under Section 112A LTCG tax limits.
+
+| Initial Corpus | Monthly SWP (Yr 1) | Return Rate | Annual Step-Up | Projected Longevity | Total Cashflow Withdrawn |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **₹50 Lakh** | ₹20,000 | ₹2.40 Lakh | 4.80% | **24.5 Years** | Depleted in Yr 25 |
-| **₹50 Lakh** | ₹25,000 | ₹3.00 Lakh | 6.00% | **17.2 Years** | Depleted in Yr 18 |
-| **₹1.00 Crore** | **₹35,000** | ₹4.20 Lakh | **3.50%** | **35+ Years** | **₹2.14 Crore** (Surplus) |
-| **₹1.00 Crore** | **₹45,000** | ₹5.40 Lakh | **4.50%** | **25.8 Years** | **₹18.4 Lakh** |
-| **₹1.00 Crore** | **₹60,000** | ₹7.20 Lakh | **6.00%** | **16.8 Years** | Depleted in Yr 17 |
-| **₹2.00 Crore** | **₹75,000** | ₹9.00 Lakh | **3.75%** | **32.4 Years** | **₹3.42 Crore** (Surplus) |
-| **₹2.00 Crore** | **₹1,00,000** | ₹12.00 Lakh | **5.00%** | **22.1 Years** | Depleted in Yr 23 |
-| **₹3.00 Crore** | **₹1,00,000** | ₹12.00 Lakh | **3.33%** | **35+ Years** | **₹7.85 Crore** (Surplus) |
-| **₹3.00 Crore** | **₹1,50,000** | ₹18.00 Lakh | **5.00%** | **22.1 Years** | Depleted in Yr 23 |
-| **₹5.00 Crore** | **₹1,50,000** | ₹18.00 Lakh | **3.00%** | **35+ Years** | **₹15.2 Crore** (Surplus) |
+| **₹30 Lakh** | ₹12,000 | 8.5% | 5% | **35+ Years** (Surplus ₹38L) | ₹52.4 Lakh |
+| **₹30 Lakh** | ₹15,000 | 8.5% | 5% | **24.2 Years** | ₹58.9 Lakh |
+| **₹30 Lakh** | ₹20,000 | 8.5% | 0% | **23.8 Years** | ₹57.1 Lakh |
+| **₹30 Lakh** | ₹25,000 | 8.5% | 0% | **16.1 Years** | ₹48.3 Lakh |
 
-> **The Power of SWR Discipline:** Notice that on a **₹1 Crore corpus**, starting at ₹35,000/month with a 5% yearly hike allows the corpus to sustain for over 35 years and **actually expand to ₹2.14 Crore**! Conversely, greedily withdrawing ₹60,000/month completely depletes the entire ₹1 Crore in less than 17 years.
+---
+
+### ₹1 Crore & ₹5 Crore HNI SWP Calculator: Multi-Decade Wealth Longevity Matrix
+> **Direct Answer (BLUF):** A ₹1 Crore mutual fund corpus at an 8.5% expected return supports a safe initial monthly SWP of **₹35,000 with a 5% annual inflation hike for 35+ years**, finishing with a terminal surplus of ₹2.14 Crore. For an HNI with a **₹5 Crore corpus**, a monthly payout of **₹1.50 Lakh with 5% annual step-up** generates over ₹9.8 Crore in lifetime withdrawals while growing the residual estate to **₹15.2 Crore** after 35 years.
+
+| Starting Corpus | Initial Monthly SWP | Annual Step-Up | Effective SWR | Projected Longevity | Terminal Value at 35 Yrs |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| **₹1.00 Crore** | **₹35,000** | **5%** | **4.20%** | **35+ Years** | **₹2.14 Crore** (Capital Growth) |
+| **₹1.00 Crore** | ₹50,000 | 5% | 6.00% | **21.5 Years** | Depleted in Yr 22 |
+| **₹2.00 Crore** | ₹70,000 | 5% | 4.20% | **35+ Years** | **₹4.30 Crore** (Capital Growth) |
+| **₹5.00 Crore** | **₹1,50,000** | **5%** | **3.60%** | **35+ Years** | **₹15.20 Crore** (Generational Wealth) |
+| **₹5.00 Crore** | ₹2,50,000 | 5% | 6.00% | **21.5 Years** | Depleted in Yr 22 |
+
+> **The Power of SWR Discipline:** Notice that on a **₹1 Crore corpus**, starting at ₹35,000/month with a 5% yearly hike allows the corpus to sustain for over 35 years and **actually expand to ₹2.14 Crore**! Conversely, withdrawing ₹60,000/month completely depletes the entire ₹1 Crore in less than 17 years.
+
+---
+
+### Best SWP Mutual Fund Plans for Monthly Income (2026 Architecture)
+> **Direct Answer (BLUF):** The best mutual fund architecture for an SWP in India combines an **Equity Savings Fund or Conservative Hybrid Fund** (for a 1–3 year immediate withdrawal bucket) paired with a **Multi-Asset Allocation Fund or Balanced Advantage Fund** (for 4–7 years) and **Flexi-Cap / Large-Cap Index Funds** (for 8+ years). This 3-bucket setup neutralizes sequence-of-returns risk, outperforms fixed deposits by 2.5%–4% post-tax, and takes full advantage of the Section 112A ₹1.25 Lakh annual LTCG tax exemption.
 
 ---
 

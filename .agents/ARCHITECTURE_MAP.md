@@ -41,6 +41,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | **QR Share & Socials** | `qr-share-modal.twig` | `subsystems/ExportSubsystem.ts` | Encoded URL state generation, canvas QR render, and native Web Share API trigger |
 | **SEBI Benchmark & Trust** | `sebibenchmark-modal.twig`<br/>`privacy-trust-badge.twig` | `subsystems/EngagementSubsystem.ts` | Regulatory disclosure compliance, index benchmark comparisons, privacy audit badges |
 | **Scenario Benchmark Tables** | `scenario-benchmark-table.twig` | Static HTML / AMFI Matrix | Pre-calculated static benchmark matrices for Google rich answers and AI search engine extraction (Gemini / Copilot) |
+| **Embed Calculator Modal** | `embed-modal.twig` | Frontend `<dialog>` / `copyEmbedCodeBtn` | 1-click responsive iframe generator for external financial bloggers and advisors with attribution backlink |
 
 ---
 

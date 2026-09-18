@@ -5,18 +5,21 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** SEO Technical Diagnostic Remediation & AI Search Grounding.
+- **Current Milestone:** SEO Technical Diagnostic Remediation, Query-Intent Optimization & Embed Backlink Engine.
 - **Implemented Fixes & Architectural Outcomes:**
-  - **P0 Schema Penalty Elimination:** Removed self-served `aggregateRating` from `HomeSchemaBuilder.php`, `SchemaFactory.php`, and `SchemaHelper.php`. Pure `SoftwareApplication`, `FAQPage`, `HowTo`, `FinancialProduct`, and `WebPage` schemas now emit cleanly without risk of algorithmic suppression across GSC.
-  - **P0 Phantom URL Eradication:** Blocked `/0.6.10`, `/sipswpcalculator.com`, and `/sipswpcalculator.com/` in `robots.txt` and added permanent 301 redirects in `content/redirects.json` and a semver pattern check in `Router.php`.
-  - **P1 AI Search Grounding & Static Answer Tables:** Created `src/Views/components/scenario-benchmark-table.twig` and embedded it into `home.twig` and `calculator-guide.twig`. Pre-calculated scenario matrices for monthly SIPs, SWP longevity, Lumpsum, CAGR benchmarks, and Step-Up deltas are now directly indexable and extractable by Gemini, Copilot, and Google rich results without JavaScript execution.
-  - **P1 INP Optimization (Core Web Vitals):** Added `requestAnimationFrame` batching to range slider input events in `SliderManager.ts` and switched `CalculatorApp.ts` to `chartManager.updateChartThrottled()`, eliminating main thread lockup and dropping interaction latency to < 50ms.
-  - **P2 Internal Linking & Discovery:** Enhanced `content/calculator_links.json` with bidirectional links between `/lumpsum-calculator` and `/cagr-calculator`, injected related calculator callouts in high-authority blog guides (`what-is-cagr.md`, `sip-vs-fd-vs-ppf.md`, `mf-returns-benchmarks.md`, `20-year-wealth-blueprint-step-up-sip.md`), transformed metric summary cards into accessible smooth-scroll triggers targeting the amortization breakdown table, and redesigned `src/Views/pages/404.twig` into a rich calculator discovery hub.
+  - **Meta Retargeting & Intent Alignment:** Retargeted homepage title from `SIP & SWP Calculator Together — Dual Wealth Planner` to `SIP + SWP Calculator Together (with Inflation & Excel)` (54 characters, compliant with SERP snippet display thresholds), with description and keywords capturing high-converting GSC queries (`sip and swp calculator together`, `sip plus swp calculator`, `sip swp calculator excel`).
+  - **Capitalizing on Positions 1–3 (Corpus Scenarios):** Added static, crawlable benchmark tables and BLUF definitions for queries where the site ranks on Page 1 (`5 lakh swp calculator`, `10 lakh`, `30 lakh`, `1 crore`, and `5 crore swp calculator`) in `content/calculators/swp-calculator.md`.
+  - **AI Citation Grounding (BLUF Direct Answers):** Injected 45–55 word direct definitional answer capsules (BLUF) into `src/Views/components/guide-definitions.twig` for "SIP with SWP Combo Plan", "Inflation Step-Up SWP", and "2026 LTCG Tax Rules (§112A)", with schema DefinedTerm hooks for Gemini, Copilot, and Perplexity RAG pipelines.
+  - **Author E-E-A-T Knowledge Graph Anchoring:** Updated `HomeSchemaBuilder.php` and `SchemaHelper.php` with author `sameAs` (LinkedIn, GitHub) and verified credentials (`jobTitle`, `knowsAbout`) for Google Knowledge Graph trust.
+  - **Embeddable Backlink Engine:** Created reusable `src/Views/components/embed-modal.twig` with 1-click iframe copy functionality, wired into `home.twig`, `calculator-guide.twig`, and `analytical-studio.twig`. Configured `GuideRenderer::renderEmbed` and `.htaccess` with relaxed `X-Frame-Options: ALLOWALL` and CSP `frame-ancestors *;` specifically for `/embed/*` routes so external finance blogs and CAs can embed the tool.
+  - **P0 Schema Penalty Elimination:** Removed self-served `aggregateRating` from `HomeSchemaBuilder.php`, `SchemaFactory.php`, and `SchemaHelper.php`. Pure `SoftwareApplication`, `FAQPage`, `HowTo`, `FinancialProduct`, and `WebPage` schemas now emit cleanly.
+  - **P0 Phantom URL Eradication:** Blocked `/0.6.10` and `/sipswpcalculator.com` in `robots.txt` with 301 redirects in `redirects.json` and `Router.php`.
+  - **P1 INP Optimization:** Added `requestAnimationFrame` batching to range slider input events in `SliderManager.ts` and switched `CalculatorApp.ts` to `chartManager.updateChartThrottled()`.
 - **Verification & System Health:**
-  - Full PHPUnit test suite: 839 tests / 13,587 assertions passed cleanly (0 failures, 0 warnings).
+  - Full PHPUnit test suite: 839 tests / 13,588 assertions passed cleanly (0 failures, 0 warnings).
   - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 234 files, 0 PHPCS violations).
   - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across base and specialized engines.
-  - Local curl verification: Confirmed 301 redirects on `/0.6.10` and `/sipswpcalculator.com`, 0 AggregateRating occurrences, and validated presence of static scenario benchmark tables on `/` and `/lumpsum-calculator`.
+  - Local curl verification: Verified on `http://127.0.0.1:8000/` for new title, meta tags, schema, BLUF capsules, and `/embed/sip-calculator` iframe rendering.
   - Frontend bundle: `npm run build` compiled without warnings or errors.
 
 ---

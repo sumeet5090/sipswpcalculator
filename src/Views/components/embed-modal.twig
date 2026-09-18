@@ -1,0 +1,56 @@
+<!-- Embed Calculator Modal (native <dialog> with pure light-mode fintech styling) -->
+<dialog id="embedModal" class="fixed inset-0 m-auto z-modal rounded-3xl shadow-modal p-6 sm:p-8 w-full max-w-lg border border-slate-200 bg-white/95 max-h-[90vh] overflow-y-auto backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm text-slate-800" aria-labelledby="embed-modal-title">
+    <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+        <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 text-sm font-black border border-emerald-200/80">⚡</span>
+            <h2 id="embed-modal-title" class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">Embed This Calculator</h2>
+        </div>
+        <button type="button" onclick="document.getElementById('embedModal')?.close()" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition text-sm font-bold cursor-pointer" aria-label="Close embed modal">✕</button>
+    </div>
+
+    <p class="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
+        Add this interactive, zero-latency financial simulation engine directly to your personal finance blog, advisory website, or client portal. Free to use with attribution.
+    </p>
+
+    <div class="space-y-3 mb-5">
+        <label for="embedIframeCode" class="block text-xs font-bold uppercase tracking-wider text-slate-500">HTML Embed Code (Responsive Iframe)</label>
+        <div class="relative">
+            <textarea id="embedIframeCode" rows="4" readonly class="w-full p-3 bg-slate-50 rounded-xl border border-slate-200 font-financial-mono text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 select-all cursor-text"><iframe src="{{ site_url }}/embed/{{ active_page and active_page != 'home' ? active_page : 'sip-calculator' }}" width="100%" height="720" frameborder="0" style="border:1px solid #e2e8f0; border-radius:16px; width:100%; max-width:1000px; height:720px; overflow:hidden;" title="{{ page_config.title|default('Financial Calculator') }}"></iframe></textarea>
+        </div>
+    </div>
+
+    <div class="p-3 bg-emerald-50/70 border border-emerald-100 rounded-xl text-caption text-emerald-950 space-y-1 mb-5">
+        <div class="font-bold flex items-center gap-1.5 text-emerald-800">
+            <span>✓</span>
+            <span>Zero Server Latency • Real-Time Client Math</span>
+        </div>
+        <p class="text-emerald-900/80 leading-relaxed">
+            The embed runs completely in your visitor's browser. It preserves interactive sliders, charts, and Indian numbering (₹ Lakhs &amp; Crores) seamlessly on desktop and mobile.
+        </p>
+    </div>
+
+    <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+        <button type="button" onclick="document.getElementById('embedModal')?.close()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition text-xs cursor-pointer">Close</button>
+        <button type="button" id="copyEmbedCodeBtn" onclick="(() => {
+            const textarea = document.getElementById('embedIframeCode');
+            if (textarea) {
+                textarea.select();
+                navigator.clipboard.writeText(textarea.value).then(() => {
+                    const btn = document.getElementById('copyEmbedCodeBtn');
+                    if (btn) {
+                        const originalText = btn.innerHTML;
+                        btn.innerHTML = '✓ Copied to Clipboard!';
+                        btn.classList.add('bg-emerald-700');
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.classList.remove('bg-emerald-700');
+                        }, 2500);
+                    }
+                });
+            }
+        })()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-flat transition text-xs flex items-center gap-1.5 cursor-pointer">
+            <span>📋</span>
+            <span>Copy Embed Code</span>
+        </button>
+    </div>
+</dialog>

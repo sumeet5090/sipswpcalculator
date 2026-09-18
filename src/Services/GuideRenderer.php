@@ -43,6 +43,14 @@ class GuideRenderer
     {
         $viewModel = $this->viewModelBuilder->build($slug);
 
-        return Response::html($this->viewRenderer->render('calculators/embed', $viewModel['data']));
+        return new Response(
+            $this->viewRenderer->render('calculators/embed', $viewModel['data']),
+            200,
+            [
+                'Content-Type' => 'text/html; charset=utf-8',
+                'X-Frame-Options' => 'ALLOWALL',
+                'Content-Security-Policy' => "frame-ancestors *;"
+            ]
+        );
     }
 }

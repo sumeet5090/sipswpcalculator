@@ -189,7 +189,6 @@ FileETag MTime Size
 
 # ============================================================
 # Security headers
-# ============================================================
 Header set X-Content-Type-Options "nosniff"
 Header set X-Frame-Options "SAMEORIGIN"
 Header set X-XSS-Protection "1; mode=block"
@@ -198,6 +197,12 @@ Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsaf
 Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
 # HSTS: Force HTTPS for 1 year, include subdomains, allow preload list
 Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+# Allow external iframes specifically for /embed/ routes (Backlink & Partner Engine)
+<If "%{REQUEST_URI} =~ m#^/embed/#">
+  Header unset X-Frame-Options
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' http://localhost:5173 http://127.0.0.1:5173 https://cdn.jsdelivr.net https://analytics.ahrefs.com https://www.googletagmanager.com https://js-de.sentry-cdn.com https://js.sentry-cdn.com https://www.clarity.ms https://scripts.clarity.ms https://*.clarity.ms; style-src 'self' 'unsafe-inline' http://localhost:5173 http://127.0.0.1:5173 https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' http://localhost:5173 http://127.0.0.1:5173 ws://localhost:5173 ws://127.0.0.1:5173 https://analytics.ahrefs.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://www.clarity.ms https://*.clarity.ms https://c.bing.com; base-uri 'self'; form-action 'self'; frame-ancestors *;"
+</If>
 
 # ============================================================
 # PHP Security (Apache mod_php fallback; primary is .user.ini)

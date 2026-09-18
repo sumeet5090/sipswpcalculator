@@ -167,9 +167,19 @@ class HomeSchemaBuilder
             "name" => "Sumeet Boga",
             "url" => $baseUrl . "/about",
             "image" => $baseUrl . "/assets/sumeet-boga-56.jpg",
-            "jobTitle" => "Software Engineer & Finance Enthusiast",
-            "description" => "Creator of the Advanced SIP & SWP Calculator.",
-            "sameAs" => ["https://www.linkedin.com/in/sumeet-boga/"],
+            "jobTitle" => "Software Engineer & Financial Systems Architect",
+            "description" => "Creator and Lead Engineer of the Advanced SIP & SWP Calculator platform for Indian mutual fund investors.",
+            "sameAs" => [
+                "https://www.linkedin.com/in/sumeet-boga/",
+                "https://github.com/sumeet5090"
+            ],
+            "knowsAbout" => [
+                "Algorithmic Financial Modeling",
+                "Systematic Investment Plans (SIP)",
+                "Systematic Withdrawal Plans (SWP)",
+                "Indian Mutual Funds Taxation (Section 112A)",
+                "Compounding Mathematics"
+            ],
             "worksFor" => ["@id" => $baseUrl . "/#organization"]
         ], SchemaHelper::JSON_FLAGS);
 

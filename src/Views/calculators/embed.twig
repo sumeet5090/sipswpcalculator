@@ -131,7 +131,7 @@
         <!-- Embed Attribution Footer (Authoritative Backlink) -->
         <footer class="mt-4 pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-500">
             <div>
-                Powered by <a href="{{ site_url }}/{{ active_page }}" target="_blank" rel="noopener" class="font-bold text-emerald-700 hover:underline">SIP &amp; SWP Calculator</a> — Free Financial Planning in India
+                Powered by <a href="{{ site_url }}{% if active_page and active_page != 'home' %}/{{ active_page }}{% else %}/{% endif %}" target="_blank" rel="noopener" class="font-bold text-emerald-700 hover:underline">SIP &amp; SWP Calculator Together</a> — Free Financial Planning in India
             </div>
             <div class="text-slate-400 text-micro">
                 🔒 100% Private in Browser • Zero Latency
