@@ -42,15 +42,14 @@
 ---
 
 ## 3. Deployment Status
-- **⚠️ NOT YET DEPLOYED:** All changes (28+ modified files including `llms-full.txt` untracked) exist only in local working tree. Must `git add llms-full.txt`, commit, and deploy to production before SEO improvements take effect.
-- Post-deployment: Submit updated sitemap in GSC, request reindexing for all 17 calculator URLs.
+- **✅ DEPLOYED TO PRODUCTION (2026-09-19):** All updates, schema penalty removals, title retargeting, Dual Mode default, static AI scenario tables, and Chart.js `clipGuardPlugin` are verified live on `https://sipswpcalculator.com/`. Serving clean bundle `app-BvL2LGEj.js` with zero console errors.
+- **✅ BING SUBMISSION:** All 42 active URLs submitted directly via Bing Webmaster Tools URL submission.
 
 ---
 
 ## 4. Next Steps & Pending Items
-- **Immediate:** Commit and deploy all changes to production.
-- **Post-deploy:** Request indexing in Google Search Console for all calculator URLs. Validate structured data via Rich Results Test.
-- Continue monitoring user feedback on mobile touch responsiveness and ergonomic dock interactions.
-- Maintain zero-latency slider calculations on all target-corpus and lumpsum iterations.
-- Follow the Handoff Ledger Protocol: update this file whenever a feature milestone or architectural change is completed.
+- **Immediate (Phase 1):** In GSC, run URL Inspection on `https://sipswpcalculator.com/` and click "Request Indexing" to prioritize Googlebot's crawl of the newly deployed Dual-Mode homepage.
+- **Structured Data Audit:** Run Google's Rich Results Test tool to verify 0 errors on FAQPage, HowTo, and SoftwareApplication schemas.
+- **Phase 2 (Authority & Distribution):** Execute outreach to Indian personal finance bloggers, CAs, and FIRE communities to adopt the new `/embed/sip-calculator` and `/embed/swp-calculator` widgets for organic contextual backlinks.
+- **Monitoring:** Track CTR and Average Position across Google Search Console and Bing Webmaster Tools over the next 7–14 days.
 
