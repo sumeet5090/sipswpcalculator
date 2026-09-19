@@ -4,7 +4,7 @@ subtitle: "The complete guide to Fixed Deposits in India — cumulative vs non-c
 meta_desc: "What is a Fixed Deposit (FD)? Learn how bank FDs work in India, cumulative vs regular interest, senior citizen rates, Section 194A TDS & post-tax net returns."
 tag: "Guide"
 tag_color: "teal"
-featured: true
+featured: false
 date: "March 2026"
 ---
 

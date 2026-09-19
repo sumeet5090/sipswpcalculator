@@ -4,7 +4,7 @@ subtitle: "Master the mathematics of compound interest — formula derivations, 
 meta_desc: "What is compound interest? Master the compounding formula, monthly vs annual frequency, the Rule of 72 & how Albert Einstein's 8th wonder builds wealth."
 tag: "Guide"
 tag_color: "teal"
-featured: true
+featured: false
 date: "March 2026"
 ---
 

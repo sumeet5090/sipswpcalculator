@@ -150,8 +150,13 @@
                 <!-- Posts Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     {% set posts = posts_by_cat[cat_id]|default([]) %}
+                    {% set featured_rendered_count = 0 %}
                     {% for post in posts %}
-                        {% set is_featured = post.featured|default(false) %}
+                        {% set is_featured = false %}
+                        {% if post.featured|default(false) and featured_rendered_count < 2 %}
+                            {% set is_featured = true %}
+                            {% set featured_rendered_count = featured_rendered_count + 1 %}
+                        {% endif %}
                         {% set tag_badge_class = 'text-emerald-600 bg-emerald-50' %}
                         {% if accent_color == 'indigo' %}
                             {% set tag_badge_class = 'text-indigo-600 bg-indigo-50' %}

@@ -4,7 +4,7 @@ subtitle: "A complete guide to the 4% Safe Withdrawal Rate — its origins, the 
 meta_desc: "Understand the 4% safe withdrawal rate for Indian retirees. Math breakdown, sequence of returns risk, and why 3.5% with step-up SWP works better in India."
 tag: "Strategy"
 tag_color: "indigo"
-featured: false
+featured: true
 date: "February 2026"
 ---
 

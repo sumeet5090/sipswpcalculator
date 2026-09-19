@@ -4,7 +4,7 @@ subtitle: "How to build a sustainable retirement income using Systematic Withdra
 meta_desc: "Master retirement planning using Systematic Withdrawal Plans (SWP) in India. Learn the 3-bucket strategy, tax optimization, and year-by-year cashflow models."
 tag: "Planning"
 tag_color: "indigo"
-featured: false
+featured: true
 date: "March 2026"
 ---
 

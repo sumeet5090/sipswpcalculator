@@ -4,7 +4,7 @@ subtitle: "The definitive guide to Public Provident Fund — 2026 interest rates
 meta_desc: "What is PPF (Public Provident Fund)? Complete guide to 2026 interest rates, 5th-of-month rule, 15-year maturity, Section 80C & 100% tax-free returns in India."
 tag: "Guide"
 tag_color: "emerald"
-featured: true
+featured: false
 date: "March 2026"
 ---
 

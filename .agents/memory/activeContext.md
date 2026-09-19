@@ -17,6 +17,9 @@
   - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 234 files, 0 PHPCS violations).
   - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across base and specialized engines.
   - Local curl verification: Confirmed HTML rendering of Child Education and Lumpsum vs SIP matrices on `localhost:8080`.
+- **Blog Category Featured Posts Balancing & Template Guardrail (2026-09-20):**
+  - Capped featured posts across blog categories to 1–2 top flagship guides per category (Growth: 2, Comparison: 2, Retirement: 2).
+  - Implemented template-level guardrail in `src/Views/pages/resources.twig` capping full-width `col-span-2` card spotlight rendering to max 2 per category.
 
 ---
 
