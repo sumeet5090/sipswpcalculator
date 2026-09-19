@@ -7,7 +7,7 @@
             "read_time": "9 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "The definitive guide to Systematic Investment Plans — Rupee Cost Averaging, compounding mechanics, Section 112A taxation, and e-NACH setup."
+            "description": "The definitive guide to Systematic Investment Plans \u2014 Rupee Cost Averaging, compounding mechanics, Section 112A taxation, and e-NACH setup."
         },
         {
             "href": "/resource/growth/what-is-compound-interest",
@@ -30,7 +30,7 @@
     ],
     "swp-calculator": [
         {
-            "href": "/resource/retirement/swp-vs-annuity-monthly-pension",
+            "href": "/resource/comparison/swp-vs-annuity-2026",
             "title": "SWP vs Annuity: Which is Better for Monthly Pension?",
             "tag": "Deep Dive",
             "read_time": "8 min",
@@ -39,7 +39,7 @@
             "description": "Discover why Systematic Withdrawal Plans provide up to 3x higher post-tax income than traditional insurance annuities or bank pension plans."
         },
         {
-            "href": "/resource/retirement/safe-withdrawal-rate-india-4-percent-rule",
+            "href": "/resource/retirement/retirement-planning-4-percent-swp-rule",
             "title": "Safe Withdrawal Rate in India: Why the 4% Rule Fails",
             "tag": "Research",
             "read_time": "9 min",
@@ -59,7 +59,7 @@
     ],
     "sip-step-up-calculator": [
         {
-            "href": "/resource/growth/step-up-sip-wealth-accelerator",
+            "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
             "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
             "tag": "Strategy",
             "read_time": "7 min",
@@ -88,7 +88,7 @@
     ],
     "lumpsum-calculator": [
         {
-            "href": "/resource/comparison/sip-vs-lumpsum-in-bull-bear-markets",
+            "href": "/resource/comparison/sip-vs-lumpsum",
             "title": "SIP vs Lumpsum in Bull and Bear Markets: Historical Study",
             "tag": "Analysis",
             "read_time": "8 min",
@@ -117,7 +117,7 @@
     ],
     "retirement-calculator": [
         {
-            "href": "/resource/retirement/safe-withdrawal-rate-india-4-percent-rule",
+            "href": "/resource/retirement/retirement-planning-4-percent-swp-rule",
             "title": "Safe Withdrawal Rate in India: Why the 4% Rule Fails",
             "tag": "Research",
             "read_time": "9 min",
@@ -135,7 +135,7 @@
             "description": "A complete blueprint for architecting a 3-bucket retirement portfolio balancing cash, debt funds, and growth equities for 30+ years."
         },
         {
-            "href": "/resource/retirement/swp-vs-annuity-monthly-pension",
+            "href": "/resource/comparison/swp-vs-annuity-2026",
             "title": "SWP vs Annuity: Which is Better for Monthly Pension?",
             "tag": "Deep Dive",
             "read_time": "8 min",
@@ -146,13 +146,13 @@
     ],
     "my-first-crore-calculator": [
         {
-            "href": "/resource/growth/sip-first-crore-timeline",
-            "title": "How to Reach ₹1 Crore Through SIP: Timelines & Milestones",
+            "href": "/resource/growth/reach-1-crore-rupees-via-sip",
+            "title": "How to Reach \u20b91 Crore Through SIP: Timelines & Milestones",
             "tag": "Milestones",
             "read_time": "8 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "Why your first ₹1 Crore takes 14 years but the second takes only 5: the mathematical law of compounding speedup unveiled."
+            "description": "Why your first \u20b91 Crore takes 14 years but the second takes only 5: the mathematical law of compounding speedup unveiled."
         },
         {
             "href": "/resource/growth/what-is-sip",
@@ -161,22 +161,22 @@
             "read_time": "9 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "Understand the discipline, fund selection criteria, and rupee cost averaging needed to build a ₹1 Crore mutual fund portfolio."
+            "description": "Understand the discipline, fund selection criteria, and rupee cost averaging needed to build a \u20b91 Crore mutual fund portfolio."
         },
         {
-            "href": "/resource/growth/step-up-sip-wealth-accelerator",
+            "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
             "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
             "tag": "Strategy",
             "read_time": "7 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "Shave 4 to 6 years off your journey to ₹1 Crore by applying a modest 10% annual step-up to your initial monthly SIP investment."
+            "description": "Shave 4 to 6 years off your journey to \u20b91 Crore by applying a modest 10% annual step-up to your initial monthly SIP investment."
         }
     ],
     "target-corpus-calculator": [
         {
-            "href": "/resource/growth/sip-first-crore-timeline",
-            "title": "How to Reach ₹1 Crore Through SIP: Timelines & Milestones",
+            "href": "/resource/growth/reach-1-crore-rupees-via-sip",
+            "title": "How to Reach \u20b91 Crore Through SIP: Timelines & Milestones",
             "tag": "Milestones",
             "read_time": "8 min",
             "category": "growth",
@@ -184,7 +184,7 @@
             "description": "Reverse-engineer milestone planning for children's education, home down payment, and financial independence."
         },
         {
-            "href": "/resource/growth/step-up-sip-wealth-accelerator",
+            "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
             "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
             "tag": "Strategy",
             "read_time": "7 min",
@@ -271,7 +271,7 @@
             "description": "Demystify reducing balance amortisation math, interest-heavy early tenures, and how extra repayments save lakhs in interest."
         },
         {
-            "href": "/resource/comparison/sip-vs-prepaying-home-loan",
+            "href": "/resource/growth/what-is-emi",
             "title": "SIP vs Prepaying Home Loan: Which Builds More Wealth?",
             "tag": "Comparison",
             "read_time": "9 min",
@@ -344,7 +344,7 @@
             "read_time": "8 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "How annual compounding on government-backed savings accounts turns ₹1.5 lakh annual deposits into over ₹40 lakhs tax-free."
+            "description": "How annual compounding on government-backed savings accounts turns \u20b91.5 lakh annual deposits into over \u20b940 lakhs tax-free."
         }
     ],
     "fd-calculator": [
@@ -378,13 +378,13 @@
     ],
     "reach-1-crore-via-sip": [
         {
-            "href": "/resource/growth/sip-first-crore-timeline",
-            "title": "How to Reach ₹1 Crore Through SIP: Timelines & Milestones",
+            "href": "/resource/growth/reach-1-crore-rupees-via-sip",
+            "title": "How to Reach \u20b91 Crore Through SIP: Timelines & Milestones",
             "tag": "Milestones",
             "read_time": "8 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "Why your first ₹1 Crore takes 14 years but the second takes only 5: the mathematical law of compounding speedup unveiled."
+            "description": "Why your first \u20b91 Crore takes 14 years but the second takes only 5: the mathematical law of compounding speedup unveiled."
         },
         {
             "href": "/resource/growth/what-is-sip",
@@ -393,30 +393,30 @@
             "read_time": "9 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "Understand the discipline, fund selection criteria, and rupee cost averaging needed to build a ₹1 Crore mutual fund portfolio."
+            "description": "Understand the discipline, fund selection criteria, and rupee cost averaging needed to build a \u20b91 Crore mutual fund portfolio."
         },
         {
-            "href": "/resource/growth/step-up-sip-wealth-accelerator",
+            "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
             "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
             "tag": "Strategy",
             "read_time": "7 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "Shave 4 to 6 years off your journey to ₹1 Crore by applying a modest 10% annual step-up to your initial monthly SIP investment."
+            "description": "Shave 4 to 6 years off your journey to \u20b91 Crore by applying a modest 10% annual step-up to your initial monthly SIP investment."
         }
     ],
     "reach-5-crore-via-sip": [
         {
-            "href": "/resource/retirement/safe-withdrawal-rate-india-4-percent-rule",
+            "href": "/resource/retirement/retirement-planning-4-percent-swp-rule",
             "title": "Safe Withdrawal Rate in India: Why the 4% Rule Fails",
             "tag": "Research",
             "read_time": "9 min",
             "category": "retirement",
             "category_name": "Retirement Planning",
-            "description": "How to convert a ₹5 Crore portfolio into perpetual, inflation-protected monthly pension cash flows without eroding capital."
+            "description": "How to convert a \u20b95 Crore portfolio into perpetual, inflation-protected monthly pension cash flows without eroding capital."
         },
         {
-            "href": "/resource/growth/step-up-sip-wealth-accelerator",
+            "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
             "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
             "tag": "Strategy",
             "read_time": "7 min",
@@ -425,7 +425,7 @@
             "description": "How continuous annual step-up multipliers make a multi-crore financial freedom portfolio achievable for salaried earners."
         },
         {
-            "href": "/resource/retirement/swp-vs-annuity-monthly-pension",
+            "href": "/resource/comparison/swp-vs-annuity-2026",
             "title": "SWP vs Annuity: Which is Better for Monthly Pension?",
             "tag": "Deep Dive",
             "read_time": "8 min",
@@ -451,16 +451,16 @@
             "read_time": "8 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "See the exponential math that turns a simple ₹5,000 monthly contribution into over ₹50 Lakhs in 20 years."
+            "description": "See the exponential math that turns a simple \u20b95,000 monthly contribution into over \u20b950 Lakhs in 20 years."
         },
         {
-            "href": "/resource/growth/step-up-sip-wealth-accelerator",
+            "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
             "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
             "tag": "Strategy",
             "read_time": "7 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "How a small ₹500 yearly top-up more than doubles your final wealth from ₹95 Lakhs to ₹2.3 Crores."
+            "description": "How a small \u20b9500 yearly top-up more than doubles your final wealth from \u20b995 Lakhs to \u20b92.3 Crores."
         }
     ],
     "sip-10000-per-month": [
@@ -471,25 +471,25 @@
             "read_time": "9 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "Master the rules of disciplined mutual fund compounding and tax efficiency on a ₹10,000 monthly investment."
+            "description": "Master the rules of disciplined mutual fund compounding and tax efficiency on a \u20b910,000 monthly investment."
         },
         {
-            "href": "/resource/growth/sip-first-crore-timeline",
-            "title": "How to Reach ₹1 Crore Through SIP: Timelines & Milestones",
+            "href": "/resource/growth/reach-1-crore-rupees-via-sip",
+            "title": "How to Reach \u20b91 Crore Through SIP: Timelines & Milestones",
             "tag": "Milestones",
             "read_time": "8 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "Track the exact 20-year roadmap from ₹10k/month to your first ₹1 Crore milestone."
+            "description": "Track the exact 20-year roadmap from \u20b910k/month to your first \u20b91 Crore milestone."
         },
         {
-            "href": "/resource/growth/step-up-sip-wealth-accelerator",
+            "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
             "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
             "tag": "Strategy",
             "read_time": "7 min",
             "category": "growth",
             "category_name": "Wealth Growth",
-            "description": "See how stepping up ₹10,000 by 10% annually creates an extra ₹2.71 Crores in 25-year wealth."
+            "description": "See how stepping up \u20b910,000 by 10% annually creates an extra \u20b92.71 Crores in 25-year wealth."
         }
     ]
 }

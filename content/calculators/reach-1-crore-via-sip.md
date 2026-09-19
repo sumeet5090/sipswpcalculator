@@ -16,7 +16,7 @@ Accumulating **₹1 Crore (₹10,000,000)** through a Systematic Investment Plan
 
 During the initial years of an investor's career, wealth accumulation feels agonizingly sluggish. When your portfolio stands at ₹2,00,000, even a stellar 15% annual market return delivers only ₹30,000 in capital appreciation—an amount easily overshadowed by a single monthly salary contribution. However, once an investor crosses the **₹1 Crore threshold**, a standard 12% to 14% annual market return produces **₹12,00,000 to ₹14,00,000 in passive yearly wealth expansion**—frequently surpassing the net take-home pay of experienced corporate professionals.
 
-This interactive **₹1 Crore SIP Goal Calculator** reverse-engineers the exact financial trajectory required to hit this milestone. Rather than forcing you to guess how long an arbitrary monthly sum will take, this tool calculates the precise monthly commitments across various time horizons (5, 8, 10, 12, 15, and 20 years), demonstrates the impact of annual step-up top-ups, incorporates post-tax net realization under Budget 2024 Section 112A rules, and benchmarks inflation-adjusted real purchasing power.
+This interactive **₹1 Crore SIP Goal Calculator** reverse-engineers the exact financial trajectory required to hit this milestone. Rather than forcing you to guess how long an arbitrary monthly sum will take, this tool calculates the precise monthly commitments across various time horizons (5, 8, 10, 12, 15, and 20 years), demonstrates the impact of annual step-up top-ups, incorporates post-tax net realization under Section 112A (2026 Rules) rules, and benchmarks inflation-adjusted real purchasing power.
 
 ---
 
@@ -129,7 +129,7 @@ To achieve an annualized 12% to 14% CAGR over 10 to 15 years, asset allocation a
 
 ---
 
-## 5. Budget 2024 LTCG Tax Impact: The Net Post-Tax ₹1 Crore
+## 5. 2026 LTCG Capital Gains Tax Rules Impact: The Net Post-Tax ₹1 Crore
 
 Under the revised tax provisions of the Indian Finance Act (effective July 23, 2024), **Long-Term Capital Gains (LTCG)** on equity-oriented mutual funds held for more than 12 months are taxed as follows:
 * **Statutory Exemption Limit:** **₹1,25,000 per financial year** (increased from the previous ₹1,00,000 threshold under Section 112A).

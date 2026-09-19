@@ -61,6 +61,39 @@
 
 {% block content %}
 {% include 'components/theme-glow-blobs.twig' %}
+
+<!-- Visual Breadcrumb Navigation (aligned with JSON-LD BreadcrumbList schema) -->
+<nav aria-label="Breadcrumb" class="mb-4 sm:mb-6">
+    <ol role="list" class="flex items-center justify-center sm:justify-start space-x-1.5 sm:space-x-2 text-xs text-slate-500 flex-wrap">
+        <li>
+            <div class="flex items-center">
+                <a href="/" class="text-slate-500 hover:text-emerald-700 transition-colors flex items-center gap-1 font-medium">
+                    <svg class="h-3.5 w-3.5 flex-shrink-0 text-slate-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Home</span>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div class="flex items-center">
+                <svg class="h-3.5 w-3.5 flex-shrink-0 text-slate-300 mx-0.5 sm:mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+                <a href="/#calculator-section" class="text-slate-500 hover:text-emerald-700 transition-colors whitespace-nowrap font-medium">Calculators</a>
+            </div>
+        </li>
+        <li class="min-w-0">
+            <div class="flex items-center min-w-0">
+                <svg class="h-3.5 w-3.5 flex-shrink-0 text-slate-300 mx-0.5 sm:mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-slate-800 font-semibold truncate max-w-[180px] xs:max-w-[260px] sm:max-w-md block" aria-current="page">{{ content_metadata.title|default(page_config.title) }}</span>
+            </div>
+        </li>
+    </ol>
+</nav>
+
 <header class="relative mb-6 sm:mb-10 text-center border-b border-slate-100 pb-6">
     <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-emerald-50 border border-emerald-100 mb-3 sm:mb-4">
         <span class="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3">

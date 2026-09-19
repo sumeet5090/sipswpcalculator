@@ -5,26 +5,25 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Dual Mode Homepage Re-Architecture, Query-Intent Optimization & Embed Backlink Engine.
+- **Current Milestone:** Individual Calculator SEO Realism, Broken Link Eradication, Topical Benchmark Matrices & Breadcrumb Alignment.
 - **Implemented Fixes & Architectural Outcomes:**
-  - **Dual-Mode Homepage by Default:** Upgraded the homepage to initialize in Combined Dual Mode (`data-mode="combo"`, `enable_swp = true` default in `RenderHomeAction.php` and `CalculatorApp.ts`). Search visitors looking for *"sip and swp calculator together"* immediately see both Stage 1 (Wealth Accumulation) and Stage 2 (Retirement Cashflow) calculating simultaneously without hunting through tabs or checkboxes, directly eliminating pogo-sticking bounce friction.
-  - **3-Mode Segmented Selector:** Deployed a 3-mode segmented control (`[🚀 Dual (SIP+SWP)]`, `[📈 SIP Only]`, `[🛡️ SWP Only]`) in `calculator-form.twig` and `TabController.ts`. Switching tabs provides zero-latency client-side toggling between combined lifecycle, pure SIP, and pure SWP with starting corpus.
-  - **Above-The-Fold Excel CTA & H1 Alignment:** Aligned H1 in `home.twig` to `SIP + SWP Calculator Together` with subtitle `Accumulation to Retirement Cashflow (with Inflation & Excel)` and added an above-the-fold "📥 Download Free Excel Model" CTA targeting GSC Rank 1 query intent.
-  - **Meta Retargeting & Intent Alignment:** Retargeted homepage title from `SIP & SWP Calculator Together — Dual Wealth Planner` to `SIP + SWP Calculator Together (with Inflation & Excel)` (54 characters, compliant with SERP snippet display thresholds), with description and keywords capturing high-converting GSC queries (`sip and swp calculator together`, `sip plus swp calculator`, `sip swp calculator excel`).
-  - **Capitalizing on Positions 1–3 (Corpus Scenarios):** Added static, crawlable benchmark tables and BLUF definitions for queries where the site ranks on Page 1 (`5 lakh swp calculator`, `10 lakh`, `30 lakh`, `1 crore`, and `5 crore swp calculator`) in `content/calculators/swp-calculator.md`.
-  - **AI Citation Grounding (BLUF Direct Answers):** Injected 45–55 word direct definitional answer capsules (BLUF) into `src/Views/components/guide-definitions.twig` for "SIP with SWP Combo Plan", "Inflation Step-Up SWP", and "2026 LTCG Tax Rules (§112A)", with schema DefinedTerm hooks for Gemini, Copilot, and Perplexity RAG pipelines.
-  - **Author E-E-A-T Knowledge Graph Anchoring:** Updated `HomeSchemaBuilder.php` and `SchemaHelper.php` with author `sameAs` (LinkedIn, GitHub) and verified credentials (`jobTitle`, `knowsAbout`) for Google Knowledge Graph trust.
-  - **Embeddable Backlink Engine:** Created reusable `src/Views/components/embed-modal.twig` with 1-click iframe copy functionality, wired into `home.twig`, `calculator-guide.twig`, and `analytical-studio.twig`. Configured `GuideRenderer::renderEmbed` and `.htaccess` with relaxed `X-Frame-Options: ALLOWALL` and CSP `frame-ancestors *;` specifically for `/embed/*` routes so external finance blogs and CAs can embed the tool.
-  - **P0 Schema Penalty Elimination:** Removed self-served `aggregateRating` from `HomeSchemaBuilder.php`, `SchemaFactory.php`, and `SchemaHelper.php`. Pure `SoftwareApplication`, `FAQPage`, `HowTo`, `FinancialProduct`, and `WebPage` schemas now emit cleanly.
-  - **P0 Phantom URL Eradication:** Blocked `/0.6.10` and `/sipswpcalculator.com` in `robots.txt` with 301 redirects in `redirects.json` and `Router.php`.
-  - **P0 Interactive Chart Rendering Resolution:** Resolved silent canvas draw abort on `#corpusChart` caused by Chart.js 4.5.1 internal `filler` plugin reading undefined `meta._clip.disabled` during multi-dataset fill passes. Configured `clip: false` on datasets and registered an inline `clipGuardPlugin` intercepting `beforeDatasetsDraw` and `beforeDatasetDraw` to guarantee `_clip` metadata integrity with zero external dependencies.
+  - **P0 Broken Link Eradication:** Fixed all 19 mismatched URLs in `content/calculator_pillar_guides.json` and added permanent 301 redirects in `content/redirects.json` ensuring 100% of internal links resolve to 200 OK endpoints without crawl-budget leakage.
+  - **P0 Step-Up SIP Benchmark Restoration:** Fixed the mode detection in `scenario-benchmark-table.twig` (`current_slug == 'sip-step-up-calculator'`), restoring the dedicated Step-Up SIP vs Regular SIP comparison table (+₹49.49L, +₹98.98L delta).
+  - **P1 Dedicated Topical Scenario Matrices:** Replaced the generic fallback tables across all specialized calculators with mathematically verified, pre-calculated static matrices:
+    - `/emi-calculator`: Home & Car Loan Monthly EMI Amortization Matrix (8.5% p.a.).
+    - `/ppf-calculator`: Public Provident Fund (PPF) 15 to 30 Year Maturity Schedule (7.1% EEE).
+    - `/fd-calculator`: Bank Fixed Deposit Compounding & Maturity Yield Matrix (General vs Senior Citizen).
+    - `/inflation-calculator`: Indian Rupee Purchasing Power & Inflation Erosion Table (6.0% CPI).
+    - `/target-corpus-calculator`, `/my-first-crore-calculator`, `/reach-1-crore-via-sip`, `/reach-5-crore-via-sip`: Target Corpus Goal-Seek Matrix across 5 to 20 years at 12% CAGR.
+  - **P1 Visual Breadcrumb Navigation:** Added clean, accessible light-mode breadcrumb navigation `<nav aria-label="Breadcrumb">` to `src/Views/calculators/calculator-guide.twig`, achieving 100% parity with the JSON-LD `BreadcrumbList` schema.
+  - **P2 Title Retargeting & SERP Truncation Fix:** Retargeted long/jargon titles to high-volume Indian investor queries under 60 characters (`SIP Calculator India — Mutual Fund SIP Return Calculator`, `Lumpsum Calculator India — One-Time Investment Returns`, `PPF Calculator India — PPF Interest & Maturity Calculator`, `Compound Interest Calculator India — Monthly & Annual Growth`, `Target Corpus Calculator — Goal SIP Calculator India`, `₹5,000 Monthly SIP Calculator`, `₹10,000 Monthly SIP Calculator`).
+  - **P2 Tax Year Freshness & BLUF AI Direct Answers:** Updated stale "Budget 2024" references to "2026 Capital Gains Tax Rules (Section 112A — 12.5% LTCG & ₹1.25L Exemption)" and injected BLUF direct answer callouts into `sip-calculator.md`, `lumpsum-calculator.md`, and `ppf-calculator.md`.
 - **Verification & System Health:**
-  - Full PHPUnit test suite: 839 tests / 13,588 assertions passed cleanly (0 failures, 0 warnings).
+  - Full PHPUnit test suite: 839 tests / 13,594 assertions passed cleanly (0 failures, 0 warnings).
   - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 234 files, 0 PHPCS violations).
   - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across base and specialized engines.
-  - Local curl verification: Verified on `http://localhost:8080/` and `http://127.0.0.1:8000/` for clean markup and fresh assets.
-  - Browser subagent validation: Verified clean initial load with Dual Mode active, instant calculation response on slider movement, smooth 3-mode tab switching, and complete accumulation-to-distribution curve visualization with 0 console errors.
-  - Frontend bundle: `npm run build` compiled without warnings or errors.
+  - SEO Metadata Validator: 44 tests / 3,036 assertions passed with 100% compliance.
+  - Local curl verification: Confirmed on `http://localhost:8080/sip-step-up-calculator`, `http://localhost:8080/emi-calculator`, and `http://localhost:8080/ppf-calculator`.
 
 ---
 

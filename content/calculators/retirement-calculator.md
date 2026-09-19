@@ -242,7 +242,7 @@ The 3-bucket strategy divides your retirement savings into three functional asse
 * **Bucket 2 (Income/Debt, Years 4–8):** High-quality short-duration debt funds generating 6.5%–7.5% p.a. to refill Bucket 1.
 * **Bucket 3 (Growth/Equity, Years 9+):** Diversified equity mutual funds generating 11%–13% p.a. to ensure your wealth outpaces long-term inflation.
 
-### How are mutual fund SWP withdrawals taxed under Budget 2024?
+### How are mutual fund SWP withdrawals taxed under 2026 Tax Rules?
 Under Section 112A of the Income Tax Act (Finance No. 2 Act, 2024), long-term capital gains on equity mutual funds held for more than 12 months are completely **tax-free up to ₹1,25,000 per financial year**. Any gains exceeding this threshold are taxed at a flat rate of **12.5%** plus 4% cess. Because each SWP withdrawal contains a high proportion of returned principal capital, your effective tax rate in retirement is typically under 3% to 5%.
 
 ### Can I retire early (FIRE) in India at age 40 or 45?

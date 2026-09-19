@@ -1,10 +1,10 @@
 ---
 og_image: "/assets/og/og-compound-interest-calculator.jpg"
-title: "Compound Interest Calculator India — Periodic Growth Planner"
+title: "Compound Interest Calculator India — Monthly & Annual Growth"
 subtitle: "Calculate compound interest returns with annual, quarterly, and monthly compounding frequencies. See Rule of 72 doubling periods and interactive growth charts."
 meta_desc: "Calculate compound interest with annual, quarterly, and monthly compounding frequencies. Model Rule of 72 doubling timelines and growth with free charts and tables."
 keywords: "compound interest calculator, ci calculator india, compounding calculator, rule of 72 calculator, monthly compounding calculator, investment compounding"
-schema_name: "Compound Interest Calculator India — Periodic Growth Planner"
+schema_name: "Compound Interest Calculator India — Monthly & Annual Growth"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-01"
@@ -192,7 +192,7 @@ Consider two investors starting with ₹10,00,000, both earning 8% p.a. in the 3
     *   Gross Nominal Return: 8.0% p.a. compounding uninterrupted inside the scheme.
     *   Pre-Tax Corpus after 20 Years: $10,00,000 \times (1 + 0.08)^{20} = \mathbf{₹46,60,957}$
     *   Capital Gain: ₹36,60,957.
-    *   Budget 2024 LTCG Tax (12.5% on gains exceeding ₹1.25 Lakh exemption):
+    *   2026 LTCG Capital Gains Tax Rules (12.5% on gains exceeding ₹1.25 Lakh exemption):
         $$\text{Tax} = 0.125 \times (36,60,957 - 1,25,000) = \mathbf{₹4,41,995}$$
     *   Net Post-Tax Corpus: $46,60,957 - 4,41,995 = \mathbf{₹42,18,962}$
 

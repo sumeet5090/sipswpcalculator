@@ -109,7 +109,7 @@ Because CAGR measures the geometric mean, it captures this mathematical drag cau
 
 To set realistic return assumptions in your financial planning, examine the historical performance across key Indian asset classes over multi-decade cycles:
 
-| Asset Class | Representative Benchmark | 10-Year CAGR | 20-Year CAGR | Volatility (Std Dev) | Tax Efficiency (Budget 2024) |
+| Asset Class | Representative Benchmark | 10-Year CAGR | 20-Year CAGR | Volatility (Std Dev) | Tax Efficiency (2026 Rules) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Indian Large-Cap Equity** | Nifty 50 TRI | **12.5% – 14.0%** | **13.2%** | Moderate (~15%) | 12.5% LTCG above ₹1.25L exemption |
 | **Indian Mid & Small-Cap** | Nifty Midcap 150 TRI | **16.0% – 19.5%** | **16.8%** | High (~21%) | 12.5% LTCG above ₹1.25L exemption |
@@ -174,7 +174,7 @@ $$\text{CAGR} = \left(\frac{11,80,000}{5,00,000}\right)^{\frac{1}{6.5}} - 1 = (2
 Nominal CAGR tells you how rapidly the numerical balance on your screen grew. **Real Post-Tax CAGR** tells you how much additional purchasing power you actually gained in the real economy.
 
 ### Step 1: Calculate Post-Tax Final Value
-Under the updated Budget 2024 tax code:
+Under the updated 2026 capital gains tax code:
 *   **Equity Mutual Funds:** Long-Term Capital Gains (held > 12 months) are taxed at **12.5%** on aggregate profits exceeding ₹1.25 Lakh per financial year.
 *   **Debt Mutual Funds (purchased post-April 1, 2023):** Taxed at your individual marginal income tax slab.
 
