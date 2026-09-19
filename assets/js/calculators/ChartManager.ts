@@ -282,6 +282,7 @@ export class ChartManager {
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
                 fill: 'origin',
+                clip: false,
                 pointStyle: ChartPatternHelper.getPointStyle('invested'),
                 pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
                 pointBorderColor: THEME_COLORS.financial.invested,
@@ -297,7 +298,8 @@ export class ChartManager {
                 borderWidth: 3,
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
-                fill: showWealthMap ? true : (showPostTax ? '+1' : 0),
+                fill: showWealthMap ? 'origin' : (showPostTax ? '+1' : 0),
+                clip: false,
                 pointStyle: ChartPatternHelper.getPointStyle('corpus'),
                 pointBackgroundColor: pointBgColors,
                 pointBorderColor: pointBorderColors,
@@ -306,8 +308,11 @@ export class ChartManager {
                 pointHoverRadius: pointHoverRadii,
                 pointHoverBorderWidth: 3,
                 order: 1,
-            },
-            {
+            }
+        ];
+
+        if (showPostTax && !showWealthMap) {
+            datasets.push({
                 label: 'Post-Tax Corpus (§112A Net)',
                 data: postTaxCorpus,
                 borderColor: THEME_COLORS.financial.postTax,
@@ -322,10 +327,9 @@ export class ChartManager {
                 pointBorderColor: THEME_COLORS.financial.postTax,
                 pointRadius: isSinglePoint ? 4 : 0,
                 pointHoverRadius: 6,
-                hidden: !showPostTax || showWealthMap,
                 order: 2,
-            }
-        ];
+            });
+        }
 
         // Real Purchasing Power Phantom Spline (when inflation > 0)
         const inflationInput = this.dom.getElement<HTMLInputElement>('inflation');
@@ -604,6 +608,35 @@ export class ChartManager {
                     ctx.stroke();
                 } finally {
                     ctx.restore();
+                }
+            }
+        }
+    };
+
+    /**
+     * Clip Guard Plugin: Prevents Chart.js getDatasetClipArea runtime exception
+     * when filler plugin resolves cross-dataset bounds during drawing passes.
+     */
+    private clipGuardPlugin = {
+        id: 'clipGuard',
+        beforeDatasetsDraw: (chart: any) => {
+            if (chart.config.type !== 'line') return;
+            const datasets = chart.data?.datasets || [];
+            for (let i = 0; i < datasets.length; i++) {
+                const meta = chart.getDatasetMeta(i);
+                if (meta && !meta._clip) {
+                    meta._clip = { top: 0, right: 0, bottom: 0, left: 0, disabled: true };
+                }
+            }
+        },
+        beforeDatasetDraw: (chart: any, args: any) => {
+            if (args?.meta && !args.meta._clip) {
+                args.meta._clip = { top: 0, right: 0, bottom: 0, left: 0, disabled: true };
+            }
+            if (args?.meta?.$filler?.index !== undefined) {
+                const fillerTarget = chart.getDatasetMeta(args.meta.$filler.index);
+                if (fillerTarget && !fillerTarget._clip) {
+                    fillerTarget._clip = { top: 0, right: 0, bottom: 0, left: 0, disabled: true };
                 }
             }
         }
@@ -1366,6 +1399,7 @@ export class ChartManager {
                 datasets: datasets
             },
             plugins: [
+                this.clipGuardPlugin,
                 this.crosshairPlugin,
                 this.splineMilestonesPlugin,
                 this.compoundingIgnitionPlugin,
@@ -1373,6 +1407,7 @@ export class ChartManager {
                 this.fdAlphaDeltaPlugin
             ],
             options: {
+                clip: false,
                 responsive: true,
                 maintainAspectRatio: false,
                 devicePixelRatio: Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2.5),

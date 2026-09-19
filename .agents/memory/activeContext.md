@@ -17,13 +17,13 @@
   - **Embeddable Backlink Engine:** Created reusable `src/Views/components/embed-modal.twig` with 1-click iframe copy functionality, wired into `home.twig`, `calculator-guide.twig`, and `analytical-studio.twig`. Configured `GuideRenderer::renderEmbed` and `.htaccess` with relaxed `X-Frame-Options: ALLOWALL` and CSP `frame-ancestors *;` specifically for `/embed/*` routes so external finance blogs and CAs can embed the tool.
   - **P0 Schema Penalty Elimination:** Removed self-served `aggregateRating` from `HomeSchemaBuilder.php`, `SchemaFactory.php`, and `SchemaHelper.php`. Pure `SoftwareApplication`, `FAQPage`, `HowTo`, `FinancialProduct`, and `WebPage` schemas now emit cleanly.
   - **P0 Phantom URL Eradication:** Blocked `/0.6.10` and `/sipswpcalculator.com` in `robots.txt` with 301 redirects in `redirects.json` and `Router.php`.
-  - **P1 INP Optimization:** Added `requestAnimationFrame` batching to range slider input events in `SliderManager.ts` and switched `CalculatorApp.ts` to `chartManager.updateChartThrottled()`.
+  - **P0 Interactive Chart Rendering Resolution:** Resolved silent canvas draw abort on `#corpusChart` caused by Chart.js 4.5.1 internal `filler` plugin reading undefined `meta._clip.disabled` during multi-dataset fill passes. Configured `clip: false` on datasets and registered an inline `clipGuardPlugin` intercepting `beforeDatasetsDraw` and `beforeDatasetDraw` to guarantee `_clip` metadata integrity with zero external dependencies.
 - **Verification & System Health:**
   - Full PHPUnit test suite: 839 tests / 13,588 assertions passed cleanly (0 failures, 0 warnings).
   - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 234 files, 0 PHPCS violations).
   - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across base and specialized engines.
-  - Local curl verification: Verified on `http://127.0.0.1:8000/` for new title, meta tags, schema, BLUF capsules, `/embed/sip-calculator` iframe rendering, and Dual Mode default markup.
-  - Browser subagent validation: Verified clean initial load with Dual Mode active, instant calculation response on slider movement, smooth 3-mode tab switching, and complete accumulation-to-distribution curve visualization.
+  - Local curl verification: Verified on `http://localhost:8080/` and `http://127.0.0.1:8000/` for clean markup and fresh assets.
+  - Browser subagent validation: Verified clean initial load with Dual Mode active, instant calculation response on slider movement, smooth 3-mode tab switching, and complete accumulation-to-distribution curve visualization with 0 console errors.
   - Frontend bundle: `npm run build` compiled without warnings or errors.
 
 ---
