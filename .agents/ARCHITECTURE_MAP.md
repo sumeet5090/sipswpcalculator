@@ -9,7 +9,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 
 | Route Slug | PHP Action | Twig Layout & Form Partial | TS Strategy / Driver | Engine / Math Parity | Defaults Key (`calculator_defaults.json`) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `/` (Home) | `Controllers\RenderHomeAction` | `calculators/home.twig`<br/>`forms/sip-fields.twig`<br/>`forms/swp-fields.twig` | `CalculatorApp.ts`<br/>`strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `sip`, `years`, `rate`, `stepup`, `inflation`, `lumpsum`, `swp_withdrawal` |
+| `/` (Home) | `Controllers\RenderHomeAction` | `calculators/home.twig`<br/>`components/calculator-form.twig`<br/>`forms/sip-fields.twig`<br/>`forms/swp-fields.twig` | `CalculatorApp.ts`<br/>`controllers/TabController.ts`<br/>`strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | Dual default (`combo`: `sip`, `years`, `rate`, `stepup`, `inflation`, `lumpsum`, `swp_withdrawal`, `swp_years`, `swp_rate`, `swp_stepup`) |
 | `/sip-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/sip-fields.twig` | `strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `sip`, `years`, `rate`, `stepup` |
 | `/swp-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/corpus-field.twig`<br/>`forms/swp-fields.twig` | `strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `corpus`, `swp_withdrawal`, `years`, `rate`, `inflation` |
 | `/sip-step-up-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/sip-fields.twig` | `strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `sip`, `years`, `rate`, `stepup` |
@@ -41,6 +41,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | **QR Share & Socials** | `qr-share-modal.twig` | `subsystems/ExportSubsystem.ts` | Encoded URL state generation, canvas QR render, and native Web Share API trigger |
 | **SEBI Benchmark & Trust** | `sebibenchmark-modal.twig`<br/>`privacy-trust-badge.twig` | `subsystems/EngagementSubsystem.ts` | Regulatory disclosure compliance, index benchmark comparisons, privacy audit badges |
 | **Scenario Benchmark Tables** | `scenario-benchmark-table.twig` | Static HTML / AMFI Matrix | Pre-calculated static benchmark matrices for Google rich answers and AI search engine extraction (Gemini / Copilot) |
+| **3-Mode Segmented Selector** | `components/calculator-form.twig` | `controllers/TabController.ts` | Instant toggle between Dual (SIP + SWP), SIP Only, and SWP Only with automatic phase staging and zero reload |
 | **Embed Calculator Modal** | `embed-modal.twig` | Frontend `<dialog>` / `copyEmbedCodeBtn` | 1-click responsive iframe generator for external financial bloggers and advisors with attribution backlink |
 
 ---

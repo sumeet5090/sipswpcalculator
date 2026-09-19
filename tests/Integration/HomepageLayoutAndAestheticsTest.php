@@ -46,7 +46,7 @@ final class HomepageLayoutAndAestheticsTest extends IntegrationTestCase
         // 1. Exactly one <h1> with proper text
         $h1s = $xpath->query('//h1');
         $this->assertEquals(1, $h1s->length, 'Homepage must have exactly one <h1>');
-        $this->assertStringContainsString('SIP SWP Calculator Together', $h1s->item(0)->textContent);
+        $this->assertStringContainsString('SIP + SWP Calculator Together', $h1s->item(0)->textContent);
 
         // 2. Speakable quick answer box
         $quickAnswer = $xpath->query('//*[@id="quick-answer"]');

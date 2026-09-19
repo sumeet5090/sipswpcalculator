@@ -33,7 +33,7 @@ export class SummaryMetricsController {
     private initCardClickHandlers(): void {
         const grid = this.dom.getElement('summary-cards-grid');
         if (!grid) return;
-        const cards = grid.querySelectorAll<HTMLElement>('> div');
+        const cards = grid.querySelectorAll<HTMLElement>(':scope > div');
         cards.forEach(card => {
             card.classList.add('cursor-pointer');
             card.setAttribute('role', 'button');

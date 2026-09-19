@@ -5,8 +5,11 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** SEO Technical Diagnostic Remediation, Query-Intent Optimization & Embed Backlink Engine.
+- **Current Milestone:** Dual Mode Homepage Re-Architecture, Query-Intent Optimization & Embed Backlink Engine.
 - **Implemented Fixes & Architectural Outcomes:**
+  - **Dual-Mode Homepage by Default:** Upgraded the homepage to initialize in Combined Dual Mode (`data-mode="combo"`, `enable_swp = true` default in `RenderHomeAction.php` and `CalculatorApp.ts`). Search visitors looking for *"sip and swp calculator together"* immediately see both Stage 1 (Wealth Accumulation) and Stage 2 (Retirement Cashflow) calculating simultaneously without hunting through tabs or checkboxes, directly eliminating pogo-sticking bounce friction.
+  - **3-Mode Segmented Selector:** Deployed a 3-mode segmented control (`[🚀 Dual (SIP+SWP)]`, `[📈 SIP Only]`, `[🛡️ SWP Only]`) in `calculator-form.twig` and `TabController.ts`. Switching tabs provides zero-latency client-side toggling between combined lifecycle, pure SIP, and pure SWP with starting corpus.
+  - **Above-The-Fold Excel CTA & H1 Alignment:** Aligned H1 in `home.twig` to `SIP + SWP Calculator Together` with subtitle `Accumulation to Retirement Cashflow (with Inflation & Excel)` and added an above-the-fold "📥 Download Free Excel Model" CTA targeting GSC Rank 1 query intent.
   - **Meta Retargeting & Intent Alignment:** Retargeted homepage title from `SIP & SWP Calculator Together — Dual Wealth Planner` to `SIP + SWP Calculator Together (with Inflation & Excel)` (54 characters, compliant with SERP snippet display thresholds), with description and keywords capturing high-converting GSC queries (`sip and swp calculator together`, `sip plus swp calculator`, `sip swp calculator excel`).
   - **Capitalizing on Positions 1–3 (Corpus Scenarios):** Added static, crawlable benchmark tables and BLUF definitions for queries where the site ranks on Page 1 (`5 lakh swp calculator`, `10 lakh`, `30 lakh`, `1 crore`, and `5 crore swp calculator`) in `content/calculators/swp-calculator.md`.
   - **AI Citation Grounding (BLUF Direct Answers):** Injected 45–55 word direct definitional answer capsules (BLUF) into `src/Views/components/guide-definitions.twig` for "SIP with SWP Combo Plan", "Inflation Step-Up SWP", and "2026 LTCG Tax Rules (§112A)", with schema DefinedTerm hooks for Gemini, Copilot, and Perplexity RAG pipelines.
@@ -19,7 +22,8 @@
   - Full PHPUnit test suite: 839 tests / 13,588 assertions passed cleanly (0 failures, 0 warnings).
   - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 234 files, 0 PHPCS violations).
   - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across base and specialized engines.
-  - Local curl verification: Verified on `http://127.0.0.1:8000/` for new title, meta tags, schema, BLUF capsules, and `/embed/sip-calculator` iframe rendering.
+  - Local curl verification: Verified on `http://127.0.0.1:8000/` for new title, meta tags, schema, BLUF capsules, `/embed/sip-calculator` iframe rendering, and Dual Mode default markup.
+  - Browser subagent validation: Verified clean initial load with Dual Mode active, instant calculation response on slider movement, smooth 3-mode tab switching, and complete accumulation-to-distribution curve visualization.
   - Frontend bundle: `npm run build` compiled without warnings or errors.
 
 ---

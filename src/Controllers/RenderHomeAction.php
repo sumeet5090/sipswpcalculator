@@ -40,8 +40,12 @@ class RenderHomeAction
 
     public function __invoke(Request $request): Response
     {
+        $body = $request->getParsedBody();
+        if (!isset($body['enable_swp'])) {
+            $body['enable_swp'] = true;
+        }
         // Instantiate Input DTO via ConfigService
-        $inputs = InvestmentInputs::fromRequest($request->getParsedBody(), $this->configService);
+        $inputs = InvestmentInputs::fromRequest($body, $this->configService);
 
         $page_config = $this->metaManager->getMeta('home');
         $homeFaqs = $this->faqRepository->getByTag('home');
@@ -58,6 +62,7 @@ class RenderHomeAction
         $templateData = array_merge($inputs->toTemplateData(), [
             'active_page'         => 'home',
             'is_calculator'       => true,
+            'calculator_type'     => 'combo',
             'page_config'         => $page_config,
             'homeFaqs'            => $homeFaqs,
             'calc_config'         => $calcConfig,
