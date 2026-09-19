@@ -12,6 +12,8 @@ date: "2026-09-05"
 
 ---
 
+> **Direct Answer (BLUF):** A **₹5,000 monthly SIP** compounding at a 12% equity CAGR builds a corpus of **₹4.12 Lakhs in 5 years**, **₹11.62 Lakhs in 10 years**, **₹49.96 Lakhs in 20 years**, and **₹94.88 Lakhs in 25 years** (on ₹15 Lakhs invested). Activating a **10% annual step-up** (+₹500/mo each year) accelerates your wealth dramatically to **₹17.5 Lakhs in 10 years**, **₹95 Lakhs in 20 years**, and **₹2.13 Crores in 25 years**.
+
 Investing **₹5,000 per month** through a Systematic Investment Plan (SIP) is the most widely adopted entry point for salaried professionals, young graduates, and first-time investors in India. While ₹5,000 may seem modest in the context of daily living expenses, disciplined monthly compounding over 10, 15, 20, or 25 years transforms this accessible installment into substantial personal wealth.
 
 At an annualized return of **12% CAGR** (the historical long-term average of the Nifty 50 TRI index), a ₹5,000 monthly investment accumulates to **₹11.6 Lakhs in 10 years**, crosses **₹50 Lakhs in 20 years**, and surpasses **₹1 Crore in 25 years**. Furthermore, by adding a simple **10% annual step-up** (increasing your monthly investment by just ₹500 in year two, ₹550 in year three, and so forth), that same ₹5,000 starting SIP explodes into **over ₹2.13 Crores**!

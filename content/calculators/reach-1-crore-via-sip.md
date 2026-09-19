@@ -12,6 +12,8 @@ date: "2026-09-05"
 
 ---
 
+> **Direct Answer (BLUF):** Building a **₹1 Crore portfolio via SIP** at a 12% equity CAGR requires **₹43,041/month over 10 years**, **₹19,819/month over 15 years**, or **₹10,009/month over 20 years**. By adding a **10% annual step-up**, your starting requirement drops to **₹26,550/month (10 yrs)** or **₹11,516/month (15 yrs)**. After reaching ₹1 Crore, subsequent crores compound significantly faster: 1 to 2 Crores takes under 5 years at ₹25,000/month.
+
 Accumulating **₹1 Crore (₹10,000,000)** through a Systematic Investment Plan (SIP) is widely regarded across Indian personal finance as the single most transformative wealth threshold. In behavioral economics and wealth management, crossing ₹1 Crore is often referred to as escaping the **compounding gravitational pull**. 
 
 During the initial years of an investor's career, wealth accumulation feels agonizingly sluggish. When your portfolio stands at ₹2,00,000, even a stellar 15% annual market return delivers only ₹30,000 in capital appreciation—an amount easily overshadowed by a single monthly salary contribution. However, once an investor crosses the **₹1 Crore threshold**, a standard 12% to 14% annual market return produces **₹12,00,000 to ₹14,00,000 in passive yearly wealth expansion**—frequently surpassing the net take-home pay of experienced corporate professionals.

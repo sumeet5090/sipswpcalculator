@@ -14,6 +14,8 @@ date: "2026-09-01"
 
 ## What is Compound Interest?
 
+> **Direct Answer (BLUF):** **Compound Interest** generates returns on both the original principal and accumulated interest ($A = P(1 + r/n)^{nt}$). At a benchmark 12% annual return, a ₹10 Lakh deposit compounds into **₹17.62 Lakhs in 5 years**, **₹31.06 Lakhs in 10 years**, and **₹96.46 Lakhs (nearly ₹1 Crore) in 20 years**. Compounding frequency significantly impacts terminal wealth: daily/monthly compounding yields higher returns than annual crediting. Under the **Rule of 72**, your money doubles every $72 \div r$ years (e.g. 6 years at 12%).
+
 **Compound Interest** is the fundamental mathematical engine driving long-term wealth accumulation. In simple interest arrangements, returns are calculated exclusively on the original deposit (principal) throughout the entire duration. In contrast, compound interest generates **returns on both the initial principal and the accumulated interest from preceding periods**. 
 
 Over multi-year horizons, this recursive feedback loop shifts an investment from linear growth into an exponential trajectory. Albert Einstein famously described compound interest as the *"eighth wonder of the world: he who understands it, earns it; he who doesn't, pays it."*

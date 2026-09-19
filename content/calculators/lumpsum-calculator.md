@@ -86,6 +86,21 @@ To resolve this with empirical data rather than emotion, quantitative analysts e
                                       Transfer to Equity over 6-12 Mo
 ```
 
+### Lumpsum vs. SIP Head-to-Head Comparison Matrix
+
+| Factor | Lumpsum Investment | Systematic Investment Plan (SIP) | Clear Winner |
+| :--- | :--- | :--- | :--- |
+| **Mathematical Terminal Return** | Compounds 100% of capital from Day 1. Superior in ~68% of 10-year rolling market windows. | Staggers capital; uninvested cash suffers savings/FD drag. | **Lumpsum** (during multi-year bull cycles) |
+| **Market Timing Vulnerability** | High sequence risk if deployed at market peak right before a 20%–30% drawdown. | Zero timing risk; automatically purchases more units during crashes via Rupee Cost Averaging. | **SIP** (immunizes against bad entry points) |
+| **Behavioral & Emotional Comfort** | High stress and anxiety during initial market corrections; prone to panic selling. | Low stress; automated debits remove emotional hesitation and fear of volatility. | **SIP** (optimal for retail peace of mind) |
+| **Ideal Source of Funds** | Windfalls (annual bonus, property sale, ancestral inheritance, ESOP exits). | Monthly salaried surplus, recurring professional fees, regular savings. | **Context Dependent** |
+| **Tax Exemption Efficiency** | Generates large lumped LTCG in redemption year, exceeding the ₹1.25L annual Section 112A cap. | Redemptions can be staggered across financial years to utilize multiple ₹1.25L tax exemptions. | **SIP / Phased SWP** |
+
+### Decision Guide: When Should You Choose Lumpsum vs. SIP?
+* **Choose Lumpsum when:** You have a windfall sum, your time horizon is **7 to 10+ years**, and market valuations (Nifty P/E or P/B) are at fair or discounted historical averages.
+* **Choose SIP when:** You earn regular monthly income and want to build a disciplined wealth habit without watching daily market swings.
+* **Choose STP (The Hybrid Solution) when:** You have a lump sum right now, but the market is trading at an all-time peak and you cannot tolerate the psychological pain of a potential near-term 10%–15% correction.
+
 ---
 
 ## 3. The Systematic Transfer Plan (STP): The Optimal Middle Ground
