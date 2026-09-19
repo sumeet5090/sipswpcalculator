@@ -44,6 +44,7 @@ export class SliderManager {
     private pairs: SliderPair[] = [];
     private _inputDebounceTimer: ReturnType<typeof setTimeout> | null = null;
     private _tooltipDismissTimer: ReturnType<typeof setTimeout> | null = null;
+    private _rafTriggerId: number | null = null;
     private _lastHapticTime: number = 0;
     private isInternalSyncing: boolean = false;
 
@@ -228,6 +229,23 @@ export class SliderManager {
                 }, 800);
             } finally {
                 this.isInternalSyncing = false;
+            }
+
+            // Batch calculation updates via requestAnimationFrame to maximize INP responsiveness
+            if (this._rafTriggerId !== null) {
+                cancelAnimationFrame(this._rafTriggerId);
+            }
+            this._rafTriggerId = requestAnimationFrame(() => {
+                this._rafTriggerId = null;
+                this.triggerFn();
+            });
+        });
+
+        // Ensure final value commits immediately on interaction completion
+        range.addEventListener('change', () => {
+            if (this._rafTriggerId !== null) {
+                cancelAnimationFrame(this._rafTriggerId);
+                this._rafTriggerId = null;
             }
             this.triggerFn();
         });

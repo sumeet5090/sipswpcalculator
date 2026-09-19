@@ -545,3 +545,26 @@ initWidget();
 <h3>Which is better: SIP in large cap or SIP in mid cap fund?</h3>
 <p>Large cap SIPs are less volatile (12-14% returns) and better for 7-10 year goals. Mid cap SIPs offer higher returns (15-18%) but with significantly more volatility — only suitable for 12+ year horizons. For most investors, a <strong>flexi-cap or multi-cap fund</strong> provides the best balance by automatically allocating across large, mid, and small caps based on market conditions. See our <a href="/resource/comparison/mf-returns-benchmarks">Returns Benchmarks Guide</a> for detailed data.</p>
 
+<div class="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 not-prose">
+    <h3 class="text-base font-bold text-slate-800 mb-3">Compare With Free Planning Tools</h3>
+    <div class="grid sm:grid-cols-2 gap-3 text-sm">
+        <a href="/lumpsum-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>Lumpsum Investment Planner</span>
+            <span>→</span>
+        </a>
+        <a href="/cagr-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>CAGR Return Calculator</span>
+            <span>→</span>
+        </a>
+        <a href="/ppf-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>PPF Calculator</span>
+            <span>→</span>
+        </a>
+        <a href="/fd-calculator" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 font-semibold text-emerald-700 flex items-center justify-between">
+            <span>Fixed Deposit Calculator</span>
+            <span>→</span>
+        </a>
+    </div>
+</div>
+
+

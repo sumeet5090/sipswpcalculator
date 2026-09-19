@@ -234,8 +234,8 @@ export class CalculatorApp {
      * Gather form input parameters and run validation constraints.
      */
     getInputs(): InvestmentInputs {
-        const appEl = this.dom.getElement('calculator-app');
-        const mode = appEl?.dataset?.mode ?? 'sip';
+        const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const mode = appEl?.dataset?.mode ?? 'combo';
         const isSwpMode = (mode === 'swp');
         const isLumpsumMode = (mode === 'lumpsum');
 
@@ -343,13 +343,18 @@ export class CalculatorApp {
      * Show/Hide SWP withdrawal configurations.
      */
     syncSwpToggleState(): void {
-        const appEl = this.dom.getElement('calculator-app');
-        const isSwpMode = (appEl?.dataset?.mode === 'swp');
+        const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const mode = appEl?.dataset?.mode;
+        const isSwpMode = (mode === 'swp');
+        const isComboMode = (mode === 'combo');
         const toggleEl = this.dom.getElement<HTMLInputElement>('enable_swp');
 
         let isChecked = false;
-        if (isSwpMode) {
+        if (isSwpMode || isComboMode) {
             isChecked = true;
+            if (toggleEl && toggleEl.type === 'checkbox') {
+                toggleEl.checked = true;
+            }
         } else if (toggleEl) {
             isChecked = (toggleEl.type === 'checkbox') ? toggleEl.checked : (toggleEl.value === '1');
         }
@@ -498,8 +503,8 @@ export class CalculatorApp {
      * Initialize app lifecycle.
      */
     init(): void {
-        const appEl = this.dom.getElement('calculator-app');
-        const mode = appEl?.dataset?.mode || 'sip';
+        const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const mode = appEl?.dataset?.mode || 'combo';
         const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
 
         if (specializedModes.includes(mode)) {
@@ -801,7 +806,7 @@ export class CalculatorApp {
                 );
             }
 
-            this.chartManager.updateChart(combined, inputs.enable_swp);
+            this.chartManager.updateChartThrottled(combined, inputs.enable_swp);
 
             if (!this.userHasInteracted) return;
 
@@ -836,10 +841,13 @@ export class CalculatorApp {
 
             const urlSwpOn = urlParams.get('swp_on') === '1';
             const initialSwpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
-            const isSwpMode = (this.dom.getElement('calculator-app')?.dataset?.mode === 'swp');
+            const rootAppEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+            const currentMode = rootAppEl?.dataset?.mode || 'combo';
+            const isSwpMode = (currentMode === 'swp');
+            const isComboMode = (currentMode === 'combo');
 
             if (initialSwpToggle) {
-                if (urlSwpOn || isSwpMode) {
+                if (urlSwpOn || isSwpMode || isComboMode) {
                     if (initialSwpToggle.type === 'checkbox') {
                         initialSwpToggle.checked = true;
                     } else {
@@ -847,7 +855,7 @@ export class CalculatorApp {
                     }
                 }
                 this.syncSwpToggleState();
-            } else if (isSwpMode) {
+            } else if (isSwpMode || isComboMode) {
                 this.syncSwpToggleState();
             }
 

@@ -88,13 +88,22 @@ class SchemaHelper
                 "@type" => "Person",
                 "name" => $this->authorName,
                 "url" => $this->siteConfig->getUrl('/about'),
+                "sameAs" => [
+                    "https://www.linkedin.com/in/sumeet-boga/",
+                    "https://github.com/sumeet5090"
+                ],
+                "jobTitle" => "Software Engineer & Financial Systems Architect"
             ],
             "publisher" => [
                 "@type" => "Organization",
                 "name" => $this->organizationName,
+                "url" => $this->siteConfig->getUrl('/'),
                 "logo" => [
                     "@type" => "ImageObject",
                     "url" => $this->siteConfig->getUrl('/assets/favicon.png')
+                ],
+                "sameAs" => [
+                    "https://www.linkedin.com/in/sumeet-boga/"
                 ]
             ],
             "datePublished" => $datePublished,

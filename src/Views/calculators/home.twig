@@ -15,12 +15,12 @@
     </div>
 
     <h1 class="fluid-h1 font-extrabold pb-1 sm:pb-2 tracking-tight">
-        <span class="text-gradient block mb-0.5 sm:mb-1">SIP SWP Calculator Together</span>
-        <span class="text-slate-700 text-ui-xs sm:text-2xl md:text-3xl block font-semibold mt-0.5 sm:mt-1">Step-Up SIP + Lumpsum + Inflation-Adjusted SWP Planner</span>
+        <span class="text-gradient block mb-0.5 sm:mb-1">SIP + SWP Calculator Together</span>
+        <span class="text-slate-700 text-ui-xs sm:text-2xl md:text-3xl block font-semibold mt-0.5 sm:mt-1">Accumulation to Retirement Cashflow (with Inflation &amp; Excel)</span>
     </h1>
     
     <p class="text-ui-xs sm:text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-2.5 sm:mb-3">
-        Calculate your combined SIP accumulation and inflation-adjusted SWP retirement cashflows with step-up compounding in one zero-latency simulation studio.
+        Plan your complete investment lifecycle: Compound through monthly SIP accumulation, then transition seamlessly into inflation-adjusted SWP retirement cashflows with instant Excel export.
     </p>
 
     <!-- EEAT Institutional Trust Bar (Desktop View) -->
@@ -42,24 +42,32 @@
     </div>
 
     <!-- Above-The-Fold Interactive Activation CTA (Desktop View) -->
-    <div class="hidden sm:flex flex-col items-center justify-center gap-2 mb-4 not-prose">
-        <a href="#calculator-heading"
-           class="inline-flex items-center gap-2 px-7 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 hover:shadow-card-hover hover:-translate-y-0.5 transition-all text-sm sm:text-base cursor-pointer"
-           aria-label="Start SIP and SWP calculation">
-            <span>Start Free Calculation</span>
-            <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-        </a>
+    <div class="hidden sm:flex flex-col items-center justify-center gap-2.5 mb-4 not-prose">
+        <div class="flex items-center gap-3">
+            <a href="#calculator-heading"
+               class="inline-flex items-center gap-2 px-7 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 hover:shadow-card-hover hover:-translate-y-0.5 transition-all text-sm sm:text-base cursor-pointer"
+               aria-label="Start SIP and SWP calculation">
+                <span>Start Dual Calculation</span>
+                <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+            </a>
+            <button type="button" onclick="document.getElementById('downloadCsvBtn')?.click()"
+               class="inline-flex items-center gap-2 px-5 py-3 bg-white hover:bg-slate-50 text-slate-700 hover:text-emerald-700 border border-slate-200/90 hover:border-emerald-300 font-bold rounded-xl shadow-flat transition-all text-sm cursor-pointer"
+               aria-label="Download Excel and CSV Schedule">
+                <span>📥</span>
+                <span>Download Free Excel Model</span>
+            </button>
+        </div>
         <p class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
             <span class="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
             <span><strong class="font-bold text-slate-700 font-financial-mono">{{ weekly_calculations|number_format(0, '.', ',') }}+</strong> calculations run this week</span>
         </p>
-        <div class="inline-flex items-center gap-2 mt-1 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-micro font-bold text-emerald-800">
+        <div class="inline-flex items-center gap-2 mt-0.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-micro font-bold text-emerald-800">
             <span>📊</span>
-            <span>Includes Free Excel &amp; CSV Amortization Export</span>
+            <span>Free Month-by-Month Amortization Schedule</span>
             <span class="text-slate-300">•</span>
-            <span>Zero Sign-Up</span>
+            <span>Zero Sign-Up Required</span>
         </div>
     </div>
 </header>
@@ -119,7 +127,7 @@
 
         <!-- Left Column: Form (Smooth natural scrolling for long forms) -->
         <div class="md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col gap-4">
-            {% include 'components/calculator-form.twig' with {'container_id': 'homepage-calc'} %}
+            {% include 'components/calculator-form.twig' %}
         </div> <!-- /left column -->
 
         <!-- Right Column: Floating Summary & Chart Visualization -->
@@ -134,6 +142,9 @@
     <!-- Multi-Mode Interactive Analytical Studio (Default: Yearly Breakdown Table) -->
     {% include 'components/analytical-studio.twig' %}
 </section><!-- /calculator section -->
+
+<!-- Pre-Calculated Scenario & Benchmark Tables for Search & AI Extractability -->
+{% include 'components/scenario-benchmark-table.twig' %}
 
 <!-- Editorial Knowledge & Research Vault -->
 {% include 'components/home-guide-content.twig' %}
@@ -206,6 +217,7 @@
             </div>
         </form>
 </dialog>
+{% include 'components/embed-modal.twig' %}
 {% endblock %}
 
 {% block scripts %}

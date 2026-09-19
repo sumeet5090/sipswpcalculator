@@ -6,7 +6,7 @@
 
 <div id="{{ container_id|default('calculator-app') }}"
      data-js="calculator-app"
-     data-mode="sip"
+     data-mode="{{ calculator_type|default('combo') }}"
      class="bg-white/95 rounded-3xl border border-slate-200/90 shadow-card backdrop-blur-xl p-3.5 sm:p-4 relative">
     <!-- Ambient Aurora Glow (Pure Light Mode: Emerald & Teal Accents) -->
     <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-400/8 rounded-full blur-3xl pointer-events-none"></div>
@@ -30,58 +30,96 @@
             </span>
         </div>
 
-        <!-- Segmented Tab Bar (Wealth Creation vs Retirement Income) -->
-        <div class="py-1 mb-2 rounded-2xl">
-            <div class="flex bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70 shadow-flat" role="tablist">
-                <button type="button" id="tab-sip" role="tab" aria-selected="true"
-                    class="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-ui-xs font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer">
-                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-growth-surface text-growth-emphasis text-micro font-extrabold">⚡</span>
-                    <span>SIP Wealth</span>
+        <!-- 3-Mode Segmented Control Bar (Dual vs SIP Only vs SWP Only) -->
+        <div class="py-0.5 mb-2 rounded-2xl">
+            <div class="flex bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70 shadow-flat gap-1" role="tablist" aria-label="Calculator Mode Selector">
+                <button type="button" id="tab-combo" role="tab" aria-selected="{% if calculator_type|default('combo') == 'combo' %}true{% else %}false{% endif %}"
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'combo' %}bg-white text-emerald-800 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
+                    <span class="flex items-center justify-center w-4 h-4 rounded-full {% if calculator_type|default('combo') == 'combo' %}bg-emerald-100 text-emerald-800{% else %}bg-slate-200 text-slate-600{% endif %} text-micro font-extrabold">🚀</span>
+                    <span>Dual (SIP+SWP)</span>
                 </button>
-                <button type="button" id="tab-swp" role="tab" aria-selected="false"
-                    class="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-900 cursor-pointer">
-                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-200 text-slate-600 text-micro font-extrabold">🛡️</span>
-                    <span>SWP Cashflow</span>
+                <button type="button" id="tab-sip" role="tab" aria-selected="{% if calculator_type|default('combo') == 'sip' %}true{% else %}false{% endif %}"
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'sip' %}bg-white text-growth-emphasis shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
+                    <span class="flex items-center justify-center w-4 h-4 rounded-full {% if calculator_type|default('combo') == 'sip' %}bg-growth-surface text-growth-emphasis{% else %}bg-slate-200 text-slate-600{% endif %} text-micro font-extrabold">⚡</span>
+                    <span>SIP Only</span>
+                </button>
+                <button type="button" id="tab-swp" role="tab" aria-selected="{% if calculator_type|default('combo') == 'swp' %}true{% else %}false{% endif %}"
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'swp' %}bg-white text-rose-600 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
+                    <span class="flex items-center justify-center w-4 h-4 rounded-full {% if calculator_type|default('combo') == 'swp' %}bg-rose-100 text-rose-800{% else %}bg-slate-200 text-slate-600{% endif %} text-micro font-extrabold">🛡️</span>
+                    <span>SWP Only</span>
                 </button>
             </div>
         </div>
 
-        <!-- SIP Panel -->
-        <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2.5 lg:max-h-[560px] xl:max-h-[580px] lg:overflow-y-auto lg:overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
-            <!-- SIP Fields -->
-            {% include 'components/forms/sip-fields.twig' %}
-        </div><!-- /panel-sip -->
-
-        <!-- SWP Panel -->
-        <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="hidden space-y-3 lg:max-h-[560px] xl:max-h-[580px] lg:overflow-y-auto lg:overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
-            <div class="py-1 mb-2 rounded-2xl">
-                <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-flat">
-                    <div>
-                        <span class="text-ui-xs font-extrabold text-payout uppercase tracking-tight block">Enable SWP Mode</span>
-                        <span class="text-caption text-slate-500 font-medium">Switch from accumulation to regular monthly cashflow</span>
+        <!-- Scrollable Form Panels Container -->
+        <div class="space-y-3 lg:max-h-[600px] xl:max-h-[640px] lg:overflow-y-auto lg:overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
+            
+            <!-- Stage 1 / SIP Panel -->
+            <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2.5">
+                <!-- Stage 1 Header (Visible in Dual Mode) -->
+                <div id="stage-1-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-50 via-teal-50/50 to-slate-50 border border-emerald-200/80 shadow-flat">
+                    <div class="flex items-center gap-1.5 text-slate-800">
+                        <span class="text-ui-xs font-extrabold text-emerald-800">Stage 1:</span>
+                        <span class="text-ui-xs font-bold text-slate-700">Wealth Accumulation (SIP)</span>
                     </div>
-                    <label class="toggle-switch relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" id="enable_swp" name="enable_swp"
-                            class="sr-only peer"
-                            aria-label="Enable Systematic Withdrawal Plan (SWP)"
-                            aria-controls="swp-fields"
-                            aria-expanded="{{ enable_swp ? 'true' : 'false' }}"
-                            {% if enable_swp %}checked{% endif %}>
-                        <div class="w-10 h-5 bg-slate-200 peer-focus-visible:ring-2 peer-focus-visible:ring-rose-400 peer-focus-visible:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-600">
-                        </div>
-                    </label>
+                    <span class="text-micro font-extrabold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-full border border-emerald-300/80">
+                        Phase 1
+                    </span>
                 </div>
+
+                <!-- SIP Fields -->
+                {% include 'components/forms/sip-fields.twig' %}
+            </div><!-- /panel-sip -->
+
+            <!-- Stage Transition Indicator (Visible only in Dual Mode) -->
+            <div id="stage-transition-divider" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center gap-2 py-1 select-none">
+                <div class="flex-1 h-px bg-gradient-to-r from-emerald-200 to-rose-200"></div>
+                <div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-micro font-extrabold text-slate-600 shadow-flat">
+                    <span>🔄</span>
+                    <span>Matured SIP Seeds Retirement SWP</span>
+                    <span>↓</span>
+                </div>
+                <div class="flex-1 h-px bg-gradient-to-r from-rose-200 to-emerald-200"></div>
             </div>
 
-            <div id="swp-fields" class="space-y-3 transition-all duration-300" {% if not enable_swp %}style="display: none; opacity: 0.5; pointer-events: none;" aria-hidden="true"{% endif %}>
-                <!-- SWP Fields -->
-                {% include 'components/forms/swp-fields.twig' %}
-            </div>
-        </div><!-- /panel-swp -->
+            <!-- Stage 2 / SWP Panel -->
+            <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="space-y-3">
+                <!-- Stage 2 Header (Visible in Dual Mode) -->
+                <div id="stage-2-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-50 via-orange-50/40 to-slate-50 border border-rose-200/80 shadow-flat">
+                    <div class="flex items-center gap-1.5 text-slate-800">
+                        <span class="text-ui-xs font-extrabold text-rose-700">Stage 2:</span>
+                        <span class="text-ui-xs font-bold text-slate-700">Retirement Cashflow (SWP)</span>
+                    </div>
+                    <span class="text-micro font-extrabold text-rose-700 bg-rose-100/80 px-2 py-0.5 rounded-full border border-rose-300/80">
+                        Phase 2
+                    </span>
+                </div>
+
+                <!-- Dedicated Starting Corpus for SWP-Only Mode (Hidden in Dual Mode where SIP seeds corpus) -->
+                <div id="swp-standalone-corpus" class="{% if calculator_type|default('combo') != 'swp' %}hidden {% endif %}space-y-2">
+                    <div class="mb-1">
+                        <span class="text-caption font-bold text-rose-600 tracking-wider uppercase">Your Starting Wealth</span>
+                    </div>
+                    {% include 'components/forms/corpus-field.twig' %}
+                </div>
+
+                <!-- Compatibility SWP toggle element -->
+                <div class="hidden">
+                    <input type="checkbox" id="enable_swp" name="enable_swp"
+                        aria-label="Enable Systematic Withdrawal Plan (SWP)"
+                        aria-controls="swp-fields"
+                        aria-expanded="true"
+                        checked>
+                </div>
+
+                <div id="swp-fields" class="space-y-3">
+                    <!-- SWP Fields -->
+                    {% include 'components/forms/swp-fields.twig' %}
+                </div>
+            </div><!-- /panel-swp -->
+        </div>
     </form>
 
     <!-- Bottom Scroll Fade Overlay Affordance -->
     <div class="pointer-events-none absolute bottom-0 left-0 right-0 h-8 rounded-b-3xl bg-gradient-to-t from-white/90 to-transparent z-10 hidden lg:block"></div>
 </div>
-
-

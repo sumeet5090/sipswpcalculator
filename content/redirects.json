@@ -19,6 +19,9 @@
         "sip-to-swp-transition-guide": "retirement/sip-vs-swp-wealth-creation-withdrawal-strategy"
     },
     "stubs": {
+        "/0.6.10": "/",
+        "/sipswpcalculator.com": "/",
+        "/sipswpcalculator.com/": "/",
         "/goal/reach-1-crore-via-sip": "/reach-1-crore-via-sip",
         "/goal/reach-5-crore-via-sip": "/reach-5-crore-via-sip",
         "/plan/sip-5000-per-month": "/sip-5000-per-month",

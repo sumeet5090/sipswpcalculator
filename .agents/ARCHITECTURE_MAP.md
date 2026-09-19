@@ -9,7 +9,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 
 | Route Slug | PHP Action | Twig Layout & Form Partial | TS Strategy / Driver | Engine / Math Parity | Defaults Key (`calculator_defaults.json`) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `/` (Home) | `Controllers\RenderHomeAction` | `calculators/home.twig`<br/>`forms/sip-fields.twig`<br/>`forms/swp-fields.twig` | `CalculatorApp.ts`<br/>`strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `sip`, `years`, `rate`, `stepup`, `inflation`, `lumpsum`, `swp_withdrawal` |
+| `/` (Home) | `Controllers\RenderHomeAction` | `calculators/home.twig`<br/>`components/calculator-form.twig`<br/>`forms/sip-fields.twig`<br/>`forms/swp-fields.twig` | `CalculatorApp.ts`<br/>`controllers/TabController.ts`<br/>`strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | Dual default (`combo`: `sip`, `years`, `rate`, `stepup`, `inflation`, `lumpsum`, `swp_withdrawal`, `swp_years`, `swp_rate`, `swp_stepup`) |
 | `/sip-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/sip-fields.twig` | `strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `sip`, `years`, `rate`, `stepup` |
 | `/swp-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/corpus-field.twig`<br/>`forms/swp-fields.twig` | `strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `corpus`, `swp_withdrawal`, `years`, `rate`, `inflation` |
 | `/sip-step-up-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/sip-fields.twig` | `strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `sip`, `years`, `rate`, `stepup` |
@@ -40,6 +40,9 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | **Slider & Number Input** | `form/input-range-pair.twig` | `SliderManager.ts`<br/>`controllers/StepperController.ts` | Two-way synchronized range slider and currency text inputs with 48px ergonomic touch stepper targets, preset chips, and auto-step rounding |
 | **QR Share & Socials** | `qr-share-modal.twig` | `subsystems/ExportSubsystem.ts` | Encoded URL state generation, canvas QR render, and native Web Share API trigger |
 | **SEBI Benchmark & Trust** | `sebibenchmark-modal.twig`<br/>`privacy-trust-badge.twig` | `subsystems/EngagementSubsystem.ts` | Regulatory disclosure compliance, index benchmark comparisons, privacy audit badges |
+| **Scenario Benchmark Tables** | `scenario-benchmark-table.twig` | Static HTML / AMFI Matrix | Pre-calculated static benchmark matrices for Google rich answers and AI search engine extraction (Gemini / Copilot) |
+| **3-Mode Segmented Selector** | `components/calculator-form.twig` | `controllers/TabController.ts` | Instant toggle between Dual (SIP + SWP), SIP Only, and SWP Only with automatic phase staging and zero reload |
+| **Embed Calculator Modal** | `embed-modal.twig` | Frontend `<dialog>` / `copyEmbedCodeBtn` | 1-click responsive iframe generator for external financial bloggers and advisors with attribution backlink |
 
 ---
 
@@ -100,8 +103,9 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 
 ### D. SEO Metadata & Triple-Schema Contract
 - **Mandatory Schemas:** Every calculator route must output structured JSON-LD schemas: `SoftwareApplication`, `FAQPage`, and contextual `HowTo` (via `SchemaFactory.php` and `HomeSchemaBuilder.php`).
+- **No Self-Served Ratings:** Self-served `AggregateRating` is strictly forbidden to prevent algorithmic suppression of rich results across Google Search Console.
 - **Title Length Limit:** Page `<title>` tags must strictly remain between **10 and 65 characters** (enforced by `tests/Integration/SeoMetadataValidatorTest.php`).
-- **AI Crawlers & Discovery:** `llms.txt` and `llms-full.txt` served from web root; `robots.txt` explicitly allows `GPTBot`, `Google-Extended`, `PerplexityBot`, `ClaudeBot`, `Amazonbot`, `anthropic-ai`, `cohere-ai`, and `OAI-SearchBot`.
+- **AI Crawlers & Discovery:** `llms.txt` and `llms-full.txt` served from web root; `robots.txt` explicitly allows `GPTBot`, `Google-Extended`, `PerplexityBot`, `ClaudeBot`, `Amazonbot`, `anthropic-ai`, `cohere-ai`, and `OAI-SearchBot`. Disallows phantom paths (`/0.6.10`, `/sipswpcalculator.com`).
 
 ### E. Vite & Tailwind CSS v4 Pipeline
 - **Tailwind v4 Directive:** Configured exclusively in `resources/css/input.css` (`@theme`, `@source`). Never create `tailwind.config.js`.

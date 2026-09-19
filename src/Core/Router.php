@@ -69,6 +69,10 @@ class Router
                 return Response::redirect($target, 301);
             }
 
+            if (preg_match('#^/\d+\.\d+\.\d+(/.*)?$#', $uri)) {
+                return Response::redirect('/', 301);
+            }
+
             if (isset($this->routes[$lookupMethod][$uri])) {
                 return $this->callAction($this->routes[$lookupMethod][$uri], [], $req);
             }

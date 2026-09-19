@@ -24,6 +24,35 @@ export class SummaryMetricsController {
         this.odometer = new OdometerController(dom, formatter);
         this.purchasingPower = new PurchasingPowerController(dom, formatter);
         this.initDrawer();
+        this.initCardClickHandlers();
+    }
+
+    /**
+     * Bind summary cards to smoothly scroll down to the yearly breakdown table on click.
+     */
+    private initCardClickHandlers(): void {
+        const grid = this.dom.getElement('summary-cards-grid');
+        if (!grid) return;
+        const cards = grid.querySelectorAll<HTMLElement>(':scope > div');
+        cards.forEach(card => {
+            card.classList.add('cursor-pointer');
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-label', 'View detailed yearly breakdown');
+            const handler = () => {
+                const target = document.getElementById('yearly-breakdown') || document.getElementById('yearly-breakdown-section');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+            card.addEventListener('click', handler);
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handler();
+                }
+            });
+        });
     }
 
     /**
