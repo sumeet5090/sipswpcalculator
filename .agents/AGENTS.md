@@ -48,10 +48,17 @@ Adhere to the following protocols for all development, design, and implementatio
 * **Edge Cases & Friction Identification:** Proactively identify and present all potential edge cases, UX friction points, and technical limitations (e.g., SEO implications, DOM bloat, schema conflicts) *before* writing code.
 * **Modern Industry Standards Alignment:** Always compare the proposed solution against the latest modern software industry standards. Advise the user if a proposed path deviates from these standards and explain the optimal architectural pattern to avoid future tech debt or hurdles.
 
-### 9. Junior Model Execution Constraints (The Handoff Protocol)
+### 9. Junior Model Execution Constraints & Investigation Guardrails (The Handoff Protocol)
 * **Strict Adherence:** If you are executing a task based on an existing `implementation_plan.md` (likely created by a higher/senior model), you must follow it precisely. Do not rewrite the architecture, ignore standard patterns, or invent new structural patterns unless explicitly instructed.
 * **The "Pause and Escalate" Rule:** If you encounter a complex error (e.g., a 500 error or a broken layout) and the fix is not immediately obvious (like a simple syntax error), DO NOT invent architectural workarounds (e.g., implicitly running database schema updates on page load). Pause, state the error clearly, and ask the user to escalate back to the Senior Model for architectural review.
 * **Debugging Protocol:** Never use `echo`, `print_r()`, or `var_dump()` inside Controllers or core classes to debug. This corrupts JSON API responses and Twig rendering, leading to cascading failures. Always use `error_log()` and check the terminal output.
+* **Vendor & Third-Party Library Debugging Guardrail (Zero-Rabbit-Hole Protocol):**
+  1. Under NO circumstances run iterative ad-hoc text search/grep loops across minified build chunks (`dist/assets/*.js`).
+  2. When diagnosing a runtime exception or crash stemming from vendor libraries (e.g. Chart.js, Vite plugins), immediately inspect the unminified original source in `node_modules/` or run an isolated minimal reproduction in a Node.js script.
+  3. Clearly communicate your exact hypothesis, the specific vendor file under investigation, and the immediate next command to the user before running low-level investigative commands.
+* **Fast Verification vs Pre-Commit Suite Tiers:**
+  1. For visual, frontend, or canvas UI defects, run the localized bundle build (`npm run build`) and browser verification first to confirm visual fidelity with 0 console errors.
+  2. Run the heavy PHPUnit/PHPStan suite (`composer check-all`) during the final gate before concluding the task, eliminating excessive delay during active debugging cycles.
 * **Vite & Twig Awareness:** Always remember that CSS/JS is bundled via Vite. If creating a new Twig layout, you *must* ensure the Vite client and `app.js` module scripts are included, otherwise styles will break.
 
 ### 10. Environment Security & Modifications

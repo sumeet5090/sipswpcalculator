@@ -46,3 +46,13 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
   3. `.agents/memory/activeContext.md` and `systemPatterns.md`
   4. Relevant `.agents/skills/*/SKILL.md` references
 - **Zero Obsolete References:** Proactively remove references to renamed classes, deprecated parameters, or deleted templates. Never allow documentation to reference phantom or obsolete artifacts.
+
+---
+
+## 6. Vendor Investigation & Tiered Verification Invariants
+- **Zero-Rabbit-Hole Rule:** Never perform iterative text greps or ad-hoc character parsing on minified production bundles (`dist/assets/*.js`).
+- **Unminified Source Debugging:** When debugging vendor crashes (Chart.js, plugins), immediately inspect unminified source code in `node_modules/` or build an isolated minimal Node.js test fixture.
+- **Hypothesis Transparency:** Clearly state the bug hypothesis, target vendor file, and next step to the user before running deep inspection commands.
+- **Tiered Verification:**
+  - Fast Tier (UI/Visual): Run `npm run build` and single browser check to verify visual rendering and 0 console errors.
+  - Gate Tier (Pre-Commit): Run `composer check-all` (839 tests, PHPStan L5, PHPCS) and `parity_check.php` before committing or finalizing.
