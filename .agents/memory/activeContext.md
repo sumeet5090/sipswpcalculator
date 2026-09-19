@@ -5,20 +5,18 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Full-Site End-to-End SEO Audit, 301 Hop Elimination, Global Tax Freshness & SERP Snippet Calibration.
+- **Current Milestone:** Individual Calculator SEO Realism, AI Overview BLUF Capsules, 2026 Tax Modernization & SWR Guardrails.
 - **Implemented Fixes & Architectural Outcomes:**
-  - **P0 Broken Link & Redirect Elimination:** Eradicated 100% of internal 301 hops by replacing `/retirement-drawdown-planner` across all blog articles (`swp-vs-fixed-deposit.md`, `retirement-planning-4-percent-swp-rule.md`, `sip-vs-swp-wealth-creation-withdrawal-strategy.md`, `swp-retirement-planning.md`) and `/about` with direct canonical links to `/swp-calculator`. Full automated crawl confirmed 0 broken links (404) and 0 redirected internal links across all 49 URLs.
-  - **P0 Global 2026 Tax Freshness:** Retargeted hardcoded "Budget 2024" terminology across shared UI components (`page-hero.twig`, `tax-waterfall-modal.twig`, `chart-visualization.twig`, `math-transparency.twig`) to authoritative 2026 standards: `2026 Capital Gains Tax Rules (Section 112A — 12.5% LTCG & ₹1.25L Exemption)`.
-  - **P1 SERP Snippet & Title Truncation Calibration:** Tuned all meta descriptions exceeding 165 characters to the ideal 145–160 character boundary (`/`, `/swp-calculator`, `/sip-step-up-calculator`, `/retirement-calculator`, `/cagr-calculator`, `/emi-calculator`, `/inflation-calculator`). Tightened long titles to under 60 chars (`/retirement-calculator` to 55c, `swp-vs-fixed-deposit.md` to 56c).
-  - **P1 Category Hub Visual Breadcrumbs:** Added semantic `<nav aria-label="Breadcrumb">` to `resources.twig` when a category is selected (`/resource/growth`, `/resource/comparison`, `/resource/retirement`), achieving 100% parity with JSON-LD `BreadcrumbList` schema.
-  - **P2 Routing Cleanliness & Schema Modernization:** Eliminated legacy `.php` literals from `faq.twig`, `glossary.twig`, `privacy.twig`, `terms.twig`, and cleaned up `header.twig`. Updated `HomeSchemaBuilder.php` copyright year to 2026 and WebSite `inLanguage` to `"en-IN"`.
+  - **P0 Google AI Overview & Featured Snippet (BLUF) Capsules:** Injected structured, direct-answer summary callouts across 8 core calculators (`/swp-calculator`, `/sip-step-up-calculator`, `/cagr-calculator`, `/emi-calculator`, `/fd-calculator`, `/inflation-calculator`, `/retirement-calculator`, `/target-corpus-calculator`), ensuring every individual calculator has upfront numerical answers for position 0 and AI SGE indexing.
+  - **P0 2026 Tax Terminology Polish:** Modernized legacy "Budget 2024" headings and text in `fd-calculator.md` (Section 50AA arbitrage), `target-corpus-calculator.md` (Section 112A tax drag), `my-first-crore-calculator.md`, `retirement-calculator.md`, and `content/faqs.json` (Section 112A 2026 rules).
+  - **P1 Practical Indian Investing Guardrails:** Codified realistic market volatility notes and emerging market Safe Withdrawal Rate (SWR) benchmarks (4.0%–5.0% initial with 5% inflation step-up) to satisfy Google's E-E-A-T and YMYL financial guidelines.
 - **Verification & System Health:**
   - Full automated crawl across 49 URLs: 0 404s, 0 301 hops, 0 public SERP title/desc truncation issues, 0 schema parse errors.
   - Full PHPUnit test suite: 839 tests / 13,594 assertions passed cleanly (0 failures, 0 warnings).
   - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 234 files, 0 PHPCS violations).
   - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across base and specialized engines.
   - SEO Metadata Validator: 44 tests / 3,036 assertions passed with 100% compliance.
-  - Local curl verification: Confirmed on `localhost:8080/`, `localhost:8080/resources`, `localhost:8080/resource/growth`, and `localhost:8080/about`.
+  - Local curl verification: Confirmed BLUF rendering on `localhost:8080/swp-calculator` and `localhost:8080/emi-calculator`.
 
 ---
 

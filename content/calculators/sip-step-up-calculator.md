@@ -14,6 +14,8 @@ og_image: "/assets/og/og-sip-step-up-calculator.jpg"
 
 ## The Definitive Guide to Step-Up (Top-Up) SIPs in India (2026 Edition)
 
+> **Direct Answer (BLUF):** A **Step-Up SIP (Top-Up SIP)** automatically increases your monthly mutual fund investment each year (typically by 10% or a fixed ₹1,000) to match annual salary hikes. Over a 20-year horizon at 12% CAGR, a ₹10,000 monthly SIP with a 10% annual step-up accumulates **₹2.47 Crores** compared to **₹99.91 Lakhs** for a flat SIP—more than doubling your final corpus and cutting 4 to 5 years off your timeline to reach ₹1 Crore.
+
 A **Step-Up Systematic Investment Plan (SIP)**—frequently designated as a **Top-Up SIP** by Indian Asset Management Companies (AMCs)—is an automated wealth acceleration strategy wherein an investor commits to increasing their periodic mutual fund investment amount at regular intervals (typically once a year) by a predefined percentage or fixed rupee denomination.
 
 While a conventional flat SIP introduces structural savings discipline, it embodies an inherent mathematical flaw: **it treats your investment capacity as static over a multi-decade horizon**. In reality, a salaried professional or business owner experiences recurring annual income increments. Failing to escalate investments alongside earnings leaves substantial surplus cash exposed to lifestyle inflation, discretionary spending, and real purchasing power depreciation.

@@ -12,9 +12,11 @@ date: "2026-08-01"
 
 ---
 
+> **Direct Answer (BLUF):** Retirement planning in India requires managing two continuous financial phases: **Wealth Accumulation (Step-Up SIP)** to build a self-sustaining corpus and **Tax-Efficient Decumulation (SWP)** to generate lifetime monthly pension. Following the Indian **3-Bucket Strategy** with a 4.0%–5.0% safe withdrawal rate protects your golden years against 6% living inflation and sequence-of-returns market shocks.
+
 Retirement planning in India has undergone a seismic structural transformation. The elimination of guaranteed defined-benefit corporate pensions, soaring urban healthcare inflation (compounding at 10%–14% annually), and expanding post-retirement life expectancies (often reaching 85 to 90 years) mean modern Indian investors face an unprecedented longevity challenge. Retiring comfortably requires far more than amassing an arbitrary lump sum; it demands a mathematically synchronized strategy connecting two distinct financial phases: **Wealth Accumulation (SIP)** during your working years and **Tax-Efficient Decumulation (SWP)** throughout your golden years.
 
-This **Retirement Calculator** is the first dedicated dual-lifecycle planner designed specifically for Indian economic conditions. It integrates monthly Systematic Investment Plans (SIP), annual salary top-ups, inflation-indexed post-retirement expenses, and Systematic Withdrawal Plans (SWP) under the latest statutory tax guidelines (Finance No. 2 Act, 2024), allowing you to stress-test your financial independence before taking the leap.
+This **Retirement Calculator** is the first dedicated dual-lifecycle planner designed specifically for Indian economic conditions. It integrates monthly Systematic Investment Plans (SIP), annual salary top-ups, inflation-indexed post-retirement expenses, and Systematic Withdrawal Plans (SWP) under 2026 statutory capital gains tax rules (Section 112A), allowing you to stress-test your financial independence before taking the leap.
 
 ---
 

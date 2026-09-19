@@ -14,6 +14,8 @@ date: "2026-09-01"
 
 ## What is an Equated Monthly Installment (EMI)?
 
+> **Direct Answer (BLUF):** An **EMI (Equated Monthly Installment)** is a fixed monthly payment covering both loan principal and compound interest calculated on a reducing balance basis. For an Indian Home Loan of **₹50 Lakhs at 8.5% p.a. for 20 years**, your monthly EMI is **₹43,391**, resulting in total interest paid of **₹54.14 Lakhs** (surpassing the original loan amount!). Prepaying just **1 extra EMI per year** or increasing your EMI by 5% annually reduces your loan tenure from 20 years down to under 16 years, saving over ₹12 Lakhs in interest.
+
 An **Equated Monthly Installment (EMI)** is a structured, fixed monthly cash outflow paid by a borrower to a financial institution (commercial bank, housing finance company, or NBFC) on a designated day of each calendar month. The EMI structure is engineered to systematically amortize both the **loan principal** and the **accrued compound interest** over an agreed duration, bringing the outstanding balance to exactly zero upon the final installment.
 
 In long-tenure borrowings—such as 20 or 30-year Indian Home Loans—the internal composition of an EMI changes dramatically over time. During the initial years of the loan, the vast majority (often 75% to 85%) of each monthly installment services the accrued interest burden, with only a negligible fraction reducing the actual principal balance. Only in the latter half of the tenure does the principal amortization component aggressively take over.

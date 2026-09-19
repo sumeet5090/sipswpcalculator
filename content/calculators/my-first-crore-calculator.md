@@ -180,9 +180,9 @@ To achieve an annualized return of 12% to 14% over a 5 to 20 year horizon withou
 
 ---
 
-## Taxation on Your First ₹1 Crore under Budget 2024 (Finance No. 2 Act)
+## Taxation on Your First ₹1 Crore under 2026 Capital Gains Rules (Section 112A)
 
-When your equity mutual fund investments grow to ₹1 Crore, knowing your post-tax take-home amount is critical for realistic planning. Under the **Finance (No. 2) Act, 2024**, mutual fund taxation in India follows these explicit statutory rules:
+When your equity mutual fund investments grow to ₹1 Crore, knowing your post-tax take-home amount is critical for realistic planning. Under current 2026 tax rules, mutual fund taxation in India follows these explicit statutory rules:
 
 ### Section 112A: Equity-Oriented Mutual Funds (LTCG)
 * **Holding Period:** More than **12 months** from purchase date.

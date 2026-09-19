@@ -14,6 +14,8 @@ date: "2026-09-01"
 
 ## What is Inflation? The Silent Wealth Destroyer
 
+> **Direct Answer (BLUF):** **Inflation** is the rate at which purchasing power erodes over time. In India, long-term consumer inflation (CPI) averages approximately **6.0% p.a.** Under the **Rule of 72** ($72 / 6 = 12$), living expenses double and your money's purchasing power cuts in half every **12 years**. A monthly lifestyle costing **₹50,000 today** will require **₹1.60 Lakhs/month in 20 years** just to maintain the same standard of living.
+
 **Inflation** is the persistent, systemic increase in the general price level of goods and services across an economy over time. In personal finance, inflation represents the gradual, irreversible **erosion of purchasing power**. It means that a ₹100 note in your wallet today will buy substantially fewer groceries, fuel, healthcare consultations, or education semesters ten or twenty years from now.
 
 Renowned economist Milton Friedman characterized inflation as the *"one form of taxation that can be imposed without legislation."* For Indian households, inflation is the single greatest threat to financial independence. If your accumulated savings sit in low-yielding bank accounts or traditional fixed deposits earning 6.5% while real consumer prices rise at 6.0%, your **real net purchasing power is evaporating every single year**. Building true wealth requires understanding inflation mathematics and constructing portfolios that systematically outpace domestic price escalation.

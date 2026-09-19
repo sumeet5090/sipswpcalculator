@@ -12,6 +12,8 @@ date: "2026-08-24"
 
 ---
 
+> **Direct Answer (BLUF):** A **Target Corpus Calculator** reverse-engineers the exact monthly SIP required to achieve a future financial milestone (e.g. ₹1 Crore or ₹5 Crores). Using the inverse annuity-due formula at a 12% equity return, reaching **₹1 Crore in 15 years requires ₹20,017/month (flat)** or **₹11,516/month with an annual 10% step-up**, cutting your required starting investment by nearly 42%.
+
 Every major life milestone in India—purchasing a residential apartment, funding overseas undergraduate education, orchestrating a child's wedding, or securing a fully self-sustaining retirement nest egg—demands an explicit **Target Corpus**. Most personal finance tools take an investment amount (e.g., ₹10,000/month) and project an arbitrary future value. However, goal-based financial planning works in reverse: you define the future capital required, the exact target date, and your risk tolerance, and reverse-engineer the precise monthly contribution needed to meet that commitment with mathematical certainty.
 
 This **Target Corpus Calculator** operates as a high-precision **Goal-Seek Solver**. By combining the closed-form inverse annuity-due equation with an iterative binary search algorithm for annual top-up (step-up) increments, this engine computes your exact required starting SIP, visualizes the contribution-to-gain ratio, and factors in real-world Indian inflation benchmarks and capital gains tax liabilities.
@@ -187,9 +189,9 @@ By executing a monthly **Systematic Transfer Plan (STP)** from equity to liquid 
 
 ---
 
-## Factoring Tax Drag into Your Target Corpus (Budget 2024 Rules)
+## Factoring Tax Drag into Your Target Corpus (2026 LTCG Rules — Section 112A)
 
-Under the **Finance (No. 2) Act, 2024**, long-term capital gains on equity mutual funds are subject to taxation upon redemption. If you need exactly ₹1 Crore in hand for a property purchase or overseas tuition, withdrawing ₹1 Crore from an equity mutual fund will leave you with an unexpected deficit after tax deduction.
+Under current 2026 capital gains tax rules, long-term capital gains on equity mutual funds are subject to taxation upon redemption. If you need exactly ₹1 Crore in hand for a property purchase or overseas tuition, withdrawing ₹1 Crore from an equity mutual fund will leave you with an unexpected deficit after tax deduction.
 
 ### Tax Treatment Summary for Equity Mutual Funds
 * **Holding Period:** More than 12 months.

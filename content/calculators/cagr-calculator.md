@@ -14,6 +14,8 @@ date: "2026-09-01"
 
 ## What is CAGR (Compound Annual Growth Rate)?
 
+> **Direct Answer (BLUF):** **CAGR (Compound Annual Growth Rate)** measures the mean annual growth rate of an investment over multiple years, smoothing out market volatility. Calculated as $\text{CAGR} = (V_{\text{final}} / V_{\text{begin}})^{1/t} - 1$, it reflects the true annualized return for mutual funds, stocks, and real estate. For example, ₹10 Lakhs growing into ₹25 Lakhs over 8 years yields a **12.14% CAGR**, aligning closely with India's long-term broad market equity benchmark (Nifty 50 TRI ~12.5%).
+
 **Compound Annual Growth Rate (CAGR)** is the geometric mean annualized growth rate of an investment over a designated holding period longer than one year. It represents the hypothetical constant annual rate at which an investment would have grown if it compounded at a steady, uninterrupted pace from its initial purchase value to its final redemption balance.
 
 In real-world financial markets—especially Indian equities and mutual funds—annual returns are never steady. A fund may surge +35% in one fiscal year, crash -18% the next, and climb +14% the year after. CAGR smooths out this intermediate market volatility, providing investors with a standardized, annualized percentage that allows for an objective, "apples-to-apples" comparison across diverse asset classes like mutual funds, direct stocks, fixed deposits, gold, and real estate.
