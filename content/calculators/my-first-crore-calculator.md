@@ -12,6 +12,8 @@ date: "2026-08-03"
 
 ---
 
+> **Direct Answer (BLUF):** Reaching **₹1 Crore** through a mutual fund SIP at an expected 12% equity CAGR requires **₹43,041/month for 10 years**, **₹19,819/month for 15 years**, or **₹10,009/month for 20 years**. Activating a **10% annual step-up** slashes your starting commitment significantly: you need just **₹26,550/month (10 yrs)** or **₹11,516/month (15 yrs)**. Under 2026 Section 112A rules, long-term capital gains (>12 months) are taxed at 12.5% on profits exceeding ₹1.25 Lakh/year.
+
 Accumulating your **first ₹1 Crore** is widely recognized across Indian personal finance as the single most critical psychological and financial milestone. In behavioral economics, this threshold is often described as escaping the "compounding gravitational pull." Because early wealth accumulation relies overwhelmingly on fresh savings out of monthly income, getting from ₹0 to ₹10 Lakhs or ₹1 Crore feels agonizingly slow. However, once an investor crosses the ₹1 Crore threshold, the portfolio generates more annual capital gains than most salaried professionals contribute in an entire year.
 
 This **1 Crore SIP Calculator** is engineered as a zero-latency **Goal-Seek Engine**. Traditional Systematic Investment Plan (SIP) calculators ask you to specify how much money you can spare each month and then calculate an arbitrary future value. In contrast, this calculator begins with the finish line: **₹1,00,00,000 (1 Crore)**—or any custom target milestone—and reverse-engineers the precise monthly investment required across various tenures, expected returns, and step-up increments to ensure you reach your goal without guesswork.
@@ -180,9 +182,9 @@ To achieve an annualized return of 12% to 14% over a 5 to 20 year horizon withou
 
 ---
 
-## Taxation on Your First ₹1 Crore under Budget 2024 (Finance No. 2 Act)
+## Taxation on Your First ₹1 Crore under 2026 Capital Gains Rules (Section 112A)
 
-When your equity mutual fund investments grow to ₹1 Crore, knowing your post-tax take-home amount is critical for realistic planning. Under the **Finance (No. 2) Act, 2024**, mutual fund taxation in India follows these explicit statutory rules:
+When your equity mutual fund investments grow to ₹1 Crore, knowing your post-tax take-home amount is critical for realistic planning. Under current 2026 tax rules, mutual fund taxation in India follows these explicit statutory rules:
 
 ### Section 112A: Equity-Oriented Mutual Funds (LTCG)
 * **Holding Period:** More than **12 months** from purchase date.

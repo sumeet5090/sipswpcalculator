@@ -4,7 +4,7 @@ subtitle: "A complete guide to the 4% Safe Withdrawal Rate — its origins, the 
 meta_desc: "Understand the 4% safe withdrawal rate for Indian retirees. Math breakdown, sequence of returns risk, and why 3.5% with step-up SWP works better in India."
 tag: "Strategy"
 tag_color: "indigo"
-featured: false
+featured: true
 date: "February 2026"
 ---
 
@@ -153,7 +153,7 @@ date: "February 2026"
 <p>It means 4% of your corpus value <em>on the day you retire</em>, not 4% of the current value each year. If you retire with ₹2 crore, your Year 1 withdrawal is ₹8 lakh. In Year 2, you withdraw ₹8 lakh + inflation (say ₹8.48 lakh) — <em>regardless of what your portfolio is now worth</em>. This fixed-amount approach prevents emotional over-spending in bull markets.</p>
 
 <h3>Can I use the 4% rule with SWP in India?</h3>
-<p>Absolutely. Set up an SWP from your equity/hybrid mutual fund for 4% of your corpus in Year 1, divided into monthly payments. Increase the SWP amount by 5-6% every year (matching inflation). This is the practical implementation of the 4% rule using Indian mutual fund infrastructure. Our <a href="/retirement-drawdown-planner">Retirement Drawdown Planner</a> automates this calculation.</p>
+<p>Absolutely. Set up an SWP from your equity/hybrid mutual fund for 4% of your corpus in Year 1, divided into monthly payments. Increase the SWP amount by 5-6% every year (matching inflation). This is the practical implementation of the 4% rule using Indian mutual fund infrastructure. Our <a href="/swp-calculator">SWP Calculator</a> automates this calculation.</p>
 
 <h3>What is the "25x Rule"?</h3>
 <p>The 25x Rule is simply the inverse of the 4% Rule: you need <strong>25 times your annual expenses</strong> to retire safely. Need ₹6 Lakh/year? Accumulate 25 × ₹6L = <strong>₹1.50 Crore</strong>. Need ₹12 Lakh/year? Accumulate 25 × ₹12L = <strong>₹3.00 Crores</strong>. For the safer 3.5% rate, use the "28.6x Rule" (1 ÷ 0.035 = 28.57).</p>

@@ -44,6 +44,40 @@
 } %}
 {% include 'components/page-hero.twig' %}
 
+{% if selected_category is defined and selected_category %}
+    {% set cat_meta = categories[selected_category]|default({}) %}
+    {% set cat_display_name = cat_meta.title|default(selected_category|capitalize) %}
+    <!-- Visual Breadcrumb Navigation (aligned with JSON-LD BreadcrumbList schema) -->
+    <nav aria-label="Breadcrumb" class="mb-6 -mt-4">
+        <ol role="list" class="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm text-slate-500 flex-wrap">
+            <li>
+                <a href="/" class="hover:text-emerald-600 transition-colors inline-flex items-center">
+                    <svg class="h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clip-rule="evenodd" />
+                    </svg>
+                    <span class="sr-only">Home</span>
+                </a>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg class="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 text-slate-300 mx-0.5 sm:mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <a href="/resources" class="hover:text-emerald-600 transition-colors whitespace-nowrap">Resources</a>
+                </div>
+            </li>
+            <li class="min-w-0">
+                <div class="flex items-center min-w-0">
+                    <svg class="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 text-slate-300 mx-0.5 sm:mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span class="text-slate-800 font-semibold truncate" aria-current="page">{{ cat_display_name }}</span>
+                </div>
+            </li>
+        </ol>
+    </nav>
+{% endif %}
+
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start pb-32 relative">
     <!-- Sidebar Navigation -->
     <aside class="lg:col-span-3 sticky top-28 hidden lg:block">
@@ -116,8 +150,13 @@
                 <!-- Posts Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     {% set posts = posts_by_cat[cat_id]|default([]) %}
+                    {% set featured_rendered_count = 0 %}
                     {% for post in posts %}
-                        {% set is_featured = post.featured|default(false) %}
+                        {% set is_featured = false %}
+                        {% if post.featured|default(false) and featured_rendered_count < 2 %}
+                            {% set is_featured = true %}
+                            {% set featured_rendered_count = featured_rendered_count + 1 %}
+                        {% endif %}
                         {% set tag_badge_class = 'text-emerald-600 bg-emerald-50' %}
                         {% if accent_color == 'indigo' %}
                             {% set tag_badge_class = 'text-indigo-600 bg-indigo-50' %}

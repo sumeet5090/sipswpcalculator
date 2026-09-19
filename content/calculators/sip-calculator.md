@@ -1,9 +1,9 @@
 ---
-title: "SIP Calculator India — Free Mutual Fund Step-Up Wealth Planner"
+title: "SIP Calculator India — Mutual Fund SIP Return Calculator"
 subtitle: "Free SIP calculator with step-up (top-up) compounding for Indian mutual funds. Calculate SIP returns, view interactive charts, and export PDF reports — no signup needed."
-meta_desc: "Calculate mutual fund returns with our free SIP calculator India. Model step-up compounding, Union Budget 2024 LTCG tax impact & download free PDF reports."
+meta_desc: "Calculate mutual fund returns with our free SIP calculator India. Model step-up compounding, 2026 LTCG tax rules (12.5% above ₹1.25L) & download free PDF reports."
 keywords: "sip calculator, free sip calculator, sip return calculator, step up sip calculator, mutual fund sip calculator india, sip calculation formula, sip tax rules"
-schema_name: "SIP Calculator India — Free Step-Up Compounding Planner"
+schema_name: "SIP Calculator India — Mutual Fund SIP Return Calculator"
 seo_category: "growth"
 type: "calculator"
 date: "2026-02-25"
@@ -13,6 +13,8 @@ og_image: "/assets/og/og-sip-calculator.jpg"
 ---
 
 ## The Complete Guide to Systematic Investment Plans (SIP) in India (2026 Edition)
+
+> **Direct Answer (BLUF):** A **Systematic Investment Plan (SIP)** is an automated wealth-building mechanism where an investor deploys a fixed sum monthly into mutual funds. By leveraging **Rupee Cost Averaging** and **monthly geometric compounding**, a ₹10,000 monthly SIP at a historical 12% equity CAGR grows into **₹23.23 Lakhs in 10 years**, **₹50.46 Lakhs in 15 years**, and **₹99.91 Lakhs (nearly ₹1 Crore) in 20 years**. With a 10% annual step-up, that same 20-year corpus doubles to **₹1.99 Crores**. Under 2026 Section 112A tax rules, equity LTCG is exempt up to ₹1.25 Lakh/year and taxed at 12.5% thereafter.
 
 A **Systematic Investment Plan (SIP)** is a disciplined investment methodology that allows individuals to invest a predetermined sum of money into a mutual fund scheme at specified regular intervals—typically monthly, weekly, or quarterly. Rather than attempting to predict short-term equity market fluctuations or deploying irregular lump-sum amounts, a SIP automates wealth accumulation by purchasing fund units across every phase of the market cycle.
 

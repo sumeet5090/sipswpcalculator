@@ -1,8 +1,8 @@
 ---
 og_image: "/assets/og/og-retirement-calculator.jpg"
-title: "Retirement Calculator India — SIP Accumulation to SWP Pension"
+title: "Retirement Calculator India — SIP & SWP Pension Planner"
 subtitle: "Free retirement calculator for India. Model your SIP accumulation phase and SWP pension drawdown in one tool. See exactly how long your corpus lasts using the 4% safe withdrawal rule."
-meta_desc: "Plan your retirement corpus with dual-phase modeling: build wealth via Step-Up SIP and generate monthly pension via SWP. Accurate 4% rule and inflation modeling in PDF."
+meta_desc: "Plan your retirement with dual-phase modeling: build wealth via Step-Up SIP and generate pension via SWP. Accurate 4% rule and inflation modeling in PDF."
 keywords: "retirement calculator india, retirement planning calculator, swp retirement calculator, retirement corpus calculator, pension planning calculator, mutual fund retirement calculator"
 schema_name: "Retirement Calculator India — SIP to SWP Pension Planner"
 seo_category: "retirement"
@@ -12,9 +12,11 @@ date: "2026-08-01"
 
 ---
 
+> **Direct Answer (BLUF):** Retirement planning in India requires managing two continuous financial phases: **Wealth Accumulation (Step-Up SIP)** to build a self-sustaining corpus and **Tax-Efficient Decumulation (SWP)** to generate lifetime monthly pension. Following the Indian **3-Bucket Strategy** with a 4.0%–5.0% safe withdrawal rate protects your golden years against 6% living inflation and sequence-of-returns market shocks.
+
 Retirement planning in India has undergone a seismic structural transformation. The elimination of guaranteed defined-benefit corporate pensions, soaring urban healthcare inflation (compounding at 10%–14% annually), and expanding post-retirement life expectancies (often reaching 85 to 90 years) mean modern Indian investors face an unprecedented longevity challenge. Retiring comfortably requires far more than amassing an arbitrary lump sum; it demands a mathematically synchronized strategy connecting two distinct financial phases: **Wealth Accumulation (SIP)** during your working years and **Tax-Efficient Decumulation (SWP)** throughout your golden years.
 
-This **Retirement Calculator** is the first dedicated dual-lifecycle planner designed specifically for Indian economic conditions. It integrates monthly Systematic Investment Plans (SIP), annual salary top-ups, inflation-indexed post-retirement expenses, and Systematic Withdrawal Plans (SWP) under the latest statutory tax guidelines (Finance No. 2 Act, 2024), allowing you to stress-test your financial independence before taking the leap.
+This **Retirement Calculator** is the first dedicated dual-lifecycle planner designed specifically for Indian economic conditions. It integrates monthly Systematic Investment Plans (SIP), annual salary top-ups, inflation-indexed post-retirement expenses, and Systematic Withdrawal Plans (SWP) under 2026 statutory capital gains tax rules (Section 112A), allowing you to stress-test your financial independence before taking the leap.
 
 ---
 
@@ -242,7 +244,7 @@ The 3-bucket strategy divides your retirement savings into three functional asse
 * **Bucket 2 (Income/Debt, Years 4–8):** High-quality short-duration debt funds generating 6.5%–7.5% p.a. to refill Bucket 1.
 * **Bucket 3 (Growth/Equity, Years 9+):** Diversified equity mutual funds generating 11%–13% p.a. to ensure your wealth outpaces long-term inflation.
 
-### How are mutual fund SWP withdrawals taxed under Budget 2024?
+### How are mutual fund SWP withdrawals taxed under 2026 Tax Rules?
 Under Section 112A of the Income Tax Act (Finance No. 2 Act, 2024), long-term capital gains on equity mutual funds held for more than 12 months are completely **tax-free up to ₹1,25,000 per financial year**. Any gains exceeding this threshold are taxed at a flat rate of **12.5%** plus 4% cess. Because each SWP withdrawal contains a high proportion of returned principal capital, your effective tax rate in retirement is typically under 3% to 5%.
 
 ### Can I retire early (FIRE) in India at age 40 or 45?

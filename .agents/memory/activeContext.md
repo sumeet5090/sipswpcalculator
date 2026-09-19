@@ -5,26 +5,21 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Dual Mode Homepage Re-Architecture, Query-Intent Optimization & Embed Backlink Engine.
+- **Current Milestone:** Search Intent & SERP Gap Analysis, 100% BLUF Answer Coverage & Child Education/Lumpsum Matrices.
 - **Implemented Fixes & Architectural Outcomes:**
-  - **Dual-Mode Homepage by Default:** Upgraded the homepage to initialize in Combined Dual Mode (`data-mode="combo"`, `enable_swp = true` default in `RenderHomeAction.php` and `CalculatorApp.ts`). Search visitors looking for *"sip and swp calculator together"* immediately see both Stage 1 (Wealth Accumulation) and Stage 2 (Retirement Cashflow) calculating simultaneously without hunting through tabs or checkboxes, directly eliminating pogo-sticking bounce friction.
-  - **3-Mode Segmented Selector:** Deployed a 3-mode segmented control (`[🚀 Dual (SIP+SWP)]`, `[📈 SIP Only]`, `[🛡️ SWP Only]`) in `calculator-form.twig` and `TabController.ts`. Switching tabs provides zero-latency client-side toggling between combined lifecycle, pure SIP, and pure SWP with starting corpus.
-  - **Above-The-Fold Excel CTA & H1 Alignment:** Aligned H1 in `home.twig` to `SIP + SWP Calculator Together` with subtitle `Accumulation to Retirement Cashflow (with Inflation & Excel)` and added an above-the-fold "📥 Download Free Excel Model" CTA targeting GSC Rank 1 query intent.
-  - **Meta Retargeting & Intent Alignment:** Retargeted homepage title from `SIP & SWP Calculator Together — Dual Wealth Planner` to `SIP + SWP Calculator Together (with Inflation & Excel)` (54 characters, compliant with SERP snippet display thresholds), with description and keywords capturing high-converting GSC queries (`sip and swp calculator together`, `sip plus swp calculator`, `sip swp calculator excel`).
-  - **Capitalizing on Positions 1–3 (Corpus Scenarios):** Added static, crawlable benchmark tables and BLUF definitions for queries where the site ranks on Page 1 (`5 lakh swp calculator`, `10 lakh`, `30 lakh`, `1 crore`, and `5 crore swp calculator`) in `content/calculators/swp-calculator.md`.
-  - **AI Citation Grounding (BLUF Direct Answers):** Injected 45–55 word direct definitional answer capsules (BLUF) into `src/Views/components/guide-definitions.twig` for "SIP with SWP Combo Plan", "Inflation Step-Up SWP", and "2026 LTCG Tax Rules (§112A)", with schema DefinedTerm hooks for Gemini, Copilot, and Perplexity RAG pipelines.
-  - **Author E-E-A-T Knowledge Graph Anchoring:** Updated `HomeSchemaBuilder.php` and `SchemaHelper.php` with author `sameAs` (LinkedIn, GitHub) and verified credentials (`jobTitle`, `knowsAbout`) for Google Knowledge Graph trust.
-  - **Embeddable Backlink Engine:** Created reusable `src/Views/components/embed-modal.twig` with 1-click iframe copy functionality, wired into `home.twig`, `calculator-guide.twig`, and `analytical-studio.twig`. Configured `GuideRenderer::renderEmbed` and `.htaccess` with relaxed `X-Frame-Options: ALLOWALL` and CSP `frame-ancestors *;` specifically for `/embed/*` routes so external finance blogs and CAs can embed the tool.
-  - **P0 Schema Penalty Elimination:** Removed self-served `aggregateRating` from `HomeSchemaBuilder.php`, `SchemaFactory.php`, and `SchemaHelper.php`. Pure `SoftwareApplication`, `FAQPage`, `HowTo`, `FinancialProduct`, and `WebPage` schemas now emit cleanly.
-  - **P0 Phantom URL Eradication:** Blocked `/0.6.10` and `/sipswpcalculator.com` in `robots.txt` with 301 redirects in `redirects.json` and `Router.php`.
-  - **P0 Interactive Chart Rendering Resolution:** Resolved silent canvas draw abort on `#corpusChart` caused by Chart.js 4.5.1 internal `filler` plugin reading undefined `meta._clip.disabled` during multi-dataset fill passes. Configured `clip: false` on datasets and registered an inline `clipGuardPlugin` intercepting `beforeDatasetsDraw` and `beforeDatasetDraw` to guarantee `_clip` metadata integrity with zero external dependencies.
+  - **Child Education & Foreign University Fund Matrix (`/target-corpus-calculator`):** Injected institutional planning matrix modeling 10%–11% Indian higher education inflation and forex depreciation. Provides clear flat vs. 10% step-up SIP roadmaps for engineering/medical and overseas degrees.
+  - **Lumpsum vs. SIP Head-to-Head Comparison Matrix (`/lumpsum-calculator`):** Expanded with empirical 10-year rolling return evaluations (~68% lumpsum outperformance vs. psychological drawdown shock of SIP) and STP transition rules.
+  - **100% Direct Answer (BLUF) Position 0 Coverage:** Injected structured BLUF callouts across all remaining calculators (`compound-interest-calculator`, `my-first-crore-calculator`, `reach-1-crore-via-sip`, `reach-5-crore-via-sip`, `sip-5000-per-month`, `sip-10000-per-month`), ensuring 100% of individual calculators possess upfront numerical direct answers for Google AI Overviews and snippet extraction.
 - **Verification & System Health:**
-  - Full PHPUnit test suite: 839 tests / 13,588 assertions passed cleanly (0 failures, 0 warnings).
+  - Full automated crawl across 49 URLs: 0 404s, 0 301 internal hops, 0 schema parse errors.
+  - Full PHPUnit test suite: 839 tests / 13,594 assertions passed cleanly (0 failures, 0 warnings).
+  - SEO Metadata Validator: 44 tests / 3,036 assertions passed with 100% compliance.
   - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 234 files, 0 PHPCS violations).
   - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across base and specialized engines.
-  - Local curl verification: Verified on `http://localhost:8080/` and `http://127.0.0.1:8000/` for clean markup and fresh assets.
-  - Browser subagent validation: Verified clean initial load with Dual Mode active, instant calculation response on slider movement, smooth 3-mode tab switching, and complete accumulation-to-distribution curve visualization with 0 console errors.
-  - Frontend bundle: `npm run build` compiled without warnings or errors.
+  - Local curl verification: Confirmed HTML rendering of Child Education and Lumpsum vs SIP matrices on `localhost:8080`.
+- **Blog Category Featured Posts Balancing & Template Guardrail (2026-09-20):**
+  - Capped featured posts across blog categories to 1–2 top flagship guides per category (Growth: 2, Comparison: 2, Retirement: 2).
+  - Implemented template-level guardrail in `src/Views/pages/resources.twig` capping full-width `col-span-2` card spotlight rendering to max 2 per category.
 
 ---
 
@@ -42,15 +37,14 @@
 ---
 
 ## 3. Deployment Status
-- **⚠️ NOT YET DEPLOYED:** All changes (28+ modified files including `llms-full.txt` untracked) exist only in local working tree. Must `git add llms-full.txt`, commit, and deploy to production before SEO improvements take effect.
-- Post-deployment: Submit updated sitemap in GSC, request reindexing for all 17 calculator URLs.
+- **✅ DEPLOYED TO PRODUCTION (2026-09-19):** All updates, schema penalty removals, title retargeting, Dual Mode default, static AI scenario tables, and Chart.js `clipGuardPlugin` are verified live on `https://sipswpcalculator.com/`. Serving clean bundle `app-BvL2LGEj.js` with zero console errors.
+- **✅ BING SUBMISSION:** All 42 active URLs submitted directly via Bing Webmaster Tools URL submission.
 
 ---
 
 ## 4. Next Steps & Pending Items
-- **Immediate:** Commit and deploy all changes to production.
-- **Post-deploy:** Request indexing in Google Search Console for all calculator URLs. Validate structured data via Rich Results Test.
-- Continue monitoring user feedback on mobile touch responsiveness and ergonomic dock interactions.
-- Maintain zero-latency slider calculations on all target-corpus and lumpsum iterations.
-- Follow the Handoff Ledger Protocol: update this file whenever a feature milestone or architectural change is completed.
+- **Immediate (Phase 1):** In GSC, run URL Inspection on `https://sipswpcalculator.com/` and click "Request Indexing" to prioritize Googlebot's crawl of the newly deployed Dual-Mode homepage.
+- **Structured Data Audit:** Run Google's Rich Results Test tool to verify 0 errors on FAQPage, HowTo, and SoftwareApplication schemas.
+- **Phase 2 (Authority & Distribution):** Execute outreach to Indian personal finance bloggers, CAs, and FIRE communities to adopt the new `/embed/sip-calculator` and `/embed/swp-calculator` widgets for organic contextual backlinks.
+- **Monitoring:** Track CTR and Average Position across Google Search Console and Bing Webmaster Tools over the next 7–14 days.
 

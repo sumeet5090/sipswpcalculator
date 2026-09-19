@@ -4,7 +4,7 @@ subtitle: "How to build a sustainable retirement income using Systematic Withdra
 meta_desc: "Master retirement planning using Systematic Withdrawal Plans (SWP) in India. Learn the 3-bucket strategy, tax optimization, and year-by-year cashflow models."
 tag: "Planning"
 tag_color: "indigo"
-featured: false
+featured: true
 date: "March 2026"
 ---
 
@@ -202,7 +202,7 @@ date: "March 2026"
 
 <div class="bg-emerald-50 border-l-4 border-emerald-400 rounded-r-xl p-5 mb-8">
     <p class="text-emerald-800 text-sm font-medium leading-relaxed">
-        <strong>💡 Pro Tip:</strong> Run your plan at 8% return (bear-case) in addition to 10% (base-case). If your corpus survives the bear-case for 30 years, your plan is robust. Use our <a href="/retirement-drawdown-planner" class="text-emerald-700 underline">Retirement Drawdown Planner</a> to stress-test multiple scenarios instantly.
+        <strong>💡 Pro Tip:</strong> Run your plan at 8% return (bear-case) in addition to 10% (base-case). If your corpus survives the bear-case for 30 years, your plan is robust. Use our <a href="/swp-calculator" class="text-emerald-700 underline">SWP Calculator</a> to stress-test multiple scenarios instantly.
     </p>
 </div>
 

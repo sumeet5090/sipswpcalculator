@@ -382,7 +382,7 @@ date: "January 2026"
     ⚡ Live Tax Simulation
   </div>
   <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight text-slate-900">Model Your Post-Tax Retirement Income</h2>
-  <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Use our SWP Calculator to see exactly how much you'll take home after Budget 2024 Section 112A LTCG tax on your withdrawal plan.</p>
+  <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Use our SWP Calculator to see exactly how much you'll take home after Section 112A LTCG tax (2026 Rules) on your withdrawal plan.</p>
   <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
     <a href="/swp-calculator"
        class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm sm:text-base cursor-pointer">

@@ -1,7 +1,7 @@
 ---
 title: "Step-Up SIP Calculator India — Top-Up Wealth Planner"
 subtitle: "Free step-up (top-up) SIP calculator for Indian mutual funds. See how increasing your SIP by 5%, 10%, or 20% annually can nearly double your final corpus compared to a flat SIP."
-meta_desc: "Calculate returns with annual Step-Up (Top-Up) SIP. See how a 5% to 15% yearly increment dramatically boosts your mutual fund corpus. Free charts and instant PDF export."
+meta_desc: "Calculate returns with annual Step-Up (Top-Up) SIP. See how a 5% to 15% yearly increment boosts your mutual fund wealth. Free charts and instant PDF export."
 keywords: "step up sip calculator, top up sip calculator, sip step up calculator india, annual step up sip, incremental sip calculator, step up vs regular sip, compounding calculator india"
 schema_name: "Step-Up SIP Calculator India — Top-Up Compounding Planner"
 seo_category: "growth"
@@ -13,6 +13,8 @@ og_image: "/assets/og/og-sip-step-up-calculator.jpg"
 ---
 
 ## The Definitive Guide to Step-Up (Top-Up) SIPs in India (2026 Edition)
+
+> **Direct Answer (BLUF):** A **Step-Up SIP (Top-Up SIP)** automatically increases your monthly mutual fund investment each year (typically by 10% or a fixed ₹1,000) to match annual salary hikes. Over a 20-year horizon at 12% CAGR, a ₹10,000 monthly SIP with a 10% annual step-up accumulates **₹2.47 Crores** compared to **₹99.91 Lakhs** for a flat SIP—more than doubling your final corpus and cutting 4 to 5 years off your timeline to reach ₹1 Crore.
 
 A **Step-Up Systematic Investment Plan (SIP)**—frequently designated as a **Top-Up SIP** by Indian Asset Management Companies (AMCs)—is an automated wealth acceleration strategy wherein an investor commits to increasing their periodic mutual fund investment amount at regular intervals (typically once a year) by a predefined percentage or fixed rupee denomination.
 

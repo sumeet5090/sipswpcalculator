@@ -12,9 +12,11 @@ date: "2026-09-05"
 
 ---
 
+> **Direct Answer (BLUF):** Reaching a **₹5 Crore financial freedom corpus** at 12% equity return requires **₹2,15,205/month for 10 years**, **₹99,095/month for 15 years**, or **₹50,045/month for 20 years**. With a **10% annual step-up**, the starting investment drops to **₹58,600/month (15 yrs)** or **₹23,800/month (20 yrs)**. Under the 4% Safe Withdrawal Rule, ₹5 Crores yields a sustainable, perpetual monthly pension of **₹1,66,666/month** without ever depleting your principal.
+
 Accumulating a **₹5 Crore (₹50,000,000)** portfolio represents the ultimate milestone of **Complete Financial Independence and Early Retirement (FIRE)** in India. While ₹1 Crore provides security and milestone validation, in modern urban India (Mumbai, Bengaluru, Delhi-NCR, Hyderabad, Pune), a ₹5 Crore corpus provides generational security: it is large enough to fund lifelong comfortable living, absorb medical emergencies, support premium global education for children, and generate inflation-protected monthly pension cash flows indefinitely without ever eroding the underlying capital.
 
-This comprehensive **₹5 Crore SIP Goal Calculator** is engineered to help ambitious Indian investors map out their multi-decade wealth roadmap. By simulating varying monthly SIP outlays, expected equity market returns (10% to 15% CAGR), annual step-up multipliers, and post-tax net realization under Budget 2024 Section 112A capital gains laws, this guide provides a realistic, mathematics-backed strategy to turn a salaried income into multi-crore generational wealth.
+This comprehensive **₹5 Crore SIP Goal Calculator** is engineered to help ambitious Indian investors map out their multi-decade wealth roadmap. By simulating varying monthly SIP outlays, expected equity market returns (10% to 15% CAGR), annual step-up multipliers, and post-tax net realization under Section 112A (2026 Rules) capital gains laws, this guide provides a realistic, mathematics-backed strategy to turn a salaried income into multi-crore generational wealth.
 
 ---
 
@@ -147,7 +149,7 @@ To build and sustain a ₹5 Crore corpus over a 15 to 20-year horizon, your inve
 
 ---
 
-## 6. Budget 2024 LTCG Taxation on a ₹5 Crore Corpus
+## 6. 2026 LTCG Capital Gains Tax Rulesation on a ₹5 Crore Corpus
 
 Under the revised Section 112A provisions of the Indian Income Tax Act (effective July 23, 2024):
 * **Long-Term Capital Gains (LTCG)** exceeding **₹1.25 Lakhs per financial year** are taxed at **12.5% flat** (plus 4% cess, for an effective rate of 13.0%).

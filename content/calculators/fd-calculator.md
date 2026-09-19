@@ -14,6 +14,8 @@ date: "2026-09-01"
 
 ## What is a Bank Fixed Deposit (FD)?
 
+> **Direct Answer (BLUF):** A **Bank Fixed Deposit (FD)** is a low-risk term deposit offering contractually guaranteed interest compounded **quarterly** per RBI guidelines ($A = P(1 + r/400)^{4t}$). Each depositor is insured up to **₹5,00,000** per bank by DICGC. While safe, FD interest is taxed at your slab rate (up to 30%+), making the post-tax return of a 7.0% FD only **~4.9%**—which can trail inflation (5.5%–6.0%).
+
 A **Bank Fixed Deposit (FD)**—also commonly termed a Term Deposit—is a premier low-risk financial instrument offered by scheduled commercial banks, small finance banks, and non-banking financial companies (NBFCs) in India. When you place a fixed deposit, you commit a lump sum of capital for a predetermined duration (ranging from 7 days up to 10 years) in exchange for a **contractually guaranteed, fixed interest rate** that remains completely insulated from market volatility.
 
 Fixed deposits are widely considered the bedrock of Indian household savings due to their simplicity, guaranteed liquidity, and sovereign protection. Under the **Deposit Insurance and Credit Guarantee Corporation (DICGC)**—a wholly-owned subsidiary of the Reserve Bank of India—every depositor's funds across principal and accrued interest are insured up to a maximum statutory limit of **₹5,00,000 (₹5 Lakh) per bank**, ensuring ultimate capital safety even in the rare event of a bank liquidation.
@@ -161,9 +163,9 @@ Because the DICGC guarantees up to ₹5,00,000 per depositor across principal an
 
 ---
 
-## Fixed Deposits vs. Arbitrage Funds: The Post-Budget 2024 Tax Shift
+## Fixed Deposits vs. Arbitrage Funds: 2026 Tax Arbitrage Strategy
 
-Following Budget 2024 and the withdrawal of debt mutual fund indexation benefits under Section 50AA, high-bracket taxpayers increasingly deploy short-term surplus into **Arbitrage Funds** instead of Fixed Deposits:
+Under 2026 tax rules and Section 50AA provisions, high-bracket taxpayers increasingly deploy short-term surplus into **Arbitrage Funds** instead of Fixed Deposits:
 
 | Feature | Bank Fixed Deposit (30% Bracket) | Arbitrage Mutual Fund (Short-to-Medium Horizon) |
 | :--- | :--- | :--- |

@@ -1,7 +1,7 @@
 ---
 title: "SWP Calculator India — Monthly Withdrawal Planner 2026"
 subtitle: "Free SWP calculator with step-up withdrawals & inflation protection for Indian mutual funds. See how long your corpus lasts, plan retirement income & export yearly tables."
-meta_desc: "Calculate monthly SWP payout, retirement corpus longevity, and post-tax returns for Indian mutual funds. Model 5 Lakh, 30 Lakh, 1 Cr & 5 Cr corpus scenarios with inflation step-up."
+meta_desc: "Calculate monthly SWP payout, corpus longevity & post-tax returns for Indian mutual funds. Model ₹5L to ₹5Cr scenarios with inflation step-up and tax reports."
 keywords: "swp calculator, swp calculator india, step up swp calculator, 5 crore swp calculator, 1 crore swp calculator, 30 lakh swp calculator, 5 lakh swp calculator, best swp for monthly income, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, swp tax calculator"
 schema_name: "SWP Calculator India — Monthly Withdrawal Planner"
 seo_category: "retirement"
@@ -13,6 +13,8 @@ og_image: "/assets/og/og-swp-calculator.jpg"
 ---
 
 ## The Definitive Guide to Systematic Withdrawal Plans (SWP) in India (2026 Edition)
+
+> **Direct Answer (BLUF):** A **Systematic Withdrawal Plan (SWP)** allows investors to withdraw a fixed monthly income from their mutual fund corpus while the remaining balance continues compounding. For retirement in India, an initial withdrawal rate of **4.0% to 5.0% paired with a 5% annual step-up** delivers a sustainable 25 to 30-year pension. Under 2026 tax rules, SWPs are significantly more tax-efficient than Fixed Deposits: only the capital gain portion of each withdrawal is taxed (Section 112A LTCG at 12.5% above the ₹1.25 Lakh annual exemption).
 
 A **Systematic Withdrawal Plan (SWP)** is an automated financial decumulation facility offered by Indian mutual fund houses that allows an investor to redeem a predetermined sum of money from their accumulated mutual fund scheme at regular intervals—most commonly on a monthly, quarterly, or annual basis. 
 

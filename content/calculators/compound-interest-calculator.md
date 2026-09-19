@@ -1,10 +1,10 @@
 ---
 og_image: "/assets/og/og-compound-interest-calculator.jpg"
-title: "Compound Interest Calculator India — Periodic Growth Planner"
+title: "Compound Interest Calculator India — Monthly & Annual Growth"
 subtitle: "Calculate compound interest returns with annual, quarterly, and monthly compounding frequencies. See Rule of 72 doubling periods and interactive growth charts."
 meta_desc: "Calculate compound interest with annual, quarterly, and monthly compounding frequencies. Model Rule of 72 doubling timelines and growth with free charts and tables."
 keywords: "compound interest calculator, ci calculator india, compounding calculator, rule of 72 calculator, monthly compounding calculator, investment compounding"
-schema_name: "Compound Interest Calculator India — Periodic Growth Planner"
+schema_name: "Compound Interest Calculator India — Monthly & Annual Growth"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-01"
@@ -13,6 +13,8 @@ date: "2026-09-01"
 ---
 
 ## What is Compound Interest?
+
+> **Direct Answer (BLUF):** **Compound Interest** generates returns on both the original principal and accumulated interest ($A = P(1 + r/n)^{nt}$). At a benchmark 12% annual return, a ₹10 Lakh deposit compounds into **₹17.62 Lakhs in 5 years**, **₹31.06 Lakhs in 10 years**, and **₹96.46 Lakhs (nearly ₹1 Crore) in 20 years**. Compounding frequency significantly impacts terminal wealth: daily/monthly compounding yields higher returns than annual crediting. Under the **Rule of 72**, your money doubles every $72 \div r$ years (e.g. 6 years at 12%).
 
 **Compound Interest** is the fundamental mathematical engine driving long-term wealth accumulation. In simple interest arrangements, returns are calculated exclusively on the original deposit (principal) throughout the entire duration. In contrast, compound interest generates **returns on both the initial principal and the accumulated interest from preceding periods**. 
 
@@ -192,7 +194,7 @@ Consider two investors starting with ₹10,00,000, both earning 8% p.a. in the 3
     *   Gross Nominal Return: 8.0% p.a. compounding uninterrupted inside the scheme.
     *   Pre-Tax Corpus after 20 Years: $10,00,000 \times (1 + 0.08)^{20} = \mathbf{₹46,60,957}$
     *   Capital Gain: ₹36,60,957.
-    *   Budget 2024 LTCG Tax (12.5% on gains exceeding ₹1.25 Lakh exemption):
+    *   2026 LTCG Capital Gains Tax Rules (12.5% on gains exceeding ₹1.25 Lakh exemption):
         $$\text{Tax} = 0.125 \times (36,60,957 - 1,25,000) = \mathbf{₹4,41,995}$$
     *   Net Post-Tax Corpus: $46,60,957 - 4,41,995 = \mathbf{₹42,18,962}$
 

@@ -1,6 +1,6 @@
 ---
 og_image: "/assets/og/og-sip-5000-per-month.jpg"
-title: "Rs 5,000 Monthly SIP Plan — Returns & Corpus Guide"
+title: "₹5,000 Monthly SIP Calculator — Returns in 5, 10, 20 Years"
 subtitle: "See how investing ₹5,000 every month in Indian mutual funds compounds into ₹50 Lakhs to ₹2.3 Crores across 5 to 25-year horizons."
 meta_desc: "See how investing ₹5,000 monthly in mutual funds compounds into ₹50 Lakhs to ₹2.3 Crores. Model 10% annual step-up compounding & LTCG tax rules with free charts."
 keywords: "5000 sip per month, 5000 monthly sip returns, 5000 sip for 10 years, 5000 sip for 20 years, 5000 sip calculator india, best mutual fund for 5000 per month"
@@ -12,11 +12,13 @@ date: "2026-09-05"
 
 ---
 
+> **Direct Answer (BLUF):** A **₹5,000 monthly SIP** compounding at a 12% equity CAGR builds a corpus of **₹4.12 Lakhs in 5 years**, **₹11.62 Lakhs in 10 years**, **₹49.96 Lakhs in 20 years**, and **₹94.88 Lakhs in 25 years** (on ₹15 Lakhs invested). Activating a **10% annual step-up** (+₹500/mo each year) accelerates your wealth dramatically to **₹17.5 Lakhs in 10 years**, **₹95 Lakhs in 20 years**, and **₹2.13 Crores in 25 years**.
+
 Investing **₹5,000 per month** through a Systematic Investment Plan (SIP) is the most widely adopted entry point for salaried professionals, young graduates, and first-time investors in India. While ₹5,000 may seem modest in the context of daily living expenses, disciplined monthly compounding over 10, 15, 20, or 25 years transforms this accessible installment into substantial personal wealth.
 
 At an annualized return of **12% CAGR** (the historical long-term average of the Nifty 50 TRI index), a ₹5,000 monthly investment accumulates to **₹11.6 Lakhs in 10 years**, crosses **₹50 Lakhs in 20 years**, and surpasses **₹1 Crore in 25 years**. Furthermore, by adding a simple **10% annual step-up** (increasing your monthly investment by just ₹500 in year two, ₹550 in year three, and so forth), that same ₹5,000 starting SIP explodes into **over ₹2.13 Crores**!
 
-This comprehensive guide analyzes the exact math of a **₹5,000 per month SIP**. Use the interactive calculator above to simulate your customized returns across various tenures, compare flat versus step-up contributions, analyze post-tax net realizations under Budget 2024 Section 112A rules, and explore optimal portfolio allocations designed specifically for a ₹5,000 monthly budget.
+This comprehensive guide analyzes the exact math of a **₹5,000 per month SIP**. Use the interactive calculator above to simulate your customized returns across various tenures, compare flat versus step-up contributions, analyze post-tax net realizations under Section 112A (2026 Rules) rules, and explore optimal portfolio allocations designed specifically for a ₹5,000 monthly budget.
 
 ---
 
@@ -115,7 +117,7 @@ Financial planners recommend a clean, high-conviction **2-Fund Core & Satellite 
 
 ---
 
-## 5. Budget 2024 LTCG Tax Treatment on ₹5,000 SIP Redemptions
+## 5. 2026 LTCG Capital Gains Tax Rules Treatment on ₹5,000 SIP Redemptions
 
 Under the revised Section 112A provisions of the Indian Income Tax Act (effective July 23, 2024):
 * **Long-Term Capital Gains (LTCG)** on equity mutual funds held for more than 12 months are exempt up to **₹1,25,000 per financial year**.

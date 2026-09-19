@@ -1,6 +1,6 @@
 ---
 og_image: "/assets/og/og-sip-10000-per-month.jpg"
-title: "Rs 10,000 Monthly SIP Plan — Returns & Wealth Guide"
+title: "₹10,000 Monthly SIP Calculator — Returns in 5, 10, 20 Years"
 subtitle: "Calculate how a ₹10,000 monthly SIP in Indian mutual funds grows into ₹23 Lakhs in 10 years, ₹1 Crore in 20 years, and over ₹4.6 Crores with step-up."
 meta_desc: "Calculate how a ₹10,000 monthly SIP in mutual funds grows into ₹1 Crore in 20 years, and over ₹4.6 Crores with step-up. Review asset allocation and free charts."
 keywords: "10000 sip per month, 10000 monthly sip returns, 10000 sip for 10 years, 10000 sip for 20 years, 10000 sip calculator india, best mutual fund for 10000 per month"
@@ -12,11 +12,13 @@ date: "2026-09-05"
 
 ---
 
+> **Direct Answer (BLUF):** A **₹10,000 monthly SIP** compounding at 12% equity CAGR builds a corpus of **₹8.25 Lakhs in 5 years**, **₹23.23 Lakhs in 10 years**, **₹50.46 Lakhs in 15 years**, and **₹99.91 Lakhs (nearly ₹1 Crore) in 20 years** on ₹24 Lakhs invested. With a **10% annual step-up** (+₹1,000/mo each year), that exact corpus surges to **₹1.88 Crores in 20 years** and **₹4.61 Crores in 25 years**.
+
 A **₹10,000 per month** Systematic Investment Plan (SIP) represents the premier wealth accumulation benchmark for mid-career professionals, dual-income couples, and tech workers in India. In Indian financial planning, investing ₹10,000 every month is widely regarded as the **gateway to generational financial independence**. 
 
 At an expected annualized return of **12% CAGR** (consistent with the 25-year historical performance of the Nifty 50 TRI index), a ₹10,000 monthly investment accumulates to **₹23.2 Lakhs in 10 years**, crosses **₹50 Lakhs in 15 years**, and hits the coveted **₹1 Crore milestone in Year 20**. Furthermore, by activating a modest **10% annual step-up** (increasing your investment by ₹1,000/month each year to reflect salary increments), that exact same starting SIP expands into an astonishing **₹4.61 Crores over 25 years**!
 
-This comprehensive planning guide breaks down the mathematics, milestone roadmaps, tax considerations under Budget 2024 Section 112A rules, and portfolio allocation architectures for a **₹10,000 per month SIP**. Use the interactive calculator above to test your custom tenure, evaluate flat versus stepped contributions, and review inflation-adjusted real purchasing power.
+This comprehensive planning guide breaks down the mathematics, milestone roadmaps, tax considerations under Section 112A (2026 Rules) rules, and portfolio allocation architectures for a **₹10,000 per month SIP**. Use the interactive calculator above to test your custom tenure, evaluate flat versus stepped contributions, and review inflation-adjusted real purchasing power.
 
 ---
 
@@ -120,7 +122,7 @@ With a monthly budget of ₹10,000, you have the financial flexibility to constr
 
 ---
 
-## 5. Budget 2024 LTCG Tax Treatment: Net Post-Tax Returns on ₹10k SIP
+## 5. 2026 LTCG Capital Gains Tax Rules Treatment: Net Post-Tax Returns on ₹10k SIP
 
 Under the revised Section 112A provisions of the Indian Income Tax Act (effective July 23, 2024):
 * **Long-Term Capital Gains (LTCG)** exceeding **₹1,25,000 per financial year** are taxed at **12.5% flat** (plus 4% health & education cess, resulting in an effective tax rate of 13.0%).

@@ -1,5 +1,5 @@
 ---
-title: "SWP vs Fixed Deposit (2026): Which Gives Better Pension Income?"
+title: "SWP vs Fixed Deposit (2026): Which Gives Better Pension?"
 subtitle: "The definitive side-by-side comparison of Systematic Withdrawal Plans and Fixed Deposits — with real numbers, tax math, and a clear verdict"
 meta_desc: "Compare Mutual Fund SWP vs Bank Fixed Deposit for retirement income in India. Real numbers, post-tax cashflow math, and a clear verdict for 2026 investors."
 tag: "Comparison"
@@ -338,7 +338,7 @@ date: "January 2026"
 
 <ol>
     <li><strong>Putting ALL retirement money in FDs:</strong> This is the #1 mistake Indian retirees make. Your FD income is guaranteed to lose purchasing power every year. Diversify.</li>
-    <li><strong>Starting SWP withdrawals too high:</strong> Withdrawing more than 5-6% of your corpus annually is unsustainable. Start with 4-5% and use a 5% annual step-up. Our <a href="/retirement-drawdown-planner">Retirement Drawdown Planner</a> can help you find the sustainable rate.</li>
+    <li><strong>Starting SWP withdrawals too high:</strong> Withdrawing more than 5-6% of your corpus annually is unsustainable. Start with 4-5% and use a 5% annual step-up. Our <a href="/swp-calculator">SWP Calculator</a> can help you find the sustainable rate.</li>
     <li><strong>Panic-selling during a market dip:</strong> If markets drop 20%, your SWP continues as normal — you're selling fewer units at lower prices. The market will recover. Do NOT switch to FDs during a crash.</li>
     <li><strong>Ignoring the tax impact:</strong> Many retirees compare pre-tax returns (FD 7% vs SWP 10%) without accounting for the massive tax difference. Always compare <em>after-tax, after-inflation</em> returns.</li>
     <li><strong>Not using the Bucket Strategy:</strong> Going 100% SWP is risky in early retirement years due to sequence-of-returns risk. Always keep 2-3 years of expenses in safe instruments.</li>

@@ -1,16 +1,18 @@
 ---
 og_image: "/assets/og/og-target-corpus-calculator.jpg"
-title: "Target Corpus Calculator — Find Required Monthly SIP for Goals"
+title: "Target Corpus Calculator — Goal SIP Calculator India"
 subtitle: "Find the exact monthly SIP needed to reach any target corpus (₹25L, ₹50L, ₹1 Cr, ₹5 Cr). Reverse-engineer your investment goals with annual step-up optimization."
 meta_desc: "Calculate the exact monthly SIP required to achieve any financial goal (₹25L, ₹50L, ₹1 Cr, ₹5 Cr). Plan goal timelines with step-up compounding and free PDF report."
-keywords: "target corpus calculator, goal sip calculator, required sip calculator, reverse sip calculator, how much sip for target, sip goal planner, financial goal calculator india"
-schema_name: "Target Corpus Calculator — Goal SIP Planner"
+keywords: "target corpus calculator, goal sip calculator, required sip calculator, sip for child education, child education sip calculator, how much sip for target, sip goal planner, financial goal calculator india"
+schema_name: "Target Corpus Calculator — Goal SIP Calculator India"
 seo_category: "growth"
 type: "calculator"
 date: "2026-08-24"
 ---
 
 ---
+
+> **Direct Answer (BLUF):** A **Target Corpus Calculator** reverse-engineers the exact monthly SIP required to achieve a future financial milestone (e.g. ₹1 Crore or ₹5 Crores). Using the inverse annuity-due formula at a 12% equity return, reaching **₹1 Crore in 15 years requires ₹20,017/month (flat)** or **₹11,516/month with an annual 10% step-up**, cutting your required starting investment by nearly 42%.
 
 Every major life milestone in India—purchasing a residential apartment, funding overseas undergraduate education, orchestrating a child's wedding, or securing a fully self-sustaining retirement nest egg—demands an explicit **Target Corpus**. Most personal finance tools take an investment amount (e.g., ₹10,000/month) and project an arbitrary future value. However, goal-based financial planning works in reverse: you define the future capital required, the exact target date, and your risk tolerance, and reverse-engineer the precise monthly contribution needed to meet that commitment with mathematical certainty.
 
@@ -137,6 +139,28 @@ Where $PV$ is the cost if paid today, $i$ is sector inflation, and $t$ is the nu
 
 ---
 
+## SIP for Child Education & Foreign University Fund: Realistic Planning Matrix
+
+Planning for a child's higher education is the #1 financial goal for Indian parents. However, higher education costs escalate at **10% to 12% annually**—far outpacing ordinary CPI inflation. For international degrees (such as an MS or MBA in the United States, United Kingdom, Canada, or Australia), currency depreciation (USD/INR historical 3%–4% annual slide) accelerates the cost burden even further.
+
+The matrix below outlines the exact monthly SIP required to build education corpuses across common timelines assuming a **12% equity mutual fund CAGR**:
+
+### Child Education SIP Milestone Matrix (Flat vs. 10% Step-Up SIP)
+
+| Education Milestone | Cost Today | Future Target Needed (with 10% inflation) | Child's Current Age (Horizon) | Flat Monthly SIP Needed | Starting SIP with 10% Annual Step-Up | Total Out-of-Pocket Savings (with Step-Up) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Private Engineering / Medical (India)** | ₹25,00,000 | **₹64,84,000** | Age 8 (10 Years) | **₹27,908 / mo** | **₹17,215 / mo** | ₹32.4 Lakhs |
+| **Premier Indian MBA (IIM / Top B-School)** | ₹30,00,000 | **₹95,17,000** | Age 5 (13 Years) | **₹25,836 / mo** | **₹13,912 / mo** | ₹34.1 Lakhs |
+| **Overseas Undergraduate (4 Years US/UK)** | ₹80,00,000 | **₹2,51,00,000** | Age 4 (14 Years) | **₹58,418 / mo** | **₹30,120 / mo** | ₹79.9 Lakhs |
+| **Overseas STEM Master's Degree (US/Canada)** | ₹60,00,000 | **₹1,55,62,000** | Age 8 (10 Years) | **₹66,979 / mo** | **₹41,290 / mo** | ₹77.7 Lakhs |
+
+### Key Takeaways for Education Planning:
+1. **Start at Child's Birth:** If you begin investing when your child is born (18-year horizon), reaching a ₹1 Crore education corpus requires just **₹13,060/month** (flat) or **₹5,820/month** with a 10% annual step-up. Waiting until age 10 cuts the horizon to 8 years, increasing the required monthly SIP by **3.5x to over ₹45,000/month**.
+2. **Step-Up Bridges the Salary Gap:** A starting parent earning ₹80,000/month cannot allocate ₹28,000 immediately to education SIPs. A 10% annual step-up enables starting at **₹17,215/month**, scaling comfortably as annual increments arrive.
+3. **Currency Buffer for Foreign Degrees:** If planning an international degree, allocate 20%–30% of the SIP portfolio into global feeder funds or US equity index funds (e.g. S&P 500 / Nasdaq 100) to naturally hedge against Rupee depreciation.
+
+---
+
 ## Step-Up Optimization: Slashing Your Starting SIP Commitment
 
 If the required monthly deposit for your financial goal exceeds your current disposable surplus, do not compromise on the target amount or push back your timeline. Instead, activate the **Annual Step-Up (Top-Up)** feature.
@@ -187,9 +211,9 @@ By executing a monthly **Systematic Transfer Plan (STP)** from equity to liquid 
 
 ---
 
-## Factoring Tax Drag into Your Target Corpus (Budget 2024 Rules)
+## Factoring Tax Drag into Your Target Corpus (2026 LTCG Rules — Section 112A)
 
-Under the **Finance (No. 2) Act, 2024**, long-term capital gains on equity mutual funds are subject to taxation upon redemption. If you need exactly ₹1 Crore in hand for a property purchase or overseas tuition, withdrawing ₹1 Crore from an equity mutual fund will leave you with an unexpected deficit after tax deduction.
+Under current 2026 capital gains tax rules, long-term capital gains on equity mutual funds are subject to taxation upon redemption. If you need exactly ₹1 Crore in hand for a property purchase or overseas tuition, withdrawing ₹1 Crore from an equity mutual fund will leave you with an unexpected deficit after tax deduction.
 
 ### Tax Treatment Summary for Equity Mutual Funds
 * **Holding Period:** More than 12 months.

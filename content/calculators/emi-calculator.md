@@ -2,7 +2,7 @@
 og_image: "/assets/og/og-emi-calculator.jpg"
 title: "EMI Calculator India — Home & Car Loan Monthly EMI Planner"
 subtitle: "Calculate monthly EMI for home loans, car loans, and personal loans with complete year-by-year amortization schedules and interest breakdown in India."
-meta_desc: "Calculate loan EMI for Home, Car, and Personal loans in India. View complete year-by-year amortization schedules, principal vs interest breakups, and free PDF report."
+meta_desc: "Calculate loan EMI for Home, Car & Personal loans in India. View complete amortization schedules, principal vs interest breakups, and free PDF report."
 keywords: "emi calculator, home loan emi calculator, car loan emi calculator, personal loan emi, loan amortization schedule, loan interest calculator india"
 schema_name: "EMI Calculator India — Home & Car Loan Planner"
 seo_category: "growth"
@@ -13,6 +13,8 @@ date: "2026-09-01"
 ---
 
 ## What is an Equated Monthly Installment (EMI)?
+
+> **Direct Answer (BLUF):** An **EMI (Equated Monthly Installment)** is a fixed monthly payment covering both loan principal and compound interest calculated on a reducing balance basis. For an Indian Home Loan of **₹50 Lakhs at 8.5% p.a. for 20 years**, your monthly EMI is **₹43,391**, resulting in total interest paid of **₹54.14 Lakhs** (surpassing the original loan amount!). Prepaying just **1 extra EMI per year** or increasing your EMI by 5% annually reduces your loan tenure from 20 years down to under 16 years, saving over ₹12 Lakhs in interest.
 
 An **Equated Monthly Installment (EMI)** is a structured, fixed monthly cash outflow paid by a borrower to a financial institution (commercial bank, housing finance company, or NBFC) on a designated day of each calendar month. The EMI structure is engineered to systematically amortize both the **loan principal** and the **accrued compound interest** over an agreed duration, bringing the outstanding balance to exactly zero upon the final installment.
 

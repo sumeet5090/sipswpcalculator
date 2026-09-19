@@ -4,7 +4,7 @@ subtitle: "The complete guide to Equated Monthly Installments — reducing balan
 meta_desc: "What is EMI (Equated Monthly Installment)? Understand the EMI calculation formula, reducing balance vs flat rate loans, prepayment strategies & amortization."
 tag: "Guide"
 tag_color: "cyan"
-featured: true
+featured: false
 date: "March 2026"
 ---
 

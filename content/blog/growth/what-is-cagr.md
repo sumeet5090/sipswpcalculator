@@ -4,7 +4,7 @@ subtitle: "The complete guide to Compound Annual Growth Rate — mathematical fo
 meta_desc: "What is CAGR (Compound Annual Growth Rate)? Understand the CAGR formula, compare CAGR vs XIRR vs absolute return, and calculate investment growth in India."
 tag: "Guide"
 tag_color: "blue"
-featured: true
+featured: false
 date: "March 2026"
 ---
 

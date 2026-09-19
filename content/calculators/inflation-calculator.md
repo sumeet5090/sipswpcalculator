@@ -2,7 +2,7 @@
 og_image: "/assets/og/og-inflation-calculator.jpg"
 title: "Inflation Calculator India — Future Value & Purchasing Power"
 subtitle: "Calculate future cost of living and purchasing power erosion in India. Understand consumer inflation impact on retirement and long-term financial goals."
-meta_desc: "Calculate future cost of living, purchasing power loss, and required retirement corpus under Indian inflation (CPI). See real values with interactive charts and PDF export."
+meta_desc: "Calculate future cost of living, purchasing power loss, and target corpus under Indian inflation (CPI). See real values with interactive charts and PDF."
 keywords: "inflation calculator, inflation calculator india, purchasing power calculator, future cost calculator, cpi inflation india, retirement inflation calculator"
 schema_name: "Inflation Calculator India — Purchasing Power Planner"
 seo_category: "retirement"
@@ -13,6 +13,8 @@ date: "2026-09-01"
 ---
 
 ## What is Inflation? The Silent Wealth Destroyer
+
+> **Direct Answer (BLUF):** **Inflation** is the rate at which purchasing power erodes over time. In India, long-term consumer inflation (CPI) averages approximately **6.0% p.a.** Under the **Rule of 72** ($72 / 6 = 12$), living expenses double and your money's purchasing power cuts in half every **12 years**. A monthly lifestyle costing **₹50,000 today** will require **₹1.60 Lakhs/month in 20 years** just to maintain the same standard of living.
 
 **Inflation** is the persistent, systemic increase in the general price level of goods and services across an economy over time. In personal finance, inflation represents the gradual, irreversible **erosion of purchasing power**. It means that a ₹100 note in your wallet today will buy substantially fewer groceries, fuel, healthcare consultations, or education semesters ten or twenty years from now.
 
