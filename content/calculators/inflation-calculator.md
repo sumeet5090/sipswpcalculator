@@ -2,7 +2,7 @@
 og_image: "/assets/og/og-inflation-calculator.jpg"
 title: "Inflation Calculator India — Future Value & Purchasing Power"
 subtitle: "Calculate future cost of living and purchasing power erosion in India. Understand consumer inflation impact on retirement and long-term financial goals."
-meta_desc: "Calculate future cost of living, purchasing power loss, and required retirement corpus under Indian inflation (CPI). See real values with interactive charts and PDF export."
+meta_desc: "Calculate future cost of living, purchasing power loss, and target corpus under Indian inflation (CPI). See real values with interactive charts and PDF."
 keywords: "inflation calculator, inflation calculator india, purchasing power calculator, future cost calculator, cpi inflation india, retirement inflation calculator"
 schema_name: "Inflation Calculator India — Purchasing Power Planner"
 seo_category: "retirement"

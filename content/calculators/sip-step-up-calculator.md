@@ -1,7 +1,7 @@
 ---
 title: "Step-Up SIP Calculator India — Top-Up Wealth Planner"
 subtitle: "Free step-up (top-up) SIP calculator for Indian mutual funds. See how increasing your SIP by 5%, 10%, or 20% annually can nearly double your final corpus compared to a flat SIP."
-meta_desc: "Calculate returns with annual Step-Up (Top-Up) SIP. See how a 5% to 15% yearly increment dramatically boosts your mutual fund corpus. Free charts and instant PDF export."
+meta_desc: "Calculate returns with annual Step-Up (Top-Up) SIP. See how a 5% to 15% yearly increment boosts your mutual fund wealth. Free charts and instant PDF export."
 keywords: "step up sip calculator, top up sip calculator, sip step up calculator india, annual step up sip, incremental sip calculator, step up vs regular sip, compounding calculator india"
 schema_name: "Step-Up SIP Calculator India — Top-Up Compounding Planner"
 seo_category: "growth"

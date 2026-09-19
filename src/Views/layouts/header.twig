@@ -76,7 +76,7 @@
         <!-- Desktop nav (visible on >= 1024px) -->
         <nav class="hidden lg:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
             {% for item in nav_items %}
-                {% set is_active = (active_page|default('') == item.id) or (active_page|default('') == (item.id ~ '.php')) or (item.id == 'resources' and active_page|default('') == 'blog_post') %}
+                {% set is_active = (active_page|default('') == item.id) or (item.id == 'resources' and active_page|default('') == 'blog_post') %}
                 {% if item.sub_items is defined %}
                     <div class="relative nav-dropdown py-2">
                         <button aria-haspopup="true" aria-expanded="false" class="{{ is_active ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600' }} transition-colors inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 rounded">
@@ -146,7 +146,7 @@
     <div id="mobile-menu" class="lg:hidden hidden border-t border-slate-200 bg-white/98 backdrop-blur-md max-h-[calc(100vh-4.5rem)] overflow-y-auto custom-scrollbar shadow-modal overscroll-contain">
         <div class="px-4 py-3 space-y-1">
             {% for item in nav_items %}
-                {% set is_active = (active_page|default('') == item.id) or (active_page|default('') == (item.id ~ '.php')) or (item.id == 'resources' and active_page|default('') == 'blog_post') %}
+                {% set is_active = (active_page|default('') == item.id) or (item.id == 'resources' and active_page|default('') == 'blog_post') %}
                 {% if item.sub_items is defined %}
                     <div class="text-slate-500 font-semibold px-3 py-2 text-xs uppercase tracking-wider">{{ item.label }}</div>
                     <div class="pl-4 space-y-1">

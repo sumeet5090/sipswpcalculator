@@ -1,8 +1,8 @@
 ---
 og_image: "/assets/og/og-retirement-calculator.jpg"
-title: "Retirement Calculator India — SIP Accumulation to SWP Pension"
+title: "Retirement Calculator India — SIP & SWP Pension Planner"
 subtitle: "Free retirement calculator for India. Model your SIP accumulation phase and SWP pension drawdown in one tool. See exactly how long your corpus lasts using the 4% safe withdrawal rule."
-meta_desc: "Plan your retirement corpus with dual-phase modeling: build wealth via Step-Up SIP and generate monthly pension via SWP. Accurate 4% rule and inflation modeling in PDF."
+meta_desc: "Plan your retirement with dual-phase modeling: build wealth via Step-Up SIP and generate pension via SWP. Accurate 4% rule and inflation modeling in PDF."
 keywords: "retirement calculator india, retirement planning calculator, swp retirement calculator, retirement corpus calculator, pension planning calculator, mutual fund retirement calculator"
 schema_name: "Retirement Calculator India — SIP to SWP Pension Planner"
 seo_category: "retirement"

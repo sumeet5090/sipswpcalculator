@@ -2,7 +2,7 @@
 og_image: "/assets/og/og-emi-calculator.jpg"
 title: "EMI Calculator India — Home & Car Loan Monthly EMI Planner"
 subtitle: "Calculate monthly EMI for home loans, car loans, and personal loans with complete year-by-year amortization schedules and interest breakdown in India."
-meta_desc: "Calculate loan EMI for Home, Car, and Personal loans in India. View complete year-by-year amortization schedules, principal vs interest breakups, and free PDF report."
+meta_desc: "Calculate loan EMI for Home, Car & Personal loans in India. View complete amortization schedules, principal vs interest breakups, and free PDF report."
 keywords: "emi calculator, home loan emi calculator, car loan emi calculator, personal loan emi, loan amortization schedule, loan interest calculator india"
 schema_name: "EMI Calculator India — Home & Car Loan Planner"
 seo_category: "growth"

@@ -2,7 +2,7 @@
 og_image: "/assets/og/og-cagr-calculator.jpg"
 title: "CAGR Calculator India — Annualized Mutual Fund Returns"
 subtitle: "Calculate Compound Annual Growth Rate (CAGR) for mutual funds, stocks, and real estate investments in India with absolute return and multiplier breakdowns."
-meta_desc: "Calculate Compound Annual Growth Rate (CAGR) and absolute returns for Indian mutual funds, stocks & SIP investments. Accurate annualized return formula with free charts."
+meta_desc: "Calculate Compound Annual Growth Rate (CAGR) & absolute returns for Indian mutual funds, stocks & investments. Accurate annualized return formula with charts."
 keywords: "cagr calculator, cagr calculator india, sip cagr calculator, calculate cagr of sip, compound annual growth rate, mutual fund cagr, annualized return calculator"
 schema_name: "CAGR Calculator India — Annualized Return Planner"
 seo_category: "growth"
