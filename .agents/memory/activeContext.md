@@ -31,6 +31,10 @@
     - Resolved label/badge collision bug by updating label container to `flex items-center gap-1.5 min-w-0 flex-1 flex-wrap` and replacing rigid `whitespace-nowrap` on `<label>` with `line-clamp-2 leading-snug`.
     - Redesigned and streamlined verbose labels into concise, professional fintech terminology with rich informational tooltips across `cagr-fields.twig`, `inflation-fields.twig`, `fd-fields.twig`, `emi-fields.twig`, `ppf-fields.twig`, and `compound-interest-fields.twig`.
     - Removed redundant uppercase section titles across sub-calculator partials to eliminate layout bloat and maintain consistent vertical rhythm.
+  - Starting Corpus Zero-Value & Validation Bug Resolution:
+    - Fixed `InvestmentInputs::fromRequest()` so that if `corpus` is absent, it resolves its own central configuration default (`$cfg['corpus']['default']` = ₹50,00,000) rather than falling back to `$lumpsum` (0.0).
+    - Defensively guarded `corpus-field.twig` so `(corpus is defined and corpus > 0) ? corpus : calc_config.corpus.default|default(5000000)` prevents any 0 rendering when `min` constraint is 10,000.
+    - Added auto-population guard in `TabController.ts` on `switchTab('swp')` to ensure that if `#corpus` is ever `< minCorpus`, it seamlessly initializes to the default 50 Lakhs without tripping validation alerts.
   - Chart canvas selector alignment: Resolved canvas target `#corpusChart` and live metric telemetry headers in `ChartManager.ts`.
 
 ---
