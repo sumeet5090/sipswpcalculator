@@ -25,7 +25,8 @@
   - Composer `check-all` suite: **100% clean** (PHPStan Level 5 across 250 files, 0 PHPCS violations across 250 files).
   - Frontend typecheck & build: `npm run build` clean in ~190ms with 0 errors.
   - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across all engines.
-  - Local `curl` verification: Confirmed sticky first column and benchmark rendering on `/`, `/swp-calculator`, `/sip-step-up-calculator`, and `/cagr-calculator`.
+  - Equal Height Alignment: Left Form Column (`#calculator-app`) and Right Summary/Chart Column (`#chart-visualization`) verified at exact 666px equal height with smooth internal scrolling and zero layout jumps.
+  - Chart canvas selector alignment: Resolved canvas target `#corpusChart` and live metric telemetry headers in `ChartManager.ts`.
 
 ---
 
