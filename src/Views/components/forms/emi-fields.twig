@@ -5,15 +5,12 @@
 <input type="hidden" id="stepup" name="stepup" value="0">
 <input type="hidden" id="lumpsum" name="lumpsum" value="0">
 
-<div class="space-y-4">
-    <div class="mb-2">
-        <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">Loan Parameters</span>
-    </div>
-
+<div class="space-y-3">
     <!-- Loan Principal Amount -->
     {{ inputs.renderInputRangePair({
         'id': 'emi_principal',
-        'label': 'Loan Amount (Principal)',
+        'label': 'Loan Amount',
+        'tooltip': 'Total principal borrowed from the financial lender.',
         'min': 50000,
         'max': 50000000,
         'slider_max': 10000000,
@@ -33,7 +30,8 @@
     <!-- Annual Interest Rate -->
     {{ inputs.renderInputRangePair({
         'id': 'emi_rate',
-        'label': 'Interest Rate (% p.a.)',
+        'label': 'Interest Rate',
+        'tooltip': 'Annual interest rate charged by your lender on the borrowing.',
         'min': 5.0,
         'max': 25.0,
         'slider_max': 18.0,
@@ -53,7 +51,8 @@
     <!-- Loan Tenure (Years) -->
     {{ inputs.renderInputRangePair({
         'id': 'emi_years',
-        'label': 'Repayment Tenure',
+        'label': 'Loan Tenure',
+        'tooltip': 'Total repayment duration in years.',
         'min': 1,
         'max': 30,
         'slider_max': 30,

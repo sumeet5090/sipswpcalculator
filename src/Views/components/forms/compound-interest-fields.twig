@@ -5,15 +5,12 @@
 <input type="hidden" id="stepup" name="stepup" value="0">
 <input type="hidden" id="lumpsum" name="lumpsum" value="0">
 
-<div class="space-y-4">
-    <div class="mb-2">
-        <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">Compound Interest Inputs</span>
-    </div>
-
+<div class="space-y-3">
     <!-- Principal Deposit Amount -->
     {{ inputs.renderInputRangePair({
         'id': 'ci_principal',
-        'label': 'Initial Principal Deposit',
+        'label': 'Initial Principal',
+        'tooltip': 'Initial lump sum deposited or invested.',
         'min': 10000,
         'max': 10000000,
         'slider_max': 5000000,
@@ -33,7 +30,8 @@
     <!-- Annual Interest Rate -->
     {{ inputs.renderInputRangePair({
         'id': 'ci_rate',
-        'label': 'Expected Annual Return Rate',
+        'label': 'Annual Rate',
+        'tooltip': 'Nominal annual return rate or interest percentage.',
         'min': 1,
         'max': 30,
         'slider_max': 25,
@@ -54,6 +52,7 @@
     {{ inputs.renderInputRangePair({
         'id': 'ci_years',
         'label': 'Investment Duration',
+        'tooltip': 'Total investment period in years.',
         'min': 1,
         'max': 40,
         'slider_max': 30,
