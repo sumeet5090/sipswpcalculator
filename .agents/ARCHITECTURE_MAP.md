@@ -40,7 +40,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | **Slider & Number Input** | `form/input-range-pair.twig` | `SliderManager.ts`<br/>`controllers/StepperController.ts` | Two-way synchronized range slider and currency text inputs with 48px ergonomic touch stepper targets, preset chips, and auto-step rounding |
 | **QR Share & Socials** | `qr-share-modal.twig` | `subsystems/ExportSubsystem.ts` | Encoded URL state generation, canvas QR render, and native Web Share API trigger |
 | **SEBI Benchmark & Trust** | `sebibenchmark-modal.twig`<br/>`privacy-trust-badge.twig` | `subsystems/EngagementSubsystem.ts` | Regulatory disclosure compliance, index benchmark comparisons, privacy audit badges |
-| **Scenario Benchmark Tables** | `scenario-benchmark-table.twig` | Static HTML / AMFI Matrix | Pre-calculated static benchmark matrices for Google rich answers and AI search engine extraction (Gemini / Copilot) |
+| **Scenario Benchmark Tables** | `scenario-benchmark-table.twig`<br/>`components/benchmarks/*.twig` (10 modular partials) | Static HTML / AMFI Matrix | Pre-calculated static benchmark matrices for Google rich answers and AI search engine extraction (Gemini / Copilot), partitioned into 10 decoupled partials |
 | **3-Mode Segmented Selector** | `components/calculator-form.twig` | `controllers/TabController.ts` | Instant toggle between Dual (SIP + SWP), SIP Only, and SWP Only with automatic phase staging and zero reload |
 | **Embed Calculator Modal** | `embed-modal.twig` | Frontend `<dialog>` / `copyEmbedCodeBtn` | 1-click responsive iframe generator for external financial bloggers and advisors with attribution backlink |
 
@@ -50,7 +50,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 
 | Export Type | HTTP Trigger Route | Backend Controller Action | Core Service / Template | Frontend Orchestrator |
 | :--- | :--- | :--- | :--- | :--- |
-| **PDF Report** | `POST /generate-pdf` | `Controllers\GeneratePdfAction` | `Services\PdfGeneratorService`<br/>`Core\PdfReportTemplate`<br/>`Core\PdfReportStylesheet`<br/>`Core\PdfReportTableBuilder` | `subsystems/ExportSubsystem.ts` (`downloadPdf()`) |
+| **PDF Report** | `POST /generate-pdf` | `Controllers\GeneratePdfAction` | `Services\PdfGeneratorService`<br/>`Core\PdfReportTemplate`<br/>`Views/pdf/report.twig`<br/>`Views/pdf/components/*.twig`<br/>`Core\PdfReportStylesheet`<br/>`Core\PdfReportTableBuilder` | `subsystems/ExportSubsystem.ts` (`downloadPdf()`) |
 | **CSV Amortization** | `POST /download-csv` | `Controllers\DownloadCsvAction` | `Services\CsvExportService` | `subsystems/ExportSubsystem.ts` (`downloadCsv()`) |
 
 ---

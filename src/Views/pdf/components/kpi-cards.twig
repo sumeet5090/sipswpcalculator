@@ -1,0 +1,28 @@
+<div class="kpi-container">
+    <table class="kpi-table">
+        <tr>
+            <td class="kpi-card invested" style="width: 25%;">
+                <span class="kpi-label">Total Invested</span>
+                <div class="kpi-val">{{ kpis.invested }}</div>
+            </td>
+            <td class="kpi-card returns" style="width: 25%;">
+                <span class="kpi-label">Est. Returns</span>
+                <div class="kpi-val" style="color: #059669;">{{ kpis.returns }}</div>
+            </td>
+            {% if has_swp %}
+            <td class="kpi-card swp" style="width: 25%;">
+                <span class="kpi-label">Total Withdrawn</span>
+                <div class="kpi-val" style="color: #e11d48;">{{ kpis.withdrawn }}</div>
+            </td>
+            {% endif %}
+            <td class="kpi-card corpus" style="width: 25%;">
+                <span class="kpi-label">Final Corpus</span>
+                <div class="kpi-val" style="color: #0284c7;">{{ kpis.corpus }}</div>
+            </td>
+            <td class="kpi-card multiplier" style="width: 25%;">
+                <span class="kpi-label">Wealth Multiplier</span>
+                <div class="kpi-val" style="color: #4f46e5;">{{ multiplier }}</div>
+            </td>
+        </tr>
+    </table>
+</div>

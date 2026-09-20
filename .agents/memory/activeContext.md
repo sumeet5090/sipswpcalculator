@@ -1,11 +1,19 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-09-19*
+*Last Updated: 2026-09-20*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Elite Architecture Refactoring — Phase 3: Frontend Architecture & Chart Deconstruction Completed.
+- **Current Milestone:** Elite Architecture Refactoring — Phase 4: Presentation Layer Decoupling Completed.
+- **Implemented Fixes & Architectural Outcomes (Phase 4):**
+  - **Modularized Scenario Benchmark Tables (`src/Views/components/benchmarks/`):** Deconstructed monolithic 723-line `scenario-benchmark-table.twig` into 10 single-purpose partials:
+    - `swp-longevity.twig`, `lumpsum-growth.twig`, `cagr-historical.twig`, `sip-stepup-comparison.twig`, `emi-amortization.twig`, `ppf-maturity.twig`, `fd-compounding.twig`, `inflation-erosion.twig`, `target-corpus.twig`, `sip-swp-dual.twig`.
+    - Reduced `scenario-benchmark-table.twig` into a clean 68-line dispatcher, allowing isolated inclusion across specialized calculator guides without DOM overhead.
+  - **PDF Twig Templating Migration (`src/Views/pdf/`):**
+    - Created master template `src/Views/pdf/report.twig` and 7 modular partials in `src/Views/pdf/components/` (`header.twig`, `meta-ribbon.twig`, `kpi-cards.twig`, `config-card.twig`, `chart-section.twig`, `milestones.twig`, `callouts-footer.twig`).
+    - Completely eliminated 200+ lines of procedural PHP string concatenation in `Core\PdfReportTemplate`, delegating presentation cleanly to `ViewRenderer` with native Twig XSS auto-escaping.
+    - Preserved seamless backward-compatibility and zero-latency execution.
 - **Implemented Fixes & Architectural Outcomes (Phase 3):**
   - **Modularized Chart Subsystem (`assets/js/calculators/chart/`):** Deconstructed monolithic `ChartManager.ts` (1,678 lines) into single-responsibility components:
     - `ChartPlugins.ts`: Decoupled all 7 custom Chart.js lifecycle plugins (`clipGuard`, `crosshair`, `splineMilestones`, `compoundingIgnition`, `croreMilestoneLine`, `fdAlphaDelta`, `donutCenterText`).

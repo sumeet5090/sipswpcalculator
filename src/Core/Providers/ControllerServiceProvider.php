@@ -81,7 +81,9 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new PdfReportTemplate(
                 $c->get(CurrencyFormatterInterface::class),
                 $milestones,
-                $c->get(PdfReportStylesheet::class)
+                $c->get(PdfReportStylesheet::class),
+                null,
+                $c->get(ViewRenderer::class)
             );
         });
 

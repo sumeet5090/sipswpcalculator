@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Investment Plan - {{ client_name }}</title>
+    <style>{{ styles|raw }}</style>
+</head>
+<body>
+    <div class="top-accent"></div>
+    {% include 'pdf/components/header.twig' %}
+    {% include 'pdf/components/meta-ribbon.twig' %}
+    {% include 'pdf/components/kpi-cards.twig' %}
+    {% include 'pdf/components/config-card.twig' %}
+    {% include 'pdf/components/chart-section.twig' %}
+    {% include 'pdf/components/milestones.twig' %}
+    <div style="page-break-before: always;"></div>
+    <div class="section-heading" style="margin-top: 0;">Year-by-Year Breakdown</div>
+    <div class="results-table-container">
+        {{ table_html|raw }}
+    </div>
+    {% include 'pdf/components/callouts-footer.twig' %}
+</body>
+</html>
