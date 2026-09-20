@@ -36,6 +36,10 @@ class DomainServiceProvider implements ServiceProviderInterface
             return new SipStrategy($c->get(ConfigService::class));
         });
 
+        $container->singleton(\Core\Strategies\StepUpSipStrategy::class, function (Container $c) {
+            return new \Core\Strategies\StepUpSipStrategy($c->get(ConfigService::class));
+        });
+
         $container->singleton(SwpStrategy::class, function (Container $c) {
             return new SwpStrategy($c->get(ConfigService::class));
         });
@@ -69,6 +73,10 @@ class DomainServiceProvider implements ServiceProviderInterface
                 $c->get(GuideViewModelBuilder::class),
                 $c->get(ViewRenderer::class)
             );
+        });
+
+        $container->singleton(\Services\GuideRendererInterface::class, function (Container $c) {
+            return $c->get(GuideRenderer::class);
         });
     }
 }

@@ -49,7 +49,7 @@ class ShowResourceCategoryAction
             fn($p) => strtolower((string) ($p['seo_category'] ?? '')) === strtolower($category)
         );
 
-        if (empty($filteredPosts) && !in_array($category, $categories, true)) {
+        if (empty($filteredPosts) && !array_key_exists($category, $categories)) {
             throw new RouteNotFoundException("Resource category not found: {$category}");
         }
 

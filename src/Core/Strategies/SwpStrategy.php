@@ -17,4 +17,14 @@ class SwpStrategy extends BaseStrategy
     {
         return InvestmentInputs::fromSwpRequest([], $this->configService);
     }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/swp-longevity.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'SWP Withdrawal & Corpus Longevity Benchmark Table';
+    }
 }

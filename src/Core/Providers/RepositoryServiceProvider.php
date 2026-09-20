@@ -70,6 +70,10 @@ class RepositoryServiceProvider implements ServiceProviderInterface
             return new TelemetryPruningService($c->get(PDO::class));
         });
 
+        $container->singleton(\Services\TelemetryPruningServiceInterface::class, function (Container $c) {
+            return $c->get(TelemetryPruningService::class);
+        });
+
         $container->singleton(AnonymizedInsightLogger::class, function (Container $c) {
             return new AnonymizedInsightLogger(
                 $c->get(PDO::class),

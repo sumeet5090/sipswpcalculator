@@ -13,7 +13,7 @@ use Core\ViewRenderer;
  * SitemapGenerator
  * Dedicated domain service to aggregate all canonical URL nodes and last-modified dates for sitemap.xml.
  */
-class SitemapGenerator
+class SitemapGenerator implements SitemapGeneratorInterface
 {
     private BlogRepository $blogRepository;
     private SiteConfig $siteConfig;

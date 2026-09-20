@@ -10,4 +10,14 @@ class TargetCorpusStrategy extends BaseStrategy
     {
         return 'target_corpus';
     }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/target-corpus.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'Target Corpus Goal-Seek Matrix: Required Monthly SIP (12% CAGR)';
+    }
 }

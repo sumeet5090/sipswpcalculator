@@ -1,0 +1,18 @@
+<table class="header-table">
+    <tr>
+        <td>
+            <div class="doc-title">Mutual Fund Investment Plan</div>
+            <div class="doc-subtitle">Personalized Wealth Accumulation &amp; Retirement Strategy</div>
+        </td>
+        <td style="text-align: right;">
+            {% if logo_base64 %}
+                <img src="{{ logo_base64 }}" alt="Logo" style="max-width: 140px; max-height: 48px;">
+            {% else %}
+                <div class="advisor-badge">
+                    <div class="advisor-label">Prepared By Advisor</div>
+                    <div class="advisor-name">{{ advisor_name }}</div>
+                </div>
+            {% endif %}
+        </td>
+    </tr>
+</table>

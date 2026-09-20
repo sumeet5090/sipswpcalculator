@@ -1,0 +1,63 @@
+<div class="section-heading">Strategy Parameters &amp; Allocation</div>
+<div class="config-card">
+    <table class="config-table">
+        {% if has_swp %}
+            <tr>
+                <th colspan="2"><span class="phase-badge sip">Phase 1: Accumulation (SIP)</span></th>
+                <th colspan="2"><span class="phase-badge swp">Phase 2: Retirement Income (SWP)</span></th>
+            </tr>
+            <tr>
+                <th>Initial Lumpsum:</th>
+                <td>{{ config.sym }}&nbsp;{{ config.lumpsum }}</td>
+                <th>Monthly SWP:</th>
+                <td>{{ config.sym }}&nbsp;{{ config.swp_withdrawal }}</td>
+            </tr>
+            <tr>
+                <th>Monthly SIP:</th>
+                <td>{{ config.sym }}&nbsp;{{ config.sip }}</td>
+                <th>SWP Period:</th>
+                <td>{{ config.swp_years }} Years</td>
+            </tr>
+            <tr>
+                <th>SIP Period:</th>
+                <td>{{ config.years }} Years</td>
+                <th>SWP Annual Hike:</th>
+                <td>{{ config.swp_stepup }}%</td>
+            </tr>
+            <tr>
+                <th>Annual Step-Up:</th>
+                <td>{{ config.stepup }}%</td>
+                <th>SWP Return Rate:</th>
+                <td>{{ config.swp_rate }}% p.a.</td>
+            </tr>
+            <tr>
+                <th>Expected Return:</th>
+                <td>{{ config.rate }}% p.a.</td>
+                <th>Expected Inflation:</th>
+                <td>{{ config.inflation }}% p.a.</td>
+            </tr>
+        {% else %}
+            <tr>
+                <th colspan="4"><span class="phase-badge sip">Wealth Accumulation (SIP) Parameters</span></th>
+            </tr>
+            <tr>
+                <th>Initial Lumpsum:</th>
+                <td>{{ config.sym }}&nbsp;{{ config.lumpsum }}</td>
+                <th>Monthly SIP:</th>
+                <td>{{ config.sym }}&nbsp;{{ config.sip }}</td>
+            </tr>
+            <tr>
+                <th>SIP Period:</th>
+                <td>{{ config.years }} Years</td>
+                <th>Expected Return:</th>
+                <td>{{ config.rate }}% p.a.</td>
+            </tr>
+            <tr>
+                <th>Annual Step-Up:</th>
+                <td>{{ config.stepup }}%</td>
+                <th>Expected Inflation:</th>
+                <td>{{ config.inflation }}% p.a.</td>
+            </tr>
+        {% endif %}
+    </table>
+</div>

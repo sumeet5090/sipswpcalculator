@@ -15,11 +15,9 @@ use Services\HtmlSanitizer;
 use Core\CurrencyFormatterInterface;
 use Services\FilenameSanitizer;
 use Services\PdfGeneratorService;
-use Services\RateLimiter;
 
 class GeneratePdfAction
 {
-    private RateLimiter $rateLimiter;
     private PdfGeneratorService $pdfGenerator;
     private ConfigServiceInterface $configService;
     private FileUploadService $fileUploadService;
@@ -29,7 +27,6 @@ class GeneratePdfAction
     private FilenameSanitizer $filenameSanitizer;
 
     public function __construct(
-        RateLimiter $rateLimiter,
         PdfGeneratorService $pdfGenerator,
         ConfigServiceInterface $configService,
         FileUploadService $fileUploadService,
@@ -38,7 +35,6 @@ class GeneratePdfAction
         ?CurrencyFormatterInterface $currencyFormatter = null,
         ?FilenameSanitizer $filenameSanitizer = null
     ) {
-        $this->rateLimiter = $rateLimiter;
         $this->pdfGenerator = $pdfGenerator;
         $this->configService = $configService;
         $this->fileUploadService = $fileUploadService;
@@ -55,17 +51,6 @@ class GeneratePdfAction
         }
 
         $post = $request->getParsedBody();
-
-        // Rate limiting check
-        try {
-            $ip = $request->getClientIp();
-            $rateLimits = $this->configService->getJsonConfig('content/rate_limits.json');
-            $maxRequests = (int) ($rateLimits['pdf_generation']['max_requests'] ?? 10);
-            $windowSeconds = (int) ($rateLimits['pdf_generation']['window_seconds'] ?? 60);
-            $this->rateLimiter->checkLimit($ip, 'sipswp_rate_limits', $maxRequests, $windowSeconds);
-        } catch (RateLimitExceededException $e) {
-            return new Response('Too many requests. Please wait a minute before generating another PDF.', 429);
-        }
 
         try {
             // Use central InvestmentInputs for robust, config-driven clamping

@@ -11,7 +11,7 @@ use Core\ViewRenderer;
  * GuideRenderer
  * Renders educational guides and calculator pages using GuideViewModelBuilder.
  */
-class GuideRenderer
+class GuideRenderer implements GuideRendererInterface
 {
     private GuideViewModelBuilder $viewModelBuilder;
     private ViewRenderer $viewRenderer;

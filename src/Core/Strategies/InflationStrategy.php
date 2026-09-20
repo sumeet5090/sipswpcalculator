@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Core\Strategies;
 
-use Core\InvestmentInputs;
+use Core\Inputs\CalculatorInputsInterface;
+use Core\Inputs\InflationInputs;
 
 class InflationStrategy extends BaseStrategy
 {
@@ -13,8 +14,23 @@ class InflationStrategy extends BaseStrategy
         return 'inflation';
     }
 
-    public function getInitialInputs(): InvestmentInputs
+    public function getInitialInputs(): CalculatorInputsInterface
     {
-        return InvestmentInputs::fromRequest([], $this->configService);
+        $defaults = $this->configService->getCalculatorDefaults();
+        $amount = (float) ($defaults['inf_amount']['default'] ?? 50000.0);
+        $rate = (float) ($defaults['inf_rate']['default'] ?? 6.0);
+        $years = (int) ($defaults['inf_years']['default'] ?? 10);
+
+        return new InflationInputs($amount, $rate, $years);
+    }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/inflation-erosion.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'Indian Rupee Purchasing Power & Inflation Erosion Table (6.0% CPI)';
     }
 }

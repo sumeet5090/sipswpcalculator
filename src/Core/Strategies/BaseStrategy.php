@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Strategies;
 
+use Core\Inputs\CalculatorInputsInterface;
 use Core\InvestmentInputs;
 use Services\ConfigServiceInterface;
 
@@ -16,8 +17,18 @@ abstract class BaseStrategy implements CalculatorStrategyInterface
         $this->configService = $configService;
     }
 
-    public function getInitialInputs(): InvestmentInputs
+    public function getInitialInputs(): CalculatorInputsInterface
     {
         return InvestmentInputs::fromRequest([], $this->configService);
+    }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/sip-swp-dual.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'SIP & SWP Growth Benchmark Reference Table';
     }
 }

@@ -66,6 +66,7 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(ConfigService::class, $this->container->get(ConfigService::class));
         $this->assertInstanceOf(\Services\ConfigServiceInterface::class, $this->container->get(\Services\ConfigServiceInterface::class));
         $this->assertInstanceOf(CsvExportService::class, $this->container->get(CsvExportService::class));
+        $this->assertInstanceOf(\Services\CsvExportServiceInterface::class, $this->container->get(\Services\CsvExportServiceInterface::class));
         $this->assertInstanceOf(SessionManager::class, $this->container->get(SessionManager::class));
         $this->assertInstanceOf(\Services\SessionManagerInterface::class, $this->container->get(\Services\SessionManagerInterface::class));
         $this->assertInstanceOf(CurrencyFormatterInterface::class, $this->container->get(CurrencyFormatterInterface::class));
@@ -90,6 +91,7 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(BlogRepository::class, $this->container->get(BlogRepository::class));
         $this->assertInstanceOf(InsightRepository::class, $this->container->get(InsightRepository::class));
         $this->assertInstanceOf(AnonymizedInsightLogger::class, $this->container->get(AnonymizedInsightLogger::class));
+        $this->assertInstanceOf(\Services\TelemetryPruningServiceInterface::class, $this->container->get(\Services\TelemetryPruningServiceInterface::class));
         $this->assertInstanceOf(SchemaFactory::class, $this->container->get(SchemaFactory::class));
     }
 
@@ -98,7 +100,9 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(AdminDashboardPresenter::class, $this->container->get(AdminDashboardPresenter::class));
         $this->assertInstanceOf(\Services\GuideViewModelBuilder::class, $this->container->get(\Services\GuideViewModelBuilder::class));
         $this->assertInstanceOf(GuideRenderer::class, $this->container->get(GuideRenderer::class));
+        $this->assertInstanceOf(\Services\GuideRendererInterface::class, $this->container->get(\Services\GuideRendererInterface::class));
         $this->assertInstanceOf(\Core\Strategies\SipStrategy::class, $this->container->get(\Core\Strategies\SipStrategy::class));
+        $this->assertInstanceOf(\Core\Strategies\StepUpSipStrategy::class, $this->container->get(\Core\Strategies\StepUpSipStrategy::class));
         $this->assertInstanceOf(\Core\Strategies\SwpStrategy::class, $this->container->get(\Core\Strategies\SwpStrategy::class));
         $this->assertInstanceOf(\Core\Strategies\LumpsumStrategy::class, $this->container->get(\Core\Strategies\LumpsumStrategy::class));
         $this->assertInstanceOf(\Core\Strategies\TargetCorpusStrategy::class, $this->container->get(\Core\Strategies\TargetCorpusStrategy::class));
@@ -121,6 +125,7 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(DownloadCsvAction::class, $this->container->get(DownloadCsvAction::class));
         $this->assertInstanceOf(GeneratePdfAction::class, $this->container->get(GeneratePdfAction::class));
         $this->assertInstanceOf(SitemapController::class, $this->container->get(SitemapController::class));
+        $this->assertInstanceOf(\Services\SitemapGeneratorInterface::class, $this->container->get(\Services\SitemapGeneratorInterface::class));
         $this->assertInstanceOf(ErrorController::class, $this->container->get(ErrorController::class));
         $this->assertInstanceOf(\Controllers\ListResourcesAction::class, $this->container->get(\Controllers\ListResourcesAction::class));
         $this->assertInstanceOf(\Controllers\ShowResourceCategoryAction::class, $this->container->get(\Controllers\ShowResourceCategoryAction::class));

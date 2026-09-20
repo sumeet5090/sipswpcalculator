@@ -88,6 +88,32 @@ class ResourceActionsTest extends TestCase
         $action('non-existent-category-xyz', new Request());
     }
 
+    public function testShowResourceCategoryActionRendersEmptyCategoryGracefully(): void
+    {
+        $mockBlogRepo = $this->createMock(BlogRepository::class);
+        $mockBlogRepo->method('getAllPosts')->willReturn([]);
+        $mockBlogRepo->method('getCategories')->willReturn([
+            'emptycat' => [
+                'title' => 'Empty Category',
+                'desc' => 'Test empty category description',
+                'icon' => '<svg></svg>',
+                'accent' => 'emerald',
+            ],
+        ]);
+        $mockBlogRepo->method('getPostsGroupedByCategory')->willReturn(['emptycat' => []]);
+
+        $action = new ShowResourceCategoryAction(
+            $mockBlogRepo,
+            $this->schemaHelper,
+            $this->metaManager,
+            $this->siteConfig,
+            $this->viewRenderer
+        );
+
+        $response = $action('emptycat', new Request());
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
     public function testShowResourcePostActionReturnsHtmlResponse(): void
     {
         $action = new ShowResourcePostAction(

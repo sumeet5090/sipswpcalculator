@@ -10,18 +10,18 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | Route Slug | PHP Action | Twig Layout & Form Partial | TS Strategy / Driver | Engine / Math Parity | Defaults Key (`calculator_defaults.json`) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `/` (Home) | `Controllers\RenderHomeAction` | `calculators/home.twig`<br/>`components/calculator-form.twig`<br/>`forms/sip-fields.twig`<br/>`forms/swp-fields.twig` | `CalculatorApp.ts`<br/>`controllers/TabController.ts`<br/>`strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | Dual default (`combo`: `sip`, `years`, `rate`, `stepup`, `inflation`, `lumpsum`, `swp_withdrawal`, `swp_years`, `swp_rate`, `swp_stepup`) |
-| `/sip-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/sip-fields.twig` | `strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `sip`, `years`, `rate`, `stepup` |
-| `/swp-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/corpus-field.twig`<br/>`forms/swp-fields.twig` | `strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `corpus`, `swp_withdrawal`, `years`, `rate`, `inflation` |
-| `/sip-step-up-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/sip-fields.twig` | `strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `sip`, `years`, `rate`, `stepup` |
-| `/lumpsum-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/lumpsum-only-fields.twig` | `strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `lumpsum`, `years`, `rate` |
-| `/retirement-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/sip-fields.twig`<br/>`forms/swp-fields.twig` | `strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | Combo defaults |
-| `/my-first-crore-calculator`<br/>`/target-corpus-calculator`<br/>`/reach-1-crore-via-sip`<br/>`/reach-5-crore-via-sip` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/target-corpus-fields.twig` | `strategies/TargetCorpusStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `target_corpus`, `years`, `rate`, `stepup` |
-| `/compound-interest-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/compound-interest-fields.twig` | `drivers/CompoundInterestDriver.ts` | `engines/CompoundInterestEngine.ts` | `ci_*` |
-| `/cagr-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/cagr-fields.twig` | `drivers/CagrDriver.ts` | `engines/CagrEngine.ts` | `cagr_*` |
-| `/emi-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/emi-fields.twig` | `drivers/EmiDriver.ts` | `engines/EmiEngine.ts` | `emi_*` |
-| `/inflation-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/inflation-fields.twig` | `drivers/InflationDriver.ts` | `engines/InflationEngine.ts` | `inflation_*` |
-| `/ppf-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/ppf-fields.twig` | `drivers/PpfDriver.ts` | `engines/PpfEngine.ts` | `ppf_*` |
-| `/fd-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/fd-fields.twig` | `drivers/FdDriver.ts` | `engines/FdEngine.ts` | `fd_*` |
+| `/sip-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/sip-fields.twig` | `Core\Strategies\SipStrategy`<br/>`strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `sip`, `years`, `rate`, `stepup` |
+| `/swp-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/corpus-field.twig`<br/>`forms/swp-fields.twig` | `Core\Strategies\SwpStrategy`<br/>`strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `corpus`, `swp_withdrawal`, `years`, `rate`, `inflation` |
+| `/sip-step-up-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/sip-fields.twig` | `Core\Strategies\StepUpSipStrategy`<br/>`strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `sip`, `years`, `rate`, `stepup` |
+| `/lumpsum-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/lumpsum-only-fields.twig` | `Core\Strategies\LumpsumStrategy`<br/>`strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `lumpsum`, `years`, `rate` |
+| `/retirement-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/sip-fields.twig`<br/>`forms/swp-fields.twig` | `Core\Strategies\ComboStrategy`<br/>`strategies/GrowStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | Combo defaults |
+| `/my-first-crore-calculator`<br/>`/target-corpus-calculator`<br/>`/reach-1-crore-via-sip`<br/>`/reach-5-crore-via-sip` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/target-corpus-fields.twig` | `Core\Strategies\TargetCorpusStrategy`<br/>`strategies/TargetCorpusStrategy.ts` | `MathEngine.ts`<br/>`Services\InvestmentCalculator` | `target_corpus`, `years`, `rate`, `stepup` |
+| `/compound-interest-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/compound-interest-fields.twig` | `Core\Strategies\CompoundInterestStrategy`<br/>`drivers/CompoundInterestDriver.ts` | `engines/CompoundInterestEngine.ts` | `ci_*` |
+| `/cagr-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/cagr-fields.twig` | `Core\Strategies\CagrStrategy`<br/>`drivers/CagrDriver.ts` | `engines/CagrEngine.ts` | `cagr_*` |
+| `/emi-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/emi-fields.twig` | `Core\Strategies\EmiStrategy`<br/>`drivers/EmiDriver.ts` | `engines/EmiEngine.ts` | `emi_*` |
+| `/inflation-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/inflation-fields.twig` | `Core\Strategies\InflationStrategy`<br/>`drivers/InflationDriver.ts` | `engines/InflationEngine.ts` | `inflation_*` |
+| `/ppf-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/ppf-fields.twig` | `Core\Strategies\PpfStrategy`<br/>`drivers/PpfDriver.ts` | `engines/PpfEngine.ts` | `ppf_*` |
+| `/fd-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/fd-fields.twig` | `Core\Strategies\FdStrategy`<br/>`drivers/FdDriver.ts` | `engines/FdEngine.ts` | `fd_*` |
 | `/embed/{slug}` | `Controllers\RenderEmbedAction` | `calculators/embed.twig` | `CalculatorApp.ts` | `MathEngine.ts` | Embedded config |
 
 ---
@@ -35,12 +35,12 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | **Tax Waterfall Modal** | `tax-waterfall-modal.twig` | `subsystems/LifecycleSubsystem.ts` | Union Budget 2024 equity LTCG (12.5% above ₹1.25L) & STCG (20%) tax net return impact |
 | **Asset Rebalancing** | `asset-rebalancing.twig` | `subsystems/LifecycleSubsystem.ts` | Equity/Debt drift rebalancing optimizer and trigger alerts |
 | **Yearly Breakdown Table** | `yearly-breakdown-table.twig` | `controllers/ResultsController.ts` | Amortization schedule, yearly SIP invested, returns, closing balances, SWP drawdowns, swipeable mobile card carousel (`mobile-breakdown-cards`), and compact 3-col list toggle |
-| **Interactive Chart** | `chart-visualization.twig` | `ChartManager.ts`<br/>`controllers/ChartScrubbingController.ts` | Dual Chart.js donut and line graph with live scrub cursor |
+| **Interactive Chart** | `chart-visualization.twig` | `ChartManager.ts`<br/>`chart/ChartPlugins.ts`<br/>`chart/ChartGradientFactory.ts`<br/>`chart/ChartMilestoneCalculator.ts`<br/>`chart/ChartDatasetBuilder.ts`<br/>`controllers/ChartScrubbingController.ts` | Modularized Chart.js coordinator, 7 lifecycle plugins, GPU cached gradient factory, milestone calculator, line/donut dataset builder, and scrub cursor |
 | **Command Palette & HUD** | `command-palette.twig`<br/>`floating-discovery-hud.twig`<br/>`layouts/base.twig` | `subsystems/ErgonomicsSubsystem.ts`<br/>`controllers/MobileErgonomicDeckController.ts`<br/>`controllers/FloatingHudController.ts` | Keyboard navigation (`Cmd+K`), quick calculator switching, 4-metric real-time mobile floating action dock, and sticky tablet/mobile mini-HUD |
 | **Slider & Number Input** | `form/input-range-pair.twig` | `SliderManager.ts`<br/>`controllers/StepperController.ts` | Two-way synchronized range slider and currency text inputs with 48px ergonomic touch stepper targets, preset chips, and auto-step rounding |
 | **QR Share & Socials** | `qr-share-modal.twig` | `subsystems/ExportSubsystem.ts` | Encoded URL state generation, canvas QR render, and native Web Share API trigger |
 | **SEBI Benchmark & Trust** | `sebibenchmark-modal.twig`<br/>`privacy-trust-badge.twig` | `subsystems/EngagementSubsystem.ts` | Regulatory disclosure compliance, index benchmark comparisons, privacy audit badges |
-| **Scenario Benchmark Tables** | `scenario-benchmark-table.twig` | Static HTML / AMFI Matrix | Pre-calculated static benchmark matrices for Google rich answers and AI search engine extraction (Gemini / Copilot) |
+| **Scenario Benchmark Tables** | `scenario-benchmark-table.twig`<br/>`components/benchmarks/*.twig` (10 modular partials) | Polymorphic `CalculatorStrategyInterface::getBenchmarkTemplate()` & `getBenchmarkTitle()` | Pre-calculated static benchmark matrices for Google rich answers and AI search engine extraction (Gemini / Copilot), partitioned into 10 decoupled partials with sticky first-columns |
 | **3-Mode Segmented Selector** | `components/calculator-form.twig` | `controllers/TabController.ts` | Instant toggle between Dual (SIP + SWP), SIP Only, and SWP Only with automatic phase staging and zero reload |
 | **Embed Calculator Modal** | `embed-modal.twig` | Frontend `<dialog>` / `copyEmbedCodeBtn` | 1-click responsive iframe generator for external financial bloggers and advisors with attribution backlink |
 
@@ -50,8 +50,8 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 
 | Export Type | HTTP Trigger Route | Backend Controller Action | Core Service / Template | Frontend Orchestrator |
 | :--- | :--- | :--- | :--- | :--- |
-| **PDF Report** | `POST /generate-pdf` | `Controllers\GeneratePdfAction` | `Services\PdfGeneratorService`<br/>`Core\PdfReportTemplate`<br/>`Core\PdfReportStylesheet`<br/>`Core\PdfReportTableBuilder` | `subsystems/ExportSubsystem.ts` (`downloadPdf()`) |
-| **CSV Amortization** | `POST /download-csv` | `Controllers\DownloadCsvAction` | `Services\CsvExportService` | `subsystems/ExportSubsystem.ts` (`downloadCsv()`) |
+| **PDF Report** | `POST /generate-pdf` | `Controllers\GeneratePdfAction` | `Services\PdfGeneratorService`<br/>`Core\PdfReportTemplate`<br/>`Views/pdf/report.twig`<br/>`Views/pdf/components/*.twig`<br/>`Core\PdfReportStylesheet`<br/>`Core\PdfReportTableBuilder` | `subsystems/ExportSubsystem.ts` (`downloadPdf()`) |
+| **CSV Amortization** | `POST /download-csv` | `Controllers\DownloadCsvAction` | `Services\CsvExportServiceInterface`<br/>(`Services\CsvExportService`) | `subsystems/ExportSubsystem.ts` (`downloadCsv()`) |
 
 ---
 
@@ -62,7 +62,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | **Live Telemetry API** | `POST /log_insight` | `Controllers\LogInsightApiAction` | `Core\AnonymizedInsightLogger`<br/>`Core\InsightRepository`<br/>`database/insights.sqlite` | Privacy-safe calculation telemetry logging without PII |
 | **Admin Dashboard** | `GET /admin_insights`<br/>`POST /admin_insights` | `Controllers\ShowAdminDashboardAction`<br/>`Controllers\ProcessAdminLoginAction`<br/>`Controllers\ProcessAdminLogoutAction` | `src/Views/admin/dashboard.twig`<br/>`Core\AdminDashboardPresenter`<br/>`Core\AdminAuthService` | Operational telemetry dashboard with session auth & rate-limiting |
 | **Database Migrations** | CLI / App bootstrap | `Core\DatabaseMigrator` | `database/migrations/` | SQLite automated schema initialization & column migrations |
-| **Telemetry Pruning** | Service | `Services\TelemetryPruningService` | `Core\InsightRepository` | Prunes telemetry logs beyond retention policy limits |
+| **Telemetry Pruning** | Service | `Services\TelemetryPruningServiceInterface`<br/>(`Services\TelemetryPruningService`) | `Core\InsightRepository` | Prunes telemetry logs beyond retention policy limits |
 
 ---
 

@@ -6,21 +6,14 @@ namespace Tests\Unit;
 
 use Controllers\LogInsightApiAction;
 use Core\AnonymizedInsightLogger;
-use Core\Exceptions\RateLimitExceededException;
 use Core\Http\Request;
 use PDO;
 use PHPUnit\Framework\TestCase;
-use Services\ConfigService;
-use Services\RateLimiter;
-use Services\RateLimitStorageInterface;
 
 class LogInsightApiActionTest extends TestCase
 {
     private PDO $pdo;
     private AnonymizedInsightLogger $logger;
-    private RateLimiter $rateLimiter;
-    private ConfigService $configService;
-    private RateLimitStorageInterface $mockStorage;
 
     protected function setUp(): void
     {
@@ -89,14 +82,11 @@ class LogInsightApiActionTest extends TestCase
         ");
 
         $this->logger = new AnonymizedInsightLogger($this->pdo);
-        $this->mockStorage = $this->createStub(RateLimitStorageInterface::class);
-        $this->rateLimiter = new RateLimiter($this->mockStorage);
-        $this->configService = new ConfigService(__DIR__ . '/../../content/calculator_defaults.json');
     }
 
     public function testMethodNotAllowedForGetRequest(): void
     {
-        $action = new LogInsightApiAction($this->logger, $this->rateLimiter, $this->configService);
+        $action = new LogInsightApiAction($this->logger);
         $request = new Request([], [], ['REQUEST_METHOD' => 'GET']);
 
         $response = $action($request);
@@ -106,7 +96,7 @@ class LogInsightApiActionTest extends TestCase
 
     public function testPayloadTooLargeReturns413(): void
     {
-        $action = new LogInsightApiAction($this->logger, $this->rateLimiter, $this->configService);
+        $action = new LogInsightApiAction($this->logger);
         $hugeBody = json_encode(['data' => str_repeat('X', 70000)]);
         $request = new Request([], [], ['REQUEST_METHOD' => 'POST'], [], (string) $hugeBody);
 
@@ -117,7 +107,7 @@ class LogInsightApiActionTest extends TestCase
 
     public function testInvalidPayloadMissingRequiredFieldsReturns400(): void
     {
-        $action = new LogInsightApiAction($this->logger, $this->rateLimiter, $this->configService);
+        $action = new LogInsightApiAction($this->logger);
         $body = json_encode(['currency' => 'INR']); // Missing calc_type, amount, duration
         $request = new Request([], [], ['REQUEST_METHOD' => 'POST'], [], (string) $body);
 
@@ -126,26 +116,9 @@ class LogInsightApiActionTest extends TestCase
         $this->assertSame(400, $response->getStatusCode());
     }
 
-    public function testRateLimitExceededReturns429(): void
-    {
-        $mockStorage = $this->createMock(RateLimitStorageInterface::class);
-        $mockStorage->expects($this->once())
-            ->method('checkAndIncrement')
-            ->willThrowException(new RateLimitExceededException('Rate limit exceeded.'));
-        $rateLimiter = new RateLimiter($mockStorage);
-
-        $action = new LogInsightApiAction($this->logger, $rateLimiter, $this->configService);
-        $body = json_encode(['calc_type' => 'SIP', 'amount' => 5000, 'duration' => 10]);
-        $request = new Request([], [], ['REQUEST_METHOD' => 'POST', 'REMOTE_ADDR' => '1.2.3.4'], [], (string) $body);
-
-        $response = $action($request);
-
-        $this->assertSame(429, $response->getStatusCode());
-    }
-
     public function testValidPostRequestReturns204AndPersistsRecord(): void
     {
-        $action = new LogInsightApiAction($this->logger, $this->rateLimiter, $this->configService);
+        $action = new LogInsightApiAction($this->logger);
         $body = json_encode([
             'calc_type' => 'SIP',
             'amount' => 5000,

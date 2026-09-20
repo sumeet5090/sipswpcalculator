@@ -10,7 +10,7 @@ use Core\Http\Response;
 use Core\InvestmentCalculator;
 use Core\InvestmentInputs;
 use Services\ConfigServiceInterface;
-use Services\CsvExportService;
+use Services\CsvExportServiceInterface;
 
 /**
  * DownloadCsvAction
@@ -20,13 +20,13 @@ class DownloadCsvAction
 {
     private InvestmentCalculator $calculator;
     private ConfigServiceInterface $configService;
-    private CsvExportService $csvExportService;
+    private CsvExportServiceInterface $csvExportService;
     private CurrencyFormatterInterface $currencyFormatter;
 
     public function __construct(
         InvestmentCalculator $calculator,
         ConfigServiceInterface $configService,
-        CsvExportService $csvExportService,
+        CsvExportServiceInterface $csvExportService,
         ?CurrencyFormatterInterface $currencyFormatter = null
     ) {
         $this->calculator = $calculator;

@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
 class Router
 {
     private array $routes = [];
+    private array $routeMiddlewares = [];
     private array $compiledPatterns = [];
     private array $redirects = [];
     private array $middlewares = [];
@@ -31,17 +32,23 @@ class Router
         $this->middlewares[] = $middleware;
     }
 
-    public function get(string $uri, array $controllerAction): void
+    public function get(string $uri, array $controllerAction, array $middlewares = []): void
     {
         $this->routes['GET'][$uri] = $controllerAction;
+        if (!empty($middlewares)) {
+            $this->routeMiddlewares['GET'][$uri] = $middlewares;
+        }
         if (str_contains($uri, '{')) {
             $this->compiledPatterns['GET'][$uri] = '#^' . preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_-]+)', $uri) . '$#';
         }
     }
 
-    public function post(string $uri, array $controllerAction): void
+    public function post(string $uri, array $controllerAction, array $middlewares = []): void
     {
         $this->routes['POST'][$uri] = $controllerAction;
+        if (!empty($middlewares)) {
+            $this->routeMiddlewares['POST'][$uri] = $middlewares;
+        }
         if (str_contains($uri, '{')) {
             $this->compiledPatterns['POST'][$uri] = '#^' . preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_-]+)', $uri) . '$#';
         }
@@ -74,7 +81,13 @@ class Router
             }
 
             if (isset($this->routes[$lookupMethod][$uri])) {
-                return $this->callAction($this->routes[$lookupMethod][$uri], [], $req);
+                $routeMiddlewares = $this->routeMiddlewares[$lookupMethod][$uri] ?? [];
+                return $this->dispatchWithRouteMiddlewares(
+                    $routeMiddlewares,
+                    $this->routes[$lookupMethod][$uri],
+                    [],
+                    $req
+                );
             }
 
             if (isset($this->compiledPatterns[$lookupMethod]) && is_array($this->compiledPatterns[$lookupMethod])) {
@@ -83,7 +96,13 @@ class Router
                         $rawParams = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
                         $params = array_map('urldecode', $rawParams);
                         $action = $this->routes[$lookupMethod][$route];
-                        return $this->callAction($action, $params, $req);
+                        $routeMiddlewares = $this->routeMiddlewares[$lookupMethod][$route] ?? [];
+                        return $this->dispatchWithRouteMiddlewares(
+                            $routeMiddlewares,
+                            $action,
+                            $params,
+                            $req
+                        );
                     }
                 }
             }
@@ -106,6 +125,35 @@ class Router
         );
 
         return $pipeline($request);
+    }
+
+    private function dispatchWithRouteMiddlewares(
+        array $routeMiddlewares,
+        array $controllerAction,
+        array $params,
+        Request $request
+    ): Response {
+        if (empty($routeMiddlewares)) {
+            return $this->callAction($controllerAction, $params, $request);
+        }
+
+        $terminalAction = fn(Request $req): Response => $this->callAction($controllerAction, $params, $req);
+
+        $routePipeline = array_reduce(
+            array_reverse($routeMiddlewares),
+            function (callable $next, mixed $middleware) {
+                return function (Request $req) use ($next, $middleware): Response {
+                    $instance = is_string($middleware)
+                        ? $this->container->get($middleware)
+                        : $middleware;
+
+                    return $instance->process($req, $next);
+                };
+            },
+            $terminalAction
+        );
+
+        return $routePipeline($request);
     }
 
     private function callAction(array $controllerAction, array $params = [], ?Request $request = null): Response

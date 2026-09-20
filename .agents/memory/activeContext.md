@@ -1,25 +1,32 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-09-19*
+*Last Updated: 2026-09-20*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Search Intent & SERP Gap Analysis, 100% BLUF Answer Coverage & Child Education/Lumpsum Matrices.
-- **Implemented Fixes & Architectural Outcomes:**
-  - **Child Education & Foreign University Fund Matrix (`/target-corpus-calculator`):** Injected institutional planning matrix modeling 10%–11% Indian higher education inflation and forex depreciation. Provides clear flat vs. 10% step-up SIP roadmaps for engineering/medical and overseas degrees.
-  - **Lumpsum vs. SIP Head-to-Head Comparison Matrix (`/lumpsum-calculator`):** Expanded with empirical 10-year rolling return evaluations (~68% lumpsum outperformance vs. psychological drawdown shock of SIP) and STP transition rules.
-  - **100% Direct Answer (BLUF) Position 0 Coverage:** Injected structured BLUF callouts across all remaining calculators (`compound-interest-calculator`, `my-first-crore-calculator`, `reach-1-crore-via-sip`, `reach-5-crore-via-sip`, `sip-5000-per-month`, `sip-10000-per-month`), ensuring 100% of individual calculators possess upfront numerical direct answers for Google AI Overviews and snippet extraction.
+- **Current Milestone:** Elite Architecture Refactoring — Phase 5: Services Layer Decoupling & Modern Presentation Architecture Completed.
+- **Implemented Fixes & Architectural Outcomes (Phase 5):**
+  - **Formal Service Interface Contracts (`src/Services/`):**
+    - Created `SitemapGeneratorInterface`, `GuideRendererInterface`, `CsvExportServiceInterface`, `TelemetryPruningServiceInterface`.
+    - Bound all 4 interfaces in DI service providers (`CoreServiceProvider`, `RepositoryServiceProvider`, `DomainServiceProvider`, `ControllerServiceProvider`).
+    - Refactored controllers/actions (`SitemapController`, `RenderGuideAction`, `RenderEmbedAction`, `DownloadCsvAction`, `AnonymizedInsightLogger`) to typehint interfaces rather than concrete implementations, upholding the Dependency Inversion Principle (DIP).
+  - **Decoupled JSON File Loading in `GuideViewModelBuilder`:**
+    - Replaced hardcoded file paths and procedural `file_get_contents()` with `$this->configService->getJsonConfig('content/calculator_links.json')` and `'content/calculator_pillar_guides.json'`.
+  - **Polymorphic Benchmark Resolution (`CalculatorStrategyInterface`):**
+    - Added `getBenchmarkTemplate(): string` and `getBenchmarkTitle(): string` to `CalculatorStrategyInterface`.
+    - Added `StepUpSipStrategy` extending `SipStrategy` to handle `/sip-step-up-calculator` polymorphically.
+    - Simplified `scenario-benchmark-table.twig` from hardcoded conditional matching to dynamic inclusion: `{% include [benchmark_tpl, 'components/benchmarks/sip-swp-dual.twig'] %}`.
+  - **Pure Light-Mode Sticky First-Column CSS (`resources/css/input.css`):**
+    - Implemented `.table-sticky-col-th` and `.table-sticky-col-td` with pure light-mode elevation (`bg-slate-50/98` / `bg-white/98`, `box-shadow: 2px 0 4px -2px rgba(0,0,0,0.06)`).
+    - Applied across all 10 benchmark tables in `src/Views/components/benchmarks/`, ensuring mobile horizontal-scroll usability.
 - **Verification & System Health:**
-  - Full automated crawl across 49 URLs: 0 404s, 0 301 internal hops, 0 schema parse errors.
-  - Full PHPUnit test suite: 839 tests / 13,594 assertions passed cleanly (0 failures, 0 warnings).
-  - SEO Metadata Validator: 44 tests / 3,036 assertions passed with 100% compliance.
-  - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 234 files, 0 PHPCS violations).
-  - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across base and specialized engines.
-  - Local curl verification: Confirmed HTML rendering of Child Education and Lumpsum vs SIP matrices on `localhost:8080`.
-- **Blog Category Featured Posts Balancing & Template Guardrail (2026-09-20):**
-  - Capped featured posts across blog categories to 1–2 top flagship guides per category (Growth: 2, Comparison: 2, Retirement: 2).
-  - Implemented template-level guardrail in `src/Views/pages/resources.twig` capping full-width `col-span-2` card spotlight rendering to max 2 per category.
+  - Full PHPUnit test suite: **844 tests / 13,657 assertions passed cleanly** (0 failures, 0 warnings).
+  - Composer `check-all` suite: **100% clean** (PHPStan Level 5 across 250 files, 0 PHPCS violations across 250 files).
+  - Frontend typecheck & build: `npm run build` clean in ~190ms with 0 errors.
+  - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across all engines.
+  - Equal Height Alignment: Left Form Column (`#calculator-app`) and Right Summary/Chart Column (`#chart-visualization`) verified at exact 666px equal height with smooth internal scrolling and zero layout jumps.
+  - Chart canvas selector alignment: Resolved canvas target `#corpusChart` and live metric telemetry headers in `ChartManager.ts`.
 
 ---
 

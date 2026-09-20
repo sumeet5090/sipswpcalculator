@@ -286,4 +286,66 @@ class MiddlewarePipelineTest extends TestCase
         $this->assertSame(200, $response->getStatusCode());
         $this->assertStringContainsString('<!DOCTYPE html>', $response->getContent());
     }
+
+    public function testRouteSpecificMiddlewareExecution(): void
+    {
+        $container = new \Core\Container();
+        $actionDispatcher = $this->createMock(\Core\ActionDispatcher::class);
+        $actionDispatcher->method('dispatch')->willReturn(Response::html('action called', 200));
+
+        $router = new \Core\Router($container, $actionDispatcher);
+
+        $executionOrder = [];
+
+        $globalMiddleware = new class ($executionOrder) implements \Core\Middleware\MiddlewareInterface {
+            /** @var array<int, string> */
+            public array $order;
+
+            /** @param array<int, string> $order */
+            public function __construct(array &$order)
+            {
+                $this->order = &$order;
+            }
+
+            public function process(Request $request, callable $next): Response
+            {
+                $this->order[] = 'global_before';
+                $resp = $next($request);
+                $this->order[] = 'global_after';
+                return $resp;
+            }
+        };
+
+        $routeMiddleware = new class ($executionOrder) implements \Core\Middleware\MiddlewareInterface {
+            /** @var array<int, string> */
+            public array $order;
+
+            /** @param array<int, string> $order */
+            public function __construct(array &$order)
+            {
+                $this->order = &$order;
+            }
+
+            public function process(Request $request, callable $next): Response
+            {
+                $this->order[] = 'route_before';
+                $resp = $next($request);
+                $this->order[] = 'route_after';
+                return $resp;
+            }
+        };
+
+        $router->pipe($globalMiddleware);
+        $router->get('/test-route', ['DummyController', '__invoke'], [$routeMiddleware]);
+
+        $request = new Request([], [], [
+            'REQUEST_METHOD' => 'GET',
+            'REQUEST_URI' => '/test-route'
+        ]);
+
+        $response = $router->dispatch($request);
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('action called', $response->getContent());
+        $this->assertSame(['global_before', 'route_before', 'route_after', 'global_after'], $executionOrder);
+    }
 }

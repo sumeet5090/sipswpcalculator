@@ -7,11 +7,11 @@
 <div id="{{ container_id|default('calculator-app') }}"
      data-js="calculator-app"
      data-mode="{{ calculator_type|default('combo') }}"
-     class="bg-white/95 rounded-3xl border border-slate-200/90 shadow-card backdrop-blur-xl p-3.5 sm:p-4 relative">
+     class="bg-white/95 rounded-3xl border border-slate-200/90 shadow-card backdrop-blur-xl p-3.5 sm:p-4 relative flex flex-col flex-1 min-h-0 md:h-full">
     <!-- Ambient Aurora Glow (Pure Light Mode: Emerald & Teal Accents) -->
     <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-400/8 rounded-full blur-3xl pointer-events-none"></div>
 
-    <form method="post" novalidate id="calculator-form" class="relative z-10 space-y-3">
+    <form method="post" novalidate id="calculator-form" class="relative z-10 flex flex-col flex-1 min-h-0 space-y-3">
         <!-- SECURITY: Honeypot field (hidden from real users, catches bots) -->
         <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
             <label for="website_url">Leave this field empty</label>
@@ -52,7 +52,7 @@
         </div>
 
         <!-- Scrollable Form Panels Container -->
-        <div class="space-y-3 lg:max-h-[600px] xl:max-h-[640px] lg:overflow-y-auto lg:overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
+        <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
             
             <!-- Stage 1 / SIP Panel -->
             <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2.5">

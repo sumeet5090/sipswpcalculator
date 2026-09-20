@@ -81,7 +81,9 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new PdfReportTemplate(
                 $c->get(CurrencyFormatterInterface::class),
                 $milestones,
-                $c->get(PdfReportStylesheet::class)
+                $c->get(PdfReportStylesheet::class),
+                null,
+                $c->get(ViewRenderer::class)
             );
         });
 
@@ -96,7 +98,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
         $container->singleton(ShowAdminDashboardAction::class, function (Container $c) {
             return new ShowAdminDashboardAction(
                 $c->get(InsightRepository::class),
-                $c->get(AdminAuthService::class),
                 $c->get(AdminDashboardPresenter::class),
                 $c->get(ViewRenderer::class),
                 $c->get(SessionManager::class)
@@ -118,9 +119,7 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new ProcessAdminLoginAction(
                 $c->get(AdminAuthService::class),
                 $c->get(ViewRenderer::class),
-                $c->get(SessionManager::class),
-                $c->get(RateLimiter::class),
-                $c->get(ConfigService::class)
+                $c->get(SessionManager::class)
             );
         });
 
@@ -132,9 +131,7 @@ class ControllerServiceProvider implements ServiceProviderInterface
 
         $container->singleton(LogInsightApiAction::class, function (Container $c) {
             return new LogInsightApiAction(
-                $c->get(AnonymizedInsightLogger::class),
-                $c->get(RateLimiter::class),
-                $c->get(ConfigService::class)
+                $c->get(AnonymizedInsightLogger::class)
             );
         });
 
@@ -164,7 +161,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
 
         $container->singleton(GeneratePdfAction::class, function (Container $c) {
             return new GeneratePdfAction(
-                $c->get(RateLimiter::class),
                 $c->get(PdfGeneratorService::class),
                 $c->get(ConfigService::class),
                 $c->get(FileUploadService::class),
@@ -185,9 +181,13 @@ class ControllerServiceProvider implements ServiceProviderInterface
             );
         });
 
+        $container->singleton(\Services\SitemapGeneratorInterface::class, function (Container $c) {
+            return $c->get(SitemapGenerator::class);
+        });
+
         $container->singleton(SitemapController::class, function (Container $c) {
             return new SitemapController(
-                $c->get(SitemapGenerator::class),
+                $c->get(\Services\SitemapGeneratorInterface::class),
                 $c->get(ViewRenderer::class)
             );
         });
@@ -269,13 +269,13 @@ class ControllerServiceProvider implements ServiceProviderInterface
 
         $container->singleton(RenderGuideAction::class, function (Container $c) {
             return new RenderGuideAction(
-                $c->get(GuideRenderer::class)
+                $c->get(\Services\GuideRendererInterface::class)
             );
         });
 
         $container->singleton(\Controllers\RenderEmbedAction::class, function (Container $c) {
             return new \Controllers\RenderEmbedAction(
-                $c->get(GuideRenderer::class)
+                $c->get(\Services\GuideRendererInterface::class)
             );
         });
     }

@@ -10,7 +10,7 @@ use PDO;
  * TelemetryPruningService
  * Dedicated maintenance service to prune expired telemetry records from the database.
  */
-class TelemetryPruningService
+class TelemetryPruningService implements TelemetryPruningServiceInterface
 {
     private PDO $pdo;
     private int $retentionDays;

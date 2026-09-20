@@ -105,6 +105,8 @@ class GuideViewModelBuilder
             'is_calculator'       => ($type === 'calculator'),
             'seo_category'        => $seo_category,
             'calculator_type'     => $calculator_type,
+            'benchmark_template'  => $strategy->getBenchmarkTemplate(),
+            'benchmark_title'     => $strategy->getBenchmarkTitle(),
             'calc_config'         => $calcDefaults,
             'show_lumpsum'        => $show_lumpsum,
             'faqs'                => $faqs,
@@ -126,22 +128,12 @@ class GuideViewModelBuilder
      */
     private function loadRelatedCalculators(string $slug): array
     {
-        $linksPath = __DIR__ . '/../../content/calculator_links.json';
-        if (!file_exists($linksPath)) {
+        $data = $this->configService->getJsonConfig('content/calculator_links.json');
+        if (!isset($data[$slug]) || !is_array($data[$slug])) {
             return [];
         }
 
-        $raw = file_get_contents($linksPath);
-        if ($raw === false) {
-            return [];
-        }
-
-        $decoded = json_decode($raw, true);
-        if (!is_array($decoded) || !isset($decoded[$slug]) || !is_array($decoded[$slug])) {
-            return [];
-        }
-
-        return $decoded[$slug];
+        return $data[$slug];
     }
 
     /**
@@ -151,21 +143,11 @@ class GuideViewModelBuilder
      */
     private function loadPillarGuides(string $slug): array
     {
-        $guidesPath = __DIR__ . '/../../content/calculator_pillar_guides.json';
-        if (!file_exists($guidesPath)) {
+        $data = $this->configService->getJsonConfig('content/calculator_pillar_guides.json');
+        if (!isset($data[$slug]) || !is_array($data[$slug])) {
             return [];
         }
 
-        $raw = file_get_contents($guidesPath);
-        if ($raw === false) {
-            return [];
-        }
-
-        $decoded = json_decode($raw, true);
-        if (!is_array($decoded) || !isset($decoded[$slug]) || !is_array($decoded[$slug])) {
-            return [];
-        }
-
-        return $decoded[$slug];
+        return $data[$slug];
     }
 }

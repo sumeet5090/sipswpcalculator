@@ -11,7 +11,7 @@ class StrategyFactory
     private const DEFAULT_STRATEGY_MAP = [
         'sip-calculator'            => SipStrategy::class,
         'swp-calculator'            => SwpStrategy::class,
-        'sip-step-up-calculator'    => SipStrategy::class,
+        'sip-step-up-calculator'    => StepUpSipStrategy::class,
         'lumpsum-calculator'        => LumpsumStrategy::class,
         'retirement-calculator'        => ComboStrategy::class,
         'my-first-crore-calculator'    => TargetCorpusStrategy::class,

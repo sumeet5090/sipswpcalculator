@@ -20,8 +20,6 @@ use Services\RateLimitStorageInterface;
 
 class GeneratePdfActionTest extends TestCase
 {
-    private RateLimitStorageInterface $mockStorage;
-    private RateLimiter $rateLimiter;
     private ConfigService $configService;
     private FileUploadService $fileUploadService;
     private HtmlSanitizer $sanitizer;
@@ -29,8 +27,6 @@ class GeneratePdfActionTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->mockStorage = $this->createStub(RateLimitStorageInterface::class);
-        $this->rateLimiter = new RateLimiter($this->mockStorage);
         $this->configService = new ConfigService(__DIR__ . '/../../content/calculator_defaults.json');
         $this->fileUploadService = new FileUploadService();
         $this->sanitizer = new HtmlSanitizer();
@@ -43,7 +39,6 @@ class GeneratePdfActionTest extends TestCase
         $pdfService = new PdfGeneratorService($template);
 
         $action = new GeneratePdfAction(
-            $this->rateLimiter,
             $pdfService,
             $this->configService,
             $this->fileUploadService,
@@ -57,36 +52,6 @@ class GeneratePdfActionTest extends TestCase
         $this->assertSame(405, $response->getStatusCode());
     }
 
-    public function testRateLimitExceededReturns429(): void
-    {
-        $mockStorage = $this->createMock(RateLimitStorageInterface::class);
-        $mockStorage->expects($this->once())
-            ->method('checkAndIncrement')
-            ->willThrowException(new RateLimitExceededException('Rate limit exceeded.'));
-        $rateLimiter = new RateLimiter($mockStorage);
-
-        $template = new PdfReportTemplate(new CurrencyHelper());
-        $pdfService = new PdfGeneratorService($template);
-
-        $action = new GeneratePdfAction(
-            $rateLimiter,
-            $pdfService,
-            $this->configService,
-            $this->fileUploadService,
-            $this->sanitizer,
-            $this->calculator
-        );
-
-        $request = new Request([], [
-            'sip' => 5000,
-            'years' => 10,
-        ], ['REQUEST_METHOD' => 'POST', 'REMOTE_ADDR' => '1.2.3.4']);
-
-        $response = $action($request);
-
-        $this->assertSame(429, $response->getStatusCode());
-    }
-
     public function testSuccessfulPdfGenerationReturnsHeadersAndBinary(): void
     {
         $mockPdfGenerator = $this->createMock(PdfGeneratorService::class);
@@ -95,7 +60,6 @@ class GeneratePdfActionTest extends TestCase
             ->willReturn('%PDF-1.4 Mock Binary PDF Content');
 
         $action = new GeneratePdfAction(
-            $this->rateLimiter,
             $mockPdfGenerator,
             $this->configService,
             $this->fileUploadService,

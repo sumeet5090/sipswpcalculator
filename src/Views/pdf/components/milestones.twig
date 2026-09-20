@@ -1,0 +1,16 @@
+{% if milestones is not empty %}
+<div class="section-heading">Key Wealth Milestones</div>
+<div class="milestones-container">
+    <table class="milestones-table">
+        <tr>
+            {% for m in milestones %}
+                <td style="width: {{ milestone_col_width }}; padding: 0 4px;">
+                    <div class="milestone-badge">{{ m.badge }}</div>
+                    <div class="milestone-val">{{ m.target_formatted }}</div>
+                    <div class="milestone-sub">Achieved in <strong>Year {{ m.year }}</strong></div>
+                </td>
+            {% endfor %}
+        </tr>
+    </table>
+</div>
+{% endif %}
