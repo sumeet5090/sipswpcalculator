@@ -5,7 +5,18 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Elite Architecture Refactoring — Phase 2: Security, Middleware Pipeline & Routing Architecture Completed.
+- **Current Milestone:** Elite Architecture Refactoring — Phase 3: Frontend Architecture & Chart Deconstruction Completed.
+- **Implemented Fixes & Architectural Outcomes (Phase 3):**
+  - **Modularized Chart Subsystem (`assets/js/calculators/chart/`):** Deconstructed monolithic `ChartManager.ts` (1,678 lines) into single-responsibility components:
+    - `ChartPlugins.ts`: Decoupled all 7 custom Chart.js lifecycle plugins (`clipGuard`, `crosshair`, `splineMilestones`, `compoundingIgnition`, `croreMilestoneLine`, `fdAlphaDelta`, `donutCenterText`).
+    - `ChartGradientFactory.ts`: Encapsulated GPU gradient generation with a 30px quantizing bucket cache to eliminate memory leaks and redraw churn.
+    - `ChartMilestoneCalculator.ts`: Isolated milestone detection, compounding crossover analysis, harmonic year ticks, and DOM milestone grid rendering.
+    - `ChartDatasetBuilder.ts`: Dedicated multi-mode line datasets builder (nominal corpus, invested capital, post-tax net, inflation real purchasing power, historical corridor, flat SIP baseline, shock overlay) and benchmark curve algorithms.
+  - **Severed Tight Coupling via EventBus:**
+    - Eliminated circular dependency where `ChartManager` directly referenced `ResultsController` and vice-versa.
+    - `ResultsController` and `ChartManager` communicate strictly via `EventBus` topics: `table:highlight`, `chart:highlight`, `chart:clearHighlight`, and `chart:scrub`.
+    - Removed `chartManager` constructor injection and `setResultsController` from `CalculatorApp.ts`.
+  - **Refactored `ChartManager.ts`:** Condensed into a focused ~500-line lifecycle and view coordinator adhering strictly to SOLID and POLA.
 - **Implemented Fixes & Architectural Outcomes (Phase 2):**
   - **Route-Level Middleware Pipeline (`Core\Router`):** Enhanced `Router::get()` and `Router::post()` to accept route-specific middlewares, seamlessly executing route-specific chains before calling target actions.
   - **Single-Responsibility `RateLimitMiddleware`:** Created dedicated, configurable rate limiting middleware; bound declarative instances in `CoreServiceProvider` (`middleware.ratelimit.pdf`, `middleware.ratelimit.insight`, `middleware.ratelimit.admin_auth`) and attached directly to routes in `App.php`.
@@ -19,6 +30,7 @@
 - **Verification & System Health:**
   - Full PHPUnit test suite: 842 tests / 13,621 assertions passed cleanly (0 failures, 0 warnings).
   - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 245 files, 0 PHPCS violations).
+  - Frontend typecheck & build: `tsc --noEmit` clean, Vite bundle build clean in ~190ms.
   - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across base and specialized engines.
 
 ---

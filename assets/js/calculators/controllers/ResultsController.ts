@@ -2,7 +2,7 @@ import { DOMAdapter } from '../../adapters/DOMAdapter';
 import { CurrencyFormatter } from '../CurrencyHelper';
 import { MathEngine } from '../MathEngine';
 import { InvestmentInputs, YearResult } from '../../types';
-import type { ChartManager } from '../ChartManager';
+import { eventBus } from '../../utils/EventBus';
 
 const TABLE_ROW_CLASS = "hover:bg-emerald-50/50 border-b border-slate-100 transition-colors cursor-pointer";
 const CELL_YEAR_CLASS = "px-4 sm:px-6 py-3.5 text-left font-extrabold text-slate-900 whitespace-nowrap sticky left-0 bg-white/98 backdrop-blur-md z-10 shadow-[2px_0_6px_-2px_rgba(0,0,0,0.08)] border-b border-slate-100";
@@ -16,7 +16,6 @@ export class ResultsController {
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
     private getInputs: () => InvestmentInputs;
-    private chartManager: ChartManager | null;
     private density: 'all' | '5y' = '5y';
     private colDensity: 'essential' | 'audit' = 'essential';
     private denominationMode: 'exact' | 'lakh' = 'exact';
@@ -30,14 +29,13 @@ export class ResultsController {
     constructor(
         dom: DOMAdapter,
         formatter: CurrencyFormatter,
-        getInputs: () => InvestmentInputs,
-        chartManager: ChartManager | null = null
+        getInputs: () => InvestmentInputs
     ) {
         this.dom = dom;
         this.formatter = formatter;
         this.getInputs = getInputs;
-        this.chartManager = chartManager;
         this.initControls();
+        this.initEventSubscriptions();
     }
 
     public setDenominationMode(mode: 'exact' | 'lakh'): void {
@@ -208,6 +206,12 @@ export class ResultsController {
         }
     }
 
+    private initEventSubscriptions(): void {
+        eventBus.subscribe<{ index: number; scrollIntoView?: boolean }>('table:highlight', (data: { index: number; scrollIntoView?: boolean }) => {
+            this.highlightTableRow(data.index, data.scrollIntoView ?? false);
+        });
+    }
+
     /**
      * Highlights matching table row during bi-directional Chart scrubbing.
      */
@@ -330,16 +334,13 @@ export class ResultsController {
             tr.dataset.year = String(row.year);
             tr.style.setProperty('--row-index', String(index));
 
-            // Bi-directional Hover & Click sync with Chart
-            if (this.chartManager) {
-                const yearIndex = row.year - 1;
-                tr.addEventListener('mouseenter', () => this.chartManager?.highlightYear(yearIndex));
-                tr.addEventListener('mouseleave', () => this.chartManager?.clearHighlight());
-                tr.addEventListener('click', () => {
-                    this.chartManager?.highlightYear(yearIndex);
-                    this.chartManager?.updateInspectionRibbon(row);
-                });
-            }
+            // Bi-directional Hover & Click sync with Chart via EventBus
+            const yearIndex = row.year - 1;
+            tr.addEventListener('mouseenter', () => eventBus.publish('chart:highlight', { index: yearIndex }));
+            tr.addEventListener('mouseleave', () => eventBus.publish('chart:clearHighlight'));
+            tr.addEventListener('click', () => {
+                eventBus.publish('chart:scrub', { index: yearIndex, row });
+            });
 
             const fmt = (v: number | null | undefined): string => {
                 if (v === null || v === undefined) return '-';

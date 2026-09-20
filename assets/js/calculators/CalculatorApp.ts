@@ -99,10 +99,8 @@ export class CalculatorApp {
         this.resultsController = new ResultsController(
             this.dom,
             this.formatter,
-            () => this.getInputs(),
-            this.chartManager
+            () => this.getInputs()
         );
-        this.chartManager.setResultsController(this.resultsController);
 
         this.summaryMetricsController = new SummaryMetricsController(
             this.dom,

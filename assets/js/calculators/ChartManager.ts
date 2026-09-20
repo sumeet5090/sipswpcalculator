@@ -3,31 +3,18 @@ import { InputValidator } from './InputValidator';
 import { DOMAdapter } from '../adapters/DOMAdapter';
 import { YearResult } from '../types';
 import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens.ts';
-import { ChartPatternHelper } from './helpers/ChartPatternHelper.ts';
-import { A11yAnnouncer } from './helpers/A11yAnnouncer.ts';
+import { A11yAnnouncer } from './helpers/A11yAnnouncer';
+import { eventBus } from '../utils/EventBus';
+import { ChartGradientFactory } from './chart/ChartGradientFactory';
+import { ChartMilestoneCalculator, Milestone } from './chart/ChartMilestoneCalculator';
+import { ChartDatasetBuilder } from './chart/ChartDatasetBuilder';
+import { createChartPlugins } from './chart/ChartPlugins';
 import type { ChartScrubbingController } from './controllers/ChartScrubbingController';
-import type { ResultsController } from './controllers/ResultsController';
-import type { Chart, ChartDataset, ChartConfiguration } from 'chart.js';
-
-export interface Milestone {
-    type: 'wealth' | 'security';
-    label: string;
-    description?: string;
-    year: number;
-    icon: string;
-    value: number;
-    index: number;
-}
-
-interface GradientBundle {
-    invested: CanvasGradient;
-    corpus: CanvasGradient;
-    postTax: CanvasGradient;
-}
+import type { Chart, ChartConfiguration } from 'chart.js';
 
 /**
  * ChartManager.ts
- * Manages instantiation, dataset state transitions, High-DPI scaling, and responsive rendering of Chart.js.
+ * Coordinates Chart.js lifecycle, dataset state transitions, High-DPI scaling, and responsive rendering.
  * Strictly adheres to SOLID, DRY, and POLA principles.
  */
 export class ChartManager {
@@ -39,7 +26,6 @@ export class ChartManager {
     private chartModulePromise: Promise<typeof Chart> | null = null;
     private showHistoricalCorridor: boolean = false;
     private scrubbingController: ChartScrubbingController | null = null;
-    private resultsController: ResultsController | null = null;
 
     private activeBenchmark: 'none' | 'nifty' | 'gold' | 'fd' = 'none';
     private activeViewType: 'line' | 'donut' = 'line';
@@ -54,6 +40,13 @@ export class ChartManager {
     private renderQueueId: number | null = null;
     private controlsInitialized: boolean = false;
 
+    // Sub-modules
+    private gradientFactory: ChartGradientFactory;
+    private milestoneCalculator: ChartMilestoneCalculator;
+    private datasetBuilder: ChartDatasetBuilder;
+    private plugins: ReturnType<typeof createChartPlugins>;
+    private unsubscribeEvents: (() => void)[] = [];
+
     constructor(
         formatter: CurrencyFormatter,
         validator: InputValidator = new InputValidator(),
@@ -62,17 +55,59 @@ export class ChartManager {
         this.formatter = formatter;
         this.validator = validator;
         this.dom = dom;
+
+        this.gradientFactory = new ChartGradientFactory();
+        this.milestoneCalculator = new ChartMilestoneCalculator(this.formatter, this.validator, this.dom);
+        this.datasetBuilder = new ChartDatasetBuilder({
+            dom: this.dom,
+            getActiveBenchmark: () => this.activeBenchmark,
+            getShowHistoricalCorridor: () => this.showHistoricalCorridor,
+            getShockOverlayData: () => this.shockOverlayData,
+            getShockOverlayCrashIndex: () => this.shockOverlayCrashIndex,
+        });
+
+        this.plugins = createChartPlugins({
+            getActiveBenchmark: () => this.activeBenchmark,
+            getLastResults: () => this.lastResults,
+            getActiveDonutScrubYear: () => this.activeDonutScrubYear,
+            getCurrentMilestones: () => this.currentMilestones,
+            computeBenchmarkCurve: (res, rate) => this.datasetBuilder.computeBenchmarkCurve(res, rate),
+            formatter: this.formatter,
+        });
+
+        this.initEventSubscriptions();
     }
 
     /**
-     * Injects the dedicated results table controller for bi-directional synchronization.
+     * Subscribes to global EventBus topics to achieve loose coupling.
      */
-    public setResultsController(resultsController: ResultsController): void {
-        this.resultsController = resultsController;
+    private initEventSubscriptions(): void {
+        const unsubHighlight = eventBus.subscribe<{ index: number }>('chart:highlight', data => {
+            if (typeof data?.index === 'number') {
+                this.highlightYear(data.index);
+            }
+        });
+
+        const unsubClear = eventBus.subscribe('chart:clearHighlight', () => {
+            this.clearHighlight();
+        });
+
+        const unsubScrub = eventBus.subscribe<{ index: number; row?: YearResult }>('chart:scrub', data => {
+            if (typeof data?.index === 'number') {
+                if (this.activeViewType === 'donut') {
+                    this.updateDonutForYear(data.index);
+                } else {
+                    this.highlightYear(data.index);
+                    this.announceCurrentPoint(data.index);
+                }
+            }
+        });
+
+        this.unsubscribeEvents.push(unsubHighlight, unsubClear, unsubScrub);
     }
 
     /**
-     * Injects the dedicated scrubbing controller for bi-directional synchronization.
+     * Injects the optional scrubbing controller for legacy/direct sync.
      */
     public setScrubbingController(scrubbingController: ChartScrubbingController): void {
         this.scrubbingController = scrubbingController;
@@ -83,13 +118,12 @@ export class ChartManager {
                 this.highlightYear(index);
                 this.announceCurrentPoint(index);
             }
-            this.resultsController?.highlightTableRow(index, false);
+            eventBus.publish('table:highlight', { index, scrollIntoView: false });
         });
     }
 
     /**
      * Dynamically loads Chart.js as an isolated vendor chunk via Vite.
-     * Eliminates external CDN dependencies, network latency, and CSP blocking.
      */
     private async loadChartModule(): Promise<typeof Chart> {
         if (this.chartModulePromise) return this.chartModulePromise;
@@ -100,47 +134,6 @@ export class ChartManager {
         })();
 
         return this.chartModulePromise;
-    }
-
-    private cachedGradientBucket: number = -1;
-    private cachedGradients: GradientBundle | null = null;
-
-    /**
-     * Compute dynamic linear gradients with 30px quantizing bucket cache to eliminate GPU thrashing on resize.
-     */
-    private createGradients(ctx: CanvasRenderingContext2D, top: number = 0, bottom: number = 400): GradientBundle {
-        const safeTop = Math.max(0, top);
-        const safeBottom = Math.max(safeTop + 60, bottom);
-        const heightSpan = safeBottom - safeTop;
-        const bucket = Math.round(heightSpan / 30) * 30;
-
-        if (this.cachedGradients && this.cachedGradientBucket === bucket) {
-            return this.cachedGradients;
-        }
-
-        const gradientInvested = ctx.createLinearGradient(0, safeTop, 0, safeBottom);
-        gradientInvested.addColorStop(0, THEME_COLORS.chart.gradientInvestedTop);
-        gradientInvested.addColorStop(0.7, THEME_COLORS.chart.gradientInvestedMid);
-        gradientInvested.addColorStop(1, THEME_COLORS.chart.gradientInvestedBottom);
-
-        const gradientCorpus = ctx.createLinearGradient(0, safeTop, 0, safeBottom);
-        gradientCorpus.addColorStop(0, THEME_COLORS.chart.gradientCorpusTop);
-        gradientCorpus.addColorStop(0.6, THEME_COLORS.chart.gradientCorpusMid);
-        gradientCorpus.addColorStop(1, THEME_COLORS.chart.gradientCorpusBottom);
-
-        const gradientPostTax = ctx.createLinearGradient(0, safeTop, 0, safeBottom);
-        gradientPostTax.addColorStop(0, THEME_COLORS.chart.gradientPostTaxTop);
-        gradientPostTax.addColorStop(0.7, THEME_COLORS.chart.gradientPostTaxMid);
-        gradientPostTax.addColorStop(1, THEME_COLORS.chart.gradientPostTaxBottom);
-
-        this.cachedGradients = {
-            invested: gradientInvested,
-            corpus: gradientCorpus,
-            postTax: gradientPostTax
-        };
-        this.cachedGradientBucket = bucket;
-
-        return this.cachedGradients;
     }
 
     /**
@@ -178,334 +171,6 @@ export class ChartManager {
             return `${symbol}${(value / 1000).toFixed(0)}k`;
         }
         return `${symbol}${value.toFixed(0)}`;
-    }
-
-    /**
-     * Calculate active milestones for current results.
-     */
-    private computeMilestones(results: YearResult[], enableSwp: boolean, showPostTax: boolean): Milestone[] {
-        const milestones: Milestone[] = [];
-        const targets = this.validator.getMilestoneTargets().map(t => ({ ...t, reached: false }));
-        let swpCovered = false;
-        let crossoverReached = false;
-
-        for (let i = 0; i < results.length; i++) {
-            const row = results[i];
-            const postTaxVal = row.post_tax_total ?? row.combined_total;
-            const activeCorpusValue = showPostTax ? postTaxVal : row.combined_total;
-            const interest = Math.max(0, activeCorpusValue - row.cumulative_invested);
-
-            // Compounding Crossover Point
-            if (!crossoverReached && interest > row.cumulative_invested && row.cumulative_invested > 0) {
-                crossoverReached = true;
-                milestones.push({
-                    type: 'wealth',
-                    label: 'Compounding Crossover ⚡',
-                    description: `Year ${row.year}: Interest earnings (${this.formatter.formatDynamic(interest)}) have surpassed total invested capital (${this.formatter.formatDynamic(row.cumulative_invested)})!`,
-                    year: row.year,
-                    icon: '⚡',
-                    value: activeCorpusValue,
-                    index: i
-                });
-            }
-
-            for (const target of targets) {
-                if (!target.reached && activeCorpusValue >= target.value) {
-                    target.reached = true;
-                    milestones.push({
-                        type: 'wealth',
-                        label: target.label,
-                        year: row.year,
-                        icon: target.icon,
-                        value: activeCorpusValue,
-                        index: i
-                    });
-                }
-            }
-
-            if (enableSwp && !swpCovered && (row.annual_withdrawal ?? 0) > 0) {
-                const tenYearsWithdrawal = (row.annual_withdrawal ?? 0) * 10;
-                const isSustainable = activeCorpusValue >= tenYearsWithdrawal;
-                if (isSustainable) {
-                    swpCovered = true;
-                    milestones.push({
-                        type: 'security',
-                        label: 'SWP Security (10 Yrs)',
-                        description: `Corpus (${this.formatter.formatDynamic(activeCorpusValue)}) covers 10 years of SWP withdrawals (Requires ${this.formatter.formatDynamic(tenYearsWithdrawal)})!`,
-                        year: row.year,
-                        icon: '🛡️',
-                        value: activeCorpusValue,
-                        index: i
-                    });
-                }
-            }
-        }
-
-        return milestones;
-    }
-
-    /**
-     * Builds synthesized datasets adhering to mutual exclusivity and clean visual layering.
-     */
-    private buildDatasets(
-        results: YearResult[],
-        gradients: GradientBundle,
-        enableSwp: boolean,
-        showPostTax: boolean,
-        showWealthMap: boolean,
-        mode: string,
-        milestones: Milestone[]
-    ): ChartDataset<'line'>[] {
-        const cumulative = results.map(r => r.cumulative_invested);
-        const corpus = results.map(r => r.combined_total);
-        const postTaxCorpus = results.map(r => r.post_tax_total ?? r.combined_total);
-        const swp = results.map(r => r.annual_withdrawal ?? 0);
-
-        const milestoneIndices = milestones.map(m => m.index);
-        const isSinglePoint = results.length === 1;
-
-        const pointRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 6 : (isSinglePoint ? 4 : 0));
-        const pointHoverRadii = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 10 : (isSinglePoint ? 8 : 6));
-        const pointBgColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? THEME_COLORS.financial.milestoneGold : THEME_COLORS.financial.growth);
-        const pointBorderColors = corpus.map((_, idx) => milestoneIndices.includes(idx) ? THEME_COLORS.chart.pointBgWhite : THEME_COLORS.financial.growth);
-        const pointBorderWidths = corpus.map((_, idx) => milestoneIndices.includes(idx) ? 3 : 2);
-
-        const interestOnly = corpus.map((c, i) => Math.max(0, c - cumulative[i]));
-
-        const datasets: ChartDataset<'line'>[] = [
-            {
-                label: 'Total Invested',
-                data: cumulative,
-                borderColor: THEME_COLORS.financial.invested,
-                backgroundColor: gradients.invested,
-                borderWidth: 2,
-                tension: 0.4,
-                cubicInterpolationMode: 'monotone' as const,
-                fill: 'origin',
-                clip: false,
-                pointStyle: ChartPatternHelper.getPointStyle('invested'),
-                pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
-                pointBorderColor: THEME_COLORS.financial.invested,
-                pointRadius: isSinglePoint ? 4 : 0,
-                pointHoverRadius: 6,
-                order: 3,
-            },
-            {
-                label: showWealthMap ? 'Interest Earned' : 'Pre-Tax Corpus',
-                data: showWealthMap ? interestOnly : corpus,
-                borderColor: THEME_COLORS.financial.growth,
-                backgroundColor: gradients.corpus,
-                borderWidth: 3,
-                tension: 0.4,
-                cubicInterpolationMode: 'monotone' as const,
-                fill: showWealthMap ? 'origin' : (showPostTax ? '+1' : 0),
-                clip: false,
-                pointStyle: ChartPatternHelper.getPointStyle('corpus'),
-                pointBackgroundColor: pointBgColors,
-                pointBorderColor: pointBorderColors,
-                pointBorderWidth: pointBorderWidths,
-                pointRadius: pointRadii,
-                pointHoverRadius: pointHoverRadii,
-                pointHoverBorderWidth: 3,
-                order: 1,
-            }
-        ];
-
-        if (showPostTax && !showWealthMap) {
-            datasets.push({
-                label: 'Post-Tax Corpus (§112A Net)',
-                data: postTaxCorpus,
-                borderColor: THEME_COLORS.financial.postTax,
-                backgroundColor: 'rgba(139, 92, 246, 0.09)',
-                borderWidth: 2,
-                borderDash: [4, 4],
-                tension: 0.4,
-                cubicInterpolationMode: 'monotone' as const,
-                fill: 1,
-                pointStyle: ChartPatternHelper.getPointStyle('postTax'),
-                pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
-                pointBorderColor: THEME_COLORS.financial.postTax,
-                pointRadius: isSinglePoint ? 4 : 0,
-                pointHoverRadius: 6,
-                order: 2,
-            });
-        }
-
-        // Real Purchasing Power Phantom Spline (when inflation > 0)
-        const inflationInput = this.dom.getElement<HTMLInputElement>('inflation');
-        const inflationRate = inflationInput ? parseFloat(inflationInput.value) : 0;
-        if (inflationRate > 0 && !showWealthMap && results.length > 1) {
-            const realValues = results.map(r => {
-                const discountFactor = Math.pow(1 + (inflationRate / 100), r.year);
-                return Math.round(r.combined_total / discountFactor);
-            });
-
-            datasets.push({
-                label: `Real Value (${inflationRate}% Inflation Adj)`,
-                data: realValues,
-                borderColor: '#0284c7', // Sky-600
-                backgroundColor: 'rgba(2, 132, 199, 0.04)',
-                borderWidth: 2,
-                borderDash: [5, 4],
-                tension: 0.4,
-                cubicInterpolationMode: 'monotone' as const,
-                fill: 1, // Fills between nominal corpus and real purchasing power
-                pointRadius: 0,
-                pointHoverRadius: 5,
-                order: 2
-            });
-        }
-
-        // Historical Volatility Corridor (Suppressed when Post-Tax is active to prevent visual clutter)
-        if (this.showHistoricalCorridor && !showWealthMap && !showPostTax && results.length > 1) {
-            const lowerCorridor = this.computeBenchmarkCurve(results, 10.2);
-            const upperCorridor = this.computeBenchmarkCurve(results, 15.8);
-
-            datasets.push({
-                label: 'Historical 10th Percentile (10.2% CAGR)',
-                data: lowerCorridor,
-                borderColor: 'rgba(5, 150, 105, 0.4)',
-                backgroundColor: 'rgba(5, 150, 105, 0.06)',
-                borderWidth: 1.5,
-                borderDash: [2, 2],
-                tension: 0.4,
-                cubicInterpolationMode: 'monotone' as const,
-                fill: '+1',
-                pointRadius: 0,
-                pointHoverRadius: 4,
-                order: 4,
-            });
-
-            datasets.push({
-                label: 'Historical 90th Percentile (15.8% CAGR)',
-                data: upperCorridor,
-                borderColor: 'rgba(5, 150, 105, 0.4)',
-                backgroundColor: 'transparent',
-                borderWidth: 1.5,
-                borderDash: [2, 2],
-                tension: 0.4,
-                cubicInterpolationMode: 'monotone' as const,
-                fill: false,
-                pointRadius: 0,
-                pointHoverRadius: 4,
-                order: 4,
-            });
-        }
-
-        const hasStepUp = !enableSwp && results.length > 1 && ((results[1].annual_contribution ?? 0) > (results[0].annual_contribution ?? 0));
-        if (hasStepUp && !showWealthMap) {
-            const yr1 = results[0];
-            const baseMonthlySip = yr1.sip_monthly ?? (yr1.annual_contribution ? (yr1.annual_contribution / 12) : 0);
-            if (baseMonthlySip > 0 || (yr1.begin_balance ?? 0) > 0) {
-                const rateInput = this.dom.getElement<HTMLInputElement>('rate');
-                const userRate = rateInput ? (parseFloat(rateInput.value) || 12) : 12;
-                const rm = userRate / 100 / 12;
-                const initialLumpsum = yr1.begin_balance ?? 0;
-
-                let flatBalance = initialLumpsum;
-                const flatData: number[] = [];
-
-                for (let i = 0; i < results.length; i++) {
-                    for (let m = 0; m < 12; m++) {
-                        flatBalance = (flatBalance + baseMonthlySip) * (1 + rm);
-                    }
-                    flatData.push(Math.round(flatBalance));
-                }
-
-                datasets.push({
-                    label: 'Flat SIP Baseline (0% Step-Up)',
-                    data: flatData,
-                    borderColor: '#94a3b8',
-                    backgroundColor: 'rgba(148, 163, 184, 0.04)',
-                    borderWidth: 2,
-                    borderDash: [4, 4],
-                    tension: 0.4,
-                    cubicInterpolationMode: 'monotone' as const,
-                    fill: false,
-                    pointRadius: isSinglePoint ? 4 : 0,
-                    pointHoverRadius: 5,
-                    pointHoverBorderColor: '#94a3b8',
-                    pointHoverBackgroundColor: '#ffffff',
-                    order: 3,
-                });
-            }
-        }
-
-        if (mode !== 'sip' || enableSwp) {
-            datasets.push({
-                label: 'Annual Withdrawal',
-                data: swp,
-                borderColor: THEME_COLORS.financial.withdrawal,
-                backgroundColor: THEME_COLORS.chart.swpFillBg,
-                borderWidth: 2,
-                borderDash: [5, 5],
-                tension: 0.4,
-                cubicInterpolationMode: 'monotone' as const,
-                fill: false,
-                pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
-                pointBorderColor: THEME_COLORS.financial.withdrawal,
-                pointRadius: isSinglePoint ? 4 : 0,
-                pointHoverRadius: 6,
-                hidden: !enableSwp,
-                order: 1,
-            });
-        }
-
-        if (this.activeBenchmark !== 'none') {
-            let rate = 12;
-            let label = 'Nifty 50 (12%)';
-            let color: string = THEME_COLORS.financial.milestoneGold;
-
-            if (this.activeBenchmark === 'gold') {
-                rate = 9;
-                label = 'Gold (9%)';
-                color = THEME_COLORS.financial.milestoneGoldDark;
-            } else if (this.activeBenchmark === 'fd') {
-                rate = 6.5;
-                label = 'Fixed Deposit (6.5%)';
-                color = THEME_COLORS.slate[500];
-            }
-
-            const benchmarkData = this.computeBenchmarkCurve(results, rate);
-            datasets.push({
-                label,
-                data: benchmarkData,
-                borderColor: color,
-                backgroundColor: 'transparent',
-                borderWidth: 2,
-                borderDash: [6, 4],
-                tension: 0.4,
-                cubicInterpolationMode: 'monotone' as const,
-                fill: false,
-                pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
-                pointBorderColor: color,
-                pointRadius: isSinglePoint ? 4 : 0,
-                pointHoverRadius: 6,
-                order: 1,
-            });
-        }
-
-        if (this.shockOverlayData) {
-            const crashIdx = this.shockOverlayCrashIndex;
-            datasets.push({
-                label: this.shockOverlayData.label,
-                data: this.shockOverlayData.data,
-                borderColor: '#be123c',
-                backgroundColor: 'rgba(190, 18, 60, 0.05)',
-                borderWidth: 2.5,
-                borderDash: [6, 4],
-                tension: 0.4,
-                cubicInterpolationMode: 'monotone' as const,
-                fill: false,
-                pointBackgroundColor: '#be123c',
-                pointBorderColor: THEME_COLORS.chart.pointBgWhite,
-                pointRadius: results.map((_, idx) => (crashIdx !== null && idx === crashIdx) ? 6 : (isSinglePoint ? 4 : 0)),
-                pointHoverRadius: 7,
-                order: 0,
-            });
-        }
-
-        return datasets;
     }
 
     /**
@@ -576,378 +241,6 @@ export class ChartManager {
         }
     }
 
-    private crosshairPlugin = {
-        id: 'crosshairLine',
-        afterDraw: (chart: any) => {
-            if (chart.config.type !== 'line' || !chart.scales?.x || !chart.scales?.y) return;
-
-            if (chart.tooltip?.getActiveElements()?.length) {
-                const activePoint = chart.tooltip.getActiveElements()[0];
-                const ctx = chart.ctx;
-                const x = activePoint.element.x;
-                const y = activePoint.element.y;
-                const leftX = chart.scales.x.left;
-                const topY = chart.scales.y.top;
-                const bottomY = chart.scales.y.bottom;
-
-                ctx.save();
-                try {
-                    ctx.beginPath();
-                    ctx.setLineDash([4, 4]);
-                    ctx.moveTo(x, topY);
-                    ctx.lineTo(x, bottomY);
-                    ctx.lineWidth = 1.5;
-                    ctx.strokeStyle = THEME_COLORS.chart.milestoneLineActive;
-                    ctx.stroke();
-
-                    // Horizontal guide line to Y axis
-                    ctx.beginPath();
-                    ctx.moveTo(leftX, y);
-                    ctx.lineTo(x, y);
-                    ctx.strokeStyle = THEME_COLORS.chart.milestoneLineSubtle;
-                    ctx.stroke();
-                } finally {
-                    ctx.restore();
-                }
-            }
-        }
-    };
-
-    /**
-     * Clip Guard Plugin: Prevents Chart.js getDatasetClipArea runtime exception
-     * when filler plugin resolves cross-dataset bounds during drawing passes.
-     */
-    private clipGuardPlugin = {
-        id: 'clipGuard',
-        beforeDatasetsDraw: (chart: any) => {
-            if (chart.config.type !== 'line') return;
-            const datasets = chart.data?.datasets || [];
-            for (let i = 0; i < datasets.length; i++) {
-                const meta = chart.getDatasetMeta(i);
-                if (meta && !meta._clip) {
-                    meta._clip = { top: 0, right: 0, bottom: 0, left: 0, disabled: true };
-                }
-            }
-        },
-        beforeDatasetDraw: (chart: any, args: any) => {
-            if (args?.meta && !args.meta._clip) {
-                args.meta._clip = { top: 0, right: 0, bottom: 0, left: 0, disabled: true };
-            }
-            if (args?.meta?.$filler?.index !== undefined) {
-                const fillerTarget = chart.getDatasetMeta(args.meta.$filler.index);
-                if (fillerTarget && !fillerTarget._clip) {
-                    fillerTarget._clip = { top: 0, right: 0, bottom: 0, left: 0, disabled: true };
-                }
-            }
-        }
-    };
-
-    /**
-     * Compounding Ignition Zone Plugin: Illuminates the inflection zone where annual interest surpasses annual SIP contributions.
-     */
-    private compoundingIgnitionPlugin = {
-        id: 'compoundingIgnitionZone',
-        beforeDatasetsDraw: (chart: any) => {
-            if (chart.config.type !== 'line' || !chart.chartArea) return;
-            const meta = chart.getDatasetMeta(1);
-            if (!meta || !meta.data || meta.data.length === 0) return;
-
-            const results = this.lastResults;
-            if (results.length < 2) return;
-
-            const crossoverIdx = results.findIndex((r, idx) => {
-                if (idx === 0) return false;
-                const annualInterest = r.interest || 0;
-                const annualContribution = r.annual_contribution || 0;
-                return annualInterest >= annualContribution && annualContribution > 0;
-            });
-
-            if (crossoverIdx === -1 || !meta.data[crossoverIdx]) return;
-
-            const ctx = chart.ctx;
-            const xPos = meta.data[crossoverIdx].x;
-            const { top, bottom, right } = chart.chartArea;
-
-            ctx.save();
-            try {
-                // Ambient soft light aurora ignition glow
-                const gradient = ctx.createLinearGradient(xPos, 0, right, 0);
-                gradient.addColorStop(0, 'rgba(16, 185, 129, 0.08)');
-                gradient.addColorStop(0.35, 'rgba(20, 184, 166, 0.04)');
-                gradient.addColorStop(1, 'rgba(16, 185, 129, 0.01)');
-
-                ctx.fillStyle = gradient;
-                ctx.fillRect(xPos, top, right - xPos, bottom - top);
-
-                // Demarcation dotted hairline
-                ctx.beginPath();
-                ctx.setLineDash([3, 3]);
-                ctx.moveTo(xPos, top);
-                ctx.lineTo(xPos, bottom);
-                ctx.lineWidth = 1;
-                ctx.strokeStyle = 'rgba(5, 150, 105, 0.4)';
-                ctx.stroke();
-
-                // Pure Light Ignition Beacon annotation (pinned to top edge)
-                const tagText = '⚡ Compounding Ignition';
-                ctx.font = '700 9px "Plus Jakarta Sans", "Inter", sans-serif';
-                const textWidth = ctx.measureText(tagText).width;
-                const pillWidth = textWidth + 14;
-                const pillX = Math.min(xPos + 4, right - pillWidth - 4);
-
-                ctx.setLineDash([]);
-                ctx.fillStyle = '#ecfdf5';
-                ctx.strokeStyle = '#a7f3d0';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                if (typeof ctx.roundRect === 'function') {
-                    ctx.roundRect(pillX, top + 4, pillWidth, 18, 4);
-                } else {
-                    ctx.rect(pillX, top + 4, pillWidth, 18);
-                }
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.fillStyle = '#047857';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(tagText, pillX + 7, top + 13);
-            } finally {
-                ctx.restore();
-            }
-        }
-    };
-
-    /**
-     * Deterministic Harmonic Stride Tick Generator.
-     * Prevents decimation dropouts (e.g. Y1, Y5, Y15 skipping Y10) by computing
-     * a clean, human-intuitive decade/semi-decade milestone cadence.
-     */
-    public computeHarmonicYearTicks(totalYears: number): number[] {
-        if (totalYears <= 5) {
-            return Array.from({ length: totalYears }, (_, i) => i + 1);
-        }
-        if (totalYears <= 10) {
-            const ticks = [1];
-            for (let y = 2; y <= totalYears; y += 2) {
-                if (!ticks.includes(y)) ticks.push(y);
-            }
-            if (!ticks.includes(totalYears)) ticks.push(totalYears);
-            return ticks;
-        }
-        if (totalYears <= 20) {
-            const ticks = [1];
-            for (let y = 5; y <= totalYears; y += 5) {
-                if (!ticks.includes(y)) ticks.push(y);
-            }
-            if (!ticks.includes(totalYears)) ticks.push(totalYears);
-            return ticks;
-        }
-        const step = totalYears <= 30 ? 5 : 10;
-        const ticks = [1];
-        for (let y = step; y <= totalYears; y += step) {
-            if (!ticks.includes(y)) ticks.push(y);
-        }
-        if (!ticks.includes(totalYears)) ticks.push(totalYears);
-        return ticks;
-    }
-
-    /**
-     * ₹1 Crore Golden Milestone Guideline Plugin.
-     * Renders a clean right-anchored pin badge without slicing text through curves.
-     */
-    private croreMilestoneLinePlugin = {
-        id: 'croreMilestoneLine',
-        afterDraw: (chart: any) => {
-            if (chart.config.type !== 'line' || !chart.scales?.y || !chart.chartArea) return;
-            const yScale = chart.scales.y;
-            const targetVal = 10000000; // 1 Crore
-            if (yScale.max < targetVal) return;
-
-            const yPos = yScale.getPixelForValue(targetVal);
-            const { left, right } = chart.chartArea;
-            const ctx = chart.ctx;
-
-            ctx.save();
-            try {
-                // Milestone badge geometry
-                const badgeText = '👑 ₹1 Crore Target';
-                ctx.font = '700 9.5px "Plus Jakarta Sans", "Inter", sans-serif';
-                const textWidth = ctx.measureText(badgeText).width;
-                const badgeW = textWidth + 16;
-                const badgeH = 18;
-                const badgeX = right - badgeW - 4;
-                const badgeY = yPos - (badgeH / 2);
-
-                // Subtle guideline stopping before the badge
-                ctx.beginPath();
-                ctx.setLineDash([4, 6]);
-                ctx.moveTo(left, yPos);
-                ctx.lineTo(badgeX - 4, yPos);
-                ctx.lineWidth = 1;
-                ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)'; // Delicate amber tint
-                ctx.stroke();
-
-                // Crisp light-mode amber milestone pill
-                ctx.setLineDash([]);
-                ctx.beginPath();
-                if (typeof ctx.roundRect === 'function') {
-                    ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 4);
-                } else {
-                    ctx.rect(badgeX, badgeY, badgeW, badgeH);
-                }
-                ctx.fillStyle = '#fffbeb'; // amber-50
-                ctx.strokeStyle = '#fde68a'; // amber-200
-                ctx.lineWidth = 1;
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.fillStyle = '#b45309'; // amber-700
-                ctx.textBaseline = 'middle';
-                ctx.fillText(badgeText, badgeX + 8, yPos);
-            } finally {
-                ctx.restore();
-            }
-        }
-    };
-
-    /**
-     * Bank FD Alpha Delta Terminal Bracket Plugin with right-edge clamping.
-     */
-    private fdAlphaDeltaPlugin = {
-        id: 'fdAlphaDelta',
-        afterDraw: (chart: any) => {
-            if (chart.config.type !== 'line' || this.activeBenchmark !== 'fd' || !chart.chartArea) return;
-            const results = this.lastResults;
-            if (results.length < 2) return;
-
-            const sipCorpus = results[results.length - 1].combined_total;
-            const fdCurve = this.computeBenchmarkCurve(results, 6.5);
-            const fdCorpus = fdCurve[fdCurve.length - 1];
-            const delta = sipCorpus - fdCorpus;
-            if (delta <= 0) return;
-
-            const metaSip = chart.getDatasetMeta(1);
-            if (!metaSip || !metaSip.data || metaSip.data.length === 0) return;
-            const finalPoint = metaSip.data[metaSip.data.length - 1];
-
-            const ctx = chart.ctx;
-            ctx.save();
-            try {
-                const badgeText = `+${this.formatter.format(delta)} FD Alpha`;
-                ctx.font = '700 10px "Plus Jakarta Sans", "Inter", sans-serif';
-                const width = ctx.measureText(badgeText).width + 12;
-
-                const clampedX = Math.min(finalPoint.x - width, chart.chartArea.right - width - 2);
-                const clampedY = Math.max(chart.chartArea.top + 4, finalPoint.y - 24);
-
-                ctx.setLineDash([]);
-                ctx.fillStyle = '#065f46';
-                ctx.beginPath();
-                if (typeof ctx.roundRect === 'function') {
-                    ctx.roundRect(clampedX, clampedY, width, 18, 4);
-                } else {
-                    ctx.rect(clampedX, clampedY, width, 18);
-                }
-                ctx.fill();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(badgeText, clampedX + 6, clampedY + 9);
-            } finally {
-                ctx.restore();
-            }
-        }
-    };
-
-    private donutCenterTextPlugin = {
-        id: 'donutCenterText',
-        afterDraw: (chart: any) => {
-            if (chart.config.type !== 'doughnut' || !chart.chartArea) return;
-            const { ctx, chartArea } = chart;
-            const datasets = chart.data.datasets;
-            if (!datasets || datasets.length === 0) return;
-
-            const results = this.lastResults;
-            const activeYear = this.activeDonutScrubYear || results.length;
-            const currentRow = results.find(r => r.year === activeYear) || results[results.length - 1];
-            
-            const isDepleted = currentRow && (currentRow.combined_total <= 0) && (currentRow.annual_withdrawal ?? 0) > 0;
-
-            const centerX = (chartArea.left + chartArea.right) / 2;
-            const centerY = (chartArea.top + chartArea.bottom) / 2;
-
-            ctx.save();
-            try {
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-
-                if (isDepleted) {
-                    ctx.font = `800 18px ${THEME_FONTS.heading}`;
-                    ctx.fillStyle = '#be123c'; // Rose-700
-                    ctx.fillText('DEPLETED', centerX, centerY - 6);
-
-                    ctx.font = `700 9px ${THEME_FONTS.mono}`;
-                    ctx.fillStyle = '#9f1239';
-                    ctx.fillText(`AT YEAR ${currentRow.year}`, centerX, centerY + 12);
-                } else {
-                    const data = datasets[0].data as number[];
-                    const totalInvested = data[0] || 0;
-                    const totalGains = data[1] || 0;
-                    const totalWithdrawals = (data.length > 2 ? data[2] : 0) || 0;
-                    const finalValue = totalGains + totalInvested + totalWithdrawals;
-                    const multiplier = totalInvested > 0 ? (finalValue / totalInvested).toFixed(1) : '1.0';
-
-                    ctx.font = `800 24px ${THEME_FONTS.mono}`;
-                    ctx.fillStyle = '#047857'; // Emerald-700
-                    ctx.fillText(`${multiplier}×`, centerX, centerY - 6);
-
-                    ctx.font = `700 9px ${THEME_FONTS.heading}`;
-                    ctx.fillStyle = '#64748b';
-                    const yearLabel = this.activeDonutScrubYear ? `YR ${this.activeDonutScrubYear} ROI` : 'ROI MULTIPLIER';
-                    ctx.fillText(yearLabel, centerX, centerY + 13);
-                }
-            } finally {
-                ctx.restore();
-            }
-        }
-    };
-
-    private splineMilestonesPlugin = {
-        id: 'splineMilestones',
-        afterDatasetsDraw: (chart: any) => {
-            if (chart.config.type !== 'line') return;
-            const meta = chart.getDatasetMeta(1);
-            if (!meta || !meta.data) return;
-
-            const ctx = chart.ctx;
-            const milestones = this.currentMilestones || [];
-
-            milestones.forEach(m => {
-                if (m.index === undefined || !meta.data[m.index]) return;
-                const point = meta.data[m.index];
-
-                ctx.save();
-                try {
-                    ctx.setLineDash([]);
-                    ctx.beginPath();
-                    ctx.arc(point.x, point.y, 11, 0, Math.PI * 2);
-                    ctx.fillStyle = m.type === 'security' ? 'rgba(245, 158, 11, 0.22)' : 'rgba(16, 185, 129, 0.22)';
-                    ctx.fill();
-
-                    ctx.beginPath();
-                    ctx.arc(point.x, point.y, 5.5, 0, Math.PI * 2);
-                    ctx.fillStyle = m.type === 'security' ? '#d97706' : '#10b981';
-                    ctx.fill();
-                    ctx.lineWidth = 2;
-                    ctx.strokeStyle = '#ffffff';
-                    ctx.stroke();
-                } finally {
-                    ctx.restore();
-                }
-            });
-        }
-    };
-
     /**
      * Update persistent Zero-CLS Heads-Up Display (HUD) telemetry console.
      */
@@ -1001,31 +294,6 @@ export class ChartManager {
         const gains = this.formatter.format(Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested));
         A11yAnnouncer.announceYearInspection(row.year, invested, corpus, gains);
         this.updateInspectionRibbon(row);
-    }
-
-    /**
-     * Compute benchmark projection dataset (Nifty 50, Gold, or FD) for the same cashflow sequence.
-     */
-    private computeBenchmarkCurve(results: YearResult[], benchmarkRate: number): number[] {
-        let corpus = 0;
-        const curve: number[] = [];
-        const monthlyRate = benchmarkRate / 12 / 100;
-
-        for (let i = 0; i < results.length; i++) {
-            const row = results[i];
-            const monthlySip = row.sip_monthly ?? 0;
-
-            if (i === 0) {
-                corpus += (row.begin_balance ?? 0);
-            }
-
-            for (let m = 0; m < 12; m++) {
-                corpus = (corpus + monthlySip) * (1 + monthlyRate);
-            }
-            curve.push(Math.round(corpus));
-        }
-
-        return curve;
     }
 
     /**
@@ -1100,7 +368,7 @@ export class ChartManager {
                 this.chartInstance.tooltip.setActiveElements([{ datasetIndex: 1, index }], { x: 0, y: 0 });
             }
             this.chartInstance.update('none');
-            this.resultsController?.highlightTableRow(index, false);
+            eventBus.publish('table:highlight', { index, scrollIntoView: false });
         } catch {
             // Ignore if chart is updating
         }
@@ -1148,47 +416,33 @@ export class ChartManager {
 
         // Overlay chips sync
         const corridorInput = this.dom.getElement<HTMLInputElement>('show_historical_corridor');
+        if (corridorInput) {
+            corridorInput.addEventListener('change', () => {
+                this.setHistoricalCorridor(corridorInput.checked);
+            });
+        }
+
         const postTaxInput = this.dom.getElement<HTMLInputElement>('show_post_tax');
-        const wealthMapInput = this.dom.getElement<HTMLInputElement>('show_wealth_map');
-
-        [corridorInput, postTaxInput, wealthMapInput].forEach(input => {
-            if (input) {
-                input.addEventListener('change', () => {
-                    this.updateActiveLensIndicator();
-                });
-            }
-        });
-
-        const canvasContainer = this.dom.getElement<HTMLElement>('chart-canvas-container');
-        if (canvasContainer) {
-            let activeKeyboardIndex = 0;
-            canvasContainer.addEventListener('keydown', (e: KeyboardEvent) => {
-                if (!this.lastResults || this.lastResults.length === 0) return;
-                const maxIndex = this.lastResults.length - 1;
-
-                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    activeKeyboardIndex = Math.min(maxIndex, activeKeyboardIndex + 1);
-                    this.highlightYear(activeKeyboardIndex);
-                    this.announceCurrentPoint(activeKeyboardIndex);
-                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    activeKeyboardIndex = Math.max(0, activeKeyboardIndex - 1);
-                    this.highlightYear(activeKeyboardIndex);
-                    this.announceCurrentPoint(activeKeyboardIndex);
-                } else if (e.key === 'Home') {
-                    e.preventDefault();
-                    activeKeyboardIndex = 0;
-                    this.highlightYear(activeKeyboardIndex);
-                    this.announceCurrentPoint(activeKeyboardIndex);
-                } else if (e.key === 'End') {
-                    e.preventDefault();
-                    activeKeyboardIndex = maxIndex;
-                    this.highlightYear(activeKeyboardIndex);
-                    this.announceCurrentPoint(activeKeyboardIndex);
+        if (postTaxInput) {
+            postTaxInput.addEventListener('change', () => {
+                this.updateActiveLensIndicator();
+                if (this.lastResults.length > 0) {
+                    this.updateChart(this.lastResults, this.lastEnableSwp);
                 }
             });
         }
+
+        const wealthMapInput = this.dom.getElement<HTMLInputElement>('show_wealth_map');
+        if (wealthMapInput) {
+            wealthMapInput.addEventListener('change', () => {
+                this.updateActiveLensIndicator();
+                if (this.lastResults.length > 0) {
+                    this.updateChart(this.lastResults, this.lastEnableSwp);
+                }
+            });
+        }
+
+        this.updateActiveLensIndicator();
     }
 
     /**
@@ -1205,146 +459,115 @@ export class ChartManager {
     }
 
     /**
-     * Initialize or update the chart.
+     * Main chart rendering function. Updates existing chart instance or constructs a new one.
      */
-    async updateChart(results: YearResult[], enableSwp: boolean = true, isDragging: boolean = false): Promise<void> {
-        this.initControls();
+    async updateChart(results: YearResult[], enableSwp: boolean, isDragging: boolean = false): Promise<void> {
         this.lastResults = results;
         this.lastEnableSwp = enableSwp;
 
-        const finalRow = results[results.length - 1];
-        if (finalRow) {
-            const headerGrossEl = this.dom.getElement('chart-header-gross');
-            const headerGainEl = this.dom.getElement('chart-header-gain');
-            if (headerGrossEl) {
-                headerGrossEl.textContent = this.formatter.format(finalRow.combined_total);
-            }
-            if (headerGainEl) {
-                const netGains = Math.max(0, (finalRow.combined_total + (finalRow.cumulative_withdrawals ?? 0)) - finalRow.cumulative_invested);
-                headerGainEl.textContent = `+${this.formatter.format(netGains)} Gains`;
-            }
-        }
+        const ctxEl = this.dom.getElement<HTMLCanvasElement>('results-chart');
+        if (!ctxEl) return;
 
-        if (this.scrubbingController) {
-            this.scrubbingController.syncResults(results);
-        }
-
-        const ctxEl = this.dom.getElement<HTMLCanvasElement>('corpusChart');
-        if (!ctxEl || !document.body.contains(ctxEl)) return;
-
-        let ChartClass: typeof Chart;
-        try {
-            ChartClass = await this.loadChartModule();
-        } catch (e) {
-            console.error('[ChartManager] Failed to load Chart.js module:', e);
-            return;
-        }
-
+        const ChartClass = await this.loadChartModule();
         const ctx = ctxEl.getContext('2d');
         if (!ctx) return;
-        ctxEl.style.touchAction = 'pan-y';
 
-        const years = results.map(r => `Yr ${r.year}`);
-        const calcApp = document.querySelector<HTMLElement>('[data-js="calculator-app"]');
-        const mode = calcApp ? (calcApp.dataset.mode || 'all') : 'all';
+        const activeMode = this.dom.getElement<HTMLInputElement>('goal_mode')?.value || 'grow';
+        const mode = activeMode.toLowerCase().includes('target') ? 'target' : (enableSwp ? 'swp' : 'sip');
+
         const showPostTax = this.dom.getElement<HTMLInputElement>('show_post_tax')?.checked || false;
         const showWealthMap = this.dom.getElement<HTMLInputElement>('show_wealth_map')?.checked || false;
 
-        const milestones = this.computeMilestones(results, enableSwp, showPostTax);
+        const milestones = this.milestoneCalculator.computeMilestones(results, enableSwp, showPostTax);
         this.currentMilestones = milestones;
-        this.updateActiveLensIndicator();
 
-        const fontFamily = THEME_FONTS.heading;
-        const gridColor = THEME_COLORS.chart.gridLine;
+        const years = results.map(r => `Yr ${r.year}`);
+        const allowedTicks = this.milestoneCalculator.computeHarmonicYearTicks(results.length);
+
         const textColor = THEME_COLORS.chart.textMuted;
+        const gridColor = THEME_COLORS.chart.gridLine;
 
-        // ── DOUGHNUT VIEW (Asset Allocation Split) ──
+        // ── DONUT VIEW (Asset Allocation) ──
         if (this.activeViewType === 'donut') {
-            if (this.chartInstance && this.currentChartType !== 'doughnut') {
-                this.chartInstance.destroy();
-                this.chartInstance = null;
-            }
+            const finalRow = results[results.length - 1];
+            const activeYear = this.activeDonutScrubYear || results.length;
+            const targetRow = results.find(r => r.year === activeYear) || finalRow;
 
-            const lastRow = results[results.length - 1];
-            const totalInvested = lastRow?.cumulative_invested || 0;
-            const finalCorpus = showPostTax ? (lastRow?.post_tax_total ?? lastRow?.combined_total ?? 0) : (lastRow?.combined_total ?? 0);
-            const totalWithdrawn = lastRow?.cumulative_withdrawals || 0;
-            const totalGains = Math.max(0, (finalCorpus + totalWithdrawn) - totalInvested);
+            const totalInvested = targetRow ? targetRow.cumulative_invested : 0;
+            const finalCorpus = targetRow ? (showPostTax ? (targetRow.post_tax_total ?? targetRow.combined_total) : targetRow.combined_total) : 0;
+            const totalWithdrawals = targetRow ? (targetRow.cumulative_withdrawals ?? 0) : 0;
+            const totalGains = Math.max(0, (finalCorpus + totalWithdrawals) - totalInvested);
 
-            const labels: string[] = ['Total Invested', 'Compounding Gains'];
-            const data: number[] = [totalInvested, totalGains];
-            const bgColors: string[] = [THEME_COLORS.financial.growthDark, THEME_COLORS.financial.growth];
+            const donutData = totalWithdrawals > 0
+                ? [totalInvested, totalGains, totalWithdrawals]
+                : [totalInvested, totalGains];
 
-            if (totalWithdrawn > 0) {
-                labels.push('Total Withdrawn');
-                data.push(totalWithdrawn);
-                bgColors.push(THEME_COLORS.financial.withdrawal);
-            }
+            const donutLabels = totalWithdrawals > 0
+                ? ['Total Invested', 'Estimated Returns', 'Total Withdrawn']
+                : ['Total Invested', 'Estimated Returns'];
 
-            const donutConfig: ChartConfiguration<'doughnut'> = {
+            const donutColors = totalWithdrawals > 0
+                ? [THEME_COLORS.financial.invested, THEME_COLORS.financial.growth, THEME_COLORS.financial.withdrawal]
+                : [THEME_COLORS.financial.invested, THEME_COLORS.financial.growth];
+
+            const donutConfig = {
                 type: 'doughnut' as const,
                 data: {
-                    labels,
+                    labels: donutLabels,
                     datasets: [{
-                        data,
-                        backgroundColor: bgColors,
+                        data: donutData,
+                        backgroundColor: donutColors,
+                        borderColor: '#ffffff',
                         borderWidth: 3,
-                        borderColor: THEME_COLORS.chart.pointBgWhite,
-                        hoverOffset: 6
-                    }]
+                        hoverOffset: 6,
+                    }],
                 },
-                plugins: [this.donutCenterTextPlugin],
+                plugins: [this.plugins.donutCenterTextPlugin],
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    devicePixelRatio: Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2.5),
-                    cutout: '70%',
+                    cutout: '74%',
                     animation: {
                         duration: isDragging ? 0 : 500,
-                        easing: 'easeOutQuart'
+                        easing: 'easeOutQuart' as const,
                     },
                     plugins: {
                         legend: {
-                            position: 'bottom',
+                            position: 'bottom' as const,
                             labels: {
+                                boxWidth: 12,
                                 usePointStyle: true,
-                                boxWidth: 8,
+                                font: { family: THEME_FONTS.heading, size: 11, weight: 600 },
                                 color: textColor,
-                                font: {
-                                    family: fontFamily,
-                                    size: 12,
-                                    weight: 600
-                                },
-                                padding: 16
-                            }
+                                padding: 16,
+                            },
                         },
                         tooltip: {
-                            enabled: true,
-                            backgroundColor: 'rgba(255, 255, 255, 0.98)',
-                            titleColor: '#0f172a',
-                            titleFont: { family: fontFamily, size: 12, weight: 'bold' },
-                            bodyColor: '#334155',
-                            bodyFont: { family: THEME_FONTS.mono, size: 11, weight: 500 },
-                            borderColor: 'rgba(203, 213, 225, 0.9)',
-                            borderWidth: 1,
-                            padding: { top: 10, right: 14, bottom: 10, left: 14 },
-                            cornerRadius: 12,
-                            boxPadding: 6,
-                            usePointStyle: true,
-                            boxWidth: 8,
-                            boxHeight: 8,
                             callbacks: {
-                                label: (item) => {
-                                    const val = Number(item.raw) || 0;
-                                    const total = data.reduce((a, b) => a + b, 0);
-                                    const pct = total > 0 ? ((val / total) * 100).toFixed(1) : '0';
-                                    return ` ${item.label}: ${this.formatter.format(val)} (${pct}%)`;
-                                }
-                            }
-                        }
-                    }
-                }
+                                label: (tooltipItem: any) => {
+                                    const val = Number(tooltipItem.raw) || 0;
+                                    const sum = donutData.reduce((a, b) => a + b, 0);
+                                    const pct = sum > 0 ? ((val / sum) * 100).toFixed(1) : '0';
+                                    return ` ${tooltipItem.label}: ${this.formatter.format(val)} (${pct}%)`;
+                                },
+                            },
+                        },
+                    },
+                },
             };
+
+            if (this.chartInstance && this.currentChartType === 'doughnut' && this.chartInstance.ctx.canvas === ctxEl) {
+                this.chartInstance.data.labels = donutLabels;
+                this.chartInstance.data.datasets[0].data = donutData;
+                this.chartInstance.data.datasets[0].backgroundColor = donutColors;
+                this.chartInstance.update(isDragging ? 'none' : undefined);
+                this.milestoneCalculator.renderMilestoneGrid(
+                    milestones,
+                    idx => this.highlightYear(idx),
+                    () => this.clearHighlight()
+                );
+                return;
+            }
 
             const existingChart = ChartClass.getChart(ctxEl);
             if (existingChart) {
@@ -1353,17 +576,21 @@ export class ChartManager {
 
             this.chartInstance = new ChartClass(ctx, donutConfig as unknown as ChartConfiguration) as unknown as Chart<'line'>;
             this.currentChartType = 'doughnut';
-            this.renderMilestoneGrid(milestones);
+            this.milestoneCalculator.renderMilestoneGrid(
+                milestones,
+                idx => this.highlightYear(idx),
+                () => this.clearHighlight()
+            );
             return;
         }
 
         // ── LINE CHART VIEW (Growth Projection) ──
         const yTop = this.chartInstance?.scales?.y?.top ?? 0;
         const yBottom = this.chartInstance?.scales?.y?.bottom ?? (ctxEl.clientHeight || 400);
-        const gradients = this.createGradients(ctx, yTop, yBottom);
+        const gradients = this.gradientFactory.createGradients(ctx, yTop, yBottom);
 
         if (this.chartInstance && this.currentChartType === 'line' && this.chartInstance.ctx.canvas === ctxEl) {
-            const datasets = this.buildDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
+            const datasets = this.datasetBuilder.buildLineDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
             this.chartInstance.data.labels = years;
             this.chartInstance.data.datasets = datasets;
 
@@ -1381,7 +608,11 @@ export class ChartManager {
             } else {
                 this.chartInstance.update();
             }
-            this.renderMilestoneGrid(milestones);
+            this.milestoneCalculator.renderMilestoneGrid(
+                milestones,
+                idx => this.highlightYear(idx),
+                () => this.clearHighlight()
+            );
             return;
         }
 
@@ -1390,21 +621,21 @@ export class ChartManager {
             existingChart.destroy();
         }
 
-        const datasets = this.buildDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
+        const datasets = this.datasetBuilder.buildLineDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
 
         const config: ChartConfiguration<'line'> = {
             type: 'line' as const,
             data: {
                 labels: years,
-                datasets: datasets
+                datasets: datasets,
             },
             plugins: [
-                this.clipGuardPlugin,
-                this.crosshairPlugin,
-                this.splineMilestonesPlugin,
-                this.compoundingIgnitionPlugin,
-                this.croreMilestoneLinePlugin,
-                this.fdAlphaDeltaPlugin
+                this.plugins.clipGuardPlugin,
+                this.plugins.crosshairPlugin,
+                this.plugins.splineMilestonesPlugin,
+                this.plugins.compoundingIgnitionPlugin,
+                this.plugins.croreMilestoneLinePlugin,
+                this.plugins.fdAlphaDeltaPlugin,
             ],
             options: {
                 clip: false,
@@ -1448,140 +679,101 @@ export class ChartManager {
                                 return ds !== undefined && !ds.hidden;
                             },
                             usePointStyle: true,
-                            boxWidth: 6,
+                            pointStyle: 'circle',
+                            padding: 12,
+                            boxWidth: 8,
+                            boxHeight: 8,
                             color: textColor,
                             font: {
-                                family: fontFamily,
-                                size: 10.5,
-                                weight: 600
+                                family: THEME_FONTS.heading,
+                                size: 11,
+                                weight: 600,
                             },
-                            padding: 14
-                        }
+                        },
                     },
                     tooltip: {
-                        enabled: true,
                         backgroundColor: 'rgba(255, 255, 255, 0.98)',
                         titleColor: '#0f172a',
-                        titleFont: {
-                            family: fontFamily,
-                            size: 12,
-                            weight: 'bold'
-                        },
-                        titleSpacing: 6,
                         bodyColor: '#334155',
+                        borderColor: '#e2e8f0',
+                        borderWidth: 1,
+                        padding: 12,
+                        boxPadding: 6,
+                        usePointStyle: true,
+                        titleFont: {
+                            family: THEME_FONTS.heading,
+                            size: 13,
+                            weight: 700,
+                        },
                         bodyFont: {
                             family: THEME_FONTS.mono,
                             size: 11,
-                            weight: 500
                         },
-                        bodySpacing: 5,
-                        borderColor: 'rgba(203, 213, 225, 0.9)',
-                        borderWidth: 1,
-                        cornerRadius: 12,
-                        padding: {
-                            top: 10,
-                            right: 14,
-                            bottom: 10,
-                            left: 14
-                        },
-                        boxPadding: 6,
-                        usePointStyle: true,
-                        boxWidth: 8,
-                        boxHeight: 8,
                         callbacks: {
-                            title: (tooltipItems) => {
-                                if (!tooltipItems || tooltipItems.length === 0) return '';
-                                const idx = tooltipItems[0].dataIndex;
-                                const row = results[idx];
-                                if (!row) return '';
-                                const isFinal = row.year === results.length;
-                                return `Year ${row.year}${isFinal ? ' • Maturity Horizon' : ''}`;
+                            label: (context: any) => {
+                                const val = context.raw;
+                                if (val === null || val === undefined) return '';
+                                return ` ${context.dataset.label}: ${this.formatter.format(Number(val))}`;
                             },
-                            label: (context) => {
-                                const datasetLabel = context.dataset.label || '';
-                                const rawVal = context.raw;
-                                const val = typeof rawVal === 'number' ? rawVal : Number(rawVal);
-                                if (isNaN(val)) return '';
-                                return ` ${datasetLabel}: ${this.formatter.format(val)}`;
-                            },
-                            footer: (tooltipItems) => {
-                                if (!tooltipItems || tooltipItems.length === 0) return '';
-                                const idx = tooltipItems[0].dataIndex;
-                                const row = results[idx];
-                                if (!row) return '';
-                                if (row.cumulative_invested > 0 && row.combined_total > 0) {
-                                    const multiplier = (row.combined_total / row.cumulative_invested).toFixed(1);
-                                    const gains = Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested);
-                                    return `Net Gains: +${this.formatter.format(gains)} (${multiplier}× Multiplier)`;
-                                }
-                                return '';
-                            }
                         },
-                        footerColor: '#047857',
-                        footerFont: {
-                            family: fontFamily,
-                            size: 10.5,
-                            weight: 'bold'
-                        },
-                        footerSpacing: 6,
-                        footerMarginTop: 6
-                    }
+                    },
                 },
                 scales: {
                     x: {
                         grid: {
-                            color: gridColor,
-                            display: false
-                        },
-                        ticks: {
-                            color: textColor,
-                            font: {
-                                family: fontFamily,
-                                size: 10,
-                                weight: 600
-                            },
-                            maxRotation: 0,
-                            autoSkip: false,
-                            callback: (val: string | number) => {
-                                const label = years[Number(val)] ?? '';
-                                const yearNum = parseInt(label.replace('Yr ', ''), 10);
-                                if (isNaN(yearNum)) return label;
-                                const allowedTicks = this.computeHarmonicYearTicks(this.lastResults.length);
-                                if (allowedTicks.includes(yearNum)) {
-                                    return `Yr ${yearNum}`;
-                                }
-                                return '';
-                            }
-                        }
-                    },
-                    y: {
-                        position: 'right',
-                        stacked: showWealthMap,
-                        grid: {
-                            color: gridColor,
-                            tickBorderDash: [4, 4]
+                            display: false,
                         },
                         ticks: {
                             color: textColor,
                             font: {
                                 family: THEME_FONTS.mono,
                                 size: 10,
-                                weight: 500
+                                weight: 500,
+                            },
+                            padding: 6,
+                            maxRotation: 0,
+                            autoSkip: false,
+                            callback: (_val: string | number, index: number) => {
+                                const yearNum = index + 1;
+                                if (allowedTicks.includes(yearNum)) {
+                                    return `Yr ${yearNum}`;
+                                }
+                                return '';
+                            },
+                        },
+                    },
+                    y: {
+                        position: 'right',
+                        stacked: showWealthMap,
+                        grid: {
+                            color: gridColor,
+                            tickBorderDash: [4, 4],
+                        },
+                        ticks: {
+                            color: textColor,
+                            font: {
+                                family: THEME_FONTS.mono,
+                                size: 10,
+                                weight: 500,
                             },
                             padding: 6,
                             callback: (value: string | number) => {
                                 return this.formatAxisTick(typeof value === 'number' ? value : Number(value));
-                            }
+                            },
                         },
-                        beginAtZero: true
-                    }
-                }
-            }
+                        beginAtZero: true,
+                    },
+                },
+            },
         };
 
         this.chartInstance = new ChartClass(ctx, config) as unknown as Chart<'line'>;
         this.currentChartType = 'line';
-        this.renderMilestoneGrid(milestones);
+        this.milestoneCalculator.renderMilestoneGrid(
+            milestones,
+            idx => this.highlightYear(idx),
+            () => this.clearHighlight()
+        );
 
         if (results.length > 0) {
             const finalRow = results[results.length - 1];
@@ -1596,67 +788,12 @@ export class ChartManager {
     }
 
     /**
-     * Cross-browser safe celebratory milestone badge renderer with bidirectional chart highlight sync.
-     */
-    renderMilestoneGrid(milestones: Milestone[]): void {
-        const container = this.dom.getElement('milestones-container');
-        if (!container) return;
-
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
-
-        if (milestones.length === 0) {
-            container.classList.add('hidden');
-            return;
-        }
-
-        container.classList.remove('hidden');
-        const fragment = document.createDocumentFragment();
-
-        milestones.forEach(m => {
-            const card = document.createElement('div');
-            card.className = 'bg-gradient-to-r from-amber-50/90 via-white to-emerald-50/50 p-3.5 rounded-2xl border border-amber-200/80 shadow-sm flex items-center gap-3 transition-all duration-200 hover:shadow-md hover:border-amber-300 cursor-pointer';
-
-            card.addEventListener('mouseenter', () => this.highlightYear(m.index));
-            card.addEventListener('mouseleave', () => this.clearHighlight());
-
-            const iconDiv = document.createElement('div');
-            iconDiv.className = 'flex items-center justify-center w-10 h-10 rounded-xl bg-amber-100/80 text-xl shrink-0 shadow-sm';
-            iconDiv.textContent = m.icon;
-
-            const textDiv = document.createElement('div');
-            textDiv.className = 'min-w-0 flex-1';
-
-            const h4 = document.createElement('h4');
-            h4.className = 'text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5';
-            h4.textContent = m.label;
-
-            const badge = document.createElement('span');
-            badge.className = 'text-[9px] font-black uppercase px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200';
-            badge.textContent = `Year ${m.year}`;
-            h4.appendChild(badge);
-
-            const p = document.createElement('p');
-            p.className = 'text-[11px] sm:text-xs text-slate-500 mt-0.5 truncate';
-            p.textContent = m.type === 'security'
-                ? (m.description || '')
-                : `Corpus reached ${this.formatter.formatDynamic(m.value)} milestone`;
-
-            textDiv.appendChild(h4);
-            textDiv.appendChild(p);
-            card.appendChild(iconDiv);
-            card.appendChild(textDiv);
-            fragment.appendChild(card);
-        });
-
-        container.appendChild(fragment);
-    }
-
-    /**
      * Explicit cleanup to prevent memory leaks and detached event listeners.
      */
     destroy(): void {
+        this.unsubscribeEvents.forEach(unsub => unsub());
+        this.unsubscribeEvents = [];
+
         if (this.rafId) {
             cancelAnimationFrame(this.rafId);
             this.rafId = null;
@@ -1669,6 +806,7 @@ export class ChartManager {
             this.chartInstance.destroy();
             this.chartInstance = null;
         }
+        this.gradientFactory.clearCache();
     }
 
     getChartInstance(): Chart | null {
