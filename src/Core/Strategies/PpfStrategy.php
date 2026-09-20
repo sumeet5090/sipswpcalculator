@@ -23,4 +23,14 @@ class PpfStrategy extends BaseStrategy
 
         return new PpfInputs($annual, $rate, $years);
     }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/ppf-maturity.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'Public Provident Fund (PPF) 15 to 30 Year Maturity Schedule (7.1% EEE)';
+    }
 }

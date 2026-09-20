@@ -21,4 +21,14 @@ abstract class BaseStrategy implements CalculatorStrategyInterface
     {
         return InvestmentInputs::fromRequest([], $this->configService);
     }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/sip-swp-dual.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'SIP & SWP Growth Benchmark Reference Table';
+    }
 }

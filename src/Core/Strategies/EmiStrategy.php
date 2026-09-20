@@ -23,4 +23,14 @@ class EmiStrategy extends BaseStrategy
 
         return new EmiInputs($principal, $rate, $years);
     }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/emi-amortization.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'Home & Car Loan Monthly EMI Amortization Matrix (8.5% p.a.)';
+    }
 }

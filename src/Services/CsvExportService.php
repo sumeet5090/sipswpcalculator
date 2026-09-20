@@ -8,7 +8,7 @@ namespace Services;
  * CsvExportService
  * Handles raw CSV generation and output stream delivery for investment schedule data.
  */
-class CsvExportService
+class CsvExportService implements CsvExportServiceInterface
 {
     /**
      * Generate raw CSV content for investment schedule data.

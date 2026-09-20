@@ -6,6 +6,7 @@ namespace Core;
 
 use PDO;
 use Services\TelemetryPruningService;
+use Services\TelemetryPruningServiceInterface;
 
 /**
  * Privacy-First Anonymized Insight Logger
@@ -15,9 +16,9 @@ use Services\TelemetryPruningService;
 class AnonymizedInsightLogger
 {
     private PDO $pdo;
-    private TelemetryPruningService $pruningService;
+    private TelemetryPruningServiceInterface $pruningService;
 
-    public function __construct(PDO $pdo, ?TelemetryPruningService $pruningService = null)
+    public function __construct(PDO $pdo, ?TelemetryPruningServiceInterface $pruningService = null)
     {
         $this->pdo = $pdo;
         $this->pruningService = $pruningService ?? new TelemetryPruningService($pdo);

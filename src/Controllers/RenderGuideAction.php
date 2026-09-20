@@ -6,13 +6,13 @@ namespace Controllers;
 
 use Core\Http\Request;
 use Core\Http\Response;
-use Services\GuideRenderer;
+use Services\GuideRendererInterface;
 
 class RenderGuideAction
 {
-    private GuideRenderer $guideRenderer;
+    private GuideRendererInterface $guideRenderer;
 
-    public function __construct(GuideRenderer $guideRenderer)
+    public function __construct(GuideRendererInterface $guideRenderer)
     {
         $this->guideRenderer = $guideRenderer;
     }

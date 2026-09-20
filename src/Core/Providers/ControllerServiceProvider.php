@@ -181,9 +181,13 @@ class ControllerServiceProvider implements ServiceProviderInterface
             );
         });
 
+        $container->singleton(\Services\SitemapGeneratorInterface::class, function (Container $c) {
+            return $c->get(SitemapGenerator::class);
+        });
+
         $container->singleton(SitemapController::class, function (Container $c) {
             return new SitemapController(
-                $c->get(SitemapGenerator::class),
+                $c->get(\Services\SitemapGeneratorInterface::class),
                 $c->get(ViewRenderer::class)
             );
         });
@@ -265,13 +269,13 @@ class ControllerServiceProvider implements ServiceProviderInterface
 
         $container->singleton(RenderGuideAction::class, function (Container $c) {
             return new RenderGuideAction(
-                $c->get(GuideRenderer::class)
+                $c->get(\Services\GuideRendererInterface::class)
             );
         });
 
         $container->singleton(\Controllers\RenderEmbedAction::class, function (Container $c) {
             return new \Controllers\RenderEmbedAction(
-                $c->get(GuideRenderer::class)
+                $c->get(\Services\GuideRendererInterface::class)
             );
         });
     }

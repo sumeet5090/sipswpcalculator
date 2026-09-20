@@ -84,6 +84,10 @@ class CoreServiceProvider implements ServiceProviderInterface
             return new CsvExportService();
         });
 
+        $container->singleton(\Services\CsvExportServiceInterface::class, function (Container $c) {
+            return $c->get(CsvExportService::class);
+        });
+
         $container->singleton(SessionManager::class, function () {
             return new SessionManager();
         });

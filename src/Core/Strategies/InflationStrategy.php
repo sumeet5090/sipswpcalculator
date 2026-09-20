@@ -23,4 +23,14 @@ class InflationStrategy extends BaseStrategy
 
         return new InflationInputs($amount, $rate, $years);
     }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/inflation-erosion.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'Indian Rupee Purchasing Power & Inflation Erosion Table (6.0% CPI)';
+    }
 }

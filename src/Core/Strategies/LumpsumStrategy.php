@@ -17,4 +17,14 @@ class LumpsumStrategy extends BaseStrategy
     {
         return InvestmentInputs::fromLumpsumRequest([], $this->configService);
     }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/lumpsum-growth.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'Lumpsum Investment Growth Matrix (AMFI Standard @ 12% CAGR)';
+    }
 }

@@ -6,15 +6,15 @@ namespace Controllers;
 
 use Core\Http\Response;
 use Core\ViewRenderer;
-use Services\SitemapGenerator;
+use Services\SitemapGeneratorInterface;
 
 class SitemapController
 {
-    private SitemapGenerator $sitemapGenerator;
+    private SitemapGeneratorInterface $sitemapGenerator;
     private ViewRenderer $viewRenderer;
 
     public function __construct(
-        SitemapGenerator $sitemapGenerator,
+        SitemapGeneratorInterface $sitemapGenerator,
         ViewRenderer $viewRenderer
     ) {
         $this->sitemapGenerator = $sitemapGenerator;

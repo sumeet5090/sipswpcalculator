@@ -23,4 +23,14 @@ class CagrStrategy extends BaseStrategy
 
         return new CagrInputs($initial, $final, $years);
     }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/cagr-historical.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'Historical Asset Class CAGR Benchmarks in India (2010–2026)';
+    }
 }

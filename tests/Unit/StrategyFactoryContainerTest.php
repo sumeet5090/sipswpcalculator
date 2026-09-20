@@ -125,6 +125,45 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertArrayHasKey('fd_amount', $inputs->toTemplateData());
     }
 
+    public function testCreateStepUpSipStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('sip-step-up-calculator');
+        $this->assertInstanceOf(\Core\Strategies\StepUpSipStrategy::class, $strategy);
+        $this->assertSame('sip-step-up', $strategy->getType());
+        $this->assertSame('components/benchmarks/sip-stepup-comparison.twig', $strategy->getBenchmarkTemplate());
+        $this->assertSame('Step-Up SIP vs. Regular SIP Wealth Generation Comparison', $strategy->getBenchmarkTitle());
+    }
+
+    public function testStrategyBenchmarkTemplatesAndTitles(): void
+    {
+        $sip = $this->factory->create('sip-calculator');
+        $this->assertSame('components/benchmarks/sip-swp-dual.twig', $sip->getBenchmarkTemplate());
+
+        $swp = $this->factory->create('swp-calculator');
+        $this->assertSame('components/benchmarks/swp-longevity.twig', $swp->getBenchmarkTemplate());
+
+        $lumpsum = $this->factory->create('lumpsum-calculator');
+        $this->assertSame('components/benchmarks/lumpsum-growth.twig', $lumpsum->getBenchmarkTemplate());
+
+        $cagr = $this->factory->create('cagr-calculator');
+        $this->assertSame('components/benchmarks/cagr-historical.twig', $cagr->getBenchmarkTemplate());
+
+        $emi = $this->factory->create('emi-calculator');
+        $this->assertSame('components/benchmarks/emi-amortization.twig', $emi->getBenchmarkTemplate());
+
+        $ppf = $this->factory->create('ppf-calculator');
+        $this->assertSame('components/benchmarks/ppf-maturity.twig', $ppf->getBenchmarkTemplate());
+
+        $fd = $this->factory->create('fd-calculator');
+        $this->assertSame('components/benchmarks/fd-compounding.twig', $fd->getBenchmarkTemplate());
+
+        $inflation = $this->factory->create('inflation-calculator');
+        $this->assertSame('components/benchmarks/inflation-erosion.twig', $inflation->getBenchmarkTemplate());
+
+        $targetCorpus = $this->factory->create('my-first-crore-calculator');
+        $this->assertSame('components/benchmarks/target-corpus.twig', $targetCorpus->getBenchmarkTemplate());
+    }
+
     public function testCreateThrowsForUnmappedSlug(): void
     {
         $this->expectException(\DomainException::class);

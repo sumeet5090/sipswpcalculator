@@ -5,41 +5,27 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Elite Architecture Refactoring — Phase 4: Presentation Layer Decoupling Completed.
-- **Implemented Fixes & Architectural Outcomes (Phase 4):**
-  - **Modularized Scenario Benchmark Tables (`src/Views/components/benchmarks/`):** Deconstructed monolithic 723-line `scenario-benchmark-table.twig` into 10 single-purpose partials:
-    - `swp-longevity.twig`, `lumpsum-growth.twig`, `cagr-historical.twig`, `sip-stepup-comparison.twig`, `emi-amortization.twig`, `ppf-maturity.twig`, `fd-compounding.twig`, `inflation-erosion.twig`, `target-corpus.twig`, `sip-swp-dual.twig`.
-    - Reduced `scenario-benchmark-table.twig` into a clean 68-line dispatcher, allowing isolated inclusion across specialized calculator guides without DOM overhead.
-  - **PDF Twig Templating Migration (`src/Views/pdf/`):**
-    - Created master template `src/Views/pdf/report.twig` and 7 modular partials in `src/Views/pdf/components/` (`header.twig`, `meta-ribbon.twig`, `kpi-cards.twig`, `config-card.twig`, `chart-section.twig`, `milestones.twig`, `callouts-footer.twig`).
-    - Completely eliminated 200+ lines of procedural PHP string concatenation in `Core\PdfReportTemplate`, delegating presentation cleanly to `ViewRenderer` with native Twig XSS auto-escaping.
-    - Preserved seamless backward-compatibility and zero-latency execution.
-- **Implemented Fixes & Architectural Outcomes (Phase 3):**
-  - **Modularized Chart Subsystem (`assets/js/calculators/chart/`):** Deconstructed monolithic `ChartManager.ts` (1,678 lines) into single-responsibility components:
-    - `ChartPlugins.ts`: Decoupled all 7 custom Chart.js lifecycle plugins (`clipGuard`, `crosshair`, `splineMilestones`, `compoundingIgnition`, `croreMilestoneLine`, `fdAlphaDelta`, `donutCenterText`).
-    - `ChartGradientFactory.ts`: Encapsulated GPU gradient generation with a 30px quantizing bucket cache to eliminate memory leaks and redraw churn.
-    - `ChartMilestoneCalculator.ts`: Isolated milestone detection, compounding crossover analysis, harmonic year ticks, and DOM milestone grid rendering.
-    - `ChartDatasetBuilder.ts`: Dedicated multi-mode line datasets builder (nominal corpus, invested capital, post-tax net, inflation real purchasing power, historical corridor, flat SIP baseline, shock overlay) and benchmark curve algorithms.
-  - **Severed Tight Coupling via EventBus:**
-    - Eliminated circular dependency where `ChartManager` directly referenced `ResultsController` and vice-versa.
-    - `ResultsController` and `ChartManager` communicate strictly via `EventBus` topics: `table:highlight`, `chart:highlight`, `chart:clearHighlight`, and `chart:scrub`.
-    - Removed `chartManager` constructor injection and `setResultsController` from `CalculatorApp.ts`.
-  - **Refactored `ChartManager.ts`:** Condensed into a focused ~500-line lifecycle and view coordinator adhering strictly to SOLID and POLA.
-- **Implemented Fixes & Architectural Outcomes (Phase 2):**
-  - **Route-Level Middleware Pipeline (`Core\Router`):** Enhanced `Router::get()` and `Router::post()` to accept route-specific middlewares, seamlessly executing route-specific chains before calling target actions.
-  - **Single-Responsibility `RateLimitMiddleware`:** Created dedicated, configurable rate limiting middleware; bound declarative instances in `CoreServiceProvider` (`middleware.ratelimit.pdf`, `middleware.ratelimit.insight`, `middleware.ratelimit.admin_auth`) and attached directly to routes in `App.php`.
-  - **Single-Responsibility `AdminAuthMiddleware`:** Extracted session auth guard from `ShowAdminDashboardAction` into route middleware, cleanly separating authorization from view presentation.
-  - **Controller Simplification & Decoupling:** Stripped procedural rate limiting and auth verification logic from `LogInsightApiAction`, `GeneratePdfAction`, `ProcessAdminLoginAction`, and `ShowAdminDashboardAction`.
-- **Implemented Fixes & Architectural Outcomes (Phase 1):**
-  - **Calculator Strategy Interface Segregation:** Created `Core\Inputs\CalculatorInputsInterface` enforcing `toTemplateData(): array`. Decoupled `CalculatorStrategyInterface` from the monolithic `InvestmentInputs`.
-  - **Specialized Strongly-Typed DTOs:** Implemented typed DTOs in `src/Core/Inputs/` (`EmiInputs`, `CagrInputs`, `CompoundInterestInputs`, `InflationInputs`, `PpfInputs`, `FdInputs`), eliminating leaky default inheritance and phantom property exposures.
-  - **Domain Concept Decoupling:** Decoupled seed accumulation capital (`initialLumpsum`) from retirement drawdown balance (`startingRetirementCorpus`) in `InvestmentInputs`, providing dedicated getters (`getInitialLumpsum()`, `getStartingCorpus()`) while maintaining full backward-compatibility with `getLumpsum()`.
-  - **Bug Fix in Category Routing:** Rectified `ShowResourceCategoryAction` line 52 to use `array_key_exists($category, $categories)` instead of `in_array`, preventing false 404s when a valid blog category has 0 published posts.
+- **Current Milestone:** Elite Architecture Refactoring — Phase 5: Services Layer Decoupling & Modern Presentation Architecture Completed.
+- **Implemented Fixes & Architectural Outcomes (Phase 5):**
+  - **Formal Service Interface Contracts (`src/Services/`):**
+    - Created `SitemapGeneratorInterface`, `GuideRendererInterface`, `CsvExportServiceInterface`, `TelemetryPruningServiceInterface`.
+    - Bound all 4 interfaces in DI service providers (`CoreServiceProvider`, `RepositoryServiceProvider`, `DomainServiceProvider`, `ControllerServiceProvider`).
+    - Refactored controllers/actions (`SitemapController`, `RenderGuideAction`, `RenderEmbedAction`, `DownloadCsvAction`, `AnonymizedInsightLogger`) to typehint interfaces rather than concrete implementations, upholding the Dependency Inversion Principle (DIP).
+  - **Decoupled JSON File Loading in `GuideViewModelBuilder`:**
+    - Replaced hardcoded file paths and procedural `file_get_contents()` with `$this->configService->getJsonConfig('content/calculator_links.json')` and `'content/calculator_pillar_guides.json'`.
+  - **Polymorphic Benchmark Resolution (`CalculatorStrategyInterface`):**
+    - Added `getBenchmarkTemplate(): string` and `getBenchmarkTitle(): string` to `CalculatorStrategyInterface`.
+    - Added `StepUpSipStrategy` extending `SipStrategy` to handle `/sip-step-up-calculator` polymorphically.
+    - Simplified `scenario-benchmark-table.twig` from hardcoded conditional matching to dynamic inclusion: `{% include [benchmark_tpl, 'components/benchmarks/sip-swp-dual.twig'] %}`.
+  - **Pure Light-Mode Sticky First-Column CSS (`resources/css/input.css`):**
+    - Implemented `.table-sticky-col-th` and `.table-sticky-col-td` with pure light-mode elevation (`bg-slate-50/98` / `bg-white/98`, `box-shadow: 2px 0 4px -2px rgba(0,0,0,0.06)`).
+    - Applied across all 10 benchmark tables in `src/Views/components/benchmarks/`, ensuring mobile horizontal-scroll usability.
 - **Verification & System Health:**
-  - Full PHPUnit test suite: 842 tests / 13,621 assertions passed cleanly (0 failures, 0 warnings).
-  - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 245 files, 0 PHPCS violations).
-  - Frontend typecheck & build: `tsc --noEmit` clean, Vite bundle build clean in ~190ms.
-  - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across base and specialized engines.
+  - Full PHPUnit test suite: **844 tests / 13,657 assertions passed cleanly** (0 failures, 0 warnings).
+  - Composer `check-all` suite: **100% clean** (PHPStan Level 5 across 250 files, 0 PHPCS violations across 250 files).
+  - Frontend typecheck & build: `npm run build` clean in ~190ms with 0 errors.
+  - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across all engines.
+  - Local `curl` verification: Confirmed sticky first column and benchmark rendering on `/`, `/swp-calculator`, `/sip-step-up-calculator`, and `/cagr-calculator`.
 
 ---
 

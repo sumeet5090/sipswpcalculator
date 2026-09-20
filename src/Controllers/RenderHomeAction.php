@@ -63,6 +63,8 @@ class RenderHomeAction
             'active_page'         => 'home',
             'is_calculator'       => true,
             'calculator_type'     => 'combo',
+            'benchmark_template'  => 'components/benchmarks/sip-swp-dual.twig',
+            'benchmark_title'     => 'SIP & SWP Growth Benchmark Reference Table',
             'page_config'         => $page_config,
             'homeFaqs'            => $homeFaqs,
             'calc_config'         => $calcConfig,

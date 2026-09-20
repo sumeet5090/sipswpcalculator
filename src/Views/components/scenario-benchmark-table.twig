@@ -2,11 +2,11 @@
   scenario-benchmark-table.twig
   Static pre-calculated scenario benchmark tables for SEO, Google rich snippets, and AI grounding (Gemini / Copilot).
   Enforces pure light-mode fintech aesthetic and Indian currency localization.
-  Refactored into modular domain components under components/benchmarks/ adhering to SRP.
+  Polymorphic resolution adhering to Open/Closed Principle (OCP) and Single Responsibility Principle (SRP).
 #}
 
-{% set calc_mode = calculator_type|default('home') %}
-{% set current_slug = active_page|default('') %}
+{% set benchmark_tpl = benchmark_template|default('components/benchmarks/sip-swp-dual.twig') %}
+{% set heading_title = benchmark_title|default('SIP & SWP Growth Benchmark Reference Table') %}
 
 <section id="scenario-benchmarks" class="mt-8 sm:mt-12 max-w-5xl mx-auto border-t border-slate-200/80 pt-8" aria-labelledby="benchmark-tables-heading" itemscope itemtype="https://schema.org/Table">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
@@ -16,27 +16,7 @@
                 <span>Pre-Calculated Scenario Benchmarks</span>
             </div>
             <h2 id="benchmark-tables-heading" class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-                {% if calc_mode == 'swp' %}
-                    SWP Withdrawal &amp; Corpus Longevity Benchmark Table
-                {% elseif calc_mode == 'lumpsum' %}
-                    Lumpsum Investment Growth Matrix (AMFI Standard @ 12% CAGR)
-                {% elseif calc_mode == 'cagr' %}
-                    Historical Asset Class CAGR Benchmarks in India (2010–2026)
-                {% elseif current_slug == 'sip-step-up-calculator' or calc_mode == 'sip-step-up' %}
-                    Step-Up SIP vs. Regular SIP Wealth Generation Comparison
-                {% elseif calc_mode == 'emi' %}
-                    Home &amp; Car Loan Monthly EMI Amortization Matrix (8.5% p.a.)
-                {% elseif calc_mode == 'ppf' %}
-                    Public Provident Fund (PPF) 15 to 30 Year Maturity Schedule (7.1% EEE)
-                {% elseif calc_mode == 'fd' %}
-                    Bank Fixed Deposit Compounding &amp; Maturity Yield Matrix
-                {% elseif calc_mode == 'inflation' %}
-                    Indian Rupee Purchasing Power &amp; Inflation Erosion Table (6.0% CPI)
-                {% elseif calc_mode == 'target_corpus' or current_slug in ['my-first-crore-calculator', 'target-corpus-calculator', 'reach-1-crore-via-sip', 'reach-5-crore-via-sip'] %}
-                    Target Corpus Goal-Seek Matrix: Required Monthly SIP (12% CAGR)
-                {% else %}
-                    SIP &amp; SWP Growth Benchmark Reference Table
-                {% endif %}
+                {{ heading_title }}
             </h2>
             <p class="text-xs sm:text-sm text-slate-600 mt-1">
                 Definitive numerical projections calculated using AMFI-compliant compounding formulas and Indian financial standards.
@@ -49,25 +29,6 @@
         </div>
     </div>
 
-    {% if calc_mode == 'swp' %}
-        {% include 'components/benchmarks/swp-longevity.twig' %}
-    {% elseif calc_mode == 'lumpsum' %}
-        {% include 'components/benchmarks/lumpsum-growth.twig' %}
-    {% elseif calc_mode == 'cagr' %}
-        {% include 'components/benchmarks/cagr-historical.twig' %}
-    {% elseif current_slug == 'sip-step-up-calculator' or calc_mode == 'sip-step-up' %}
-        {% include 'components/benchmarks/sip-stepup-comparison.twig' %}
-    {% elseif calc_mode == 'emi' %}
-        {% include 'components/benchmarks/emi-amortization.twig' %}
-    {% elseif calc_mode == 'ppf' %}
-        {% include 'components/benchmarks/ppf-maturity.twig' %}
-    {% elseif calc_mode == 'fd' %}
-        {% include 'components/benchmarks/fd-compounding.twig' %}
-    {% elseif calc_mode == 'inflation' %}
-        {% include 'components/benchmarks/inflation-erosion.twig' %}
-    {% elseif calc_mode == 'target_corpus' or current_slug in ['my-first-crore-calculator', 'target-corpus-calculator', 'reach-1-crore-via-sip', 'reach-5-crore-via-sip'] %}
-        {% include 'components/benchmarks/target-corpus.twig' %}
-    {% else %}
-        {% include 'components/benchmarks/sip-swp-dual.twig' %}
-    {% endif %}
+    {% include [benchmark_tpl, 'components/benchmarks/sip-swp-dual.twig'] %}
 </section>
+

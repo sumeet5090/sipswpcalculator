@@ -24,4 +24,14 @@ class FdStrategy extends BaseStrategy
 
         return new FdInputs($amount, $rate, $years, $frequency);
     }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/fd-compounding.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'Bank Fixed Deposit Compounding & Maturity Yield Matrix';
+    }
 }

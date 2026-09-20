@@ -17,4 +17,14 @@ interface CalculatorStrategyInterface
      * Provides the initial default inputs for the calculator
      */
     public function getInitialInputs(): CalculatorInputsInterface;
+
+    /**
+     * Returns the Twig template path for the pre-calculated scenario benchmark table
+     */
+    public function getBenchmarkTemplate(): string;
+
+    /**
+     * Returns the human-readable heading title for the pre-calculated scenario benchmark table
+     */
+    public function getBenchmarkTitle(): string;
 }
