@@ -465,10 +465,34 @@ export class ChartManager {
         this.lastResults = results;
         this.lastEnableSwp = enableSwp;
 
-        const ctxEl = this.dom.getElement<HTMLCanvasElement>('results-chart');
-        if (!ctxEl) return;
+        const finalRow = results[results.length - 1];
+        if (finalRow) {
+            const headerGrossEl = this.dom.getElement('chart-header-gross');
+            const headerGainEl = this.dom.getElement('chart-header-gain');
+            if (headerGrossEl) {
+                headerGrossEl.textContent = this.formatter.format(finalRow.combined_total);
+            }
+            if (headerGainEl) {
+                const netGains = Math.max(0, (finalRow.combined_total + (finalRow.cumulative_withdrawals ?? 0)) - finalRow.cumulative_invested);
+                headerGainEl.textContent = `+${this.formatter.format(netGains)} Gains`;
+            }
+        }
 
-        const ChartClass = await this.loadChartModule();
+        if (this.scrubbingController) {
+            this.scrubbingController.syncResults(results);
+        }
+
+        const ctxEl = this.dom.getElement<HTMLCanvasElement>('corpusChart') || this.dom.getElement<HTMLCanvasElement>('results-chart');
+        if (!ctxEl || !document.body.contains(ctxEl)) return;
+
+        let ChartClass: typeof Chart;
+        try {
+            ChartClass = await this.loadChartModule();
+        } catch (e) {
+            console.error('[ChartManager] Failed to load Chart.js module:', e);
+            return;
+        }
+
         const ctx = ctxEl.getContext('2d');
         if (!ctx) return;
 
