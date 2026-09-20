@@ -5,15 +5,12 @@
 <input type="hidden" id="stepup" name="stepup" value="0">
 <input type="hidden" id="lumpsum" name="lumpsum" value="0">
 
-<div class="space-y-4">
-    <div class="mb-2">
-        <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">Fixed Deposit Details</span>
-    </div>
-
+<div class="space-y-3">
     <!-- Deposit Amount -->
     {{ inputs.renderInputRangePair({
         'id': 'fd_principal',
-        'label': 'Total Deposit Amount',
+        'label': 'Deposit Amount',
+        'tooltip': 'Fixed principal capital deposited into the bank or NBFC term deposit.',
         'min': 10000,
         'max': 10000000,
         'slider_max': 2500000,
@@ -33,7 +30,8 @@
     <!-- Annual Interest Rate -->
     {{ inputs.renderInputRangePair({
         'id': 'fd_rate',
-        'label': 'Card Interest Rate (% p.a.)',
+        'label': 'Interest Rate',
+        'tooltip': 'Annual card rate offered by the institution for your tenure.',
         'min': 3.0,
         'max': 12.0,
         'slider_max': 10.0,
@@ -53,7 +51,8 @@
     <!-- Deposit Duration (Years) -->
     {{ inputs.renderInputRangePair({
         'id': 'fd_years',
-        'label': 'Deposit Horizon',
+        'label': 'Deposit Tenure',
+        'tooltip': 'Tenure or holding duration of the fixed deposit before maturity.',
         'min': 0.25,
         'max': 10.0,
         'slider_max': 10.0,

@@ -5,15 +5,12 @@
 <input type="hidden" id="stepup" name="stepup" value="0">
 <input type="hidden" id="lumpsum" name="lumpsum" value="0">
 
-<div class="space-y-4">
-    <div class="mb-2">
-        <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">PPF Account Details</span>
-    </div>
-
+<div class="space-y-3">
     <!-- Annual PPF Deposit -->
     {{ inputs.renderInputRangePair({
         'id': 'ppf_deposit',
-        'label': 'Yearly PPF Contribution',
+        'label': 'Yearly Deposit',
+        'tooltip': 'Annual deposit to your PPF account (Statutory limit: ₹500 to ₹1,50,000 / FY).',
         'min': 500,
         'max': 150000,
         'slider_max': 150000,
@@ -33,7 +30,8 @@
     <!-- Statutory Interest Rate -->
     {{ inputs.renderInputRangePair({
         'id': 'ppf_rate',
-        'label': 'Statutory Interest Rate (% p.a.)',
+        'label': 'Interest Rate',
+        'tooltip': 'Current Govt of India notified PPF interest rate (compounded annually).',
         'min': 5.0,
         'max': 12.0,
         'slider_max': 10.0,
@@ -52,7 +50,8 @@
     <!-- Tenure with 5-Year Extensions -->
     {{ inputs.renderInputRangePair({
         'id': 'ppf_years',
-        'label': 'Investment Duration',
+        'label': 'PPF Duration',
+        'tooltip': 'Mandatory 15-year base period, extendable in 5-year blocks.',
         'min': 15,
         'max': 35,
         'slider_max': 35,

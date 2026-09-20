@@ -5,15 +5,12 @@
 <input type="hidden" id="stepup" name="stepup" value="0">
 <input type="hidden" id="lumpsum" name="lumpsum" value="0">
 
-<div class="space-y-4">
-    <div class="mb-2">
-        <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">CAGR Inputs</span>
-    </div>
-
+<div class="space-y-3">
     <!-- Initial Investment Value (V_begin) -->
     {{ inputs.renderInputRangePair({
         'id': 'cagr_initial',
-        'label': 'Initial Investment (Starting Value)',
+        'label': 'Initial Investment',
+        'tooltip': 'Starting portfolio value or capital invested at the beginning of the holding period.',
         'min': 1000,
         'max': 10000000,
         'slider_max': 2500000,
@@ -33,7 +30,8 @@
     <!-- Final Investment Value (V_final) -->
     {{ inputs.renderInputRangePair({
         'id': 'cagr_final',
-        'label': 'Final Value (Current Portfolio / Target)',
+        'label': 'Target / Final Value',
+        'tooltip': 'Current portfolio valuation or targeted final accumulated wealth.',
         'min': 1000,
         'max': 50000000,
         'slider_max': 10000000,
@@ -53,7 +51,8 @@
     <!-- Holding Duration (Years) -->
     {{ inputs.renderInputRangePair({
         'id': 'cagr_years',
-        'label': 'Holding Tenure (Years)',
+        'label': 'Investment Duration',
+        'tooltip': 'Total number of years between your initial investment and final value.',
         'min': 0.5,
         'max': 40,
         'slider_max': 25,
