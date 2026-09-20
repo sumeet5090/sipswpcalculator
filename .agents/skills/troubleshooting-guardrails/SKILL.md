@@ -41,5 +41,11 @@ and before `</body>`:
 - **Action:** Always state your exact hypothesis and target files to the user before running deep debugging commands.
 
 ### 7. Fast Verification vs Full Gate Tiers
-- **Action:** For visual, client-side, or canvas UI defects, run the localized bundle build (`npm run build`) and browser verification first to verify visual fidelity and 0 console errors.
+- **Action:** For visual, client-side, or canvas UI defects, run the localized bundle build (`npm run build`) and quick verification first to verify visual fidelity and 0 console errors.
 - **Action:** Run the full 800+ test PHPUnit/PHPStan suite (`composer check-all`) during the final gate before concluding the task, eliminating excessive delay during active debugging cycles.
+
+### 8. Headless Browser Subagent Anti-Hang Protocol
+- **Action:** NEVER dispatch browser subagents with compound, multi-step instructions (e.g. measuring DOM properties, scrolling, sliding inputs, checking network tabs, and taking screenshots all in one call). Compound actions cause Playwright/Puppeteer idle-wait hangs.
+- **Action:** Limit all browser subagent tasks to single, bounded, atomic verification (e.g., capture a specific screenshot and return immediately).
+- **Action:** Always favor zero-latency CLI checks (`npm run build`, `curl` + grep) over heavy browser subagents unless visual pixel screenshot proof is explicitly demanded by the user.
+

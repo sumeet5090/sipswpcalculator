@@ -57,8 +57,12 @@ Adhere to the following protocols for all development, design, and implementatio
   2. When diagnosing a runtime exception or crash stemming from vendor libraries (e.g. Chart.js, Vite plugins), immediately inspect the unminified original source in `node_modules/` or run an isolated minimal reproduction in a Node.js script.
   3. Clearly communicate your exact hypothesis, the specific vendor file under investigation, and the immediate next command to the user before running low-level investigative commands.
 * **Fast Verification vs Pre-Commit Suite Tiers:**
-  1. For visual, frontend, or canvas UI defects, run the localized bundle build (`npm run build`) and browser verification first to confirm visual fidelity with 0 console errors.
+  1. For visual, frontend, or canvas UI defects, run the localized bundle build (`npm run build`) and quick verification first to confirm visual fidelity with 0 console errors.
   2. Run the heavy PHPUnit/PHPStan suite (`composer check-all`) during the final gate before concluding the task, eliminating excessive delay during active debugging cycles.
+* **Browser Subagent Fail-Fast & Single-Objective Guardrail (Anti-Hang Protocol):**
+  1. **Strict Single-Objective:** Browser subagents must NEVER be dispatched with open-ended or multi-step compound mandates (e.g., combining DOM JavaScript evaluations, scrolling, slider dragging, network inspection, and screenshots in a single session). Such compound tasks trigger unresolvable idle-wait loops in Playwright/Puppeteer.
+  2. **Bounded Execution:** Subagents must only be used for atomic, single-shot verification (e.g., *"Navigate to URL, capture screenshot of selector X, and immediately return"*). 
+  3. **Deterministic First:** Always prefer deterministic, zero-latency CLI checks (`npm run build`, `curl -s http://localhost:8080/ | grep ...`, or minimal Node.js scripts) over spawning heavy headless browser agents. Only invoke browser subagents when visual pixel-level screenshot evidence is explicitly required.
 * **Vite & Twig Awareness:** Always remember that CSS/JS is bundled via Vite. If creating a new Twig layout, you *must* ensure the Vite client and `app.js` module scripts are included, otherwise styles will break.
 
 ### 10. Environment Security & Modifications
