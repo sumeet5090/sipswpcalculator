@@ -5,18 +5,16 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Search Intent & SERP Gap Analysis, 100% BLUF Answer Coverage & Child Education/Lumpsum Matrices.
-- **Implemented Fixes & Architectural Outcomes:**
-  - **Child Education & Foreign University Fund Matrix (`/target-corpus-calculator`):** Injected institutional planning matrix modeling 10%–11% Indian higher education inflation and forex depreciation. Provides clear flat vs. 10% step-up SIP roadmaps for engineering/medical and overseas degrees.
-  - **Lumpsum vs. SIP Head-to-Head Comparison Matrix (`/lumpsum-calculator`):** Expanded with empirical 10-year rolling return evaluations (~68% lumpsum outperformance vs. psychological drawdown shock of SIP) and STP transition rules.
-  - **100% Direct Answer (BLUF) Position 0 Coverage:** Injected structured BLUF callouts across all remaining calculators (`compound-interest-calculator`, `my-first-crore-calculator`, `reach-1-crore-via-sip`, `reach-5-crore-via-sip`, `sip-5000-per-month`, `sip-10000-per-month`), ensuring 100% of individual calculators possess upfront numerical direct answers for Google AI Overviews and snippet extraction.
+- **Current Milestone:** Elite Architecture Refactoring — Phase 1: Domain & Type Safety Architecture Completed.
+- **Implemented Fixes & Architectural Outcomes (Phase 1):**
+  - **Calculator Strategy Interface Segregation:** Created `Core\Inputs\CalculatorInputsInterface` enforcing `toTemplateData(): array`. Decoupled `CalculatorStrategyInterface` from the monolithic `InvestmentInputs`.
+  - **Specialized Strongly-Typed DTOs:** Implemented typed DTOs in `src/Core/Inputs/` (`EmiInputs`, `CagrInputs`, `CompoundInterestInputs`, `InflationInputs`, `PpfInputs`, `FdInputs`), eliminating leaky default inheritance and phantom property exposures.
+  - **Domain Concept Decoupling:** Decoupled seed accumulation capital (`initialLumpsum`) from retirement drawdown balance (`startingRetirementCorpus`) in `InvestmentInputs`, providing dedicated getters (`getInitialLumpsum()`, `getStartingCorpus()`) while maintaining full backward-compatibility with `getLumpsum()`.
+  - **Bug Fix in Category Routing:** Rectified `ShowResourceCategoryAction` line 52 to use `array_key_exists($category, $categories)` instead of `in_array`, preventing false 404s when a valid blog category has 0 published posts.
 - **Verification & System Health:**
-  - Full automated crawl across 49 URLs: 0 404s, 0 301 internal hops, 0 schema parse errors.
-  - Full PHPUnit test suite: 839 tests / 13,594 assertions passed cleanly (0 failures, 0 warnings).
-  - SEO Metadata Validator: 44 tests / 3,036 assertions passed with 100% compliance.
-  - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 234 files, 0 PHPCS violations).
+  - Full PHPUnit test suite: 840 tests / 13,607 assertions passed cleanly (0 failures, 0 warnings).
+  - Composer `check-all` suite: 100% clean (PHPStan Level 5 across 241 files, 0 PHPCS violations).
   - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across base and specialized engines.
-  - Local curl verification: Confirmed HTML rendering of Child Education and Lumpsum vs SIP matrices on `localhost:8080`.
 - **Blog Category Featured Posts Balancing & Template Guardrail (2026-09-20):**
   - Capped featured posts across blog categories to 1–2 top flagship guides per category (Growth: 2, Comparison: 2, Retirement: 2).
   - Implemented template-level guardrail in `src/Views/pages/resources.twig` capping full-width `col-span-2` card spotlight rendering to max 2 per category.

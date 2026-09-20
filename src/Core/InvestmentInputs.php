@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Core\Inputs\CalculatorInputsInterface;
 use Services\ConfigServiceInterface;
 
 /**
  * InvestmentInputs
  * Encapsulates and sanitizes user input parameters for calculations.
  */
-class InvestmentInputs
+class InvestmentInputs implements CalculatorInputsInterface
 {
     public const DEFAULT_LTCG_EXEMPTION = 125000.0;
     public const DEFAULT_LTCG_TAX_RATE = 0.125;
@@ -23,7 +24,8 @@ class InvestmentInputs
     private float $swpWithdrawal;
     private float $swpStepup;
     private int $swpYears;
-    private float $lumpsum;
+    private float $initialLumpsum;
+    private float $startingRetirementCorpus;
     private float $swpRate;
     private float $inflation;
     private float $ltcgExemption;
@@ -41,11 +43,12 @@ class InvestmentInputs
         float $swpWithdrawal,
         float $swpStepup,
         int $swpYears,
-        float $lumpsum,
+        float $initialLumpsum,
         float $swpRate,
         float $inflation,
         float $ltcgExemption = self::DEFAULT_LTCG_EXEMPTION,
-        float $ltcgTaxRate = self::DEFAULT_LTCG_TAX_RATE
+        float $ltcgTaxRate = self::DEFAULT_LTCG_TAX_RATE,
+        ?float $startingRetirementCorpus = null
     ) {
         $this->sip = $sip;
         $this->years = $years;
@@ -55,7 +58,8 @@ class InvestmentInputs
         $this->swpWithdrawal = $swpWithdrawal;
         $this->swpStepup = $swpStepup;
         $this->swpYears = $swpYears;
-        $this->lumpsum = $lumpsum;
+        $this->initialLumpsum = $initialLumpsum;
+        $this->startingRetirementCorpus = $startingRetirementCorpus ?? $initialLumpsum;
         $this->swpRate = $swpRate;
         $this->inflation = $inflation;
         $this->ltcgExemption = $ltcgExemption;
@@ -136,16 +140,16 @@ class InvestmentInputs
             $swpRate,
             $inflation,
             $ltcgExemption,
-            $ltcgTaxRate
+            $ltcgTaxRate,
+            isset($data['corpus']) ? self::resolveField('corpus', $data, $cfg) : $lumpsum
         );
     }
 
     /**
      * Named constructor for the SWP-only calculator.
      *
-     * Maps the HTTP `corpus` field → internal `lumpsum` domain concept.
+     * Maps the HTTP `corpus` field to startingRetirementCorpus and lumpsum for backward-compatibility.
      * SWP is always enabled; SIP accumulation fields default to zero/minimal values.
-     * This is the industry-standard Named Constructor pattern: one input shape → one factory.
      *
      * @param array $data POST/GET payload from the SWP calculator form
      * @param ConfigServiceInterface $config ConfigServiceInterface instance
@@ -173,11 +177,12 @@ class InvestmentInputs
             $swpWithdrawal,
             $swpStepup,
             $swpYears,
-            $corpus,         // corpus maps to lumpsum as starting balance
+            $corpus,         // initialLumpsum (fallback parity)
             $swpRate,
             $inflation,
             $ltcgExemption,
-            $ltcgTaxRate
+            $ltcgTaxRate,
+            $corpus          // startingRetirementCorpus
         );
     }
 
@@ -213,7 +218,8 @@ class InvestmentInputs
             0.0,
             $inflation,
             $ltcgExemption,
-            $ltcgTaxRate
+            $ltcgTaxRate,
+            $lumpsum
         );
     }
 
@@ -233,7 +239,8 @@ class InvestmentInputs
         float $swpRate = 0.0,
         float $inflation = 0.0,
         float $ltcgExemption = self::DEFAULT_LTCG_EXEMPTION,
-        float $ltcgTaxRate = self::DEFAULT_LTCG_TAX_RATE
+        float $ltcgTaxRate = self::DEFAULT_LTCG_TAX_RATE,
+        ?float $startingCorpus = null
     ): self {
         return new self(
             $sip,
@@ -248,7 +255,8 @@ class InvestmentInputs
             $swpRate,
             $inflation,
             $ltcgExemption,
-            $ltcgTaxRate
+            $ltcgTaxRate,
+            $startingCorpus ?? $lumpsum
         );
     }
 
@@ -269,7 +277,14 @@ class InvestmentInputs
     public function withLumpsum(float $lumpsum): self
     {
         $clone = clone $this;
-        $clone->lumpsum = $lumpsum;
+        $clone->initialLumpsum = $lumpsum;
+        return $clone;
+    }
+
+    public function withStartingCorpus(float $startingCorpus): self
+    {
+        $clone = clone $this;
+        $clone->startingRetirementCorpus = $startingCorpus;
         return $clone;
     }
 
@@ -344,7 +359,17 @@ class InvestmentInputs
 
     public function getLumpsum(): float
     {
-        return $this->lumpsum;
+        return $this->initialLumpsum;
+    }
+
+    public function getInitialLumpsum(): float
+    {
+        return $this->initialLumpsum;
+    }
+
+    public function getStartingCorpus(): float
+    {
+        return $this->startingRetirementCorpus;
     }
 
     public function getSwpRate(): float
@@ -379,8 +404,8 @@ class InvestmentInputs
             'years'           => $this->years,
             'rate'            => $this->rate,
             'stepup'          => $this->stepup,
-            'lumpsum'         => $this->lumpsum,
-            'corpus'          => $this->lumpsum,
+            'lumpsum'         => $this->initialLumpsum,
+            'corpus'          => $this->startingRetirementCorpus,
             'enable_swp'      => $this->enableSwp,
             'swp_withdrawal'  => $this->swpWithdrawal,
             'swp_years_input' => $this->swpYears,

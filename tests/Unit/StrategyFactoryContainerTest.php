@@ -65,7 +65,9 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertInstanceOf(\Core\Strategies\CompoundInterestStrategy::class, $strategy);
         $this->assertSame('compound_interest', $strategy->getType());
         $inputs = $strategy->getInitialInputs();
-        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\CompoundInterestInputs::class, $inputs);
+        $this->assertArrayHasKey('ci_principal', $inputs->toTemplateData());
     }
 
     public function testCreateCagrStrategyFromContainer(): void
@@ -74,7 +76,9 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertInstanceOf(\Core\Strategies\CagrStrategy::class, $strategy);
         $this->assertSame('cagr', $strategy->getType());
         $inputs = $strategy->getInitialInputs();
-        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\CagrInputs::class, $inputs);
+        $this->assertArrayHasKey('cagr_initial', $inputs->toTemplateData());
     }
 
     public function testCreateEmiStrategyFromContainer(): void
@@ -83,7 +87,9 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertInstanceOf(\Core\Strategies\EmiStrategy::class, $strategy);
         $this->assertSame('emi', $strategy->getType());
         $inputs = $strategy->getInitialInputs();
-        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\EmiInputs::class, $inputs);
+        $this->assertArrayHasKey('emi_principal', $inputs->toTemplateData());
     }
 
     public function testCreateInflationStrategyFromContainer(): void
@@ -92,7 +98,9 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertInstanceOf(\Core\Strategies\InflationStrategy::class, $strategy);
         $this->assertSame('inflation', $strategy->getType());
         $inputs = $strategy->getInitialInputs();
-        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\InflationInputs::class, $inputs);
+        $this->assertArrayHasKey('inf_amount', $inputs->toTemplateData());
     }
 
     public function testCreatePpfStrategyFromContainer(): void
@@ -101,7 +109,9 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertInstanceOf(\Core\Strategies\PpfStrategy::class, $strategy);
         $this->assertSame('ppf', $strategy->getType());
         $inputs = $strategy->getInitialInputs();
-        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\PpfInputs::class, $inputs);
+        $this->assertArrayHasKey('ppf_annual_investment', $inputs->toTemplateData());
     }
 
     public function testCreateFdStrategyFromContainer(): void
@@ -110,7 +120,9 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertInstanceOf(\Core\Strategies\FdStrategy::class, $strategy);
         $this->assertSame('fd', $strategy->getType());
         $inputs = $strategy->getInitialInputs();
-        $this->assertInstanceOf(\Core\InvestmentInputs::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\FdInputs::class, $inputs);
+        $this->assertArrayHasKey('fd_amount', $inputs->toTemplateData());
     }
 
     public function testCreateThrowsForUnmappedSlug(): void

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Strategies;
 
-use Core\InvestmentInputs;
+use Core\Inputs\CalculatorInputsInterface;
 
 interface CalculatorStrategyInterface
 {
@@ -16,5 +16,5 @@ interface CalculatorStrategyInterface
     /**
      * Provides the initial default inputs for the calculator
      */
-    public function getInitialInputs(): InvestmentInputs;
+    public function getInitialInputs(): CalculatorInputsInterface;
 }

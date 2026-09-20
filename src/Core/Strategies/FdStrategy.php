@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Core\Strategies;
 
-use Core\InvestmentInputs;
+use Core\Inputs\CalculatorInputsInterface;
+use Core\Inputs\FdInputs;
 
 class FdStrategy extends BaseStrategy
 {
@@ -13,8 +14,14 @@ class FdStrategy extends BaseStrategy
         return 'fd';
     }
 
-    public function getInitialInputs(): InvestmentInputs
+    public function getInitialInputs(): CalculatorInputsInterface
     {
-        return InvestmentInputs::fromLumpsumRequest([], $this->configService);
+        $defaults = $this->configService->getCalculatorDefaults();
+        $amount = (float) ($defaults['fd_amount']['default'] ?? 100000.0);
+        $rate = (float) ($defaults['fd_rate']['default'] ?? 7.0);
+        $years = (int) ($defaults['fd_years']['default'] ?? 5);
+        $frequency = (int) ($defaults['fd_frequency']['default'] ?? 4);
+
+        return new FdInputs($amount, $rate, $years, $frequency);
     }
 }

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Core\Strategies;
 
-use Core\InvestmentInputs;
+use Core\Inputs\CalculatorInputsInterface;
+use Core\Inputs\EmiInputs;
 
 class EmiStrategy extends BaseStrategy
 {
@@ -13,8 +14,13 @@ class EmiStrategy extends BaseStrategy
         return 'emi';
     }
 
-    public function getInitialInputs(): InvestmentInputs
+    public function getInitialInputs(): CalculatorInputsInterface
     {
-        return InvestmentInputs::fromRequest([], $this->configService);
+        $defaults = $this->configService->getCalculatorDefaults();
+        $principal = (float) ($defaults['emi_principal']['default'] ?? 3000000.0);
+        $rate = (float) ($defaults['emi_rate']['default'] ?? 8.5);
+        $years = (int) ($defaults['emi_years']['default'] ?? 20);
+
+        return new EmiInputs($principal, $rate, $years);
     }
 }
