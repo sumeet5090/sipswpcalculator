@@ -18,7 +18,6 @@ use Services\SessionManager;
 class ShowAdminDashboardActionTest extends TestCase
 {
     private InsightRepository&Stub $insightRepo;
-    private AdminAuthService&Stub $authService;
     private AdminDashboardPresenter&Stub $presenter;
     private ViewRenderer&MockObject $viewRenderer;
     private SessionManager&Stub $sessionManager;
@@ -27,7 +26,6 @@ class ShowAdminDashboardActionTest extends TestCase
     protected function setUp(): void
     {
         $this->insightRepo = $this->createStub(InsightRepository::class);
-        $this->authService = $this->createStub(AdminAuthService::class);
         $this->presenter = $this->createStub(AdminDashboardPresenter::class);
         $this->viewRenderer = $this->createMock(ViewRenderer::class);
         $this->sessionManager = $this->createStub(SessionManager::class);
@@ -36,35 +34,14 @@ class ShowAdminDashboardActionTest extends TestCase
 
         $this->action = new ShowAdminDashboardAction(
             $this->insightRepo,
-            $this->authService,
             $this->presenter,
             $this->viewRenderer,
             $this->sessionManager
         );
     }
 
-    public function testUnauthenticatedRequestRendersLoginWithCsrfToken(): void
-    {
-        $this->authService->method('isAuthenticated')->willReturn(false);
-
-        $this->viewRenderer->expects($this->once())
-            ->method('render')
-            ->with('admin/login', [
-                'error' => '',
-                'csrf_token' => 'mock_csrf_token_123',
-            ])
-            ->willReturn('<html>Login Page with CSRF</html>');
-
-        $request = new Request([], [], ['REQUEST_METHOD' => 'GET', 'REQUEST_URI' => '/admin_insights']);
-        $response = ($this->action)($request);
-
-        $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame('<html>Login Page with CSRF</html>', $response->getBody());
-    }
-
     public function testAuthenticatedRequestRendersDashboard(): void
     {
-        $this->authService->method('isAuthenticated')->willReturn(true);
         $this->insightRepo->method('getDashboardData')->willReturn(['totalCalculations' => 5]);
         $this->presenter->method('formatForView')->willReturn(['totalCalculations' => 5]);
 

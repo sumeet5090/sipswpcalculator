@@ -171,6 +171,44 @@ class CoreServiceProvider implements ServiceProviderInterface
             );
         });
 
+        $container->singleton(\Core\Middleware\AdminAuthMiddleware::class, function (Container $c) {
+            return new \Core\Middleware\AdminAuthMiddleware(
+                $c->get(AdminAuthService::class),
+                $c->get(ViewRenderer::class),
+                $c->get(SessionManager::class)
+            );
+        });
+
+        $container->singleton('middleware.ratelimit.pdf', function (Container $c) {
+            return new \Core\Middleware\RateLimitMiddleware(
+                $c->get(\Services\RateLimiter::class),
+                $c->get(ConfigService::class),
+                'pdf_generation',
+                'sipswp_rate_limits',
+                'Too many requests. Please wait a minute before generating another PDF.'
+            );
+        });
+
+        $container->singleton('middleware.ratelimit.insight', function (Container $c) {
+            return new \Core\Middleware\RateLimitMiddleware(
+                $c->get(\Services\RateLimiter::class),
+                $c->get(ConfigService::class),
+                'log_insight',
+                'sipswp_log_limits',
+                'Rate limit exceeded'
+            );
+        });
+
+        $container->singleton('middleware.ratelimit.admin_auth', function (Container $c) {
+            return new \Core\Middleware\RateLimitMiddleware(
+                $c->get(\Services\RateLimiter::class),
+                $c->get(ConfigService::class),
+                'admin_auth',
+                'sipswp_admin_auth',
+                'Too many login attempts. Please wait 5 minutes before trying again.'
+            );
+        });
+
         $container->singleton(\Core\ActionDispatcher::class, function (Container $c) {
             return new \Core\ActionDispatcher($c);
         });

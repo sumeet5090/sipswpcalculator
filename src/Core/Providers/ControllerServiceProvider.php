@@ -96,7 +96,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
         $container->singleton(ShowAdminDashboardAction::class, function (Container $c) {
             return new ShowAdminDashboardAction(
                 $c->get(InsightRepository::class),
-                $c->get(AdminAuthService::class),
                 $c->get(AdminDashboardPresenter::class),
                 $c->get(ViewRenderer::class),
                 $c->get(SessionManager::class)
@@ -118,9 +117,7 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new ProcessAdminLoginAction(
                 $c->get(AdminAuthService::class),
                 $c->get(ViewRenderer::class),
-                $c->get(SessionManager::class),
-                $c->get(RateLimiter::class),
-                $c->get(ConfigService::class)
+                $c->get(SessionManager::class)
             );
         });
 
@@ -132,9 +129,7 @@ class ControllerServiceProvider implements ServiceProviderInterface
 
         $container->singleton(LogInsightApiAction::class, function (Container $c) {
             return new LogInsightApiAction(
-                $c->get(AnonymizedInsightLogger::class),
-                $c->get(RateLimiter::class),
-                $c->get(ConfigService::class)
+                $c->get(AnonymizedInsightLogger::class)
             );
         });
 
@@ -164,7 +159,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
 
         $container->singleton(GeneratePdfAction::class, function (Container $c) {
             return new GeneratePdfAction(
-                $c->get(RateLimiter::class),
                 $c->get(PdfGeneratorService::class),
                 $c->get(ConfigService::class),
                 $c->get(FileUploadService::class),

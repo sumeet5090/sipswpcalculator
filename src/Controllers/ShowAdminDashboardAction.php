@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Controllers;
 
-use Core\AdminAuthService;
 use Core\AdminDashboardPresenter;
 use Core\DashboardConfig;
 use Core\Http\Request;
@@ -16,24 +15,22 @@ use Services\SessionManagerInterface;
 /**
  * ShowAdminDashboardAction
  * Single Responsibility action dedicated strictly to formatting and displaying the admin insights dashboard.
+ * Authentication is enforced upstream via AdminAuthMiddleware.
  */
 class ShowAdminDashboardAction
 {
     private InsightRepository $insightRepository;
-    private AdminAuthService $authService;
     private AdminDashboardPresenter $presenter;
     private ViewRenderer $viewRenderer;
     private SessionManagerInterface $sessionManager;
 
     public function __construct(
         InsightRepository $insightRepository,
-        AdminAuthService $authService,
         AdminDashboardPresenter $presenter,
         ViewRenderer $viewRenderer,
         SessionManagerInterface $sessionManager
     ) {
         $this->insightRepository = $insightRepository;
-        $this->authService = $authService;
         $this->presenter = $presenter;
         $this->viewRenderer = $viewRenderer;
         $this->sessionManager = $sessionManager;
@@ -41,13 +38,6 @@ class ShowAdminDashboardAction
 
     public function __invoke(Request $request): Response
     {
-        if (!$this->authService->isAuthenticated()) {
-            return Response::html($this->viewRenderer->render('admin/login', [
-                'error' => '',
-                'csrf_token' => $this->sessionManager->ensureCsrfToken(),
-            ]));
-        }
-
         $time_ranges = DashboardConfig::TIME_RANGES;
 
         $current_range_key = (string) $request->get('range', '24h');

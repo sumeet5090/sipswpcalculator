@@ -50,18 +50,12 @@ class AdminActionControllersTest extends TestCase
         $authService = $this->createMock(AdminAuthService::class);
         $viewRenderer = $this->createStub(ViewRenderer::class);
         $sessionManager = $this->createStub(SessionManager::class);
-        $rateLimiter = $this->createStub(RateLimiter::class);
-        $configService = $this->createStub(ConfigService::class);
-
-        $configService->method('getJsonConfig')->willReturn([
-            'admin_auth' => ['max_requests' => 5, 'window_seconds' => 300]
-        ]);
 
         $authService->expects($this->once())
             ->method('login')
             ->with('secret_password');
 
-        $action = new ProcessAdminLoginAction($authService, $viewRenderer, $sessionManager, $rateLimiter, $configService);
+        $action = new ProcessAdminLoginAction($authService, $viewRenderer, $sessionManager);
         $request = new Request([], ['password' => 'secret_password'], ['REQUEST_METHOD' => 'POST']);
         $response = $action($request);
 

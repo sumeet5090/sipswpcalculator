@@ -131,7 +131,7 @@ class App
         $this->router->get('/', [RenderHomeAction::class, '__invoke']);
         $this->router->post('/', [RenderHomeAction::class, '__invoke']);
         $this->router->post('/download-csv', [DownloadCsvAction::class, '__invoke']);
-        $this->router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke']);
+        $this->router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke'], ['middleware.ratelimit.pdf']);
 
         // Dynamic Calculators Registration
         foreach ($this->routesConfig['calculators'] as $calc => $config) {
@@ -153,10 +153,10 @@ class App
         $this->router->get('/sitemap.xml', [SitemapController::class, 'index']);
 
         // Admin / Insight Routing
-        $this->router->get('/admin_insights', [ShowAdminDashboardAction::class, '__invoke']);
-        $this->router->post('/admin_insights', [ProcessAdminLoginAction::class, '__invoke']);
+        $this->router->get('/admin_insights', [ShowAdminDashboardAction::class, '__invoke'], [\Core\Middleware\AdminAuthMiddleware::class]);
+        $this->router->post('/admin_insights', [ProcessAdminLoginAction::class, '__invoke'], ['middleware.ratelimit.admin_auth']);
         $this->router->post('/admin_insights/logout', [ProcessAdminLogoutAction::class, '__invoke']);
-        $this->router->post('/log_insight', [LogInsightApiAction::class, '__invoke']);
+        $this->router->post('/log_insight', [LogInsightApiAction::class, '__invoke'], ['middleware.ratelimit.insight']);
 
         // Blog / Resources Routing
         $this->router->get('/resources', [ListResourcesAction::class, '__invoke']);
