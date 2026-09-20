@@ -26,6 +26,7 @@
   - Frontend typecheck & build: `npm run build` clean in ~190ms with 0 errors.
   - Cross-runtime parity suite: `php tests/parity_check.php` passes with 100% parity across all engines.
   - Equal Height Alignment: Left Form Column (`#calculator-app`) and Right Summary/Chart Column (`#chart-visualization`) verified at exact 666px equal height with smooth internal scrolling and zero layout jumps.
+  - Spacing & Geometric Harmonization (`calculator-guide.twig`): Harmonized sub-calculator forms to match the main calculator's high-density `space-y-3` layout, refined `text-caption` header typography, eliminated bloated `mt-4` margins, and updated the outer container from `.glass-card p-4 sm:p-5` to `bg-white/95 rounded-3xl border border-slate-200/90 shadow-card backdrop-blur-xl p-3.5 sm:p-4` with ambient light aurora glow.
   - Chart canvas selector alignment: Resolved canvas target `#corpusChart` and live metric telemetry headers in `ChartManager.ts`.
 
 ---

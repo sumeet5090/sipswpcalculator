@@ -125,32 +125,37 @@
          class="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-8">
         <!-- Left Column: Form (Smooth natural scrolling for long forms) -->
         <div class="md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col min-h-0 md:h-full">
-            <div class="glass-card p-4 sm:p-5 flex flex-col flex-1 min-h-0 md:h-full">
-                <form id="calculator-form" class="space-y-6 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1 scroll-smooth" onsubmit="event.preventDefault();">
+            <div class="bg-white/95 rounded-3xl border border-slate-200/90 shadow-card backdrop-blur-xl p-3.5 sm:p-4 relative flex flex-col flex-1 min-h-0 md:h-full">
+                <!-- Ambient Aurora Glow (Pure Light Mode: Emerald & Teal Accents) -->
+                <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-400/8 rounded-full blur-3xl pointer-events-none"></div>
+
+                <form id="calculator-form" class="relative z-10 space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth" onsubmit="event.preventDefault();">
                     {% if calculator_type == 'all' or calculator_type == 'combo' %}
                         <!-- Combo Form (SIP + SWP Tabs) -->
-                        <div class="py-1 mb-4 rounded-xl">
-                            <div class="flex rounded-xl overflow-hidden border border-slate-200 shadow-flat" role="tablist">
+                        <div class="py-0.5 mb-2 rounded-2xl">
+                            <div class="flex bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70 shadow-flat gap-1" role="tablist">
                                 <button type="button" id="tab-sip" role="tab" aria-selected="true"
-                                    class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-emerald-500 text-white">
-                                    SIP Details
+                                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer">
+                                    <span>⚡</span>
+                                    <span>SIP Details</span>
                                 </button>
                                 <button type="button" id="tab-swp" role="tab" aria-selected="false"
-                                    class="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-200 bg-white text-slate-500 hover:bg-rose-50 hover:text-rose-500">
-                                    SWP Details
+                                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-900 cursor-pointer">
+                                    <span>🛡️</span>
+                                    <span>SWP Details</span>
                                 </button>
                             </div>
                         </div>
                         
                         <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip">
-                            <div class="space-y-4">
+                            <div class="space-y-3">
                                 {% include 'components/forms/sip-fields.twig' %}
                             </div>
                         </div>
                         
                         <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="hidden">
-                            <div class="space-y-4">
-                                <div class="py-1 mb-4 rounded-xl">
+                            <div class="space-y-3">
+                                <div class="py-0.5 mb-1 rounded-xl">
                                     <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-flat">
                                         <span class="text-ui-xs font-extrabold text-rose-600 uppercase tracking-tight">Enable SWP Mode</span>
                                         <label class="toggle-switch relative inline-flex items-center cursor-pointer">
@@ -159,7 +164,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div id="swp-fields" {% if not enable_swp %}style="display: none; opacity: 0.5; pointer-events: none;" aria-hidden="true"{% endif %}>
+                                <div id="swp-fields" class="space-y-3" {% if not enable_swp %}style="display: none; opacity: 0.5; pointer-events: none;" aria-hidden="true"{% endif %}>
                                     {% include 'components/forms/swp-fields.twig' %}
                                 </div>
                             </div>
@@ -167,37 +172,37 @@
                     {% else %}
                         <!-- Single Calculator Forms -->
                         <input type="hidden" id="enable_swp" name="enable_swp" value="{{ calculator_type == 'swp' ? '1' : '0' }}">
-                        <div class="space-y-4">
+                        <div class="space-y-3">
                             {% if calculator_type == 'sip' %}
-                                <div class="mb-2">
-                                    <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">SIP Details</span>
+                                <div class="mb-1">
+                                    <span class="text-caption font-bold text-growth-emphasis tracking-wider uppercase">SIP Details</span>
                                 </div>
                                 {% include 'components/forms/sip-fields.twig' %}
                             {% endif %}
 
                             {% if calculator_type == 'lumpsum' %}
-                                <div class="mb-2">
-                                    <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">Lumpsum Details</span>
+                                <div class="mb-1">
+                                    <span class="text-caption font-bold text-growth-emphasis tracking-wider uppercase">Lumpsum Details</span>
                                 </div>
                                 {% include 'components/forms/lumpsum-only-fields.twig' %}
                             {% endif %}
 
                             {% if calculator_type == 'target_corpus' %}
-                                <div class="mb-2">
-                                    <span class="text-xs font-bold text-emerald-600 tracking-widest uppercase">Target Goal Details</span>
+                                <div class="mb-1">
+                                    <span class="text-caption font-bold text-growth-emphasis tracking-wider uppercase">Target Goal Details</span>
                                 </div>
                                 {% include 'components/forms/target-corpus-fields.twig' %}
                             {% endif %}
 
                             {% if calculator_type == 'swp' %}
-                                <div class="mb-2">
-                                     <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">Your Corpus</span>
+                                <div class="mb-1">
+                                     <span class="text-caption font-bold text-rose-600 tracking-wider uppercase">Your Starting Wealth</span>
                                 </div>
                                 {% include 'components/forms/corpus-field.twig' %}
-                                <div class="mb-2 mt-4">
-                                     <span class="text-xs font-bold text-rose-500 tracking-widest uppercase">SWP Details</span>
+                                <div class="mb-1 pt-1">
+                                     <span class="text-caption font-bold text-rose-600 tracking-wider uppercase">SWP Details</span>
                                 </div>
-                                <div id="swp-fields">
+                                <div id="swp-fields" class="space-y-3">
                                      {% include 'components/forms/swp-fields.twig' %}
                                 </div>
                             {% endif %}
