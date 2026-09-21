@@ -15,7 +15,7 @@ class LumpsumStrategy extends BaseStrategy
 
     public function getInitialInputs(): InvestmentInputs
     {
-        return InvestmentInputs::fromLumpsumRequest([], $this->configService);
+        return InvestmentInputs::fromLumpsumRequest(['lumpsum' => 500000.0], $this->configService);
     }
 
     public function getBenchmarkTemplate(): string

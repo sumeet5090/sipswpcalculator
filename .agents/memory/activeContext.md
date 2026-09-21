@@ -35,6 +35,10 @@
     - Fixed `InvestmentInputs::fromRequest()` so that if `corpus` is absent, it resolves its own central configuration default (`$cfg['corpus']['default']` = ₹50,00,000) rather than falling back to `$lumpsum` (0.0).
     - Defensively guarded `corpus-field.twig` so `(corpus is defined and corpus > 0) ? corpus : calc_config.corpus.default|default(5000000)` prevents any 0 rendering when `min` constraint is 10,000.
     - Added auto-population guard in `TabController.ts` on `switchTab('swp')` to ensure that if `#corpus` is ever `< minCorpus`, it seamlessly initializes to the default 50 Lakhs without tripping validation alerts.
+  - Dedicated Calculator Landing Defaults & Form Visibility Resolution:
+    - Fixed empty form rendering bug on `/sip-step-up-calculator` by updating `calculator-guide.twig` conditional to `{% if calculator_type in ['sip', 'sip-step-up'] %}`.
+    - Fixed Lumpsum initial input default on `/lumpsum-calculator` so it initializes to the standard ₹5,00,000 starting benchmark instead of ₹0 across both `LumpsumStrategy.php` and `lumpsum-only-fields.twig`.
+    - Aligned `TargetCorpusStrategy.php` initial horizon to 15 years, matching the SSR target hero result card (`₹ 11,516 / mo`), guide copy, and target corpus default configuration.
   - Chart canvas selector alignment: Resolved canvas target `#corpusChart` and live metric telemetry headers in `ChartManager.ts`.
 
 ---

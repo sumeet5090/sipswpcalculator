@@ -173,7 +173,7 @@
                         <!-- Single Calculator Forms -->
                         <input type="hidden" id="enable_swp" name="enable_swp" value="{{ calculator_type == 'swp' ? '1' : '0' }}">
                         <div class="space-y-3">
-                            {% if calculator_type == 'sip' %}
+                            {% if calculator_type in ['sip', 'sip-step-up'] %}
                                 <div class="mb-1">
                                     <span class="text-caption font-bold text-growth-emphasis tracking-wider uppercase">SIP Details</span>
                                 </div>
