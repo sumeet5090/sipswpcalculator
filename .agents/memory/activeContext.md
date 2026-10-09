@@ -5,8 +5,8 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** SEO Optimization & Quality Remediation — Step 1, Step 2 & Step 3 Completed.
-- **Implemented Fixes & Architectural Outcomes (Steps 1, 2 & 3):**
+- **Current Milestone:** SEO Optimization & Quality Remediation — Steps 1, 2, 3 & 4 Completed.
+- **Implemented Fixes & Architectural Outcomes (Steps 1, 2, 3 & 4):**
   - **Step 1 (Pruning Dead-Weight Content & Resolving Cannibalization):**
     - **1-Crore Cannibalization Resolution:**
       - Archived duplicate files (`reach-1-crore-via-sip.md` and `reach-1-crore-rupees-via-sip.md`) to `content/archive/`.
@@ -40,13 +40,19 @@
     - **Dead-Click Remediation (10.37% sessions):**
       - In `SummaryMetricsController.ts`: Enhanced card click handlers to automatically switch to the `#tab-yearly-breakdown` tab before smooth scrolling.
       - In `ChartManager.ts`: Converted dead `onClick: () => {}` in legend into interactive dataset show/hide toggles with strikethrough state.
+  - **Step 4 (Above-the-Fold Horizontal Quick-Switcher Calculator Dock):**
+    - **Solved 19.8% Scroll Barrier:**
+      - Created `src/Views/components/calculator-dock.twig` with 1-tap horizontal scrolling across all 13 canonical calculators.
+      - Integrated directly above `#calculator-section` in both `calculator-guide.twig` and `home.twig`.
+      - Styled in strict compliance with the pure light-mode fintech theme (`bg-white/95`, `border-slate-200/90`, `shadow-card`, active emerald pill `bg-emerald-600 text-white font-bold`).
+      - Pure vanilla JS auto-scroll smoothly centers the active pill into view on initial load.
+      - High SEO value: semantic `<nav aria-label="Financial Calculators Quick Switcher">` distributes PageRank equity directly from the primary viewport to all canonical calculator landing pages.
   - **Verification & QA Passed:**
     - All 9 redirects verified with 301 status and correct `Location` header.
-    - PHPUnit: 809 tests / 12,666 assertions passed (100% OK).
+    - PHPUnit: 809 tests / 12,667 assertions passed (100% OK).
     - `composer check-all` (PHPStan Level 5 + PHPCS): 0 errors across 250 files.
     - `php tests/parity_check.php`: 100% parity across all calculator engines.
-    - `npm run typecheck && npm run build`: built in 194ms with 0 type errors.
-    - `npm run build`: built cleanly with 0 type errors.
+    - `npm run typecheck && npm run build`: built in 189ms with 0 type errors.
   - **Formal Service Interface Contracts (`src/Services/`):**
     - Created `SitemapGeneratorInterface`, `GuideRendererInterface`, `CsvExportServiceInterface`, `TelemetryPruningServiceInterface`.
     - Bound all 4 interfaces in DI service providers (`CoreServiceProvider`, `RepositoryServiceProvider`, `DomainServiceProvider`, `ControllerServiceProvider`).

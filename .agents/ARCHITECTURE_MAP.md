@@ -76,7 +76,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | **Educational Guides** | `content/calculators/*.md` | `Core\ContentManager` | `src/Services/GuideViewModelBuilder`<br/>`calculators/calculator-guide.twig` |
 | **Blog Articles** | `content/blog/*.md` | `Core\BlogRepository` | `Controllers\ShowResourcePostAction`<br/>`src/Views/pages/post.twig` |
 | **Categories & Pillars** | `content/categories.json`<br/>`content/calculator_pillar_guides.json` | `Services\GuideViewModelBuilder` | `components/related-pillar-guides.twig`<br/>`components/related-calculators.twig` |
-| **Cross-Links** | `content/calculator_links.json` | `Services\GuideViewModelBuilder` | `components/related-calculators.twig` |
+| **Cross-Links** | `content/calculator_links.json` | `Services\GuideViewModelBuilder` | `components/related-calculators.twig`<br/>`components/calculator-dock.twig` |
 | **Meta Tags & OpenGraph** | `content/meta_pages.json` | `Core\MetaManager` | `layouts/base.twig`<br/>`components/page-hero.twig` |
 | **URL Redirects** | `content/redirects.json` | `Core\RedirectLoader` | `Core\Router.php` (301 Permanent Redirects) |
 | **Rate Limit Rules** | `content/rate_limits.json` | `Services\ConfigService`<br/>`Services\RateLimiter` | `Controllers\LogInsightApiAction`<br/>`Controllers\GeneratePdfAction` |
