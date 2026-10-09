@@ -1,495 +1,274 @@
 {
     "sip-calculator": [
         {
-            "href": "/resource/growth/what-is-sip",
-            "title": "What is SIP in Mutual Funds? Complete 2026 Guide",
-            "tag": "Pillar Guide",
-            "read_time": "9 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "The definitive guide to Systematic Investment Plans \u2014 Rupee Cost Averaging, compounding mechanics, Section 112A taxation, and e-NACH setup."
+            "href": "/resource/growth/sip-for-beginners",
+            "title": "SIP for Beginners 2026: Complete Step-by-Step Guide",
+            "description": "Master Rupee Cost Averaging, power of compounding, and how to start your first equity SIP with ease."
         },
         {
-            "href": "/resource/growth/what-is-compound-interest",
-            "title": "What is Compound Interest & How Compounding Works in India",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Understand discrete vs continuous compounding, the Rule of 72, and how compounding transforms small monthly SIPs into multi-crore wealth."
+            "href": "/resource/comparison/sip-vs-fd-vs-ppf",
+            "title": "SIP vs FD vs PPF: Compare Real Returns & Tax Math",
+            "description": "Examine real purchasing power returns across equity SIPs, Bank Fixed Deposits, and PPF under 2026 tax rules."
         },
         {
-            "href": "/resource/growth/what-is-cagr",
-            "title": "What is CAGR? Compound Annual Growth Rate Formula & Guide",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Learn the math behind CAGR, why absolute returns mislead mutual fund investors, and the exact difference between CAGR, XIRR, and IRR."
+            "href": "/resource/comparison/mf-returns-benchmarks",
+            "title": "Mutual Fund Return Benchmarks: Real Indian CAGR",
+            "description": "Historical rolling returns across Nifty 50, Large-Cap, Mid-Cap, and Small-Cap mutual fund categories in India."
         }
     ],
     "swp-calculator": [
         {
-            "href": "/resource/comparison/swp-vs-annuity-2026",
-            "title": "SWP vs Annuity: Which is Better for Monthly Pension?",
-            "tag": "Deep Dive",
-            "read_time": "8 min",
-            "category": "retirement",
-            "category_name": "Retirement Planning",
-            "description": "Discover why Systematic Withdrawal Plans provide up to 3x higher post-tax income than traditional insurance annuities or bank pension plans."
+            "href": "/resource/comparison/swp-vs-fixed-deposit",
+            "title": "SWP vs Fixed Deposit: Which Gives Better Pension?",
+            "description": "Compare monthly cash flow, capital preservation, and the massive tax advantages of SWP over traditional Bank FDs."
         },
         {
             "href": "/resource/retirement/retirement-planning-4-percent-swp-rule",
-            "title": "Safe Withdrawal Rate in India: Why the 4% Rule Fails",
-            "tag": "Research",
-            "read_time": "9 min",
-            "category": "retirement",
-            "category_name": "Retirement Planning",
-            "description": "How to calibrate the US Trinity Study for India's 6% inflation and Sequence of Returns Risk to protect your retirement corpus from early depletion."
+            "title": "The 4% SWP Rule Explained: Make Money Last",
+            "description": "Learn how the Trinity 4% rule adapts to Indian inflation and discover how to design an immortal retirement cash flow."
         },
         {
-            "href": "/resource/growth/what-is-sip",
-            "title": "What is SIP in Mutual Funds? Complete 2026 Guide",
-            "tag": "Pillar Guide",
-            "read_time": "9 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Understand how the wealth accumulated during your SIP accumulation phase transitions seamlessly into systematic SWP retirement cash flows."
+            "href": "/resource/comparison/swp-vs-annuity-2026",
+            "title": "SWP vs Commercial Annuity: Monthly Pension Battle",
+            "description": "Compare flexibility, corpus ownership, tax treatment, and legacy inheritance between SWP and life insurer annuities."
         }
     ],
     "sip-step-up-calculator": [
         {
             "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
-            "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
-            "tag": "Strategy",
-            "read_time": "7 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "See how stepping up your SIP by just 10% each year can nearly double your final 20-year corpus compared to a flat, unadjusted monthly investment."
+            "title": "20-Year Step-Up SIP Wealth Blueprint",
+            "description": "Discover how a modest 10% annual top-up doubles your eventual wealth compared to flat investments."
         },
         {
-            "href": "/resource/growth/what-is-sip",
-            "title": "What is SIP in Mutual Funds? Complete 2026 Guide",
-            "tag": "Pillar Guide",
-            "read_time": "9 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Learn the core foundation of Systematic Investment Plans, Rupee Cost Averaging, and how stepped installments combat annual inflation."
+            "href": "/resource/growth/sip-for-beginners",
+            "title": "SIP for Beginners 2026: Complete Guide",
+            "description": "Understand how disciplined automated top-ups match annual career salary increments."
         },
         {
-            "href": "/resource/growth/what-is-compound-interest",
-            "title": "What is Compound Interest & How Compounding Works in India",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Explore the discrete geometric compounding formulas governing stepped cashflows and exponential growth curves."
+            "href": "/resource/comparison/sip-vs-fd-vs-ppf",
+            "title": "SIP vs FD vs PPF: Real Returns & Tax Comparison",
+            "description": "See why fixed return instruments cannot compete with stepping up your equity mutual fund investments."
         }
     ],
     "lumpsum-calculator": [
         {
             "href": "/resource/comparison/sip-vs-lumpsum",
-            "title": "SIP vs Lumpsum in Bull and Bear Markets: Historical Study",
-            "tag": "Analysis",
-            "read_time": "8 min",
-            "category": "comparison",
-            "category_name": "Strategy & Comparisons",
-            "description": "A 25-year empirical analysis of Nifty 50 rolling returns comparing lump sum deployment with staggered Systematic Transfer Plans (STP)."
+            "title": "SIP vs Lumpsum: Which Delivers Higher Returns?",
+            "description": "Compare one-time lump sum deployments against staggered monthly SIPs across bull and bear market cycles."
         },
         {
-            "href": "/resource/growth/what-is-cagr",
-            "title": "What is CAGR? Compound Annual Growth Rate Formula & Guide",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Master the Compound Annual Growth Rate formula to accurately benchmark your lump sum equity returns against fixed income alternatives."
+            "href": "/resource/comparison/mf-returns-benchmarks",
+            "title": "Mutual Fund Return Benchmarks: Real Indian CAGR",
+            "description": "Historical CAGR return expectations across equity asset classes for lump sum deployments."
         },
         {
-            "href": "/resource/comparison/what-is-fd",
-            "title": "What is a Fixed Deposit (FD)? Types, Returns & Tax Guide",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "comparison",
-            "category_name": "Strategy & Comparisons",
-            "description": "Compare mutual fund lump sum compounding against bank fixed deposits, analyzing post-tax returns under 30% slab rates."
+            "href": "/resource/comparison/sip-vs-fd-vs-ppf",
+            "title": "SIP vs FD vs PPF: Wealth Creation & Taxes",
+            "description": "Evaluate lump sum mutual fund compounding against guaranteed fixed income options."
         }
     ],
     "retirement-calculator": [
         {
             "href": "/resource/retirement/retirement-planning-4-percent-swp-rule",
-            "title": "Safe Withdrawal Rate in India: Why the 4% Rule Fails",
-            "tag": "Research",
-            "read_time": "9 min",
-            "category": "retirement",
-            "category_name": "Retirement Planning",
-            "description": "Calibrate your retirement drawdowns to India's unique inflation dynamics and protect against Sequence of Returns Risk."
+            "title": "The 4% SWP Rule: Make Retirement Money Last",
+            "description": "Calculate your retirement nest egg requirement using the empirical 4% sustainable withdrawal rate."
         },
         {
             "href": "/resource/retirement/swp-retirement-planning",
-            "title": "SWP Retirement Planning: The Ultimate Indian Guide",
-            "tag": "Comprehensive",
-            "read_time": "10 min",
-            "category": "retirement",
-            "category_name": "Retirement Planning",
-            "description": "A complete blueprint for architecting a 3-bucket retirement portfolio balancing cash, debt funds, and growth equities for 30+ years."
+            "title": "Retirement Planning with SWP: The Complete Masterclass",
+            "description": "Master the 3-Bucket Strategy, emergency liquidity reserves, and lifelong pension architecture."
         },
         {
-            "href": "/resource/comparison/swp-vs-annuity-2026",
-            "title": "SWP vs Annuity: Which is Better for Monthly Pension?",
-            "tag": "Deep Dive",
-            "read_time": "8 min",
-            "category": "retirement",
-            "category_name": "Retirement Planning",
-            "description": "Understand why mutual fund SWPs beat guaranteed pension plans through liquidity, capital retention, and 12.5% LTCG tax treatment."
+            "href": "/resource/comparison/swp-vs-fixed-deposit",
+            "title": "SWP vs Fixed Deposit: Better Post-Retirement Income",
+            "description": "Understand how post-tax SWP distributions outshine taxable FD interest during retirement."
         }
     ],
     "my-first-crore-calculator": [
         {
-            "href": "/resource/growth/reach-1-crore-rupees-via-sip",
-            "title": "How to Reach \u20b91 Crore Through SIP: Timelines & Milestones",
-            "tag": "Milestones",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Why your first \u20b91 Crore takes 14 years but the second takes only 5: the mathematical law of compounding speedup unveiled."
-        },
-        {
-            "href": "/resource/growth/what-is-sip",
-            "title": "What is SIP in Mutual Funds? Complete 2026 Guide",
-            "tag": "Pillar Guide",
-            "read_time": "9 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Understand the discipline, fund selection criteria, and rupee cost averaging needed to build a \u20b91 Crore mutual fund portfolio."
-        },
-        {
             "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
-            "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
-            "tag": "Strategy",
-            "read_time": "7 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Shave 4 to 6 years off your journey to \u20b91 Crore by applying a modest 10% annual step-up to your initial monthly SIP investment."
+            "title": "20-Year Step-Up SIP Wealth Blueprint",
+            "description": "Discover how a disciplined step-up cuts your journey to \u20b91 Crore by nearly 5 full years."
+        },
+        {
+            "href": "/resource/growth/sip-for-beginners",
+            "title": "SIP for Beginners 2026: Complete Guide",
+            "description": "Build the foundational habits required to escape compounding friction and reach \u20b91 Crore."
+        },
+        {
+            "href": "/resource/comparison/mf-returns-benchmarks",
+            "title": "Mutual Fund Return Benchmarks: Real Indian CAGR",
+            "description": "Realistic equity returns to model when forecasting your 1-Crore wealth accumulation milestone."
         }
     ],
     "target-corpus-calculator": [
         {
-            "href": "/resource/growth/reach-1-crore-rupees-via-sip",
-            "title": "How to Reach \u20b91 Crore Through SIP: Timelines & Milestones",
-            "tag": "Milestones",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Reverse-engineer milestone planning for children's education, home down payment, and financial independence."
-        },
-        {
             "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
-            "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
-            "tag": "Strategy",
-            "read_time": "7 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "How annual salary increments make reaching large target goals realistic without straining your starting monthly cash budget."
+            "title": "20-Year Step-Up SIP Wealth Blueprint",
+            "description": "Reverse-engineer target goals faster by leveraging progressive annual investment top-ups."
         },
         {
-            "href": "/resource/growth/what-is-cagr",
-            "title": "What is CAGR? Compound Annual Growth Rate Formula & Guide",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Understand realistic portfolio CAGR expectations across large-cap, flexi-cap, and hybrid funds to set achievable targets."
+            "href": "/resource/growth/sip-for-beginners",
+            "title": "SIP for Beginners 2026: Complete Guide",
+            "description": "Turn abstract financial milestones into actionable, automated monthly investment allocations."
+        },
+        {
+            "href": "/resource/comparison/mf-returns-benchmarks",
+            "title": "Mutual Fund Return Benchmarks: Real Indian CAGR",
+            "description": "Calibrate target corpus timelines using verified Indian market rolling return distributions."
         }
     ],
     "compound-interest-calculator": [
         {
-            "href": "/resource/growth/what-is-compound-interest",
-            "title": "What is Compound Interest & How Compounding Works in India",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Deep dive into compounding frequencies, annual equivalent rates, and how time horizon supercharges capital growth."
+            "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
+            "title": "20-Year Step-Up SIP Wealth Blueprint",
+            "description": "Observe the compounding inflection curve where annual capital gains eclipse your total contributions."
         },
         {
-            "href": "/resource/growth/what-is-cagr",
-            "title": "What is CAGR? Compound Annual Growth Rate Formula & Guide",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Connect compounding math to real-world asset evaluation across equities, mutual funds, real estate, and fixed income."
+            "href": "/resource/growth/sip-for-beginners",
+            "title": "SIP for Beginners 2026: Complete Guide",
+            "description": "Understand how monthly compounding frequencies accelerate returns in diversified mutual funds."
         },
         {
-            "href": "/resource/growth/what-is-sip",
-            "title": "What is SIP in Mutual Funds? Complete 2026 Guide",
-            "tag": "Pillar Guide",
-            "read_time": "9 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Put compound interest into action through automated monthly mutual fund investments in the Indian market."
+            "href": "/resource/comparison/sip-vs-fd-vs-ppf",
+            "title": "SIP vs FD vs PPF: Wealth Creation & Taxes",
+            "description": "Compare exponential equity compounding with linear fixed income interest accumulation."
         }
     ],
     "cagr-calculator": [
         {
-            "href": "/resource/growth/what-is-cagr",
-            "title": "What is CAGR? Compound Annual Growth Rate Formula & Guide",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "The definitive CAGR manual: step-by-step formula derivation, limitations, and how it compares to XIRR and annualized returns."
+            "href": "/resource/comparison/mf-returns-benchmarks",
+            "title": "Mutual Fund Return Benchmarks: Real Indian CAGR",
+            "description": "Benchmark your portfolio annualized return against 10, 15, and 20-year Indian equity indices."
         },
         {
-            "href": "/resource/comparison/what-is-fd",
-            "title": "What is a Fixed Deposit (FD)? Types, Returns & Tax Guide",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "comparison",
-            "category_name": "Strategy & Comparisons",
-            "description": "Calculate true real post-tax CAGR on bank fixed deposits after accounting for 6% inflation and slab-rate taxation."
+            "href": "/resource/comparison/sip-vs-lumpsum",
+            "title": "SIP vs Lumpsum: Realized Returns Compared",
+            "description": "Understand the mathematical difference between point-to-point CAGR and cashflow XIRR."
         },
         {
-            "href": "/resource/growth/what-is-compound-interest",
-            "title": "What is Compound Interest & How Compounding Works in India",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "How continuous compounding and geometric expansion generate the multi-year returns measured by CAGR."
+            "href": "/resource/comparison/sip-vs-fd-vs-ppf",
+            "title": "SIP vs FD vs PPF: Compare Real Net Returns",
+            "description": "Evaluate nominal CAGR against inflation-adjusted real purchasing power and taxation."
         }
     ],
     "emi-calculator": [
         {
-            "href": "/resource/growth/what-is-emi",
-            "title": "What is EMI? Equated Monthly Installment Formula & Calculation",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Demystify reducing balance amortisation math, interest-heavy early tenures, and how extra repayments save lakhs in interest."
+            "href": "/resource/growth/earning-30k-at-25-investment-blueprint",
+            "title": "Earning \u20b930K at Age 25? Investment Blueprint",
+            "description": "Balance debt service obligations and loan EMIs with early automated wealth accumulation."
         },
         {
-            "href": "/resource/growth/what-is-emi",
-            "title": "SIP vs Prepaying Home Loan: Which Builds More Wealth?",
-            "tag": "Comparison",
-            "read_time": "9 min",
-            "category": "comparison",
-            "category_name": "Strategy & Comparisons",
-            "description": "A rigorous mathematical comparison: should you aggressively prepay your 8.5% home loan or invest in a 12% equity mutual fund SIP?"
+            "href": "/resource/comparison/sip-vs-fd-vs-ppf",
+            "title": "SIP vs FD vs PPF: Financial Allocation Strategy",
+            "description": "Determine the optimal financial split between prepaying loans and investing in compounding equity."
         },
         {
-            "href": "/resource/growth/what-is-compound-interest",
-            "title": "What is Compound Interest & How Compounding Works in India",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "How reverse compounding works against borrowers in bank amortization schedules and how to flip it in your favor."
+            "href": "/resource/growth/sip-for-beginners",
+            "title": "SIP for Beginners 2026: Complete Guide",
+            "description": "Discover why starting an equity SIP alongside a loan EMI prevents opportunity cost losses."
         }
     ],
     "inflation-calculator": [
         {
-            "href": "/resource/comparison/what-is-fd",
-            "title": "What is a Fixed Deposit (FD)? Types, Returns & Tax Guide",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "comparison",
-            "category_name": "Strategy & Comparisons",
-            "description": "Examine the 'negative real return trap' when bank FD interest fails to outpace India's Consumer Price Index (CPI) inflation."
+            "href": "/resource/comparison/sip-vs-fd-vs-ppf",
+            "title": "SIP vs FD vs PPF: Real Inflation-Adjusted Returns",
+            "description": "Discover why traditional fixed income products often deliver negative real returns after inflation."
         },
         {
-            "href": "/resource/growth/what-is-cagr",
-            "title": "What is CAGR? Compound Annual Growth Rate Formula & Guide",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Learn how to compute Real CAGR by deflating nominal portfolio growth with historical inflation series."
+            "href": "/resource/comparison/swp-vs-fixed-deposit",
+            "title": "SWP vs Fixed Deposit: Inflation Protection Battle",
+            "description": "How equity-backed Systematic Withdrawal Plans safeguard retiree purchasing power over decades."
         },
         {
-            "href": "/resource/growth/what-is-compound-interest",
-            "title": "What is Compound Interest & How Compounding Works in India",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Why compound interest is the only effective financial defense against the compounding erosion of purchasing power."
+            "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
+            "title": "20-Year Step-Up SIP Wealth Blueprint",
+            "description": "Combat lifestyle inflation by systematically increasing your monthly SIP allocation."
         }
     ],
     "ppf-calculator": [
         {
-            "href": "/resource/comparison/what-is-ppf",
-            "title": "What is PPF (Public Provident Fund)? Rules, Rates & Tax Benefits",
-            "tag": "Pillar Guide",
-            "read_time": "9 min",
-            "category": "comparison",
-            "category_name": "Strategy & Comparisons",
-            "description": "Complete guide to Sovereign EEE tax-exempt compounding: 15-year lock-in rules, 5th-of-the-month deposit strategy, and extensions."
+            "href": "/resource/comparison/sip-vs-fd-vs-ppf",
+            "title": "SIP vs FD vs PPF: 2026 Comparative Math",
+            "description": "In-depth breakdown of PPF EEE tax exemption vs equity LTCG returns after 2026 tax changes."
         },
         {
-            "href": "/resource/comparison/what-is-fd",
-            "title": "What is a Fixed Deposit (FD)? Types, Returns & Tax Guide",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "comparison",
-            "category_name": "Strategy & Comparisons",
-            "description": "PPF vs Fixed Deposit head-to-head: why PPF's EEE tax-free status delivers vastly higher net wealth despite identical interest rates."
+            "href": "/resource/comparison/mutual-fund-tax-2026",
+            "title": "Mutual Fund Tax Rules 2026: Complete LTCG Guide",
+            "description": "Understand how the \u20b91.25 Lakh annual equity LTCG exemption balances out PPF tax advantages."
         },
         {
-            "href": "/resource/growth/what-is-compound-interest",
-            "title": "What is Compound Interest & How Compounding Works in India",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "How annual compounding on government-backed savings accounts turns \u20b91.5 lakh annual deposits into over \u20b940 lakhs tax-free."
+            "href": "/resource/growth/sip-for-beginners",
+            "title": "SIP for Beginners 2026: Complete Guide",
+            "description": "How to construct a balanced portfolio blending sovereign PPF safety with equity SIP growth."
         }
     ],
     "fd-calculator": [
         {
-            "href": "/resource/comparison/what-is-fd",
-            "title": "What is a Fixed Deposit (FD)? Types, Returns & Tax Guide",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "comparison",
-            "category_name": "Strategy & Comparisons",
-            "description": "Everything you need to know about Fixed Deposits in 2026: cumulative vs payout FDs, TDS rules, Form 15G/15H, and senior citizen rates."
+            "href": "/resource/comparison/swp-vs-fixed-deposit",
+            "title": "SWP vs Fixed Deposit: Tax & Pension Comparison",
+            "description": "Why high-bracket taxpayers lose over 30% of FD interest and how SWP provides superior post-tax cashflow."
         },
         {
-            "href": "/resource/comparison/what-is-ppf",
-            "title": "What is PPF (Public Provident Fund)? Rules, Rates & Tax Benefits",
-            "tag": "Pillar Guide",
-            "read_time": "9 min",
-            "category": "comparison",
-            "category_name": "Strategy & Comparisons",
-            "description": "Compare taxable bank deposits with Sovereign EEE Public Provident Funds to maximize your risk-free fixed income allocation."
+            "href": "/resource/comparison/sip-vs-fd-vs-ppf",
+            "title": "SIP vs FD vs PPF: Wealth Creation & Taxes",
+            "description": "Detailed mathematical comparison of fixed interest accrual versus market-linked wealth generation."
         },
         {
-            "href": "/resource/growth/what-is-compound-interest",
-            "title": "What is Compound Interest & How Compounding Works in India",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Understand quarterly compounding mechanics in bank fixed deposits and how to calculate the Annualized Percentage Yield (APY)."
-        }
-    ],
-    "reach-1-crore-via-sip": [
-        {
-            "href": "/resource/growth/reach-1-crore-rupees-via-sip",
-            "title": "How to Reach \u20b91 Crore Through SIP: Timelines & Milestones",
-            "tag": "Milestones",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Why your first \u20b91 Crore takes 14 years but the second takes only 5: the mathematical law of compounding speedup unveiled."
-        },
-        {
-            "href": "/resource/growth/what-is-sip",
-            "title": "What is SIP in Mutual Funds? Complete 2026 Guide",
-            "tag": "Pillar Guide",
-            "read_time": "9 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Understand the discipline, fund selection criteria, and rupee cost averaging needed to build a \u20b91 Crore mutual fund portfolio."
-        },
-        {
-            "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
-            "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
-            "tag": "Strategy",
-            "read_time": "7 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Shave 4 to 6 years off your journey to \u20b91 Crore by applying a modest 10% annual step-up to your initial monthly SIP investment."
+            "href": "/resource/comparison/mutual-fund-tax-2026",
+            "title": "Mutual Fund Tax Rules 2026: Complete LTCG Guide",
+            "description": "Compare slab-rate taxation on Bank FDs against the concessional 12.5% LTCG on mutual funds."
         }
     ],
     "reach-5-crore-via-sip": [
         {
             "href": "/resource/retirement/retirement-planning-4-percent-swp-rule",
-            "title": "Safe Withdrawal Rate in India: Why the 4% Rule Fails",
-            "tag": "Research",
-            "read_time": "9 min",
-            "category": "retirement",
-            "category_name": "Retirement Planning",
-            "description": "How to convert a \u20b95 Crore portfolio into perpetual, inflation-protected monthly pension cash flows without eroding capital."
+            "title": "The 4% SWP Rule: Make Retirement Money Last",
+            "description": "Plan sustainable pension cash flows from your \u20b95 Crore financial freedom portfolio."
         },
         {
             "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
-            "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
-            "tag": "Strategy",
-            "read_time": "7 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "How continuous annual step-up multipliers make a multi-crore financial freedom portfolio achievable for salaried earners."
+            "title": "20-Year Step-Up SIP Wealth Blueprint",
+            "description": "Accelerate your path to multi-crore wealth with disciplined annual increments."
         },
         {
-            "href": "/resource/comparison/swp-vs-annuity-2026",
-            "title": "SWP vs Annuity: Which is Better for Monthly Pension?",
-            "tag": "Deep Dive",
-            "read_time": "8 min",
-            "category": "retirement",
-            "category_name": "Retirement Planning",
-            "description": "Understand why Systematic Withdrawal Plans provide vastly superior liquidity and lower tax on large retirement corpuses than commercial annuities."
+            "href": "/resource/comparison/swp-vs-fixed-deposit",
+            "title": "SWP vs Fixed Deposit: Better Post-Retirement Income",
+            "description": "Model post-tax distributions from your \u20b95 Crore corpus to ensure perpetual longevity."
         }
     ],
     "sip-5000-per-month": [
         {
-            "href": "/resource/growth/what-is-sip",
-            "title": "What is SIP in Mutual Funds? Complete 2026 Guide",
-            "tag": "Pillar Guide",
-            "read_time": "9 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "The definitive beginner's manual on Systematic Investment Plans, e-NACH mandates, and rupee cost averaging."
-        },
-        {
-            "href": "/resource/growth/what-is-compound-interest",
-            "title": "What is Compound Interest & How Compounding Works in India",
-            "tag": "Pillar Guide",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "See the exponential math that turns a simple \u20b95,000 monthly contribution into over \u20b950 Lakhs in 20 years."
+            "href": "/resource/growth/sip-for-beginners",
+            "title": "SIP for Beginners 2026: Complete Guide",
+            "description": "Step-by-step guidance on automating your \u20b95,000 monthly investment into top-rated mutual funds."
         },
         {
             "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
-            "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
-            "tag": "Strategy",
-            "read_time": "7 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "How a small \u20b9500 yearly top-up more than doubles your final wealth from \u20b995 Lakhs to \u20b92.3 Crores."
+            "title": "20-Year Step-Up SIP Wealth Blueprint",
+            "description": "See how stepping up a modest \u20b95,000 monthly commitment can yield over \u20b92 Crores."
+        },
+        {
+            "href": "/resource/growth/earning-30k-at-25-investment-blueprint",
+            "title": "Earning \u20b930K at Age 25? Investment Blueprint",
+            "description": "Budgeting and investing \u20b95,000 monthly out of entry-level salaries in urban India."
         }
     ],
     "sip-10000-per-month": [
         {
-            "href": "/resource/growth/what-is-sip",
-            "title": "What is SIP in Mutual Funds? Complete 2026 Guide",
-            "tag": "Pillar Guide",
-            "read_time": "9 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Master the rules of disciplined mutual fund compounding and tax efficiency on a \u20b910,000 monthly investment."
-        },
-        {
-            "href": "/resource/growth/reach-1-crore-rupees-via-sip",
-            "title": "How to Reach \u20b91 Crore Through SIP: Timelines & Milestones",
-            "tag": "Milestones",
-            "read_time": "8 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "Track the exact 20-year roadmap from \u20b910k/month to your first \u20b91 Crore milestone."
-        },
-        {
             "href": "/resource/growth/20-year-wealth-blueprint-step-up-sip",
-            "title": "The Power of Step-Up SIP: How 10% Annual Top-Up Accelerates Wealth",
-            "tag": "Strategy",
-            "read_time": "7 min",
-            "category": "growth",
-            "category_name": "Wealth Growth",
-            "description": "See how stepping up \u20b910,000 by 10% annually creates an extra \u20b92.71 Crores in 25-year wealth."
+            "title": "20-Year Step-Up SIP Wealth Blueprint",
+            "description": "Discover how a \u20b910,000 SIP paired with a 10% annual top-up builds multi-generational wealth."
+        },
+        {
+            "href": "/resource/growth/sip-for-beginners",
+            "title": "SIP for Beginners 2026: Complete Guide",
+            "description": "Best practices for selecting index, flexi-cap, and balanced advantage funds for a \u20b910,000 monthly allocation."
+        },
+        {
+            "href": "/resource/growth/earning-30k-at-25-investment-blueprint",
+            "title": "Earning \u20b930K at Age 25? Investment Blueprint",
+            "description": "Scaling your investment contributions from \u20b95,000 to \u20b910,000 as your professional career progresses."
         }
     ]
 }

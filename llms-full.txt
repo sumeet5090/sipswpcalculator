@@ -69,7 +69,7 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 3. **SIP Calculator (`https://sipswpcalculator.com/sip-calculator`)**
    - Standalone Systematic Investment Plan tool with step-up top-up compounding, total wealth projections, and post-tax net yield breakdowns.
 
-4. **1 Crore SIP Goal Calculator (`https://sipswpcalculator.com/my-first-crore-calculator` & `/reach-1-crore-via-sip`)**
+4. **1 Crore SIP Goal Calculator (`https://sipswpcalculator.com/my-first-crore-calculator`)**
    - Reverse-engineers the exact monthly SIP and step-up increments required to reach ₹1 Crore across 5, 10, 15, and 20-year horizons.
 
 5. **Target Corpus Calculator (`https://sipswpcalculator.com/target-corpus-calculator`)**

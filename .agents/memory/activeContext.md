@@ -1,12 +1,28 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-09-20*
+*Last Updated: 2026-10-10*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Elite Architecture Refactoring — Phase 5: Services Layer Decoupling & Modern Presentation Architecture Completed.
-- **Implemented Fixes & Architectural Outcomes (Phase 5):**
+- **Current Milestone:** SEO Optimization & Quality Remediation — Step 1: Pruning Dead-Weight Content & Resolving Cannibalization Completed.
+- **Implemented Fixes & Architectural Outcomes (Step 1):**
+  - **1-Crore Cannibalization Resolution:**
+    - Archived duplicate files (`reach-1-crore-via-sip.md` and `reach-1-crore-rupees-via-sip.md`) to `content/archive/`.
+    - De-registered `'/reach-1-crore-via-sip'` from `routes.php`.
+    - 301-redirected `/reach-1-crore-via-sip` and `/resource/growth/reach-1-crore-rupees-via-sip` directly into `/my-first-crore-calculator`.
+  - **Zero-Click Thin Definition Pruning (Helpful Content Quality Score Boost):**
+    - Archived 7 thin "What is..." blog articles into `content/archive/blog/`: `what-is-sip`, `what-is-cagr`, `what-is-compound-interest`, `what-is-emi`, `what-is-fd`, `what-is-ppf`, `inflation-impact-on-sip`.
+    - Registered permanent HTTP 301 redirects in `content/redirects.json` directing each retired slug to its respective primary interactive calculator (`/sip-calculator`, `/cagr-calculator`, `/compound-interest-calculator`, `/emi-calculator`, `/fd-calculator`, `/ppf-calculator`, `/inflation-calculator`).
+  - **Internal Link & Sitemap Hygiene:**
+    - Updated `content/calculator_links.json` and `content/calculator_pillar_guides.json` so all internal links point directly to active 200-OK canonical destinations without redirect hops.
+    - Verified `sitemap.xml` now emits 33 clean 200-OK URLs (0 retired or redirecting URLs).
+  - **Verification & QA Passed:**
+    - All 9 redirects verified with 301 status and correct `Location` header.
+    - PHPUnit: 809 tests / 12,666 assertions passed (100% OK).
+    - `composer check-all` (PHPStan Level 5 + PHPCS): 0 errors across 250 files.
+    - `php tests/parity_check.php`: 100% parity across all calculator engines.
+    - `npm run build`: built in 284ms with 0 type errors.
   - **Formal Service Interface Contracts (`src/Services/`):**
     - Created `SitemapGeneratorInterface`, `GuideRendererInterface`, `CsvExportServiceInterface`, `TelemetryPruningServiceInterface`.
     - Bound all 4 interfaces in DI service providers (`CoreServiceProvider`, `RepositoryServiceProvider`, `DomainServiceProvider`, `ControllerServiceProvider`).
