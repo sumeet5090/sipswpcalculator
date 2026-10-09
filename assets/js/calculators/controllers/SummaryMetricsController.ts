@@ -40,7 +40,13 @@ export class SummaryMetricsController {
             card.setAttribute('tabindex', '0');
             card.setAttribute('aria-label', 'View detailed yearly breakdown');
             const handler = () => {
-                const target = document.getElementById('yearly-breakdown') || document.getElementById('yearly-breakdown-section');
+                const tabBtn = document.getElementById('tab-yearly-breakdown');
+                if (tabBtn && tabBtn.getAttribute('aria-selected') !== 'true') {
+                    tabBtn.click();
+                }
+                const target = document.getElementById('yearly-breakdown') || 
+                               document.getElementById('yearly-breakdown-section') || 
+                               document.getElementById('panel-yearly-breakdown');
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }

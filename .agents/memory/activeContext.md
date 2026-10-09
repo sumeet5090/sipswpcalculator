@@ -5,8 +5,8 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** SEO Optimization & Quality Remediation — Step 1 & Step 2 Completed.
-- **Implemented Fixes & Architectural Outcomes (Step 1 & Step 2):**
+- **Current Milestone:** SEO Optimization & Quality Remediation — Step 1, Step 2 & Step 3 Completed.
+- **Implemented Fixes & Architectural Outcomes (Steps 1, 2 & 3):**
   - **Step 1 (Pruning Dead-Weight Content & Resolving Cannibalization):**
     - **1-Crore Cannibalization Resolution:**
       - Archived duplicate files (`reach-1-crore-via-sip.md` and `reach-1-crore-rupees-via-sip.md`) to `content/archive/`.
@@ -28,11 +28,24 @@
       - `/sip-step-up-calculator`: Title `Step-Up SIP Calculator India — Top-Up Compounding Planner`, Meta `Calculate how a 5% to 20% annual salary step-up accelerates your mutual fund wealth. Compare flat vs top-up SIP returns with 2026 tax calculation.`
     - Validated all titles satisfy byte length constraints (`strlen($title) <= 65`) taking into account UTF-8 multi-byte characters (`₹`, `—`).
     - Verified rendered HTML via local server curl and automated integration test suite.
+  - **Step 3 (Core Web Vitals INP & Chart.js Stability Optimization):**
+    - **Chart.js Crash Elimination (`getLabelAndValue` of null):**
+      - In `ChartManager.ts`: Defensively guarded `highlightYear()` and `clearHighlight()`. Fixed hardcoded `datasetIndex: 1` by dynamically validating active dataset existence, boundary indices, and `meta.controller` non-nullness.
+      - In `ChartPlugins.ts`: Added null/bounds guards to `crosshairPlugin`, `compoundingIgnitionPlugin`, `fdAlphaDeltaPlugin`, and `splineMilestonesPlugin` to prevent dummy meta generation when `datasets.length <= 1`.
+    - **Mobile INP Optimization (<150ms):**
+      - Decoupled `SliderManager.ts` and `CalculatorApp.ts` execution pipeline:
+        - Fast Path (60fps rAF frame): Instantly updates hero summary metrics cards, slider visual track progress, and throttled canvas draw (`update('none')`).
+        - Settled/Deferred Path: Defers heavy 30-year table re-rendering, `localStorage` draft saving, undo stack pushes, and A11y screen reader announcements until 120ms drag pause or interaction commit (`change`/`pointerup`/`touchend`).
+        - Eliminated forced synchronous layout reflows during drag by deferring `getBoundingClientRect()` measurements in `logInsight` to `requestIdleCallback`.
+    - **Dead-Click Remediation (10.37% sessions):**
+      - In `SummaryMetricsController.ts`: Enhanced card click handlers to automatically switch to the `#tab-yearly-breakdown` tab before smooth scrolling.
+      - In `ChartManager.ts`: Converted dead `onClick: () => {}` in legend into interactive dataset show/hide toggles with strikethrough state.
   - **Verification & QA Passed:**
     - All 9 redirects verified with 301 status and correct `Location` header.
     - PHPUnit: 809 tests / 12,666 assertions passed (100% OK).
     - `composer check-all` (PHPStan Level 5 + PHPCS): 0 errors across 250 files.
     - `php tests/parity_check.php`: 100% parity across all calculator engines.
+    - `npm run typecheck && npm run build`: built in 194ms with 0 type errors.
     - `npm run build`: built cleanly with 0 type errors.
   - **Formal Service Interface Contracts (`src/Services/`):**
     - Created `SitemapGeneratorInterface`, `GuideRendererInterface`, `CsvExportServiceInterface`, `TelemetryPruningServiceInterface`.

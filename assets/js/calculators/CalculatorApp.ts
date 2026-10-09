@@ -58,6 +58,7 @@ export class CalculatorApp {
     private ergonomicsSubsystem: ErgonomicsSubsystem;
 
     private shortcutsInitialized = false;
+    private _deferredSettledTimer: ReturnType<typeof setTimeout> | null = null;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -86,10 +87,10 @@ export class CalculatorApp {
         };
 
         this.sliderManager = new SliderManager(
-            () => {
+            (options?: { isDragging?: boolean }) => {
                 this.userHasInteracted = true;
                 this.interactionCount++;
-                this.triggerCalculation();
+                this.triggerCalculation(options);
             },
             this.validator,
             this.dom,
@@ -289,7 +290,8 @@ export class CalculatorApp {
     /**
      * Publish inputs to calculation event queue.
      */
-    triggerCalculation(): void {
+    triggerCalculation(options?: { isDragging?: boolean }): void {
+        const isDragging = options?.isDragging ?? false;
         if (this.specializedController) {
             this.specializedController.calculate();
             return;
@@ -313,7 +315,7 @@ export class CalculatorApp {
             }
         }
 
-        eventBus.publish('input:changed', inputs);
+        eventBus.publish('input:changed', { inputs, isDragging });
     }
 
     /**
@@ -772,18 +774,16 @@ export class CalculatorApp {
     }
 
     private initEventBusSubscribers(): void {
-        eventBus.subscribe('input:changed', (inputs: InvestmentInputs) => {
-            this.lifecycleSubsystem.persistDraft(inputs);
-            this.lifecycleSubsystem.pushUndoState(inputs);
+        eventBus.subscribe('input:changed', (payload: InvestmentInputs | { inputs: InvestmentInputs; isDragging?: boolean }) => {
+            const inputs = (typeof payload === 'object' && payload !== null && 'inputs' in payload) ? payload.inputs : (payload as InvestmentInputs);
+            const isDragging = (typeof payload === 'object' && payload !== null && 'isDragging' in payload) ? Boolean(payload.isDragging) : false;
 
             const combined = MathEngine.calculate(inputs);
             this.latestResults = combined;
-            this.updateTable(combined, inputs.enable_swp);
-            this.updateSummaryMetrics(combined);
 
-            this.engagementSubsystem.updateResults(combined, inputs);
-            this.lifecycleSubsystem.updateResults(combined, inputs);
-            this.ergonomicsSubsystem.updateResults(combined, inputs);
+            // ── FAST ZERO-LATENCY FRAME PIPELINE (Runs on every 60fps drag frame) ──
+            // Instantly update summary metrics cards (#total-invested, #est-returns, #total-value)
+            this.updateSummaryMetrics(combined);
 
             const lastRow = combined[combined.length - 1];
             if (lastRow) {
@@ -791,23 +791,62 @@ export class CalculatorApp {
                 if (bridgeValEl) {
                     bridgeValEl.textContent = this.formatter.formatDynamic(lastRow.combined_total);
                 }
-
-                // Announce calculation to screen reader with throttle
-                A11yAnnouncer.announceCalculation(
-                    inputs.enable_swp ? 'swp' : (this.activeGoalMode === 'target' ? 'target' : 'sip'),
-                    inputs.enable_swp ? 'SWP' : 'SIP',
-                    inputs.enable_swp ? inputs.swp_withdrawal : inputs.sip,
-                    inputs.years,
-                    inputs.rate,
-                    lastRow.combined_total,
-                    inputs.enable_swp ? (lastRow.cumulative_withdrawals || 0) : (lastRow.combined_total - lastRow.cumulative_invested)
-                );
             }
 
+            // Schedule low-cost canvas draw on rAF
             this.chartManager.updateChartThrottled(combined, inputs.enable_swp);
 
-            if (!this.userHasInteracted) return;
+            // ── DEFERRED HEAVY PIPELINE (Decoupled to achieve sub-150ms mobile INP) ──
+            if (isDragging) {
+                if (this._deferredSettledTimer !== null) {
+                    clearTimeout(this._deferredSettledTimer);
+                }
+                this._deferredSettledTimer = setTimeout(() => {
+                    this._deferredSettledTimer = null;
+                    this.executeSettledUpdates(inputs, combined);
+                }, 120);
+            } else {
+                if (this._deferredSettledTimer !== null) {
+                    clearTimeout(this._deferredSettledTimer);
+                    this._deferredSettledTimer = null;
+                }
+                this.executeSettledUpdates(inputs, combined);
+            }
+        });
+    }
 
+    /**
+     * Executes non-critical DOM table re-renders, state persistence, A11y announcements,
+     * and idle layout analytics once slider dragging pauses or settles.
+     */
+    private executeSettledUpdates(inputs: InvestmentInputs, combined: YearResult[]): void {
+        this.lifecycleSubsystem.persistDraft(inputs);
+        this.lifecycleSubsystem.pushUndoState(inputs);
+
+        this.updateTable(combined, inputs.enable_swp);
+
+        this.engagementSubsystem.updateResults(combined, inputs);
+        this.lifecycleSubsystem.updateResults(combined, inputs);
+        this.ergonomicsSubsystem.updateResults(combined, inputs);
+
+        const lastRow = combined[combined.length - 1];
+        if (lastRow) {
+            // Announce calculation to screen reader with throttle
+            A11yAnnouncer.announceCalculation(
+                inputs.enable_swp ? 'swp' : (this.activeGoalMode === 'target' ? 'target' : 'sip'),
+                inputs.enable_swp ? 'SWP' : 'SIP',
+                inputs.enable_swp ? inputs.swp_withdrawal : inputs.sip,
+                inputs.years,
+                inputs.rate,
+                lastRow.combined_total,
+                inputs.enable_swp ? (lastRow.cumulative_withdrawals || 0) : (lastRow.combined_total - lastRow.cumulative_invested)
+            );
+        }
+
+        if (!this.userHasInteracted) return;
+
+        // Schedule layout-measuring analytics during requestIdleCallback to eliminate forced synchronous reflow
+        const runAnalytics = () => {
             const breakdownEl = this.dom.getElement('yearly-breakdown-section') || this.dom.getElement('breakdown-body');
             const tableViewed = breakdownEl
                 ? (breakdownEl.getBoundingClientRect().top < this.dom.getViewportHeight() ? 1 : 0)
@@ -818,7 +857,13 @@ export class CalculatorApp {
                 table_viewed: tableViewed,
                 device_type: deviceType
             });
-        });
+        };
+
+        if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+            (window as any).requestIdleCallback(runAnalytics, { timeout: 1000 });
+        } else {
+            setTimeout(runAnalytics, 50);
+        }
     }
 
     private initInitialCalculation(): void {
