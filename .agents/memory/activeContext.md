@@ -5,24 +5,35 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** SEO Optimization & Quality Remediation — Step 1: Pruning Dead-Weight Content & Resolving Cannibalization Completed.
-- **Implemented Fixes & Architectural Outcomes (Step 1):**
-  - **1-Crore Cannibalization Resolution:**
-    - Archived duplicate files (`reach-1-crore-via-sip.md` and `reach-1-crore-rupees-via-sip.md`) to `content/archive/`.
-    - De-registered `'/reach-1-crore-via-sip'` from `routes.php`.
-    - 301-redirected `/reach-1-crore-via-sip` and `/resource/growth/reach-1-crore-rupees-via-sip` directly into `/my-first-crore-calculator`.
-  - **Zero-Click Thin Definition Pruning (Helpful Content Quality Score Boost):**
-    - Archived 7 thin "What is..." blog articles into `content/archive/blog/`: `what-is-sip`, `what-is-cagr`, `what-is-compound-interest`, `what-is-emi`, `what-is-fd`, `what-is-ppf`, `inflation-impact-on-sip`.
-    - Registered permanent HTTP 301 redirects in `content/redirects.json` directing each retired slug to its respective primary interactive calculator (`/sip-calculator`, `/cagr-calculator`, `/compound-interest-calculator`, `/emi-calculator`, `/fd-calculator`, `/ppf-calculator`, `/inflation-calculator`).
-  - **Internal Link & Sitemap Hygiene:**
-    - Updated `content/calculator_links.json` and `content/calculator_pillar_guides.json` so all internal links point directly to active 200-OK canonical destinations without redirect hops.
-    - Verified `sitemap.xml` now emits 33 clean 200-OK URLs (0 retired or redirecting URLs).
+- **Current Milestone:** SEO Optimization & Quality Remediation — Step 1 & Step 2 Completed.
+- **Implemented Fixes & Architectural Outcomes (Step 1 & Step 2):**
+  - **Step 1 (Pruning Dead-Weight Content & Resolving Cannibalization):**
+    - **1-Crore Cannibalization Resolution:**
+      - Archived duplicate files (`reach-1-crore-via-sip.md` and `reach-1-crore-rupees-via-sip.md`) to `content/archive/`.
+      - De-registered `'/reach-1-crore-via-sip'` from `routes.php`.
+      - 301-redirected `/reach-1-crore-via-sip` and `/resource/growth/reach-1-crore-rupees-via-sip` directly into `/my-first-crore-calculator`.
+    - **Zero-Click Thin Definition Pruning (Helpful Content Quality Score Boost):**
+      - Archived 7 thin "What is..." blog articles into `content/archive/blog/`: `what-is-sip`, `what-is-cagr`, `what-is-compound-interest`, `what-is-emi`, `what-is-fd`, `what-is-ppf`, `inflation-impact-on-sip`.
+      - Registered permanent HTTP 301 redirects in `content/redirects.json` directing each retired slug to its respective primary interactive calculator (`/sip-calculator`, `/cagr-calculator`, `/compound-interest-calculator`, `/emi-calculator`, `/fd-calculator`, `/ppf-calculator`, `/inflation-calculator`).
+    - **Internal Link & Sitemap Hygiene:**
+      - Updated `content/calculator_links.json` and `content/calculator_pillar_guides.json` so all internal links point directly to active 200-OK canonical destinations without redirect hops.
+      - Re-tagged 4 high-value 1-Crore FAQs in `content/faqs.json` to `my-first-crore-calculator`.
+      - Verified `sitemap.xml` emits 33 clean 200-OK URLs (0 retired or redirecting URLs).
+  - **Step 2 (Page 1 CTR Snippet Retargeting):**
+    - Retargeted `<title>` and `<meta name="description">` frontmatter for Google Page 1 ranking calculators:
+      - `/swp-calculator`: Title `SWP Calculator India — Monthly Pension from ₹10L to ₹1 Cr`, Meta `Calculate monthly SWP payout, tax-free withdrawals & corpus longevity for ₹10 Lakhs, ₹50 Lakhs, or ₹1 Crore in mutual funds. Free 2026 LTCG tax reports.`
+      - `/my-first-crore-calculator`: Title `1 Crore SIP Calculator — Monthly SIP Needed for ₹1 Cr`, Meta `Find the exact monthly SIP required to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% annual step-up compounding & 2026 LTCG taxes with free PDF report.`
+      - `/inflation-calculator`: Title `Inflation Calculator India — What Will Your Money Be Worth?`, Meta `See what ₹50,000/month or ₹1 Crore today will be worth in 10, 20, or 30 years at 6% Indian inflation. Calculate future living expenses & erosion instantly.`
+      - `/sip-calculator`: Title `SIP Calculator India — Returns with Step-Up & 2026 Tax`, Meta `Free SIP calculator for Indian mutual funds. Model monthly returns, 10% annual step-up compounding, 2026 capital gains taxes (12.5% LTCG) & download PDF.`
+      - `/sip-step-up-calculator`: Title `Step-Up SIP Calculator India — Top-Up Compounding Planner`, Meta `Calculate how a 5% to 20% annual salary step-up accelerates your mutual fund wealth. Compare flat vs top-up SIP returns with 2026 tax calculation.`
+    - Validated all titles satisfy byte length constraints (`strlen($title) <= 65`) taking into account UTF-8 multi-byte characters (`₹`, `—`).
+    - Verified rendered HTML via local server curl and automated integration test suite.
   - **Verification & QA Passed:**
     - All 9 redirects verified with 301 status and correct `Location` header.
     - PHPUnit: 809 tests / 12,666 assertions passed (100% OK).
     - `composer check-all` (PHPStan Level 5 + PHPCS): 0 errors across 250 files.
     - `php tests/parity_check.php`: 100% parity across all calculator engines.
-    - `npm run build`: built in 284ms with 0 type errors.
+    - `npm run build`: built cleanly with 0 type errors.
   - **Formal Service Interface Contracts (`src/Services/`):**
     - Created `SitemapGeneratorInterface`, `GuideRendererInterface`, `CsvExportServiceInterface`, `TelemetryPruningServiceInterface`.
     - Bound all 4 interfaces in DI service providers (`CoreServiceProvider`, `RepositoryServiceProvider`, `DomainServiceProvider`, `ControllerServiceProvider`).

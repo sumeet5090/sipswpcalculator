@@ -1,10 +1,10 @@
 ---
 og_image: "/assets/og/og-my-first-crore-calculator.jpg"
-title: "1 Crore SIP Calculator — Monthly Investment to Reach ₹1 Cr"
+title: "1 Crore SIP Calculator — Monthly SIP Needed for ₹1 Cr"
 subtitle: "Find the exact monthly SIP needed to reach ₹1 Crore in 5, 10, 15, or 20 years. Free goal planning calculator for Indian mutual fund investors."
-meta_desc: "Calculate exact monthly SIP required to reach ₹1 Crore in 5, 10, 15 or 20 years. Model step-up compounding, mutual fund returns & inflation impact with free PDF."
+meta_desc: "Find the exact monthly SIP required to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% annual step-up compounding & 2026 LTCG taxes with free PDF report."
 keywords: "crore calculator, 1 crore in 5 years sip, reach 1 crore sip, how much sip for 1 crore, 1 crore mutual fund calculator, crorepathi sip planner, 1 crore in 10 years sip"
-schema_name: "1 Crore SIP Calculator — Monthly SIP to Reach ₹1 Cr"
+schema_name: "1 Crore SIP Calculator — Monthly Investment to Reach ₹1 Cr"
 seo_category: "growth"
 type: "calculator"
 date: "2026-08-03"
