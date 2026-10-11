@@ -1,0 +1,158 @@
+{#
+  Calculator Quick-Switcher Dock
+  Above-the-fold horizontal pill navigation providing 1-tap switching across all 13 calculators.
+  Overcomes the 19.8% scroll depth barrier and distributes internal PageRank equity.
+#}
+{% set current_slug = active_page|default('home') %}
+
+{% set dock_calculators = [
+    {
+        'slug': 'home',
+        'href': '/',
+        'icon': '⚡🛡️',
+        'short_title': 'SIP + SWP Dual',
+        'badge': 'Core'
+    },
+    {
+        'slug': 'sip-calculator',
+        'href': '/sip-calculator',
+        'icon': '⚡',
+        'short_title': 'SIP Calculator',
+        'badge': null
+    },
+    {
+        'slug': 'swp-calculator',
+        'href': '/swp-calculator',
+        'icon': '🛡️',
+        'short_title': 'SWP Pension',
+        'badge': 'Retire'
+    },
+    {
+        'slug': 'sip-step-up-calculator',
+        'href': '/sip-step-up-calculator',
+        'icon': '🚀',
+        'short_title': 'Step-Up SIP',
+        'badge': 'Top-Up'
+    },
+    {
+        'slug': 'my-first-crore-calculator',
+        'href': '/my-first-crore-calculator',
+        'icon': '👑',
+        'short_title': '₹1 Crore Goal',
+        'badge': 'Goal'
+    },
+    {
+        'slug': 'inflation-calculator',
+        'href': '/inflation-calculator',
+        'icon': '📉',
+        'short_title': 'Inflation & CPI',
+        'badge': null
+    },
+    {
+        'slug': 'lumpsum-calculator',
+        'href': '/lumpsum-calculator',
+        'icon': '💰',
+        'short_title': 'Lumpsum',
+        'badge': null
+    },
+    {
+        'slug': 'retirement-calculator',
+        'href': '/retirement-calculator',
+        'icon': '🏖️',
+        'short_title': 'Retirement FIRE',
+        'badge': null
+    },
+    {
+        'slug': 'target-corpus-calculator',
+        'href': '/target-corpus-calculator',
+        'icon': '🎯',
+        'short_title': 'Target Corpus',
+        'badge': null
+    },
+    {
+        'slug': 'cagr-calculator',
+        'href': '/cagr-calculator',
+        'icon': '📈',
+        'short_title': 'CAGR Return',
+        'badge': null
+    },
+    {
+        'slug': 'emi-calculator',
+        'href': '/emi-calculator',
+        'icon': '🏦',
+        'short_title': 'Loan EMI',
+        'badge': null
+    },
+    {
+        'slug': 'ppf-calculator',
+        'href': '/ppf-calculator',
+        'icon': '🏛️',
+        'short_title': 'PPF Scheme',
+        'badge': 'Tax-Free'
+    },
+    {
+        'slug': 'fd-calculator',
+        'href': '/fd-calculator',
+        'icon': '📜',
+        'short_title': 'Fixed Deposit',
+        'badge': null
+    }
+] %}
+
+<nav aria-label="Financial Calculators Quick Switcher" class="relative mb-6 sm:mb-8 not-prose">
+    <!-- Visual Section Header for Exploration -->
+    <div class="flex items-center justify-between mb-2 px-1">
+        <span class="text-caption font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span>Explore All Calculators</span>
+        </span>
+        <span class="text-caption text-slate-400 font-medium hidden sm:inline">
+            Scroll or tap to switch tool
+        </span>
+    </div>
+
+    <!-- Outer Dock Container with Pure Light Elevation & Border -->
+    <div class="relative bg-white/95 rounded-2xl border border-slate-200/90 shadow-card backdrop-blur-xl p-1.5 sm:p-2">
+        <!-- Horizontal Scrollable Track -->
+        <div id="calculator-dock-track" class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar scroll-smooth py-0.5 px-0.5">
+            {% for item in dock_calculators %}
+                {% set is_active = (current_slug == item.slug) %}
+                <a href="{{ item.href }}"
+                   id="dock-pill-{{ item.slug }}"
+                   class="shrink-0 flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-ui-xs transition-all duration-200 whitespace-nowrap {{ is_active ? 'bg-emerald-600 text-white font-bold shadow-subtle shadow-emerald-600/30 ring-2 ring-emerald-500/25' : 'bg-slate-50/90 hover:bg-emerald-50/70 text-slate-700 hover:text-emerald-900 border border-slate-200/80 hover:border-emerald-300 font-semibold shadow-flat hover:shadow-subtle' }}"
+                   {% if is_active %}aria-current="page"{% endif %}
+                   title="{{ item.short_title }} — Indian Financial Calculator">
+                    <span class="text-xs sm:text-sm select-none" aria-hidden="true">{{ item.icon }}</span>
+                    <span>{{ item.short_title }}</span>
+                    {% if item.badge %}
+                        <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-full tracking-wider leading-none {{ is_active ? 'bg-emerald-700/80 text-emerald-100' : 'bg-emerald-100/80 text-emerald-800' }}">
+                            {{ item.badge }}
+                        </span>
+                    {% endif %}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</nav>
+
+<script>
+    // Smooth auto-scroll active dock pill into viewport on load
+    (function () {
+        function scrollActiveDockPill() {
+            var activePill = document.querySelector('#calculator-dock-track a[aria-current="page"]');
+            var track = document.getElementById('calculator-dock-track');
+            if (activePill && track) {
+                var trackRect = track.getBoundingClientRect();
+                var pillRect = activePill.getBoundingClientRect();
+                if (pillRect.left < trackRect.left || pillRect.right > trackRect.right) {
+                    activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                }
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', scrollActiveDockPill);
+        } else {
+            scrollActiveDockPill();
+        }
+    })();
+</script>

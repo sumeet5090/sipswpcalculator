@@ -9,7 +9,7 @@ Comprehensive routing registry for sipswpcalculator.com. Categorized by function
 
 ---
 
-## 2. Standalone & Specialized Calculators (17 Tools)
+## 2. Standalone & Specialized Calculators (16 Active Tools)
 - `https://sipswpcalculator.com/sip-calculator`
 - `https://sipswpcalculator.com/swp-calculator`
 - `https://sipswpcalculator.com/sip-step-up-calculator`
@@ -23,39 +23,30 @@ Comprehensive routing registry for sipswpcalculator.com. Categorized by function
 - `https://sipswpcalculator.com/inflation-calculator`
 - `https://sipswpcalculator.com/ppf-calculator`
 - `https://sipswpcalculator.com/fd-calculator`
-- `https://sipswpcalculator.com/reach-1-crore-via-sip`
 - `https://sipswpcalculator.com/reach-5-crore-via-sip`
 - `https://sipswpcalculator.com/sip-5000-per-month`
 - `https://sipswpcalculator.com/sip-10000-per-month`
 
 ---
 
-## 3. Educational Pillar Guides & Resource Hubs
+## 3. Educational Pillar Guides & Resource Hubs (12 Active In-Depth Guides)
 ### Category Hubs
 - `https://sipswpcalculator.com/resources` (All Resources Hub)
 - `https://sipswpcalculator.com/resource/growth` (Wealth Growth Category Hub)
 - `https://sipswpcalculator.com/resource/retirement` (Retirement Planning Category Hub)
 - `https://sipswpcalculator.com/resource/comparison` (Investment Comparisons Category Hub)
 
-### Growth Articles (10 Guides)
-- `https://sipswpcalculator.com/resource/growth/what-is-sip`
-- `https://sipswpcalculator.com/resource/growth/what-is-compound-interest`
-- `https://sipswpcalculator.com/resource/growth/what-is-cagr`
-- `https://sipswpcalculator.com/resource/growth/what-is-emi`
+### Growth Articles (3 Guides)
 - `https://sipswpcalculator.com/resource/growth/sip-for-beginners`
 - `https://sipswpcalculator.com/resource/growth/earning-30k-at-25-investment-blueprint`
-- `https://sipswpcalculator.com/resource/growth/reach-1-crore-rupees-via-sip`
 - `https://sipswpcalculator.com/resource/growth/20-year-wealth-blueprint-step-up-sip`
-- `https://sipswpcalculator.com/resource/growth/inflation-impact-on-sip`
 
 ### Retirement Articles (3 Guides)
 - `https://sipswpcalculator.com/resource/retirement/swp-retirement-planning`
 - `https://sipswpcalculator.com/resource/retirement/retirement-planning-4-percent-swp-rule`
 - `https://sipswpcalculator.com/resource/retirement/sip-vs-swp-wealth-creation-withdrawal-strategy`
 
-### Comparison Articles (7 Guides)
-- `https://sipswpcalculator.com/resource/comparison/what-is-ppf`
-- `https://sipswpcalculator.com/resource/comparison/what-is-fd`
+### Comparison Articles (6 Guides)
 - `https://sipswpcalculator.com/resource/comparison/sip-vs-lumpsum`
 - `https://sipswpcalculator.com/resource/comparison/sip-vs-fd-vs-ppf`
 - `https://sipswpcalculator.com/resource/comparison/mf-returns-benchmarks`
@@ -89,7 +80,6 @@ Comprehensive routing registry for sipswpcalculator.com. Categorized by function
 - `https://sipswpcalculator.com/embed/inflation-calculator`
 - `https://sipswpcalculator.com/embed/ppf-calculator`
 - `https://sipswpcalculator.com/embed/fd-calculator`
-- `https://sipswpcalculator.com/embed/reach-1-crore-via-sip`
 - `https://sipswpcalculator.com/embed/reach-5-crore-via-sip`
 - `https://sipswpcalculator.com/embed/sip-5000-per-month`
 - `https://sipswpcalculator.com/embed/sip-10000-per-month`

@@ -363,14 +363,33 @@ export class ChartManager {
     highlightYear(index: number): void {
         if (!this.chartInstance || this.activeViewType !== 'line') return;
         try {
-            this.chartInstance.setActiveElements([{ datasetIndex: 1, index }]);
+            const datasets = this.chartInstance.data?.datasets;
+            if (!datasets || datasets.length === 0) return;
+
+            // Target the primary corpus/growth dataset (dataset 1 if present and valid, otherwise dataset 0)
+            let targetDatasetIndex = (datasets.length > 1) ? 1 : 0;
+            let meta = this.chartInstance.getDatasetMeta(targetDatasetIndex);
+
+            // If the target dataset has no controller or is hidden, fallback to dataset 0
+            if (!meta || !meta.controller || meta.hidden) {
+                targetDatasetIndex = 0;
+                meta = this.chartInstance.getDatasetMeta(0);
+            }
+
+            if (!meta || !meta.controller) return;
+
+            const targetData = datasets[targetDatasetIndex]?.data;
+            if (!targetData || index < 0 || index >= targetData.length) return;
+            if (!meta.data || !meta.data[index]) return;
+
+            this.chartInstance.setActiveElements([{ datasetIndex: targetDatasetIndex, index }]);
             if (this.chartInstance.tooltip) {
-                this.chartInstance.tooltip.setActiveElements([{ datasetIndex: 1, index }], { x: 0, y: 0 });
+                this.chartInstance.tooltip.setActiveElements([{ datasetIndex: targetDatasetIndex, index }], { x: 0, y: 0 });
             }
             this.chartInstance.update('none');
             eventBus.publish('table:highlight', { index, scrollIntoView: false });
         } catch {
-            // Ignore if chart is updating
+            // Defensively swallow any transient Chart.js render/animation race condition
         }
     }
 
@@ -386,7 +405,7 @@ export class ChartManager {
             }
             this.chartInstance.update('none');
         } catch {
-            // Ignore if chart is updating
+            // Defensively swallow any transient Chart.js race condition
         }
     }
 
@@ -694,13 +713,25 @@ export class ChartManager {
                     legend: {
                         position: 'top',
                         align: 'center',
-                        onClick: () => {},
+                        onClick: (_e: any, legendItem: any, legend: any) => {
+                            const index = legendItem.datasetIndex;
+                            const ci = legend.chart;
+                            if (typeof index === 'number') {
+                                if (ci.isDatasetVisible(index)) {
+                                    ci.hide(index);
+                                    legendItem.hidden = true;
+                                } else {
+                                    ci.show(index);
+                                    legendItem.hidden = false;
+                                }
+                            }
+                        },
                         labels: {
                             filter: (legendItem, chartData) => {
                                 if (typeof legendItem.datasetIndex !== 'number') return true;
                                 if (!chartData || !chartData.datasets) return true;
                                 const ds = chartData.datasets[legendItem.datasetIndex];
-                                return ds !== undefined && !ds.hidden;
+                                return ds !== undefined;
                             },
                             usePointStyle: true,
                             pointStyle: 'circle',

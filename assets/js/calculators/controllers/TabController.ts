@@ -125,6 +125,23 @@ export class TabController {
                 if (stageDivider) stageDivider.classList.add('hidden');
                 if (standaloneCorpus) standaloneCorpus.classList.remove('hidden');
 
+                // If corpus input is zero or below minimum, populate with default benchmark
+                const corpusInput = this.dom.getElement<HTMLInputElement>('corpus');
+                const corpusRange = this.dom.getElement<HTMLInputElement>('corpus_range');
+                if (corpusInput) {
+                    const minCorpus = parseFloat(corpusInput.getAttribute('data-min') || corpusInput.getAttribute('min') || '10000');
+                    const curVal = parseFloat(corpusInput.value) || 0;
+                    if (curVal < minCorpus) {
+                        const defaultVal = 5000000;
+                        corpusInput.value = String(defaultVal);
+                        corpusInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        if (corpusRange) {
+                            corpusRange.value = String(defaultVal);
+                            corpusRange.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                    }
+                }
+
                 if (swpToggle) {
                     swpToggle.checked = true;
                     swpToggle.setAttribute('aria-expanded', 'true');

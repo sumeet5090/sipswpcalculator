@@ -37,7 +37,7 @@ export class SliderManager {
         window.addEventListener('touchcancel', hideAllTooltips, { passive: true });
     }
 
-    private triggerFn: () => void;
+    private triggerFn: (options?: { isDragging?: boolean }) => void;
     private validator: InputValidator;
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
@@ -47,9 +47,10 @@ export class SliderManager {
     private _rafTriggerId: number | null = null;
     private _lastHapticTime: number = 0;
     private isInternalSyncing: boolean = false;
+    private _isDragging: boolean = false;
 
     constructor(
-        triggerFn: () => void,
+        triggerFn: (options?: { isDragging?: boolean }) => void,
         validator: InputValidator,
         dom: DOMAdapter = new DOMAdapter(),
         formatter: CurrencyFormatter = new CurrencyFormatter()
@@ -60,7 +61,11 @@ export class SliderManager {
         this.formatter = formatter;
     }
 
-    public setTriggerFn(fn: () => void): void {
+    public getIsDragging(): boolean {
+        return this._isDragging;
+    }
+
+    public setTriggerFn(fn: (options?: { isDragging?: boolean }) => void): void {
         this.triggerFn = fn;
     }
 
@@ -178,14 +183,29 @@ export class SliderManager {
         };
 
         SliderManager.initGlobalTooltipDismissal();
-        range.addEventListener('pointerdown', () => showTooltip(parseFloat(range.value) || 0));
-        range.addEventListener('touchstart', () => showTooltip(parseFloat(range.value) || 0), { passive: true });
-        range.addEventListener('pointerup', hideTooltip);
-        range.addEventListener('touchend', hideTooltip, { passive: true });
-        range.addEventListener('touchcancel', hideTooltip, { passive: true });
+        const startDrag = () => {
+            this._isDragging = true;
+            showTooltip(parseFloat(range.value) || 0);
+        };
+        const endDrag = () => {
+            this._isDragging = false;
+            hideTooltip();
+            if (this._rafTriggerId !== null) {
+                cancelAnimationFrame(this._rafTriggerId);
+                this._rafTriggerId = null;
+            }
+            this.triggerFn({ isDragging: false });
+        };
+
+        range.addEventListener('pointerdown', startDrag);
+        range.addEventListener('touchstart', startDrag, { passive: true });
+        range.addEventListener('pointerup', endDrag);
+        range.addEventListener('touchend', endDrag, { passive: true });
+        range.addEventListener('touchcancel', endDrag, { passive: true });
 
         // Range Slider Input Sync
         range.addEventListener('input', () => {
+            this._isDragging = true;
             if (this.isInternalSyncing) return;
             this.isInternalSyncing = true;
             try {
@@ -237,17 +257,18 @@ export class SliderManager {
             }
             this._rafTriggerId = requestAnimationFrame(() => {
                 this._rafTriggerId = null;
-                this.triggerFn();
+                this.triggerFn({ isDragging: true });
             });
         });
 
         // Ensure final value commits immediately on interaction completion
         range.addEventListener('change', () => {
+            this._isDragging = false;
             if (this._rafTriggerId !== null) {
                 cancelAnimationFrame(this._rafTriggerId);
                 this._rafTriggerId = null;
             }
-            this.triggerFn();
+            this.triggerFn({ isDragging: false });
         });
 
         // WAI-ARIA Slider Keyboard Support (PageUp, PageDown, Home, End)

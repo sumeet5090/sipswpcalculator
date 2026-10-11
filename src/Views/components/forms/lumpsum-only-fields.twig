@@ -13,7 +13,7 @@
         'max': calc_config.lumpsum.max|default(10000000),
         'slider_max': calc_config.lumpsum.slider_max|default(2500000),
         'step': calc_config.lumpsum.step|default(5000),
-        'value': lumpsum|default(calc_config.lumpsum.default|default(500000)),
+        'value': (lumpsum is defined and lumpsum > 0) ? lumpsum : calc_config.lumpsum.default|default(500000),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [

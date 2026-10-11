@@ -127,15 +127,6 @@ $calculators = [
         'tag3' => 'Section 194A TDS Deduction',
         'accent' => [13, 148, 136], // teal-600
     ],
-    'reach-1-crore-via-sip' => [
-        'category' => 'MILESTONE GOAL-SEEK',
-        'title' => 'How to Reach ₹1 Crore via SIP',
-        'subtitle' => 'Calculate monthly investments to reach ₹1 Crore across 5, 10, 15, and 20 years with 10% annual step-up compounding & LTCG tax rules.',
-        'tag1' => '5 to 20-Year Timelines',
-        'tag2' => '10% Step-Up Boost',
-        'tag3' => 'LTCG Tax Waterfall',
-        'accent' => [5, 150, 105], // emerald-600
-    ],
     'reach-5-crore-via-sip' => [
         'category' => 'FINANCIAL FREEDOM (FIRE)',
         'title' => 'How to Reach ₹5 Crore via SIP',

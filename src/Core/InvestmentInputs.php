@@ -122,6 +122,9 @@ class InvestmentInputs implements CalculatorInputsInterface
         $swpYears      = (int) self::resolveField('swp_years', $data, $cfg);
         $lumpsumField  = (!isset($data['lumpsum']) && isset($data['corpus'])) ? 'corpus' : 'lumpsum';
         $lumpsum       = self::resolveField($lumpsumField, $data, $cfg);
+        $corpus        = isset($data['corpus'])
+            ? self::resolveField('corpus', $data, $cfg)
+            : (isset($data['lumpsum']) ? $lumpsum : self::resolveField('corpus', $data, $cfg));
         $swpRate       = self::resolveField('swp_rate', $data, $cfg);
         $inflation     = self::resolveField('inflation', $data, $cfg);
 
@@ -141,7 +144,7 @@ class InvestmentInputs implements CalculatorInputsInterface
             $inflation,
             $ltcgExemption,
             $ltcgTaxRate,
-            isset($data['corpus']) ? self::resolveField('corpus', $data, $cfg) : $lumpsum
+            $corpus
         );
     }
 

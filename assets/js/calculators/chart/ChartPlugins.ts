@@ -35,12 +35,14 @@ export function createChartPlugins(context: ChartPluginsContext) {
 
             if (chart.tooltip?.getActiveElements()?.length) {
                 const activePoint = chart.tooltip.getActiveElements()[0];
+                if (!activePoint || !activePoint.element || typeof activePoint.element.x !== 'number' || typeof activePoint.element.y !== 'number') return;
                 const ctx = chart.ctx;
                 const x = activePoint.element.x;
                 const y = activePoint.element.y;
                 const leftX = chart.scales.x.left;
                 const topY = chart.scales.y.top;
                 const bottomY = chart.scales.y.bottom;
+                if (!isFinite(x) || !isFinite(y) || !isFinite(leftX) || !isFinite(topY) || !isFinite(bottomY)) return;
 
                 ctx.save();
                 try {
@@ -100,9 +102,10 @@ export function createChartPlugins(context: ChartPluginsContext) {
     const compoundingIgnitionPlugin = {
         id: 'compoundingIgnitionZone',
         beforeDatasetsDraw: (chart: any) => {
-            if (chart.config.type !== 'line' || !chart.chartArea) return;
-            const meta = chart.getDatasetMeta(1);
-            if (!meta || !meta.data || meta.data.length === 0) return;
+            if (chart.config.type !== 'line' || !chart.chartArea || !chart.data?.datasets?.length) return;
+            const targetDsIndex = chart.data.datasets.length > 1 ? 1 : 0;
+            const meta = chart.getDatasetMeta(targetDsIndex);
+            if (!meta || !meta.controller || !meta.data || meta.data.length === 0) return;
 
             const results = getLastResults();
             if (results.length < 2) return;
@@ -244,9 +247,12 @@ export function createChartPlugins(context: ChartPluginsContext) {
             const delta = sipCorpus - fdCorpus;
             if (delta <= 0) return;
 
-            const metaSip = chart.getDatasetMeta(1);
-            if (!metaSip || !metaSip.data || metaSip.data.length === 0) return;
+            if (!chart.data?.datasets?.length) return;
+            const targetDsIndex = chart.data.datasets.length > 1 ? 1 : 0;
+            const metaSip = chart.getDatasetMeta(targetDsIndex);
+            if (!metaSip || !metaSip.controller || !metaSip.data || metaSip.data.length === 0) return;
             const finalPoint = metaSip.data[metaSip.data.length - 1];
+            if (!finalPoint || typeof finalPoint.x !== 'number' || typeof finalPoint.y !== 'number') return;
 
             const ctx = chart.ctx;
             ctx.save();
@@ -339,9 +345,10 @@ export function createChartPlugins(context: ChartPluginsContext) {
     const splineMilestonesPlugin = {
         id: 'splineMilestones',
         afterDatasetsDraw: (chart: any) => {
-            if (chart.config.type !== 'line') return;
-            const meta = chart.getDatasetMeta(1);
-            if (!meta || !meta.data) return;
+            if (chart.config.type !== 'line' || !chart.data?.datasets?.length) return;
+            const targetDsIndex = chart.data.datasets.length > 1 ? 1 : 0;
+            const meta = chart.getDatasetMeta(targetDsIndex);
+            if (!meta || !meta.controller || !meta.data) return;
 
             const ctx = chart.ctx;
             const milestones = getCurrentMilestones() || [];
