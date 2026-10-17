@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "seo-automation": {
+      "command": "/Users/sumeetboga/projects/sipswpcalculator/venv/bin/python",
+      "args": [
+        "/Users/sumeetboga/projects/sipswpcalculator/scripts/seo-mcp/server.py"
+      ],
+      "env": {
+        "GSC_CREDENTIALS_PATH": "/Users/sumeetboga/.config/sipswpcalculator/secrets/gsc-key.json",
+        "GSC_SITE_URL": "sc-domain:sipswpcalculator.com",
+        "BING_API_KEY": "bd3170e7caee40539b6b360634e9e9ec"
+      }
+    }
+  }
+}
