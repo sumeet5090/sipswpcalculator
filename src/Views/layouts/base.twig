@@ -333,11 +333,13 @@
 
             <div class="grid grid-cols-2 gap-2">
                 <!-- CSV Export -->
+                {% if calculator_type not in ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'] %}
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('downloadCsvBtn')?.click()"
                     class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
                     <span class="text-ui-sm">📊</span>
                     <span>Export CSV</span>
                 </button>
+                {% endif %}
                 <!-- Save Plan -->
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('saveCalculationBtn')?.click()"
                     class="p-2.5 rounded-xl bg-amber-50/70 hover:bg-amber-100/70 border border-amber-200 text-amber-900 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
@@ -363,11 +365,13 @@
                     <span>Snapshot</span>
                 </button>
                 <!-- §112A Tax Waterfall -->
+                {% if calculator_type not in ['emi', 'ppf', 'fd', 'inflation'] %}
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('open-tax-waterfall-btn')?.click()"
                     class="p-2.5 rounded-xl bg-violet-50 hover:bg-violet-100 border border-violet-200 text-violet-900 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
                     <span class="text-ui-sm">⚖️</span>
                     <span>§112A Tax</span>
                 </button>
+                {% endif %}
                 <!-- Embed Calculator -->
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('open-embed-modal-btn')?.click()"
                     class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">

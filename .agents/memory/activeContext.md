@@ -5,8 +5,27 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed.
-- **Implemented Fixes & Architectural Outcomes (2026-11-02):**
+- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed (Parts 1, 2 & 3).
+- **Implemented Fixes & Architectural Outcomes (Part 3 - 2026-11-02):**
+  - **DEFECT-1 (Critical):** Fixed `/embed/sip-step-up-calculator` blank form in `src/Views/calculators/embed.twig`: updated check to `{% if calculator_type in ['sip', 'sip-step-up'] %}` so the iframe renders all SIP and Step-Up form controls.
+  - **DEFECT-2 (Critical):** Fixed `/embed/retirement-calculator` combo tab lockout in `src/Views/calculators/embed.twig`: replaced legacy 2-tab buttons with the full 3-mode segmented control bar (`#tab-combo`, `#tab-sip`, `#tab-swp`), Stage 1 & Stage 2 headers, stage divider, and `#swp-standalone-corpus`.
+  - **DEFECT-3 (High):** Restored URL query parameter state hydration for specialized calculators:
+    - In `assets/js/calculators/controllers/UrlStateController.ts`: added generic parsing for all URL query parameters, updating `<input>`/`<select>` elements and matching `_range` sliders while clamping to min/max.
+    - In `assets/js/calculators/CalculatorApp.ts`: invoked `UrlStateController.init()` for specialized calculators so shared/bookmarked URLs hydrate on load.
+  - **DEFECT-4 (High):** Fixed `ShareController.ts` permalink serialization and messaging:
+    - Added `buildShareUrl()` extracting `FormData` for specialized modes.
+    - Updated `#shareCalcBtn` (Copy Link), `tryNativeShare()`, and `shareToWhatsApp()` to format contextual titles, principal, interest, and maturity values rather than `sip=0&years=0`.
+    - Added specialized calculator titles and year fallbacks to `downloadSocialCard()`.
+  - **DEFECT-5 (Medium):** Contextual UI suppression on debt/loans/inflation:
+    - Suppressed Section 112A equity tax button `⚖️` on `/emi-calculator`, `/ppf-calculator`, `/fd-calculator`, and `/inflation-calculator` in `src/Views/components/chart-visualization.twig` and `src/Views/layouts/base.twig`.
+    - Suppressed "Export CSV" button in the mobile action sheet for specialized calculators where CSV export is not supported.
+- **Verification & QA Passed (Part 3):**
+  - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
+  - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)**.
+  - PHPStan Level 5: **0 errors**.
+  - PHPCS: **0 violations**.
+  - Frontend Typecheck & Build: `npm run typecheck && npm run build` built with 0 type errors in 211ms.
+  - CLI Dispatch Assertions: Verified all embed routes, controls, and tax button suppression via PHP HTTP requests.
   - **P0 Critical Fixes:**
     - Fixed `/retirement-calculator` mode lockout in `src/Views/calculators/calculator-guide.twig`: rendered the full 3-mode segmented control bar (`tab-combo`, `tab-sip`, `tab-swp`) with Stage 1 (Accumulation) & Stage 2 (Distribution) headers and dividers.
     - Fixed dead clicks on master chart controls in `assets/js/calculators/CalculatorApp.ts`: invoked `this.chartManager.initControls()` during `init()`, enabling donut view toggles and benchmark comparison chips (None, Nifty 50, Gold, Bank FD) across all calculators.

@@ -62,6 +62,41 @@ export class UrlStateController {
             }
         }
 
+        // Generic hydration for specialized form inputs and dropdowns
+        urlParams.forEach((val, key) => {
+            if (paramMap[key] || ['cur', 'goal_mode', 'post_tax', 'wealth_map', 'swp_on'].includes(key)) {
+                return;
+            }
+
+            const selectEl = this.dom.getElement<HTMLSelectElement>(key);
+            if (selectEl && selectEl.tagName === 'SELECT') {
+                selectEl.value = val;
+                selectEl.dispatchEvent(new Event('change', { bubbles: true }));
+                return;
+            }
+
+            const numVal = parseFloat(val);
+            if (!isNaN(numVal)) {
+                const inputEl = this.dom.getElement<HTMLInputElement>(key);
+                const rangeEl = this.dom.getElement<HTMLInputElement>(key + '_range');
+
+                if (inputEl || rangeEl) {
+                    let clampedVal = numVal;
+                    if (inputEl) {
+                        const min = parseFloat(inputEl.getAttribute('min') || '0');
+                        const max = parseFloat(inputEl.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
+                        clampedVal = Math.min(Math.max(numVal, min), max);
+                        inputEl.value = String(clampedVal);
+                        inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+                    if (rangeEl) {
+                        rangeEl.value = String(clampedVal);
+                        rangeEl.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+                }
+            }
+        });
+
         if (urlParams.has('cur')) {
             const curVal = urlParams.get('cur') || 'INR';
             const curEl = this.dom.getElement<HTMLSelectElement>('currency');

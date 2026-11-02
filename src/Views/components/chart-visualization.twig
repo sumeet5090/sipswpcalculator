@@ -192,11 +192,13 @@
                         title="Snapshot scenario for comparison">
                         <span class="text-ui-xs">📸</span>
                     </button>
+                    {% if calculator_type not in ['emi', 'ppf', 'fd', 'inflation'] %}
                     <button type="button" id="open-tax-waterfall-btn" 
                         class="p-1.5 rounded-xl border border-tax-border bg-tax-surface hover:bg-violet-100 text-tax-emphasis transition-all active:scale-95 cursor-pointer shadow-flat"
                         title="Open Section 112A Tax Waterfall Modal">
                         <span class="text-ui-xs">⚖️</span>
                     </button>
+                    {% endif %}
                     <button type="button" id="open-embed-modal-btn" 
                         onclick="document.getElementById('embedModal')?.showModal()"
                         class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-flat"

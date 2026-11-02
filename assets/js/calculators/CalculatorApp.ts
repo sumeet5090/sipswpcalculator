@@ -533,6 +533,11 @@ export class CalculatorApp {
                 this.analytics
             );
             this.specializedController.init();
+            new UrlStateController(
+                this.dom,
+                () => this.syncSwpToggleState(),
+                (goalMode) => this.setGoalMode(goalMode)
+            ).init();
             this.exportSubsystem.init();
             this.ergonomicsSubsystem.init();
             return;
