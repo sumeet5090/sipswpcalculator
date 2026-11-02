@@ -5,8 +5,23 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed (Parts 1, 2 & 3).
-- **Implemented Fixes & Architectural Outcomes (Part 3 - 2026-11-02):**
+- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed (Parts 1, 2, 3 & 4).
+- **Implemented Fixes & Architectural Outcomes (Part 4 - 2026-11-02):**
+  - **DEFECT-1 (Critical):** Suppressed invalid PDF download trigger (`openPdfModalBtn`) in `src/Views/components/yearly-breakdown-table.twig` for specialized calculators (`ppf`, `fd`, `emi`, `inflation`, `cagr`, `compound_interest`) where `GeneratePdfAction` cannot process non-SIP inputs. In `src/Views/layouts/base.twig`, swapped the mobile hero button from `dock-pdf-btn` to `dock-social-btn` ("Share Card", 100% supported via 1080x1080 canvas export) for specialized modes.
+  - **DEFECT-2 (High):** Re-hydrated the mobile bottom dock (`#mobile-dock-glance`) and sticky mini-HUD for specialized calculators:
+    - Added `onResultsUpdated` callback to `SpecializedCalculatorController.ts` invoked after `this.driver.calculate(ctx)`.
+    - Wired callback in `CalculatorApp.ts` to `this.ergonomicsSubsystem.updateResults(results, this.getInputs())`.
+    - In `MobileErgonomicDeckController.ts`, added specialized formatting for Monthly EMI (`EMI/mo`), PPF Deposit (`Deposit/yr`), and FD Principal (`Deposit`), eliminating frozen `₹ --`.
+  - **DEFECT-3 (High):** Restored "Save Plan" (`#saveCalculationBtn`) localStorage title parity in `resources/js/save-calculation.ts`: added mode-aware extractors for `emi`, `ppf`, `fd`, `compound_interest`, `cagr`, and `inflation`, eliminating bogus `₹0/mo • 15Y @ 12%` records.
+  - **DEFECT-4 (Medium):** Suppressed dead "📸 Snapshot" button in `src/Views/components/chart-visualization.twig` and `src/Views/layouts/base.twig` on all 6 specialized calculators where `ScenarioDiffController` is inapplicable.
+  - **DEFECT-5 (Low):** Suppressed "AMFI Aligned" regulatory badge and AMFI modal trigger on non-mutual fund calculators (`/emi-calculator` and `/inflation-calculator`) in `chart-visualization.twig` and `base.twig`.
+- **Verification & QA Passed (Part 4):**
+  - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
+  - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)**.
+  - PHPStan Level 5: **0 errors**.
+  - PHPCS: **0 violations**.
+  - Frontend Typecheck & Build: `npm run typecheck && npm run build` built with 0 type errors in 293ms.
+  - CLI Dispatch Assertions: Verified button suppression, modal scoping, and mobile deck hero swap via PHP HTTP requests.
   - **DEFECT-1 (Critical):** Fixed `/embed/sip-step-up-calculator` blank form in `src/Views/calculators/embed.twig`: updated check to `{% if calculator_type in ['sip', 'sip-step-up'] %}` so the iframe renders all SIP and Step-Up form controls.
   - **DEFECT-2 (Critical):** Fixed `/embed/retirement-calculator` combo tab lockout in `src/Views/calculators/embed.twig`: replaced legacy 2-tab buttons with the full 3-mode segmented control bar (`#tab-combo`, `#tab-sip`, `#tab-swp`), Stage 1 & Stage 2 headers, stage divider, and `#swp-standalone-corpus`.
   - **DEFECT-3 (High):** Restored URL query parameter state hydration for specialized calculators:

@@ -123,6 +123,36 @@ export function initSaveCalculationUI(): void {
         } else if (mode === 'target_corpus') {
             const targetVal = (document.getElementById('target_corpus') as HTMLInputElement | null)?.value || '0';
             title = `Target ₹${parseFloat(targetVal).toLocaleString('en-IN')} • ${duration}Y @ ${rate}%`;
+        } else if (mode === 'emi') {
+            const principal = (document.getElementById('emi_principal') as HTMLInputElement | null)?.value || '0';
+            const emiRate = (document.getElementById('emi_rate') as HTMLInputElement | null)?.value || '8.5';
+            const emiYears = (document.getElementById('emi_years') as HTMLInputElement | null)?.value || '20';
+            title = `Loan ₹${parseFloat(principal).toLocaleString('en-IN')} • ${emiYears}Y @ ${emiRate}%`;
+        } else if (mode === 'ppf') {
+            const deposit = (document.getElementById('ppf_deposit') as HTMLInputElement | null)?.value || '0';
+            const ppfRate = (document.getElementById('ppf_rate') as HTMLInputElement | null)?.value || '7.1';
+            const ppfYears = (document.getElementById('ppf_years') as HTMLInputElement | null)?.value || '15';
+            title = `PPF ₹${parseFloat(deposit).toLocaleString('en-IN')}/yr • ${ppfYears}Y @ ${ppfRate}%`;
+        } else if (mode === 'fd') {
+            const principal = (document.getElementById('fd_principal') as HTMLInputElement | null)?.value || '0';
+            const fdRate = (document.getElementById('fd_rate') as HTMLInputElement | null)?.value || '7.5';
+            const fdYears = (document.getElementById('fd_years') as HTMLInputElement | null)?.value || '5';
+            title = `FD ₹${parseFloat(principal).toLocaleString('en-IN')} • ${fdYears}Y @ ${fdRate}%`;
+        } else if (mode === 'compound_interest') {
+            const principal = (document.getElementById('ci_principal') as HTMLInputElement | null)?.value || '0';
+            const ciRate = (document.getElementById('ci_rate') as HTMLInputElement | null)?.value || '10';
+            const ciYears = (document.getElementById('ci_years') as HTMLInputElement | null)?.value || '10';
+            title = `CI ₹${parseFloat(principal).toLocaleString('en-IN')} • ${ciYears}Y @ ${ciRate}%`;
+        } else if (mode === 'cagr') {
+            const initVal = (document.getElementById('cagr_initial') as HTMLInputElement | null)?.value || '0';
+            const finalVal = (document.getElementById('cagr_final') as HTMLInputElement | null)?.value || '0';
+            const cagrYears = (document.getElementById('cagr_years') as HTMLInputElement | null)?.value || '5';
+            title = `CAGR ₹${parseFloat(initVal).toLocaleString('en-IN')} to ₹${parseFloat(finalVal).toLocaleString('en-IN')} • ${cagrYears}Y`;
+        } else if (mode === 'inflation') {
+            const amount = (document.getElementById('inf_amount') as HTMLInputElement | null)?.value || '0';
+            const infRate = (document.getElementById('inf_rate') as HTMLInputElement | null)?.value || '6';
+            const infYears = (document.getElementById('inf_years') as HTMLInputElement | null)?.value || '10';
+            title = `Inflation ₹${parseFloat(amount).toLocaleString('en-IN')} • ${infYears}Y @ ${infRate}%`;
         } else {
             title = `₹${sip.toLocaleString('en-IN')}/mo • ${duration}Y @ ${rate}%`;
         }

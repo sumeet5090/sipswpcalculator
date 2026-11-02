@@ -170,18 +170,37 @@ export class MobileErgonomicDeckController {
             this.deckGainsEl.textContent = `+${this.formatter.formatDynamic(gains)}`;
         }
 
-        if (inputs && this.deckCashflowEl) {
-            if (inputs.enable_swp && inputs.swp_withdrawal > 0) {
+        if (this.deckCashflowEl) {
+            const appEl = this.dom.getElement('calculator-app');
+            const mode = appEl?.dataset?.mode;
+
+            if (inputs && inputs.enable_swp && inputs.swp_withdrawal > 0) {
                 if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'SWP Out';
                 this.deckCashflowEl.textContent = `+${this.formatter.formatDynamic(inputs.swp_withdrawal)}/m`;
                 this.deckCashflowEl.className = 'text-ui-xs font-black text-rose-700 font-financial-mono tabular-nums truncate';
-            } else if (inputs.sip > 0) {
+            } else if (inputs && inputs.sip > 0) {
                 if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'SIP In';
                 this.deckCashflowEl.textContent = `${this.formatter.formatDynamic(inputs.sip)}/m`;
                 this.deckCashflowEl.className = 'text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums truncate';
-            } else if (inputs.lumpsum > 0) {
+            } else if (inputs && inputs.lumpsum > 0) {
                 if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Lumpsum';
                 this.deckCashflowEl.textContent = this.formatter.formatDynamic(inputs.lumpsum);
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-slate-800 font-financial-mono tabular-nums truncate';
+            } else if (mode === 'emi') {
+                const emiEl = this.dom.getElement('summary-corpus');
+                const emiVal = emiEl?.textContent?.trim() || '₹ --';
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'EMI/mo';
+                this.deckCashflowEl.textContent = emiVal;
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-rose-700 font-financial-mono tabular-nums truncate';
+            } else if (mode === 'ppf') {
+                const deposit = parseFloat(this.dom.getValue('ppf_deposit') || '0');
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Deposit';
+                this.deckCashflowEl.textContent = deposit > 0 ? `${this.formatter.formatDynamic(deposit)}/yr` : '₹ --';
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums truncate';
+            } else if (mode === 'fd') {
+                const principal = parseFloat(this.dom.getValue('fd_principal') || '0');
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Deposit';
+                this.deckCashflowEl.textContent = principal > 0 ? this.formatter.formatDynamic(principal) : '₹ --';
                 this.deckCashflowEl.className = 'text-ui-xs font-black text-slate-800 font-financial-mono tabular-nums truncate';
             } else {
                 if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Cashflow';
