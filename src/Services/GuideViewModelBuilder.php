@@ -94,6 +94,11 @@ class GuideViewModelBuilder
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
 
         $targetCorpus = ($strategy instanceof \Core\Strategies\TargetCorpusStrategy) ? $strategy->getTargetCorpus() : null;
+        $targetCalculatedSip = null;
+        if ($strategy instanceof \Core\Strategies\TargetCorpusStrategy && $targetCorpus !== null && $initialInputs instanceof \Core\InvestmentInputs) {
+            $calc = new \Core\InvestmentCalculator();
+            $targetCalculatedSip = $calc->calculateRequiredSip($initialInputs, $targetCorpus);
+        }
         $all_posts = $this->blogRepository->getAllPosts();
         $related_calculators = $this->loadRelatedCalculators($fileSlug);
         $pillar_guides = $this->loadPillarGuides($fileSlug);
@@ -109,6 +114,7 @@ class GuideViewModelBuilder
             'benchmark_template'  => $strategy->getBenchmarkTemplate(),
             'benchmark_title'     => $strategy->getBenchmarkTitle(),
             'target_corpus'       => $targetCorpus,
+            'target_calculated_sip' => $targetCalculatedSip,
             'calc_config'         => $calcDefaults,
             'show_lumpsum'        => $show_lumpsum,
             'faqs'                => $faqs,

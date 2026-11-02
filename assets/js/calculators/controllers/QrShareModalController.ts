@@ -119,9 +119,28 @@ export class QrShareModalController {
         }
 
         try {
+            const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+            const mode = appEl?.dataset?.mode;
+            const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
+
+            if (mode && specializedModes.includes(mode)) {
+                const form = this.dom.getElement<HTMLFormElement>('calculator-form');
+                if (form) {
+                    const formData = new FormData(form);
+                    const params = new URLSearchParams();
+                    formData.forEach((val, key) => {
+                        const strVal = String(val).trim();
+                        if (strVal !== '' && key !== 'website_url' && !['sip', 'stepup', 'lumpsum', 'enable_swp'].includes(key)) {
+                            params.set(key, strVal);
+                        }
+                    });
+                    const queryString = params.toString();
+                    return queryString ? `${window.location.origin}${window.location.pathname}?${queryString}` : window.location.href;
+                }
+            }
+
             const inputs = this.getInputs();
             const params = new URLSearchParams();
-            const appEl = this.dom.getElement('calculator-app');
             const isSwpMode = (appEl?.dataset?.mode === 'swp');
 
             if (inputs.sip !== undefined) params.set('sip', String(inputs.sip));

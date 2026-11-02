@@ -21,6 +21,12 @@
     - Added Indian currency unit subtext and voice ARIA announcements in `assets/js/calculators/CurrencyHelper.ts` for specialized fields (`_principal`, `_deposit`, `_amount`, `_initial`, `_final`, `_years`, `_rate`).
     - Fixed Step-Up boost button in `assets/js/calculators/CalculatorApp.ts`: dynamically increments step-up by +5% if already active rather than resetting to 10%.
     - Suppressed Section 112A equity tax lens on debt/statutory fixed income calculators (PPF, FD, EMI) in `src/Views/components/chart-visualization.twig`.
+    - Fixed Save Plan input selectors in `resources/js/save-calculation.ts` to properly read `sip`, `years`, `rate`, `stepup`, `enable_swp`, and `summary-corpus`.
+    - Fixed SSR hydration flash on `/reach-5-crore-via-sip` in `GuideViewModelBuilder.php` and `target-corpus-fields.twig`, dynamically computing `target_calculated_sip` and highlighting matching rows in `target-corpus.twig`.
+    - Corrected Compound Interest benchmark matrix in `CompoundInterestStrategy.php` to use `lumpsum-growth.twig` rather than the SIP/SWP table.
+    - Suppressed unhydrated SWR telemetry strip on specialized calculators in `chart-visualization.twig` and `SpecializedCalculatorController.ts`.
+    - Hidden SIP-only CSV & PDF export triggers on specialized calculators in `yearly-breakdown-table.twig`.
+    - Serialized specialized form parameters in `QrShareModalController.ts` and enabled `chartManager.getLastResults()` fallback in `CalculatorApp.ts`.
   - **Verification & QA Passed:**
     - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
     - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)** including new unit tests for `reach-5-crore-via-sip` and `sip-5000-per-month`.

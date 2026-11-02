@@ -116,7 +116,7 @@ export class CalculatorApp {
             chartManager: this.chartManager,
             analytics: this.analytics,
             getInputs: () => this.getInputs(),
-            getLatestResults: () => this.latestResults,
+            getLatestResults: () => this.latestResults.length > 0 ? this.latestResults : this.chartManager.getLastResults(),
             getActiveGoalMode: () => this.activeGoalMode,
             getInteractionCount: () => this.interactionCount
         });
@@ -128,7 +128,7 @@ export class CalculatorApp {
             analytics: this.analytics,
             triggerCalculation: () => this.triggerCalculation(),
             getInputs: () => this.getInputs(),
-            getLatestResults: () => this.latestResults,
+            getLatestResults: () => this.latestResults.length > 0 ? this.latestResults : this.chartManager.getLastResults(),
             onSmartNudgeRate: (rate) => this.setSmartNudgeRate(rate)
         });
 

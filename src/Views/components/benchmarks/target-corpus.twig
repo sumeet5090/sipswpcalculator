@@ -27,7 +27,7 @@
                     <td class="py-3 px-3 sm:px-4 text-center text-slate-600">₹9,909 / mo</td>
                     <td class="py-3 px-3 sm:px-4 text-right font-bold text-emerald-800">₹5,004 / mo</td>
                 </tr>
-                <tr class="hover:bg-slate-50/50 transition-colors bg-emerald-50/30">
+                <tr class="hover:bg-slate-50/50 transition-colors {% if target_corpus|default(10000000) == 10000000 %}bg-emerald-50/30 font-bold{% endif %}">
                     <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 font-sans table-sticky-col-td">₹1.00 Crore</td>
                     <td class="py-3 px-3 sm:px-4 text-center text-slate-700">₹1,21,232 / mo</td>
                     <td class="py-3 px-3 sm:px-4 text-center font-extrabold text-emerald-800">₹43,041 / mo</td>
@@ -41,7 +41,7 @@
                     <td class="py-3 px-3 sm:px-4 text-center text-slate-600">₹39,637 / mo</td>
                     <td class="py-3 px-3 sm:px-4 text-right font-bold text-emerald-800">₹20,017 / mo</td>
                 </tr>
-                <tr class="hover:bg-slate-50/50 transition-colors">
+                <tr class="hover:bg-slate-50/50 transition-colors {% if target_corpus|default(10000000) == 50000000 %}bg-emerald-50/30 font-bold{% endif %}">
                     <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 font-sans table-sticky-col-td">₹5.00 Crore</td>
                     <td class="py-3 px-3 sm:px-4 text-center text-slate-700">₹6,06,161 / mo</td>
                     <td class="py-3 px-3 sm:px-4 text-center font-semibold text-emerald-700">₹2,15,203 / mo</td>

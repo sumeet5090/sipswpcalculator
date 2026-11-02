@@ -96,23 +96,40 @@ export function initSaveCalculationUI(): void {
     }
 
     saveBtn.addEventListener('click', () => {
-        const sipInput = document.getElementById('sip_amount') as HTMLInputElement | null;
-        const durationInput = document.getElementById('duration') as HTMLInputElement | null;
-        const rateInput = document.getElementById('interest_rate') as HTMLInputElement | null;
-        const stepUpInput = document.getElementById('step_up_pct') as HTMLInputElement | null;
-        const swpToggle = document.getElementById('swp_enabled') as HTMLInputElement | null;
-        const corpusDisplay = document.getElementById('summary-final-corpus') || document.getElementById('mini-hud-corpus');
+        const appEl = document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const mode = appEl?.dataset?.mode || 'combo';
 
-        const sip = sipInput ? parseFloat(sipInput.value) || 10000 : 10000;
+        const sipInput = (document.getElementById('sip') || document.getElementById('sip_amount')) as HTMLInputElement | null;
+        const durationInput = (document.getElementById('years') || document.getElementById('duration')) as HTMLInputElement | null;
+        const rateInput = (document.getElementById('rate') || document.getElementById('interest_rate')) as HTMLInputElement | null;
+        const stepUpInput = (document.getElementById('stepup') || document.getElementById('step_up_pct')) as HTMLInputElement | null;
+        const swpToggle = (document.getElementById('enable_swp') || document.getElementById('swp_enabled')) as HTMLInputElement | null;
+        const corpusDisplay = document.getElementById('summary-corpus') || document.getElementById('summary-final-corpus') || document.getElementById('mini-hud-corpus');
+
+        const sip = sipInput ? parseFloat(sipInput.value) || 0 : 0;
         const duration = durationInput ? parseInt(durationInput.value, 10) || 15 : 15;
         const rate = rateInput ? parseFloat(rateInput.value) || 12 : 12;
         const stepUp = stepUpInput ? parseFloat(stepUpInput.value) || 0 : 0;
         const swpEnabled = swpToggle ? swpToggle.checked : false;
         const corpus = corpusDisplay ? corpusDisplay.textContent?.trim() || '' : '';
 
+        let title = '';
+        if (mode === 'swp') {
+            const swpWithdrawal = (document.getElementById('swp_withdrawal') as HTMLInputElement | null)?.value || '0';
+            title = `SWP ₹${parseFloat(swpWithdrawal).toLocaleString('en-IN')}/mo • ${duration}Y @ ${rate}%`;
+        } else if (mode === 'lumpsum') {
+            const lumpsumVal = (document.getElementById('lumpsum') as HTMLInputElement | null)?.value || '0';
+            title = `Lumpsum ₹${parseFloat(lumpsumVal).toLocaleString('en-IN')} • ${duration}Y @ ${rate}%`;
+        } else if (mode === 'target_corpus') {
+            const targetVal = (document.getElementById('target_corpus') as HTMLInputElement | null)?.value || '0';
+            title = `Target ₹${parseFloat(targetVal).toLocaleString('en-IN')} • ${duration}Y @ ${rate}%`;
+        } else {
+            title = `₹${sip.toLocaleString('en-IN')}/mo • ${duration}Y @ ${rate}%`;
+        }
+
         const success = saveCalculation({
-            title: `₹${sip.toLocaleString('en-IN')}/mo • ${duration}Y @ ${rate}%`,
-            calcType: 'sip_swp',
+            title: title,
+            calcType: mode,
             sipAmount: sip,
             sipDuration: duration,
             interestRate: rate,
