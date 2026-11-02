@@ -1,495 +1,384 @@
-# Implementation Plan: Calculator Regression & Defect Remediation
+# Implementation Plan: Additional Calculator Regression & Quality Fixes (Part 2)
 
 **Target Executor:** Junior Gemini 3.8 Flash Low (The Handoff Protocol)  
 **Governing Standard:** `.agents/AGENTS.md` (Light-mode fintech aesthetic, POLA, Chesterton's Fence, Cross-Runtime Parity)  
-**Scope:** Remediate 11 confirmed defects across all 16 dedicated calculators without touching the homepage master calculator.
+**Scope:** Remediate 7 additional latent defects across all 16 dedicated calculators.
 
 ---
 
-## Architectural Overview & Execution Strategy
+## Architectural Overview
 
-Our regression audit confirmed **100% mathematical parity** between PHP and TypeScript calculation engines (`tests/parity_check.php` passes all scenarios). However, the UI orchestration, template structures, initial strategy inputs, and event listeners suffer from 11 specific defects ranging from critical lockout to tooltip glitches.
-
-To ensure seamless execution by a junior model without rabbit holes or regressions, this plan organizes the fixes into **5 atomic, sequential phases**:
+This plan resolves the secondary batch of regression findings uncovered across state persistence, SSR hydration, benchmark templates, and specialized calculator state sharing:
 
 ```mermaid
 flowchart TD
-    P1["Phase 1: P0 Strategy & Page Defaults\n(PHP Backend: StrategyFactory, SipStrategy, TargetCorpusStrategy)"] --> P2["Phase 2: P0 UI Wiring & Mode Switching\n(Twig & TS: calculator-guide.twig, ChartManager.ts)"]
-    P2 --> P3["Phase 3: P1 Slider Tooltips & Specialized Modals\n(TS: SliderManager.ts, CalculatorApp.ts)"]
-    P3 --> P4["Phase 4: P2 & P3 Calculation Logic & Polish\n(TS: ResultsController.ts, CagrDriver.ts, CurrencyHelper.ts)"]
-    P4 --> P5["Phase 5: Verification & Parity Gate\n(CLI: npm run build, parity_check.php, curl validation)"]
+    P1["Phase 1: Persistence & LocalStorage Fix\n(resources/js/save-calculation.ts)"] --> P2["Phase 2: SSR Hydration & Benchmark Accuracy\n(PHP & Twig: GuideViewModelBuilder, CompoundInterestStrategy, target-corpus-fields)"]
+    P2 --> P3["Phase 3: Specialized Calculator UI Guarding\n(Twig & TS: chart-visualization.twig, yearly-breakdown-table.twig, SpecializedCalculatorController.ts)"]
+    P3 --> P4["Phase 4: Share URL & Subsystem Result State\n(TS: QrShareModalController.ts, ChartManager.ts, CalculatorApp.ts)"]
+    P4 --> P5["Phase 5: Verification & Quality Gate\n(CLI: npm run build, phpunit, parity_check.php)"]
 ```
 
 ---
 
 ## Proposed Changes
 
-### Phase 1: P0 Route & Strategy Initial Defaults (PHP Backend)
+### Phase 1: LocalStorage "Save Plan" Input Selectors
 
 #### Goal:
-Ensure `/reach-5-crore-via-sip` initializes to ₹5 Crore (not ₹1 Crore), and `/sip-5000-per-month` initializes to ₹5,000 (not ₹10,000), matching their SEO titles, content, and mathematical matrices.
+Ensure clicking "Save Plan" (`#saveCalculationBtn`) saves the actual user inputs rather than falling back to hardcoded ₹10,000 / 15Y defaults.
+
+#### 1.1 `resources/js/save-calculation.ts`
+- **File:** `resources/js/save-calculation.ts`
+- **Action:** Query the active DOM input IDs (`sip`, `years`, `rate`, `stepup`, `enable_swp`, `summary-corpus`), and generate context-aware titles for SWP, Lumpsum, and Target Corpus.
+- **Diff:**
+```diff
+--- a/resources/js/save-calculation.ts
++++ b/resources/js/save-calculation.ts
+@@ -95,25 +95,44 @@ export function initSaveCalculationUI(): void {
+         return;
+     }
+ 
+     saveBtn.addEventListener('click', () => {
+-        const sipInput = document.getElementById('sip_amount') as HTMLInputElement | null;
+-        const durationInput = document.getElementById('duration') as HTMLInputElement | null;
+-        const rateInput = document.getElementById('interest_rate') as HTMLInputElement | null;
+-        const stepUpInput = document.getElementById('step_up_pct') as HTMLInputElement | null;
+-        const swpToggle = document.getElementById('swp_enabled') as HTMLInputElement | null;
+-        const corpusDisplay = document.getElementById('summary-final-corpus') || document.getElementById('mini-hud-corpus');
++        const appEl = document.querySelector<HTMLElement>('[data-js="calculator-app"]');
++        const mode = appEl?.dataset?.mode || 'combo';
++
++        const sipInput = (document.getElementById('sip') || document.getElementById('sip_amount')) as HTMLInputElement | null;
++        const durationInput = (document.getElementById('years') || document.getElementById('duration')) as HTMLInputElement | null;
++        const rateInput = (document.getElementById('rate') || document.getElementById('interest_rate')) as HTMLInputElement | null;
++        const stepUpInput = (document.getElementById('stepup') || document.getElementById('step_up_pct')) as HTMLInputElement | null;
++        const swpToggle = (document.getElementById('enable_swp') || document.getElementById('swp_enabled')) as HTMLInputElement | null;
++        const corpusDisplay = document.getElementById('summary-corpus') || document.getElementById('summary-final-corpus') || document.getElementById('mini-hud-corpus');
+ 
+-        const sip = sipInput ? parseFloat(sipInput.value) || 10000 : 10000;
++        const sip = sipInput ? parseFloat(sipInput.value) || 0 : 0;
+         const duration = durationInput ? parseInt(durationInput.value, 10) || 15 : 15;
+         const rate = rateInput ? parseFloat(rateInput.value) || 12 : 12;
+         const stepUp = stepUpInput ? parseFloat(stepUpInput.value) || 0 : 0;
+         const swpEnabled = swpToggle ? swpToggle.checked : false;
+         const corpus = corpusDisplay ? corpusDisplay.textContent?.trim() || '' : '';
+ 
++        let title = '';
++        if (mode === 'swp') {
++            const swpWithdrawal = (document.getElementById('swp_withdrawal') as HTMLInputElement | null)?.value || '0';
++            title = `SWP ₹${parseFloat(swpWithdrawal).toLocaleString('en-IN')}/mo • ${duration}Y @ ${rate}%`;
++        } else if (mode === 'lumpsum') {
++            const lumpsumVal = (document.getElementById('lumpsum') as HTMLInputElement | null)?.value || '0';
++            title = `Lumpsum ₹${parseFloat(lumpsumVal).toLocaleString('en-IN')} • ${duration}Y @ ${rate}%`;
++        } else if (mode === 'target_corpus') {
++            const targetVal = (document.getElementById('target_corpus') as HTMLInputElement | null)?.value || '0';
++            title = `Target ₹${parseFloat(targetVal).toLocaleString('en-IN')} • ${duration}Y @ ${rate}%`;
++        } else {
++            title = `₹${sip.toLocaleString('en-IN')}/mo • ${duration}Y @ ${rate}%`;
++        }
++
+         const success = saveCalculation({
+-            title: `₹${sip.toLocaleString('en-IN')}/mo • ${duration}Y @ ${rate}%`,
+-            calcType: 'sip_swp',
++            title: title,
++            calcType: mode,
+             sipAmount: sip,
+             sipDuration: duration,
+             interestRate: rate,
+```
 
 ---
 
-#### 1.1 `src/Core/Strategies/SipStrategy.php`
-- **File:** `src/Core/Strategies/SipStrategy.php`
-- **Action:** Support an optional `$defaultSip` constructor override so specific slugs can supply custom starting monthly amounts.
+### Phase 2: SSR Hydration & Benchmark Accuracy (PHP & Twig)
+
+#### Goal:
+1. Fix SSR hydration flash on `/reach-5-crore-via-sip` so the hero card outputs ~₹58,600 / mo without layout jump, and highlight the ₹5 Cr row in the benchmark matrix.
+2. Fix benchmark table on `/compound-interest-calculator` so it renders compound interest matrix rather than SIP/SWP monthly pension table.
+
+#### 2.1 `src/Services/GuideViewModelBuilder.php`
+- **File:** `src/Services/GuideViewModelBuilder.php`
+- **Action:** Calculate `target_calculated_sip` during SSR using `InvestmentCalculator::calculateRequiredSip`.
 - **Diff:**
 ```diff
---- a/src/Core/Strategies/SipStrategy.php
-+++ b/src/Core/Strategies/SipStrategy.php
-@@ -4,10 +4,28 @@ declare(strict_types=1);
+--- a/src/Services/GuideViewModelBuilder.php
++++ b/src/Services/GuideViewModelBuilder.php
+@@ -94,6 +94,11 @@ class GuideViewModelBuilder
+         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
  
- namespace Core\Strategies;
+         $targetCorpus = ($strategy instanceof \Core\Strategies\TargetCorpusStrategy) ? $strategy->getTargetCorpus() : null;
++        $targetCalculatedSip = null;
++        if ($strategy instanceof \Core\Strategies\TargetCorpusStrategy && $targetCorpus !== null && $initialInputs instanceof \Core\InvestmentInputs) {
++            $calc = new \Core\InvestmentCalculator();
++            $targetCalculatedSip = $calc->calculateRequiredSip($initialInputs, $targetCorpus);
++        }
+         $all_posts = $this->blogRepository->getAllPosts();
+         $related_calculators = $this->loadRelatedCalculators($fileSlug);
+         $pillar_guides = $this->loadPillarGuides($fileSlug);
+@@ -110,6 +115,7 @@ class GuideViewModelBuilder
+             'benchmark_template'  => $strategy->getBenchmarkTemplate(),
+             'benchmark_title'     => $strategy->getBenchmarkTitle(),
+             'target_corpus'       => $targetCorpus,
++            'target_calculated_sip' => $targetCalculatedSip,
+             'calc_config'         => $calcDefaults,
+             'show_lumpsum'        => $show_lumpsum,
+```
+
+#### 2.2 `src/Views/components/forms/target-corpus-fields.twig`
+- **File:** `src/Views/components/forms/target-corpus-fields.twig`
+- **Action:** Use dynamic SSR `target_calculated_sip`.
+- **Diff:**
+```diff
+--- a/src/Views/components/forms/target-corpus-fields.twig
++++ b/src/Views/components/forms/target-corpus-fields.twig
+@@ -13,7 +13,7 @@
+         </span>
+         <span class="text-micro bg-growth-surface text-growth-emphasis px-2 py-0.5 rounded-full font-bold border border-growth-border">Inverse Math Solved</span>
+     </div>
+-    <div id="target_calculated_sip_display" class="text-heading-lg sm:text-display-xl font-extrabold text-growth-emphasis font-financial-mono mt-1.5 tabular-nums">₹ 11,516 / mo</div>
++    <div id="target_calculated_sip_display" class="text-heading-lg sm:text-display-xl font-extrabold text-growth-emphasis font-financial-mono mt-1.5 tabular-nums">₹ {{ (target_calculated_sip|default(11516))|number_format }} / mo</div>
+     <p class="text-caption text-slate-600 mt-1">Systematically required monthly investment to achieve your target corpus.</p>
+ </div>
+```
+
+#### 2.3 `src/Views/components/benchmarks/target-corpus.twig`
+- **File:** `src/Views/components/benchmarks/target-corpus.twig`
+- **Action:** Dynamically highlight the milestone row that matches `target_corpus`.
+- **Diff:**
+```diff
+--- a/src/Views/components/benchmarks/target-corpus.twig
++++ b/src/Views/components/benchmarks/target-corpus.twig
+@@ -27,7 +27,7 @@
+                     <td class="py-3 px-3 sm:px-4 text-center text-slate-600">₹9,909 / mo</td>
+                     <td class="py-3 px-3 sm:px-4 text-right font-bold text-emerald-800">₹5,004 / mo</td>
+                 </tr>
+-                <tr class="hover:bg-slate-50/50 transition-colors bg-emerald-50/30">
++                <tr class="hover:bg-slate-50/50 transition-colors {% if target_corpus|default(10000000) == 10000000 %}bg-emerald-50/30 font-bold{% endif %}">
+                     <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 font-sans table-sticky-col-td">₹1.00 Crore</td>
+                     <td class="py-3 px-3 sm:px-4 text-center text-slate-700">₹1,21,232 / mo</td>
+                     <td class="py-3 px-3 sm:px-4 text-center font-extrabold text-emerald-800">₹43,041 / mo</td>
+@@ -41,7 +41,7 @@
+                     <td class="py-3 px-3 sm:px-4 text-center text-slate-600">₹39,637 / mo</td>
+                     <td class="py-3 px-3 sm:px-4 text-right font-bold text-emerald-800">₹20,017 / mo</td>
+                 </tr>
+-                <tr class="hover:bg-slate-50/50 transition-colors">
++                <tr class="hover:bg-slate-50/50 transition-colors {% if target_corpus|default(10000000) == 50000000 %}bg-emerald-50/30 font-bold{% endif %}">
+                     <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 font-sans table-sticky-col-td">₹5.00 Crore</td>
+                     <td class="py-3 px-3 sm:px-4 text-center text-slate-700">₹6,06,161 / mo</td>
+                     <td class="py-3 px-3 sm:px-4 text-center font-semibold text-emerald-700">₹2,15,203 / mo</td>
+```
+
+#### 2.4 `src/Core/Strategies/CompoundInterestStrategy.php`
+- **File:** `src/Core/Strategies/CompoundInterestStrategy.php`
+- **Action:** Override `getBenchmarkTemplate()` and `getBenchmarkTitle()`.
+- **Diff:**
+```diff
+--- a/src/Core/Strategies/CompoundInterestStrategy.php
++++ b/src/Core/Strategies/CompoundInterestStrategy.php
+@@ -24,4 +24,14 @@ class CompoundInterestStrategy extends BaseStrategy
  
-+use Core\Inputs\CalculatorInputsInterface;
-+use Core\InvestmentInputs;
-+use Services\ConfigServiceInterface;
-+
- class SipStrategy extends BaseStrategy
- {
-+    private ?float $defaultSip;
-+
-+    public function __construct(ConfigServiceInterface $configService, ?float $defaultSip = null)
-+    {
-+        parent::__construct($configService);
-+        $this->defaultSip = $defaultSip;
-+    }
-+
-     public function getType(): string
-     {
-         return 'sip';
+         return new CompoundInterestInputs($principal, $rate, $years, $frequency);
      }
 +
-+    public function getInitialInputs(): CalculatorInputsInterface
++    public function getBenchmarkTemplate(): string
 +    {
-+        $overrides = $this->defaultSip !== null ? ['sip' => $this->defaultSip] : [];
-+        return InvestmentInputs::fromRequest($overrides, $this->configService);
++        return 'components/benchmarks/lumpsum-growth.twig';
++    }
++
++    public function getBenchmarkTitle(): string
++    {
++        return 'Compound Interest Growth Matrix (Principal Compounded @ 12% CAGR)';
 +    }
  }
 ```
 
 ---
 
-#### 1.2 `src/Core/Strategies/TargetCorpusStrategy.php`
-- **File:** `src/Core/Strategies/TargetCorpusStrategy.php`
-- **Action:** Support custom `$defaultTargetCorpus` and expose a getter `getTargetCorpus(): float`.
-- **Diff:**
-```diff
---- a/src/Core/Strategies/TargetCorpusStrategy.php
-+++ b/src/Core/Strategies/TargetCorpusStrategy.php
-@@ -4,9 +4,23 @@ declare(strict_types=1);
- 
- namespace Core\Strategies;
- 
-+use Services\ConfigServiceInterface;
-+
- class TargetCorpusStrategy extends BaseStrategy
- {
-+    private float $defaultTargetCorpus;
-+
-+    public function __construct(ConfigServiceInterface $configService, float $defaultTargetCorpus = 10000000.0)
-+    {
-+        parent::__construct($configService);
-+        $this->defaultTargetCorpus = $defaultTargetCorpus;
-+    }
-+
-+    public function getTargetCorpus(): float
-+    {
-+        return $this->defaultTargetCorpus;
-+    }
-+
-     public function getType(): string
-     {
-         return 'target_corpus';
-```
-
----
-
-#### 1.3 `src/Core/Strategies/StrategyFactory.php`
-- **File:** `src/Core/Strategies/StrategyFactory.php`
-- **Action:** Pass customized constructor parameters for `sip-5000-per-month` (5,000) and `reach-5-crore-via-sip` (50,000,000).
-- **Diff:**
-```diff
---- a/src/Core/Strategies/StrategyFactory.php
-+++ b/src/Core/Strategies/StrategyFactory.php
-@@ -57,6 +57,14 @@ class StrategyFactory
-         if (!isset($this->strategyMap[$key])) {
-             throw new \DomainException("No calculator strategy mapped for slug: '{$key}'");
-         }
-+
-+        if ($key === 'sip-5000-per-month') {
-+            return new SipStrategy($this->configService, 5000.0);
-+        }
-+        if ($key === 'reach-5-crore-via-sip') {
-+            return new TargetCorpusStrategy($this->configService, 50000000.0);
-+        }
-+
-         $strategyClass = $this->strategyMap[$key];
-```
-
----
-
-#### 1.4 `src/Services/GuideViewModelBuilder.php`
-- **File:** `src/Services/GuideViewModelBuilder.php`
-- **Action:** Pass `target_corpus` into `$data` for the Twig template.
-- **Diff:**
-```diff
---- a/src/Services/GuideViewModelBuilder.php
-+++ b/src/Services/GuideViewModelBuilder.php
-@@ -93,6 +93,7 @@ class GuideViewModelBuilder
-         $show_lumpsum = ($calculator_type === 'lumpsum');
-         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
- 
-+        $targetCorpus = ($strategy instanceof \Core\Strategies\TargetCorpusStrategy) ? $strategy->getTargetCorpus() : null;
-         $all_posts = $this->blogRepository->getAllPosts();
-         $related_calculators = $this->loadRelatedCalculators($fileSlug);
-         $pillar_guides = $this->loadPillarGuides($fileSlug);
-@@ -108,6 +109,7 @@ class GuideViewModelBuilder
-             'calculator_type'     => $calculator_type,
-             'benchmark_template'  => $strategy->getBenchmarkTemplate(),
-             'benchmark_title'     => $strategy->getBenchmarkTitle(),
-+            'target_corpus'       => $targetCorpus,
-             'calc_config'         => $calcDefaults,
-             'show_lumpsum'        => $show_lumpsum,
-```
-
----
-
-### Phase 2: P0 UI Wiring & Mode Switching (Twig & TypeScript)
+### Phase 3: Specialized Calculator UI Guarding (Twig & TypeScript)
 
 #### Goal:
-1. Fix permanent lockout on `/retirement-calculator` by rendering the 3-mode segmented control bar.
-2. Fix dead clicks on donut view and benchmark chips across ALL calculators by calling `chartManager.initControls()`.
+1. Suppress `#purchasing-power-telemetry-strip` (which shows `₹ --` and retirement copy) on specialized calculators.
+2. Conditionally hide CSV & PDF export buttons on specialized calculators where backend endpoints only parse SIP/SWP inputs.
 
----
-
-#### 2.1 `src/Views/calculators/calculator-guide.twig`
-- **File:** `src/Views/calculators/calculator-guide.twig`
-- **Action:** Replace the 2-button tabs in combo mode with the proper 3-button segmented control bar matching `calculator-form.twig`, including stage headers and divider.
-- **Diff:**
-```diff
---- a/src/Views/calculators/calculator-guide.twig
-+++ b/src/Views/calculators/calculator-guide.twig
-@@ -134,22 +134,39 @@
-                 <form id="calculator-form" class="relative z-10 space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth" onsubmit="event.preventDefault();">
-                     {% if calculator_type == 'all' or calculator_type == 'combo' %}
--                        <!-- Combo Form (SIP + SWP Tabs) -->
-+                        <!-- 3-Mode Segmented Control Bar (Dual vs SIP Only vs SWP Only) -->
-                         <div class="py-0.5 mb-2 rounded-2xl">
--                            <div class="flex bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70 shadow-flat gap-1" role="tablist">
--                                <button type="button" id="tab-sip" role="tab" aria-selected="true"
--                                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer">
--                                    <span>⚡</span>
--                                    <span>SIP Details</span>
-+                            <div class="flex bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70 shadow-flat gap-1" role="tablist" aria-label="Calculator Mode Selector">
-+                                <button type="button" id="tab-combo" role="tab" aria-selected="true"
-+                                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 bg-white text-emerald-800 shadow-flat border border-slate-200/60 cursor-pointer">
-+                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 text-micro font-extrabold">🚀</span>
-+                                    <span>Dual (SIP+SWP)</span>
-+                                </button>
-+                                <button type="button" id="tab-sip" role="tab" aria-selected="false"
-+                                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-900 cursor-pointer">
-+                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-200 text-slate-600 text-micro font-extrabold">⚡</span>
-+                                    <span>SIP Only</span>
-                                 </button>
-                                 <button type="button" id="tab-swp" role="tab" aria-selected="false"
-                                     class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-900 cursor-pointer">
--                                    <span>🛡️</span>
--                                    <span>SWP Details</span>
-+                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-200 text-slate-600 text-micro font-extrabold">🛡️</span>
-+                                    <span>SWP Only</span>
-                                 </button>
-                             </div>
-                         </div>
-                         
-                         <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip">
-+                            <div id="stage-1-header" class="flex items-center justify-between px-3 py-1.5 mb-2 rounded-xl bg-gradient-to-r from-emerald-50 via-teal-50/50 to-slate-50 border border-emerald-200/80 shadow-flat">
-+                                <div class="flex items-center gap-2">
-+                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-emerald-600 text-white text-micro font-black">1</span>
-+                                    <span class="text-caption font-extrabold text-emerald-950 uppercase tracking-wider">Accumulation Phase (SIP)</span>
-+                                </div>
-+                                <span class="text-micro font-bold text-emerald-700 font-financial-mono">Wealth Building</span>
-+                            </div>
-                             <div class="space-y-3">
-                                 {% include 'components/forms/sip-fields.twig' %}
-                             </div>
-                         </div>
-                         
--                        <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="hidden">
-+                        <div id="stage-transition-divider" class="my-3 flex items-center gap-2">
-+                            <div class="flex-1 border-t border-dashed border-slate-300"></div>
-+                            <span class="text-micro font-bold uppercase tracking-widest text-slate-400 bg-slate-50 px-2 py-0.5 rounded-full border border-slate-200">Retirement Transition</span>
-+                            <div class="flex-1 border-t border-dashed border-slate-300"></div>
-+                        </div>
-+
-+                        <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp">
-+                            <div id="stage-2-header" class="flex items-center justify-between px-3 py-1.5 mb-2 rounded-xl bg-gradient-to-r from-rose-50 via-amber-50/50 to-slate-50 border border-rose-200/80 shadow-flat">
-+                                <div class="flex items-center gap-2">
-+                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-rose-600 text-white text-micro font-black">2</span>
-+                                    <span class="text-caption font-extrabold text-rose-950 uppercase tracking-wider">Distribution Phase (SWP)</span>
-+                                </div>
-+                                <span class="text-micro font-bold text-rose-700 font-financial-mono">Retirement Cashflow</span>
-+                            </div>
-+                            <div id="swp-standalone-corpus" class="hidden mb-3">
-+                                {% include 'components/forms/corpus-field.twig' %}
-+                            </div>
-                             <div class="space-y-3">
-```
-
----
-
-#### 2.2 `assets/js/calculators/CalculatorApp.ts`
-- **File:** `assets/js/calculators/CalculatorApp.ts`
-- **Action:** Call `this.chartManager.initControls()` at the top of `init()` so that chart view toggles and benchmark chips are wired on every calculator.
-- **Diff:**
-```diff
---- a/assets/js/calculators/CalculatorApp.ts
-+++ b/assets/js/calculators/CalculatorApp.ts
-@@ -507,6 +507,9 @@ export class CalculatorApp {
-         const mode = appEl?.dataset?.mode || 'combo';
-         const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
- 
-+        // Bind view switcher (line/donut) and benchmark chips across all calculators
-+        this.chartManager.initControls();
-+
-         if (specializedModes.includes(mode)) {
-             new StepperController(
-```
-
----
-
-### Phase 3: P1 Slider Tooltips & Specialized Modals (TypeScript)
-
-#### Goal:
-1. Fix slider drag tooltips on all 6 specialized calculators so currency fields display `₹X Lakh / Crore` instead of `3000000%`, and tenure sliders display `X Yrs` instead of `X%`.
-2. Initialize `ExportSubsystem` and `ErgonomicsSubsystem` on specialized calculators so "Share Plan", QR code modal, and keyboard shortcuts function properly.
-
----
-
-#### 3.1 `assets/js/calculators/SliderManager.ts`
-- **File:** `assets/js/calculators/SliderManager.ts`
-- **Action:** Expand tooltip formatting rules to detect currency and year inputs across standard and specialized calculators.
-- **Diff:**
-```diff
---- a/assets/js/calculators/SliderManager.ts
-+++ b/assets/js/calculators/SliderManager.ts
-@@ -168,9 +168,13 @@ export class SliderManager {
-             const max = parseFloat(range.max) || 100;
-             const pct = max > min ? ((val - min) / (max - min)) * 100 : 0;
-             tooltip.style.left = `clamp(32px, ${pct.toFixed(2)}%, calc(100% - 32px))`;
--            if (inputId === 'sip' || inputId === 'lumpsum' || inputId === 'target_corpus' || inputId === 'swp_withdrawal') {
-+            
-+            const isCurrency = inputId === 'sip' || inputId === 'lumpsum' || inputId === 'target_corpus' || inputId === 'swp_withdrawal' ||
-+                inputId.endsWith('_principal') || inputId.endsWith('_deposit') || inputId.endsWith('_amount') || inputId.endsWith('_initial') || inputId.endsWith('_final');
-+            const isYears = inputId === 'years' || inputId === 'swp_years' || inputId.endsWith('_years');
-+
-+            if (isCurrency) {
-                 tooltip.textContent = this.formatter.formatDynamic(val);
--            } else if (inputId === 'years' || inputId === 'swp_years') {
-+            } else if (isYears) {
-                 tooltip.textContent = `${val} Yrs`;
-             } else {
-                 tooltip.textContent = `${val}%`;
-```
-
----
-
-#### 3.2 `assets/js/calculators/CalculatorApp.ts`
-- **File:** `assets/js/calculators/CalculatorApp.ts`
-- **Action:** Initialize `exportSubsystem` and `ergonomicsSubsystem` before returning in specialized calculator mode.
-- **Diff:**
-```diff
---- a/assets/js/calculators/CalculatorApp.ts
-+++ b/assets/js/calculators/CalculatorApp.ts
-@@ -530,6 +530,8 @@ export class CalculatorApp {
-                 this.analytics
-             );
-             this.specializedController.init();
-+            this.exportSubsystem.init();
-+            this.ergonomicsSubsystem.init();
-             return;
-         }
-```
-
----
-
-### Phase 4: P2 & P3 Calculation Logic, Formatting & Microcopy Polish
-
-#### Goal:
-1. Prevent spurious "Compounding Ignition" row in Year 2 on Lumpsum, SWP, and Specialized calculators.
-2. Fix double-sign `+-40.0%` on CAGR negative returns.
-3. Conditionally suppress equity tax lenses on PPF, FD, and EMI calculators in Twig.
-4. Add Indian currency subtext and assistive voice labels for specialized fields in `CurrencyHelper.ts`.
-5. Fix Step-Up boost button to increment rather than reset to 10.
-
----
-
-#### 4.1 `assets/js/calculators/controllers/ResultsController.ts`
-- **File:** `assets/js/calculators/controllers/ResultsController.ts`
-- **Action:** Restrict Compounding Ignition ribbon strictly to SIP accumulation mode when annual contributions and SIP are positive.
-- **Diff:**
-```diff
---- a/assets/js/calculators/controllers/ResultsController.ts
-+++ b/assets/js/calculators/controllers/ResultsController.ts
-@@ -314,7 +314,8 @@ export class ResultsController {
-             }
- 
-             // Detect and inject Compounding Ignition Inflection Ribbon Row
--            if (!ignitionRendered && (row.interest ?? 0) >= (row.annual_contribution ?? 0) && row.year > 1 && row.cumulative_invested > 0) {
-+            const isAccumulation = !inputs.enable_swp && (inputs.sip ?? 0) > 0 && (row.annual_contribution ?? 0) > 0;
-+            if (isAccumulation && !ignitionRendered && (row.interest ?? 0) >= (row.annual_contribution ?? 0) && row.year > 1 && row.cumulative_invested > 0) {
-                 ignitionRendered = true;
-                 const inflectionTr = document.createElement('tr');
-                 inflectionTr.className = 'bg-emerald-50/80 border-y border-emerald-300/80 font-sans';
-```
-
----
-
-#### 4.2 `assets/js/calculators/drivers/CagrDriver.ts`
-- **File:** `assets/js/calculators/drivers/CagrDriver.ts`
-- **Action:** Avoid hardcoded `+` prefix when absolute return is negative.
-- **Diff:**
-```diff
---- a/assets/js/calculators/drivers/CagrDriver.ts
-+++ b/assets/js/calculators/drivers/CagrDriver.ts
-@@ -60,7 +60,9 @@ export class CagrDriver implements ISpecializedDriver {
- 
-         const gainBadge = ctx.dom.getElement('summary-gain-badge');
-         if (gainBadge) {
--            gainBadge.textContent = `+${res.absolute_return_percentage.toFixed(1)}% (${res.multiplier.toFixed(2)}x)`;
-+            const pct = res.absolute_return_percentage;
-+            const sign = pct >= 0 ? '+' : '';
-+            gainBadge.textContent = `${sign}${pct.toFixed(1)}% (${res.multiplier.toFixed(2)}x)`;
-         }
- 
-         ctx.resultsController.updateTable(combined, false);
-```
-
----
-
-#### 4.3 `assets/js/calculators/CurrencyHelper.ts`
-- **File:** `assets/js/calculators/CurrencyHelper.ts`
-- **Action:** Add subtext and ARIA formatting support for specialized fields (`_principal`, `_deposit`, `_amount`, `_initial`, `_final`, `_years`, `_rate`).
-- **Diff:**
-```diff
---- a/assets/js/calculators/CurrencyHelper.ts
-+++ b/assets/js/calculators/CurrencyHelper.ts
-@@ -144,8 +144,16 @@ export class CurrencyFormatter {
-             return this.formatDynamic(value);
-         }
- 
--        if (fieldId === 'years' || fieldId === 'swp_years') {
-+        if (fieldId.endsWith('_principal') || fieldId.endsWith('_deposit') || fieldId.endsWith('_amount') || fieldId.endsWith('_initial') || fieldId.endsWith('_final')) {
-+            return this.formatDynamic(value);
-+        }
-+
-+        if (fieldId === 'years' || fieldId === 'swp_years' || fieldId.endsWith('_years')) {
-             const months = value * 12;
-             return `${value} Year${value > 1 ? 's' : ''} (${months} Months)`;
-         }
-+
-+        if (fieldId.endsWith('_rate')) {
-+            return `${value.toFixed(1).replace(/\.0$/, '')}% p.a.`;
-+        }
-```
-
----
-
-#### 4.4 `assets/js/calculators/CalculatorApp.ts` (Step-Up Boost Button)
-- **File:** `assets/js/calculators/CalculatorApp.ts`
-- **Action:** Increment step-up by +5% if already active, instead of resetting to 10.
-- **Diff:**
-```diff
---- a/assets/js/calculators/CalculatorApp.ts
-+++ b/assets/js/calculators/CalculatorApp.ts
-@@ -580,7 +580,9 @@ export class CalculatorApp {
-         const stepupBoostBtn = this.dom.getElement<HTMLButtonElement>('apply-10pct-stepup-btn');
-         if (stepupBoostBtn) {
-             stepupBoostBtn.addEventListener('click', () => {
--                this.sliderManager.updateFieldValue('stepup', 10);
-+                const current = parseFloat(this.dom.getValue('stepup') || '0') || 0;
-+                const nextVal = current === 0 ? 10 : Math.min(25, current + 5);
-+                this.sliderManager.updateFieldValue('stepup', nextVal);
-                 this.triggerCalculation();
-                 this.engagementSubsystem.triggerMicroBurst();
--                A11yAnnouncer.announce('Applied 10% annual salary appraisal step-up');
-+                A11yAnnouncer.announce(`Applied salary step-up: ${nextVal}%`);
-             });
-         }
-```
-
----
-
-#### 4.5 `src/Views/components/chart-visualization.twig`
+#### 3.1 `src/Views/components/chart-visualization.twig`
 - **File:** `src/Views/components/chart-visualization.twig`
-- **Action:** Conditionally hide Section 112A equity capital gains tax toggle on fixed-income/debt products (PPF, FD, EMI).
+- **Action:** Wrap `#purchasing-power-telemetry-strip` in conditional checking for non-specialized calculators.
 - **Diff:**
 ```diff
 --- a/src/Views/components/chart-visualization.twig
 +++ b/src/Views/components/chart-visualization.twig
-@@ -282,6 +282,7 @@
-                 <span id="active-lens-indicator" class="hidden sm:inline-flex items-center text-micro font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70 shrink-0">Standard View</span>
+@@ -64,6 +64,7 @@
+         </div>
+     </div>
  
-+                {% if calculator_type not in ['ppf', 'fd', 'emi'] %}
-                 <!-- Lens: Section 112A LTCG Tax -->
-                 <label id="overlay-chip-post-tax" 
-                     class="group relative inline-flex items-center gap-1.5 px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg cursor-pointer select-none transition-all duration-150 text-caption font-semibold text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-white active:scale-95 border border-slate-200/80 has-checked:bg-white has-checked:text-tax-emphasis has-checked:shadow-flat has-checked:border-tax-border has-checked:font-bold shrink-0" 
-@@ -290,6 +291,7 @@
-                     <span>§112A LTCG</span>
-                     <span id="tax-telemetry-pill" class="px-1.5 py-0.2 rounded bg-slate-200/60 peer-checked:bg-tax-surface text-micro font-financial-mono text-slate-600 peer-checked:text-tax-emphasis font-bold">12.5%</span>
-                 </label>
-+                {% endif %}
++    {% if calculator_type not in ['emi', 'ppf', 'fd', 'cagr', 'compound_interest', 'inflation'] %}
+     <!-- Real Purchasing Power & Peace-of-Mind Telemetry Strip (Dynamic Risk Empathy) -->
+     <div id="purchasing-power-telemetry-strip" class="p-3 sm:p-3.5 rounded-2xl bg-white/95 border border-slate-200/90 shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-all">
+         <div class="flex items-start sm:items-center gap-3 min-w-0">
+@@ -90,6 +91,7 @@
+             </div>
+         </div>
+     </div>
++    {% endif %}
  
-                 <!-- Lens: Corridor -->
+     <!-- Empathetic SWR Longevity Guardian Alert (Zero-CLS Container) -->
+```
+
+#### 3.2 `src/Views/components/yearly-breakdown-table.twig`
+- **File:** `src/Views/components/yearly-breakdown-table.twig`
+- **Action:** Conditionally hide CSV & PDF export buttons on specialized calculators.
+- **Diff:**
+```diff
+--- a/src/Views/components/yearly-breakdown-table.twig
++++ b/src/Views/components/yearly-breakdown-table.twig
+@@ -47,6 +47,7 @@
+ 
+         <!-- Desktop Dispatch & Conversion Hub (High-Prominence Action Pod >= sm) -->
+         <div class="hidden sm:flex flex-wrap items-center gap-2 w-full sm:w-auto justify-start sm:justify-end">
++            {% if calculator_type not in ['ppf', 'fd', 'emi', 'inflation', 'cagr', 'compound_interest'] %}
+             <!-- CSV Export Button -->
+             <button type="submit" id="downloadCsvBtn" name="action" value="download_csv" form="calculator-form" formaction="/download-csv"
+                 class="px-3.5 py-2 rounded-xl bg-growth-surface hover:bg-emerald-100 text-growth-emphasis border border-growth-border text-ui-xs font-extrabold transition-all duration-150 shadow-flat hover:shadow-subtle hover:border-emerald-300 active:scale-95 cursor-pointer flex items-center gap-1.5"
+@@ -65,6 +66,7 @@
+                 <span>🎨</span>
+                 <span class="text-caption font-bold">Branded PDF</span>
+             </button>
++            {% endif %}
+ 
+             <!-- Save Plan to Browser Storage Button -->
+```
+
+#### 3.3 `assets/js/calculators/controllers/SpecializedCalculatorController.ts`
+- **File:** `assets/js/calculators/controllers/SpecializedCalculatorController.ts`
+- **Action:** Hide telemetry strip if present in the DOM during client-side hydration.
+- **Diff:**
+```diff
+--- a/assets/js/calculators/controllers/SpecializedCalculatorController.ts
++++ b/assets/js/calculators/controllers/SpecializedCalculatorController.ts
+@@ -88,6 +88,10 @@ export class SpecializedCalculatorController {
+             summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-3 gap-3 transition-all duration-300';
+             cardWithdrawn.classList.add('hidden');
+         }
++        const telemetryStrip = this.dom.getElement('purchasing-power-telemetry-strip');
++        if (telemetryStrip) {
++            telemetryStrip.classList.add('hidden');
++        }
+     }
+ 
+     private bindFormListeners(): void {
 ```
 
 ---
 
-## Phase 5: Verification & Quality Gate Plan
+### Phase 4: Share URL & Subsystem Result State (TypeScript)
 
-To be executed immediately following the changes:
+#### Goal:
+1. In `QrShareModalController.ts`, serialize specialized form parameters into share links when in specialized mode.
+2. In `ChartManager.ts`, expose `getLastResults()`, and fall back to it in `CalculatorApp.ts` so `this.chartScrubbingController`, snapshot diffs, and WhatsApp share receive the calculated data on specialized calculators.
 
-### 1. Mathematical Parity Check
-Run the cross-runtime parity suite with NVM Node path:
-```bash
-PATH="/Users/sumeetboga/.nvm/versions/node/v24.14.0/bin:$PATH" php tests/parity_check.php
+#### 4.1 `assets/js/calculators/controllers/QrShareModalController.ts`
+- **File:** `assets/js/calculators/controllers/QrShareModalController.ts`
+- **Action:** Serialize specialized form parameters when in specialized mode.
+- **Diff:**
+```diff
+--- a/assets/js/calculators/controllers/QrShareModalController.ts
++++ b/assets/js/calculators/controllers/QrShareModalController.ts
+@@ -121,6 +121,24 @@ export class QrShareModalController {
+         try {
++            const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
++            const mode = appEl?.dataset?.mode;
++            const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
++
++            if (mode && specializedModes.includes(mode)) {
++                const form = this.dom.getElement<HTMLFormElement>('calculator-form');
++                if (form) {
++                    const formData = new FormData(form);
++                    const params = new URLSearchParams();
++                    formData.forEach((val, key) => {
++                        const strVal = String(val).trim();
++                        if (strVal !== '' && key !== 'website_url' && !['sip', 'stepup', 'lumpsum', 'enable_swp'].includes(key)) {
++                            params.set(key, strVal);
++                        }
++                    });
++                    const queryString = params.toString();
++                    return queryString ? `${window.location.origin}${window.location.pathname}?${queryString}` : window.location.href;
++                }
++            }
++
+             const inputs = this.getInputs();
+             const params = new URLSearchParams();
+-            const appEl = this.dom.getElement('calculator-app');
+             const isSwpMode = (appEl?.dataset?.mode === 'swp');
 ```
-*Expected Result:* 0 failures, all 20 forward scenarios + 5 inverse solver tests + 37 specialized tests pass.
 
-### 2. Frontend TypeScript Build & Bundling
-```bash
-npm run build
+#### 4.2 `assets/js/calculators/ChartManager.ts`
+- **File:** `assets/js/calculators/ChartManager.ts`
+- **Action:** Expose public getter `getLastResults(): YearResult[]`.
+- **Diff:**
+```diff
+--- a/assets/js/calculators/ChartManager.ts
++++ b/assets/js/calculators/ChartManager.ts
+@@ -79,6 +79,13 @@ export class ChartManager {
+         this.initEventSubscriptions();
+     }
+ 
++    /**
++     * Returns the most recent calculation results schedule.
++     */
++    public getLastResults(): YearResult[] {
++        return this.lastResults;
++    }
++
+     /**
+      * Subscribes to global EventBus topics to achieve loose coupling.
+      */
 ```
-*Expected Result:* 0 TypeScript compiler errors, clean bundle emitted into `dist/`.
 
-### 3. PHPUnit Unit Tests
-```bash
-vendor/bin/phpunit --testsuite Unit
-```
-*Expected Result:* All unit tests pass with zero errors.
-
-### 4. Route Defaults Verification (DOM checks)
-Test rendering and initial values for critical URLs:
-```bash
-php -r "
-require 'vendor/autoload.php';
-\$app = (require 'src/bootstrap.php');
-// Test StrategyFactory for sip-5000
-\$sf = \$app->get(\Core\Strategies\StrategyFactory::class);
-\$sipStrategy = \$sf->create('sip-5000-per-month');
-assert(\$sipStrategy->getInitialInputs()->toTemplateData()['sip'] === 5000.0, 'SIP 5000 strategy failed');
-// Test StrategyFactory for reach-5-crore
-\$croreStrategy = \$sf->create('reach-5-crore-via-sip');
-assert(\$croreStrategy->getTargetCorpus() === 50000000.0, 'Reach 5 Crore strategy failed');
-echo 'StrategyFactory checks PASSED\n';
-"
+#### 4.3 `assets/js/calculators/CalculatorApp.ts`
+- **File:** `assets/js/calculators/CalculatorApp.ts`
+- **Action:** Use `this.latestResults.length > 0 ? this.latestResults : this.chartManager.getLastResults()` in subsystem initializers.
+- **Diff:**
+```diff
+--- a/assets/js/calculators/CalculatorApp.ts
++++ b/assets/js/calculators/CalculatorApp.ts
+@@ -118,7 +118,7 @@ export class CalculatorApp {
+             formatter: this.formatter,
+             chartManager: this.chartManager,
+             analytics: this.analytics,
+             getInputs: () => this.getInputs(),
+-            getLatestResults: () => this.latestResults,
++            getLatestResults: () => this.latestResults.length > 0 ? this.latestResults : this.chartManager.getLastResults(),
+             getActiveGoalMode: () => this.activeGoalMode,
+             getInteractionCount: () => this.interactionCount
+         });
+@@ -130,7 +130,7 @@ export class CalculatorApp {
+             analytics: this.analytics,
+             triggerCalculation: () => this.triggerCalculation(),
+             getInputs: () => this.getInputs(),
+-            getLatestResults: () => this.latestResults,
++            getLatestResults: () => this.latestResults.length > 0 ? this.latestResults : this.chartManager.getLastResults(),
+             onSmartNudgeRate: (rate) => this.setSmartNudgeRate(rate)
+         });
 ```
 
 ---
 
-## Retrospective & Guardrail Compliance Check
-- **Pure Light Mode Theme:** All modified Twig markup strictly uses light classes (`bg-white`, `border-slate-200`, `text-slate-900`, `bg-emerald-50`, `text-emerald-800`). Zero dark containers introduced.
-- **Zero Hallucination / POLA:** No magic string heuristics or hacks; strategy parameters and Twig state are explicit.
-- **Documentation Anti-Drift:** Update `.agents/memory/activeContext.md` upon completion.
+## Phase 5: Verification & Parity Gate Plan
 
+1. **Parity Check:**
+   ```bash
+   PATH="/Users/sumeetboga/.nvm/versions/node/v24.14.0/bin:$PATH" php tests/parity_check.php
+   ```
+2. **TypeScript & Bundling Check:**
+   ```bash
+   npm run build
+   ```
+3. **PHPUnit Unit Tests:**
+   ```bash
+   PATH="/Users/sumeetboga/.nvm/versions/node/v24.14.0/bin:$PATH" vendor/bin/phpunit --testsuite Unit
+   ```
+4. **PHPStan & PHPCS:**
+   ```bash
+   php -d memory_limit=1G vendor/bin/phpstan analyse src/Services/GuideViewModelBuilder.php src/Core/Strategies/CompoundInterestStrategy.php --debug
+   vendor/bin/phpcs src/Services/GuideViewModelBuilder.php src/Core/Strategies/CompoundInterestStrategy.php
+   ```
+5. **Handoff Ledger Protocol:** Update `.agents/memory/activeContext.md`.

@@ -47,6 +47,7 @@
 
         <!-- Desktop Dispatch & Conversion Hub (High-Prominence Action Pod >= sm) -->
         <div class="hidden sm:flex flex-wrap items-center gap-2 w-full sm:w-auto justify-start sm:justify-end">
+            {% if calculator_type not in ['ppf', 'fd', 'emi', 'inflation', 'cagr', 'compound_interest'] %}
             <!-- CSV Export Button -->
             <button type="submit" id="downloadCsvBtn" name="action" value="download_csv" form="calculator-form" formaction="/download-csv"
                 class="px-3.5 py-2 rounded-xl bg-growth-surface hover:bg-emerald-100 text-growth-emphasis border border-growth-border text-ui-xs font-extrabold transition-all duration-150 shadow-flat hover:shadow-subtle hover:border-emerald-300 active:scale-95 cursor-pointer flex items-center gap-1.5"
@@ -65,6 +66,7 @@
                 <span>🎨</span>
                 <span class="text-caption font-bold">Branded PDF</span>
             </button>
+            {% endif %}
 
             <!-- Save Plan to Browser Storage Button -->
             <button type="button" id="saveCalculationBtn"

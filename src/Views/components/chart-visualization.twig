@@ -64,6 +64,7 @@
         </div>
     </div>
 
+    {% if calculator_type not in ['emi', 'ppf', 'fd', 'cagr', 'compound_interest', 'inflation'] %}
     <!-- Real Purchasing Power & Peace-of-Mind Telemetry Strip (Dynamic Risk Empathy) -->
     <div id="purchasing-power-telemetry-strip" class="p-3 sm:p-3.5 rounded-2xl bg-white/95 border border-slate-200/90 shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-all">
         <div class="flex items-start sm:items-center gap-3 min-w-0">
@@ -90,6 +91,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
     <!-- Empathetic SWR Longevity Guardian Alert (Zero-CLS Container) -->
     <div id="swp-longevity-guardian-alert" class="hidden p-3.5 sm:p-4 rounded-2xl bg-amber-50/90 border border-amber-200/90 shadow-subtle transition-all">
@@ -190,11 +192,13 @@
                         title="Snapshot scenario for comparison">
                         <span class="text-ui-xs">📸</span>
                     </button>
+                    {% if calculator_type not in ['emi', 'ppf', 'fd', 'inflation'] %}
                     <button type="button" id="open-tax-waterfall-btn" 
                         class="p-1.5 rounded-xl border border-tax-border bg-tax-surface hover:bg-violet-100 text-tax-emphasis transition-all active:scale-95 cursor-pointer shadow-flat"
                         title="Open Section 112A Tax Waterfall Modal">
                         <span class="text-ui-xs">⚖️</span>
                     </button>
+                    {% endif %}
                     <button type="button" id="open-embed-modal-btn" 
                         onclick="document.getElementById('embedModal')?.showModal()"
                         class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-flat"

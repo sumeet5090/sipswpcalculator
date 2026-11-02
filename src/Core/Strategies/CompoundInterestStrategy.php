@@ -24,4 +24,14 @@ class CompoundInterestStrategy extends BaseStrategy
 
         return new CompoundInterestInputs($principal, $rate, $years, $frequency);
     }
+
+    public function getBenchmarkTemplate(): string
+    {
+        return 'components/benchmarks/lumpsum-growth.twig';
+    }
+
+    public function getBenchmarkTitle(): string
+    {
+        return 'Compound Interest Growth Matrix (Principal Compounded @ 12% CAGR)';
+    }
 }

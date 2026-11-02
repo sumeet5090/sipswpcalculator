@@ -18,62 +18,85 @@ export class ShareController {
         this.getResults = getResults;
     }
 
+    public buildShareUrl(): string {
+        const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const mode = appEl?.dataset?.mode;
+        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
+
+        if (mode && specializedModes.includes(mode)) {
+            const form = this.dom.getElement<HTMLFormElement>('calculator-form');
+            if (form) {
+                const formData = new FormData(form);
+                const params = new URLSearchParams();
+                formData.forEach((val, key) => {
+                    const strVal = String(val).trim();
+                    if (strVal !== '' && key !== 'website_url' && !['sip', 'stepup', 'lumpsum', 'enable_swp'].includes(key)) {
+                        params.set(key, strVal);
+                    }
+                });
+                const queryString = params.toString();
+                return queryString ? `${window.location.origin}${window.location.pathname}?${queryString}` : window.location.href;
+            }
+        }
+
+        const inputs = this.getInputs();
+        const params = new URLSearchParams();
+        const isSwpMode = (mode === 'swp');
+
+        params.set('sip', String(inputs.sip));
+        params.set('years', String(inputs.years));
+        params.set('rate', String(inputs.rate));
+        params.set('stepup', String(inputs.stepup));
+
+        if (isSwpMode) {
+            params.set('corpus', String(inputs.lumpsum));
+        } else {
+            params.set('lumpsum', String(inputs.lumpsum));
+        }
+
+        if (inputs.inflation > 0) {
+            params.set('inflation', String(inputs.inflation));
+        }
+
+        const curVal = this.dom.getValue('currency') || 'INR';
+        if (curVal !== 'INR') {
+            params.set('cur', curVal);
+        }
+
+        const targetCorpusVal = this.dom.getValue('target_corpus');
+        const goalTargetBtn = this.dom.getElement('goal-target');
+        if (goalTargetBtn && goalTargetBtn.getAttribute('aria-checked') === 'true') {
+            params.set('goal_mode', 'target');
+            if (targetCorpusVal) {
+                params.set('target_corpus', String(targetCorpusVal));
+            }
+        }
+
+        const postTaxToggle = this.dom.getElement<HTMLInputElement>('show_post_tax');
+        if (postTaxToggle?.checked) {
+            params.set('post_tax', '1');
+        }
+
+        const wealthMapToggle = this.dom.getElement<HTMLInputElement>('show_wealth_map');
+        if (wealthMapToggle?.checked) {
+            params.set('wealth_map', '1');
+        }
+
+        if (inputs.enable_swp) {
+            params.set('swp_on', '1');
+            params.set('swp', String(inputs.swp_withdrawal));
+            params.set('swp_years', String(inputs.swp_years));
+            params.set('swp_stepup', String(inputs.swp_stepup));
+            params.set('swp_rate', String(inputs.swp_rate));
+        }
+        return window.location.origin + window.location.pathname + '?' + params.toString();
+    }
+
     init(): void {
         const shareBtn = this.dom.getElement('shareCalcBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
-                const inputs = this.getInputs();
-                const params = new URLSearchParams();
-                const appEl = this.dom.getElement('calculator-app');
-                const isSwpMode = (appEl?.dataset?.mode === 'swp');
-
-                params.set('sip', String(inputs.sip));
-                params.set('years', String(inputs.years));
-                params.set('rate', String(inputs.rate));
-                params.set('stepup', String(inputs.stepup));
-
-                if (isSwpMode) {
-                    params.set('corpus', String(inputs.lumpsum));
-                } else {
-                    params.set('lumpsum', String(inputs.lumpsum));
-                }
-
-                if (inputs.inflation > 0) {
-                    params.set('inflation', String(inputs.inflation));
-                }
-
-                const curVal = this.dom.getValue('currency') || 'INR';
-                if (curVal !== 'INR') {
-                    params.set('cur', curVal);
-                }
-
-                const targetCorpusVal = this.dom.getValue('target_corpus');
-                const goalTargetBtn = this.dom.getElement('goal-target');
-                if (goalTargetBtn && goalTargetBtn.getAttribute('aria-checked') === 'true') {
-                    params.set('goal_mode', 'target');
-                    if (targetCorpusVal) {
-                        params.set('target_corpus', String(targetCorpusVal));
-                    }
-                }
-
-                const postTaxToggle = this.dom.getElement<HTMLInputElement>('show_post_tax');
-                if (postTaxToggle?.checked) {
-                    params.set('post_tax', '1');
-                }
-
-                const wealthMapToggle = this.dom.getElement<HTMLInputElement>('show_wealth_map');
-                if (wealthMapToggle?.checked) {
-                    params.set('wealth_map', '1');
-                }
-
-                if (inputs.enable_swp) {
-                    params.set('swp_on', '1');
-                    params.set('swp', String(inputs.swp_withdrawal));
-                    params.set('swp_years', String(inputs.swp_years));
-                    params.set('swp_stepup', String(inputs.swp_stepup));
-                    params.set('swp_rate', String(inputs.swp_rate));
-                }
-                const shareUrl = window.location.origin + window.location.pathname + '?' + params.toString();
+                const shareUrl = this.buildShareUrl();
 
                 const showCopiedFeedback = () => {
                     const btnText = this.dom.getElement('shareBtnText');
@@ -132,33 +155,30 @@ export class ShareController {
      * Discriminates AbortError silently as standard user cancellation.
      */
     async tryNativeShare(): Promise<boolean> {
-        const inputs = this.getInputs();
-        const results = this.getResults ? this.getResults() : [];
-        const params = new URLSearchParams();
-        params.set('sip', String(inputs.sip));
-        params.set('years', String(inputs.years));
-        params.set('rate', String(inputs.rate));
-        params.set('stepup', String(inputs.stepup));
-        if (inputs.lumpsum > 0) params.set('lumpsum', String(inputs.lumpsum));
-        if (inputs.enable_swp) {
-            params.set('swp_on', '1');
-            params.set('swp', String(inputs.swp_withdrawal));
-            params.set('swp_years', String(inputs.swp_years));
-            params.set('swp_stepup', String(inputs.swp_stepup));
-            params.set('swp_rate', String(inputs.swp_rate));
-        }
+        const shareUrl = this.buildShareUrl();
+        const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const mode = appEl?.dataset?.mode;
+        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
 
-        const shareUrl = window.location.origin + window.location.pathname + '?' + params.toString();
-        let planSummary = `Wealth Plan (${inputs.years} Years) • Monthly SIP: ₹${inputs.sip.toLocaleString('en-IN')}`;
-        if (results && results.length > 0) {
-            const last = results[results.length - 1];
-            planSummary += ` • Projected Corpus: ₹${Math.round(last.combined_total).toLocaleString('en-IN')}`;
+        let planSummary = '';
+        if (mode && specializedModes.includes(mode)) {
+            const h1 = document.querySelector('h1')?.textContent?.trim() || 'Financial Calculation';
+            const corpus = this.dom.getElement('summary-corpus')?.textContent?.trim() || '';
+            planSummary = `${h1}${corpus ? ` • Total: ${corpus}` : ''}`;
+        } else {
+            const inputs = this.getInputs();
+            const results = this.getResults ? this.getResults() : [];
+            planSummary = `Wealth Plan (${inputs.years} Years) • Monthly SIP: ₹${inputs.sip.toLocaleString('en-IN')}`;
+            if (results && results.length > 0) {
+                const last = results[results.length - 1];
+                planSummary += ` • Projected Corpus: ₹${Math.round(last.combined_total).toLocaleString('en-IN')}`;
+            }
         }
 
         if (typeof navigator !== 'undefined' && 'share' in navigator) {
             try {
                 await navigator.share({
-                    title: 'SIP & SWP Wealth Plan',
+                    title: 'Financial Plan',
                     text: planSummary,
                     url: shareUrl
                 });
@@ -183,8 +203,6 @@ export class ShareController {
         });
         return false;
     }
-
-
 
     /**
      * Generate and download a branded 1080x1080 social card.
@@ -221,7 +239,14 @@ export class ShareController {
             'swp': 'Retirement SWP Cash Flow Plan',
             'stepup': 'Step-Up SIP Accelerated Plan',
             'combo': 'SIP & SWP Comprehensive Plan',
-            'lumpsum': 'Lumpsum Investment Plan'
+            'lumpsum': 'Lumpsum Investment Plan',
+            'target_corpus': 'Target Corpus Wealth Plan',
+            'compound_interest': 'Compound Interest Growth Plan',
+            'cagr': 'CAGR Return Performance Plan',
+            'emi': 'Loan EMI Repayment Plan',
+            'inflation': 'Inflation Purchasing Power Plan',
+            'ppf': 'PPF Long-Term Savings Plan',
+            'fd': 'Fixed Deposit Returns Plan'
         };
         const planTitle = titleMap[mode] || 'Wealth Accumulation Plan';
 
@@ -242,7 +267,8 @@ export class ShareController {
         // Trigger file download
         const a = document.createElement('a');
         a.href = dataUrl;
-        a.download = `wealth-plan-${inputs.years}yrs.png`;
+        const yearsFallback = inputs.years || parseFloat(this.dom.getValue('years') || this.dom.getValue('emi_years') || this.dom.getValue('ppf_years') || this.dom.getValue('fd_years') || '10');
+        a.download = `wealth-plan-${yearsFallback}yrs.png`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -312,31 +338,34 @@ export class ShareController {
      * Dispatch structured investment plan proposal directly to WhatsApp.
      */
     shareToWhatsApp(results?: YearResult[]): void {
-        const inputs = this.getInputs();
-        const params = new URLSearchParams();
-        params.set('sip', String(inputs.sip));
-        params.set('years', String(inputs.years));
-        params.set('rate', String(inputs.rate));
-        params.set('stepup', String(inputs.stepup));
-        if (inputs.lumpsum > 0) params.set('lumpsum', String(inputs.lumpsum));
-        if (inputs.enable_swp) {
-            params.set('swp_on', '1');
-            params.set('swp', String(inputs.swp_withdrawal));
-            params.set('swp_years', String(inputs.swp_years));
-            params.set('swp_stepup', String(inputs.swp_stepup));
-            params.set('swp_rate', String(inputs.swp_rate));
-        }
+        const shareUrl = this.buildShareUrl();
+        const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const mode = appEl?.dataset?.mode;
+        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
 
-        const shareUrl = window.location.origin + window.location.pathname + '?' + params.toString();
-        let planSummary = `📊 *My Wealth Plan (${inputs.years} Years)*\n• Monthly SIP: ₹${inputs.sip.toLocaleString('en-IN')}\n• Annual Step-Up: ${inputs.stepup}%`;
-        
-        if (results && results.length > 0) {
-            const last = results[results.length - 1];
-            planSummary += `\n• Projected Corpus: ₹${Math.round(last.combined_total).toLocaleString('en-IN')}`;
-        }
+        let planSummary = '';
+        if (mode && specializedModes.includes(mode)) {
+            const h1 = document.querySelector('h1')?.textContent?.trim() || 'Financial Calculation';
+            const corpus = this.dom.getElement('summary-corpus')?.textContent?.trim() || '';
+            const invested = this.dom.getElement('summary-invested')?.textContent?.trim() || '';
+            const interest = this.dom.getElement('summary-interest')?.textContent?.trim() || '';
 
-        if (inputs.enable_swp) {
-            planSummary += `\n• Monthly Retirement SWP: ₹${inputs.swp_withdrawal.toLocaleString('en-IN')}`;
+            planSummary = `📊 *${h1}*`;
+            if (invested) planSummary += `\n• Principal / Invested: ${invested}`;
+            if (interest) planSummary += `\n• Interest / Growth: ${interest}`;
+            if (corpus) planSummary += `\n• Total / Maturity: ${corpus}`;
+        } else {
+            const inputs = this.getInputs();
+            planSummary = `📊 *My Wealth Plan (${inputs.years} Years)*\n• Monthly SIP: ₹${inputs.sip.toLocaleString('en-IN')}\n• Annual Step-Up: ${inputs.stepup}%`;
+            
+            if (results && results.length > 0) {
+                const last = results[results.length - 1];
+                planSummary += `\n• Projected Corpus: ₹${Math.round(last.combined_total).toLocaleString('en-IN')}`;
+            }
+
+            if (inputs.enable_swp) {
+                planSummary += `\n• Monthly Retirement SWP: ₹${inputs.swp_withdrawal.toLocaleString('en-IN')}`;
+            }
         }
         
         const text = `${planSummary}\n\n👉 View, test, or customize this exact calculation here:\n${shareUrl}`;

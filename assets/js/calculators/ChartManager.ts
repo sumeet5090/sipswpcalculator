@@ -79,6 +79,13 @@ export class ChartManager {
     }
 
     /**
+     * Returns the most recent calculation results schedule.
+     */
+    public getLastResults(): YearResult[] {
+        return this.lastResults;
+    }
+
+    /**
      * Subscribes to global EventBus topics to achieve loose coupling.
      */
     private initEventSubscriptions(): void {
