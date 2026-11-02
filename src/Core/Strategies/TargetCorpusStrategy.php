@@ -4,8 +4,23 @@ declare(strict_types=1);
 
 namespace Core\Strategies;
 
+use Services\ConfigServiceInterface;
+
 class TargetCorpusStrategy extends BaseStrategy
 {
+    private float $defaultTargetCorpus;
+
+    public function __construct(ConfigServiceInterface $configService, float $defaultTargetCorpus = 10000000.0)
+    {
+        parent::__construct($configService);
+        $this->defaultTargetCorpus = $defaultTargetCorpus;
+    }
+
+    public function getTargetCorpus(): float
+    {
+        return $this->defaultTargetCorpus;
+    }
+
     public function getType(): string
     {
         return 'target_corpus';

@@ -143,9 +143,17 @@ export class CurrencyFormatter {
             return this.formatDynamic(value);
         }
 
-        if (fieldId === 'years' || fieldId === 'swp_years') {
+        if (fieldId.endsWith('_principal') || fieldId.endsWith('_deposit') || fieldId.endsWith('_amount') || fieldId.endsWith('_initial') || fieldId.endsWith('_final')) {
+            return this.formatDynamic(value);
+        }
+
+        if (fieldId === 'years' || fieldId === 'swp_years' || fieldId.endsWith('_years')) {
             const months = value * 12;
             return `${value} Year${value > 1 ? 's' : ''} (${months} Months)`;
+        }
+
+        if (fieldId.endsWith('_rate')) {
+            return `${value.toFixed(1).replace(/\.0$/, '')}% p.a.`;
         }
 
         if (fieldId === 'rate') {
@@ -202,13 +210,13 @@ export class CurrencyFormatter {
         if (fieldId === 'swp_withdrawal' || fieldId === 'swp') {
             return `${this.formatDynamic(value)} per month systematic withdrawal`;
         }
-        if (fieldId === 'lumpsum' || fieldId === 'corpus' || fieldId === 'target_corpus') {
-            return `${this.formatDynamic(value)} corpus`;
+        if (fieldId === 'lumpsum' || fieldId === 'corpus' || fieldId === 'target_corpus' || fieldId.endsWith('_principal') || fieldId.endsWith('_deposit') || fieldId.endsWith('_amount') || fieldId.endsWith('_initial') || fieldId.endsWith('_final')) {
+            return `${this.formatDynamic(value)} principal`;
         }
-        if (fieldId === 'years' || fieldId === 'swp_years') {
+        if (fieldId === 'years' || fieldId === 'swp_years' || fieldId.endsWith('_years')) {
             return `${value} Year${value === 1 ? '' : 's'} duration`;
         }
-        if (fieldId === 'rate' || fieldId === 'swp_rate') {
+        if (fieldId === 'rate' || fieldId === 'swp_rate' || fieldId.endsWith('_rate')) {
             return `${value} Percent expected return`;
         }
         if (fieldId === 'stepup' || fieldId === 'swp_stepup') {

@@ -133,29 +133,57 @@
 
                 <form id="calculator-form" class="relative z-10 space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth" onsubmit="event.preventDefault();">
                     {% if calculator_type == 'all' or calculator_type == 'combo' %}
-                        <!-- Combo Form (SIP + SWP Tabs) -->
+                        <!-- 3-Mode Segmented Control Bar (Dual vs SIP Only vs SWP Only) -->
                         <div class="py-0.5 mb-2 rounded-2xl">
-                            <div class="flex bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70 shadow-flat gap-1" role="tablist">
-                                <button type="button" id="tab-sip" role="tab" aria-selected="true"
-                                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer">
-                                    <span>⚡</span>
-                                    <span>SIP Details</span>
+                            <div class="flex bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70 shadow-flat gap-1" role="tablist" aria-label="Calculator Mode Selector">
+                                <button type="button" id="tab-combo" role="tab" aria-selected="true"
+                                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 bg-white text-emerald-800 shadow-flat border border-slate-200/60 cursor-pointer">
+                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 text-micro font-extrabold">🚀</span>
+                                    <span>Dual (SIP+SWP)</span>
+                                </button>
+                                <button type="button" id="tab-sip" role="tab" aria-selected="false"
+                                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-900 cursor-pointer">
+                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-200 text-slate-600 text-micro font-extrabold">⚡</span>
+                                    <span>SIP Only</span>
                                 </button>
                                 <button type="button" id="tab-swp" role="tab" aria-selected="false"
                                     class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 text-slate-500 hover:text-slate-900 cursor-pointer">
-                                    <span>🛡️</span>
-                                    <span>SWP Details</span>
+                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-slate-200 text-slate-600 text-micro font-extrabold">🛡️</span>
+                                    <span>SWP Only</span>
                                 </button>
                             </div>
                         </div>
                         
                         <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip">
+                            <div id="stage-1-header" class="flex items-center justify-between px-3 py-1.5 mb-2 rounded-xl bg-gradient-to-r from-emerald-50 via-teal-50/50 to-slate-50 border border-emerald-200/80 shadow-flat">
+                                <div class="flex items-center gap-2">
+                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-emerald-600 text-white text-micro font-black">1</span>
+                                    <span class="text-caption font-extrabold text-emerald-950 uppercase tracking-wider">Accumulation Phase (SIP)</span>
+                                </div>
+                                <span class="text-micro font-bold text-emerald-700 font-financial-mono">Wealth Building</span>
+                            </div>
                             <div class="space-y-3">
                                 {% include 'components/forms/sip-fields.twig' %}
                             </div>
                         </div>
                         
-                        <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="hidden">
+                        <div id="stage-transition-divider" class="my-3 flex items-center gap-2">
+                            <div class="flex-1 border-t border-dashed border-slate-300"></div>
+                            <span class="text-micro font-bold uppercase tracking-widest text-slate-400 bg-slate-50 px-2 py-0.5 rounded-full border border-slate-200">Retirement Transition</span>
+                            <div class="flex-1 border-t border-dashed border-slate-300"></div>
+                        </div>
+
+                        <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp">
+                            <div id="stage-2-header" class="flex items-center justify-between px-3 py-1.5 mb-2 rounded-xl bg-gradient-to-r from-rose-50 via-amber-50/50 to-slate-50 border border-rose-200/80 shadow-flat">
+                                <div class="flex items-center gap-2">
+                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-rose-600 text-white text-micro font-black">2</span>
+                                    <span class="text-caption font-extrabold text-rose-950 uppercase tracking-wider">Distribution Phase (SWP)</span>
+                                </div>
+                                <span class="text-micro font-bold text-rose-700 font-financial-mono">Retirement Cashflow</span>
+                            </div>
+                            <div id="swp-standalone-corpus" class="hidden mb-3">
+                                {% include 'components/forms/corpus-field.twig' %}
+                            </div>
                             <div class="space-y-3">
                                 <div class="py-0.5 mb-1 rounded-xl">
                                     <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-flat">

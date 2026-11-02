@@ -5,7 +5,28 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Two-Week Telemetry Diagnostic & High-Impact SEO/CTR Execution — Steps 1, 2, 3 Completed.
+- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed.
+- **Implemented Fixes & Architectural Outcomes (2026-11-02):**
+  - **P0 Critical Fixes:**
+    - Fixed `/retirement-calculator` mode lockout in `src/Views/calculators/calculator-guide.twig`: rendered the full 3-mode segmented control bar (`tab-combo`, `tab-sip`, `tab-swp`) with Stage 1 (Accumulation) & Stage 2 (Distribution) headers and dividers.
+    - Fixed dead clicks on master chart controls in `assets/js/calculators/CalculatorApp.ts`: invoked `this.chartManager.initControls()` during `init()`, enabling donut view toggles and benchmark comparison chips (None, Nifty 50, Gold, Bank FD) across all calculators.
+    - Fixed `/reach-5-crore-via-sip` default corpus in `StrategyFactory.php`, `TargetCorpusStrategy.php`, and `GuideViewModelBuilder.php`: correctly initializes with ₹5 Crore (`target_corpus = 50000000`) instead of ₹1 Crore.
+    - Fixed `/sip-5000-per-month` initial SIP amount in `StrategyFactory.php` and `SipStrategy.php`: correctly initializes with ₹5,000/mo (`sip = 5000`) instead of ₹10,000.
+  - **P1 High Severity Fixes:**
+    - Fixed slider thumb tooltips in `assets/js/calculators/SliderManager.ts`: expanded formatting logic to detect currency (`_principal`, `_deposit`, `_amount`, `_initial`, `_final`) and year inputs (`_years`), eliminating `3000000%` and displaying `₹X Lakh / Crore` and `X Yrs`.
+    - Fixed specialized calculator ergonomics & modals in `assets/js/calculators/CalculatorApp.ts`: initialized `exportSubsystem` (for QR sharing & PDF) and `ergonomicsSubsystem` (for Cmd+K command palette).
+  - **P2 & P3 Polish Fixes:**
+    - Guarded compounding ignition ribbon in `assets/js/calculators/controllers/ResultsController.ts`: restricted to active SIP accumulation mode when annual contributions and SIP are positive, preventing false Year 2 banners on SWP, Lumpsum, and specialized calculators.
+    - Fixed negative CAGR return formatting in `assets/js/calculators/drivers/CagrDriver.ts`: eliminated double sign `+-40.0%`.
+    - Added Indian currency unit subtext and voice ARIA announcements in `assets/js/calculators/CurrencyHelper.ts` for specialized fields (`_principal`, `_deposit`, `_amount`, `_initial`, `_final`, `_years`, `_rate`).
+    - Fixed Step-Up boost button in `assets/js/calculators/CalculatorApp.ts`: dynamically increments step-up by +5% if already active rather than resetting to 10%.
+    - Suppressed Section 112A equity tax lens on debt/statutory fixed income calculators (PPF, FD, EMI) in `src/Views/components/chart-visualization.twig`.
+  - **Verification & QA Passed:**
+    - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
+    - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)** including new unit tests for `reach-5-crore-via-sip` and `sip-5000-per-month`.
+    - PHPStan Level 5: **0 errors**.
+    - PHPCS: **0 violations**.
+    - Frontend Typecheck & Build: `npm run typecheck && npm run build` built with 0 type errors in 263ms.
 - **Implemented Fixes & Architectural Outcomes (2026-11-02):**
   - **Live Search Diagnostics (Oct 17 – Oct 31, 2026):**
     - Google Search Console: +19.9% Clicks (193 vs 161), +14.8% Impressions (9,546 vs 8,315), baseline run-rate surge from ~500 to ~890 impressions/day.
