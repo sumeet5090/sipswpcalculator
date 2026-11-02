@@ -26,6 +26,7 @@ export class SpecializedCalculatorController {
     private summaryMetricsController: SummaryMetricsController;
     private odometer: OdometerController;
     private analytics: AnalyticsService | null;
+    private onResultsUpdated?: (results: any[]) => void;
     private driver: ISpecializedDriver | null = null;
     private userHasInteracted = false;
 
@@ -46,7 +47,8 @@ export class SpecializedCalculatorController {
         chartManager: ChartManager,
         resultsController: ResultsController,
         summaryMetricsController: SummaryMetricsController,
-        analytics: AnalyticsService | null = null
+        analytics: AnalyticsService | null = null,
+        onResultsUpdated?: (results: any[]) => void
     ) {
         this.mode = mode;
         this.dom = dom;
@@ -57,6 +59,7 @@ export class SpecializedCalculatorController {
         this.summaryMetricsController = summaryMetricsController;
         this.odometer = new OdometerController(dom, formatter);
         this.analytics = analytics;
+        this.onResultsUpdated = onResultsUpdated;
 
         const driverFactory = SpecializedCalculatorController.DRIVER_REGISTRY[this.mode];
         if (driverFactory) {
@@ -114,6 +117,10 @@ export class SpecializedCalculatorController {
         }
         const ctx = this.createDriverContext();
         this.driver.calculate(ctx);
+
+        if (this.onResultsUpdated) {
+            this.onResultsUpdated(this.chartManager.getLastResults());
+        }
 
         if (this.userHasInteracted && this.analytics && typeof this.driver.getTelemetryPayload === 'function') {
             const basePayload = this.driver.getTelemetryPayload(ctx);

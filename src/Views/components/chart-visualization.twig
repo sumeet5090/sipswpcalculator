@@ -143,12 +143,14 @@
                     <h3 class="font-heading text-ui-base sm:text-heading-sm font-extrabold text-slate-900 tracking-tight truncate">
                         Wealth Growth Trajectory
                     </h3>
+                    {% if calculator_type not in ['emi', 'inflation'] %}
                     <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.showModal()"
                         class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100/90 hover:bg-growth-surface border border-slate-200 hover:border-growth-border text-micro text-slate-600 hover:text-growth-emphasis transition-all cursor-pointer shadow-flat shrink-0"
                         title="Click to view AMFI/SEBI regulatory modeling assumptions">
                         <span class="font-bold">AMFI Aligned</span>
                         <span class="text-slate-400 text-micro">ℹ️</span>
                     </button>
+                    {% endif %}
                 </div>
                 <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-ui-xs text-slate-500 font-medium">
                     <span>Projected: <strong class="text-slate-900 font-financial-mono font-bold" id="chart-header-gross">₹ --</strong></span>
@@ -187,11 +189,13 @@
                         <span class="text-ui-xs">✦</span>
                         <span>Share Plan</span>
                     </button>
+                    {% if calculator_type not in ['ppf', 'fd', 'emi', 'inflation', 'cagr', 'compound_interest'] %}
                     <button type="button" id="snapshot-scenario-btn" 
                         class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-flat"
                         title="Snapshot scenario for comparison">
                         <span class="text-ui-xs">📸</span>
                     </button>
+                    {% endif %}
                     {% if calculator_type not in ['emi', 'ppf', 'fd', 'inflation'] %}
                     <button type="button" id="open-tax-waterfall-btn" 
                         class="p-1.5 rounded-xl border border-tax-border bg-tax-surface hover:bg-violet-100 text-tax-emphasis transition-all active:scale-95 cursor-pointer shadow-flat"

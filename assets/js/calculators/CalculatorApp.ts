@@ -530,7 +530,10 @@ export class CalculatorApp {
                 this.chartManager,
                 this.resultsController,
                 this.summaryMetricsController,
-                this.analytics
+                this.analytics,
+                (results) => {
+                    this.ergonomicsSubsystem.updateResults(results, this.getInputs());
+                }
             );
             this.specializedController.init();
             new UrlStateController(

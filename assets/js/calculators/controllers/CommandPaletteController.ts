@@ -54,6 +54,94 @@ export const COMMAND_ITEMS: CommandItem[] = [
         icon: '🎯'
     },
     {
+        id: 'calc-retirement',
+        title: 'Retirement Calculator',
+        description: 'Plan your retirement corpus, post-retirement monthly expenses, and financial independence.',
+        category: 'Calculator',
+        url: '/retirement-calculator',
+        icon: '🌴'
+    },
+    {
+        id: 'calc-target-corpus',
+        title: 'Target Corpus Calculator',
+        description: 'Find the required monthly investment to build your desired target wealth goal.',
+        category: 'Calculator',
+        url: '/target-corpus-calculator',
+        icon: '🎯'
+    },
+    {
+        id: 'calc-reach-5-cr',
+        title: 'Reach ₹5 Crore via SIP',
+        description: 'Calculate timeline and monthly investment needed to build a ₹5 Crore milestone.',
+        category: 'Calculator',
+        url: '/reach-5-crore-via-sip',
+        icon: '🏆'
+    },
+    {
+        id: 'calc-sip-5k',
+        title: '₹5,000 Monthly SIP Calculator',
+        description: 'See the power of compounding and long-term corpus growth with ₹5,000/month.',
+        category: 'Calculator',
+        url: '/sip-5000-per-month',
+        icon: '🌱'
+    },
+    {
+        id: 'calc-sip-10k',
+        title: '₹10,000 Monthly SIP Calculator',
+        description: 'Explore wealth generation, milestone targets, and returns with a ₹10,000/month SIP.',
+        category: 'Calculator',
+        url: '/sip-10000-per-month',
+        icon: '💼'
+    },
+    {
+        id: 'calc-ci',
+        title: 'Compound Interest Calculator',
+        description: 'Calculate compound interest with custom compounding frequencies and principal growth.',
+        category: 'Calculator',
+        url: '/compound-interest-calculator',
+        icon: '🔄'
+    },
+    {
+        id: 'calc-cagr',
+        title: 'CAGR Calculator',
+        description: 'Compute Compound Annual Growth Rate across investments and multi-year timeframes.',
+        category: 'Calculator',
+        url: '/cagr-calculator',
+        icon: '📊'
+    },
+    {
+        id: 'calc-emi',
+        title: 'EMI Calculator',
+        description: 'Calculate monthly home, car, or personal loan EMIs, interest payable, and amortization.',
+        category: 'Calculator',
+        url: '/emi-calculator',
+        icon: '🏠'
+    },
+    {
+        id: 'calc-inflation',
+        title: 'Inflation Calculator',
+        description: 'Forecast the future purchasing power of money and inflation-adjusted living costs.',
+        category: 'Calculator',
+        url: '/inflation-calculator',
+        icon: '📉'
+    },
+    {
+        id: 'calc-ppf',
+        title: 'PPF Calculator',
+        description: 'Public Provident Fund calculation with guaranteed government interest and tax-free returns.',
+        category: 'Calculator',
+        url: '/ppf-calculator',
+        icon: '🛡️'
+    },
+    {
+        id: 'calc-fd',
+        title: 'FD Calculator',
+        description: 'Fixed Deposit maturity value, cumulative interest, and senior citizen rate bonuses.',
+        category: 'Calculator',
+        url: '/fd-calculator',
+        icon: '🏦'
+    },
+    {
         id: 'guide-cagr-xirr',
         title: 'CAGR vs XIRR Explained',
         description: 'Understand the difference between point-to-point and periodic cashflow returns.',
