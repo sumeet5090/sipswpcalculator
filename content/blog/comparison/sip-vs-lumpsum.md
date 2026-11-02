@@ -18,12 +18,35 @@ date: "July 2026"
             TL;DR: SIP vs Lumpsum — The Bottom Line
         </h2>
         <div class="space-y-3 text-slate-700 text-left leading-relaxed">
-            <p><strong>In a Continuous Bull Market:</strong> <span class="text-emerald-600 font-semibold">Lumpsum wins</span> because your entire capital earns compound returns from Day 1.</p>
-            <p><strong>In a Volatile or Bear Market:</strong> <span class="text-emerald-600 font-semibold">SIP wins</span> due to <em>Rupee Cost Averaging</em>, acquiring more NAV units at market lows.</p>
-            <p><strong>For Salaried Investors:</strong> <span class="text-emerald-600 font-semibold">Step-Up SIP</span> is mathematically superior as it aligns with monthly income and annual salary increments.</p>
-            <p><strong>Have a Large Cash Windfall?</strong> Don't deploy all at once. Use a <strong>Systematic Transfer Plan (STP)</strong> to transfer funds from Liquid/Debt funds into Equity funds over 6-12 months.</p>
+            <p><strong>In a Continuous Bull Market:</strong> <a href="/lumpsum-calculator" class="text-emerald-700 hover:underline font-bold">Lumpsum wins</a> because your entire capital earns compound returns from Day 1.</p>
+            <p><strong>In a Volatile or Bear Market:</strong> <a href="/sip-calculator" class="text-emerald-700 hover:underline font-bold">SIP wins</a> due to <em>Rupee Cost Averaging</em>, acquiring more NAV units at market lows.</p>
+            <p><strong>For Salaried Investors:</strong> <a href="/sip-step-up-calculator" class="text-emerald-700 hover:underline font-bold">Step-Up SIP</a> is mathematically superior as it aligns with monthly income and annual salary increments.</p>
+            <p><strong>Have a Large Cash Windfall?</strong> Don't deploy all at once. Use a <strong>Systematic Transfer Plan (STP)</strong> to transfer funds from Liquid/Debt funds into Equity funds over 6-12 months, or model lump sum compounding with our <a href="/lumpsum-calculator" class="text-emerald-700 hover:underline font-bold">Lumpsum Calculator</a>.</p>
         </div>
     </div>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8 not-prose">
+    <a href="/lumpsum-calculator" class="p-4 bg-white/95 rounded-2xl border border-slate-200/90 shadow-subtle hover:border-indigo-400 hover:shadow-card-hover transition-all flex items-center justify-between group">
+        <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 block mb-0.5">One-Time Capital</span>
+            <span class="font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors">Lumpsum Calculator &rarr;</span>
+            <p class="text-xs text-slate-500 mt-0.5">Model returns on ₹1 Lakh to ₹50 Lakhs with 2026 LTCG tax</p>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:scale-105 transition-transform flex-shrink-0 ml-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+    </a>
+    <a href="/sip-calculator" class="p-4 bg-white/95 rounded-2xl border border-slate-200/90 shadow-subtle hover:border-emerald-400 hover:shadow-card-hover transition-all flex items-center justify-between group">
+        <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block mb-0.5">Monthly Compounding</span>
+            <span class="font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">SIP Calculator &rarr;</span>
+            <p class="text-xs text-slate-500 mt-0.5">Model regular monthly SIP growth with annual step-up</p>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 group-hover:scale-105 transition-transform flex-shrink-0 ml-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+        </div>
+    </a>
 </div>
 
 <h2 id="understanding-the-basics">1. Understanding the Core Difference</h2>
@@ -57,7 +80,7 @@ date: "July 2026"
 
 <h2 id="lumpsum-deep-dive">3. Deep Dive: Lumpsum Investment</h2>
 
-<p>A lumpsum investment involves deploying a bulk sum — such as an annual performance bonus, property sale proceeds, or retirement gratuity — all at once into mutual funds.</p>
+<p>A lumpsum investment involves deploying a bulk sum — such as an annual performance bonus, property sale proceeds, or retirement gratuity — all at once into mutual funds. You can calculate your projected portfolio returns, compounding acceleration, and post-tax maturity value with our dedicated <a href="/lumpsum-calculator" class="text-emerald-700 hover:underline font-bold">Lumpsum Calculator</a>.</p>
 
 <h3 class="text-lg font-bold text-slate-800 mt-6 mb-3">Key Advantages of Lumpsum</h3>
 <ul>
@@ -196,6 +219,11 @@ date: "July 2026"
             <li>• You have a long horizon (10+ years) and high risk tolerance for volatility.</li>
             <li>• You deploy via STP (Liquid Fund to Equity Fund) over 6 to 12 months.</li>
         </ul>
+        <div class="mt-4 pt-3 border-t border-slate-100">
+            <a href="/lumpsum-calculator" class="text-indigo-600 hover:text-indigo-700 font-bold text-sm inline-flex items-center gap-1.5">
+                Launch Lumpsum Calculator &rarr;
+            </a>
+        </div>
     </div>
 </div>
 
@@ -208,10 +236,28 @@ date: "July 2026"
     </div>
     <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
         <h3 class="font-bold text-slate-800 text-base mb-1">Can I do both SIP and Lumpsum in the same Mutual Fund scheme?</h3>
-        <p class="text-slate-600 text-sm">Absolutely! You can run an ongoing monthly SIP and make additional lumpsum top-up investments whenever the market experiences major dips.</p>
+        <p class="text-slate-600 text-sm">Absolutely! You can run an ongoing monthly SIP and make additional lumpsum top-up investments whenever the market experiences major dips using our <a href="/lumpsum-calculator" class="text-emerald-700 font-bold underline">Lumpsum Calculator</a> to check their future values.</p>
     </div>
     <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
         <h3 class="font-bold text-slate-800 text-base mb-1">What is the best way to invest a windfall of ₹5 Lakh?</h3>
         <p class="text-slate-600 text-sm">Instead of a direct lumpsum into equity, deposit ₹5 Lakh into a Liquid Mutual Fund and initiate a Systematic Transfer Plan (STP) of ₹30,000 to ₹40,000 per month into an Equity Fund over 12-15 months.</p>
+    </div>
+</div>
+
+<div class="mt-12 pt-8 border-t border-slate-200 not-prose">
+    <h3 class="text-base font-bold text-slate-900 mb-4">Explore Related Financial Calculators</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <a href="/lumpsum-calculator" class="p-3.5 bg-white/95 rounded-xl border border-slate-200/90 shadow-subtle hover:border-indigo-400 hover:shadow-card-hover transition-all flex flex-col justify-between">
+            <span class="font-bold text-slate-900 text-sm text-indigo-700">Lumpsum Calculator &rarr;</span>
+            <span class="text-xs text-slate-500 mt-1">Model ₹1L–₹50L one-time growth</span>
+        </a>
+        <a href="/sip-calculator" class="p-3.5 bg-white/95 rounded-xl border border-slate-200/90 shadow-subtle hover:border-emerald-400 hover:shadow-card-hover transition-all flex flex-col justify-between">
+            <span class="font-bold text-slate-900 text-sm text-emerald-700">SIP Calculator &rarr;</span>
+            <span class="text-xs text-slate-500 mt-1">Monthly compounding & step-up</span>
+        </a>
+        <a href="/my-first-crore-calculator" class="p-3.5 bg-white/95 rounded-xl border border-slate-200/90 shadow-subtle hover:border-emerald-400 hover:shadow-card-hover transition-all flex flex-col justify-between">
+            <span class="font-bold text-slate-900 text-sm text-emerald-700">1 Crore SIP Calculator &rarr;</span>
+            <span class="text-xs text-slate-500 mt-1">Find monthly SIP for ₹1 Crore</span>
+        </a>
     </div>
 </div>
