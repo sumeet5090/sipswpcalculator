@@ -159,12 +159,12 @@ Applying the 4% rule blindly in India without localization introduces fatal risk
 
 ### Recommended Safe Withdrawal Rates for Indian Portfolios
 
-| Safe Withdrawal Rate (SWR) | Monthly Income per ₹1 Crore Corpus | Retirement Horizon | Portfolio Survival Probability | Risk Assessment |
-|:---:|:---:|:---:|:---:|:---|
-| **3.0% – 3.5%** | **₹25,000 – ₹29,167** | **35+ Years** | **> 98%** | **Ultra-Conservative (FIRE Standard):** Highly resilient against severe stagflation. Corpus almost certainly grows. |
-| **4.0%** | **₹33,333** | **30 Years** | **~90%** | **Balanced Standard:** Ideal for standard corporate retirees aged 58–60 with a diversified 3-bucket allocation. |
-| **5.0%** | **₹41,667** | **22–25 Years** | **~75%** | **Moderate Risk:** Sustainable if equity markets deliver >11% CAGR, but vulnerable to early-decade drawdowns. |
-| **6.0%** | **₹50,000** | **15–18 Years** | **< 50%** | **Aggressive / High Depletion Risk:** Capital will deplete rapidly unless backed by substantial outside pensions. |
+| Safe Withdrawal Rate (SWR) | Monthly on ₹10 Lakh | Monthly on ₹25 Lakh | Monthly on ₹50 Lakh | Monthly on ₹1 Crore | Portfolio Horizon | Risk Assessment |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---|
+| **3.5% (Ultra-Safe)** | ₹2,917 / mo | ₹7,292 / mo | ₹14,583 / mo | ₹29,167 / mo | **35+ Years** | **Ultra-Conservative (FIRE Standard):** Corpus almost certainly grows perpetually. |
+| **4.0% (Gold Standard)** | ₹3,333 / mo | ₹8,333 / mo | ₹16,667 / mo | ₹33,333 / mo | **30+ Years** | **Balanced Standard:** Ideal for corporate retirees with diversified allocation. |
+| **5.0% (Balanced Income)** | ₹4,167 / mo | ₹10,417 / mo | ₹20,833 / mo | ₹41,667 / mo | **22–25 Years** | **Moderate Risk:** Sustainable if equity markets deliver >11% CAGR over tenure. |
+| **6.0% (Aggressive Drawdown)** | ₹5,000 / mo | ₹12,500 / mo | ₹25,000 / mo | ₹50,000 / mo | **15–18 Years** | **High Depletion Risk:** Capital depletes steadily unless backed by outside income. |
 
 ---
 

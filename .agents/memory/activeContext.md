@@ -1,11 +1,35 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-10-10*
+*Last Updated: 2026-11-02*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** SEO Optimization & Quality Remediation — Steps 1, 2, 3 & 4 Completed.
+- **Current Milestone:** Two-Week Telemetry Diagnostic & High-Impact SEO/CTR Execution — Steps 1, 2, 3 Completed.
+- **Implemented Fixes & Architectural Outcomes (2026-11-02):**
+  - **Live Search Diagnostics (Oct 17 – Oct 31, 2026):**
+    - Google Search Console: +19.9% Clicks (193 vs 161), +14.8% Impressions (9,546 vs 8,315), baseline run-rate surge from ~500 to ~890 impressions/day.
+    - Bing Webmaster Tools: +43.2% W-o-W clicks (53 clicks late Oct), ranking Position 4.0 for core head term `swp calculator` (44 clicks, 1,550 impressions).
+  - **Step 1: `/my-first-crore-calculator` 5-Year Milestone Optimization:**
+    - Targeted Google Position 5.3 keyword (`1 crore in 5 years sip calculator`, 0% CTR).
+    - Added dedicated FAQ `crore-sip-needed-5-years` in `content/faqs.json`.
+    - Added explicit 5-year calculations (₹1,21,232/month flat, ~₹1,02,000/month step-up) to Direct Answer (BLUF) and matrix strategic insights in `content/calculators/my-first-crore-calculator.md`.
+  - **Step 2: `/lumpsum-calculator` Authority & Internal Link Injection:**
+    - Addressed ranking gap (Position 52.6 on 1,600 impressions) by linking from high-ranking pillar guide `content/blog/comparison/sip-vs-lumpsum.md`.
+    - Added pure light-mode interactive tool cards, contextual deep links, decision framework CTA buttons, and a bottom "Related Financial Calculators" grid.
+    - Added `lumpsum-10-lakh-returns` FAQ to `content/faqs.json`.
+  - **Step 3: `/swp-calculator` Benchmarks & Corpus Tier Expansion:**
+    - Replicated Bing's top-4 ranking on Google for popular corpus searches (`10l swp calculator`, `20 lakh inr swp calculator`).
+    - Added ₹10 Lakh and ₹20 Lakh starting corpus tiers to `src/Views/components/benchmarks/swp-longevity.twig`.
+    - Expanded Safe Withdrawal Rate matrix in `content/calculators/swp-calculator.md` with explicit columns for ₹10L, ₹25L, ₹50L, and ₹1 Cr.
+    - Added `swp-payout-10-lakhs` FAQ to `content/faqs.json`.
+- **Verification & QA Passed:**
+  - Full PHPUnit suite: **809 tests / 12,666 assertions passed (100% OK)** (674 unit tests + 135 integration tests).
+  - PHPStan Level 5: 0 errors across 250 files.
+  - PHPCS: 0 violations across 250 files.
+  - Calculation Parity: `php tests/parity_check.php` passes with 100% parity across all engines.
+  - Frontend Typecheck & Build: `npm run typecheck && npm run build` built in 334ms with 0 type errors.
+  - Local Server Curl: Verified DOM elements rendered cleanly across all modified routes.
 - **Implemented Fixes & Architectural Outcomes (Steps 1, 2, 3 & 4):**
   - **Step 1 (Pruning Dead-Weight Content & Resolving Cannibalization):**
     - **1-Crore Cannibalization Resolution:**

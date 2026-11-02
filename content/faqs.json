@@ -24,6 +24,17 @@
         "a": "Yes, SWPs are generally far more tax-efficient than Bank Fixed Deposits in India. Entire FD interest payouts are taxed annually at your marginal income tax slab rate (up to 30%+ surcharge). In contrast, SWP withdrawals are treated as capital redemptions where only the capital gains portion of the withdrawn sum is taxed (LTCG at 12.5% above \u20b91.25 Lakh exemption for equity funds). This delivers significantly higher net post-tax cash flows."
     },
     {
+        "id": "swp-payout-10-lakhs",
+        "category": "basics",
+        "tags": [
+            "swp-calculator",
+            "home",
+            "faq-page"
+        ],
+        "q": "How much monthly pension can I withdraw from a \u20b910 Lakh or \u20b920 Lakh SWP corpus?",
+        "a": "Following safe withdrawal rate (SWR) principles for Indian mutual funds, a \u20b910 Lakh corpus comfortably sustains a monthly withdrawal of \u20b93,333/month at 4% SWR, \u20b94,167/month at 5% SWR, or \u20b95,000/month at 6% SWR. For a \u20b920 Lakh corpus, a 4% to 5% withdrawal provides \u20b96,667 to \u20b98,333 per month while preserving your principal balance over long retirement horizons."
+    },
+    {
         "id": "basics-sip-vs-lumpsum",
         "category": "basics",
         "tags": [
@@ -447,6 +458,28 @@
         ],
         "q": "How is a lump sum mutual fund investment taxed upon redemption in India?",
         "a": "For Equity Mutual Funds held over 12 months, Long-Term Capital Gains (LTCG) above \u20b91.25 Lakh per financial year are taxed at 12.5% (effective FY 2024-25 onwards). Redemptions within 12 months incur Short-Term Capital Gains (STCG) at 20%. Debt mutual funds acquired after April 1, 2023 are taxed at marginal income tax slab rates regardless of holding tenure."
+    },
+    {
+        "id": "lumpsum-10-lakh-returns",
+        "category": "growth",
+        "tags": [
+            "lumpsum-calculator",
+            "faq-page"
+        ],
+        "q": "How much will a \u20b910 Lakh lumpsum investment grow in 10 and 20 years?",
+        "a": "At an expected 12% annualized return (CAGR) in diversified equity mutual funds, a one-time \u20b910 Lakh lumpsum investment compounds into ~\u20b931.06 Lakhs in 10 years (over 3x) and ~\u20b996.46 Lakhs (nearly \u20b91 Crore) in 20 years. Under 2026 Section 112A rules, long-term capital gains are taxed at 12.5% on profits exceeding \u20b91.25 Lakh per financial year."
+    },
+    {
+        "id": "crore-sip-needed-5-years",
+        "category": "growth",
+        "tags": [
+            "my-first-crore-calculator",
+            "target-corpus-calculator",
+            "sip-calculator",
+            "faq-page"
+        ],
+        "q": "How much monthly SIP is needed to reach \u20b91 Crore in 5 years?",
+        "a": "To reach \u20b91 Crore in 5 years at an expected 12% equity CAGR, you need a flat monthly SIP of ~\u20b91,21,232 (investing \u20b972.74 Lakhs with \u20b927.26 Lakhs in compounding gains). If you adopt a 10% annual Step-Up SIP, you can reach \u20b91 Crore starting with an initial monthly SIP of ~\u20b91,02,000."
     },
     {
         "id": "crore-sip-needed-10-years",
