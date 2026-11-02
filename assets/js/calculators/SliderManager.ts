@@ -168,9 +168,14 @@ export class SliderManager {
             const max = parseFloat(range.max) || 100;
             const pct = max > min ? ((val - min) / (max - min)) * 100 : 0;
             tooltip.style.left = `clamp(32px, ${pct.toFixed(2)}%, calc(100% - 32px))`;
-            if (inputId === 'sip' || inputId === 'lumpsum' || inputId === 'target_corpus' || inputId === 'swp_withdrawal') {
+
+            const isCurrency = inputId === 'sip' || inputId === 'lumpsum' || inputId === 'target_corpus' || inputId === 'swp_withdrawal' ||
+                inputId.endsWith('_principal') || inputId.endsWith('_deposit') || inputId.endsWith('_amount') || inputId.endsWith('_initial') || inputId.endsWith('_final');
+            const isYears = inputId === 'years' || inputId === 'swp_years' || inputId.endsWith('_years');
+
+            if (isCurrency) {
                 tooltip.textContent = this.formatter.formatDynamic(val);
-            } else if (inputId === 'years' || inputId === 'swp_years') {
+            } else if (isYears) {
                 tooltip.textContent = `${val} Yrs`;
             } else {
                 tooltip.textContent = `${val}%`;

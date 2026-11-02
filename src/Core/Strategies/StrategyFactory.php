@@ -57,6 +57,14 @@ class StrategyFactory
         if (!isset($this->strategyMap[$key])) {
             throw new \DomainException("No calculator strategy mapped for slug: '{$key}'");
         }
+
+        if ($key === 'sip-5000-per-month') {
+            return new SipStrategy($this->configService, 5000.0);
+        }
+        if ($key === 'reach-5-crore-via-sip') {
+            return new TargetCorpusStrategy($this->configService, 50000000.0);
+        }
+
         $strategyClass = $this->strategyMap[$key];
 
         if ($this->strategyResolver !== null) {

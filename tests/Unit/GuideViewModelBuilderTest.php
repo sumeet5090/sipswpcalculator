@@ -74,6 +74,26 @@ class GuideViewModelBuilderTest extends TestCase
         $this->assertSame('combo', $data['calculator_type']);
     }
 
+    public function testBuildSip5000PerMonthOverridesDefaultSip(): void
+    {
+        $result = $this->builder->build('sip-5000-per-month');
+
+        $data = $result['data'];
+        $this->assertArrayHasKey('sip', $data);
+        $this->assertSame(5000.0, (float) $data['sip']);
+        $this->assertSame('sip', $data['calculator_type']);
+    }
+
+    public function testBuildReach5CroreOverridesTargetCorpus(): void
+    {
+        $result = $this->builder->build('reach-5-crore-via-sip');
+
+        $data = $result['data'];
+        $this->assertArrayHasKey('target_corpus', $data);
+        $this->assertSame(50000000.0, (float) $data['target_corpus']);
+        $this->assertSame('target_corpus', $data['calculator_type']);
+    }
+
     public function testBuildThrowsForInvalidSlug(): void
     {
         $this->expectException(RouteNotFoundException::class);

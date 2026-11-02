@@ -60,7 +60,9 @@ export class CagrDriver implements ISpecializedDriver {
 
         const gainBadge = ctx.dom.getElement('summary-gain-badge');
         if (gainBadge) {
-            gainBadge.textContent = `+${res.absolute_return_percentage.toFixed(1)}% (${res.multiplier.toFixed(2)}x)`;
+            const pct = res.absolute_return_percentage;
+            const sign = pct >= 0 ? '+' : '';
+            gainBadge.textContent = `${sign}${pct.toFixed(1)}% (${res.multiplier.toFixed(2)}x)`;
         }
 
         ctx.resultsController.updateTable(combined, false);

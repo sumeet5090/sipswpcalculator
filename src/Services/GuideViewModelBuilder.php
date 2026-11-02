@@ -93,6 +93,7 @@ class GuideViewModelBuilder
         $show_lumpsum = ($calculator_type === 'lumpsum');
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
 
+        $targetCorpus = ($strategy instanceof \Core\Strategies\TargetCorpusStrategy) ? $strategy->getTargetCorpus() : null;
         $all_posts = $this->blogRepository->getAllPosts();
         $related_calculators = $this->loadRelatedCalculators($fileSlug);
         $pillar_guides = $this->loadPillarGuides($fileSlug);
@@ -107,6 +108,7 @@ class GuideViewModelBuilder
             'calculator_type'     => $calculator_type,
             'benchmark_template'  => $strategy->getBenchmarkTemplate(),
             'benchmark_title'     => $strategy->getBenchmarkTitle(),
+            'target_corpus'       => $targetCorpus,
             'calc_config'         => $calcDefaults,
             'show_lumpsum'        => $show_lumpsum,
             'faqs'                => $faqs,

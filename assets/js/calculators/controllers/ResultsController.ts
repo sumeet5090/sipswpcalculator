@@ -311,8 +311,9 @@ export class ResultsController {
                 );
             }
 
-            // Detect and inject Compounding Ignition Inflection Ribbon Row
-            if (!ignitionRendered && (row.interest ?? 0) >= (row.annual_contribution ?? 0) && row.year > 1 && row.cumulative_invested > 0) {
+            // Detect and inject Compounding Ignition Inflection Ribbon Row (SIP accumulation only)
+            const isAccumulation = !inputs.enable_swp && (inputs.sip ?? 0) > 0 && (row.annual_contribution ?? 0) > 0;
+            if (isAccumulation && !ignitionRendered && (row.interest ?? 0) >= (row.annual_contribution ?? 0) && row.year > 1 && row.cumulative_invested > 0) {
                 ignitionRendered = true;
                 const inflectionTr = document.createElement('tr');
                 inflectionTr.className = 'bg-emerald-50/80 border-y border-emerald-300/80 font-sans';

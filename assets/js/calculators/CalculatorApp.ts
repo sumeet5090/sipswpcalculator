@@ -507,6 +507,9 @@ export class CalculatorApp {
         const mode = appEl?.dataset?.mode || 'combo';
         const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
 
+        // Bind view switcher (line/donut) and benchmark chips across all calculators
+        this.chartManager.initControls();
+
         if (specializedModes.includes(mode)) {
             new StepperController(
                 this.dom,
@@ -530,6 +533,8 @@ export class CalculatorApp {
                 this.analytics
             );
             this.specializedController.init();
+            this.exportSubsystem.init();
+            this.ergonomicsSubsystem.init();
             return;
         }
 
@@ -580,10 +585,12 @@ export class CalculatorApp {
         const stepupBoostBtn = this.dom.getElement<HTMLButtonElement>('apply-10pct-stepup-btn');
         if (stepupBoostBtn) {
             stepupBoostBtn.addEventListener('click', () => {
-                this.sliderManager.updateFieldValue('stepup', 10);
+                const current = parseFloat(this.dom.getValue('stepup') || '0') || 0;
+                const nextVal = current === 0 ? 10 : Math.min(25, current + 5);
+                this.sliderManager.updateFieldValue('stepup', nextVal);
                 this.triggerCalculation();
                 this.engagementSubsystem.triggerMicroBurst();
-                A11yAnnouncer.announce('Applied 10% annual salary appraisal step-up');
+                A11yAnnouncer.announce(`Applied salary step-up: ${nextVal}%`);
             });
         }
 
