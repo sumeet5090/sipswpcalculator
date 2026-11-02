@@ -83,7 +83,29 @@ export class InputValidator {
      * Retrieve constraint boundaries for a field.
      */
     getConstraint(field: string): FieldConstraint | undefined {
-        return this.constraints[field];
+        if (this.constraints[field]) {
+            return this.constraints[field];
+        }
+
+        if (typeof document !== 'undefined') {
+            const el = document.getElementById(field);
+            if (el) {
+                const minAttr = el.getAttribute('min');
+                const maxAttr = el.getAttribute('max');
+                if (minAttr !== null || maxAttr !== null) {
+                    const min = minAttr !== null ? parseFloat(minAttr) : 0;
+                    const max = maxAttr !== null ? parseFloat(maxAttr) : Number.MAX_SAFE_INTEGER;
+                    const defaultVal = el.getAttribute('value') ? parseFloat(el.getAttribute('value')!) : min;
+                    return {
+                        min: !isNaN(min) ? min : 0,
+                        max: !isNaN(max) ? max : Number.MAX_SAFE_INTEGER,
+                        default: !isNaN(defaultVal) ? defaultVal : min
+                    };
+                }
+            }
+        }
+
+        return undefined;
     }
 
     /**
@@ -92,7 +114,7 @@ export class InputValidator {
      */
     validate(field: string, val: number | string): number {
         const parsed = IndianNumberParser.parse(val);
-        const limits = this.constraints[field];
+        const limits = this.getConstraint(field);
         if (!limits) return isNaN(parsed) ? 0 : parsed;
 
         if (isNaN(parsed)) {

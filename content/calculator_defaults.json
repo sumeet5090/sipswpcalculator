@@ -98,6 +98,15 @@
         "label": "Starting Corpus",
         "prefix": "₹"
     },
+    "target_corpus": {
+        "default": 10000000,
+        "min": 100000,
+        "max": 1000000000,
+        "slider_max": 50000000,
+        "step": 100000,
+        "label": "Target Corpus",
+        "prefix": "₹"
+    },
     "ltcg_tax": {
         "exemption_threshold": 125000,
         "rate": 0.125

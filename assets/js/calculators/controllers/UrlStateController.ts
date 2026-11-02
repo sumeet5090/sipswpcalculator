@@ -75,9 +75,15 @@ export class UrlStateController {
                 return;
             }
 
+            const inputEl = this.dom.getElement<HTMLInputElement>(key);
+            if (inputEl && inputEl.type === 'checkbox') {
+                inputEl.checked = (val === '1' || val === 'true' || val === 'on');
+                inputEl.dispatchEvent(new Event('change', { bubbles: true }));
+                return;
+            }
+
             const numVal = parseFloat(val);
             if (!isNaN(numVal)) {
-                const inputEl = this.dom.getElement<HTMLInputElement>(key);
                 const rangeEl = this.dom.getElement<HTMLInputElement>(key + '_range');
 
                 if (inputEl || rangeEl) {
