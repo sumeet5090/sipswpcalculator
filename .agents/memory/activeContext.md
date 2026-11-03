@@ -5,27 +5,31 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed (Parts 1, 2, 3, 4, 5 & Validation Remediation).
-- **Implemented Fixes & Architectural Outcomes (Validation Remediation - 2026-11-03):**
+- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed (Parts 1-5, Validation Remediation, & Final Polish).
+- **Implemented Fixes & Architectural Outcomes (Validation Remediation & Final Polish - 2026-11-03):**
   - **DEFECT-1 (High):** Complete DOM Bound Discovery in `assets/js/calculators/InputValidator.ts`:
     - Updated `InputValidator.getConstraint(field)` to inspect `el?.getAttribute('data-min') ?? el?.getAttribute('min') ?? rangeEl?.getAttribute('min')` and `el?.getAttribute('data-max') ?? el?.getAttribute('max') ?? rangeEl?.getAttribute('max')`.
     - Solves the gap where text inputs output `data-min`/`data-max` rather than `min`/`max`, guaranteeing accurate constraint boundaries for specialized steppers (`emi_years`, `ppf_deposit`, `fd_principal`, etc.) and preventing `EmiEngine.ts` runtime crashes on decrement.
-  - **DEFECT-2 (High):** Deep-Linked URL Parameter Clamping in `assets/js/calculators/controllers/UrlStateController.ts`:
+  - **DEFECT-2 (High):** Deep-Linked URL Parameter Clamping & Drag-State Elimination in `assets/js/calculators/controllers/UrlStateController.ts`:
     - Updated URL hydration loops to inspect `data-min` and `data-max` from `inputEl` and `min`/`max` from `rangeEl`.
-    - Prevents out-of-bounds parameters (e.g. `?years=-5` or `?ppf_years=5`) from bypassing boundary limits.
+    - Eliminated synthetic `input` event dispatch on `rangeEl` when `inputEl` was already dispatched, preventing `SliderManager` from getting stuck in an artificial `_isDragging = true` state on page load.
+    - Expands `rangeEl.max` when `clampedVal > max` to prevent native browser truncation.
   - **DEFECT-3 (High):** Target Corpus Sharing & Messaging Restoration in `assets/js/calculators/controllers/ShareController.ts`:
     - In `buildShareUrl()`, detected `mode === 'target_corpus'` independently of `#goal-target` button existence (which only exists on homepage).
     - Serializes `goal_mode=target` and `target_corpus=<val>` while suppressing dummy `sip=0`.
     - Added dedicated message formatters in `tryNativeShare()` and `shareToWhatsApp()` displaying the Target Corpus and Required Monthly SIP.
   - **DEFECT-4 (Low):** Normalized Goal Query Parameter in `assets/js/calculators/CalculatorApp.ts`:
     - Supported both `urlParams.get('goal')` and `urlParams.get('goal_mode')`.
+  - **DEFECT-5 (Low):** Benchmark Milestone Highlighting Completeness in `src/Views/components/benchmarks/target-corpus.twig`:
+    - Added dynamic conditional highlighting matching all 5 presets: ₹25L (`2500000`), ₹50L (`5000000`), ₹1 Cr (`10000000`), ₹2 Cr (`20000000`), and ₹5 Cr (`50000000`).
 - **Verification & QA Passed:**
   - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
   - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)**.
   - PHPStan Level 5: **0 errors**.
   - PHPCS: **0 violations**.
-  - Frontend Typecheck & Build: `npm run typecheck && npm run build` built with 0 type errors in 304ms.
+  - Frontend Typecheck & Build: `npm run typecheck && npm run build` built with 0 type errors in 250ms.
   - Node Behavioral Assertion Suite: Verified constraint discovery (`emi_years` {min: 1, max: 30}), URL parameter clamping (-5 -> 1), and target corpus share serialization (`target_corpus=...` without `sip=0`).
+  - SSR Verification: Verified active row highlighting on `/target-corpus-calculator` across milestones.
   - **DEFECT-1 (Critical):** Fixed `/embed/sip-step-up-calculator` blank form in `src/Views/calculators/embed.twig`: updated check to `{% if calculator_type in ['sip', 'sip-step-up'] %}` so the iframe renders all SIP and Step-Up form controls.
   - **DEFECT-2 (Critical):** Fixed `/embed/retirement-calculator` combo tab lockout in `src/Views/calculators/embed.twig`: replaced legacy 2-tab buttons with the full 3-mode segmented control bar (`#tab-combo`, `#tab-sip`, `#tab-swp`), Stage 1 & Stage 2 headers, stage divider, and `#swp-standalone-corpus`.
   - **DEFECT-3 (High):** Restored URL query parameter state hydration for specialized calculators:
