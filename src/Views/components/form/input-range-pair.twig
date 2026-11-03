@@ -15,17 +15,23 @@
     
     {% set theme = config.theme|default('emerald') %}
     
-    {% set inputFocusBorder = theme == 'rose' 
-        ? 'focus-within:border-rose-500 focus-within:ring-rose-500/20' 
-        : 'focus-within:border-emerald-500 focus-within:ring-emerald-500/20' %}
+    {% set inputFocusBorder = theme == 'blue'
+        ? 'focus-within:border-blue-500 focus-within:ring-blue-500/20'
+        : (theme == 'rose'
+            ? 'focus-within:border-rose-500 focus-within:ring-rose-500/20'
+            : 'focus-within:border-emerald-500 focus-within:ring-emerald-500/20') %}
         
-    {% set rangeColorClass = theme == 'rose' ? 'accent-rose-600' : 'accent-emerald-600' %}
+    {% set rangeColorClass = theme == 'blue'
+        ? 'accent-blue-600'
+        : (theme == 'rose' ? 'accent-rose-600' : 'accent-emerald-600') %}
     {% set labelHtml = config.label_html|default(null) %}
     
     {% set presets = config.presets|default(null) %}
-    {% set activeChipClass = theme == 'rose' 
-        ? 'is-active-rose bg-rose-600 text-white border-rose-600 shadow-flat' 
-        : 'is-active bg-emerald-600 text-white border-emerald-600 shadow-flat' %}
+    {% set activeChipClass = theme == 'blue'
+        ? 'is-active-blue bg-blue-600 text-white border-blue-600 shadow-flat'
+        : (theme == 'rose' 
+            ? 'is-active-rose bg-rose-600 text-white border-rose-600 shadow-flat' 
+            : 'is-active bg-emerald-600 text-white border-emerald-600 shadow-flat') %}
     {% set tooltip = config.tooltip|default(null) %}
     
     <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2 sm:p-2.5 transition-all duration-200 shadow-subtle hover:shadow-card" data-field-id="{{ id }}">

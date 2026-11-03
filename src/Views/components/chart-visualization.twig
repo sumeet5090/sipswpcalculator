@@ -59,74 +59,73 @@
         {% set card4Title = 'Maturity Value' %}
     {% endif %}
 
-    <!-- Fluid Quantum Wealth Ribbon Grid (Scoreboard Tray with High-Contrast Pure Light-Mode Color Authority) -->
-    <div class="p-1.5 sm:p-2 rounded-3xl bg-slate-200/70 border border-slate-300/80 shadow-subtle">
+    <!-- Fluid Quantum Wealth Ribbon Grid (Institutional Scoreboard: 3 Clean White Cards + 1 Dark Executive Anchor) -->
+    <div class="p-1.5 sm:p-2 rounded-3xl bg-slate-100/90 border border-slate-200/90 shadow-subtle">
         <div id="summary-cards-grid" class="grid grid-cols-2 {% if isFourCardMode %}sm:grid-cols-4{% else %}sm:grid-cols-3{% endif %} gap-2 sm:gap-2.5 transition-all duration-300">
             <!-- Card 1: Total Invested / Principal -->
-            <div class="border-t-4 border-t-slate-500 bg-gradient-to-b from-slate-100 via-indigo-50/30 to-slate-50 rounded-2xl border-2 border-slate-300/90 shadow-flat px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card hover:border-slate-400 group flex flex-col justify-between min-w-0">
-                <div class="text-caption font-bold text-slate-600 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
-                    <span class="text-ui-xs">💰</span>
-                    <span>{{ card1Title }}</span>
+            <div class="bg-white rounded-2xl border border-slate-200/90 shadow-flat px-3 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-subtle hover:border-slate-300 group flex flex-col justify-between min-w-0">
+                <div class="text-caption font-bold text-slate-500 uppercase tracking-wider mb-1 leading-tight">
+                    {{ card1Title }}
                 </div>
-                <div id="summary-invested" class="metric-len-normal font-black text-slate-900 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5" aria-label="₹ --">
+                <div id="summary-invested" class="metric-len-normal font-black text-slate-900 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5 text-left" aria-label="₹ --">
                     <span class="sr-only">₹ --</span>
                     <span aria-hidden="true" data-nosnippet="true">₹ --</span>
                 </div>
-                <div class="text-micro font-bold text-slate-500 font-financial-mono tracking-tight">
+                <div class="text-micro font-medium text-slate-500 font-financial-mono tracking-tight">
                     {{ card1Sub }}
                 </div>
             </div>
 
             <!-- Card 2: Compounding Gains / Interest -->
-            <div class="border-t-4 border-t-emerald-600 bg-gradient-to-b from-emerald-100/60 via-teal-50/40 to-emerald-50/80 rounded-2xl border-2 border-emerald-300/90 shadow-flat px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card hover:border-emerald-400 group flex flex-col justify-between relative min-w-0">
-                <div id="title-interest-container" class="flex items-center justify-center gap-1 mb-1">
-                    <span id="title-interest" class="text-caption font-bold text-emerald-900 uppercase tracking-wider leading-tight flex items-center gap-0.5">
-                        <span>↗</span>
-                        <span>{{ card2Title }}</span>
+            <div class="bg-white rounded-2xl border border-slate-200/90 shadow-flat px-3 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-subtle hover:border-slate-300 group flex flex-col justify-between relative min-w-0">
+                <div id="title-interest-container" class="flex items-center justify-between gap-1 mb-1">
+                    <span id="title-interest" class="text-caption font-bold text-slate-500 uppercase tracking-wider leading-tight">
+                        {{ card2Title }}
+                    </span>
+                    <span id="summary-gain-badge" class="inline-flex items-center text-micro font-bold px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/80 tabular-nums">
+                        +0%
                     </span>
                 </div>
-                <div id="summary-interest" class="metric-len-normal font-black text-emerald-800 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5" aria-label="₹ --">
+                <div id="summary-interest" class="metric-len-normal font-black text-slate-900 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5 text-left" aria-label="₹ --">
                     <span class="sr-only">₹ --</span>
                     <span aria-hidden="true" data-nosnippet="true">₹ --</span>
                 </div>
-                <div class="flex items-center justify-center gap-1">
-                    <span id="summary-gain-badge" class="inline-flex items-center text-micro font-black px-2 py-0.5 rounded-full bg-emerald-200/90 text-emerald-950 border border-emerald-300">
-                        +0%
-                    </span>
+                <div class="text-micro font-medium text-emerald-700 font-financial-mono tracking-tight">
+                    Compound Growth
                 </div>
             </div>
 
             <!-- Card 3: Total Withdrawn / Payment (Morphs visible only in SWP/Combo/EMI mode) -->
-            <div id="card-withdrawn" class="{% if not isFourCardMode %}hidden {% endif %}border-t-4 border-t-blue-600 bg-gradient-to-b from-blue-100/60 via-sky-50/40 to-blue-50/80 rounded-2xl border-2 border-blue-300/90 shadow-flat px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card hover:border-blue-400 group flex flex-col justify-between min-w-0">
-                <div class="text-caption font-bold text-blue-900 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-0.5">
-                    <span>↘</span>
-                    <span>{{ card3Title }}</span>
+            <div id="card-withdrawn" class="{% if not isFourCardMode %}hidden {% endif %}bg-white rounded-2xl border border-slate-200/90 shadow-flat px-3 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-subtle hover:border-slate-300 group flex flex-col justify-between min-w-0">
+                <div class="text-caption font-bold text-slate-500 uppercase tracking-wider mb-1 leading-tight">
+                    {{ card3Title }}
                 </div>
-                <div id="summary-withdrawn" class="metric-len-normal font-black text-blue-950 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5" aria-label="₹ --">
+                <div id="summary-withdrawn" class="metric-len-normal font-black text-slate-900 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5 text-left" aria-label="₹ --">
                     <span class="sr-only">₹ --</span>
                     <span aria-hidden="true" data-nosnippet="true">₹ --</span>
                 </div>
-                <div class="text-micro font-bold text-blue-700 font-financial-mono tracking-tight">
+                <div class="text-micro font-medium text-slate-500 font-financial-mono tracking-tight">
                     {{ card3Sub }}
                 </div>
             </div>
 
-            <!-- Card 4: Final Corpus / Net Wealth / EMI (Mobile Asymmetric Hero Placement) -->
-            <div id="card-corpus" class="border-t-4 border-t-emerald-700 col-span-2 sm:col-span-1 order-first sm:order-none bg-gradient-to-br from-emerald-200/90 via-teal-100 to-emerald-100/80 rounded-2xl border-2 border-emerald-600 shadow-glow-growth px-3 py-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 relative group flex flex-col justify-between min-w-0">
-                <div id="title-corpus" class="text-caption font-extrabold text-emerald-950 mb-1 leading-tight flex items-center justify-center gap-1">
-                    <span class="inline-flex items-center gap-1 bg-emerald-700 text-white px-2.5 py-0.5 rounded-full text-micro font-black uppercase tracking-wider shadow-flat">
-                        <span>💎</span>
-                        <span>{{ card4Title }}</span>
+            <!-- Card 4: Final Corpus / Net Wealth / EMI (Institutional Executive Anchor - Pure Light Mode) -->
+            <div id="card-corpus" class="col-span-2 sm:col-span-1 order-first sm:order-none bg-white rounded-2xl border-2 border-emerald-600 shadow-card px-3.5 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 ring-2 ring-emerald-500/10 relative group flex flex-col justify-between min-w-0">
+                <div id="title-corpus" class="text-caption font-bold text-slate-600 uppercase tracking-wider mb-1 leading-tight flex items-center justify-between">
+                    <span>{{ card4Title }}</span>
+                    <span class="text-micro font-bold text-emerald-800 bg-emerald-50 border border-emerald-200/90 px-2 py-0.5 rounded-full">
+                        Primary
                     </span>
                 </div>
-                <div id="summary-corpus" class="metric-hero-corpus font-black text-emerald-950 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5" aria-label="₹ --">
+                <div id="summary-corpus" class="metric-hero-corpus font-black text-slate-900 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5 text-left" aria-label="₹ --">
                     <span class="sr-only">₹ --</span>
                     <span aria-hidden="true" data-nosnippet="true">₹ --</span>
                 </div>
-                <div class="flex items-center justify-center gap-1">
-                    <div id="post-tax-statutory-pill" class="hidden text-micro font-bold text-tax-emphasis bg-tax-surface border border-tax-border px-1.5 py-0.5 rounded whitespace-nowrap">
-                        ⚖️ §112A Net
+                <div class="flex items-center gap-1.5">
+                    <div id="post-tax-statutory-pill" class="hidden text-micro font-bold text-slate-700 bg-slate-100 border border-slate-200/90 px-1.5 py-0.5 rounded whitespace-nowrap">
+                        §112A Net
                     </div>
+                    <span class="text-micro font-medium text-slate-500">Total Net Portfolio</span>
                 </div>
             </div>
         </div>

@@ -5,7 +5,20 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Final 3 Polish Points Completed (10/10 Polish Achieved & Verified).
+- **Current Milestone:** Institutional Fintech Polish Complete (80/20 Rule, Left-Aligned Tabular Numerals, Pure Light-Mode Executive Anchor, Royal Blue SWP Controls).
+- **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 6 - Institutional Fintech Polish):**
+  - **Ledger "White Box" Defect Eliminated (`src/Views/components/yearly-breakdown-table.twig`):**
+    - Removed `min-h-[380px]` from `#table-scroll-wrapper` so the table naturally shrink-wraps milestone rows without any artificial ~200px empty white space below row entries.
+  - **Institutional Scoreboard (80/20 Rule + Left-Aligned Tabular Numeral Layout in `chart-visualization.twig`):**
+    - Cards 1, 2, 3 (`summary-invested`, `summary-interest`, `summary-withdrawn`): Clean `#FFFFFF` backgrounds (`bg-white border border-slate-200/90 shadow-flat hover:shadow-subtle rounded-2xl p-3 text-left`). Stripped cluttered emojis (`💰`, `↗`, `↘`), applied small uppercase slate headers (`text-caption font-bold text-slate-500 uppercase tracking-wider`), and strictly left-aligned monospace numbers (`text-left font-financial-mono tabular-nums`).
+    - Card 4 (`card-corpus`): Executive Anchor adhering to Strict Pure Light-Mode (`bg-white rounded-2xl border-2 border-emerald-600 shadow-card px-3.5 py-3 text-left ring-2 ring-emerald-500/10`), an emerald badge pill (`Primary`), and prominent `text-slate-900` numbers. Zero prohibited dark classes (`bg-slate-900` / `bg-slate-950` rejected per `TelemetryIntegrationTest`).
+  - **Sub-Chart De-Cluttering & Color Saturation Balance (`src/Views/calculators/home.twig` & `src/Views/components/analytical-studio.twig`):**
+    - Neutralized `#quick-answer` to a clean editorial footnote card (`bg-white rounded-2xl border border-slate-200/90 border-l-4 border-l-emerald-600 p-3.5 sm:p-4 shadow-subtle`). Removed `⚡` emoji.
+    - Neutralized Analytical Studio command header (`#breakdown-studio`) from a mint gradient to clean institutional slate (`bg-slate-50/95 border border-slate-200/90 rounded-2xl p-4 shadow-card mb-4`). Removed oversized glowing blur divs.
+  - **Stage 2 SWP Sliders Royal Blue (`src/Views/components/forms/swp-fields.twig` & `src/Views/components/form/input-range-pair.twig`):**
+    - Updated SWP inputs to `'theme': 'blue'` with `accent-blue-600`, removing alarming danger-red (`rose`) slider tracks and reserving red strictly for capital depletion alerts.
+  - **Workspace Decluttering (`src/Views/components/calculator-form.twig`):**
+    - Removed `🚀`, `⚡`, `🛡️` emojis from mode tab selectors; replaced with subtle colored indicator dots (`bg-emerald-600` / `bg-blue-600` / `bg-slate-300`).
 - **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 5 - Final 3 Polish Points):**
   - **Polish 1: Exact Column Height Alignment (~1,330px Baseline Match):**
     - **Left Column:** Configured quick preset chip rows in `input-range-pair.twig` on desktop to reveal smoothly on hover/focus (`sm:max-h-0 sm:opacity-0 sm:group-hover/field:max-h-12 sm:group-hover/field:opacity-100 sm:group-focus-within/field:max-h-12 sm:group-focus-within/field:opacity-100 transition-all duration-200`), saving ~220px of idle vertical height while keeping mobile touch chips permanently visible and all inputs open without accordions (`FormStructureParityTest` clean). Compacted narrative and salary appraisal callouts in `sip-fields.twig`.

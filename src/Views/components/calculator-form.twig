@@ -34,18 +34,18 @@
         <div class="py-0.5 mb-2 rounded-2xl">
             <div class="flex bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70 shadow-flat gap-1" role="tablist" aria-label="Calculator Mode Selector">
                 <button type="button" id="tab-combo" role="tab" aria-selected="{% if calculator_type|default('combo') == 'combo' %}true{% else %}false{% endif %}"
-                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'combo' %}bg-white text-emerald-800 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
-                    <span class="flex items-center justify-center w-4 h-4 rounded-full {% if calculator_type|default('combo') == 'combo' %}bg-emerald-100 text-emerald-800{% else %}bg-slate-200 text-slate-600{% endif %} text-micro font-extrabold">🚀</span>
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-extrabold uppercase tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'combo' %}bg-white text-emerald-900 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
+                    <span class="w-2 h-2 rounded-full {% if calculator_type|default('combo') == 'combo' %}bg-emerald-600{% else %}bg-slate-300{% endif %}"></span>
                     <span>Dual (SIP+SWP)</span>
                 </button>
                 <button type="button" id="tab-sip" role="tab" aria-selected="{% if calculator_type|default('combo') == 'sip' %}true{% else %}false{% endif %}"
-                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'sip' %}bg-white text-growth-emphasis shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
-                    <span class="flex items-center justify-center w-4 h-4 rounded-full {% if calculator_type|default('combo') == 'sip' %}bg-growth-surface text-growth-emphasis{% else %}bg-slate-200 text-slate-600{% endif %} text-micro font-extrabold">⚡</span>
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'sip' %}bg-white text-emerald-900 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
+                    <span class="w-2 h-2 rounded-full {% if calculator_type|default('combo') == 'sip' %}bg-emerald-600{% else %}bg-slate-300{% endif %}"></span>
                     <span>SIP Only</span>
                 </button>
                 <button type="button" id="tab-swp" role="tab" aria-selected="{% if calculator_type|default('combo') == 'swp' %}true{% else %}false{% endif %}"
-                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'swp' %}bg-white text-rose-600 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
-                    <span class="flex items-center justify-center w-4 h-4 rounded-full {% if calculator_type|default('combo') == 'swp' %}bg-rose-100 text-rose-800{% else %}bg-slate-200 text-slate-600{% endif %} text-micro font-extrabold">🛡️</span>
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 text-ui-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'swp' %}bg-white text-blue-900 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
+                    <span class="w-2 h-2 rounded-full {% if calculator_type|default('combo') == 'swp' %}bg-blue-600{% else %}bg-slate-300{% endif %}"></span>
                     <span>SWP Only</span>
                 </button>
             </div>
