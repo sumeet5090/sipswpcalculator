@@ -62,7 +62,7 @@
     <!-- Fluid Quantum Wealth Ribbon Grid (Zero-CLS responsive container) -->
     <div id="summary-cards-grid" class="grid grid-cols-2 {% if isFourCardMode %}sm:grid-cols-4{% else %}sm:grid-cols-3{% endif %} gap-2.5 sm:gap-3 transition-all duration-300">
         <!-- Card 1: Total Invested / Principal -->
-        <div class="border-l-4 border-l-slate-400 bg-white/95 rounded-2xl border border-slate-200/90 shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-slate-300 group flex flex-col justify-between min-w-0">
+        <div class="border-l-4 border-l-slate-400 bg-gradient-to-br from-slate-50 via-indigo-50/30 to-slate-100/80 rounded-2xl border border-slate-200/90 shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-slate-300 group flex flex-col justify-between min-w-0">
             <div class="text-caption font-bold text-slate-500 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span class="text-ui-xs">💰</span>
                 <span>{{ card1Title }}</span>
@@ -77,7 +77,7 @@
         </div>
 
         <!-- Card 2: Compounding Gains / Interest -->
-        <div class="border-l-4 border-l-emerald-500 bg-emerald-50/30 rounded-2xl border border-emerald-200/90 shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-300 group flex flex-col justify-between relative min-w-0">
+        <div class="border-l-4 border-l-emerald-500 bg-gradient-to-br from-emerald-50 via-teal-50/70 to-emerald-100/50 rounded-2xl border border-emerald-200/90 shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-300 group flex flex-col justify-between relative min-w-0">
             <div id="title-interest-container" class="flex items-center justify-center gap-1 mb-1">
                 <span id="title-interest" class="text-caption font-bold text-emerald-700 uppercase tracking-wider leading-tight flex items-center gap-0.5">
                     <span>↗</span>
@@ -96,7 +96,7 @@
         </div>
 
         <!-- Card 3: Total Withdrawn / Payment (Morphs visible only in SWP/Combo/EMI mode) -->
-        <div id="card-withdrawn" class="{% if not isFourCardMode %}hidden {% endif %}border-l-4 border-l-blue-500 bg-blue-50/30 rounded-2xl border border-blue-200/90 shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-blue-300 group flex flex-col justify-between min-w-0">
+        <div id="card-withdrawn" class="{% if not isFourCardMode %}hidden {% endif %}border-l-4 border-l-blue-500 bg-gradient-to-br from-blue-50 via-sky-50/70 to-blue-100/50 rounded-2xl border border-blue-200/90 shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-blue-300 group flex flex-col justify-between min-w-0">
             <div class="text-caption font-bold text-blue-700 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-0.5">
                 <span>↘</span>
                 <span>{{ card3Title }}</span>
@@ -111,7 +111,7 @@
         </div>
 
         <!-- Card 4: Final Corpus / Net Wealth / EMI (Mobile Asymmetric Hero Placement) -->
-        <div id="card-corpus" class="border-l-4 border-l-emerald-600 col-span-2 sm:col-span-1 order-first sm:order-none bg-gradient-to-b from-white to-emerald-50/60 rounded-2xl border-2 border-emerald-600/90 shadow-glow-growth px-3 py-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 relative group flex flex-col justify-between min-w-0">
+        <div id="card-corpus" class="border-l-4 border-l-emerald-600 col-span-2 sm:col-span-1 order-first sm:order-none bg-gradient-to-br from-emerald-100/80 via-teal-50/90 to-white rounded-2xl border-2 border-emerald-600/90 shadow-glow-growth px-3 py-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 relative group flex flex-col justify-between min-w-0">
             <div id="title-corpus" class="text-caption font-extrabold text-emerald-950 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span>💎</span>
                 <span>{{ card4Title }}</span>
@@ -130,7 +130,7 @@
 
     {% if calculator_type not in ['emi', 'ppf', 'fd', 'cagr', 'compound_interest', 'inflation'] %}
     <!-- Real Purchasing Power & Peace-of-Mind Telemetry Strip (Dynamic Risk Empathy) -->
-    <div id="purchasing-power-telemetry-strip" class="p-3 sm:p-3.5 rounded-2xl bg-white/95 border border-slate-200/90 shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-all">
+    <div id="purchasing-power-telemetry-strip" class="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-teal-50/70 via-emerald-50/40 to-white border border-teal-200/80 shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-all">
         <div class="flex items-start sm:items-center gap-3 min-w-0">
             <div class="flex items-center justify-center w-8 h-8 rounded-xl bg-teal-50 border border-teal-200/80 text-teal-800 text-ui-sm font-extrabold shrink-0 shadow-flat">
                 ⚖️

@@ -5,21 +5,27 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Argon Crawl Audit Resolution & DOM Structural Hierarchy Optimization Completed.
-- **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 2):**
-  - **Headless Crawler DOM Isolation & Modal Attributes:**
-    - In `src/Views/components/strategy-starter.twig` and `assets/js/calculators/controllers/WealthQuizController.ts`: Appended native HTML5 `hidden`, inline `style="display: none;"`, and `aria-hidden="true"` to `#wealth-guided-wizard-drawer`. Updated `openDrawer` / `closeDrawer` to dynamically toggle both HTML attributes and inline display styles. Headless DOM scrapers that do not evaluate CSS bundles now correctly skip unmounted wizard step forms.
-  - **Duplicate Ledger Views Elimination:**
-    - In `src/Views/components/yearly-breakdown-table.twig` and `assets/js/calculators/controllers/ResultsController.ts`: Added native `hidden style="display: none;" aria-hidden="true"` to `#mobile-breakdown-list-wrapper`. Refactored `ResultsController.updateTable()` so that only the actively selected mobile view (Carousel cards or Compact table list) is populated in the DOM, clearing the inactive container completely and eliminating duplicate 40-year DOM trees.
-  - **Analytical Studio Multi-Panel Isolation:**
-    - In `src/Views/components/analytical-studio.twig` and `assets/js/calculators/controllers/StudioTabController.ts`: Added native HTML5 `hidden` and inline `style="display: none;"` to panels 2 through 5 (`panel-city-benchmark`, `panel-milestone-roadmap`, `panel-stress-test`, `panel-asset-rebalance`). Updated `switchTab()` to explicitly manage `panel.hidden` and `panel.style.display`, ensuring crawlers and screen readers only process the active tab.
-  - **Input Field Control Density Tuning:**
-    - In `src/Views/components/form/input-range-pair.twig`: Retained direct exposure of all primary and secondary inputs in accordance with `FormStructureParityTest.php` and product UX requirements. Reduced vertical bulk of preset chips to ultra-compact `min-h-[26px] sm:min-h-[24px]` and refined resting opacity to `opacity-75 sm:opacity-50`, illuminating to 100% on field hover or focus.
-  - **Pre-Calculator Vertical Funnel Tightening:**
-    - In `src/Views/components/calculator-dock.twig`: Streamlined exploration header and reduced vertical margins from `mb-6 sm:mb-8` to `mb-2.5 sm:mb-3`, pulling the primary calculator closer to the hero.
-  - **Odometer Screen-Reader & Crawler Shielding Verification:**
-    - Verified `RollingOdometerView.ts` pairs `<span class="sr-only">${formattedText}</span>` with `aria-hidden="true"` and `data-nosnippet="true"` on mechanical tumbler containers and digit slots.
-- **Previous Session Fixes (2026-11-03 Session 1):**
+- **Current Milestone:** Mild Professional Color Architecture & Light-Mode Depth Overhaul Completed.
+- **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 3):**
+  - **Canvas Multi-Stop Light Mesh (`resources/css/input.css`):**
+    - Defined `--gradient-surface` on `body` combining three delicate radial aurora accents (emerald `0.08`, sky blue `0.08`, periwinkle `0.04`) with a soft slate vertical gradient (`#f8fafc` -> `#f1f5f9` -> `#edf2f7`).
+    - Upgraded `.fintech-glass-card` with an elevated gentle gradient background (`linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.94) 100%)`) providing subtle tactile warmth while maintaining WCAG AAA text contrast.
+  - **Stage 1 & Stage 2 Soft Pastel Consoles (`calculator-form.twig` & `calculator-guide.twig`):**
+    - Stage 1 (Accumulation SIP): Upgraded to a breathable pastel mint wash (`bg-gradient-to-b from-emerald-50/70 via-emerald-50/40 to-teal-50/20 border-emerald-200/80 shadow-subtle`) with an emerald-100 header strip.
+    - Stage 2 (Distribution SWP): Upgraded to a crisp pastel sky/azure wash (`bg-gradient-to-b from-blue-50/70 via-blue-50/40 to-indigo-50/20 border-blue-200/80 shadow-subtle`) with a blue-100 header strip.
+    - Transition Bridge: Enhanced `#stage-transition-divider` with a high-contrast periwinkle pill (`bg-indigo-100/90 border border-indigo-300/90 text-indigo-950`).
+  - **Scoreboard KPI Cards Mild Pastel Spectrum (`chart-visualization.twig`):**
+    - Card 1 (Invested): Soft slate/indigo tint (`bg-gradient-to-br from-slate-50 via-indigo-50/30 to-slate-100/80`).
+    - Card 2 (Gains): Soft mint emerald tint (`bg-gradient-to-br from-emerald-50 via-teal-50/70 to-emerald-100/50`).
+    - Card 3 (Payouts): Soft sky blue tint (`bg-gradient-to-br from-blue-50 via-sky-50/70 to-blue-100/50`).
+    - Card 4 (Final Corpus Hero): Glowing emerald-to-teal gradient (`bg-gradient-to-br from-emerald-100/80 via-teal-50/90 to-white`).
+    - Telemetry Strip: Mild teal/mint wash (`bg-gradient-to-r from-teal-50/70 via-emerald-50/40 to-white border border-teal-200/80`).
+  - **Surfaces & Dock Warmth (`strategy-starter.twig`, `calculator-dock.twig`, `analytical-studio.twig`):**
+    - Presets toolbar: Mild horizontal gradient (`bg-gradient-to-r from-emerald-50/70 via-slate-50/90 to-blue-50/70`).
+    - Calculator Dock: Soft recessed tray (`bg-gradient-to-r from-slate-100/90 via-emerald-50/30 to-slate-100/90`).
+    - Studio Command Header: Breathable pastel header (`bg-gradient-to-r from-emerald-50/50 via-white to-teal-50/40`).
+    - Cashflow Ledger: Alternating zebra striping (`even:bg-slate-50/60 hover:bg-emerald-50/50`).
+- **Previous Session Fixes (2026-11-03 Sessions 1 & 2):**
   - **P0 Critical (Surface Architecture & Pure Light Scoreboard):**
     - **4-Tier Surface Luminance Hierarchy:**
       - Canvas Base: Configured `--color-canvas-base: #f1f5f9;` with `body` background `#F1F5F9` in `resources/css/input.css` and `calculator-guide.twig`, providing crisp physical elevation for `#FFFFFF` cards and eliminating "all-white wall" fatigue.

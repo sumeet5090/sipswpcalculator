@@ -4,7 +4,7 @@ import { MathEngine } from '../MathEngine';
 import { InvestmentInputs, YearResult } from '../../types';
 import { eventBus } from '../../utils/EventBus';
 
-const TABLE_ROW_CLASS = "hover:bg-emerald-50/50 border-b border-slate-100 transition-colors cursor-pointer";
+const TABLE_ROW_CLASS = "even:bg-slate-50/60 hover:bg-emerald-50/50 border-b border-slate-100 transition-colors cursor-pointer";
 const CELL_YEAR_CLASS = "px-4 sm:px-6 py-3.5 text-left font-extrabold text-slate-900 whitespace-nowrap sticky left-0 bg-white/98 backdrop-blur-md z-10 shadow-[2px_0_6px_-2px_rgba(0,0,0,0.08)] border-b border-slate-100";
 const CELL_MONO_CLASS = "px-4 sm:px-6 py-3.5 text-right font-mono tabular-nums text-slate-600 whitespace-nowrap";
 const CELL_EMERALD_CLASS = "px-4 sm:px-6 py-3.5 text-right text-emerald-700 font-semibold font-mono tabular-nums whitespace-nowrap";
