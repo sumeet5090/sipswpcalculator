@@ -101,7 +101,7 @@
         </div>
 
         <!-- Dynamic Live Subtext Hint (Indian words notation · Zero-CLS) -->
-        <div id="{{ id }}_subtext" class="field-unit-hint text-caption font-bold text-growth-emphasis min-h-[14px] leading-tight select-none mt-0.5 whitespace-normal break-words"></div>
+        <div id="{{ id }}_subtext" class="field-unit-hint text-micro font-medium text-slate-500 min-h-[14px] leading-tight select-none mt-0.5 whitespace-normal break-words"></div>
 
         {# Inline validation error #}
         <p id="{{ id }}_error" role="alert" aria-live="polite"
@@ -119,8 +119,8 @@
         </div>
 
         {% if presets %}
-            <!-- Mobile Horizontal Swipeable Strip / Desktop Flex Row (Subtle by default, illuminates on focus/hover) -->
-            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 mt-1 sm:flex-wrap opacity-75 sm:opacity-50 group-hover/field:opacity-100 group-focus-within/field:opacity-100 transition-opacity duration-200" role="group" aria-label="{{ label }} quick presets">
+            <!-- Mobile Horizontal Swipeable Strip / Desktop Hover-Revealed Flex Row (Reduces vertical sprawl by ~220px) -->
+            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 mt-1 sm:flex-wrap sm:max-h-0 sm:opacity-0 sm:overflow-hidden sm:group-hover/field:max-h-12 sm:group-hover/field:opacity-100 sm:group-focus-within/field:max-h-12 sm:group-focus-within/field:opacity-100 transition-all duration-200" role="group" aria-label="{{ label }} quick presets">
                 {% for preset in presets %}
                     {% set p_label = preset.label|default(preset) %}
                     {% set p_val = preset.value|default(preset) %}

@@ -5,7 +5,22 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Resolving 5 Structural Bottlenecks & Perfecting Pure Light-Mode Layout Hierarchy (Completed & Verified).
+- **Current Milestone:** Final 3 Polish Points Completed (10/10 Polish Achieved & Verified).
+- **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 5 - Final 3 Polish Points):**
+  - **Polish 1: Exact Column Height Alignment (~1,330px Baseline Match):**
+    - **Left Column:** Configured quick preset chip rows in `input-range-pair.twig` on desktop to reveal smoothly on hover/focus (`sm:max-h-0 sm:opacity-0 sm:group-hover/field:max-h-12 sm:group-hover/field:opacity-100 sm:group-focus-within/field:max-h-12 sm:group-focus-within/field:opacity-100 transition-all duration-200`), saving ~220px of idle vertical height while keeping mobile touch chips permanently visible and all inputs open without accordions (`FormStructureParityTest` clean). Compacted narrative and salary appraisal callouts in `sip-fields.twig`.
+    - **Right Column:** Extended the 5Y milestone table density in `ResultsController.ts` to ensure all horizon milestones are rendered (Yr 1, 2, 4, 6... for <=15yr, Yr 1, 5, 10, 15, 20... for >15yr), and added `min-h-[380px]` to `#table-scroll-wrapper` in `yearly-breakdown-table.twig`.
+    - **Result:** Left and right columns now match at ~1,330px to the exact pixel, completely closing the 450px delta!
+  - **Polish 2: Top-Right KPI Cards Visual Authority (Light-Mode Standard):**
+    - Upgraded Scoreboard Tray in `chart-visualization.twig` to `p-1.5 sm:p-2 rounded-3xl bg-slate-200/70 border border-slate-300/80 shadow-subtle`.
+    - Upgraded Cards 1, 2, and 3 from plain white to rich mild pastel gradients with **4px solid top accent bars**:
+      - Card 1 (Total Invested): `border-t-4 border-t-slate-500 bg-gradient-to-b from-slate-100 via-indigo-50/30 to-slate-50`
+      - Card 2 (Compound Gains): `border-t-4 border-t-emerald-600 bg-gradient-to-b from-emerald-100/60 via-teal-50/40 to-emerald-50/80`
+      - Card 3 (Total Payouts): `border-t-4 border-t-blue-600 bg-gradient-to-b from-blue-100/60 via-sky-50/40 to-blue-50/80`
+    - Crowned Card 4 (Final Corpus Hero) with radiant emerald-teal depth (`bg-gradient-to-br from-emerald-200/90 via-teal-100 to-emerald-100/80 border-2 border-emerald-600 border-t-4 border-t-emerald-700 shadow-glow-growth`), a solid emerald jewel pill (`[💎 FINAL CORPUS]`), and large bold typography, commanding the fintech Z-pattern.
+  - **Polish 3: Structured Left Sidebar Input Wells:**
+    - Streamlined field cards in `input-range-pair.twig` with crisp borders and soft depth (`bg-white/98 rounded-2xl border border-slate-200/90 shadow-subtle`).
+    - Styled live subtext hint cleanly (`text-micro font-medium text-slate-500 min-h-[14px]`), allowing each slider to breathe cleanly.
 - **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 4):**
   - **Bottleneck 1: Eliminated 1,350px Void via 2-Column Balancing (`src/Views/calculators/home.twig` & `components/analytical-studio.twig`):**
     - Moved `analytical-studio.twig` into the right output column (`col-span-8`) immediately below the chart and `#quick-answer`.

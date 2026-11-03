@@ -342,7 +342,11 @@ export class ResultsController {
         if (this.searchYear !== null) {
             filteredData = data.filter(r => r.year === this.searchYear);
         } else if (this.density === '5y') {
-            filteredData = data.filter(r => r.year === 1 || r.year % 5 === 0 || r.year === data.length);
+            if (data.length <= 15) {
+                filteredData = data.filter(r => r.year === 1 || r.year % 2 === 0 || r.year === data.length);
+            } else {
+                filteredData = data.filter(r => r.year === 1 || r.year % 5 === 0 || r.year === data.length);
+            }
         }
 
         let ignitionRendered = false;
