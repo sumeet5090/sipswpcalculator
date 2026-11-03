@@ -117,6 +117,17 @@
   --color-gold-surface: #fef3c7;
   --color-gold-border: #fde68a;
 
+  /* ── 4-Tier Surface Luminance Hierarchy Tokens ── */
+  --color-canvas-base: #f1f5f9;
+  --color-section-well: #e2e8f0;
+  --color-surface-card: #ffffff;
+  --color-sip-tint: #ecfdf5;
+  --color-sip-accent: #10b981;
+  --color-swp-tint: #eff6ff;
+  --color-swp-accent: #3b82f6;
+  --color-bridge-bg: #e0e7ff;
+  --color-bridge-text: #312e81;
+
   /* ── 3-Tier System Border Opacity Stack ── */
   --color-border-subtle: rgba(226, 232, 240, 0.6);
   --color-border-default: rgba(226, 232, 240, 0.85);
@@ -322,6 +333,7 @@ html {
 body {
   width: 100%;
   position: relative;
+  background-color: var(--color-canvas-base, #f1f5f9);
 }
 
 /* ── Custom Range Slider Tactile Thumbs & Touch Ergonomics ── */

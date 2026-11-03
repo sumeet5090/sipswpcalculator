@@ -5,8 +5,33 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed (All 16 Standalone Calculators & Embeds).
-- **Implemented Fixes & Architectural Outcomes (Standalone Calculator Regression - 2026-11-03):**
+- **Current Milestone:** Visual Hierarchy & Surface Architecture Overhaul Completed (Gemini 4 Argon Audit Remediation).
+- **Implemented Fixes & Architectural Outcomes (2026-11-03):**
+  - **P0 Critical (Surface Architecture & Pure Light Scoreboard):**
+    - **4-Tier Surface Luminance Hierarchy:**
+      - Canvas Base: Configured `--color-canvas-base: #f1f5f9;` with `body` background `#F1F5F9` in `resources/css/input.css` and `calculator-guide.twig`, providing crisp physical elevation for `#FFFFFF` cards and eliminating "all-white wall" fatigue.
+      - Pure Light Mode Rule Adherence: Rejected inverted dark container recommendation (`#0F172A`) in strict compliance with `AGENTS.md` and `systemPatterns.md`. Implemented an elevated pure light scoreboard header in `src/Views/components/chart-visualization.twig` with 3px colored left-border metric accents (`border-l-4 border-l-slate-400` for Invested, `border-l-4 border-l-emerald-500` for Gains, `border-l-4 border-l-blue-500` for Payouts, `border-l-4 border-l-emerald-600` for Net Corpus).
+      - Semantic Phase Containers: In `calculator-form.twig` and `calculator-guide.twig`, differentiated Stage 1 (Accumulation SIP) with `border-t-4 border-emerald-500` and `bg-emerald-50/20` container tint, and Stage 2 (Distribution SWP) with `border-t-4 border-blue-500` and `bg-blue-50/20` container tint.
+      - Handoff Bridge: Styled `#stage-transition-divider` as a high-contrast indigo pill (`bg-indigo-50 border-indigo-200 text-indigo-950 font-extrabold`).
+  - **P1 High Severity (Information Architecture & Funnel Streamlining):**
+    - **Above-The-Fold Pre-Calculator Funnel:**
+      - In `src/Views/components/strategy-starter.twig` and `src/Views/calculators/home.twig`: Replaced the 4 bulky blueprint cards with a sleek, 1-line horizontal **Quick Preset Strip** (`[🎯 ₹1 Cr Sprint] [🏖️ FIRE Pension] [🎓 Child Edu] [🛡️ Senior SWP] [🪄 3-Step Wizard]`) directly above the calculator, bringing the primary calculator immediately above the fold on desktop and tablet.
+      - Re-architected `#wealth-guided-wizard-drawer` into a focused modal overlay with background click-to-dismiss and `Escape` key listeners in `WealthQuizController.ts`, eliminating layout shift while preserving 100% of the interactive quiz functionality.
+    - **Input Sensory De-Cluttering:**
+      - In `src/Views/components/form/input-range-pair.twig`: Streamlined preset chips row with subtle resting opacity (`opacity-85 sm:opacity-60`) that smoothly illuminates on hover or `:focus-within` (`group-focus-within/field:opacity-100 group-hover/field:opacity-100`), reducing sensory clutter across 36+ inputs while keeping 48px touch steppers and range sliders primary.
+  - **P2 Polish & Accessibility Invariants:**
+    - **Odometer Screen-Reader & Web Crawler Protection:**
+      - In `assets/js/calculators/views/RollingOdometerView.ts`: Appended a dedicated `<span class="sr-only">${formattedText}</span>` element alongside the `aria-hidden="true"` tumbler container, guaranteeing that search engines and assistive technologies index clean currency strings (`₹1,98,89,000`) rather than concatenated mechanical digit strips (`0123456789...`).
+    - **Analytical Studio Recessed Well:**
+      - In `src/Views/components/analytical-studio.twig`: Wrapped `#breakdown-studio` in a Tier 1 recessed section tray (`p-2 sm:p-4 rounded-[2rem] bg-slate-200/50 border border-slate-300/60 shadow-inner`) establishing clear macro-tool boundaries.
+- **Verification & QA Passed:**
+  - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
+  - Full PHPUnit Suite: **811 tests / 12,673 assertions passed (100% OK)**.
+  - Strict Static Analysis (PHPStan Level 8 / composer check-all): **0 errors across 250 files**.
+  - Coding Standards (PHPCS): **0 violations across 250 files**.
+  - Frontend Build & Typecheck: `npm run typecheck && npm run build` built in 234ms with 0 type errors.
+  - Local Server Curl: Verified DOM elements rendered cleanly on `/` and `/retirement-calculator`.
+
   - **P0 Critical:**
     - **Retirement / Combo Calculator SSR Hydration & Field Visibility:**
       - In `src/Core/Strategies/ComboStrategy.php`: Overrode `getInitialInputs()` to return `InvestmentInputs::fromRequest(['enable_swp' => true], $this->configService)`.

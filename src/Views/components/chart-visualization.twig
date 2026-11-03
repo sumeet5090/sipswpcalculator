@@ -62,7 +62,7 @@
     <!-- Fluid Quantum Wealth Ribbon Grid (Zero-CLS responsive container) -->
     <div id="summary-cards-grid" class="grid grid-cols-2 {% if isFourCardMode %}sm:grid-cols-4{% else %}sm:grid-cols-3{% endif %} gap-2.5 sm:gap-3 transition-all duration-300">
         <!-- Card 1: Total Invested / Principal -->
-        <div class="bg-white/95 rounded-2xl border border-slate-200/90 shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-slate-300 group flex flex-col justify-between min-w-0">
+        <div class="border-l-4 border-l-slate-400 bg-white/95 rounded-2xl border border-slate-200/90 shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-slate-300 group flex flex-col justify-between min-w-0">
             <div class="text-caption font-bold text-slate-500 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span class="text-ui-xs">💰</span>
                 <span>{{ card1Title }}</span>
@@ -76,44 +76,44 @@
         </div>
 
         <!-- Card 2: Compounding Gains / Interest -->
-        <div class="bg-white/95 rounded-2xl border border-growth-border shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-300 group flex flex-col justify-between relative min-w-0">
+        <div class="border-l-4 border-l-emerald-500 bg-emerald-50/30 rounded-2xl border border-emerald-200/90 shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-300 group flex flex-col justify-between relative min-w-0">
             <div id="title-interest-container" class="flex items-center justify-center gap-1 mb-1">
-                <span id="title-interest" class="text-caption font-bold text-growth uppercase tracking-wider leading-tight flex items-center gap-0.5">
+                <span id="title-interest" class="text-caption font-bold text-emerald-700 uppercase tracking-wider leading-tight flex items-center gap-0.5">
                     <span>↗</span>
                     <span>{{ card2Title }}</span>
                 </span>
             </div>
-            <div id="summary-interest" class="metric-len-normal font-black text-growth-emphasis font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
+            <div id="summary-interest" class="metric-len-normal font-black text-emerald-900 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
                 ₹ --
             </div>
             <div class="flex items-center justify-center gap-1">
-                <span id="summary-gain-badge" class="inline-flex items-center text-micro font-bold px-2 py-0.5 rounded-full bg-growth-surface text-growth-emphasis border border-growth-border">
+                <span id="summary-gain-badge" class="inline-flex items-center text-micro font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
                     +0%
                 </span>
             </div>
         </div>
 
         <!-- Card 3: Total Withdrawn / Payment (Morphs visible only in SWP/Combo/EMI mode) -->
-        <div id="card-withdrawn" class="{% if not isFourCardMode %}hidden {% endif %}bg-white/95 rounded-2xl border border-payout-border shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-rose-300 group flex flex-col justify-between min-w-0">
-            <div class="text-caption font-bold text-payout uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-0.5">
+        <div id="card-withdrawn" class="{% if not isFourCardMode %}hidden {% endif %}border-l-4 border-l-blue-500 bg-blue-50/30 rounded-2xl border border-blue-200/90 shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-blue-300 group flex flex-col justify-between min-w-0">
+            <div class="text-caption font-bold text-blue-700 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-0.5">
                 <span>↘</span>
                 <span>{{ card3Title }}</span>
             </div>
-            <div id="summary-withdrawn" class="metric-len-normal font-black text-payout-emphasis font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
+            <div id="summary-withdrawn" class="metric-len-normal font-black text-blue-950 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
                 ₹ --
             </div>
-            <div class="text-micro font-bold text-payout font-financial-mono tracking-tight">
+            <div class="text-micro font-bold text-blue-600 font-financial-mono tracking-tight">
                 {{ card3Sub }}
             </div>
         </div>
 
         <!-- Card 4: Final Corpus / Net Wealth / EMI (Mobile Asymmetric Hero Placement) -->
-        <div id="card-corpus" class="col-span-2 sm:col-span-1 order-first sm:order-none bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl border-2 border-emerald-600/90 shadow-glow-growth px-3 py-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 relative group flex flex-col justify-between min-w-0">
-            <div id="title-corpus" class="text-caption font-extrabold text-growth-emphasis uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
+        <div id="card-corpus" class="border-l-4 border-l-emerald-600 col-span-2 sm:col-span-1 order-first sm:order-none bg-gradient-to-b from-white to-emerald-50/60 rounded-2xl border-2 border-emerald-600/90 shadow-glow-growth px-3 py-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 relative group flex flex-col justify-between min-w-0">
+            <div id="title-corpus" class="text-caption font-extrabold text-emerald-950 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span>💎</span>
                 <span>{{ card4Title }}</span>
             </div>
-            <div id="summary-corpus" class="metric-hero-corpus font-black text-emerald-900 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
+            <div id="summary-corpus" class="metric-hero-corpus font-black text-emerald-950 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
                 ₹ --
             </div>
             <div class="flex items-center justify-center gap-1">

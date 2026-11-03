@@ -119,8 +119,8 @@
         </div>
 
         {% if presets %}
-            <!-- Mobile Horizontal Swipeable Strip / Desktop Flex Row -->
-            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 mt-1 sm:flex-wrap" role="group" aria-label="{{ label }} quick presets">
+            <!-- Mobile Horizontal Swipeable Strip / Desktop Flex Row (Subtle by default, illuminates on focus/hover) -->
+            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 mt-1 sm:flex-wrap opacity-85 sm:opacity-60 group-hover/field:opacity-100 group-focus-within/field:opacity-100 transition-opacity duration-200" role="group" aria-label="{{ label }} quick presets">
                 {% for preset in presets %}
                     {% set p_label = preset.label|default(preset) %}
                     {% set p_val = preset.value|default(preset) %}
