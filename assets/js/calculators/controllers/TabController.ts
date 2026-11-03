@@ -196,5 +196,14 @@ export class TabController {
                 }
             });
         }
+
+        const initialMode = appEl?.dataset?.mode;
+        if (comboTab && (initialMode === 'combo' || comboTab.getAttribute('aria-selected') === 'true')) {
+            switchTab('combo');
+        } else if (sipTab && initialMode === 'sip') {
+            switchTab('sip');
+        } else if (swpTab && initialMode === 'swp') {
+            switchTab('swp');
+        }
     }
 }

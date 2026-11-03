@@ -88,10 +88,24 @@ export class ChartDatasetBuilder {
 
         const datasets: ChartDataset<'line'>[] = [];
 
+        const appMode = this.dom.getElement('calculator-app')?.dataset?.mode || '';
+        let investedLabel = 'Total Invested';
+        let corpusLabel = showWealthMap ? 'Interest Earned' : 'Pre-Tax Corpus';
+        let postTaxLabel = 'Post-Tax Corpus (§112A Net)';
+
+        if (appMode === 'emi') {
+            investedLabel = 'Principal Repaid';
+            corpusLabel = 'Remaining Loan Balance';
+        } else if (appMode === 'inflation') {
+            investedLabel = "Today's Living Cost";
+            corpusLabel = 'Future Living Cost';
+            postTaxLabel = 'Real Purchasing Power';
+        }
+
         // 1. Total Invested Capital
         if (!showWealthMap) {
             datasets.push({
-                label: 'Total Invested',
+                label: investedLabel,
                 data: cumulative,
                 borderColor: THEME_COLORS.financial.invested,
                 backgroundColor: gradients.invested,
@@ -111,7 +125,7 @@ export class ChartDatasetBuilder {
 
         // 2. Projected Nominal Corpus (Base Curve)
         datasets.push({
-            label: showWealthMap ? 'Interest Earned' : 'Pre-Tax Corpus',
+            label: corpusLabel,
             data: showWealthMap ? interestOnly : corpus,
             borderColor: THEME_COLORS.financial.growth,
             backgroundColor: gradients.corpus,
@@ -133,7 +147,7 @@ export class ChartDatasetBuilder {
         // 3. Post-Tax Realized Value Layer
         if (showPostTax && !showWealthMap) {
             datasets.push({
-                label: 'Post-Tax Corpus (§112A Net)',
+                label: postTaxLabel,
                 data: postTaxCorpus,
                 borderColor: THEME_COLORS.financial.postTax,
                 backgroundColor: 'rgba(139, 92, 246, 0.09)',

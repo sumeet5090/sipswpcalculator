@@ -21,6 +21,17 @@ export class EmiDriver implements ISpecializedDriver {
         if (subInvested) subInvested.textContent = 'Principal Borrowed';
         if (titleInterest) titleInterest.textContent = 'Total Interest';
         if (titleCorpus) titleCorpus.textContent = 'Monthly EMI';
+
+        const cardWithdrawn = document.getElementById('card-withdrawn');
+        const summaryGrid = document.getElementById('summary-cards-grid');
+        if (cardWithdrawn && summaryGrid) {
+            cardWithdrawn.classList.remove('hidden');
+            summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-4 gap-3 transition-all duration-300';
+            const titleWithdrawn = cardWithdrawn.querySelector('div:first-child span:last-child');
+            const subWithdrawn = cardWithdrawn.querySelector('div:last-child');
+            if (titleWithdrawn) titleWithdrawn.textContent = 'Total Payment';
+            if (subWithdrawn) subWithdrawn.textContent = 'Principal + Interest';
+        }
     }
 
     public calculate(ctx: DriverContext): void {
@@ -45,8 +56,10 @@ export class EmiDriver implements ISpecializedDriver {
             };
         });
 
+        const totalPayment = principal + res.total_interest;
         ctx.odometer.animateValue('summary-invested', principal);
         ctx.odometer.animateValue('summary-interest', res.total_interest);
+        ctx.odometer.animateValue('summary-withdrawn', totalPayment);
 
         const corpusEl = ctx.dom.getElement('summary-corpus');
         if (corpusEl) {

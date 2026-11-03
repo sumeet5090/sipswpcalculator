@@ -155,38 +155,32 @@ export class MobileErgonomicDeckController {
 
     public update(results: YearResult[], inputs?: InvestmentInputs): void {
         if (!results || results.length === 0) return;
+        const appEl = this.dom.getElement('calculator-app');
+        const mode = appEl?.dataset?.mode;
+
         const lastRow = results[results.length - 1];
         const newCorpus = lastRow.combined_total;
         const invested = lastRow.cumulative_invested;
-        const gains = Math.max(0, newCorpus - invested);
+        const gains = Math.max(0, (newCorpus + (lastRow.cumulative_withdrawals ?? 0)) - invested);
 
-        if (this.deckCorpusEl) {
-            this.deckCorpusEl.textContent = this.formatter.format(newCorpus);
-        }
-        if (this.deckInvestedEl) {
-            this.deckInvestedEl.textContent = this.formatter.formatDynamic(invested);
-        }
-        if (this.deckGainsEl) {
-            this.deckGainsEl.textContent = `+${this.formatter.formatDynamic(gains)}`;
+        if (mode === 'emi') {
+            const totalInterestPaid = results.reduce((acc, r) => acc + (r.interest ?? 0), 0);
+            if (this.deckCorpusEl) this.deckCorpusEl.textContent = `${this.formatter.format(lastRow.sip_monthly ?? 0)}/mo`;
+            if (this.deckInvestedEl) this.deckInvestedEl.textContent = this.formatter.formatDynamic(invested);
+            if (this.deckGainsEl) this.deckGainsEl.textContent = this.formatter.formatDynamic(totalInterestPaid);
+        } else if (mode === 'inflation') {
+            const costIncrease = Math.max(0, newCorpus - invested);
+            if (this.deckCorpusEl) this.deckCorpusEl.textContent = this.formatter.format(newCorpus);
+            if (this.deckInvestedEl) this.deckInvestedEl.textContent = this.formatter.formatDynamic(invested);
+            if (this.deckGainsEl) this.deckGainsEl.textContent = `+${this.formatter.formatDynamic(costIncrease)}`;
+        } else {
+            if (this.deckCorpusEl) this.deckCorpusEl.textContent = this.formatter.format(newCorpus);
+            if (this.deckInvestedEl) this.deckInvestedEl.textContent = this.formatter.formatDynamic(invested);
+            if (this.deckGainsEl) this.deckGainsEl.textContent = `+${this.formatter.formatDynamic(gains)}`;
         }
 
         if (this.deckCashflowEl) {
-            const appEl = this.dom.getElement('calculator-app');
-            const mode = appEl?.dataset?.mode;
-
-            if (inputs && inputs.enable_swp && inputs.swp_withdrawal > 0) {
-                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'SWP Out';
-                this.deckCashflowEl.textContent = `+${this.formatter.formatDynamic(inputs.swp_withdrawal)}/m`;
-                this.deckCashflowEl.className = 'text-ui-xs font-black text-rose-700 font-financial-mono tabular-nums truncate';
-            } else if (inputs && inputs.sip > 0) {
-                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'SIP In';
-                this.deckCashflowEl.textContent = `${this.formatter.formatDynamic(inputs.sip)}/m`;
-                this.deckCashflowEl.className = 'text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums truncate';
-            } else if (inputs && inputs.lumpsum > 0) {
-                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Lumpsum';
-                this.deckCashflowEl.textContent = this.formatter.formatDynamic(inputs.lumpsum);
-                this.deckCashflowEl.className = 'text-ui-xs font-black text-slate-800 font-financial-mono tabular-nums truncate';
-            } else if (mode === 'emi') {
+            if (mode === 'emi') {
                 const emiEl = this.dom.getElement('summary-corpus');
                 const emiVal = emiEl?.textContent?.trim() || '₹ --';
                 if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'EMI/mo';
@@ -201,6 +195,33 @@ export class MobileErgonomicDeckController {
                 const principal = parseFloat(this.dom.getValue('fd_principal') || '0');
                 if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Deposit';
                 this.deckCashflowEl.textContent = principal > 0 ? this.formatter.formatDynamic(principal) : '₹ --';
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-slate-800 font-financial-mono tabular-nums truncate';
+            } else if (mode === 'cagr') {
+                const initial = parseFloat(this.dom.getValue('cagr_initial') || '0');
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Initial';
+                this.deckCashflowEl.textContent = initial > 0 ? this.formatter.formatDynamic(initial) : '₹ --';
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums truncate';
+            } else if (mode === 'inflation') {
+                const cost = parseFloat(this.dom.getValue('inf_amount') || '0');
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Today';
+                this.deckCashflowEl.textContent = cost > 0 ? this.formatter.formatDynamic(cost) : '₹ --';
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-slate-800 font-financial-mono tabular-nums truncate';
+            } else if (mode === 'compound_interest') {
+                const ciPrincipal = parseFloat(this.dom.getValue('ci_principal') || '0');
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Principal';
+                this.deckCashflowEl.textContent = ciPrincipal > 0 ? this.formatter.formatDynamic(ciPrincipal) : '₹ --';
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-slate-800 font-financial-mono tabular-nums truncate';
+            } else if (inputs && inputs.enable_swp && inputs.swp_withdrawal > 0) {
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'SWP Out';
+                this.deckCashflowEl.textContent = `+${this.formatter.formatDynamic(inputs.swp_withdrawal)}/m`;
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-rose-700 font-financial-mono tabular-nums truncate';
+            } else if (inputs && inputs.sip > 0) {
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'SIP In';
+                this.deckCashflowEl.textContent = `${this.formatter.formatDynamic(inputs.sip)}/m`;
+                this.deckCashflowEl.className = 'text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums truncate';
+            } else if (inputs && inputs.lumpsum > 0) {
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Lumpsum';
+                this.deckCashflowEl.textContent = this.formatter.formatDynamic(inputs.lumpsum);
                 this.deckCashflowEl.className = 'text-ui-xs font-black text-slate-800 font-financial-mono tabular-nums truncate';
             } else {
                 if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Cashflow';

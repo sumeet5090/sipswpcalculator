@@ -46,16 +46,22 @@ export class FdDriver implements ISpecializedDriver {
 
         const res = FdEngine.calculate(principal, rate, years, isSenior, frequency);
 
-        const combined: YearResult[] = res.yearly_schedule.map(item => ({
-            year: item.year,
-            begin_balance: item.opening_balance,
-            sip_monthly: null,
-            annual_contribution: item.year === 1 ? principal : 0,
-            cumulative_invested: principal,
-            interest: item.interest_earned,
-            combined_total: item.closing_balance,
-            post_tax_total: item.closing_balance
-        }));
+        let cumulativePayout = 0;
+        const combined: YearResult[] = res.yearly_schedule.map(item => {
+            cumulativePayout += item.payout_withdrawn;
+            return {
+                year: item.year,
+                begin_balance: item.opening_balance,
+                sip_monthly: null,
+                annual_contribution: item.year === 1 ? principal : 0,
+                cumulative_invested: principal,
+                interest: item.interest_earned,
+                annual_withdrawal: item.payout_withdrawn,
+                cumulative_withdrawals: Math.round(cumulativePayout),
+                combined_total: item.closing_balance,
+                post_tax_total: item.closing_balance
+            };
+        });
 
         ctx.odometer.animateValue('summary-invested', principal);
         ctx.odometer.animateValue('summary-interest', res.total_interest);
@@ -73,8 +79,9 @@ export class FdDriver implements ISpecializedDriver {
             gainBadge.textContent = isSenior ? '+0.5% Senior Card' : `${res.effective_rate}% Card Rate`;
         }
 
-        ctx.resultsController.updateTable(combined, false);
-        ctx.chartManager.updateChart(combined, false);
+        const hasWithdrawals = cumulativePayout > 0;
+        ctx.resultsController.updateTable(combined, hasWithdrawals);
+        ctx.chartManager.updateChart(combined, hasWithdrawals);
         ctx.summaryMetricsController.fitSummaryCards();
     }
 

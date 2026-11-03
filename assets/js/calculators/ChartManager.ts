@@ -261,7 +261,6 @@ export class ChartManager {
         const rInvested = this.dom.getElement('ribbon-inspect-invested');
         const rGains = this.dom.getElement('ribbon-inspect-gains');
         const rCorpus = this.dom.getElement('ribbon-inspect-corpus');
-        const statusDot = this.dom.getElement('hud-status-dot');
 
         const hudYearLabel = this.dom.getElement('hud-year-label');
         const hudInvested = this.dom.getElement('hud-invested-metric');
@@ -280,12 +279,25 @@ export class ChartManager {
             if (rInvested) rInvested.textContent = investedStr;
             if (rCorpus) rCorpus.textContent = corpusStr;
             if (rGains) rGains.textContent = `+${gainsStr}`;
+            const statusDot = this.dom.getElement('hud-status-dot');
             if (statusDot) statusDot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
 
+            const appMode = this.dom.getElement('calculator-app')?.dataset?.mode || '';
             if (hudYearLabel) hudYearLabel.textContent = `Year ${row.year} of ${totalYears}`;
-            if (hudInvested) hudInvested.textContent = `Invested: ${investedStr}`;
-            if (hudGains) hudGains.textContent = `Gains: +${gainsStr}`;
-            if (hudTotal) hudTotal.textContent = `Total: ${corpusStr}`;
+
+            if (appMode === 'emi') {
+                if (hudInvested) hudInvested.textContent = `Principal Paid: ${investedStr}`;
+                if (hudGains) hudGains.textContent = `Interest Paid: ${this.formatter.format(row.interest || 0)}`;
+                if (hudTotal) hudTotal.textContent = `Loan Balance: ${corpusStr}`;
+            } else if (appMode === 'inflation') {
+                if (hudInvested) hudInvested.textContent = `Today: ${investedStr}`;
+                if (hudGains) hudGains.textContent = `Escalation: +${gainsStr}`;
+                if (hudTotal) hudTotal.textContent = `Future Cost: ${corpusStr}`;
+            } else {
+                if (hudInvested) hudInvested.textContent = `Invested: ${investedStr}`;
+                if (hudGains) hudGains.textContent = `Gains: +${gainsStr}`;
+                if (hudTotal) hudTotal.textContent = `Total: ${corpusStr}`;
+            }
             if (hudTimelineIndicator) hudTimelineIndicator.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0';
         }
     }
@@ -348,6 +360,7 @@ export class ChartManager {
         const row = this.lastResults[yearIndex];
         if (!row) return;
 
+        const appMode = this.dom.getElement('calculator-app')?.dataset?.mode || '';
         const showPostTax = this.dom.getElement<HTMLInputElement>('show_post_tax')?.checked || false;
         const invested = row.cumulative_invested || 0;
         const finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
@@ -356,7 +369,16 @@ export class ChartManager {
 
         const dataset = this.chartInstance.data.datasets[0];
         if (dataset) {
-            dataset.data = withdrawals > 0 ? [invested, gains, withdrawals] : [invested, gains];
+            if (appMode === 'emi') {
+                const totalInterest = this.lastResults.reduce((acc, r) => acc + (r.interest ?? 0), 0);
+                dataset.data = [invested, totalInterest];
+            } else if (appMode === 'inflation') {
+                dataset.data = [invested, Math.max(0, finalCorpus - invested)];
+            } else if (appMode === 'cagr' && finalCorpus < invested) {
+                dataset.data = [finalCorpus, invested - finalCorpus];
+            } else {
+                dataset.data = withdrawals > 0 ? [invested, gains, withdrawals] : [invested, gains];
+            }
             this.activeDonutScrubYear = row.year;
             this.chartInstance.update('none');
         }
@@ -491,16 +513,31 @@ export class ChartManager {
         this.lastResults = results;
         this.lastEnableSwp = enableSwp;
 
+        const appMode = this.dom.getElement('calculator-app')?.dataset?.mode || '';
         const finalRow = results[results.length - 1];
         if (finalRow) {
             const headerGrossEl = this.dom.getElement('chart-header-gross');
             const headerGainEl = this.dom.getElement('chart-header-gain');
             if (headerGrossEl) {
-                headerGrossEl.textContent = this.formatter.format(finalRow.combined_total);
+                if (appMode === 'emi') {
+                    const totalInterest = results.reduce((acc, r) => acc + (r.interest ?? 0), 0);
+                    const totalPayment = finalRow.cumulative_invested + totalInterest;
+                    headerGrossEl.textContent = this.formatter.format(totalPayment);
+                } else {
+                    headerGrossEl.textContent = this.formatter.format(finalRow.combined_total);
+                }
             }
             if (headerGainEl) {
-                const netGains = Math.max(0, (finalRow.combined_total + (finalRow.cumulative_withdrawals ?? 0)) - finalRow.cumulative_invested);
-                headerGainEl.textContent = `+${this.formatter.format(netGains)} Gains`;
+                if (appMode === 'emi') {
+                    const totalInterest = results.reduce((acc, r) => acc + (r.interest ?? 0), 0);
+                    headerGainEl.textContent = `${this.formatter.format(totalInterest)} Total Interest`;
+                } else if (appMode === 'inflation') {
+                    const costIncrease = Math.max(0, finalRow.combined_total - finalRow.cumulative_invested);
+                    headerGainEl.textContent = `+${this.formatter.format(costIncrease)} Escalation`;
+                } else {
+                    const netGains = Math.max(0, (finalRow.combined_total + (finalRow.cumulative_withdrawals ?? 0)) - finalRow.cumulative_invested);
+                    headerGainEl.textContent = `+${this.formatter.format(netGains)} Gains`;
+                }
             }
         }
 
@@ -543,22 +580,44 @@ export class ChartManager {
             const activeYear = this.activeDonutScrubYear || results.length;
             const targetRow = results.find(r => r.year === activeYear) || finalRow;
 
-            const totalInvested = targetRow ? targetRow.cumulative_invested : 0;
-            const finalCorpus = targetRow ? (showPostTax ? (targetRow.post_tax_total ?? targetRow.combined_total) : targetRow.combined_total) : 0;
-            const totalWithdrawals = targetRow ? (targetRow.cumulative_withdrawals ?? 0) : 0;
-            const totalGains = Math.max(0, (finalCorpus + totalWithdrawals) - totalInvested);
+            let donutData: number[] = [];
+            let donutLabels: string[] = [];
+            let donutColors: string[] = [];
 
-            const donutData = totalWithdrawals > 0
-                ? [totalInvested, totalGains, totalWithdrawals]
-                : [totalInvested, totalGains];
+            if (appMode === 'emi') {
+                const totalInterest = results.reduce((acc, r) => acc + (r.interest ?? 0), 0);
+                const principal = targetRow ? targetRow.cumulative_invested : 0;
+                donutData = [principal, totalInterest];
+                donutLabels = ['Principal Loan Amount', 'Total Interest Payable'];
+                donutColors = ['#0ea5e9', '#f43f5e'];
+            } else if (appMode === 'inflation') {
+                const baseCost = targetRow ? targetRow.cumulative_invested : 0;
+                const escalation = targetRow ? Math.max(0, targetRow.combined_total - baseCost) : 0;
+                donutData = [baseCost, escalation];
+                donutLabels = ['Current Living Cost', 'Inflation Escalation'];
+                donutColors = [THEME_COLORS.financial.invested, '#f59e0b'];
+            } else if (appMode === 'cagr' && targetRow && targetRow.combined_total < targetRow.cumulative_invested) {
+                const retained = targetRow.combined_total;
+                const loss = targetRow.cumulative_invested - targetRow.combined_total;
+                donutData = [retained, loss];
+                donutLabels = ['Retained Capital', 'Capital Loss'];
+                donutColors = [THEME_COLORS.financial.invested, '#f43f5e'];
+            } else {
+                const totalInvested = targetRow ? targetRow.cumulative_invested : 0;
+                const finalCorpus = targetRow ? (showPostTax ? (targetRow.post_tax_total ?? targetRow.combined_total) : targetRow.combined_total) : 0;
+                const totalWithdrawals = targetRow ? (targetRow.cumulative_withdrawals ?? 0) : 0;
+                const totalGains = Math.max(0, (finalCorpus + totalWithdrawals) - totalInvested);
 
-            const donutLabels = totalWithdrawals > 0
-                ? ['Total Invested', 'Estimated Returns', 'Total Withdrawn']
-                : ['Total Invested', 'Estimated Returns'];
-
-            const donutColors = totalWithdrawals > 0
-                ? [THEME_COLORS.financial.invested, THEME_COLORS.financial.growth, THEME_COLORS.financial.withdrawal]
-                : [THEME_COLORS.financial.invested, THEME_COLORS.financial.growth];
+                if (totalWithdrawals > 0) {
+                    donutData = [totalInvested, totalGains, totalWithdrawals];
+                    donutLabels = ['Total Invested', 'Estimated Returns', 'Total Withdrawn'];
+                    donutColors = [THEME_COLORS.financial.invested, THEME_COLORS.financial.growth, THEME_COLORS.financial.withdrawal];
+                } else {
+                    donutData = [totalInvested, totalGains];
+                    donutLabels = ['Total Invested', 'Estimated Returns'];
+                    donutColors = [THEME_COLORS.financial.invested, THEME_COLORS.financial.growth];
+                }
+            }
 
             const donutConfig = {
                 type: 'doughnut' as const,

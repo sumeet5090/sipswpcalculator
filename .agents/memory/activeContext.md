@@ -5,7 +5,39 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed (Parts 1-5, Validation Remediation, & Final Polish).
+- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed (All 16 Standalone Calculators & Embeds).
+- **Implemented Fixes & Architectural Outcomes (Standalone Calculator Regression - 2026-11-03):**
+  - **P0 Critical:**
+    - **Retirement / Combo Calculator SSR Hydration & Field Visibility:**
+      - In `src/Core/Strategies/ComboStrategy.php`: Overrode `getInitialInputs()` to return `InvestmentInputs::fromRequest(['enable_swp' => true], $this->configService)`.
+      - In `assets/js/calculators/controllers/TabController.ts`: Updated `init()` to automatically invoke `switchTab('combo')` on load if `appEl.dataset.mode === 'combo'` or `#tab-combo` is active, unhiding `#swp-fields` with full opacity and interactive pointer events.
+    - **Fixed Deposit (FD) Non-Cumulative Payout Schedule & Donut Invariant:**
+      - In `assets/js/calculators/drivers/FdDriver.ts`: Mapped `item.payout_withdrawn` into `annual_withdrawal` and accumulated `cumulative_withdrawals` in the `YearResult` schedule.
+      - Passed `hasWithdrawals = cumulativePayout > 0` to both `ResultsController.updateTable()` and `ChartManager.updateChart()`, preserving the net gain invariant `(combined_total + cumulative_withdrawals) - cumulative_invested = total_interest` and preventing NaN donut slices.
+  - **P1 High Severity:**
+    - **EMI Loan Semantics & Amortization Visualizations:**
+      - In `assets/js/calculators/drivers/EmiDriver.ts`: Un-hid `#card-withdrawn` as "Total Payment (Principal + Interest)", updated summary cards grid to 4 columns, and animated `summary-withdrawn` to `principal + res.total_interest`.
+      - In `assets/js/calculators/ChartManager.ts` & `ChartDatasetBuilder.ts`: Transformed Line chart datasets to "Principal Repaid" and "Remaining Loan Balance". Transformed Donut chart to "Principal Loan Amount" vs "Total Interest Payable". Scrubbing ribbon formatted as `Principal Repaid`, `Interest Paid`, and `Loan Balance`.
+      - In `assets/js/calculators/controllers/ResultsController.ts`: Transformed table headers to `Principal Repaid`, `Interest Paid`, `Remaining Debt`. Suppressed Compounding Ignition row. Mobile card displays a loan repayment progress bar (`Repaid: X%` / `Balance: Y%`) and suppresses the irrelevant wealth multiplier badge.
+    - **Inflation Cost Escalation Visualizations:**
+      - In `assets/js/calculators/ChartManager.ts` & `ChartDatasetBuilder.ts`: Donut chart renders "Current Living Cost" vs "Inflation Escalation". Line chart plots "Today's Living Cost", "Future Living Cost", and "Real Purchasing Power". Scrubbing ribbon renders `Today`, `Escalation`, and `Future Cost`.
+      - In `assets/js/calculators/controllers/ResultsController.ts`: Adapted table headers to `Current Cost`, `Annual Escalation`, `Future Cost`. Suppressed Compounding Ignition row.
+    - **Input Clamping Elimination on Specialized Modes:**
+      - In `assets/js/calculators/CalculatorApp.ts`: In `getInputs()`, if `specializedModes.includes(mode)`, immediately returns zeroed SIP/SWP inputs, eliminating false clamping of `0` to default minimum SIP bound `500`.
+  - **P2 & P3 Polish:**
+    - **CAGR Capital Loss Visualization:**
+      - In `assets/js/calculators/ChartManager.ts`: When `finalCorpus < totalInvested`, Donut chart dynamically renders "Retained Capital" vs "Capital Loss" with rose color.
+    - **Mobile Ergonomic Deck Specialized Display:**
+      - In `assets/js/calculators/controllers/MobileErgonomicDeckController.ts`: Prioritized specialized modes (EMI displays `EMI/mo: ₹X`, PPF displays `Deposit: ₹X/yr`, FD displays `Deposit: ₹X`).
+    - **SSR Zero-CLS 4-Card Summary Grid:**
+      - In `src/Views/components/chart-visualization.twig`: Configured `sm:grid-cols-4` on SSR when `enable_swp or calculator_type in ['swp', 'combo']` (otherwise `sm:grid-cols-3`). Un-hid `#card-withdrawn` on SSR when SWP is active.
+- **Verification & QA Passed:**
+  - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
+  - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)**.
+  - PHPStan Level 5: **0 errors across src/Controllers/, src/Services/, src/Core/**.
+  - PHPCS: **0 violations on modified files**.
+  - Frontend Typecheck & Build: `npm run typecheck && npm run build` built with 0 type errors in 251ms.
+  - Twig SSR Rendering: Confirmed `sm:grid-cols-4` and `#card-withdrawn` visible on SWP and Combo SSR, `sm:grid-cols-3` and `#card-withdrawn` hidden on SIP SSR.
 - **Implemented Fixes & Architectural Outcomes (Validation Remediation & Final Polish - 2026-11-03):**
   - **DEFECT-1 (High):** Complete DOM Bound Discovery in `assets/js/calculators/InputValidator.ts`:
     - Updated `InputValidator.getConstraint(field)` to inspect `el?.getAttribute('data-min') ?? el?.getAttribute('min') ?? rangeEl?.getAttribute('min')` and `el?.getAttribute('data-max') ?? el?.getAttribute('max') ?? rangeEl?.getAttribute('max')`.
