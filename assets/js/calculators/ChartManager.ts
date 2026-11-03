@@ -35,6 +35,7 @@ export class ChartManager {
     private shockOverlayData: { label: string; data: number[] } | null = null;
     private shockOverlayCrashIndex: number | null = null;
     private activeDonutScrubYear: number | null = null;
+    private lastMode: string = '';
 
     private rafId: number | null = null;
     private renderQueueId: number | null = null;
@@ -561,6 +562,12 @@ export class ChartManager {
 
         const activeMode = this.dom.getElement<HTMLInputElement>('goal_mode')?.value || 'grow';
         const mode = activeMode.toLowerCase().includes('target') ? 'target' : (enableSwp ? 'swp' : 'sip');
+
+        if (this.lastMode && this.lastMode !== mode && this.chartInstance) {
+            this.chartInstance.destroy();
+            this.chartInstance = null;
+        }
+        this.lastMode = mode;
 
         const showPostTax = this.dom.getElement<HTMLInputElement>('show_post_tax')?.checked || false;
         const showWealthMap = this.dom.getElement<HTMLInputElement>('show_wealth_map')?.checked || false;

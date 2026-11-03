@@ -5,7 +5,24 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Junior Model Audit & Comprehensive Rectifications Completed (SliderManager Theme Parity, Desktop Ledger Card Footer, Strip 30+ Emojis to Clean SVGs, Underline Dock Switcher, Left-Aligned Odometer).
+- **Current Milestone:** Argon Regressions & Institutional Polish Complete (SWP Area Fill & Mode Lifecycle Rebuild, Left Column Shrink-Wrap & Sticky Gliding, Royal Blue Starting Wealth Slider, Pure Light-Mode Executive Anchor).
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 8 - Argon Regressions & Polish):**
+  - **Fixed Bug A: Chart Canvas Blank (White Void) in SWP Mode (`ChartDatasetBuilder.ts` & `ChartManager.ts`):**
+    - In `ChartDatasetBuilder.ts`, updated SWP Dataset 1 (`corpus`) to `fill: (mode === 'swp' || showWealthMap) ? 'origin' : (showPostTax ? '+1' : 0)`, shading remaining wealth down to the zero origin baseline.
+    - Set SWP Dataset 0 (`invested`) to `fill: (mode === 'swp') ? false : 'origin'` so starting capital renders as an elegant horizontal baseline rather than flood-filling the lower half of the chart.
+    - In `ChartManager.ts`, added `lastMode` tracking in `updateChart()`. When calculator mode shifts between `'combo'`, `'sip'`, or `'swp'`, `this.chartInstance.destroy()` is called to cleanly rebuild the chart instance, eliminating stale Chart.js `_metasets` controller and filler target conflicts.
+  - **Fixed Bug B: Left Sidebar ~650px Empty White Tail (`home.twig`, `calculator-form.twig`, `calculator-guide.twig`):**
+    - Added `self-start md:sticky md:top-20` to the left column wrapper in `home.twig` and `calculator-guide.twig`, preventing CSS Grid from stretching the sidebar card to match the right column's height.
+    - Replaced `md:h-full` with `h-auto` on the form container in `calculator-form.twig` and `calculator-guide.twig` so the container wraps tightly around active inputs and glides alongside right-hand charts during scroll.
+  - **Fixed Bug C: Stage 2 Starting Wealth Slider Theme Parity (`corpus-field.twig`, `calculator-form.twig`, `calculator-guide.twig`):**
+    - Updated `corpus-field.twig` from `'theme': 'rose'` to `'theme': 'blue'`.
+    - Updated label headers in `calculator-form.twig` and `calculator-guide.twig` from `text-rose-600` to `text-blue-700`.
+    - Starting Wealth slider now has `accent-blue-600`, `focus-within:border-blue-500`, and `is-active-blue` preset chips, achieving full visual unity with Stage 2.
+  - **Elevated Tweak 1: Pure Light-Mode Executive Anchor on Card 4 (`chart-visualization.twig`):**
+    - Evaluated Argon's `#0F172A` dark suggestion against `.agents/AGENTS.md` and `TelemetryIntegrationTest.php` (which strictly forbids dark container classes).
+    - Upgraded `#card-corpus` to a distinguished Pure Light-Mode Executive Anchor: `bg-emerald-50/90 rounded-2xl border-2 border-emerald-600 shadow-card ring-2 ring-emerald-500/15`, solid emerald badge (`bg-emerald-600 text-white font-black`), and bold `text-slate-900` hero typography.
+  - **Synchronized Tweak 2: 5-Year Milestone Table Synchronization (`yearly-breakdown-table.twig` & `ResultsController.ts`):**
+    - Verified default milestone table density displays structured milestone rows by default and keeps `#desktop-table-milestone-counter` in lockstep.
 - **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 7 - Junior Model Rectifications):**
   - **Fixed `SliderManager.ts` Theme Parity Bug:** Added `isBlueTheme` detection in `_updatePresetChips()`, ensuring SWP blue preset chips activate with `is-active-blue bg-blue-600 text-white border-blue-600` instead of turning emerald green (`bg-emerald-600`), and properly clear all theme classes on de-selection.
   - **Added Desktop Ledger Progressive Disclosure Card Footer (`yearly-breakdown-table.twig` & `ResultsController.ts`):** Added `#desktop-table-footer` inside the table card with `#desktop-table-milestone-counter` ("Showing 9 Milestone Years") and `#desktop-toggle-all-years-btn` ("View All 40 Years ▾" / "Collapse to 5Y Milestones ▴"), wiring click and text synchronization in `ResultsController.ts`.
