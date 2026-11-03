@@ -5,26 +5,27 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed (Parts 1, 2, 3, 4 & 5).
-- **Implemented Fixes & Architectural Outcomes (Part 5 - 2026-11-03):**
-  - **DEFECT-1 (High):** Dynamic Clamping & Bound Discovery in `assets/js/calculators/InputValidator.ts` and `content/calculator_defaults.json`:
-    - Added `target_corpus` boundaries (`min: 100000`, `max: 1000000000`, `default: 10000000`, `step: 100000`) to `calculator_defaults.json`.
-    - Enhanced `InputValidator.getConstraint(field)`: when a field is not defined in static JSON or Data Island state, it inspects DOM element attributes `min`, `max`, and `value`.
-    - Clamps values in `InputValidator.validate()` using `getConstraint()`, eliminating stepper decrement crashes below minimum thresholds in `EmiEngine.ts`, `PpfEngine.ts`, and specialized calculators.
-  - **DEFECT-2 (High):** Checkbox State Restoration on Deep-Linked URLs in `assets/js/calculators/controllers/UrlStateController.ts`:
-    - Added checkbox detection in the generic URL parameter hydration loop: detects `inputEl.type === 'checkbox'`, sets `inputEl.checked = (val === '1' || val === 'true' || val === 'on')`, and triggers `change` event.
-    - Prevents senior citizen bonus rates and custom checkbox flags (`fd_senior`) from being dropped or parsed as NaN.
-  - **DEFECT-3 (Medium):** Command Palette Complete Registration in `assets/js/calculators/controllers/CommandPaletteController.ts`:
-    - Registered all 11 missing calculators in `COMMAND_ITEMS` (`calc-retirement`, `calc-target-corpus`, `calc-reach-5-cr`, `calc-sip-5k`, `calc-sip-10k`, `calc-ci`, `calc-cagr`, `calc-emi`, `calc-inflation`, `calc-ppf`, `calc-fd`), allowing users to jump directly to any calculator via Cmd+K natural language search.
-  - **DEFECT-4 (Low):** Dynamic Benchmark Matrix Row Highlighting in `src/Views/components/benchmarks/sip-swp-dual.twig`:
-    - Replaced hardcoded ₹10,000 row highlight (`bg-emerald-50/30`) with dynamic conditionals matching `sip|default(10000)` (e.g. ₹5,000 row on `/sip-5000-per-month` receives `bg-emerald-50/40 font-semibold`).
-- **Verification & QA Passed (Part 5):**
+- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed (Parts 1, 2, 3, 4, 5 & Validation Remediation).
+- **Implemented Fixes & Architectural Outcomes (Validation Remediation - 2026-11-03):**
+  - **DEFECT-1 (High):** Complete DOM Bound Discovery in `assets/js/calculators/InputValidator.ts`:
+    - Updated `InputValidator.getConstraint(field)` to inspect `el?.getAttribute('data-min') ?? el?.getAttribute('min') ?? rangeEl?.getAttribute('min')` and `el?.getAttribute('data-max') ?? el?.getAttribute('max') ?? rangeEl?.getAttribute('max')`.
+    - Solves the gap where text inputs output `data-min`/`data-max` rather than `min`/`max`, guaranteeing accurate constraint boundaries for specialized steppers (`emi_years`, `ppf_deposit`, `fd_principal`, etc.) and preventing `EmiEngine.ts` runtime crashes on decrement.
+  - **DEFECT-2 (High):** Deep-Linked URL Parameter Clamping in `assets/js/calculators/controllers/UrlStateController.ts`:
+    - Updated URL hydration loops to inspect `data-min` and `data-max` from `inputEl` and `min`/`max` from `rangeEl`.
+    - Prevents out-of-bounds parameters (e.g. `?years=-5` or `?ppf_years=5`) from bypassing boundary limits.
+  - **DEFECT-3 (High):** Target Corpus Sharing & Messaging Restoration in `assets/js/calculators/controllers/ShareController.ts`:
+    - In `buildShareUrl()`, detected `mode === 'target_corpus'` independently of `#goal-target` button existence (which only exists on homepage).
+    - Serializes `goal_mode=target` and `target_corpus=<val>` while suppressing dummy `sip=0`.
+    - Added dedicated message formatters in `tryNativeShare()` and `shareToWhatsApp()` displaying the Target Corpus and Required Monthly SIP.
+  - **DEFECT-4 (Low):** Normalized Goal Query Parameter in `assets/js/calculators/CalculatorApp.ts`:
+    - Supported both `urlParams.get('goal')` and `urlParams.get('goal_mode')`.
+- **Verification & QA Passed:**
   - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
   - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)**.
   - PHPStan Level 5: **0 errors**.
   - PHPCS: **0 violations**.
-  - Frontend Typecheck & Build: `npm run typecheck && npm run build` built with 0 type errors in 229ms.
-  - CLI Dispatch Assertions: Verified dynamic benchmark row highlighting on `/sip-5000-per-month` and `/sip-10000-per-month`.
+  - Frontend Typecheck & Build: `npm run typecheck && npm run build` built with 0 type errors in 304ms.
+  - Node Behavioral Assertion Suite: Verified constraint discovery (`emi_years` {min: 1, max: 30}), URL parameter clamping (-5 -> 1), and target corpus share serialization (`target_corpus=...` without `sip=0`).
   - **DEFECT-1 (Critical):** Fixed `/embed/sip-step-up-calculator` blank form in `src/Views/calculators/embed.twig`: updated check to `{% if calculator_type in ['sip', 'sip-step-up'] %}` so the iframe renders all SIP and Step-Up form controls.
   - **DEFECT-2 (Critical):** Fixed `/embed/retirement-calculator` combo tab lockout in `src/Views/calculators/embed.twig`: replaced legacy 2-tab buttons with the full 3-mode segmented control bar (`#tab-combo`, `#tab-sip`, `#tab-swp`), Stage 1 & Stage 2 headers, stage divider, and `#swp-standalone-corpus`.
   - **DEFECT-3 (High):** Restored URL query parameter state hydration for specialized calculators:

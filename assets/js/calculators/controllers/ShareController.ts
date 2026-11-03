@@ -42,15 +42,26 @@ export class ShareController {
         const inputs = this.getInputs();
         const params = new URLSearchParams();
         const isSwpMode = (mode === 'swp');
+        const targetCorpusVal = this.dom.getValue('target_corpus');
+        const goalTargetBtn = this.dom.getElement('goal-target');
+        const isTargetMode = (mode === 'target_corpus') || (goalTargetBtn && goalTargetBtn.getAttribute('aria-checked') === 'true');
 
-        params.set('sip', String(inputs.sip));
+        if (isTargetMode) {
+            params.set('goal_mode', 'target');
+            if (targetCorpusVal) {
+                params.set('target_corpus', String(targetCorpusVal));
+            }
+        } else {
+            params.set('sip', String(inputs.sip));
+        }
+
         params.set('years', String(inputs.years));
         params.set('rate', String(inputs.rate));
         params.set('stepup', String(inputs.stepup));
 
         if (isSwpMode) {
             params.set('corpus', String(inputs.lumpsum));
-        } else {
+        } else if (!isTargetMode) {
             params.set('lumpsum', String(inputs.lumpsum));
         }
 
@@ -61,15 +72,6 @@ export class ShareController {
         const curVal = this.dom.getValue('currency') || 'INR';
         if (curVal !== 'INR') {
             params.set('cur', curVal);
-        }
-
-        const targetCorpusVal = this.dom.getValue('target_corpus');
-        const goalTargetBtn = this.dom.getElement('goal-target');
-        if (goalTargetBtn && goalTargetBtn.getAttribute('aria-checked') === 'true') {
-            params.set('goal_mode', 'target');
-            if (targetCorpusVal) {
-                params.set('target_corpus', String(targetCorpusVal));
-            }
         }
 
         const postTaxToggle = this.dom.getElement<HTMLInputElement>('show_post_tax');
@@ -165,6 +167,11 @@ export class ShareController {
             const h1 = document.querySelector('h1')?.textContent?.trim() || 'Financial Calculation';
             const corpus = this.dom.getElement('summary-corpus')?.textContent?.trim() || '';
             planSummary = `${h1}${corpus ? ` • Total: ${corpus}` : ''}`;
+        } else if (mode === 'target_corpus') {
+            const targetCorpusVal = parseFloat(this.dom.getValue('target_corpus') || '0');
+            const years = this.dom.getValue('years') || '15';
+            const reqSipDisplay = this.dom.getElement('target_calculated_sip_display')?.textContent?.trim() || '';
+            planSummary = `Target Corpus Goal Plan (${years} Years) • Target: ₹${targetCorpusVal.toLocaleString('en-IN')}${reqSipDisplay ? ` • Required SIP: ${reqSipDisplay}` : ''}`;
         } else {
             const inputs = this.getInputs();
             const results = this.getResults ? this.getResults() : [];
@@ -354,6 +361,17 @@ export class ShareController {
             if (invested) planSummary += `\n• Principal / Invested: ${invested}`;
             if (interest) planSummary += `\n• Interest / Growth: ${interest}`;
             if (corpus) planSummary += `\n• Total / Maturity: ${corpus}`;
+        } else if (mode === 'target_corpus') {
+            const targetCorpusVal = parseFloat(this.dom.getValue('target_corpus') || '0');
+            const years = this.dom.getValue('years') || '15';
+            const rate = this.dom.getValue('rate') || '12';
+            const stepup = this.dom.getValue('stepup') || '10';
+            const reqSipDisplay = this.dom.getElement('target_calculated_sip_display')?.textContent?.trim() || '';
+
+            planSummary = `🎯 *Target Corpus Goal Plan (${years} Years)*`;
+            if (targetCorpusVal > 0) planSummary += `\n• Target Goal: ₹${targetCorpusVal.toLocaleString('en-IN')}`;
+            if (reqSipDisplay) planSummary += `\n• Required Monthly SIP: ${reqSipDisplay}`;
+            planSummary += `\n• Expected Return: ${rate}%\n• Annual Step-Up: ${stepup}%`;
         } else {
             const inputs = this.getInputs();
             planSummary = `📊 *My Wealth Plan (${inputs.years} Years)*\n• Monthly SIP: ₹${inputs.sip.toLocaleString('en-IN')}\n• Annual Step-Up: ${inputs.stepup}%`;

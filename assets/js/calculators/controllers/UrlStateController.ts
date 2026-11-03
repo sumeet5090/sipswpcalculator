@@ -48,8 +48,8 @@ export class UrlStateController {
 
                     let clampedVal = numVal;
                     if (inputEl) {
-                        const min = parseFloat(inputEl.getAttribute('min') || '0');
-                        const max = parseFloat(inputEl.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
+                        const min = parseFloat(inputEl.getAttribute('data-min') || inputEl.getAttribute('min') || rangeEl?.getAttribute('min') || '0');
+                        const max = parseFloat(inputEl.getAttribute('data-max') || inputEl.getAttribute('max') || rangeEl?.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
                         clampedVal = Math.min(Math.max(numVal, min), max);
                         inputEl.value = String(clampedVal);
                         inputEl.dispatchEvent(new Event('input', { bubbles: true }));
@@ -89,8 +89,8 @@ export class UrlStateController {
                 if (inputEl || rangeEl) {
                     let clampedVal = numVal;
                     if (inputEl) {
-                        const min = parseFloat(inputEl.getAttribute('min') || '0');
-                        const max = parseFloat(inputEl.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
+                        const min = parseFloat(inputEl.getAttribute('data-min') || inputEl.getAttribute('min') || rangeEl?.getAttribute('min') || '0');
+                        const max = parseFloat(inputEl.getAttribute('data-max') || inputEl.getAttribute('max') || rangeEl?.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
                         clampedVal = Math.min(Math.max(numVal, min), max);
                         inputEl.value = String(clampedVal);
                         inputEl.dispatchEvent(new Event('input', { bubbles: true }));

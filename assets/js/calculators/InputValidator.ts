@@ -89,13 +89,14 @@ export class InputValidator {
 
         if (typeof document !== 'undefined') {
             const el = document.getElementById(field);
-            if (el) {
-                const minAttr = el.getAttribute('min');
-                const maxAttr = el.getAttribute('max');
+            const rangeEl = document.getElementById(`${field}_range`);
+            if (el || rangeEl) {
+                const minAttr = el?.getAttribute('data-min') ?? el?.getAttribute('min') ?? rangeEl?.getAttribute('min') ?? null;
+                const maxAttr = el?.getAttribute('data-max') ?? el?.getAttribute('max') ?? rangeEl?.getAttribute('max') ?? null;
                 if (minAttr !== null || maxAttr !== null) {
                     const min = minAttr !== null ? parseFloat(minAttr) : 0;
                     const max = maxAttr !== null ? parseFloat(maxAttr) : Number.MAX_SAFE_INTEGER;
-                    const defaultVal = el.getAttribute('value') ? parseFloat(el.getAttribute('value')!) : min;
+                    const defaultVal = el?.getAttribute('value') ? parseFloat(el.getAttribute('value')!) : min;
                     return {
                         min: !isNaN(min) ? min : 0,
                         max: !isNaN(max) ? max : Number.MAX_SAFE_INTEGER,

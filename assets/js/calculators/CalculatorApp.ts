@@ -551,7 +551,7 @@ export class CalculatorApp {
             searchStr = '?' + window.location.hash.split('?')[1];
         }
         const urlParams = new URLSearchParams(searchStr);
-        const urlGoal = urlParams.get('goal');
+        const urlGoal = urlParams.get('goal') || urlParams.get('goal_mode');
 
         if (mode === 'target_corpus' || mode === 'target' || urlGoal === 'target_corpus' || urlGoal === 'target') {
             this.activeGoalMode = 'target_corpus';
