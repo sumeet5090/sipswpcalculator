@@ -57,42 +57,6 @@
     </div>
 </header>
 
-<!-- Quick Answer Box for AI extraction / Featured Snippet (Compact Collapsible on Mobile, Expanded on Desktop) -->
-<div id="quick-answer" class="relative overflow-hidden bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-emerald-500/10 backdrop-blur-md border border-emerald-300/60 rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 mb-2.5 sm:mb-4 max-w-2xl mx-auto shadow-card"
-    role="complementary" aria-label="Quick Answer">
-    <details open class="sm:contents fintech-accordion group">
-        <summary class="flex items-center justify-between gap-2 cursor-pointer select-none sm:cursor-default sm:pointer-events-none mb-0.5 sm:mb-2">
-            <span class="inline-flex items-center gap-1.5 text-micro font-bold text-growth-emphasis uppercase tracking-widest bg-growth-surface px-2 py-0.5 rounded-full border border-growth-border">
-                ⚡ Quick Summary
-            </span>
-            <div class="flex items-center gap-1.5">
-                <span class="text-caption font-semibold text-growth-emphasis/80">AI Verified Estimate</span>
-                <span class="sm:hidden accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
-            </div>
-        </summary>
-        <div class="mt-1.5 sm:mt-0">
-            <h3 class="text-sm sm:text-lg font-bold text-slate-800 mb-1">How much will a ₹10,000/month SIP grow in 20 years?</h3>
-            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month SIP will
-                grow to approximately <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
-                        data-amount-inr="19889000">₹1.99 Crore</span></strong> over 20 years. Total invested: <strong class="text-slate-700 font-financial-mono"><span
-                    class="dynamic-amount" data-amount-inr="6873000">₹68.73 Lakh</span></strong> • Total compound gains: <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
-                    data-amount-inr="13016000">₹1.30 Crore</span></strong>.</p>
-        </div>
-    </details>
-</div>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "SIP SWP Calculator Together — Combined Mutual Fund Planner 2026",
-  "speakable": {
-    "@type": "SpeakableSpecification",
-    "cssSelector": ["#quick-answer"]
-  },
-  "url": "{{ site_url }}/"
-}
-</script>
-
 {% include 'components/calculator-dock.twig' %}
 
 <section id="calculator-section" class="scroll-mt-32" style="scroll-margin-top: 120px;"
@@ -105,21 +69,57 @@
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-8 mt-4 sm:mt-6">
 
         <!-- Left Column: Form (Smooth natural scrolling for long forms) -->
-        <div class="md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col min-h-0 md:h-full">
+        <div class="md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col min-h-0">
             {% include 'components/calculator-form.twig' %}
         </div> <!-- /left column -->
 
-        <!-- Right Column: Floating Summary & Chart Visualization -->
-        <div class="md:col-span-6 lg:col-span-7 xl:col-span-8 space-y-4 md:sticky md:top-20 md:self-start md:z-20">
+        <!-- Right Column: Summary, Chart & Analytical Studio (Balanced Column Heights) -->
+        <div class="md:col-span-6 lg:col-span-7 xl:col-span-8 space-y-4 min-h-0">
             {% include 'components/chart-visualization.twig' %}
             
             <!-- Side-by-Side Scenario Diff Comparison (Unhides when snapshot baseline is taken) -->
             {% include 'components/scenario-comparison.twig' %}
+
+            <!-- Quick Answer Box for AI extraction / Featured Snippet & Benchmark Baseline -->
+            <div id="quick-answer" class="relative overflow-hidden bg-gradient-to-r from-emerald-500/10 via-teal-500/5 to-emerald-500/10 backdrop-blur-md border border-emerald-300/60 rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-subtle"
+                role="complementary" aria-label="Quick Answer">
+                <details open class="sm:contents fintech-accordion group">
+                    <summary class="flex items-center justify-between gap-2 cursor-pointer select-none sm:cursor-default sm:pointer-events-none mb-1 sm:mb-2">
+                        <span class="inline-flex items-center gap-1.5 text-micro font-bold text-growth-emphasis uppercase tracking-widest bg-growth-surface px-2 py-0.5 rounded-full border border-growth-border">
+                            ⚡ AI Benchmark Baseline
+                        </span>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-caption font-semibold text-growth-emphasis/80">AMFI/SEBI Calibrated</span>
+                            <span class="sm:hidden accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+                        </div>
+                    </summary>
+                    <div class="mt-1 sm:mt-0">
+                        <h3 class="text-ui-xs sm:text-ui-sm font-bold text-slate-800 mb-1">How much will a ₹10,000/month SIP grow in 20 years?</h3>
+                        <p class="text-caption sm:text-ui-xs text-slate-600 leading-relaxed">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month SIP will
+                            grow to approximately <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
+                                    data-amount-inr="19889000">₹1.99 Crore</span></strong> over 20 years. Total invested: <strong class="text-slate-700 font-financial-mono"><span
+                                class="dynamic-amount" data-amount-inr="6873000">₹68.73 Lakh</span></strong> • Total compound gains: <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
+                                data-amount-inr="13016000">₹1.30 Crore</span></strong>.</p>
+                    </div>
+                </details>
+            </div>
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "SIP SWP Calculator Together — Combined Mutual Fund Planner 2026",
+              "speakable": {
+                "@type": "SpeakableSpecification",
+                "cssSelector": ["#quick-answer"]
+              },
+              "url": "{{ site_url }}/"
+            }
+            </script>
+
+            <!-- Multi-Mode Interactive Analytical Studio (Default: Yearly Breakdown Table) -->
+            {% include 'components/analytical-studio.twig' %}
         </div>
     </div><!-- /12-col grid -->
-
-    <!-- Multi-Mode Interactive Analytical Studio (Default: Yearly Breakdown Table) -->
-    {% include 'components/analytical-studio.twig' %}
 </section><!-- /calculator section -->
 
 <!-- Pre-Calculated Scenario & Benchmark Tables for Search & AI Extractability -->

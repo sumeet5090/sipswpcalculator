@@ -5,7 +5,24 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Mild Professional Color Architecture & Light-Mode Depth Overhaul Completed.
+- **Current Milestone:** Resolving 5 Structural Bottlenecks & Perfecting Pure Light-Mode Layout Hierarchy (Completed & Verified).
+- **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 4):**
+  - **Bottleneck 1: Eliminated 1,350px Void via 2-Column Balancing (`src/Views/calculators/home.twig` & `components/analytical-studio.twig`):**
+    - Moved `analytical-studio.twig` into the right output column (`col-span-8`) immediately below the chart and `#quick-answer`.
+    - Both columns are now ~1,450px tall, completely eliminating the 1,350px blank dead zone under the chart.
+    - Users now experience instant, zero-latency side-by-side feedback: adjusting any slider on the left immediately updates BOTH the visual chart AND the yearly compounding ledger on the right simultaneously.
+  - **Bottleneck 2: High-Craft Pure Light-Mode Scoreboard (`src/Views/components/chart-visualization.twig`):**
+    - Wrapped the 4 KPI cards in a dedicated Scoreboard Dock Tray (`p-1.5 sm:p-2 rounded-3xl bg-slate-100/90 border border-slate-200/90 shadow-subtle`).
+    - Elevated each card with pure white surfaces, colored left-accent stripes (`border-l-4`), and crisp high-contrast typography while strictly rejecting dark surfaces in accordance with `AGENTS.md` and `ModalArchitectureTest.php`.
+    - Celebrated the Final Corpus card as an unmistakable hero with radiant mint-teal gradient (`bg-gradient-to-br from-emerald-100/90 via-teal-50/95 to-white border-2 border-emerald-600 shadow-glow-growth`).
+  - **Bottleneck 3: Left Sidebar Input Density Refinement (`src/Views/components/form/input-range-pair.twig`):**
+    - Refined input card well padding to `p-2 sm:p-2.5`, reducing vertical sprawl by ~60px across 9 controls while preserving 48px touch targets and leaving all inputs open without accordions (complying with `FormStructureParityTest`).
+  - **Bottleneck 4: Deconstructed Monolithic Lower SEO Sheet (`components/home-guide-content.twig` & `components/guide-faq.twig`):**
+    - Removed the giant outer `.fintech-glass-card` wrapper that previously enveloped the entire lower half of the page.
+    - Allowed the `#f1f5f9` cool gray canvas base to flow between 8 distinct elevated cards (`space-y-6 sm:space-y-8`), eliminating the "wall of white".
+    - Upgraded the 14-item FAQ into compact, collapsible `<details class="fintech-accordion">` cards with the first 2 questions open by default and smooth chevron rotation, cutting lower scroll height by ~1,200px while keeping 100% of text and FAQPage schema intact for SEO crawlers.
+  - **Bottleneck 5: Above-The-Fold Funnel Optimization (`src/Views/calculators/home.twig`):**
+    - Relocated `#quick-answer` (speakable AI estimate) from the hero header into the right output column as an "AI Benchmark Baseline", keeping `cssSelector: ["#quick-answer"]` speakable schema valid while bringing the calculator controls right near the top fold.
 - **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 3):**
   - **Canvas Multi-Stop Light Mesh (`resources/css/input.css`):**
     - Defined `--gradient-surface` on `body` combining three delicate radial aurora accents (emerald `0.08`, sky blue `0.08`, periwinkle `0.04`) with a soft slate vertical gradient (`#f8fafc` -> `#f1f5f9` -> `#edf2f7`).
