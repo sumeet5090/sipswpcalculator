@@ -69,6 +69,13 @@ export class ResultsController {
             fiveYBtn.addEventListener('click', () => this.setDensity('5y'));
         }
 
+        const desktopToggleBtn = this.dom.getElement('desktop-toggle-all-years-btn');
+        if (desktopToggleBtn) {
+            desktopToggleBtn.addEventListener('click', () => {
+                this.setDensity(this.density === '5y' ? 'all' : '5y');
+            });
+        }
+
         const heatmapBtn = this.dom.getElement('table-heatmap-toggle');
         if (heatmapBtn) {
             heatmapBtn.addEventListener('click', () => {
@@ -347,6 +354,24 @@ export class ResultsController {
             } else {
                 filteredData = data.filter(r => r.year === 1 || r.year % 5 === 0 || r.year === data.length);
             }
+        }
+
+        const milestoneCounter = this.dom.getElement('desktop-table-milestone-counter');
+        if (milestoneCounter) {
+            milestoneCounter.textContent = this.density === 'all'
+                ? `Showing All ${data.length} Annual Cashflows`
+                : `Showing ${filteredData.length} Milestone Years`;
+        }
+
+        const desktopToggleText = this.dom.getElement('desktop-toggle-all-years-text');
+        const desktopToggleIcon = this.dom.getElement('desktop-toggle-all-years-icon');
+        if (desktopToggleText) {
+            desktopToggleText.textContent = this.density === 'all'
+                ? 'Collapse to 5Y Milestones'
+                : `View All ${data.length} Years`;
+        }
+        if (desktopToggleIcon) {
+            desktopToggleIcon.classList.toggle('rotate-180', this.density === 'all');
         }
 
         let ignitionRendered = false;

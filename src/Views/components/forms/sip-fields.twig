@@ -3,7 +3,12 @@
 <!-- Conversational Mad Libs Live Narrative Strip -->
 <div id="conversational-narrative-strip" class="p-1.5 sm:p-2 rounded-xl bg-gradient-to-r from-slate-50 via-emerald-50/40 to-slate-50 border border-slate-200/90 shadow-flat mb-1.5 text-micro sm:text-ui-xs text-slate-700 leading-relaxed transition-all">
     <div class="flex items-center gap-1.5 flex-wrap">
-        <span class="font-extrabold text-slate-900 shrink-0">🧭 Plan:</span>
+        <span class="font-extrabold text-slate-900 shrink-0 flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+            <span>Plan:</span>
+        </span>
         <span id="narrative-strategy-badge" class="hidden font-bold text-micro px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-flat shrink-0 items-center gap-1"></span>
         <span>Investing</span>
         <span class="font-financial-mono font-extrabold text-emerald-800 bg-white px-1.5 py-0.5 rounded border border-emerald-300/80 shadow-flat" id="narrative-sip">₹{{ (sip|default(10000))|number_format }}</span>
@@ -79,8 +84,11 @@
         <!-- Rate Nudge AMFI Guidelines Popover -->
         <div id="rate-nudge-popover" class="hidden absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-2.5rem)] p-3.5 bg-white/98 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-modal z-50 text-left space-y-2.5 animate-in fade-in zoom-in-95 duration-150" role="dialog" aria-label="Historical Return Guidance">
             <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
-                <span class="text-ui-xs font-bold text-slate-900 flex items-center gap-1">
-                    <span>📈</span> <span>AMFI Category Guidance</span>
+                <span class="text-ui-xs font-bold text-slate-900 flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-growth" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                    <span>AMFI Category Guidance</span>
                 </span>
                 <button type="button" id="rate-nudge-close" class="text-slate-400 hover:text-slate-700 p-1 text-ui-xs cursor-pointer" aria-label="Close Popover">✕</button>
             </div>
@@ -154,7 +162,9 @@
 <div class="rounded-2xl bg-slate-50/70 border border-slate-200/90 p-2 sm:p-2.5 space-y-2.5 shadow-subtle mt-1">
     <div class="flex items-center justify-between gap-2">
         <span class="text-caption font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-            <span>⚡</span>
+            <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
             <span>Adjustments &amp; Inflation</span>
         </span>
         <span class="text-micro font-bold text-growth-emphasis bg-growth-surface border border-growth-border px-2 py-0.5 rounded-full shadow-flat">
@@ -185,7 +195,7 @@
     <!-- Corporate Salary Appraisal Step-Up Optimizer Callout -->
     <div id="salary-stepup-nudge-box" class="p-2 sm:p-1.5 rounded-xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50/80 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-flat cursor-pointer active:scale-[0.98] transition-all" onclick="document.getElementById('apply-10pct-stepup-btn')?.click()">
         <div class="text-caption text-emerald-950 font-medium leading-tight min-w-0">
-            <span>💡 <strong>Career Appraisal:</strong> Step up 10% annually</span>
+            <span><strong>Career Appraisal:</strong> Step up 10% annually</span>
         </div>
         <button type="button" id="apply-10pct-stepup-btn"
             class="px-3.5 sm:px-2 py-2 sm:py-0.5 text-ui-xs sm:text-micro font-extrabold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-flat transition-all active:scale-95 cursor-pointer whitespace-nowrap shrink-0 min-h-[44px] sm:min-h-0 flex items-center justify-center">

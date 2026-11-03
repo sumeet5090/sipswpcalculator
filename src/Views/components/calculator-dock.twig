@@ -1,7 +1,7 @@
 {#
   Calculator Quick-Switcher Dock
-  Above-the-fold horizontal pill navigation providing 1-tap switching across all 13 calculators.
-  Overcomes the 19.8% scroll depth barrier and distributes internal PageRank equity.
+  Above-the-fold horizontal tab navigation providing 1-tap switching across all 13 calculators.
+  Clean institutional underline tab design (Zerodha / Stripe style) with zero visual clash.
 #}
 {% set current_slug = active_page|default('home') %}
 
@@ -9,129 +9,133 @@
     {
         'slug': 'home',
         'href': '/',
-        'icon': '⚡🛡️',
+        'icon_type': 'dual',
         'short_title': 'SIP + SWP Dual',
         'badge': 'Core'
     },
     {
         'slug': 'sip-calculator',
         'href': '/sip-calculator',
-        'icon': '⚡',
+        'icon_type': 'sip',
         'short_title': 'SIP Calculator',
         'badge': null
     },
     {
         'slug': 'swp-calculator',
         'href': '/swp-calculator',
-        'icon': '🛡️',
+        'icon_type': 'swp',
         'short_title': 'SWP Pension',
         'badge': 'Retire'
     },
     {
         'slug': 'sip-step-up-calculator',
         'href': '/sip-step-up-calculator',
-        'icon': '🚀',
+        'icon_type': 'stepup',
         'short_title': 'Step-Up SIP',
         'badge': 'Top-Up'
     },
     {
         'slug': 'my-first-crore-calculator',
         'href': '/my-first-crore-calculator',
-        'icon': '👑',
+        'icon_type': 'target',
         'short_title': '₹1 Crore Goal',
         'badge': 'Goal'
     },
     {
         'slug': 'inflation-calculator',
         'href': '/inflation-calculator',
-        'icon': '📉',
+        'icon_type': 'inflation',
         'short_title': 'Inflation & CPI',
         'badge': null
     },
     {
         'slug': 'lumpsum-calculator',
         'href': '/lumpsum-calculator',
-        'icon': '💰',
+        'icon_type': 'lumpsum',
         'short_title': 'Lumpsum',
         'badge': null
     },
     {
         'slug': 'retirement-calculator',
         'href': '/retirement-calculator',
-        'icon': '🏖️',
+        'icon_type': 'fire',
         'short_title': 'Retirement FIRE',
         'badge': null
     },
     {
         'slug': 'target-corpus-calculator',
         'href': '/target-corpus-calculator',
-        'icon': '🎯',
+        'icon_type': 'target',
         'short_title': 'Target Corpus',
         'badge': null
     },
     {
         'slug': 'cagr-calculator',
         'href': '/cagr-calculator',
-        'icon': '📈',
+        'icon_type': 'cagr',
         'short_title': 'CAGR Return',
         'badge': null
     },
     {
         'slug': 'emi-calculator',
         'href': '/emi-calculator',
-        'icon': '🏦',
+        'icon_type': 'emi',
         'short_title': 'Loan EMI',
         'badge': null
     },
     {
         'slug': 'ppf-calculator',
         'href': '/ppf-calculator',
-        'icon': '🏛️',
+        'icon_type': 'ppf',
         'short_title': 'PPF Scheme',
         'badge': 'Tax-Free'
     },
     {
         'slug': 'fd-calculator',
         'href': '/fd-calculator',
-        'icon': '📜',
+        'icon_type': 'fd',
         'short_title': 'Fixed Deposit',
         'badge': null
     }
 ] %}
 
-<nav aria-label="Financial Calculators Quick Switcher" class="relative mb-2.5 sm:mb-3 not-prose">
-    <!-- Visual Section Header for Exploration -->
-    <div class="flex items-center justify-between mb-1.5 px-1">
-        <span class="text-micro sm:text-caption font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-            <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-            <span>Explore All Calculators</span>
-        </span>
-        <span class="text-micro text-slate-400 font-medium hidden sm:inline">
-            Scroll or tap to switch tool
-        </span>
-    </div>
-
-    <!-- Outer Dock Container with Pure Light Elevation & Border -->
-    <div class="relative bg-gradient-to-r from-slate-100/90 via-emerald-50/30 to-slate-100/90 rounded-2xl border border-slate-200/90 shadow-subtle backdrop-blur-xl p-1.5 sm:p-2">
-        <!-- Horizontal Scrollable Track -->
-        <div id="calculator-dock-track" class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar scroll-smooth py-0.5 px-0.5">
-            {% for item in dock_calculators %}
-                {% set is_active = (current_slug == item.slug) %}
-                <a href="{{ item.href }}"
-                   id="dock-pill-{{ item.slug }}"
-                   class="shrink-0 flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-ui-xs transition-all duration-200 whitespace-nowrap {{ is_active ? 'bg-emerald-600 text-white font-bold shadow-subtle shadow-emerald-600/30 ring-2 ring-emerald-500/25' : 'bg-slate-50/90 hover:bg-emerald-50/70 text-slate-700 hover:text-emerald-900 border border-slate-200/80 hover:border-emerald-300 font-semibold shadow-flat hover:shadow-subtle' }}"
-                   {% if is_active %}aria-current="page"{% endif %}
-                   title="{{ item.short_title }} — Indian Financial Calculator">
-                    <span class="text-xs sm:text-sm select-none" aria-hidden="true">{{ item.icon }}</span>
-                    <span>{{ item.short_title }}</span>
-                    {% if item.badge %}
-                        <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-full tracking-wider leading-none {{ is_active ? 'bg-emerald-700/80 text-emerald-100' : 'bg-emerald-100/80 text-emerald-800' }}">
-                            {{ item.badge }}
-                        </span>
+<nav aria-label="Financial Calculators Quick Switcher" class="relative mb-2.5 sm:mb-3 not-prose border-b border-slate-200/90">
+    <!-- Horizontal Scrollable Underline Tab Track (Institutional Stripe/Zerodha Style) -->
+    <div id="calculator-dock-track" class="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar scroll-smooth -mb-px">
+        {% for item in dock_calculators %}
+            {% set is_active = (current_slug == item.slug) %}
+            <a href="{{ item.href }}"
+               id="dock-pill-{{ item.slug }}"
+               class="shrink-0 flex items-center gap-1.5 px-3 sm:px-3.5 py-2.5 text-ui-xs transition-all duration-150 whitespace-nowrap {{ is_active ? 'border-b-2 border-emerald-600 text-slate-900 font-extrabold' : 'border-b-2 border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300 font-semibold' }}"
+               {% if is_active %}aria-current="page"{% endif %}
+               title="{{ item.short_title }} — Indian Financial Calculator">
+                <span class="inline-flex items-center shrink-0 {{ is_active ? 'text-emerald-700' : 'text-slate-400 group-hover:text-slate-600' }}" aria-hidden="true">
+                    {% if item.icon_type == 'dual' %}
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                    {% elseif item.icon_type == 'sip' or item.icon_type == 'stepup' or item.icon_type == 'cagr' %}
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    {% elseif item.icon_type == 'swp' %}
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    {% elseif item.icon_type == 'target' %}
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/><circle cx="12" cy="12" r="5" stroke-width="2"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+                    {% elseif item.icon_type == 'inflation' %}
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
+                    {% elseif item.icon_type == 'lumpsum' or item.icon_type == 'fd' %}
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    {% elseif item.icon_type == 'emi' or item.icon_type == 'ppf' %}
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    {% else %}
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     {% endif %}
-                </a>
-            {% endfor %}
-        </div>
+                </span>
+                <span>{{ item.short_title }}</span>
+                {% if item.badge %}
+                    <span class="text-micro font-extrabold uppercase px-1.5 py-0.2 rounded-full tracking-wider leading-none {{ is_active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600' }}">
+                        {{ item.badge }}
+                    </span>
+                {% endif %}
+            </a>
+        {% endfor %}
     </div>
 </nav>
 

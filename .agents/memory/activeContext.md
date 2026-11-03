@@ -5,7 +5,18 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Institutional Fintech Polish Complete (80/20 Rule, Left-Aligned Tabular Numerals, Pure Light-Mode Executive Anchor, Royal Blue SWP Controls).
+- **Current Milestone:** Junior Model Audit & Comprehensive Rectifications Completed (SliderManager Theme Parity, Desktop Ledger Card Footer, Strip 30+ Emojis to Clean SVGs, Underline Dock Switcher, Left-Aligned Odometer).
+- **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 7 - Junior Model Rectifications):**
+  - **Fixed `SliderManager.ts` Theme Parity Bug:** Added `isBlueTheme` detection in `_updatePresetChips()`, ensuring SWP blue preset chips activate with `is-active-blue bg-blue-600 text-white border-blue-600` instead of turning emerald green (`bg-emerald-600`), and properly clear all theme classes on de-selection.
+  - **Added Desktop Ledger Progressive Disclosure Card Footer (`yearly-breakdown-table.twig` & `ResultsController.ts`):** Added `#desktop-table-footer` inside the table card with `#desktop-table-milestone-counter` ("Showing 9 Milestone Years") and `#desktop-toggle-all-years-btn` ("View All 40 Years ▾" / "Collapse to 5Y Milestones ▴"), wiring click and text synchronization in `ResultsController.ts`.
+  - **Refactored Pre-Calculator Quick-Switcher (`calculator-dock.twig`):** Converted floating pill buttons into a clean, horizontal institutional underline tab strip (`border-b-2 border-emerald-600 text-slate-900 font-extrabold` active; `border-b-2 border-transparent text-slate-500` inactive) with subtle inline SVGs, eliminating the visual collision with the strategy starter bar below it.
+  - **Stripped 30+ Cluttered OS Emojis Across 8 Views:**
+    - `strategy-starter.twig` & `StrategyBlueprintController.ts`: Replaced `🎯`, `🏖️`, `🎓`, `🛡️`, `🪄` with clean inline SVGs and clean string titles.
+    - `chart-visualization.twig`: Replaced `⚖️`, `🛡️`, `✨`, `📈`, `🍩`, `⚡`, `✦`, `📸`, `🔗` with clean SVGs and typographic labels; cleaned benchmark chips (`Nifty 50`, `Gold`, `Bank FD`).
+    - `yearly-breakdown-table.twig`: Replaced `📊`, `🎨`, `💾`, `🖼️`, `🃏 Cards`, `📋 Table`, `📜` with clean SVGs.
+    - `sip-fields.twig` & `swp-fields.twig`: Replaced `🧭 Plan:`, `📈 AMFI Category Guidance`, `⚡`, `💡 Career Appraisal`, `🛡️ Inflation Escalation` with clean SVGs and typography.
+    - `home.twig` & `calculator-form.twig`: Replaced `📥`, `🔒`, `⚡` with clean SVGs.
+  - **Enforced Strict Odometer Left-Alignment (`resources/css/input.css`):** Changed `@utility odometer-container` to `justify-content: flex-start;`, ensuring numbers strictly left-align with scoreboard card headers.
 - **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 6 - Institutional Fintech Polish):**
   - **Ledger "White Box" Defect Eliminated (`src/Views/components/yearly-breakdown-table.twig`):**
     - Removed `min-h-[380px]` from `#table-scroll-wrapper` so the table naturally shrink-wraps milestone rows without any artificial ~200px empty white space below row entries.

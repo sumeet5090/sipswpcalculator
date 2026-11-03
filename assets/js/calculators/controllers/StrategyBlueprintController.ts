@@ -39,7 +39,7 @@ export class StrategyBlueprintController {
     private readonly blueprints: Record<string, StrategyBlueprintPreset> = {
         first_crore: {
             id: 'first_crore',
-            title: '🎯 First ₹1 Crore Rush',
+            title: 'First ₹1 Crore Rush',
             description: '₹25k/mo SIP @ 12% CAGR with 10% annual top-up to cross ₹1 Cr fast.',
             sip: 25000,
             years: 9,
@@ -50,7 +50,7 @@ export class StrategyBlueprintController {
         },
         fire_retirement: {
             id: 'fire_retirement',
-            title: '🏖️ FIRE Early Retirement',
+            title: 'FIRE Early Retirement',
             description: '15 Yrs Accumulation → 25 Yrs of inflation-adjusted monthly pension.',
             sip: 50000,
             years: 15,
@@ -65,7 +65,7 @@ export class StrategyBlueprintController {
         },
         child_education: {
             id: 'child_education',
-            title: '🎓 Child Higher Education',
+            title: 'Child Higher Education',
             description: '₹15k/mo SIP + ₹1L seed corpus compounding to ₹1.5+ Cr for college fees.',
             sip: 15000,
             years: 18,
@@ -76,7 +76,7 @@ export class StrategyBlueprintController {
         },
         capital_preservation: {
             id: 'capital_preservation',
-            title: '🛡️ Senior Citizen Monthly Income',
+            title: 'Senior Citizen Monthly Income',
             description: '₹50 Lakh corpus generating ₹35,000/mo steady tax-efficient retirement cashflow.',
             sip: 0,
             years: 0,

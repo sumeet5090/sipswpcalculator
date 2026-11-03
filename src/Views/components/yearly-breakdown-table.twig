@@ -6,7 +6,11 @@
         <!-- Left Operational Dock (Title · Horizon Density · Column Mode) -->
         <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <div class="flex items-center gap-2 mr-1">
-                <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-growth-surface text-growth-emphasis text-ui-sm border border-growth-border shadow-flat font-extrabold">📊</span>
+                <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-growth-surface text-growth-emphasis text-ui-sm border border-growth-border shadow-flat font-extrabold">
+                    <svg class="w-4 h-4 text-growth" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                </span>
                 <div>
                     <h2 id="yearly-breakdown" class="font-heading text-heading-sm sm:text-heading-md font-extrabold text-slate-900 tracking-tight leading-tight">
                         Yearly Cashflow Ledger
@@ -63,7 +67,9 @@
                 aria-controls="pdfModal"
                 class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-tax-surface hover:bg-violet-100 text-tax-emphasis border border-tax-border text-ui-xs font-bold transition-all duration-150 shadow-flat hover:shadow-subtle hover:border-violet-300 active:scale-95 cursor-pointer"
                 title="Add Client Name, Advisor Logo & Branding to PDF">
-                <span>🎨</span>
+                <svg class="w-3.5 h-3.5 text-tax-emphasis" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4 4 4 0 014-4c1.1 0 2.1.4 2.8 1.1L12 16l2.2-2.2c.7-.7 1.7-1.1 2.8-1.1a4 4 0 014 4 4 4 0 01-4 4H7z"/>
+                </svg>
                 <span class="text-caption font-bold">Branded PDF</span>
             </button>
             {% endif %}
@@ -72,7 +78,11 @@
             <button type="button" id="saveCalculationBtn"
                 class="px-3.5 py-2 rounded-xl bg-amber-50/90 hover:bg-amber-100/90 text-amber-900 border border-amber-200 text-ui-xs font-extrabold transition-all duration-150 shadow-flat hover:shadow-subtle hover:border-amber-300 active:scale-95 cursor-pointer flex items-center gap-1.5"
                 title="Save current calculation to this browser for future reference">
-                <span id="saveBtnIcon">💾</span>
+                <span id="saveBtnIcon">
+                    <svg class="w-3.5 h-3.5 text-amber-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                    </svg>
+                </span>
                 <span id="saveBtnText">Save Plan</span>
             </button>
 
@@ -91,7 +101,9 @@
             <button type="button" id="downloadSocialCardBtn"
                 class="px-3.5 py-2 rounded-xl bg-teal-50/90 hover:bg-teal-100/90 text-teal-900 border border-teal-200 text-ui-xs font-extrabold transition-all duration-150 shadow-flat hover:shadow-subtle hover:border-teal-300 active:scale-95 cursor-pointer flex items-center gap-1.5"
                 title="Generate and download a branded 1080x1080 social card for WhatsApp, Instagram, or Twitter">
-                <span>🖼️</span>
+                <svg class="w-3.5 h-3.5 text-teal-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
                 <span id="socialCardBtnText">Share Card</span>
             </button>
 
@@ -137,6 +149,18 @@
             </table>
         </div>
 
+        <!-- Desktop Progressive Disclosure Card Footer (Institutional Milestone Cap) -->
+        <div id="desktop-table-footer" class="hidden sm:flex items-center justify-between px-5 py-3 bg-slate-50/90 border-t border-slate-200/80 text-caption font-semibold text-slate-600">
+            <span id="desktop-table-milestone-counter">Showing 9 Milestone Years</span>
+            <button type="button" id="desktop-toggle-all-years-btn"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 hover:bg-slate-50 text-slate-700 font-bold transition-all shadow-flat hover:shadow-subtle active:scale-95 cursor-pointer text-caption">
+                <span id="desktop-toggle-all-years-text">View All 40 Years</span>
+                <svg id="desktop-toggle-all-years-icon" class="w-3.5 h-3.5 text-slate-500 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+        </div>
+
         <!-- ========================================================================= -->
         <!-- TIER 3: MOBILE SWIPEABLE CAROUSEL & COMPACT LIST MODES                    -->
         <!-- ========================================================================= -->
@@ -144,12 +168,18 @@
             <span class="text-caption font-bold text-slate-500 uppercase tracking-wider">Breakdown View:</span>
             <div class="inline-flex bg-slate-100 p-0.5 rounded-xl border border-slate-200/80 shadow-flat" role="tablist">
                 <button type="button" id="mobile-view-carousel-btn" role="tab" aria-selected="true"
-                    class="px-3 py-1.5 text-caption font-bold rounded-lg transition-all bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer min-h-[40px] flex items-center gap-1">
-                    <span>🃏</span> <span>Cards</span>
+                    class="px-3 py-1.5 text-caption font-bold rounded-lg transition-all bg-white text-growth-emphasis shadow-flat border border-slate-200/60 cursor-pointer min-h-[40px] flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                    </svg>
+                    <span>Cards</span>
                 </button>
                 <button type="button" id="mobile-view-list-btn" role="tab" aria-selected="false"
-                    class="px-3 py-1.5 text-caption font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900 cursor-pointer min-h-[40px] flex items-center gap-1">
-                    <span>📋</span> <span>Table</span>
+                    class="px-3 py-1.5 text-caption font-bold rounded-lg transition-all text-slate-600 hover:text-slate-900 cursor-pointer min-h-[40px] flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                    <span>Table</span>
                 </button>
             </div>
         </div>
@@ -180,7 +210,9 @@
         <div class="sm:hidden p-3 border-t border-slate-100 flex justify-center bg-slate-50/50">
             <button type="button" id="mobile-expand-all-years-btn" 
                 class="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-slate-50 text-slate-700 font-bold text-ui-xs border border-slate-200 shadow-flat transition-all flex items-center justify-center gap-1.5 active:scale-98 cursor-pointer min-h-[44px]">
-                <span>📜</span>
+                <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                </svg>
                 <span id="expand-btn-text">Show All Years Breakdown</span>
             </button>
         </div>
