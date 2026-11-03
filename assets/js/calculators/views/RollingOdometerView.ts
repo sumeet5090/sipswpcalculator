@@ -42,6 +42,7 @@ export class RollingOdometerView {
         const container = document.createElement('span');
         container.className = 'odometer-container font-financial-mono inline-flex items-baseline';
         container.setAttribute('aria-hidden', 'true');
+        container.setAttribute('data-nosnippet', 'true');
         this.element.appendChild(container);
         this.container = container;
         this.currentSlots = [];
@@ -84,6 +85,7 @@ export class RollingOdometerView {
                 if (isDigit) {
                     const slotEl = document.createElement('span');
                     slotEl.className = 'odometer-digit-slot relative inline-block overflow-hidden';
+                    slotEl.setAttribute('aria-hidden', 'true');
 
                     const ribbonEl = document.createElement('span');
                     ribbonEl.className = 'odometer-ribbon flex flex-col';
@@ -105,6 +107,7 @@ export class RollingOdometerView {
                 } else {
                     const slotEl = document.createElement('span');
                     slotEl.className = 'odometer-static inline-block';
+                    slotEl.setAttribute('aria-hidden', 'true');
                     slotEl.textContent = ch;
                     container.appendChild(slotEl);
                     this.currentSlots.push({ type: 'static', char: ch, slotEl });

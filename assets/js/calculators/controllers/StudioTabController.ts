@@ -87,8 +87,12 @@ export class StudioTabController {
                 const targetPanelId = targetTabId.replace('tab-', 'panel-');
                 if (panel.id === targetPanelId) {
                     panel.classList.remove('hidden');
+                    panel.removeAttribute('hidden');
+                    panel.style.display = '';
                 } else {
                     panel.classList.add('hidden');
+                    panel.setAttribute('hidden', '');
+                    panel.style.display = 'none';
                 }
             });
 

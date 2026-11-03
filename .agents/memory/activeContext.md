@@ -5,8 +5,21 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Visual Hierarchy & Surface Architecture Overhaul Completed (Gemini 4 Argon Audit Remediation).
-- **Implemented Fixes & Architectural Outcomes (2026-11-03):**
+- **Current Milestone:** Argon Crawl Audit Resolution & DOM Structural Hierarchy Optimization Completed.
+- **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 2):**
+  - **Headless Crawler DOM Isolation & Modal Attributes:**
+    - In `src/Views/components/strategy-starter.twig` and `assets/js/calculators/controllers/WealthQuizController.ts`: Appended native HTML5 `hidden`, inline `style="display: none;"`, and `aria-hidden="true"` to `#wealth-guided-wizard-drawer`. Updated `openDrawer` / `closeDrawer` to dynamically toggle both HTML attributes and inline display styles. Headless DOM scrapers that do not evaluate CSS bundles now correctly skip unmounted wizard step forms.
+  - **Duplicate Ledger Views Elimination:**
+    - In `src/Views/components/yearly-breakdown-table.twig` and `assets/js/calculators/controllers/ResultsController.ts`: Added native `hidden style="display: none;" aria-hidden="true"` to `#mobile-breakdown-list-wrapper`. Refactored `ResultsController.updateTable()` so that only the actively selected mobile view (Carousel cards or Compact table list) is populated in the DOM, clearing the inactive container completely and eliminating duplicate 40-year DOM trees.
+  - **Analytical Studio Multi-Panel Isolation:**
+    - In `src/Views/components/analytical-studio.twig` and `assets/js/calculators/controllers/StudioTabController.ts`: Added native HTML5 `hidden` and inline `style="display: none;"` to panels 2 through 5 (`panel-city-benchmark`, `panel-milestone-roadmap`, `panel-stress-test`, `panel-asset-rebalance`). Updated `switchTab()` to explicitly manage `panel.hidden` and `panel.style.display`, ensuring crawlers and screen readers only process the active tab.
+  - **Input Field Control Density Tuning:**
+    - In `src/Views/components/form/input-range-pair.twig`: Retained direct exposure of all primary and secondary inputs in accordance with `FormStructureParityTest.php` and product UX requirements. Reduced vertical bulk of preset chips to ultra-compact `min-h-[26px] sm:min-h-[24px]` and refined resting opacity to `opacity-75 sm:opacity-50`, illuminating to 100% on field hover or focus.
+  - **Pre-Calculator Vertical Funnel Tightening:**
+    - In `src/Views/components/calculator-dock.twig`: Streamlined exploration header and reduced vertical margins from `mb-6 sm:mb-8` to `mb-2.5 sm:mb-3`, pulling the primary calculator closer to the hero.
+  - **Odometer Screen-Reader & Crawler Shielding Verification:**
+    - Verified `RollingOdometerView.ts` pairs `<span class="sr-only">${formattedText}</span>` with `aria-hidden="true"` and `data-nosnippet="true"` on mechanical tumbler containers and digit slots.
+- **Previous Session Fixes (2026-11-03 Session 1):**
   - **P0 Critical (Surface Architecture & Pure Light Scoreboard):**
     - **4-Tier Surface Luminance Hierarchy:**
       - Canvas Base: Configured `--color-canvas-base: #f1f5f9;` with `body` background `#F1F5F9` in `resources/css/input.css` and `calculator-guide.twig`, providing crisp physical elevation for `#FFFFFF` cards and eliminating "all-white wall" fatigue.

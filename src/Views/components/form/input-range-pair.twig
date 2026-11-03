@@ -120,12 +120,12 @@
 
         {% if presets %}
             <!-- Mobile Horizontal Swipeable Strip / Desktop Flex Row (Subtle by default, illuminates on focus/hover) -->
-            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 mt-1 sm:flex-wrap opacity-85 sm:opacity-60 group-hover/field:opacity-100 group-focus-within/field:opacity-100 transition-opacity duration-200" role="group" aria-label="{{ label }} quick presets">
+            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 mt-1 sm:flex-wrap opacity-75 sm:opacity-50 group-hover/field:opacity-100 group-focus-within/field:opacity-100 transition-opacity duration-200" role="group" aria-label="{{ label }} quick presets">
                 {% for preset in presets %}
                     {% set p_label = preset.label|default(preset) %}
                     {% set p_val = preset.value|default(preset) %}
                     <button type="button" 
-                        class="preset-chip text-caption font-bold px-2 py-0.5 min-h-[36px] sm:min-h-[30px] rounded-lg border border-slate-200/90 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-flat text-center justify-center flex items-center shrink-0 whitespace-nowrap {{ value == p_val ? activeChipClass : '' }}"
+                        class="preset-chip text-caption font-bold px-2 py-0.5 min-h-[30px] sm:min-h-[26px] rounded-lg border border-slate-200/90 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500 transition-all cursor-pointer select-none active:scale-95 shadow-flat text-center justify-center flex items-center shrink-0 whitespace-nowrap {{ value == p_val ? activeChipClass : '' }}"
                         data-preset-for="{{ id }}"
                         data-preset-val="{{ p_val }}"
                         aria-pressed="{{ value == p_val ? 'true' : 'false' }}">

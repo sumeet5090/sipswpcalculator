@@ -116,6 +116,9 @@ export class WealthQuizController {
 
         const openDrawer = () => {
             drawer.classList.remove('hidden');
+            drawer.removeAttribute('hidden');
+            drawer.style.display = 'flex';
+            drawer.setAttribute('aria-hidden', 'false');
             toggleBtn.setAttribute('aria-expanded', 'true');
             if (toggleText) toggleText.textContent = 'Close Guided Wizard';
             if (toggleIcon) toggleIcon.style.transform = 'rotate(180deg)';
@@ -124,6 +127,9 @@ export class WealthQuizController {
 
         const closeDrawer = () => {
             drawer.classList.add('hidden');
+            drawer.setAttribute('hidden', '');
+            drawer.style.display = 'none';
+            drawer.setAttribute('aria-hidden', 'true');
             toggleBtn.setAttribute('aria-expanded', 'false');
             if (toggleText) toggleText.textContent = 'Need Guidance? Open 3-Step Wizard';
             if (toggleIcon) toggleIcon.style.transform = 'rotate(0deg)';
