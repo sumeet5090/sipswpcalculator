@@ -73,7 +73,7 @@ export class UrlStateController {
 
         // Generic hydration for specialized form inputs and dropdowns
         urlParams.forEach((val, key) => {
-            if (paramMap[key] || ['cur', 'goal_mode', 'post_tax', 'wealth_map', 'swp_on'].includes(key)) {
+            if (paramMap[key] || ['cur', 'goal', 'goal_mode', 'post_tax', 'wealth_map', 'swp_on'].includes(key)) {
                 return;
             }
 
@@ -130,9 +130,9 @@ export class UrlStateController {
             }
         }
 
-        if (urlParams.has('goal_mode') && this.setGoalMode) {
-            const mode = urlParams.get('goal_mode') || 'grow';
-            this.setGoalMode(mode);
+        const goalParam = urlParams.get('goal_mode') || urlParams.get('goal');
+        if (goalParam && this.setGoalMode) {
+            this.setGoalMode(goalParam);
         }
 
         if (urlParams.has('post_tax') && urlParams.get('post_tax') === '1') {

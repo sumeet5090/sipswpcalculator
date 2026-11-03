@@ -24,13 +24,18 @@
       - In `assets/js/calculators/controllers/ResultsController.ts`: Adapted table headers to `Current Cost`, `Annual Escalation`, `Future Cost`. Suppressed Compounding Ignition row.
     - **Input Clamping Elimination on Specialized Modes:**
       - In `assets/js/calculators/CalculatorApp.ts`: In `getInputs()`, if `specializedModes.includes(mode)`, immediately returns zeroed SIP/SWP inputs, eliminating false clamping of `0` to default minimum SIP bound `500`.
-  - **P2 & P3 Polish:**
-    - **CAGR Capital Loss Visualization:**
-      - In `assets/js/calculators/ChartManager.ts`: When `finalCorpus < totalInvested`, Donut chart dynamically renders "Retained Capital" vs "Capital Loss" with rose color.
-    - **Mobile Ergonomic Deck Specialized Display:**
-      - In `assets/js/calculators/controllers/MobileErgonomicDeckController.ts`: Prioritized specialized modes (EMI displays `EMI/mo: ₹X`, PPF displays `Deposit: ₹X/yr`, FD displays `Deposit: ₹X`).
-    - **SSR Zero-CLS 4-Card Summary Grid:**
-      - In `src/Views/components/chart-visualization.twig`: Configured `sm:grid-cols-4` on SSR when `enable_swp or calculator_type in ['swp', 'combo']` (otherwise `sm:grid-cols-3`). Un-hid `#card-withdrawn` on SSR when SWP is active.
+  - **P2 & P3 Polish (Phase 2):**
+    - **REG2-P1-01 (High / Medium):** Fixed Desktop Layout Shift (CLS) on `/emi-calculator` by setting `isFourCardMode = enable_swp or calculator_type in ['swp', 'combo', 'emi']` in `src/Views/components/chart-visualization.twig`, rendering `sm:grid-cols-4` and `#card-withdrawn` without `hidden` on SSR.
+    - **REG2-P2-01 (Medium):** Eliminated SSR text flicker across all specialized calculators (`emi`, `cagr`, `fd`, `ppf`, `inflation`, `compound_interest`) by dynamically setting card titles and sublabels in `src/Views/components/chart-visualization.twig` on SSR.
+    - **REG2-P2-02 (Medium):** Normalized URL parameter parsing in `assets/js/calculators/controllers/UrlStateController.ts` to accept both `goal_mode` and `goal`, and excluded `goal` from the generic numerical input loop.
+    - **REG2-P3-01 (Low):** Differentiated target corpus monthly contributions in `assets/js/calculators/controllers/MobileErgonomicDeckController.ts` by displaying `Req. SIP` instead of generic `SIP In`.
+  - **Verification & QA Passed (Phase 2):**
+    - Vite Build: `npm run typecheck && npm run build` built cleanly in 246ms with 0 type errors.
+    - Twig SSR Rendering: Confirmed `/emi-calculator` renders 4 cards without `hidden` and tailored EMI labels, `/cagr-calculator` renders 3 cards with CAGR labels, `/inflation-calculator` renders Inflation labels, `/swp-calculator` renders 4 cards, and `/sip-calculator` renders 3 cards.
+    - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS**.
+    - PHPStan Level 5: **0 errors**.
+    - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)**.
+    - PHPCS: **0 violations**.
 - **Verification & QA Passed:**
   - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
   - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)**.

@@ -216,7 +216,9 @@ export class MobileErgonomicDeckController {
                 this.deckCashflowEl.textContent = `+${this.formatter.formatDynamic(inputs.swp_withdrawal)}/m`;
                 this.deckCashflowEl.className = 'text-ui-xs font-black text-rose-700 font-financial-mono tabular-nums truncate';
             } else if (inputs && inputs.sip > 0) {
-                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'SIP In';
+                if (this.deckCashflowLabelEl) {
+                    this.deckCashflowLabelEl.textContent = (mode === 'target_corpus' || mode === 'target') ? 'Req. SIP' : 'SIP In';
+                }
                 this.deckCashflowEl.textContent = `${this.formatter.formatDynamic(inputs.sip)}/m`;
                 this.deckCashflowEl.className = 'text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums truncate';
             } else if (inputs && inputs.lumpsum > 0) {

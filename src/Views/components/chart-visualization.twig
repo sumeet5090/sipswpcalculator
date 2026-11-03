@@ -1,26 +1,86 @@
 <div class="space-y-4">
+    {% set isFourCardMode = enable_swp or calculator_type in ['swp', 'combo', 'emi'] %}
+    {% set card1Title = 'Total Invested' %}
+    {% set card1Sub = 'Principal Capital' %}
+    {% if calculator_type == 'emi' %}
+        {% set card1Title = 'Loan Amount' %}
+        {% set card1Sub = 'Principal Borrowed' %}
+    {% elseif calculator_type == 'inflation' %}
+        {% set card1Title = "Today's Cost" %}
+        {% set card1Sub = 'Current Living Expense' %}
+    {% elseif calculator_type == 'cagr' %}
+        {% set card1Title = 'Initial Value' %}
+        {% set card1Sub = 'Starting Investment' %}
+    {% elseif calculator_type == 'fd' %}
+        {% set card1Title = 'Deposit Amount' %}
+        {% set card1Sub = 'Bank FD Principal' %}
+    {% elseif calculator_type == 'ppf' %}
+        {% set card1Title = 'Total PPF Deposit' %}
+        {% set card1Sub = 'Statutory Contributions' %}
+    {% elseif calculator_type == 'compound_interest' %}
+        {% set card1Title = 'Principal Invested' %}
+        {% set card1Sub = 'Starting Capital' %}
+    {% endif %}
+
+    {% set card2Title = 'Compound Gains' %}
+    {% if calculator_type == 'emi' %}
+        {% set card2Title = 'Total Interest' %}
+    {% elseif calculator_type == 'inflation' %}
+        {% set card2Title = 'Cost Escalation' %}
+    {% elseif calculator_type == 'cagr' %}
+        {% set card2Title = 'Absolute Gain' %}
+    {% elseif calculator_type == 'fd' %}
+        {% set card2Title = 'Interest Earned' %}
+    {% elseif calculator_type == 'ppf' %}
+        {% set card2Title = 'Tax-Free Interest' %}
+    {% elseif calculator_type == 'compound_interest' %}
+        {% set card2Title = 'Compound Interest' %}
+    {% endif %}
+
+    {% set card3Title = 'Total Payouts' %}
+    {% set card3Sub = 'Systematic Cashflow' %}
+    {% if calculator_type == 'emi' %}
+        {% set card3Title = 'Total Payment' %}
+        {% set card3Sub = 'Principal + Interest' %}
+    {% endif %}
+
+    {% set card4Title = 'Final Wealth Corpus' %}
+    {% if calculator_type == 'emi' %}
+        {% set card4Title = 'Monthly EMI' %}
+    {% elseif calculator_type == 'inflation' %}
+        {% set card4Title = 'Future Living Cost' %}
+    {% elseif calculator_type == 'cagr' %}
+        {% set card4Title = 'CAGR Return' %}
+    {% elseif calculator_type == 'fd' %}
+        {% set card4Title = 'Maturity Value' %}
+    {% elseif calculator_type == 'ppf' %}
+        {% set card4Title = 'Maturity Corpus' %}
+    {% elseif calculator_type == 'compound_interest' %}
+        {% set card4Title = 'Maturity Value' %}
+    {% endif %}
+
     <!-- Fluid Quantum Wealth Ribbon Grid (Zero-CLS responsive container) -->
-    <div id="summary-cards-grid" class="grid grid-cols-2 {% if enable_swp or calculator_type in ['swp', 'combo'] %}sm:grid-cols-4{% else %}sm:grid-cols-3{% endif %} gap-2.5 sm:gap-3 transition-all duration-300">
-        <!-- Card 1: Total Invested -->
+    <div id="summary-cards-grid" class="grid grid-cols-2 {% if isFourCardMode %}sm:grid-cols-4{% else %}sm:grid-cols-3{% endif %} gap-2.5 sm:gap-3 transition-all duration-300">
+        <!-- Card 1: Total Invested / Principal -->
         <div class="bg-white/95 rounded-2xl border border-slate-200/90 shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-slate-300 group flex flex-col justify-between min-w-0">
             <div class="text-caption font-bold text-slate-500 uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span class="text-ui-xs">💰</span>
-                <span>Total Invested</span>
+                <span>{{ card1Title }}</span>
             </div>
             <div id="summary-invested" class="metric-len-normal font-black text-slate-900 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
                 ₹ --
             </div>
             <div class="text-micro font-bold text-slate-400 font-financial-mono tracking-tight">
-                Principal Capital
+                {{ card1Sub }}
             </div>
         </div>
 
-        <!-- Card 2: Compounding Gains -->
+        <!-- Card 2: Compounding Gains / Interest -->
         <div class="bg-white/95 rounded-2xl border border-growth-border shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-300 group flex flex-col justify-between relative min-w-0">
             <div id="title-interest-container" class="flex items-center justify-center gap-1 mb-1">
                 <span id="title-interest" class="text-caption font-bold text-growth uppercase tracking-wider leading-tight flex items-center gap-0.5">
                     <span>↗</span>
-                    <span>Compound Gains</span>
+                    <span>{{ card2Title }}</span>
                 </span>
             </div>
             <div id="summary-interest" class="metric-len-normal font-black text-growth-emphasis font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
@@ -33,25 +93,25 @@
             </div>
         </div>
 
-        <!-- Card 3: Total Withdrawn (Morphs visible only in SWP mode) -->
-        <div id="card-withdrawn" class="{% if not (enable_swp or calculator_type in ['swp', 'combo']) %}hidden {% endif %}bg-white/95 rounded-2xl border border-payout-border shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-rose-300 group flex flex-col justify-between min-w-0">
+        <!-- Card 3: Total Withdrawn / Payment (Morphs visible only in SWP/Combo/EMI mode) -->
+        <div id="card-withdrawn" class="{% if not isFourCardMode %}hidden {% endif %}bg-white/95 rounded-2xl border border-payout-border shadow-card px-2.5 sm:px-3 py-3 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-rose-300 group flex flex-col justify-between min-w-0">
             <div class="text-caption font-bold text-payout uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-0.5">
                 <span>↘</span>
-                <span>Total Payouts</span>
+                <span>{{ card3Title }}</span>
             </div>
             <div id="summary-withdrawn" class="metric-len-normal font-black text-payout-emphasis font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
                 ₹ --
             </div>
             <div class="text-micro font-bold text-payout font-financial-mono tracking-tight">
-                Systematic Cashflow
+                {{ card3Sub }}
             </div>
         </div>
 
-        <!-- Card 4: Final Corpus / Net Wealth (Mobile Asymmetric Hero Placement) -->
+        <!-- Card 4: Final Corpus / Net Wealth / EMI (Mobile Asymmetric Hero Placement) -->
         <div id="card-corpus" class="col-span-2 sm:col-span-1 order-first sm:order-none bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl border-2 border-emerald-600/90 shadow-glow-growth px-3 py-3.5 text-center overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 relative group flex flex-col justify-between min-w-0">
             <div id="title-corpus" class="text-caption font-extrabold text-growth-emphasis uppercase tracking-wider mb-1 leading-tight flex items-center justify-center gap-1">
                 <span>💎</span>
-                <span>Final Wealth Corpus</span>
+                <span>{{ card4Title }}</span>
             </div>
             <div id="summary-corpus" class="metric-hero-corpus font-black text-emerald-900 font-financial-mono tabular-nums transition-numbers whitespace-nowrap overflow-visible py-0.5">
                 ₹ --
