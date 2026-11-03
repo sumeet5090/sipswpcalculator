@@ -141,6 +141,18 @@ export class WealthQuizController {
         if (closeBtn) {
             closeBtn.addEventListener('click', closeDrawer);
         }
+
+        drawer.addEventListener('click', (e) => {
+            if (e.target === drawer) {
+                closeDrawer();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !drawer.classList.contains('hidden')) {
+                closeDrawer();
+            }
+        });
     }
 
     private goToStep(step: number): void {

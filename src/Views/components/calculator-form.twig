@@ -55,14 +55,15 @@
         <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
             
             <!-- Stage 1 / SIP Panel -->
-            <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2.5">
+            <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2.5 border-t-4 border-emerald-500 rounded-2xl bg-emerald-50/20 p-2 sm:p-2.5 border border-emerald-100/60 transition-all">
                 <!-- Stage 1 Header (Visible in Dual Mode) -->
-                <div id="stage-1-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-50 via-teal-50/50 to-slate-50 border border-emerald-200/80 shadow-flat">
+                <div id="stage-1-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50/90 border border-emerald-200/90 shadow-flat">
                     <div class="flex items-center gap-1.5 text-slate-800">
-                        <span class="text-ui-xs font-extrabold text-emerald-800">Stage 1:</span>
-                        <span class="text-ui-xs font-bold text-slate-700">Wealth Accumulation (SIP)</span>
+                        <span class="flex items-center justify-center w-4 h-4 rounded-full bg-emerald-600 text-white text-micro font-black">1</span>
+                        <span class="text-ui-xs font-extrabold text-emerald-950">Stage 1:</span>
+                        <span class="text-ui-xs font-bold text-slate-700">Accumulation (SIP)</span>
                     </div>
-                    <span class="text-micro font-extrabold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-full border border-emerald-300/80">
+                    <span class="text-micro font-extrabold text-white bg-emerald-600 px-2 py-0.5 rounded-full shadow-flat">
                         Phase 1
                     </span>
                 </div>
@@ -72,25 +73,26 @@
             </div><!-- /panel-sip -->
 
             <!-- Stage Transition Indicator (Visible only in Dual Mode) -->
-            <div id="stage-transition-divider" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center gap-2 py-1 select-none">
-                <div class="flex-1 h-px bg-gradient-to-r from-emerald-200 to-rose-200"></div>
-                <div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-micro font-extrabold text-slate-600 shadow-flat">
-                    <span>🔄</span>
+            <div id="stage-transition-divider" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center gap-2 py-1.5 select-none">
+                <div class="flex-1 h-px bg-gradient-to-r from-emerald-300 to-indigo-200"></div>
+                <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-micro font-extrabold text-indigo-950 shadow-flat">
+                    <span class="text-indigo-600">⚡</span>
                     <span>Matured SIP Seeds Retirement SWP</span>
-                    <span>↓</span>
+                    <span class="text-indigo-600">↓</span>
                 </div>
-                <div class="flex-1 h-px bg-gradient-to-r from-rose-200 to-emerald-200"></div>
+                <div class="flex-1 h-px bg-gradient-to-r from-indigo-200 to-blue-300"></div>
             </div>
 
             <!-- Stage 2 / SWP Panel -->
-            <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="space-y-3">
+            <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="space-y-3 border-t-4 border-blue-500 rounded-2xl bg-blue-50/20 p-2 sm:p-2.5 border border-blue-100/60 transition-all">
                 <!-- Stage 2 Header (Visible in Dual Mode) -->
-                <div id="stage-2-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-50 via-orange-50/40 to-slate-50 border border-rose-200/80 shadow-flat">
+                <div id="stage-2-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-2 rounded-xl bg-blue-50/90 border border-blue-200/90 shadow-flat">
                     <div class="flex items-center gap-1.5 text-slate-800">
-                        <span class="text-ui-xs font-extrabold text-rose-700">Stage 2:</span>
+                        <span class="flex items-center justify-center w-4 h-4 rounded-full bg-blue-600 text-white text-micro font-black">2</span>
+                        <span class="text-ui-xs font-extrabold text-blue-950">Stage 2:</span>
                         <span class="text-ui-xs font-bold text-slate-700">Retirement Cashflow (SWP)</span>
                     </div>
-                    <span class="text-micro font-extrabold text-rose-700 bg-rose-100/80 px-2 py-0.5 rounded-full border border-rose-300/80">
+                    <span class="text-micro font-extrabold text-white bg-blue-600 px-2 py-0.5 rounded-full shadow-flat">
                         Phase 2
                     </span>
                 </div>

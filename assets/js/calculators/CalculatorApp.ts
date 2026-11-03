@@ -237,6 +237,23 @@ export class CalculatorApp {
         const mode = appEl?.dataset?.mode ?? 'combo';
         const isSwpMode = (mode === 'swp');
         const isLumpsumMode = (mode === 'lumpsum');
+        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
+
+        if (specializedModes.includes(mode)) {
+            return {
+                sip: 0,
+                years: 0,
+                rate: 0,
+                stepup: 0,
+                inflation: 0,
+                lumpsum: 0,
+                enable_swp: false,
+                swp_withdrawal: 0,
+                swp_years: 0,
+                swp_stepup: 0,
+                swp_rate: 0
+            };
+        }
 
         if (isSwpMode) {
             return {
@@ -551,7 +568,7 @@ export class CalculatorApp {
             searchStr = '?' + window.location.hash.split('?')[1];
         }
         const urlParams = new URLSearchParams(searchStr);
-        const urlGoal = urlParams.get('goal');
+        const urlGoal = urlParams.get('goal') || urlParams.get('goal_mode');
 
         if (mode === 'target_corpus' || mode === 'target' || urlGoal === 'target_corpus' || urlGoal === 'target') {
             this.activeGoalMode = 'target_corpus';

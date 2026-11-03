@@ -46,17 +46,26 @@ export class UrlStateController {
                     const inputEl = this.dom.getElement<HTMLInputElement>(id);
                     const rangeEl = this.dom.getElement<HTMLInputElement>(id + '_range');
 
-                    let clampedVal = numVal;
                     if (inputEl) {
-                        const min = parseFloat(inputEl.getAttribute('min') || '0');
-                        const max = parseFloat(inputEl.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
-                        clampedVal = Math.min(Math.max(numVal, min), max);
+                        const min = parseFloat(inputEl.getAttribute('data-min') || inputEl.getAttribute('min') || rangeEl?.getAttribute('min') || '0');
+                        const max = parseFloat(inputEl.getAttribute('data-max') || inputEl.getAttribute('max') || rangeEl?.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
+                        const clampedVal = Math.min(Math.max(numVal, min), max);
+                        if (rangeEl && clampedVal > parseFloat(rangeEl.max || rangeEl.getAttribute('max') || '0')) {
+                            rangeEl.max = String(clampedVal);
+                            rangeEl.setAttribute('aria-valuemax', String(clampedVal));
+                        }
                         inputEl.value = String(clampedVal);
                         inputEl.dispatchEvent(new Event('input', { bubbles: true }));
-                    }
-                    if (rangeEl) {
+                    } else if (rangeEl) {
+                        const min = parseFloat(rangeEl.getAttribute('min') || '0');
+                        const max = parseFloat(rangeEl.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
+                        const clampedVal = Math.min(Math.max(numVal, min), max);
+                        if (clampedVal > parseFloat(rangeEl.max || rangeEl.getAttribute('max') || '0')) {
+                            rangeEl.max = String(clampedVal);
+                            rangeEl.setAttribute('aria-valuemax', String(clampedVal));
+                        }
                         rangeEl.value = String(clampedVal);
-                        rangeEl.dispatchEvent(new Event('input', { bubbles: true }));
+                        rangeEl.dispatchEvent(new Event('change', { bubbles: true }));
                     }
                 }
             }
@@ -64,7 +73,7 @@ export class UrlStateController {
 
         // Generic hydration for specialized form inputs and dropdowns
         urlParams.forEach((val, key) => {
-            if (paramMap[key] || ['cur', 'goal_mode', 'post_tax', 'wealth_map', 'swp_on'].includes(key)) {
+            if (paramMap[key] || ['cur', 'goal', 'goal_mode', 'post_tax', 'wealth_map', 'swp_on'].includes(key)) {
                 return;
             }
 
@@ -87,17 +96,26 @@ export class UrlStateController {
                 const rangeEl = this.dom.getElement<HTMLInputElement>(key + '_range');
 
                 if (inputEl || rangeEl) {
-                    let clampedVal = numVal;
                     if (inputEl) {
-                        const min = parseFloat(inputEl.getAttribute('min') || '0');
-                        const max = parseFloat(inputEl.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
-                        clampedVal = Math.min(Math.max(numVal, min), max);
+                        const min = parseFloat(inputEl.getAttribute('data-min') || inputEl.getAttribute('min') || rangeEl?.getAttribute('min') || '0');
+                        const max = parseFloat(inputEl.getAttribute('data-max') || inputEl.getAttribute('max') || rangeEl?.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
+                        const clampedVal = Math.min(Math.max(numVal, min), max);
+                        if (rangeEl && clampedVal > parseFloat(rangeEl.max || rangeEl.getAttribute('max') || '0')) {
+                            rangeEl.max = String(clampedVal);
+                            rangeEl.setAttribute('aria-valuemax', String(clampedVal));
+                        }
                         inputEl.value = String(clampedVal);
                         inputEl.dispatchEvent(new Event('input', { bubbles: true }));
-                    }
-                    if (rangeEl) {
+                    } else if (rangeEl) {
+                        const min = parseFloat(rangeEl.getAttribute('min') || '0');
+                        const max = parseFloat(rangeEl.getAttribute('max') || String(Number.MAX_SAFE_INTEGER));
+                        const clampedVal = Math.min(Math.max(numVal, min), max);
+                        if (clampedVal > parseFloat(rangeEl.max || rangeEl.getAttribute('max') || '0')) {
+                            rangeEl.max = String(clampedVal);
+                            rangeEl.setAttribute('aria-valuemax', String(clampedVal));
+                        }
                         rangeEl.value = String(clampedVal);
-                        rangeEl.dispatchEvent(new Event('input', { bubbles: true }));
+                        rangeEl.dispatchEvent(new Event('change', { bubbles: true }));
                     }
                 }
             }
@@ -112,9 +130,9 @@ export class UrlStateController {
             }
         }
 
-        if (urlParams.has('goal_mode') && this.setGoalMode) {
-            const mode = urlParams.get('goal_mode') || 'grow';
-            this.setGoalMode(mode);
+        const goalParam = urlParams.get('goal_mode') || urlParams.get('goal');
+        if (goalParam && this.setGoalMode) {
+            this.setGoalMode(goalParam);
         }
 
         if (urlParams.has('post_tax') && urlParams.get('post_tax') === '1') {

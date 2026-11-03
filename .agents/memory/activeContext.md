@@ -5,26 +5,93 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Site-Wide Calculator Regression & Quality Remediation Completed (Parts 1, 2, 3, 4 & 5).
-- **Implemented Fixes & Architectural Outcomes (Part 5 - 2026-11-03):**
-  - **DEFECT-1 (High):** Dynamic Clamping & Bound Discovery in `assets/js/calculators/InputValidator.ts` and `content/calculator_defaults.json`:
-    - Added `target_corpus` boundaries (`min: 100000`, `max: 1000000000`, `default: 10000000`, `step: 100000`) to `calculator_defaults.json`.
-    - Enhanced `InputValidator.getConstraint(field)`: when a field is not defined in static JSON or Data Island state, it inspects DOM element attributes `min`, `max`, and `value`.
-    - Clamps values in `InputValidator.validate()` using `getConstraint()`, eliminating stepper decrement crashes below minimum thresholds in `EmiEngine.ts`, `PpfEngine.ts`, and specialized calculators.
-  - **DEFECT-2 (High):** Checkbox State Restoration on Deep-Linked URLs in `assets/js/calculators/controllers/UrlStateController.ts`:
-    - Added checkbox detection in the generic URL parameter hydration loop: detects `inputEl.type === 'checkbox'`, sets `inputEl.checked = (val === '1' || val === 'true' || val === 'on')`, and triggers `change` event.
-    - Prevents senior citizen bonus rates and custom checkbox flags (`fd_senior`) from being dropped or parsed as NaN.
-  - **DEFECT-3 (Medium):** Command Palette Complete Registration in `assets/js/calculators/controllers/CommandPaletteController.ts`:
-    - Registered all 11 missing calculators in `COMMAND_ITEMS` (`calc-retirement`, `calc-target-corpus`, `calc-reach-5-cr`, `calc-sip-5k`, `calc-sip-10k`, `calc-ci`, `calc-cagr`, `calc-emi`, `calc-inflation`, `calc-ppf`, `calc-fd`), allowing users to jump directly to any calculator via Cmd+K natural language search.
-  - **DEFECT-4 (Low):** Dynamic Benchmark Matrix Row Highlighting in `src/Views/components/benchmarks/sip-swp-dual.twig`:
-    - Replaced hardcoded ₹10,000 row highlight (`bg-emerald-50/30`) with dynamic conditionals matching `sip|default(10000)` (e.g. ₹5,000 row on `/sip-5000-per-month` receives `bg-emerald-50/40 font-semibold`).
-- **Verification & QA Passed (Part 5):**
+- **Current Milestone:** Visual Hierarchy & Surface Architecture Overhaul Completed (Gemini 4 Argon Audit Remediation).
+- **Implemented Fixes & Architectural Outcomes (2026-11-03):**
+  - **P0 Critical (Surface Architecture & Pure Light Scoreboard):**
+    - **4-Tier Surface Luminance Hierarchy:**
+      - Canvas Base: Configured `--color-canvas-base: #f1f5f9;` with `body` background `#F1F5F9` in `resources/css/input.css` and `calculator-guide.twig`, providing crisp physical elevation for `#FFFFFF` cards and eliminating "all-white wall" fatigue.
+      - Pure Light Mode Rule Adherence: Rejected inverted dark container recommendation (`#0F172A`) in strict compliance with `AGENTS.md` and `systemPatterns.md`. Implemented an elevated pure light scoreboard header in `src/Views/components/chart-visualization.twig` with 3px colored left-border metric accents (`border-l-4 border-l-slate-400` for Invested, `border-l-4 border-l-emerald-500` for Gains, `border-l-4 border-l-blue-500` for Payouts, `border-l-4 border-l-emerald-600` for Net Corpus).
+      - Semantic Phase Containers: In `calculator-form.twig` and `calculator-guide.twig`, differentiated Stage 1 (Accumulation SIP) with `border-t-4 border-emerald-500` and `bg-emerald-50/20` container tint, and Stage 2 (Distribution SWP) with `border-t-4 border-blue-500` and `bg-blue-50/20` container tint.
+      - Handoff Bridge: Styled `#stage-transition-divider` as a high-contrast indigo pill (`bg-indigo-50 border-indigo-200 text-indigo-950 font-extrabold`).
+  - **P1 High Severity (Information Architecture & Funnel Streamlining):**
+    - **Above-The-Fold Pre-Calculator Funnel:**
+      - In `src/Views/components/strategy-starter.twig` and `src/Views/calculators/home.twig`: Replaced the 4 bulky blueprint cards with a sleek, 1-line horizontal **Quick Preset Strip** (`[🎯 ₹1 Cr Sprint] [🏖️ FIRE Pension] [🎓 Child Edu] [🛡️ Senior SWP] [🪄 3-Step Wizard]`) directly above the calculator, bringing the primary calculator immediately above the fold on desktop and tablet.
+      - Re-architected `#wealth-guided-wizard-drawer` into a focused modal overlay with background click-to-dismiss and `Escape` key listeners in `WealthQuizController.ts`, eliminating layout shift while preserving 100% of the interactive quiz functionality.
+    - **Input Sensory De-Cluttering:**
+      - In `src/Views/components/form/input-range-pair.twig`: Streamlined preset chips row with subtle resting opacity (`opacity-85 sm:opacity-60`) that smoothly illuminates on hover or `:focus-within` (`group-focus-within/field:opacity-100 group-hover/field:opacity-100`), reducing sensory clutter across 36+ inputs while keeping 48px touch steppers and range sliders primary.
+  - **P2 Polish & Accessibility Invariants:**
+    - **Odometer Screen-Reader & Web Crawler Protection:**
+      - In `assets/js/calculators/views/RollingOdometerView.ts`: Appended a dedicated `<span class="sr-only">${formattedText}</span>` element alongside the `aria-hidden="true"` tumbler container, guaranteeing that search engines and assistive technologies index clean currency strings (`₹1,98,89,000`) rather than concatenated mechanical digit strips (`0123456789...`).
+    - **Analytical Studio Recessed Well:**
+      - In `src/Views/components/analytical-studio.twig`: Wrapped `#breakdown-studio` in a Tier 1 recessed section tray (`p-2 sm:p-4 rounded-[2rem] bg-slate-200/50 border border-slate-300/60 shadow-inner`) establishing clear macro-tool boundaries.
+- **Verification & QA Passed:**
+  - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
+  - Full PHPUnit Suite: **811 tests / 12,673 assertions passed (100% OK)**.
+  - Strict Static Analysis (PHPStan Level 8 / composer check-all): **0 errors across 250 files**.
+  - Coding Standards (PHPCS): **0 violations across 250 files**.
+  - Frontend Build & Typecheck: `npm run typecheck && npm run build` built in 234ms with 0 type errors.
+  - Local Server Curl: Verified DOM elements rendered cleanly on `/` and `/retirement-calculator`.
+
+  - **P0 Critical:**
+    - **Retirement / Combo Calculator SSR Hydration & Field Visibility:**
+      - In `src/Core/Strategies/ComboStrategy.php`: Overrode `getInitialInputs()` to return `InvestmentInputs::fromRequest(['enable_swp' => true], $this->configService)`.
+      - In `assets/js/calculators/controllers/TabController.ts`: Updated `init()` to automatically invoke `switchTab('combo')` on load if `appEl.dataset.mode === 'combo'` or `#tab-combo` is active, unhiding `#swp-fields` with full opacity and interactive pointer events.
+    - **Fixed Deposit (FD) Non-Cumulative Payout Schedule & Donut Invariant:**
+      - In `assets/js/calculators/drivers/FdDriver.ts`: Mapped `item.payout_withdrawn` into `annual_withdrawal` and accumulated `cumulative_withdrawals` in the `YearResult` schedule.
+      - Passed `hasWithdrawals = cumulativePayout > 0` to both `ResultsController.updateTable()` and `ChartManager.updateChart()`, preserving the net gain invariant `(combined_total + cumulative_withdrawals) - cumulative_invested = total_interest` and preventing NaN donut slices.
+  - **P1 High Severity:**
+    - **EMI Loan Semantics & Amortization Visualizations:**
+      - In `assets/js/calculators/drivers/EmiDriver.ts`: Un-hid `#card-withdrawn` as "Total Payment (Principal + Interest)", updated summary cards grid to 4 columns, and animated `summary-withdrawn` to `principal + res.total_interest`.
+      - In `assets/js/calculators/ChartManager.ts` & `ChartDatasetBuilder.ts`: Transformed Line chart datasets to "Principal Repaid" and "Remaining Loan Balance". Transformed Donut chart to "Principal Loan Amount" vs "Total Interest Payable". Scrubbing ribbon formatted as `Principal Repaid`, `Interest Paid`, and `Loan Balance`.
+      - In `assets/js/calculators/controllers/ResultsController.ts`: Transformed table headers to `Principal Repaid`, `Interest Paid`, `Remaining Debt`. Suppressed Compounding Ignition row. Mobile card displays a loan repayment progress bar (`Repaid: X%` / `Balance: Y%`) and suppresses the irrelevant wealth multiplier badge.
+    - **Inflation Cost Escalation Visualizations:**
+      - In `assets/js/calculators/ChartManager.ts` & `ChartDatasetBuilder.ts`: Donut chart renders "Current Living Cost" vs "Inflation Escalation". Line chart plots "Today's Living Cost", "Future Living Cost", and "Real Purchasing Power". Scrubbing ribbon renders `Today`, `Escalation`, and `Future Cost`.
+      - In `assets/js/calculators/controllers/ResultsController.ts`: Adapted table headers to `Current Cost`, `Annual Escalation`, `Future Cost`. Suppressed Compounding Ignition row.
+    - **Input Clamping Elimination on Specialized Modes:**
+      - In `assets/js/calculators/CalculatorApp.ts`: In `getInputs()`, if `specializedModes.includes(mode)`, immediately returns zeroed SIP/SWP inputs, eliminating false clamping of `0` to default minimum SIP bound `500`.
+  - **P2 & P3 Polish (Phase 2):**
+    - **REG2-P1-01 (High / Medium):** Fixed Desktop Layout Shift (CLS) on `/emi-calculator` by setting `isFourCardMode = enable_swp or calculator_type in ['swp', 'combo', 'emi']` in `src/Views/components/chart-visualization.twig`, rendering `sm:grid-cols-4` and `#card-withdrawn` without `hidden` on SSR.
+    - **REG2-P2-01 (Medium):** Eliminated SSR text flicker across all specialized calculators (`emi`, `cagr`, `fd`, `ppf`, `inflation`, `compound_interest`) by dynamically setting card titles and sublabels in `src/Views/components/chart-visualization.twig` on SSR.
+    - **REG2-P2-02 (Medium):** Normalized URL parameter parsing in `assets/js/calculators/controllers/UrlStateController.ts` to accept both `goal_mode` and `goal`, and excluded `goal` from the generic numerical input loop.
+    - **REG2-P3-01 (Low):** Differentiated target corpus monthly contributions in `assets/js/calculators/controllers/MobileErgonomicDeckController.ts` by displaying `Req. SIP` instead of generic `SIP In`.
+  - **Verification & QA Passed (Phase 2):**
+    - Vite Build: `npm run typecheck && npm run build` built cleanly in 246ms with 0 type errors.
+    - Twig SSR Rendering: Confirmed `/emi-calculator` renders 4 cards without `hidden` and tailored EMI labels, `/cagr-calculator` renders 3 cards with CAGR labels, `/inflation-calculator` renders Inflation labels, `/swp-calculator` renders 4 cards, and `/sip-calculator` renders 3 cards.
+    - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS**.
+    - PHPStan Level 5: **0 errors**.
+    - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)**.
+    - PHPCS: **0 violations**.
+- **Verification & QA Passed:**
+  - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
+  - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)**.
+  - PHPStan Level 5: **0 errors across src/Controllers/, src/Services/, src/Core/**.
+  - PHPCS: **0 violations on modified files**.
+  - Frontend Typecheck & Build: `npm run typecheck && npm run build` built with 0 type errors in 251ms.
+  - Twig SSR Rendering: Confirmed `sm:grid-cols-4` and `#card-withdrawn` visible on SWP and Combo SSR, `sm:grid-cols-3` and `#card-withdrawn` hidden on SIP SSR.
+- **Implemented Fixes & Architectural Outcomes (Validation Remediation & Final Polish - 2026-11-03):**
+  - **DEFECT-1 (High):** Complete DOM Bound Discovery in `assets/js/calculators/InputValidator.ts`:
+    - Updated `InputValidator.getConstraint(field)` to inspect `el?.getAttribute('data-min') ?? el?.getAttribute('min') ?? rangeEl?.getAttribute('min')` and `el?.getAttribute('data-max') ?? el?.getAttribute('max') ?? rangeEl?.getAttribute('max')`.
+    - Solves the gap where text inputs output `data-min`/`data-max` rather than `min`/`max`, guaranteeing accurate constraint boundaries for specialized steppers (`emi_years`, `ppf_deposit`, `fd_principal`, etc.) and preventing `EmiEngine.ts` runtime crashes on decrement.
+  - **DEFECT-2 (High):** Deep-Linked URL Parameter Clamping & Drag-State Elimination in `assets/js/calculators/controllers/UrlStateController.ts`:
+    - Updated URL hydration loops to inspect `data-min` and `data-max` from `inputEl` and `min`/`max` from `rangeEl`.
+    - Eliminated synthetic `input` event dispatch on `rangeEl` when `inputEl` was already dispatched, preventing `SliderManager` from getting stuck in an artificial `_isDragging = true` state on page load.
+    - Expands `rangeEl.max` when `clampedVal > max` to prevent native browser truncation.
+  - **DEFECT-3 (High):** Target Corpus Sharing & Messaging Restoration in `assets/js/calculators/controllers/ShareController.ts`:
+    - In `buildShareUrl()`, detected `mode === 'target_corpus'` independently of `#goal-target` button existence (which only exists on homepage).
+    - Serializes `goal_mode=target` and `target_corpus=<val>` while suppressing dummy `sip=0`.
+    - Added dedicated message formatters in `tryNativeShare()` and `shareToWhatsApp()` displaying the Target Corpus and Required Monthly SIP.
+  - **DEFECT-4 (Low):** Normalized Goal Query Parameter in `assets/js/calculators/CalculatorApp.ts`:
+    - Supported both `urlParams.get('goal')` and `urlParams.get('goal_mode')`.
+  - **DEFECT-5 (Low):** Benchmark Milestone Highlighting Completeness in `src/Views/components/benchmarks/target-corpus.twig`:
+    - Added dynamic conditional highlighting matching all 5 presets: ₹25L (`2500000`), ₹50L (`5000000`), ₹1 Cr (`10000000`), ₹2 Cr (`20000000`), and ₹5 Cr (`50000000`).
+- **Verification & QA Passed:**
   - Cross-Runtime Parity Suite (`tests/parity_check.php`): **100% PASS** (20 forward, 5 binary search solver, 37 specialized cases).
   - PHPUnit Suite: **676 tests / 8,955 assertions passed (100% OK)**.
   - PHPStan Level 5: **0 errors**.
   - PHPCS: **0 violations**.
-  - Frontend Typecheck & Build: `npm run typecheck && npm run build` built with 0 type errors in 229ms.
-  - CLI Dispatch Assertions: Verified dynamic benchmark row highlighting on `/sip-5000-per-month` and `/sip-10000-per-month`.
+  - Frontend Typecheck & Build: `npm run typecheck && npm run build` built with 0 type errors in 250ms.
+  - Node Behavioral Assertion Suite: Verified constraint discovery (`emi_years` {min: 1, max: 30}), URL parameter clamping (-5 -> 1), and target corpus share serialization (`target_corpus=...` without `sip=0`).
+  - SSR Verification: Verified active row highlighting on `/target-corpus-calculator` across milestones.
   - **DEFECT-1 (Critical):** Fixed `/embed/sip-step-up-calculator` blank form in `src/Views/calculators/embed.twig`: updated check to `{% if calculator_type in ['sip', 'sip-step-up'] %}` so the iframe renders all SIP and Step-Up form controls.
   - **DEFECT-2 (Critical):** Fixed `/embed/retirement-calculator` combo tab lockout in `src/Views/calculators/embed.twig`: replaced legacy 2-tab buttons with the full 3-mode segmented control bar (`#tab-combo`, `#tab-sip`, `#tab-swp`), Stage 1 & Stage 2 headers, stage divider, and `#swp-standalone-corpus`.
   - **DEFECT-3 (High):** Restored URL query parameter state hydration for specialized calculators:

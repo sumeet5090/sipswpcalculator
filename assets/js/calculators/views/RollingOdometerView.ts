@@ -8,6 +8,7 @@
 export class RollingOdometerView {
     private element: HTMLElement;
     private container: HTMLElement | null = null;
+    private srOnlyEl: HTMLElement | null = null;
     private currentSlots: Array<{ type: 'digit' | 'static'; char: string; slotEl: HTMLElement; ribbonEl?: HTMLElement }> = [];
     private isReducedMotion: boolean = false;
 
@@ -31,6 +32,13 @@ export class RollingOdometerView {
         }
 
         this.element.innerHTML = '';
+
+        // Accessible screen-reader & search crawler text sibling
+        const srEl = document.createElement('span');
+        srEl.className = 'sr-only';
+        this.element.appendChild(srEl);
+        this.srOnlyEl = srEl;
+
         const container = document.createElement('span');
         container.className = 'odometer-container font-financial-mono inline-flex items-baseline';
         container.setAttribute('aria-hidden', 'true');
@@ -55,6 +63,9 @@ export class RollingOdometerView {
         }
 
         const container = this.ensureContainer();
+        if (this.srOnlyEl) {
+            this.srOnlyEl.textContent = formattedText;
+        }
         const chars = formattedText.split('');
 
         // Reconcile slots if character structure or count changes
@@ -134,6 +145,7 @@ export class RollingOdometerView {
      */
     public destroy(): void {
         this.container = null;
+        this.srOnlyEl = null;
         this.currentSlots = [];
     }
 }

@@ -114,16 +114,8 @@
     aria-labelledby="calculator-heading">
     <h2 class="sr-only" id="calculator-heading">Calculate Your SIP & SWP Returns</h2>
     
-    <!-- Strategy Starter: 1-Click Blueprints & 3-Step Guided Wizard (Progressive on Mobile) -->
-    <details class="sm:contents fintech-accordion group" id="strategy-starter-accordion">
-        <summary class="flex sm:hidden items-center justify-between p-3 rounded-2xl bg-white/95 border border-slate-200/90 shadow-subtle cursor-pointer select-none mb-3 text-ui-xs font-bold text-slate-800">
-            <span class="flex items-center gap-2"><span>🚀</span> <span>1-Click Goal Blueprints &amp; Wizard</span></span>
-            <span class="accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
-        </summary>
-        <div class="mt-1 sm:mt-0">
-            {% include 'components/strategy-starter.twig' %}
-        </div>
-    </details>
+    <!-- Strategy Starter: 1-Click Blueprints & 3-Step Guided Wizard -->
+    {% include 'components/strategy-starter.twig' %}
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-8 mt-4 sm:mt-6">
 

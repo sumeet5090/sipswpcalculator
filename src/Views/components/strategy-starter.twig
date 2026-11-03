@@ -1,47 +1,119 @@
 <!-- Strategy Starter: Consolidated 1-Click Blueprints & 3-Step Guided Wizard -->
-<div id="strategy-starter-container" class="mt-6 mb-8">
-    <!-- Header with 1-Click Title and Wizard Accordion Toggle -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-        <div>
-            <h3 class="text-sm sm:text-base font-extrabold text-slate-900 flex items-center gap-2">
-                <span>🚀</span>
-                <span>Strategy Starter &amp; Financial Blueprints</span>
-            </h3>
-            <p class="text-xs text-slate-500">Select a one-tap popular goal preset or launch the guided wizard</p>
+<div id="strategy-starter-container" class="mt-2 mb-3">
+    <div class="flex items-center justify-between gap-2 p-1.5 sm:p-2 rounded-2xl bg-white/95 border border-slate-200/90 shadow-card backdrop-blur-md overflow-x-auto no-scrollbar">
+        <div class="flex items-center gap-1.5 shrink-0 pl-1 text-caption font-bold text-slate-500 uppercase tracking-wider">
+            <span>🎯</span>
+            <span class="hidden sm:inline">Presets:</span>
         </div>
 
-        <!-- Guided Wizard Toggle Button -->
+        <div class="flex items-center gap-1.5 sm:gap-2 flex-nowrap overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar" role="toolbar" aria-label="Strategy Blueprints">
+            <!-- 1. First ₹1 Crore Rush -->
+            <button type="button" 
+                class="persona-btn snap-center shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-200/90 bg-emerald-50/70 hover:bg-emerald-100 text-slate-800 hover:text-emerald-900 text-ui-xs font-bold shadow-flat active:scale-95 transition-all cursor-pointer group"
+                data-persona="first_crore"
+                data-title="🎯 First ₹1 Crore Rush"
+                aria-pressed="false"
+                data-sip="25000"
+                data-years="9"
+                data-rate="12"
+                data-stepup="10"
+                data-lumpsum="0"
+                data-enable-swp="false">
+                <span>🎯</span>
+                <span class="font-extrabold text-slate-800">₹1 Cr Sprint</span>
+                <span class="hidden md:inline text-micro text-emerald-700 bg-emerald-200/60 px-1.5 py-0.5 rounded font-financial-mono">9 Yrs</span>
+            </button>
+
+            <!-- 2. FIRE Early Retirement -->
+            <button type="button" 
+                class="persona-btn snap-center shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-blue-200/90 bg-blue-50/70 hover:bg-blue-100 text-slate-800 hover:text-blue-900 text-ui-xs font-bold shadow-flat active:scale-95 transition-all cursor-pointer group"
+                data-persona="fire_retirement"
+                data-title="🏖️ FIRE Early Retirement"
+                aria-pressed="false"
+                data-sip="50000"
+                data-years="15"
+                data-rate="12"
+                data-stepup="10"
+                data-lumpsum="0"
+                data-enable-swp="true"
+                data-swp="120000"
+                data-swp-years="25"
+                data-swp-rate="8"
+                data-swp-hike="6">
+                <span>🏖️</span>
+                <span class="font-extrabold text-slate-800">FIRE Pension</span>
+                <span class="hidden md:inline text-micro text-blue-700 bg-blue-200/60 px-1.5 py-0.5 rounded font-financial-mono">15+25 Yrs</span>
+            </button>
+
+            <!-- 3. Child Higher Education -->
+            <button type="button" 
+                class="persona-btn snap-center shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-indigo-200/90 bg-indigo-50/70 hover:bg-indigo-100 text-slate-800 hover:text-indigo-900 text-ui-xs font-bold shadow-flat active:scale-95 transition-all cursor-pointer group"
+                data-persona="child_education"
+                data-title="🎓 Child Higher Education"
+                aria-pressed="false"
+                data-sip="15000"
+                data-years="18"
+                data-rate="12"
+                data-stepup="10"
+                data-lumpsum="100000"
+                data-enable-swp="false">
+                <span>🎓</span>
+                <span class="font-extrabold text-slate-800">Child Edu</span>
+                <span class="hidden md:inline text-micro text-indigo-700 bg-indigo-200/60 px-1.5 py-0.5 rounded font-financial-mono">18 Yrs</span>
+            </button>
+
+            <!-- 4. Senior Capital Preservation -->
+            <button type="button" 
+                class="persona-btn snap-center shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-amber-200/90 bg-amber-50/70 hover:bg-amber-100 text-slate-800 hover:text-amber-900 text-ui-xs font-bold shadow-flat active:scale-95 transition-all cursor-pointer group"
+                data-persona="capital_preservation"
+                data-title="🛡️ Senior Citizen Monthly Income"
+                aria-pressed="false"
+                data-sip="0"
+                data-years="0"
+                data-rate="8"
+                data-stepup="0"
+                data-lumpsum="5000000"
+                data-corpus="5000000"
+                data-enable-swp="true"
+                data-swp="35000"
+                data-swp-years="20"
+                data-swp-rate="8"
+                data-swp-hike="0">
+                <span>🛡️</span>
+                <span class="font-extrabold text-slate-800">Senior SWP</span>
+                <span class="hidden md:inline text-micro text-amber-700 bg-amber-200/60 px-1.5 py-0.5 rounded font-financial-mono">₹35k/mo</span>
+            </button>
+        </div>
+
+        <!-- Guided Wizard Trigger Button -->
         <button
             type="button"
             id="toggle-guided-wizard-btn"
             aria-expanded="false"
             aria-controls="wealth-guided-wizard-drawer"
-            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 transition-all cursor-pointer shadow-flat active:scale-95 self-start sm:self-auto"
+            class="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-ui-xs font-extrabold bg-emerald-600 hover:bg-emerald-500 text-white shadow-flat active:scale-95 transition-all cursor-pointer"
         >
-            <span class="text-sm">🪄</span>
-            <span id="wizard-toggle-text">Need Guidance? Open 3-Step Wizard</span>
-            <span id="wizard-toggle-icon" class="text-micro font-bold text-growth transition-transform duration-200">▼</span>
+            <span>🪄</span>
+            <span id="wizard-toggle-text">3-Step Wizard</span>
+            <span id="wizard-toggle-icon" class="text-micro font-bold text-emerald-200 transition-transform duration-200">▾</span>
         </button>
     </div>
 
-    <!-- Expandable 3-Step Guided Wizard Drawer (Hidden by default, expands on request) -->
-    <div id="wealth-guided-wizard-drawer" class="hidden mb-6 bg-white/95 backdrop-blur-md text-slate-800 rounded-3xl p-5 sm:p-7 shadow-modal border border-emerald-200/80 relative overflow-hidden transition-all duration-300">
-        <!-- Ambient Light Glow -->
-        <div class="absolute -right-20 -top-20 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-teal-500/5 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="relative z-10">
+    <!-- Modal 3-Step Guided Wizard (Fixed overlay modal, zero layout shift) -->
+    <div id="wealth-guided-wizard-drawer" class="hidden fixed inset-0 z-modal flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-all duration-300">
+        <div class="bg-white/98 text-slate-800 rounded-3xl p-5 sm:p-7 shadow-modal border border-slate-200/90 w-full max-w-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
             <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
                 <div class="flex items-center gap-2">
-                    <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 text-xs">🪄</span>
+                    <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 text-sm font-black">🪄</span>
                     <div>
-                        <h4 class="text-xs sm:text-sm font-extrabold text-slate-900">Interactive Wealth Readiness Wizard</h4>
+                        <h4 class="text-sm sm:text-base font-extrabold text-slate-900">Interactive Wealth Readiness Wizard</h4>
                         <p class="text-caption text-slate-500">Answer 3 quick questions to discover your personalized strategy</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
                     <span id="quiz-step-label" class="text-micro font-bold text-growth-emphasis bg-growth-surface px-2.5 py-0.5 rounded-full border border-growth-border">Step 1 of 3</span>
-                    <button type="button" id="close-guided-wizard-btn" class="text-slate-400 hover:text-slate-700 p-1 text-xs font-bold rounded-md hover:bg-slate-100 cursor-pointer" aria-label="Close Guided Wizard">
+                    <button type="button" id="close-guided-wizard-btn" class="text-slate-400 hover:text-slate-700 w-7 h-7 flex items-center justify-center text-xs font-bold rounded-lg hover:bg-slate-100 cursor-pointer" aria-label="Close Guided Wizard">
                         ✕
                     </button>
                 </div>
@@ -56,7 +128,7 @@
                         <strong class="text-xs text-slate-900 block">First ₹1 Crore</strong>
                         <span class="text-micro text-slate-500">Wealth Sprint</span>
                     </button>
-                    <button type="button" class="quiz-choice p-3 rounded-2xl bg-slate-50 border border-slate-200 hover:border-rose-500 hover:bg-white text-left transition-all cursor-pointer shadow-flat" data-goal="fire" data-years="15" data-enable-swp="true" data-swp="100000">
+                    <button type="button" class="quiz-choice p-3 rounded-2xl bg-slate-50 border border-slate-200 hover:border-blue-500 hover:bg-white text-left transition-all cursor-pointer shadow-flat" data-goal="fire" data-years="15" data-enable-swp="true" data-swp="100000">
                         <span class="text-base block mb-1">🏖️</span>
                         <strong class="text-xs text-slate-900 block">FIRE Retirement</strong>
                         <span class="text-micro text-slate-500">Pension Freedom</span>
@@ -131,105 +203,5 @@
                 </button>
             </div>
         </div>
-    </div>
-
-    <!-- Default 1-Click Persona Blueprint Cards Carousel (Horizontal Snap on Mobile, Grid on Desktop) -->
-    <div class="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 overflow-x-auto sm:overflow-visible snap-x snap-mandatory -mx-3 px-3 sm:mx-0 sm:px-0 pb-2 sm:pb-0 custom-scrollbar scroll-smooth" role="toolbar" aria-label="Strategy Blueprints">
-        <!-- 1. First ₹1 Crore Rush -->
-        <button type="button" 
-            class="persona-btn snap-center shrink-0 w-[80vw] max-w-[300px] sm:w-auto text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-emerald-50/50 hover:border-emerald-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
-            data-persona="first_crore"
-            data-title="🎯 First ₹1 Crore Rush"
-            aria-pressed="false"
-            data-sip="25000"
-            data-years="9"
-            data-rate="12"
-            data-stepup="10"
-            data-lumpsum="0"
-            data-enable-swp="false">
-            <div>
-                <div class="flex items-center justify-between mb-1.5">
-                    <span class="text-base sm:text-lg">🎯</span>
-                    <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200 group-hover:bg-emerald-600 group-hover:text-white transition-colors">9 Yrs Target</span>
-                </div>
-                <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-emerald-800 transition-colors leading-snug">First ₹1 Crore Rush</h4>
-                <p class="text-caption text-slate-500 mt-1 line-clamp-2">₹25k/mo SIP @ 12% CAGR with 10% annual top-up to cross ₹1 Cr fast.</p>
-            </div>
-        </button>
-
-        <!-- 2. FIRE Early Retirement -->
-        <button type="button" 
-            class="persona-btn snap-center shrink-0 w-[80vw] max-w-[300px] sm:w-auto text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-rose-50/50 hover:border-rose-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
-            data-persona="fire_retirement"
-            data-title="🏖️ FIRE Early Retirement"
-            aria-pressed="false"
-            data-sip="50000"
-            data-years="15"
-            data-rate="12"
-            data-stepup="10"
-            data-lumpsum="0"
-            data-enable-swp="true"
-            data-swp="120000"
-            data-swp-years="25"
-            data-swp-rate="8"
-            data-swp-hike="6">
-            <div>
-                <div class="flex items-center justify-between mb-1.5">
-                    <span class="text-base sm:text-lg">🏖️</span>
-                    <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-200 group-hover:bg-rose-600 group-hover:text-white transition-colors">FIRE Plan</span>
-                </div>
-                <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-rose-800 transition-colors leading-snug">FIRE Early Retirement</h4>
-                <p class="text-caption text-slate-500 mt-1 line-clamp-2">15 Yrs Accumulation → 25 Yrs of inflation-adjusted monthly pension.</p>
-            </div>
-        </button>
-
-        <!-- 3. Child Higher Education -->
-        <button type="button" 
-            class="persona-btn snap-center shrink-0 w-[80vw] max-w-[300px] sm:w-auto text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-indigo-50/50 hover:border-indigo-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
-            data-persona="child_education"
-            data-title="🎓 Child Higher Education"
-            aria-pressed="false"
-            data-sip="15000"
-            data-years="18"
-            data-rate="12"
-            data-stepup="10"
-            data-lumpsum="100000"
-            data-enable-swp="false">
-            <div>
-                <div class="flex items-center justify-between mb-1.5">
-                    <span class="text-base sm:text-lg">🎓</span>
-                    <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-indigo-100 text-indigo-800 border border-indigo-200 group-hover:bg-indigo-600 group-hover:text-white transition-colors">18 Yrs Goal</span>
-                </div>
-                <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-indigo-800 transition-colors leading-snug">Child Higher Education</h4>
-                <p class="text-caption text-slate-500 mt-1 line-clamp-2">₹15k/mo SIP + ₹1L seed corpus compounding to ₹1.5+ Cr for college fees.</p>
-            </div>
-        </button>
-
-        <!-- 4. Senior Capital Preservation -->
-        <button type="button" 
-            class="persona-btn snap-center shrink-0 w-[80vw] max-w-[300px] sm:w-auto text-left p-3 sm:p-3.5 rounded-2xl border border-slate-200/90 bg-white/95 hover:bg-amber-50/50 hover:border-amber-300 hover:shadow-card shadow-flat active:scale-98 transition-all cursor-pointer group flex flex-col justify-between"
-            data-persona="capital_preservation"
-            data-title="🛡️ Senior Citizen Monthly Income"
-            aria-pressed="false"
-            data-sip="0"
-            data-years="0"
-            data-rate="8"
-            data-stepup="0"
-            data-lumpsum="5000000"
-            data-corpus="5000000"
-            data-enable-swp="true"
-            data-swp="35000"
-            data-swp-years="20"
-            data-swp-rate="8"
-            data-swp-hike="0">
-            <div>
-                <div class="flex items-center justify-between mb-1.5">
-                    <span class="text-base sm:text-lg">🛡️</span>
-                    <span class="text-micro font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-200 group-hover:bg-amber-600 group-hover:text-white transition-colors">Monthly SWP</span>
-                </div>
-                <h4 class="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-amber-800 transition-colors leading-snug">Senior Citizen Monthly Income</h4>
-                <p class="text-caption text-slate-500 mt-1 line-clamp-2">₹50 Lakh corpus generating ₹35,000/mo steady tax-efficient retirement cashflow.</p>
-            </div>
-        </button>
     </div>
 </div>

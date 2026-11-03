@@ -253,10 +253,28 @@ export class ResultsController {
         const showTotalInvested = true;
         const showSwpMonthly = enableSwp && isAudit;
         const showAnnualSwp = enableSwp && isAudit;
-        const showTotalWithdrawn = enableSwp;
+        const showTotalWithdrawn = enableSwp || data.some(r => (r.cumulative_withdrawals ?? 0) > 0);
         const showInterest = true;
         const showTax = showPostTax && isAudit;
         const showEndCorpus = true;
+
+        const appMode = this.dom.getElement('calculator-app')?.dataset?.mode || '';
+        const thWithdrawn = this.dom.getElement<HTMLElement>('th-total-withdrawn');
+        if (thWithdrawn) {
+            thWithdrawn.textContent = (appMode === 'fd') ? 'Interest Payouts' : 'Total Withdrawn';
+        }
+        const thInvested = this.dom.getElement<HTMLElement>('th-total-invested');
+        if (thInvested) {
+            thInvested.textContent = (appMode === 'emi') ? 'Principal Repaid' : ((appMode === 'inflation') ? 'Current Cost' : 'Total Invested');
+        }
+        const thInterest = this.dom.getElement<HTMLElement>('th-interest');
+        if (thInterest) {
+            thInterest.textContent = (appMode === 'emi') ? 'Interest Paid' : ((appMode === 'inflation') ? 'Annual Escalation' : 'Annual Gain');
+        }
+        const thEndCorpus = this.dom.getElement<HTMLElement>('th-end-corpus');
+        if (thEndCorpus) {
+            thEndCorpus.textContent = (appMode === 'emi') ? 'Remaining Debt' : ((appMode === 'inflation') ? 'Future Cost' : 'End Corpus');
+        }
 
         // Synchronize <thead> headers strictly with active column visibility
         const setHeaderVisibility = (id: string, isVisible: boolean) => {
@@ -312,7 +330,7 @@ export class ResultsController {
             }
 
             // Detect and inject Compounding Ignition Inflection Ribbon Row (SIP accumulation only)
-            const isAccumulation = !inputs.enable_swp && (inputs.sip ?? 0) > 0 && (row.annual_contribution ?? 0) > 0;
+            const isAccumulation = (appMode === 'sip' || appMode === 'sip-step-up' || appMode === 'combo' || appMode === '') && !inputs.enable_swp && (inputs.sip ?? 0) > 0 && (row.annual_contribution ?? 0) > 0;
             if (isAccumulation && !ignitionRendered && (row.interest ?? 0) >= (row.annual_contribution ?? 0) && row.year > 1 && row.cumulative_invested > 0) {
                 ignitionRendered = true;
                 const inflectionTr = document.createElement('tr');
@@ -476,7 +494,7 @@ export class ResultsController {
                 corpusVal.textContent = fmt(finalCorpus);
                 corpusWrap.appendChild(corpusVal);
 
-                if (row.cumulative_invested > 0 && finalCorpus > 0) {
+                if (appMode !== 'emi' && appMode !== 'inflation' && row.cumulative_invested > 0 && finalCorpus > 0) {
                     const multiplier = (finalCorpus / row.cumulative_invested).toFixed(1);
                     const multiplierBadge = document.createElement('span');
                     multiplierBadge.className = 'px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-black shrink-0 shadow-flat';
@@ -487,8 +505,29 @@ export class ResultsController {
                 header.appendChild(corpusWrap);
                 card.appendChild(header);
 
-                // Proportional Visual Progress Bar (Principal Invested vs Compound Gains)
-                if (finalCorpus > 0 && row.cumulative_invested > 0) {
+                // Proportional Visual Progress Bar
+                if (appMode === 'emi') {
+                    const loanPrincipal = finalCorpus + row.cumulative_invested;
+                    const repaidPercent = loanPrincipal > 0 ? Math.min(100, Math.max(0, (row.cumulative_invested / loanPrincipal) * 100)) : 0;
+                    const remainingPercent = 100 - repaidPercent;
+
+                    const barContainer = document.createElement('div');
+                    barContainer.className = 'w-full h-1.5 bg-slate-100 rounded-full overflow-hidden flex my-1';
+
+                    const repaidSegment = document.createElement('div');
+                    repaidSegment.className = 'bg-emerald-500 h-full transition-all';
+                    repaidSegment.style.width = `${repaidPercent}%`;
+                    repaidSegment.title = `Repaid: ${repaidPercent.toFixed(0)}%`;
+
+                    const remainingSegment = document.createElement('div');
+                    remainingSegment.className = 'bg-slate-300 h-full transition-all';
+                    remainingSegment.style.width = `${remainingPercent}%`;
+                    remainingSegment.title = `Balance: ${remainingPercent.toFixed(0)}%`;
+
+                    barContainer.appendChild(repaidSegment);
+                    barContainer.appendChild(remainingSegment);
+                    card.appendChild(barContainer);
+                } else if (finalCorpus > 0 && row.cumulative_invested > 0) {
                     const investedPercent = Math.min(100, Math.max(5, (row.cumulative_invested / finalCorpus) * 100));
                     const gainsPercent = Math.max(0, 100 - investedPercent);
 
@@ -516,7 +555,7 @@ export class ResultsController {
                 const investedCol = document.createElement('div');
                 const investedLabel = document.createElement('span');
                 investedLabel.className = "text-slate-500 block text-caption font-semibold";
-                investedLabel.textContent = "Total Invested";
+                investedLabel.textContent = (appMode === 'emi') ? "Principal Paid" : ((appMode === 'inflation') ? "Base Living Cost" : "Total Invested");
                 const investedVal = document.createElement('span');
                 investedVal.className = "font-bold font-financial-mono tabular-nums text-slate-800 whitespace-nowrap text-ui-xs";
                 investedVal.textContent = fmt(row.cumulative_invested);
@@ -527,12 +566,14 @@ export class ResultsController {
                 const interestCol = document.createElement('div');
                 interestCol.className = "text-right";
                 const interestLabel = document.createElement('span');
-                interestLabel.className = "text-emerald-700 block text-caption font-semibold";
-                interestLabel.textContent = "Annual Gain";
+                interestLabel.className = (appMode === 'emi') ? "text-slate-600 block text-caption font-semibold" : "text-emerald-700 block text-caption font-semibold";
+                interestLabel.textContent = (appMode === 'emi') ? "Interest Paid" : ((appMode === 'inflation') ? "Cost Escalation" : "Annual Gain");
                 const interestVal = document.createElement('span');
-                interestVal.className = "font-extrabold font-financial-mono tabular-nums text-emerald-700 whitespace-nowrap text-ui-xs";
-                interestVal.textContent = `+${fmt(row.interest)}`;
+                interestVal.className = (appMode === 'emi') ? "font-extrabold font-financial-mono tabular-nums text-slate-700 whitespace-nowrap text-ui-xs" : "font-extrabold font-financial-mono tabular-nums text-emerald-700 whitespace-nowrap text-ui-xs";
+                interestVal.textContent = `${(appMode === 'emi') ? '' : '+'}${fmt(row.interest)}`;
                 interestCol.appendChild(interestLabel);
+                interestCol.appendChild(interestVal);
+                grid.appendChild(interestCol);
                 interestCol.appendChild(interestVal);
                 grid.appendChild(interestCol);
 

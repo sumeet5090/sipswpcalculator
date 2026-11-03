@@ -42,6 +42,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | **SEBI Benchmark & Trust** | `sebibenchmark-modal.twig`<br/>`privacy-trust-badge.twig` | `subsystems/EngagementSubsystem.ts` | Regulatory disclosure compliance, index benchmark comparisons, privacy audit badges |
 | **Scenario Benchmark Tables** | `scenario-benchmark-table.twig`<br/>`components/benchmarks/*.twig` (10 modular partials) | Polymorphic `CalculatorStrategyInterface::getBenchmarkTemplate()` & `getBenchmarkTitle()` | Pre-calculated static benchmark matrices for Google rich answers and AI search engine extraction (Gemini / Copilot), partitioned into 10 decoupled partials with sticky first-columns |
 | **3-Mode Segmented Selector** | `components/calculator-form.twig` | `controllers/TabController.ts` | Instant toggle between Dual (SIP + SWP), SIP Only, and SWP Only with automatic phase staging and zero reload |
+| **Strategy Starter & Guided Wizard** | `strategy-starter.twig` | `controllers/StrategyBlueprintController.ts`<br/>`controllers/WealthQuizController.ts` | 1-click popular goal presets (₹1 Cr, FIRE, Education, Senior SWP) and modal 3-step wealth questionnaire |
 | **Embed Calculator Modal** | `embed-modal.twig` | Frontend `<dialog>` / `copyEmbedCodeBtn` | 1-click responsive iframe generator for external financial bloggers and advisors with attribution backlink |
 
 ---

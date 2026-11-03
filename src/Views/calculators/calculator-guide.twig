@@ -11,7 +11,7 @@
         --glass-bg: rgba(255, 255, 255, .9);
         --glass-border: 1px solid rgba(255, 255, 255, .5);
         --glass-shadow: 0 8px 32px 0 rgba(5, 150, 105, .1);
-        --color-bg: #f8fafc;
+        --color-bg: #f1f5f9;
         --color-text-primary: #0f172a;
         --color-text-secondary: #64748b;
         --color-border: #e2e8f0
@@ -154,32 +154,36 @@
                             </div>
                         </div>
                         
-                        <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip">
-                            <div id="stage-1-header" class="flex items-center justify-between px-3 py-1.5 mb-2 rounded-xl bg-gradient-to-r from-emerald-50 via-teal-50/50 to-slate-50 border border-emerald-200/80 shadow-flat">
+                        <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2.5 border-t-4 border-emerald-500 rounded-2xl bg-emerald-50/20 p-2 sm:p-2.5 border border-emerald-100/60 transition-all">
+                            <div id="stage-1-header" class="flex items-center justify-between px-3 py-2 mb-2 rounded-xl bg-emerald-50/90 border border-emerald-200/90 shadow-flat">
                                 <div class="flex items-center gap-2">
                                     <span class="flex items-center justify-center w-4 h-4 rounded-full bg-emerald-600 text-white text-micro font-black">1</span>
                                     <span class="text-caption font-extrabold text-emerald-950 uppercase tracking-wider">Accumulation Phase (SIP)</span>
                                 </div>
-                                <span class="text-micro font-bold text-emerald-700 font-financial-mono">Wealth Building</span>
+                                <span class="text-micro font-extrabold text-white bg-emerald-600 px-2 py-0.5 rounded-full shadow-flat">Phase 1</span>
                             </div>
                             <div class="space-y-3">
                                 {% include 'components/forms/sip-fields.twig' %}
                             </div>
                         </div>
                         
-                        <div id="stage-transition-divider" class="my-3 flex items-center gap-2">
-                            <div class="flex-1 border-t border-dashed border-slate-300"></div>
-                            <span class="text-micro font-bold uppercase tracking-widest text-slate-400 bg-slate-50 px-2 py-0.5 rounded-full border border-slate-200">Retirement Transition</span>
-                            <div class="flex-1 border-t border-dashed border-slate-300"></div>
+                        <div id="stage-transition-divider" class="my-3 flex items-center gap-2 select-none">
+                            <div class="flex-1 h-px bg-gradient-to-r from-emerald-300 to-indigo-200"></div>
+                            <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-micro font-extrabold text-indigo-950 shadow-flat">
+                                <span class="text-indigo-600">⚡</span>
+                                <span>Matured SIP Seeds Retirement SWP</span>
+                                <span class="text-indigo-600">↓</span>
+                            </div>
+                            <div class="flex-1 h-px bg-gradient-to-r from-indigo-200 to-blue-300"></div>
                         </div>
 
-                        <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp">
-                            <div id="stage-2-header" class="flex items-center justify-between px-3 py-1.5 mb-2 rounded-xl bg-gradient-to-r from-rose-50 via-amber-50/50 to-slate-50 border border-rose-200/80 shadow-flat">
+                        <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="space-y-3 border-t-4 border-blue-500 rounded-2xl bg-blue-50/20 p-2 sm:p-2.5 border border-blue-100/60 transition-all">
+                            <div id="stage-2-header" class="flex items-center justify-between px-3 py-2 mb-2 rounded-xl bg-blue-50/90 border border-blue-200/90 shadow-flat">
                                 <div class="flex items-center gap-2">
-                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-rose-600 text-white text-micro font-black">2</span>
-                                    <span class="text-caption font-extrabold text-rose-950 uppercase tracking-wider">Distribution Phase (SWP)</span>
+                                    <span class="flex items-center justify-center w-4 h-4 rounded-full bg-blue-600 text-white text-micro font-black">2</span>
+                                    <span class="text-caption font-extrabold text-blue-950 uppercase tracking-wider">Distribution Phase (SWP)</span>
                                 </div>
-                                <span class="text-micro font-bold text-rose-700 font-financial-mono">Retirement Cashflow</span>
+                                <span class="text-micro font-extrabold text-white bg-blue-600 px-2 py-0.5 rounded-full shadow-flat">Phase 2</span>
                             </div>
                             <div id="swp-standalone-corpus" class="hidden mb-3">
                                 {% include 'components/forms/corpus-field.twig' %}
