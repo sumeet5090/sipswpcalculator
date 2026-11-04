@@ -184,22 +184,28 @@ export class CalculatorApp {
      * Reapply a restored set of parameters across form inputs and trigger recalculation.
      */
     applyRestoredInputs(inputs: InvestmentInputs): void {
-        if (inputs.sip !== undefined) this.sliderManager.updateFieldValue('sip', inputs.sip, true);
-        if (inputs.years !== undefined) this.sliderManager.updateFieldValue('years', inputs.years, true);
-        if (inputs.rate !== undefined) this.sliderManager.updateFieldValue('rate', inputs.rate, true);
-        if (inputs.stepup !== undefined) this.sliderManager.updateFieldValue('stepup', inputs.stepup, true);
+        const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const mode = appEl?.dataset?.mode ?? 'combo';
+        const isSwpMode = (mode === 'swp');
+
+        if (!isSwpMode) {
+            if (inputs.sip !== undefined && inputs.sip > 0) this.sliderManager.updateFieldValue('sip', inputs.sip, true);
+            if (inputs.years !== undefined && inputs.years > 0) this.sliderManager.updateFieldValue('years', inputs.years, true);
+            if (inputs.rate !== undefined && inputs.rate > 0) this.sliderManager.updateFieldValue('rate', inputs.rate, true);
+            if (inputs.stepup !== undefined) this.sliderManager.updateFieldValue('stepup', inputs.stepup, true);
+        }
         if (inputs.inflation !== undefined) this.sliderManager.updateFieldValue('inflation', inputs.inflation, true);
         if (inputs.lumpsum !== undefined) {
             this.sliderManager.updateFieldValue('lumpsum', inputs.lumpsum, true);
             this.sliderManager.updateFieldValue('corpus', inputs.lumpsum, true);
         }
-        if (inputs.swp_withdrawal !== undefined) this.sliderManager.updateFieldValue('swp_withdrawal', inputs.swp_withdrawal, true);
-        if (inputs.swp_years !== undefined) this.sliderManager.updateFieldValue('swp_years', inputs.swp_years, true);
-        if (inputs.swp_rate !== undefined) this.sliderManager.updateFieldValue('swp_rate', inputs.swp_rate, true);
+        if (inputs.swp_withdrawal !== undefined && inputs.swp_withdrawal > 0) this.sliderManager.updateFieldValue('swp_withdrawal', inputs.swp_withdrawal, true);
+        if (inputs.swp_years !== undefined && inputs.swp_years > 0) this.sliderManager.updateFieldValue('swp_years', inputs.swp_years, true);
+        if (inputs.swp_rate !== undefined && inputs.swp_rate > 0) this.sliderManager.updateFieldValue('swp_rate', inputs.swp_rate, true);
         if (inputs.swp_stepup !== undefined) this.sliderManager.updateFieldValue('swp_stepup', inputs.swp_stepup, true);
 
         const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
-        if (swpToggle && swpToggle.checked !== inputs.enable_swp) {
+        if (swpToggle && inputs.enable_swp !== undefined && swpToggle.checked !== inputs.enable_swp) {
             swpToggle.checked = inputs.enable_swp;
             this.syncSwpToggleState();
         }
@@ -222,7 +228,9 @@ export class CalculatorApp {
      * Reset all calculator inputs and sliders to factory benchmark defaults.
      */
     resetToDefaults(): void {
-        this.lifecycleSubsystem.clearDraft();
+        const rootAppEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const currentMode = rootAppEl?.dataset?.mode || 'combo';
+        this.lifecycleSubsystem.clearDraft(currentMode);
         this.sliderManager.resetAllToDefaults();
         this.engagementSubsystem.playTick(280, 0.05);
         this.engagementSubsystem.vibrate([12, 24, 12]);
@@ -852,7 +860,9 @@ export class CalculatorApp {
      * and idle layout analytics once slider dragging pauses or settles.
      */
     private executeSettledUpdates(inputs: InvestmentInputs, combined: YearResult[]): void {
-        this.lifecycleSubsystem.persistDraft(inputs);
+        const rootAppEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const currentMode = rootAppEl?.dataset?.mode || 'combo';
+        this.lifecycleSubsystem.persistDraft(inputs, currentMode);
         this.lifecycleSubsystem.pushUndoState(inputs);
 
         this.updateTable(combined, inputs.enable_swp);
@@ -906,8 +916,14 @@ export class CalculatorApp {
             }
             const urlParams = new URLSearchParams(searchStr);
             const hasUrlParams = Array.from(urlParams.keys()).length > 0;
+
+            const rootAppEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+            const currentMode = rootAppEl?.dataset?.mode || 'combo';
+            const isSwpMode = (currentMode === 'swp');
+            const isComboMode = (currentMode === 'combo');
+
             if (!hasUrlParams) {
-                const savedDraft = this.lifecycleSubsystem.loadDraft();
+                const savedDraft = this.lifecycleSubsystem.loadDraft(currentMode);
                 if (savedDraft) {
                     this.applyRestoredInputs(savedDraft);
                     return;
@@ -916,10 +932,6 @@ export class CalculatorApp {
 
             const urlSwpOn = urlParams.get('swp_on') === '1';
             const initialSwpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
-            const rootAppEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
-            const currentMode = rootAppEl?.dataset?.mode || 'combo';
-            const isSwpMode = (currentMode === 'swp');
-            const isComboMode = (currentMode === 'combo');
 
             if (initialSwpToggle) {
                 if (urlSwpOn || isSwpMode || isComboMode) {
@@ -948,12 +960,28 @@ export class CalculatorApp {
                 }
             }
 
-            const swpEnabledOnLoad = initialInputs.enable_swp;
+            let swpEnabledOnLoad = initialInputs.enable_swp;
             let existingData: YearResult[] = [];
             try {
                 existingData = MathEngine.calculate(initialInputs);
             } catch (e) {
                 console.error("Initial JS Calculation Failed:", e);
+            }
+
+            // Anti-degeneracy guardrail: If the initial data produced a flat line or <= 2 data points,
+            // immediately recover by resetting sliders to curated factory defaults for this mode.
+            if (existingData.length <= 2 && currentMode !== 'lumpsum') {
+                this.sliderManager.resetAllToDefaults();
+                initialInputs = this.getInputs();
+                if (strategy) {
+                    initialInputs = strategy.execute(initialInputs);
+                }
+                swpEnabledOnLoad = initialInputs.enable_swp;
+                try {
+                    existingData = MathEngine.calculate(initialInputs);
+                } catch (e) {
+                    console.error("Factory recovery calculation failed:", e);
+                }
             }
 
             if (existingData.length > 0) {

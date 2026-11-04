@@ -1,11 +1,34 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-03*
+*Last Updated: 2026-11-04*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Argon Regressions & Institutional Polish Complete (SWP Area Fill & Mode Lifecycle Rebuild, Left Column Shrink-Wrap & Sticky Gliding, Royal Blue Starting Wealth Slider, Pure Light-Mode Executive Anchor).
+- **Current Milestone:** Curated Starting Points & Anti-Degeneracy Guardrails Complete (Mode-Namespaced Session Storage, Sanity/Degeneracy Validation, Blueprint Mode Auto-Alignment, Factory Benchmark Recovery).
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 9 - Curated Starting Points & Anti-Degeneracy Guardrails):**
+  - **Resolved Root Cause of Degenerate Flat Chart (`SessionStorageController.ts`):**
+    - Transitioned from a single global draft key (`sip_swp_calc_draft_state_v1`) to strictly namespaced keys per calculator mode: `sip_swp_calc_draft_${mode}_v2`.
+    - Added `purgeLegacyDraft()` to automatically clean up the legacy key on bootstrap, purging any poisoned drafts from past browser sessions.
+    - Added `isValidDraftForMode(mode, inputs)` validation: rejects any draft with `years < 2`, `rate < 2`, or degenerate input combinations (e.g. SIP < 1,000 and lumpsum <= 0), discarding corrupt or foreign drafts in favor of curated factory starting points.
+  - **Updated Lifecycle Subsystem Layer (`LifecycleSubsystem.ts`):**
+    - Updated `persistDraft(inputs, mode)`, `loadDraft(mode)`, and `clearDraft(mode)` to propagate calculator mode throughout the application lifecycle.
+  - **Eliminated Blueprint Zero-Clamping (`StrategyBlueprintController.ts`):**
+    - Configured `capital_preservation` ("Senior Citizen Monthly Income") to programmatically click `tab-swp` so it executes purely in SWP mode rather than injecting zeroes into Phase 1 SIP accumulation.
+    - Set healthy dormant baseline inputs (`sip: 10000, years: 15, swpHike: 5`) so switching back to `tab-combo` preserves realistic numbers instead of clamping to slider minimums (₹500 / 1 yr).
+    - Auto-aligned `fire_retirement` to `tab-combo` and `first_crore` / `child_education` to `tab-sip`.
+  - **Anti-Degeneracy Guardrail & Factory Recovery (`CalculatorApp.ts`):**
+    - In `initInitialCalculation()`, drafts are loaded by `currentMode` (`loadDraft(currentMode)`).
+    - Added anti-degeneracy recovery check: if initial calculation data produces $\le 2$ data points (like "Year 2 of 2"), `CalculatorApp` immediately resets sliders to curated factory defaults and recalculates.
+    - In `applyRestoredInputs()`, added mode checks to prevent injecting zero or negative values into active sliders.
+  - **Verified Quality & Parity Standards:**
+    - TypeScript compiles cleanly (`npm run typecheck`: 0 errors).
+    - Production bundle built cleanly (`npm run build`).
+    - PHPStan Level 8 clean across all 250 files.
+    - PHPCS PSR-12 clean across all 250 files.
+    - All 811 PHPUnit tests passed (12,673 assertions).
+    - All 62 MathEngine parity checks passed 100%.
+    - Verified 200 OK responses across `/`, `/sip-calculator`, `/swp-calculator`, `/target-corpus-calculator`, `/compound-interest-calculator`, `/cagr-calculator`, and `/emi-calculator`.
 - **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 8 - Argon Regressions & Polish):**
   - **Fixed Bug A: Chart Canvas Blank (White Void) in SWP Mode (`ChartDatasetBuilder.ts` & `ChartManager.ts`):**
     - In `ChartDatasetBuilder.ts`, updated SWP Dataset 1 (`corpus`) to `fill: (mode === 'swp' || showWealthMap) ? 'origin' : (showPostTax ? '+1' : 0)`, shading remaining wealth down to the zero origin baseline.

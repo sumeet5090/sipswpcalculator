@@ -78,8 +78,8 @@ export class StrategyBlueprintController {
             id: 'capital_preservation',
             title: 'Senior Citizen Monthly Income',
             description: '₹50 Lakh corpus generating ₹35,000/mo steady tax-efficient retirement cashflow.',
-            sip: 0,
-            years: 0,
+            sip: 10000,
+            years: 15,
             rate: 8,
             stepup: 0,
             lumpsum: 5000000,
@@ -88,7 +88,7 @@ export class StrategyBlueprintController {
             swp: 35000,
             swpYears: 20,
             swpRate: 8,
-            swpHike: 0
+            swpHike: 5
         }
     };
 
@@ -143,6 +143,24 @@ export class StrategyBlueprintController {
 
         this.activeBlueprintId = personaId;
         this.analytics.setStrategyStarterUsed(personaId);
+
+        // Auto-align active mode tab for the selected strategy blueprint
+        if (personaId === 'capital_preservation') {
+            const tabSwp = this.dom.getElement<HTMLButtonElement>('tab-swp');
+            if (tabSwp) {
+                tabSwp.click();
+            }
+        } else if (personaId === 'fire_retirement') {
+            const tabCombo = this.dom.getElement<HTMLButtonElement>('tab-combo');
+            if (tabCombo) {
+                tabCombo.click();
+            }
+        } else if (personaId === 'first_crore' || personaId === 'child_education') {
+            const tabSip = this.dom.getElement<HTMLButtonElement>('tab-sip');
+            if (tabSip) {
+                tabSip.click();
+            }
+        }
 
         // 1. Inject field values via SliderManager
         this.sliderManager.updateFieldValue('sip', preset.sip, true);
