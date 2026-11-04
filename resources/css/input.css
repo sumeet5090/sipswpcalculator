@@ -745,6 +745,20 @@ input[type="range"].accent-rose-600:active::-moz-range-thumb {
   box-shadow: 0 0 0 6px rgba(244, 63, 94, 0.25), 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Blue Range Thumb (for SWP blue mode) */
+input[type="range"].accent-blue-600::-webkit-slider-thumb {
+  border-color: #2563eb;
+}
+input[type="range"].accent-blue-600:active::-webkit-slider-thumb {
+  box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.25), 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+input[type="range"].accent-blue-600::-moz-range-thumb {
+  border-color: #2563eb;
+}
+input[type="range"].accent-blue-600:active::-moz-range-thumb {
+  box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.25), 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 /* ── Smooth Accordion Details Transitions ── */
 details.fintech-accordion summary {
   list-style: none;

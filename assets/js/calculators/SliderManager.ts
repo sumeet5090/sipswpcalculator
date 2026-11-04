@@ -536,6 +536,9 @@ export class SliderManager {
 
     private _updatePresetChips(fieldId: string, currentVal: number): void {
         const chips = this.dom.getElements<HTMLButtonElement>(`button[data-preset-for="${fieldId}"]`);
+        const inactiveClasses = ['bg-slate-50', 'text-slate-700', 'border-slate-200/90', 'hover:border-slate-300', 'hover:bg-slate-100', 'hover:text-slate-900', 'bg-slate-50/90', 'text-slate-600'];
+        const activeColorClasses = ['is-active', 'is-active-rose', 'is-active-blue', 'bg-emerald-600', 'bg-rose-600', 'bg-blue-600', 'text-white', 'border-emerald-600', 'border-rose-600', 'border-blue-600'];
+
         chips.forEach(chip => {
             const presetVal = parseFloat(chip.dataset.presetVal || '');
             const isActive = (!isNaN(presetVal) && Math.abs(presetVal - currentVal) < 0.01);
@@ -544,20 +547,18 @@ export class SliderManager {
 
             if (isActive) {
                 chip.setAttribute('aria-pressed', 'true');
+                chip.classList.remove(...inactiveClasses);
                 if (isBlueTheme) {
                     chip.classList.add('is-active-blue', 'bg-blue-600', 'text-white', 'border-blue-600');
-                    chip.classList.remove('bg-slate-50/90', 'text-slate-600', 'border-slate-200/90');
                 } else if (isRoseTheme) {
                     chip.classList.add('is-active-rose', 'bg-rose-600', 'text-white', 'border-rose-600');
-                    chip.classList.remove('bg-slate-50/90', 'text-slate-600', 'border-slate-200/90');
                 } else {
                     chip.classList.add('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600');
-                    chip.classList.remove('bg-slate-50/90', 'text-slate-600', 'border-slate-200/90');
                 }
             } else {
                 chip.setAttribute('aria-pressed', 'false');
-                chip.classList.remove('is-active', 'is-active-rose', 'is-active-blue', 'bg-emerald-600', 'bg-rose-600', 'bg-blue-600', 'text-white', 'border-emerald-600', 'border-rose-600', 'border-blue-600');
-                chip.classList.add('bg-slate-50/90', 'text-slate-600', 'border-slate-200/90');
+                chip.classList.remove(...activeColorClasses);
+                chip.classList.add('bg-slate-50', 'text-slate-700', 'border-slate-200/90', 'hover:border-slate-300', 'hover:bg-slate-100', 'hover:text-slate-900');
             }
         });
     }

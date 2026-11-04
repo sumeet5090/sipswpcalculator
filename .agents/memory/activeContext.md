@@ -5,7 +5,25 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Systematic Mitigation of Planning & Architectural Friction Points Complete (Declarative Metaset Shield, Defensive Fill Contracts, Asymmetric Dashboard Layout Primitive, Design Review Intent Translation Matrix, and Compound Review Triage Protocol).
+- **Current Milestone:** SWP Form Selected Number (Preset Chip) Contrast & Theme Parity Fix Complete (High-Specificity `.is-active-blue` CSS Token, Mutually Exclusive Twig Classes, Synchronized SliderManager JS Deactivation, and Blue Slider Thumb Styling).
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 12 - SWP Preset Chip Contrast Fix):**
+  - **Codified High-Specificity Blue Preset Chip Token (`resources/css/styles.css`):**
+    - Added `.preset-chip.is-active-blue` with `background-color: #2563eb !important; color: #ffffff !important; border-color: #1d4ed8 !important; box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25) !important;`.
+    - Added `!important` to `.preset-chip.is-active` and `.preset-chip.is-active-rose` to ensure utility class order can never cause collisions.
+  - **Eliminated Twig Active/Inactive Class Collisions (`src/Views/components/form/input-range-pair.twig`):**
+    - Moved `border-slate-200/90 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900` into the false branch of the ternary condition.
+    - Active chips now render only `activeChipClass` (`is-active-blue bg-blue-600 text-white border-blue-600 shadow-flat`), completely eliminating the CSS cascade race condition between `.bg-slate-50` and `.bg-blue-600`.
+  - **Synchronized Dynamic JS State (`assets/js/calculators/SliderManager.ts`):**
+    - Updated `_updatePresetChips` to cleanly remove all inactive classes (`bg-slate-50`, `text-slate-700`, `border-slate-200/90`, etc.) when activating chips, and restore them properly when deactivating.
+  - **Blue Range Slider Thumb Styling (`resources/css/input.css`):**
+    - Added `accent-blue-600` webkit and moz thumb styles matching the royal blue SWP theme.
+  - **Verified Quality & Parity Standards:**
+    - `npm run typecheck` & `npm run build`: 0 errors (clean Vite bundle `app-CfAuzsE3.css` and `app-B0eYyMxz.js`).
+    - `vendor/bin/phpstan analyse`: Level 8 passed across all 250 files.
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
+    - `vendor/bin/phpunit`: 811 tests passed with 12,672 assertions.
+    - `php tests/parity_check.php`: 62 cross-runtime parity tests passed 100%.
+    - Verified live HTML markup on `/swp-calculator` via `curl` confirming active preset chips render with high-contrast `#2563eb` background and `#ffffff` text without `bg-slate-50` collisions.
 - **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 11 - Architectural Friction Mitigations):**
   - **Design Review Intent Translation Matrix (`AGENTS.md` & `systemPatterns.md`):**
     - Codified non-negotiable intent mapping rules. External requests for dark surfaces (`#0F172A`, `bg-slate-900`) automatically map to the **Executive Light-Mode Anchor** (`bg-emerald-50/90 border-2 border-emerald-600 ring-2 ring-emerald-500/15`, `text-slate-900`, solid emerald pill badge), eliminating hesitation or CI dark theme test conflicts.
