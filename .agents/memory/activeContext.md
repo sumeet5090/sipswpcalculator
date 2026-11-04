@@ -5,7 +5,22 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Tier 4 Chart Console Footer Redesign Complete (Low Cognitive Load Twin Segmented Wells, Human-Centric Microcopy, Zero Neon Distractions, 100% Contract & Parity Maintained).
+- **Current Milestone:** Tier 4 Benchmark Segmented Dock Contrast & Hover State Stabilization Complete (Standardized Elevated Segmented Control, Zero White-on-White Contrast Collisions, 100% Contract & Parity Maintained).
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 16 - Benchmark Segmented Dock Contrast & Hover Stabilization):**
+  - **Standardized Elevated Segmented Control Architecture (`chart-visualization.twig`, `ChartManager.ts`):**
+    - Harmonized the Left Benchmark Console (`None`, `Nifty 50`, `Gold`, `Bank FD`) with Tier 1's View Mode Switcher and Tier 4's Analysis Lenses.
+    - Active benchmark chips now render as crisp elevated white cards (`is-active bg-white text-growth-emphasis border border-slate-200/80 shadow-flat font-bold`) instead of jarring solid green buttons.
+    - Inactive benchmark chips render as transparent interactive items (`bg-transparent text-slate-600 border border-transparent hover:text-slate-900 hover:bg-white/60`).
+  - **Resolved White-on-White Hover Invisibility Bug (`styles.css`, `ChartManager.ts`):**
+    - Codified `.benchmark-chip.is-active` and `.benchmark-chip.is-active:hover` in `styles.css` with `background-color: #ffffff !important` and `color: var(--color-growth-emphasis) !important`, permanently preventing `hover:bg-white` from colliding with `.text-white { color: #ffffff !important }` and causing text to vanish on hover.
+    - Updated `ChartManager.ts` `setBenchmark()` to dynamically swap active and inactive classes cleanly on both the button container and `.benchmark-rate` child badge (`text-growth font-semibold` when active, `text-slate-400 font-normal` when inactive).
+  - **100% Test & Contract Preservation:**
+    - `data-benchmark="none|nifty|gold|fd"` and `.benchmark-chip` contract preserved for `ChartCardTest.php`.
+  - **Verified Quality & Parity Standards:**
+    - `npm run typecheck` & `npm run build`: Clean build in 298ms (0 errors).
+    - `php tests/parity_check.php`: 62/62 cross-runtime parity tests passed 100%.
+    - `composer check-all`: 811 tests passed with 12,672 assertions, PHPStan Level 8 clean (250/250 files), PHPCS PSR-12 clean.
+    - Local server rendering verified for `/` confirming all DOM elements and classes.
 - **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 15 - Tier 4 Chart Console Redesign):**
   - **Twin Segmented Console Architecture (`chart-visualization.twig`):**
     - Grouped Tier 4 controls into two distinct, symmetrically balanced segmented docks (`bg-slate-100/90 border border-slate-200/70 p-1 rounded-xl shadow-flat`), harmonizing directly with Tier 1's View Mode Switcher and the top form console.

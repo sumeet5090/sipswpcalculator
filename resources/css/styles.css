@@ -818,6 +818,25 @@ input[type=range]::-moz-range-track {
     box-shadow: 0 1px 3px rgba(225, 29, 72, 0.25) !important;
 }
 
+/* ── Tier 4 Benchmark Segmented Dock Invariant & Hover State Stability ── */
+.benchmark-chip.is-active {
+    background-color: #ffffff !important;
+    color: var(--color-growth-emphasis, #064e3b) !important;
+    border-color: rgba(226, 232, 240, 0.9) !important;
+    box-shadow: var(--shadow-flat, 0 1px 2px 0 rgba(0, 0, 0, 0.05)) !important;
+    font-weight: 700 !important;
+}
+
+.benchmark-chip.is-active:hover {
+    background-color: #ffffff !important;
+    color: var(--color-growth-emphasis, #064e3b) !important;
+}
+
+.benchmark-chip.is-active .benchmark-rate {
+    color: var(--color-growth-600, #059669) !important;
+    font-weight: 600 !important;
+}
+
 /* Micro-Stepper Buttons & Touch Target Enlargement (WCAG & Apple HIG 44px) */
 .stepper-btn {
     min-width: 30px;

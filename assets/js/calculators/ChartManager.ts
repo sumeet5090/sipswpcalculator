@@ -235,12 +235,43 @@ export class ChartManager {
         this.activeBenchmark = benchmark;
         const chips = this.dom.getElements<HTMLButtonElement>('.benchmark-chip');
         chips.forEach(c => {
-            if (c.dataset.benchmark === benchmark) {
-                c.classList.add('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600', 'shadow-flat');
-                c.classList.remove('bg-slate-50', 'text-slate-600');
+            const isMatch = c.dataset.benchmark === benchmark;
+            const rateSpan = c.querySelector<HTMLSpanElement>('.benchmark-rate');
+            if (isMatch) {
+                c.classList.add('is-active', 'bg-white', 'text-growth-emphasis', 'shadow-flat', 'border-slate-200/80', 'font-bold');
+                c.classList.remove(
+                    'bg-transparent',
+                    'text-slate-600',
+                    'border-transparent',
+                    'hover:text-slate-900',
+                    'hover:bg-white/60',
+                    'font-semibold',
+                    'bg-slate-50',
+                    'bg-emerald-600',
+                    'text-white',
+                    'border-emerald-600'
+                );
+                if (rateSpan) {
+                    rateSpan.classList.add('text-growth', 'font-semibold');
+                    rateSpan.classList.remove('text-slate-400', 'font-normal');
+                }
             } else {
-                c.classList.remove('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600', 'shadow-flat');
-                c.classList.add('bg-slate-50', 'text-slate-600');
+                c.classList.remove(
+                    'is-active',
+                    'bg-white',
+                    'text-growth-emphasis',
+                    'shadow-flat',
+                    'border-slate-200/80',
+                    'font-bold',
+                    'bg-emerald-600',
+                    'text-white',
+                    'border-emerald-600'
+                );
+                c.classList.add('bg-transparent', 'text-slate-600', 'border-transparent', 'hover:text-slate-900', 'hover:bg-white/60', 'font-semibold');
+                if (rateSpan) {
+                    rateSpan.classList.remove('text-growth', 'font-semibold');
+                    rateSpan.classList.add('text-slate-400', 'font-normal');
+                }
             }
         });
 
