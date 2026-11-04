@@ -85,6 +85,17 @@ export class OdometerController {
         // Update ambient aura based on the target value
         this.updateAmbientAura(elementId, targetVal);
 
+        // Update companion compact denomination badge if present (e.g. ₹1.20 Cr, ₹40.74 L)
+        const compactEl = this.dom.getElement(`${elementId}-compact`);
+        if (compactEl) {
+            if (targetVal > 0) {
+                compactEl.textContent = this.formatter.formatCompact(targetVal);
+                compactEl.style.display = '';
+            } else {
+                compactEl.style.display = 'none';
+            }
+        }
+
         // Cancel any in-flight animation for this element
         const existing = this.animations.get(elementId);
         let currentVal = targetVal;

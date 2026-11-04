@@ -5,7 +5,21 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** SWP Form Selected Number (Preset Chip) Contrast & Theme Parity Fix Complete (High-Specificity `.is-active-blue` CSS Token, Mutually Exclusive Twig Classes, Synchronized SliderManager JS Deactivation, and Blue Slider Thumb Styling).
+- **Current Milestone:** Left Sidebar `h-fit` Shrink-Wrapping & Compact Indian Denomination Badges Complete (Anti-Stretch Responsive/Print Geometry, Dynamic Cr/Lakh Odometer Badges, Full Exact Calculation Parity Preserved).
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 13 - Sidebar Shrink-Wrapping & Compact Denomination Badges):**
+  - **Left Sidebar `h-fit` Geometry (`home.twig`, `calculator-guide.twig`, `calculator-form.twig`):**
+    - Added `h-fit` to the left column wrapper (`md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col min-h-0 self-start h-fit md:sticky md:top-20`).
+    - Replaced `flex-1` and `h-auto` with `h-fit` on `#calculator-app`.
+    - Guarantees the left console tightly shrink-wraps its active sliders without extending empty white space, both during interactive browser scrolling and in headless full-page PDF/print exports.
+  - **Compact Indian Denomination Badges (`chart-visualization.twig`, `CurrencyHelper.ts`, `OdometerController.ts`, `SummaryMetricsController.ts`):**
+    - Added `formatCompact(amount: number)` to `CurrencyHelper.ts` to output clean, stable 2-decimal Indian currency strings (e.g. `₹1.20 Cr`, `₹1.78 Cr`, `₹99.20 L`, `₹40.74 L`).
+    - Added compact badge elements to the 4 KPI cards in `chart-visualization.twig` (`#summary-invested-compact`, `#summary-interest-compact`, `#summary-withdrawn-compact`, `#summary-corpus-compact`).
+    - Automatically wired badge updates directly inside `OdometerController.animateValue()` and `SummaryMetricsController.updateSummaryCards()`, giving all 14 calculators instant high-scannability without sacrificing exact rupee numerical precision in `#summary-*`.
+  - **Verified Quality & Parity Standards:**
+    - `npm run typecheck` & `npm run build`: Clean build in 236ms (0 errors).
+    - `php tests/parity_check.php`: 62/62 cross-runtime tests passed 100%.
+    - `composer check-all`: 811 PHPUnit tests passed (12,672 assertions), PHPStan Level 8 clean (250/250 files), PHPCS PSR-12 clean.
+    - Verified rendered HTML on `/` and `/swp-calculator` confirming `self-start h-fit md:sticky md:top-20` and the compact badges.
 - **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 12 - SWP Preset Chip Contrast Fix):**
   - **Codified High-Specificity Blue Preset Chip Token (`resources/css/styles.css`):**
     - Added `.preset-chip.is-active-blue` with `background-color: #2563eb !important; color: #ffffff !important; border-color: #1d4ed8 !important; box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25) !important;`.

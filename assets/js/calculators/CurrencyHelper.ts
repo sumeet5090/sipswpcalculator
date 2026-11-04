@@ -101,6 +101,37 @@ export class CurrencyFormatter {
     }
 
     /**
+     * Ultra-compact currency notation for metric badges and summary pills (e.g. ₹1.20 Cr, ₹40.74 L).
+     */
+    formatCompact(amount: number): string {
+        const rounded = Math.round(amount + Number.EPSILON) || 0;
+        if (Math.abs(rounded) === 0) return `${this.symbol}0`;
+        const abs = Math.abs(rounded);
+        const prefix = rounded < 0 ? `-${this.symbol}` : this.symbol;
+
+        if (this.currency === 'INR') {
+            if (abs >= 10000000) {
+                const cr = (abs / 10000000).toFixed(2);
+                return `${prefix}${cr} Cr`;
+            }
+            if (abs >= 100000) {
+                const lk = (abs / 100000).toFixed(2);
+                return `${prefix}${lk} L`;
+            }
+            if (abs >= 1000) {
+                const k = (abs / 1000).toFixed(1).replace(/\.0$/, '');
+                return `${prefix}${k}k`;
+            }
+        } else {
+            if (abs >= 1000000000) return `${prefix}${(abs / 1000000000).toFixed(2)}B`;
+            if (abs >= 1000000) return `${prefix}${(abs / 1000000).toFixed(2)}M`;
+            if (abs >= 1000) return `${prefix}${(abs / 1000).toFixed(1)}k`;
+        }
+
+        return `${prefix}${abs.toLocaleString(this.locale)}`;
+    }
+
+    /**
      * Formats Indian word translation for live input helper badges (e.g. "≈ 25 Lakhs").
      */
     formatWordBadge(amount: number): string {
