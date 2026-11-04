@@ -5,7 +5,23 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Curated Starting Points & Anti-Degeneracy Guardrails Complete (Mode-Namespaced Session Storage, Sanity/Degeneracy Validation, Blueprint Mode Auto-Alignment, Factory Benchmark Recovery).
+- **Current Milestone:** Unified Form UI/UX Across All 14 Calculators Complete (Single Source of Truth `calculator-form.twig`, Flagship Dual-Mode Visual Console Parity, 4px Top Accent Bars, Privacy & Trust Seals).
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 10 - Form UI/UX Platform-Wide Unification):**
+  - **Eliminated Code Duplication & Unified Architecture (`calculator-form.twig` & `calculator-guide.twig`):**
+    - Refactored `src/Views/components/calculator-form.twig` into a single canonical, polymorphic form component serving both `home.twig` and `calculator-guide.twig`.
+    - Removed the 148-line duplicate, divergent form implementation in `calculator-guide.twig`, replacing it with `{% include 'components/calculator-form.twig' %}`.
+    - Moved `id="calculator-app"` ownership to the form container matching `home.twig` exactly, resolving duplicate container IDs on guide pages.
+  - **Elevated All Calculator Forms to Flagship Dual-Mode Console Standard:**
+    - **Privacy & Trust Seal:** Added `100% Client-Side Private • Zero PII Transmitted` across all 14 calculator forms.
+    - **Tactile Console Container:** Enclosed every calculator form in a distinct pastel-washed well with a **4px solid top accent bar** (`border-t-4 border-emerald-500` / `border-blue-500` / `border-indigo-500` / `border-amber-500` / `border-teal-500` with soft pastel background washes).
+    - **Executive Header Strips:** Replaced raw unstyled text (`SIP DETAILS`) with structured header strips featuring the signature numbered/icon pill on the left (`1`, `2`, `✦`, `↗`, `#`, `↘`) and high-contrast badge on the right (`Phase 1`, `Phase 2`, `Single Deposit`, `Inverse Math`, `AMFI Model`, `Reducing Balance`, `7.1% EEE Tax-Free`, `Quarterly Yield`).
+  - **Verified Quality & Parity Standards:**
+    - `npm run typecheck` & `npm run build`: 0 errors.
+    - `vendor/bin/phpstan analyse`: Level 8 passed across all 250 files.
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
+    - `vendor/bin/phpunit`: 811 tests passed with 12,672 assertions.
+    - `php tests/parity_check.php`: 62 cross-runtime parity tests passed 100%.
+    - Live local `curl` verification across `/`, `/sip-calculator`, `/swp-calculator`, `/lumpsum-calculator`, `/target-corpus-calculator`, `/compound-interest-calculator`, and `/emi-calculator` confirmed 200 OK responses and proper markup rendering.
 - **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 9 - Curated Starting Points & Anti-Degeneracy Guardrails):**
   - **Resolved Root Cause of Degenerate Flat Chart (`SessionStorageController.ts`):**
     - Transitioned from a single global draft key (`sip_swp_calc_draft_state_v1`) to strictly namespaced keys per calculator mode: `sip_swp_calc_draft_${mode}_v2`.
