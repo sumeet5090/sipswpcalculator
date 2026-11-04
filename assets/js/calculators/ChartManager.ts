@@ -707,29 +707,43 @@ export class ChartManager {
 
         if (this.chartInstance && this.currentChartType === 'line' && this.chartInstance.ctx.canvas === ctxEl) {
             const datasets = this.datasetBuilder.buildLineDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
-            this.chartInstance.data.labels = years;
-            this.chartInstance.data.datasets = datasets;
 
-            if (this.chartInstance.options.scales?.y) {
-                this.chartInstance.options.scales.y.stacked = showWealthMap;
-            }
+            // Declarative Lifecycle & Metaset Shield:
+            // Check if dataset count or stacked scale configuration shifted.
+            // If schema changed (e.g. toggling benchmarks, post-tax lens, corridor, or step-up baseline),
+            // destroy the instance cleanly so Chart.js rebuilds fresh internal _metasets controllers.
+            const previousDatasetCount = this.chartInstance.data.datasets?.length ?? 0;
+            const previousStacked = !!this.chartInstance.options.scales?.y?.stacked;
+            const schemaChanged = previousDatasetCount !== datasets.length || previousStacked !== showWealthMap;
 
-            if (isDragging) {
-                if (this.rafId) cancelAnimationFrame(this.rafId);
-                this.rafId = requestAnimationFrame(() => {
-                    if (this.chartInstance) {
-                        this.chartInstance.update('none');
-                    }
-                });
+            if (schemaChanged) {
+                this.chartInstance.destroy();
+                this.chartInstance = null;
             } else {
-                this.chartInstance.update();
+                this.chartInstance.data.labels = years;
+                this.chartInstance.data.datasets = datasets;
+
+                if (this.chartInstance.options.scales?.y) {
+                    this.chartInstance.options.scales.y.stacked = showWealthMap;
+                }
+
+                if (isDragging) {
+                    if (this.rafId) cancelAnimationFrame(this.rafId);
+                    this.rafId = requestAnimationFrame(() => {
+                        if (this.chartInstance) {
+                            this.chartInstance.update('none');
+                        }
+                    });
+                } else {
+                    this.chartInstance.update();
+                }
+                this.milestoneCalculator.renderMilestoneGrid(
+                    milestones,
+                    idx => this.highlightYear(idx),
+                    () => this.clearHighlight()
+                );
+                return;
             }
-            this.milestoneCalculator.renderMilestoneGrid(
-                milestones,
-                idx => this.highlightYear(idx),
-                () => this.clearHighlight()
-            );
-            return;
         }
 
         const existingChart = ChartClass.getChart(ctxEl);

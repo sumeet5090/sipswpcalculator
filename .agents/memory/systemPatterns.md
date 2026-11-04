@@ -4,8 +4,8 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
 
 ---
 
-## 1. Pure Light-Mode Theme Invariant
-- **Rule:** Under NO circumstances should dark surfaces, dark card backgrounds (`bg-slate-900`, `bg-gray-950`), or inverted widgets be used.
+## 1. Pure Light-Mode Theme Invariant & Intent Translation Matrix
+- **Rule:** Under NO circumstances should dark surfaces, dark card backgrounds (`bg-slate-900`, `bg-gray-950`), or inverted widgets be used. Enforced automatically by `TelemetryIntegrationTest.php`.
 - **Card Styling:** `bg-white/95`, `bg-slate-50/80`, `border-slate-200/80`, `shadow-flat` or `shadow-card`.
 - **Typography:** `text-slate-900`, `text-slate-700`, `text-slate-500`.
 - **Accent Palettes:**
@@ -13,6 +13,19 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
   - Withdrawal / SWP: `rose-600` / `rose-500` / `rose-50`
   - Specialized / Goals: `teal-600`, `indigo-600`, `amber-600`
 - **Ambient Lighting:** Soft pastel aurora blur gradients (`emerald-400/12`, `teal-300/8`, `indigo-300/6`).
+- **Design Review Intent Translation Matrix:** When visual design critiques suggest dark surfaces, map them immediately:
+  - *Dark navy/slate card (#0F172A)* $\rightarrow$ **Executive Light-Mode Anchor:** `bg-emerald-50/90 border-2 border-emerald-600 shadow-card ring-2 ring-emerald-500/15` with `text-slate-900` typography and solid emerald pill badge.
+  - *Dark drop shadows / ambient vignette* $\rightarrow$ **Crisp Subtle Elevation:** `shadow-card border-slate-200/90` with soft aurora glow (`emerald-400/12`, `teal-300/8`).
+  - *Dark hero header* $\rightarrow$ **Crisp Light FinTech Console:** `bg-white/95` with emerald/teal underline tabs.
+
+---
+
+## 1.1 Asymmetric Dashboard Layout Primitive
+- **Rule:** In two-column dashboard layouts with asymmetric heights (control console on left, interactive chart & long ledger on right), the control column MUST use:
+  ```html
+  <div class="col-span-12 md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col min-h-0 self-start md:sticky md:top-20">
+  ```
+- **Rationale:** CSS Grid items stretch by default (`align-items: stretch`). Adding `self-start` prevents empty white tails when left sidebar stages collapse. Adding `md:sticky md:top-20` keeps controls accessible while scrolling through deep table ledgers.
 
 ---
 

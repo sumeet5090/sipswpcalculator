@@ -155,7 +155,7 @@ export class ChartDatasetBuilder {
                 borderDash: [4, 4],
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
-                fill: 1,
+                fill: (mode === 'swp') ? false : 1,
                 pointStyle: ChartPatternHelper.getPointStyle('postTax'),
                 pointBackgroundColor: THEME_COLORS.chart.pointBgWhite,
                 pointBorderColor: THEME_COLORS.financial.postTax,
@@ -183,7 +183,7 @@ export class ChartDatasetBuilder {
                 borderDash: [5, 4],
                 tension: 0.4,
                 cubicInterpolationMode: 'monotone' as const,
-                fill: 1,
+                fill: false,
                 pointRadius: 0,
                 pointHoverRadius: 5,
                 order: 2

@@ -5,7 +5,29 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Unified Form UI/UX Across All 14 Calculators Complete (Single Source of Truth `calculator-form.twig`, Flagship Dual-Mode Visual Console Parity, 4px Top Accent Bars, Privacy & Trust Seals).
+- **Current Milestone:** Systematic Mitigation of Planning & Architectural Friction Points Complete (Declarative Metaset Shield, Defensive Fill Contracts, Asymmetric Dashboard Layout Primitive, Design Review Intent Translation Matrix, and Compound Review Triage Protocol).
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 11 - Architectural Friction Mitigations):**
+  - **Design Review Intent Translation Matrix (`AGENTS.md` & `systemPatterns.md`):**
+    - Codified non-negotiable intent mapping rules. External requests for dark surfaces (`#0F172A`, `bg-slate-900`) automatically map to the **Executive Light-Mode Anchor** (`bg-emerald-50/90 border-2 border-emerald-600 ring-2 ring-emerald-500/15`, `text-slate-900`, solid emerald pill badge), eliminating hesitation or CI dark theme test conflicts.
+  - **Compound Review Triage Protocol (`AGENTS.md`):**
+    - Codified a multi-stream triage procedure decomposing complex compound feedback into: Stream 1 (Fast-Path Deterministic UI), Stream 2 (Invariant Translation), and Stream 3 (Deep Runtime Isolation).
+  - **Defensive Fill Contracts (`ChartDatasetBuilder.ts`):**
+    - In SWP mode, enforced absolute boundary isolation: Dataset 1 (`corpus`) $\rightarrow$ `fill: 'origin'`, Dataset 0 (`invested`) $\rightarrow$ `fill: false`, and Post-Tax $\rightarrow$ `fill: (mode === 'swp') ? false : 1`.
+    - Neutralized phantom inflation spline fills (`fill: false`), preventing ambiguous dataset index crossing.
+  - **Chart.js Metaset Lifecycle Shield (`ChartManager.ts`):**
+    - In `updateChart`, added a declarative schema change detector (`previousDatasetCount !== datasets.length || previousStacked !== showWealthMap`).
+    - When schema changes (lenses, benchmarks, mode transitions), the chart instance is automatically destroyed and cleanly reconstructed with fresh internal `_metasets` controllers, eliminating the silent canvas void bug.
+    - Preserved zero-latency in-place `update('none')` during active slider dragging.
+  - **Asymmetric Dashboard Layout Primitive (`systemPatterns.md`):**
+    - Formally codified `<div class="md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col min-h-0 self-start md:sticky md:top-20">` as the platform layout standard across all 14 calculators.
+  - **Verified Quality & Parity Standards:**
+    - TypeScript compiles cleanly (`npm run typecheck`: 0 errors).
+    - Production bundle built cleanly (`npm run build`: 209ms).
+    - PHPStan Level 8 clean across all 250 files (0 errors).
+    - PHPCS PSR-12 clean across all 250 files.
+    - All 811 PHPUnit tests passed (12,672 assertions).
+    - All 62 MathEngine cross-runtime parity checks passed 100%.
+    - Verified 200 OK responses with matching layout primitives on `/`, `/sip-calculator`, and `/swp-calculator`.
 - **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 10 - Form UI/UX Platform-Wide Unification):**
   - **Eliminated Code Duplication & Unified Architecture (`calculator-form.twig` & `calculator-guide.twig`):**
     - Refactored `src/Views/components/calculator-form.twig` into a single canonical, polymorphic form component serving both `home.twig` and `calculator-guide.twig`.
