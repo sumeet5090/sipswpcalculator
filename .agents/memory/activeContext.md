@@ -5,7 +5,26 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Left Sidebar `h-fit` Shrink-Wrapping & Compact Indian Denomination Badges Complete (Anti-Stretch Responsive/Print Geometry, Dynamic Cr/Lakh Odometer Badges, Full Exact Calculation Parity Preserved).
+- **Current Milestone:** Primary KPI Headline Denomination Elevation & Dual-Mode Auto-Seed Transparency Complete (Compact Cr/Lakh Visual Hierarchy, Zero Digit Clipping, Subline Rupee Precision, Unambiguous Phase 1 Auto-Bridge Badge, 100% Mathematical Parity Preserved).
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 14 - KPI Headline Elevation & Auto-Seed Transparency):**
+  - **Elevated KPI Headlines to Indian Denominations (`chart-visualization.twig`):**
+    - Promoted the primary stat headline (`#summary-invested-headline`, `#summary-interest-headline`, `#summary-withdrawn-headline`, `#summary-corpus-headline`) to prominent, scannable Indian units (`text-ui-base sm:text-ui-lg font-black font-financial-mono`, e.g. `₹68.74 L`, `₹1.78 Cr`, `₹99.20 L`, `₹2.20 Cr`).
+    - Positioned the exact comma-formatted rupee figures in crisp monospace font on the subline (`#summary-invested`, `#summary-interest`, `#summary-withdrawn`, `#summary-corpus`) alongside the metric subtitle descriptor.
+    - Eliminates comma-counting cognitive fatigue, prevents visual 8-digit wrapping/clipping on narrow mobile cards, and retains full precision for institutional users, automated tests, PDF exporters, and screen readers.
+  - **Synchronized Controller Animations (`OdometerController.ts`, `SummaryMetricsController.ts`, `EmiDriver.ts`, `CagrDriver.ts`):**
+    - Updated `OdometerController.ts` to simultaneously animate the exact rupee value into `#summary-*` and update the compact denomination on `#summary-*-headline` on every frame of the 400ms transition.
+    - Updated `SummaryMetricsController.ts` with `updateMetricsDisplays` to coordinate both headline and subline across all calculation updates.
+    - Synchronized `EmiDriver.ts` and `CagrDriver.ts` to populate both headline and exact elements cleanly.
+  - **Dual-Mode Stage 2 Auto-Seed Transparency (`swp-fields.twig`, `CalculatorApp.ts`):**
+    - Replaced the confusing "SIP Matured Corpus Bridge: Seed with Matured Corpus (₹ --)? [Sync Corpus]" prompt in `swp-fields.twig` with a clear confirmation banner: *"✓ Phase 1 Auto-Bridge: Seeded with Matured SIP: <span id="bridge-matured-corpus-val">₹ 1.99 Cr</span> [Sync Corpus]"*.
+    - Updated `CalculatorApp.ts` to populate `#bridge-matured-corpus-val` using the actual Year 20 SIP maturity corpus (`combined[sipYears - 1]`) rather than the Year 40 SWP ending balance, completely eliminating external reviewer confusion about Dual-Mode seeding.
+  - **Verified Quality & Parity Standards:**
+    - `npm run typecheck` & `npm run build`: 0 errors (clean Vite bundle).
+    - `php tests/parity_check.php`: 62/62 cross-runtime parity tests passed 100%.
+    - `vendor/bin/phpunit`: 811 tests passed with 12,672 assertions.
+    - `vendor/bin/phpstan analyse`: Level 8 passed across all 250 files.
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
+    - Local server rendering verified for `/` and `/swp-calculator` with status 200 and all expected DOM IDs.
 - **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 13 - Sidebar Shrink-Wrapping & Compact Denomination Badges):**
   - **Left Sidebar `h-fit` Geometry (`home.twig`, `calculator-guide.twig`, `calculator-form.twig`):**
     - Added `h-fit` to the left column wrapper (`md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col min-h-0 self-start h-fit md:sticky md:top-20`).

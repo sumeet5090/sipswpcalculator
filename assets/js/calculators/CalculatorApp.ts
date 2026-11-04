@@ -499,8 +499,12 @@ export class CalculatorApp {
         if (bridgeBtn) {
             bridgeBtn.addEventListener('click', () => {
                 if (this.latestResults.length === 0) return;
-                const lastRow = this.latestResults[this.latestResults.length - 1];
-                const maturedCorpus = lastRow.combined_total;
+                const inputs = this.getInputs();
+                const sipYears = inputs.years || 0;
+                const maturedRow = (inputs.enable_swp && sipYears > 0 && sipYears <= this.latestResults.length)
+                    ? this.latestResults[sipYears - 1]
+                    : this.latestResults[this.latestResults.length - 1];
+                const maturedCorpus = maturedRow.combined_total;
                 if (maturedCorpus <= 0) return;
 
                 this.sliderManager.updateFieldValue('corpus', maturedCorpus);
@@ -825,11 +829,14 @@ export class CalculatorApp {
             // Instantly update summary metrics cards (#total-invested, #est-returns, #total-value)
             this.updateSummaryMetrics(combined);
 
-            const lastRow = combined[combined.length - 1];
-            if (lastRow) {
+            const sipYears = inputs.years || 0;
+            const maturedRow = (inputs.enable_swp && sipYears > 0 && sipYears <= combined.length)
+                ? combined[sipYears - 1]
+                : combined[combined.length - 1];
+            if (maturedRow) {
                 const bridgeValEl = this.dom.getElement('bridge-matured-corpus-val');
                 if (bridgeValEl) {
-                    bridgeValEl.textContent = this.formatter.formatDynamic(lastRow.combined_total);
+                    bridgeValEl.textContent = this.formatter.formatDynamic(maturedRow.combined_total);
                 }
             }
 
@@ -992,6 +999,17 @@ export class CalculatorApp {
                 this.ergonomicsSubsystem.updateFloatingHud(existingData);
 
                 this.chartManager.updateChart(existingData, swpEnabledOnLoad);
+
+                const sipYears = initialInputs.years || 0;
+                const maturedRow = (initialInputs.enable_swp && sipYears > 0 && sipYears <= existingData.length)
+                    ? existingData[sipYears - 1]
+                    : existingData[existingData.length - 1];
+                if (maturedRow) {
+                    const bridgeValEl = this.dom.getElement('bridge-matured-corpus-val');
+                    if (bridgeValEl) {
+                        bridgeValEl.textContent = this.formatter.formatDynamic(maturedRow.combined_total);
+                    }
+                }
             }
 
             this.sliderManager.refreshVisuals();

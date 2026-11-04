@@ -85,16 +85,27 @@ export class OdometerController {
         // Update ambient aura based on the target value
         this.updateAmbientAura(elementId, targetVal);
 
-        // Update companion compact denomination badge if present (e.g. ₹1.20 Cr, ₹40.74 L)
-        const compactEl = this.dom.getElement(`${elementId}-compact`);
-        if (compactEl) {
-            if (targetVal > 0) {
-                compactEl.textContent = this.formatter.formatCompact(targetVal);
-                compactEl.style.display = '';
-            } else {
-                compactEl.style.display = 'none';
+        // Update companion compact denomination headline and badge if present (e.g. ₹1.20 Cr, ₹40.74 L)
+        const updateCompanionDisplays = (val: number) => {
+            const compactText = val > 0 ? this.formatter.formatCompact(val) : this.formatter.format(0);
+
+            const headlineEl = this.dom.getElement(`${elementId}-headline`);
+            if (headlineEl) {
+                headlineEl.textContent = compactText;
             }
-        }
+
+            const compactEl = this.dom.getElement(`${elementId}-compact`);
+            if (compactEl) {
+                if (val > 0) {
+                    compactEl.textContent = compactText;
+                    compactEl.style.display = '';
+                } else {
+                    compactEl.style.display = 'none';
+                }
+            }
+        };
+
+        updateCompanionDisplays(targetVal);
 
         // Cancel any in-flight animation for this element
         const existing = this.animations.get(elementId);
@@ -114,6 +125,7 @@ export class OdometerController {
         // If delta is negligible, set directly
         if (Math.abs(targetVal - currentVal) < 1) {
             this.renderFormattedText(elementId, el, this.formatter.format(targetVal), true);
+            updateCompanionDisplays(targetVal);
             el.dataset.rawVal = String(targetVal);
             this.animations.delete(elementId);
             return;
@@ -127,8 +139,10 @@ export class OdometerController {
             const progress = Math.min(Math.max(elapsed / durationMs, 0), 1);
             const easeProgress = 1 - Math.pow(1 - progress, 4); // easeOutQuart
             const val = startVal + (targetVal - startVal) * easeProgress;
+            const roundedVal = Math.round(val);
 
-            this.renderFormattedText(elementId, el, this.formatter.format(Math.round(val)), true);
+            this.renderFormattedText(elementId, el, this.formatter.format(roundedVal), true);
+            updateCompanionDisplays(roundedVal);
             el.dataset.rawVal = String(targetVal);
 
             if (progress < 1) {
@@ -136,6 +150,7 @@ export class OdometerController {
                 this.animations.set(elementId, { startVal, targetVal, startTime, duration: durationMs, rafId });
             } else {
                 this.renderFormattedText(elementId, el, this.formatter.format(targetVal), false);
+                updateCompanionDisplays(targetVal);
                 this.animations.delete(elementId);
             }
         };

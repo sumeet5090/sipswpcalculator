@@ -57,6 +57,10 @@ export class CagrDriver implements ISpecializedDriver {
         if (corpusEl) {
             corpusEl.textContent = `${res.cagr_percentage.toFixed(2)}% p.a.`;
         }
+        const headlineEl = ctx.dom.getElement('summary-corpus-headline');
+        if (headlineEl) {
+            headlineEl.textContent = `${res.cagr_percentage.toFixed(2)}% p.a.`;
+        }
 
         const gainBadge = ctx.dom.getElement('summary-gain-badge');
         if (gainBadge) {

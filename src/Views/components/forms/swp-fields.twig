@@ -2,12 +2,15 @@
 
 {% if calculator_type != 'swp' %}
 <!-- Lifecycle Accumulation Bridge (Transfer Matured SIP Corpus to SWP Starting Corpus) -->
-<div id="swp-accumulation-bridge" class="p-2.5 sm:p-3 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-subtle">
-    <div class="min-w-0">
-        <div class="text-micro font-bold text-growth-emphasis uppercase tracking-wider">SIP Matured Corpus Bridge</div>
-        <div class="text-ui-xs font-bold text-slate-800 flex-wrap">Seed with Matured Corpus (<span id="bridge-matured-corpus-val" class="font-financial-mono text-growth-emphasis font-extrabold whitespace-nowrap">₹ --</span>)?</div>
+<div id="swp-accumulation-bridge" class="p-2 sm:p-2.5 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-subtle">
+    <div class="flex items-center gap-2 min-w-0">
+        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-600 text-white text-micro font-black shrink-0">✓</span>
+        <div class="min-w-0">
+            <div class="text-micro font-extrabold text-growth-emphasis uppercase tracking-wider">Phase 1 Auto-Bridge</div>
+            <div class="text-ui-xs font-bold text-slate-800 truncate">Seeded with Matured SIP: <span id="bridge-matured-corpus-val" class="font-financial-mono text-growth-emphasis font-extrabold whitespace-nowrap">₹ --</span></div>
+        </div>
     </div>
-    <button type="button" id="apply-sip-to-swp-btn" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-ui-xs font-extrabold shadow-flat active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0">
+    <button type="button" id="apply-sip-to-swp-btn" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-ui-xs font-extrabold shadow-flat active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0" title="Transfer Phase 1 matured corpus into starting balance">
         Sync Corpus
     </button>
 </div>

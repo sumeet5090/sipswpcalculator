@@ -221,22 +221,30 @@ export class SummaryMetricsController {
         this.odometer.animateValue('summary-corpus', finalCorpus);
         this.fitSummaryCards();
 
-        // Update Compact Indian Denomination Badges (e.g. ₹1.20 Cr, ₹40.74 L)
-        const updateCompactBadge = (badgeId: string, val: number) => {
-            const el = this.dom.getElement(badgeId);
-            if (!el) return;
-            if (val > 0) {
-                el.textContent = this.formatter.formatCompact(val);
-                el.style.display = '';
-            } else {
-                el.style.display = 'none';
+        // Update Compact Indian Denomination Headlines & Badges (e.g. ₹1.20 Cr, ₹40.74 L)
+        const updateMetricsDisplays = (baseId: string, val: number) => {
+            const compactText = val > 0 ? this.formatter.formatCompact(val) : this.formatter.format(0);
+
+            const headlineEl = this.dom.getElement(`${baseId}-headline`);
+            if (headlineEl) {
+                headlineEl.textContent = compactText;
+            }
+
+            const badgeEl = this.dom.getElement(`${baseId}-compact`);
+            if (badgeEl) {
+                if (val > 0) {
+                    badgeEl.textContent = compactText;
+                    badgeEl.style.display = '';
+                } else {
+                    badgeEl.style.display = 'none';
+                }
             }
         };
 
-        updateCompactBadge('summary-invested-compact', totalInvested);
-        updateCompactBadge('summary-interest-compact', finalGains);
-        updateCompactBadge('summary-withdrawn-compact', totalWithdrawn);
-        updateCompactBadge('summary-corpus-compact', finalCorpus);
+        updateMetricsDisplays('summary-invested', totalInvested);
+        updateMetricsDisplays('summary-interest', finalGains);
+        updateMetricsDisplays('summary-withdrawn', totalWithdrawn);
+        updateMetricsDisplays('summary-corpus', finalCorpus);
 
         // Update real purchasing power and peace-of-mind telemetry
         this.purchasingPower.updateDisplay(preTaxCorpus, inputs);

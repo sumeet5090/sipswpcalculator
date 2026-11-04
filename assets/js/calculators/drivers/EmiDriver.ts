@@ -65,6 +65,10 @@ export class EmiDriver implements ISpecializedDriver {
         if (corpusEl) {
             corpusEl.textContent = `${ctx.formatter.format(Math.round(res.monthly_emi))} / mo`;
         }
+        const headlineEl = ctx.dom.getElement('summary-corpus-headline');
+        if (headlineEl) {
+            headlineEl.textContent = `${ctx.formatter.formatCompact(Math.round(res.monthly_emi))} / mo`;
+        }
 
         const gainBadge = ctx.dom.getElement('summary-gain-badge');
         if (gainBadge) {
