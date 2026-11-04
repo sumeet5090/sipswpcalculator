@@ -1,17 +1,26 @@
 <!-- Curated FAQ Section -->
-<div class="mt-12 border-t border-slate-200/80 pt-8">
+<div>
     <h2 id="faq-section" class="text-lg sm:text-xl font-bold text-slate-900 text-center mb-6 flex items-center justify-center gap-2">
         <span>❓</span>
         <span>Frequently Asked Questions (FAQ) on SIP to SWP</span>
     </h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
         {% for faq in homeFaqs|default([]) %}
             {% set isLastOdd = (loop.last and loop.length is odd) %}
             {% set colSpan = isLastOdd ? 'md:col-span-2' : '' %}
-            <div class="{{ colSpan }} p-4 rounded-2xl bg-white border border-slate-200/90 shadow-flat">
-                <h3 id="faq-{{ loop.index }}" class="text-sm sm:text-base font-bold text-slate-900 mb-1.5">{{ loop.index }}. {{ faq.q }}</h3>
-                <p class="text-sm sm:text-base text-slate-600 leading-relaxed">{{ faq.a }}</p>
-            </div>
+            <details {% if loop.index <= 2 %}open{% endif %} class="{{ colSpan }} fintech-accordion group rounded-2xl bg-white/95 border border-slate-200/90 shadow-subtle hover:border-slate-300 transition-all overflow-hidden">
+                <summary class="flex items-center justify-between gap-3 p-4 bg-slate-50/70 group-hover:bg-slate-100/70 group-open:bg-slate-100/90 cursor-pointer select-none transition-colors border-b border-transparent group-open:border-slate-200/80">
+                    <h3 id="faq-{{ loop.index }}" class="text-ui-xs sm:text-ui-sm font-extrabold text-slate-900 pr-2 leading-snug">
+                        {{ loop.index }}. {{ faq.q }}
+                    </h3>
+                    <span class="w-6 h-6 rounded-full bg-slate-200/60 group-hover:bg-slate-200 group-open:bg-emerald-100 group-open:text-emerald-800 flex items-center justify-center shrink-0 text-micro font-bold text-slate-500 transition-all duration-200 group-open:rotate-180">
+                        ▼
+                    </span>
+                </summary>
+                <div class="p-4 bg-white text-ui-xs sm:text-ui-sm text-slate-600 leading-relaxed">
+                    <p>{{ faq.a }}</p>
+                </div>
+            </details>
         {% endfor %}
     </div>
 </div>

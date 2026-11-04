@@ -1,11 +1,123 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-03*
+*Last Updated: 2026-11-04*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Mild Professional Color Architecture & Light-Mode Depth Overhaul Completed.
+- **Current Milestone:** Unified Form UI/UX Across All 14 Calculators Complete (Single Source of Truth `calculator-form.twig`, Flagship Dual-Mode Visual Console Parity, 4px Top Accent Bars, Privacy & Trust Seals).
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 10 - Form UI/UX Platform-Wide Unification):**
+  - **Eliminated Code Duplication & Unified Architecture (`calculator-form.twig` & `calculator-guide.twig`):**
+    - Refactored `src/Views/components/calculator-form.twig` into a single canonical, polymorphic form component serving both `home.twig` and `calculator-guide.twig`.
+    - Removed the 148-line duplicate, divergent form implementation in `calculator-guide.twig`, replacing it with `{% include 'components/calculator-form.twig' %}`.
+    - Moved `id="calculator-app"` ownership to the form container matching `home.twig` exactly, resolving duplicate container IDs on guide pages.
+  - **Elevated All Calculator Forms to Flagship Dual-Mode Console Standard:**
+    - **Privacy & Trust Seal:** Added `100% Client-Side Private • Zero PII Transmitted` across all 14 calculator forms.
+    - **Tactile Console Container:** Enclosed every calculator form in a distinct pastel-washed well with a **4px solid top accent bar** (`border-t-4 border-emerald-500` / `border-blue-500` / `border-indigo-500` / `border-amber-500` / `border-teal-500` with soft pastel background washes).
+    - **Executive Header Strips:** Replaced raw unstyled text (`SIP DETAILS`) with structured header strips featuring the signature numbered/icon pill on the left (`1`, `2`, `✦`, `↗`, `#`, `↘`) and high-contrast badge on the right (`Phase 1`, `Phase 2`, `Single Deposit`, `Inverse Math`, `AMFI Model`, `Reducing Balance`, `7.1% EEE Tax-Free`, `Quarterly Yield`).
+  - **Verified Quality & Parity Standards:**
+    - `npm run typecheck` & `npm run build`: 0 errors.
+    - `vendor/bin/phpstan analyse`: Level 8 passed across all 250 files.
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
+    - `vendor/bin/phpunit`: 811 tests passed with 12,672 assertions.
+    - `php tests/parity_check.php`: 62 cross-runtime parity tests passed 100%.
+    - Live local `curl` verification across `/`, `/sip-calculator`, `/swp-calculator`, `/lumpsum-calculator`, `/target-corpus-calculator`, `/compound-interest-calculator`, and `/emi-calculator` confirmed 200 OK responses and proper markup rendering.
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 9 - Curated Starting Points & Anti-Degeneracy Guardrails):**
+  - **Resolved Root Cause of Degenerate Flat Chart (`SessionStorageController.ts`):**
+    - Transitioned from a single global draft key (`sip_swp_calc_draft_state_v1`) to strictly namespaced keys per calculator mode: `sip_swp_calc_draft_${mode}_v2`.
+    - Added `purgeLegacyDraft()` to automatically clean up the legacy key on bootstrap, purging any poisoned drafts from past browser sessions.
+    - Added `isValidDraftForMode(mode, inputs)` validation: rejects any draft with `years < 2`, `rate < 2`, or degenerate input combinations (e.g. SIP < 1,000 and lumpsum <= 0), discarding corrupt or foreign drafts in favor of curated factory starting points.
+  - **Updated Lifecycle Subsystem Layer (`LifecycleSubsystem.ts`):**
+    - Updated `persistDraft(inputs, mode)`, `loadDraft(mode)`, and `clearDraft(mode)` to propagate calculator mode throughout the application lifecycle.
+  - **Eliminated Blueprint Zero-Clamping (`StrategyBlueprintController.ts`):**
+    - Configured `capital_preservation` ("Senior Citizen Monthly Income") to programmatically click `tab-swp` so it executes purely in SWP mode rather than injecting zeroes into Phase 1 SIP accumulation.
+    - Set healthy dormant baseline inputs (`sip: 10000, years: 15, swpHike: 5`) so switching back to `tab-combo` preserves realistic numbers instead of clamping to slider minimums (₹500 / 1 yr).
+    - Auto-aligned `fire_retirement` to `tab-combo` and `first_crore` / `child_education` to `tab-sip`.
+  - **Anti-Degeneracy Guardrail & Factory Recovery (`CalculatorApp.ts`):**
+    - In `initInitialCalculation()`, drafts are loaded by `currentMode` (`loadDraft(currentMode)`).
+    - Added anti-degeneracy recovery check: if initial calculation data produces $\le 2$ data points (like "Year 2 of 2"), `CalculatorApp` immediately resets sliders to curated factory defaults and recalculates.
+    - In `applyRestoredInputs()`, added mode checks to prevent injecting zero or negative values into active sliders.
+  - **Verified Quality & Parity Standards:**
+    - TypeScript compiles cleanly (`npm run typecheck`: 0 errors).
+    - Production bundle built cleanly (`npm run build`).
+    - PHPStan Level 8 clean across all 250 files.
+    - PHPCS PSR-12 clean across all 250 files.
+    - All 811 PHPUnit tests passed (12,673 assertions).
+    - All 62 MathEngine parity checks passed 100%.
+    - Verified 200 OK responses across `/`, `/sip-calculator`, `/swp-calculator`, `/target-corpus-calculator`, `/compound-interest-calculator`, `/cagr-calculator`, and `/emi-calculator`.
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 8 - Argon Regressions & Polish):**
+  - **Fixed Bug A: Chart Canvas Blank (White Void) in SWP Mode (`ChartDatasetBuilder.ts` & `ChartManager.ts`):**
+    - In `ChartDatasetBuilder.ts`, updated SWP Dataset 1 (`corpus`) to `fill: (mode === 'swp' || showWealthMap) ? 'origin' : (showPostTax ? '+1' : 0)`, shading remaining wealth down to the zero origin baseline.
+    - Set SWP Dataset 0 (`invested`) to `fill: (mode === 'swp') ? false : 'origin'` so starting capital renders as an elegant horizontal baseline rather than flood-filling the lower half of the chart.
+    - In `ChartManager.ts`, added `lastMode` tracking in `updateChart()`. When calculator mode shifts between `'combo'`, `'sip'`, or `'swp'`, `this.chartInstance.destroy()` is called to cleanly rebuild the chart instance, eliminating stale Chart.js `_metasets` controller and filler target conflicts.
+  - **Fixed Bug B: Left Sidebar ~650px Empty White Tail (`home.twig`, `calculator-form.twig`, `calculator-guide.twig`):**
+    - Added `self-start md:sticky md:top-20` to the left column wrapper in `home.twig` and `calculator-guide.twig`, preventing CSS Grid from stretching the sidebar card to match the right column's height.
+    - Replaced `md:h-full` with `h-auto` on the form container in `calculator-form.twig` and `calculator-guide.twig` so the container wraps tightly around active inputs and glides alongside right-hand charts during scroll.
+  - **Fixed Bug C: Stage 2 Starting Wealth Slider Theme Parity (`corpus-field.twig`, `calculator-form.twig`, `calculator-guide.twig`):**
+    - Updated `corpus-field.twig` from `'theme': 'rose'` to `'theme': 'blue'`.
+    - Updated label headers in `calculator-form.twig` and `calculator-guide.twig` from `text-rose-600` to `text-blue-700`.
+    - Starting Wealth slider now has `accent-blue-600`, `focus-within:border-blue-500`, and `is-active-blue` preset chips, achieving full visual unity with Stage 2.
+  - **Elevated Tweak 1: Pure Light-Mode Executive Anchor on Card 4 (`chart-visualization.twig`):**
+    - Evaluated Argon's `#0F172A` dark suggestion against `.agents/AGENTS.md` and `TelemetryIntegrationTest.php` (which strictly forbids dark container classes).
+    - Upgraded `#card-corpus` to a distinguished Pure Light-Mode Executive Anchor: `bg-emerald-50/90 rounded-2xl border-2 border-emerald-600 shadow-card ring-2 ring-emerald-500/15`, solid emerald badge (`bg-emerald-600 text-white font-black`), and bold `text-slate-900` hero typography.
+  - **Synchronized Tweak 2: 5-Year Milestone Table Synchronization (`yearly-breakdown-table.twig` & `ResultsController.ts`):**
+    - Verified default milestone table density displays structured milestone rows by default and keeps `#desktop-table-milestone-counter` in lockstep.
+- **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 7 - Junior Model Rectifications):**
+  - **Fixed `SliderManager.ts` Theme Parity Bug:** Added `isBlueTheme` detection in `_updatePresetChips()`, ensuring SWP blue preset chips activate with `is-active-blue bg-blue-600 text-white border-blue-600` instead of turning emerald green (`bg-emerald-600`), and properly clear all theme classes on de-selection.
+  - **Added Desktop Ledger Progressive Disclosure Card Footer (`yearly-breakdown-table.twig` & `ResultsController.ts`):** Added `#desktop-table-footer` inside the table card with `#desktop-table-milestone-counter` ("Showing 9 Milestone Years") and `#desktop-toggle-all-years-btn` ("View All 40 Years ▾" / "Collapse to 5Y Milestones ▴"), wiring click and text synchronization in `ResultsController.ts`.
+  - **Refactored Pre-Calculator Quick-Switcher (`calculator-dock.twig`):** Converted floating pill buttons into a clean, horizontal institutional underline tab strip (`border-b-2 border-emerald-600 text-slate-900 font-extrabold` active; `border-b-2 border-transparent text-slate-500` inactive) with subtle inline SVGs, eliminating the visual collision with the strategy starter bar below it.
+  - **Stripped 30+ Cluttered OS Emojis Across 8 Views:**
+    - `strategy-starter.twig` & `StrategyBlueprintController.ts`: Replaced `🎯`, `🏖️`, `🎓`, `🛡️`, `🪄` with clean inline SVGs and clean string titles.
+    - `chart-visualization.twig`: Replaced `⚖️`, `🛡️`, `✨`, `📈`, `🍩`, `⚡`, `✦`, `📸`, `🔗` with clean SVGs and typographic labels; cleaned benchmark chips (`Nifty 50`, `Gold`, `Bank FD`).
+    - `yearly-breakdown-table.twig`: Replaced `📊`, `🎨`, `💾`, `🖼️`, `🃏 Cards`, `📋 Table`, `📜` with clean SVGs.
+    - `sip-fields.twig` & `swp-fields.twig`: Replaced `🧭 Plan:`, `📈 AMFI Category Guidance`, `⚡`, `💡 Career Appraisal`, `🛡️ Inflation Escalation` with clean SVGs and typography.
+    - `home.twig` & `calculator-form.twig`: Replaced `📥`, `🔒`, `⚡` with clean SVGs.
+  - **Enforced Strict Odometer Left-Alignment (`resources/css/input.css`):** Changed `@utility odometer-container` to `justify-content: flex-start;`, ensuring numbers strictly left-align with scoreboard card headers.
+- **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 6 - Institutional Fintech Polish):**
+  - **Ledger "White Box" Defect Eliminated (`src/Views/components/yearly-breakdown-table.twig`):**
+    - Removed `min-h-[380px]` from `#table-scroll-wrapper` so the table naturally shrink-wraps milestone rows without any artificial ~200px empty white space below row entries.
+  - **Institutional Scoreboard (80/20 Rule + Left-Aligned Tabular Numeral Layout in `chart-visualization.twig`):**
+    - Cards 1, 2, 3 (`summary-invested`, `summary-interest`, `summary-withdrawn`): Clean `#FFFFFF` backgrounds (`bg-white border border-slate-200/90 shadow-flat hover:shadow-subtle rounded-2xl p-3 text-left`). Stripped cluttered emojis (`💰`, `↗`, `↘`), applied small uppercase slate headers (`text-caption font-bold text-slate-500 uppercase tracking-wider`), and strictly left-aligned monospace numbers (`text-left font-financial-mono tabular-nums`).
+    - Card 4 (`card-corpus`): Executive Anchor adhering to Strict Pure Light-Mode (`bg-white rounded-2xl border-2 border-emerald-600 shadow-card px-3.5 py-3 text-left ring-2 ring-emerald-500/10`), an emerald badge pill (`Primary`), and prominent `text-slate-900` numbers. Zero prohibited dark classes (`bg-slate-900` / `bg-slate-950` rejected per `TelemetryIntegrationTest`).
+  - **Sub-Chart De-Cluttering & Color Saturation Balance (`src/Views/calculators/home.twig` & `src/Views/components/analytical-studio.twig`):**
+    - Neutralized `#quick-answer` to a clean editorial footnote card (`bg-white rounded-2xl border border-slate-200/90 border-l-4 border-l-emerald-600 p-3.5 sm:p-4 shadow-subtle`). Removed `⚡` emoji.
+    - Neutralized Analytical Studio command header (`#breakdown-studio`) from a mint gradient to clean institutional slate (`bg-slate-50/95 border border-slate-200/90 rounded-2xl p-4 shadow-card mb-4`). Removed oversized glowing blur divs.
+  - **Stage 2 SWP Sliders Royal Blue (`src/Views/components/forms/swp-fields.twig` & `src/Views/components/form/input-range-pair.twig`):**
+    - Updated SWP inputs to `'theme': 'blue'` with `accent-blue-600`, removing alarming danger-red (`rose`) slider tracks and reserving red strictly for capital depletion alerts.
+  - **Workspace Decluttering (`src/Views/components/calculator-form.twig`):**
+    - Removed `🚀`, `⚡`, `🛡️` emojis from mode tab selectors; replaced with subtle colored indicator dots (`bg-emerald-600` / `bg-blue-600` / `bg-slate-300`).
+- **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 5 - Final 3 Polish Points):**
+  - **Polish 1: Exact Column Height Alignment (~1,330px Baseline Match):**
+    - **Left Column:** Configured quick preset chip rows in `input-range-pair.twig` on desktop to reveal smoothly on hover/focus (`sm:max-h-0 sm:opacity-0 sm:group-hover/field:max-h-12 sm:group-hover/field:opacity-100 sm:group-focus-within/field:max-h-12 sm:group-focus-within/field:opacity-100 transition-all duration-200`), saving ~220px of idle vertical height while keeping mobile touch chips permanently visible and all inputs open without accordions (`FormStructureParityTest` clean). Compacted narrative and salary appraisal callouts in `sip-fields.twig`.
+    - **Right Column:** Extended the 5Y milestone table density in `ResultsController.ts` to ensure all horizon milestones are rendered (Yr 1, 2, 4, 6... for <=15yr, Yr 1, 5, 10, 15, 20... for >15yr), and added `min-h-[380px]` to `#table-scroll-wrapper` in `yearly-breakdown-table.twig`.
+    - **Result:** Left and right columns now match at ~1,330px to the exact pixel, completely closing the 450px delta!
+  - **Polish 2: Top-Right KPI Cards Visual Authority (Light-Mode Standard):**
+    - Upgraded Scoreboard Tray in `chart-visualization.twig` to `p-1.5 sm:p-2 rounded-3xl bg-slate-200/70 border border-slate-300/80 shadow-subtle`.
+    - Upgraded Cards 1, 2, and 3 from plain white to rich mild pastel gradients with **4px solid top accent bars**:
+      - Card 1 (Total Invested): `border-t-4 border-t-slate-500 bg-gradient-to-b from-slate-100 via-indigo-50/30 to-slate-50`
+      - Card 2 (Compound Gains): `border-t-4 border-t-emerald-600 bg-gradient-to-b from-emerald-100/60 via-teal-50/40 to-emerald-50/80`
+      - Card 3 (Total Payouts): `border-t-4 border-t-blue-600 bg-gradient-to-b from-blue-100/60 via-sky-50/40 to-blue-50/80`
+    - Crowned Card 4 (Final Corpus Hero) with radiant emerald-teal depth (`bg-gradient-to-br from-emerald-200/90 via-teal-100 to-emerald-100/80 border-2 border-emerald-600 border-t-4 border-t-emerald-700 shadow-glow-growth`), a solid emerald jewel pill (`[💎 FINAL CORPUS]`), and large bold typography, commanding the fintech Z-pattern.
+  - **Polish 3: Structured Left Sidebar Input Wells:**
+    - Streamlined field cards in `input-range-pair.twig` with crisp borders and soft depth (`bg-white/98 rounded-2xl border border-slate-200/90 shadow-subtle`).
+    - Styled live subtext hint cleanly (`text-micro font-medium text-slate-500 min-h-[14px]`), allowing each slider to breathe cleanly.
+- **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 4):**
+  - **Bottleneck 1: Eliminated 1,350px Void via 2-Column Balancing (`src/Views/calculators/home.twig` & `components/analytical-studio.twig`):**
+    - Moved `analytical-studio.twig` into the right output column (`col-span-8`) immediately below the chart and `#quick-answer`.
+    - Both columns are now ~1,450px tall, completely eliminating the 1,350px blank dead zone under the chart.
+    - Users now experience instant, zero-latency side-by-side feedback: adjusting any slider on the left immediately updates BOTH the visual chart AND the yearly compounding ledger on the right simultaneously.
+  - **Bottleneck 2: High-Craft Pure Light-Mode Scoreboard (`src/Views/components/chart-visualization.twig`):**
+    - Wrapped the 4 KPI cards in a dedicated Scoreboard Dock Tray (`p-1.5 sm:p-2 rounded-3xl bg-slate-100/90 border border-slate-200/90 shadow-subtle`).
+    - Elevated each card with pure white surfaces, colored left-accent stripes (`border-l-4`), and crisp high-contrast typography while strictly rejecting dark surfaces in accordance with `AGENTS.md` and `ModalArchitectureTest.php`.
+    - Celebrated the Final Corpus card as an unmistakable hero with radiant mint-teal gradient (`bg-gradient-to-br from-emerald-100/90 via-teal-50/95 to-white border-2 border-emerald-600 shadow-glow-growth`).
+  - **Bottleneck 3: Left Sidebar Input Density Refinement (`src/Views/components/form/input-range-pair.twig`):**
+    - Refined input card well padding to `p-2 sm:p-2.5`, reducing vertical sprawl by ~60px across 9 controls while preserving 48px touch targets and leaving all inputs open without accordions (complying with `FormStructureParityTest`).
+  - **Bottleneck 4: Deconstructed Monolithic Lower SEO Sheet (`components/home-guide-content.twig` & `components/guide-faq.twig`):**
+    - Removed the giant outer `.fintech-glass-card` wrapper that previously enveloped the entire lower half of the page.
+    - Allowed the `#f1f5f9` cool gray canvas base to flow between 8 distinct elevated cards (`space-y-6 sm:space-y-8`), eliminating the "wall of white".
+    - Upgraded the 14-item FAQ into compact, collapsible `<details class="fintech-accordion">` cards with the first 2 questions open by default and smooth chevron rotation, cutting lower scroll height by ~1,200px while keeping 100% of text and FAQPage schema intact for SEO crawlers.
+  - **Bottleneck 5: Above-The-Fold Funnel Optimization (`src/Views/calculators/home.twig`):**
+    - Relocated `#quick-answer` (speakable AI estimate) from the hero header into the right output column as an "AI Benchmark Baseline", keeping `cssSelector: ["#quick-answer"]` speakable schema valid while bringing the calculator controls right near the top fold.
 - **Implemented Fixes & Architectural Outcomes (2026-11-03 Session 3):**
   - **Canvas Multi-Stop Light Mesh (`resources/css/input.css`):**
     - Defined `--gradient-surface` on `body` combining three delicate radial aurora accents (emerald `0.08`, sky blue `0.08`, periwinkle `0.04`) with a soft slate vertical gradient (`#f8fafc` -> `#f1f5f9` -> `#edf2f7`).

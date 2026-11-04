@@ -151,16 +151,16 @@ export class LifecycleSubsystem {
         this.strategyBlueprintController.syncWithInputs(inputs);
     }
 
-    public persistDraft(inputs: InvestmentInputs): void {
-        this.sessionStorageController.persistDraft(inputs);
+    public persistDraft(inputs: InvestmentInputs, mode: string = 'combo'): void {
+        this.sessionStorageController.persistDraft(mode, inputs);
     }
 
-    public loadDraft(): InvestmentInputs | null {
-        return this.sessionStorageController.loadDraft();
+    public loadDraft(mode: string = 'combo'): InvestmentInputs | null {
+        return this.sessionStorageController.loadDraft(mode);
     }
 
-    public clearDraft(): void {
-        this.sessionStorageController.clearDraft();
+    public clearDraft(mode?: string): void {
+        this.sessionStorageController.clearDraft(mode);
     }
 
     public pushUndoState(inputs: InvestmentInputs): void {

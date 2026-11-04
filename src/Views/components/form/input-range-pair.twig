@@ -15,20 +15,26 @@
     
     {% set theme = config.theme|default('emerald') %}
     
-    {% set inputFocusBorder = theme == 'rose' 
-        ? 'focus-within:border-rose-500 focus-within:ring-rose-500/20' 
-        : 'focus-within:border-emerald-500 focus-within:ring-emerald-500/20' %}
+    {% set inputFocusBorder = theme == 'blue'
+        ? 'focus-within:border-blue-500 focus-within:ring-blue-500/20'
+        : (theme == 'rose'
+            ? 'focus-within:border-rose-500 focus-within:ring-rose-500/20'
+            : 'focus-within:border-emerald-500 focus-within:ring-emerald-500/20') %}
         
-    {% set rangeColorClass = theme == 'rose' ? 'accent-rose-600' : 'accent-emerald-600' %}
+    {% set rangeColorClass = theme == 'blue'
+        ? 'accent-blue-600'
+        : (theme == 'rose' ? 'accent-rose-600' : 'accent-emerald-600') %}
     {% set labelHtml = config.label_html|default(null) %}
     
     {% set presets = config.presets|default(null) %}
-    {% set activeChipClass = theme == 'rose' 
-        ? 'is-active-rose bg-rose-600 text-white border-rose-600 shadow-flat' 
-        : 'is-active bg-emerald-600 text-white border-emerald-600 shadow-flat' %}
+    {% set activeChipClass = theme == 'blue'
+        ? 'is-active-blue bg-blue-600 text-white border-blue-600 shadow-flat'
+        : (theme == 'rose' 
+            ? 'is-active-rose bg-rose-600 text-white border-rose-600 shadow-flat' 
+            : 'is-active bg-emerald-600 text-white border-emerald-600 shadow-flat') %}
     {% set tooltip = config.tooltip|default(null) %}
     
-    <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 transition-all duration-200 shadow-subtle hover:shadow-card" data-field-id="{{ id }}">
+    <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2 sm:p-2.5 transition-all duration-200 shadow-subtle hover:shadow-card" data-field-id="{{ id }}">
         <!-- Row 1: Label & Stepper Pill (Groww / Zerodha High-Density Inline Pattern) -->
         <div class="flex items-center justify-between gap-2 min-w-0">
             <!-- Left: Label, Tooltip & Word Badge -->
@@ -101,7 +107,7 @@
         </div>
 
         <!-- Dynamic Live Subtext Hint (Indian words notation · Zero-CLS) -->
-        <div id="{{ id }}_subtext" class="field-unit-hint text-caption font-bold text-growth-emphasis min-h-[14px] leading-tight select-none mt-0.5 whitespace-normal break-words"></div>
+        <div id="{{ id }}_subtext" class="field-unit-hint text-micro font-medium text-slate-500 min-h-[14px] leading-tight select-none mt-0.5 whitespace-normal break-words"></div>
 
         {# Inline validation error #}
         <p id="{{ id }}_error" role="alert" aria-live="polite"
@@ -119,8 +125,8 @@
         </div>
 
         {% if presets %}
-            <!-- Mobile Horizontal Swipeable Strip / Desktop Flex Row (Subtle by default, illuminates on focus/hover) -->
-            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 mt-1 sm:flex-wrap opacity-75 sm:opacity-50 group-hover/field:opacity-100 group-focus-within/field:opacity-100 transition-opacity duration-200" role="group" aria-label="{{ label }} quick presets">
+            <!-- Mobile Horizontal Swipeable Strip / Desktop Hover-Revealed Flex Row (Reduces vertical sprawl by ~220px) -->
+            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 mt-1 sm:flex-wrap sm:max-h-0 sm:opacity-0 sm:overflow-hidden sm:group-hover/field:max-h-12 sm:group-hover/field:opacity-100 sm:group-focus-within/field:max-h-12 sm:group-focus-within/field:opacity-100 transition-all duration-200" role="group" aria-label="{{ label }} quick presets">
                 {% for preset in presets %}
                     {% set p_label = preset.label|default(preset) %}
                     {% set p_val = preset.value|default(preset) %}

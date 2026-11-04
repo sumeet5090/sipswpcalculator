@@ -23,7 +23,7 @@
     'step': calc_config.swp_withdrawal.step,
     'value': swp_withdrawal,
     'prefix': '₹',
-    'theme': 'rose',
+    'theme': 'blue',
     'presets': [
         {'label': '₹10k', 'value': 10000},
         {'label': '₹25k', 'value': 25000},
@@ -43,8 +43,8 @@
     'step': calc_config.swp_years.step,
     'value': swp_years_input,
     'suffix': 'Yrs',
-    'theme': 'rose',
-    'input_text_color': 'text-slate-900 focus:border-rose-500 focus:ring-rose-500/20',
+    'theme': 'blue',
+    'input_text_color': 'text-slate-900 focus:border-blue-500 focus:ring-blue-500/20',
     'presets': [
         {'label': '5Y', 'value': 5},
         {'label': '10Y', 'value': 10},
@@ -65,8 +65,8 @@
     'step': calc_config.swp_rate.step,
     'value': swp_rate,
     'suffix': '%',
-    'theme': 'rose',
-    'input_text_color': 'text-slate-900 focus:border-rose-500 focus:ring-rose-500/20',
+    'theme': 'blue',
+    'input_text_color': 'text-slate-900 focus:border-blue-500 focus:ring-blue-500/20',
     'presets': [
         {'label': '6%', 'value': 6},
         {'label': '7%', 'value': 7},
@@ -79,10 +79,12 @@
 <div class="rounded-2xl bg-slate-50/70 border border-slate-200/90 p-2.5 space-y-2 shadow-subtle mt-1">
     <div class="flex items-center justify-between gap-2">
         <span class="text-caption font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-            <span>🛡️</span>
+            <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
             <span>Inflation Escalation</span>
         </span>
-        <span class="text-micro font-bold text-payout-emphasis bg-payout-surface border border-payout-border px-2.5 py-0.5 rounded-full shadow-flat">
+        <span class="text-micro font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full shadow-flat">
             Annual Hikes
         </span>
     </div>
@@ -98,9 +100,9 @@
         'step': calc_config.swp_stepup.step,
         'value': swp_stepup,
         'suffix': '%',
-        'theme': 'rose',
+        'theme': 'blue',
         'enterkeyhint': 'done',
-        'input_text_color': 'text-slate-900 focus:border-rose-500 focus:ring-rose-500/20',
+        'input_text_color': 'text-slate-900 focus:border-blue-500 focus:ring-blue-500/20',
         'presets': [
             {'label': '0%', 'value': 0},
             {'label': '5%', 'value': 5},

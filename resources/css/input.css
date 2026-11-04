@@ -246,7 +246,7 @@
 @utility odometer-container {
   display: inline-flex;
   align-items: baseline;
-  justify-content: flex-end;
+  justify-content: flex-start;
   font-variant-numeric: tabular-nums lining-nums;
   line-height: 1.15em;
   contain: layout style;
