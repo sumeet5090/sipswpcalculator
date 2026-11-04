@@ -5,7 +5,27 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Primary KPI Headline Denomination Elevation & Dual-Mode Auto-Seed Transparency Complete (Compact Cr/Lakh Visual Hierarchy, Zero Digit Clipping, Subline Rupee Precision, Unambiguous Phase 1 Auto-Bridge Badge, 100% Mathematical Parity Preserved).
+- **Current Milestone:** Tier 4 Chart Console Footer Redesign Complete (Low Cognitive Load Twin Segmented Wells, Human-Centric Microcopy, Zero Neon Distractions, 100% Contract & Parity Maintained).
+- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 15 - Tier 4 Chart Console Redesign):**
+  - **Twin Segmented Console Architecture (`chart-visualization.twig`):**
+    - Grouped Tier 4 controls into two distinct, symmetrically balanced segmented docks (`bg-slate-100/90 border border-slate-200/70 p-1 rounded-xl shadow-flat`), harmonizing directly with Tier 1's View Mode Switcher and the top form console.
+    - Left Console: Opportunity Cost Benchmark Selector (`None | Nifty 50 (12%) | Gold (9%) | Bank FD (6.5%)`).
+    - Right Console: Analytical Projection Lenses (`Post-Tax | Volatility Range | Breakdown`) accompanied by the `#active-lens-indicator` status badge.
+  - **Eliminated Cognitive Overload & Jargon (`chart-visualization.twig`, `ChartManager.ts`):**
+    - Replaced cryptic tax jargon `§112A LTCG` with human-friendly **`Post-Tax`** (retaining subtle statutory `12.5%` subtext via `#tax-telemetry-pill`).
+    - Replaced quant jargon `± Corridor` with intuitive **`Volatility Range`** (retaining `10–90%` subtext via `#corridor-telemetry-pill`).
+    - Replaced `Wealth Map` with clear **`Breakdown`** (retaining `Stack` subtext via `#wealth-map-telemetry-pill`).
+    - Eliminated neon glowing box-shadows and awkward nested sub-pill boxes in favor of clean, elevated light-mode micro-toggles (`has-checked:bg-white has-checked:shadow-flat border border-transparent has-checked:border-*-200`).
+    - Updated `ChartManager.ts` to output clean indicator labels (`Post-Tax`, `Range`, `Breakdown`, or `Standard View`).
+  - **100% Test & Contract Preservation:**
+    - All IDs, classes, and attributes needed by automated test suites (`ChartCardTest.php`, `AccessibilityAndTrustArchitectureTest.php`) are strictly preserved.
+  - **Verified Quality & Parity Standards:**
+    - `npm run typecheck` & `npm run build`: 0 errors (clean Vite bundle).
+    - `php tests/parity_check.php`: 62/62 cross-runtime parity tests passed 100%.
+    - `vendor/bin/phpunit`: 811 tests passed with 12,672 assertions.
+    - `vendor/bin/phpstan analyse`: Level 8 passed across all 250 files.
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
+    - Local server rendering verified for `/` with status 200 and all expected DOM IDs.
 - **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 14 - KPI Headline Elevation & Auto-Seed Transparency):**
   - **Elevated KPI Headlines to Indian Denominations (`chart-visualization.twig`):**
     - Promoted the primary stat headline (`#summary-invested-headline`, `#summary-interest-headline`, `#summary-withdrawn-headline`, `#summary-corpus-headline`) to prominent, scannable Indian units (`text-ui-base sm:text-ui-lg font-black font-financial-mono`, e.g. `₹68.74 L`, `₹1.78 Cr`, `₹99.20 L`, `₹2.20 Cr`).

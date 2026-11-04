@@ -193,16 +193,16 @@ export class ChartManager {
         const showWealthMap = this.dom.getElement<HTMLInputElement>('show_wealth_map')?.checked || false;
 
         const active: string[] = [];
-        if (showCorridor) active.push('Corridor');
-        if (showPostTax) active.push('§112A Tax');
-        if (showWealthMap) active.push('Decomp');
+        if (showPostTax) active.push('Post-Tax');
+        if (showCorridor) active.push('Range');
+        if (showWealthMap) active.push('Breakdown');
 
         if (active.length === 0) {
             indicator.textContent = 'Standard View';
-            indicator.className = 'hidden sm:inline-flex items-center text-[10px] font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70';
+            indicator.className = 'inline-flex items-center text-micro font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70 shrink-0';
         } else {
             indicator.textContent = active.join(' + ');
-            indicator.className = 'hidden sm:inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-full border border-emerald-200/80 shadow-2xs';
+            indicator.className = 'inline-flex items-center text-micro font-bold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-full border border-emerald-200/80 shadow-flat shrink-0';
         }
     }
 
@@ -236,10 +236,10 @@ export class ChartManager {
         const chips = this.dom.getElements<HTMLButtonElement>('.benchmark-chip');
         chips.forEach(c => {
             if (c.dataset.benchmark === benchmark) {
-                c.classList.add('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600');
+                c.classList.add('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600', 'shadow-flat');
                 c.classList.remove('bg-slate-50', 'text-slate-600');
             } else {
-                c.classList.remove('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600');
+                c.classList.remove('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600', 'shadow-flat');
                 c.classList.add('bg-slate-50', 'text-slate-600');
             }
         });

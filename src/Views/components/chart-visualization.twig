@@ -382,56 +382,76 @@
         </table>
 
         <!-- ========================================================================= -->
-        <!-- TIER 4: REFINED HISTORICAL BENCHMARK & ANALYTICAL LENSES FOOTER           -->
+        <!-- TIER 4: REFINED HISTORICAL BENCHMARK & ANALYTICAL LENSES CONSOLE          -->
         <!-- ========================================================================= -->
-        <footer class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 mt-1 pt-3 border-t border-slate-100">
-            <!-- Left: Opportunity Cost Historical Benchmarks -->
-            <div class="flex items-center gap-1.5 sm:gap-2 min-w-0 max-w-full overflow-x-auto no-scrollbar py-1">
-                <span class="text-micro font-bold text-slate-400 uppercase tracking-widest shrink-0">Benchmark:</span>
-                <div class="inline-flex items-center gap-1.5" role="group" aria-label="Historical Benchmarks">
-                    <button type="button" class="benchmark-chip text-caption font-semibold px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center is-active bg-emerald-600 text-white border-emerald-600 shadow-flat" data-benchmark="none">None</button>
-                    <button type="button" class="benchmark-chip text-caption font-semibold px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center" data-benchmark="nifty">Nifty 50 (12%)</button>
-                    <button type="button" class="benchmark-chip text-caption font-semibold px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center" data-benchmark="gold">Gold (9%)</button>
-                    <button type="button" class="benchmark-chip text-caption font-semibold px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition-all cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center" data-benchmark="fd">Bank FD (6.5%)</button>
+        <footer class="mt-2 pt-3 border-t border-slate-100 flex flex-col xl:flex-row xl:items-center justify-between gap-3">
+            <!-- Left Console: Opportunity Cost Benchmark Selector (Single-Choice Segmented Dock) -->
+            <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2.5 min-w-0">
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <span class="text-micro font-extrabold text-slate-500 uppercase tracking-wider">Benchmark</span>
+                    <span class="text-micro font-medium text-slate-400 hidden sm:inline">•</span>
+                </div>
+                <div class="inline-flex items-center p-1 rounded-xl bg-slate-100/90 border border-slate-200/70 shadow-flat gap-1 max-w-full overflow-x-auto no-scrollbar" role="group" aria-label="Historical Return Benchmarks">
+                    <button type="button" class="benchmark-chip px-2.5 py-1 text-ui-xs font-bold rounded-lg transition-all duration-150 cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center is-active bg-emerald-600 text-white border-emerald-600 shadow-flat" data-benchmark="none">
+                        None
+                    </button>
+                    <button type="button" class="benchmark-chip px-2.5 py-1 text-ui-xs font-semibold rounded-lg transition-all duration-150 cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center bg-slate-50 text-slate-600 hover:text-slate-900 hover:bg-white" data-benchmark="nifty">
+                        <span>Nifty 50</span>
+                        <span class="ml-1 text-micro text-slate-400 font-financial-mono font-normal">12%</span>
+                    </button>
+                    <button type="button" class="benchmark-chip px-2.5 py-1 text-ui-xs font-semibold rounded-lg transition-all duration-150 cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center bg-slate-50 text-slate-600 hover:text-slate-900 hover:bg-white" data-benchmark="gold">
+                        <span>Gold</span>
+                        <span class="ml-1 text-micro text-slate-400 font-financial-mono font-normal">9%</span>
+                    </button>
+                    <button type="button" class="benchmark-chip px-2.5 py-1 text-ui-xs font-semibold rounded-lg transition-all duration-150 cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center bg-slate-50 text-slate-600 hover:text-slate-900 hover:bg-white" data-benchmark="fd">
+                        <span>Bank FD</span>
+                        <span class="ml-1 text-micro text-slate-400 font-financial-mono font-normal">6.5%</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Right: Lenses Toggles (Corridor, LTCG Tax, Wealth Map) -->
-            <div class="flex items-center gap-2 overflow-x-auto max-w-full no-scrollbar py-1 lg:self-center" role="group" aria-label="Analytical Projection Lenses">
-                <span class="text-micro font-bold text-slate-400 uppercase tracking-wider hidden sm:inline shrink-0">Lenses:</span>
-                <span id="active-lens-indicator" class="hidden sm:inline-flex items-center text-micro font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70 shrink-0">Standard View</span>
+            <!-- Right Console: Analytical Projection Lenses (Multi-Toggle Segmented Dock) -->
+            <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2.5 min-w-0 xl:self-center">
+                <div class="flex items-center justify-between sm:justify-start gap-1.5 shrink-0">
+                    <span class="text-micro font-extrabold text-slate-500 uppercase tracking-wider">Analysis Lenses</span>
+                    <span id="active-lens-indicator" class="inline-flex items-center text-micro font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70 shrink-0">
+                        Standard View
+                    </span>
+                </div>
 
-                {% if calculator_type not in ['ppf', 'fd', 'emi'] %}
-                <!-- Lens: Section 112A LTCG Tax -->
-                <label id="overlay-chip-post-tax" 
-                    class="group relative inline-flex items-center gap-1.5 px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg cursor-pointer select-none transition-all duration-150 text-caption font-semibold text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-white active:scale-95 border border-slate-200/80 has-checked:bg-white has-checked:text-tax-emphasis has-checked:shadow-flat has-checked:border-tax-border has-checked:font-bold shrink-0" 
-                    title="Toggle 2026 Section 112A Post-Tax Returns [Shift+T]">
-                    <input type="checkbox" id="show_post_tax" class="sr-only peer" aria-label="Show Post-Tax Returns">
-                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-violet-500 peer-checked:shadow-[0_0_6px_rgba(139,92,246,0.8)] transition-all"></span>
-                    <span>§112A LTCG</span>
-                    <span id="tax-telemetry-pill" class="px-1.5 py-0.2 rounded bg-slate-200/60 peer-checked:bg-tax-surface text-micro font-financial-mono text-slate-600 peer-checked:text-tax-emphasis font-bold">12.5%</span>
-                </label>
-                {% endif %}
+                <div class="inline-flex items-center p-1 rounded-xl bg-slate-100/90 border border-slate-200/70 shadow-flat gap-1 max-w-full overflow-x-auto no-scrollbar" role="group" aria-label="Analytical Projection Lenses">
+                    {% if calculator_type not in ['ppf', 'fd', 'emi'] %}
+                    <!-- Lens: Section 112A LTCG Tax -->
+                    <label id="overlay-chip-post-tax" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-ui-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-white active:scale-95 border border-transparent has-checked:bg-white has-checked:text-violet-900 has-checked:shadow-flat has-checked:border-violet-200 has-checked:font-bold shrink-0" 
+                        title="Toggle Section 112A Post-Tax Net Returns [Shift+T]">
+                        <input type="checkbox" id="show_post_tax" class="sr-only peer" aria-label="Show Post-Tax Returns">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-violet-600 transition-colors"></span>
+                        <span>Post-Tax</span>
+                        <span id="tax-telemetry-pill" class="text-micro font-financial-mono text-slate-400 peer-checked:text-violet-700 font-medium">12.5%</span>
+                    </label>
+                    {% endif %}
 
-                <!-- Lens: Corridor -->
-                <label id="overlay-chip-corridor" 
-                    class="group relative inline-flex items-center gap-1.5 px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg cursor-pointer select-none transition-all duration-150 text-caption font-semibold text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-white active:scale-95 border border-slate-200/80 has-checked:bg-white has-checked:text-growth-emphasis has-checked:shadow-flat has-checked:border-growth-border has-checked:font-bold shrink-0" 
-                    title="Toggle 10th-90th Percentile Historical Volatility Corridor [Shift+C]">
-                    <input type="checkbox" id="show_historical_corridor" class="sr-only peer" aria-label="Show Historical Volatility Corridor">
-                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-emerald-500 peer-checked:shadow-[0_0_6px_rgba(16,185,129,0.8)] transition-all"></span>
-                    <span>± Corridor</span>
-                    <span id="corridor-telemetry-pill" class="px-1.5 py-0.2 rounded bg-slate-200/60 peer-checked:bg-growth-surface text-micro font-financial-mono text-slate-600 peer-checked:text-growth-emphasis font-bold">10–90%</span>
-                </label>
+                    <!-- Lens: Corridor -->
+                    <label id="overlay-chip-corridor" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-ui-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-white active:scale-95 border border-transparent has-checked:bg-white has-checked:text-emerald-950 has-checked:shadow-flat has-checked:border-emerald-200 has-checked:font-bold shrink-0" 
+                        title="Toggle Historical Volatility Range (10th-90th Percentile) [Shift+C]">
+                        <input type="checkbox" id="show_historical_corridor" class="sr-only peer" aria-label="Show Historical Volatility Corridor">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-emerald-600 transition-colors"></span>
+                        <span>Volatility Range</span>
+                        <span id="corridor-telemetry-pill" class="text-micro font-financial-mono text-slate-400 peer-checked:text-emerald-700 font-medium">10–90%</span>
+                    </label>
 
-                <!-- Lens: Wealth Map -->
-                <label id="overlay-chip-wealth-map" 
-                    class="group relative inline-flex items-center gap-1.5 px-3 py-2 sm:py-1 min-h-[44px] sm:min-h-0 rounded-xl sm:rounded-lg cursor-pointer select-none transition-all duration-150 text-caption font-semibold text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-white active:scale-95 border border-slate-200/80 has-checked:bg-white has-checked:text-indigo-900 has-checked:shadow-flat has-checked:border-indigo-200 has-checked:font-bold shrink-0" 
-                    title="Toggle Stacked Principal vs Gain Decomposition [Shift+M]">
-                    <input type="checkbox" id="show_wealth_map" class="sr-only peer" aria-label="Show Wealth Map">
-                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-indigo-500 peer-checked:shadow-[0_0_6px_rgba(99,102,241,0.8)] transition-all"></span>
-                    <span>Wealth Map</span>
-                    <span id="wealth-map-telemetry-pill" class="px-1.5 py-0.2 rounded bg-slate-200/60 peer-checked:bg-indigo-100 text-micro font-financial-mono text-slate-600 peer-checked:text-indigo-800 font-bold">Stack</span>
-                </label>
+                    <!-- Lens: Wealth Map (Stacked Decomposition) -->
+                    <label id="overlay-chip-wealth-map" 
+                        class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-ui-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-white active:scale-95 border border-transparent has-checked:bg-white has-checked:text-indigo-950 has-checked:shadow-flat has-checked:border-indigo-200 has-checked:font-bold shrink-0" 
+                        title="Toggle Principal vs Gains Decomposition [Shift+M]">
+                        <input type="checkbox" id="show_wealth_map" class="sr-only peer" aria-label="Show Wealth Map">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-indigo-600 transition-colors"></span>
+                        <span>Breakdown</span>
+                        <span id="wealth-map-telemetry-pill" class="text-micro font-financial-mono text-slate-400 peer-checked:text-indigo-700 font-medium">Stack</span>
+                    </label>
+                </div>
             </div>
         </footer>
     </div>
