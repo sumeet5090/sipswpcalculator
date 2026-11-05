@@ -154,7 +154,6 @@ export class CalculatorApp {
                     swpToggle.checked = true;
                     this.syncSwpToggleState();
                 }
-                this.sliderManager.updateFieldValue('lumpsum', maturedCorpus);
                 this.sliderManager.updateFieldValue('corpus', maturedCorpus);
                 this.sliderManager.updateFieldValue('swp_withdrawal', safeMonthlyWithdrawal);
                 this.setGoalMode('grow');
@@ -508,7 +507,6 @@ export class CalculatorApp {
                 if (maturedCorpus <= 0) return;
 
                 this.sliderManager.updateFieldValue('corpus', maturedCorpus);
-                this.sliderManager.updateFieldValue('lumpsum', maturedCorpus);
 
                 const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
                 if (swpToggle) {
@@ -995,7 +993,9 @@ export class CalculatorApp {
                 this.latestResults = existingData;
 
                 this.updateTable(existingData, swpEnabledOnLoad);
+                this.summaryMetricsController.setInstant(true);
                 this.updateSummaryMetrics(existingData);
+                this.summaryMetricsController.setInstant(false);
                 this.ergonomicsSubsystem.updateFloatingHud(existingData);
 
                 this.chartManager.updateChart(existingData, swpEnabledOnLoad);

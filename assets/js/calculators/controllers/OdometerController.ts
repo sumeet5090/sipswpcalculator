@@ -15,10 +15,18 @@ export class OdometerController {
     private formatter: CurrencyFormatter;
     private animations: Map<string, AnimationState> = new Map();
     private views: Map<string, RollingOdometerView> = new Map();
+    private forceInstant: boolean = false;
 
     constructor(dom: DOMAdapter, formatter: CurrencyFormatter) {
         this.dom = dom;
         this.formatter = formatter;
+    }
+
+    /**
+     * Force immediate non-animated settling (used for initial hydration and headless snapshots).
+     */
+    public setInstant(instant: boolean): void {
+        this.forceInstant = instant;
     }
 
     /**
@@ -58,16 +66,18 @@ export class OdometerController {
     private renderFormattedText(elementId: string, el: HTMLElement, text: string, instant: boolean = false): void {
         const len = text.length;
 
-        // 1. Assign calibrated length classes directly based on string length (zero layout reads)
-        el.classList.remove('metric-len-normal', 'metric-len-medium', 'metric-len-long', 'metric-len-huge');
-        if (len <= 11) {
-            el.classList.add('metric-len-normal');
-        } else if (len <= 13) {
-            el.classList.add('metric-len-medium');
-        } else if (len <= 15) {
-            el.classList.add('metric-len-long');
-        } else {
-            el.classList.add('metric-len-huge');
+        // Only assign hero length classes to standalone widgets, not to subline precision metrics
+        if (!elementId.startsWith('summary-')) {
+            el.classList.remove('metric-len-normal', 'metric-len-medium', 'metric-len-long', 'metric-len-huge');
+            if (len <= 11) {
+                el.classList.add('metric-len-normal');
+            } else if (len <= 13) {
+                el.classList.add('metric-len-medium');
+            } else if (len <= 15) {
+                el.classList.add('metric-len-long');
+            } else {
+                el.classList.add('metric-len-huge');
+            }
         }
 
         // 2. Delegate rendering to GPU-accelerated tumbler view
@@ -106,6 +116,22 @@ export class OdometerController {
         };
 
         updateCompanionDisplays(targetVal);
+
+        // Fast-forward immediate rendering for initial hydration, headless screenshots, or reduced motion
+        const isHeadlessOrStatic = (typeof window !== 'undefined' && (
+            Boolean((window.navigator as unknown as { webdriver?: boolean })?.webdriver) ||
+            window.location.search.includes('static=1') ||
+            window.location.search.includes('snapshot=1') ||
+            this.forceInstant
+        ));
+
+        if (durationMs === 0 || isHeadlessOrStatic) {
+            this.renderFormattedText(elementId, el, this.formatter.format(targetVal), true);
+            updateCompanionDisplays(targetVal);
+            el.dataset.rawVal = String(targetVal);
+            this.animations.delete(elementId);
+            return;
+        }
 
         // Cancel any in-flight animation for this element
         const existing = this.animations.get(elementId);

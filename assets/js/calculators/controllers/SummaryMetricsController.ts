@@ -82,6 +82,13 @@ export class SummaryMetricsController {
     }
 
     /**
+     * Force immediate non-animated settling (used for initial hydration and headless snapshots).
+     */
+    public setInstant(instant: boolean): void {
+        this.odometer.setInstant(instant);
+    }
+
+    /**
      * Adapt text font size inside metrics tiles on screen resize.
      */
     fitSummaryCards(): void {
@@ -92,21 +99,9 @@ export class SummaryMetricsController {
 
         if (cardElms.length === 0) return;
 
-        // 1. Reset Phase & Length Classification
+        // 1. Reset Phase (subline elements use native compact typography)
         cardElms.forEach(el => {
             el.style.whiteSpace = 'nowrap';
-            const text = el.getAttribute('aria-label') || el.dataset.formattedText || el.textContent?.trim() || '';
-            const len = text.length;
-            el.classList.remove('metric-len-normal', 'metric-len-medium', 'metric-len-long', 'metric-len-huge');
-            if (len <= 11) {
-                el.classList.add('metric-len-normal');
-            } else if (len <= 13) {
-                el.classList.add('metric-len-medium');
-            } else if (len <= 15) {
-                el.classList.add('metric-len-long');
-            } else {
-                el.classList.add('metric-len-huge');
-            }
             el.style.fontSize = '';
             el.style.letterSpacing = '';
         });

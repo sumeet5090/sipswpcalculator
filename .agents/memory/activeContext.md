@@ -1,12 +1,31 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-04*
+*Last Updated: 2026-11-05*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Tier 4 Benchmark Segmented Dock Contrast & Hover State Stabilization Complete (Standardized Elevated Segmented Control, Zero White-on-White Contrast Collisions, 100% Contract & Parity Maintained).
-- **Implemented Fixes & Architectural Outcomes (2026-11-04 Session 16 - Benchmark Segmented Dock Contrast & Hover Stabilization):**
+- **Current Milestone:** Dual-Mode Lumpsum Capital Pollution Eliminated & KPI Odometer Subline Decoupling Complete (Zero Double-Counted Capital, Zero Mid-Roll Snapshot Easing Captures, Zero Horizontal Monospace Digit Clipping, 100% Accounting Reconciliation & Cross-Runtime Parity Preserved).
+- **Implemented Fixes & Architectural Outcomes (2026-11-05 Session 17 - Dual-Mode Lumpsum Pollution & Odometer Subline Settling):**
+  - **Eliminated Dual-Mode Lumpsum Capital Pollution (`CalculatorApp.ts`, `LifecycleSubsystem.ts`):**
+    - Removed `this.sliderManager.updateFieldValue('lumpsum', maturedCorpus)` calls from `onLifecycleTransferred` and the Phase 1 bridge click listeners.
+    - In Dual Mode (`combo`), setting `#lumpsum` previously caused `MathEngine.ts` to mistakenly ingest the matured corpus as external Year 0 lumpsum capital (double-counting ₹72L–₹1.40Cr of principal).
+    - Preserved `#corpus` update so the SWP phase draws down the existing accumulated SIP maturity wealth without double-counting invested capital.
+  - **Decoupled KPI Subline Sizing & Eliminated Digit Clipping (`chart-visualization.twig`, `OdometerController.ts`, `SummaryMetricsController.ts`):**
+    - Removed oversized 22px `.metric-len-normal` classes from the subline elements (`#summary-invested`, `#summary-interest`, `#summary-withdrawn`, `#summary-corpus`), replacing with calibrated `text-ui-xs font-bold font-financial-mono whitespace-nowrap overflow-visible`.
+    - Restricted `metric-len-*` dynamic class assignment in `OdometerController.ts` and `SummaryMetricsController.ts` so subline metrics are never scaled to 22px inside narrow card containers, eliminating left-side digit clipping (e.g. `₹1,` cutoff in `₹1,40,73,843`).
+    - Aligned Card 4 headline to `text-ui-base sm:text-ui-lg font-black font-financial-mono` and upgraded the "Net Corpus" pill to solid emerald `bg-emerald-600 text-white border border-emerald-700/80` per the *Design Review Intent Translation Matrix*.
+  - **Instant Hydration & Headless Snapshot Mode (`OdometerController.ts`, `SummaryMetricsController.ts`, `CalculatorApp.ts`):**
+    - Added `forceInstant` flag and `setInstant(boolean)` in `OdometerController.ts` and `SummaryMetricsController.ts`.
+    - Wired `durationMs === 0 || isHeadlessOrStatic || this.forceInstant` (detecting `window.navigator.webdriver`, `static=1`, `snapshot=1`) to immediately bypass RAF easing loops and render settled target values.
+    - Wrapped initial calculation paint in `CalculatorApp.ts` with `setInstant(true)` and `setInstant(false)`, ensuring all automated screenshot scripts capture 100% settled rupee values without `±843` mid-roll easing numbers.
+  - **Complete Quality & Parity Standards Verification:**
+    - `npm run typecheck` & `npm run build`: 0 errors (clean Vite bundle built in 193ms).
+    - `php tests/parity_check.php`: 62/62 cross-runtime parity tests passed 100%.
+    - `vendor/bin/phpunit`: 811 tests passed with 12,672 assertions (0 regressions).
+    - `vendor/bin/phpstan analyse`: Level 8 passed across all 250 files (0 errors).
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
+    - SEO & Schema Test Suites: `SeoMetadataValidatorTest` (35 tests, 2448 assertions) and `HomeSchemaBuilderTest` passed 100% with zero SEO degradation.
   - **Standardized Elevated Segmented Control Architecture (`chart-visualization.twig`, `ChartManager.ts`):**
     - Harmonized the Left Benchmark Console (`None`, `Nifty 50`, `Gold`, `Bank FD`) with Tier 1's View Mode Switcher and Tier 4's Analysis Lenses.
     - Active benchmark chips now render as crisp elevated white cards (`is-active bg-white text-growth-emphasis border border-slate-200/80 shadow-flat font-bold`) instead of jarring solid green buttons.

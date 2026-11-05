@@ -100,7 +100,6 @@ export class LifecycleSubsystem {
                         swpToggle.checked = true;
                         config.syncSwpToggleState();
                     }
-                    this.sliderManager.updateFieldValue('lumpsum', maturedCorpus);
                     this.sliderManager.updateFieldValue('corpus', maturedCorpus);
                     this.sliderManager.updateFieldValue('swp_withdrawal', safeMonthlyWithdrawal);
                     config.setGoalMode('grow');
