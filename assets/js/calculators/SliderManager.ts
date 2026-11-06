@@ -536,8 +536,11 @@ export class SliderManager {
 
     private _updatePresetChips(fieldId: string, currentVal: number): void {
         const chips = this.dom.getElements<HTMLButtonElement>(`button[data-preset-for="${fieldId}"]`);
-        const inactiveClasses = ['bg-slate-50', 'text-slate-700', 'border-slate-200/90', 'hover:border-slate-300', 'hover:bg-slate-100', 'hover:text-slate-900', 'bg-slate-50/90', 'text-slate-600'];
-        const activeColorClasses = ['is-active', 'is-active-rose', 'is-active-blue', 'bg-emerald-600', 'bg-rose-600', 'bg-blue-600', 'text-white', 'border-emerald-600', 'border-rose-600', 'border-blue-600'];
+        const inactiveClasses = [
+            'bg-slate-50', 'text-slate-700', 'border-slate-200/90', 'hover:border-slate-300', 'hover:bg-slate-100', 'hover:text-slate-900',
+            'bg-slate-50/90', 'text-slate-600', 'border-transparent', 'bg-slate-100/80', 'hover:bg-slate-200/80', 'shadow-none'
+        ];
+        const activeColorClasses = ['is-active', 'is-active-rose', 'is-active-blue', 'bg-emerald-600', 'bg-rose-600', 'bg-blue-600', 'text-white', 'border-emerald-600', 'border-rose-600', 'border-blue-600', 'shadow-flat'];
 
         chips.forEach(chip => {
             const presetVal = parseFloat(chip.dataset.presetVal || '');
@@ -549,16 +552,16 @@ export class SliderManager {
                 chip.setAttribute('aria-pressed', 'true');
                 chip.classList.remove(...inactiveClasses);
                 if (isBlueTheme) {
-                    chip.classList.add('is-active-blue', 'bg-blue-600', 'text-white', 'border-blue-600');
+                    chip.classList.add('is-active-blue', 'bg-blue-600', 'text-white', 'border-blue-600', 'shadow-flat');
                 } else if (isRoseTheme) {
-                    chip.classList.add('is-active-rose', 'bg-rose-600', 'text-white', 'border-rose-600');
+                    chip.classList.add('is-active-rose', 'bg-rose-600', 'text-white', 'border-rose-600', 'shadow-flat');
                 } else {
-                    chip.classList.add('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600');
+                    chip.classList.add('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600', 'shadow-flat');
                 }
             } else {
                 chip.setAttribute('aria-pressed', 'false');
                 chip.classList.remove(...activeColorClasses);
-                chip.classList.add('bg-slate-50', 'text-slate-700', 'border-slate-200/90', 'hover:border-slate-300', 'hover:bg-slate-100', 'hover:text-slate-900');
+                chip.classList.add('border-transparent', 'bg-slate-100/80', 'text-slate-600', 'hover:bg-slate-200/80', 'hover:text-slate-900', 'shadow-none');
             }
         });
     }

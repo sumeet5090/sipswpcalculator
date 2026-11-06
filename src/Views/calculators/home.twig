@@ -23,43 +23,38 @@
         Plan your complete investment lifecycle: Compound through monthly SIP accumulation, then transition seamlessly into inflation-adjusted SWP retirement cashflows with instant Excel export.
     </p>
 
-    <!-- EEAT Institutional Trust Bar (Desktop View) -->
-    <div class="hidden sm:flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-500 mb-4 pb-3 border-b border-slate-200/60 max-w-3xl mx-auto">
+    <!-- Compact Institutional Trust & Verification Strip -->
+    <div class="hidden sm:flex items-center justify-center gap-3 text-caption text-slate-500 font-medium mb-2.5 max-w-3xl mx-auto flex-wrap not-prose">
         <a href="https://www.linkedin.com/in/sumeet-boga/" target="_blank" rel="noopener"
-            class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            class="inline-flex items-center gap-1.5 hover:text-emerald-700 transition-colors">
             <img src="/assets/sumeet-boga-56.jpg" alt="Sumeet Boga — Creator of SIP Calculator"
-                class="w-7 h-7 rounded-full shadow-flat border border-emerald-100 object-cover" width="28" height="28"
+                class="w-5 h-5 rounded-full shadow-flat border border-emerald-100 object-cover" width="20" height="20"
                 fetchpriority="high" decoding="async">
-            <span>Engineered by <strong class="text-slate-700 font-bold">Sumeet Boga</strong> (Software &amp; Algorithmic Finance)</span>
+            <span>Engineered by <strong class="text-slate-700 font-bold">Sumeet Boga</strong></span>
         </a>
-        <span class="hidden sm:inline text-slate-300">|</span>
-        <div class="flex items-center gap-1.5 bg-growth-surface text-growth-emphasis px-3 py-1 rounded-full text-xs font-bold border border-growth-border shadow-flat">
+        <span class="text-slate-300">•</span>
+        <span class="inline-flex items-center gap-1 text-growth-emphasis font-semibold">
             <svg class="w-3.5 h-3.5 text-growth" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            <span>Verified for Accuracy: {{ "now"|date("F Y") }}</span>
-        </div>
-    </div>
-
-    <!-- Above-The-Fold Trust & Model Access Strip (Desktop View) -->
-    <div class="hidden sm:flex items-center justify-center gap-3 text-caption text-slate-500 font-medium mb-3 not-prose">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-micro font-bold text-emerald-800">
-            <span class="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-            <span><strong class="font-financial-mono text-slate-700">{{ weekly_calculations|number_format(0, '.', ',') }}+</strong> calculations this week</span>
+            <span>Verified: {{ "now"|date("F Y") }}</span>
+        </span>
+        <span class="text-slate-300">•</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-micro font-bold text-emerald-800">
+            <span class="inline-block w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+            <span><strong class="font-financial-mono text-slate-700">{{ weekly_calculations|number_format(0, '.', ',') }}+</strong> run this week</span>
         </span>
         <span class="text-slate-300">•</span>
         <button type="button" onclick="document.getElementById('downloadCsvBtn')?.click()"
-           class="inline-flex items-center gap-1.5 text-slate-700 hover:text-emerald-700 font-bold cursor-pointer transition-colors"
+           class="inline-flex items-center gap-1 text-slate-700 hover:text-emerald-700 font-bold cursor-pointer transition-colors text-caption"
            aria-label="Download Excel and CSV Schedule">
             <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
-            <span>Download Free Excel Model</span>
+            <span>Free Excel Model</span>
         </button>
     </div>
 </header>
-
-{% include 'components/calculator-dock.twig' %}
 
 <section id="calculator-section" class="scroll-mt-32" style="scroll-margin-top: 120px;"
     aria-labelledby="calculator-heading">
@@ -123,6 +118,19 @@
         </div>
     </div><!-- /12-col grid -->
 </section><!-- /calculator section -->
+
+<!-- Explore All 13 Institutional Wealth Calculators -->
+<div class="mt-8 mb-4">
+    <div class="flex items-center justify-between mb-2 px-1">
+        <span class="text-caption font-extrabold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
+            </svg>
+            <span>Explore All 13 Institutional Financial Calculators</span>
+        </span>
+    </div>
+    {% include 'components/calculator-dock.twig' %}
+</div>
 
 <!-- Pre-Calculated Scenario & Benchmark Tables for Search & AI Extractability -->
 {% include 'components/scenario-benchmark-table.twig' %}

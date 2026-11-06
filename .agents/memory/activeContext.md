@@ -5,7 +5,32 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Dual-Mode Starting Wealth Auto-Bridge & 4-Stage KPI Narrative Elevation Complete (Auto-Seeded Bridge Banner, Zero-Hydration-Jump SSR Pre-Rendering, 4-Stage Dual-Phase Story, Dynamic Multi-Lens Scaling, 100% Parity Maintained).
+- **Current Milestone:** Elite Product Design Polish & Visual Hierarchy Elevation Complete (Demoted 12-Calculator Dock to Workspace Footer, De-Bordered Ghost Slider Preset Chips, Toned Down Chart Milestones & Cleaned Redundant Chart Header, Consolidated Ledger Export Hub, Compressed Hero Trust Strip, Harmonized 3-Bucket Guide, 100% Quality & Parity Preserved).
+- **Implemented Fixes & Architectural Outcomes (2026-11-06 Session 20 - Elite Product Design Polish & Visual Hierarchy Elevation):**
+  - **Demoted 12-Calculator Switcher Strip Below Workspace (`home.twig`):**
+    - Repositioned `calculator-dock.twig` from above `#calculator-section` to immediately below the main calculator workspace with an authoritative section divider (`Explore All 13 Institutional Financial Calculators`).
+    - Elevates the flagship Dual Calculator ~75px higher above the fold, eliminates strip-stacking competition with the 3-mode switcher, and preserves all 13 internal SEO crawl links.
+  - **De-Bordered Ghost Slider Preset Chips (`input-range-pair.twig`, `SliderManager.ts` - Guardrail 3):**
+    - Updated inactive preset chips across both Twig template SSR and `SliderManager.ts` dynamic update handler to borderless ghost pills (`border-transparent bg-slate-100/80 text-slate-600 hover:bg-slate-200/80 hover:text-slate-900 shadow-none`).
+    - Active chips retain crisp theme borders, elevated surfaces, and bold typography (`is-active`, `is-active-blue`, `is-active-rose`).
+    - Eliminates ~35 unnecessary 1px gray borders from the left sidebar for an ultra-clean fintech console aesthetic.
+  - **Toned Down Chart Milestones & Streamlined Header (`chart-visualization.twig`, `ChartMilestoneCalculator.ts` - Guardrail 2):**
+    - Re-themed the 5 dynamic milestone cards from warning yellow/amber backgrounds (`from-amber-50/90`, `border-amber-200/80`, `bg-amber-100/80`) to crisp light neutral slate cards (`bg-white/95 border border-slate-200/90 shadow-flat hover:shadow-card hover:border-slate-300`).
+    - Wrapped static `#chart-header-gross` and `#chart-header-gain` in `.sr-only` to prevent visual duplication against Card 4 directly above while maintaining 100% DOM contract compatibility with `ChartManager.ts` and `TemplateDataParityTest.php`.
+  - **Consolidated Ledger Export & Share Toolbar (`yearly-breakdown-table.twig` - Guardrail 1):**
+    - Replaced the crowded 6-button toolbar with 2 clean executive controls: a primary emerald `📄 Download PDF Plan` CTA (`#openPdfModalBtn`) and a secondary `Export & Share ▾` dropdown container (`#downloadCsvBtn`, `#customizePdfModalBtn`, `#downloadSocialCardBtn`, `#shareCalcBtn`, `#saveCalculationBtn`).
+    - Strictly maintained single, unique DOM ID occurrences (0 duplicates) across the entire template and added a document click-outside listener to auto-close the dropdown.
+  - **Compressed Hero Section Trust Strip (`home.twig`):**
+    - Unified the author attribution link, accuracy verification badge, weekly calculations counter, and free Excel download CTA into a single compact metadata row, eliminating ~40px of vertical dead space.
+  - **Harmonized 3-Bucket Strategy Cards Palette (`guide-how-to.twig`):**
+    - Re-styled Card 2 (SWP) from jarring pastel pink/red (`bg-rose-50/50`) to soft institutional blue (`bg-blue-50/50 border border-blue-200/80 text-blue-900 bg-blue-100 text-blue-800`), aligning with the Stage 1 (Emerald) & Stage 2 (Blue) color design system.
+  - **Complete Quality & Parity Standards Verification:**
+    - `npm run typecheck` & `npm run build`: 0 errors (clean Vite bundle built in 279ms).
+    - `php tests/parity_check.php`: 62/62 cross-runtime parity tests passed 100%.
+    - `vendor/bin/phpunit`: 811 tests passed with 12,672 assertions (0 regressions).
+    - `vendor/bin/phpstan analyse --memory-limit=512M`: Level 8 passed across all 250 files (0 errors).
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
+    - Route Dispatch Tests: `/` rendered cleanly with status 200 OK.
 - **Implemented Fixes & Architectural Outcomes (2026-11-06 Session 19 - Dual-Mode Auto-Bridge & 4-Stage KPI Narrative Elevation):**
   - **Live Auto-Bridge Banner with Standalone Transition (`swp-fields.twig`, `CalculatorApp.ts`):**
     - In Dual (SIP + SWP) Mode, replaced the manual `Your Starting Wealth` slider with an informational auto-link bridge banner: `🔗 Phase 1 Matured SIP Corpus: ₹1.99 Cr (Auto-seeded into Phase 2 SWP)`.

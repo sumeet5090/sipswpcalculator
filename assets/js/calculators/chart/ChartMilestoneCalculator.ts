@@ -155,7 +155,7 @@ export class ChartMilestoneCalculator {
 
         milestones.forEach(m => {
             const card = document.createElement('div');
-            card.className = 'bg-gradient-to-r from-amber-50/90 via-white to-emerald-50/50 p-3.5 rounded-2xl border border-amber-200/80 shadow-sm flex items-center gap-3 transition-all duration-200 hover:shadow-md hover:border-amber-300 cursor-pointer';
+            card.className = 'bg-white/95 p-3.5 rounded-2xl border border-slate-200/90 shadow-flat flex items-center gap-3 transition-all duration-200 hover:shadow-card hover:border-slate-300 cursor-pointer';
 
             if (onHoverMilestone) {
                 card.addEventListener('mouseenter', () => onHoverMilestone(m.index));
@@ -165,7 +165,7 @@ export class ChartMilestoneCalculator {
             }
 
             const iconDiv = document.createElement('div');
-            iconDiv.className = 'flex items-center justify-center w-10 h-10 rounded-xl bg-amber-100/80 text-xl shrink-0 shadow-sm';
+            iconDiv.className = 'flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 text-slate-700 text-lg shrink-0 border border-slate-200/60 shadow-flat';
             iconDiv.textContent = m.icon;
 
             const textDiv = document.createElement('div');
