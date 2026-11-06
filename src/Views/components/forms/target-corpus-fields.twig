@@ -60,7 +60,7 @@
 
     <!-- Expected Return Rate (%) -->
     {% set rateLabelHtml %}
-    <div class="flex items-center gap-1.5 min-w-0">
+    <div class="flex items-center gap-1.5 min-w-0 flex-wrap">
         <label for="rate" id="rate_label" class="field-label text-ui-xs font-bold text-slate-800 tracking-tight normal-case select-none cursor-pointer hover:text-growth transition-colors leading-snug whitespace-nowrap" title="Double-click to reset to default">
             Expected Return
         </label>
@@ -68,12 +68,12 @@
         <!-- Smart Nudge trigger -->
         <div class="relative inline-flex items-center shrink-0">
             <button type="button" id="rate-nudge-btn"
-                class="inline-flex items-center gap-1 text-micro font-bold text-growth hover:text-growth-emphasis bg-growth-surface hover:bg-emerald-100 border border-growth-border px-1.5 py-0.5 rounded-md transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500 cursor-pointer shadow-flat shrink-0"
+                class="relative w-5 h-5 sm:w-4 sm:h-4 rounded-full bg-growth-surface hover:bg-emerald-100 text-growth hover:text-growth-emphasis text-micro font-bold inline-flex items-center justify-center border border-growth-border transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-flat shrink-0"
                 aria-haspopup="true" aria-expanded="false"
                 aria-controls="rate-nudge-popover"
-                title="AMFI Historical Return Guidance">
+                title="Not sure? Click for AMFI Historical Return Guidance">
                 <span>ℹ</span>
-                <span class="hidden xl:inline">Not sure?</span>
+                <span class="sr-only">Not sure? AMFI Category Guidance</span>
             </button>
 
             <!-- Rate Nudge AMFI Guidelines Popover -->

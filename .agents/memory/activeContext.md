@@ -1,11 +1,26 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-05*
+*Last Updated: 2026-11-06*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Dual-Mode Lumpsum Capital Pollution Eliminated & KPI Odometer Subline Decoupling Complete (Zero Double-Counted Capital, Zero Mid-Roll Snapshot Easing Captures, Zero Horizontal Monospace Digit Clipping, 100% Accounting Reconciliation & Cross-Runtime Parity Preserved).
+- **Current Milestone:** Expected Return Preset Options & Guidance Trigger Clipping Resolved (Expanded Multi-Row Preset Height Ceiling, Harmonized Circular Guidance Trigger, Zero Stepper Overlap, 100% Quality & Parity Maintained).
+- **Implemented Fixes & Architectural Outcomes (2026-11-06 Session 18 - Preset Options & Nudge Trigger Clipping Fix):**
+  - **Expanded Multi-Row Preset Chip Max-Height (`input-range-pair.twig`):**
+    - Upgraded desktop hover/focus max-height in `input-range-pair.twig` from `sm:group-hover/field:max-h-12` (48px) to `sm:group-hover/field:max-h-36` (144px).
+    - Multi-word preset options like Expected Return (`7% Debt`, `9% Hybrid`, `12% Large Cap`, `14% Mid Cap`, `18% Small Cap`) that wrap into 2 rows (~72px) now render completely with zero clipping and full clickability on both rows, while 1-row presets retain their natural compact ~32px height.
+  - **Harmonized Circular AMFI Guidance Trigger & Prevented Stepper Overlap (`sip-fields.twig`, `target-corpus-fields.twig`):**
+    - Refactored `rate-nudge-btn` from an oversized pill with `hidden xl:inline Not sure?` text (which previously widened to ~75px and clipped under the 140px stepper capsule) into a clean, compact circular `ℹ` help badge (`w-5 h-5 sm:w-4 sm:h-4 rounded-full bg-growth-surface text-growth`) matching the rest of the application's tooltip design.
+    - Preserved `Not sure?` accessible screen-reader microcopy and popover attributes (`id="rate-nudge-btn"`, `aria-haspopup="true"`, `aria-expanded="false"`, `aria-controls="rate-nudge-popover"`) to maintain 100% compatibility with `SmartNudgeController.ts` and `FormStructureParityTest`.
+    - Added `flex-wrap` to the label container (`min-w-0 flex-wrap`) ensuring responsive resilience without element clipping.
+  - **Complete Quality & Parity Standards Verification:**
+    - `npm run typecheck` & `npm run build`: 0 errors (clean Vite bundle built in 205ms).
+    - `php tests/parity_check.php`: 62/62 cross-runtime parity tests passed 100%.
+    - `vendor/bin/phpunit`: 811 tests passed with 12,672 assertions (0 regressions).
+    - `vendor/bin/phpstan analyse`: Level 8 passed across all 250 files (0 errors).
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
+    - Route Dispatch Tests: `/`, `/sip-calculator`, `/target-corpus-calculator`, `/swp-calculator` rendered cleanly with status 200.
 - **Implemented Fixes & Architectural Outcomes (2026-11-05 Session 17 - Dual-Mode Lumpsum Pollution & Odometer Subline Settling):**
   - **Eliminated Dual-Mode Lumpsum Capital Pollution (`CalculatorApp.ts`, `LifecycleSubsystem.ts`):**
     - Removed `this.sliderManager.updateFieldValue('lumpsum', maturedCorpus)` calls from `onLifecycleTransferred` and the Phase 1 bridge click listeners.

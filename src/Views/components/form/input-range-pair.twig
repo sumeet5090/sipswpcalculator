@@ -126,7 +126,7 @@
 
         {% if presets %}
             <!-- Mobile Horizontal Swipeable Strip / Desktop Hover-Revealed Flex Row (Reduces vertical sprawl by ~220px) -->
-            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 mt-1 sm:flex-wrap sm:max-h-0 sm:opacity-0 sm:overflow-hidden sm:group-hover/field:max-h-12 sm:group-hover/field:opacity-100 sm:group-focus-within/field:max-h-12 sm:group-focus-within/field:opacity-100 transition-all duration-200" role="group" aria-label="{{ label }} quick presets">
+            <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 mt-1 sm:flex-wrap sm:max-h-0 sm:opacity-0 sm:overflow-hidden sm:group-hover/field:max-h-36 sm:group-hover/field:opacity-100 sm:group-focus-within/field:max-h-36 sm:group-focus-within/field:opacity-100 transition-all duration-200" role="group" aria-label="{{ label }} quick presets">
                 {% for preset in presets %}
                     {% set p_label = preset.label|default(preset) %}
                     {% set p_val = preset.value|default(preset) %}
