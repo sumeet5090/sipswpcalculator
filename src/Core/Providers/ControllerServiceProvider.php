@@ -142,7 +142,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(FaqRepository::class),
                 $c->get(ViewRenderer::class),
                 $c->get(SchemaFactory::class),
-                $c->get(InsightRepository::class)
+                $c->get(InsightRepository::class),
+                $c->get(InvestmentCalculator::class)
             );
         });
 

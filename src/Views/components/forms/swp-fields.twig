@@ -2,16 +2,23 @@
 
 {% if calculator_type != 'swp' %}
 <!-- Lifecycle Accumulation Bridge (Transfer Matured SIP Corpus to SWP Starting Corpus) -->
-<div id="swp-accumulation-bridge" class="p-2 sm:p-2.5 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-200/90 flex items-center justify-between gap-2 shadow-subtle">
+<div id="swp-accumulation-bridge" class="p-2 sm:p-2.5 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-subtle">
     <div class="flex items-center gap-2 min-w-0">
-        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-600 text-white text-micro font-black shrink-0">✓</span>
+        <span class="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 text-micro font-black shrink-0">🔗</span>
         <div class="min-w-0">
-            <div class="text-micro font-extrabold text-growth-emphasis uppercase tracking-wider">Phase 1 Auto-Bridge</div>
-            <div class="text-ui-xs font-bold text-slate-800 truncate">Seeded with Matured SIP: <span id="bridge-matured-corpus-val" class="font-financial-mono text-growth-emphasis font-extrabold whitespace-nowrap">₹ --</span></div>
+            <div class="text-micro font-extrabold text-emerald-800 uppercase tracking-wider flex items-center gap-1.5">
+                <span>Phase 1 Matured SIP Corpus</span>
+                <span class="text-micro font-bold text-growth-emphasis bg-growth-surface border border-growth-border px-1.5 py-0.2 rounded-full">Auto-Seeded</span>
+            </div>
+            <div class="text-ui-xs font-bold text-slate-800 truncate">
+                <span id="bridge-matured-corpus-val" class="font-financial-mono text-growth-emphasis font-extrabold whitespace-nowrap">{{ initial_kpis and initial_kpis.maturity_compact ? initial_kpis.maturity_compact : '₹ --' }}</span>
+                <span class="text-slate-500 font-medium ml-1 text-micro">(Auto-seeded into Phase 2 SWP)</span>
+            </div>
         </div>
     </div>
-    <button type="button" id="apply-sip-to-swp-btn" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-ui-xs font-extrabold shadow-flat active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0" title="Transfer Phase 1 matured corpus into starting balance">
-        Sync Corpus
+    <button type="button" id="apply-sip-to-swp-btn" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 hover:text-slate-900 text-ui-xs font-bold shadow-flat active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center justify-center gap-1" title="Customize starting wealth as a standalone SWP calculator">
+        <span>Edit as Standalone SWP</span>
+        <span class="text-slate-400">→</span>
     </button>
 </div>
 {% endif %}

@@ -494,7 +494,7 @@ export class CalculatorApp {
      * Wire 1-Click SIP Matured Corpus -> SWP Bridge transition
      */
     private initLifecycleBridge(): void {
-        const bridgeBtn = this.dom.getElement('apply-sip-to-swp-btn');
+        const bridgeBtn = this.dom.getElement('apply-sip-to-swp-btn') || this.dom.getElement('edit-as-standalone-swp-btn');
         if (bridgeBtn) {
             bridgeBtn.addEventListener('click', () => {
                 if (this.latestResults.length === 0) return;

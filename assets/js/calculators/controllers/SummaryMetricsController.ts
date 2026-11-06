@@ -190,6 +190,89 @@ export class SummaryMetricsController {
         if (interestTitle) interestTitle.textContent = interestLabel;
         if (corpusTitle) corpusTitle.textContent = corpusLabel;
 
+        const isDualMode = Boolean(inputs.enable_swp && inputs.years > 0);
+        const sipYears = inputs.years || 0;
+        const swpYears = inputs.swp_years || 0;
+        const totalYears = isDualMode ? (sipYears + swpYears) : (inputs.enable_swp ? swpYears : sipYears);
+
+        let maturedCorpus = 0;
+        let maturedGains = 0;
+        let maturedGainPct = 0;
+
+        if (isDualMode && sipYears > 0) {
+            const maturedIndex = Math.min(sipYears - 1, data.length - 1);
+            const maturedRow = data[maturedIndex];
+            const maturedInvested = maturedRow.cumulative_invested;
+            let mCorpus = maturedRow.combined_total;
+            let mGains = Math.max(0, mCorpus - maturedInvested);
+
+            if (showPostTax && inputs.inflation > 0) {
+                const maturedLtcg = maturedRow.ltcg_tax ?? 0;
+                mCorpus = maturedRow.post_tax_total ?? Math.max(0, mCorpus - maturedLtcg);
+                mGains = Math.max(0, mGains - maturedLtcg);
+                mCorpus = MathEngine.calculateInflationDiscount(mCorpus, sipYears, inputs.inflation);
+                mGains = MathEngine.calculateInflationDiscount(mGains, sipYears, inputs.inflation);
+            } else if (showPostTax) {
+                const maturedLtcg = maturedRow.ltcg_tax ?? 0;
+                mCorpus = maturedRow.post_tax_total ?? Math.max(0, mCorpus - maturedLtcg);
+                mGains = Math.max(0, mGains - maturedLtcg);
+            } else if (inputs.inflation > 0) {
+                mCorpus = MathEngine.calculateInflationDiscount(mCorpus, sipYears, inputs.inflation);
+                mGains = MathEngine.calculateInflationDiscount(mGains, sipYears, inputs.inflation);
+            }
+
+            maturedCorpus = mCorpus;
+            maturedGains = mGains;
+            maturedGainPct = maturedInvested > 0 ? Math.round((maturedGains / maturedInvested) * 100) : 0;
+
+            const bridgeVal = this.dom.getElement('bridge-matured-corpus-val');
+            if (bridgeVal) {
+                bridgeVal.textContent = this.formatter.formatCompact(maturedRow.combined_total);
+            }
+        }
+
+        const card2DisplayValue = isDualMode ? maturedCorpus : finalGains;
+
+        const titleInvested = this.dom.getElement('title-invested');
+        const subtitleInvested = this.dom.getElement('subtitle-invested');
+        const titleInterest = this.dom.getElement('title-interest');
+        const subtitleInterest = this.dom.getElement('subtitle-interest');
+        const titleWithdrawn = this.dom.getElement('title-withdrawn');
+        const subtitleWithdrawn = this.dom.getElement('subtitle-withdrawn');
+        const titleCorpusText = this.dom.getElement('title-corpus-text');
+        const subtitleCorpus = this.dom.getElement('subtitle-corpus');
+
+        if (isDualMode) {
+            if (titleInvested) titleInvested.textContent = 'Total SIP Invested';
+            if (subtitleInvested) subtitleInvested.textContent = `${sipYears} Yrs Accumulation`;
+
+            let card2Title = 'Phase 1 SIP Maturity';
+            if (showPostTax && inputs.inflation > 0) card2Title = 'Phase 1 Post-Tax Real Maturity';
+            else if (showPostTax) card2Title = 'Phase 1 Post-Tax Maturity';
+            else if (inputs.inflation > 0) card2Title = 'Phase 1 Real Maturity';
+            if (titleInterest) titleInterest.textContent = card2Title;
+            if (subtitleInterest) subtitleInterest.textContent = `+${this.formatter.formatCompact(maturedGains)} Gains @ Yr ${sipYears}`;
+
+            if (titleWithdrawn) titleWithdrawn.textContent = 'Phase 2 Total SWP Paid';
+            if (subtitleWithdrawn) subtitleWithdrawn.textContent = `${swpYears} Yrs Retirement`;
+
+            let card4Title = `Final Corpus @ Yr ${totalYears}`;
+            if (showPostTax && inputs.inflation > 0) card4Title = `Post-Tax Real Corpus @ Yr ${totalYears}`;
+            else if (showPostTax) card4Title = `Post-Tax Corpus @ Yr ${totalYears}`;
+            else if (inputs.inflation > 0) card4Title = `Real Corpus @ Yr ${totalYears}`;
+            if (titleCorpusText) titleCorpusText.textContent = card4Title;
+            if (subtitleCorpus) subtitleCorpus.textContent = `+${this.formatter.formatCompact(finalGains)} Lifetime Gains`;
+        } else {
+            if (titleInvested) titleInvested.textContent = 'Total Invested';
+            if (subtitleInvested) subtitleInvested.textContent = 'Principal Capital';
+            if (titleInterest) titleInterest.textContent = interestLabel;
+            if (subtitleInterest) subtitleInterest.textContent = 'Compound Growth';
+            if (titleWithdrawn) titleWithdrawn.textContent = 'Total Payouts';
+            if (subtitleWithdrawn) subtitleWithdrawn.textContent = 'Systematic Cashflow';
+            if (titleCorpusText) titleCorpusText.textContent = corpusLabel;
+            if (subtitleCorpus) subtitleCorpus.textContent = '';
+        }
+
         // Dynamic Morphological Summary Cards Grid (SIP: 3-column, SWP: 4-column)
         const summaryGrid = this.dom.getElement('summary-cards-grid');
         const cardWithdrawn = this.dom.getElement('card-withdrawn');
@@ -211,7 +294,7 @@ export class SummaryMetricsController {
 
         // Odometer spring animation for KPI numbers
         this.odometer.animateValue('summary-invested', totalInvested);
-        this.odometer.animateValue('summary-interest', finalGains);
+        this.odometer.animateValue('summary-interest', card2DisplayValue);
         this.odometer.animateValue('summary-withdrawn', totalWithdrawn);
         this.odometer.animateValue('summary-corpus', finalCorpus);
         this.fitSummaryCards();
@@ -237,7 +320,7 @@ export class SummaryMetricsController {
         };
 
         updateMetricsDisplays('summary-invested', totalInvested);
-        updateMetricsDisplays('summary-interest', finalGains);
+        updateMetricsDisplays('summary-interest', card2DisplayValue);
         updateMetricsDisplays('summary-withdrawn', totalWithdrawn);
         updateMetricsDisplays('summary-corpus', finalCorpus);
 
@@ -256,14 +339,10 @@ export class SummaryMetricsController {
         // Update Gain Ratio Badge
         const gainBadge = this.dom.getElement('summary-gain-badge');
         if (gainBadge) {
-            if (totalInvested > 0) {
-                const gainPct = Math.round((finalGains / totalInvested) * 100);
-                const sign = gainPct >= 0 ? '+' : '';
-                gainBadge.textContent = `${sign}${gainPct}%`;
-                gainBadge.style.display = '';
-            } else {
-                gainBadge.style.display = 'none';
-            }
+            const activeGainPct = isDualMode ? maturedGainPct : (totalInvested > 0 ? Math.round((finalGains / totalInvested) * 100) : 0);
+            const sign = activeGainPct >= 0 ? '+' : '';
+            gainBadge.textContent = `${sign}${activeGainPct}%`;
+            gainBadge.style.display = '';
         }
 
         // Compounding Crossover Point (Year when annual return > annual investment)

@@ -22,6 +22,34 @@ class CurrencyHelper implements CurrencyFormatterInterface
     }
 
     /**
+     * Format dynamic large amounts with appropriate Lakh/Crore compact notation.
+     *
+     * @param float|int $amount
+     * @return string
+     */
+    public static function formatCompactInr(float|int $amount): string
+    {
+        $amount = round((float) $amount);
+        $absAmount = abs($amount);
+        $prefix = $amount < 0 ? '-₹' : '₹';
+
+        if ($absAmount >= 10000000.0) {
+            $val = number_format($absAmount / 10000000.0, 2, '.', '');
+            return $prefix . $val . ' Cr';
+        }
+        if ($absAmount >= 100000.0) {
+            $val = number_format($absAmount / 100000.0, 2, '.', '');
+            return $prefix . $val . ' L';
+        }
+        if ($absAmount >= 1000.0) {
+            $val = number_format($absAmount / 1000.0, 1, '.', '');
+            return $prefix . $val . ' k';
+        }
+
+        return self::formatInr($amount);
+    }
+
+    /**
      * Format dynamic large amounts with appropriate Lakh/Crore or Million/Billion suffix.
      *
      * @param float|int $amount
@@ -79,7 +107,7 @@ class CurrencyHelper implements CurrencyFormatterInterface
      * @param float|int $num
      * @return string
      */
-    private static function formatInr(float|int $num): string
+    public static function formatInr(float|int $num): string
     {
         $num = round($num);
         $money = (int) abs($num);

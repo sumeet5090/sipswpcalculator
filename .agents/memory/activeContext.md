@@ -5,7 +5,30 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Expected Return Preset Options & Guidance Trigger Clipping Resolved (Expanded Multi-Row Preset Height Ceiling, Harmonized Circular Guidance Trigger, Zero Stepper Overlap, 100% Quality & Parity Maintained).
+- **Current Milestone:** Dual-Mode Starting Wealth Auto-Bridge & 4-Stage KPI Narrative Elevation Complete (Auto-Seeded Bridge Banner, Zero-Hydration-Jump SSR Pre-Rendering, 4-Stage Dual-Phase Story, Dynamic Multi-Lens Scaling, 100% Parity Maintained).
+- **Implemented Fixes & Architectural Outcomes (2026-11-06 Session 19 - Dual-Mode Auto-Bridge & 4-Stage KPI Narrative Elevation):**
+  - **Live Auto-Bridge Banner with Standalone Transition (`swp-fields.twig`, `CalculatorApp.ts`):**
+    - In Dual (SIP + SWP) Mode, replaced the manual `Your Starting Wealth` slider with an informational auto-link bridge banner: `🔗 Phase 1 Matured SIP Corpus: ₹1.99 Cr (Auto-seeded into Phase 2 SWP)`.
+    - Added clean transition button `[Edit as Standalone SWP →]` (`id="apply-sip-to-swp-btn"`) that seeds `#corpus` with the current matured corpus and activates the SWP-only tab with zero math divergence or dead sliders.
+  - **4-Stage Dual-Phase Scoreboard Narrative (`chart-visualization.twig`, `SummaryMetricsController.ts`):**
+    - Structured the 4-card KPI row to narrate the 2-phase lifecycle in sequence:
+      - **Card 1 (`Total SIP Invested`):** `₹68.73 L` (Subtext: `20 Yrs Accumulation • ₹68,73,000`)
+      - **Card 2 (`Phase 1 SIP Maturity`):** `₹1.99 Cr` (Subtext: `+₹1.30 Cr Gains @ Yr 20`, Gain Badge: `+189%`)
+      - **Card 3 (`Phase 2 Total SWP Paid`):** `₹99.20 L` (Subtext: `20 Yrs Retirement • ₹99,19,786`)
+      - **Card 4 (`Final Corpus @ Yr 40`):** `₹7.64 Cr` (Subtext: `+₹7.94 Cr Lifetime Gains`)
+    - Added responsive fallback logic so single-mode calculators (SIP Only, SWP Only, Lumpsum, EMI, PPF, FD, CAGR) retain their standard labels and single-mode gain percentages without interference.
+  - **Zero-Hydration-Jump SSR Parity (`RenderHomeAction.php`, `CurrencyHelper.php`, `ControllerServiceProvider.php`):**
+    - Implemented `CurrencyHelper::formatCompactInr()` for standard Indian financial notations (`₹68.73 L`, `₹1.99 Cr`, `₹99.20 L`, `₹7.64 Cr`).
+    - Injected `InvestmentCalculator` into `RenderHomeAction` and generated `initial_kpis` pre-rendered into `chart-visualization.twig` markup, ensuring instant SSR presentation matching client-side JS with 0 hydration jump and 100% `TemplateDataParityTest` compliance.
+  - **Analytical Lens Consistency (`SummaryMetricsController.ts` - Guardrail 3):**
+    - When toggling Post-Tax (§112A) or Inflation lenses, Card 2 (Phase 1 SIP Maturity) discounts by the **Year 20 factor** (`inputs.years`), while Card 4 discounts by the **Year 40 factor** (`inputs.years + inputs.swp_years`).
+  - **Complete Quality & Parity Standards Verification:**
+    - `npm run typecheck` & `npm run build`: 0 errors (clean Vite bundle built in 205ms).
+    - `php tests/parity_check.php`: 62/62 cross-runtime parity tests passed 100%.
+    - `vendor/bin/phpunit`: 811 tests passed with 12,672 assertions (0 regressions).
+    - `vendor/bin/phpstan analyse --memory-limit=512M`: Level 8 passed across all 250 files (0 errors).
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
+    - Route Dispatch Tests: `/`, `/sip-calculator`, `/target-corpus-calculator`, `/swp-calculator` rendered cleanly with status 200.
 - **Implemented Fixes & Architectural Outcomes (2026-11-06 Session 18 - Preset Options & Nudge Trigger Clipping Fix):**
   - **Expanded Multi-Row Preset Chip Max-Height (`input-range-pair.twig`):**
     - Upgraded desktop hover/focus max-height in `input-range-pair.twig` from `sm:group-hover/field:max-h-12` (48px) to `sm:group-hover/field:max-h-36` (144px).

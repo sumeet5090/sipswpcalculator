@@ -65,83 +65,84 @@
             <!-- Card 1: Total Invested / Principal -->
             <div class="bg-white rounded-2xl border border-slate-200/90 shadow-flat px-3 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-subtle hover:border-slate-300 group flex flex-col justify-between min-w-0">
                 <div class="flex items-center justify-between gap-1 mb-1">
-                    <span class="text-caption font-bold text-slate-500 uppercase tracking-wider leading-tight">
-                        {{ card1Title }}
+                    <span id="title-invested" class="text-caption font-bold text-slate-500 uppercase tracking-wider leading-tight">
+                        {{ initial_kpis and initial_kpis.is_dual_mode ? 'Total SIP Invested' : card1Title }}
                     </span>
                     <span id="summary-invested-compact" class="hidden text-micro font-bold px-1.5 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200/80 tabular-nums"></span>
                 </div>
                 <div id="summary-invested-headline" class="text-ui-base sm:text-ui-lg font-black text-slate-900 font-financial-mono tabular-nums leading-tight py-0.5 text-left">
-                    ₹ --
+                    {{ initial_kpis and initial_kpis.invested_compact ? initial_kpis.invested_compact : '₹ --' }}
                 </div>
                 <div class="flex items-center justify-between gap-1 text-micro font-medium text-slate-500 font-financial-mono tracking-tight mt-0.5">
-                    <div id="summary-invested" class="text-ui-xs font-bold text-slate-700 font-financial-mono whitespace-nowrap overflow-visible" aria-label="₹ --">
-                        <span class="sr-only">₹ --</span>
-                        <span aria-hidden="true" data-nosnippet="true">₹ --</span>
+                    <div id="summary-invested" class="text-ui-xs font-bold text-slate-700 font-financial-mono whitespace-nowrap overflow-visible" aria-label="{{ initial_kpis and initial_kpis.invested_exact ? initial_kpis.invested_exact : '₹ --' }}">
+                        <span class="sr-only">{{ initial_kpis and initial_kpis.invested_exact ? initial_kpis.invested_exact : '₹ --' }}</span>
+                        <span aria-hidden="true" data-nosnippet="true">{{ initial_kpis and initial_kpis.invested_exact ? initial_kpis.invested_exact : '₹ --' }}</span>
                     </div>
-                    <span class="text-slate-400 truncate">{{ card1Sub }}</span>
+                    <span id="subtitle-invested" class="text-slate-400 truncate">{{ initial_kpis and initial_kpis.is_dual_mode ? (initial_kpis.sip_years ~ ' Yrs Accumulation') : card1Sub }}</span>
                 </div>
             </div>
 
-            <!-- Card 2: Compounding Gains / Interest -->
+            <!-- Card 2: Compounding Gains / Interest (Morphs into Phase 1 SIP Maturity in Dual Mode) -->
             <div class="bg-white rounded-2xl border border-slate-200/90 shadow-flat px-3 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-subtle hover:border-slate-300 group flex flex-col justify-between relative min-w-0">
                 <div id="title-interest-container" class="flex items-center justify-between gap-1 mb-1">
                     <span id="title-interest" class="text-caption font-bold text-slate-500 uppercase tracking-wider leading-tight">
-                        {{ card2Title }}
+                        {{ initial_kpis and initial_kpis.is_dual_mode ? 'Phase 1 SIP Maturity' : card2Title }}
                     </span>
                     <span id="summary-gain-badge" class="inline-flex items-center text-micro font-bold px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/80 tabular-nums">
-                        +0%
+                        {{ initial_kpis and initial_kpis.is_dual_mode ? ('+' ~ initial_kpis.maturity_gain_pct ~ '%') : '+0%' }}
                     </span>
                 </div>
                 <div id="summary-interest-headline" class="text-ui-base sm:text-ui-lg font-black text-slate-900 font-financial-mono tabular-nums leading-tight py-0.5 text-left">
-                    ₹ --
+                    {{ initial_kpis and initial_kpis.maturity_compact ? initial_kpis.maturity_compact : '₹ --' }}
                 </div>
                 <div class="flex items-center justify-between gap-1 text-micro font-medium text-emerald-700 font-financial-mono tracking-tight mt-0.5">
-                    <div id="summary-interest" class="text-ui-xs font-bold text-slate-700 font-financial-mono whitespace-nowrap overflow-visible" aria-label="₹ --">
-                        <span class="sr-only">₹ --</span>
-                        <span aria-hidden="true" data-nosnippet="true">₹ --</span>
+                    <div id="summary-interest" class="text-ui-xs font-bold text-slate-700 font-financial-mono whitespace-nowrap overflow-visible" aria-label="{{ initial_kpis and initial_kpis.maturity_exact ? initial_kpis.maturity_exact : '₹ --' }}">
+                        <span class="sr-only">{{ initial_kpis and initial_kpis.maturity_exact ? initial_kpis.maturity_exact : '₹ --' }}</span>
+                        <span aria-hidden="true" data-nosnippet="true">{{ initial_kpis and initial_kpis.maturity_exact ? initial_kpis.maturity_exact : '₹ --' }}</span>
                     </div>
                     <span id="summary-interest-compact" class="text-emerald-800 font-bold hidden"></span>
-                    <span class="text-slate-400 truncate">Compound Growth</span>
+                    <span id="subtitle-interest" class="text-slate-400 truncate">{{ initial_kpis and initial_kpis.is_dual_mode ? ('+' ~ initial_kpis.maturity_gains_compact ~ ' Gains @ Yr ' ~ initial_kpis.sip_years) : 'Compound Growth' }}</span>
                 </div>
             </div>
 
             <!-- Card 3: Total Withdrawn / Payment (Morphs visible only in SWP/Combo/EMI mode) -->
             <div id="card-withdrawn" class="{% if not isFourCardMode %}hidden {% endif %}bg-white rounded-2xl border border-slate-200/90 shadow-flat px-3 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-subtle hover:border-slate-300 group flex flex-col justify-between min-w-0">
                 <div class="flex items-center justify-between gap-1 mb-1">
-                    <span class="text-caption font-bold text-slate-500 uppercase tracking-wider leading-tight">
-                        {{ card3Title }}
+                    <span id="title-withdrawn" class="text-caption font-bold text-slate-500 uppercase tracking-wider leading-tight">
+                        {{ initial_kpis and initial_kpis.is_dual_mode ? 'Phase 2 Total SWP Paid' : card3Title }}
                     </span>
                     <span id="summary-withdrawn-compact" class="hidden text-micro font-bold px-1.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200/80 tabular-nums"></span>
                 </div>
                 <div id="summary-withdrawn-headline" class="text-ui-base sm:text-ui-lg font-black text-slate-900 font-financial-mono tabular-nums leading-tight py-0.5 text-left">
-                    ₹ --
+                    {{ initial_kpis and initial_kpis.withdrawn_compact ? initial_kpis.withdrawn_compact : '₹ --' }}
                 </div>
                 <div class="flex items-center justify-between gap-1 text-micro font-medium text-slate-500 font-financial-mono tracking-tight mt-0.5">
-                    <div id="summary-withdrawn" class="text-ui-xs font-bold text-slate-700 font-financial-mono whitespace-nowrap overflow-visible" aria-label="₹ --">
-                        <span class="sr-only">₹ --</span>
-                        <span aria-hidden="true" data-nosnippet="true">₹ --</span>
+                    <div id="summary-withdrawn" class="text-ui-xs font-bold text-slate-700 font-financial-mono whitespace-nowrap overflow-visible" aria-label="{{ initial_kpis and initial_kpis.withdrawn_exact ? initial_kpis.withdrawn_exact : '₹ --' }}">
+                        <span class="sr-only">{{ initial_kpis and initial_kpis.withdrawn_exact ? initial_kpis.withdrawn_exact : '₹ --' }}</span>
+                        <span aria-hidden="true" data-nosnippet="true">{{ initial_kpis and initial_kpis.withdrawn_exact ? initial_kpis.withdrawn_exact : '₹ --' }}</span>
                     </div>
-                    <span class="text-slate-400 truncate">{{ card3Sub }}</span>
+                    <span id="subtitle-withdrawn" class="text-slate-400 truncate">{{ initial_kpis and initial_kpis.is_dual_mode ? (initial_kpis.swp_years ~ ' Yrs Retirement') : card3Sub }}</span>
                 </div>
             </div>
 
             <!-- Card 4: Final Corpus / Net Wealth / EMI (Institutional Executive Anchor - Pure Light Mode) -->
             <div id="card-corpus" class="col-span-2 sm:col-span-1 order-first sm:order-none bg-emerald-50/90 rounded-2xl border-2 border-emerald-600 shadow-card px-3.5 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 ring-2 ring-emerald-500/15 relative group flex flex-col justify-between min-w-0">
                 <div id="title-corpus" class="text-caption font-extrabold text-slate-700 uppercase tracking-wider mb-1 leading-tight flex items-center justify-between gap-1">
-                    <span>{{ card4Title }}</span>
+                    <span id="title-corpus-text">{{ initial_kpis and initial_kpis.is_dual_mode ? ('Final Corpus @ Yr ' ~ initial_kpis.total_years) : card4Title }}</span>
                     <span id="summary-corpus-compact" class="hidden text-micro font-black text-emerald-950 bg-emerald-200/90 border border-emerald-300 px-2 py-0.5 rounded-full shadow-flat"></span>
                     <span class="text-micro font-extrabold text-white bg-emerald-600 border border-emerald-700/80 px-2 py-0.5 rounded-full shadow-flat">
                         Net Corpus
                     </span>
                 </div>
                 <div id="summary-corpus-headline" class="text-ui-base sm:text-ui-lg font-black text-slate-900 font-financial-mono tabular-nums leading-tight py-0.5 text-left">
-                    ₹ --
+                    {{ initial_kpis and initial_kpis.corpus_compact ? initial_kpis.corpus_compact : '₹ --' }}
                 </div>
                 <div class="flex items-center justify-between gap-1 text-micro font-medium text-slate-600 font-financial-mono tracking-tight mt-0.5">
-                    <div id="summary-corpus" class="text-ui-xs font-extrabold text-slate-800 font-financial-mono whitespace-nowrap overflow-visible" aria-label="₹ --">
-                        <span class="sr-only">₹ --</span>
-                        <span aria-hidden="true" data-nosnippet="true">₹ --</span>
+                    <div id="summary-corpus" class="text-ui-xs font-extrabold text-slate-800 font-financial-mono whitespace-nowrap overflow-visible" aria-label="{{ initial_kpis and initial_kpis.corpus_exact ? initial_kpis.corpus_exact : '₹ --' }}">
+                        <span class="sr-only">{{ initial_kpis and initial_kpis.corpus_exact ? initial_kpis.corpus_exact : '₹ --' }}</span>
+                        <span aria-hidden="true" data-nosnippet="true">{{ initial_kpis and initial_kpis.corpus_exact ? initial_kpis.corpus_exact : '₹ --' }}</span>
                     </div>
+                    <span id="subtitle-corpus" class="text-slate-500 truncate font-semibold">{{ initial_kpis and initial_kpis.is_dual_mode ? ('+' ~ initial_kpis.lifetime_gains_compact ~ ' Lifetime Gains') : '' }}</span>
                     <div id="post-tax-statutory-pill" class="hidden text-micro font-bold text-slate-700 bg-white border border-slate-200 px-1.5 py-0.5 rounded whitespace-nowrap">
                         §112A Net
                     </div>
