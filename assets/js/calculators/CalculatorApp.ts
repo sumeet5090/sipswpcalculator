@@ -637,6 +637,14 @@ export class CalculatorApp {
             });
         }
 
+        const savePlanBtn = this.dom.getElement('saveCalculationBtn');
+        if (savePlanBtn) {
+            savePlanBtn.addEventListener('click', () => {
+                const inputs = this.getInputs();
+                this.lifecycleSubsystem.saveScenarioDiffSnapshot(inputs, this.latestResults);
+            });
+        }
+
         this.initPassiveSeoClickListeners();
         this.initResizeListeners();
 

@@ -25,6 +25,17 @@ export class ScenarioDiffController {
         const clearBtn = this.dom.getElement('scenario-clear-btn');
         const shareDiffBtn = this.dom.getElement('scenario-share-diff-btn');
 
+        const card = this.dom.getElement('scenario-diff-card');
+        if (card && !this.snapshot) {
+            card.classList.add('hidden');
+            card.style.display = 'none';
+        }
+        const panel = this.dom.getElement('scenario-comparison-panel');
+        if (panel && !this.snapshot) {
+            panel.classList.add('hidden');
+            panel.style.display = 'none';
+        }
+
         if (snapshotBtn) {
             snapshotBtn.addEventListener('click', () => {
                 // Handled via external snapshot trigger or direct state capture
@@ -72,6 +83,12 @@ export class ScenarioDiffController {
         const card = this.dom.getElement('scenario-diff-card');
         if (card) {
             card.classList.remove('hidden');
+            card.style.display = '';
+        }
+        const panel = this.dom.getElement('scenario-comparison-panel');
+        if (panel) {
+            panel.classList.remove('hidden');
+            panel.style.display = '';
         }
         this.updateDiff(results);
 
@@ -120,6 +137,12 @@ export class ScenarioDiffController {
         const card = this.dom.getElement('scenario-diff-card');
         if (card) {
             card.classList.add('hidden');
+            card.style.display = 'none';
+        }
+        const panel = this.dom.getElement('scenario-comparison-panel');
+        if (panel) {
+            panel.classList.add('hidden');
+            panel.style.display = 'none';
         }
     }
 

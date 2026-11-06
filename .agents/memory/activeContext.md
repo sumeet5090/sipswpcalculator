@@ -24,6 +24,9 @@
     - Unified the author attribution link, accuracy verification badge, weekly calculations counter, and free Excel download CTA into a single compact metadata row, eliminating ~40px of vertical dead space.
   - **Harmonized 3-Bucket Strategy Cards Palette (`guide-how-to.twig`):**
     - Re-styled Card 2 (SWP) from jarring pastel pink/red (`bg-rose-50/50`) to soft institutional blue (`bg-blue-50/50 border border-blue-200/80 text-blue-900 bg-blue-100 text-blue-800`), aligning with the Stage 1 (Emerald) & Stage 2 (Blue) color design system.
+  - **Zero-Empty-State Scenario Comparison Panel (`scenario-comparison.twig`, `ScenarioDiffController.ts`, `CalculatorApp.ts`):**
+    - Wrapped the scenario comparison card in `#scenario-comparison-panel` with default `hidden` class and `style="display: none;"` on initial SSR/page load, eliminating the empty placeholder box (saving ~120px) and aligning the bottom of the right column with the left sidebar.
+    - Wired `setSnapshot` trigger to both the chart camera button (`#snapshot-scenario-btn`) and the ledger action (`#saveCalculationBtn` "Save Plan Snapshot") to smoothly reveal the comparison panel only upon explicit user save.
   - **Complete Quality & Parity Standards Verification:**
     - `npm run typecheck` & `npm run build`: 0 errors (clean Vite bundle built in 279ms).
     - `php tests/parity_check.php`: 62/62 cross-runtime parity tests passed 100%.
