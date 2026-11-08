@@ -70,6 +70,7 @@ class RenderHomeAction
         $totalYears = $inputs->isSwpEnabled() ? ($sipYears + $swpYears) : $sipYears;
 
         $initialKpis = [];
+        $initialSchedule = [];
         if (!empty($results)) {
             $lastRow = end($results);
             $totalInvested = (float) $lastRow['cumulative_invested'];
@@ -102,6 +103,22 @@ class RenderHomeAction
                 'corpus_exact'           => CurrencyHelper::formatInr($finalCorpus),
                 'lifetime_gains_compact' => CurrencyHelper::formatCompactInr($finalGains),
             ];
+
+            $totalCount = count($results);
+            foreach ($results as $row) {
+                $y = (int) $row['year'];
+                if ($y === 1 || $y % 5 === 0 || $y === $totalCount) {
+                    $initialSchedule[] = [
+                        'year'                   => $y,
+                        'is_final'               => $y === $totalCount,
+                        'cumulative_invested'    => CurrencyHelper::formatInr((float) $row['cumulative_invested']),
+                        'combined_total'         => CurrencyHelper::formatInr((float) $row['combined_total']),
+                        'interest'               => CurrencyHelper::formatInr((float) $row['interest']),
+                        'cumulative_withdrawals' => CurrencyHelper::formatInr((float) ($row['cumulative_withdrawals'] ?? 0)),
+                        'has_withdrawals'        => ((float) ($row['cumulative_withdrawals'] ?? 0)) > 0,
+                    ];
+                }
+            }
         }
 
         $templateData = array_merge($inputs->toTemplateData(), [
@@ -117,6 +134,7 @@ class RenderHomeAction
             'site_modified'       => $siteModified,
             'weekly_calculations' => $weeklyCalculations,
             'initial_kpis'        => $initialKpis,
+            'initial_schedule'    => $initialSchedule,
         ]);
 
         return Response::html($this->viewRenderer->render('calculators/home', $templateData));

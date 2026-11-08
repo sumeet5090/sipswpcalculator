@@ -276,13 +276,22 @@ export class SummaryMetricsController {
         // Dynamic Morphological Summary Cards Grid (SIP: 3-column, SWP: 4-column)
         const summaryGrid = this.dom.getElement('summary-cards-grid');
         const cardWithdrawn = this.dom.getElement('card-withdrawn');
+        const cardCorpus = this.dom.getElement('card-corpus');
         if (summaryGrid && cardWithdrawn) {
             if (inputs.enable_swp) {
-                summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-4 gap-3 transition-all duration-300';
+                summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 transition-all duration-300';
                 cardWithdrawn.classList.remove('hidden');
+                if (cardCorpus) {
+                    cardCorpus.classList.remove('col-span-2', 'order-first');
+                    cardCorpus.classList.add('col-span-1');
+                }
             } else {
-                summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-3 gap-3 transition-all duration-300';
+                summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5 transition-all duration-300';
                 cardWithdrawn.classList.add('hidden');
+                if (cardCorpus) {
+                    cardCorpus.classList.remove('col-span-1', 'order-first');
+                    cardCorpus.classList.add('col-span-2');
+                }
             }
         }
 

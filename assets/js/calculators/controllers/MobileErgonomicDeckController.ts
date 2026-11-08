@@ -43,6 +43,7 @@ export class MobileErgonomicDeckController {
         this.initDOM();
         this.bindEvents();
         this.bindGestureSwiping();
+        this.initScrollAutoVisibility();
     }
 
     private initDOM(): void {
@@ -108,6 +109,38 @@ export class MobileErgonomicDeckController {
                 }
             }
         }, { passive: true });
+    }
+
+    /**
+     * Auto-hide mobile bottom dock once the user reaches the KPI Scoreboard / Chart section.
+     */
+    private initScrollAutoVisibility(): void {
+        if (typeof window === 'undefined' || typeof IntersectionObserver === 'undefined') return;
+        const dock = this.dom.getElement('mobile-action-dock');
+        const targetSection = document.getElementById('chart-visualization') || document.getElementById('calculator-section');
+        if (!dock || !targetSection) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // When chart / KPI section enters viewport, slide the dock out smoothly
+                if (entry.isIntersecting) {
+                    dock.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+                } else {
+                    const rect = targetSection.getBoundingClientRect();
+                    // If target section is below viewport (user is in the sliders area above)
+                    if (rect.top > 0) {
+                        dock.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+                    } else {
+                        // If scrolled past into bottom tables/content
+                        dock.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+
+        observer.observe(targetSection);
     }
 
     /**

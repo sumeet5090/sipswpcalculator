@@ -1,12 +1,38 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-06*
+*Last Updated: 2026-11-08*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Elite Product Design Polish & Visual Hierarchy Elevation Complete (Demoted 12-Calculator Dock to Workspace Footer, De-Bordered Ghost Slider Preset Chips, Toned Down Chart Milestones & Cleaned Redundant Chart Header, Consolidated Ledger Export Hub, Compressed Hero Trust Strip, Harmonized 3-Bucket Guide, 100% Quality & Parity Preserved).
-- **Implemented Fixes & Architectural Outcomes (2026-11-06 Session 20 - Elite Product Design Polish & Visual Hierarchy Elevation):**
+- **Current Milestone:** Mobile Viewport (iPhone 16 / 393px) Ergonomics & UI/UX Elevation Complete (Symmetrical 2x2 KPI Grid, Zero-Void SSR Pre-Rendered Mobile Ledger, Royal Blue Stage 2 Sliders, Slim 56px Auto-Hiding Mobile Action Dock, Refined 8px Mobile Slider Rails, Full-Width Peace-of-Mind Telemetry Strip, 100% Quality & Parity Preserved).
+- **Implemented Fixes & Architectural Outcomes (2026-11-08 Session 21 - Mobile Ergonomics & UI/UX Elevation):**
+  - **Symmetrical 2x2 Chronological KPI Grid (`chart-visualization.twig`, `SummaryMetricsController.ts`):**
+    - Removed `col-span-2 order-first sm:order-none` on Card 4 in 4-card mode (`isFourCardMode`).
+    - Configured all 4 cards to render as equal `col-span-1` cells in a symmetrical `2×2` grid on mobile (`Row 1: Invested | Maturity`, `Row 2: SWP Paid | Final Corpus`), eliminating the awkward 3-row staircase and the 50% orphan empty hole on Row 3.
+    - Preserved `col-span-2` for Card 4 in 3-card mode (SIP Only) to cleanly anchor the bottom row under Cards 1 and 2.
+  - **Zero-Void SSR Mobile Cashflow Ledger (`RenderHomeAction.php`, `yearly-breakdown-table.twig`, `ResultsController.ts`):**
+    - Passed initial milestone schedule from `RenderHomeAction.php` and pre-rendered milestone cards (Years 1, 5, 10, 15, 20, 25, 30, 35, 40) directly into `#mobile-breakdown-cards` with `min-h-[140px]`, eliminating the ~600px blank white void on initial mobile load.
+    - Cleaned up duplicate node appends in `ResultsController.ts` and ensured seamless hydration.
+  - **Stage 2 Royal Blue Slider Tracks & Thumbs (`styles.css`):**
+    - Added explicit `.accent-blue-500, .accent-blue-600` linear gradients (`#3b82f6` to `#2563eb`) and Webkit/Moz thumbs (`#2563eb`) in `styles.css`.
+    - Eliminates the green-on-blue clash across all Stage 2 (SWP) sliders, perfectly harmonizing with the blue active preset chips and headers.
+  - **Slim 56px Mobile Action Dock with Auto-Hide (`base.twig`, `MobileErgonomicDeckController.ts`):**
+    - Consolidated `#mobile-action-dock` from a bulky ~115px double row into a sleek single-row executive console (~52px–56px height) featuring live Corpus/Gains, `[📊 Charts ↓]` jump link, `[📄 PDF]` action, and `[•••]` drawer trigger.
+    - Integrated an `IntersectionObserver` in `MobileErgonomicDeckController.ts` targeting `#chart-visualization` that automatically slides the dock out of view (`translate-y-full opacity-0 pointer-events-none`) when the user reaches the chart, freeing up screen space.
+    - Preserved 100% of test-mandated IDs (`#mobile-deck-corpus-val`, `#mobile-deck-sip-btn`, `#mobile-deck-swp-btn`, `#mobile-deck-share-btn`, `#dock-pdf-btn`, etc.) to pass `MobileErgonomicDeckTest.php`.
+  - **Refined 8px Mobile Slider Rails (`styles.css`):**
+    - Replaced the aggressive `height: 44px;` rule on `input[type=range]` under `@media (max-width: 640px)` with a sleek `height: 8px; margin: 10px 0;` rail and a 22px thumb with themed focus rings.
+    - Eliminates 44px thick progress-bar tubes, cuts vertical page height by ~25%, and prevents accidental slider drags during vertical scrolling.
+  - **Full-Width Peace-of-Mind Telemetry Strip (`chart-visualization.twig`):**
+    - Restructured `#purchasing-power-telemetry-strip` into a 2-tier layout: Top row pairs the shield icon and label with the Peace-of-Mind score pill; bottom row provides full width to the description paragraph with `whitespace-normal break-words leading-relaxed text-left`, eliminating cramped 1-word wrapping and truncation.
+  - **Complete Quality & Parity Standards Verification:**
+    - `npm run typecheck` & `npm run build`: 0 errors (clean Vite bundle built in 215ms).
+    - `php tests/parity_check.php`: 62/62 cross-runtime parity tests passed 100%.
+    - `vendor/bin/phpunit`: 811 tests passed with 12,672 assertions (0 regressions).
+    - `vendor/bin/phpstan analyse --memory-limit=512M`: Level 8 passed across all 250 files (0 errors).
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
+    - Route Dispatch Tests: `/` rendered cleanly with status 200 OK.
   - **Demoted 12-Calculator Switcher Strip Below Workspace (`home.twig`):**
     - Repositioned `calculator-dock.twig` from above `#calculator-section` to immediately below the main calculator workspace with an authoritative section divider (`Explore All 13 Institutional Financial Calculators`).
     - Elevates the flagship Dual Calculator ~75px higher above the fold, eliminates strip-stacking competition with the 3-mode switcher, and preserves all 13 internal SEO crawl links.

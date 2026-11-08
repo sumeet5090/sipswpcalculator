@@ -126,7 +126,7 @@
             </div>
 
             <!-- Card 4: Final Corpus / Net Wealth / EMI (Institutional Executive Anchor - Pure Light Mode) -->
-            <div id="card-corpus" class="col-span-2 sm:col-span-1 order-first sm:order-none bg-emerald-50/90 rounded-2xl border-2 border-emerald-600 shadow-card px-3.5 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 ring-2 ring-emerald-500/15 relative group flex flex-col justify-between min-w-0">
+            <div id="card-corpus" class="{% if isFourCardMode %}col-span-1{% else %}col-span-2 sm:col-span-1{% endif %} bg-emerald-50/90 rounded-2xl border-2 border-emerald-600 shadow-card px-3.5 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 ring-2 ring-emerald-500/15 relative group flex flex-col justify-between min-w-0">
                 <div id="title-corpus" class="text-caption font-extrabold text-slate-700 uppercase tracking-wider mb-1 leading-tight flex items-center justify-between gap-1">
                     <span id="title-corpus-text">{{ initial_kpis and initial_kpis.is_dual_mode ? ('Final Corpus @ Yr ' ~ initial_kpis.total_years) : card4Title }}</span>
                     <span id="summary-corpus-compact" class="hidden text-micro font-black text-emerald-950 bg-emerald-200/90 border border-emerald-300 px-2 py-0.5 rounded-full shadow-flat"></span>
@@ -153,33 +153,37 @@
 
     {% if calculator_type not in ['emi', 'ppf', 'fd', 'cagr', 'compound_interest', 'inflation'] %}
     <!-- Real Purchasing Power & Peace-of-Mind Telemetry Strip (Dynamic Risk Empathy) -->
-    <div id="purchasing-power-telemetry-strip" class="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-teal-50/70 via-emerald-50/40 to-white border border-teal-200/80 shadow-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-all">
-        <div class="flex items-start sm:items-center gap-3 min-w-0">
-            <div class="flex items-center justify-center w-8 h-8 rounded-xl bg-teal-50 border border-teal-200/80 text-teal-800 text-ui-sm font-extrabold shrink-0 shadow-flat">
-                <svg class="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
-                </svg>
-            </div>
-            <div class="min-w-0">
-                <div class="flex items-center gap-2 flex-wrap">
+    <div id="purchasing-power-telemetry-strip" class="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-teal-50/70 via-emerald-50/40 to-white border border-teal-200/80 shadow-card flex flex-col gap-2 sm:gap-2.5 transition-all">
+        <!-- Row 1: Header (Icon, Reality Metric & Peace-of-Mind Score Pill) -->
+        <div class="w-full flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-teal-50 border border-teal-200/80 text-teal-800 text-ui-sm font-extrabold shrink-0 shadow-flat">
+                    <svg class="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                    </svg>
+                </div>
+                <div class="flex items-center gap-1.5 flex-wrap">
                     <span class="text-caption font-extrabold text-slate-500 uppercase tracking-wider">Inflation-Adjusted Reality:</span>
                     <strong id="real-purchasing-corpus" class="text-ui-xs sm:text-ui-sm font-black font-financial-mono text-slate-900">₹ --</strong>
-                    <span id="peace-of-mind-badge" class="text-ui-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 whitespace-nowrap shadow-flat flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                        <span>Bulletproof Resilience</span>
-                    </span>
                 </div>
-                <p id="purchasing-power-anchor" class="text-caption text-slate-600 truncate sm:whitespace-normal font-medium mt-0.5">
-                    Perpetual sovereign wealth: provides ₹1,20,000/mo lifetime safe withdrawal with zero capital erosion.
-                </p>
+            </div>
+            <!-- Score & Resilience Badge -->
+            <div class="flex items-center gap-2 shrink-0 ml-auto sm:ml-0">
+                <span id="peace-of-mind-badge" class="text-ui-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 whitespace-nowrap shadow-flat flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                    <span>Bulletproof Resilience</span>
+                </span>
+                <div class="text-right flex items-center gap-1 px-2 py-0.5 rounded-lg bg-teal-50/80 border border-teal-200/60">
+                    <span class="text-micro font-bold uppercase tracking-wider text-slate-500">Score</span>
+                    <span id="peace-of-mind-score" class="text-ui-xs font-black font-financial-mono text-emerald-800">85/100</span>
+                </div>
             </div>
         </div>
-        <div class="flex items-center gap-2 self-end sm:self-center shrink-0">
-            <div class="text-right">
-                <div class="text-micro font-extrabold uppercase tracking-wider text-slate-400">Peace-of-Mind</div>
-                <div id="peace-of-mind-score" class="text-ui-xs font-black font-financial-mono text-emerald-700">85/100</div>
-            </div>
-        </div>
+
+        <!-- Row 2: Full-Width Contextual Safe Withdrawal Insight Paragraph -->
+        <p id="purchasing-power-anchor" class="text-caption text-slate-600 leading-relaxed font-medium whitespace-normal break-words text-left w-full pl-0 sm:pl-9">
+            Perpetual sovereign wealth: provides ₹1,20,000/mo lifetime safe withdrawal with zero capital erosion.
+        </p>
     </div>
     {% endif %}
 

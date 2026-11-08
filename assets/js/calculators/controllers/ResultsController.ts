@@ -638,8 +638,6 @@ export class ResultsController {
                 interestCol.appendChild(interestLabel);
                 interestCol.appendChild(interestVal);
                 grid.appendChild(interestCol);
-                interestCol.appendChild(interestVal);
-                grid.appendChild(interestCol);
 
                 if (enableSwp && (row.cumulative_withdrawals ?? 0) > 0) {
                     const withCol = document.createElement('div');

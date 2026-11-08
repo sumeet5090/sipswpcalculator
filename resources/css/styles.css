@@ -690,6 +690,11 @@ input[type=range].accent-rose-600 {
     background: linear-gradient(to right, var(--color-payout, #be123c) 0%, var(--color-payout-emphasis, #881337) var(--range-progress, 0%), var(--color-slate-200, #e2e8f0) var(--range-progress, 0%), var(--color-slate-200, #e2e8f0) 100%);
 }
 
+input[type=range].accent-blue-500,
+input[type=range].accent-blue-600 {
+    background: linear-gradient(to right, #3b82f6 0%, #2563eb var(--range-progress, 0%), var(--color-slate-200, #e2e8f0) var(--range-progress, 0%), var(--color-slate-200, #e2e8f0) 100%);
+}
+
 /* Webkit Thumb */
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -771,6 +776,41 @@ input[type=range].accent-rose-500:active::-moz-range-thumb,
 input[type=range].accent-rose-600:active::-moz-range-thumb {
     background: #be123c;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 0 7px rgba(225, 29, 72, 0.35);
+}
+
+/* Blue Variant Thumbs */
+input[type=range].accent-blue-500::-webkit-slider-thumb,
+input[type=range].accent-blue-600::-webkit-slider-thumb {
+    background: #2563eb;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+input[type=range].accent-blue-500:hover::-webkit-slider-thumb,
+input[type=range].accent-blue-600:hover::-webkit-slider-thumb {
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2), 0 0 0 5px rgba(37, 99, 235, 0.28);
+}
+
+input[type=range].accent-blue-500:active::-webkit-slider-thumb,
+input[type=range].accent-blue-600:active::-webkit-slider-thumb {
+    background: #1d4ed8;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 0 7px rgba(37, 99, 235, 0.35);
+}
+
+input[type=range].accent-blue-500::-moz-range-thumb,
+input[type=range].accent-blue-600::-moz-range-thumb {
+    background: #2563eb;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+input[type=range].accent-blue-500:hover::-moz-range-thumb,
+input[type=range].accent-blue-600:hover::-moz-range-thumb {
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2), 0 0 0 5px rgba(37, 99, 235, 0.28);
+}
+
+input[type=range].accent-blue-500:active::-moz-range-thumb,
+input[type=range].accent-blue-600:active::-moz-range-thumb {
+    background: #1d4ed8;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 0 7px rgba(37, 99, 235, 0.35);
 }
 
 /* Hide default track pseudo-elements so dynamic background shows through */
@@ -1149,23 +1189,33 @@ input[type=range]::-moz-range-track {
         box-shadow: var(--glass-shadow);
     }
 
-    /* Mobile: larger slider thumb for touch targets (min 48px touch area) */
+    /* Mobile: refined slider track with comfortable tap thumb */
     input[type=range] {
-        height: 44px;
-        /* invisible touch area meets 48px guideline */
+        height: 8px;
+        margin: 10px 0;
     }
 
     input[type=range]::-webkit-slider-thumb {
-        height: 24px;
-        width: 24px;
-        margin-top: -9px;
-        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        height: 22px;
+        width: 22px;
+        margin-top: -7px;
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
     }
 
     input[type=range]::-moz-range-thumb {
-        height: 24px;
-        width: 24px;
-        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        height: 22px;
+        width: 22px;
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+    }
+
+    input[type=range].accent-blue-500::-webkit-slider-thumb,
+    input[type=range].accent-blue-600::-webkit-slider-thumb {
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+    }
+
+    input[type=range].accent-rose-500::-webkit-slider-thumb,
+    input[type=range].accent-rose-600::-webkit-slider-thumb {
+        box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.15);
     }
 
     /* Goal Reverser hero input */
