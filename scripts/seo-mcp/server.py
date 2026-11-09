@@ -20,6 +20,8 @@ GSC_KEY_PATH = os.path.expanduser(
 )
 DEFAULT_SITE_URL = os.environ.get("GSC_SITE_URL", "sc-domain:sipswpcalculator.com")
 BING_API_KEY = os.environ.get("BING_API_KEY", "")
+GA4_PROPERTY_ID = os.environ.get("GA4_PROPERTY_ID", "")
+GA4_SCOPES = ["https://www.googleapis.com/auth/analytics.readonly"]
 
 
 def get_gsc_service():
@@ -31,6 +33,49 @@ def get_gsc_service():
         GSC_KEY_PATH, scopes=scopes
     )
     return build("searchconsole", "v1", credentials=creds)
+
+
+def get_ga4_service():
+    if not os.path.exists(GSC_KEY_PATH):
+        raise FileNotFoundError(f"Service account credentials file not found at {GSC_KEY_PATH}")
+    
+    creds = service_account.Credentials.from_service_account_file(
+        GSC_KEY_PATH, scopes=GA4_SCOPES
+    )
+    return build("analyticsdata", "v1beta", credentials=creds)
+
+
+def get_ga4_admin_service():
+    if not os.path.exists(GSC_KEY_PATH):
+        raise FileNotFoundError(f"Service account credentials file not found at {GSC_KEY_PATH}")
+    
+    creds = service_account.Credentials.from_service_account_file(
+        GSC_KEY_PATH, scopes=GA4_SCOPES
+    )
+    return build("analyticsadmin", "v1beta", credentials=creds)
+
+
+def resolve_ga4_property_id(explicit_id: Optional[str] = None) -> Optional[str]:
+    """Resolve GA4 Property ID from explicit argument, environment variable, or auto-discovery."""
+    if explicit_id:
+        return explicit_id.replace("properties/", "").strip()
+    
+    env_id = os.environ.get("GA4_PROPERTY_ID", GA4_PROPERTY_ID).replace("properties/", "").strip()
+    if env_id:
+        return env_id
+        
+    try:
+        admin_service = get_ga4_admin_service()
+        response = admin_service.accountSummaries().list().execute()
+        for account in response.get("accountSummaries", []):
+            for prop in account.get("propertySummaries", []):
+                prop_id = prop.get("property", "").replace("properties/", "").strip()
+                if prop_id:
+                    return prop_id
+    except Exception:
+        pass
+        
+    return None
 
 
 @mcp.tool
@@ -165,6 +210,189 @@ def bing_indexnow_submit(host: str, key: str, url_list: List[str], key_location:
         "status_code": resp.status_code,
         "success": resp.status_code in [200, 202],
         "message": "URLs submitted successfully to IndexNow" if resp.status_code in [200, 202] else resp.text
+    }
+
+
+@mcp.tool
+def ga4_query_report(
+    property_id: Optional[str] = None,
+    days: int = 28,
+    metrics: Optional[List[str]] = None,
+    dimensions: Optional[List[str]] = None,
+    row_limit: int = 50,
+    start_row: int = 0
+) -> Dict[str, Any]:
+    """
+    Query historical traffic, sessions, pageviews, and user engagement metrics from Google Analytics 4 (GA4).
+    
+    Args:
+        property_id: The numeric GA4 Property ID (e.g. '123456789' or 'properties/123456789').
+                     Defaults to auto-discovery or configured GA4_PROPERTY_ID.
+        days: Number of days back to query (e.g. 7, 28, 90). Defaults to 28 days.
+        metrics: Metrics to query (e.g. 'activeUsers', 'sessions', 'screenPageViews', 'averageSessionDuration', 'bounceRate', 'conversions').
+                 Defaults to ['activeUsers', 'sessions', 'screenPageViews', 'averageSessionDuration', 'bounceRate'].
+        dimensions: Dimensions to group by (e.g. 'pagePath', 'sessionDefaultChannelGroup', 'country', 'deviceCategory', 'date').
+                    Defaults to ['pagePath'].
+        row_limit: Maximum number of rows to return (up to 10000). Defaults to 50.
+        start_row: Zero-based row offset for pagination. Defaults to 0.
+    """
+    target_property = resolve_ga4_property_id(property_id)
+    if not target_property:
+        return {
+            "error": "GA4 Property ID not provided or discovered.",
+            "instructions": (
+                "Provide the numeric property_id parameter or set GA4_PROPERTY_ID in environment/.agents/mcp_config.json. "
+                "Also ensure the service account (gsc-bot@sipswpcalculator-gsc.iam.gserviceaccount.com) "
+                "is added as a Viewer in Google Analytics Admin -> Property Access Management."
+            )
+        }
+
+    if metrics is None:
+        metrics = ["activeUsers", "sessions", "screenPageViews", "averageSessionDuration", "bounceRate"]
+    if dimensions is None:
+        dimensions = ["pagePath"]
+
+    start_date = f"{days}daysAgo"
+    end_date = "yesterday"
+
+    request_body = {
+        "dateRanges": [{"startDate": start_date, "endDate": end_date}],
+        "dimensions": [{"name": dim} for dim in dimensions],
+        "metrics": [{"name": met} for met in metrics],
+        "limit": min(row_limit, 10000),
+        "offset": start_row
+    }
+
+    try:
+        service = get_ga4_service()
+        response = service.properties().runReport(
+            property=f"properties/{target_property}", body=request_body
+        ).execute()
+    except Exception as e:
+        return {
+            "error": f"GA4 Data API error: {str(e)}",
+            "property_id": target_property,
+            "help": (
+                "Ensure the service account gsc-bot@sipswpcalculator-gsc.iam.gserviceaccount.com "
+                "is granted 'Viewer' role under Google Analytics -> Admin -> Property Access Management."
+            )
+        }
+
+    dim_headers = [h.get("name", "") for h in response.get("dimensionHeaders", [])]
+    metric_headers = [h.get("name", "") for h in response.get("metricHeaders", [])]
+    
+    formatted_rows = []
+    for r in response.get("rows", []):
+        row_dims = {dim_headers[i]: v.get("value") for i, v in enumerate(r.get("dimensionValues", []))}
+        row_metrics = {}
+        for i, v in enumerate(r.get("metricValues", [])):
+            val_str = v.get("value", "0")
+            try:
+                val_num = float(val_str) if "." in val_str else int(val_str)
+                if isinstance(val_num, float):
+                    val_num = round(val_num, 3)
+            except ValueError:
+                val_num = val_str
+            row_metrics[metric_headers[i]] = val_num
+            
+        formatted_rows.append({
+            "dimensions": row_dims,
+            "metrics": row_metrics
+        })
+
+    return {
+        "property_id": target_property,
+        "date_range": f"{start_date} to {end_date}",
+        "total_rows": response.get("rowCount", len(formatted_rows)),
+        "dimensions": dim_headers,
+        "metrics": metric_headers,
+        "rows": formatted_rows
+    }
+
+
+@mcp.tool
+def ga4_realtime_report(
+    property_id: Optional[str] = None,
+    metrics: Optional[List[str]] = None,
+    dimensions: Optional[List[str]] = None,
+    row_limit: int = 25
+) -> Dict[str, Any]:
+    """
+    Query real-time active users and events occurring on the site right now (last 30 minutes).
+    
+    Args:
+        property_id: The numeric GA4 Property ID. Defaults to auto-discovery or configured GA4_PROPERTY_ID.
+        metrics: Realtime metrics to query (e.g. 'activeUsers', 'eventCount'). Defaults to ['activeUsers'].
+        dimensions: Realtime dimensions to group by (e.g. 'unifiedScreenName', 'pagePath', 'country', 'city', 'deviceCategory').
+                    Defaults to ['pagePath'].
+        row_limit: Maximum number of rows to return (up to 1000). Defaults to 25.
+    """
+    target_property = resolve_ga4_property_id(property_id)
+    if not target_property:
+        return {
+            "error": "GA4 Property ID not provided or discovered.",
+            "instructions": (
+                "Provide the numeric property_id parameter or set GA4_PROPERTY_ID in environment/.agents/mcp_config.json. "
+                "Also ensure the service account (gsc-bot@sipswpcalculator-gsc.iam.gserviceaccount.com) "
+                "is added as a Viewer in Google Analytics Admin -> Property Access Management."
+            )
+        }
+
+    if metrics is None:
+        metrics = ["activeUsers"]
+    if dimensions is None:
+        dimensions = ["pagePath"]
+
+    request_body = {
+        "dimensions": [{"name": dim} for dim in dimensions],
+        "metrics": [{"name": met} for met in metrics],
+        "limit": min(row_limit, 1000)
+    }
+
+    try:
+        service = get_ga4_service()
+        response = service.properties().runRealtimeReport(
+            property=f"properties/{target_property}", body=request_body
+        ).execute()
+    except Exception as e:
+        return {
+            "error": f"GA4 Realtime API error: {str(e)}",
+            "property_id": target_property,
+            "help": (
+                "Ensure the service account gsc-bot@sipswpcalculator-gsc.iam.gserviceaccount.com "
+                "is granted 'Viewer' role under Google Analytics -> Admin -> Property Access Management."
+            )
+        }
+
+    dim_headers = [h.get("name", "") for h in response.get("dimensionHeaders", [])]
+    metric_headers = [h.get("name", "") for h in response.get("metricHeaders", [])]
+    
+    formatted_rows = []
+    total_active_users = 0
+    for r in response.get("rows", []):
+        row_dims = {dim_headers[i]: v.get("value") for i, v in enumerate(r.get("dimensionValues", []))}
+        row_metrics = {}
+        for i, v in enumerate(r.get("metricValues", [])):
+            val_str = v.get("value", "0")
+            try:
+                val_num = int(val_str) if "." not in val_str else round(float(val_str), 3)
+            except ValueError:
+                val_num = val_str
+            row_metrics[metric_headers[i]] = val_num
+            if metric_headers[i] == "activeUsers" and isinstance(val_num, (int, float)):
+                total_active_users += int(val_num)
+                
+        formatted_rows.append({
+            "dimensions": row_dims,
+            "metrics": row_metrics
+        })
+
+    return {
+        "property_id": target_property,
+        "total_active_users_last_30m": total_active_users,
+        "dimensions": dim_headers,
+        "metrics": metric_headers,
+        "rows": formatted_rows
     }
 
 
