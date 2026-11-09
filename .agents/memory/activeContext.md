@@ -1,11 +1,17 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-09*
+*Last Updated: 2026-11-10*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** GA4 Reporting Integration into `seo-automation` FastMCP Server Complete & Verified with Live Data (Property ID `551282573` Configured, Realtime & Historical Reports Verified with Live Production Analytics).
+- **Current Milestone:** Telemetry Forensic Audit & Global Rules Hardening (Enshrined Comprehensive Planning, Zero-Guesswork Protocol, and Minute-Detail Technical Rigor in `.agents/AGENTS.md` and `.agents/memory/systemPatterns.md`).
+- **Implemented Fixes & Architectural Outcomes (2026-11-10 Session 25 - Global Rules Hardening & Zero-Ambiguity Mandate):**
+  - **Enshrined Rigorous Multi-Angle Planning & Zero-Guesswork Protocol (`.agents/AGENTS.md` & `.agents/memory/systemPatterns.md`):**
+    - Updated Section 1 (Development & Quality Assurance) and Section 8 (Architectural Planning & Pre-Implementation Discussions) in `.agents/AGENTS.md`.
+    - Added mandatory rule: planning must evaluate every dimension (performance/INP, software engineering standards, security, accessibility, SEO, SSR-client parity) down to minute details (exact DOM IDs, CSS utility tokens, function signatures, mathematical formulas).
+    - Established strict **Zero-Guesswork & Human Admin Clarification Protocol**: If any question, confusion, or fork in the road arises during planning, the agent must immediately approach the human admin for full clarification before proceeding. Zero guesswork or ambiguity is permitted into the implementation phase.
+    - Added System Pattern 5 in `.agents/memory/systemPatterns.md` codifying deep technical rigor in all `implementation_plan.md` artifacts.
 - **Implemented Fixes & Architectural Outcomes (2026-11-09 Session 24 - GA4 Analytics Reporting in FastMCP Server):**
   - **Google Analytics 4 API Integration (`scripts/seo-mcp/server.py`):**
     - Integrated `google-api-python-client` with `analyticsdata` v1beta and `analyticsadmin` v1beta APIs using the existing service account credentials (`gsc-key.json`).
