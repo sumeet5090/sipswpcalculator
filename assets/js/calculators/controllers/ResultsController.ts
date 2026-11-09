@@ -519,6 +519,7 @@ export class ResultsController {
                 const isFinal = row.year === data.length;
 
                 card.className = "snap-center shrink-0 w-[84vw] max-w-[320px] p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-subtle space-y-2 transition-all flex flex-col justify-between";
+                card.dataset.cardYear = String(row.year);
 
                 if (this.heatmapEnabled && row.interest > 0) {
                     const intensity = Math.min(1, row.interest / maxInterest);

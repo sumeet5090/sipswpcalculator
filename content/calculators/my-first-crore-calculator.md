@@ -1,8 +1,8 @@
 ---
 og_image: "/assets/og/og-my-first-crore-calculator.jpg"
-title: "1 Crore SIP Calculator: How Much Monthly SIP for ₹1 Cr?"
-subtitle: "Find the exact monthly SIP needed to reach ₹1 Crore in 5, 10, 15, or 20 years. Free goal planning calculator with 10% annual step-up compounding."
-meta_desc: "Find the exact monthly SIP required to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% annual step-up savings & 2026 LTCG tax impacts with free PDF report."
+title: "1 Crore SIP Calculator (with Free Excel & Tax Table)"
+subtitle: "Find the exact monthly SIP needed to reach ₹1 Crore in 5, 10, 15, or 20 years. Free goal planning calculator with 10% annual step-up compounding & downloadable Excel."
+meta_desc: "Find the exact monthly SIP required to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% step-up compounding & 2026 LTCG tax impacts with free downloadable Excel."
 keywords: "crore calculator, 1 crore in 5 years sip, reach 1 crore sip, how much sip for 1 crore, 1 crore mutual fund calculator, crorepathi sip planner, 1 crore in 10 years sip"
 schema_name: "1 Crore SIP Calculator — Monthly Investment to Reach ₹1 Cr"
 seo_category: "growth"
@@ -12,7 +12,7 @@ date: "2026-08-03"
 
 ---
 
-> **Direct Answer (BLUF):** Reaching **₹1 Crore** through a mutual fund SIP at an expected 12% equity CAGR requires **₹1,21,232/month for 5 years**, **₹43,041/month for 10 years**, **₹19,819/month for 15 years**, or **₹10,009/month for 20 years**. Activating a **10% annual step-up** slashes your starting commitment significantly: you need **~₹1,02,000/month (5 yrs)**, **₹26,550/month (10 yrs)**, or **₹11,516/month (15 yrs)**. Under 2026 Section 112A rules, long-term capital gains (>12 months) are taxed at 12.5% on profits exceeding ₹1.25 Lakh/year.
+> **Direct Answer (BLUF):** Reaching **₹1 Crore** through a mutual fund SIP at an expected 12% equity CAGR requires **₹1,21,232/month for 5 years**, **₹43,041/month for 10 years**, **₹19,819/month for 15 years**, or **₹10,009/month for 20 years**. Activating a **10% annual step-up** slashes your starting commitment significantly: you need **~₹1,02,000/month (5 yrs)**, **₹26,550/month (10 yrs)**, or **₹11,516/month (15 yrs)**. Under 2026 Section 112A rules, long-term capital gains (>12 months) are taxed at 12.5% on profits exceeding ₹1.25 Lakh/year. Use the interactive calculator and downloadable Excel below to simulate custom tenures and inflation-adjusted targets.
 
 Accumulating your **first ₹1 Crore** is widely recognized across Indian personal finance as the single most critical psychological and financial milestone. In behavioral economics, this threshold is often described as escaping the "compounding gravitational pull." Because early wealth accumulation relies overwhelmingly on fresh savings out of monthly income, getting from ₹0 to ₹10 Lakhs or ₹1 Crore feels agonizingly slow. However, once an investor crosses the ₹1 Crore threshold, the portfolio generates more annual capital gains than most salaried professionals contribute in an entire year.
 

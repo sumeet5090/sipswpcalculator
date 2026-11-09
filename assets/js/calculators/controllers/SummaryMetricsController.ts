@@ -28,29 +28,77 @@ export class SummaryMetricsController {
     }
 
     /**
-     * Bind summary cards to smoothly scroll down to the yearly breakdown table on click.
+     * Navigate to and highlight a specific milestone year in the Cashflow Ledger.
+     */
+    public navigateToMilestoneYear(targetYear: number): void {
+        const tabBtn = document.getElementById('tab-yearly-breakdown');
+        if (tabBtn && tabBtn.getAttribute('aria-selected') !== 'true') {
+            tabBtn.click();
+        }
+
+        // If in 5Y density mode and target is not a milestone, expand to all years
+        const isOddMilestone = targetYear > 1 && targetYear % 5 !== 0;
+        if (isOddMilestone) {
+            const densityAllBtn = document.getElementById('table-density-all');
+            if (densityAllBtn && densityAllBtn.getAttribute('aria-selected') !== 'true') {
+                densityAllBtn.click();
+            }
+        }
+
+        const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+        if (isMobile) {
+            const mobileCard = document.querySelector<HTMLElement>(`#mobile-breakdown-cards [data-card-year="${targetYear}"]`);
+            if (mobileCard) {
+                mobileCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                mobileCard.classList.add('ring-2', 'ring-emerald-500', 'bg-emerald-50/90');
+                setTimeout(() => {
+                    mobileCard.classList.remove('ring-2', 'ring-emerald-500', 'bg-emerald-50/90');
+                }, 1400);
+                return;
+            }
+        }
+
+        // Desktop table row
+        const row = document.querySelector<HTMLElement>(`#breakdown-body tr[data-year="${targetYear}"]`);
+        if (row) {
+            row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            row.classList.add('bg-emerald-100/90', 'ring-2', 'ring-emerald-500/50');
+            setTimeout(() => {
+                row.classList.remove('bg-emerald-100/90', 'ring-2', 'ring-emerald-500/50');
+            }, 1400);
+            return;
+        }
+
+        // Fallback to table container
+        const tableTarget = document.getElementById('yearly-breakdown') || 
+                            document.getElementById('yearly-breakdown-section') || 
+                            document.getElementById('panel-yearly-breakdown');
+        if (tableTarget) {
+            tableTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    /**
+     * Bind summary cards to smoothly scroll down and highlight specific milestone years in the Cashflow Ledger.
      */
     private initCardClickHandlers(): void {
         const grid = this.dom.getElement('summary-cards-grid');
         if (!grid) return;
-        const cards = grid.querySelectorAll<HTMLElement>(':scope > div');
-        cards.forEach(card => {
+
+        const bindCard = (id: string, indexFallback: number, getTargetYear: () => number, label: string) => {
+            const card = this.dom.getElement(id) || (grid.children[indexFallback] as HTMLElement | undefined);
+            if (!card) return;
+
             card.classList.add('cursor-pointer');
             card.setAttribute('role', 'button');
             card.setAttribute('tabindex', '0');
-            card.setAttribute('aria-label', 'View detailed yearly breakdown');
+            card.setAttribute('aria-label', label);
+
             const handler = () => {
-                const tabBtn = document.getElementById('tab-yearly-breakdown');
-                if (tabBtn && tabBtn.getAttribute('aria-selected') !== 'true') {
-                    tabBtn.click();
-                }
-                const target = document.getElementById('yearly-breakdown') || 
-                               document.getElementById('yearly-breakdown-section') || 
-                               document.getElementById('panel-yearly-breakdown');
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                const targetYear = getTargetYear();
+                this.navigateToMilestoneYear(targetYear);
             };
+
             card.addEventListener('click', handler);
             card.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -58,7 +106,23 @@ export class SummaryMetricsController {
                     handler();
                 }
             });
-        });
+        };
+
+        bindCard('card-invested', 0, () => 1, 'View initial investment row in Cashflow Ledger');
+        bindCard('card-maturity', 1, () => {
+            const inputs = this.getInputs();
+            return inputs.years > 0 ? inputs.years : 1;
+        }, 'View Phase 1 SIP Maturity row in Cashflow Ledger');
+        bindCard('card-withdrawn', 2, () => {
+            const inputs = this.getInputs();
+            return inputs.enable_swp && inputs.years > 0 ? inputs.years + 1 : 1;
+        }, 'View retirement withdrawal cashflows in Cashflow Ledger');
+        bindCard('card-corpus', 3, () => {
+            const inputs = this.getInputs();
+            const sipYears = inputs.years || 0;
+            const swpYears = inputs.swp_years || 0;
+            return inputs.enable_swp ? (sipYears + swpYears) : (sipYears > 0 ? sipYears : 1);
+        }, 'View final wealth corpus in Cashflow Ledger');
     }
 
     /**
@@ -140,8 +204,10 @@ export class SummaryMetricsController {
 
     /**
      * Update top-level summary metrics with smooth odometer numeric roll physics.
+     * Supports Tier 1 instant text updates during active dragging, deferring
+     * layout-thrashing DOM measurements and multi-frame physics to settled state.
      */
-    updateSummaryMetrics(data: YearResult[]): void {
+    updateSummaryMetrics(data: YearResult[], isDragging: boolean = false): void {
         if (!data || data.length === 0) return;
 
         const lastRow = data[data.length - 1];
@@ -301,13 +367,6 @@ export class SummaryMetricsController {
             postTaxPill.style.display = showPostTax ? 'block' : 'none';
         }
 
-        // Odometer spring animation for KPI numbers
-        this.odometer.animateValue('summary-invested', totalInvested);
-        this.odometer.animateValue('summary-interest', card2DisplayValue);
-        this.odometer.animateValue('summary-withdrawn', totalWithdrawn);
-        this.odometer.animateValue('summary-corpus', finalCorpus);
-        this.fitSummaryCards();
-
         // Update Compact Indian Denomination Headlines & Badges (e.g. ₹1.20 Cr, ₹40.74 L)
         const updateMetricsDisplays = (baseId: string, val: number) => {
             const compactText = val > 0 ? this.formatter.formatCompact(val) : this.formatter.format(0);
@@ -333,6 +392,28 @@ export class SummaryMetricsController {
         updateMetricsDisplays('summary-withdrawn', totalWithdrawn);
         updateMetricsDisplays('summary-corpus', finalCorpus);
 
+        // Update Gain Ratio Badge
+        const gainBadge = this.dom.getElement('summary-gain-badge');
+        if (gainBadge) {
+            const activeGainPct = isDualMode ? maturedGainPct : (totalInvested > 0 ? Math.round((finalGains / totalInvested) * 100) : 0);
+            const sign = activeGainPct >= 0 ? '+' : '';
+            gainBadge.textContent = `${sign}${activeGainPct}%`;
+            gainBadge.style.display = '';
+        }
+
+        // ── TIER 1 FAST-PATH BAILOUT DURING ACTIVE POINTER DRAG ──
+        // Bypasses multi-frame odometer physics, layout font measurement loops, and forced DOM reflows
+        if (isDragging) {
+            return;
+        }
+
+        // Odometer spring animation for KPI numbers (executed once dragging pauses or completes)
+        this.odometer.animateValue('summary-invested', totalInvested);
+        this.odometer.animateValue('summary-interest', card2DisplayValue);
+        this.odometer.animateValue('summary-withdrawn', totalWithdrawn);
+        this.odometer.animateValue('summary-corpus', finalCorpus);
+        this.fitSummaryCards();
+
         // Update real purchasing power and peace-of-mind telemetry
         this.purchasingPower.updateDisplay(preTaxCorpus, inputs);
         this.updateNarrative(inputs);
@@ -343,15 +424,6 @@ export class SummaryMetricsController {
             corpusCard.classList.remove('metric-pulse-active');
             void (corpusCard as HTMLElement).offsetWidth; // Force DOM reflow
             corpusCard.classList.add('metric-pulse-active');
-        }
-
-        // Update Gain Ratio Badge
-        const gainBadge = this.dom.getElement('summary-gain-badge');
-        if (gainBadge) {
-            const activeGainPct = isDualMode ? maturedGainPct : (totalInvested > 0 ? Math.round((finalGains / totalInvested) * 100) : 0);
-            const sign = activeGainPct >= 0 ? '+' : '';
-            gainBadge.textContent = `${sign}${activeGainPct}%`;
-            gainBadge.style.display = '';
         }
 
         // Compounding Crossover Point (Year when annual return > annual investment)

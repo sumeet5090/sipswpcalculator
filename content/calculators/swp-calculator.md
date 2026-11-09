@@ -1,7 +1,7 @@
 ---
-title: "SWP Calculator India — Monthly Pension & Corpus Longevity"
-subtitle: "Free SWP calculator with step-up withdrawals & inflation protection for Indian mutual funds. See how long your corpus lasts, plan retirement income & export yearly tables."
-meta_desc: "Calculate monthly SWP payout, capital longevity & inflation-adjusted income for ₹10 Lakhs to ₹5 Crores in mutual funds. Free 2026 LTCG tax-efficient reports."
+title: "SWP Calculator India (with Free Excel & Longevity Table)"
+subtitle: "Free SWP calculator with step-up withdrawals & inflation protection for Indian mutual funds. Plan retirement income & export free month-by-month cashflow tables."
+meta_desc: "Calculate monthly SWP payout, capital longevity & inflation-adjusted income for ₹10 Lakhs to ₹5 Crores. Model 2026 LTCG tax with free downloadable Excel report."
 keywords: "swp calculator, swp calculator india, step up swp calculator, 5 crore swp calculator, 1 crore swp calculator, 30 lakh swp calculator, 5 lakh swp calculator, best swp for monthly income, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, swp tax calculator"
 schema_name: "SWP Calculator India — Monthly Pension & Withdrawal Planner"
 seo_category: "retirement"
@@ -14,7 +14,7 @@ og_image: "/assets/og/og-swp-calculator.jpg"
 
 ## The Definitive Guide to Systematic Withdrawal Plans (SWP) in India (2026 Edition)
 
-> **Direct Answer (BLUF):** A **Systematic Withdrawal Plan (SWP)** allows investors to withdraw a fixed monthly income from their mutual fund corpus while the remaining balance continues compounding. For retirement in India, an initial withdrawal rate of **4.0% to 5.0% paired with a 5% annual step-up** delivers a sustainable 25 to 30-year pension. Under 2026 tax rules, SWPs are significantly more tax-efficient than Fixed Deposits: only the capital gain portion of each withdrawal is taxed (Section 112A LTCG at 12.5% above the ₹1.25 Lakh annual exemption).
+> **Direct Answer (BLUF):** A **Systematic Withdrawal Plan (SWP)** allows investors to withdraw a fixed monthly income from their mutual fund corpus while the remaining balance continues compounding. For retirement in India, an initial withdrawal rate of **4.0% to 5.0% paired with a 5% annual step-up** delivers a sustainable 25 to 30-year pension. Under 2026 tax rules, SWPs are significantly more tax-efficient than FDs: only the capital gain portion is taxed (12.5% LTCG above ₹1.25L exemption). Use the interactive calculator and downloadable Excel below to evaluate sustainable payout horizons.
 
 A **Systematic Withdrawal Plan (SWP)** is an automated financial decumulation facility offered by Indian mutual fund houses that allows an investor to redeem a predetermined sum of money from their accumulated mutual fund scheme at regular intervals—most commonly on a monthly, quarterly, or annual basis. 
 

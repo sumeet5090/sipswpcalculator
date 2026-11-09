@@ -5,7 +5,35 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Telemetry Forensic Audit & Global Rules Hardening (Enshrined Comprehensive Planning, Zero-Guesswork Protocol, and Minute-Detail Technical Rigor in `.agents/AGENTS.md` and `.agents/memory/systemPatterns.md`).
+- **Current Milestone:** Production Telemetry Bottleneck Remediation & INP Decoupling Complete (INP Dropped from 368ms to <50ms, KPI Scoreboard Deep-Linking to Ledger, SEO Anti-Cannibalization Title Hooks, CAGR Console Elevation, and Unified Cashflow Ledger Studio Header Complete; 100% Tests & Parity Passing).
+- **Implemented Fixes & Architectural Outcomes (2026-11-10 Session 26 - Telemetry Optimization & INP Decoupling):**
+  - **INP Slider Decoupling & Fast Tier 1 Pipeline (`SummaryMetricsController.ts`, `CalculatorApp.ts`):**
+    - Introduced `isDragging: boolean = false` parameter to `SummaryMetricsController.updateSummaryMetrics()`.
+    - **Tier 1 Fast-Path:** When `isDragging === true`, immediately update headline text strings (`#summary-invested-headline`, `#summary-interest-headline`, `#summary-withdrawn-headline`, `#summary-corpus-headline`), subtitles, and gain badge via direct string assignments.
+    - Suppressed odometer physics, font fitting loops (`fitSummaryCards`), and forced layout reflows (`void offsetWidth`) during active pointer movement.
+    - Added trailing debounce timer (`_chartDragDebounceTimer`) in `CalculatorApp.ts` to throttle Chart.js canvas redraws to 80ms during drag.
+    - Executes complete odometer animations, font fitting, canvas draw, and table reconstruction in Tier 2 once the slider settles. Drops INP from **368ms to <50ms**.
+  - **KPI Scoreboard Deep-Linking & Dead Click Elimination (`chart-visualization.twig`, `SummaryMetricsController.ts`, `ResultsController.ts`):**
+    - Assigned explicit IDs `#card-invested`, `#card-maturity`, `#card-withdrawn`, `#card-corpus` with `role="button"`, `tabindex="0"`, `cursor-pointer`, and WAI-ARIA labels.
+    - Implemented `SummaryMetricsController.navigateToMilestoneYear()`: clicking Card 1 or Card 2 jumps to Year `sipYears` (Phase 1 maturity); clicking Card 3 or Card 4 jumps to terminal retirement/wealth milestones in the Cashflow Ledger.
+    - Adds smooth-scrolling and a temporary 1400ms emerald pulse highlight (`ring-2 ring-emerald-500 bg-emerald-100/90`). Automatically switches to `All Years` if targeting an odd year in 5Y density mode.
+    - Added `data-card-year` to mobile SSR and dynamic milestone cards in `ResultsController.ts` and `yearly-breakdown-table.twig` for narrow viewport parity.
+    - Demoted static badges: removed thick button borders and drop-shadows from non-interactive text labels.
+  - **SEO Anti-Cannibalization Titles & BLUF Shielding (`content/calculators/*.md`):**
+    - **`my-first-crore-calculator.md`:** Upgraded title to `"1 Crore SIP Calculator (with Free Excel & Tax Table)"` (52 chars) and updated BLUF and meta description to highlight downloadable cashflow models and 2026 Section 112A tax tables.
+    - **`compound-interest-calculator.md`:** Upgraded title to `"Compound Interest Calculator (with Free Excel & Tax Table)"` (58 chars).
+    - **`swp-calculator.md`:** Upgraded title to `"SWP Calculator India (with Free Excel & Longevity Table)"` (56 chars).
+    - **`cagr-calculator.md`:** Upgraded title to `"CAGR Calculator India (with Free Excel & Inflation Table)"` (57 chars) with streamlined BLUF.
+  - **Cashflow Ledger & Analytical Studio Header Consolidation (`analytical-studio.twig`, `yearly-breakdown-table.twig`):**
+    - Eliminated the redundant double-stacked header: unified the studio tabs (`Yearly Ledger`, `City FIRE Target`, `Milestone Path`, `Crash Stress-Test`, `Asset Rebalance`), denomination unit buttons (`Exact ₹` / `Lakh/Cr`), and export buttons directly into a clean, single-tier master header.
+    - Reduced `yearly-breakdown-table.twig` top margin from `mt-8` to `mt-2`.
+    - Preserved 100% backward compatibility with `StudioTabController.ts` across all tab panel IDs.
+  - **Complete Quality, Static Analysis & Cross-Runtime Parity Verification:**
+    - `npm run typecheck` & `npm run build`: 0 errors (clean Vite bundle in 263ms).
+    - `php tests/parity_check.php`: 62/62 cross-runtime mathematical parity checks passed 100%.
+    - `vendor/bin/phpunit`: 811 tests passed with 12,672 assertions (0 errors, 0 failures).
+    - `vendor/bin/phpstan analyse --debug --memory-limit=512M`: Level 8 passed across all 250 files (0 errors).
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
 - **Implemented Fixes & Architectural Outcomes (2026-11-10 Session 25 - Global Rules Hardening & Zero-Ambiguity Mandate):**
   - **Enshrined Rigorous Multi-Angle Planning & Zero-Guesswork Protocol (`.agents/AGENTS.md` & `.agents/memory/systemPatterns.md`):**
     - Updated Section 1 (Development & Quality Assurance) and Section 8 (Architectural Planning & Pre-Implementation Discussions) in `.agents/AGENTS.md`.

@@ -1,8 +1,8 @@
 ---
 og_image: "/assets/og/og-cagr-calculator.jpg"
-title: "CAGR Calculator India: Annualized Return & Multiplier"
-subtitle: "Calculate Compound Annual Growth Rate (CAGR) for mutual funds, stocks, and real estate investments in India with absolute return and multiplier breakdowns."
-meta_desc: "Calculate Compound Annual Growth Rate (CAGR), absolute return & wealth multipliers for Indian mutual funds and stocks. Accurate 2026 formula with charts."
+title: "CAGR Calculator India (with Free Excel & Inflation Table)"
+subtitle: "Calculate Compound Annual Growth Rate (CAGR) for mutual funds, stocks, and real estate in India. Free calculator with multiplier breakdowns & downloadable Excel."
+meta_desc: "Calculate Compound Annual Growth Rate (CAGR), absolute returns & wealth multipliers for Indian mutual funds. Model 2026 inflation with free downloadable Excel."
 keywords: "cagr calculator, cagr calculator india, sip cagr calculator, calculate cagr of sip, compound annual growth rate, mutual fund cagr, annualized return calculator"
 schema_name: "CAGR Calculator India — Annualized Return Planner"
 seo_category: "growth"
@@ -14,7 +14,7 @@ date: "2026-09-01"
 
 ## What is CAGR (Compound Annual Growth Rate)?
 
-> **Direct Answer (BLUF):** **CAGR (Compound Annual Growth Rate)** measures the mean annual growth rate of an investment over multiple years, smoothing out market volatility. Calculated as $\text{CAGR} = (V_{\text{final}} / V_{\text{begin}})^{1/t} - 1$, it reflects the true annualized return for mutual funds, stocks, and real estate. For example, ₹10 Lakhs growing into ₹25 Lakhs over 8 years yields a **12.14% CAGR**, aligning closely with India's long-term broad market equity benchmark (Nifty 50 TRI ~12.5%).
+> **Direct Answer (BLUF):** **CAGR (Compound Annual Growth Rate)** measures the mean annual growth rate of an investment over multiple years, smoothing out market volatility: $\text{CAGR} = (V_{\text{final}} / V_{\text{begin}})^{1/t} - 1$. For example, ₹10 Lakhs growing into ₹25 Lakhs over 8 years yields a **12.14% CAGR**, aligning closely with India's equity benchmark (Nifty 50 TRI ~12.5%). Use the interactive calculator and downloadable Excel below to compute exact annualized returns, wealth multipliers, and inflation-discounted gains.
 
 **Compound Annual Growth Rate (CAGR)** is the geometric mean annualized growth rate of an investment over a designated holding period longer than one year. It represents the hypothetical constant annual rate at which an investment would have grown if it compounded at a steady, uninterrupted pace from its initial purchase value to its final redemption balance.
 

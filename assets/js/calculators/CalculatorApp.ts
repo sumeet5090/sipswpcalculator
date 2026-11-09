@@ -59,6 +59,7 @@ export class CalculatorApp {
 
     private shortcutsInitialized = false;
     private _deferredSettledTimer: ReturnType<typeof setTimeout> | null = null;
+    private _chartDragDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -359,8 +360,8 @@ export class CalculatorApp {
     /**
      * Update summary stats block.
      */
-    updateSummaryMetrics(data: YearResult[]): void {
-        this.summaryMetricsController.updateSummaryMetrics(data);
+    updateSummaryMetrics(data: YearResult[], isDragging: boolean = false): void {
+        this.summaryMetricsController.updateSummaryMetrics(data, isDragging);
     }
 
     /**
@@ -833,7 +834,7 @@ export class CalculatorApp {
 
             // ── FAST ZERO-LATENCY FRAME PIPELINE (Runs on every 60fps drag frame) ──
             // Instantly update summary metrics cards (#total-invested, #est-returns, #total-value)
-            this.updateSummaryMetrics(combined);
+            this.updateSummaryMetrics(combined, isDragging);
 
             const sipYears = inputs.years || 0;
             const maturedRow = (inputs.enable_swp && sipYears > 0 && sipYears <= combined.length)
@@ -846,23 +847,42 @@ export class CalculatorApp {
                 }
             }
 
-            // Schedule low-cost canvas draw on rAF
-            this.chartManager.updateChartThrottled(combined, inputs.enable_swp);
-
-            // ── DEFERRED HEAVY PIPELINE (Decoupled to achieve sub-150ms mobile INP) ──
+            // ── DEFERRED HEAVY PIPELINE (Decoupled to achieve sub-50ms mobile INP) ──
             if (isDragging) {
+                // Trailing debounce chart canvas updates during high-frequency pointer moves
+                if (this._chartDragDebounceTimer !== null) {
+                    clearTimeout(this._chartDragDebounceTimer);
+                }
+                this._chartDragDebounceTimer = setTimeout(() => {
+                    this._chartDragDebounceTimer = null;
+                    this.chartManager.updateChartThrottled(combined, inputs.enable_swp);
+                }, 80);
+
                 if (this._deferredSettledTimer !== null) {
                     clearTimeout(this._deferredSettledTimer);
                 }
                 this._deferredSettledTimer = setTimeout(() => {
                     this._deferredSettledTimer = null;
+                    if (this._chartDragDebounceTimer !== null) {
+                        clearTimeout(this._chartDragDebounceTimer);
+                        this._chartDragDebounceTimer = null;
+                    }
+                    this.chartManager.updateChartThrottled(combined, inputs.enable_swp);
+                    this.summaryMetricsController.updateSummaryMetrics(combined, false);
                     this.executeSettledUpdates(inputs, combined);
-                }, 120);
+                }, 100);
             } else {
+                if (this._chartDragDebounceTimer !== null) {
+                    clearTimeout(this._chartDragDebounceTimer);
+                    this._chartDragDebounceTimer = null;
+                }
                 if (this._deferredSettledTimer !== null) {
                     clearTimeout(this._deferredSettledTimer);
                     this._deferredSettledTimer = null;
                 }
+                // Schedule low-cost canvas draw on rAF
+                this.chartManager.updateChartThrottled(combined, inputs.enable_swp);
+                this.summaryMetricsController.updateSummaryMetrics(combined, false);
                 this.executeSettledUpdates(inputs, combined);
             }
         });

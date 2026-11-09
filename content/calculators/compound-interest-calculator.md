@@ -1,8 +1,8 @@
 ---
 og_image: "/assets/og/og-compound-interest-calculator.jpg"
-title: "Compound Interest Calculator India — Monthly & Annual Growth"
-subtitle: "Calculate compound interest returns with annual, quarterly, and monthly compounding frequencies. See Rule of 72 doubling periods and interactive growth charts."
-meta_desc: "Calculate compound interest with annual, quarterly, and monthly compounding frequencies. Model Rule of 72 doubling timelines and growth with free charts and tables."
+title: "Compound Interest Calculator (with Free Excel & Tax Table)"
+subtitle: "Calculate compound interest returns with annual, quarterly, and monthly compounding frequencies. Free calculator with Rule of 72 doubling timelines & downloadable Excel."
+meta_desc: "Calculate compound interest across monthly & annual frequencies. Model Rule of 72 doubling timelines & 2026 tax with free downloadable Excel cashflow table."
 keywords: "compound interest calculator, ci calculator india, compounding calculator, rule of 72 calculator, monthly compounding calculator, investment compounding"
 schema_name: "Compound Interest Calculator India — Monthly & Annual Growth"
 seo_category: "growth"
@@ -14,7 +14,7 @@ date: "2026-09-01"
 
 ## What is Compound Interest?
 
-> **Direct Answer (BLUF):** **Compound Interest** generates returns on both the original principal and accumulated interest ($A = P(1 + r/n)^{nt}$). At a benchmark 12% annual return, a ₹10 Lakh deposit compounds into **₹17.62 Lakhs in 5 years**, **₹31.06 Lakhs in 10 years**, and **₹96.46 Lakhs (nearly ₹1 Crore) in 20 years**. Compounding frequency significantly impacts terminal wealth: daily/monthly compounding yields higher returns than annual crediting. Under the **Rule of 72**, your money doubles every $72 \div r$ years (e.g. 6 years at 12%).
+> **Direct Answer (BLUF):** **Compound Interest** generates returns on both the original principal and accumulated interest ($A = P(1 + r/n)^{nt}$). At a benchmark 12% annual return, a ₹10 Lakh deposit compounds into **₹17.62 Lakhs in 5 years**, **₹31.06 Lakhs in 10 years**, and **₹96.46 Lakhs (nearly ₹1 Crore) in 20 years**. Compounding frequency significantly impacts terminal wealth: monthly compounding outpaces annual crediting. Under the **Rule of 72**, your money doubles every $72 \div r$ years (e.g. 6 years at 12%). Use the interactive calculator and downloadable Excel below to model custom compounding schedules.
 
 **Compound Interest** is the fundamental mathematical engine driving long-term wealth accumulation. In simple interest arrangements, returns are calculated exclusively on the original deposit (principal) throughout the entire duration. In contrast, compound interest generates **returns on both the initial principal and the accumulated interest from preceding periods**. 
 

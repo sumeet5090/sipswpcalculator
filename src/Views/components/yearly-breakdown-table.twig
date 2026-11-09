@@ -1,4 +1,4 @@
-<div class="mt-8 space-y-4">
+<div class="mt-2 space-y-4">
     <!-- ========================================================================= -->
     <!-- TIER 1: UNIFIED BIFURCATED CONTROL & CONVERSION DISPATCH HUB              -->
     <!-- ========================================================================= -->
@@ -202,7 +202,7 @@
             <div id="mobile-breakdown-cards" class="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-2">
                 {% if initial_schedule %}
                     {% for row in initial_schedule %}
-                        <div class="snap-center shrink-0 w-[84vw] max-w-[320px] p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-subtle space-y-2 transition-all flex flex-col justify-between">
+                        <div data-card-year="{{ row.year }}" class="snap-center shrink-0 w-[84vw] max-w-[320px] p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-subtle space-y-2 transition-all flex flex-col justify-between">
                             <div class="flex items-center justify-between">
                                 <span class="{{ row.is_final ? 'px-2.5 py-1 rounded-lg text-ui-xs font-black bg-emerald-600 text-white shadow-flat' : 'px-2.5 py-0.5 rounded-lg text-ui-xs font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-200' }}">
                                     Year {{ row.year }}{{ row.is_final ? ' (Maturity)' : '' }}
