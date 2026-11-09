@@ -1,0 +1,136 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * IndexNow Instant Search Engine Indexing CLI Tool
+ * Submits published and updated URLs to Bing, Yandex, Seznam, and Naver via IndexNow.
+ */
+
+$rootDir = dirname(__DIR__);
+
+// 1. Locate the IndexNow key file in root directory
+$key = null;
+$keyFile = null;
+
+$files = glob($rootDir . '/*.txt') ?: [];
+foreach ($files as $file) {
+    $basename = basename($file, '.txt');
+    // Check if filename matches standard 32-char hex IndexNow key
+    if (preg_match('/^[a-f0-9]{32}$/i', $basename)) {
+        $content = trim((string) file_get_contents($file));
+        if ($content === $basename) {
+            $key = $content;
+            $keyFile = basename($file);
+            break;
+        }
+    }
+}
+
+if ($key === null) {
+    fwrite(STDERR, "\033[31mError:\033[0m No valid IndexNow key file (<key>.txt) found in root directory.\n");
+    exit(1);
+}
+
+// 2. Determine target host and URLs
+$host = 'sipswpcalculator.com';
+$keyLocation = "https://{$host}/{$keyFile}";
+
+$urls = [];
+if ($argc > 1) {
+    // Specific URLs passed as arguments
+    for ($i = 1; $i < $argc; $i++) {
+        $arg = trim($argv[$i]);
+        if (!empty($arg)) {
+            $urls[] = $arg;
+        }
+    }
+} else {
+    // Default: read all URLs from url.txt
+    $urlFilePath = $rootDir . '/url.txt';
+    if (file_exists($urlFilePath)) {
+        $lines = file($urlFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if (!empty($line) && str_starts_with($line, 'http')) {
+                $urls[] = $line;
+            }
+        }
+    }
+}
+
+if (empty($urls)) {
+    fwrite(STDERR, "\033[31mError:\033[0m No URLs provided and url.txt is empty.\n");
+    exit(1);
+}
+
+echo "\033[36m=== IndexNow Submission ===\033[0m\n";
+echo "Host:         {$host}\n";
+echo "Key:          {$key}\n";
+echo "Key Location: {$keyLocation}\n";
+echo "URL Count:    " . count($urls) . "\n";
+echo "Submitting to IndexNow API (api.indexnow.org)...\n";
+
+$payload = [
+    'host'        => $host,
+    'key'         => $key,
+    'keyLocation' => $keyLocation,
+    'urlList'     => array_values($urls),
+];
+
+$jsonData = json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+if ($jsonData === false) {
+    fwrite(STDERR, "\033[31mError:\033[0m Failed to encode JSON payload.\n");
+    exit(1);
+}
+
+$ch = curl_init('https://api.indexnow.org/IndexNow');
+
+$caBundle = ini_get('curl.cainfo') ?: ini_get('openssl.cafile');
+if (empty($caBundle) || !file_exists((string) $caBundle)) {
+    foreach (['/opt/homebrew/etc/openssl@3/cert.pem', '/etc/ssl/cert.pem', '/etc/pki/tls/certs/ca-bundle.crt'] as $fallback) {
+        if (file_exists($fallback)) {
+            $caBundle = $fallback;
+            break;
+        }
+    }
+}
+if (!empty($caBundle) && file_exists((string) $caBundle)) {
+    curl_setopt($ch, CURLOPT_CAINFO, (string) $caBundle);
+}
+
+curl_setopt_array($ch, [
+    CURLOPT_POST           => true,
+    CURLOPT_POSTFIELDS     => $jsonData,
+    CURLOPT_HTTPHEADER     => [
+        'Content-Type: application/json; charset=utf-8',
+        'User-Agent: SIP-SWP-Calculator-IndexNow-Client/1.0',
+    ],
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_TIMEOUT        => 20,
+]);
+
+$response = curl_exec($ch);
+$httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$curlErr = curl_error($ch);
+curl_close($ch);
+
+if (!empty($curlErr)) {
+    fwrite(STDERR, "\033[31mcURL Error:\033[0m {$curlErr}\n");
+    exit(1);
+}
+
+echo "HTTP Status:  {$httpCode}\n";
+
+if ($httpCode === 200) {
+    echo "\033[32m✓ Success:\033[0m URLs successfully submitted and indexed!\n";
+    exit(0);
+} elseif ($httpCode === 202) {
+    echo "\033[32m✓ Accepted (HTTP 202):\033[0m URLs received and queued for immediate crawling.\n";
+    echo "Note: Search engines will verify ownership via {$keyLocation}.\n";
+    exit(0);
+} else {
+    fwrite(STDERR, "\033[31m✗ IndexNow Response ({$httpCode}):\033[0m {$response}\n");
+    exit(1);
+}

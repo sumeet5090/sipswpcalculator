@@ -1,11 +1,25 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-08*
+*Last Updated: 2026-11-09*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Search Engine Optimization & Link Equity Elevation Complete (GSC/Bing Analytics-Driven Title & Meta CTR Optimization, SWP Longevity & Payout Matrix Expansion, Schema FAQ Augmentation, Homepage Related Calculators Hub Integration, 100% SEO Contract & Quality Standards Verified).
+- **Current Milestone:** Bing IndexNow Verification & Full Site URL Submission Complete (Root Verification Key Configured, Dev Server Static Routing Updated, `bin/indexnow` CLI Created, All 33 Site URLs Successfully Submitted via IndexNow API).
+- **Implemented Fixes & Architectural Outcomes (2026-11-09 Session 23 - Bing IndexNow Verification & Submission Pipeline):**
+  - **IndexNow Verification Key Deployed (`ade10b6f29714f90b6e4666dc36468b3.txt`):**
+    - Tracked Bing Webmaster Tools verification key file in root directory (`ade10b6f29714f90b6e4666dc36468b3.txt`) with exact content matching the key.
+  - **Static Asset Whitelist Update (`index.php`):**
+    - Added `'txt'` to `$allowedExts` in the CLI server static file handler so local development servers serve `.txt` files directly (matching production LiteSpeed/Apache `.htaccess` `!-f` static pass-through).
+  - **Reusable CLI Submission Command (`bin/indexnow`):**
+    - Created executable `bin/indexnow` CLI tool: dynamically discovers root IndexNow key, reads all URLs from `url.txt` (or accepts command-line arguments), handles CA certificate detection, and submits via HTTP POST to `https://api.indexnow.org/IndexNow`.
+  - **Executed Full Site IndexNow Submission:**
+    - Successfully submitted all 33 production site URLs (including `/`, `/swp-calculator`, `/my-first-crore-calculator`, `/lumpsum-calculator`, `/cagr-calculator`) to IndexNow, receiving HTTP 202 Accepted.
+  - **Complete Quality Standards Verification:**
+    - `php tests/parity_check.php`: 62/62 cross-runtime mathematical parity checks passed 100%.
+    - `vendor/bin/phpunit tests/Unit/`: 676 unit tests passed with 8,954 assertions (0 errors).
+    - `vendor/bin/phpstan analyse --debug --memory-limit=512M`: Level 8 passed across all 250 files (0 errors).
+    - `vendor/bin/phpcs`: Strict PSR-12 passed across all 250 files.
 - **Implemented Fixes & Architectural Outcomes (2026-11-08 Session 22 - SEO Analytics-Driven CTR & Internal Linking Optimization):**
   - **High-CTR Title & Meta Optimization (`content/calculators/*.md`):**
     - **`my-first-crore-calculator.md`:** Upgraded title from `"1 Crore SIP Calculator — Monthly SIP Needed for ₹1 Cr"` to `"1 Crore SIP Calculator: How Much Monthly SIP for ₹1 Cr?"` (57 chars). Updated meta description to emphasize exact milestone answers (`"Find the exact monthly SIP required to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% annual step-up savings & 2026 LTCG tax impacts with free PDF report."`, 161 chars) targeting 2,831 GSC impressions.

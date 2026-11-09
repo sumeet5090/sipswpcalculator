@@ -63,6 +63,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | **Live Telemetry API** | `POST /log_insight` | `Controllers\LogInsightApiAction` | `Core\AnonymizedInsightLogger`<br/>`Core\InsightRepository`<br/>`database/insights.sqlite` | Privacy-safe calculation telemetry logging without PII |
 | **Admin Dashboard** | `GET /admin_insights`<br/>`POST /admin_insights` | `Controllers\ShowAdminDashboardAction`<br/>`Controllers\ProcessAdminLoginAction`<br/>`Controllers\ProcessAdminLogoutAction` | `src/Views/admin/dashboard.twig`<br/>`Core\AdminDashboardPresenter`<br/>`Core\AdminAuthService` | Operational telemetry dashboard with session auth & rate-limiting |
 | **Database Migrations** | CLI / App bootstrap | `Core\DatabaseMigrator` | `database/migrations/` | SQLite automated schema initialization & column migrations |
+| **IndexNow Submission CLI** | `bin/indexnow` | Standalone CLI | `ade10b6f29714f90b6e4666dc36468b3.txt`<br/>`url.txt` | Submits published/updated site URLs to IndexNow (Bing/Yandex) |
 | **Telemetry Pruning** | Service | `Services\TelemetryPruningServiceInterface`<br/>(`Services\TelemetryPruningService`) | `Core\InsightRepository` | Prunes telemetry logs beyond retention policy limits |
 
 ---
