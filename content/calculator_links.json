@@ -1,4 +1,26 @@
 {
+    "home": [
+        {
+            "href": "/my-first-crore-calculator",
+            "title": "1 Crore SIP Goal Planner",
+            "description": "Calculate the exact monthly SIP and years required to reach ₹1 Crore or ₹5 Crores with annual step-ups."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Pension Calculator",
+            "description": "Model monthly post-retirement withdrawals, capital longevity, and 2026 LTCG tax savings from mutual funds."
+        },
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Dual-Phase Planner",
+            "description": "Combine wealth accumulation and systematic pension drawdown using the proven 4% safe withdrawal rule."
+        },
+        {
+            "href": "/cagr-calculator",
+            "title": "CAGR & Wealth Multiplier",
+            "description": "Calculate Compound Annual Growth Rate (CAGR) and absolute returns across mutual funds, stocks, and real estate."
+        }
+    ],
     "sip-calculator": [
         {
             "href": "/sip-step-up-calculator",

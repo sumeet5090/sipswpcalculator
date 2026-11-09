@@ -121,6 +121,10 @@ class RenderHomeAction
             }
         }
 
+        $calcLinks = $this->configService->getJsonConfig('content/calculator_links.json');
+        /** @var array<int, array{href: string, title: string, description: string}> $relatedCalculators */
+        $relatedCalculators = is_array($calcLinks['home'] ?? null) ? $calcLinks['home'] : [];
+
         $templateData = array_merge($inputs->toTemplateData(), [
             'active_page'         => 'home',
             'is_calculator'       => true,
@@ -135,6 +139,7 @@ class RenderHomeAction
             'weekly_calculations' => $weeklyCalculations,
             'initial_kpis'        => $initialKpis,
             'initial_schedule'    => $initialSchedule,
+            'related_calculators' => $relatedCalculators,
         ]);
 
         return Response::html($this->viewRenderer->render('calculators/home', $templateData));

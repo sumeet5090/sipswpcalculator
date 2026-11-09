@@ -1,7 +1,7 @@
 ---
-title: "SWP Calculator India — Monthly Pension from ₹10L to ₹1 Cr"
+title: "SWP Calculator India — Monthly Pension & Corpus Longevity"
 subtitle: "Free SWP calculator with step-up withdrawals & inflation protection for Indian mutual funds. See how long your corpus lasts, plan retirement income & export yearly tables."
-meta_desc: "Calculate monthly SWP payout, tax-free withdrawals & corpus longevity for ₹10 Lakhs, ₹50 Lakhs, or ₹1 Crore in mutual funds. Free 2026 LTCG tax reports."
+meta_desc: "Calculate monthly SWP payout, capital longevity & inflation-adjusted income for ₹10 Lakhs to ₹5 Crores in mutual funds. Free 2026 LTCG tax-efficient reports."
 keywords: "swp calculator, swp calculator india, step up swp calculator, 5 crore swp calculator, 1 crore swp calculator, 30 lakh swp calculator, 5 lakh swp calculator, best swp for monthly income, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, swp tax calculator"
 schema_name: "SWP Calculator India — Monthly Pension & Withdrawal Planner"
 seo_category: "retirement"
@@ -183,6 +183,21 @@ The tables below illustrate how long various mutual fund retirement corpuses wil
 | **₹10 Lakh** | ₹5,000 | 8.5% | 5% | **21.4 Years** | Semi-retirement income |
 | **₹10 Lakh** | ₹7,500 | 8.5% | 0% | **17.5 Years** | Senior citizen monthly support |
 | **₹10 Lakh** | ₹10,000 | 8.5% | 0% | **11.5 Years** | Higher monthly drawdown |
+
+---
+
+### ₹20 Lakh & ₹50 Lakh SWP Calculator: Middle-Class Retirement & Sustainable Cashflow
+> **Direct Answer (BLUF):** A **₹20 Lakh mutual fund corpus** invested in a hybrid fund earning 8.5% annualized can safely sustain a monthly withdrawal of **₹8,333/month (5% SWR) for 35+ years** or **₹15,000/month for 17.2 years**. For a **₹50 Lakh corpus**, a monthly payout of **₹20,000/month with a 5% annual step-up** provides over **32 years of inflation-protected income**, leaving a residual surplus balance of over ₹45 Lakhs. Withdrawing an aggressive ₹50,000/month from ₹50 Lakhs depletes the capital in roughly **11.8 years**.
+
+| Initial Corpus | Monthly SWP (Yr 1) | Return Rate | Annual Step-Up | Projected Longevity | Strategic Objective |
+|:---|:---:|:---:|:---:|:---:|:---|
+| **₹20 Lakh** | ₹6,667 | 8.5% | 5% | **35+ Years** (Surplus ₹28L) | Perpetual 4% Safe Withdrawal |
+| **₹20 Lakh** | ₹10,000 | 8.5% | 0% | **28.4 Years** | Fixed monthly supplement |
+| **₹20 Lakh** | ₹15,000 | 8.5% | 0% | **17.2 Years** | Medium-term retirement bridge |
+| **₹50 Lakh** | **₹16,667** | **8.5%** | **5%** | **35+ Years** (Surplus ₹95L) | Gold Standard 4% SWR with inflation hike |
+| **₹50 Lakh** | ₹25,000 | 8.5% | 5% | **24.5 Years** | Balanced family monthly budget |
+| **₹50 Lakh** | ₹35,000 | 8.5% | 0% | **21.8 Years** | Fixed ₹35k/mo non-stepup pension |
+| **₹50 Lakh** | ₹50,000 | 8.5% | 0% | **11.8 Years** | Accelerated capital decumulation |
 
 ---
 

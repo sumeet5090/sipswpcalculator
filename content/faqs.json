@@ -874,5 +874,54 @@
         ],
         "q": "Can I add annual lump sums or bonuses to my ₹10,000 monthly SIP?",
         "a": "Yes. Adding an annual Diwali or performance bonus lump sum of ₹50,000 alongside your ₹10,000 monthly SIP significantly accelerates wealth creation. Over 20 years at 12% CAGR, the extra ₹50,000 annual lump sum contributes an additional ₹40.3 Lakhs to your terminal maturity corpus."
+    },
+    {
+        "id": "swp-payout-50-lakhs",
+        "category": "retirement",
+        "tags": [
+            "home",
+            "swp-calculator",
+            "faq-page",
+            "retirement-calculator"
+        ],
+        "q": "How much monthly income can I safely withdraw from a ₹50 Lakh SWP corpus?",
+        "a": "Following safe withdrawal rate principles for Indian mutual funds, a ₹50 Lakh corpus invested in a Conservative Hybrid or Balanced Advantage fund returning 8.5% can comfortably generate ₹16,667 to ₹20,000 per month (4% to 5% SWR) with a 5% annual inflation step-up for over 30 years. If you prefer a fixed monthly pension without annual step-up, you can safely withdraw up to ₹30,000 per month for over 25 years while keeping Section 112A equity LTCG taxes near zero."
+    },
+    {
+        "id": "swp-sip-transition",
+        "category": "strategies",
+        "tags": [
+            "home",
+            "swp-calculator",
+            "sip-calculator",
+            "faq-page",
+            "retirement-calculator"
+        ],
+        "q": "Can I transition from a monthly SIP to an SWP upon retirement?",
+        "a": "Yes, this is the foundational dual-phase retirement blueprint. During your earning career (accumulation phase), you invest monthly via Step-Up SIP into equity mutual funds to build a sizable corpus. At retirement (distribution phase), you transfer the accumulated capital into a low-volatility Conservative Hybrid, Arbitrage, or Debt fund and activate an SWP to receive predictable, automated monthly pension direct to your bank account."
+    },
+    {
+        "id": "swp-inflation-impact",
+        "category": "strategies",
+        "tags": [
+            "home",
+            "swp-calculator",
+            "faq-page",
+            "retirement-calculator"
+        ],
+        "q": "How does inflation affect my SWP monthly pension over 20 to 30 years?",
+        "a": "In India, lifestyle inflation averages 6% to 7% annually. A flat ₹50,000 monthly withdrawal will lose half its real purchasing power in just 12 years. To counter this, an inflation-adjusted SWP incorporates an annual step-up (typically 5% to 6% per year). For an SWP with annual step-up to remain sustainable, your starting withdrawal rate should not exceed 4% to 4.5% of your initial retirement corpus."
+    },
+    {
+        "id": "swp-2026-tax-rules",
+        "category": "taxation",
+        "tags": [
+            "home",
+            "swp-calculator",
+            "faq-page",
+            "retirement-calculator"
+        ],
+        "q": "What is the tax impact on mutual fund SWP withdrawals under 2026 rules?",
+        "a": "SWP redemptions from equity mutual funds are governed by Section 112A rules. Each monthly withdrawal is split into principal redemption (tax-free) and capital gains. For equity funds held >12 months, long-term capital gains (LTCG) exceeding ₹1.25 Lakh per financial year are taxed at 12.5%. Because early withdrawals are mostly returned principal, the taxable portion is minimal, making SWPs drastically more tax-efficient than bank FD interest which is taxed at slab rates up to 30%+."
     }
 ]
