@@ -5,17 +5,17 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** GA4 Reporting Integration into `seo-automation` FastMCP Server Complete (`scripts/seo-mcp/server.py`, `.agents/mcp_config.json`, `.agents/ARCHITECTURE_MAP.md`). Ready for Google Analytics Viewer permission grant to service account.
+- **Current Milestone:** GA4 Reporting Integration into `seo-automation` FastMCP Server Complete & Verified with Live Data (Property ID `551282573` Configured, Realtime & Historical Reports Verified with Live Production Analytics).
 - **Implemented Fixes & Architectural Outcomes (2026-11-09 Session 24 - GA4 Analytics Reporting in FastMCP Server):**
   - **Google Analytics 4 API Integration (`scripts/seo-mcp/server.py`):**
     - Integrated `google-api-python-client` with `analyticsdata` v1beta and `analyticsadmin` v1beta APIs using the existing service account credentials (`gsc-key.json`).
     - Added `GA4_SCOPES = ["https://www.googleapis.com/auth/analytics.readonly"]` for secure, read-only analytics access.
     - Implemented auto-discovery via `analyticsadmin.accountSummaries().list()` with fallback to explicit `property_id` argument and `GA4_PROPERTY_ID` environment variable.
     - Added `@mcp.tool ga4_query_report`: Queries historical performance (activeUsers, sessions, pageviews, average duration, bounce rate) grouped by dimensions (pagePath, channel group, country, device) across configurable time windows (default 28 days).
-    - Added `@mcp.tool ga4_realtime_report`: Queries live active users and active events over the last 30 minutes.
-  - **MCP Configuration & Validation (`.agents/mcp_config.json`):**
-    - Added `"GA4_PROPERTY_ID": ""` to the `env` config for optional explicit override.
-    - Verified python compilation (`py_compile`) and FastMCP tool registration (7 tools registered: 3 GSC, 2 Bing, 2 GA4).
+    - Added `@mcp.tool ga4_realtime_report`: Queries live active users and active events over the last 30 minutes, dynamically mapping screen/page dimensions to `unifiedScreenName` per GA4 realtime schema.
+  - **MCP Configuration & Live Verification (`.agents/mcp_config.json`):**
+    - Configured `"GA4_PROPERTY_ID": "551282573"`.
+    - Successfully queried live production data: verified 2 live active users in realtime report and 33 pages indexed with 425 users on `/` over the last 28 days.
 - **Implemented Fixes & Architectural Outcomes (2026-11-09 Session 23 - Bing IndexNow Verification & Submission Pipeline):**
   - **IndexNow Verification Key Deployed (`ade10b6f29714f90b6e4666dc36468b3.txt`):**
     - Tracked Bing Webmaster Tools verification key file in root directory (`ade10b6f29714f90b6e4666dc36468b3.txt`) with exact content matching the key.

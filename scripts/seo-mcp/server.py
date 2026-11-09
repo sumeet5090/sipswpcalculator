@@ -322,9 +322,9 @@ def ga4_realtime_report(
     
     Args:
         property_id: The numeric GA4 Property ID. Defaults to auto-discovery or configured GA4_PROPERTY_ID.
-        metrics: Realtime metrics to query (e.g. 'activeUsers', 'eventCount'). Defaults to ['activeUsers'].
-        dimensions: Realtime dimensions to group by (e.g. 'unifiedScreenName', 'pagePath', 'country', 'city', 'deviceCategory').
-                    Defaults to ['pagePath'].
+        metrics: Realtime metrics to query (e.g. 'activeUsers', 'eventCount', 'conversions'). Defaults to ['activeUsers'].
+        dimensions: Realtime dimensions to group by (e.g. 'unifiedScreenName', 'country', 'city', 'deviceCategory').
+                    Defaults to ['unifiedScreenName'].
         row_limit: Maximum number of rows to return (up to 1000). Defaults to 25.
     """
     target_property = resolve_ga4_property_id(property_id)
@@ -341,7 +341,10 @@ def ga4_realtime_report(
     if metrics is None:
         metrics = ["activeUsers"]
     if dimensions is None:
-        dimensions = ["pagePath"]
+        dimensions = ["unifiedScreenName"]
+    else:
+        # GA4 Realtime API does not support 'pagePath' or 'pageTitle'; map to 'unifiedScreenName'
+        dimensions = ["unifiedScreenName" if dim in ("pagePath", "pageTitle") else dim for dim in dimensions]
 
     request_body = {
         "dimensions": [{"name": dim} for dim in dimensions],
