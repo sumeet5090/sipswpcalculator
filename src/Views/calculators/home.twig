@@ -63,59 +63,62 @@
     <!-- Strategy Starter: 1-Click Blueprints & 3-Step Guided Wizard -->
     {% include 'components/strategy-starter.twig' %}
 
-    <div class="grid grid-cols-1 md:grid-cols-12 xl:grid-rows-[auto_1fr] items-start gap-5 lg:gap-8 mt-4 sm:mt-6">
+    <div class="xl:grid xl:grid-cols-12 xl:grid-rows-[auto_1fr] xl:items-start xl:gap-8 mt-4 sm:mt-6">
 
-        <!-- Left Column: Form (Shrink-wrapped to content with sticky gliding on xl+ desktop) -->
-        <div class="md:col-span-5 xl:row-span-2 flex flex-col min-h-0 min-w-0 self-start h-fit xl:sticky xl:top-24">
-            {% include 'components/calculator-form.twig' %}
-        </div> <!-- /left column -->
+        <!-- Row-1 Wrapper (< xl): bounds Child 2 md:sticky strictly to Row 1 height; dissolves at xl+ via xl:contents -->
+        <div class="grid grid-cols-1 md:grid-cols-12 items-start gap-5 lg:gap-8 mb-5 lg:mb-8 xl:mb-0 xl:contents">
+            <!-- Left Column: Form (Shrink-wrapped to content with sticky gliding on xl+ desktop) -->
+            <div class="md:col-span-5 xl:row-span-2 flex flex-col min-h-0 min-w-0 self-start h-fit xl:sticky xl:top-24">
+                {% include 'components/calculator-form.twig' %}
+            </div> <!-- /left column -->
 
-        <!-- Right Column Top: Summary, Chart, Scenario & Quick Answer (Sticky beside Stage 2 SWP inputs on md..lg tablets) -->
-        <div class="md:col-span-7 space-y-4 min-h-0 min-w-0 self-start md:sticky md:top-24 xl:static">
-            {% include 'components/chart-visualization.twig' %}
-            
-            <!-- Side-by-Side Scenario Diff Comparison (Unhides when snapshot baseline is taken) -->
-            {% include 'components/scenario-comparison.twig' %}
+            <!-- Right Column Top: Summary, Chart, Scenario & Quick Answer (Sticky beside Stage 2 SWP inputs on md..lg tablets, bounded to Row 1) -->
+            <div class="md:col-span-7 space-y-4 min-h-0 min-w-0 self-start md:sticky md:top-24 xl:static">
+                {% include 'components/chart-visualization.twig' %}
+                
+                <!-- Side-by-Side Scenario Diff Comparison (Unhides when snapshot baseline is taken) -->
+                {% include 'components/scenario-comparison.twig' %}
 
-            <!-- Quick Answer Box for AI extraction / Featured Snippet & Benchmark Baseline -->
-            <div id="quick-answer" class="relative overflow-hidden bg-white rounded-2xl border border-slate-200/90 border-l-4 border-l-emerald-600 p-3.5 sm:p-4 shadow-subtle"
-                role="complementary" aria-label="Quick Answer">
-                <details open class="sm:contents fintech-accordion group">
-                    <summary class="flex items-center justify-between gap-2 cursor-pointer select-none sm:cursor-default sm:pointer-events-none mb-1 sm:mb-2">
-                        <span class="inline-flex items-center text-micro font-bold text-slate-700 uppercase tracking-widest bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200">
-                            Regulatory Benchmark
-                        </span>
-                        <div class="flex items-center gap-1.5">
-                            <span class="text-caption font-semibold text-slate-500">AMFI/SEBI Calibrated</span>
-                            <span class="sm:hidden accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+                <!-- Quick Answer Box for AI extraction / Featured Snippet & Benchmark Baseline -->
+                <div id="quick-answer" class="relative overflow-hidden bg-white rounded-2xl border border-slate-200/90 border-l-4 border-l-emerald-600 p-3.5 sm:p-4 shadow-subtle"
+                    role="complementary" aria-label="Quick Answer">
+                    <details open class="sm:contents fintech-accordion group">
+                        <summary class="flex items-center justify-between gap-2 cursor-pointer select-none sm:cursor-default sm:pointer-events-none mb-1 sm:mb-2">
+                            <span class="inline-flex items-center text-micro font-bold text-slate-700 uppercase tracking-widest bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200">
+                                Regulatory Benchmark
+                            </span>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-caption font-semibold text-slate-500">AMFI/SEBI Calibrated</span>
+                                <span class="sm:hidden accordion-chevron text-micro font-bold text-slate-400 transition-transform">▼</span>
+                            </div>
+                        </summary>
+                        <div class="mt-1 sm:mt-0">
+                            <h3 class="text-ui-xs sm:text-ui-sm font-bold text-slate-800 mb-1">How much will a ₹10,000/month SIP grow in 20 years?</h3>
+                            <p class="text-caption sm:text-ui-xs text-slate-600 leading-relaxed">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month SIP will
+                                grow to approximately <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
+                                        data-amount-inr="19889000">₹1.99 Crore</span></strong> over 20 years. Total invested: <strong class="text-slate-700 font-financial-mono"><span
+                                    class="dynamic-amount" data-amount-inr="6873000">₹68.73 Lakh</span></strong> • Total compound gains: <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
+                                    data-amount-inr="13016000">₹1.30 Crore</span></strong>.</p>
                         </div>
-                    </summary>
-                    <div class="mt-1 sm:mt-0">
-                        <h3 class="text-ui-xs sm:text-ui-sm font-bold text-slate-800 mb-1">How much will a ₹10,000/month SIP grow in 20 years?</h3>
-                        <p class="text-caption sm:text-ui-xs text-slate-600 leading-relaxed">At 12% annual returns with a 10% yearly step-up, a ₹10,000/month SIP will
-                            grow to approximately <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
-                                    data-amount-inr="19889000">₹1.99 Crore</span></strong> over 20 years. Total invested: <strong class="text-slate-700 font-financial-mono"><span
-                                class="dynamic-amount" data-amount-inr="6873000">₹68.73 Lakh</span></strong> • Total compound gains: <strong class="text-growth-emphasis font-financial-mono font-extrabold"><span class="dynamic-amount"
-                                data-amount-inr="13016000">₹1.30 Crore</span></strong>.</p>
-                    </div>
-                </details>
-            </div>
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              "name": "SIP SWP Calculator Together — Combined Mutual Fund Planner 2026",
-              "speakable": {
-                "@type": "SpeakableSpecification",
-                "cssSelector": ["#quick-answer"]
-              },
-              "url": "{{ site_url }}/"
-            }
-            </script>
-        </div><!-- /right column top -->
+                    </details>
+                </div>
+                <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "WebPage",
+                  "name": "SIP SWP Calculator Together — Combined Mutual Fund Planner 2026",
+                  "speakable": {
+                    "@type": "SpeakableSpecification",
+                    "cssSelector": ["#quick-answer"]
+                  },
+                  "url": "{{ site_url }}/"
+                }
+                </script>
+            </div><!-- /right column top -->
+        </div>
 
-        <!-- Child 3: Multi-Mode Interactive Analytical Studio (Full-width md..lg tablet, Right-column xl+ desktop) -->
-        <div class="md:col-span-12 xl:col-span-7 xl:col-start-6 min-w-0">
+        <!-- Child 3: Multi-Mode Interactive Analytical Studio (Full-width block below Row 1 on <xl, Right-column Row 2 on xl+) -->
+        <div class="xl:col-span-7 xl:col-start-6 min-w-0">
             {% include 'components/analytical-studio.twig' %}
         </div>
     </div><!-- /12-col grid -->

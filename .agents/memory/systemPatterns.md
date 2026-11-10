@@ -21,12 +21,14 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
 ---
 
 ## 1.1 Asymmetric Dashboard Layout & Responsive GPU Compositing Primitives
-- **Rule (Home 3-Child Grid Workspace):** On `home.twig`, use a uniform `5 / 7` column split from `md:` (`768px+`) with explicit desktop row distribution (`xl:grid-rows-[auto_1fr]`), `items-start`, `min-w-0` shrink guards, desktop sticky on Child 1, hybrid tablet-only sticky on Child 2 (`md:sticky md:top-24 xl:static`), and full-width tablet placement on Child 3:
+- **Rule (Home 3-Child Grid Workspace & Row-1 `xl:contents` Sticky Boundary):** On `home.twig`, wrap Child 1 (`md:col-span-5`) and Child 2 (`md:col-span-7`) inside an `xl:contents` Row-1 grid wrapper so tablet `md:sticky md:top-24` on Child 2 (`768px–1279px`) is bounded strictly to Row 1 height (`height(Child 1)`) and unsticks cleanly before Child 3 `#breakdown-studio` (`analytical-studio.twig`, opaque `bg-slate-100`), while `xl:contents` dissolves the wrapper at `>=1280px` into the 12-column desktop layout:
   ```html
-  <div class="grid grid-cols-1 md:grid-cols-12 xl:grid-rows-[auto_1fr] items-start gap-5 lg:gap-8 mt-4 sm:mt-6">
-      <div class="md:col-span-5 xl:row-span-2 flex flex-col min-h-0 min-w-0 self-start h-fit xl:sticky xl:top-24">...</div>
-      <div class="md:col-span-7 space-y-4 min-h-0 min-w-0 self-start md:sticky md:top-24 xl:static">...</div>
-      <div class="md:col-span-12 xl:col-span-7 xl:col-start-6 min-w-0">...</div>
+  <div class="xl:grid xl:grid-cols-12 xl:grid-rows-[auto_1fr] xl:items-start xl:gap-8 mt-4 sm:mt-6">
+      <div class="grid grid-cols-1 md:grid-cols-12 items-start gap-5 lg:gap-8 mb-5 lg:mb-8 xl:mb-0 xl:contents">
+          <div class="md:col-span-5 xl:row-span-2 flex flex-col min-h-0 min-w-0 self-start h-fit xl:sticky xl:top-24">...</div>
+          <div class="md:col-span-7 space-y-4 min-h-0 min-w-0 self-start md:sticky md:top-24 xl:static">...</div>
+      </div>
+      <div class="xl:col-span-7 xl:col-start-6 min-w-0">...</div>
   </div>
   ```
 - **Rule (Sub-Calculator Guide Grid):** On `calculator-guide.twig`, use matching `items-start`, `md:col-span-5` (left), `md:col-span-7` (right), `min-w-0`, and desktop-only sticky (`xl:sticky xl:top-24`).
@@ -37,9 +39,9 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
   - Both SSR (`chart-visualization.twig`) and TypeScript (`SummaryMetricsController.ts`, `EmiDriver.ts`, `SpecializedCalculatorController.ts`) MUST declare identical breakpoint tokens.
 - **Rule (Chromium GPU Compositor Stability Across `393px–1366px+`):**
   - Never apply `background-attachment: fixed` at ANY breakpoint (`body` in `input.css`, `styles.css`, `base.twig`, or `admin.twig`); always use `background-attachment: scroll`. Even `@media (min-width: 1024px)` fixed backgrounds cause Chromium's Skia rasterizer at `1024px` (`iPad Pro 13`) to drop `<canvas id="corpusChart">` when paired with card surfaces.
-  - Never apply `backdrop-filter: blur(...)` (`backdrop-blur-*`) or `transition-all` to large scrollable cards (`#chart-card`, `#calculator-app`, `.fintech-glass-card`, component cards, sticky ledger cells `#results-table th/td:first-child` / `.table-sticky-col-0`, `.slider-floating-tooltip`), or to fixed HUD/navbar/dock bars (`bg-white` / `bg-white/98`); reserve `backdrop-blur-*` strictly for lightweight overlay modal/wizard backdrops (`dialog::backdrop`). Keep `background-color: rgba(255, 255, 255, 0.98)` inside `@utility fintech-glass-card` (`TypographyAndThemeTokensTest`), transform-only `.metric-pulse-active` (`input.css`), and pure light `bg-white/95` on `strategy-starter.twig` (`ArchetypeInjectorTest`).
+  - Never apply `backdrop-filter: blur(...)` (`backdrop-blur-*`) or `transition-all` to large scrollable cards (`#chart-card`, `#calculator-app`, `.fintech-glass-card`, component cards, sticky ledger cells `#results-table th/td:first-child` / `.table-sticky-col-0`, `.slider-floating-tooltip`), or to fixed HUD/navbar/dock bars (`bg-white` / `bg-white/98`); reserve `backdrop-blur-*` strictly for lightweight overlay modal/wizard backdrops (`dialog::backdrop`). Keep `background-color: rgba(255, 255, 255, 0.98)` inside `@utility fintech-glass-card` (`TypographyAndThemeTokensTest`), transform-only `.metric-pulse-active` (`input.css`), and pure light `bg-white/95` on `strategy-starter.twig` (`ArchetypeInjectorTest`). Keep `#breakdown-studio` opaque (`bg-slate-100`, not `bg-slate-100/70`) while preserving `bg-white/95` in `yearly-breakdown-table.twig` (`YearlyBreakdownTableTest#L122`).
   - Keep `#mini-hud-anchor` at `top-20` (`80px`) to clear the `73px` navbar.
-- **Rationale:** `items-start` + `self-start` eliminates Grid row stretch tails; placing `md:sticky md:top-24 xl:static` on the shorter Child 2 right column pairs KPIs + Chart beside Stage 2 SWP inputs on `768px–1279px` while behaving statically on shorter single-phase tabs and un-sticking cleanly at `#breakdown-studio` (`md:col-span-12`) or `xl:` desktop (`>=1280px`). Eliminating `background-attachment: fixed` and large-card `backdrop-filter` prevents Chromium `<canvas>` and card layer drops at `800px–1366px`.
+- **Rationale:** `items-start` + `self-start` eliminates Grid row stretch tails, and isolating Row 1 with `xl:contents` ensures CSS `position: sticky` on `md:col-span-7` uses Row 1 as its containing block rather than the full outer grid spanning `#breakdown-studio`. Child 2 tracks cleanly alongside Stage 2 SWP inputs on `768px–1279px` and unsticks with a constant 20px–32px gutter above opaque `#breakdown-studio` (`0px` overlap), then dissolves into desktop side-by-side layout (`xl:row-span-2`) at `>=1280px`. Eliminating `background-attachment: fixed` and large-card `backdrop-filter` prevents Chromium `<canvas>` and card layer drops at `800px–1366px`.
 
 ---
 

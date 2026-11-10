@@ -1,11 +1,23 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-10*
+*Last Updated: 2026-11-11*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** CSS Architecture Unification Complete — Cascade Layer Remediation (`@layer base` / `@layer components`), Range Slider SSoT (`input.css`), Zero-Specificity `.prose` / `.not-prose` Isolation, Dead-Code Purge & WCAG Contrast Alignment.
+- **Current Milestone:** Row-1 Sticky Scoping & Studio Overlap Resolution Complete — Option A (`xl:contents` Row-1 Grid Wrapper + Opaque `#breakdown-studio`) Verified Across Foldables, Tablets & Desktop.
+- **Implemented Fixes & Architectural Outcomes (2026-11-11 Session 30 - Row-1 Sticky Containing-Block Isolation & Studio Opacity Fix):**
+  - **Root-Cause Diagnosis (`home.twig`, `analytical-studio.twig`):**
+    - On `768px–1279px` (`md:`–`lg:`), `position: sticky` on Grid Child 2 (`md:col-span-7 ... md:sticky md:top-24 xl:static`) used the entire 3-child outer CSS Grid (stretching past `#breakdown-studio`) as its containing block rather than Row 1 alone, causing Child 2 (`Wealth Growth Trajectory`) to stay stuck through `#breakdown-studio` (`Yearly Cashflow Ledger & Analytical Studio`) and bleed behind `bg-slate-100/70`.
+  - **Option A Structural Fix (`src/Views/calculators/home.twig#L66-L124`, `src/Views/components/analytical-studio.twig#L2`):**
+    - Scoped Child 1 (`md:col-span-5`) and Child 2 (`md:col-span-7`) inside a Row-1 wrapper `<div class="grid grid-cols-1 md:grid-cols-12 items-start gap-5 lg:gap-8 mb-5 lg:mb-8 xl:mb-0 xl:contents">` nested inside `<div class="xl:grid xl:grid-cols-12 xl:grid-rows-[auto_1fr] xl:items-start xl:gap-8 mt-4 sm:mt-6">`, and simplified Child 3's wrapper to `<div class="xl:col-span-7 xl:col-start-6 min-w-0">`. On `<1280px`, Child 2 unsticks cleanly at Row 1's bottom boundary (`20px`/`32px` gutter above Child 3); on `>=1280px`, `xl:contents` dissolves the wrapper back into the 12-column desktop layout (`xl:row-span-2`).
+    - Hardened `#breakdown-studio` container surface in `analytical-studio.twig#L2` from semi-transparent `bg-slate-100/70` to solid opaque `bg-slate-100`, while keeping `bg-white/95` on `yearly-breakdown-table.twig` intact for `YearlyBreakdownTableTest#L122`.
+  - **End-to-End Verification (`npm run build`, SSR `curl`, Chrome CDP, Parity & `composer check-all`):**
+    - Vite production build (`npm run typecheck && npm run build`): 0 errors (`dist/assets/app-BhLK4z9l.css` `198.22 kB`, `dist/assets/app-S4czV1OB.js` `329.98 kB`).
+    - SSR `curl` (`http://localhost:8080/`): HTTP `200 OK` rendering `xl:contents`, `bg-slate-100`, and updated asset hashes.
+    - Headless Chrome CDP (`393x852`, `768x1024`, `800x900`, `1024x900`, `1366x900` across scroll positions `0..2200` + seam screenshot inspection at `800x900` `sy=1850` & `1024x900` `sy=1650`): `docOverflow === 0`, `maxOverlapC2C3 === 0`, `maxOverlapC1C3 === 0`, consistent `20px`/`32px` gutter above `#breakdown-studio`, opaque `bg-slate-100` (`oklch(0.968 0.007 247.896)`), `outerDisplay: "grid"` / `row1Display: "contents"` side-by-side symmetry at `1366x900`, and `CONSOLE_ERRORS: []`.
+    - `php tests/parity_check.php`: `71/71` cases passed.
+    - `composer check-all`: PHPStan Level Max `250/250 [OK]`, PHPCS `250/250 (100%)`, PHPUnit `811 tests, 12672 assertions` OK.
 - **Implemented Fixes & Architectural Outcomes (2026-11-10 Session 29 - CSS Architecture Unification, Cascade Remediation & Dead-Code Purge):**
   - **Cascade Layer Remediation & Unified Stylesheets (`resources/css/input.css`, `resources/css/styles.css`):**
     - Wrapped document/element defaults in `@layer base` (`html`, `body`, `h1..h6`, `:where(input[type="number"], input[type="text"], select, textarea)`, `:where(label)`, `table`, `:where(...):focus-visible`, and `dialog`/`dialog::backdrop` verbatim substrings preserved for `ModalArchitectureTest`) and wrapped component selectors in `@layer components` across both `input.css` and `styles.css`.
