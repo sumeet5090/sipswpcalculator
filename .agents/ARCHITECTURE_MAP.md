@@ -125,9 +125,10 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 - **Excel INR Encoding:** Always prepend `\xEF\xBB\xBF` (UTF-8 BOM) to CSV downloads so Excel displays the `₹` symbol correctly.
 
 ### G. Foldable, Tablet & Desktop Responsive Layout Guardrails
-- **3-Child Home Grid (`home.twig`):** Uniform `md:col-span-5` (Form) + `md:col-span-7` (Chart/Quick Answer) + Child 3 Studio (`md:col-span-12 xl:col-span-7 xl:col-start-6`) with `xl:grid-rows-[auto_1fr]` (`xl:row-span-2` on Child 1), `items-start`, `min-w-0` on all grid children, and desktop-only sticky (`xl:sticky xl:top-24`).
+- **3-Child Home Grid (`home.twig`):** Uniform `md:col-span-5` (Form, `xl:row-span-2 xl:sticky xl:top-24`) + `md:col-span-7` (Right Top Chart/Quick Answer with `self-start md:sticky md:top-24 xl:static` so tablet Dual-mode outputs glide beside Stage 2 SWP inputs without colliding with `#mini-hud-anchor`) + Child 3 Studio (`md:col-span-12 xl:col-span-7 xl:col-start-6`) with `xl:grid-rows-[auto_1fr]`, `items-start`, and `min-w-0` on all grid children, plus gentle `< xl` form padding/gap compaction (`calculator-form.twig`, `input-range-pair.twig`, `sip-fields.twig`, `swp-fields.twig`).
+- **Monotonic Chart Aspect Curve (`chart-visualization.twig`):** `#chart-canvas-container` uses monotonic landscape breakpoints `h-[250px] sm:h-[290px] md:h-[260px] lg:h-[320px] xl:h-[395px]` (`maintainAspectRatio: false`) paired with compact `< xl` `#chart-card` chrome padding (`transition-shadow`) to prevent foldable/tablet letterboxing.
 - **KPI Matrix SSR/TS Parity:** `#summary-cards-grid` uses `grid-cols-2 xl:grid-cols-4` (4-card) or `grid-cols-2 xl:grid-cols-3` + `col-span-2 xl:col-span-1` on `#card-corpus` (3-card), synchronized identically across `chart-visualization.twig`, `SummaryMetricsController.ts`, `EmiDriver.ts`, and `SpecializedCalculatorController.ts`.
-- **Chromium GPU Compositor Hygiene:** `background-attachment: fixed` is scoped strictly to `@media (min-width: 1024px)` (`scroll` default below `1024px`, zero inline `background-attachment` on `<body>`), sticky table column `.table-sticky-col-0` / `#results-table` uses solid opaque `#ffffff` / `#f8fafc` (`background-clip: padding-box`, no per-cell `backdrop-blur-*`), `.stagger-row` uses immediate `opacity: 1`, glow blobs sit on `z-behind` behind `z-10` headers, and `#mini-hud-anchor` clears the navbar at `top-20`.
+- **Chromium GPU Compositor Hygiene:** Always use `body { background-attachment: scroll }` at all viewport widths (no `@media (min-width: 1024px)` `fixed` override in `input.css`/`styles.css` or inline `<body>` styles); omit `backdrop-filter: blur(...)` (`backdrop-blur-*`) from large scrollable cards (`#chart-card`, `#calculator-app`, `.fintech-glass-card`, `.glass-card`, component cards, sticky `.table-sticky-col-0` / `#results-table` cells) and fixed HUD/navbar/dock bars (`bg-white` / `bg-white/98`, reserving blur only for modal/dialog backdrops); use immediate `.stagger-row` `opacity: 1`, `z-behind` glow blobs behind `z-10` headers, `@supports`-guarded `.text-gradient`, and `#mini-hud-anchor` at `top-20`.
 
 ---
 
@@ -135,4 +136,4 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 
 - **Parity Verification Script:** `php tests/parity_check.php` (TypeScript vs. PHP mathematical parity)
 - **Full PHPUnit Test Suite:** `composer test` or `vendor/bin/phpunit`
-- **Strict Linter & Static Analysis:** `composer check-all` (PHPStan level 8 + PHPCS + PHPUnit)
+- **Strict Linter & Static Analysis:** `composer check-all` (PHPStan level 5 + PHPCS + PHPUnit)

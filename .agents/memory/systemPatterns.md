@@ -21,24 +21,25 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
 ---
 
 ## 1.1 Asymmetric Dashboard Layout & Responsive GPU Compositing Primitives
-- **Rule (Home 3-Child Grid Workspace):** On `home.twig`, use a uniform `5 / 7` column split from `md:` (`768px+`) with explicit desktop row distribution (`xl:grid-rows-[auto_1fr]`), `items-start`, `min-w-0` shrink guards, and responsive Studio placement:
+- **Rule (Home 3-Child Grid Workspace):** On `home.twig`, use a uniform `5 / 7` column split from `md:` (`768px+`) with explicit desktop row distribution (`xl:grid-rows-[auto_1fr]`), `items-start`, `min-w-0` shrink guards, desktop sticky on Child 1, hybrid tablet-only sticky on Child 2 (`md:sticky md:top-24 xl:static`), and full-width tablet placement on Child 3:
   ```html
   <div class="grid grid-cols-1 md:grid-cols-12 xl:grid-rows-[auto_1fr] items-start gap-5 lg:gap-8 mt-4 sm:mt-6">
       <div class="md:col-span-5 xl:row-span-2 flex flex-col min-h-0 min-w-0 self-start h-fit xl:sticky xl:top-24">...</div>
-      <div class="md:col-span-7 space-y-4 min-h-0 min-w-0">...</div>
+      <div class="md:col-span-7 space-y-4 min-h-0 min-w-0 self-start md:sticky md:top-24 xl:static">...</div>
       <div class="md:col-span-12 xl:col-span-7 xl:col-start-6 min-w-0">...</div>
   </div>
   ```
 - **Rule (Sub-Calculator Guide Grid):** On `calculator-guide.twig`, use matching `items-start`, `md:col-span-5` (left), `md:col-span-7` (right), `min-w-0`, and desktop-only sticky (`xl:sticky xl:top-24`).
+- **Rule (Monotonic Chart Canvas Heights):** Keep `#chart-canvas-container` (`chart-visualization.twig`) on monotonic landscape height steps (`h-[250px] sm:h-[290px] md:h-[260px] lg:h-[320px] xl:h-[395px]`) with `maintainAspectRatio: false` (`ChartManager.ts`) and compact `< xl` card padding (`transition-shadow`) so narrower tablet/foldable columns never exhibit square vertical letterboxing.
 - **Rule (KPI Card Responsive Matrix — Twig & TS Sync):** `#summary-cards-grid` MUST stay 2-up across `320px–1279px` and only expand to 4-up/3-up at `xl:` (`>=1280px`):
   - 4-Card Modes (`combo`, `swp`, `emi`): `grid grid-cols-2 xl:grid-cols-4` (`#card-corpus` = `col-span-1`).
   - 3-Card Modes (`sip`, `lumpsum`, `target_corpus`, specialized): `grid grid-cols-2 xl:grid-cols-3` (`#card-corpus` = `col-span-2 xl:col-span-1`).
   - Both SSR (`chart-visualization.twig`) and TypeScript (`SummaryMetricsController.ts`, `EmiDriver.ts`, `SpecializedCalculatorController.ts`) MUST declare identical breakpoint tokens.
-- **Rule (Chromium Tablet/Foldable GPU Compositor Stability):**
-  - Never apply `background-attachment: fixed` on `<1024px` (either CSS or inline `<body>` style in `base.twig`); scope it strictly inside `@media (min-width: 1024px)`.
-  - Never apply `backdrop-filter: blur(...)` (`backdrop-blur-*`) or infinite animated gradients to dozens of sticky table cells (`#results-table th/td:first-child`, `.table-sticky-col-0`, `ResultsController.ts`) or `.text-gradient`; use solid opaque `#ffffff`/`#f8fafc` sticky cell surfaces (`background-clip: padding-box`) and solid `#047857` fallback inside `@supports`.
-  - Keep `#mini-hud-anchor` at `top-20` (`80px`) to clear the `73px` navbar (`bg-white/95`).
-- **Rationale:** `items-start` + `self-start` eliminates Grid row stretch tails; scoping sticky sidebars to `xl:` (`>=1280px`) prevents tall Dual-mode inputs from clipping or floating mid-scroll on `768px–1279px` tablets; `md:col-span-12` gives the 4–11 column Cashflow Ledger full tablet width while `xl:grid-rows-[auto_1fr]` prevents intra-column vertical gaps on desktop.
+- **Rule (Chromium GPU Compositor Stability Across `393px–1366px+`):**
+  - Never apply `background-attachment: fixed` at ANY breakpoint (`body` in `input.css`, `styles.css`, or inline `base.twig`); always use `background-attachment: scroll`. Even `@media (min-width: 1024px)` fixed backgrounds cause Chromium's Skia rasterizer at `1024px` (`iPad Pro 13`) to drop `<canvas id="corpusChart">` when paired with card surfaces.
+  - Never apply `backdrop-filter: blur(...)` (`backdrop-blur-*`) or `transition-all` to large scrollable cards (`#chart-card`, `#calculator-app`, `.fintech-glass-card`, `.glass-card`, component cards, sticky ledger cells `#results-table th/td:first-child` / `.table-sticky-col-0`), or to fixed HUD/navbar/dock bars (`bg-white` / `bg-white/98`); reserve `backdrop-blur-*` strictly for lightweight overlay modal/wizard backdrops. Keep `background-color: rgba(255, 255, 255, 0.98)` inside `@utility fintech-glass-card` (`TypographyAndThemeTokensTest`) and pure light `bg-white/95` on `strategy-starter.twig` (`ArchetypeInjectorTest`).
+  - Keep `#mini-hud-anchor` at `top-20` (`80px`) to clear the `73px` navbar.
+- **Rationale:** `items-start` + `self-start` eliminates Grid row stretch tails; placing `md:sticky md:top-24 xl:static` on the shorter Child 2 right column pairs KPIs + Chart beside Stage 2 SWP inputs on `768px–1279px` while behaving statically on shorter single-phase tabs and un-sticking cleanly at `#breakdown-studio` (`md:col-span-12`) or `xl:` desktop (`>=1280px`). Eliminating `background-attachment: fixed` and large-card `backdrop-filter` prevents Chromium `<canvas>` and card layer drops at `800px–1366px`.
 
 ---
 
@@ -88,4 +89,4 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
 - **Hypothesis Transparency:** Clearly state the bug hypothesis, target vendor file, and next step to the user before running deep inspection commands.
 - **Tiered Verification:**
   - Fast Tier (UI/Visual): Run `npm run build` and single browser check to verify visual rendering and 0 console errors.
-  - Gate Tier (Pre-Commit): Run `composer check-all` (839 tests, PHPStan L5, PHPCS) and `parity_check.php` before committing or finalizing.
+  - Gate Tier (Pre-Commit): Run `composer check-all` (811 tests, PHPStan L5, PHPCS) and `parity_check.php` before committing or finalizing.

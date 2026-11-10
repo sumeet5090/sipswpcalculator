@@ -7,11 +7,11 @@
 <div id="{{ container_id|default('calculator-app') }}"
      data-js="calculator-app"
      data-mode="{{ calculator_type|default('combo') }}"
-     class="bg-white/95 rounded-3xl border border-slate-200/90 shadow-card backdrop-blur-xl p-3.5 sm:p-4 relative flex flex-col min-h-0 h-fit">
+     class="bg-white rounded-3xl border border-slate-200/90 shadow-card p-3 xl:p-4 relative flex flex-col min-h-0 h-fit">
     <!-- Ambient Aurora Glow (Pure Light Mode: Emerald & Teal Accents) -->
     <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-400/8 rounded-full blur-3xl pointer-events-none"></div>
 
-    <form method="post" novalidate id="calculator-form" class="relative z-10 flex flex-col flex-1 min-h-0 space-y-3" onsubmit="event.preventDefault();">
+    <form method="post" novalidate id="calculator-form" class="relative z-10 flex flex-col flex-1 min-h-0 space-y-2 xl:space-y-3" onsubmit="event.preventDefault();">
         <!-- SECURITY: Honeypot field (hidden from real users, catches bots) -->
         <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
             <label for="website_url">Leave this field empty</label>
@@ -34,7 +34,7 @@
 
         {% if calculator_type|default('combo') in ['combo', 'all'] %}
         <!-- 3-Mode Segmented Control Bar (Dual vs SIP Only vs SWP Only) -->
-        <div class="py-0.5 mb-2 rounded-2xl">
+        <div class="py-0.5 mb-1 xl:mb-2 rounded-2xl">
             <div class="flex bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70 shadow-flat gap-1" role="tablist" aria-label="Calculator Mode Selector">
                 <button type="button" id="tab-combo" role="tab" aria-selected="{% if calculator_type|default('combo') == 'combo' %}true{% else %}false{% endif %}"
                     class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1.5 text-ui-xs font-extrabold uppercase tracking-normal xl:tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'combo' %}bg-white text-emerald-900 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
@@ -55,12 +55,12 @@
         </div>
 
         <!-- Scrollable Form Panels Container -->
-        <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
+        <div class="space-y-2 xl:space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
             
             <!-- Stage 1 / SIP Panel -->
-            <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2.5 border-t-4 border-emerald-500 rounded-2xl bg-gradient-to-b from-emerald-50/70 via-emerald-50/40 to-teal-50/20 p-2 sm:p-2.5 border border-emerald-200/80 shadow-subtle transition-all">
+            <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2 xl:space-y-2.5 border-t-4 border-emerald-500 rounded-2xl bg-gradient-to-b from-emerald-50/70 via-emerald-50/40 to-teal-50/20 p-2 xl:p-2.5 border border-emerald-200/80 shadow-subtle transition-all">
                 <!-- Stage 1 Header (Visible in Dual Mode) -->
-                <div id="stage-1-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-100/90 border border-emerald-300/80 shadow-flat">
+                <div id="stage-1-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-1.5 xl:py-2 rounded-xl bg-emerald-100/90 border border-emerald-300/80 shadow-flat">
                     <div class="flex items-center gap-1.5 text-slate-800">
                         <span class="flex items-center justify-center w-4 h-4 rounded-full bg-emerald-600 text-white text-micro font-black">1</span>
                         <span class="text-ui-xs font-extrabold text-emerald-950">Stage 1:</span>
@@ -76,7 +76,7 @@
             </div><!-- /panel-sip -->
 
             <!-- Stage Transition Indicator (Visible only in Dual Mode) -->
-            <div id="stage-transition-divider" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center gap-2 py-1.5 select-none">
+            <div id="stage-transition-divider" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center gap-2 py-0.5 xl:py-1.5 select-none">
                 <div class="flex-1 h-px bg-gradient-to-r from-emerald-300 to-indigo-200"></div>
                 <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-100/90 border border-indigo-300/90 text-micro font-extrabold text-indigo-950 shadow-flat">
                     <svg class="w-3.5 h-3.5 text-indigo-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,9 +89,9 @@
             </div>
 
             <!-- Stage 2 / SWP Panel -->
-            <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="space-y-3 border-t-4 border-blue-500 rounded-2xl bg-gradient-to-b from-blue-50/70 via-blue-50/40 to-indigo-50/20 p-2 sm:p-2.5 border border-blue-200/80 shadow-subtle transition-all">
+            <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="space-y-2 xl:space-y-3 border-t-4 border-blue-500 rounded-2xl bg-gradient-to-b from-blue-50/70 via-blue-50/40 to-indigo-50/20 p-2 xl:p-2.5 border border-blue-200/80 shadow-subtle transition-all">
                 <!-- Stage 2 Header (Visible in Dual Mode) -->
-                <div id="stage-2-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-2 rounded-xl bg-blue-100/90 border border-blue-300/80 shadow-flat">
+                <div id="stage-2-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-1.5 xl:py-2 rounded-xl bg-blue-100/90 border border-blue-300/80 shadow-flat">
                     <div class="flex items-center gap-1.5 text-slate-800">
                         <span class="flex items-center justify-center w-4 h-4 rounded-full bg-blue-600 text-white text-micro font-black">2</span>
                         <span class="text-ui-xs font-extrabold text-blue-950">Stage 2:</span>

@@ -34,7 +34,7 @@
             : 'is-active bg-emerald-600 text-white border-emerald-600 shadow-flat') %}
     {% set tooltip = config.tooltip|default(null) %}
     
-    <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2 sm:p-2.5 transition-all duration-200 shadow-subtle hover:shadow-card" data-field-id="{{ id }}">
+    <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2 xl:p-2.5 transition-all duration-200 shadow-subtle hover:shadow-card" data-field-id="{{ id }}">
         <!-- Row 1: Label & Stepper Pill (Groww / Zerodha High-Density Inline Pattern) -->
         <div class="flex items-center justify-between gap-2 min-w-0">
             <!-- Left: Label, Tooltip & Word Badge -->
@@ -53,7 +53,7 @@
                                 ℹ
                             </button>
                             <div role="tooltip" 
-                                class="absolute left-0 sm:left-1/2 sm:-translate-x-1/2 bottom-full mb-2 hidden group-hover/tip:block group-focus-within/tip:block w-64 max-w-[80vw] p-2.5 bg-white/98 backdrop-blur-md text-slate-700 text-caption leading-relaxed rounded-xl shadow-modal border border-slate-200/90 z-50 pointer-events-none transition-all">
+                                class="absolute left-0 sm:left-1/2 sm:-translate-x-1/2 bottom-full mb-2 hidden group-hover/tip:block group-focus-within/tip:block w-64 max-w-[80vw] p-2.5 bg-white text-slate-700 text-caption leading-relaxed rounded-xl shadow-modal border border-slate-200/90 z-50 pointer-events-none transition-all">
                                 <strong class="text-slate-900 block font-bold mb-0.5">{{ label }}</strong>
                                 {{ tooltip }}
                             </div>

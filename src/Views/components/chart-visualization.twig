@@ -209,7 +209,7 @@
                                 ℹ
                             </button>
                             <div role="tooltip" 
-                                class="absolute left-0 sm:left-1/2 sm:-translate-x-1/2 bottom-full mb-2 hidden group-hover/tip:block group-focus-within/tip:block w-72 max-w-[85vw] p-2.5 bg-white/98 backdrop-blur-md text-slate-700 text-caption leading-relaxed rounded-xl shadow-modal border border-slate-200/90 z-50 pointer-events-none transition-all text-left">
+                                class="absolute left-0 sm:left-1/2 sm:-translate-x-1/2 bottom-full mb-2 hidden group-hover/tip:block group-focus-within/tip:block w-72 max-w-[85vw] p-2.5 bg-white text-slate-700 text-caption leading-relaxed rounded-xl shadow-modal border border-slate-200/90 z-50 pointer-events-none transition-all text-left">
                                 <strong class="text-slate-900 block font-bold mb-0.5">How Auto-Heal Works:</strong>
                                 Uses a 40-iteration binary search to calculate the exact maximum monthly payout you can safely withdraw without running out of money before your target tenure ends.
                             </div>
@@ -230,12 +230,12 @@
     </div>
 
     <!-- Chart Card -->
-    <div id="chart-card" class="relative z-10 bg-white/95 rounded-3xl border border-slate-200/90 shadow-card backdrop-blur-xl overflow-hidden transition-all duration-300 hover:shadow-card-hover p-4 sm:p-5 flex flex-col gap-3">
+    <div id="chart-card" class="relative z-10 bg-white rounded-3xl border border-slate-200/90 shadow-card overflow-hidden transition-shadow duration-300 hover:shadow-card-hover p-3.5 sm:p-4 xl:p-5 flex flex-col gap-2.5 xl:gap-3">
         
         <!-- ========================================================================= -->
         <!-- TIER 1: UNIFIED MASTER COMMAND DOCK (Identity · Mode · Headline Context)  -->
         <!-- ========================================================================= -->
-        <header class="flex flex-col xl:flex-row xl:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+        <header class="flex flex-col xl:flex-row xl:items-center justify-between gap-2 xl:gap-3 pb-2 xl:pb-3 border-b border-slate-100">
             <!-- Left: Identity & Live Financial Context -->
             <div class="flex flex-col gap-0.5 min-w-0">
                 <div class="flex items-center gap-2">
@@ -335,7 +335,7 @@
         <!-- ========================================================================= -->
         <!-- TIER 2: REAL-TIME TIMELINE INSPECTION HUD DOCK                            -->
         <!-- ========================================================================= -->
-        <div id="chart-inspection-hud" class="flex flex-col xl:flex-row xl:items-center justify-between gap-2 px-3.5 py-2.5 rounded-2xl bg-slate-50/90 border border-slate-200/80 text-ui-xs text-slate-600 transition-all">
+        <div id="chart-inspection-hud" class="flex flex-col xl:flex-row xl:items-center justify-between gap-2 px-3 py-2 xl:px-3.5 xl:py-2.5 rounded-2xl bg-slate-50/90 border border-slate-200/80 text-ui-xs text-slate-600 transition-all">
             <div class="flex items-center gap-2 shrink-0">
                 <span id="hud-timeline-indicator" class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
                 <span id="hud-year-label" class="font-bold text-slate-800 tracking-tight whitespace-nowrap">Interactive Timeline</span>
@@ -352,7 +352,7 @@
         <!-- ========================================================================= -->
         <!-- TIER 3: INTERACTIVE CANVAS CONTAINER & ACCESSIBLE LEDGER                  -->
         <!-- ========================================================================= -->
-        <div class="h-[300px] sm:h-[380px] lg:h-[370px] xl:h-[410px] w-full min-w-0 relative z-10" 
+        <div class="h-[250px] sm:h-[290px] md:h-[260px] lg:h-[320px] xl:h-[395px] w-full min-w-0 relative z-10" 
             tabindex="0" id="chart-canvas-container" 
             aria-label="Interactive Wealth Projection Chart. Use Left and Right arrow keys to inspect yearly progression.">
             <canvas id="corpusChart" class="w-full h-full block" role="img" aria-label="Investment growth projection line chart"></canvas>
@@ -389,7 +389,7 @@
         <!-- ========================================================================= -->
         <!-- TIER 4: REFINED HISTORICAL BENCHMARK & ANALYTICAL LENSES CONSOLE          -->
         <!-- ========================================================================= -->
-        <footer class="mt-2 pt-3 border-t border-slate-100 flex flex-col xl:flex-row xl:items-center justify-between gap-3">
+        <footer class="mt-1 xl:mt-2 pt-2.5 xl:pt-3 border-t border-slate-100 flex flex-col xl:flex-row xl:items-center justify-between gap-2.5 xl:gap-3">
             <!-- Left Console: Opportunity Cost Benchmark Selector (Single-Choice Segmented Dock) -->
             <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2.5 min-w-0">
                 <div class="flex items-center gap-1.5 shrink-0">

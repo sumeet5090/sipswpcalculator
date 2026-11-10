@@ -133,7 +133,7 @@
     {% if is_calculator_route %}
     <!-- Compact Tablet/Desktop Floating Mini-HUD Capsule (Glides in when primary summary cards scroll off-screen on >= md viewports) -->
     <div id="mini-hud-anchor" class="hidden md:flex fixed top-20 inset-x-0 justify-center z-header pointer-events-none">
-        <div id="mobile-sticky-mini-hud" class="pointer-events-auto bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-floating hover:shadow-card-hover rounded-full px-4 sm:px-5 py-2 flex items-center gap-3 sm:gap-4 divide-x divide-slate-200/80 transform -translate-y-4 opacity-0 pointer-events-none transition-all duration-300 ease-out">
+        <div id="mobile-sticky-mini-hud" class="pointer-events-auto bg-white/98 border border-slate-200/90 shadow-floating hover:shadow-card-hover rounded-full px-4 sm:px-5 py-2 flex items-center gap-3 sm:gap-4 divide-x divide-slate-200/80 transform -translate-y-4 opacity-0 pointer-events-none transition-all duration-300 ease-out">
             <!-- Live Signal Pulse -->
             <div class="flex items-center gap-1.5 shrink-0 pr-1">
                 <span class="relative flex h-2 w-2">
@@ -216,7 +216,7 @@
     
     {% if is_calculator_route %}
     <!-- Keyboard-Aware Floating Micro-Preview Capsule (Glides above virtual keyboard during text typing on mobile) -->
-    <div id="keyboard-docked-preview" class="hidden opacity-0 pointer-events-none fixed z-modal left-2.5 right-2.5 sm:left-4 sm:right-4 bg-white/98 text-slate-900 border border-emerald-300 shadow-modal rounded-2xl px-3 sm:px-4 py-2 flex items-center justify-between transition-all duration-200 backdrop-blur-xl">
+    <div id="keyboard-docked-preview" class="hidden opacity-0 pointer-events-none fixed z-modal left-2.5 right-2.5 sm:left-4 sm:right-4 bg-white text-slate-900 border border-emerald-300 shadow-modal rounded-2xl px-3 sm:px-4 py-2 flex items-center justify-between transition-all duration-200">
         <div class="flex items-center gap-1.5 min-w-0">
             <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
             <span class="text-micro font-bold text-slate-500 uppercase shrink-0">Live Corpus:</span>
@@ -234,7 +234,7 @@
     </div>
 
     <!-- Ergonomic Mobile Sticky Action Dock (Visible only on <md viewports on calculator pages) -->
-    <div id="mobile-action-dock" class="md:hidden fixed bottom-0 left-0 right-0 z-dock bg-white/95 backdrop-blur-xl border-t border-slate-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-3 py-2 flex items-center justify-between gap-2 pb-[max(0.625rem,env(safe-area-inset-bottom))] transition-all duration-300">
+    <div id="mobile-action-dock" class="md:hidden fixed bottom-0 left-0 right-0 z-dock bg-white/98 border-t border-slate-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-3 py-2 flex items-center justify-between gap-2 pb-[max(0.625rem,env(safe-area-inset-bottom))] transition-all duration-300">
         <!-- Left: Net Financial Outcome Glance (Corpus + Gains Badge) -->
         <div class="flex items-center gap-2 min-w-0 flex-1">
             <div class="flex flex-col justify-center min-w-0">
@@ -399,7 +399,7 @@
 
     <!-- Floating Scroll-to-Top FAB (appears on scroll up to prevent text occlusion) -->
     <button type="button" id="mobile-scroll-top-fab"
-        class="sm:hidden fixed {% if is_calculator_route or active_page|default('') == 'blog_post' %}bottom-32{% else %}bottom-8{% endif %} right-3.5 z-sticky w-9 h-9 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-card text-slate-600 text-xs font-black flex items-center justify-center active:scale-90 transition-all duration-300 cursor-pointer opacity-0 pointer-events-none translate-y-2"
+        class="sm:hidden fixed {% if is_calculator_route or active_page|default('') == 'blog_post' %}bottom-32{% else %}bottom-8{% endif %} right-3.5 z-sticky w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-card text-slate-600 text-xs font-black flex items-center justify-center active:scale-90 transition-all duration-300 cursor-pointer opacity-0 pointer-events-none translate-y-2"
         onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
         aria-label="Scroll to top">
         ↑
