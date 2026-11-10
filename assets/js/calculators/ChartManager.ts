@@ -253,7 +253,7 @@ export class ChartManager {
                 );
                 if (rateSpan) {
                     rateSpan.classList.add('text-growth', 'font-semibold');
-                    rateSpan.classList.remove('text-slate-400', 'font-normal');
+                    rateSpan.classList.remove('text-slate-500', 'font-normal');
                 }
             } else {
                 c.classList.remove(
@@ -270,7 +270,7 @@ export class ChartManager {
                 c.classList.add('bg-transparent', 'text-slate-600', 'border-transparent', 'hover:text-slate-900', 'hover:bg-white/60', 'font-semibold');
                 if (rateSpan) {
                     rateSpan.classList.remove('text-growth', 'font-semibold');
-                    rateSpan.classList.add('text-slate-400', 'font-normal');
+                    rateSpan.classList.add('text-slate-500', 'font-normal');
                 }
             }
         });

@@ -8,7 +8,6 @@ import { AudioFeedbackController } from '../controllers/AudioFeedbackController.
 import { CityBenchmarkController } from '../controllers/CityBenchmarkController.ts';
 import { DailyAccrualController } from '../controllers/DailyAccrualController.ts';
 import { SmartNudgeController } from '../controllers/SmartNudgeController.ts';
-import { CardSpotlightController } from '../controllers/CardSpotlightController.ts';
 import { GoalCommitmentController } from '../controllers/GoalCommitmentController.ts';
 import { InvestmentInputs, YearResult } from '../../types';
 
@@ -38,7 +37,6 @@ export class EngagementSubsystem {
     private cityBenchmarkController: CityBenchmarkController;
     private dailyAccrualController: DailyAccrualController;
     private smartNudgeController: SmartNudgeController;
-    private spotlightController: CardSpotlightController;
     private goalCommitmentController: GoalCommitmentController;
 
     constructor(config: EngagementSubsystemConfig) {
@@ -77,8 +75,6 @@ export class EngagementSubsystem {
             config.onSmartNudgeRate
         );
 
-        this.spotlightController = new CardSpotlightController();
-
         this.goalCommitmentController = new GoalCommitmentController(
             this.dom,
             this.formatter,
@@ -99,7 +95,6 @@ export class EngagementSubsystem {
         this.cityBenchmarkController.init();
         this.dailyAccrualController.init();
         this.smartNudgeController.init();
-        this.spotlightController.init();
         this.goalCommitmentController.init();
         this.quizController.init();
         this.celebrationController.init();

@@ -78,7 +78,7 @@
                         <span class="sr-only">{{ initial_kpis and initial_kpis.invested_exact ? initial_kpis.invested_exact : '₹ --' }}</span>
                         <span aria-hidden="true" data-nosnippet="true">{{ initial_kpis and initial_kpis.invested_exact ? initial_kpis.invested_exact : '₹ --' }}</span>
                     </div>
-                    <span id="subtitle-invested" class="text-slate-400 truncate">{{ initial_kpis and initial_kpis.is_dual_mode ? (initial_kpis.sip_years ~ ' Yrs Accumulation') : card1Sub }}</span>
+                    <span id="subtitle-invested" class="text-slate-500 truncate">{{ initial_kpis and initial_kpis.is_dual_mode ? (initial_kpis.sip_years ~ ' Yrs Accumulation') : card1Sub }}</span>
                 </div>
             </div>
 
@@ -101,7 +101,7 @@
                         <span aria-hidden="true" data-nosnippet="true">{{ initial_kpis and initial_kpis.maturity_exact ? initial_kpis.maturity_exact : '₹ --' }}</span>
                     </div>
                     <span id="summary-interest-compact" class="text-emerald-800 font-bold hidden"></span>
-                    <span id="subtitle-interest" class="text-slate-400 truncate">{{ initial_kpis and initial_kpis.is_dual_mode ? ('+' ~ initial_kpis.maturity_gains_compact ~ ' Gains @ Yr ' ~ initial_kpis.sip_years) : 'Compound Growth' }}</span>
+                    <span id="subtitle-interest" class="text-slate-500 truncate">{{ initial_kpis and initial_kpis.is_dual_mode ? ('+' ~ initial_kpis.maturity_gains_compact ~ ' Gains @ Yr ' ~ initial_kpis.sip_years) : 'Compound Growth' }}</span>
                 </div>
             </div>
 
@@ -121,7 +121,7 @@
                         <span class="sr-only">{{ initial_kpis and initial_kpis.withdrawn_exact ? initial_kpis.withdrawn_exact : '₹ --' }}</span>
                         <span aria-hidden="true" data-nosnippet="true">{{ initial_kpis and initial_kpis.withdrawn_exact ? initial_kpis.withdrawn_exact : '₹ --' }}</span>
                     </div>
-                    <span id="subtitle-withdrawn" class="text-slate-400 truncate">{{ initial_kpis and initial_kpis.is_dual_mode ? (initial_kpis.swp_years ~ ' Yrs Retirement') : card3Sub }}</span>
+                    <span id="subtitle-withdrawn" class="text-slate-500 truncate">{{ initial_kpis and initial_kpis.is_dual_mode ? (initial_kpis.swp_years ~ ' Yrs Retirement') : card3Sub }}</span>
                 </div>
             </div>
 
@@ -168,8 +168,8 @@
                 </div>
             </div>
             <!-- Score & Resilience Badge -->
-            <div class="flex items-center gap-2 shrink-0 ml-auto xl:ml-0">
-                <span id="peace-of-mind-badge" class="text-ui-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 whitespace-nowrap shadow-flat flex items-center gap-1">
+            <div class="flex flex-wrap items-center justify-end gap-1.5 sm:gap-2 min-w-0 max-w-full ml-auto xl:ml-0">
+                <span id="peace-of-mind-badge" class="text-ui-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 whitespace-normal sm:whitespace-nowrap max-w-full text-center leading-tight shadow-flat flex items-center gap-1">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                     <span>Bulletproof Resilience</span>
                 </span>
@@ -368,7 +368,7 @@
                 <span id="scrubber-max-indicator" class="font-bold">Yr --</span>
             </div>
             <input type="range" id="mobile-chart-scrubber" min="1" max="30" value="30" step="1"
-                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
+                class="w-full rounded-full appearance-none cursor-pointer accent-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
                 aria-label="Scrub through investment timeline years">
         </div>
 
@@ -402,15 +402,15 @@
                     </button>
                     <button type="button" class="benchmark-chip px-2.5 py-1 text-ui-xs font-semibold rounded-lg transition-all duration-150 cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center bg-transparent text-slate-600 border border-transparent hover:text-slate-900 hover:bg-white/60" data-benchmark="nifty">
                         <span>Nifty 50</span>
-                        <span class="benchmark-rate ml-1 text-micro text-slate-400 font-financial-mono font-normal">12%</span>
+                        <span class="benchmark-rate ml-1 text-micro text-slate-500 font-financial-mono font-normal">12%</span>
                     </button>
                     <button type="button" class="benchmark-chip px-2.5 py-1 text-ui-xs font-semibold rounded-lg transition-all duration-150 cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center bg-transparent text-slate-600 border border-transparent hover:text-slate-900 hover:bg-white/60" data-benchmark="gold">
                         <span>Gold</span>
-                        <span class="benchmark-rate ml-1 text-micro text-slate-400 font-financial-mono font-normal">9%</span>
+                        <span class="benchmark-rate ml-1 text-micro text-slate-500 font-financial-mono font-normal">9%</span>
                     </button>
                     <button type="button" class="benchmark-chip px-2.5 py-1 text-ui-xs font-semibold rounded-lg transition-all duration-150 cursor-pointer whitespace-nowrap shrink-0 inline-flex items-center justify-center bg-transparent text-slate-600 border border-transparent hover:text-slate-900 hover:bg-white/60" data-benchmark="fd">
                         <span>Bank FD</span>
-                        <span class="benchmark-rate ml-1 text-micro text-slate-400 font-financial-mono font-normal">6.5%</span>
+                        <span class="benchmark-rate ml-1 text-micro text-slate-500 font-financial-mono font-normal">6.5%</span>
                     </button>
                 </div>
             </div>
@@ -433,7 +433,7 @@
                         <input type="checkbox" id="show_post_tax" class="sr-only peer" aria-label="Show Post-Tax Returns">
                         <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-violet-600 transition-colors"></span>
                         <span>Post-Tax</span>
-                        <span id="tax-telemetry-pill" class="text-micro font-financial-mono text-slate-400 peer-checked:text-violet-700 font-medium">12.5%</span>
+                        <span id="tax-telemetry-pill" class="text-micro font-financial-mono text-slate-500 peer-checked:text-violet-700 font-medium">12.5%</span>
                     </label>
                     {% endif %}
 
@@ -444,7 +444,7 @@
                         <input type="checkbox" id="show_historical_corridor" class="sr-only peer" aria-label="Show Historical Volatility Corridor">
                         <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-emerald-600 transition-colors"></span>
                         <span>Volatility Range</span>
-                        <span id="corridor-telemetry-pill" class="text-micro font-financial-mono text-slate-400 peer-checked:text-emerald-700 font-medium">10–90%</span>
+                        <span id="corridor-telemetry-pill" class="text-micro font-financial-mono text-slate-500 peer-checked:text-emerald-700 font-medium">10–90%</span>
                     </label>
 
                     <!-- Lens: Wealth Map (Stacked Decomposition) -->
@@ -454,7 +454,7 @@
                         <input type="checkbox" id="show_wealth_map" class="sr-only peer" aria-label="Show Wealth Map">
                         <span class="w-1.5 h-1.5 rounded-full bg-slate-300 peer-checked:bg-indigo-600 transition-colors"></span>
                         <span>Breakdown</span>
-                        <span id="wealth-map-telemetry-pill" class="text-micro font-financial-mono text-slate-400 peer-checked:text-indigo-700 font-medium">Stack</span>
+                        <span id="wealth-map-telemetry-pill" class="text-micro font-financial-mono text-slate-500 peer-checked:text-indigo-700 font-medium">Stack</span>
                     </label>
                 </div>
             </div>

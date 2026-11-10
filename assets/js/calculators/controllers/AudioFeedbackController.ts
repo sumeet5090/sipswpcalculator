@@ -155,13 +155,13 @@ export class AudioFeedbackController {
         const text = soundBtn.querySelector('.sound-text');
 
         if (this.isEnabled) {
-            soundBtn.classList.remove('text-slate-400', 'bg-slate-50');
+            soundBtn.classList.remove('text-slate-500', 'bg-slate-50');
             soundBtn.classList.add('text-emerald-700', 'bg-emerald-50', 'border-emerald-200');
             if (icon) icon.textContent = '🔊';
             if (text) text.textContent = 'Sound ON';
         } else {
             soundBtn.classList.remove('text-emerald-700', 'bg-emerald-50', 'border-emerald-200');
-            soundBtn.classList.add('text-slate-400', 'bg-slate-50');
+            soundBtn.classList.add('text-slate-500', 'bg-slate-50');
             if (icon) icon.textContent = '🔇';
             if (text) text.textContent = 'Muted';
         }

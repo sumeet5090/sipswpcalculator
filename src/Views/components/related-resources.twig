@@ -30,7 +30,7 @@
     {% endif %}
 
     {% if related|length > 0 %}
-    <section class="mt-8 mb-12" aria-label="Related Resources">
+    <section class="not-prose mt-8 mb-12" aria-label="Related Resources">
         <h3 class="text-lg font-extrabold text-slate-800 mb-5 flex items-center gap-2">
             <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
@@ -61,7 +61,7 @@
                     <h4 class="text-sm font-bold text-slate-800 {{ title_hover }} transition-colors leading-snug mb-2 line-clamp-2">
                         {{ post.title }}
                     </h4>
-                    <p class="text-xs text-slate-400 flex items-center gap-2">
+                    <p class="text-xs text-slate-500 flex items-center gap-2">
                         <span>{{ post.read_time|default('5 min') }} read</span>
                         <span>&middot;</span>
                         <span>{{ post.date|default('2026') }}</span>

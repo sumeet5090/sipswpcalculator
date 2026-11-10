@@ -80,15 +80,15 @@
                 <!-- Numeric Well (text-body prevents iOS Safari zoom) -->
                 <div class="flex items-center justify-center px-1 py-0.5 w-16 sm:w-20 shrink-0">
                     {% if prefix %}
-                        <span class="currency-symbol text-caption sm:text-ui-xs font-black text-slate-400 mr-0.5 select-none pointer-events-none shrink-0">{{ prefix }}</span>
+                        <span class="currency-symbol text-caption sm:text-ui-xs font-black text-slate-500 mr-0.5 select-none pointer-events-none shrink-0">{{ prefix }}</span>
                     {% endif %}
                     <input type="text" inputmode="{{ inputMode }}" enterkeyhint="{{ enterKeyHint }}" id="{{ id }}" name="{{ name }}"
-                        class="stepper-input w-full !p-0 !border-0 !rounded-none !shadow-none !bg-transparent text-center text-body font-black font-financial-mono tabular-nums text-slate-900 focus:outline-none focus:ring-0 tracking-tight min-w-0"
+                        class="stepper-input w-full p-0 border-0 rounded-none shadow-none bg-transparent text-center text-body font-black font-financial-mono tabular-nums text-slate-900 focus:outline-none focus:ring-0 tracking-tight min-w-0"
                         required value="{{ value }}" data-min="{{ min }}" data-max="{{ max }}" data-step="{{ step }}"
                         autocomplete="off" spellcheck="false"
                         aria-describedby="{{ id }}_error">
                     {% if suffix %}
-                        <span class="text-caption font-bold text-slate-400 ml-0.5 select-none pointer-events-none shrink-0">{{ suffix }}</span>
+                        <span class="text-caption font-bold text-slate-500 ml-0.5 select-none pointer-events-none shrink-0">{{ suffix }}</span>
                     {% endif %}
                 </div>
 
@@ -121,7 +121,7 @@
                 aria-valuenow="{{ value }}"
                 aria-valuemin="{{ min }}"
                 aria-valuemax="{{ sliderMax }}"
-                class="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer {{ rangeColorClass }}">
+                class="w-full rounded-full appearance-none cursor-pointer {{ rangeColorClass }}">
         </div>
 
         {% if presets %}

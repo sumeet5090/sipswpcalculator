@@ -159,7 +159,7 @@ export class MilestoneCelebrationController {
                     realValEl.className = 'checkpoint-real-value text-[9px] text-emerald-700 font-bold block mt-0.5';
                 } else {
                     realValEl.textContent = 'Real: ₹--';
-                    realValEl.className = 'checkpoint-real-value text-[9px] text-slate-400 font-medium block mt-0.5';
+                    realValEl.className = 'checkpoint-real-value text-[9px] text-slate-500 font-medium block mt-0.5';
                 }
             }
 

@@ -349,7 +349,7 @@ export class CommandPaletteController {
 
         if (this.filteredItems.length === 0) {
             const empty = document.createElement('div');
-            empty.className = 'py-8 text-center text-xs font-semibold text-slate-400';
+            empty.className = 'py-8 text-center text-xs font-semibold text-slate-500';
             empty.textContent = 'No matching financial calculators or guides found.';
             this.resultsContainer.appendChild(empty);
             return;
@@ -371,7 +371,7 @@ export class CommandPaletteController {
                     </span>
                     <div class="min-w-0">
                         <div class="text-xs sm:text-sm font-bold truncate ${isSelected ? 'text-emerald-900' : 'text-slate-800'}">${item.title}</div>
-                        <div class="text-[11px] text-slate-400 truncate">${item.description}</div>
+                        <div class="text-[11px] text-slate-500 truncate">${item.description}</div>
                     </div>
                 </div>
                 <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md ${

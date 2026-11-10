@@ -160,10 +160,10 @@ export class PurchasingPowerController {
         if (badgeEl) {
             badgeEl.textContent = insight.resilienceBadgeText;
             badgeEl.className = insight.resilienceTier === 'bulletproof'
-                ? 'text-ui-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200'
+                ? 'text-ui-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 whitespace-normal sm:whitespace-nowrap max-w-full text-center leading-tight shadow-flat'
                 : insight.resilienceTier === 'prudent'
-                ? 'text-ui-xs font-bold px-3 py-1 rounded-full bg-teal-50 text-teal-800 border border-teal-200'
-                : 'text-ui-xs font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200';
+                ? 'text-ui-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-teal-50 text-teal-800 border border-teal-200 whitespace-normal sm:whitespace-nowrap max-w-full text-center leading-tight shadow-flat'
+                : 'text-ui-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 whitespace-normal sm:whitespace-nowrap max-w-full text-center leading-tight shadow-flat';
         }
     }
 }

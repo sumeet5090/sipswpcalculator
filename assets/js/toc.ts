@@ -17,14 +17,14 @@ export function initToc(): void {
         if (tocList) {
             tocList.replaceChildren();
             const emptyItem = document.createElement('li');
-            emptyItem.className = 'text-slate-400 italic text-sm';
+            emptyItem.className = 'text-slate-500 italic text-sm';
             emptyItem.textContent = 'No sections found.';
             tocList.appendChild(emptyItem);
         }
         if (mobileTocList) {
             mobileTocList.replaceChildren();
             const emptyItem = document.createElement('li');
-            emptyItem.className = 'text-slate-400 italic text-sm';
+            emptyItem.className = 'text-slate-500 italic text-sm';
             emptyItem.textContent = 'No sections found.';
             mobileTocList.appendChild(emptyItem);
         }

@@ -8,13 +8,6 @@
 <style>
     :root {
         --gradient-primary: linear-gradient(135deg, #059669, #047857);
-        --glass-bg: rgba(255, 255, 255, .9);
-        --glass-border: 1px solid rgba(255, 255, 255, .5);
-        --glass-shadow: 0 8px 32px 0 rgba(5, 150, 105, .1);
-        --color-bg: #f1f5f9;
-        --color-text-primary: #0f172a;
-        --color-text-secondary: #64748b;
-        --color-border: #e2e8f0
     }
 
     @font-face {
@@ -23,31 +16,22 @@
         size-adjust: 107%;
         ascent-override: 90%;
         descent-override: 22%;
-        line-gap-override: 0%
+        line-gap-override: 0%;
     }
 
     body {
-        background-color: var(--color-bg);
+        background-color: #f1f5f9;
         font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', 'Inter', Arial, sans-serif;
-        color: var(--color-text-primary);
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased
+        color: #0f172a;
+        -webkit-font-smoothing: antialiased;
     }
 
     .navbar-glass {
-        background: rgba(255, 255, 255, .98)
-    }
-
-    .glass-card {
-        background: var(--glass-bg);
-        border: var(--glass-border);
-        box-shadow: var(--glass-shadow);
-        border-radius: 1rem;
-        position: relative
+        background: rgba(255, 255, 255, .98);
     }
 
     .text-gradient {
-        color: #047857
+        color: #047857;
     }
 
     @supports ((-webkit-background-clip: text) or (background-clip: text)) {
@@ -56,7 +40,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: transparent
+            color: transparent;
         }
     }
 </style>
@@ -215,7 +199,7 @@
 
         <!-- Real-Time Proposal Header Preview Box -->
         <div id="pdf-live-preview-box" class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-left space-y-1.5">
-            <div class="text-micro font-bold uppercase tracking-wider text-slate-400">Live Proposal Header Preview</div>
+            <div class="text-micro font-bold uppercase tracking-wider text-slate-500">Live Proposal Header Preview</div>
             <div class="flex items-center justify-between border-b border-slate-200/80 pb-2">
                 <div>
                     <div id="preview-client-name" class="text-xs font-extrabold text-slate-900">Valued Investor</div>

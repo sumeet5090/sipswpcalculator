@@ -63,7 +63,7 @@
             </svg>
         </div>
         <input id="glossarySearch" type="text" placeholder="Search glossary terms or definitions..."
-            class="w-full !pl-11 !pr-4 !py-3 border border-slate-200 rounded-2xl bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-flat transition-all text-sm font-medium"
+            class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-flat transition-all text-sm font-medium"
             autocomplete="off">
     </div>
 
@@ -150,7 +150,7 @@
             if (searchInput && searchInput.value.trim().length > 0) {
                 letterLinks.forEach(link => {
                     link.classList.remove('bg-emerald-600', 'text-white');
-                    link.classList.add('text-slate-400');
+                    link.classList.add('text-slate-500');
                 });
                 return;
             }
@@ -172,10 +172,10 @@
                 const target = link.getAttribute('href').replace('#letter-', '');
                 if (target === activeLetter) {
                     link.classList.add('bg-emerald-600', 'text-white');
-                    link.classList.remove('text-slate-400');
+                    link.classList.remove('text-slate-500');
                 } else {
                     link.classList.remove('bg-emerald-600', 'text-white');
-                    link.classList.add('text-slate-400');
+                    link.classList.add('text-slate-500');
                 }
             });
         }

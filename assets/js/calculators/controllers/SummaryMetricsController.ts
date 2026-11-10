@@ -419,7 +419,7 @@ export class SummaryMetricsController {
         this.updateNarrative(inputs);
 
         // Flash ambient recalculation indicator on primary corpus card
-        const corpusCard = this.dom.getElement('summary-corpus')?.closest('.glass-card, [class*="rounded-2xl"]');
+        const corpusCard = this.dom.getElement('summary-corpus')?.closest('.fintech-glass-card, [class*="rounded-2xl"]');
         if (corpusCard) {
             corpusCard.classList.remove('metric-pulse-active');
             void (corpusCard as HTMLElement).offsetWidth; // Force DOM reflow
