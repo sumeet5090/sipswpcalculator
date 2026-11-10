@@ -51,10 +51,17 @@
     }
 
     .text-gradient {
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-image: var(--gradient-primary)
+        color: #047857
+    }
+
+    @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+        .text-gradient {
+            background-image: var(--gradient-primary, linear-gradient(135deg, #059669 0%, #047857 100%));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent
+        }
     }
 </style>
 {% endblock %}
@@ -94,7 +101,7 @@
     </ol>
 </nav>
 
-<header class="relative mb-6 sm:mb-10 text-center border-b border-slate-100 pb-6">
+<header class="relative z-10 mb-6 sm:mb-10 text-center border-b border-slate-100 pb-6">
     <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-emerald-50 border border-emerald-100 mb-3 sm:mb-4">
         <span class="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3">
             <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -118,14 +125,14 @@
 <section id="calculator-section" class="scroll-mt-32" style="scroll-margin-top: 120px;" aria-labelledby="calculator-heading">
     <h2 class="sr-only" id="calculator-heading">Calculate Your Returns</h2>
     
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-8">
-        <!-- Left Column: Form (Shrink-wrapped to content with sticky gliding) -->
-        <div class="md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col min-h-0 self-start h-fit md:sticky md:top-20">
+    <div class="grid grid-cols-1 md:grid-cols-12 items-start gap-5 lg:gap-8">
+        <!-- Left Column: Form (Shrink-wrapped to content with sticky gliding on xl+ desktop) -->
+        <div class="md:col-span-5 flex flex-col min-h-0 min-w-0 self-start h-fit xl:sticky xl:top-24">
             {% include 'components/calculator-form.twig' %}
         </div>
 
         <!-- Right Column: Floating Summary & Chart Visualization -->
-        <div class="md:col-span-6 lg:col-span-7 xl:col-span-8 space-y-4 md:sticky md:top-20 md:self-start md:z-20">
+        <div class="md:col-span-7 space-y-4 min-w-0 xl:sticky xl:top-24 xl:self-start xl:z-20">
             {% include 'components/chart-visualization.twig' %}
         </div>
     </div>

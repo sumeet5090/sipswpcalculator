@@ -61,7 +61,7 @@
 
     <!-- Fluid Quantum Wealth Ribbon Grid (Institutional Scoreboard: 3 Clean White Cards + 1 Dark Executive Anchor) -->
     <div class="p-1.5 sm:p-2 rounded-3xl bg-slate-100/90 border border-slate-200/90 shadow-subtle">
-        <div id="summary-cards-grid" class="grid grid-cols-2 {% if isFourCardMode %}sm:grid-cols-4{% else %}sm:grid-cols-3{% endif %} gap-2 sm:gap-2.5 transition-all duration-300">
+        <div id="summary-cards-grid" class="grid grid-cols-2 {% if isFourCardMode %}xl:grid-cols-4{% else %}xl:grid-cols-3{% endif %} gap-2 sm:gap-2.5 transition-all duration-300">
             <!-- Card 1: Total Invested / Principal -->
             <div id="card-invested" role="button" tabindex="0" title="Click to view initial investment milestone in Cashflow Ledger" class="bg-white rounded-2xl border border-slate-200/90 shadow-flat px-3 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-card hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 group flex flex-col justify-between min-w-0 cursor-pointer">
                 <div class="flex items-center justify-between gap-1 mb-1">
@@ -126,7 +126,7 @@
             </div>
 
             <!-- Card 4: Final Corpus / Net Wealth / EMI (Institutional Executive Anchor - Pure Light Mode) -->
-            <div id="card-corpus" role="button" tabindex="0" title="Click to view final wealth corpus in Cashflow Ledger" class="{% if isFourCardMode %}col-span-1{% else %}col-span-2 sm:col-span-1{% endif %} bg-emerald-50/90 rounded-2xl border-2 border-emerald-600 shadow-card px-3.5 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 ring-2 ring-emerald-500/15 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 relative group flex flex-col justify-between min-w-0 cursor-pointer">
+            <div id="card-corpus" role="button" tabindex="0" title="Click to view final wealth corpus in Cashflow Ledger" class="{% if isFourCardMode %}col-span-1{% else %}col-span-2 xl:col-span-1{% endif %} bg-emerald-50/90 rounded-2xl border-2 border-emerald-600 shadow-card px-3.5 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 ring-2 ring-emerald-500/15 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 relative group flex flex-col justify-between min-w-0 cursor-pointer">
                 <div id="title-corpus" class="text-caption font-extrabold text-slate-700 uppercase tracking-wider mb-1 leading-tight flex items-center justify-between gap-1">
                     <span id="title-corpus-text">{{ initial_kpis and initial_kpis.is_dual_mode ? ('Final Corpus @ Yr ' ~ initial_kpis.total_years) : card4Title }}</span>
                     <span id="summary-corpus-compact" class="hidden text-micro font-black text-emerald-950 bg-emerald-200/90 border border-emerald-300 px-2 py-0.5 rounded-full shadow-flat"></span>
@@ -155,7 +155,7 @@
     <!-- Real Purchasing Power & Peace-of-Mind Telemetry Strip (Dynamic Risk Empathy) -->
     <div id="purchasing-power-telemetry-strip" class="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-teal-50/70 via-emerald-50/40 to-white border border-teal-200/80 shadow-card flex flex-col gap-2 sm:gap-2.5 transition-all">
         <!-- Row 1: Header (Icon, Reality Metric & Peace-of-Mind Score Pill) -->
-        <div class="w-full flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+        <div class="w-full flex items-center justify-between gap-2 flex-wrap xl:flex-nowrap">
             <div class="flex items-center gap-2.5 min-w-0">
                 <div class="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-teal-50 border border-teal-200/80 text-teal-800 text-ui-sm font-extrabold shrink-0 shadow-flat">
                     <svg class="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,7 +168,7 @@
                 </div>
             </div>
             <!-- Score & Resilience Badge -->
-            <div class="flex items-center gap-2 shrink-0 ml-auto sm:ml-0">
+            <div class="flex items-center gap-2 shrink-0 ml-auto xl:ml-0">
                 <span id="peace-of-mind-badge" class="text-ui-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 whitespace-nowrap shadow-flat flex items-center gap-1">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                     <span>Bulletproof Resilience</span>

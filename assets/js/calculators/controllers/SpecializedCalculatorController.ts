@@ -87,9 +87,14 @@ export class SpecializedCalculatorController {
     private adjustSummaryCardLayout(): void {
         const summaryGrid = this.dom.getElement('summary-cards-grid');
         const cardWithdrawn = this.dom.getElement('card-withdrawn');
+        const cardCorpus = this.dom.getElement('card-corpus');
         if (summaryGrid && cardWithdrawn) {
-            summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-3 gap-3 transition-all duration-300';
+            summaryGrid.className = 'grid grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-2.5 transition-all duration-300';
             cardWithdrawn.classList.add('hidden');
+            if (cardCorpus) {
+                cardCorpus.classList.remove('col-span-1', 'sm:col-span-1', 'order-first');
+                cardCorpus.classList.add('col-span-2', 'xl:col-span-1');
+            }
         }
         const telemetryStrip = this.dom.getElement('purchasing-power-telemetry-strip');
         if (telemetryStrip) {

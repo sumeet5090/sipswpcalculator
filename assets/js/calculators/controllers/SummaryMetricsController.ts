@@ -345,18 +345,18 @@ export class SummaryMetricsController {
         const cardCorpus = this.dom.getElement('card-corpus');
         if (summaryGrid && cardWithdrawn) {
             if (inputs.enable_swp) {
-                summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 transition-all duration-300';
+                summaryGrid.className = 'grid grid-cols-2 xl:grid-cols-4 gap-2 sm:gap-2.5 transition-all duration-300';
                 cardWithdrawn.classList.remove('hidden');
                 if (cardCorpus) {
-                    cardCorpus.classList.remove('col-span-2', 'order-first');
+                    cardCorpus.classList.remove('col-span-2', 'sm:col-span-1', 'xl:col-span-1', 'order-first');
                     cardCorpus.classList.add('col-span-1');
                 }
             } else {
-                summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5 transition-all duration-300';
+                summaryGrid.className = 'grid grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-2.5 transition-all duration-300';
                 cardWithdrawn.classList.add('hidden');
                 if (cardCorpus) {
-                    cardCorpus.classList.remove('col-span-1', 'order-first');
-                    cardCorpus.classList.add('col-span-2');
+                    cardCorpus.classList.remove('col-span-1', 'sm:col-span-1', 'order-first');
+                    cardCorpus.classList.add('col-span-2', 'xl:col-span-1');
                 }
             }
         }

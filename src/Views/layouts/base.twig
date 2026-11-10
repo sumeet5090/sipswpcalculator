@@ -123,7 +123,7 @@
     
     {% block head %}{% endblock %}
 </head>
-<body class="{{ page_config.body_class|default('bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emerald-500/20 selection:text-emerald-900') }} overflow-x-clip max-w-full relative" style="{{ page_config.body_style|default('background-image: var(--gradient-surface); background-attachment: fixed;') }}">
+<body class="{{ page_config.body_class|default('bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emerald-500/20 selection:text-emerald-900') }} overflow-x-clip max-w-full relative" style="{{ page_config.body_style|default('background-image: var(--gradient-surface);') }}">
     {% set is_calculator_route = is_calculator|default(false) or (active_page|default('') in ['home', 'sip-calculator', 'swp-calculator', 'sip-step-up-calculator', 'lumpsum-calculator', 'retirement-calculator', 'my-first-crore-calculator', 'target-corpus-calculator', 'compound-interest-calculator', 'cagr-calculator', 'emi-calculator', 'inflation-calculator', 'ppf-calculator', 'fd-calculator']) %}
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:p-3 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:shadow-floating focus:z-popover font-bold transition-all">Skip to main content</a>
     <div id="calculator-a11y-live-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
@@ -132,7 +132,7 @@
     
     {% if is_calculator_route %}
     <!-- Compact Tablet/Desktop Floating Mini-HUD Capsule (Glides in when primary summary cards scroll off-screen on >= md viewports) -->
-    <div id="mini-hud-anchor" class="hidden md:flex fixed top-[4.25rem] inset-x-0 justify-center z-header pointer-events-none">
+    <div id="mini-hud-anchor" class="hidden md:flex fixed top-20 inset-x-0 justify-center z-header pointer-events-none">
         <div id="mobile-sticky-mini-hud" class="pointer-events-auto bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-floating hover:shadow-card-hover rounded-full px-4 sm:px-5 py-2 flex items-center gap-3 sm:gap-4 divide-x divide-slate-200/80 transform -translate-y-4 opacity-0 pointer-events-none transition-all duration-300 ease-out">
             <!-- Live Signal Pulse -->
             <div class="flex items-center gap-1.5 shrink-0 pr-1">

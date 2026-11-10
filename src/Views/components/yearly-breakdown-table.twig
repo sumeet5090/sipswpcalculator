@@ -2,7 +2,7 @@
     <!-- ========================================================================= -->
     <!-- TIER 1: UNIFIED BIFURCATED CONTROL & CONVERSION DISPATCH HUB              -->
     <!-- ========================================================================= -->
-    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3.5 pb-3.5 border-b border-slate-100">
+    <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-3.5 pb-3.5 border-b border-slate-100">
         <!-- Left Operational Dock (Title · Horizon Density · Column Mode) -->
         <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <div class="flex items-center gap-2 mr-1">
@@ -50,7 +50,7 @@
         </div>
 
         <!-- Desktop Dispatch & Conversion Hub (Consolidated Executive Action Hub >= sm) -->
-        <div class="hidden sm:flex flex-wrap items-center gap-2 w-full sm:w-auto justify-start sm:justify-end">
+        <div class="hidden sm:flex flex-wrap items-center gap-2 w-full xl:w-auto justify-start xl:justify-end">
             <!-- Consolidated Export & Share Dropdown -->
             <details class="relative inline-block text-left group" id="export-share-dropdown">
                 <summary class="list-none inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200/90 text-ui-xs font-bold transition-all shadow-flat active:scale-95 cursor-pointer">
@@ -138,24 +138,24 @@
     <!-- ========================================================================= -->
     <!-- TIER 2: INSTITUTIONAL HIGH-DENSITY LEDGER GRID                             -->
     <!-- ========================================================================= -->
-    <div class="bg-white/95 backdrop-blur-md rounded-3xl overflow-hidden border border-slate-200/80 shadow-card">
+    <div class="bg-white/95 rounded-3xl overflow-hidden border border-slate-200/80 shadow-card">
         <!-- Desktop Table View with Sticky Year Pin Elevation -->
         <div id="table-scroll-wrapper" class="hidden sm:block max-h-[600px] overflow-y-auto overflow-x-auto custom-scrollbar">
             <table id="results-table" class="w-full text-ui-xs sm:text-ui-sm relative border-separate border-spacing-0">
                 <thead id="breakdown-head"
-                    class="bg-slate-50/98 backdrop-blur-md text-caption uppercase font-extrabold text-slate-600 sticky top-0 z-20 shadow-[0_1px_3px_rgba(0,0,0,0.05)] border-b border-slate-200">
+                    class="bg-slate-50 text-caption uppercase font-extrabold text-slate-600 sticky top-0 z-20 shadow-[0_1px_3px_rgba(0,0,0,0.05)] border-b border-slate-200">
                     <tr>
-                        <th scope="col" id="th-year" class="px-4 sm:px-5 py-3.5 text-left sticky left-0 z-30 table-sticky-col-0 bg-slate-50 shadow-[3px_0_8px_-2px_rgba(15,23,42,0.05)] border-b border-slate-200 font-extrabold text-slate-900 whitespace-nowrap min-w-[5rem]">Year</th>
-                        <th scope="col" id="th-begin-balance" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 whitespace-nowrap">Start Corpus</th>
-                        <th scope="col" id="th-sip-monthly" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-growth whitespace-nowrap">Monthly SIP</th>
-                        <th scope="col" id="th-annual-sip" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-growth whitespace-nowrap">Annual SIP</th>
-                        <th scope="col" id="th-total-invested" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 whitespace-nowrap">Total Invested</th>
-                        <th scope="col" id="th-swp-monthly" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-payout whitespace-nowrap">Monthly SWP</th>
-                        <th scope="col" id="th-annual-swp" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-payout whitespace-nowrap">Annual SWP</th>
-                        <th scope="col" id="th-total-withdrawn" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-slate-600 whitespace-nowrap">Total Withdrawn</th>
-                        <th scope="col" id="th-interest" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-growth whitespace-nowrap">Annual Gain</th>
-                        <th scope="col" id="th-tax" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-tax whitespace-nowrap">LTCG Tax (§112A)</th>
-                        <th scope="col" id="th-end-corpus" class="px-4 sm:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 font-extrabold text-slate-900 whitespace-nowrap">End Corpus</th>
+                        <th scope="col" id="th-year" class="px-3.5 lg:px-5 py-3.5 text-left sticky left-0 z-30 table-sticky-col-0 bg-slate-50 shadow-[3px_0_8px_-2px_rgba(15,23,42,0.05)] border-b border-slate-200 font-extrabold text-slate-900 whitespace-nowrap min-w-[5rem]">Year</th>
+                        <th scope="col" id="th-begin-balance" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 whitespace-nowrap">Start Corpus</th>
+                        <th scope="col" id="th-sip-monthly" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-growth whitespace-nowrap">Monthly SIP</th>
+                        <th scope="col" id="th-annual-sip" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-growth whitespace-nowrap">Annual SIP</th>
+                        <th scope="col" id="th-total-invested" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 whitespace-nowrap">Total Invested</th>
+                        <th scope="col" id="th-swp-monthly" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-payout whitespace-nowrap">Monthly SWP</th>
+                        <th scope="col" id="th-annual-swp" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-payout whitespace-nowrap">Annual SWP</th>
+                        <th scope="col" id="th-total-withdrawn" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-slate-600 whitespace-nowrap">Total Withdrawn</th>
+                        <th scope="col" id="th-interest" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-growth whitespace-nowrap">Annual Gain</th>
+                        <th scope="col" id="th-tax" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 text-tax whitespace-nowrap">LTCG Tax (§112A)</th>
+                        <th scope="col" id="th-end-corpus" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-50 border-b border-slate-200 font-extrabold text-slate-900 whitespace-nowrap">End Corpus</th>
                     </tr>
                 </thead>
                 <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600 font-financial-mono"></tbody>

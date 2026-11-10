@@ -124,6 +124,11 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 - **CSV Formula Injection:** Prefix non-numeric formula cells starting with `=`, `+`, `-`, `@`, `\t` with a single quote `'`.
 - **Excel INR Encoding:** Always prepend `\xEF\xBB\xBF` (UTF-8 BOM) to CSV downloads so Excel displays the `₹` symbol correctly.
 
+### G. Foldable, Tablet & Desktop Responsive Layout Guardrails
+- **3-Child Home Grid (`home.twig`):** Uniform `md:col-span-5` (Form) + `md:col-span-7` (Chart/Quick Answer) + Child 3 Studio (`md:col-span-12 xl:col-span-7 xl:col-start-6`) with `xl:grid-rows-[auto_1fr]` (`xl:row-span-2` on Child 1), `items-start`, `min-w-0` on all grid children, and desktop-only sticky (`xl:sticky xl:top-24`).
+- **KPI Matrix SSR/TS Parity:** `#summary-cards-grid` uses `grid-cols-2 xl:grid-cols-4` (4-card) or `grid-cols-2 xl:grid-cols-3` + `col-span-2 xl:col-span-1` on `#card-corpus` (3-card), synchronized identically across `chart-visualization.twig`, `SummaryMetricsController.ts`, `EmiDriver.ts`, and `SpecializedCalculatorController.ts`.
+- **Chromium GPU Compositor Hygiene:** `background-attachment: fixed` is scoped strictly to `@media (min-width: 1024px)` (`scroll` default below `1024px`, zero inline `background-attachment` on `<body>`), sticky table column `.table-sticky-col-0` / `#results-table` uses solid opaque `#ffffff` / `#f8fafc` (`background-clip: padding-box`, no per-cell `backdrop-blur-*`), `.stagger-row` uses immediate `opacity: 1`, glow blobs sit on `z-behind` behind `z-10` headers, and `#mini-hud-anchor` clears the navbar at `top-20`.
+
 ---
 
 ## 7. Testing & Verification Suite

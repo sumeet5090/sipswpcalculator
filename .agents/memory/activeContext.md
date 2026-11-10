@@ -5,7 +5,19 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Production Telemetry Bottleneck Remediation & INP Decoupling Complete (INP Dropped from 368ms to <50ms, KPI Scoreboard Deep-Linking to Ledger, SEO Anti-Cannibalization Title Hooks, CAGR Console Elevation, and Unified Cashflow Ledger Studio Header Complete; 100% Tests & Parity Passing).
+- **Current Milestone:** Foldable Phone & Tablet Responsive Architecture Overhaul (`673px–1279px` Grid Track Balance, `grid-cols-2 xl:grid-cols-4`/`3` KPI Sync, Desktop-Scoped Sticky Sidebars, Header/Mini-HUD Clearance, and Chromium GPU Compositor Stability).
+- **Implemented Fixes & Architectural Outcomes (2026-11-10 Session 27 - Foldable & Tablet Responsive Architecture Overhaul):**
+  - **5/7 Workspace Grid & Responsive Studio Placement (`home.twig`, `calculator-guide.twig`, `analytical-studio.twig`):**
+    - Updated calculator workspace grid to uniform `md:col-span-5` (inputs) + `md:col-span-7` (chart/quick-answer) with `items-start`, `min-w-0` on all grid children, and desktop-only sticky (`xl:sticky xl:top-24`).
+    - Extracted `#breakdown-studio` into Grid Child 3 (`md:col-span-12 xl:col-span-7 xl:col-start-6 min-w-0`) paired with `xl:row-span-2` on Child 1 and `xl:grid-rows-[auto_1fr]` on the parent grid, giving tablets/foldables (`768px–1279px`) full width for 4–11 column Cashflow Ledgers while locking desktop (`>=1280px`) right-column alignment with zero intra-column vertical gaps.
+    - Removed stacking `mt-2 sm:mt-4` on `#breakdown-studio`; deferred `analytical-studio.twig` and `yearly-breakdown-table.twig` horizontal action headers and tab gradient fades from `lg:` to `xl:` with `min-w-0` flex shrink guards.
+  - **Cross-Runtime KPI & Form Tablet Fit (`chart-visualization.twig`, `SummaryMetricsController.ts`, `EmiDriver.ts`, `SpecializedCalculatorController.ts`, `calculator-form.twig`, `sip-fields.twig`, `swp-fields.twig`):**
+    - Synced `#summary-cards-grid` to `grid-cols-2 xl:grid-cols-4` (4-card) and `grid-cols-2 xl:grid-cols-3` with `col-span-2 xl:col-span-1` on `#card-corpus` (3-card) across Twig SSR and all three TS controllers/drivers.
+    - Moved `#purchasing-power-telemetry-strip` (`chart-visualization.twig`) and `#swp-accumulation-bridge` (`swp-fields.twig`) horizontal breakpoints to `xl:`; removed `whitespace-nowrap` (`line-clamp-2`) from `rate_label` in `sip-fields.twig`; tuned `calculator-form.twig` mode tabs to `px-1.5 tracking-normal xl:tracking-wider`.
+  - **Navbar Clearance & Chromium GPU Compositor Hardening (`base.twig`, `header.twig`, `theme-glow-blobs.twig`, `input.css`, `styles.css`, `yearly-breakdown-table.twig`, `ResultsController.ts`):**
+    - Adjusted `#mini-hud-anchor` from `top-[4.25rem]` (`68px`) to `top-20` (`80px`) to cleanly clear the `73px` fixed navbar (`bg-white/95`).
+    - Scoped `background-attachment: fixed` strictly to `@media (min-width: 1024px)` (`scroll` default below `1024px`, stripped inline declaration from `base.twig`), moved ambient glow blobs to `z-behind` with `z-10` `<header>`, and hardened `.text-gradient` (`#047857` fallback + `@supports`, zero infinite keyframe animation).
+    - Stripped per-cell `backdrop-blur-md` / `backdrop-filter: blur(8px)` from sticky ledger cells/headers (`yearly-breakdown-table.twig`, `ResultsController.ts`, `input.css`), using solid opaque `#ffffff`/`#f8fafc` (`background-clip: padding-box` preserved), and simplified `.stagger-row` in `styles.css` to immediate `opacity: 1` (fixing undefined `--spring-smooth`).
 - **Implemented Fixes & Architectural Outcomes (2026-11-10 Session 26 - Telemetry Optimization & INP Decoupling):**
   - **INP Slider Decoupling & Fast Tier 1 Pipeline (`SummaryMetricsController.ts`, `CalculatorApp.ts`):**
     - Introduced `isDragging: boolean = false` parameter to `SummaryMetricsController.updateSummaryMetrics()`.

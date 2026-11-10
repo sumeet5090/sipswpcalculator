@@ -1,20 +1,20 @@
 <!-- Multi-Mode Interactive Analytical Studio (Consolidated Cashflow Ledger Hub) -->
-<div id="breakdown-studio" class="mt-2 sm:mt-4 scroll-mt-24 relative p-2 sm:p-4 rounded-[2rem] bg-slate-100/70 border border-slate-200/90 shadow-subtle">
+<div id="breakdown-studio" class="scroll-mt-24 relative p-2 sm:p-4 rounded-[2rem] bg-slate-100/70 border border-slate-200/90 shadow-subtle">
 
     <!-- ========================================================================= -->
     <!-- STUDIO COMMAND HEADER & LIVE CONTEXT RIBBON                               -->
     <!-- ========================================================================= -->
     <div class="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-card mb-4 relative overflow-hidden">
-        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div class="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
             
             <!-- Left: Studio Title & Live Scenario Telemetry Indicator -->
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 min-w-0">
                 <div class="flex items-center justify-center w-10 h-10 rounded-2xl bg-growth-surface text-growth border border-growth-border shadow-flat shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg>
                 </div>
-                <div>
+                <div class="min-w-0">
                     <div class="flex flex-wrap items-center gap-2">
                         <h2 class="font-heading text-heading-sm sm:text-heading-md font-extrabold text-slate-900 tracking-tight">
                             Yearly Cashflow Ledger &amp; Analytical Studio
@@ -31,7 +31,7 @@
             </div>
 
             <!-- Right: Studio Utility Action Deck -->
-            <div class="flex items-center gap-2 self-start lg:self-center shrink-0">
+            <div class="flex flex-wrap items-center gap-2 self-start xl:self-center shrink-0 max-w-full">
                 <!-- Currency Denomination Mode -->
                 <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 text-caption font-bold text-slate-600" role="group" aria-label="Denomination Unit">
                     <button type="button" id="studio-unit-exact" class="px-2.5 py-1 rounded-lg bg-white text-growth-emphasis shadow-flat border border-slate-200/60 transition-all cursor-pointer" aria-pressed="true">
@@ -68,8 +68,8 @@
         <!-- ========================================================================= -->
         <div class="mt-4 pt-3.5 border-t border-slate-100 relative">
             <!-- Mobile Horizontal Gradient Fading Indicators (Widened for stronger scroll cue) -->
-            <div class="pointer-events-none absolute left-0 top-3.5 bottom-0 w-8 bg-gradient-to-r from-white to-transparent z-10 lg:hidden"></div>
-            <div class="pointer-events-none absolute right-0 top-3.5 bottom-0 w-8 bg-gradient-to-l from-white to-transparent z-10 lg:hidden"></div>
+            <div class="pointer-events-none absolute left-0 top-3.5 bottom-0 w-8 bg-gradient-to-r from-white to-transparent z-10 xl:hidden"></div>
+            <div class="pointer-events-none absolute right-0 top-3.5 bottom-0 w-8 bg-gradient-to-l from-white to-transparent z-10 xl:hidden"></div>
 
             <nav id="studio-tabs-nav" role="tablist" aria-label="Analytical Studio Modules"
                 class="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 border border-slate-200/80 overflow-x-auto max-w-full custom-scrollbar relative scroll-smooth">

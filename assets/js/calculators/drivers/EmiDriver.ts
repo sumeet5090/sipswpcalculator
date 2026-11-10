@@ -24,9 +24,14 @@ export class EmiDriver implements ISpecializedDriver {
 
         const cardWithdrawn = document.getElementById('card-withdrawn');
         const summaryGrid = document.getElementById('summary-cards-grid');
+        const cardCorpus = document.getElementById('card-corpus');
         if (cardWithdrawn && summaryGrid) {
             cardWithdrawn.classList.remove('hidden');
-            summaryGrid.className = 'grid grid-cols-2 sm:grid-cols-4 gap-3 transition-all duration-300';
+            summaryGrid.className = 'grid grid-cols-2 xl:grid-cols-4 gap-2 sm:gap-2.5 transition-all duration-300';
+            if (cardCorpus) {
+                cardCorpus.classList.remove('col-span-2', 'sm:col-span-1', 'xl:col-span-1', 'order-first');
+                cardCorpus.classList.add('col-span-1');
+            }
             const titleWithdrawn = cardWithdrawn.querySelector('div:first-child span:last-child');
             const subWithdrawn = cardWithdrawn.querySelector('div:last-child');
             if (titleWithdrawn) titleWithdrawn.textContent = 'Total Payment';

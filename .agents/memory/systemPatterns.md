@@ -20,12 +20,25 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
 
 ---
 
-## 1.1 Asymmetric Dashboard Layout Primitive
-- **Rule:** In two-column dashboard layouts with asymmetric heights (control console on left, interactive chart & long ledger on right), the control column MUST use:
+## 1.1 Asymmetric Dashboard Layout & Responsive GPU Compositing Primitives
+- **Rule (Home 3-Child Grid Workspace):** On `home.twig`, use a uniform `5 / 7` column split from `md:` (`768px+`) with explicit desktop row distribution (`xl:grid-rows-[auto_1fr]`), `items-start`, `min-w-0` shrink guards, and responsive Studio placement:
   ```html
-  <div class="col-span-12 md:col-span-6 lg:col-span-5 xl:col-span-4 flex flex-col min-h-0 self-start md:sticky md:top-20">
+  <div class="grid grid-cols-1 md:grid-cols-12 xl:grid-rows-[auto_1fr] items-start gap-5 lg:gap-8 mt-4 sm:mt-6">
+      <div class="md:col-span-5 xl:row-span-2 flex flex-col min-h-0 min-w-0 self-start h-fit xl:sticky xl:top-24">...</div>
+      <div class="md:col-span-7 space-y-4 min-h-0 min-w-0">...</div>
+      <div class="md:col-span-12 xl:col-span-7 xl:col-start-6 min-w-0">...</div>
+  </div>
   ```
-- **Rationale:** CSS Grid items stretch by default (`align-items: stretch`). Adding `self-start` prevents empty white tails when left sidebar stages collapse. Adding `md:sticky md:top-20` keeps controls accessible while scrolling through deep table ledgers.
+- **Rule (Sub-Calculator Guide Grid):** On `calculator-guide.twig`, use matching `items-start`, `md:col-span-5` (left), `md:col-span-7` (right), `min-w-0`, and desktop-only sticky (`xl:sticky xl:top-24`).
+- **Rule (KPI Card Responsive Matrix — Twig & TS Sync):** `#summary-cards-grid` MUST stay 2-up across `320px–1279px` and only expand to 4-up/3-up at `xl:` (`>=1280px`):
+  - 4-Card Modes (`combo`, `swp`, `emi`): `grid grid-cols-2 xl:grid-cols-4` (`#card-corpus` = `col-span-1`).
+  - 3-Card Modes (`sip`, `lumpsum`, `target_corpus`, specialized): `grid grid-cols-2 xl:grid-cols-3` (`#card-corpus` = `col-span-2 xl:col-span-1`).
+  - Both SSR (`chart-visualization.twig`) and TypeScript (`SummaryMetricsController.ts`, `EmiDriver.ts`, `SpecializedCalculatorController.ts`) MUST declare identical breakpoint tokens.
+- **Rule (Chromium Tablet/Foldable GPU Compositor Stability):**
+  - Never apply `background-attachment: fixed` on `<1024px` (either CSS or inline `<body>` style in `base.twig`); scope it strictly inside `@media (min-width: 1024px)`.
+  - Never apply `backdrop-filter: blur(...)` (`backdrop-blur-*`) or infinite animated gradients to dozens of sticky table cells (`#results-table th/td:first-child`, `.table-sticky-col-0`, `ResultsController.ts`) or `.text-gradient`; use solid opaque `#ffffff`/`#f8fafc` sticky cell surfaces (`background-clip: padding-box`) and solid `#047857` fallback inside `@supports`.
+  - Keep `#mini-hud-anchor` at `top-20` (`80px`) to clear the `73px` navbar (`bg-white/95`).
+- **Rationale:** `items-start` + `self-start` eliminates Grid row stretch tails; scoping sticky sidebars to `xl:` (`>=1280px`) prevents tall Dual-mode inputs from clipping or floating mid-scroll on `768px–1279px` tablets; `md:col-span-12` gives the 4–11 column Cashflow Ledger full tablet width while `xl:grid-rows-[auto_1fr]` prevents intra-column vertical gaps on desktop.
 
 ---
 

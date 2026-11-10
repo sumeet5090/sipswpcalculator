@@ -344,7 +344,13 @@ body {
   position: relative;
   background-color: var(--color-canvas-base, #f1f5f9);
   background-image: var(--gradient-surface);
-  background-attachment: fixed;
+  background-attachment: scroll;
+}
+
+@media (min-width: 1024px) {
+  body {
+    background-attachment: fixed;
+  }
 }
 
 /* ── Custom Range Slider Tactile Thumbs & Touch Ergonomics ── */
@@ -514,9 +520,7 @@ input[type="range"]::-moz-range-thumb {
 #results-table td:first-child {
   position: sticky;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: #ffffff;
   z-index: 5;
   border-right: 1px solid rgba(226, 232, 240, 0.85);
   box-shadow: 3px 0 8px -2px rgba(15, 23, 42, 0.05);
@@ -524,7 +528,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 #results-table thead th:first-child {
-  background-color: rgba(248, 250, 252, 0.98);
+  background-color: #f8fafc;
   z-index: 20;
 }
 
@@ -579,9 +583,7 @@ input[type="range"]::-moz-range-thumb {
   position: sticky !important;
   left: 0 !important;
   z-index: 10 !important;
-  background-color: rgba(255, 255, 255, 0.98) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
+  background-color: #ffffff !important;
   box-shadow: 3px 0 8px -2px rgba(15, 23, 42, 0.08) !important;
 }
 
