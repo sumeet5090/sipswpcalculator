@@ -25,6 +25,7 @@ export interface LifecycleSubsystemConfig {
     syncSwpToggleState: () => void;
     setGoalMode: (mode: string) => void;
     applyRestoredInputs: (inputs: InvestmentInputs) => void;
+    onSyncLumpsumDisclosure?: (value: number, programmaticReset: boolean) => void;
     onSafeSwpAdjusted?: (safeAmount: number) => void;
     onLifecycleTransferred?: (maturedCorpus: number, safeMonthlyWithdrawal: number) => void;
 }
@@ -115,7 +116,8 @@ export class LifecycleSubsystem {
             this.sliderManager,
             this.analytics,
             () => config.syncSwpToggleState(),
-            () => config.triggerCalculation()
+            () => config.triggerCalculation(),
+            (val, programmaticReset) => config.onSyncLumpsumDisclosure?.(val, programmaticReset)
         );
 
         this.scenarioDiffController = new ScenarioDiffController(

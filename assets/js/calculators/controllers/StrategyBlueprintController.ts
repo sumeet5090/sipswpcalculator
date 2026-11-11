@@ -34,7 +34,9 @@ export class StrategyBlueprintController {
     private analytics: AnalyticsService;
     private onSyncSwp: () => void;
     private onCalculate: () => void;
+    private onSyncLumpsumDisclosure?: (value: number, programmaticReset: boolean) => void;
     private activeBlueprintId: string | null = null;
+    private isApplyingBlueprint: boolean = false;
 
     private readonly blueprints: Record<string, StrategyBlueprintPreset> = {
         first_crore: {
@@ -97,13 +99,15 @@ export class StrategyBlueprintController {
         sliderManager: SliderManager,
         analytics: AnalyticsService,
         onSyncSwp: () => void,
-        onCalculate: () => void
+        onCalculate: () => void,
+        onSyncLumpsumDisclosure?: (value: number, programmaticReset: boolean) => void
     ) {
         this.dom = dom;
         this.sliderManager = sliderManager;
         this.analytics = analytics;
         this.onSyncSwp = onSyncSwp;
         this.onCalculate = onCalculate;
+        this.onSyncLumpsumDisclosure = onSyncLumpsumDisclosure;
     }
 
     public init(): void {
@@ -141,77 +145,83 @@ export class StrategyBlueprintController {
         const preset = this.blueprints[personaId];
         if (!preset) return;
 
-        this.activeBlueprintId = personaId;
-        this.analytics.setStrategyStarterUsed(personaId);
+        this.isApplyingBlueprint = true;
+        try {
+            this.activeBlueprintId = personaId;
+            this.analytics.setStrategyStarterUsed(personaId);
 
-        // Auto-align active mode tab for the selected strategy blueprint
-        if (personaId === 'capital_preservation') {
-            const tabSwp = this.dom.getElement<HTMLButtonElement>('tab-swp');
-            if (tabSwp) {
-                tabSwp.click();
+            // Auto-align active mode tab for the selected strategy blueprint
+            if (personaId === 'capital_preservation') {
+                const tabSwp = this.dom.getElement<HTMLButtonElement>('tab-swp');
+                if (tabSwp) {
+                    tabSwp.click();
+                }
+            } else if (personaId === 'fire_retirement') {
+                const tabCombo = this.dom.getElement<HTMLButtonElement>('tab-combo');
+                if (tabCombo) {
+                    tabCombo.click();
+                }
+            } else if (personaId === 'first_crore' || personaId === 'child_education') {
+                const tabSip = this.dom.getElement<HTMLButtonElement>('tab-sip');
+                if (tabSip) {
+                    tabSip.click();
+                }
             }
-        } else if (personaId === 'fire_retirement') {
-            const tabCombo = this.dom.getElement<HTMLButtonElement>('tab-combo');
-            if (tabCombo) {
-                tabCombo.click();
+
+            // 1. Inject field values via SliderManager
+            this.sliderManager.updateFieldValue('sip', preset.sip, true);
+            this.sliderManager.updateFieldValue('years', preset.years, true);
+            this.sliderManager.updateFieldValue('rate', preset.rate, true);
+            this.sliderManager.updateFieldValue('stepup', preset.stepup, true);
+
+            if (preset.lumpsum !== undefined) {
+                this.sliderManager.updateFieldValue('lumpsum', preset.lumpsum, true);
+                this.onSyncLumpsumDisclosure?.(preset.lumpsum, preset.lumpsum <= 0);
             }
-        } else if (personaId === 'first_crore' || personaId === 'child_education') {
-            const tabSip = this.dom.getElement<HTMLButtonElement>('tab-sip');
-            if (tabSip) {
-                tabSip.click();
+            if (preset.corpus !== undefined) {
+                this.sliderManager.updateFieldValue('corpus', preset.corpus, true);
             }
-        }
 
-        // 1. Inject field values via SliderManager
-        this.sliderManager.updateFieldValue('sip', preset.sip, true);
-        this.sliderManager.updateFieldValue('years', preset.years, true);
-        this.sliderManager.updateFieldValue('rate', preset.rate, true);
-        this.sliderManager.updateFieldValue('stepup', preset.stepup, true);
+            if (preset.swp !== undefined) {
+                this.sliderManager.updateFieldValue('swp_withdrawal', preset.swp, true);
+            }
+            if (preset.swpYears !== undefined) {
+                this.sliderManager.updateFieldValue('swp_years', preset.swpYears, true);
+            }
+            if (preset.swpRate !== undefined) {
+                this.sliderManager.updateFieldValue('swp_rate', preset.swpRate, true);
+            }
+            if (preset.swpHike !== undefined) {
+                this.sliderManager.updateFieldValue('swp_stepup', preset.swpHike, true);
+            }
 
-        if (preset.lumpsum !== undefined) {
-            this.sliderManager.updateFieldValue('lumpsum', preset.lumpsum, true);
-        }
-        if (preset.corpus !== undefined) {
-            this.sliderManager.updateFieldValue('corpus', preset.corpus, true);
-        }
+            // 2. Synchronize SWP switch
+            const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
+            if (swpToggle) {
+                swpToggle.checked = Boolean(preset.enableSwp);
+                this.onSyncSwp();
+            }
 
-        if (preset.swp !== undefined) {
-            this.sliderManager.updateFieldValue('swp_withdrawal', preset.swp, true);
-        }
-        if (preset.swpYears !== undefined) {
-            this.sliderManager.updateFieldValue('swp_years', preset.swpYears, true);
-        }
-        if (preset.swpRate !== undefined) {
-            this.sliderManager.updateFieldValue('swp_rate', preset.swpRate, true);
-        }
-        if (preset.swpHike !== undefined) {
-            this.sliderManager.updateFieldValue('swp_stepup', preset.swpHike, true);
-        }
+            // 3. Update Visual Active States across blueprint cards
+            this.updateButtonsVisualState(personaId);
 
-        // 2. Synchronize SWP switch
-        const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
-        if (swpToggle) {
-            swpToggle.checked = Boolean(preset.enableSwp);
-            this.onSyncSwp();
+            // 4. Update in-form Live Narrative Strip Badge
+            this.updateNarrativeBadge(preset.title);
+
+            // 5. Trigger Calculation
+            this.onCalculate();
+
+            // 6. Tactile haptics & accessibility announcement
+            if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+                try {
+                    navigator.vibrate([15, 30, 15]);
+                } catch {}
+            }
+
+            A11yAnnouncer.announce(`Applied ${preset.title} blueprint.`);
+        } finally {
+            this.isApplyingBlueprint = false;
         }
-
-        // 3. Update Visual Active States across blueprint cards
-        this.updateButtonsVisualState(personaId);
-
-        // 4. Update in-form Live Narrative Strip Badge
-        this.updateNarrativeBadge(preset.title);
-
-        // 5. Trigger Calculation
-        this.onCalculate();
-
-        // 6. Tactile haptics & accessibility announcement
-        if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-            try {
-                navigator.vibrate([15, 30, 15]);
-            } catch {}
-        }
-
-        A11yAnnouncer.announce(`Applied ${preset.title} blueprint.`);
     }
 
     /**
@@ -245,7 +255,7 @@ export class StrategyBlueprintController {
      * Compares active inputs against current blueprint to detect manual user deviation.
      */
     public syncWithInputs(inputs: InvestmentInputs): void {
-        if (!this.activeBlueprintId) return;
+        if (this.isApplyingBlueprint || !this.activeBlueprintId) return;
         const preset = this.blueprints[this.activeBlueprintId];
         if (!preset) return;
 
@@ -254,6 +264,7 @@ export class StrategyBlueprintController {
             inputs.years === preset.years &&
             inputs.rate === preset.rate &&
             inputs.stepup === preset.stepup &&
+            (preset.lumpsum === undefined || inputs.lumpsum === preset.lumpsum) &&
             (preset.enableSwp === undefined || inputs.enable_swp === preset.enableSwp);
 
         if (!isMatch) {

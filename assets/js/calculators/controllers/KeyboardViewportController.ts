@@ -40,7 +40,8 @@ export class KeyboardViewportController {
     private bindEvents(): void {
         if (typeof window === 'undefined') return;
 
-        const inputs = this.getVisibleInputs();
+        const inputs = Array.from(document.querySelectorAll<HTMLInputElement>('#calculator-form input[type="text"]'))
+            .filter(inp => inp.id !== 'website_url' && inp.name !== 'website_url' && inp.tabIndex >= 0);
         inputs.forEach(input => {
             input.addEventListener('focus', () => {
                 if (window.innerWidth >= 768) return;
@@ -121,19 +122,49 @@ export class KeyboardViewportController {
         }
     }
 
+    private isInputEffectivelyVisible(input: HTMLInputElement): boolean {
+        if (
+            input.disabled ||
+            input.readOnly ||
+            input.tabIndex < 0 ||
+            input.id === 'website_url' ||
+            input.name === 'website_url'
+        ) {
+            return false;
+        }
+        let current: HTMLElement | null = input;
+        while (current && current !== document.body) {
+            if (
+                current.hasAttribute('hidden') ||
+                current.classList.contains('hidden') ||
+                current.getAttribute('aria-hidden') === 'true'
+            ) {
+                return false;
+            }
+            const style = window.getComputedStyle(current);
+            if (style.display === 'none' || style.visibility === 'hidden') {
+                return false;
+            }
+            current = current.parentElement;
+        }
+        return true;
+    }
+
     private getVisibleInputs(): HTMLInputElement[] {
         const inputs = Array.from(document.querySelectorAll<HTMLInputElement>('#calculator-form input[type="text"]'));
-        return inputs.filter(inp => {
-            const style = window.getComputedStyle(inp);
-            return style.display !== 'none' && style.visibility !== 'hidden' && !inp.disabled;
-        });
+        return inputs.filter(inp => this.isInputEffectivelyVisible(inp));
     }
 
     private navigateInput(direction: number): void {
         const inputs = this.getVisibleInputs();
         if (inputs.length === 0) return;
 
-        let currentIndex = this.activeInput ? inputs.indexOf(this.activeInput) : -1;
+        const activeCandidate = (this.activeInput && inputs.includes(this.activeInput))
+            ? this.activeInput
+            : (document.activeElement instanceof HTMLInputElement && inputs.includes(document.activeElement)
+                ? document.activeElement
+                : null);
+        const currentIndex = activeCandidate ? inputs.indexOf(activeCandidate) : -1;
         let nextIndex = currentIndex + direction;
 
         if (nextIndex < 0) nextIndex = inputs.length - 1;
@@ -141,6 +172,7 @@ export class KeyboardViewportController {
 
         const target = inputs[nextIndex];
         if (target) {
+            this.activeInput = target;
             target.focus();
             try {
                 target.select();

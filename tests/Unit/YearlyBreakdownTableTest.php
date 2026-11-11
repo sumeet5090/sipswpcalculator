@@ -7,6 +7,8 @@ namespace Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Core\InvestmentCalculator;
 use Core\InvestmentInputs;
+use Core\ViewRenderer;
+use Core\ViteHelper;
 
 /**
  * Validates Yearly Breakdown Table (Panel 1) template architecture,
@@ -121,5 +123,32 @@ final class YearlyBreakdownTableTest extends TestCase
         $this->assertStringNotContainsString('bg-gray-900', $content);
         $this->assertStringContainsString('bg-white/95', $content);
         $this->assertStringContainsString('border-slate-200', $content);
+    }
+
+    public function testInStudioAndStandaloneRenderingModes(): void
+    {
+        $viewRenderer = new ViewRenderer(
+            new ViteHelper('testing'),
+            'testing',
+            'https://sipswpcalculator.com',
+            __DIR__ . '/../../src/Views'
+        );
+
+        $standaloneHtml = $viewRenderer->render('components/yearly-breakdown-table', [
+            'calculator_type' => 'combo',
+            'in_studio' => false,
+        ]);
+        $this->assertStringContainsString('Yearly Cashflow Ledger', $standaloneHtml);
+        $this->assertStringContainsString('id="yearly-breakdown"', $standaloneHtml);
+        $this->assertStringContainsString('id="results-table"', $standaloneHtml);
+
+        $studioHtml = $viewRenderer->render('components/yearly-breakdown-table', [
+            'calculator_type' => 'combo',
+            'in_studio' => true,
+        ]);
+        $this->assertStringNotContainsString('Yearly Cashflow Ledger', $studioHtml);
+        $this->assertStringContainsString('id="yearly-breakdown"', $studioHtml);
+        $this->assertStringContainsString('id="results-table"', $studioHtml);
+        $this->assertStringContainsString('rounded-b-3xl', $studioHtml);
     }
 }

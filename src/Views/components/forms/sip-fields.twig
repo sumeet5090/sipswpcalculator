@@ -12,7 +12,13 @@
         <span id="narrative-strategy-badge" class="hidden font-bold text-micro px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-flat shrink-0 items-center gap-1"></span>
         <span>Investing</span>
         <span class="font-financial-mono font-extrabold text-emerald-800 bg-white px-1.5 py-0.5 rounded border border-emerald-300/80 shadow-flat" id="narrative-sip">₹{{ (sip|default(10000))|number_format }}</span>
-        <span>/mo for</span>
+        <span>/mo</span>
+        <span id="narrative-lumpsum-wrapper" class="{{ (lumpsum|default(0)) > 0 ? 'inline-flex' : 'hidden' }} items-center gap-1">
+            <span>+</span>
+            <span class="font-financial-mono font-extrabold text-emerald-800 bg-white px-1.5 py-0.5 rounded border border-emerald-300/80 shadow-flat" id="narrative-lumpsum">{% if (lumpsum|default(0)) > 0 %}₹{{ lumpsum|number_format }}{% endif %}</span>
+            <span>seed</span>
+        </span>
+        <span>for</span>
         <span class="font-financial-mono font-extrabold text-slate-900 bg-white px-1.5 py-0.5 rounded border border-slate-300 shadow-flat" id="narrative-years">{{ years|default(15) }} yrs</span>
         <span>at</span>
         <span class="font-financial-mono font-extrabold text-growth-emphasis bg-growth-surface px-1.5 py-0.5 rounded border border-growth-border shadow-flat" id="narrative-rate">{{ rate|default(12) }}% CAGR</span>
@@ -40,6 +46,9 @@
     ]
 }) }}
 </div>
+
+<!-- Initial Lumpsum (Slot 1B: Progressive Seed Capital Disclosure) -->
+{% include 'components/forms/lumpsum-fields.twig' %}
 
 <!-- Period (Yrs) -->
 {{ inputs.renderInputRangePair({
@@ -154,9 +163,6 @@
         {'label': '18% Small Cap', 'value': 18}
     ]
 }) }}
-
-<!-- Initial Lumpsum (Optional Starting Capital) -->
-{% include 'components/forms/lumpsum-fields.twig' %}
 
 <!-- Adjustments & Inflation Options -->
 <div class="rounded-2xl bg-slate-50/70 border border-slate-200/90 p-2 xl:p-2.5 space-y-2 xl:space-y-2.5 shadow-subtle mt-1">

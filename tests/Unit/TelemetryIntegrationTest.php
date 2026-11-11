@@ -68,6 +68,8 @@ final class TelemetryIntegrationTest extends TestCase
         $requiredNarrativeIds = [
             'conversational-narrative-strip',
             'narrative-sip',
+            'narrative-lumpsum-wrapper',
+            'narrative-lumpsum',
             'narrative-years',
             'narrative-rate',
         ];
@@ -94,6 +96,9 @@ final class TelemetryIntegrationTest extends TestCase
             'chart-visualization.twig' => $this->chartVizTwig,
             'qr-share-modal.twig' => $this->qrShareModalTwig,
             'sip-fields.twig' => $this->sipFieldsTwig,
+            'lumpsum-fields.twig' => (string) file_get_contents(__DIR__ . '/../../src/Views/components/forms/lumpsum-fields.twig'),
+            'analytical-studio.twig' => (string) file_get_contents(__DIR__ . '/../../src/Views/components/analytical-studio.twig'),
+            'yearly-breakdown-table.twig' => (string) file_get_contents(__DIR__ . '/../../src/Views/components/yearly-breakdown-table.twig'),
         ];
 
         foreach ($templates as $name => $content) {

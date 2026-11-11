@@ -33,6 +33,7 @@
             ? 'is-active-rose bg-rose-600 text-white border-rose-600 shadow-flat' 
             : 'is-active bg-emerald-600 text-white border-emerald-600 shadow-flat') %}
     {% set tooltip = config.tooltip|default(null) %}
+    {% set footerActionHtml = config.footer_action_html|default(null) %}
     
     <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2 xl:p-2.5 transition-all duration-200 shadow-subtle hover:shadow-card" data-field-id="{{ id }}">
         <!-- Row 1: Label & Stepper Pill (Groww / Zerodha High-Density Inline Pattern) -->
@@ -107,7 +108,14 @@
         </div>
 
         <!-- Dynamic Live Subtext Hint (Indian words notation · Zero-CLS) -->
-        <div id="{{ id }}_subtext" class="field-unit-hint text-micro font-medium text-slate-500 min-h-[14px] leading-tight select-none mt-0.5 whitespace-normal break-words"></div>
+        {% if footerActionHtml %}
+            <div class="flex items-center justify-between gap-2 mt-0.5 min-w-0">
+                <div id="{{ id }}_subtext" class="field-unit-hint text-micro font-medium text-slate-500 min-h-[14px] leading-tight select-none whitespace-normal break-words min-w-0"></div>
+                <div class="shrink-0">{{ footerActionHtml|raw }}</div>
+            </div>
+        {% else %}
+            <div id="{{ id }}_subtext" class="field-unit-hint text-micro font-medium text-slate-500 min-h-[14px] leading-tight select-none mt-0.5 whitespace-normal break-words"></div>
+        {% endif %}
 
         {# Inline validation error #}
         <p id="{{ id }}_error" role="alert" aria-live="polite"

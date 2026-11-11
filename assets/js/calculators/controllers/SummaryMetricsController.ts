@@ -656,11 +656,25 @@ export class SummaryMetricsController {
      */
     updateNarrative(inputs: InvestmentInputs): void {
         const narrativeSip = this.dom.getElement('narrative-sip');
+        const narrativeLumpsumWrapper = this.dom.getElement('narrative-lumpsum-wrapper');
+        const narrativeLumpsum = this.dom.getElement('narrative-lumpsum');
         const narrativeYears = this.dom.getElement('narrative-years');
         const narrativeRate = this.dom.getElement('narrative-rate');
 
         if (narrativeSip) {
             narrativeSip.textContent = this.formatter.format(inputs.sip);
+        }
+        if (narrativeLumpsumWrapper && narrativeLumpsum) {
+            const lumpsumVal = inputs.lumpsum || 0;
+            if (lumpsumVal > 0) {
+                narrativeLumpsum.textContent = this.formatter.formatCompact(lumpsumVal);
+                narrativeLumpsumWrapper.classList.remove('hidden');
+                narrativeLumpsumWrapper.classList.add('inline-flex');
+            } else {
+                narrativeLumpsum.textContent = '';
+                narrativeLumpsumWrapper.classList.add('hidden');
+                narrativeLumpsumWrapper.classList.remove('inline-flex');
+            }
         }
         if (narrativeYears) {
             narrativeYears.textContent = `${inputs.years} yrs`;

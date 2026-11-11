@@ -1,10 +1,10 @@
 <!-- Multi-Mode Interactive Analytical Studio (Consolidated Cashflow Ledger Hub) -->
-<div id="breakdown-studio" class="scroll-mt-24 relative p-2 sm:p-4 rounded-[2rem] bg-slate-100 border border-slate-200/90 shadow-subtle">
+<div id="breakdown-studio" class="scroll-mt-24 relative rounded-3xl bg-white border border-slate-200/90 shadow-card">
 
     <!-- ========================================================================= -->
     <!-- STUDIO COMMAND HEADER & LIVE CONTEXT RIBBON                               -->
     <!-- ========================================================================= -->
-    <div class="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-card mb-4 relative overflow-hidden">
+    <div class="p-4 sm:p-5 bg-white rounded-t-3xl border-b border-slate-200/80 relative">
         <div class="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
             
             <!-- Left: Studio Title & Live Scenario Telemetry Indicator -->
@@ -145,29 +145,29 @@
     <!-- ========================================================================= -->
     <!-- STUDIO TAB PANELS (ALL SEO-INDEXED IN DOM WITH SMOOTH CROSS-FADE)         -->
     <!-- ========================================================================= -->
-    <div class="space-y-4">
+    <div>
         <!-- Panel 1: Yearly Breakdown Table (Default Active) -->
         <div id="panel-yearly-breakdown" role="tabpanel" aria-labelledby="tab-yearly-breakdown" class="studio-tab-panel transition-all duration-200 ease-out">
-            {% include 'components/yearly-breakdown-table.twig' %}
+            {% include 'components/yearly-breakdown-table.twig' with { 'in_studio': true } %}
         </div>
 
         <!-- Panel 2: City FIRE Benchmark -->
-        <div id="panel-city-benchmark" role="tabpanel" aria-labelledby="tab-city-benchmark" class="studio-tab-panel hidden transition-all duration-200 ease-out" hidden style="display: none;">
+        <div id="panel-city-benchmark" role="tabpanel" aria-labelledby="tab-city-benchmark" class="studio-tab-panel hidden transition-all duration-200 ease-out p-3 sm:p-4 bg-slate-50 rounded-b-3xl" hidden style="display: none;">
             {% include 'components/city-fire-benchmark.twig' %}
         </div>
 
         <!-- Panel 3: Milestone Roadmap -->
-        <div id="panel-milestone-roadmap" role="tabpanel" aria-labelledby="tab-milestone-roadmap" class="studio-tab-panel hidden transition-all duration-200 ease-out" hidden style="display: none;">
+        <div id="panel-milestone-roadmap" role="tabpanel" aria-labelledby="tab-milestone-roadmap" class="studio-tab-panel hidden transition-all duration-200 ease-out p-3 sm:p-4 bg-slate-50 rounded-b-3xl" hidden style="display: none;">
             {% include 'components/wealth-roadmap.twig' %}
         </div>
 
         <!-- Panel 4: Stress-Test Simulator -->
-        <div id="panel-stress-test" role="tabpanel" aria-labelledby="tab-stress-test" class="studio-tab-panel hidden transition-all duration-200 ease-out" hidden style="display: none;">
+        <div id="panel-stress-test" role="tabpanel" aria-labelledby="tab-stress-test" class="studio-tab-panel hidden transition-all duration-200 ease-out p-3 sm:p-4 bg-slate-50 rounded-b-3xl" hidden style="display: none;">
             {% include 'components/stress-test-simulator.twig' %}
         </div>
 
         <!-- Panel 5: Asset Rebalance -->
-        <div id="panel-asset-rebalance" role="tabpanel" aria-labelledby="tab-asset-rebalance" class="studio-tab-panel hidden transition-all duration-200 ease-out" hidden style="display: none;">
+        <div id="panel-asset-rebalance" role="tabpanel" aria-labelledby="tab-asset-rebalance" class="studio-tab-panel hidden transition-all duration-200 ease-out p-3 sm:p-4 bg-slate-50 rounded-b-3xl" hidden style="display: none;">
             {% include 'components/asset-rebalancing.twig' %}
         </div>
     </div>

@@ -1,10 +1,12 @@
-<div class="mt-2 space-y-4">
+{% set isStudio = in_studio|default(false) %}
+<div id="yearly-breakdown" class="{{ isStudio ? 'scroll-mt-24' : 'mt-2 space-y-4 scroll-mt-24' }}">
     <!-- ========================================================================= -->
     <!-- TIER 1: UNIFIED BIFURCATED CONTROL & CONVERSION DISPATCH HUB              -->
     <!-- ========================================================================= -->
-    <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-3.5 pb-3.5 border-b border-slate-100">
+    <div class="{{ isStudio ? 'hidden sm:flex flex-col xl:flex-row items-start xl:items-center justify-between gap-3 px-4 sm:px-5 py-3 bg-slate-50 border-b border-slate-200/80' : 'flex flex-col xl:flex-row items-start xl:items-center justify-between gap-3.5 pb-3.5 border-b border-slate-100' }}">
         <!-- Left Operational Dock (Title · Horizon Density · Column Mode) -->
         <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+            {% if not isStudio %}
             <div class="flex items-center gap-2 mr-1">
                 <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-growth-surface text-growth-emphasis text-ui-sm border border-growth-border shadow-flat font-extrabold">
                     <svg class="w-4 h-4 text-growth" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -12,12 +14,13 @@
                     </svg>
                 </span>
                 <div>
-                    <h2 id="yearly-breakdown" class="font-heading text-heading-sm sm:text-heading-md font-extrabold text-slate-900 tracking-tight leading-tight">
+                    <h2 class="font-heading text-heading-sm sm:text-heading-md font-extrabold text-slate-900 tracking-tight leading-tight">
                         Yearly Cashflow Ledger
                     </h2>
-                    <p class="text-caption font-medium text-slate-500 hidden sm:block">Annual compounding progression & cashflows</p>
+                    <p class="text-caption font-medium text-slate-500 hidden sm:block">Annual compounding progression &amp; cashflows</p>
                 </div>
             </div>
+            {% endif %}
 
             <!-- Segmented Horizon & Column Density Strip (Desktop / Tablet) -->
             <div class="hidden sm:flex items-center gap-1.5">
@@ -138,7 +141,7 @@
     <!-- ========================================================================= -->
     <!-- TIER 2: INSTITUTIONAL HIGH-DENSITY LEDGER GRID                             -->
     <!-- ========================================================================= -->
-    <div class="bg-white/95 rounded-3xl overflow-hidden border border-slate-200/80 shadow-card">
+    <div class="{{ isStudio ? 'bg-white/95 rounded-b-3xl overflow-hidden' : 'bg-white/95 rounded-3xl overflow-hidden border border-slate-200/80 shadow-card' }}">
         <!-- Desktop Table View with Sticky Year Pin Elevation -->
         <div id="table-scroll-wrapper" class="hidden sm:block max-h-[600px] overflow-y-auto overflow-x-auto custom-scrollbar">
             <table id="results-table" class="w-full text-ui-xs sm:text-ui-sm relative border-separate border-spacing-0">

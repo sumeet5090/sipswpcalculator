@@ -90,7 +90,7 @@ class GuideViewModelBuilder
         $initialInputs = $strategy->getInitialInputs();
         $calcDefaults = $this->configService->getCalculatorDefaults();
 
-        $show_lumpsum = ($calculator_type === 'lumpsum');
+        $show_lumpsum = in_array($calculator_type, ['lumpsum', 'sip', 'sip-step-up', 'combo', 'all'], true);
         $layout = ($type === 'calculator') ? 'calculators/calculator-guide' : 'layouts/generic-post';
 
         $targetCorpus = ($strategy instanceof \Core\Strategies\TargetCorpusStrategy) ? $strategy->getTargetCorpus() : null;

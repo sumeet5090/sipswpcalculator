@@ -35,6 +35,36 @@ class FormStructureParityTest extends TestCase
 
         // Ensure semantic section header exists
         $this->assertStringContainsString('Adjustments & Inflation', $content);
+
+        // Ensure Initial Lumpsum is docked in Slot 1B directly below Monthly SIP and above Period (Yrs)
+        $sipPos = strpos($content, 'id="sip_container"');
+        $lumpsumPos = strpos($content, "components/forms/lumpsum-fields.twig");
+        $yearsPos = strpos($content, "'id': 'years'");
+        $this->assertIsInt($sipPos);
+        $this->assertIsInt($lumpsumPos);
+        $this->assertIsInt($yearsPos);
+        $this->assertGreaterThan($sipPos, $lumpsumPos);
+        $this->assertLessThan($yearsPos, $lumpsumPos);
+    }
+
+    /**
+     * Test that lumpsum-fields.twig uses accessible WAI-ARIA progressive disclosure without <details>/<summary>.
+     */
+    public function testLumpsumFieldsSlot1bProgressiveDisclosureContract(): void
+    {
+        $path = __DIR__ . '/../../src/Views/components/forms/lumpsum-fields.twig';
+        $this->assertFileExists($path);
+        $content = (string) file_get_contents($path);
+
+        $this->assertStringNotContainsString('<details', $content);
+        $this->assertStringNotContainsString('<summary', $content);
+        $this->assertStringContainsString('id="lumpsum-slot"', $content);
+        $this->assertStringContainsString('id="lumpsum-toggle-btn"', $content);
+        $this->assertStringContainsString('aria-expanded="', $content);
+        $this->assertStringContainsString('aria-controls="lumpsum-drawer"', $content);
+        $this->assertStringContainsString('id="lumpsum-drawer"', $content);
+        $this->assertStringContainsString('id="lumpsum-remove-btn"', $content);
+        $this->assertStringContainsString("'id': 'lumpsum'", $content);
     }
 
     /**

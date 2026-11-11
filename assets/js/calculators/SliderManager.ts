@@ -48,6 +48,7 @@ export class SliderManager {
     private _lastHapticTime: number = 0;
     private isInternalSyncing: boolean = false;
     private _isDragging: boolean = false;
+    private _onFieldResetToDefault?: (fieldId: string, defaultVal: number) => void;
 
     constructor(
         triggerFn: (options?: { isDragging?: boolean }) => void,
@@ -67,6 +68,10 @@ export class SliderManager {
 
     public setTriggerFn(fn: (options?: { isDragging?: boolean }) => void): void {
         this.triggerFn = fn;
+    }
+
+    public setOnFieldResetToDefault(callback: (fieldId: string, defaultVal: number) => void): void {
+        this._onFieldResetToDefault = callback;
     }
 
     /**
@@ -124,6 +129,7 @@ export class SliderManager {
             labelEl.addEventListener('dblclick', (e) => {
                 e.preventDefault();
                 this.updateFieldValue(inputId, initialDefaultValue);
+                this._onFieldResetToDefault?.(inputId, initialDefaultValue);
             });
 
             let lastTap = 0;
@@ -132,6 +138,7 @@ export class SliderManager {
                 if (now - lastTap < 350 && now - lastTap > 0) {
                     e.preventDefault();
                     this.updateFieldValue(inputId, initialDefaultValue);
+                    this._onFieldResetToDefault?.(inputId, initialDefaultValue);
                     lastTap = 0;
                 } else {
                     lastTap = now;
@@ -484,6 +491,7 @@ export class SliderManager {
     resetAllToDefaults(): void {
         this.pairs.forEach(({ fieldId, initialDefaultValue }) => {
             this.updateFieldValue(fieldId, initialDefaultValue);
+            this._onFieldResetToDefault?.(fieldId, initialDefaultValue);
         });
     }
 

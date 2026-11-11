@@ -25,6 +25,7 @@ import { UrlStateController } from './controllers/UrlStateController.ts';
 import { ResultsController } from './controllers/ResultsController.ts';
 import { SummaryMetricsController } from './controllers/SummaryMetricsController.ts';
 import { ChartScrubbingController } from './controllers/ChartScrubbingController.ts';
+import { LumpsumDisclosureController } from './controllers/LumpsumDisclosureController.ts';
 import { A11yAnnouncer } from './helpers/A11yAnnouncer.ts';
 import { ModalScrollLockHelper } from './helpers/ModalScrollLockHelper.ts';
 import { SpecializedCalculatorController } from './controllers/SpecializedCalculatorController.ts';
@@ -50,6 +51,7 @@ export class CalculatorApp {
     private sliderManager: SliderManager;
     private resultsController: ResultsController;
     private summaryMetricsController: SummaryMetricsController;
+    private lumpsumDisclosureController: LumpsumDisclosureController;
     private specializedController: SpecializedCalculatorController | null = null;
 
     private exportSubsystem: ExportSubsystem;
@@ -98,6 +100,22 @@ export class CalculatorApp {
             this.formatter
         );
 
+        this.lumpsumDisclosureController = new LumpsumDisclosureController(
+            this.dom,
+            () => {
+                this.sliderManager.updateFieldValue('lumpsum', 0, true);
+                this.userHasInteracted = true;
+                this.interactionCount++;
+                this.triggerCalculation();
+            }
+        );
+
+        this.sliderManager.setOnFieldResetToDefault((fieldId, defaultVal) => {
+            if (fieldId === 'lumpsum' && defaultVal <= 0) {
+                this.lumpsumDisclosureController.collapse(false);
+            }
+        });
+
         this.resultsController = new ResultsController(
             this.dom,
             this.formatter,
@@ -144,6 +162,9 @@ export class CalculatorApp {
             syncSwpToggleState: () => this.syncSwpToggleState(),
             setGoalMode: (mode) => this.setGoalMode(mode),
             applyRestoredInputs: (inputs) => this.applyRestoredInputs(inputs),
+            onSyncLumpsumDisclosure: (val, programmaticReset) => {
+                this.lumpsumDisclosureController.syncForValue(val, programmaticReset);
+            },
             onSafeSwpAdjusted: (safeAmount) => {
                 this.sliderManager.updateFieldValue('swp_withdrawal', safeAmount);
                 this.triggerCalculation();
@@ -198,6 +219,7 @@ export class CalculatorApp {
         if (inputs.lumpsum !== undefined) {
             this.sliderManager.updateFieldValue('lumpsum', inputs.lumpsum, true);
             this.sliderManager.updateFieldValue('corpus', inputs.lumpsum, true);
+            this.lumpsumDisclosureController.syncForValue(inputs.lumpsum, inputs.lumpsum <= 0);
         }
         if (inputs.swp_withdrawal !== undefined && inputs.swp_withdrawal > 0) this.sliderManager.updateFieldValue('swp_withdrawal', inputs.swp_withdrawal, true);
         if (inputs.swp_years !== undefined && inputs.swp_years > 0) this.sliderManager.updateFieldValue('swp_years', inputs.swp_years, true);
@@ -232,6 +254,7 @@ export class CalculatorApp {
         const currentMode = rootAppEl?.dataset?.mode || 'combo';
         this.lifecycleSubsystem.clearDraft(currentMode);
         this.sliderManager.resetAllToDefaults();
+        this.lumpsumDisclosureController.syncForValue(0, true);
         this.engagementSubsystem.playTick(280, 0.05);
         this.engagementSubsystem.vibrate([12, 24, 12]);
         this.triggerCalculation();
@@ -655,6 +678,8 @@ export class CalculatorApp {
             (goalMode) => this.setGoalMode(goalMode)
         ).init();
 
+        this.lumpsumDisclosureController.init();
+
         this.initEventBusSubscribers();
         this.initInitialCalculation();
     }
@@ -832,6 +857,10 @@ export class CalculatorApp {
             const combined = MathEngine.calculate(inputs);
             this.latestResults = combined;
 
+            if (inputs.lumpsum > 0) {
+                this.lumpsumDisclosureController.expand(false);
+            }
+
             // ── FAST ZERO-LATENCY FRAME PIPELINE (Runs on every 60fps drag frame) ──
             // Instantly update summary metrics cards (#total-invested, #est-returns, #total-value)
             this.updateSummaryMetrics(combined, isDragging);
@@ -1006,6 +1035,7 @@ export class CalculatorApp {
             if (existingData.length <= 2 && currentMode !== 'lumpsum') {
                 this.sliderManager.resetAllToDefaults();
                 initialInputs = this.getInputs();
+                this.lumpsumDisclosureController.syncForValue(initialInputs.lumpsum, initialInputs.lumpsum <= 0);
                 if (strategy) {
                     initialInputs = strategy.execute(initialInputs);
                 }

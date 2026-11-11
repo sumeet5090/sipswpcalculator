@@ -68,6 +68,8 @@ final class ArchetypeInjectorTest extends TestCase
         $this->assertStringContainsString('getBlueprints(): Record<string, StrategyBlueprintPreset>', $this->controllerCode);
         $this->assertStringContainsString('A11yAnnouncer.announce', $this->controllerCode);
         $this->assertStringContainsString('navigator.vibrate', $this->controllerCode);
+        $this->assertStringContainsString('inputs.lumpsum === preset.lumpsum', $this->controllerCode);
+        $this->assertStringContainsString('onSyncLumpsumDisclosure', $this->controllerCode);
     }
 
     public function testStrategyBlueprintMathematicalParity(): void

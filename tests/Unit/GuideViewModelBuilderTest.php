@@ -13,9 +13,12 @@ use Core\MetaManager;
 use Core\SchemaHelper;
 use Core\SiteConfig;
 use Core\Strategies\StrategyFactory;
+use Core\ViewRenderer;
+use Core\ViteHelper;
 use Parsedown;
 use PHPUnit\Framework\TestCase;
 use Services\ConfigService;
+use Services\GuideRenderer;
 use Services\GuideViewModelBuilder;
 
 class GuideViewModelBuilderTest extends TestCase
@@ -98,5 +101,40 @@ class GuideViewModelBuilderTest extends TestCase
     {
         $this->expectException(RouteNotFoundException::class);
         $this->builder->build('non-existent-calculator-guide-xyz');
+    }
+
+    public function testShowLumpsumVisibilityMatrixAndEmbedGuardrail(): void
+    {
+        foreach (['sip-calculator', 'sip-step-up-calculator', 'retirement-calculator', 'lumpsum-calculator'] as $slug) {
+            $vm = $this->builder->build($slug);
+            $this->assertTrue(
+                (bool) ($vm['data']['show_lumpsum'] ?? false),
+                "Route '{$slug}' must expose show_lumpsum = true"
+            );
+        }
+
+        foreach (['swp-calculator', 'reach-5-crore-via-sip'] as $slug) {
+            $vm = $this->builder->build($slug);
+            $this->assertFalse(
+                (bool) ($vm['data']['show_lumpsum'] ?? true),
+                "Route '{$slug}' must keep show_lumpsum = false"
+            );
+        }
+
+        $viewRenderer = new ViewRenderer(
+            new ViteHelper('testing'),
+            'testing',
+            'https://sipswpcalculator.com',
+            __DIR__ . '/../../src/Views'
+        );
+        $renderer = new GuideRenderer($this->builder, $viewRenderer);
+
+        $pageHtml = $renderer->render('sip-calculator')->getContent();
+        $this->assertStringContainsString('id="lumpsum-toggle-btn"', $pageHtml);
+        $this->assertStringContainsString('id="lumpsum-drawer"', $pageHtml);
+
+        $embedHtml = $renderer->renderEmbed('sip-calculator')->getContent();
+        $this->assertStringNotContainsString('id="lumpsum-toggle-btn"', $embedHtml);
+        $this->assertStringNotContainsString('id="lumpsum-drawer"', $embedHtml);
     }
 }

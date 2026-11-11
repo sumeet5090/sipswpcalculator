@@ -1,23 +1,60 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
-<!-- Initial Lumpsum — only rendered when show_lumpsum is true -->
+<!-- Initial Lumpsum — Slot 1B Progressive Disclosure (only rendered when show_lumpsum is true) -->
 {% if show_lumpsum %}
-{{ inputs.renderInputRangePair({
-    'id': 'lumpsum',
-    'label': calc_config.lumpsum.label,
-    'min': calc_config.lumpsum.min,
-    'max': calc_config.lumpsum.max,
-    'slider_max': calc_config.lumpsum.slider_max,
-    'step': calc_config.lumpsum.step,
-    'value': lumpsum|default(0),
-    'prefix': '₹',
-    'theme': 'emerald',
-    'presets': [
-        {'label': '₹50k', 'value': 50000},
-        {'label': '₹1L', 'value': 100000},
-        {'label': '₹5L', 'value': 500000},
-        {'label': '₹10L', 'value': 1000000},
-        {'label': '₹25L', 'value': 2500000}
-    ]
-}) }}
-{% endif %}
+{% set lumpsumVal = lumpsum|default(0) %}
+{% set isLumpsumExpanded = (lumpsumVal > 0) %}
+<div id="lumpsum-slot" class="relative">
+    <!-- Collapsed Trigger Strip (Visible when lumpsum == 0) -->
+    <button type="button"
+        id="lumpsum-toggle-btn"
+        aria-expanded="{{ isLumpsumExpanded ? 'true' : 'false' }}"
+        aria-controls="lumpsum-drawer"
+        class="{{ isLumpsumExpanded ? 'hidden ' : '' }}w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-slate-50/90 hover:bg-emerald-50/70 border border-dashed border-slate-300/90 hover:border-emerald-400 text-left transition-all duration-150 shadow-flat cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 min-h-[40px]">
+        <span class="flex items-center gap-2 min-w-0">
+            <span class="flex items-center justify-center w-5 h-5 rounded-md bg-emerald-100/90 text-growth border border-emerald-200 font-black text-ui-xs leading-none shrink-0 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600 transition-colors" aria-hidden="true">+</span>
+            <span class="text-ui-xs font-bold text-slate-800 group-hover:text-emerald-950 truncate">Add Initial Lumpsum</span>
+            <span class="text-micro font-medium text-slate-500 hidden sm:inline whitespace-nowrap">(Optional Seed Capital)</span>
+        </span>
+        <span class="text-micro font-bold text-growth-emphasis bg-white px-2 py-0.5 rounded-md border border-slate-200/90 group-hover:border-emerald-300 shadow-flat shrink-0 font-financial-mono">
+            Optional
+        </span>
+    </button>
 
+    <!-- Expanded Seed Capital Drawer (Visible when lumpsum > 0 or user-expanded) -->
+    <div id="lumpsum-drawer"
+        aria-hidden="{{ isLumpsumExpanded ? 'false' : 'true' }}"
+        class="{{ isLumpsumExpanded ? '' : 'hidden' }}">
+        {% set removeLumpsumHtml %}
+        <button type="button"
+            id="lumpsum-remove-btn"
+            aria-controls="lumpsum-drawer"
+            aria-label="Remove Initial Lumpsum and reset to zero"
+            title="Reset Initial Lumpsum to ₹0 and collapse"
+            class="relative inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-payout-surface text-slate-600 hover:text-payout border border-slate-200/90 hover:border-payout-border text-micro font-bold transition-colors cursor-pointer shrink-0 shadow-flat before:content-[''] before:absolute before:-inset-1.5 sm:before:inset-0">
+            <span aria-hidden="true">✕</span>
+            <span>Remove Lumpsum</span>
+        </button>
+        {% endset %}
+
+        {{ inputs.renderInputRangePair({
+            'id': 'lumpsum',
+            'label': calc_config.lumpsum.label,
+            'min': calc_config.lumpsum.min,
+            'max': calc_config.lumpsum.max,
+            'slider_max': calc_config.lumpsum.slider_max,
+            'step': calc_config.lumpsum.step,
+            'value': lumpsumVal,
+            'prefix': '₹',
+            'theme': 'emerald',
+            'footer_action_html': removeLumpsumHtml,
+            'presets': [
+                {'label': '₹50k', 'value': 50000},
+                {'label': '₹1L', 'value': 100000},
+                {'label': '₹5L', 'value': 500000},
+                {'label': '₹10L', 'value': 1000000},
+                {'label': '₹25L', 'value': 2500000}
+            ]
+        }) }}
+    </div>
+</div>
+{% endif %}

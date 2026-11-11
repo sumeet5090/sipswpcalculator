@@ -42,9 +42,11 @@ class GuideRenderer implements GuideRendererInterface
     public function renderEmbed(string $slug): Response
     {
         $viewModel = $this->viewModelBuilder->build($slug);
+        $data = $viewModel['data'];
+        $data['show_lumpsum'] = (($data['calculator_type'] ?? '') === 'lumpsum');
 
         return new Response(
-            $this->viewRenderer->render('calculators/embed', $viewModel['data']),
+            $this->viewRenderer->render('calculators/embed', $data),
             200,
             [
                 'Content-Type' => 'text/html; charset=utf-8',
