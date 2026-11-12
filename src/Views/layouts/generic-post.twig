@@ -34,14 +34,14 @@
     {% set post_cta_url = content_metadata.cta_url %}
     {% set post_dock_cta_url = content_metadata.cta_url %}
 {% elseif cat_slug == 'retirement' %}
-    {% set post_cta_url = '/swp-calculator?corpus=10000000&swp_withdrawal=50000&swp_years=30&swp_rate=8&swp_stepup=5&utm_source=blog_cta&utm_medium=retirement' %}
-    {% set post_dock_cta_url = '/swp-calculator?corpus=10000000&swp_withdrawal=50000&swp_years=30&swp_rate=8&swp_stepup=5&utm_source=blog_dock&utm_medium=retirement' %}
+    {% set post_cta_url = '/swp-calculator?corpus=10000000&swp_withdrawal=50000&swp_years=30&swp_rate=8&swp_stepup=5' %}
+    {% set post_dock_cta_url = '/swp-calculator?corpus=10000000&swp_withdrawal=50000&swp_years=30&swp_rate=8&swp_stepup=5' %}
 {% elseif cat_slug == 'comparison' %}
-    {% set post_cta_url = '/?sip=10000&years=10&rate=12&utm_source=blog_cta&utm_medium=comparison#calculator-section' %}
-    {% set post_dock_cta_url = '/?sip=10000&years=10&rate=12&utm_source=blog_dock&utm_medium=comparison#calculator-section' %}
+    {% set post_cta_url = '/sip-calculator?sip=10000&years=10&rate=12' %}
+    {% set post_dock_cta_url = '/sip-calculator?sip=10000&years=10&rate=12' %}
 {% else %}
-    {% set post_cta_url = '/?sip=10000&years=15&rate=12&stepup=10&utm_source=blog_cta&utm_medium=growth#calculator-section' %}
-    {% set post_dock_cta_url = '/?sip=10000&years=15&rate=12&stepup=10&utm_source=blog_dock&utm_medium=growth#calculator-section' %}
+    {% set post_cta_url = '/sip-step-up-calculator?sip=10000&years=15&rate=12&stepup=10' %}
+    {% set post_dock_cta_url = '/sip-step-up-calculator?sip=10000&years=15&rate=12&stepup=10' %}
 {% endif %}
 
 <div class="doc-layout-grid relative">

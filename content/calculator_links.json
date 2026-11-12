@@ -1,14 +1,24 @@
 {
     "home": [
         {
-            "href": "/my-first-crore-calculator",
-            "title": "1 Crore SIP Goal Planner",
-            "description": "Calculate the exact monthly SIP and years required to reach ₹1 Crore or ₹5 Crores with annual step-ups."
+            "href": "/sip-calculator",
+            "title": "SIP Calculator India",
+            "description": "Calculate monthly mutual fund SIP returns, step-up growth projections, and Section 112A capital gains."
         },
         {
             "href": "/swp-calculator",
             "title": "SWP Pension Calculator",
             "description": "Model monthly post-retirement withdrawals, capital longevity, and 2026 LTCG tax savings from mutual funds."
+        },
+        {
+            "href": "/lumpsum-calculator",
+            "title": "Lumpsum Calculator",
+            "description": "Project one-time mutual fund compounding returns and compare lumpsum growth against monthly SIPs."
+        },
+        {
+            "href": "/my-first-crore-calculator",
+            "title": "1 Crore SIP Goal Planner",
+            "description": "Calculate the exact monthly SIP and years required to reach ₹1 Crore or ₹5 Crores with annual step-ups."
         },
         {
             "href": "/retirement-calculator",
@@ -338,12 +348,12 @@
         {
             "href": "/my-first-crore-calculator",
             "title": "1 Crore SIP Goal Calculator",
-            "description": "See how a ₹5,000 SIP paired with a 10% annual step-up crosses ₹1 Crore in 20 years."
+            "description": "See how a ₹5,000 SIP paired with a 10% annual step-up reaches ₹99.44 Lakhs in 20 years and crosses ₹1 Crore in Year 21."
         },
         {
             "href": "/sip-step-up-calculator",
             "title": "Step-Up SIP Calculator",
-            "description": "Turn your ₹5,000 starting monthly investment into over ₹2.3 Crores with a disciplined 10% annual top-up."
+            "description": "Turn your ₹5,000 starting monthly investment into ₹2.14 Crores in 25 years with a disciplined 10% annual top-up."
         },
         {
             "href": "/compound-interest-calculator",
@@ -355,7 +365,7 @@
         {
             "href": "/my-first-crore-calculator",
             "title": "1 Crore SIP Goal Calculator",
-            "description": "See how your ₹10,000 monthly investment hits the ₹1 Crore milestone in exactly 20 years."
+            "description": "See how your ₹10,000 monthly investment hits ₹99.91 Lakhs in Year 20 and crosses ₹1 Crore cleanly."
         },
         {
             "href": "/reach-5-crore-via-sip",
@@ -370,7 +380,7 @@
         {
             "href": "/sip-step-up-calculator",
             "title": "Step-Up SIP Calculator",
-            "description": "See how stepping up ₹10,000 by 10% annually creates an extra ₹2.71 Crores in 25-year wealth."
+            "description": "See how stepping up ₹10,000 by 10% annually creates an extra ₹2.38 Crores in 25-year wealth."
         }
     ]
 }

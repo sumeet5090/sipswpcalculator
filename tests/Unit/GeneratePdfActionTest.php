@@ -82,4 +82,42 @@ class GeneratePdfActionTest extends TestCase
         $this->assertStringContainsString('Financial_Report_for_Aarav_Sharma.pdf', $response->getHeader('Content-Disposition') ?? '');
         $this->assertStringContainsString('%PDF-1.4 Mock Binary PDF Content', $response->getBody());
     }
+
+    public function testSpecializedCalculatorPdfUsesSpecializedContextAndTitle(): void
+    {
+        $capturedPayload = [];
+        $mockPdfGenerator = $this->createMock(PdfGeneratorService::class);
+        $mockPdfGenerator->expects($this->once())
+            ->method('generate')
+            ->with(
+                $this->callback(function (array $data) use (&$capturedPayload): bool {
+                    $capturedPayload = $data;
+                    return true;
+                })
+            )
+            ->willReturn('%PDF-1.4 Specialized Content');
+
+        $action = new GeneratePdfAction(
+            $mockPdfGenerator,
+            $this->configService,
+            $this->fileUploadService,
+            $this->sanitizer,
+            $this->calculator
+        );
+
+        $request = new Request([], [
+            'calculator_type' => 'fd',
+            'fd_principal'    => 1000000,
+            'fd_rate'         => 7.5,
+            'fd_years'        => 5,
+            'currency'        => 'INR',
+        ], ['REQUEST_METHOD' => 'POST', 'REMOTE_ADDR' => '1.2.3.4']);
+
+        $response = $action($request);
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('Fixed Deposit Maturity Report', $capturedPayload['doc_title'] ?? null);
+        $this->assertSame('FDP-', $capturedPayload['proposal_prefix'] ?? null);
+        $this->assertStringContainsString('FD_Maturity_Schedule.pdf', $response->getHeader('Content-Disposition') ?? '');
+    }
 }

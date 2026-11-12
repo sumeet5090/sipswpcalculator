@@ -7,6 +7,7 @@ schema_name: "Step-Up SIP Calculator India — Top-Up Compounding Planner"
 seo_category: "growth"
 type: "calculator"
 date: "2026-08-01"
+updated_at: "2026-11-12"
 og_image: "/assets/og/og-sip-step-up-calculator.jpg"
 ---
 
@@ -14,7 +15,7 @@ og_image: "/assets/og/og-sip-step-up-calculator.jpg"
 
 ## The Definitive Guide to Step-Up (Top-Up) SIPs in India (2026 Edition)
 
-> **Direct Answer (BLUF):** A **Step-Up SIP (Top-Up SIP)** automatically increases your monthly mutual fund investment each year (typically by 10% or a fixed ₹1,000) to match annual salary hikes. Over a 20-year horizon at 12% CAGR, a ₹10,000 monthly SIP with a 10% annual step-up accumulates **₹2.47 Crores** compared to **₹99.91 Lakhs** for a flat SIP—more than doubling your final corpus and cutting 4 to 5 years off your timeline to reach ₹1 Crore.
+> **Direct Answer (BLUF):** A **Step-Up SIP (Top-Up SIP)** automatically increases your monthly mutual fund investment each year (typically by 10% or a fixed ₹1,000) to match annual salary hikes. Over a 20-year horizon at 12% CAGR, a ₹10,000 monthly SIP with a 10% annual step-up accumulates **₹1.99 Crores** (`₹1,98,88,715`) compared to **₹99.91 Lakhs** for a flat SIP—nearly doubling your final corpus and cutting ~5 years off your timeline to reach ₹1 Crore. Over 25 years, the corpus reaches **₹4.28 Crores** (`₹4,27,55,461`).
 
 A **Step-Up Systematic Investment Plan (SIP)**—frequently designated as a **Top-Up SIP** by Indian Asset Management Companies (AMCs)—is an automated wealth acceleration strategy wherein an investor commits to increasing their periodic mutual fund investment amount at regular intervals (typically once a year) by a predefined percentage or fixed rupee denomination.
 
@@ -92,23 +93,23 @@ The following comprehensive matrix models the terminal corpus and total contribu
 
 | Metric | Investment Horizon | Flat SIP (0% Step-Up) | 5% Annual Step-Up | 10% Annual Step-Up | 15% Annual Step-Up |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **Terminal Corpus** | **10 Years** | ₹23.23 Lakh | ₹28.84 Lakh | **₹35.69 Lakh** | ₹44.08 Lakh |
-| Total Invested | 10 Years | ₹12.00 Lakh | ₹15.10 Lakh | ₹19.12 Lakh | ₹24.36 Lakh |
-| Wealth Multiplier | 10 Years | 1.94x | 1.91x | 1.87x | 1.81x |
-| **Terminal Corpus** | **15 Years** | ₹50.46 Lakh | ₹70.19 Lakh | **₹97.55 Lakh** | **₹1.35 Crore** |
-| Total Invested | 15 Years | ₹18.00 Lakh | ₹25.89 Lakh | ₹37.95 Lakh | ₹56.42 Lakh |
-| Wealth Multiplier | 15 Years | 2.80x | 2.71x | 2.57x | 2.39x |
-| **Terminal Corpus** | **20 Years** | **₹99.91 Lakh** | **₹1.37 Crore** | **₹1.99 Crore** | **₹3.11 Crore** |
+| **Terminal Corpus** | **10 Years** | ₹23.23 Lakh | ₹27.87 Lakh | **₹33.74 Lakh** | ₹41.19 Lakh |
+| Total Invested | 10 Years | ₹12.00 Lakh | ₹15.09 Lakh | ₹19.12 Lakh | ₹24.36 Lakh |
+| Wealth Multiplier | 10 Years | 1.94x | 1.85x | 1.76x | 1.69x |
+| **Terminal Corpus** | **15 Years** | ₹50.46 Lakh | ₹65.31 Lakh | **₹86.84 Lakh** | **₹1.18 Crore** |
+| Total Invested | 15 Years | ₹18.00 Lakh | ₹25.89 Lakh | ₹38.13 Lakh | ₹57.10 Lakh |
+| Wealth Multiplier | 15 Years | 2.80x | 2.52x | 2.28x | 2.07x |
+| **Terminal Corpus** | **20 Years** | **₹99.91 Lakh** | **₹1.37 Crore** | **₹1.99 Crore** | **₹3.03 Crore** |
 | Total Invested | 20 Years | ₹24.00 Lakh | ₹39.68 Lakh | ₹68.73 Lakh | ₹1.23 Crore |
-| Wealth Multiplier | 20 Years | 4.16x | 3.45x | 2.90x | 2.53x |
-| **Terminal Corpus** | **25 Years** | **₹1.90 Crore** | **₹3.22 Crore** | **₹5.33 Crore** | **₹9.32 Crore** |
+| Wealth Multiplier | 20 Years | 4.16x | 3.46x | 2.89x | 2.46x |
+| **Terminal Corpus** | **25 Years** | **₹1.90 Crore** | **₹2.73 Crore** | **₹4.28 Crore** | **₹7.26 Crore** |
 | Total Invested | 25 Years | ₹30.00 Lakh | ₹57.27 Lakh | ₹1.18 Crore | ₹2.55 Crore |
-| Wealth Multiplier | 25 Years | 6.33x | 5.62x | 4.52x | 3.65x |
+| Wealth Multiplier | 25 Years | 6.33x | 4.78x | 3.62x | 2.84x |
 
 ### Critical Analytical Insights from the Data:
-1. **The 20-Year Doubling Effect:** Over a 20-year horizon, a modest **10% annual step-up** almost exactly **doubles your terminal corpus** from ₹99.91 Lakh to **₹1.99 Crore**.
-2. **The 25-Year Quadrupling Effect:** Over a 25-year career, a 15% annual step-up delivers **₹9.32 Crore**—nearly **5 times** the corpus of a flat SIP (₹1.90 Crore).
-3. **Manageable Incremental Outflows:** In Year 2 of a 10% step-up on ₹10,000, your installment rises by merely ₹1,000/month (₹33 per day). This trivial lifestyle sacrifice translates into tens of lakhs in compound gains decades later.
+1. **The 20-Year Doubling Effect:** Over a 20-year horizon, a modest **10% annual step-up** almost exactly **doubles your terminal corpus** from ₹99.91 Lakh to **₹1.99 Crore** (`₹1,98,88,715`).
+2. **The 25-Year Exponential Surge:** Over a 25-year career, a 10% step-up produces **₹4.28 Crore**, while an aggressive 15% annual step-up delivers **₹7.26 Crore** (`₹7,25,75,157`)—nearly **4 times** the corpus of a flat SIP (₹1.90 Crore).
+3. **Manageable Incremental Outflows:** In Year 2 of a 10% step-up on ₹10,000, your installment rises by merely ₹1,000/month (₹33 per day). This trivial lifestyle sacrifice translates into crores in compound gains decades later.
 
 ---
 
@@ -147,12 +148,12 @@ The table below illustrates the exact timeline required to reach landmark financ
 
 | Wealth Milestone | Flat SIP Timeline | 5% Step-Up Timeline | 10% Step-Up Timeline | 15% Step-Up Timeline | Time Saved via 10% Step-Up |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **₹50 Lakh** | 12.5 Years | 11.2 Years | **10.1 Years** | 9.2 Years | **2.4 Years Earlier** |
-| **₹1 Crore** | 17.5 Years | 15.1 Years | **13.2 Years** | 11.7 Years | **4.3 Years Earlier** |
-| **₹2 Crore** | 22.8 Years | 19.3 Years | **16.6 Years** | 14.5 Years | **6.2 Years Earlier** |
-| **₹5 Crore** | 29.8 Years | 25.1 Years | **21.3 Years** | 18.3 Years | **8.5 Years Earlier** |
+| **₹50 Lakh** | Year 13 | Year 11 | **Year 10** | Year 10 | **3 Years Earlier** |
+| **₹1 Crore** | Year 17 | Year 16 | **Year 14** | Year 13 | **3 Years Earlier** |
+| **₹2 Crore** | Year 23 | Year 20 | **Year 18** | Year 16 | **5 Years Earlier** |
+| **₹5 Crore** | Year 30 | Year 27 | **Year 24** | Year 21 | **6 Years Earlier** |
 
-> **The 1 Crore Benchmark:** A flat ₹15,000 monthly SIP takes **17.5 years** to build ₹1 Crore. Stepping up by 10% annually reaches the same ₹1 Crore milestone in **13.2 years**—saving over **4 years and 3 months of working life**.
+> **The 1 Crore Benchmark:** On a ₹15,000/month starting SIP at 12% CAGR, a flat SIP takes until **Year 17** (`₹1.00 Cr`) to reach ₹1 Crore, whereas stepping up by 10% annually reaches **₹1.09 Crore in Year 14**—saving **3 full years** of accumulation (and reaching ₹5 Crore **6 years earlier**, in Year 24 vs. Year 30).
 
 ---
 
@@ -189,7 +190,7 @@ Because a Step-Up SIP involves escalating installment sizes every 12 months, und
 ### FIFO Accounting on Layered Installments
 When you redeem mutual fund units, the Income Tax Department mandates the **First-In, First-Out (FIFO)** methodology:
 1. Units acquired in Year 1 are liquidated first, followed sequentially by units acquired in Year 2, Year 3, etc.
-2. For **Equity-Oriented Funds (≥65% equity)**, units held for longer than 12 months qualify for **Long-Term Capital Gains (LTCG) at 12.5%** under Section 112A.
+2. For **Equity-Oriented Funds (≥65% equity)**, units held for longer than 12 months qualify for **Long-Term Capital Gains (LTCG) at 12.5% base rate (13.0% effective with 4% cess)** under Section 112A.
 3. An annual exemption of up to **₹1.25 Lakh in LTCG** applies per financial year across all equity assets.
 4. Units held for 12 months or less are classified as **Short-Term Capital Gains (STCG)** and taxed at a flat **20%** under Section 111A.
 
@@ -234,7 +235,7 @@ An annual step-up increases your installment once every 12 months, matching annu
 <ul class="space-y-2 text-sm">
 <li><a href="/sip-calculator" class="text-emerald-700 hover:underline font-semibold">SIP Calculator Guide</a> — Master flat SIP compounding mechanics and Rupee Cost Averaging</li>
 <li><a href="/swp-calculator" class="text-emerald-700 hover:underline font-semibold">SWP Calculator Guide</a> — Plan your step-up withdrawal strategy in retirement</li>
-<li><a href="/my-first-crore-calculator" class="text-emerald-700 hover:underline font-semibold">My First Crore Calculator</a> — Discover how a Step-Up SIP cuts 4+ years off your ₹1 Crore journey</li>
+<li><a href="/my-first-crore-calculator" class="text-emerald-700 hover:underline font-semibold">1 Crore SIP Calculator</a> — Discover how a Step-Up SIP cuts 4+ years off your ₹1 Crore journey</li>
 <li><a href="/target-corpus-calculator" class="text-emerald-700 hover:underline font-semibold">Target Corpus Calculator</a> — Reverse-calculate required monthly SIPs with step-up boosts</li>
 <li><a href="/retirement-calculator" class="text-emerald-700 hover:underline font-semibold">Retirement Calculator</a> — Model your full accumulation-to-income pension lifecycle</li>
 <li><a href="/lumpsum-calculator" class="text-emerald-700 hover:underline font-semibold">Lumpsum Calculator</a> — Compare stepped monthly SIPs against one-time capital growth</li>
@@ -250,9 +251,9 @@ An annual step-up increases your installment once every 12 months, matching annu
   </div>
   <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight text-slate-900">Calculate Your Step-Up Multiplier Now</h2>
   <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Use the interactive slider controls above to test 5%, 10%, or 15% annual step-ups against your current monthly investment. View interactive charts, amortization schedules, and export branded PDF reports instantly.</p>
-  <a href="/#calculator-section"
+  <a href="#calculator-section"
      class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm sm:text-base cursor-pointer">
-    Open Step-Up SIP Planner
+    Simulate My Step-Up SIP Now
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
   </a>
 </div>

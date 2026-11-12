@@ -8,6 +8,7 @@ schema_name: "Inflation Calculator India — Purchasing Power & Future Value Pla
 seo_category: "retirement"
 type: "calculator"
 date: "2026-09-01"
+updated_at: "2026-11-12"
 ---
 
 ---

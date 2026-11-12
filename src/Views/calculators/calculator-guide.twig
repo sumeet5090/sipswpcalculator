@@ -67,7 +67,7 @@
                 <svg class="h-3.5 w-3.5 flex-shrink-0 text-slate-300 mx-0.5 sm:mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                 </svg>
-                <a href="/#calculator-section" class="text-slate-500 hover:text-emerald-700 transition-colors whitespace-nowrap font-medium">Calculators</a>
+                <a href="/resources" class="text-slate-500 hover:text-emerald-700 transition-colors whitespace-nowrap font-medium">Calculators</a>
             </div>
         </li>
         <li class="min-w-0">
@@ -75,7 +75,7 @@
                 <svg class="h-3.5 w-3.5 flex-shrink-0 text-slate-300 mx-0.5 sm:mx-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                 </svg>
-                <span class="text-slate-800 font-semibold truncate max-w-[180px] xs:max-w-[260px] sm:max-w-md block" aria-current="page">{{ content_metadata.title|default(page_config.title) }}</span>
+                <span class="text-slate-800 font-semibold truncate max-w-[180px] xs:max-w-[260px] sm:max-w-md block" aria-current="page">{{ content_metadata.h1|default(content_metadata.schema_name|default(page_config.title)) }}</span>
             </div>
         </li>
     </ol>
@@ -91,10 +91,10 @@
     </div>
 
     <h1 class="fluid-h1 font-extrabold pb-2 sm:pb-3 tracking-tight text-slate-900">
-        {{ page_config.title }}
+        {{ page_config.h1|default(content_metadata.h1|default(content_metadata.schema_name|default(page_config.title))) }}
     </h1>
     {% if page_config.meta_desc %}
-        <p class="text-ui-xs sm:text-body text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-3 sm:mb-4 line-clamp-3 sm:line-clamp-none">
+        <p class="text-ui-xs sm:text-body text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-3 sm:mb-4">
             {{ page_config.meta_desc }}
         </p>
     {% endif %}

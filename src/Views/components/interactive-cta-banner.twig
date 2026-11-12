@@ -10,11 +10,11 @@
 {% if cta_url is defined and cta_url %}
     {% set target_cta_href = cta_url %}
 {% elseif current_cat == 'retirement' %}
-    {% set target_cta_href = '/swp-calculator?corpus=10000000&swp_withdrawal=50000&swp_years=30&swp_rate=8&swp_stepup=5&utm_source=blog_cta&utm_medium=retirement' %}
+    {% set target_cta_href = '/swp-calculator?corpus=10000000&swp_withdrawal=50000&swp_years=30&swp_rate=8&swp_stepup=5' %}
 {% elseif current_cat == 'comparison' %}
-    {% set target_cta_href = '/?sip=10000&years=10&rate=12&utm_source=blog_cta&utm_medium=comparison#calculator-section' %}
+    {% set target_cta_href = '/sip-calculator?sip=10000&years=10&rate=12' %}
 {% else %}
-    {% set target_cta_href = '/?sip=10000&years=15&rate=12&stepup=10&utm_source=blog_cta&utm_medium=growth#calculator-section' %}
+    {% set target_cta_href = '/sip-step-up-calculator?sip=10000&years=15&rate=12&stepup=10' %}
 {% endif %}
 
 <section class="not-prose mt-12 mb-8" aria-label="Simulate Your Wealth Journey">
@@ -116,13 +116,13 @@
                         <div class="flex flex-col">
                             <span class="text-caption font-bold text-slate-500 uppercase tracking-wider">Tenure &amp; Return</span>
                             <span class="text-base sm:text-lg font-black text-slate-800 font-financial-mono">15 Yrs @ 12%</span>
-                            <span class="text-caption text-slate-500">₹38.1L Total Invested</span>
+                            <span class="text-caption text-slate-500">₹38.13L Total Invested</span>
                         </div>
                     </div>
                     <div class="flex flex-col sm:items-end">
                         <span class="text-caption font-bold text-slate-500 uppercase tracking-wider">Expected Future Corpus</span>
-                        <span class="text-base sm:text-lg font-extrabold text-emerald-700 font-financial-mono">₹82.68 Lakhs</span>
-                        <span class="text-caption text-emerald-600 font-bold">+₹44.5L Wealth Gain ✨</span>
+                        <span class="text-base sm:text-lg font-extrabold text-emerald-700 font-financial-mono">₹86.84 Lakhs</span>
+                        <span class="text-caption text-emerald-600 font-bold">+₹48.71L Wealth Gain ✨</span>
                     </div>
                 {% endif %}
             </div>

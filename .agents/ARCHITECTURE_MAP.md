@@ -51,8 +51,8 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 
 | Export Type | HTTP Trigger Route | Backend Controller Action | Core Service / Template | Frontend Orchestrator |
 | :--- | :--- | :--- | :--- | :--- |
-| **PDF Report** | `POST /generate-pdf` | `Controllers\GeneratePdfAction` | `Services\PdfGeneratorService`<br/>`Core\PdfReportTemplate`<br/>`Views/pdf/report.twig`<br/>`Views/pdf/components/*.twig`<br/>`Core\PdfReportStylesheet`<br/>`Core\PdfReportTableBuilder` | `subsystems/ExportSubsystem.ts` (`downloadPdf()`) |
-| **CSV Amortization** | `POST /download-csv` | `Controllers\DownloadCsvAction` | `Services\CsvExportServiceInterface`<br/>(`Services\CsvExportService`) | `subsystems/ExportSubsystem.ts` (`downloadCsv()`) |
+| **PDF Report** | `POST /generate-pdf` | `Controllers\GeneratePdfAction` | `Services\PdfGeneratorService`<br/>`Services\SpecializedReportBuilder`<br/>`Core\PdfReportTemplate`<br/>`Views/pdf/report.twig`<br/>`Views/pdf/components/*.twig`<br/>`Core\PdfReportStylesheet`<br/>`Core\PdfReportTableBuilder` | `subsystems/ExportSubsystem.ts` (`downloadPdf()`) |
+| **CSV Amortization** | `POST /download-csv` | `Controllers\DownloadCsvAction` | `Services\CsvExportServiceInterface`<br/>(`Services\CsvExportService`, `generateDynamic()`)<br/>`Services\SpecializedReportBuilder`<br/>`Core\Math\CagrEngine::generateSchedule()` | `subsystems/ExportSubsystem.ts` (`downloadCsv()`) |
 
 ---
 
@@ -93,9 +93,9 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 - **Invariant:** NEVER inject global JavaScript state (`window.mode = 'sip'`) or scatter state across HTML attributes.
 - **Contract:** PHP injects a single structured tag: `<script type="application/json" id="calculator-app-state">`. TypeScript (`CalculatorApp.ts`) reads and validates this payload on DOM initialization.
 
-### B. Client-Owned Rendering (DOM Output Ownership)
-- **Invariant:** NEVER use PHP/Twig loops (`{% for row in results %}`) to pre-render dynamic calculation tables or charts.
-- **Contract:** PHP renders only empty skeleton targets (e.g. `<tbody id="yearly-breakdown-body">`, `<canvas id="results-chart">`). TypeScript is solely responsible for rendering and updating dynamic DOM output.
+### B. Dual-Phase Hydration & Dynamic DOM Ownership
+- **SSR Initial Hydration:** `RenderHomeAction` and `GuideViewModelBuilder` (with `Core\PurchasingPowerHelper`) pre-compute `initial_kpis`, mode-accurate `initial_telemetry`, and `initial_schedule` (`extractMilestoneRows`) from canonical `calculator_defaults.json` defaults so every calculator route renders zero `--` KPI placeholders and populated mobile milestone cards/lists in raw HTML.
+- **Dynamic Client Ownership:** `CalculatorApp.ts` (and `drivers/*.ts`) owns all post-load recalculations, live chart updates (`<canvas id="results-chart">`), and desktop ledger table rows (`<tbody id="breakdown-body">`). Never replace frontend calculations with AJAX calls.
 
 ### C. Mathematical Engine Rules & Rounding
 - **End-of-Period Timing:** Contributions are added *before* monthly compounding: $B_m = (B_{m-1} + C_m - W_m) \times (1 + r/12)$.
@@ -104,11 +104,13 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 - **Strict Nullness Contract:** Accumulation years must have `swp_monthly: null` and `annual_withdrawal: null`. SWP years must have `sip_monthly: null`. Never emit `0` or `0.0` in place of `null`.
 - **40-Iteration Binary Search:** Goal-seeking solvers (`TargetCorpusStrategy.ts`) run a fixed 40-step binary search to guarantee exact convergence in $<5\text{ms}$ with zero risk of infinite looping.
 
-### D. SEO Metadata & Triple-Schema Contract
-- **Mandatory Schemas:** Every calculator route must output structured JSON-LD schemas: `SoftwareApplication`, `FAQPage`, and contextual `HowTo` (via `SchemaFactory.php` and `HomeSchemaBuilder.php`).
+### D. SEO Metadata, Schema, Deterministic Lastmod & Export Contract
+- **Mandatory Schemas:** Every calculator route outputs `SoftwareApplication`, `FAQPage`, `BreadcrumbList`, and `HowTo` via `SchemaFactory.php` and `HomeSchemaBuilder.php` (using PNG `Organization.logo` at `assets/logo-512.png`). `Article` schema is omitted on `type === 'calculator'` routes, and `/` emits a single `<head>` `WebPage` JSON-LD (with `SpeakableSpecification` `#quick-answer`) via `SchemaFactory::generateForHome()`.
 - **No Self-Served Ratings:** Self-served `AggregateRating` is strictly forbidden to prevent algorithmic suppression of rich results across Google Search Console.
-- **Title Length Limit:** Page `<title>` tags must strictly remain between **10 and 65 characters** (enforced by `tests/Integration/SeoMetadataValidatorTest.php`).
-- **AI Crawlers & Discovery:** `llms.txt` and `llms-full.txt` served from web root; `robots.txt` explicitly allows `GPTBot`, `Google-Extended`, `PerplexityBot`, `ClaudeBot`, `Amazonbot`, `anthropic-ai`, `cohere-ai`, and `OAI-SearchBot`. Disallows phantom paths (`/0.6.10`, `/sipswpcalculator.com`).
+- **Title Length Limit & H1 Decoupling:** Page `<title>` tags must strictly remain between **10 and 65 characters** (enforced by `tests/Integration/SeoMetadataValidatorTest.php`). Frontmatter `h1` optionally decouples hero `<h1>` and breadcrumb labels from SERP `<title>` (e.g. removing `(with Free Excel...)` suffixes).
+- **Deterministic `<lastmod>` & Production-Only Analytics:** `ContentManager::getFileModifiedDate()` resolves frontmatter `updated_at` -> `date` -> `DateConstants::SITE_LAST_UPDATED` fallback (`SitemapGenerator.php` and `RenderHomeAction.php` avoid volatile CI `filemtime()`). `base.twig` gates GA4/Clarity/Ahrefs behind `window.__IS_PROD_HOST__`, and `related-resources.twig` prioritizes same-category posts first.
+- **AI Crawlers, Crawlability & Redirect Consolidation:** `llms.txt` and `llms-full.txt` served from web root; `robots.txt` explicitly allows `GPTBot`, `Google-Extended`, `PerplexityBot`, `ClaudeBot`, `Amazonbot`, `anthropic-ai`, `cohere-ai`, and `OAI-SearchBot`, and leaves legacy redirect paths (`/0.6.10`, `/sipswpcalculator.com`) crawlable so `301` redirects in `content/redirects.json` consolidate authority onto `/`.
+- **Universal Export Fulfillment:** All 17 calculator routes expose Excel (CSV) and PDF exports via `ExportSubsystem.ts` + `Services\SpecializedReportBuilder`.
 
 ### E. Vite & Tailwind CSS v4 Pipeline & CSS Cascade Layers
 - **Tailwind v4 Directive:** Configured exclusively in `resources/css/input.css` (`@theme`, `@source`). Never create `tailwind.config.js`.

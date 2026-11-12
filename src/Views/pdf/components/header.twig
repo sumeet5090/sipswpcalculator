@@ -1,8 +1,8 @@
 <table class="header-table">
     <tr>
         <td>
-            <div class="doc-title">Mutual Fund Investment Plan</div>
-            <div class="doc-subtitle">Personalized Wealth Accumulation &amp; Retirement Strategy</div>
+            <div class="doc-title">{{ doc_title|default('Mutual Fund Investment Plan') }}</div>
+            <div class="doc-subtitle">{{ doc_subtitle|default('Personalized Wealth Accumulation & Retirement Strategy') }}</div>
         </td>
         <td style="text-align: right;">
             {% if logo_base64 %}

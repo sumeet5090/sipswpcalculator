@@ -537,7 +537,7 @@ initWidget();
 <p>Both qualify for Section 80C deduction (₹1.5 lakh). ELSS has a shorter lock-in (3 years vs 15 years) and potentially higher returns (12-15% vs 7.1%). However, ELSS carries market risk. The optimal strategy for most: invest ₹1.5 lakh in PPF (for the guaranteed base) and <em>additional</em> investments in ELSS or non-ELSS equity SIPs. If you can only pick one, and your horizon is 15+ years, ELSS is mathematically superior.</p>
 
 <h3>How much will ₹10,000/month SIP become in 20 years?</h3>
-<p>At 12% annual return: approximately <strong>₹1 crore</strong> (₹99.9 lakh). Total invested: ₹24 lakh. Gains: ~₹76 lakh. With a 10% annual step-up (₹10,000 → ₹11,000 → ₹12,100…), the corpus grows to approximately <strong>₹2.4 crore</strong>. Use our <a href="/#calculator-section">SIP Calculator</a> to model your exact scenario.</p>
+<p>At 12% annual return: approximately <strong>₹1 crore</strong> (₹99.9 lakh). Total invested: ₹24 lakh. Gains: ~₹76 lakh. With a 10% annual step-up (₹10,000 → ₹11,000 → ₹12,100…), the corpus grows to approximately <strong>₹1.99 crore</strong> (₹1,98,88,715). Use our <a href="/sip-calculator">SIP Calculator</a> or <a href="/sip-step-up-calculator">Step-Up SIP Calculator</a> to model your exact scenario.</p>
 
 <h3>Is PPF rate going to increase in 2026?</h3>
 <p>PPF interest rates are set by the Government of India quarterly and are linked to the yield on 10-year government securities. As of early 2026, the rate is 7.1% and has remained stable for several quarters. While small adjustments (±0.25%) are possible, dramatic changes are unlikely in the near term. Even at 7.1%, PPF remains the best risk-free instrument in India when you account for its complete tax-free status.</p>

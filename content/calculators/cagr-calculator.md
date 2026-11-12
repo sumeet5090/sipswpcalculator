@@ -1,6 +1,7 @@
 ---
 og_image: "/assets/og/og-cagr-calculator.jpg"
 title: "CAGR Calculator India (with Free Excel & Inflation Table)"
+h1: "CAGR Calculator India"
 subtitle: "Calculate Compound Annual Growth Rate (CAGR) for mutual funds, stocks, and real estate in India. Free calculator with multiplier breakdowns & downloadable Excel."
 meta_desc: "Calculate Compound Annual Growth Rate (CAGR), absolute returns & wealth multipliers for Indian mutual funds. Model 2026 inflation with free downloadable Excel."
 keywords: "cagr calculator, cagr calculator india, sip cagr calculator, calculate cagr of sip, compound annual growth rate, mutual fund cagr, annualized return calculator"
@@ -8,6 +9,7 @@ schema_name: "CAGR Calculator India — Annualized Return Planner"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-01"
+updated_at: "2026-11-12"
 ---
 
 ---

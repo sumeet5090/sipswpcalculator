@@ -49,6 +49,20 @@ class SchemaFactory
             $schemas[] = $schema;
         }
 
+        // 8. WebPage Schema with Speakable specification (single canonical emission in <head>)
+        $homeUrl = rtrim($this->siteConfig->getUrl('/'), '/') . '/';
+        $schemas[] = (string) json_encode([
+            "@context" => "https://schema.org",
+            "@type" => "WebPage",
+            "name" => $page_config['title'] ?? "SIP SWP Calculator Together — Combined Mutual Fund Planner 2026",
+            "description" => $page_config['meta_desc'] ?? '',
+            "speakable" => [
+                "@type" => "SpeakableSpecification",
+                "cssSelector" => ["#quick-answer"]
+            ],
+            "url" => $homeUrl
+        ], SchemaHelper::JSON_FLAGS);
+
         $html = '';
         foreach ($schemas as $schema) {
             $html .= '<script type="application/ld+json">' . $schema . '</script>' . "\n";
@@ -105,15 +119,17 @@ class SchemaFactory
         ];
         $schemas[] = $this->schemaHelper->getBreadcrumbs($breadcrumbs);
 
-        // 2. Article Schema
-        $schemas[] = $this->schemaHelper->getArticle(
-            $title,
-            $description,
-            $url,
-            $imageUrl,
-            $publishedDate,
-            $actualModifiedDate
-        );
+        // 2. Article Schema (only for editorial articles & static guides, never on interactive calculator routes)
+        if ($type !== 'calculator') {
+            $schemas[] = $this->schemaHelper->getArticle(
+                $title,
+                $description,
+                $url,
+                $imageUrl,
+                $publishedDate,
+                $actualModifiedDate
+            );
+        }
 
         // 3. WebPage Schema
         $schemas[] = $this->schemaHelper->getWebPage(

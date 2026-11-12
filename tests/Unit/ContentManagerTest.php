@@ -99,4 +99,22 @@ MD;
         $this->assertSame($withoutExt['html'], $withExt['html']);
         $this->assertSame($manager->getFileModifiedDate('/extension-test'), $manager->getFileModifiedDate('/extension-test.md'));
     }
+
+    public function testGetFileModifiedDateUsesDeterministicFrontmatterInsteadOfFilemtime(): void
+    {
+        $parsedown = new Parsedown();
+        $manager = new ContentManager($parsedown, $this->tempDir);
+
+        file_put_contents("{$this->tempDir}/updated-priority.md", "---\ntitle: \"A\"\ndate: \"2025-01-15\"\nupdated_at: \"2026-06-20\"\n---\nBody");
+        file_put_contents("{$this->tempDir}/month-year-only.md", "---\ntitle: \"B\"\ndate: \"October 2026\"\n---\nBody");
+        file_put_contents("{$this->tempDir}/no-date.md", "---\ntitle: \"C\"\n---\nBody");
+
+        touch("{$this->tempDir}/updated-priority.md", strtotime('2029-12-31'));
+        touch("{$this->tempDir}/month-year-only.md", strtotime('2029-12-31'));
+        touch("{$this->tempDir}/no-date.md", strtotime('2029-12-31'));
+
+        $this->assertSame('2026-06-20', $manager->getFileModifiedDate('/updated-priority'));
+        $this->assertSame('2026-10-01', $manager->getFileModifiedDate('/month-year-only'));
+        $this->assertSame(\Core\DateConstants::CONTENT_FALLBACK_DATE, $manager->getFileModifiedDate('/no-date'));
+    }
 }

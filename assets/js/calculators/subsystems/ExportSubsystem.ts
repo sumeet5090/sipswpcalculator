@@ -14,6 +14,7 @@ export interface ExportSubsystemConfig {
     chartManager: ChartManager;
     analytics: AnalyticsService;
     getInputs: () => InvestmentInputs;
+    getExportPayload?: () => Record<string, string | number | boolean>;
     getLatestResults: () => YearResult[];
     getActiveGoalMode: () => string;
     getInteractionCount: () => number;
@@ -52,13 +53,15 @@ export class ExportSubsystem {
             this.getLatestResults,
             this.getActiveGoalMode,
             this.getInteractionCount,
-            this.formatter
+            this.formatter,
+            config.getExportPayload
         );
 
         this.csvExportController = new CsvExportController(
             this.dom,
             this.analytics,
-            this.getInputs
+            this.getInputs,
+            config.getExportPayload
         );
 
         this.shareController = new ShareController(

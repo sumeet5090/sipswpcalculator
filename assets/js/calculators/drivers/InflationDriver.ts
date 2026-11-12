@@ -12,10 +12,10 @@ export class InflationDriver implements ISpecializedDriver {
     }
 
     public setupCardLabels(): void {
-        const titleInvested = document.querySelector('#summary-cards-grid > div:nth-child(1) span:nth-child(2)');
-        const subInvested = document.querySelector('#summary-cards-grid > div:nth-child(1) div:last-child');
-        const titleInterest = document.querySelector('#title-interest span:nth-child(2)');
-        const titleCorpus = document.querySelector('#title-corpus span:nth-child(2)');
+        const titleInvested = document.getElementById('title-invested');
+        const subInvested = document.getElementById('subtitle-invested');
+        const titleInterest = document.getElementById('title-interest');
+        const titleCorpus = document.getElementById('title-corpus-text');
 
         if (titleInvested) titleInvested.textContent = "Today's Cost";
         if (subInvested) subInvested.textContent = 'Current Living Expense';

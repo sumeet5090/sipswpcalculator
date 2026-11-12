@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Controllers;
 
 use Core\CurrencyHelper;
+use Core\DateConstants;
 use Core\Factories\SchemaFactory;
 use Core\FaqRepository;
 use Core\Http\Request;
@@ -12,6 +13,7 @@ use Core\Http\Response;
 use Core\InvestmentCalculator;
 use Core\InvestmentInputs;
 use Core\MetaManager;
+use Core\PurchasingPowerHelper;
 use Core\ViewRenderer;
 use Services\ConfigServiceInterface;
 
@@ -56,7 +58,7 @@ class RenderHomeAction
         $homeFaqs = $this->faqRepository->getByTag('home');
         $calcConfig = $this->configService->getCalculatorDefaults();
 
-        $siteModified = $this->viewRenderer->getTemplateModifiedDate('calculators/home');
+        $siteModified = DateConstants::SITE_LAST_UPDATED;
 
         $page_config['additional_head'] = $this->schemaFactory->generateForHome($page_config, $homeFaqs, $siteModified);
 
@@ -71,6 +73,7 @@ class RenderHomeAction
 
         $initialKpis = [];
         $initialSchedule = [];
+        $initialTelemetry = [];
         if (!empty($results)) {
             $lastRow = end($results);
             $totalInvested = (float) $lastRow['cumulative_invested'];
@@ -85,6 +88,8 @@ class RenderHomeAction
             $maturedInvested = (float) $maturedRow['cumulative_invested'];
             $maturedGains = max(0.0, $maturedCorpus - $maturedInvested);
             $maturedGainPct = $maturedInvested > 0 ? (int) round(($maturedGains / $maturedInvested) * 100) : 0;
+
+            $initialTelemetry = PurchasingPowerHelper::buildTelemetry($finalCorpus, $inputs);
 
             $initialKpis = [
                 'is_dual_mode'           => $inputs->isSwpEnabled() && $sipYears > 0,
@@ -139,6 +144,7 @@ class RenderHomeAction
             'weekly_calculations' => $weeklyCalculations,
             'initial_kpis'        => $initialKpis,
             'initial_schedule'    => $initialSchedule,
+            'initial_telemetry'   => $initialTelemetry,
             'related_calculators' => $relatedCalculators,
         ]);
 

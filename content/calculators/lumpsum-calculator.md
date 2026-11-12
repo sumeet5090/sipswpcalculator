@@ -7,6 +7,7 @@ schema_name: "Lumpsum Calculator India — One-Time Investment Returns"
 seo_category: "growth"
 type: "calculator"
 date: "2026-08-01"
+updated_at: "2026-11-12"
 og_image: "/assets/og/og-lumpsum-calculator.jpg"
 ---
 
@@ -14,7 +15,7 @@ og_image: "/assets/og/og-lumpsum-calculator.jpg"
 
 ## The Definitive Guide to Lumpsum Mutual Fund Investing in India (2026 Edition)
 
-> **Direct Answer (BLUF):** A **Lumpsum Investment** deploys your entire capital into a mutual fund scheme on Day 1, allowing 100% of your principal to compound immediately. Historically in India, a ₹10 Lakh one-time investment at an expected 12% equity CAGR grows into **₹17.62 Lakhs in 5 years**, **₹31.06 Lakhs in 10 years**, and **₹96.46 Lakhs (nearly ₹1 Crore) in 20 years**. While a lumpsum mathematically beats a SIP during sustained bull markets, deploying through a Systematic Transfer Plan (STP) over 6–12 months protects against sudden market corrections. Under 2026 Section 112A rules, long-term capital gains (>12 months) are taxed at 12.5% on gains exceeding ₹1.25 Lakh/year.
+> **Direct Answer (BLUF):** A **Lumpsum Investment** deploys your entire capital into a mutual fund scheme on Day 1, allowing 100% of your principal to compound immediately. Historically in India, a ₹10 Lakh one-time investment at an expected 12% equity CAGR grows into **₹17.62 Lakhs in 5 years**, **₹31.06 Lakhs in 10 years**, and **₹96.46 Lakhs (nearly ₹1 Crore) in 20 years**. While a lumpsum mathematically beats a SIP during sustained bull markets, deploying through a Systematic Transfer Plan (STP) over 6–12 months protects against sudden market corrections. Under Section 112A rules, long-term capital gains (>12 months) are taxed at **12.5% base rate (13.0% effective with 4% cess)** on gains exceeding ₹1.25 Lakh/year.
 
 A **Lumpsum Investment** is a single, one-time capital deployment made into a mutual fund scheme, in contrast to recurring periodic contributions made through a Systematic Investment Plan (SIP). Whether arising from an annual corporate performance bonus, maturity proceeds from an ancestral fixed deposit, ESOP (Employee Stock Ownership Plan) liquidation, real estate property sale, or inheritance, a lumpsum investment puts your entire capital pool to work immediately.
 
@@ -292,9 +293,9 @@ Yes. Mutual funds offer total redemption flexibility. You can redeem any arbitra
   </div>
   <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight text-slate-900">Simulate Your One-Time Investment Returns</h2>
   <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Input your available lumpsum capital, set your expected annual CAGR, and test various time horizons. View visual wealth accumulation trajectories and export complete PDF reports instantly.</p>
-  <a href="/#calculator-section"
+  <a href="#calculator-section"
      class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm sm:text-base cursor-pointer">
-    Open Lumpsum Calculator
+    Calculate Lumpsum Growth Now
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
   </a>
 </div>

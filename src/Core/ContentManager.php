@@ -69,7 +69,35 @@ class ContentManager
         if ($fullPath === null || !file_exists($fullPath)) {
             throw new \RuntimeException("Content markdown file missing or unauthorized at: {$path}");
         }
-        return date('Y-m-d', filemtime($fullPath));
+
+        $meta = $this->getMetadataOnly($path) ?? [];
+        $rawDate = $meta['updated_at'] ?? $meta['date'] ?? null;
+
+        if (is_string($rawDate) && trim($rawDate) !== '') {
+            $normalized = $this->normalizeFrontmatterDate(trim($rawDate));
+            if ($normalized !== null) {
+                return $normalized;
+            }
+        }
+
+        return DateConstants::CONTENT_FALLBACK_DATE;
+    }
+
+    private function normalizeFrontmatterDate(string $rawDate): ?string
+    {
+        $formats = ['!Y-m-d', '!d F Y', '!F d, Y', '!Y/m/d', '!F Y', '!M Y', '!Y-m'];
+        foreach ($formats as $fmt) {
+            $parsed = \DateTimeImmutable::createFromFormat($fmt, $rawDate);
+            if ($parsed !== false) {
+                return $parsed->format('Y-m-d');
+            }
+        }
+
+        try {
+            return (new \DateTimeImmutable($rawDate))->format('Y-m-d');
+        } catch (\Throwable) {
+            return null;
+        }
     }
 
     public function getParsedContent(string $path): ?array

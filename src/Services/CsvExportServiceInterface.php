@@ -18,4 +18,12 @@ interface CsvExportServiceInterface
      * @param string $currencySymbol Currency symbol to display in column headers
      */
     public function generate(array $combined, bool $enableSwp, string $currencySymbol = '₹'): string;
+
+    /**
+     * Generate UTF-8 BOM-prefixed CSV content from arbitrary headers and schedule rows.
+     *
+     * @param list<string> $headers
+     * @param list<list<int|float|string>> $rows
+     */
+    public function generateDynamic(array $headers, array $rows): string;
 }

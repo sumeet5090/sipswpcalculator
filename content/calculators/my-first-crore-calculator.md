@@ -1,6 +1,7 @@
 ---
 og_image: "/assets/og/og-my-first-crore-calculator.jpg"
 title: "1 Crore SIP Calculator (with Free Excel & Tax Table)"
+h1: "1 Crore SIP Calculator"
 subtitle: "Find the exact monthly SIP needed to reach ₹1 Crore in 5, 10, 15, or 20 years. Free goal planning calculator with 10% annual step-up compounding & downloadable Excel."
 meta_desc: "Find the exact monthly SIP required to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% step-up compounding & 2026 LTCG tax impacts with free downloadable Excel."
 keywords: "crore calculator, 1 crore in 5 years sip, reach 1 crore sip, how much sip for 1 crore, 1 crore mutual fund calculator, crorepathi sip planner, 1 crore in 10 years sip"
@@ -8,11 +9,12 @@ schema_name: "1 Crore SIP Calculator — Monthly Investment to Reach ₹1 Cr"
 seo_category: "growth"
 type: "calculator"
 date: "2026-08-03"
+updated_at: "2026-11-12"
 ---
 
 ---
 
-> **Direct Answer (BLUF):** Reaching **₹1 Crore** through a mutual fund SIP at an expected 12% equity CAGR requires **₹1,21,232/month for 5 years**, **₹43,041/month for 10 years**, **₹19,819/month for 15 years**, or **₹10,009/month for 20 years**. Activating a **10% annual step-up** slashes your starting commitment significantly: you need **~₹1,02,000/month (5 yrs)**, **₹26,550/month (10 yrs)**, or **₹11,516/month (15 yrs)**. Under 2026 Section 112A rules, long-term capital gains (>12 months) are taxed at 12.5% on profits exceeding ₹1.25 Lakh/year. Use the interactive calculator and downloadable Excel below to simulate custom tenures and inflation-adjusted targets.
+> **Direct Answer (BLUF):** Reaching **₹1 Crore** through a mutual fund SIP at an expected 12% equity CAGR requires **₹1,21,232/month for 5 years**, **₹43,041/month for 10 years**, **₹19,819/month for 15 years**, or **₹10,009/month for 20 years**. Activating a **10% annual step-up** slashes your initial starting commitment to **₹1,01,567/month (5 yrs)**, **₹29,636/month (10 yrs)**, or **₹11,516/month (15 yrs)**. Under Section 112A rules, long-term capital gains (>12 months) are taxed at **12.5% base rate (13.0% effective with 4% cess)** on profits exceeding ₹1.25 Lakh/year. Use the interactive calculator and downloadable Excel below to simulate custom tenures and inflation-adjusted targets.
 
 Accumulating your **first ₹1 Crore** is widely recognized across Indian personal finance as the single most critical psychological and financial milestone. In behavioral economics, this threshold is often described as escaping the "compounding gravitational pull." Because early wealth accumulation relies overwhelmingly on fresh savings out of monthly income, getting from ₹0 to ₹10 Lakhs or ₹1 Crore feels agonizingly slow. However, once an investor crosses the ₹1 Crore threshold, the portfolio generates more annual capital gains than most salaried professionals contribute in an entire year.
 
@@ -56,18 +58,18 @@ Below is the definitive reference matrix showing the exact monthly SIP required 
 
 | Time Horizon | At 10% CAGR (Conservative) | At 12% CAGR (Broad Market Nifty) | At 14% CAGR (Aggressive Mid/Flexi) | At 15% CAGR (High Alpha Growth) |
 | :--- | :--- | :--- | :--- | :--- |
-| **3 Years** | ₹2,38,082 / month | ₹2,30,942 / month | ₹2,24,010 / month | ₹2,20,617 / month |
-| **5 Years** | ₹1,28,067 / month | ₹1,21,232 / month | ₹1,14,714 / month | ₹1,11,544 / month |
-| **7 Years** | ₹81,176 / month | ₹75,178 / month | ₹69,576 / month | ₹66,913 / month |
-| **10 Years** | ₹48,414 / month | ₹43,041 / month | ₹38,206 / month | ₹35,972 / month |
-| **12 Years** | ₹35,528 / month | ₹30,810 / month | ₹26,675 / month | ₹24,792 / month |
-| **15 Years** | ₹23,928 / month | **₹19,819 / month** | ₹16,373 / month | ₹14,841 / month |
-| **20 Years** | ₹13,060 / month | **₹10,009 / month** | ₹7,624 / month | ₹6,664 / month |
-| **25 Years** | ₹7,419 / month | **₹5,270 / month** | ₹3,711 / month | ₹3,114 / month |
-| **30 Years** | ₹4,305 / month | **₹2,833 / month** | ₹1,842 / month | ₹1,480 / month |
+| **3 Years** | ₹2,37,361 / month | ₹2,29,845 / month | ₹2,22,514 / month | ₹2,18,917 / month |
+| **5 Years** | ₹1,28,070 / month | ₹1,21,232 / month | ₹1,14,678 / month | ₹1,11,505 / month |
+| **7 Years** | ₹81,995 / month | ₹75,770 / month | ₹69,918 / month | ₹67,128 / month |
+| **10 Years** | ₹48,414 / month | ₹43,041 / month | ₹38,155 / month | ₹35,886 / month |
+| **12 Years** | ₹35,876 / month | ₹31,032 / month | ₹26,734 / month | ₹24,778 / month |
+| **15 Years** | ₹23,928 / month | **₹19,819 / month** | ₹16,317 / month | ₹14,774 / month |
+| **20 Years** | ₹13,060 / month | **₹10,009 / month** | ₹7,597 / month | ₹6,597 / month |
+| **25 Years** | ₹7,474 / month | **₹5,270 / month** | ₹3,667 / month | ₹3,045 / month |
+| **30 Years** | ₹4,387 / month | **₹2,833 / month** | ₹1,800 / month | ₹1,427 / month |
 
 ### Crucial Strategic Insights from the Matrix
-* **How to Reach ₹1 Crore in 5 Years:** Reaching ₹1 Crore in just 60 months requires an aggressive flat SIP of **₹1,21,232/month** at 12% CAGR. You contribute ₹72.74 Lakhs from your pocket, while compounding generates the remaining ₹27.26 Lakhs. If you utilize a 10% annual Step-Up SIP, you can start with **~₹1,02,000/month** in Year 1, stepping up each year as your salary or business revenues grow.
+* **How to Reach ₹1 Crore in 5 Years:** Reaching ₹1 Crore in just 60 months requires an aggressive flat SIP of **₹1,21,232/month** at 12% CAGR. You contribute ₹72.74 Lakhs from your pocket, while compounding generates the remaining ₹27.26 Lakhs. If you utilize a 10% annual Step-Up SIP, you can start with **₹1,01,567/month** in Year 1, stepping up each year as your salary or business revenues grow.
 * **The 10-Year to 20-Year Horizon Halving:** If you invest over 10 years at 12% CAGR, you need **₹43,041 every single month** (total investment: ₹51.64 Lakhs). By doubling your horizon to 20 years, your required monthly commitment drops by **76.7% to just ₹10,009/month** (total investment: ₹24.02 Lakhs). Giving compounding an extra decade cuts your required out-of-pocket capital by more than half while producing the exact same ₹1 Crore.
 * **The ₹5,000/Month Sweet Spot:** For fresh graduates starting their career at age 22, investing just **₹5,270 per month** in a low-cost Nifty 50 Index Fund or Flexi-Cap Fund compounds into ₹1,00,00,000 by age 47—even if the investment amount is never increased by a single rupee.
 
@@ -114,17 +116,17 @@ When you step up your SIP by 10% annually, your contribution increases in tandem
 
 | Investment Strategy | Initial Starting SIP | Annual Increment | Total Amount Invested | Wealth Gained (Returns) | Final Corpus Accumulated | Milestone Date |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Flat Static SIP** | ₹43,041 / month | 0% (Fixed) | ₹51,64,920 | ₹48,35,080 | **₹1,00,00,000** | Month 120 (10.0 Yrs) |
-| **5% Annual Step-Up** | ₹33,850 / month | +5% every year | ₹51,13,842 | ₹48,86,158 | **₹1,00,00,000** | Month 120 (10.0 Yrs) |
-| **10% Annual Step-Up** | ₹26,550 / month | +10% every year | ₹49,94,832 | ₹50,05,168 | **₹1,00,00,000** | Month 120 (10.0 Yrs) |
-| **15% Annual Step-Up** | ₹20,800 / month | +15% every year | ₹48,15,480 | ₹51,84,520 | **₹1,00,00,000** | Month 120 (10.0 Yrs) |
+| **Flat Static SIP** | ₹43,041 / month | 0% (Fixed) | ₹51,64,920 | ₹48,35,080 | **₹1,00,00,106** | Month 120 (10.0 Yrs) |
+| **5% Annual Step-Up** | ₹35,882 / month | +5% every year | ₹54,15,840 | ₹45,84,267 | **₹1,00,00,107** | Month 120 (10.0 Yrs) |
+| **10% Annual Step-Up** | ₹29,636 / month | +10% every year | ₹56,67,858 | ₹43,32,295 | **₹1,00,00,153** | Month 120 (10.0 Yrs) |
+| **15% Annual Step-Up** | ₹24,279 / month | +15% every year | ₹59,15,448 | ₹40,84,410 | **₹99,99,858** | Month 120 (10.0 Yrs) |
 
 ### The Power of Starting Small
-Notice that with a **10% annual step-up**, you do not need to come up with ₹43,000/month right away. You can start with just **₹26,550/month**—a 38% lower initial burden—and still reach ₹1 Crore at the exact same 10-year mark.
+Notice that with a **10% annual step-up**, you do not need to come up with ₹43,041/month right away. You can start with **₹29,636/month**—a **31% lower initial monthly burden**—and still reach ₹1 Crore at the exact same 10-year mark.
 
 Alternatively, if you commit to a fixed **₹25,000/month starting investment**:
-* A **flat SIP** reaches ₹1 Crore in **13.5 years**.
-* A **10% step-up SIP** reaches ₹1 Crore in **9.8 years**—shaving nearly **4 full years** off your journey!
+* A **flat SIP** reaches ₹1 Crore in **Year 14** (`₹1.09 Crore`).
+* A **10% step-up SIP** reaches ₹1 Crore in **Year 11** (`₹1.03 Crore`)—shaving **3 full years** off your journey!
 
 ---
 
@@ -146,8 +148,8 @@ Indian mutual fund advisors frequently cite two classic benchmark frameworks to 
 * **Annual Step-Up:** 10% each year
 * **Expected Return:** 12% CAGR
 * **Total Invested:** ₹19,12,491
-* **Final Corpus:** **₹38,54,200**
-* While this falls short of ₹1 Crore at Year 10, extending this exact plan for just **4.5 more years (to Year 14.5)** pushes the portfolio straight past **₹1,02,00,000**, on total lifetime contributions of under ₹37 Lakhs.
+* **Final Corpus:** **₹33,74,326 (`₹33.74 Lakhs`)**
+* While this falls short of ₹1 Crore at Year 10, extending this exact plan until **Year 16** pushes the portfolio straight past **₹1,03,20,256 (`₹1.03 Crores`)**, on total lifetime contributions of ₹43.14 Lakhs.
 
 ---
 
@@ -219,9 +221,9 @@ Instead of redeeming your entire ₹1 Crore in one lump sum and paying over ₹8
 
 ### Case Study 1: Priya (Age 24, Software Engineer in Bengaluru)
 * **Financial Goal:** Reach ₹1 Crore by age 34 (10-Year Horizon).
-* **Starting Income:** ₹65,000 / month.
-* **Strategy:** Starting with a fixed ₹43,000/month flat SIP is impossible on her current salary. Instead, Priya starts a **10% Step-Up SIP** with **₹26,550/month** (40% of her salary). As she receives annual salary increments and promotions, her SIP scales to ₹29,205 in Year 2 and ₹32,125 in Year 3.
-* **Outcome:** At an assumed 12% CAGR, Priya crosses **₹1,00,12,000** in Month 119—achieving financial independence in her early thirties without lifestyle deprivation.
+* **Starting Income:** ₹75,000 / month.
+* **Strategy:** Starting with a fixed ₹43,041/month flat SIP is steep on her current salary. Instead, Priya starts a **10% Step-Up SIP** with **₹29,636/month**. As she receives annual salary increments and promotions, her SIP scales to ₹32,600 in Year 2 and ₹35,860 in Year 3.
+* **Outcome:** At an assumed 12% CAGR, Priya reaches **₹1,00,00,153** right at Year 10—achieving her first crore milestone in her early thirties while preserving early-career cash flow.
 
 ### Case Study 2: Rahul & Ananya (Ages 32 & 30, Double Income Family in Mumbai)
 * **Financial Goal:** Build a ₹1 Crore higher education fund for their newborn daughter by age 15 (15-Year Horizon).
@@ -232,8 +234,8 @@ Instead of redeeming your entire ₹1 Crore in one lump sum and paying over ₹8
 ### Case Study 3: Vikram (Age 42, Senior Manager in Hyderabad)
 * **Financial Goal:** Accumulate ₹1 Crore retirement booster corpus in 7 years (Age 49).
 * **Starting Income:** ₹2,50,000 / month.
-* **Strategy:** With a compressed 7-year horizon, compounding has less time to work. At a conservative 11% return, Vikram requires **₹78,500/month**. Because his salary is mature and expenses are stable, he allocates ₹80,000/month into an aggressive hybrid fund and large-cap equity funds.
-* **Outcome:** Over 7 years, Vikram invests ₹67.2 Lakhs. His capital gains add ₹33.8 Lakhs, crossing ₹1.01 Crore right on schedule before entering his final pre-retirement phase.
+* **Strategy:** With a compressed 7-year horizon, compounding has less time to work. At a conservative 11% return, Vikram requires **₹78,835/month**. Because his salary is mature and expenses are stable, he allocates ₹80,000/month into an aggressive hybrid fund and large-cap equity funds.
+* **Outcome:** Over 7 years, Vikram invests ₹67.2 Lakhs. His capital gains add ₹34.2 Lakhs, crossing ₹1.01 Crore right on schedule before entering his final pre-retirement phase.
 
 ---
 
@@ -251,13 +253,13 @@ Even with perfect math, over 80% of investors fail to reach ₹1 Crore because o
 ## Frequently Asked Questions (FAQ)
 
 ### How much monthly SIP is needed to reach ₹1 Crore in 10 years?
-At an assumed average return of **12% CAGR** from equity mutual funds, you need a monthly SIP of **₹43,041** for 10 years (120 months). Over this period, you will invest a total of ₹51,64,920, and your capital gains will contribute ₹48,35,080. If you increase your SIP by 10% each year (Step-Up SIP), your required starting amount drops to **₹26,550/month**.
+At an assumed average return of **12% CAGR** from equity mutual funds, you need a monthly SIP of **₹43,041** for 10 years (120 months). Over this period, you will invest a total of ₹51,64,920, and your capital gains will contribute ₹48,35,186. If you increase your SIP by 10% each year (Step-Up SIP), your required starting amount drops to **₹29,636/month**.
 
 ### How much SIP is required for ₹1 Crore in 15 years?
 At a **12% CAGR**, a monthly SIP of **₹19,819** will accumulate ₹1 Crore in 15 years (180 months). Your total personal investment will be ₹35,67,420, while your compounded market gains will be ₹64,32,580—meaning nearly 65% of your final corpus is generated by compounding returns.
 
 ### Can I reach ₹1 Crore with a ₹5,000 monthly SIP?
-Yes! With a monthly SIP of **₹5,000**, you will reach ₹1 Crore in **25.5 years** at a 12% CAGR (total investment: ₹15.3 Lakhs). However, if you apply a **10% annual step-up** to your ₹5,000 SIP, you will cross ₹1 Crore in just **16.5 years**—shaving 9 full years off your timeline!
+Yes! With a flat monthly SIP of **₹5,000**, you will cross ₹1 Crore in **Year 26** (`₹1.08 Crore`, on ₹15.6 Lakhs invested) at a 12% CAGR. However, if you apply a **10% annual step-up** to your ₹5,000 SIP, you reach **₹99.44 Lakhs at Year 20** and cross **₹1 Crore in Year 21** (`₹1.16 Crore`)—shaving **5 full years** off your timeline!
 
 ### Is a 12% return realistic for equity mutual funds in India?
 Yes. Over rolling 10, 15, and 20-year periods, the Indian equity benchmark index (Nifty 50 TRI) has historically delivered annualized returns between 12% and 14%. While short-term returns fluctuate significantly year to year, a 12% CAGR expectation is a standard, realistic benchmark for long-term Indian mutual fund financial planning.
@@ -266,7 +268,7 @@ Yes. Over rolling 10, 15, and 20-year periods, the Indian equity benchmark index
 The 15x15x15 rule states that investing **₹15,000 per month** for **15 years** at an annualized return of **15%** results in a final wealth corpus of **₹1.01 Crore**. Your total investment of ₹27 Lakhs generates over ₹74.5 Lakhs in compound growth.
 
 ### How much tax will I pay when I withdraw ₹1 Crore from mutual funds?
-Under Section 112A of the Income Tax Act (Finance No. 2 Act, 2024), Long-Term Capital Gains (LTCG) on equity mutual funds held for over 12 months are exempt up to **₹1,25,000 per financial year**. Any gains above this exemption are taxed at a flat rate of **12.5%** plus 4% cess. If you withdraw the entire ₹1 Crore in one lump sum on an initial investment of ₹35 Lakhs, your tax will be approximately **₹8.28 Lakhs**. If you withdraw gradually using an SWP across multiple financial years, you can utilize the ₹1.25 Lakh exemption every year to significantly lower your total tax liability.
+Under Section 112A of the Income Tax Act (Finance No. 2 Act, 2024), Long-Term Capital Gains (LTCG) on equity mutual funds held for over 12 months are exempt up to **₹1,25,000 per financial year**. Any gains above this exemption are taxed at a **12.5% base rate (13.0% effective inclusive of 4% Health & Education Cess)**. If you withdraw the entire ₹1 Crore in one lump sum on an initial investment of ₹35 Lakhs, your tax will be **₹8,28,750** (~₹8.29 Lakhs). If you withdraw gradually using an SWP across multiple financial years, you can utilize the ₹1.25 Lakh exemption every year to significantly lower your total tax liability.
 
 ### What should I do after reaching my first ₹1 Crore?
 Once you hit your first ₹1 Crore milestone:

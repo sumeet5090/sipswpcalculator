@@ -34,8 +34,10 @@ export class PurchasingPowerController {
      * Compute real purchasing power and peace-of-mind score from current state.
      */
     public analyze(nominalCorpus: number, inputs: InvestmentInputs): PurchasingPowerInsight {
-        const years = inputs.years || 1;
-        const inflationRate = Math.max(0, inputs.inflation ?? 6.0);
+        const years = inputs.enable_swp
+            ? Math.max(1, (inputs.years || 0) + (inputs.swp_years || 0))
+            : (inputs.years || 1);
+        const inflationRate = inputs.inflation > 0 ? inputs.inflation : 6.0;
 
         // Real Value PV = FV / (1 + i)^n
         const discountFactor = Math.pow(1 + inflationRate / 100, years);
@@ -45,7 +47,9 @@ export class PurchasingPowerController {
             ? Math.max(0, Math.min(100, Math.round(((nominalCorpus - realValue) / nominalCorpus) * 100)))
             : 0;
 
-        const anchor = this.resolveAnchor(realValue);
+        const anchor = inputs.enable_swp
+            ? this.resolveAnchor(realValue)
+            : this.resolveModeAnchor(realValue, nominalCorpus, inflationRate, years);
         const { score, tier, badgeText } = this.calculatePeaceOfMind(inputs);
 
         return {
@@ -59,6 +63,21 @@ export class PurchasingPowerController {
             resilienceTier: tier,
             resilienceBadgeText: badgeText
         };
+    }
+
+    /**
+     * Resolves mode-accurate accumulation copy when SWP is inactive so SIP/Lumpsum calculators
+     * never display retirement withdrawal prose in the purchasing power telemetry strip.
+     */
+    public resolveModeAnchor(
+        realCorpus: number,
+        nominalCorpus: number,
+        inflationRate: number,
+        effectiveYears: number
+    ): string {
+        const realCompact = this.formatter.formatCompact(realCorpus);
+        const nominalCompact = this.formatter.formatCompact(nominalCorpus);
+        return `At ${inflationRate}% CPI over ${effectiveYears} years, your ${nominalCompact} corpus holds ${realCompact} in today's purchasing power.`;
     }
 
     /**

@@ -6,7 +6,7 @@ tag: "Blueprint"
 tag_color: "emerald"
 featured: false
 date: "July 2026"
-cta_url: "/?sip=6000&years=25&rate=12&stepup=10&utm_source=blog_cta&utm_medium=growth#calculator-section"
+cta_url: "/sip-step-up-calculator?sip=6000&years=25&rate=12&stepup=10"
 ---
 
 ---
@@ -79,7 +79,7 @@ Let's look at the numbers. If you start a **modest SIP** of ₹5,000/month at ag
 *   **With a 10% Annual Step-Up:**
     If you increase your SIP amount by just **10% every year** to match your annual salary raises (from ₹5,000 to ₹5,500 in Year 2, and so on):
     *   Total Invested: ₹98.7 Lakh (gradually increasing as your income grows)
-    *   Total Maturity Value: **₹3.68 Crore!** (Check out the <a href="/my-first-crore-calculator" class="text-emerald-600 font-bold hover:underline">My First Crore Calculator</a> to model your exact timeline.)
+    *   Total Maturity Value: **₹3.68 Crore!** (Check out the <a href="/my-first-crore-calculator" class="text-emerald-600 font-bold hover:underline">1 Crore SIP Calculator</a> to model your exact timeline.)
 
 By stepping up your contributions, you more than **double** your final wealth with minimal friction because the increment mirrors your salary growth.
 

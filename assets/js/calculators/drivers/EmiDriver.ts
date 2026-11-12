@@ -12,10 +12,10 @@ export class EmiDriver implements ISpecializedDriver {
     }
 
     public setupCardLabels(): void {
-        const titleInvested = document.querySelector('#summary-cards-grid > div:nth-child(1) span:nth-child(2)');
-        const subInvested = document.querySelector('#summary-cards-grid > div:nth-child(1) div:last-child');
-        const titleInterest = document.querySelector('#title-interest span:nth-child(2)');
-        const titleCorpus = document.querySelector('#title-corpus span:nth-child(2)');
+        const titleInvested = document.getElementById('title-invested');
+        const subInvested = document.getElementById('subtitle-invested');
+        const titleInterest = document.getElementById('title-interest');
+        const titleCorpus = document.getElementById('title-corpus-text');
 
         if (titleInvested) titleInvested.textContent = 'Loan Amount';
         if (subInvested) subInvested.textContent = 'Principal Borrowed';
@@ -32,8 +32,8 @@ export class EmiDriver implements ISpecializedDriver {
                 cardCorpus.classList.remove('col-span-2', 'sm:col-span-1', 'xl:col-span-1', 'order-first');
                 cardCorpus.classList.add('col-span-1');
             }
-            const titleWithdrawn = cardWithdrawn.querySelector('div:first-child span:last-child');
-            const subWithdrawn = cardWithdrawn.querySelector('div:last-child');
+            const titleWithdrawn = document.getElementById('title-withdrawn');
+            const subWithdrawn = document.getElementById('subtitle-withdrawn');
             if (titleWithdrawn) titleWithdrawn.textContent = 'Total Payment';
             if (subWithdrawn) subWithdrawn.textContent = 'Principal + Interest';
         }

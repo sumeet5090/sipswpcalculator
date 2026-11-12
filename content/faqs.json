@@ -843,7 +843,7 @@
             "sip-5000-per-month"
         ],
         "q": "How much more wealth does a 10% annual step-up create on a ₹5,000 SIP?",
-        "a": "On a flat ₹5,000 monthly SIP for 25 years at 12% CAGR, you invest ₹15 Lakhs and build a corpus of ₹94.88 Lakhs. With a 10% annual step-up (adding just ₹500/month in year 2, ₹550/month in year 3), your total investment increases to ₹59.0 Lakhs, but your final maturity corpus surges to ₹2.37 Crores—generating an extra ₹1.42 Crores in pure compounding gain."
+        "a": "On a flat ₹5,000 monthly SIP for 25 years at 12% CAGR, you invest ₹15 Lakhs and build a corpus of ₹94.88 Lakhs. With a 10% annual step-up (adding ₹500/month in Year 2 and scaling 10% yearly), your total investment increases to ₹59.01 Lakhs, and your final maturity corpus surges to ₹2.14 Crores—generating an extra ₹1.19 Crores in wealth creation."
     },
     {
         "id": "plan-5k-direct-vs-regular",
@@ -863,7 +863,7 @@
             "sip-10000-per-month"
         ],
         "q": "Can I generate a lifetime pension from a ₹10,000 monthly SIP corpus?",
-        "a": "Yes. Investing ₹10,000 per month with a 10% annual step-up for 20 years accumulates approximately ₹1.82 Crores. By parking this corpus into a conservative hybrid or balanced advantage fund and initiating a 6% annual SWP, you can generate a tax-efficient monthly pension of ₹91,000 while preserving your principal corpus against inflation."
+        "a": "Yes. Investing ₹10,000 per month with a 10% annual step-up for 20 years at 12% CAGR accumulates approximately ₹1.99 Crores. By parking this corpus into a conservative hybrid or balanced advantage fund and initiating a 6% annual SWP, you can generate a tax-efficient monthly pension of ₹99,500 while preserving your principal corpus against inflation."
     },
     {
         "id": "plan-10k-lumpsum-combo",

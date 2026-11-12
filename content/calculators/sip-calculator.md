@@ -7,6 +7,7 @@ schema_name: "SIP Calculator India — Mutual Fund SIP Return Planner"
 seo_category: "growth"
 type: "calculator"
 date: "2026-02-25"
+updated_at: "2026-11-12"
 og_image: "/assets/og/og-sip-calculator.jpg"
 ---
 
@@ -14,7 +15,7 @@ og_image: "/assets/og/og-sip-calculator.jpg"
 
 ## The Complete Guide to Systematic Investment Plans (SIP) in India (2026 Edition)
 
-> **Direct Answer (BLUF):** A **Systematic Investment Plan (SIP)** is an automated wealth-building mechanism where an investor deploys a fixed sum monthly into mutual funds. By leveraging **Rupee Cost Averaging** and **monthly geometric compounding**, a ₹10,000 monthly SIP at a historical 12% equity CAGR grows into **₹23.23 Lakhs in 10 years**, **₹50.46 Lakhs in 15 years**, and **₹99.91 Lakhs (nearly ₹1 Crore) in 20 years**. With a 10% annual step-up, that same 20-year corpus doubles to **₹1.99 Crores**. Under 2026 Section 112A tax rules, equity LTCG is exempt up to ₹1.25 Lakh/year and taxed at 12.5% thereafter.
+> **Direct Answer (BLUF):** A **Systematic Investment Plan (SIP)** is an automated wealth-building mechanism where an investor deploys a fixed sum monthly into mutual funds. By leveraging **Rupee Cost Averaging** and **monthly geometric compounding**, a ₹10,000 monthly SIP at a historical 12% equity CAGR grows into **₹23.23 Lakhs in 10 years**, **₹50.46 Lakhs in 15 years**, and **₹99.91 Lakhs (nearly ₹1 Crore) in 20 years**. With a 10% annual step-up, that same 20-year corpus doubles to **₹1.99 Crores**. Under Section 112A tax rules, equity LTCG is exempt up to ₹1.25 Lakh/year and taxed at **12.5% base rate (13.0% effective with 4% cess)** thereafter.
 
 A **Systematic Investment Plan (SIP)** is a disciplined investment methodology that allows individuals to invest a predetermined sum of money into a mutual fund scheme at specified regular intervals—typically monthly, weekly, or quarterly. Rather than attempting to predict short-term equity market fluctuations or deploying irregular lump-sum amounts, a SIP automates wealth accumulation by purchasing fund units across every phase of the market cycle.
 
@@ -155,9 +156,9 @@ A **Step-Up SIP** automatically increments your monthly installment by a fixed p
 | **Starting Monthly SIP (Year 1)** | ₹10,000 | ₹10,000 | ₹10,000 | ₹10,000 |
 | **Final Monthly SIP (Year 20)** | ₹10,000 | ₹25,270 | ₹61,159 | ₹1,42,318 |
 | **Total Principal Invested** | ₹24.00 Lakh | ₹39.68 Lakh | ₹68.73 Lakh | ₹1.23 Crore |
-| **Total Wealth Gain** | ₹75.91 Lakh | ₹97.55 Lakh | ₹1.30 Crore | ₹1.88 Crore |
-| **Terminal Maturity Value** | **₹99.91 Lakh** | **₹1.37 Crore** | **₹1.99 Crore** | **₹3.11 Crore** |
-| **Wealth Multiplier vs Flat SIP** | 1.00x | **1.37x** | **1.99x** | **3.11x** |
+| **Total Wealth Gain** | ₹75.91 Lakh | ₹97.70 Lakh | ₹1.30 Crore | ₹1.80 Crore |
+| **Terminal Maturity Value** | **₹99.91 Lakh** | **₹1.37 Crore** | **₹1.99 Crore** | **₹3.03 Crore** |
+| **Wealth Multiplier vs Flat SIP** | 1.00x | **1.37x** | **1.99x** | **3.03x** |
 
 > **Key Takeaway:** A 10% annual Step-Up on a starting ₹10,000 SIP requires an additional ₹44.73 Lakh in total out-of-pocket savings over 20 years, but delivers nearly **₹1 Crore extra terminal wealth** compared to a flat SIP.
 
@@ -263,7 +264,7 @@ Yes. Once you reach your target wealth goal or retirement age, you can transitio
 <li><a href="/sip-step-up-calculator" class="text-emerald-700 hover:underline font-semibold">Step-Up SIP Calculator</a> — See how 5% to 15% annual increments accelerate your wealth targets</li>
 <li><a href="/swp-calculator" class="text-emerald-700 hover:underline font-semibold">SWP Calculator Guide</a> — Master tax-efficient retirement withdrawals and pension modeling</li>
 <li><a href="/retirement-calculator" class="text-emerald-700 hover:underline font-semibold">Retirement Calculator</a> — Plan your full lifecycle from monthly accumulation to monthly pension</li>
-<li><a href="/my-first-crore-calculator" class="text-emerald-700 hover:underline font-semibold">My First Crore Calculator</a> — Discover the exact monthly SIP required to reach ₹1 Crore</li>
+<li><a href="/my-first-crore-calculator" class="text-emerald-700 hover:underline font-semibold">1 Crore SIP Calculator</a> — Discover the exact monthly SIP required to reach ₹1 Crore</li>
 <li><a href="/lumpsum-calculator" class="text-emerald-700 hover:underline font-semibold">Lumpsum Calculator</a> — Compare SIP growth against one-time capital compounding</li>
 <li><a href="/compound-interest-calculator" class="text-emerald-700 hover:underline font-semibold">Compound Interest Calculator</a> — Model compounding frequency across daily, monthly &amp; annual periods</li>
 <li><a href="/cagr-calculator" class="text-emerald-700 hover:underline font-semibold">CAGR Calculator</a> — Calculate annualized compound returns across mutual funds and stocks</li>
@@ -278,9 +279,9 @@ Yes. Once you reach your target wealth goal or retirement age, you can transitio
   </div>
   <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight text-slate-900">Simulate Your Wealth Projection Now</h2>
   <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Use the interactive slider controls above to model your monthly investment, annual step-up percentage, and expected CAGR. View complete amortization tables and export professional PDF reports instantly.</p>
-  <a href="/#calculator-section"
+  <a href="#calculator-section"
      class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm sm:text-base cursor-pointer">
-    Open SIP &amp; SWP Calculator
+    Calculate My SIP Returns Now
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
   </a>
 </div>

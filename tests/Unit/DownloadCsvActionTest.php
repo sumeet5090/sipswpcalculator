@@ -86,4 +86,35 @@ class DownloadCsvActionTest extends TestCase
         $this->assertStringContainsString('Cumulative Withdrawals (₹)', $body);
         $this->assertStringContainsString('10000000', $body);
     }
+
+    public function testInvokeExportsSpecializedCalculatorsWithModeSpecificHeadersAndFilename(): void
+    {
+        $cagrReq = new Request([], [
+            'calculator_type' => 'cagr',
+            'cagr_initial'    => 100000,
+            'cagr_final'      => 250000,
+            'cagr_years'      => 5,
+            'currency'        => 'INR',
+        ], ['REQUEST_METHOD' => 'POST']);
+
+        $cagrResp = ($this->action)($cagrReq);
+        $this->assertSame(200, $cagrResp->getStatusCode());
+        $this->assertStringContainsString('CAGR_Yearly_Report.csv', $cagrResp->getHeader('Content-Disposition') ?? '');
+        $this->assertStringStartsWith("\xEF\xBB\xBF", $cagrResp->getBody());
+        $this->assertStringContainsString('Begin Value (₹)', $cagrResp->getBody());
+        $this->assertStringContainsString('Compounded Gain (₹)', $cagrResp->getBody());
+
+        $emiReq = new Request([], [
+            'calculator_type' => 'emi',
+            'emi_principal'   => 3000000,
+            'emi_rate'        => 8.5,
+            'emi_years'       => 20,
+            'currency'        => 'INR',
+        ], ['REQUEST_METHOD' => 'POST']);
+
+        $emiResp = ($this->action)($emiReq);
+        $this->assertSame(200, $emiResp->getStatusCode());
+        $this->assertStringContainsString('Loan_EMI_Amortization_Schedule.csv', $emiResp->getHeader('Content-Disposition') ?? '');
+        $this->assertStringContainsString('Monthly EMI (₹)', $emiResp->getBody());
+    }
 }

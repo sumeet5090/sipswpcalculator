@@ -8,15 +8,16 @@ schema_name: "5 Crore SIP Financial Freedom Calculator"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-05"
+updated_at: "2026-11-12"
 ---
 
 ---
 
-> **Direct Answer (BLUF):** Reaching a **₹5 Crore financial freedom corpus** at 12% equity return requires **₹2,15,205/month for 10 years**, **₹99,095/month for 15 years**, or **₹50,045/month for 20 years**. With a **10% annual step-up**, the starting investment drops to **₹58,600/month (15 yrs)** or **₹23,800/month (20 yrs)**. Under the 4% Safe Withdrawal Rule, ₹5 Crores yields a sustainable, perpetual monthly pension of **₹1,66,666/month** without ever depleting your principal.
+> **Direct Answer (BLUF):** Reaching a **₹5 Crore financial freedom corpus** at 12% equity return requires **₹2,15,203/month for 10 years**, **₹99,093/month for 15 years**, or **₹50,043/month for 20 years**. With a **10% annual step-up**, the starting investment drops to **₹57,578/month (15 yrs)** or **₹25,140/month (20 yrs)**. Under the 4% Safe Withdrawal Rule, ₹5 Crores yields a sustainable, perpetual monthly pension of **₹1,66,666/month** without ever depleting your principal.
 
 Accumulating a **₹5 Crore (₹50,000,000)** portfolio represents the ultimate milestone of **Complete Financial Independence and Early Retirement (FIRE)** in India. While ₹1 Crore provides security and milestone validation, in modern urban India (Mumbai, Bengaluru, Delhi-NCR, Hyderabad, Pune), a ₹5 Crore corpus provides generational security: it is large enough to fund lifelong comfortable living, absorb medical emergencies, support premium global education for children, and generate inflation-protected monthly pension cash flows indefinitely without ever eroding the underlying capital.
 
-This comprehensive **₹5 Crore SIP Goal Calculator** is engineered to help ambitious Indian investors map out their multi-decade wealth roadmap. By simulating varying monthly SIP outlays, expected equity market returns (10% to 15% CAGR), annual step-up multipliers, and post-tax net realization under Section 112A (2026 Rules) capital gains laws, this guide provides a realistic, mathematics-backed strategy to turn a salaried income into multi-crore generational wealth.
+This comprehensive **₹5 Crore SIP Goal Calculator** is engineered to help ambitious Indian investors map out their multi-decade wealth roadmap. By simulating varying monthly SIP outlays, expected equity market returns (10% to 15% CAGR), annual step-up multipliers, and post-tax net realization under **Section 112A** (12.5% base LTCG rate; **13.0% effective** inclusive of 4% cess above ₹1.25 Lakh annual exemption), this guide provides a realistic, mathematics-backed strategy to turn a salaried income into multi-crore generational wealth.
 
 ---
 
@@ -61,21 +62,21 @@ Below is the definitive matrix detailing the required monthly SIP to accumulate 
 
 | Investment Horizon | Conservative (10% CAGR) | Balanced Equity (12% CAGR) | Aggressive Growth (14% CAGR) | High Alpha / Small-Cap (15% CAGR) |
 |:---:|:---:|:---:|:---:|:---:|
-| **7 Years (84 mos)** | ₹4,02,207 / mo | ₹3,73,631 / mo | ₹3,47,156 / mo | ₹3,34,567 / mo |
-| **10 Years (120 mos)**| ₹2,42,071 / mo | ₹2,15,205 / mo | ₹1,91,207 / mo | ₹1,80,071 / mo |
-| **12 Years (144 mos)**| ₹1,78,732 / mo | ₹1,54,357 / mo | ₹1,33,148 / mo | ₹1,23,529 / mo |
-| **15 Years (180 mos)**| ₹1,19,642 / mo | ₹99,097 / mo | ₹81,867 / mo | ₹74,209 / mo |
-| **18 Years (216 mos)**| ₹82,858 / mo | ₹65,472 / mo | ₹51,466 / mo | ₹45,562 / mo |
-| **20 Years (240 mos)**| ₹65,302 / mo | ₹50,046 / mo | ₹38,122 / mo | ₹33,220 / mo |
-| **25 Years (300 mos)**| ₹37,098 / mo | ₹26,350 / mo | ₹18,536 / mo | ₹15,487 / mo |
-| **30 Years (360 mos)**| ₹21,935 / mo | ₹14,288 / mo | ₹9,157 / mo | ₹7,298 / mo |
+| **7 Years (84 mos)** | ₹4,09,976 / mo | ₹3,78,848 / mo | ₹3,49,589 / mo | ₹3,35,642 / mo |
+| **10 Years (120 mos)**| ₹2,42,070 / mo | ₹2,15,203 / mo | ₹1,90,773 / mo | ₹1,79,432 / mo |
+| **12 Years (144 mos)**| ₹1,79,378 / mo | ₹1,55,158 / mo | ₹1,33,671 / mo | ₹1,23,890 / mo |
+| **15 Years (180 mos)**| ₹1,19,639 / mo | ₹99,093 / mo | ₹81,586 / mo | ₹73,870 / mo |
+| **18 Years (216 mos)**| ₹82,567 / mo | ₹65,322 / mo | ₹51,260 / mo | ₹45,279 / mo |
+| **20 Years (240 mos)**| ₹65,300 / mo | ₹50,043 / mo | ₹37,984 / mo | ₹32,983 / mo |
+| **25 Years (300 mos)**| ₹37,372 / mo | ₹26,349 / mo | ₹18,333 / mo | ₹15,225 / mo |
+| **30 Years (360 mos)**| ₹21,936 / mo | ₹14,165 / mo | ₹8,998 / mo | ₹7,133 / mo |
 
 ```
 Monthly Commitment to Reach ₹5 Crores (@ 12% CAGR):
-₹2,15,205 / mo ──► 10 Years (Senior Executives & Business Owners)
-  ₹99,097 / mo ──► 15 Years (Dual-Income Tech/Corporate Households)
-  ₹50,046 / mo ──► 20 Years (Mid-Career Professionals)
-  ₹26,350 / mo ──► 25 Years (Young Professionals in 20s)
+₹2,15,203 / mo ──► 10 Years (Senior Executives & Business Owners)
+  ₹99,093 / mo ──► 15 Years (Dual-Income Tech/Corporate Households)
+  ₹50,043 / mo ──► 20 Years (Mid-Career Professionals)
+  ₹26,349 / mo ──► 25 Years (Young Professionals in 20s)
 ```
 
 ---
@@ -109,13 +110,13 @@ By starting with an accessible monthly commitment (such as ₹25,000) and increa
 
 ### Comparison: Starting at ₹25,000/Month (@ 12% CAGR over 25 Years)
 
-| Strategy | Monthly Outlay | Total Capital Invested | Portfolio Value at Year 25 | Years to Reach ₹5 Crores |
+| Strategy | Monthly Outlay | Total Capital Invested | Portfolio Value at Year 25 | Milestone Year (₹5 Cr) |
 |:---|:---:|:---:|:---:|:---:|
-| **Flat Static SIP** | Fixed ₹25,000/mo | ₹75,00,000 | ₹4,74,40,782 | 25.5 Years |
-| **10% Annual Step-Up** | Starts ₹25,000, steps up 10%/yr | ₹2,95,04,242 | **₹10,65,58,040** | **19.8 Years (5.7 Years Saved!)** |
-| **15% Annual Step-Up** | Starts ₹25,000, steps up 15%/yr | ₹6,35,82,600 | **₹17,89,45,210** | **17.1 Years (8.4 Years Saved!)** |
+| **Flat Static SIP** | Fixed ₹25,000/mo | ₹75,00,000 | ₹4,74,40,877 | **Year 26** (₹5.38 Cr) |
+| **10% Annual Step-Up** | Starts ₹25,000, steps up 10%/yr | ₹2,95,04,118 | **₹10,68,88,653** | **Year 21 (~5 Years Saved!)** |
+| **15% Annual Step-Up** | Starts ₹25,000, steps up 15%/yr | ₹6,38,37,905 | **₹18,14,37,893** | **Year 18 (~8 Years Saved!)** |
 
-By stepping up your investment by 10% annually, you reach ₹5 Crores in **under 20 years**, while accumulating over **₹10.6 Crores by Year 25**—more than double the flat SIP outcome!
+By stepping up your investment by 10% annually, you cross ₹5 Crores in **Year 21** (versus Year 26 flat), while accumulating **₹10.69 Crores by Year 25**—more than double the flat SIP outcome!
 
 ---
 
@@ -149,26 +150,26 @@ To build and sustain a ₹5 Crore corpus over a 15 to 20-year horizon, your inve
 
 ---
 
-## 6. 2026 LTCG Capital Gains Tax Rulesation on a ₹5 Crore Corpus
+## 6. Section 112A LTCG Taxation on a ₹5 Crore Corpus
 
-Under the revised Section 112A provisions of the Indian Income Tax Act (effective July 23, 2024):
-* **Long-Term Capital Gains (LTCG)** exceeding **₹1.25 Lakhs per financial year** are taxed at **12.5% flat** (plus 4% cess, for an effective rate of 13.0%).
-* **Short-Term Capital Gains (STCG)** are taxed at **20% flat**.
+Under the revised Section 112A provisions of the Indian Income Tax Act (Finance (No. 2) Act, 2024):
+* **Long-Term Capital Gains (LTCG)** exceeding **₹1.25 Lakhs per financial year** are taxed at a **12.5% base rate** (**13.0% effective** inclusive of 4% Health & Education Cess).
+* **Short-Term Capital Gains (STCG)** are taxed at **20% flat** (plus cess).
 
 ### Post-Tax Reality of Liquidating a ₹5 Crore Portfolio:
-Assume an investor reaches ₹5,00,00,000 over a 20-year SIP of ₹50,046/month @ 12% CAGR:
+Assume an investor reaches ₹5,00,00,000 over a 20-year SIP of ₹50,043/month @ 12% CAGR:
 
 ```
 Gross Portfolio Value at Target:           ₹ 5,00,00,000
-Minus Total Capital Invested (Principal): -₹ 1,20,11,040
+Minus Total Capital Invested (Principal): -₹ 1,20,10,320
 ────────────────────────────────────────────────────────
-Gross Long-Term Capital Gains (LTCG):       ₹ 3,79,88,960
+Gross Long-Term Capital Gains (LTCG):       ₹ 3,79,89,680
 Minus Annual Section 112A Exemption:       -₹   1,25,000
 ────────────────────────────────────────────────────────
-Taxable Long-Term Capital Gains:            ₹ 3,78,63,960
-Net LTCG Tax Payable (@ 12.5% + Cess):     -₹  49,22,315
+Taxable Long-Term Capital Gains:            ₹ 3,78,64,680
+Net LTCG Tax Payable (@ 12.5% base + 4% Cess = 13.0%): -₹  49,22,408
 ────────────────────────────────────────────────────────
-FINAL TAKE-HOME WEALTH IN BANK:             ₹ 4,50,77,685
+FINAL TAKE-HOME WEALTH IN BANK:             ₹ 4,50,77,592
 ```
 
 ### Strategic Tax Preservation: Never Liquidate All at Once!

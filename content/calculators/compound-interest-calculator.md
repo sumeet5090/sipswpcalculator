@@ -1,6 +1,7 @@
 ---
 og_image: "/assets/og/og-compound-interest-calculator.jpg"
 title: "Compound Interest Calculator (with Free Excel & Tax Table)"
+h1: "Compound Interest Calculator India"
 subtitle: "Calculate compound interest returns with annual, quarterly, and monthly compounding frequencies. Free calculator with Rule of 72 doubling timelines & downloadable Excel."
 meta_desc: "Calculate compound interest across monthly & annual frequencies. Model Rule of 72 doubling timelines & 2026 tax with free downloadable Excel cashflow table."
 keywords: "compound interest calculator, ci calculator india, compounding calculator, rule of 72 calculator, monthly compounding calculator, investment compounding"
@@ -8,6 +9,7 @@ schema_name: "Compound Interest Calculator India — Monthly & Annual Growth"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-01"
+updated_at: "2026-11-12"
 ---
 
 ---
@@ -141,9 +143,9 @@ To visualize the compounding "hockey-stick" curve, examine how a lump sum invest
 | **Year 3** | ₹10,00,000 | ₹14,04,928 | ₹14,25,761 | ₹14,30,769 | **$1.43\times$** |
 | **Year 5** | ₹10,00,000 | ₹17,62,342 | ₹18,06,111 | ₹18,16,697 | **$1.82\times$** |
 | **Year 10** | ₹10,00,000 | ₹31,05,848 | ₹32,62,038 | ₹33,00,387 | **$3.30\times$** |
-| **Year 15** | ₹10,00,000 | ₹54,73,566 | ₹58,91,601 | ₹59,95,744 | **$6.00\times$** |
-| **Year 20** | ₹10,00,000 | ₹96,46,293 | ₹1,06,40,891 | ₹1,08,92,553 | **$10.89\times$** |
-| **Year 25** | ₹10,00,000 | ₹1,70,00,064 | ₹1,92,18,632 | ₹1,97,80,188 | **$19.78\times$** |
+| **Year 15** | ₹10,00,000 | ₹54,73,566 | ₹58,91,601 | ₹59,95,802 | **$6.00\times$** |
+| **Year 20** | ₹10,00,000 | ₹96,46,293 | ₹1,06,40,891 | ₹1,08,92,554 | **$10.89\times$** |
+| **Year 25** | ₹10,00,000 | ₹1,70,00,064 | ₹1,92,18,632 | ₹1,97,88,466 | **$19.79\times$** |
 | **Year 30** | ₹10,00,000 | ₹2,99,59,922 | ₹3,47,10,987 | ₹3,59,49,641 | **$35.95\times$** |
 
 ### The Critical Takeaway: The Back-Loaded Nature of Compounding
@@ -229,12 +231,12 @@ Over 30 years, an investor in the regular plan surrenders **over ₹62 Lakh**—
 ### Case Study 1: The Early Starter (Arun) vs. The Late Saver (Varun)
 To understand why starting early outweighs investing large sums later:
 
-*   **Arun (Starts at Age 22):** Invests ₹10,000 per month for **10 years** (Age 22 to 32), then stops completely. Total invested: ₹12,00,000. He leaves the corpus compounding at 12% until retirement at Age 60 (28 more years of pure compounding).
-*   **Varun (Starts at Age 32):** Waits 10 years, then invests ₹10,000 per month continuously for **28 years** (Age 32 to 60). Total invested: ₹33,60,000.
+*   **Arun (Starts at Age 22):** Invests ₹10,000 per month for **10 years** (Age 22 to 32) at **12% p.a. compounded monthly**, then stops completely. Total invested: ₹12,00,000. He leaves his ₹23,23,391 corpus compounding at 12% nominal p.a. (compounded monthly, 12.68% EAR) until retirement at Age 60 (28 more years of pure compounding).
+*   **Varun (Starts at Age 32):** Waits 10 years, then invests ₹10,000 per month continuously for **28 years** (Age 32 to 60) at 12% nominal p.a. (compounded monthly). Total invested: ₹33,60,000.
 
-#### The Results at Age 60:
-*   **Arun's Final Corpus:** ₹23.23 Lakh at age 32 grows to **₹5.54 Crore** at age 60.
-*   **Varun's Final Corpus:** Continuous SIP over 28 years reaches **₹2.67 Crore** at age 60.
+#### The Results at Age 60 (Monthly Compounding @ 12% Nominal):
+*   **Arun's Final Corpus:** ₹23.23 Lakh at age 32 grows to **₹6.58 Crore** (`₹6,57,81,518`) at age 60 *(or ₹5.55 Crore under annual compounding)*.
+*   **Varun's Final Corpus:** Continuous SIP over 28 years reaches **₹2.76 Crore** (`₹2,75,85,847`) at age 60.
 
 Even though Varun invested **nearly three times more capital** (₹33.6L vs ₹12L), Arun accumulated **more than double the retirement corpus** simply because his capital enjoyed an extra decade of compounding. Time in the market reliably beats timing or contribution volume.
 

@@ -11,4 +11,5 @@ namespace Core;
 class DateConstants
 {
     public const CONTENT_FALLBACK_DATE = '2026-03-01';
+    public const SITE_LAST_UPDATED = '2026-11-12';
 }

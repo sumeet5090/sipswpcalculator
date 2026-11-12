@@ -12,6 +12,7 @@
     <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-400/8 rounded-full blur-3xl pointer-events-none"></div>
 
     <form method="post" novalidate id="calculator-form" class="relative z-10 flex flex-col flex-1 min-h-0 space-y-2 xl:space-y-3" onsubmit="event.preventDefault();">
+        <input type="hidden" id="calculator_type" name="calculator_type" value="{{ calculator_type|default('combo') }}">
         <!-- SECURITY: Honeypot field (hidden from real users, catches bots) -->
         <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
             <label for="website_url">Leave this field empty</label>

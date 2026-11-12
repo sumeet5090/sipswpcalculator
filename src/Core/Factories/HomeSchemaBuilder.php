@@ -39,8 +39,13 @@ class HomeSchemaBuilder
             "@context" => "https://schema.org",
             "@id" => $baseUrl . "/#calculator",
             "@type" => "SoftwareApplication",
-            "name" => $page_config['schema_name'] ?? "Advanced SIP & SWP Calculator",
-            "alternateName" => ["SIP Calculator", "SWP Calculator", "Step-Up SIP Calculator", "Mutual Fund SIP Calculator", "SIP Return Calculator", "SWP Retirement Planner"],
+            "name" => $page_config['schema_name'] ?? "SIP + SWP Calculator Together",
+            "alternateName" => [
+                "SIP and SWP Calculator Together",
+                "SIP Plus SWP Calculator",
+                "Combined SIP SWP Retirement Calculator",
+                "SIP with SWP Combo Planner"
+            ],
             "url" => $baseUrl . "/",
             "applicationCategory" => "FinanceApplication",
             "applicationSubCategory" => "Investment Calculator",
@@ -85,8 +90,8 @@ class HomeSchemaBuilder
             "@context" => "https://schema.org",
             "@id" => $baseUrl . "/#financialproduct",
             "@type" => "FinancialProduct",
-            "name" => "SIP & SWP Investment Planning Tool",
-            "alternateName" => "Mutual Fund SIP Return Calculator",
+            "name" => "SIP & SWP Combined Lifecycle Planning Tool",
+            "alternateName" => "Combined SIP & SWP Retirement Planning Tool",
             "description" => "Free financial planning tool for calculating Systematic Investment Plan (SIP) returns with annual step-up compounding and Systematic Withdrawal Plan (SWP) retirement income projections.",
             "url" => $baseUrl . "/",
             "provider" => ["@id" => $baseUrl . "/#organization"],
@@ -143,7 +148,7 @@ class HomeSchemaBuilder
             "url" => $baseUrl . "/",
             "logo" => [
                 "@type" => "ImageObject",
-                "url" => $baseUrl . "/assets/favicon.svg",
+                "url" => $baseUrl . "/assets/logo-512.png",
                 "width" => 512,
                 "height" => 512
             ],

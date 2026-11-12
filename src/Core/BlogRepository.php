@@ -109,7 +109,7 @@ class BlogRepository
      */
     public function parsePostDate(string $rawDate): \DateTimeImmutable
     {
-        $formats = ['F Y', 'Y-m-d', 'd F Y', 'Y-m', 'M Y', 'F d, Y', 'Y/m/d'];
+        $formats = ['!F Y', '!Y-m-d', '!d F Y', '!Y-m', '!M Y', '!F d, Y', '!Y/m/d'];
         foreach ($formats as $fmt) {
             $parsed = \DateTimeImmutable::createFromFormat($fmt, trim($rawDate));
             if ($parsed !== false) {

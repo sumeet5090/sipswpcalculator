@@ -1,5 +1,5 @@
 {# Related Resources Component
-   Displays cross-category related posts to strengthen internal linking and reader discovery.
+   Displays same-category related posts first to strengthen topical silos, backfilling cross-category if needed.
    Expected variables:
      - all_posts: array of all blog posts (from BlogRepository::getAllPosts)
      - seo_category: current post's category slug (growth, retirement, comparison)
@@ -9,18 +9,18 @@
 {% set current_href = current_href|default(request.server('REQUEST_URI', '/')) %}
 {% set current_cat = seo_category|default(category|default('')) %}
 
-{# Related Resources — cross-category posts for internal link equity #}
+{# Related Resources — prioritize same-category topical silos first #}
 {% if all_posts is defined and all_posts is not empty %}
     {% set related = [] %}
     {% for post in all_posts %}
         {% set post_cat = post.seo_category|default(post.category|default('')) %}
-        {# Pick posts from OTHER categories, excluding the current post #}
-        {% if post_cat != current_cat and post.href != current_href and related|length < 3 %}
+        {# Pass 1: Pick posts from the SAME category first to build deep topical authority #}
+        {% if post_cat == current_cat and post.href != current_href and related|length < 3 %}
             {% set related = related|merge([post]) %}
         {% endif %}
     {% endfor %}
 
-    {# If we didn't get 3 from other categories, fill with same-category posts #}
+    {# Pass 2: Backfill with cross-category posts only if fewer than 3 same-category posts exist #}
     {% if related|length < 3 %}
         {% for post in all_posts %}
             {% if post.href != current_href and post not in related and related|length < 3 %}

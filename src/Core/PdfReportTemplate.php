@@ -61,14 +61,19 @@ class PdfReportTemplate implements PdfTemplateInterface
         $chart_base64 = (string) ($inputs['chart_base64'] ?? '');
         $custom_disclaimer = (string) ($inputs['custom_disclaimer'] ?? '');
 
-        $multiplier = self::calculateMultiplier(
-            (float) ($inputs['raw_invested'] ?? 0),
-            (float) ($inputs['raw_corpus'] ?? 0),
-            (float) ($inputs['raw_withdrawn'] ?? 0)
-        );
+        $multiplier = isset($inputs['multiplier_override'])
+            ? (string) $inputs['multiplier_override']
+            : self::calculateMultiplier(
+                (float) ($inputs['raw_invested'] ?? 0),
+                (float) ($inputs['raw_corpus'] ?? 0),
+                (float) ($inputs['raw_withdrawn'] ?? 0)
+            );
 
-        $proposal_id = 'SWP-' . strtoupper(substr(md5($client_name . date('Y-m-d')), 0, 8));
-        $has_swp = ((int) ($inputs['swp_years'] ?? 0) > 0 || (float) ($inputs['swp_withdrawal'] ?? 0) > 0);
+        $proposalPrefix = (string) ($inputs['proposal_prefix'] ?? 'SWP-');
+        $proposal_id = $proposalPrefix . strtoupper(substr(md5($client_name . date('Y-m-d')), 0, 8));
+        $has_swp = array_key_exists('has_swp', $inputs)
+            ? (bool) $inputs['has_swp']
+            : ((int) ($inputs['swp_years'] ?? 0) > 0 || (float) ($inputs['swp_withdrawal'] ?? 0) > 0);
         $sym = (string) ($inputs['currency_symbol'] ?? '₹');
 
         if (!empty($inputs['combined_results']) && is_array($inputs['combined_results'])) {
@@ -86,7 +91,9 @@ class PdfReportTemplate implements PdfTemplateInterface
             : '25%';
 
         $disclaimerText = $custom_disclaimer ?: "Mutual fund investments are subject to market risks. Read all scheme-related documents carefully before investing. Past performance is not an indicator of future returns. Projections generated in this report are for illustrative financial planning purposes only.";
-        $hasInflationCallout = ($sym === '₹' || $sym === 'INR');
+        $hasInflationCallout = array_key_exists('has_inflation_callout', $inputs)
+            ? (bool) $inputs['has_inflation_callout']
+            : ($sym === '₹' || $sym === 'INR');
 
         $configData = [
             'sym' => $sym,
@@ -109,11 +116,21 @@ class PdfReportTemplate implements PdfTemplateInterface
             'corpus' => (string) ($inputs['summary_corpus'] ?? '0'),
         ];
 
+        $kpiLabels = array_merge([
+            'invested' => 'Total Invested',
+            'returns' => 'Est. Returns',
+            'withdrawn' => 'Total Withdrawn',
+            'corpus' => 'Final Corpus',
+            'multiplier' => 'Wealth Multiplier',
+        ], is_array($inputs['kpi_labels'] ?? null) ? $inputs['kpi_labels'] : []);
+
         $viewData = [
             'client_name' => $client_name,
             'advisor_name' => $advisor_name,
             'date_str' => date('d M Y'),
             'proposal_id' => $proposal_id,
+            'doc_title' => (string) ($inputs['doc_title'] ?? 'Mutual Fund Investment Plan'),
+            'doc_subtitle' => (string) ($inputs['doc_subtitle'] ?? 'Personalized Wealth Accumulation & Retirement Strategy'),
             'logo_base64' => $inputs['logo_base64'] ?? null,
             'chart_base64' => $chart_base64,
             'multiplier' => $multiplier,
@@ -121,7 +138,10 @@ class PdfReportTemplate implements PdfTemplateInterface
             'styles' => $styles,
             'table_html' => $table_html,
             'kpis' => $kpis,
+            'kpi_labels' => $kpiLabels,
             'config' => $configData,
+            'config_badge' => (string) ($inputs['config_badge'] ?? ''),
+            'config_rows' => is_array($inputs['config_rows'] ?? null) ? $inputs['config_rows'] : [],
             'milestones' => $milestones,
             'milestone_col_width' => $milestoneColWidth,
             'has_inflation_callout' => $hasInflationCallout,

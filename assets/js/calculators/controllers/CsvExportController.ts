@@ -11,15 +11,18 @@ export class CsvExportController {
     private dom: DOMAdapter;
     private analytics: AnalyticsService;
     private getInputs: () => InvestmentInputs;
+    private getExportPayload?: () => Record<string, string | number | boolean>;
 
     constructor(
         dom: DOMAdapter,
         analytics: AnalyticsService,
-        getInputs: () => InvestmentInputs
+        getInputs: () => InvestmentInputs,
+        getExportPayload?: () => Record<string, string | number | boolean>
     ) {
         this.dom = dom;
         this.analytics = analytics;
         this.getInputs = getInputs;
+        this.getExportPayload = getExportPayload;
     }
 
     init(): void {
@@ -37,9 +40,12 @@ export class CsvExportController {
 
             try {
                 const inputs = this.getInputs();
+                const exportPayload: Record<string, unknown> = this.getExportPayload
+                    ? this.getExportPayload()
+                    : { ...inputs };
                 const formData = new FormData();
 
-                Object.entries(inputs).forEach(([key, val]) => {
+                Object.entries(exportPayload).forEach(([key, val]) => {
                     if (val !== undefined && val !== null) {
                         formData.append(key, String(val));
                     }

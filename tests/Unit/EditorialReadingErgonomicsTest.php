@@ -149,9 +149,10 @@ final class EditorialReadingErgonomicsTest extends TestCase
         );
 
         $this->assertStringContainsString('target_cta_href', $interactiveCta);
-        $this->assertStringContainsString('utm_source=blog_cta&utm_medium=growth#calculator-section', $interactiveCta);
-        $this->assertStringContainsString('utm_source=blog_cta&utm_medium=retirement', $interactiveCta);
-        $this->assertStringContainsString('utm_source=blog_cta&utm_medium=comparison#calculator-section', $interactiveCta);
+        $this->assertStringContainsString('/sip-step-up-calculator?sip=10000&years=15&rate=12&stepup=10', $interactiveCta);
+        $this->assertStringContainsString('/swp-calculator?corpus=10000000&swp_withdrawal=50000&swp_years=30&swp_rate=8&swp_stepup=5', $interactiveCta);
+        $this->assertStringContainsString('/sip-calculator?sip=10000&years=10&rate=12', $interactiveCta);
+        $this->assertStringNotContainsString('utm_source=', $interactiveCta);
         $this->assertStringContainsString('href="{{ target_cta_href }}"', $interactiveCta);
 
         $genericPostLayout = (string) file_get_contents(
@@ -160,6 +161,7 @@ final class EditorialReadingErgonomicsTest extends TestCase
 
         $this->assertStringContainsString('post_cta_url', $genericPostLayout);
         $this->assertStringContainsString('post_dock_cta_url', $genericPostLayout);
+        $this->assertStringNotContainsString('utm_source=', $genericPostLayout);
         $this->assertStringContainsString('href="{{ post_dock_cta_url }}"', $genericPostLayout);
         $this->assertStringContainsString('cta_url: post_cta_url', $genericPostLayout);
     }

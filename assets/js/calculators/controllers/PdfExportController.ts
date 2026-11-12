@@ -13,6 +13,7 @@ export class PdfExportController {
     private getActiveGoalMode: () => string;
     private getInteractionCount: () => number;
     private formatter: CurrencyFormatter;
+    private getExportPayload?: () => Record<string, string | number | boolean>;
 
     constructor(
         dom: DOMAdapter,
@@ -22,7 +23,8 @@ export class PdfExportController {
         getLatestResults: () => YearResult[],
         getActiveGoalMode: () => string,
         getInteractionCount: () => number,
-        formatter: CurrencyFormatter = new CurrencyFormatter()
+        formatter: CurrencyFormatter = new CurrencyFormatter(),
+        getExportPayload?: () => Record<string, string | number | boolean>
     ) {
         this.dom = dom;
         this.chartManager = chartManager;
@@ -32,6 +34,7 @@ export class PdfExportController {
         this.getActiveGoalMode = getActiveGoalMode;
         this.getInteractionCount = getInteractionCount;
         this.formatter = formatter;
+        this.getExportPayload = getExportPayload;
     }
 
     init(): void {
@@ -161,21 +164,28 @@ export class PdfExportController {
 
         const formData = customFormData || new FormData();
         const currentInputs = this.getInputs();
+        const exportPayload = this.getExportPayload ? this.getExportPayload() : {};
 
         if (!formData.has('clientName')) formData.append('clientName', 'Valued Investor');
         if (!formData.has('advisorName')) formData.append('advisorName', '');
 
-        formData.append('sip', String(currentInputs.sip));
-        formData.append('years', String(currentInputs.years));
-        formData.append('rate', String(currentInputs.rate));
-        formData.append('stepup', String(currentInputs.stepup));
-        formData.append('lumpsum', String(currentInputs.lumpsum));
-        formData.append('inflation', String(currentInputs.inflation));
-        formData.append('enable_swp', currentInputs.enable_swp ? '1' : '0');
-        formData.append('swp_withdrawal', String(currentInputs.swp_withdrawal));
-        formData.append('swp_stepup', String(currentInputs.swp_stepup));
-        formData.append('swp_years', String(currentInputs.swp_years));
-        formData.append('swp_rate', String(currentInputs.swp_rate));
+        Object.entries(exportPayload).forEach(([key, val]) => {
+            if (!formData.has(key) && val !== undefined && val !== null) {
+                formData.append(key, String(val));
+            }
+        });
+
+        if (!formData.has('sip')) formData.append('sip', String(currentInputs.sip));
+        if (!formData.has('years')) formData.append('years', String(currentInputs.years));
+        if (!formData.has('rate')) formData.append('rate', String(currentInputs.rate));
+        if (!formData.has('stepup')) formData.append('stepup', String(currentInputs.stepup));
+        if (!formData.has('lumpsum')) formData.append('lumpsum', String(currentInputs.lumpsum));
+        if (!formData.has('inflation')) formData.append('inflation', String(currentInputs.inflation));
+        if (!formData.has('enable_swp')) formData.append('enable_swp', currentInputs.enable_swp ? '1' : '0');
+        if (!formData.has('swp_withdrawal')) formData.append('swp_withdrawal', String(currentInputs.swp_withdrawal));
+        if (!formData.has('swp_stepup')) formData.append('swp_stepup', String(currentInputs.swp_stepup));
+        if (!formData.has('swp_years')) formData.append('swp_years', String(currentInputs.swp_years));
+        if (!formData.has('swp_rate')) formData.append('swp_rate', String(currentInputs.swp_rate));
 
         formData.append('currency_symbol', this.formatter.getSymbol());
         formData.append('currency', this.formatter.getCurrency());
@@ -203,11 +213,20 @@ export class PdfExportController {
 
             const blob = await res.blob();
             const clientNameClean = (formData.get('clientName') || 'Plan').toString().trim().replace(/[^a-zA-Z0-9_\-]/g, '_').replace(/_+/g, '_') || 'Plan';
+            let filename = `Financial_Report_for_${clientNameClean}.pdf`;
+            const disposition = res.headers.get('Content-Disposition');
+            if (disposition && disposition.includes('filename=')) {
+                const match = disposition.match(/filename="?([^";]+)"?/);
+                if (match && match[1]) {
+                    filename = match[1].trim();
+                }
+            }
+
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = `Financial_Report_for_${clientNameClean}.pdf`;
+            a.download = filename;
             document.body.appendChild(a);
             a.click();
             a.remove();

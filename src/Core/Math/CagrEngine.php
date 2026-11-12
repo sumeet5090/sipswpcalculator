@@ -61,4 +61,41 @@ final class CagrEngine
             'multiplier' => round($multiplier, 4)
         ];
     }
+
+    /**
+     * Build year-by-year compounded trajectory matching the client-side CagrDriver schedule.
+     *
+     * @return list<array{
+     *     year: int,
+     *     begin_balance: float,
+     *     annual_contribution: float,
+     *     cumulative_invested: float,
+     *     interest: float,
+     *     closing_balance: float
+     * }>
+     */
+    public function generateSchedule(float $beginningValue, float $endingValue, float $years): array
+    {
+        $res = $this->calculate($beginningValue, $endingValue, $years);
+        $fullYears = max(1, (int) ceil($years));
+        $annualRate = $res['cagr_percentage'] / 100.0;
+        $prevVal = $beginningValue;
+        $schedule = [];
+
+        for ($yr = 1; $yr <= $fullYears; $yr++) {
+            $tFrac = min((float) $yr, $years);
+            $currentVal = round($beginningValue * pow(1.0 + $annualRate, $tFrac));
+            $schedule[] = [
+                'year' => $yr,
+                'begin_balance' => round($prevVal, 2),
+                'annual_contribution' => $yr === 1 ? round($beginningValue, 2) : 0.0,
+                'cumulative_invested' => round($beginningValue, 2),
+                'interest' => round($currentVal - $prevVal, 2),
+                'closing_balance' => $currentVal,
+            ];
+            $prevVal = $currentVal;
+        }
+
+        return $schedule;
+    }
 }

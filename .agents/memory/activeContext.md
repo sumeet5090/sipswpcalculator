@@ -1,11 +1,25 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-11*
+*Last Updated: 2026-11-12*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Slot 1B Progressive Seed Capital Disclosure (`Initial Lumpsum`), Unified Solid-White Studio/Ledger Workbench (`in_studio`), & Mobile Honeypot Keyboard Traversal Fix Complete and Verified Across Viewports.
+- **Current Milestone:** Comprehensive SEO Remediation (Phases 1–3) — P0 Crawl/De-Cannibalization/Analytics Hygiene, P1 Full SSR Hydration & Internal Link Graph + Deterministic `<lastmod>`, P2 Universal Excel/PDF Fulfillment, Schema Cleanup & 100% Mathematical Engine Parity Across Guides Complete.
+- **Implemented Features & Fixes (2026-11-12 Session 32 - SEO Phase 1–3 Implementation):**
+  - **P0 — Redirect Consolidation, Home De-Cannibalization & Production Analytics Gate:**
+    - Unblocked `/0.6.10` and `/sipswpcalculator.com` in `robots.txt` so `301` redirects in `content/redirects.json` consolidate ranking equity onto `/`.
+    - Scoped `HomeSchemaBuilder.php`, `content/meta_pages.json`, and `src/Views/components/guide-definitions.twig` on `/` strictly to Dual SIP+SWP lifecycle planning; removed internal `utm_*` parameters and re-routed `growth`/`comparison` blog CTAs in `interactive-cta-banner.twig`, `generic-post.twig`, and blog markdown away from `/#calculator-section`.
+    - Gated GA4 (`G-C3P1ZCY6GR`), Clarity, and Ahrefs in `src/Views/layouts/base.twig` behind `window.__IS_PROD_HOST__`, and added `reach-5-crore-via-sip`, `sip-5000-per-month`, `sip-10000-per-month` to `is_calculator_route`.
+  - **P1 — Full SSR Hydration (`GuideViewModelBuilder`), Internal Link Graph & Deterministic `<lastmod>`:**
+    - Pre-computed `initial_kpis`, `initial_schedule`, and mode-accurate `initial_telemetry` (`Core\PurchasingPowerHelper`) in `GuideViewModelBuilder.php` across all 16 standalone calculator routes (eliminating `₹ --` placeholders and hardcoded SWP telemetry copy in `chart-visualization.twig`); removed mobile `line-clamp-3` on intro paragraphs in `calculator-guide.twig`.
+    - Fixed remaining `/#calculator-section` authority leaks across markdown/Twig CTAs and breadcrumbs; exposed all 17 calculators across `header.twig` (fixing nested `<nav>`), `calculator-dock.twig`, `footer.twig`, `resources.twig`, and `content/calculator_links.json`; prioritized same-category posts first in `related-resources.twig`.
+    - Replaced volatile `filemtime()` calls in `ContentManager::getFileModifiedDate()`, `SitemapGenerator.php`, and `RenderHomeAction.php` with deterministic frontmatter `updated_at` -> `date` -> `Core\Config\DateConstants::SITE_LAST_UPDATED`.
+  - **P2 — Universal CSV/PDF Export Fulfillment, Schema Fixes & Mathematical Engine Parity:**
+    - Generated 512×512 PNG `assets/logo-512.png` for `Organization.logo` (`HomeSchemaBuilder.php`, `SchemaHelper.php`).
+    - Forwarded `h1`, `schema_name`, and `updated_at` in `MetaManager.php`; emitted a single `<head>` `WebPage` JSON-LD on `/` via `SchemaFactory::generateForHome()`; omitted `Article` schema on `calculator` routes; decoupled hero `<h1>` and breadcrumb labels from `<title>`.
+    - Enabled Excel (CSV) and PDF exports across all calculator modes (`compound_interest`, `cagr`, `emi`, `inflation`, `ppf`, `fd`, `sip`, `swp`, `lumpsum`, `combo`) via `Services\SpecializedReportBuilder`, `CagrEngine::generateSchedule()`, `CsvExportService::generateDynamic()`, `DownloadCsvAction`, `GeneratePdfAction`, `PdfReportTemplate`, and `ExportSubsystem.ts` drivers.
+    - Audited and reconciled 100% of static prose & benchmark tables across `content/calculators/*.md`, `content/faqs.json`, `sip-stepup-comparison.twig`, and `interactive-cta-banner.twig` strictly against `InvestmentCalculator.php` and `Core\Math\*Engine`, plus unified Section 112A wording (`12.5% base rate; 13.0% effective inclusive of 4% cess above ₹1.25L/yr`).
 - **Implemented Features & Fixes (2026-11-11 Session 31 - Slot 1B Progressive Lumpsum Disclosure & `in_studio` Studio/Ledger Fusion):**
   - **Slot 1B Initial Lumpsum Progressive Disclosure (`sip-fields.twig`, `lumpsum-fields.twig`, `input-range-pair.twig`, `LumpsumDisclosureController.ts`):**
     - Moved `lumpsum-fields.twig` directly below `#sip_container` (`Monthly SIP`) and above `Period (Yrs)` (`'id': 'years'`) inside isolated `group/field` hover scopes so hovering `Monthly SIP` never reveals `Initial Lumpsum` presets.

@@ -19,7 +19,7 @@ class InflationStrategy extends BaseStrategy
         $defaults = $this->configService->getCalculatorDefaults();
         $amount = (float) ($defaults['inf_amount']['default'] ?? 50000.0);
         $rate = (float) ($defaults['inf_rate']['default'] ?? 6.0);
-        $years = (int) ($defaults['inf_years']['default'] ?? 10);
+        $years = (int) ($defaults['inf_years']['default'] ?? 15);
 
         return new InflationInputs($amount, $rate, $years);
     }

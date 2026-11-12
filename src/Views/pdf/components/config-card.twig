@@ -1,7 +1,19 @@
 <div class="section-heading">Strategy Parameters &amp; Allocation</div>
 <div class="config-card">
     <table class="config-table">
-        {% if has_swp %}
+        {% if config_rows is defined and config_rows is not empty %}
+            <tr>
+                <th colspan="4"><span class="phase-badge sip">{{ config_badge|default('Calculation Parameters') }}</span></th>
+            </tr>
+            {% for row in config_rows %}
+            <tr>
+                <th>{{ row.l1 }}</th>
+                <td>{{ row.v1 }}</td>
+                <th>{{ row.l2 }}</th>
+                <td>{{ row.v2 }}</td>
+            </tr>
+            {% endfor %}
+        {% elseif has_swp %}
             <tr>
                 <th colspan="2"><span class="phase-badge sip">Phase 1: Accumulation (SIP)</span></th>
                 <th colspan="2"><span class="phase-badge swp">Phase 2: Retirement Income (SWP)</span></th>

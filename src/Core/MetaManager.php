@@ -99,13 +99,16 @@ class MetaManager
         }
 
         return [
-            'title' => $title,
-            'meta_desc' => $desc,
-            'keywords' => $metadata['keywords'] ?? '',
-            'canonical' => $canonical,
-            'og_title' => $title,
-            'og_desc' => $desc,
-            'og_image' => $ogImage,
+            'title'       => $title,
+            'h1'          => $metadata['h1'] ?? null,
+            'schema_name' => $metadata['schema_name'] ?? null,
+            'updated_at'  => $metadata['updated_at'] ?? null,
+            'meta_desc'   => $desc,
+            'keywords'    => $metadata['keywords'] ?? '',
+            'canonical'   => $canonical,
+            'og_title'    => $title,
+            'og_desc'     => $desc,
+            'og_image'    => $ogImage,
         ];
     }
 

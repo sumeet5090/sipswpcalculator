@@ -8,11 +8,12 @@ schema_name: "Target Corpus Calculator — Goal SIP Calculator India"
 seo_category: "growth"
 type: "calculator"
 date: "2026-08-24"
+updated_at: "2026-11-12"
 ---
 
 ---
 
-> **Direct Answer (BLUF):** A **Target Corpus Calculator** reverse-engineers the exact monthly SIP required to achieve a future financial milestone (e.g. ₹1 Crore or ₹5 Crores). Using the inverse annuity-due formula at a 12% equity return, reaching **₹1 Crore in 15 years requires ₹20,017/month (flat)** or **₹11,516/month with an annual 10% step-up**, cutting your required starting investment by nearly 42%.
+> **Direct Answer (BLUF):** A **Target Corpus Calculator** reverse-engineers the exact monthly SIP required to achieve a future financial milestone (e.g. ₹1 Crore or ₹5 Crores). Using the inverse annuity-due formula at a 12% nominal annual return (1%/month), reaching **₹1 Crore in 15 years requires ₹19,819/month (flat)** or **₹11,516/month with an annual 10% step-up**, cutting your required starting investment by ~42%.
 
 Every major life milestone in India—purchasing a residential apartment, funding overseas undergraduate education, orchestrating a child's wedding, or securing a fully self-sustaining retirement nest egg—demands an explicit **Target Corpus**. Most personal finance tools take an investment amount (e.g., ₹10,000/month) and project an arbitrary future value. However, goal-based financial planning works in reverse: you define the future capital required, the exact target date, and your risk tolerance, and reverse-engineer the precise monthly contribution needed to meet that commitment with mathematical certainty.
 
@@ -57,24 +58,24 @@ Below is the definitive reference table illustrating the required monthly SIP ac
 
 | Target Corpus | 3 Years Horizon | 5 Years Horizon | 7 Years Horizon | 10 Years Horizon | 15 Years Horizon | 20 Years Horizon | 25 Years Horizon |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **₹10 Lakhs** | ₹23,094 / mo | ₹12,123 / mo | ₹7,518 / mo | ₹4,304 / mo | ₹1,982 / mo | ₹1,001 / mo | ₹527 / mo |
-| **₹25 Lakhs** | ₹57,736 / mo | ₹30,308 / mo | ₹18,795 / mo | ₹10,760 / mo | ₹4,955 / mo | ₹2,502 / mo | ₹1,318 / mo |
-| **₹50 Lakhs** | ₹1,15,471 / mo | ₹60,616 / mo | ₹37,589 / mo | ₹21,520 / mo | ₹9,910 / mo | ₹5,005 / mo | ₹2,635 / mo |
-| **₹1 Crore** | ₹2,30,942 / mo | ₹1,21,232 / mo | ₹75,178 / mo | ₹43,041 / mo | ₹19,819 / mo | ₹10,009 / mo | ₹5,270 / mo |
-| **₹2 Crores** | ₹4,61,884 / mo | ₹2,42,464 / mo | ₹1,50,356 / mo | ₹86,082 / mo | ₹39,638 / mo | ₹20,018 / mo | ₹10,540 / mo |
-| **₹5 Crores** | ₹11,54,710 / mo | ₹6,06,160 / mo | ₹3,75,890 / mo | ₹2,15,205 / mo | ₹99,095 / mo | ₹50,045 / mo | ₹26,350 / mo |
-| **₹10 Crores** | ₹23,09,420 / mo | ₹12,12,320 / mo | ₹7,51,780 / mo | ₹4,30,410 / mo | ₹1,98,190 / mo | ₹1,00,090 / mo | ₹52,700 / mo |
+| **₹10 Lakhs** | ₹22,984 / mo | ₹12,123 / mo | ₹7,577 / mo | ₹4,304 / mo | ₹1,982 / mo | ₹1,001 / mo | ₹527 / mo |
+| **₹25 Lakhs** | ₹57,461 / mo | ₹30,308 / mo | ₹18,942 / mo | ₹10,760 / mo | ₹4,955 / mo | ₹2,502 / mo | ₹1,317 / mo |
+| **₹50 Lakhs** | ₹1,14,922 / mo | ₹60,616 / mo | ₹37,885 / mo | ₹21,520 / mo | ₹9,909 / mo | ₹5,004 / mo | ₹2,635 / mo |
+| **₹1 Crore** | ₹2,29,845 / mo | ₹1,21,232 / mo | ₹75,770 / mo | ₹43,041 / mo | ₹19,819 / mo | ₹10,009 / mo | ₹5,270 / mo |
+| **₹2 Crores** | ₹4,59,689 / mo | ₹2,42,464 / mo | ₹1,51,539 / mo | ₹86,081 / mo | ₹39,637 / mo | ₹20,017 / mo | ₹10,539 / mo |
+| **₹5 Crores** | ₹11,49,223 / mo | ₹6,06,161 / mo | ₹3,78,848 / mo | ₹2,15,203 / mo | ₹99,093 / mo | ₹50,043 / mo | ₹26,349 / mo |
+| **₹10 Crores** | ₹22,98,447 / mo | ₹12,12,322 / mo | ₹7,57,696 / mo | ₹4,30,405 / mo | ₹1,98,186 / mo | ₹1,00,085 / mo | ₹52,697 / mo |
 
 ### High-Alpha vs. Conservative Return Sensitivity Matrix (10-Year Horizon)
 Market returns are not static. To ensure your goal planning remains resilient under diverse market conditions, the matrix below highlights how your required monthly deposit changes for a **10-Year Horizon** under varying CAGRs:
 
 | Target Corpus | At 8% CAGR (Debt/Conservative) | At 10% CAGR (Large-Cap / Hybrid) | At 12% CAGR (Broad Market Index) | At 14% CAGR (Aggressive Flexi/Mid) | At 15% CAGR (High Growth Alpha) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **₹25 Lakhs** | ₹13,674 / mo | ₹12,104 / mo | **₹10,760 / mo** | ₹9,551 / mo | ₹8,993 / mo |
-| **₹50 Lakhs** | ₹27,348 / mo | ₹24,207 / mo | **₹21,520 / mo** | ₹19,103 / mo | ₹17,986 / mo |
-| **₹1 Crore** | ₹54,696 / mo | ₹48,414 / mo | **₹43,041 / mo** | ₹38,206 / mo | ₹35,972 / mo |
-| **₹2 Crores** | ₹1,09,392 / mo | ₹96,828 / mo | **₹86,082 / mo** | ₹76,412 / mo | ₹71,944 / mo |
-| **₹5 Crores** | ₹2,73,480 / mo | ₹2,42,070 / mo | **₹2,15,205 / mo** | ₹1,91,030 / mo | ₹1,79,860 / mo |
+| **₹25 Lakhs** | ₹13,575 / mo | ₹12,103 / mo | **₹10,760 / mo** | ₹9,539 / mo | ₹8,972 / mo |
+| **₹50 Lakhs** | ₹27,149 / mo | ₹24,207 / mo | **₹21,520 / mo** | ₹19,077 / mo | ₹17,943 / mo |
+| **₹1 Crore** | ₹54,299 / mo | ₹48,414 / mo | **₹43,041 / mo** | ₹38,155 / mo | ₹35,886 / mo |
+| **₹2 Crores** | ₹1,08,598 / mo | ₹96,828 / mo | **₹86,081 / mo** | ₹76,309 / mo | ₹71,773 / mo |
+| **₹5 Crores** | ₹2,71,495 / mo | ₹2,42,070 / mo | **₹2,15,203 / mo** | ₹1,90,773 / mo | ₹1,79,432 / mo |
 
 ---
 
@@ -149,14 +150,14 @@ The matrix below outlines the exact monthly SIP required to build education corp
 
 | Education Milestone | Cost Today | Future Target Needed (with 10% inflation) | Child's Current Age (Horizon) | Flat Monthly SIP Needed | Starting SIP with 10% Annual Step-Up | Total Out-of-Pocket Savings (with Step-Up) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Private Engineering / Medical (India)** | ₹25,00,000 | **₹64,84,000** | Age 8 (10 Years) | **₹27,908 / mo** | **₹17,215 / mo** | ₹32.4 Lakhs |
-| **Premier Indian MBA (IIM / Top B-School)** | ₹30,00,000 | **₹95,17,000** | Age 5 (13 Years) | **₹25,836 / mo** | **₹13,912 / mo** | ₹34.1 Lakhs |
-| **Overseas Undergraduate (4 Years US/UK)** | ₹80,00,000 | **₹2,51,00,000** | Age 4 (14 Years) | **₹58,418 / mo** | **₹30,120 / mo** | ₹79.9 Lakhs |
-| **Overseas STEM Master's Degree (US/Canada)** | ₹60,00,000 | **₹1,55,62,000** | Age 8 (10 Years) | **₹66,979 / mo** | **₹41,290 / mo** | ₹77.7 Lakhs |
+| **Private Engineering / Medical (India)** | ₹25,00,000 | **₹64,84,000** | Age 8 (10 Years) | **₹27,907 / mo** | **₹19,216 / mo** | ₹36.75 Lakhs |
+| **Premier Indian MBA (IIM / Top B-School)** | ₹30,00,000 | **₹95,17,000** | Age 5 (13 Years) | **₹25,316 / mo** | **₹15,695 / mo** | ₹46.19 Lakhs |
+| **Overseas Undergraduate (4 Years US/UK)** | ₹80,00,000 | **₹2,51,00,000** | Age 4 (14 Years) | **₹57,514 / mo** | **₹34,503 / mo** | ₹1.16 Crores |
+| **Overseas STEM Master's Degree (US/Canada)** | ₹60,00,000 | **₹1,55,62,000** | Age 8 (10 Years) | **₹66,980 / mo** | **₹46,119 / mo** | ₹88.20 Lakhs |
 
 ### Key Takeaways for Education Planning:
-1. **Start at Child's Birth:** If you begin investing when your child is born (18-year horizon), reaching a ₹1 Crore education corpus requires just **₹13,060/month** (flat) or **₹5,820/month** with a 10% annual step-up. Waiting until age 10 cuts the horizon to 8 years, increasing the required monthly SIP by **3.5x to over ₹45,000/month**.
-2. **Step-Up Bridges the Salary Gap:** A starting parent earning ₹80,000/month cannot allocate ₹28,000 immediately to education SIPs. A 10% annual step-up enables starting at **₹17,215/month**, scaling comfortably as annual increments arrive.
+1. **Start at Child's Birth:** If you begin investing when your child is born (18-year horizon), reaching a ₹1 Crore education corpus requires just **₹13,064/month** (flat) or **₹6,937/month** with a 10% annual step-up. Waiting until age 10 cuts the horizon to 8 years, increasing the required monthly SIP by **over 4.7x to ₹61,910/month (flat)**.
+2. **Step-Up Bridges the Salary Gap:** A starting parent earning ₹80,000/month cannot allocate ₹28,000 immediately to education SIPs. A 10% annual step-up enables starting at **₹19,216/month**, scaling comfortably as annual increments arrive.
 3. **Currency Buffer for Foreign Degrees:** If planning an international degree, allocate 20%–30% of the SIP portfolio into global feeder funds or US equity index funds (e.g. S&P 500 / Nasdaq 100) to naturally hedge against Rupee depreciation.
 
 ---
@@ -176,13 +177,13 @@ By committing to increase your monthly investment by 5%, 10%, or 15% each year a
 │ Strategy          │ Starting SIP (Yr 1│ Total Amount Contributed        │
 ├───────────────────┼───────────────────┼─────────────────────────────────┤
 │ Flat Fixed SIP    │ ₹21,520 / month   │ ₹25,82,400 (51.6% of goal)      │
-│ 5% Annual Step-Up │ ₹16,925 / month   │ ₹25,56,921 (51.1% of goal)      │
-│ 10% Annual Step-Up│ ₹13,275 / month   │ ₹24,97,416 (49.9% of goal)      │
-│ 15% Annual Step-Up│ ₹10,400 / month   │ ₹24,07,740 (48.1% of goal)      │
+│ 5% Annual Step-Up │ ₹17,941 / month   │ ₹27,07,920 (54.2% of goal)      │
+│ 10% Annual Step-Up│ ₹14,818 / month   │ ₹28,33,929 (56.7% of goal)      │
+│ 15% Annual Step-Up│ ₹12,140 / month   │ ₹29,57,846 (59.2% of goal)      │
 └───────────────────┴───────────────────┴─────────────────────────────────┘
 ```
 
-Notice the tremendous leverage: with a **10% annual step-up**, your starting requirement drops from **₹21,520/month to just ₹13,275/month**—a **38.3% immediate reduction** in cash-flow pressure!
+Notice the tremendous leverage: with a **10% annual step-up**, your starting requirement drops from **₹21,520/month to ₹14,818/month**—a **31.1% immediate reduction** in cash-flow pressure!
 
 ---
 
@@ -240,19 +241,19 @@ For example, if you accumulate **₹1,00,00,000** over 15 years with a total con
 ### Case Study 1: Rohan (Age 28) — Down Payment for a 3BHK in Pune
 * **Goal:** Accumulate a ₹30 Lakh down payment in 6 Years.
 * **Strategy:** Rohan allocates his investment into an aggressive hybrid fund (65% equity, 35% debt) targeting a **10.5% CAGR**.
-* **Calculator Output:** A flat SIP requires **₹30,120/month**. Instead, Rohan chooses an **8% annual step-up**, starting with **₹24,200/month**.
-* **Outcome:** Rohan comfortably manages his initial rent and savings commitments. At Year 6, his portfolio hits **₹30,45,000**, enabling him to secure his home loan at prime lending rates.
+* **Calculator Output:** A flat SIP requires **₹29,826/month**. Instead, Rohan chooses an **8% annual step-up**, starting with **₹24,972/month**.
+* **Outcome:** Rohan comfortably manages his initial rent and savings commitments. At Year 6, his portfolio hits **₹30,00,007**, enabling him to secure his home loan at prime lending rates.
 
 ### Case Study 2: Dr. Meera (Age 36) — Son's Medical Education Fund
 * **Goal:** Build an inflated target corpus of ₹85 Lakhs in 11 Years.
 * **Strategy:** With an 11-year runway, Dr. Meera chooses a diversified equity basket (50% Flexi-Cap, 30% Large-Cap, 20% Mid-Cap) targeting a **12.5% CAGR**.
-* **Calculator Output:** Required starting deposit is **₹27,850/month** with a **10% annual step-up**.
-* **Outcome:** At Year 8, Dr. Meera initiates a monthly STP into liquid funds to lock in her gains. By Year 11, the tuition fund reaches **₹87,10,000**, unaffected by minor market corrections.
+* **Calculator Output:** Required starting deposit is **₹19,975/month** with a **10% annual step-up**.
+* **Outcome:** At Year 8, Dr. Meera initiates a monthly STP into liquid funds to lock in her gains. By Year 11, the tuition fund reaches **₹85,00,000**, unaffected by minor market corrections.
 
 ### Case Study 3: Sandeep & Kavita (Age 42 & 40) — Early Retirement Booster (FIRE)
 * **Goal:** Reach a supplemental ₹2 Crore corpus in 8 Years.
-* **Strategy:** Because both partners earn established senior corporate salaries, they deploy an aggressive **₹1,32,000/month** combined SIP at an assumed **12% CAGR**.
-* **Outcome:** Their total lifetime investment of ₹1.26 Crores compounds by an additional ₹76.8 Lakhs in capital gains, reaching **₹2.03 Crores** right as Sandeep turns 50, providing the financial runway to transition to advisory consulting.
+* **Strategy:** Because both partners earn established senior corporate salaries, they deploy a **₹1,23,819/month** combined SIP at an assumed **12% CAGR**.
+* **Outcome:** Their total lifetime investment of ₹1.19 Crores compounds by an additional ₹81.1 Lakhs in capital gains, reaching **₹2.00 Crores** right as Sandeep turns 50, providing the financial runway to transition to advisory consulting.
 
 ---
 
@@ -265,16 +266,16 @@ A Target Corpus Calculator is a goal-seek financial tool that reverse-engineers 
 When an annual step-up percentage is applied, contributions increase dynamically every 12 months, creating a piecewise compounding equation that cannot be solved with a simple fraction. Our engine uses an iterative **binary search algorithm** that tests candidate installment amounts until it converges on the starting monthly SIP with precision down to ₹0.01.
 
 ### How much SIP is required to build a target corpus of ₹50 Lakhs in 10 years?
-At an assumed average return of **12% CAGR** from equity mutual funds, you need a monthly SIP of **₹21,520** for 10 years. Total personal investment will be ₹25,82,400, and compounding returns will add ₹24,17,600. If you use a **10% annual step-up**, your starting investment drops to just **₹13,275/month**.
+At an assumed average return of **12% CAGR** from equity mutual funds, you need a monthly SIP of **₹21,520** for 10 years. Total personal investment will be ₹25,82,400, and compounding returns will add ₹24,17,537. If you use a **10% annual step-up**, your starting investment drops to **₹14,818/month**.
 
 ### Should I include inflation in my target corpus?
-Yes, absolutely. Inflation continuously reduces purchasing power over time. If a child's college education costs ₹25 Lakhs today, at 10% annual education inflation, the same degree will cost over **₹65 Lakhs in 10 years**. Always input the **future inflated cost** into the calculator rather than today's price tag.
+Yes, absolutely. Inflation continuously reduces purchasing power over time. If a child's college education costs ₹25 Lakhs today, at 10% annual education inflation, the same degree will cost over **₹64.8 Lakhs in 10 years**. Always input the **future inflated cost** into the calculator rather than today's price tag.
 
 ### What rate of return should I assume for a 5-year target corpus?
 For a 5-year horizon, assuming an aggressive 14%–15% return is dangerous because equity markets can experience multi-year consolidation phases. A prudent, conservative assumption for a 5-year timeline is **10% to 11% CAGR**, utilizing a balanced advantage or large-cap oriented mutual fund portfolio.
 
-### How does the 2024 capital gains tax affect my target corpus?
-Under Section 112A of the Income Tax Act (Finance No. 2 Act, 2024), long-term capital gains on equity mutual funds held for over 12 months are taxed at **12.5%** on gains exceeding **₹1,25,000 per financial year**. To ensure you receive your full target amount in hand after redemption, you should increase your target corpus by approximately 7% to 9% to cover future tax liabilities.
+### How does Section 112A capital gains tax affect my target corpus?
+Under Section 112A of the Income Tax Act (Finance No. 2 Act, 2024), long-term capital gains on equity mutual funds held for over 12 months are taxed at a **12.5% base rate (13.0% effective with 4% cess)** on gains exceeding **₹1,25,000 per financial year**. To ensure you receive your full target amount in hand after redemption, you should increase your target corpus by approximately 7% to 9% to cover future tax liabilities.
 
 ### What is the difference between a Target Corpus Calculator and a regular SIP Calculator?
 A regular SIP calculator takes your monthly deposit and projects what it will grow to in the future (Forward Simulation). A Target Corpus Calculator takes your final financial goal and tells you how much you need to save each month to get there (Reverse Goal-Seeking).

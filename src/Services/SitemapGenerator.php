@@ -6,8 +6,8 @@ namespace Services;
 
 use Core\BlogRepository;
 use Core\ContentManager;
+use Core\DateConstants;
 use Core\SiteConfig;
-use Core\ViewRenderer;
 
 /**
  * SitemapGenerator
@@ -18,20 +18,17 @@ class SitemapGenerator implements SitemapGeneratorInterface
     private BlogRepository $blogRepository;
     private SiteConfig $siteConfig;
     private array $routesConfig;
-    private ViewRenderer $viewRenderer;
     private ContentManager $contentManager;
 
     public function __construct(
         BlogRepository $blogRepository,
         SiteConfig $siteConfig,
         array $routesConfig,
-        ViewRenderer $viewRenderer,
         ContentManager $contentManager
     ) {
         $this->blogRepository = $blogRepository;
         $this->siteConfig = $siteConfig;
         $this->routesConfig = $routesConfig;
-        $this->viewRenderer = $viewRenderer;
         $this->contentManager = $contentManager;
     }
 
@@ -50,7 +47,7 @@ class SitemapGenerator implements SitemapGeneratorInterface
         // 1. Home Page
         $urls[] = [
             'loc' => $baseUrl . '/',
-            'lastmod' => $this->viewRenderer->getTemplateModifiedDate('calculators/home'),
+            'lastmod' => DateConstants::SITE_LAST_UPDATED,
             'changefreq' => 'weekly',
             'priority' => '1.0',
             'image' => [
@@ -113,7 +110,7 @@ class SitemapGenerator implements SitemapGeneratorInterface
         // 4. Resources Index
         $urls[] = [
             'loc' => $baseUrl . '/resources',
-            'lastmod' => $this->viewRenderer->getTemplateModifiedDate('pages/resources'),
+            'lastmod' => DateConstants::SITE_LAST_UPDATED,
             'changefreq' => 'weekly',
             'priority' => '0.7',
             'image' => [
@@ -128,8 +125,7 @@ class SitemapGenerator implements SitemapGeneratorInterface
                 continue;
             }
 
-            $slug = ltrim($path, '/');
-            $lastmod = $this->viewRenderer->getTemplateModifiedDate('pages/' . $slug);
+            $lastmod = DateConstants::SITE_LAST_UPDATED;
             $priority = is_array($config) && isset($config['priority']) ? (string) $config['priority'] : '0.5';
             $changefreq = is_array($config) && isset($config['changefreq']) ? (string) $config['changefreq'] : 'yearly';
 

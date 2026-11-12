@@ -8,6 +8,7 @@ schema_name: "FD Calculator India — Fixed Deposit Maturity Planner"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-01"
+updated_at: "2026-11-12"
 ---
 
 ---
@@ -70,8 +71,8 @@ Interest is paid out periodically directly into the depositor's linked savings a
 
 | Payout Option | Periodic Payout Received | Cumulative Interest Earned | Final Maturity Proceeds | Effective Annual Yield |
 | :--- | :--- | :--- | :--- | :--- |
-| **Cumulative (Reinvestment)** | ₹0 (Reinvested) | **₹4,49,948** | **₹14,49,948** | **8.999%** |
-| **Monthly Payout** | **₹6,211 / month** | ₹3,72,660 | ₹10,00,000 | 7.453% |
+| **Cumulative (Reinvestment)** | ₹0 (Reinvested) | **₹4,49,948** | **₹14,49,948** | **7.714% CAGR** *(~9.00% simple annual avg)* |
+| **Monthly Payout** | **₹6,211 / month** | ₹3,72,680 | ₹10,00,000 | 7.454% |
 | **Quarterly Payout** | **₹18,750 / quarter** | ₹3,75,000 | ₹10,00,000 | 7.500% |
 | **Annual Payout** | **₹75,000 / year** | ₹3,75,000 | ₹10,00,000 | 7.500% |
 
@@ -88,9 +89,9 @@ Indian banks offer structured interest rate bonuses for elder depositors to prov
 3. **Special Fixed Deposit Schemes:** Programs like SBI WeCare, HDFC Senior Citizen Care, and ICICI Golden Years offer further promotional spreads (+0.75% to +1.00%) on tenures of 5 to 10 years.
 
 ### The Financial Advantage of Senior Rates (₹15 Lakh Deposit for 5 Years at 7.0% Base Rate)
-*   **General Depositor (7.00% Rate):** Maturity value = **₹21,22,170** (Interest = ₹6,22,170).
+*   **General Depositor (7.00% Rate):** Maturity value = **₹21,22,167** (Interest = ₹6,22,167).
 *   **Senior Citizen (7.50% Rate):** Maturity value = **₹21,74,922** (Interest = ₹6,74,922).
-*   **Elder Advantage:** The +0.50% rate bump delivers **₹52,752 in extra guaranteed cash** over a 5-year deposit.
+*   **Elder Advantage:** The +0.50% rate bump delivers **₹52,755 in extra guaranteed cash** over a 5-year deposit.
 
 ---
 

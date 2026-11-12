@@ -100,7 +100,9 @@ class SchemaHelper
                 "url" => $this->siteConfig->getUrl('/'),
                 "logo" => [
                     "@type" => "ImageObject",
-                    "url" => $this->siteConfig->getUrl('/assets/favicon.png')
+                    "url" => $this->siteConfig->getUrl('/assets/logo-512.png'),
+                    "width" => 512,
+                    "height" => 512
                 ],
                 "sameAs" => [
                     "https://www.linkedin.com/in/sumeet-boga/"

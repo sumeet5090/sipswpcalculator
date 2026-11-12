@@ -137,4 +137,35 @@ class GuideViewModelBuilderTest extends TestCase
         $this->assertStringNotContainsString('id="lumpsum-toggle-btn"', $embedHtml);
         $this->assertStringNotContainsString('id="lumpsum-drawer"', $embedHtml);
     }
+
+    public function testSsrHydrationAndModeAccurateTelemetryAcrossCalculators(): void
+    {
+        foreach (['sip-calculator', 'swp-calculator', 'cagr-calculator', 'fd-calculator', 'my-first-crore-calculator'] as $slug) {
+            $vm = $this->builder->build($slug);
+            $data = $vm['data'];
+
+            $kpis = $data['initial_kpis'] ?? [];
+            $this->assertNotEmpty($kpis, "SSR initial_kpis missing on {$slug}");
+            $this->assertNotEmpty($data['initial_schedule'] ?? [], "SSR initial_schedule missing on {$slug}");
+
+            foreach (['invested_compact', 'maturity_compact', 'corpus_compact'] as $field) {
+                $this->assertArrayHasKey($field, $kpis, "{$field} missing in initial_kpis on {$slug}");
+                $this->assertStringNotContainsString('--', (string) $kpis[$field], "{$field} contains placeholder on {$slug}");
+            }
+        }
+
+        $sipVm = $this->builder->build('sip-calculator')['data'];
+        $sipTelemetry = (string) ($sipVm['initial_telemetry']['anchor_text'] ?? '');
+        $this->assertStringContainsString('purchasing power', $sipTelemetry);
+        $this->assertStringNotContainsString('lifetime safe withdrawal', $sipTelemetry);
+
+        $targetVm = $this->builder->build('my-first-crore-calculator')['data'];
+        $targetTelemetry = (string) ($targetVm['initial_telemetry']['anchor_text'] ?? '');
+        $this->assertStringContainsString('purchasing power', $targetTelemetry);
+        $this->assertStringNotContainsString('lifetime safe withdrawal', $targetTelemetry);
+
+        $swpVm = $this->builder->build('swp-calculator')['data'];
+        $swpTelemetry = (string) ($swpVm['initial_telemetry']['anchor_text'] ?? '');
+        $this->assertNotSame('', $swpTelemetry);
+    }
 }

@@ -177,7 +177,6 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(BlogRepository::class),
                 $c->get(SiteConfig::class),
                 $routesConfig,
-                $c->get(ViewRenderer::class),
                 $c->get(ContentManager::class)
             );
         });

@@ -18,7 +18,7 @@ Accumulating **₹1 Crore (₹10,000,000)** through a Systematic Investment Plan
 
 During the initial years of an investor's career, wealth accumulation feels agonizingly sluggish. When your portfolio stands at ₹2,00,000, even a stellar 15% annual market return delivers only ₹30,000 in capital appreciation—an amount easily overshadowed by a single monthly salary contribution. However, once an investor crosses the **₹1 Crore threshold**, a standard 12% to 14% annual market return produces **₹12,00,000 to ₹14,00,000 in passive yearly wealth expansion**—frequently surpassing the net take-home pay of experienced corporate professionals.
 
-This interactive **₹1 Crore SIP Goal Calculator** reverse-engineers the exact financial trajectory required to hit this milestone. Rather than forcing you to guess how long an arbitrary monthly sum will take, this tool calculates the precise monthly commitments across various time horizons (5, 8, 10, 12, 15, and 20 years), demonstrates the impact of annual step-up top-ups, incorporates post-tax net realization under Section 112A (2026 Rules) rules, and benchmarks inflation-adjusted real purchasing power.
+This interactive **₹1 Crore SIP Goal Calculator** reverse-engineers the exact financial trajectory required to hit this milestone. Rather than forcing you to guess how long an arbitrary monthly sum will take, this tool calculates the precise monthly commitments across various time horizons (5, 8, 10, 12, 15, and 20 years), demonstrates the impact of annual step-up top-ups, incorporates post-tax net realization under Section 112A (12.5% base LTCG rate; 13.0% effective with 4% cess above ₹1.25 Lakh annual exemption), and benchmarks inflation-adjusted real purchasing power.
 
 ---
 

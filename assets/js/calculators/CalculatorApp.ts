@@ -135,6 +135,7 @@ export class CalculatorApp {
             chartManager: this.chartManager,
             analytics: this.analytics,
             getInputs: () => this.getInputs(),
+            getExportPayload: () => this.getExportPayload(),
             getLatestResults: () => this.latestResults.length > 0 ? this.latestResults : this.chartManager.getLastResults(),
             getActiveGoalMode: () => this.activeGoalMode,
             getInteractionCount: () => this.interactionCount
@@ -333,6 +334,47 @@ export class CalculatorApp {
             swp_stepup: this.validator.validate('swp_stepup', this.dom.getValue('swp_stepup') || 0),
             swp_rate: this.validator.validate('swp_rate', this.dom.getValue('swp_rate') || 0)
         };
+    }
+
+    /**
+     * Collect active form inputs including specialized mode parameters and currency for CSV/PDF exports.
+     */
+    getExportPayload(): Record<string, string | number | boolean> {
+        const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
+        const mode = appEl?.dataset?.mode ?? 'combo';
+        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
+
+        const payload: Record<string, string | number | boolean> = {
+            calculator_type: mode,
+            currency: this.formatter.getCurrency(),
+            currency_symbol: this.formatter.getSymbol(),
+        };
+
+        if (specializedModes.includes(mode)) {
+            const form = this.dom.getElement<HTMLFormElement>('calculator-form');
+            if (form) {
+                const fields = form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select');
+                fields.forEach(field => {
+                    const name = field.name || field.id;
+                    if (!name || name === 'website_url' || name.endsWith('_range')) return;
+                    if (field instanceof HTMLInputElement && field.type === 'checkbox') {
+                        payload[name] = field.checked ? '1' : '0';
+                    } else {
+                        payload[name] = field.value;
+                    }
+                });
+            }
+            return payload;
+        }
+
+        const baseInputs = this.getInputs();
+        Object.entries(baseInputs).forEach(([k, v]) => {
+            payload[k] = v;
+        });
+        if (mode === 'swp') {
+            payload['corpus'] = baseInputs.lumpsum;
+        }
+        return payload;
     }
 
     /**

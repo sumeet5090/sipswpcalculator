@@ -64,7 +64,8 @@ class DomainServiceProvider implements ServiceProviderInterface
                 $c->get(FaqRepository::class),
                 $c->get(BlogRepository::class),
                 $c->get(StrategyFactory::class),
-                $c->get(ConfigService::class)
+                $c->get(ConfigService::class),
+                $c->get(\Core\InvestmentCalculator::class)
             );
         });
 

@@ -17,12 +17,14 @@ class FdStrategy extends BaseStrategy
     public function getInitialInputs(): CalculatorInputsInterface
     {
         $defaults = $this->configService->getCalculatorDefaults();
-        $amount = (float) ($defaults['fd_amount']['default'] ?? 100000.0);
+        $amount = (float) ($defaults['fd_principal']['default'] ?? $defaults['fd_amount']['default'] ?? 500000.0);
         $rate = (float) ($defaults['fd_rate']['default'] ?? 7.0);
-        $years = (int) ($defaults['fd_years']['default'] ?? 5);
-        $frequency = (int) ($defaults['fd_frequency']['default'] ?? 4);
+        $years = (float) ($defaults['fd_years']['default'] ?? 3.0);
+        $compoundingFrequency = (int) ($defaults['fd_compounding_frequency']['default'] ?? 4);
+        $isSenior = (bool) ($defaults['fd_senior']['default'] ?? false);
+        $payoutFrequency = (string) ($defaults['fd_frequency']['default'] ?? 'cumulative');
 
-        return new FdInputs($amount, $rate, $years, $frequency);
+        return new FdInputs($amount, $rate, $years, $compoundingFrequency, $isSenior, $payoutFrequency);
     }
 
     public function getBenchmarkTemplate(): string

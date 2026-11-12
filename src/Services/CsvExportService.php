@@ -80,6 +80,37 @@ class CsvExportService implements CsvExportServiceInterface
         return is_string($csvContent) ? $csvContent : '';
     }
 
+    /**
+     * Generate UTF-8 BOM-prefixed CSV content from arbitrary headers and schedule rows.
+     *
+     * @param list<string> $headers
+     * @param list<list<int|float|string>> $rows
+     */
+    public function generateDynamic(array $headers, array $rows): string
+    {
+        $resource = fopen('php://temp', 'r+');
+        if ($resource === false) {
+            throw new \RuntimeException('Failed to allocate stream resource for CSV export.');
+        }
+
+        fwrite($resource, "\xEF\xBB\xBF");
+        fputcsv($resource, $headers, ',', '"', '');
+
+        foreach ($rows as $row) {
+            $sanitizedRow = [];
+            foreach ($row as $cell) {
+                $sanitizedRow[] = $this->sanitizeCsvCell($cell);
+            }
+            fputcsv($resource, $sanitizedRow, ',', '"', '');
+        }
+
+        rewind($resource);
+        $csvContent = stream_get_contents($resource);
+        fclose($resource);
+
+        return is_string($csvContent) ? $csvContent : '';
+    }
+
     private function sanitizeCsvCell(mixed $value): string
     {
         $str = (string) $value;

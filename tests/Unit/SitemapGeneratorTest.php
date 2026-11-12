@@ -7,7 +7,6 @@ namespace Tests\Unit;
 use Core\BlogRepository;
 use Core\ContentManager;
 use Core\SiteConfig;
-use Core\ViewRenderer;
 use Parsedown;
 use PHPUnit\Framework\TestCase;
 use Services\SitemapGenerator;
@@ -19,7 +18,6 @@ class SitemapGeneratorTest extends TestCase
         $siteConfig = new SiteConfig('https://sipswpcalculator.com');
         $contentManager = new ContentManager(new Parsedown(), __DIR__ . '/../../content');
         $blogRepository = new BlogRepository($contentManager);
-        $viewRenderer = new ViewRenderer(new \Core\ViteHelper('testing'), 'testing', 'https://sipswpcalculator.com', __DIR__ . '/../../src/Views');
 
         $routesConfig = [
             'calculators' => [
@@ -35,7 +33,6 @@ class SitemapGeneratorTest extends TestCase
             $blogRepository,
             $siteConfig,
             $routesConfig,
-            $viewRenderer,
             $contentManager
         );
 

@@ -89,7 +89,13 @@
                         {{ initial_kpis and initial_kpis.is_dual_mode ? 'Phase 1 SIP Maturity' : card2Title }}
                     </span>
                     <span id="summary-gain-badge" class="inline-flex items-center text-micro font-bold px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/80 tabular-nums">
-                        {{ initial_kpis and initial_kpis.is_dual_mode ? ('+' ~ initial_kpis.maturity_gain_pct ~ '%') : '+0%' }}
+                        {% if initial_kpis and initial_kpis.gain_badge_text is defined %}
+                            {{ initial_kpis.gain_badge_text }}
+                        {% elseif initial_kpis and initial_kpis.maturity_gain_pct is defined %}
+                            +{{ initial_kpis.maturity_gain_pct }}%
+                        {% else %}
+                            +0%
+                        {% endif %}
                     </span>
                 </div>
                 <div id="summary-interest-headline" class="text-ui-base sm:text-ui-lg font-black text-slate-900 font-financial-mono tabular-nums leading-tight py-0.5 text-left">
@@ -164,25 +170,28 @@
                 </div>
                 <div class="flex items-center gap-1.5 flex-wrap">
                     <span class="text-caption font-extrabold text-slate-500 uppercase tracking-wider">Inflation-Adjusted Reality:</span>
-                    <strong id="real-purchasing-corpus" class="text-ui-xs sm:text-ui-sm font-black font-financial-mono text-slate-900">₹ --</strong>
+                    <strong id="real-purchasing-corpus" class="text-ui-xs sm:text-ui-sm font-black font-financial-mono text-slate-900">{{ initial_telemetry and initial_telemetry.real_corpus ? initial_telemetry.real_corpus : '₹ --' }}</strong>
                 </div>
             </div>
             <!-- Score & Resilience Badge -->
             <div class="flex flex-wrap items-center justify-end gap-1.5 sm:gap-2 min-w-0 max-w-full ml-auto xl:ml-0">
-                <span id="peace-of-mind-badge" class="text-ui-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 whitespace-normal sm:whitespace-nowrap max-w-full text-center leading-tight shadow-flat flex items-center gap-1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                    <span>Bulletproof Resilience</span>
+                {% set tier = initial_telemetry.resilience_tier|default('bulletproof') %}
+                {% set badgeClasses = tier == 'vulnerable'
+                    ? 'bg-amber-50 text-amber-800 border-amber-200'
+                    : (tier == 'prudent' ? 'bg-teal-50 text-teal-800 border-teal-200' : 'bg-emerald-50 text-emerald-800 border-emerald-200') %}
+                <span id="peace-of-mind-badge" class="text-ui-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full {{ badgeClasses }} border whitespace-normal sm:whitespace-nowrap max-w-full text-center leading-tight shadow-flat flex items-center gap-1">
+                    <span>{{ initial_telemetry and initial_telemetry.resilience_label ? initial_telemetry.resilience_label : '🛡️ Bulletproof Resilience (Institutional Grade)' }}</span>
                 </span>
                 <div class="text-right flex items-center gap-1 px-2 py-0.5 rounded-lg bg-teal-50/80 border border-teal-200/60">
                     <span class="text-micro font-bold uppercase tracking-wider text-slate-500">Score</span>
-                    <span id="peace-of-mind-score" class="text-ui-xs font-black font-financial-mono text-emerald-800">85/100</span>
+                    <span id="peace-of-mind-score" class="text-ui-xs font-black font-financial-mono text-emerald-800">{{ initial_telemetry and initial_telemetry.peace_score is defined ? (initial_telemetry.peace_score ~ '/100') : '85/100' }}</span>
                 </div>
             </div>
         </div>
 
-        <!-- Row 2: Full-Width Contextual Safe Withdrawal Insight Paragraph -->
+        <!-- Row 2: Full-Width Contextual Purchasing Power Insight Paragraph -->
         <p id="purchasing-power-anchor" class="text-caption text-slate-600 leading-relaxed font-medium whitespace-normal break-words text-left w-full pl-0 sm:pl-9">
-            Perpetual sovereign wealth: provides ₹1,20,000/mo lifetime safe withdrawal with zero capital erosion.
+            {{ initial_telemetry and initial_telemetry.anchor_text ? initial_telemetry.anchor_text : "Solid financial foundation: adjusts future wealth into today's rupee purchasing power." }}
         </p>
     </div>
     {% endif %}
@@ -253,9 +262,9 @@
                     {% endif %}
                 </div>
                 <div class="sr-only" aria-live="polite">
-                    <span>Projected: <strong class="text-slate-900 font-financial-mono font-bold" id="chart-header-gross">₹ --</strong></span>
+                    <span>Projected: <strong class="text-slate-900 font-financial-mono font-bold" id="chart-header-gross">{{ initial_kpis and initial_kpis.corpus_compact ? initial_kpis.corpus_compact : '₹ --' }}</strong></span>
                     <span>•</span>
-                    <span class="text-growth-emphasis font-bold font-financial-mono" id="chart-header-gain">+₹ -- Gains</span>
+                    <span class="text-growth-emphasis font-bold font-financial-mono" id="chart-header-gain">{{ initial_kpis and initial_kpis.maturity_compact ? '+' ~ initial_kpis.maturity_compact ~ ' Gains' : '+₹ -- Gains' }}</span>
                 </div>
             </div>
 
@@ -341,11 +350,11 @@
                 <span id="hud-year-label" class="font-bold text-slate-800 tracking-tight whitespace-nowrap">Interactive Timeline</span>
             </div>
             <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-financial-mono text-caption sm:text-ui-xs">
-                <span id="hud-invested-metric" class="text-slate-500 font-medium whitespace-nowrap">Invested: ₹ --</span>
+                <span id="hud-invested-metric" class="text-slate-500 font-medium whitespace-nowrap">{{ initial_kpis and initial_kpis.invested_compact ? 'Invested: ' ~ initial_kpis.invested_compact : 'Invested: ₹ --' }}</span>
                 <span class="text-slate-300 hidden sm:inline select-none" aria-hidden="true">•</span>
-                <span id="hud-gains-metric" class="text-growth-emphasis font-bold whitespace-nowrap">Gains: ₹ --</span>
+                <span id="hud-gains-metric" class="text-growth-emphasis font-bold whitespace-nowrap">{{ initial_kpis and initial_kpis.maturity_compact ? 'Gains: ' ~ initial_kpis.maturity_compact : 'Gains: ₹ --' }}</span>
                 <span class="text-slate-300 hidden sm:inline select-none" aria-hidden="true">•</span>
-                <span id="hud-total-metric" class="text-slate-900 font-black whitespace-nowrap">Total: ₹ --</span>
+                <span id="hud-total-metric" class="text-slate-900 font-black whitespace-nowrap">{{ initial_kpis and initial_kpis.corpus_compact ? 'Total: ' ~ initial_kpis.corpus_compact : 'Total: ₹ --' }}</span>
             </div>
         </div>
 

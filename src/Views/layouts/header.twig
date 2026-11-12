@@ -4,13 +4,17 @@
         'href': '#', 
         'id': 'calculators',
         'sub_items': [
+            {'label': 'SIP + SWP Dual Planner', 'href': '/'},
             {'label': 'SIP Calculator', 'href': '/sip-calculator'},
             {'label': 'SWP Calculator', 'href': '/swp-calculator'},
             {'label': 'Lumpsum Calculator', 'href': '/lumpsum-calculator'},
             {'label': 'Step-Up SIP Calculator', 'href': '/sip-step-up-calculator'},
             {'label': 'Retirement Calculator', 'href': '/retirement-calculator'},
-            {'label': 'Target Goal Calculator', 'href': '/target-corpus-calculator'},
-            {'label': 'My First Crore', 'href': '/my-first-crore-calculator'},
+            {'label': 'Target Corpus Calculator', 'href': '/target-corpus-calculator'},
+            {'label': '1 Crore SIP Calculator', 'href': '/my-first-crore-calculator'},
+            {'label': '5 Crore SIP Calculator', 'href': '/reach-5-crore-via-sip'},
+            {'label': '₹5,000 Monthly SIP', 'href': '/sip-5000-per-month'},
+            {'label': '₹10,000 Monthly SIP', 'href': '/sip-10000-per-month'},
             {'label': 'Compound Interest', 'href': '/compound-interest-calculator'},
             {'label': 'CAGR Calculator', 'href': '/cagr-calculator'},
             {'label': 'EMI Calculator', 'href': '/emi-calculator'},
@@ -47,7 +51,7 @@
     }
 </style>
 
-<nav class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/98 transition-all duration-300 shadow-flat">
+<header class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/98 transition-all duration-300 shadow-flat">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse group">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 40px; height: 40px;"
@@ -83,10 +87,10 @@
                             {{ item.label }}
                             <svg class="w-4 h-4 nav-chevron transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
-                        <div role="menu" class="absolute left-0 mt-2 w-56 rounded-xl bg-white shadow-card-hover ring-1 ring-black ring-opacity-5 nav-dropdown-menu">
-                            <div class="py-1">
+                        <div role="menu" class="absolute left-0 mt-2 w-[440px] rounded-xl bg-white shadow-card-hover ring-1 ring-black ring-opacity-5 nav-dropdown-menu">
+                            <div class="grid grid-cols-2 gap-1 p-2">
                                 {% for sub in item.sub_items %}
-                                    <a href="{{ sub.href }}" role="menuitem" class="block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 focus:bg-emerald-50 focus:text-emerald-600 focus:outline-none">{{ sub.label }}</a>
+                                    <a href="{{ sub.href }}" role="menuitem" class="block px-3 py-1.5 rounded-lg text-xs sm:text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 focus:bg-emerald-50 focus:text-emerald-600 focus:outline-none truncate">{{ sub.label }}</a>
                                 {% endfor %}
                             </div>
                         </div>
@@ -181,4 +185,4 @@
             </div>
         </div>
     </div>
-</nav>
+</header>

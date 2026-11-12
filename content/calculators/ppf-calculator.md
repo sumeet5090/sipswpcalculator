@@ -8,6 +8,7 @@ schema_name: "PPF Calculator India — PPF Interest & Maturity Calculator"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-01"
+updated_at: "2026-11-12"
 ---
 
 ---
@@ -123,19 +124,19 @@ The table below illustrates the year-by-year compounding progression of a PPF ac
 | **Year 5** | ₹7,14,334 | ₹1,50,000 | ₹61,368 | ₹9,25,701 | Crosses ₹9 Lakh |
 | **Year 6** | ₹9,25,701 | ₹1,50,000 | ₹76,375 | ₹11,52,076 | Crosses ₹10 Lakh |
 | **Year 7** | ₹11,52,076 | ₹1,50,000 | ₹92,447 | ₹13,94,523 | Partial withdrawal opens |
-| **Year 8** | ₹13,94,523 | ₹1,50,000 | ₹1,09,611 | ₹16,54,135 | Interest exceeds ₹1L/yr |
-| **Year 9** | ₹16,54,135 | ₹1,50,000 | ₹1,27,944 | ₹19,32,078 | Near ₹20 Lakh |
-| **Year 10** | ₹19,32,078 | ₹1,50,000 | ₹1,47,528 | ₹22,29,606 | Annual interest $\approx$ deposit |
-| **Year 11** | ₹22,29,606 | ₹1,50,000 | ₹1,68,432 | ₹25,48,038 | Interest > Annual deposit |
-| **Year 12** | ₹25,48,038 | ₹1,50,000 | ₹1,90,761 | ₹28,88,799 | Crosses ₹28 Lakh |
-| **Year 13** | ₹28,88,799 | ₹1,50,000 | ₹2,14,605 | ₹32,53,404 | Over ₹32 Lakh |
-| **Year 14** | ₹32,53,404 | ₹1,50,000 | ₹2,40,092 | ₹36,43,495 | Over ₹36 Lakh |
-| **Year 15** | ₹36,43,495 | ₹1,50,000 | ₹2,67,338 | **₹40,60,834** | **Statutory Maturity** |
+| **Year 8** | ₹13,94,524 | ₹1,50,000 | ₹1,09,661 | ₹16,54,185 | Interest exceeds ₹1L/yr |
+| **Year 9** | ₹16,54,185 | ₹1,50,000 | ₹1,28,097 | ₹19,32,282 | Near ₹20 Lakh |
+| **Year 10** | ₹19,32,282 | ₹1,50,000 | ₹1,47,842 | ₹22,30,124 | Annual interest $\approx$ deposit |
+| **Year 11** | ₹22,30,124 | ₹1,50,000 | ₹1,68,989 | ₹25,49,113 | Interest > Annual deposit |
+| **Year 12** | ₹25,49,113 | ₹1,50,000 | ₹1,91,637 | ₹28,90,750 | Crosses ₹28 Lakh |
+| **Year 13** | ₹28,90,750 | ₹1,50,000 | ₹2,15,893 | ₹32,56,643 | Over ₹32 Lakh |
+| **Year 14** | ₹32,56,643 | ₹1,50,000 | ₹2,41,872 | ₹36,48,515 | Over ₹36 Lakh |
+| **Year 15** | ₹36,48,515 | ₹1,50,000 | ₹2,69,695 | **₹40,68,209** | **Statutory Maturity** |
 
 ### Summary at 15-Year Maturity:
 *   **Total Capital Invested:** ₹22,50,000 (₹22.50 Lakh)
-*   **Total Tax-Free Interest Earned:** **₹18,10,834 (₹18.11 Lakh)**
-*   **Final Tax-Free Maturity Amount:** **₹40,60,834 (₹40.61 Lakh)**
+*   **Total Tax-Free Interest Earned:** **₹18,18,209 (₹18.18 Lakh)**
+*   **Final Tax-Free Maturity Amount:** **₹40,68,209 (₹40.68 Lakh)**
 
 ---
 
@@ -153,10 +154,10 @@ If you do not wish to commit fresh funds, you can leave the maturity balance in 
 
 | Extension Horizon | Total Capital Deposited | Cumulative Tax-Free Interest | Total Accumulated Corpus | Wealth Multiplier |
 | :--- | :--- | :--- | :--- | :--- |
-| **15 Years (Base)** | ₹22,50,000 | ₹18,10,834 | **₹40,60,834** | **$1.80\times$** |
-| **20 Years (1 Block)** | ₹30,00,000 | ₹36,58,071 | **₹66,58,071** | **$2.22\times$** |
+| **15 Years (Base)** | ₹22,50,000 | ₹18,18,209 | **₹40,68,209** | **$1.81\times$** |
+| **20 Years (1 Block)** | ₹30,00,000 | ₹36,58,288 | **₹66,58,288** | **$2.22\times$** |
 | **25 Years (2 Blocks)**| ₹37,50,000 | ₹65,58,015 | **₹1,03,08,015 (₹1.03 Cr)** | **$2.75\times$** |
-| **30 Years (3 Blocks)**| ₹45,00,000 | ₹1,09,47,025 | **₹1,54,47,025 (₹1.54 Cr)** | **$3.43\times$** |
+| **30 Years (3 Blocks)**| ₹45,00,000 | ₹1,09,50,911 | **₹1,54,50,911 (₹1.55 Cr)** | **$3.43\times$** |
 
 By extending a PPF account for 25 to 30 years (matching a typical career span from age 25 to 55), an investor builds a **100% tax-free sovereign retirement corpus of over ₹1.54 Crore**, with over ₹1.09 Crore generated solely from compounding interest.
 
