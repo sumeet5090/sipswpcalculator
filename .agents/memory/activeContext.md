@@ -1,11 +1,38 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-12*
+*Last Updated: 2026-11-19*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Comprehensive SEO Remediation (Phases 1–3) — P0 Crawl/De-Cannibalization/Analytics Hygiene, P1 Full SSR Hydration & Internal Link Graph + Deterministic `<lastmod>`, P2 Universal Excel/PDF Fulfillment, Schema Cleanup & 100% Mathematical Engine Parity Across Guides Complete.
+- **Current Milestone:** 4-Color Semantic Pillar System & Tonal Contrast Polish Complete — Pure Light-Mode Anchors (`border-t-4`, Solid 600-Weight Badges, Dynamic Accents across `resources.twig`, `home-guide-content.twig`, and Benchmark Tables) Verified Across Full Quality Suite.
+- **Implemented Features & Fixes (2026-11-19 Session 33 - 4-Color Semantic Pillar System & Tonal Contrast Polish):**
+  - **4-Color Semantic Pillar Architecture Established:**
+    - **Pillar 1 — Emerald (`emerald-600` / `#059669`):** Stage 1 SIP & Wealth Accumulation (SIP, Step-Up SIP, Lumpsum, CAGR, Compound Interest, Definitions, How-To, Math Transparency proofs, and SIP Returns Benchmark Matrix).
+    - **Pillar 2 — Royal Blue (`blue-600` / `#2563EB`):** Stage 2 SWP & Retirement Cashflow (Retirement Hub, SWP payouts, SWR Benchmarks, Real-world retirement case studies).
+    - **Pillar 3 — Indigo (`indigo-600` / `#4F46E5`):** Tax Optimization (§112A LTCG), Inflation & Market Volatility (Tax waterfall, inflation adjustments, historical drawdowns & recoveries).
+    - **Pillar 4 — Amber / Gold (`amber-600` / `#D97706`):** Milestones (₹1 Cr, ₹5 Cr, FIRE), Sovereign Benchmarks (PPF, FD), Privacy & Security Trust, and FAQ Vault.
+  - **Resource Center & Category Polish (`content/categories.json`, `resources.twig`, `generic-post.twig`, `styles.css`):**
+    - Updated `content/categories.json` to assign `growth` (Emerald), `retirement` (Royal Blue), and `comparison` (Indigo).
+    - Added `:where(.category-blue blockquote)` styling to `resources/css/styles.css` and updated category mapping in `generic-post.twig`.
+    - Upgraded `resources.twig` with dynamic pillar header badges (`w-12 h-12 rounded-2xl {{ icon_badge_class }} text-white shadow-card-hover`), tool pills (`bg-blue-50 text-blue-800`, `bg-indigo-50 text-indigo-800`), `border-t-4` top accent bars (`border-t-emerald-500`, `border-t-blue-500`, `border-t-indigo-500`), saturated 800-weight tag pills (`bg-*-50 text-*-800 border-*-200`), and matching solid 600-weight arrow buttons.
+  - **Homepage Educational Roadmap Differentiation (`home-guide-content.twig`, `math-transparency.twig`, `privacy-trust-badge.twig`):**
+    - Replaced monochromatic white card stacking with distinct 4px top accent borders:
+      - Master Intro, Definitions, How-To, Math Transparency proofs $\rightarrow$ `border-t-4 border-t-emerald-500`
+      - Real-World Examples & Retirement Case Studies $\rightarrow$ `border-t-4 border-t-blue-500`
+      - Historical Market Recoveries, Risks & Taxation §112A $\rightarrow$ `border-t-4 border-t-indigo-500`
+      - Privacy Guarantee Trust Badge, FAQ Vault $\rightarrow$ `border-t-4 border-t-amber-500`
+  - **Scenario Benchmark Tables Pillar Differentiation (`sip-swp-dual.twig`):**
+    - Table 1 (Monthly SIP Returns Matrix): Anchored with `border-t-4 border-t-emerald-500` and emerald badge header.
+    - Table 2 (SWP Retirement Cashflow & SWR Matrix): Anchored with `border-t-4 border-t-blue-500`, blue badge header, and Royal Blue milestone badges (`bg-blue-50 text-blue-800`, `bg-blue-100 text-blue-900`) for perpetual horizons.
+  - **Pre-Commit Verification & Quality Gate:**
+    - `npm run typecheck && npm run build`: 0 errors (Vite built `dist/assets/app-DPkJvNWa.css` `201.10 kB`, `dist/assets/app-7cCS7-DP.js` `335.07 kB`).
+    - `php tests/parity_check.php`: 71/71 financial math parity cases passed 100%.
+    - `vendor/bin/phpunit`: 820 tests, 12,776 assertions passed with 0 errors, 0 failures.
+    - `vendor/bin/phpstan analyse --memory-limit=1G`: 253/253 files checked, 0 errors (Level Max).
+    - `vendor/bin/phpcs`: 253/253 files checked, 100% PSR-12 clean.
+    - `tests/Unit/DesignTokenAuditTest.php` & `tests/Unit/TelemetryIntegrationTest.php`: 17/17 tests passed (0 prohibited dark classes, 0 prohibited gray-* classes).
+    - SSR App dispatch verification: HTTP 200 OK with expected semantic top borders and badges.
 - **Implemented Features & Fixes (2026-11-12 Session 32 - SEO Phase 1–3 Implementation):**
   - **P0 — Redirect Consolidation, Home De-Cannibalization & Production Analytics Gate:**
     - Unblocked `/0.6.10` and `/sipswpcalculator.com` in `robots.txt` so `301` redirects in `content/redirects.json` consolidate ranking equity onto `/`.

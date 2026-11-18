@@ -407,6 +407,16 @@
         margin: 2rem 0;
     }
 
+    :where(.category-blue blockquote):not(:where(.not-prose, .not-prose *)) {
+        border-left: 4px solid #3b82f6;
+        background-color: #eff6ff;
+        color: #1e40af;
+        padding: 1.25rem 1.75rem;
+        border-radius: 0 1rem 1rem 0;
+        font-style: italic;
+        margin: 2rem 0;
+    }
+
     :where(.category-indigo blockquote):not(:where(.not-prose, .not-prose *)) {
         border-left: 4px solid #6366f1;
         background-color: #f5f3ff;
