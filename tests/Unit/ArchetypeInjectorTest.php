@@ -41,16 +41,19 @@ final class ArchetypeInjectorTest extends TestCase
         $this->assertStringContainsString('aria-pressed="false"', $this->strategyStarterTwig);
     }
 
-    public function testBlueprintButtonsUsePureLightModeThemeClasses(): void
+    public function testStrategyStarterExecutiveHybridThemeClasses(): void
     {
-        // Must use light mode palette
-        $this->assertStringContainsString('bg-white/95', $this->strategyStarterTwig);
-        $this->assertStringContainsString('border-slate-200', $this->strategyStarterTwig);
-        $this->assertStringContainsString('text-slate-800', $this->strategyStarterTwig);
-
-        // Under no circumstances should dark mode backgrounds exist
-        $this->assertStringNotContainsString('bg-slate-900', $this->strategyStarterTwig);
+        // Must maintain Cool Slate neutral tokens without untyped gray
         $this->assertStringNotContainsString('bg-gray-900', $this->strategyStarterTwig);
+        $this->assertDoesNotMatchRegularExpression('/\b(text|bg|border)-gray-[0-9]+\b/', $this->strategyStarterTwig);
+
+        // Modal remains crisp light workspace
+        $this->assertStringContainsString('bg-white/98', $this->strategyStarterTwig);
+        $this->assertStringContainsString('border-slate-200', $this->strategyStarterTwig);
+
+        // Toolbar uses authorized executive slate command strip
+        $this->assertStringContainsString('bg-slate-900', $this->strategyStarterTwig);
+        $this->assertStringContainsString('persona-btn', $this->strategyStarterTwig);
     }
 
     public function testSipFieldsContainsDynamicNarrativeStrategyBadgeWithoutDuplicateChips(): void

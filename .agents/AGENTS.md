@@ -14,12 +14,15 @@ Adhere to the following protocols for all development, design, and implementatio
 ### 2. Design & Styling
 * **Premium Aesthetic:** Maintain a premium, professional look and feel. Use **Tailwind CSS** for all styling, ensuring high consistency in fonts, layouts, and component design across the entire application.
 * **Consistency:** All new components must align with existing premium design themes.
-* **Strict Pure Light-Mode Theme:** Under no circumstances should dark surfaces, dark widgets, or inverted dark cards (e.g. `bg-slate-900`, `bg-slate-950`, `bg-gray-900`) be used. The application strictly adheres to a clean, crisp, premium light fintech aesthetic. All cards, modals, and interactive widgets must be styled with light surfaces (`bg-white/95`, `bg-slate-50`), crisp borders (`border-slate-200`), dark high-contrast typography (`text-slate-900`, `text-slate-700`), and vibrant emerald/teal/indigo accents.
-* **Light Ambient Glow System:** Ambient background lighting must always use soft, light, pastel aurora gradients (e.g. `emerald-400/12`, `teal-300/8`, `indigo-300/6`, `cyan-200/5`) to create a luminous, breathable, light depth atmosphere rather than dark vignette lighting.
-* **Design Review Intent Translation Matrix:** When visual design critiques (e.g. from external reviewers) suggest dark surfaces, dark backgrounds, or dark widgets, NEVER deliberate or inject prohibited dark classes (`bg-slate-900`, `bg-slate-950`, `bg-gray-900`, `#0F172A`). Immediately map external intent directly to approved high-contrast light-mode tokens:
-  1. *Reviewer requests: "Make card dark navy / slate (#0F172A)"* $\rightarrow$ **Executive Light-Mode Anchor:** `bg-emerald-50/90 border-2 border-emerald-600 shadow-card ring-2 ring-emerald-500/15` with `text-slate-900` typography and solid emerald pill badge (`bg-emerald-600 text-white`).
-  2. *Reviewer requests: "Dark drop shadow / heavy black vignette"* $\rightarrow$ **Crisp Subtle Elevation:** `shadow-card border-slate-200/90` with luminous pastel aurora glow (`emerald-400/12`, `teal-300/8`).
-  3. *Reviewer requests: "Dark hero banner / header"* $\rightarrow$ **Crisp Light FinTech Console:** `bg-white/95` or `bg-slate-50/90` with emerald/teal gradient underline tabs and high-contrast dark slate typography.
+* **Executive Hybrid FinTech Theme:** The application adheres to an executive hybrid fintech aesthetic (modeled after Stripe, Mercury, and Linear). 
+  - **Light Interactive Workspace:** All slider input controls, form cards, and dense financial data tables remain strictly light (`bg-white`, `bg-slate-50`), crisp borders (`border-slate-200`, `border-slate-300`), and dark high-contrast typography (`text-slate-900`, `text-slate-700`) for zero eye fatigue and maximum daylight/print readability.
+  - **Authorized Midnight Slate Depth Anchors:** To provide commanding visual hierarchy and prevent monochromatic washed-out flatness, deep midnight slate (`bg-slate-900`, `bg-slate-950`, `bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950`) is officially authorized on 4 key anchor surfaces:
+    1. **Hero Header Consoles** (top command console with luminous emerald/cyan accents and white typography).
+    2. **Strategy Blueprint Toolbars** (command strips with high-contrast persona buttons).
+    3. **Primary Climax KPI Anchor (Card 4 — Final Corpus)** (inverted midnight emerald anchor with glowing numbers and solid pill badges).
+    4. **Architectural Footers & Floating Action Docks** (grounding surfaces framing the experience).
+  - **Prohibited Tokens:** Arbitrary black vignettes and untyped gray classes (`bg-gray-900`, `*-gray-*`) remain strictly prohibited; all neutrals must use Cool Slate (`slate-*`).
+* **Light & Midnight Ambient Glow System:** Ambient lighting balances luminous pastel aurora gradients (`emerald-400/12`, `teal-300/8`) in light zones with targeted emerald/cyan radial shimmers (`emerald-500/20`) inside midnight anchors.
 
 ### 3. SEO & Content Strategy
 * **Strategic Optimization:** Maintain strict SEO friendliness. Use semantic HTML, descriptive page titles, and accurate meta tags.

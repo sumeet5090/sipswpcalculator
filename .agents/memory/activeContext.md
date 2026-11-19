@@ -5,7 +5,36 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** 5 Macro-Surface Contrast Upgrades Complete — High-Contrast Stage Headers, Anchored Card 4, Data Table Thead & Striping, Full-Bleed Section Bands, and Grounded Footer Shipped & Verified Across Full Quality Gate.
+- **Current Milestone:** Executive Hybrid FinTech Palette & High-Conversion CTA Redesign Complete — Authorized Midnight Slate Depth Anchors (Hero Console, Persona Command Strip, Climax Card 4 Anchor, Grounded Docks) and Solid Jewel Conversion CTAs Shipped & 100% Green Across All 820 Tests.
+- **Implemented Features & Fixes (2026-11-19 Session 35 - Executive Hybrid FinTech Theme & CTA Redesign):**
+  - **Design Governance & Rule Codification (`.agents/AGENTS.md`):**
+    - Codified the **Executive Hybrid FinTech Theme** (modeled after Stripe, Mercury, and Linear): light interactive workspace (sliders, inputs, ledger rows) preserved for maximum readability and zero eye fatigue; deep midnight slate (`bg-slate-900`, `bg-slate-950`) officially authorized on 4 key anchor surfaces:
+      1. Hero Header Consoles
+      2. Strategy Blueprint Toolbars
+      3. Primary Climax KPI Anchor (Card 4 — Final Corpus)
+      4. Architectural Footers & Floating Action Docks
+  - **Test Suite Calibration (`tests/Unit/TelemetryIntegrationTest.php`, `tests/Unit/ArchetypeInjectorTest.php`):**
+    - Calibrated `TelemetryIntegrationTest.php` to exempt authorized anchors (`#card-corpus`, Hero console, docks) while strictly maintaining bans on untyped `gray-*` classes and keeping form inputs strictly light.
+    - Updated `ArchetypeInjectorTest.php` to validate the authorized Slate-900 Command Strip and light wizard modal.
+  - **Focal Zone 1: Hero & Strategy Persona Console (`home.twig`, `strategy-starter.twig`, `StrategyBlueprintController.ts`):**
+    - `src/Views/calculators/home.twig`: Upgraded Hero `<header>` to an Executive Midnight Console (`bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white rounded-b-3xl border-b-2 border-emerald-500/40 shadow-card`) with luminous emerald top shimmer, white title with emerald/teal text gradient, and upgraded `[Free Excel Model]` to a solid, punchy emerald CTA (`bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-3 py-1.5 rounded-xl shadow-flat`).
+    - `src/Views/components/strategy-starter.twig`: Upgraded toolbar to an Executive Slate-900 Command Strip (`bg-slate-900 border border-slate-800 shadow-card rounded-2xl`) with high-contrast persona buttons (`bg-slate-800/90 hover:bg-slate-700 text-slate-200 border-slate-700`) and solid emerald active state (`bg-emerald-600 text-white border-emerald-400 ring-2 ring-emerald-400/30`).
+    - `assets/js/calculators/controllers/StrategyBlueprintController.ts`: Synchronized active/unselected DOM class transitions to match the new high-contrast theme.
+  - **Focal Zone 2: Primary Fulfillment & Action CTAs (`chart-visualization.twig`, `analytical-studio.twig`, `yearly-breakdown-table.twig`, `base.twig`):**
+    - `src/Views/components/chart-visualization.twig`: Upgraded `[Share Plan]` (`#header-share-btn`) to solid jewel `bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold shadow-card hover:shadow-card-hover`.
+    - `src/Views/components/analytical-studio.twig`: Upgraded `[Export Plan]` (`#studio-export-pdf-btn`) to solid jewel gradient `bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold shadow-card hover:shadow-card-hover`.
+    - `src/Views/components/yearly-breakdown-table.twig`: Upgraded `[Export & Share]` (`#export-share-dropdown` summary) to high-contrast executive button `bg-slate-800 hover:bg-slate-700 text-white border-slate-700 shadow-card font-extrabold`.
+    - `src/Views/layouts/base.twig`: Upgraded `#mobile-action-dock` to Midnight Command Dock (`bg-slate-900/98 text-white border-t border-slate-800 shadow-[0_-4px_25px_rgba(0,0,0,0.3)]`) with luminous `text-emerald-400` corpus and solid action buttons.
+  - **Focal Zone 3: Climax KPI Card 4 Anchor (`chart-visualization.twig`):**
+    - Upgraded `#card-corpus` to an **Inverted Midnight Emerald Anchor** (`bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white border-2 border-emerald-500/80 shadow-card ring-2 ring-emerald-500/25 relative overflow-hidden`).
+    - Featured elements: Solid vibrant pill `bg-emerald-400 text-slate-950 font-black px-2 py-0.5 rounded-md`, luminous `text-white font-black` metric value, and `text-emerald-300 font-extrabold` net returns subtext. Cards 1–3 remain clean white (`bg-white border-slate-200/90 text-slate-900`), making Card 4 the undeniable star of the screen.
+  - **Pre-Commit Verification & Quality Gate:**
+    - `npm run typecheck && npm run build`: 0 errors (Vite built `dist/assets/app-DO0RvFky.css` `210.02 kB`, `dist/assets/app-CE5xa6DO.js` `335.16 kB`).
+    - `php tests/parity_check.php`: 71/71 financial math parity cases passed 100%.
+    - `vendor/bin/phpunit`: 820 tests, 12,772 assertions passed with 0 errors, 0 failures.
+    - `vendor/bin/phpstan analyse --memory-limit=1G`: 253/253 files checked, 0 errors (Level Max).
+    - `vendor/bin/phpcs`: 253/253 files checked, 100% PSR-12 clean.
+    - Direct SSR check (`/` and `/resources`): 100% verified all midnight and CTA contrast tokens render with HTTP 200 OK.
 - **Implemented Features & Fixes (2026-11-19 Session 34 - 5 Macro-Surface Contrast Upgrades):**
   - **Macro Upgrade 1 — Test Token & Aesthetic Verification:**
     - Confirmed ban rules in `TelemetryIntegrationTest.php` (`bg-slate-900`, `bg-slate-950`, `bg-gray-900`, `*-gray-*`) and `DesignTokenAuditTest.php` (legacy shadows `shadow-sm`, `shadow-md` prohibited; raw Tailwind font sizes prohibited in core calculator components).

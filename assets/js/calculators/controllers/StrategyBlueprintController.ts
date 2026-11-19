@@ -235,13 +235,14 @@ export class StrategyBlueprintController {
         buttons.forEach(btn => {
             btn.setAttribute('aria-pressed', 'false');
             btn.classList.remove(
-                'border-emerald-500',
-                'bg-emerald-50/80',
+                'border-emerald-400',
+                'bg-emerald-600',
+                'text-white',
                 'ring-2',
-                'ring-emerald-500/25',
+                'ring-emerald-400/30',
                 'shadow-card'
             );
-            btn.classList.add('border-slate-200/90', 'bg-white/95');
+            btn.classList.add('border-slate-700', 'bg-slate-800/90', 'text-slate-200');
         });
 
         const badge = this.dom.getElement('narrative-strategy-badge');
@@ -280,22 +281,24 @@ export class StrategyBlueprintController {
 
             if (isSelected) {
                 btn.classList.add(
-                    'border-emerald-500',
-                    'bg-emerald-50/80',
+                    'border-emerald-400',
+                    'bg-emerald-600',
+                    'text-white',
                     'ring-2',
-                    'ring-emerald-500/25',
+                    'ring-emerald-400/30',
                     'shadow-card'
                 );
-                btn.classList.remove('border-slate-200/90', 'bg-white/95');
+                btn.classList.remove('border-slate-700', 'bg-slate-800/90', 'text-slate-200');
             } else {
                 btn.classList.remove(
-                    'border-emerald-500',
-                    'bg-emerald-50/80',
+                    'border-emerald-400',
+                    'bg-emerald-600',
+                    'text-white',
                     'ring-2',
-                    'ring-emerald-500/25',
+                    'ring-emerald-400/30',
                     'shadow-card'
                 );
-                btn.classList.add('border-slate-200/90', 'bg-white/95');
+                btn.classList.add('border-slate-700', 'bg-slate-800/90', 'text-slate-200');
             }
         });
     }

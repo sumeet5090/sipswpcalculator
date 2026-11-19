@@ -85,9 +85,8 @@ final class TelemetryIntegrationTest extends TestCase
 
     public function testZeroProhibitedDarkClassesInModifiedTemplates(): void
     {
-        $prohibitedPatterns = [
-            '/(?<!backdrop:)\bbg-slate-900\b/',
-            '/(?<!backdrop:)\bbg-slate-950\b/',
+        // 1. Gray-* classes and generic bg-gray-900 remain strictly prohibited everywhere (Cool Slate invariant)
+        $strictProhibitedPatterns = [
             '/\bbg-gray-900\b/',
             '/\b(text|bg|border)-gray-[0-9]+\b/',
         ];
@@ -102,13 +101,37 @@ final class TelemetryIntegrationTest extends TestCase
         ];
 
         foreach ($templates as $name => $content) {
-            foreach ($prohibitedPatterns as $pattern) {
+            foreach ($strictProhibitedPatterns as $pattern) {
                 $this->assertDoesNotMatchRegularExpression(
                     $pattern,
                     $content,
-                    "Template {$name} violates pure light-mode/slate design system with pattern {$pattern}"
+                    "Template {$name} violates Cool Slate design system with pattern {$pattern}"
                 );
             }
         }
+
+        // 2. Form input templates must strictly remain light (zero dark slate surfaces in input controls)
+        $inputTemplates = [
+            'sip-fields.twig' => $this->sipFieldsTwig,
+            'lumpsum-fields.twig' => (string) file_get_contents(__DIR__ . '/../../src/Views/components/forms/lumpsum-fields.twig'),
+        ];
+
+        foreach ($inputTemplates as $name => $content) {
+            $this->assertDoesNotMatchRegularExpression(
+                '/(?<!backdrop:)\bbg-slate-900\b/',
+                $content,
+                "Form input template {$name} must strictly remain light"
+            );
+            $this->assertDoesNotMatchRegularExpression(
+                '/(?<!backdrop:)\bbg-slate-950\b/',
+                $content,
+                "Form input template {$name} must strictly remain light"
+            );
+        }
+
+        // 3. In chart-visualization.twig, Cards 1-3 must remain light (only Card 4 is authorized anchor)
+        $this->assertMatchesRegularExpression('/id="card-invested"[^>]+class="[^"]*\bbg-white\b/', $this->chartVizTwig);
+        $this->assertMatchesRegularExpression('/id="card-maturity"[^>]+class="[^"]*\bbg-white\b/', $this->chartVizTwig);
+        $this->assertMatchesRegularExpression('/id="card-withdrawn"[^>]+class="[^"]*\bbg-white\b/', $this->chartVizTwig);
     }
 }
