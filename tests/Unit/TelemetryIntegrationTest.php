@@ -129,9 +129,11 @@ final class TelemetryIntegrationTest extends TestCase
             );
         }
 
-        // 3. In chart-visualization.twig, Cards 1-3 must remain light (only Card 4 is authorized anchor)
+        // 3. In chart-visualization.twig, Cards 1-3 must remain light, Card 4 uses jewel-tone emerald anchor (zero dark slate)
         $this->assertMatchesRegularExpression('/id="card-invested"[^>]+class="[^"]*\bbg-white\b/', $this->chartVizTwig);
         $this->assertMatchesRegularExpression('/id="card-maturity"[^>]+class="[^"]*\bbg-white\b/', $this->chartVizTwig);
         $this->assertMatchesRegularExpression('/id="card-withdrawn"[^>]+class="[^"]*\bbg-white\b/', $this->chartVizTwig);
+        $this->assertDoesNotMatchRegularExpression('/id="card-corpus"[^>]+class="[^"]*\bbg-slate-950\b/', $this->chartVizTwig);
+        $this->assertDoesNotMatchRegularExpression('/id="card-corpus"[^>]+class="[^"]*\bbg-slate-900\b/', $this->chartVizTwig);
     }
 }

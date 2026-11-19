@@ -131,27 +131,27 @@
                 </div>
             </div>
 
-            <!-- Card 4: Final Corpus / Net Wealth / EMI (Institutional Executive Anchor - Midnight Emerald) -->
-            <div id="card-corpus" role="button" tabindex="0" title="Click to view final wealth corpus in Cashflow Ledger" class="{% if isFourCardMode %}col-span-1{% else %}col-span-2 xl:col-span-1{% endif %} bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white rounded-2xl border-2 border-emerald-500/80 shadow-card px-3.5 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-400 ring-2 ring-emerald-500/25 focus:outline-none focus:ring-2 focus:ring-emerald-400 relative group flex flex-col justify-between min-w-0 cursor-pointer">
+            <!-- Card 4: Final Corpus / Net Wealth / EMI (Institutional Executive Anchor - Jewel-Tone Emerald) -->
+            <div id="card-corpus" role="button" tabindex="0" title="Click to view final wealth corpus in Cashflow Ledger" class="{% if isFourCardMode %}col-span-1{% else %}col-span-2 xl:col-span-1{% endif %} bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-700 text-white rounded-2xl border-2 border-emerald-500 shadow-card px-3.5 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-400 ring-2 ring-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-400 relative group flex flex-col justify-between min-w-0 cursor-pointer">
                 <!-- Ambient Radial Shimmer -->
-                <div class="absolute -right-8 -top-8 w-28 h-28 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none" aria-hidden="true"></div>
+                <div class="absolute -right-8 -top-8 w-28 h-28 bg-white/10 rounded-full blur-2xl pointer-events-none" aria-hidden="true"></div>
 
-                <div id="title-corpus" class="text-caption font-extrabold text-slate-200 uppercase tracking-wider mb-1 leading-tight flex items-center justify-between gap-1 relative z-10">
+                <div id="title-corpus" class="text-caption font-extrabold text-slate-100 uppercase tracking-wider mb-1 leading-tight flex items-center justify-between gap-1 relative z-10">
                     <span id="title-corpus-text">{{ initial_kpis and initial_kpis.is_dual_mode ? ('Final Corpus @ Yr ' ~ initial_kpis.total_years) : card4Title }}</span>
-                    <span id="summary-corpus-compact" class="hidden text-micro font-black text-emerald-950 bg-emerald-200/90 border border-emerald-300 px-2 py-0.5 rounded-full shadow-flat"></span>
-                    <span class="text-micro font-black text-slate-950 bg-emerald-400 border border-emerald-300 px-2 py-0.5 rounded-md shadow-flat">
+                    <span id="summary-corpus-compact" class="hidden text-micro font-black text-emerald-950 bg-white border border-emerald-200 px-2 py-0.5 rounded-full shadow-flat"></span>
+                    <span class="text-micro font-black text-emerald-900 bg-white border border-emerald-200 px-2 py-0.5 rounded-md shadow-flat">
                         Net Corpus
                     </span>
                 </div>
                 <div id="summary-corpus-headline" class="text-ui-base sm:text-ui-lg font-black text-white font-financial-mono tabular-nums leading-tight py-0.5 text-left relative z-10">
                     {{ initial_kpis and initial_kpis.corpus_compact ? initial_kpis.corpus_compact : '₹ --' }}
                 </div>
-                <div class="flex items-center justify-between gap-1 text-micro font-medium text-emerald-300 font-financial-mono tracking-tight mt-0.5 relative z-10">
-                    <div id="summary-corpus" class="text-ui-xs font-bold text-slate-200 font-financial-mono whitespace-nowrap overflow-visible" aria-label="{{ initial_kpis and initial_kpis.corpus_exact ? initial_kpis.corpus_exact : '₹ --' }}">
+                <div class="flex items-center justify-between gap-1 text-micro font-medium text-emerald-100 font-financial-mono tracking-tight mt-0.5 relative z-10">
+                    <div id="summary-corpus" class="text-ui-xs font-bold text-slate-100 font-financial-mono whitespace-nowrap overflow-visible" aria-label="{{ initial_kpis and initial_kpis.corpus_exact ? initial_kpis.corpus_exact : '₹ --' }}">
                         <span class="sr-only">{{ initial_kpis and initial_kpis.corpus_exact ? initial_kpis.corpus_exact : '₹ --' }}</span>
                         <span aria-hidden="true" data-nosnippet="true">{{ initial_kpis and initial_kpis.corpus_exact ? initial_kpis.corpus_exact : '₹ --' }}</span>
                     </div>
-                    <span id="subtitle-corpus" class="text-emerald-400 truncate font-semibold">{{ initial_kpis and initial_kpis.is_dual_mode ? ('+' ~ initial_kpis.lifetime_gains_compact ~ ' Lifetime Gains') : '' }}</span>
+                    <span id="subtitle-corpus" class="text-emerald-100 truncate font-semibold">{{ initial_kpis and initial_kpis.is_dual_mode ? ('+' ~ initial_kpis.lifetime_gains_compact ~ ' Lifetime Gains') : '' }}</span>
                     <div id="post-tax-statutory-pill" class="hidden text-micro font-bold text-slate-900 bg-white border border-slate-200 px-1.5 py-0.5 rounded whitespace-nowrap">
                         §112A Net
                     </div>

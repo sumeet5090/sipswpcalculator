@@ -235,14 +235,14 @@ export class StrategyBlueprintController {
         buttons.forEach(btn => {
             btn.setAttribute('aria-pressed', 'false');
             btn.classList.remove(
-                'border-emerald-400',
+                'border-emerald-600',
                 'bg-emerald-600',
                 'text-white',
                 'ring-2',
                 'ring-emerald-400/30',
                 'shadow-card'
             );
-            btn.classList.add('border-slate-700', 'bg-slate-800/90', 'text-slate-200');
+            btn.classList.add('border-slate-200/90', 'bg-white', 'text-slate-900');
         });
 
         const badge = this.dom.getElement('narrative-strategy-badge');
@@ -281,24 +281,24 @@ export class StrategyBlueprintController {
 
             if (isSelected) {
                 btn.classList.add(
-                    'border-emerald-400',
+                    'border-emerald-600',
                     'bg-emerald-600',
                     'text-white',
                     'ring-2',
                     'ring-emerald-400/30',
                     'shadow-card'
                 );
-                btn.classList.remove('border-slate-700', 'bg-slate-800/90', 'text-slate-200');
+                btn.classList.remove('border-slate-200/90', 'bg-white', 'text-slate-900');
             } else {
                 btn.classList.remove(
-                    'border-emerald-400',
+                    'border-emerald-600',
                     'bg-emerald-600',
                     'text-white',
                     'ring-2',
                     'ring-emerald-400/30',
                     'shadow-card'
                 );
-                btn.classList.add('border-slate-700', 'bg-slate-800/90', 'text-slate-200');
+                btn.classList.add('border-slate-200/90', 'bg-white', 'text-slate-900');
             }
         });
     }

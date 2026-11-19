@@ -5,7 +5,30 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Executive Hybrid FinTech Palette & High-Conversion CTA Redesign Complete — Authorized Midnight Slate Depth Anchors (Hero Console, Persona Command Strip, Climax Card 4 Anchor, Grounded Docks) and Solid Jewel Conversion CTAs Shipped & 100% Green Across All 820 Tests.
+- **Current Milestone:** Alternative Light-Mode Focal Anchor (Unified Daylight & Jewel-Tone Palette) Complete — Replaced dark midnight blocks with institutional emerald/teal jewel-tone gradients and crisp daylight toolbars; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and SSR verification.
+- **Implemented Features & Fixes (2026-11-19 Session 36 - Alternative Light-Mode Focal Anchor):**
+  - **Design Governance & Rule Codification (`.agents/AGENTS.md`):**
+    - Codified the **Executive Daylight & Jewel-Tone FinTech Theme**: eliminated visual seam tension caused by stacking pitch-dark blocks (`bg-slate-950`, `bg-slate-900`) directly over the daylight interactive calculator workspace.
+    - Preserved crisp daylight surfaces for slider inputs, form cards, and tables (`bg-white`, `border-slate-200/90`, `text-slate-900`).
+    - Standardized **Unified Jewel-Tone Focal Anchors**:
+      1. Top Hero Console: Institutional Emerald/Teal Jewel-Tone Gradient (`bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 text-white`) with luminous white accents and a high-contrast white pill action CTA `[Free Excel Model]`.
+      2. Strategy Blueprint Toolbars: Crisp Daylight Console Strips (`bg-slate-100/90 border border-slate-200/90`) with white persona cards and solid emerald active states (`bg-emerald-600 text-white`).
+      3. Climax KPI Card 4 Anchor (`#card-corpus`): Solid Jewel-Tone Emerald Anchor (`bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-700 text-white border-2 border-emerald-500 shadow-card`).
+      4. Mobile Action Dock: Daylight grounded dock (`bg-white/98 text-slate-900 border-t-2 border-slate-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]`) with solid jewel triggers.
+  - **Component Template Implementations:**
+    - `src/Views/calculators/home.twig`: Upgraded Hero `<header>` to Institutional Emerald/Teal Jewel-Tone Gradient (`bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 text-white rounded-b-3xl border-b-2 border-emerald-600 shadow-card`) with ambient top glow, emerald-100 typography, and white pill `[Free Excel Model]` button (`bg-white hover:bg-emerald-50 text-emerald-900 font-extrabold`).
+    - `src/Views/components/strategy-starter.twig`: Replaced dark strip with daylight console strip (`bg-slate-100/90 border border-slate-200/90 rounded-2xl`) and crisp white persona buttons (`bg-white hover:bg-slate-50 text-slate-900 border border-slate-200/90 hover:border-emerald-500`).
+    - `assets/js/calculators/controllers/StrategyBlueprintController.ts`: Updated `resetActiveState()` and `updateButtonsVisualState()` to toggle `border-emerald-600 bg-emerald-600 text-white` (selected) and `border-slate-200/90 bg-white text-slate-900` (unselected).
+    - `src/Views/components/chart-visualization.twig`: Upgraded Card 4 (`#card-corpus`) to Solid Jewel-Tone Emerald Anchor (`bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-700 text-white border-2 border-emerald-500 shadow-card`) with crisp white `[Net Corpus]` pill badge.
+    - `src/Views/components/yearly-breakdown-table.twig`: Upgraded `#export-share-dropdown` summary button to crisp executive daylight button (`bg-white hover:bg-slate-50 text-slate-800 border-2 border-slate-300 hover:border-emerald-500 hover:text-emerald-700 text-ui-xs font-extrabold shadow-flat`).
+    - `src/Views/layouts/base.twig`: Upgraded `#mobile-action-dock` to daylight dock (`bg-white/98 text-slate-900 border-t-2 border-slate-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]`) with `text-slate-900 font-black` live corpus metric and daylight action buttons.
+  - **Test Suite Calibration & Quality Gates:**
+    - `tests/Unit/ArchetypeInjectorTest.php`: Updated assertions for daylight toolbar (`bg-slate-100/90`, zero `bg-slate-900`).
+    - `tests/Unit/TelemetryIntegrationTest.php`: Verified zero `bg-slate-950` and zero `bg-slate-900` on Card 4 and form inputs.
+    - `npm run typecheck && npm run build`: 0 errors.
+    - `php tests/parity_check.php`: 71/71 tests PASS.
+    - `composer check-all`: 253/253 PHPStan files checked (Level Max OK), 253/253 PHPCS PSR-12 clean, 820/820 PHPUnit tests PASS (12,775 assertions).
+    - Direct local SSR verification: verified all jewel tokens and daylight classes render with HTTP 200 OK.
 - **Implemented Features & Fixes (2026-11-19 Session 35 - Executive Hybrid FinTech Theme & CTA Redesign):**
   - **Design Governance & Rule Codification (`.agents/AGENTS.md`):**
     - Codified the **Executive Hybrid FinTech Theme** (modeled after Stripe, Mercury, and Linear): light interactive workspace (sliders, inputs, ledger rows) preserved for maximum readability and zero eye fatigue; deep midnight slate (`bg-slate-900`, `bg-slate-950`) officially authorized on 4 key anchor surfaces:

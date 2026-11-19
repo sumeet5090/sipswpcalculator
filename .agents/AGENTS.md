@@ -14,15 +14,15 @@ Adhere to the following protocols for all development, design, and implementatio
 ### 2. Design & Styling
 * **Premium Aesthetic:** Maintain a premium, professional look and feel. Use **Tailwind CSS** for all styling, ensuring high consistency in fonts, layouts, and component design across the entire application.
 * **Consistency:** All new components must align with existing premium design themes.
-* **Executive Hybrid FinTech Theme:** The application adheres to an executive hybrid fintech aesthetic (modeled after Stripe, Mercury, and Linear). 
+* **Executive Daylight & Jewel-Tone FinTech Theme:** The application adheres to an executive daylight fintech aesthetic (modeled after Stripe, Mercury, and Linear) enhanced by high-authority jewel-tone focal anchors:
   - **Light Interactive Workspace:** All slider input controls, form cards, and dense financial data tables remain strictly light (`bg-white`, `bg-slate-50`), crisp borders (`border-slate-200`, `border-slate-300`), and dark high-contrast typography (`text-slate-900`, `text-slate-700`) for zero eye fatigue and maximum daylight/print readability.
-  - **Authorized Midnight Slate Depth Anchors:** To provide commanding visual hierarchy and prevent monochromatic washed-out flatness, deep midnight slate (`bg-slate-900`, `bg-slate-950`, `bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950`) is officially authorized on 4 key anchor surfaces:
-    1. **Hero Header Consoles** (top command console with luminous emerald/cyan accents and white typography).
-    2. **Strategy Blueprint Toolbars** (command strips with high-contrast persona buttons).
-    3. **Primary Climax KPI Anchor (Card 4 — Final Corpus)** (inverted midnight emerald anchor with glowing numbers and solid pill badges).
-    4. **Architectural Footers & Floating Action Docks** (grounding surfaces framing the experience).
-  - **Prohibited Tokens:** Arbitrary black vignettes and untyped gray classes (`bg-gray-900`, `*-gray-*`) remain strictly prohibited; all neutrals must use Cool Slate (`slate-*`).
-* **Light & Midnight Ambient Glow System:** Ambient lighting balances luminous pastel aurora gradients (`emerald-400/12`, `teal-300/8`) in light zones with targeted emerald/cyan radial shimmers (`emerald-500/20`) inside midnight anchors.
+  - **Unified Jewel-Tone Focal Anchors:** To eliminate visual tension between dark headers and daylight workspaces while providing unmistakable hierarchy, key focal surfaces are powered by institutional jewel tones:
+    1. **Hero Header Consoles:** Institutional Emerald/Teal Jewel-Tone Gradient (`bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 text-white`) with luminous white accents and high-contrast white pill action CTAs.
+    2. **Strategy Blueprint Toolbars:** Crisp Daylight Console Strips (`bg-slate-100/90 border border-slate-200/90`) with high-contrast white persona cards (`bg-white border border-slate-200/90 text-slate-900`) and solid emerald active states (`bg-emerald-600 text-white`).
+    3. **Primary Climax KPI Anchor (Card 4 — Final Corpus):** Solid Jewel-Tone Emerald Anchor (`bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-700 text-white border-2 border-emerald-500 shadow-card`) providing maximum visual weight against Cards 1–3 (`bg-white`).
+    4. **Architectural Footers & Floating Action Docks:** Clean daylight grounded surfaces (`bg-slate-100` / `bg-white/98 border-t-2 border-slate-200/90 text-slate-900`) with solid emerald fulfillment triggers.
+  - **Prohibited Tokens:** Dark surface blocks (`bg-slate-900`, `bg-slate-950`), arbitrary black vignettes, and untyped gray classes (`bg-gray-900`, `*-gray-*`) remain strictly prohibited on card and header surfaces; all neutrals must use Cool Slate (`slate-*`).
+* **Daylight & Jewel Ambient Glow System:** Ambient lighting balances luminous pastel aurora gradients (`emerald-400/12`, `teal-300/8`) in light zones with subtle white radial shimmers (`white/10`) inside jewel anchors.
 
 ### 3. SEO & Content Strategy
 * **Strategic Optimization:** Maintain strict SEO friendliness. Use semantic HTML, descriptive page titles, and accurate meta tags.
