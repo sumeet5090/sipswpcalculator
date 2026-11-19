@@ -5,7 +5,7 @@
 
 {% block content %}
 {% include 'components/theme-glow-blobs.twig' %}
-<header class="relative z-10 mb-2.5 sm:mb-5 text-center">
+<header class="relative z-10 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 pt-4 pb-6 sm:pb-8 mb-4 sm:mb-6 text-center bg-gradient-to-b from-emerald-100/70 via-teal-50/40 to-transparent border-b border-emerald-200/60 rounded-b-3xl">
     <div class="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 mb-2">
         <span class="relative flex h-2.5 w-2.5">
             <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -126,7 +126,9 @@
 </div>
 
 <!-- Pre-Calculated Scenario & Benchmark Tables for Search & AI Extractability -->
-{% include 'components/scenario-benchmark-table.twig' %}
+<div class="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-10 sm:py-14 bg-indigo-50/70 border-y border-indigo-200/80 my-8 sm:my-12">
+    {% include 'components/scenario-benchmark-table.twig' %}
+</div>
 
 <!-- Editorial Knowledge & Research Vault -->
 {% include 'components/home-guide-content.twig' %}

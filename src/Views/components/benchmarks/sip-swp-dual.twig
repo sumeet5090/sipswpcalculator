@@ -11,18 +11,18 @@
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-left text-xs sm:text-sm border-collapse" aria-label="Monthly SIP Returns Matrix">
                 <caption class="sr-only">Maturity corpus for regular monthly SIP investments at 12 percent expected CAGR across multiple timeframes</caption>
-                <thead>
-                    <tr class="bg-slate-50/50 border-b border-slate-200 text-slate-700 font-bold">
-                        <th scope="col" class="py-3 px-3 sm:px-4 font-extrabold text-slate-900 table-sticky-col-th">Monthly SIP</th>
+                <thead class="bg-slate-200/90 border-b-2 border-slate-300 text-slate-900 font-extrabold">
+                    <tr class="divide-x divide-slate-300/60">
+                        <th scope="col" class="py-3 px-3 sm:px-4 font-extrabold text-slate-900 table-sticky-col-th bg-slate-200/95">Monthly SIP</th>
                         <th scope="col" class="py-3 px-3 sm:px-4 text-center">5 Years (₹)</th>
                         <th scope="col" class="py-3 px-3 sm:px-4 text-center">10 Years (₹)</th>
                         <th scope="col" class="py-3 px-3 sm:px-4 text-center">15 Years (₹)</th>
                         <th scope="col" class="py-3 px-3 sm:px-4 text-center">20 Years (₹)</th>
                         <th scope="col" class="py-3 px-3 sm:px-4 text-center">25 Years (₹)</th>
-                        <th scope="col" class="py-3 px-3 sm:px-4 text-right font-extrabold text-emerald-800">30 Years (₹)</th>
+                        <th scope="col" class="py-3 px-3 sm:px-4 text-right font-extrabold text-emerald-900 bg-emerald-100/60">30 Years (₹)</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 font-financial-mono tabular-nums">
+                <tbody class="divide-y divide-slate-100 font-financial-mono tabular-nums [&>tr:nth-child(even)]:bg-slate-100/70">
                     <tr class="hover:bg-slate-50/50 transition-colors{% if (sip|default(10000)) == 5000 %} bg-emerald-50/40 font-semibold{% endif %}">
                         <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 font-sans table-sticky-col-td">₹5,000</td>
                         <td class="py-3 px-3 sm:px-4 text-center">₹4.12 L</td>
@@ -94,16 +94,16 @@
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full text-left text-xs sm:text-sm border-collapse" aria-label="SWP Retirement Cashflow Benchmarks">
                 <caption class="sr-only">Monthly systematic withdrawal cashflows and estimated corpus longevity across retirement sizes</caption>
-                <thead>
-                    <tr class="bg-slate-50/50 border-b border-slate-200 text-slate-700 font-bold">
-                        <th scope="col" class="py-3 px-3 sm:px-4 font-extrabold text-slate-900 table-sticky-col-th">Retirement Corpus</th>
+                <thead class="bg-slate-200/90 border-b-2 border-slate-300 text-slate-900 font-extrabold">
+                    <tr class="divide-x divide-slate-300/60">
+                        <th scope="col" class="py-3 px-3 sm:px-4 font-extrabold text-slate-900 table-sticky-col-th bg-slate-200/95">Retirement Corpus</th>
                         <th scope="col" class="py-3 px-3 sm:px-4 text-center">Conservative SWR (4%)</th>
                         <th scope="col" class="py-3 px-3 sm:px-4 text-center">Balanced SWR (5%)</th>
                         <th scope="col" class="py-3 px-3 sm:px-4 text-center">Aggressive SWR (6%)</th>
-                        <th scope="col" class="py-3 px-3 sm:px-4 text-right font-extrabold text-blue-900">Recommended Horizon</th>
+                        <th scope="col" class="py-3 px-3 sm:px-4 text-right font-extrabold text-blue-900 bg-blue-100/60">Recommended Horizon</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 font-financial-mono tabular-nums">
+                <tbody class="divide-y divide-slate-100 font-financial-mono tabular-nums [&>tr:nth-child(even)]:bg-slate-100/70">
                     <tr class="hover:bg-slate-50/50 transition-colors">
                         <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 font-sans table-sticky-col-td">₹50 Lakh</td>
                         <td class="py-3 px-3 sm:px-4 text-center font-semibold text-slate-700">₹16,667 / mo</td>

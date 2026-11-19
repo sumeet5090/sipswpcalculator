@@ -61,13 +61,13 @@
             <!-- Stage 1 / SIP Panel -->
             <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2 xl:space-y-2.5 border-t-4 border-emerald-500 rounded-2xl bg-gradient-to-b from-emerald-50/70 via-emerald-50/40 to-teal-50/20 p-2 xl:p-2.5 border border-emerald-200/80 shadow-subtle transition-all">
                 <!-- Stage 1 Header (Visible in Dual Mode) -->
-                <div id="stage-1-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-1.5 xl:py-2 rounded-xl bg-emerald-100/90 border border-emerald-300/80 shadow-flat">
-                    <div class="flex items-center gap-1.5 text-slate-800">
-                        <span class="flex items-center justify-center w-4 h-4 rounded-full bg-emerald-600 text-white text-micro font-black">1</span>
-                        <span class="text-ui-xs font-extrabold text-emerald-950">Stage 1:</span>
-                        <span class="text-ui-xs font-bold text-slate-700">Accumulation (SIP)</span>
+                <div id="stage-1-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-1.5 xl:py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-flat border border-emerald-500">
+                    <div class="flex items-center gap-1.5 text-white">
+                        <span class="flex items-center justify-center w-4 h-4 rounded-full bg-white text-emerald-700 text-micro font-black">1</span>
+                        <span class="text-ui-xs font-extrabold text-white">Stage 1:</span>
+                        <span class="text-ui-xs font-bold text-emerald-50">Accumulation (SIP)</span>
                     </div>
-                    <span class="text-micro font-extrabold text-emerald-950 bg-emerald-200/90 border border-emerald-300 px-2.5 py-0.5 rounded-full shadow-flat">
+                    <span class="text-micro font-extrabold text-white bg-white/20 border border-white/30 px-2.5 py-0.5 rounded-full shadow-flat">
                         Phase 1
                     </span>
                 </div>
@@ -92,13 +92,13 @@
             <!-- Stage 2 / SWP Panel -->
             <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="space-y-2 xl:space-y-3 border-t-4 border-blue-500 rounded-2xl bg-gradient-to-b from-blue-50/70 via-blue-50/40 to-indigo-50/20 p-2 xl:p-2.5 border border-blue-200/80 shadow-subtle transition-all">
                 <!-- Stage 2 Header (Visible in Dual Mode) -->
-                <div id="stage-2-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-1.5 xl:py-2 rounded-xl bg-blue-100/90 border border-blue-300/80 shadow-flat">
-                    <div class="flex items-center gap-1.5 text-slate-800">
-                        <span class="flex items-center justify-center w-4 h-4 rounded-full bg-blue-600 text-white text-micro font-black">2</span>
-                        <span class="text-ui-xs font-extrabold text-blue-950">Stage 2:</span>
-                        <span class="text-ui-xs font-bold text-slate-700">Retirement Cashflow (SWP)</span>
+                <div id="stage-2-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-1.5 xl:py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-flat border border-blue-500">
+                    <div class="flex items-center gap-1.5 text-white">
+                        <span class="flex items-center justify-center w-4 h-4 rounded-full bg-white text-blue-700 text-micro font-black">2</span>
+                        <span class="text-ui-xs font-extrabold text-white">Stage 2:</span>
+                        <span class="text-ui-xs font-bold text-blue-50">Retirement Cashflow (SWP)</span>
                     </div>
-                    <span class="text-micro font-extrabold text-blue-950 bg-blue-200/90 border border-blue-300 px-2.5 py-0.5 rounded-full shadow-flat">
+                    <span class="text-micro font-extrabold text-white bg-white/20 border border-white/30 px-2.5 py-0.5 rounded-full shadow-flat">
                         Phase 2
                     </span>
                 </div>

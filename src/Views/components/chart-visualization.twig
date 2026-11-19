@@ -132,11 +132,11 @@
             </div>
 
             <!-- Card 4: Final Corpus / Net Wealth / EMI (Institutional Executive Anchor - Pure Light Mode) -->
-            <div id="card-corpus" role="button" tabindex="0" title="Click to view final wealth corpus in Cashflow Ledger" class="{% if isFourCardMode %}col-span-1{% else %}col-span-2 xl:col-span-1{% endif %} bg-emerald-50/90 rounded-2xl border-2 border-emerald-600 shadow-card px-3.5 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-700 ring-2 ring-emerald-500/15 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 relative group flex flex-col justify-between min-w-0 cursor-pointer">
-                <div id="title-corpus" class="text-caption font-extrabold text-slate-700 uppercase tracking-wider mb-1 leading-tight flex items-center justify-between gap-1">
+            <div id="card-corpus" role="button" tabindex="0" title="Click to view final wealth corpus in Cashflow Ledger" class="{% if isFourCardMode %}col-span-1{% else %}col-span-2 xl:col-span-1{% endif %} bg-gradient-to-br from-emerald-100/90 via-emerald-50 to-teal-100/80 rounded-2xl border-2 border-emerald-500 shadow-card px-3.5 py-3 text-left overflow-hidden transition-all duration-200 hover:shadow-card-hover hover:border-emerald-600 ring-2 ring-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 relative group flex flex-col justify-between min-w-0 cursor-pointer">
+                <div id="title-corpus" class="text-caption font-extrabold text-slate-800 uppercase tracking-wider mb-1 leading-tight flex items-center justify-between gap-1">
                     <span id="title-corpus-text">{{ initial_kpis and initial_kpis.is_dual_mode ? ('Final Corpus @ Yr ' ~ initial_kpis.total_years) : card4Title }}</span>
                     <span id="summary-corpus-compact" class="hidden text-micro font-black text-emerald-950 bg-emerald-200/90 border border-emerald-300 px-2 py-0.5 rounded-full shadow-flat"></span>
-                    <span class="text-micro font-extrabold text-white bg-emerald-600 border border-emerald-700/80 px-2 py-0.5 rounded-full shadow-flat">
+                    <span class="text-micro font-extrabold text-white bg-emerald-600 border border-emerald-700/80 px-2 py-0.5 rounded-md shadow-flat">
                         Net Corpus
                     </span>
                 </div>

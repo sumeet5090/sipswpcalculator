@@ -5,7 +5,37 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** 4-Color Semantic Pillar System & Tonal Contrast Polish Complete — Pure Light-Mode Anchors (`border-t-4`, Solid 600-Weight Badges, Dynamic Accents across `resources.twig`, `home-guide-content.twig`, and Benchmark Tables) Verified Across Full Quality Suite.
+- **Current Milestone:** 5 Macro-Surface Contrast Upgrades Complete — High-Contrast Stage Headers, Anchored Card 4, Data Table Thead & Striping, Full-Bleed Section Bands, and Grounded Footer Shipped & Verified Across Full Quality Gate.
+- **Implemented Features & Fixes (2026-11-19 Session 34 - 5 Macro-Surface Contrast Upgrades):**
+  - **Macro Upgrade 1 — Test Token & Aesthetic Verification:**
+    - Confirmed ban rules in `TelemetryIntegrationTest.php` (`bg-slate-900`, `bg-slate-950`, `bg-gray-900`, `*-gray-*`) and `DesignTokenAuditTest.php` (legacy shadows `shadow-sm`, `shadow-md` prohibited; raw Tailwind font sizes prohibited in core calculator components).
+    - Verified that solid saturated semantic mid-tones (`bg-emerald-600`, `bg-blue-600`, `bg-indigo-600`) and high-contrast light neutrals (`bg-slate-200/90`, `border-slate-300`, `even:bg-slate-100/70`) are fully compliant with pure light-mode standards.
+  - **Macro Upgrade 2 — Solid Jewel-Tone Stage Header Bars & KPI Card 4 Anchor:**
+    - `src/Views/components/calculator-form.twig`:
+      - Stage 1 (Wealth Accumulation — SIP): Upgraded header strip to high-contrast `bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-flat border border-emerald-500` with white text and `bg-white/20 text-white` Phase 1 badge.
+      - Stage 2 (Retirement Cashflow — SWP): Upgraded header strip to high-contrast `bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-flat border border-blue-500` with white text and `bg-white/20 text-white` Phase 2 badge.
+    - `src/Views/components/chart-visualization.twig`:
+      - KPI Card 4 (`#card-corpus`): Anchored with richer gradient surface `bg-gradient-to-br from-emerald-100/90 via-emerald-50 to-teal-100/80 border-2 border-emerald-500 shadow-card` and solid pill badge `bg-emerald-600 text-white px-2 py-0.5 rounded-md shadow-flat`.
+  - **Macro Upgrade 3 — High-Contrast Data Table Headers & Row Striping:**
+    - `src/Views/components/yearly-breakdown-table.twig`: Upgraded `#breakdown-head` and all `<th>` cells to `bg-slate-200/90 text-slate-900 border-b-2 border-slate-300 font-extrabold text-caption` with `shadow-subtle`, and sticky `#th-year` to `bg-slate-200/95 border-b-2 border-slate-300 font-extrabold`.
+    - `assets/js/calculators/controllers/ResultsController.ts`: Set `TABLE_ROW_CLASS` to `even:bg-slate-100/70 hover:bg-emerald-50/70 border-b border-slate-200/60 transition-colors cursor-pointer`.
+    - `src/Views/components/benchmarks/sip-swp-dual.twig` & `src/Views/components/guide-risks.twig` & `src/Views/components/guide-historical-data.twig`: Upgraded table `<thead>` elements to `bg-slate-200/90 border-b-2 border-slate-300 text-slate-900 font-extrabold` and `[&>tr:nth-child(even)]:bg-slate-100/70`.
+  - **Macro Upgrade 4 — Hero Mesh Header Wash & Full-Bleed Section Bands:**
+    - `src/Views/calculators/home.twig`: Upgraded hero `<header>` to `-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 pt-4 pb-6 sm:pb-8 mb-4 sm:mb-6 text-center bg-gradient-to-b from-emerald-100/70 via-teal-50/40 to-transparent border-b border-emerald-200/60 rounded-b-3xl`.
+    - Wrapped `components/scenario-benchmark-table.twig` in `-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-10 sm:py-14 bg-indigo-50/70 border-y border-indigo-200/80 my-8 sm:my-12`.
+    - `src/Views/components/home-guide-content.twig`: Wrapped Real-World Examples in `bg-amber-50/60 border-y border-amber-200/80` and Risks & Taxation §112A in `bg-blue-50/60 border-y border-blue-200/80`.
+    - `src/Views/pages/resources.twig`: Added category-matched tinted card header boxes (`bg-emerald-50/90 border-b border-emerald-100`, `bg-blue-50/90 border-b border-blue-100`, `bg-indigo-50/90 border-b border-indigo-100`, `bg-amber-50/90 border-b border-amber-100`) and matching solid 600-weight action arrows.
+  - **Macro Upgrade 5 — Grounded Architectural Footer:**
+    - `src/Views/layouts/footer.twig`: Upgraded footer container to `bg-slate-200/90 border-t-2 border-slate-300/90 shadow-card relative overflow-hidden p-6 sm:p-10` with top rainbow line `<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-blue-600 to-indigo-600"></div>` and crisp contrast disclaimer box `bg-white/95 border border-slate-300/90`.
+  - **Pre-Commit Verification & Quality Gate:**
+    - `npm run typecheck && npm run build`: 0 errors (Vite built `dist/assets/app-BI6cahKr.css` `205.40 kB`, `dist/assets/app-BrcMaG8T.js` `335.07 kB`).
+    - `php tests/parity_check.php`: 71/71 financial math parity cases passed 100%.
+    - `vendor/bin/phpunit`: 820 tests, 12,776 assertions passed with 0 errors, 0 failures.
+    - `vendor/bin/phpstan analyse --memory-limit=1G`: 253/253 files checked, 0 errors (Level Max).
+    - `vendor/bin/phpcs`: 253/253 files checked, 100% PSR-12 clean.
+    - `tests/Unit/DesignTokenAuditTest.php` & `tests/Unit/TelemetryIntegrationTest.php`: 23/23 tests passed (0 prohibited dark classes, 0 prohibited gray-* classes, 0 legacy shadows, 0 raw text sizes in core components).
+    - `tests/Integration/HomepageLayoutAndAestheticsTest.php`: 1 test, 28 assertions passed (HTTP 200, 0 duplicate IDs, all schema and studio anchors intact).
+    - Local SSR check (`/` and `/resources`): 100% verified all contrast classes rendered properly.
 - **Implemented Features & Fixes (2026-11-19 Session 33 - 4-Color Semantic Pillar System & Tonal Contrast Polish):**
   - **4-Color Semantic Pillar Architecture Established:**
     - **Pillar 1 — Emerald (`emerald-600` / `#059669`):** Stage 1 SIP & Wealth Accumulation (SIP, Step-Up SIP, Lumpsum, CAGR, Compound Interest, Definitions, How-To, Math Transparency proofs, and SIP Returns Benchmark Matrix).
