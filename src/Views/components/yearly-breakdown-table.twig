@@ -56,7 +56,7 @@
         <div class="hidden sm:flex flex-wrap items-center gap-2 w-full xl:w-auto justify-start xl:justify-end">
             <!-- Consolidated Export & Share Dropdown -->
             <details class="relative inline-block text-left group" id="export-share-dropdown">
-                <summary class="list-none inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 border-2 border-slate-300 hover:border-emerald-500 hover:text-emerald-700 text-ui-xs font-extrabold transition-all shadow-flat active:scale-95 cursor-pointer">
+                <summary class="list-none inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-300 hover:border-slate-400 text-ui-xs font-bold transition-all shadow-flat active:scale-95 cursor-pointer">
                     <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
                     </svg>
@@ -142,19 +142,19 @@
         <div id="table-scroll-wrapper" class="hidden sm:block max-h-[600px] overflow-y-auto overflow-x-auto custom-scrollbar">
             <table id="results-table" class="w-full text-ui-xs sm:text-ui-sm relative border-separate border-spacing-0">
                 <thead id="breakdown-head"
-                    class="bg-slate-200/90 text-caption uppercase font-extrabold text-slate-900 sticky top-0 z-20 shadow-subtle border-b-2 border-slate-300">
+                    class="bg-slate-50/95 text-micro uppercase font-bold text-slate-700 tracking-wider sticky top-0 z-20 shadow-subtle border-b border-slate-200/90">
                     <tr>
-                        <th scope="col" id="th-year" class="px-3.5 lg:px-5 py-3.5 text-left sticky left-0 z-30 table-sticky-col-0 bg-slate-200/95 shadow-[3px_0_8px_-2px_rgba(15,23,42,0.06)] border-b-2 border-slate-300 font-extrabold text-slate-900 whitespace-nowrap min-w-[5rem]">Year</th>
-                        <th scope="col" id="th-begin-balance" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-200/90 border-b-2 border-slate-300 whitespace-nowrap text-slate-800">Start Corpus</th>
-                        <th scope="col" id="th-sip-monthly" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-200/90 border-b-2 border-slate-300 text-growth-emphasis whitespace-nowrap">Monthly SIP</th>
-                        <th scope="col" id="th-annual-sip" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-200/90 border-b-2 border-slate-300 text-growth-emphasis whitespace-nowrap">Annual SIP</th>
-                        <th scope="col" id="th-total-invested" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-200/90 border-b-2 border-slate-300 whitespace-nowrap text-slate-900">Total Invested</th>
-                        <th scope="col" id="th-swp-monthly" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-200/90 border-b-2 border-slate-300 text-rose-800 whitespace-nowrap">Monthly SWP</th>
-                        <th scope="col" id="th-annual-swp" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-200/90 border-b-2 border-slate-300 text-rose-800 whitespace-nowrap">Annual SWP</th>
-                        <th scope="col" id="th-total-withdrawn" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-200/90 border-b-2 border-slate-300 text-slate-900 whitespace-nowrap">Total Withdrawn</th>
-                        <th scope="col" id="th-interest" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-200/90 border-b-2 border-slate-300 text-growth-emphasis whitespace-nowrap">Annual Gain</th>
-                        <th scope="col" id="th-tax" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-200/90 border-b-2 border-slate-300 text-indigo-900 whitespace-nowrap">LTCG Tax (§112A)</th>
-                        <th scope="col" id="th-end-corpus" class="px-3.5 lg:px-5 py-3.5 text-right bg-slate-200/90 border-b-2 border-slate-300 font-extrabold text-slate-900 whitespace-nowrap">End Corpus</th>
+                        <th scope="col" id="th-year" class="px-3.5 lg:px-5 py-3 text-left sticky left-0 z-30 table-sticky-col-0 bg-slate-50/98 shadow-[3px_0_8px_-2px_rgba(15,23,42,0.06)] border-b border-slate-200/90 font-bold text-slate-900 whitespace-nowrap min-w-[5rem]">Year</th>
+                        <th scope="col" id="th-begin-balance" class="px-3.5 lg:px-5 py-3 text-right bg-slate-50/95 border-b border-slate-200/90 whitespace-nowrap text-slate-700">Start Corpus</th>
+                        <th scope="col" id="th-sip-monthly" class="px-3.5 lg:px-5 py-3 text-right bg-slate-50/95 border-b border-slate-200/90 text-growth-emphasis whitespace-nowrap">Monthly SIP</th>
+                        <th scope="col" id="th-annual-sip" class="px-3.5 lg:px-5 py-3 text-right bg-slate-50/95 border-b border-slate-200/90 text-growth-emphasis whitespace-nowrap">Annual SIP</th>
+                        <th scope="col" id="th-total-invested" class="px-3.5 lg:px-5 py-3 text-right bg-slate-50/95 border-b border-slate-200/90 whitespace-nowrap text-slate-900 font-bold">Total Invested</th>
+                        <th scope="col" id="th-swp-monthly" class="px-3.5 lg:px-5 py-3 text-right bg-slate-50/95 border-b border-slate-200/90 text-rose-700 whitespace-nowrap">Monthly SWP</th>
+                        <th scope="col" id="th-annual-swp" class="px-3.5 lg:px-5 py-3 text-right bg-slate-50/95 border-b border-slate-200/90 text-rose-700 whitespace-nowrap">Annual SWP</th>
+                        <th scope="col" id="th-total-withdrawn" class="px-3.5 lg:px-5 py-3 text-right bg-slate-50/95 border-b border-slate-200/90 text-slate-900 whitespace-nowrap">Total Withdrawn</th>
+                        <th scope="col" id="th-interest" class="px-3.5 lg:px-5 py-3 text-right bg-slate-50/95 border-b border-slate-200/90 text-growth-emphasis whitespace-nowrap">Annual Gain</th>
+                        <th scope="col" id="th-tax" class="px-3.5 lg:px-5 py-3 text-right bg-slate-50/95 border-b border-slate-200/90 text-indigo-700 whitespace-nowrap">LTCG Tax (§112A)</th>
+                        <th scope="col" id="th-end-corpus" class="px-3.5 lg:px-5 py-3 text-right bg-slate-50/95 border-b border-slate-200/90 font-bold text-slate-900 whitespace-nowrap">End Corpus</th>
                     </tr>
                 </thead>
                 <tbody id="breakdown-body" class="divide-y divide-slate-100 text-slate-600 font-financial-mono"></tbody>

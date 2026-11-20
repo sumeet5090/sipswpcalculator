@@ -236,13 +236,13 @@ export class StrategyBlueprintController {
             btn.setAttribute('aria-pressed', 'false');
             btn.classList.remove(
                 'border-emerald-600',
-                'bg-emerald-600',
+                'bg-emerald-700',
                 'text-white',
                 'ring-2',
-                'ring-emerald-400/30',
-                'shadow-card'
+                'ring-emerald-500/20',
+                'shadow-flat'
             );
-            btn.classList.add('border-slate-200/90', 'bg-white', 'text-slate-900');
+            btn.classList.add('border-slate-200/90', 'bg-white', 'text-slate-800');
         });
 
         const badge = this.dom.getElement('narrative-strategy-badge');
@@ -282,23 +282,23 @@ export class StrategyBlueprintController {
             if (isSelected) {
                 btn.classList.add(
                     'border-emerald-600',
-                    'bg-emerald-600',
+                    'bg-emerald-700',
                     'text-white',
                     'ring-2',
-                    'ring-emerald-400/30',
-                    'shadow-card'
+                    'ring-emerald-500/20',
+                    'shadow-flat'
                 );
-                btn.classList.remove('border-slate-200/90', 'bg-white', 'text-slate-900');
+                btn.classList.remove('border-slate-200/90', 'bg-white', 'text-slate-800');
             } else {
                 btn.classList.remove(
                     'border-emerald-600',
-                    'bg-emerald-600',
+                    'bg-emerald-700',
                     'text-white',
                     'ring-2',
-                    'ring-emerald-400/30',
-                    'shadow-card'
+                    'ring-emerald-500/20',
+                    'shadow-flat'
                 );
-                btn.classList.add('border-slate-200/90', 'bg-white', 'text-slate-900');
+                btn.classList.add('border-slate-200/90', 'bg-white', 'text-slate-800');
             }
         });
     }

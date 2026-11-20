@@ -1,11 +1,36 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-19*
+*Last Updated: 2026-11-20*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Alternative Light-Mode Focal Anchor (Unified Daylight & Jewel-Tone Palette) Complete — Replaced dark midnight blocks with institutional emerald/teal jewel-tone gradients and crisp daylight toolbars; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and SSR verification.
+- **Current Milestone:** Understated Executive FinTech Color Refinement (Linear & Stripe Aesthetic) Complete — Replaced heavy saturated color blocks with luminous daylight canopies, refined daylight anchors, disciplined toolbars, and precision table headers; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and SSR verification.
+- **Implemented Features & Fixes (2026-11-20 Session 37 - Understated Executive FinTech Theme):**
+  - **Design Governance & Rule Codification (`.agents/AGENTS.md`):**
+    - Codified the **Understated Executive FinTech Theme (Linear & Stripe Aesthetic)**: eliminated heavy, oversaturated color masses across the page in favor of luminous daylight canopies, precision micro-borders, commanding dark typography, and disciplined jewel CTAs.
+  - **Component Template Implementations:**
+    - `src/Views/calculators/home.twig`:
+      - Hero `<header>`: Upgraded to a Luminous Architectural Daylight Canopy (`bg-gradient-to-b from-slate-50 via-white to-slate-50/60 text-slate-900 border-b border-slate-200/90 shadow-subtle`) with soft ambient emerald aura (`bg-emerald-500/8 blur-3xl`), sharp `text-slate-900` and `text-emerald-700` typography, clean trust signals, and a solid emerald `[Free Excel Model]` conversion CTA (`bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold`).
+      - Unified below-the-fold full-bleed chapter bands from conflicting pastel colors to an architectural alternating cadence: `bg-slate-50/80 border-y border-slate-200/70` for benchmark and guide breakout bands, framing clean white cards with zero rainbow clashes.
+    - `src/Views/components/home-guide-content.twig`:
+      - Replaced `bg-amber-50` and `bg-blue-50` full-bleed section bands with `bg-slate-50/80 border-y border-slate-200/70`, maintaining targeted semantic card accents (`border-t-amber-500`, `border-t-blue-500`).
+    - `src/Views/components/chart-visualization.twig`:
+      - Card 4 (`#card-corpus`): Refined into an **Executive Daylight Anchor** (`bg-gradient-to-br from-white via-emerald-50/40 to-teal-50/30 text-slate-900 rounded-2xl border-2 border-emerald-600 shadow-card ring-2 ring-emerald-500/15`). Metric numbers in commanding `text-slate-900 font-black font-financial-mono`, subtext in `text-emerald-700`, and badge in solid emerald pill `bg-emerald-600 text-white`.
+    - `src/Views/components/strategy-starter.twig`:
+      - Refined preset toolbar to crisp daylight console `bg-slate-50/90 border border-slate-200/90 shadow-flat` with clean white cards (`bg-white border-slate-200/90 text-slate-800`), muted slate tenure tags (`bg-slate-100 text-slate-600 border border-slate-200/80`), and solid emerald active state.
+    - `assets/js/calculators/controllers/StrategyBlueprintController.ts`:
+      - Updated `resetActiveState()` and `updateButtonsVisualState()` to toggle `border-emerald-600 bg-emerald-700 text-white ring-2 ring-emerald-500/20 shadow-flat` when selected, and revert to `border-slate-200/90 bg-white text-slate-800` when unselected.
+    - `src/Views/components/yearly-breakdown-table.twig`:
+      - Upgraded `#breakdown-head` to a Precision Ledger Header (`bg-slate-50/95 text-slate-700 border-b border-slate-200/90 font-bold uppercase text-micro tracking-wider shadow-subtle`) with sticky year column `#th-year` in `bg-slate-50/98 text-slate-900`.
+      - Refined `#export-share-dropdown` summary button to crisp daylight executive styling (`bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-300`).
+  - **Test Suite Calibration & Quality Gates:**
+    - `tests/Unit/ArchetypeInjectorTest.php`: Updated to validate `bg-slate-50`, `bg-slate-100`, and zero `bg-slate-900`.
+    - `tests/Unit/TelemetryIntegrationTest.php`: Verified 0 prohibited dark classes and light-mode compliance.
+    - `npm run typecheck && npm run build`: 0 errors (Vite built `dist/assets/app-Cs4NZ6XF.css` `208.95 kB`, `dist/assets/app-DtlfCaQq.js` `335.15 kB`).
+    - `php tests/parity_check.php`: 71/71 tests PASS.
+    - `composer check-all`: 253/253 PHPStan files checked (Level Max OK), 253/253 PHPCS PSR-12 clean, 820/820 PHPUnit tests PASS (12,776 assertions).
+    - Direct local SSR verification on port 9016: verified all refined tokens render with HTTP 200 OK.
 - **Implemented Features & Fixes (2026-11-19 Session 36 - Alternative Light-Mode Focal Anchor):**
   - **Design Governance & Rule Codification (`.agents/AGENTS.md`):**
     - Codified the **Executive Daylight & Jewel-Tone FinTech Theme**: eliminated visual seam tension caused by stacking pitch-dark blocks (`bg-slate-950`, `bg-slate-900`) directly over the daylight interactive calculator workspace.

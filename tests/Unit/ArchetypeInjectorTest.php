@@ -52,6 +52,7 @@ final class ArchetypeInjectorTest extends TestCase
         $this->assertStringContainsString('border-slate-200', $this->strategyStarterTwig);
 
         // Toolbar uses crisp daylight slate console strip
+        $this->assertStringContainsString('bg-slate-50', $this->strategyStarterTwig);
         $this->assertStringContainsString('bg-slate-100', $this->strategyStarterTwig);
         $this->assertStringNotContainsString('bg-slate-900', $this->strategyStarterTwig);
         $this->assertStringContainsString('persona-btn', $this->strategyStarterTwig);
