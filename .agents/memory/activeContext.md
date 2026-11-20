@@ -1,11 +1,56 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-20*
+*Last Updated: 2026-11-21*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Deep Form Controls, Range Sliders & Hero Canopy Visual Contrast Refinements Complete — Delivered punchy Hero branding, high-contrast slider tracks & thumbs, crisp numeric stepper capsules, and authoritative stage panel enclosures; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and SSR verification.
+- **Current Milestone:** Warm Amber & Golden Harvest Palette with Authentic Glassmorphism Refinement Complete — Eliminated generic blue across the entire calculator workspace in favor of Warm Amber (`amber-500` through `amber-800`), reinstated authentic frosted glassmorphism (`backdrop-blur-md`, `bg-white/85` to `bg-white/95`, specular highlights, and crisp borders) across the workbench, form cards, and stage panels; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and SSR verification.
+- **Implemented Features & Fixes (2026-11-21 Session 39 - Warm Amber Palette & Glassmorphism Refinements):**
+  - **CSS Engine & Utility Layer (`resources/css/input.css`, `resources/css/styles.css`):**
+    - `@utility fintech-glass-card`: Enhanced with authentic glassmorphic specification (`background-color: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9), var(--shadow-card)`).
+    - Amber Range Sliders: Added `.accent-amber-500, .accent-amber-600` track fill gradients (`#f59e0b` to `#d97706`) and tactile thumbs (`background: #d97706; border: 2.5px solid #ffffff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(217, 119, 6, 0.25)`), including mobile touch scaling and hover/active states. Maintained backward-compatible aliases for blue tokens.
+    - Preset Chips: Added `.preset-chip.is-active-amber` with solid amber-600 active fill, amber-700 border, and warm focus glow.
+  - **TypeScript Controllers (`assets/js/calculators/SliderManager.ts`):**
+    - Extended `activeColorClasses` with `is-active-amber`, `bg-amber-600`, and `border-amber-600`.
+    - Added `isAmberTheme` detection in `_updatePresetChips()` to dynamically toggle amber active states when preset values match.
+  - **Component Template Implementations:**
+    - `src/Views/components/calculator-form.twig`:
+      - `#calculator-app` container: Upgraded to `bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200/90 shadow-card`.
+      - `#tab-swp` mode selector tab: Replaced blue text and indicator dot with `bg-white text-amber-900 shadow-flat` and `bg-amber-600`.
+      - Stage 1 (SIP) Panel (`#panel-sip`): Upgraded to frosted emerald glass (`bg-gradient-to-b from-emerald-50/70 via-emerald-50/30 to-white/90 backdrop-blur-md border-2 border-emerald-300/90 border-t-4 border-emerald-600`).
+      - Stage Transition Divider (`#stage-transition-divider`): Transition track updated to `from-emerald-400 via-teal-400 to-amber-400` and `from-amber-400 to-amber-500`, with center pill badge `from-emerald-700 via-teal-700 to-amber-700 text-white`.
+      - Stage 2 (SWP) Panel (`#panel-swp`): Upgraded to frosted amber glass (`border-t-4 border-amber-600 bg-gradient-to-b from-amber-50/70 via-amber-50/30 to-white/90 backdrop-blur-md border-2 border-amber-300/90 shadow-card`).
+      - Stage 2 Header (`#stage-2-header`): Upgraded to solid amber gradient (`bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 text-white shadow-card border-2 border-amber-500`) with `text-amber-800` numeral and `text-amber-50` subtext.
+      - Starting Wealth labels: Updated to high-contrast `text-amber-800`.
+      - Fixed Deposit Panel: Modernized from legacy blue to classic Sovereign Indigo/Slate (`border-t-4 border-indigo-600`, `bg-indigo-100/90`, `bg-indigo-600 text-white`, `text-indigo-950`).
+    - `src/Views/components/form/input-range-pair.twig`:
+      - Field Card Enclosures: Upgraded to frosted glass cards (`bg-white/85 backdrop-blur-md border-2 border-slate-200/90 hover:border-slate-300 shadow-flat hover:shadow-subtle rounded-2xl`).
+      - Theme Mapping: Supported `amber` with `focus-within:border-amber-500 focus-within:ring-amber-500/20`, `accent-amber-600`, and `is-active-amber bg-amber-600`.
+    - `src/Views/components/forms/swp-fields.twig`:
+      - Updated `swp_withdrawal`, `swp_years`, `swp_rate`, and `swp_stepup` to `'theme': 'amber'` with `focus:border-amber-500 focus:ring-amber-500/20`.
+      - Updated Inflation Escalation badge to `text-amber-900 bg-amber-100/90 border border-amber-300/80` and icon to `text-amber-600`.
+    - `src/Views/components/forms/corpus-field.twig`:
+      - Updated dedicated starting corpus field to `'theme': 'amber'`.
+    - `src/Views/components/chart-visualization.twig`:
+      - Wealth Ribbon Scoreboard container: Upgraded to `bg-slate-100/80 backdrop-blur-md border border-slate-200/90 shadow-subtle`.
+      - Cards 1 & 2 (`#card-invested`, `#card-maturity`): Upgraded to frosted glass (`bg-white/90 backdrop-blur-sm`).
+      - Card 3 (`#card-withdrawn`): Upgraded to frosted glass (`bg-white/90 backdrop-blur-sm`), focus ring `focus:ring-amber-500/40`, and compact badge `bg-amber-100/90 text-amber-900 border border-amber-300/80`.
+      - Chart Card (`#chart-card`): Upgraded to `bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200/90 shadow-card`.
+    - `src/Views/components/benchmarks/sip-swp-dual.twig`:
+      - Replaced all blue banner, text, and badge classes with warm amber equivalents (`border-t-amber-500`, `bg-amber-50/50`, `text-amber-900`, `bg-amber-100/90 border-amber-300`, `text-amber-950 bg-amber-100/60`).
+    - `src/Views/components/strategy-starter.twig`:
+      - Updated FIRE Pension icon to `text-amber-600` and quiz choice to `hover:border-amber-500 bg-amber-50 border-amber-200 text-amber-700`.
+    - `src/Views/components/home-guide-content.twig`:
+      - Updated Risks & Taxation card to `border-t-amber-500`.
+    - `src/Views/layouts/footer.twig`:
+      - Updated top decorative gradient to `from-emerald-500 via-teal-500 to-amber-500`.
+  - **Pre-Commit Verification & Quality Gates:**
+    - `npm run typecheck && npm run build`: 0 errors (Vite built `dist/assets/app-DtX5DQX_.css` `215.87 kB`, `dist/assets/app-DQUg4P5q.js` `335.28 kB`).
+    - `php tests/parity_check.php`: 71/71 mathematical engine parity tests PASS.
+    - `vendor/bin/phpunit tests/Unit/...`: 32 tests, 214 assertions PASS (Unit suite).
+    - `vendor/bin/phpunit tests/Integration/HomepageLayoutAndAestheticsTest.php`: 1 test, 28 assertions PASS.
+    - `composer check-all`: 253/253 PHPStan files checked (Level Max OK), 253/253 PHPCS PSR-12 clean, 820/820 PHPUnit tests PASS (12,776 assertions).
 - **Implemented Features & Fixes (2026-11-20 Session 38 - Deep Form Controls, Sliders & Hero Canopy Refinements):**
   - **Component Template Implementations:**
     - `src/Views/calculators/home.twig`:

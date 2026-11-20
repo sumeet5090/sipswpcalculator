@@ -548,19 +548,23 @@ export class SliderManager {
             'bg-slate-50', 'text-slate-700', 'border-slate-200/90', 'hover:border-slate-300', 'hover:bg-slate-100', 'hover:text-slate-900',
             'bg-slate-50/90', 'text-slate-600', 'border-transparent', 'bg-slate-100/80', 'hover:bg-slate-200/80', 'shadow-none'
         ];
-        const activeColorClasses = ['is-active', 'is-active-rose', 'is-active-blue', 'bg-emerald-600', 'bg-rose-600', 'bg-blue-600', 'text-white', 'border-emerald-600', 'border-rose-600', 'border-blue-600', 'shadow-flat'];
+        const activeColorClasses = [
+            'is-active', 'is-active-rose', 'is-active-blue', 'is-active-amber',
+            'bg-emerald-600', 'bg-rose-600', 'bg-blue-600', 'bg-amber-600',
+            'text-white', 'border-emerald-600', 'border-rose-600', 'border-blue-600', 'border-amber-600', 'shadow-flat'
+        ];
 
         chips.forEach(chip => {
             const presetVal = parseFloat(chip.dataset.presetVal || '');
             const isActive = (!isNaN(presetVal) && Math.abs(presetVal - currentVal) < 0.01);
-            const isBlueTheme = chip.classList.contains('is-active-blue') || chip.closest('[data-field-id]')?.querySelector('.accent-blue-500, .accent-blue-600') !== null;
+            const isAmberTheme = chip.classList.contains('is-active-amber') || chip.classList.contains('is-active-blue') || chip.closest('[data-field-id]')?.querySelector('.accent-amber-500, .accent-amber-600, .accent-blue-500, .accent-blue-600') !== null;
             const isRoseTheme = chip.classList.contains('is-active-rose') || chip.closest('[data-field-id]')?.querySelector('.accent-rose-500, .accent-rose-600') !== null;
 
             if (isActive) {
                 chip.setAttribute('aria-pressed', 'true');
                 chip.classList.remove(...inactiveClasses);
-                if (isBlueTheme) {
-                    chip.classList.add('is-active-blue', 'bg-blue-600', 'text-white', 'border-blue-600', 'shadow-flat');
+                if (isAmberTheme) {
+                    chip.classList.add('is-active-amber', 'bg-amber-600', 'text-white', 'border-amber-600', 'shadow-flat');
                 } else if (isRoseTheme) {
                     chip.classList.add('is-active-rose', 'bg-rose-600', 'text-white', 'border-rose-600', 'shadow-flat');
                 } else {
