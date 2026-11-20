@@ -5,7 +5,37 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Understated Executive FinTech Color Refinement (Linear & Stripe Aesthetic) Complete — Replaced heavy saturated color blocks with luminous daylight canopies, refined daylight anchors, disciplined toolbars, and precision table headers; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and SSR verification.
+- **Current Milestone:** Deep Form Controls, Range Sliders & Hero Canopy Visual Contrast Refinements Complete — Delivered punchy Hero branding, high-contrast slider tracks & thumbs, crisp numeric stepper capsules, and authoritative stage panel enclosures; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and SSR verification.
+- **Implemented Features & Fixes (2026-11-20 Session 38 - Deep Form Controls, Sliders & Hero Canopy Refinements):**
+  - **Component Template Implementations:**
+    - `src/Views/calculators/home.twig`:
+      - Hero `<header>` Canopy: Refined to `from-slate-100 via-slate-50 to-white text-slate-900 border-b-2 border-emerald-500/50 shadow-card relative overflow-hidden` with ambient top shimmer `bg-emerald-500/12 blur-3xl`.
+      - Eyebrow pill: Upgraded to `bg-emerald-100/90 border-2 border-emerald-300/90 text-emerald-900 font-black shadow-flat`.
+      - H1 Heading: Deepened contrast with `bg-gradient-to-r from-emerald-800 via-teal-800 to-emerald-900 bg-clip-text text-transparent font-black` + `text-slate-900 font-extrabold`.
+      - Trust & Authority Signals: Wrapped author, SEBI-aligned methodology, and calculation run count in distinct architectural daylight cards with `border border-slate-300/90 bg-white shadow-flat`.
+      - `[Free Excel Model]` Button: Solid punchy emerald CTA (`bg-emerald-600 hover:bg-emerald-700 text-white font-black px-4 py-2 rounded-xl shadow-card active:scale-95 transition-all cursor-pointer border border-emerald-500`).
+    - `src/Views/components/form/input-range-pair.twig`:
+      - Input Field Cards: Elevated to `border-2 border-slate-200/90 hover:border-slate-400 bg-white p-2.5 xl:p-3 shadow-flat hover:shadow-subtle rounded-2xl` for distinct tactile boundaries.
+      - Numeric Stepper Capsule: Upgraded to `relative inline-flex items-center rounded-xl bg-white border-2 border-slate-300 focus-within:ring-2 transition-all shadow-flat overflow-hidden shrink-0`.
+      - Stepper Buttons (`-` and `+`): Upgraded to high-contrast `bg-slate-100 hover:bg-slate-200 text-slate-800 hover:text-slate-950 font-black border-r/l border-slate-300`.
+      - Numeric Input: Crisp high-contrast `text-slate-950 font-black font-financial-mono text-ui-sm sm:text-body`.
+      - Currency Symbol: Crisp `text-slate-600 font-extrabold`.
+    - `resources/css/input.css`:
+      - Range Slider Track: Upgraded height to `7px` with unfilled track background deepened from `#e2e8f0` (slate-200) to `#cbd5e1` (slate-300) for distinct visual progress against daylight cards.
+      - Slider Thumbs: Upgraded emerald thumb to `20px` with `margin-top: -6.5px`, `border: 2.5px solid #ffffff`, and `box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(16, 185, 129, 0.25)` for high tactile contrast. Synchronized blue thumb for SWP sliders.
+    - `src/Views/components/calculator-form.twig`:
+      - Dual Mode Stage 1 Panel (`#panel-sip`): Upgraded to `border-t-4 border-emerald-600 rounded-2xl bg-gradient-to-b from-emerald-50/80 via-emerald-50/40 to-white p-2.5 xl:p-3 border-2 border-emerald-300/90 shadow-card transition-all`.
+      - Dual Mode Stage 1 Header (`#stage-1-header`): Upgraded to `bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 text-white shadow-card border-2 border-emerald-500` with bold `w-5 h-5` badge and Phase 1 pill.
+      - Dual Mode Stage Transition Indicator (`#stage-transition-divider`): Elevated to `bg-gradient-to-r from-emerald-700 via-teal-700 to-blue-700 text-white border-2 border-white text-micro font-black shadow-card` with connecting gradient tracks.
+      - Dual Mode Stage 2 Panel (`#panel-swp`): Upgraded to `border-t-4 border-blue-600 rounded-2xl bg-gradient-to-b from-blue-50/80 via-blue-50/40 to-white p-2.5 xl:p-3 border-2 border-blue-300/90 shadow-card transition-all`.
+      - Dual Mode Stage 2 Header (`#stage-2-header`): Upgraded to `bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 text-white shadow-card border-2 border-blue-500` with bold `w-5 h-5` badge.
+      - Standalone Single-Calculator Enclosures & Headers: Upgraded SIP, SWP, Lumpsum, Target Corpus, Compound Interest, CAGR, EMI, Inflation, PPF, and FD panels with matching crisp `border-2 border-*-300/90 shadow-card` enclosures and `border-2 border-*-300/90 shadow-flat` headers.
+  - **Pre-Commit Verification & Quality Gates:**
+    - `npm run typecheck && npm run build`: 0 errors (Vite built `dist/assets/app-DPcUf0Ki.css` `211.27 kB`, `dist/assets/app-DfhvYFve.js` `335.15 kB`).
+    - `php tests/parity_check.php`: 71/71 mathematical engine parity tests PASS.
+    - `vendor/bin/phpunit tests/Unit/...`: 32 tests, 214 assertions PASS (Unit suite).
+    - `vendor/bin/phpunit tests/Integration/HomepageLayoutAndAestheticsTest.php`: 1 test, 28 assertions PASS.
+    - `composer check-all`: 253/253 PHPStan files checked (Level Max OK), 253/253 PHPCS PSR-12 clean, 820/820 PHPUnit tests PASS (12,776 assertions).
 - **Implemented Features & Fixes (2026-11-20 Session 37 - Understated Executive FinTech Theme):**
   - **Design Governance & Rule Codification (`.agents/AGENTS.md`):**
     - Codified the **Understated Executive FinTech Theme (Linear & Stripe Aesthetic)**: eliminated heavy, oversaturated color masses across the page in favor of luminous daylight canopies, precision micro-borders, commanding dark typography, and disciplined jewel CTAs.
