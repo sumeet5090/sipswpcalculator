@@ -240,9 +240,11 @@ export class StrategyBlueprintController {
                 'text-white',
                 'ring-2',
                 'ring-emerald-500/20',
+                'ring-emerald-500/25',
+                'shadow-card',
                 'shadow-flat'
             );
-            btn.classList.add('border-slate-200/90', 'bg-white', 'text-slate-800');
+            btn.classList.add('border-slate-200/80', 'bg-white/90', 'text-slate-800');
         });
 
         const badge = this.dom.getElement('narrative-strategy-badge');
@@ -285,20 +287,20 @@ export class StrategyBlueprintController {
                     'bg-emerald-700',
                     'text-white',
                     'ring-2',
-                    'ring-emerald-500/20',
-                    'shadow-flat'
+                    'ring-emerald-500/25',
+                    'shadow-card'
                 );
-                btn.classList.remove('border-slate-200/90', 'bg-white', 'text-slate-800');
+                btn.classList.remove('border-slate-200/80', 'bg-white/90', 'text-slate-800');
             } else {
                 btn.classList.remove(
                     'border-emerald-600',
                     'bg-emerald-700',
                     'text-white',
                     'ring-2',
-                    'ring-emerald-500/20',
-                    'shadow-flat'
+                    'ring-emerald-500/25',
+                    'shadow-card'
                 );
-                btn.classList.add('border-slate-200/90', 'bg-white', 'text-slate-800');
+                btn.classList.add('border-slate-200/80', 'bg-white/90', 'text-slate-800');
             }
         });
     }

@@ -5,7 +5,27 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Warm Amber & Golden Harvest Palette with Authentic Glassmorphism Refinement Complete — Eliminated generic blue across the entire calculator workspace in favor of Warm Amber (`amber-500` through `amber-800`), reinstated authentic frosted glassmorphism (`backdrop-blur-md`, `bg-white/85` to `bg-white/95`, specular highlights, and crisp borders) across the workbench, form cards, and stage panels; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and SSR verification.
+- **Current Milestone:** Strategy Blueprint Toolbar & Persona Drawer Glassmorphic Refinement Complete — Elevated the preset console strip, archetype cards, and 3-step interactive wealth wizard modal with multi-layer frosted glass surfaces (`backdrop-blur-md` and `backdrop-blur-xl`), dual ambient shimmer glow orbs (`emerald-500/12` accumulation and `amber-500/12` harvest), tactile hover-lift micro-interactions, glowing active states, and synchronized TypeScript visual transitions; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and SSR verification.
+- **Implemented Features & Fixes (2026-11-21 Session 40 - Strategy Blueprint & Persona Drawer Glassmorphic Refinement):**
+  - **Component Template Implementations (`src/Views/components/strategy-starter.twig`):**
+    - `#strategy-starter-container`: Upgraded toolbar surface to layered frosted glass (`bg-slate-50/80 backdrop-blur-md border border-slate-200/90 shadow-card relative overflow-hidden`) with ambient emerald (`-left-8 -top-8 bg-emerald-500/12 blur-2xl`) and amber (`-right-8 -bottom-8 bg-amber-500/12 blur-2xl`) glow spheres.
+    - Persona Blueprint Cards (`.persona-btn`): Refined default state to tactile frosted cards (`border-2 border-slate-200/80 bg-white/90 backdrop-blur-sm hover:border-emerald-500/50 hover:bg-white text-slate-800 shadow-flat hover:shadow-card hover:-translate-y-0.5 active:scale-95 transition-all duration-200`).
+    - Tenure Badges inside cards: Refined with frosted translucent pill tags (`bg-slate-100/90 border border-slate-200/80 font-financial-mono font-bold text-slate-700`).
+    - Wizard Launch Button (`#toggle-guided-wizard-btn`): Upgraded to glowing jewel CTA (`bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white shadow-card hover:shadow-card-hover border-2 border-emerald-400/80 ring-2 ring-emerald-500/20 active:scale-95`).
+    - 3-Step Guided Wizard Modal (`#wealth-guided-wizard-drawer`):
+      - Backdrop Overlay: Refined to frosted high-contrast veil (`bg-slate-950/60 backdrop-blur-md`).
+      - Modal Container: Upgraded to frosted executive daylight card (`bg-white/98 backdrop-blur-xl text-slate-900 rounded-3xl p-5 sm:p-7 shadow-modal border-2 border-slate-200/90`) with ambient corner shimmers (`emerald-500/12` and `amber-500/12`).
+      - Choice Option Cards (`.quiz-choice`): Refined to frosted glass cards (`bg-slate-50/90 backdrop-blur-sm border-2 border-slate-200/80 hover:border-emerald-500 hover:bg-white hover:shadow-card hover:-translate-y-0.5 shadow-flat transition-all duration-200`).
+      - Apply Plan Button (`#apply-quiz-plan-btn`): Upgraded to luminous glowing emerald CTA (`bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white shadow-card hover:shadow-card-hover border-2 border-emerald-400/80 ring-2 ring-emerald-500/20 active:scale-98`).
+  - **TypeScript Controller Implementations (`assets/js/calculators/controllers/StrategyBlueprintController.ts`):**
+    - Synchronized `resetActiveState()` to cleanly remove active classes (`border-emerald-600`, `bg-emerald-700`, `text-white`, `ring-2`, `ring-emerald-500/20`, `ring-emerald-500/25`, `shadow-card`, `shadow-flat`) and restore default frosted classes (`border-slate-200/80`, `bg-white/90`, `text-slate-800`).
+    - Synchronized `updateButtonsVisualState()` to apply glowing active classes when selected and cleanly restore frosted classes when unselected.
+  - **Pre-Commit Verification & Quality Gates:**
+    - `npm run typecheck && npm run build`: 0 errors (Vite built `dist/assets/app-DZj4R3xu.css` `217.25 kB`, `dist/assets/app-Brg2aZ0w.js` `335.33 kB`).
+    - `php tests/parity_check.php`: 71/71 mathematical engine parity tests PASS.
+    - `vendor/bin/phpunit tests/Unit/...`: 31 tests, 195 assertions PASS (StrategyStarter, ArchetypeInjector, CalculatorForm, TelemetryIntegration, DesignTokenAudit).
+    - `vendor/bin/phpunit tests/Integration/HomepageLayoutAndAestheticsTest.php`: 1 test, 28 assertions PASS.
+    - `composer check-all`: 253/253 PHPStan files checked (Level Max OK), 253/253 PHPCS PSR-12 clean, 820/820 PHPUnit tests PASS (12,776 assertions).
 - **Implemented Features & Fixes (2026-11-21 Session 39 - Warm Amber Palette & Glassmorphism Refinements):**
   - **CSS Engine & Utility Layer (`resources/css/input.css`, `resources/css/styles.css`):**
     - `@utility fintech-glass-card`: Enhanced with authentic glassmorphic specification (`background-color: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9), var(--shadow-card)`).
