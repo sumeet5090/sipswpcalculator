@@ -26,6 +26,9 @@
 - [2 Crore SIP Calculator](https://sipswpcalculator.com/2-crore-sip-calculator): Reverse-engineer required monthly SIP to reach ₹2 Crores with step-up compounding
 - [₹25,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-25000-per-month): Multi-decade ₹25,000 monthly SIP returns, 10% annual step-up compounding, and HNI wealth roadmap
 - [₹50,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-50000-per-month): Multi-decade ₹50,000 monthly SIP returns, 10% annual step-up compounding, and accelerated FIRE path
+- [₹15,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-15000-per-month): Multi-decade ₹15,000 monthly SIP returns, 10% annual step-up compounding, and mid-career milestone roadmap
+- [₹20,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-20000-per-month): Multi-decade ₹20,000 monthly SIP returns, 10% annual step-up compounding, and urban wealth accelerator
+- [3 Crore SIP Calculator](https://sipswpcalculator.com/3-crore-sip-calculator): Reverse-engineer required monthly SIP to reach ₹3 Crores with step-up compounding
 
 ## Core Features & Mechanics
 - All financial calculations execute client-side in the browser with zero latency and zero server roundtrips

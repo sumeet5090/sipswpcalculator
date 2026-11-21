@@ -37,7 +37,7 @@ sipswpcalculator/
 │   │   ├── Math/             # Specialized calculation engines (CompoundInterest, CAGR, EMI, FD, PPF, Inflation)
 │   │   ├── Middleware/       # Pipeline middleware (TrailingSlash, Session, Honeypot, AdminCsrf)
 │   │   ├── Providers/        # DI Service Providers (Core, Repository, Domain, Controller)
-│   │   ├── Strategies/       # Strategy pattern implementations for 22 calculator types
+│   │   ├── Strategies/       # Strategy pattern implementations for 25 calculator types
 │   │   └── InvestmentCalculator.php # SEBI/AMFI-compliant core SIP/SWP calculation engine
 │   ├── Services/             # Business logic (ConfigService, PdfGenerator, CsvExport, Sitemap, Auth)
 │   └── Views/                # Twig templates

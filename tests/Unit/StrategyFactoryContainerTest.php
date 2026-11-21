@@ -216,6 +216,34 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertSame(50000.0, $inputs->getSip());
     }
 
+    public function testCreateSip15000StrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('sip-15000-per-month');
+        $this->assertInstanceOf(SipStrategy::class, $strategy);
+        $this->assertSame('sip', $strategy->getType());
+        $this->assertSame(15000.0, $strategy->getDefaultSip());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(15000.0, $inputs->getSip());
+    }
+
+    public function testCreateSip20000StrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('sip-20000-per-month');
+        $this->assertInstanceOf(SipStrategy::class, $strategy);
+        $this->assertSame('sip', $strategy->getType());
+        $this->assertSame(20000.0, $strategy->getDefaultSip());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(20000.0, $inputs->getSip());
+    }
+
+    public function testCreate3CroreSipStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('3-crore-sip-calculator');
+        $this->assertInstanceOf(TargetCorpusStrategy::class, $strategy);
+        $this->assertSame('target_corpus', $strategy->getType());
+        $this->assertSame(30000000.0, $strategy->getTargetCorpus());
+    }
+
     public function testCreateThrowsForUnmappedSlug(): void
     {
         $this->expectException(\DomainException::class);

@@ -492,5 +492,71 @@
             "title": "1 Crore SWP Calculator",
             "description": "Explore retirement cash flows and monthly pension payouts once your wealth milestones are reached."
         }
+    ],
+    "sip-15000-per-month": [
+        {
+            "href": "/sip-10000-per-month",
+            "title": "₹10,000 Monthly SIP Calculator",
+            "description": "Compare wealth accumulation trajectory against a ₹10,000/month baseline plan."
+        },
+        {
+            "href": "/sip-20000-per-month",
+            "title": "₹20,000 Monthly SIP Calculator",
+            "description": "See how stepping up your investments to ₹20,000/month cuts years off your ₹1 Crore goal."
+        },
+        {
+            "href": "/my-first-crore-calculator",
+            "title": "1 Crore SIP Goal Calculator",
+            "description": "Calculate the exact timeline to reach ₹1 Crore with flat vs step-up SIP compounding."
+        },
+        {
+            "href": "/sip-calculator",
+            "title": "Custom SIP Calculator",
+            "description": "Model custom monthly contributions, compounding returns, and capital gains."
+        }
+    ],
+    "sip-20000-per-month": [
+        {
+            "href": "/sip-15000-per-month",
+            "title": "₹15,000 Monthly SIP Calculator",
+            "description": "Compare wealth accumulation velocity against a ₹15,000/month foundation plan."
+        },
+        {
+            "href": "/sip-25000-per-month",
+            "title": "₹25,000 Monthly SIP Calculator",
+            "description": "Explore higher corporate savings tiers with ₹25,000 monthly investments."
+        },
+        {
+            "href": "/2-crore-sip-calculator",
+            "title": "2 Crore SIP Calculator",
+            "description": "See how a ₹20,000 monthly SIP reaches ₹2 Crores with annual step-up compounding."
+        },
+        {
+            "href": "/my-first-crore-calculator",
+            "title": "1 Crore SIP Goal Calculator",
+            "description": "Calculate the exact time required to hit your first ₹1 Crore milestone."
+        }
+    ],
+    "3-crore-sip-calculator": [
+        {
+            "href": "/2-crore-sip-calculator",
+            "title": "2 Crore SIP Calculator",
+            "description": "Compare monthly investment requirements to hit ₹2 Crores vs ₹3 Crores."
+        },
+        {
+            "href": "/reach-5-crore-via-sip",
+            "title": "5 Crore FIRE Calculator",
+            "description": "Map the ultimate financial freedom roadmap and multi-decade wealth milestones."
+        },
+        {
+            "href": "/target-corpus-calculator",
+            "title": "Target Corpus Calculator",
+            "description": "Reverse-engineer exact monthly SIP requirements for any custom financial goal."
+        },
+        {
+            "href": "/1-crore-swp-calculator",
+            "title": "1 Crore SWP Calculator",
+            "description": "Explore monthly pension payouts and sustainable retirement cash flows."
+        }
     ]
 }

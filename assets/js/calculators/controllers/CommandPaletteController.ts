@@ -102,6 +102,14 @@ export const COMMAND_ITEMS: CommandItem[] = [
         icon: '🎯'
     },
     {
+        id: 'calc-reach-3-cr',
+        title: '3 Crore SIP Calculator',
+        description: 'Calculate monthly SIP and step-up compounding needed to reach ₹3 Crores.',
+        category: 'Calculator',
+        url: '/3-crore-sip-calculator',
+        icon: '🎯'
+    },
+    {
         id: 'calc-sip-5k',
         title: '₹5,000 Monthly SIP Calculator',
         description: 'See the power of compounding and long-term corpus growth with ₹5,000/month.',
@@ -116,6 +124,22 @@ export const COMMAND_ITEMS: CommandItem[] = [
         category: 'Calculator',
         url: '/sip-10000-per-month',
         icon: '💼'
+    },
+    {
+        id: 'calc-sip-15k',
+        title: '₹15,000 Monthly SIP Calculator',
+        description: 'Mid-career wealth generation and 10% step-up compounding with ₹15,000/month.',
+        category: 'Calculator',
+        url: '/sip-15000-per-month',
+        icon: '📈'
+    },
+    {
+        id: 'calc-sip-20k',
+        title: '₹20,000 Monthly SIP Calculator',
+        description: 'Urban wealth accelerator and 10% step-up compounding with ₹20,000/month.',
+        category: 'Calculator',
+        url: '/sip-20000-per-month',
+        icon: '📈'
     },
     {
         id: 'calc-sip-25k',
