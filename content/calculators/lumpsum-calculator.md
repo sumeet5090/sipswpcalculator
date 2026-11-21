@@ -7,7 +7,7 @@ schema_name: "Lumpsum Calculator India — One-Time Investment Returns"
 seo_category: "growth"
 type: "calculator"
 date: "2026-08-01"
-updated_at: "2026-11-12"
+updated_at: "2026-11-22"
 og_image: "/assets/og/og-lumpsum-calculator.jpg"
 ---
 
@@ -62,7 +62,7 @@ Where $e$ is Euler's mathematical constant ($\approx 2.71828$). While practical 
 
 ## 2. Lumpsum vs. SIP: What 25 Years of Nifty 50 Rolling Returns Prove
 
-The debate between deploying a lump sum immediately versus staggering it across monthly SIP installments is the most contested subject in Indian wealth management. Investors often hesitate to commit a lump sum because they fear investing at a market peak right before a crash.
+The debate between deploying a lump sum immediately versus staggering it across monthly installments via a [Systematic Investment Plan (SIP)](/sip-calculator) is the most contested subject in Indian wealth management. Investors often hesitate to commit a lump sum because they fear investing at a market peak right before a crash.
 
 To resolve this with empirical data rather than emotion, quantitative analysts evaluate historical **rolling returns** of the Nifty 50 and S&P BSE Sensex Total Return Indices (TRI) over rolling 3-year, 5-year, 7-year, and 10-year investment windows:
 
@@ -89,7 +89,7 @@ To resolve this with empirical data rather than emotion, quantitative analysts e
 
 ### Lumpsum vs. SIP Head-to-Head Comparison Matrix
 
-| Factor | Lumpsum Investment | Systematic Investment Plan (SIP) | Clear Winner |
+| Factor | Lumpsum Investment | [Systematic Investment Plan (SIP)](/sip-calculator) | Clear Winner |
 | :--- | :--- | :--- | :--- |
 | **Mathematical Terminal Return** | Compounds 100% of capital from Day 1. Superior in ~68% of 10-year rolling market windows. | Staggers capital; uninvested cash suffers savings/FD drag. | **Lumpsum** (during multi-year bull cycles) |
 | **Market Timing Vulnerability** | High sequence risk if deployed at market peak right before a 20%–30% drawdown. | Zero timing risk; automatically purchases more units during crashes via Rupee Cost Averaging. | **SIP** (immunizes against bad entry points) |
@@ -99,7 +99,7 @@ To resolve this with empirical data rather than emotion, quantitative analysts e
 
 ### Decision Guide: When Should You Choose Lumpsum vs. SIP?
 * **Choose Lumpsum when:** You have a windfall sum, your time horizon is **7 to 10+ years**, and market valuations (Nifty P/E or P/B) are at fair or discounted historical averages.
-* **Choose SIP when:** You earn regular monthly income and want to build a disciplined wealth habit without watching daily market swings.
+* **Choose SIP when:** You earn regular monthly income and want to build a disciplined wealth habit without watching daily market swings. Use our [Monthly SIP Calculator](/sip-calculator) to model your wealth accumulation trajectory.
 * **Choose STP (The Hybrid Solution) when:** You have a lump sum right now, but the market is trading at an all-time peak and you cannot tolerate the psychological pain of a potential near-term 10%–15% correction.
 
 ---

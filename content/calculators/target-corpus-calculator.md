@@ -8,14 +8,14 @@ schema_name: "Target Corpus Calculator — Goal SIP Calculator India"
 seo_category: "growth"
 type: "calculator"
 date: "2026-08-24"
-updated_at: "2026-11-12"
+updated_at: "2026-11-22"
 ---
 
 ---
 
 > **Direct Answer (BLUF):** A **Target Corpus Calculator** reverse-engineers the exact monthly SIP required to achieve a future financial milestone (e.g. ₹1 Crore or ₹5 Crores). Using the inverse annuity-due formula at a 12% nominal annual return (1%/month), reaching **₹1 Crore in 15 years requires ₹19,819/month (flat)** or **₹11,516/month with an annual 10% step-up**, cutting your required starting investment by ~42%.
 
-Every major life milestone in India—purchasing a residential apartment, funding overseas undergraduate education, orchestrating a child's wedding, or securing a fully self-sustaining retirement nest egg—demands an explicit **Target Corpus**. Most personal finance tools take an investment amount (e.g., ₹10,000/month) and project an arbitrary future value. However, goal-based financial planning works in reverse: you define the future capital required, the exact target date, and your risk tolerance, and reverse-engineer the precise monthly contribution needed to meet that commitment with mathematical certainty.
+Every major life milestone in India—purchasing a residential apartment, funding overseas undergraduate education, orchestrating a child's wedding, or securing a fully self-sustaining retirement nest egg—demands an explicit **Target Corpus**. Most personal finance tools take an investment amount (e.g., ₹10,000/month) and project an arbitrary future value (such as our [Forward SIP Calculator](/sip-calculator)). However, goal-based financial planning works in reverse: you define the future capital required, the exact target date, and your risk tolerance, and reverse-engineer the precise monthly contribution needed to meet that commitment with mathematical certainty.
 
 This **Target Corpus Calculator** operates as a high-precision **Goal-Seek Solver**. By combining the closed-form inverse annuity-due equation with an iterative binary search algorithm for annual top-up (step-up) increments, this engine computes your exact required starting SIP, visualizes the contribution-to-gain ratio, and factors in real-world Indian inflation benchmarks and capital gains tax liabilities.
 
@@ -278,7 +278,7 @@ For a 5-year horizon, assuming an aggressive 14%–15% return is dangerous becau
 Under Section 112A of the Income Tax Act (Finance No. 2 Act, 2024), long-term capital gains on equity mutual funds held for over 12 months are taxed at a **12.5% base rate (13.0% effective with 4% cess)** on gains exceeding **₹1,25,000 per financial year**. To ensure you receive your full target amount in hand after redemption, you should increase your target corpus by approximately 7% to 9% to cover future tax liabilities.
 
 ### What is the difference between a Target Corpus Calculator and a regular SIP Calculator?
-A regular SIP calculator takes your monthly deposit and projects what it will grow to in the future (Forward Simulation). A Target Corpus Calculator takes your final financial goal and tells you how much you need to save each month to get there (Reverse Goal-Seeking).
+A regular [SIP Calculator](/sip-calculator) takes your monthly deposit and projects what it will grow to in the future (Forward Simulation). A Target Corpus Calculator takes your final financial goal and tells you how much you need to save each month to get there (Reverse Goal-Seeking).
 
 ### When should I move my accumulated money out of equity into safe debt funds?
 You should initiate a **Systematic Transfer Plan (STP)** from equity mutual funds to liquid or ultra-short duration debt funds roughly **2 to 3 years before your goal's target date**. This de-risking glide path protects your accumulated wealth from sudden stock market drawdowns right before you need to withdraw the funds.
@@ -289,6 +289,6 @@ You should initiate a **Systematic Transfer Plan (STP)** from equity mutual fund
 * [1 Crore SIP Calculator](/my-first-crore-calculator) — Dedicated milestone planner for your first ₹1,00,00,000.
 * [SIP Calculator](/sip-calculator) — Calculate returns and wealth accumulation for fixed monthly investments.
 * [Step-Up SIP Calculator](/sip-step-up-calculator) — Model annual top-ups to accelerate your timeline to financial freedom.
-* [SWP Calculator](/swp-calculator) — Plan sustainable monthly retirement withdrawals from your accumulated target corpus.
+* [SWP Calculator](/swp-calculator) — Plan sustainable monthly retirement withdrawals and post-corpus decumulation from your accumulated target wealth.
 * [Inflation Calculator](/inflation-calculator) — Calculate the future cost of your goals based on Indian CPI inflation.
 * [Retirement Calculator](/retirement-calculator) — Model your complete lifecycle from accumulation to retirement pension.

@@ -1,11 +1,44 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-21*
+*Last Updated: 2026-11-22*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Strategy Blueprint Toolbar & Persona Drawer Glassmorphic Refinement Complete — Elevated the preset console strip, archetype cards, and 3-step interactive wealth wizard modal with multi-layer frosted glass surfaces (`backdrop-blur-md` and `backdrop-blur-xl`), dual ambient shimmer glow orbs (`emerald-500/12` accumulation and `amber-500/12` harvest), tactile hover-lift micro-interactions, glowing active states, and synchronized TypeScript visual transitions; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and SSR verification.
+- **Current Milestone:** Strategic In-Content PageRank & Contextual Cross-Linking Optimization Complete — Channeled topical equity from high-ranking authority pages (`/my-first-crore-calculator` [Pos 1.0], `/lumpsum-calculator` [Pos 1.0], `/reach-5-crore-via-sip`, `/sip-10000-per-month`, `/sip-5000-per-month`, `/target-corpus-calculator`) directly into core `/sip-calculator` and `/swp-calculator` routes through high-visibility editorial bridges and comprehensive related tool lists; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and local curl checks.
+- **Implemented Features & Fixes (2026-11-22 Session 41 - Strategic In-Content PageRank Flow & Cross-Linking Optimization):**
+  - **`content/calculators/my-first-crore-calculator.md`:**
+    - Intro narrative (L21): Injected high-intent anchor linking to `[Systematic Investment Plan (SIP) Calculators](/sip-calculator)`.
+    - Section 2 Milestone Matrix (L45): Added high-visibility editorial bridge callout card linking to `[Custom Monthly SIP Calculator](/sip-calculator)`.
+    - Section 7 Decumulation Transition (L276): Enhanced retirement anchor text to `[SWP Calculator (Monthly Pension & Systematic Withdrawal Planner)](/swp-calculator)`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/lumpsum-calculator.md`:**
+    - Section 2 Narrative (L65): Injected editorial anchor `[Systematic Investment Plan (SIP)](/sip-calculator)`.
+    - Section 2.1 Head-to-Head Table: Anchored column header directly to `[Systematic Investment Plan (SIP)](/sip-calculator)`.
+    - Section 2 Decision Guide (L102): Added in-text recommendation linking to `[Monthly SIP Calculator](/sip-calculator)`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/reach-5-crore-via-sip.md`:**
+    - Section 8 Action Plan (L204): Added editorial bridge pointing to `[Custom SIP Calculator](/sip-calculator)`.
+    - Related Tools (L215): Resolved orphan omission by adding `* [SIP Calculator](/sip-calculator) — Calculate monthly accumulation, interest earned, and maturity value for custom investment budgets`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/sip-10000-per-month.md`:**
+    - Section 1 BLUF Narrative (L22): Added editorial link to `[Custom SIP Calculator](/sip-calculator)`.
+    - Related Tools (L177): Resolved orphan omission by adding `* [SIP Calculator](/sip-calculator) — Simulate monthly wealth accumulation and step-up compounding for custom investment budgets beyond ₹10,000`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/sip-5000-per-month.md`:**
+    - Section 1 BLUF Narrative (L22): Injected contextual editorial link to `[Custom SIP Calculator](/sip-calculator)`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/target-corpus-calculator.md`:**
+    - Section 1 BLUF Narrative (L18): Added contextual anchor `[Forward SIP Calculator](/sip-calculator)`.
+    - Section 6 FAQ (L281): Injected editorial anchor `[SIP Calculator](/sip-calculator)`.
+    - Related Tools (L292): Enhanced decumulation description for `[SWP Calculator](/swp-calculator)`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **Verification & Quality Gates:**
+    - `php tests/parity_check.php`: 71/71 mathematical engine parity tests PASS.
+    - `vendor/bin/phpstan analyse --memory-limit=512M`: 253/253 files checked, 0 errors.
+    - `vendor/bin/phpcs`: 253/253 files checked, 0 violations (PSR-12 clean).
+    - `vendor/bin/phpunit`: 820/820 tests PASS (12,776 assertions).
+    - Local live PHP server curl verification (`http://127.0.0.1:8080`): Verified HTTP 200, valid HTML anchors, and non-broken link targets across all 6 modified calculator routes.
 - **Implemented Features & Fixes (2026-11-21 Session 40 - Strategy Blueprint & Persona Drawer Glassmorphic Refinement):**
   - **Component Template Implementations (`src/Views/components/strategy-starter.twig`):**
     - `#strategy-starter-container`: Upgraded toolbar surface to layered frosted glass (`bg-slate-50/80 backdrop-blur-md border border-slate-200/90 shadow-card relative overflow-hidden`) with ambient emerald (`-left-8 -top-8 bg-emerald-500/12 blur-2xl`) and amber (`-right-8 -bottom-8 bg-amber-500/12 blur-2xl`) glow spheres.
