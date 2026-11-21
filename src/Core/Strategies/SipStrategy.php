@@ -18,12 +18,17 @@ class SipStrategy extends BaseStrategy
         $this->defaultSip = $defaultSip;
     }
 
+    public function getDefaultSip(): ?float
+    {
+        return $this->defaultSip;
+    }
+
     public function getType(): string
     {
         return 'sip';
     }
 
-    public function getInitialInputs(): CalculatorInputsInterface
+    public function getInitialInputs(): InvestmentInputs
     {
         $overrides = $this->defaultSip !== null ? ['sip' => $this->defaultSip] : [];
         return InvestmentInputs::fromRequest($overrides, $this->configService);

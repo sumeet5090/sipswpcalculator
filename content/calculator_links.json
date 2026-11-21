@@ -426,5 +426,71 @@
             "title": "1 Crore SWP Calculator",
             "description": "Explore retirement cash flows and monthly pension payouts once your wealth milestones are reached."
         }
+    ],
+    "sip-25000-per-month": [
+        {
+            "href": "/sip-10000-per-month",
+            "title": "₹10,000 Monthly SIP Calculator",
+            "description": "Compare your wealth accumulation velocity against a ₹10,000/month foundation plan."
+        },
+        {
+            "href": "/sip-50000-per-month",
+            "title": "₹50,000 Monthly SIP Calculator",
+            "description": "See how scaling your monthly savings to ₹50,000/month cuts years off your ₹5 Crore FIRE goal."
+        },
+        {
+            "href": "/my-first-crore-calculator",
+            "title": "1 Crore SIP Goal Calculator",
+            "description": "See how a 10% step-up lets a ₹25,000 monthly SIP reach ₹1 Crore in just 11 years."
+        },
+        {
+            "href": "/sip-calculator",
+            "title": "Custom SIP Calculator",
+            "description": "Calculate exact compounding returns, capital gains, and year-by-year cash flows."
+        }
+    ],
+    "50-lakh-swp-calculator": [
+        {
+            "href": "/1-crore-swp-calculator",
+            "title": "1 Crore SWP Calculator",
+            "description": "Compare cash flow sustainability and monthly pension payouts from a larger ₹1 Crore corpus."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Model custom monthly retirement pension withdrawals, inflation hikes, and 2026 LTCG tax savings."
+        },
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Plan your dual accumulation and distribution retirement roadmap using proven safe withdrawal rules."
+        },
+        {
+            "href": "/fd-calculator",
+            "title": "Fixed Deposit (FD) Calculator",
+            "description": "Compare post-tax returns between Bank Fixed Deposits and a tax-advantaged Mutual Fund SWP."
+        }
+    ],
+    "sip-50000-per-month": [
+        {
+            "href": "/sip-25000-per-month",
+            "title": "₹25,000 Monthly SIP Calculator",
+            "description": "Compare wealth compounding trajectory with a ₹25,000 monthly baseline SIP."
+        },
+        {
+            "href": "/reach-5-crore-via-sip",
+            "title": "5 Crore SIP Calculator",
+            "description": "Map the ultimate financial freedom roadmap: see how ₹50,000/month reaches ₹5 Crores in 15.8 years."
+        },
+        {
+            "href": "/2-crore-sip-calculator",
+            "title": "2 Crore SIP Calculator",
+            "description": "See how quickly a ₹50,000 monthly SIP accumulates ₹2 Crores with step-up compounding."
+        },
+        {
+            "href": "/1-crore-swp-calculator",
+            "title": "1 Crore SWP Calculator",
+            "description": "Explore retirement cash flows and monthly pension payouts once your wealth milestones are reached."
+        }
     ]
 }

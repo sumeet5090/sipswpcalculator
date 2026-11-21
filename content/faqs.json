@@ -992,5 +992,107 @@
         ],
         "q": "Which mutual funds are safest for running an SWP from a ₹1 Crore corpus?",
         "a": "Financial planners recommend Conservative Hybrid Funds, Balanced Advantage Funds (BAFs), or Equity Savings Funds. These schemes maintain 35% to 65% in equities to beat inflation and generate 8% to 10% long-term returns, while allocating the rest to high-grade debt and arbitrage instruments to shield your retirement income from market drawdowns."
+    },
+    {
+        "id": "sip-25k-returns-10-20-years",
+        "category": "growth",
+        "tags": [
+            "sip-25000-per-month",
+            "sip-calculator",
+            "faq-page"
+        ],
+        "q": "How much will a ₹25,000 monthly SIP grow in 10, 15, and 20 years?",
+        "a": "At an expected 12% equity CAGR, a ₹25,000 monthly SIP accumulates to ₹58.08 Lakhs in 10 years (investing ₹30 Lakhs), ₹1.26 Crores in 15 years (investing ₹45 Lakhs), and ₹2.50 Crores in 20 years (investing ₹60 Lakhs). With a 10% annual step-up, your 20-year corpus nearly doubles to ₹4.97 Crores."
+    },
+    {
+        "id": "sip-25k-crore-timeline",
+        "category": "growth",
+        "tags": [
+            "sip-25000-per-month",
+            "my-first-crore-calculator",
+            "faq-page"
+        ],
+        "q": "How long does it take to reach ₹1 Crore with a ₹25,000 monthly SIP?",
+        "a": "At a 12% CAGR, a flat ₹25,000 monthly SIP crosses ₹1 Crore in approximately 13.5 years. If you add a 10% annual step-up (+₹2,500/month each year to reflect salary increments), you reach the ₹1 Crore milestone in just 11 years, saving 2.5 full years."
+    },
+    {
+        "id": "sip-25k-tax-rules",
+        "category": "taxation",
+        "tags": [
+            "sip-25000-per-month",
+            "taxation",
+            "faq-page"
+        ],
+        "q": "What is the tax on a ₹25,000 monthly SIP when redeemed after 10 or 20 years?",
+        "a": "Under Section 112A rules (Finance Act 2024), long-term capital gains on equity mutual funds held over 12 months are taxed at a 12.5% base rate (13.0% effective inclusive of 4% cess) on net gains exceeding ₹1.25 Lakh per financial year. Withdrawing via an SWP during retirement spreads your profits across multiple years to maximize the annual tax-free threshold."
+    },
+    {
+        "id": "swp-50l-monthly-payout",
+        "category": "retirement",
+        "tags": [
+            "50-lakh-swp-calculator",
+            "swp-calculator",
+            "retirement-calculator",
+            "faq-page"
+        ],
+        "q": "How much monthly pension can I safely withdraw from a ₹50 Lakh mutual fund corpus?",
+        "a": "At an expected 8% annual return in a conservative hybrid portfolio, a ₹50 Lakh corpus safely generates ₹30,000 to ₹33,333 per month indefinitely without eroding your principal. If you include a 5% annual step-up to beat inflation, a starting withdrawal of ₹20,000/month sustains your cash flows for 30+ years, paying out ₹1.59 Crores in total while preserving ₹44.4 Lakhs in residual wealth."
+    },
+    {
+        "id": "swp-50l-vs-fd",
+        "category": "taxation",
+        "tags": [
+            "50-lakh-swp-calculator",
+            "swp-calculator",
+            "faq-page"
+        ],
+        "q": "Why is a ₹50 Lakh SWP more tax-efficient than a Bank FD for retirement income?",
+        "a": "Bank FD interest on ₹50 Lakh is fully taxable at your income tax slab rate (up to 31.2%), yielding only ~₹20,067/month post-tax at 30% slab. An SWP redemptions only taxes the capital gains portion under Section 112A (12.5% above ₹1.25L exemption), leaving ₹31,250+ net in hand each month—an extra ₹11,180+ monthly cash flow (+55.7%) on the exact same starting capital."
+    },
+    {
+        "id": "swp-50l-bucket-strategy",
+        "category": "strategies",
+        "tags": [
+            "50-lakh-swp-calculator",
+            "strategies",
+            "retirement-calculator",
+            "faq-page"
+        ],
+        "q": "What is the best fund allocation for running an SWP from a ₹50 Lakh corpus?",
+        "a": "A 3-bucket strategy works best: Bucket 1 allocates ₹10 Lakhs (20%) in Liquid/Arbitrage funds for 1–3 years of uninterrupted cash flow; Bucket 2 places ₹20 Lakhs (40%) in Conservative Hybrid or Equity Savings funds for 7.5%–8.5% stable yields; Bucket 3 invests ₹20 Lakhs (40%) in Large-Cap Index or Balanced Advantage funds to beat inflation over 8+ years."
+    },
+    {
+        "id": "sip-50k-returns-10-20-years",
+        "category": "growth",
+        "tags": [
+            "sip-50000-per-month",
+            "sip-calculator",
+            "faq-page"
+        ],
+        "q": "How much will a ₹50,000 monthly SIP grow in 10, 15, and 20 years?",
+        "a": "At an expected 12% equity CAGR, a ₹50,000 monthly SIP builds ₹1.16 Crores in 10 years (investing ₹60 Lakhs), ₹2.52 Crores in 15 years (investing ₹90 Lakhs), and ₹5.00 Crores in 20 years (investing ₹1.20 Crores). If you implement a 10% annual step-up, your 20-year corpus surges to ₹9.94 Crores, and reaches ₹21.38 Crores in 25 years."
+    },
+    {
+        "id": "sip-50k-crore-timeline",
+        "category": "growth",
+        "tags": [
+            "sip-50000-per-month",
+            "my-first-crore-calculator",
+            "reach-5-crore-via-sip",
+            "faq-page"
+        ],
+        "q": "How quickly does a ₹50,000 monthly SIP reach ₹1 Crore and ₹5 Crores?",
+        "a": "At a 12% CAGR, a flat ₹50,000 monthly SIP crosses ₹1 Crore in just 9.2 years. With a 10% annual step-up, it reaches ₹1 Crore in only 7.8 years. To hit ₹5 Crores, a flat SIP takes 20.0 years, while a 10% step-up SIP reaches ₹5 Crores in just 15.8 years—saving more than 4 years."
+    },
+    {
+        "id": "sip-50k-portfolio-allocation",
+        "category": "strategies",
+        "tags": [
+            "sip-50000-per-month",
+            "strategies",
+            "faq-page"
+        ],
+        "q": "What is the ideal mutual fund portfolio for a ₹50,000 monthly SIP?",
+        "a": "A diversified 4-fund core portfolio provides optimal risk-adjusted returns: ₹20,000 (40%) in Nifty 50 or Large & Midcap Index Fund for low-cost stability; ₹15,000 (30%) in Flexi-Cap or Multi-Cap Fund for unconstrained alpha; ₹10,000 (20%) in Mid-Cap Fund for accelerated growth; and ₹5,000 (10%) in Small-Cap Fund for long-term compound wealth expansion."
     }
 ]
