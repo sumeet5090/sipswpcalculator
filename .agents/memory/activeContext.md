@@ -5,7 +5,33 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Strategy Blueprint Toolbar & Persona Drawer Glassmorphic Refinement Complete — Elevated the preset console strip, archetype cards, and 3-step interactive wealth wizard modal with multi-layer frosted glass surfaces (`backdrop-blur-md` and `backdrop-blur-xl`), dual ambient shimmer glow orbs (`emerald-500/12` accumulation and `amber-500/12` harvest), tactile hover-lift micro-interactions, glowing active states, and synchronized TypeScript visual transitions; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and SSR verification.
+- **Current Milestone:** Comprehensive Documentation & Rules Refinement Complete (Zero-Ambiguity Standard) — Systematically audited and refined all workspace instructions, architectural coordinate maps, system patterns, public README, ADRs, and agent skills. Structured `.agents/AGENTS.md` into 12 logically sequenced authoritative pillars with a formal 5-Stage Agent Execution Lifecycle; synchronized the Disciplined Dual-Engine Palette (Institutional Emerald & Warm Amber Golden Harvest, Sovereign Indigo) and Authentic Frosted Glassmorphism across all documentation; eradicated obsolete blue references and duplicate headings; locked test suite metrics to 820 PHPUnit tests (12,776 assertions), 253 PHPStan files at Level Max, and 71 parity tests.
+- **Implemented Features & Fixes (2026-11-21 Session 41 - Comprehensive Documentation & Rules Refinement):**
+  - **Workspace & Agent Governance (`.agents/AGENTS.md`):**
+    - Normalized section numbering and structured into 12 authoritative pillars (Development Standards, Design System Governance, SEO/Content Strategy, Product Mission, 5-Stage Lifecycle, Architectural Invariants, Planning Protocol, Junior Model Guardrails, Security Protocols, Software Engineering Models, Sandbox Rules, Clickable File Links).
+    - Codified the sequential 5-Stage Lifecycle: Stage 1 (Context Anchoring via `ARCHITECTURE_MAP.md`), Stage 2 (Planning & Zero-Guesswork Artifact `implementation_plan.md`), Stage 3 (Implementation Protocol adhering to SOLID/POLA/CQS), Stage 4 (Deterministic Tiered Verification), Stage 5 (Anti-Drift Documentation & Handoff Ledger).
+    - Codified the Disciplined Dual-Engine Palette (Emerald Accumulation, Warm Amber Golden Harvest, Sovereign Indigo) and Authentic Frosted Glassmorphism standard (`backdrop-blur-md`, `bg-white/85` to `bg-white/95`, specular inner highlights, and ambient glow spheres).
+  - **Architecture Coordinate Map (`.agents/ARCHITECTURE_MAP.md`):**
+    - Updated Section 6.H semantic color pillars: replaced legacy blue with Warm Amber & Golden Harvest (`amber-600` / `#D97706`) for Stage 2 SWP, and defined Sovereign Indigo (`indigo-600`) for Fixed Deposit.
+    - Harmonized Section 6.G with the authentic frosted glassmorphic card elevation (`@utility fintech-glass-card`) and GPU compositor rules (`background-attachment: scroll`).
+    - Synchronized Section 7 verification commands and metrics (820 PHPUnit tests, 12,776 assertions, Level Max on 253 files, 71 parity tests).
+  - **System Patterns & Invariants (`.agents/memory/systemPatterns.md`):**
+    - Corrected duplicate "## 5." headings into clean sequential sections (1 through 7).
+    - Aligned Section 1 accent palettes with the Disciplined Dual-Engine standard and authentic frosted glassmorphism.
+    - Updated verification suite metrics to 820 tests (12,776 assertions) and 71 parity tests.
+  - **Public Documentation (`README.md`):**
+    - Purged legacy blue references in favor of Warm Amber & Golden Harvest for Stage 2 SWP and Sovereign Indigo for Fixed Deposit.
+    - Added dedicated `## Developer & AI Agent Governance Protocols` section linking directly to `.agents/AGENTS.md` and `.agents/ARCHITECTURE_MAP.md`.
+    - Updated Architecture Quality Standards table to 820 unit and integration tests (12,776 assertions) and 71 cross-runtime mathematical parity tests.
+  - **Architectural Decision Records (`docs/adr/0004-pure-light-mode-fintech-design-system.md`):**
+    - Updated ADR 0004 to record the accepted evolution: Pure Light-Mode FinTech Design System with Disciplined Dual-Engine Palette and Authentic Frosted Glassmorphism.
+  - **Agent Skills (`.agents/skills/architecture-nuances/SKILL.md`):**
+    - Added Section 8 detailing the Understated Executive FinTech Theme and Dual-Engine Palette rules.
+  - **Pre-Commit Verification & Quality Gates:**
+    - `npm run typecheck && npm run build`: 0 errors (Vite built `dist/assets/app-DZj4R3xu.css` `217.25 kB`, `dist/assets/app-Brg2aZ0w.js` `335.33 kB`).
+    - `php tests/parity_check.php`: 71/71 mathematical engine parity tests PASS.
+    - `vendor/bin/phpunit tests/Unit/...`: 26 tests, 149 assertions PASS (DesignTokenAudit, TelemetryIntegration, ArchetypeInjector, StrategyStarterComponent).
+    - `composer check-all`: 253/253 PHPStan files checked (Level Max OK), 253/253 PHPCS PSR-12 clean, 820/820 PHPUnit tests PASS (12,776 assertions).
 - **Implemented Features & Fixes (2026-11-21 Session 40 - Strategy Blueprint & Persona Drawer Glassmorphic Refinement):**
   - **Component Template Implementations (`src/Views/components/strategy-starter.twig`):**
     - `#strategy-starter-container`: Upgraded toolbar surface to layered frosted glass (`bg-slate-50/80 backdrop-blur-md border border-slate-200/90 shadow-card relative overflow-hidden`) with ambient emerald (`-left-8 -top-8 bg-emerald-500/12 blur-2xl`) and amber (`-right-8 -bottom-8 bg-amber-500/12 blur-2xl`) glow spheres.

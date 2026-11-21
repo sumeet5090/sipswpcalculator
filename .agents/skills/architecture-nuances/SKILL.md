@@ -40,4 +40,13 @@ If you modify formulas, you must verify parity against `tests/Unit/SebiAmfiCompl
 - **Action Dispatching:** Controller actions resolve parameters by typehint (`Request`), exact route slug name, positional index, and default values. Non-Response returns must be valid string HTML or throw `ContainerException`.
 - **Zero Echoes:** Never use `echo`, `print_r()`, or `var_dump()` in controllers or services; log via `error_log()`.
 
-> **Further Reading:** For a deep dive into these rules, consult the root `README.md` and Architectural Decision Records in `docs/adr/`.
+### 8. Understated Executive FinTech Theme & Dual-Engine Palette
+**Action:**
+- **Strict Pure Light Mode:** All card surfaces, inputs, and modals must remain pure light mode (`bg-white/85` to `bg-white/95`, `bg-slate-50`, `border-slate-200/90`, `text-slate-900`). Dark blocks (`bg-slate-900`, `bg-slate-950`, `*-gray-*`) are forbidden.
+- **Disciplined Dual-Engine Palette:**
+  - Stage 1 (SIP Accumulation): Institutional Emerald (`emerald-600`/`emerald-700`).
+  - Stage 2 (SWP Retirement): Warm Amber & Golden Harvest (`amber-600`/`amber-700`, `text-amber-900`). Generic blue is strictly eliminated.
+  - Sovereign Instruments: Sovereign Indigo (`indigo-600`).
+- **Authentic Glassmorphism:** Sliders, input cards, stage panels, and toolbars use frosted surfaces (`backdrop-blur-md`, `bg-white/85` to `bg-white/95`, inner specular highlights `box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9)`, and soft ambient glows `emerald-500/12` / `amber-500/12`).
+
+> **Further Reading:** For a deep dive into these rules, consult the root `README.md`, `.agents/AGENTS.md`, `.agents/ARCHITECTURE_MAP.md`, and Architectural Decision Records in `docs/adr/`.

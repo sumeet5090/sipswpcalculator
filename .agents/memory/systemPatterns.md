@@ -1,6 +1,6 @@
 # System Patterns & Architectural Invariants
 
-This file codifies core invariant patterns to ensure Antigravity maintains architectural consistency without re-investigating design conventions.
+This file codifies core invariant patterns to ensure Antigravity and developers maintain architectural consistency without re-investigating design conventions.
 
 ---
 
@@ -8,15 +8,17 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
 - **Rule:** Under NO circumstances should dark surfaces, dark card backgrounds (`bg-slate-900`, `bg-gray-950`), or inverted widgets be used. Enforced automatically by `TelemetryIntegrationTest.php`.
 - **Card Styling:** `bg-white/95`, `bg-slate-50/80`, `border-slate-200/80`, `shadow-flat` or `shadow-card`.
 - **Typography:** `text-slate-900`, `text-slate-700`, `text-slate-500`.
-- **Accent Palettes:**
-  - Growth / SIP: `emerald-600` / `emerald-500` / `emerald-50`
-  - Withdrawal / SWP: `rose-600` / `rose-500` / `rose-50`
-  - Specialized / Goals: `teal-600`, `indigo-600`, `amber-600`
-- **Ambient Lighting:** Soft pastel aurora blur gradients (`emerald-400/12`, `teal-300/8`, `indigo-300/6`).
+- **Accent Palettes (Disciplined Dual-Engine):**
+  - **Stage 1 (SIP / Wealth Accumulation):** Institutional Emerald (`emerald-600` / `emerald-700`, `emerald-50/90`, `text-emerald-900`).
+  - **Stage Transition Bridge:** Multi-stop gradient connector (`from-emerald-600 via-teal-600 to-amber-600`).
+  - **Stage 2 (SWP / Retirement Cashflow & Payouts):** Warm Amber & Golden Harvest (`amber-600` / `amber-700`, `amber-50/90`, `text-amber-900`). **Generic blue is completely eliminated.**
+  - **Sovereign Instruments (Fixed Deposit):** Sovereign Indigo (`indigo-600` / `indigo-700`, `text-indigo-950`).
+  - **Specialized & Strategic Goals:** `teal-600`, `amber-500`.
+- **Ambient Lighting:** Soft pastel aurora blur gradients (`emerald-500/12`, `amber-500/12`, `teal-400/6`).
 - **Design Review Intent Translation Matrix:** When visual design critiques suggest dark surfaces, map them immediately:
   - *Dark navy/slate card (#0F172A)* $\rightarrow$ **Executive Light-Mode Anchor:** `bg-emerald-50/90 border-2 border-emerald-600 shadow-card ring-2 ring-emerald-500/15` with `text-slate-900` typography and solid emerald pill badge.
-  - *Dark drop shadows / ambient vignette* $\rightarrow$ **Crisp Subtle Elevation:** `shadow-card border-slate-200/90` with soft aurora glow (`emerald-400/12`, `teal-300/8`).
-  - *Dark hero header* $\rightarrow$ **Crisp Light FinTech Console:** `bg-white/95` with emerald/teal underline tabs.
+  - *Dark drop shadows / ambient vignette* $\rightarrow$ **Crisp Subtle Elevation:** `shadow-card border-slate-200/90` with soft aurora glow (`emerald-500/12`, `amber-500/12`).
+  - *Dark hero header* $\rightarrow$ **Luminous Architectural Daylight Canopy:** `from-slate-50 via-white to-slate-50/60 text-slate-900 border-b border-slate-200/90 shadow-subtle` with soft ambient emerald aura (`bg-emerald-500/8 blur-3xl`), commanding dark slate-900 typography, and solid emerald conversion CTA (`bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold`).
 
 ---
 
@@ -37,11 +39,11 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
   - 4-Card Modes (`combo`, `swp`, `emi`): `grid grid-cols-2 xl:grid-cols-4` (`#card-corpus` = `col-span-1`).
   - 3-Card Modes (`sip`, `lumpsum`, `target_corpus`, specialized): `grid grid-cols-2 xl:grid-cols-3` (`#card-corpus` = `col-span-2 xl:col-span-1`).
   - Both SSR (`chart-visualization.twig`) and TypeScript (`SummaryMetricsController.ts`, `EmiDriver.ts`, `SpecializedCalculatorController.ts`) MUST declare identical breakpoint tokens.
-- **Rule (Chromium GPU Compositor Stability Across `393px–1366px+`):**
+- **Rule (Chromium GPU Compositor Stability & Glassmorphism Standards):**
   - Never apply `background-attachment: fixed` at ANY breakpoint (`body` in `input.css`, `styles.css`, `base.twig`, or `admin.twig`); always use `background-attachment: scroll`. Even `@media (min-width: 1024px)` fixed backgrounds cause Chromium's Skia rasterizer at `1024px` (`iPad Pro 13`) to drop `<canvas id="corpusChart">` when paired with card surfaces.
-  - Never apply `backdrop-filter: blur(...)` (`backdrop-blur-*`) or `transition-all` to large scrollable cards (`#chart-card`, `#calculator-app`, `.fintech-glass-card`, component cards, sticky ledger cells `#results-table th/td:first-child` / `.table-sticky-col-0`, `.slider-floating-tooltip`), or to fixed HUD/navbar/dock bars (`bg-white` / `bg-white/98`); reserve `backdrop-blur-*` strictly for lightweight overlay modal/wizard backdrops (`dialog::backdrop`). Keep `background-color: rgba(255, 255, 255, 0.98)` inside `@utility fintech-glass-card` (`TypographyAndThemeTokensTest`), transform-only `.metric-pulse-active` (`input.css`), and pure light `bg-white/95` on `strategy-starter.twig` (`ArchetypeInjectorTest`). Keep `#breakdown-studio` solid opaque (`bg-white`, zero root `overflow-hidden` so `#export-share-dropdown` stays unclipped) while preserving `bg-white/95` in `yearly-breakdown-table.twig` (`YearlyBreakdownTableTest#L122`).
-  - Keep `#mini-hud-anchor` at `top-20` (`80px`) to clear the `73px` navbar.
-- **Rationale:** `items-start` + `self-start` eliminates Grid row stretch tails, and isolating Row 1 with `xl:contents` ensures CSS `position: sticky` on `md:col-span-7` uses Row 1 as its containing block rather than the full outer grid spanning `#breakdown-studio`. Child 2 tracks cleanly alongside Stage 2 SWP inputs on `768px–1279px` and unsticks with a constant 20px–32px gutter above opaque `#breakdown-studio` (`0px` overlap), then dissolves into desktop side-by-side layout (`xl:row-span-2`) at `>=1280px`. Eliminating `background-attachment: fixed` and large-card `backdrop-filter` prevents Chromium `<canvas>` and card layer drops at `800px–1366px`.
+  - Authentic frosted glassmorphism is implemented via `@utility fintech-glass-card` (`backdrop-blur-md`, `bg-white/85` to `bg-white/95`, `border-slate-200/90`, inner specular highlights `box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9)`), with `backdrop-blur-xl` on modal backdrops (`#wealth-guided-wizard-drawer`).
+  - Keep `.metric-pulse-active` GPU transform-only (`input.css`), immediate `.stagger-row` `opacity: 1`, `z-behind` glow blobs behind `z-10` headers, `@supports`-guarded `.text-gradient`, and `#mini-hud-anchor` at `top-20` (`80px`) to clear the `73px` navbar.
+- **Rationale:** `items-start` + `self-start` eliminates Grid row stretch tails, and isolating Row 1 with `xl:contents` ensures CSS `position: sticky` on `md:col-span-7` uses Row 1 as its containing block rather than the full outer grid spanning `#breakdown-studio`. Child 2 tracks cleanly alongside Stage 2 SWP inputs on `768px–1279px` and unsticks with a constant 20px–32px gutter above opaque `#breakdown-studio` (`0px` overlap), then dissolves into desktop side-by-side layout (`xl:row-span-2`) at `>=1280px`. Eliminating `background-attachment: fixed` prevents Chromium `<canvas>` and card layer drops at `800px–1366px`.
 
 ---
 
@@ -88,7 +90,7 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
 
 ---
 
-## 5. Documentation Synchronicity & Anti-Drift Contract
+## 6. Documentation Synchronicity & Anti-Drift Contract
 - **Atomic Doc Updates:** Code and its documentation are considered a single atomic unit. Any commit or PR that modifies routes, logic, formulas, or UI contracts must update referencing docs in the exact same step.
 - **Audit Checklist on Changes:**
   1. `README.md`
@@ -99,10 +101,11 @@ This file codifies core invariant patterns to ensure Antigravity maintains archi
 
 ---
 
-## 6. Vendor Investigation & Tiered Verification Invariants
+## 7. Vendor Investigation & Tiered Verification Invariants
 - **Zero-Rabbit-Hole Rule:** Never perform iterative text greps or ad-hoc character parsing on minified production bundles (`dist/assets/*.js`).
 - **Unminified Source Debugging:** When debugging vendor crashes (Chart.js, plugins), immediately inspect unminified source code in `node_modules/` or build an isolated minimal Node.js test fixture.
 - **Hypothesis Transparency:** Clearly state the bug hypothesis, target vendor file, and next step to the user before running deep inspection commands.
-- **Tiered Verification:**
-  - Fast Tier (UI/Visual): Run `npm run build` and single browser check to verify visual rendering and 0 console errors.
-  - Gate Tier (Pre-Commit): Run `composer check-all` (814 tests, PHPStan Level Max, PHPCS) and `parity_check.php` before committing or finalizing.
+- **Tiered Verification Pipeline:**
+  - *Tier 1 (Fast-Path Local Build & Parity):* Run `npm run build` and `php tests/parity_check.php` (verifying 71/71 parity tests).
+  - *Tier 2 (Integration & Local Curl):* Run `vendor/bin/phpunit tests/Integration/HomepageLayoutAndAestheticsTest.php` and curl checks against the local server.
+  - *Tier 3 (Gate Tier):* Run `composer check-all` (820 tests, 12,776 assertions, PHPStan Level Max on 253 files, PSR-12 clean) before committing or concluding.
