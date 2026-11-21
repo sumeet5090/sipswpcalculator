@@ -236,11 +236,14 @@ export class StrategyBlueprintController {
             btn.setAttribute('aria-pressed', 'false');
             btn.classList.remove(
                 'border-emerald-600',
+                'border-emerald-700',
                 'bg-emerald-700',
+                'bg-emerald-800',
                 'text-white',
                 'ring-2',
                 'ring-emerald-500/20',
                 'ring-emerald-500/25',
+                'ring-emerald-600/25',
                 'shadow-card',
                 'shadow-flat'
             );
@@ -283,21 +286,31 @@ export class StrategyBlueprintController {
 
             if (isSelected) {
                 btn.classList.add(
-                    'border-emerald-600',
-                    'bg-emerald-700',
+                    'border-emerald-700',
+                    'bg-emerald-800',
                     'text-white',
                     'ring-2',
-                    'ring-emerald-500/25',
+                    'ring-emerald-600/25',
                     'shadow-card'
                 );
-                btn.classList.remove('border-slate-200/80', 'bg-white/90', 'text-slate-800');
-            } else {
                 btn.classList.remove(
                     'border-emerald-600',
                     'bg-emerald-700',
+                    'ring-emerald-500/25',
+                    'border-slate-200/80',
+                    'bg-white/90',
+                    'text-slate-800'
+                );
+            } else {
+                btn.classList.remove(
+                    'border-emerald-600',
+                    'border-emerald-700',
+                    'bg-emerald-700',
+                    'bg-emerald-800',
                     'text-white',
                     'ring-2',
                     'ring-emerald-500/25',
+                    'ring-emerald-600/25',
                     'shadow-card'
                 );
                 btn.classList.add('border-slate-200/80', 'bg-white/90', 'text-slate-800');

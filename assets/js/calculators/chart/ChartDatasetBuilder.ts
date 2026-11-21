@@ -177,8 +177,8 @@ export class ChartDatasetBuilder {
             datasets.push({
                 label: `Real Value (${inflationRate}% Inflation Adj)`,
                 data: realValues,
-                borderColor: '#0284c7', // Sky-600
-                backgroundColor: 'rgba(2, 132, 199, 0.04)',
+                borderColor: '#c2410c', // Orange-700
+                backgroundColor: 'rgba(194, 65, 12, 0.04)',
                 borderWidth: 2,
                 borderDash: [5, 4],
                 tension: 0.4,

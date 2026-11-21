@@ -38,18 +38,18 @@
         <div class="py-0.5 mb-1 xl:mb-2 rounded-2xl">
             <div class="flex bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70 shadow-flat gap-1" role="tablist" aria-label="Calculator Mode Selector">
                 <button type="button" id="tab-combo" role="tab" aria-selected="{% if calculator_type|default('combo') == 'combo' %}true{% else %}false{% endif %}"
-                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1.5 text-ui-xs font-extrabold uppercase tracking-normal xl:tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'combo' %}bg-white text-emerald-900 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
-                    <span class="w-2 h-2 rounded-full {% if calculator_type|default('combo') == 'combo' %}bg-emerald-600{% else %}bg-slate-300{% endif %}"></span>
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1.5 text-ui-xs font-extrabold uppercase tracking-normal xl:tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'combo' %}bg-white text-emerald-950 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
+                    <span class="w-2 h-2 rounded-full {% if calculator_type|default('combo') == 'combo' %}bg-emerald-700{% else %}bg-slate-300{% endif %}"></span>
                     <span>Dual (SIP+SWP)</span>
                 </button>
                 <button type="button" id="tab-sip" role="tab" aria-selected="{% if calculator_type|default('combo') == 'sip' %}true{% else %}false{% endif %}"
-                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1.5 text-ui-xs font-bold uppercase tracking-normal xl:tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'sip' %}bg-white text-emerald-900 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
-                    <span class="w-2 h-2 rounded-full {% if calculator_type|default('combo') == 'sip' %}bg-emerald-600{% else %}bg-slate-300{% endif %}"></span>
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1.5 text-ui-xs font-bold uppercase tracking-normal xl:tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'sip' %}bg-white text-emerald-950 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
+                    <span class="w-2 h-2 rounded-full {% if calculator_type|default('combo') == 'sip' %}bg-emerald-700{% else %}bg-slate-300{% endif %}"></span>
                     <span>SIP Only</span>
                 </button>
                 <button type="button" id="tab-swp" role="tab" aria-selected="{% if calculator_type|default('combo') == 'swp' %}true{% else %}false{% endif %}"
-                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1.5 text-ui-xs font-bold uppercase tracking-normal xl:tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'swp' %}bg-white text-amber-900 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
-                    <span class="w-2 h-2 rounded-full {% if calculator_type|default('combo') == 'swp' %}bg-amber-600{% else %}bg-slate-300{% endif %}"></span>
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 px-1.5 text-ui-xs font-bold uppercase tracking-normal xl:tracking-wider rounded-xl transition-all duration-200 {% if calculator_type|default('combo') == 'swp' %}bg-white text-amber-950 shadow-flat border border-slate-200/60{% else %}text-slate-500 hover:text-slate-900{% endif %} cursor-pointer">
+                    <span class="w-2 h-2 rounded-full {% if calculator_type|default('combo') == 'swp' %}bg-amber-700{% else %}bg-slate-300{% endif %}"></span>
                     <span>SWP Only</span>
                 </button>
             </div>
@@ -59,11 +59,11 @@
         <div class="space-y-2 xl:space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
             
             <!-- Stage 1 / SIP Panel -->
-            <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2 xl:space-y-2.5 border-t-4 border-emerald-600 rounded-2xl bg-gradient-to-b from-emerald-50/70 via-emerald-50/30 to-white/90 backdrop-blur-md p-2.5 xl:p-3 border-2 border-emerald-300/90 shadow-card transition-all">
+            <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2 xl:space-y-2.5 border-t-4 border-emerald-700 rounded-2xl bg-gradient-to-b from-emerald-50/70 via-emerald-50/30 to-white/90 backdrop-blur-md p-2.5 xl:p-3 border-2 border-emerald-300/90 shadow-card transition-all">
                 <!-- Stage 1 Header (Visible in Dual Mode) -->
-                <div id="stage-1-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 text-white shadow-card border-2 border-emerald-500">
+                <div id="stage-1-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-700 via-emerald-800 to-teal-800 text-white shadow-card border-2 border-emerald-600">
                     <div class="flex items-center gap-2 text-white">
-                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-white text-emerald-800 text-ui-xs font-black shadow-flat">1</span>
+                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-white text-emerald-900 text-ui-xs font-black shadow-flat">1</span>
                         <span class="text-ui-xs font-black text-white">Stage 1:</span>
                         <span class="text-ui-xs font-bold text-emerald-50">Accumulation (SIP)</span>
                     </div>
@@ -78,23 +78,23 @@
 
             <!-- Stage Transition Indicator (Visible only in Dual Mode) -->
             <div id="stage-transition-divider" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center gap-2 py-1 xl:py-2 select-none">
-                <div class="flex-1 h-0.5 bg-gradient-to-r from-emerald-400 via-teal-400 to-amber-400"></div>
-                <div class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-emerald-700 via-teal-700 to-amber-700 text-white border-2 border-white text-micro font-black shadow-card">
+                <div class="flex-1 h-0.5 bg-gradient-to-r from-emerald-500 via-teal-600 to-amber-600"></div>
+                <div class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-emerald-800 via-teal-800 to-amber-800 text-white border-2 border-white text-micro font-black shadow-card">
                     <svg class="w-3.5 h-3.5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                     </svg>
                     <span>Matured SIP Seeds Retirement SWP</span>
                     <span class="text-amber-200">↓</span>
                 </div>
-                <div class="flex-1 h-0.5 bg-gradient-to-r from-amber-400 to-amber-500"></div>
+                <div class="flex-1 h-0.5 bg-gradient-to-r from-amber-600 to-amber-700"></div>
             </div>
 
             <!-- Stage 2 / SWP Panel -->
-            <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="space-y-2 xl:space-y-3 border-t-4 border-amber-600 rounded-2xl bg-gradient-to-b from-amber-50/70 via-amber-50/30 to-white/90 backdrop-blur-md p-2.5 xl:p-3 border-2 border-amber-300/90 shadow-card transition-all">
+            <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="space-y-2 xl:space-y-3 border-t-4 border-amber-700 rounded-2xl bg-gradient-to-b from-amber-50/70 via-amber-50/30 to-white/90 backdrop-blur-md p-2.5 xl:p-3 border-2 border-amber-300/90 shadow-card transition-all">
                 <!-- Stage 2 Header (Visible in Dual Mode) -->
-                <div id="stage-2-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 text-white shadow-card border-2 border-amber-500">
+                <div id="stage-2-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 text-white shadow-card border-2 border-amber-600">
                     <div class="flex items-center gap-2 text-white">
-                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-white text-amber-800 text-ui-xs font-black shadow-flat">2</span>
+                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-white text-amber-950 text-ui-xs font-black shadow-flat">2</span>
                         <span class="text-ui-xs font-black text-white">Stage 2:</span>
                         <span class="text-ui-xs font-bold text-amber-50">Retirement Cashflow (SWP)</span>
                     </div>

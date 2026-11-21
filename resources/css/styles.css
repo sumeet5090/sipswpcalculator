@@ -247,18 +247,18 @@
     }
 
     .preset-chip.is-active {
-        background-color: #059669;
+        background-color: #047857;
         color: #ffffff;
-        border-color: #047857;
-        box-shadow: 0 1px 3px rgba(5, 150, 105, 0.25);
+        border-color: #065f46;
+        box-shadow: 0 1px 3px rgba(4, 120, 87, 0.3);
     }
 
     .preset-chip.is-active-amber,
     .preset-chip.is-active-blue {
-        background-color: #d97706;
+        background-color: #b45309;
         color: #ffffff;
-        border-color: #b45309;
-        box-shadow: 0 1px 3px rgba(217, 119, 6, 0.25);
+        border-color: #92400e;
+        box-shadow: 0 1px 3px rgba(180, 83, 9, 0.3);
     }
 
     .preset-chip.is-active-rose {

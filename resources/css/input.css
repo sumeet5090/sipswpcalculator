@@ -123,10 +123,10 @@
   --color-surface-card: #ffffff;
   --color-sip-tint: #ecfdf5;
   --color-sip-accent: #10b981;
-  --color-swp-tint: #eff6ff;
-  --color-swp-accent: #3b82f6;
-  --color-bridge-bg: #e0e7ff;
-  --color-bridge-text: #312e81;
+  --color-swp-tint: #fffbeb;
+  --color-swp-accent: #b45309;
+  --color-bridge-bg: #fef3c7;
+  --color-bridge-text: #78350f;
 
   /* ── 3-Tier System Border Opacity Stack ── */
   --color-border-subtle: rgba(226, 232, 240, 0.6);

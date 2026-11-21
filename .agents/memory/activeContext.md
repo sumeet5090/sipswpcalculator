@@ -5,7 +5,35 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Comprehensive Documentation & Rules Refinement Complete (Zero-Ambiguity Standard) — Systematically audited and refined all workspace instructions, architectural coordinate maps, system patterns, public README, ADRs, and agent skills. Structured `.agents/AGENTS.md` into 12 logically sequenced authoritative pillars with a formal 5-Stage Agent Execution Lifecycle; synchronized the Disciplined Dual-Engine Palette (Institutional Emerald & Warm Amber Golden Harvest, Sovereign Indigo) and Authentic Frosted Glassmorphism across all documentation; eradicated obsolete blue references and duplicate headings; locked test suite metrics to 820 PHPUnit tests (12,776 assertions), 253 PHPStan files at Level Max, and 71 parity tests.
+- **Current Milestone:** Deeper Executive Luxury Color Refinement Complete — Systematically elevated Stage 1 (SIP Wealth Accumulation) and Stage 2 (SWP Retirement Cashflow) to Deeper Executive Luxury colorways. Stage 1 now commands rich Forest Emerald (`#047857` / `emerald-700` / `emerald-800`) paired with deep emerald accent pills and borders. Stage 2 features rich Burnished Amber (`#b45309` / `amber-700` / `amber-800`) with high-contrast warm badges and slider accents. Completely eradicated the last remaining sky-blue spline from Chart.js (`#0284c7` -> `#c2410c` terracotta/burnt orange), aligned `ThemeTokens.ts` with `ThemeConstants.php` single source of truth, and elevated Card 4 (Climax Final Corpus Anchor) to `border-2 border-emerald-700`, deep emerald pill `bg-emerald-700`, and `text-slate-950 font-black`.
+- **Implemented Features & Fixes (2026-11-21 Session 42 - Deeper Executive Luxury Color Refinements):**
+  - **CSS Token Layer (`resources/css/input.css`, `resources/css/styles.css`):**
+    - Updated CSS variables: `--color-growth: #047857`, `--color-growth-emphasis: #065f46`, `--color-swp-accent: #b45309`, `--color-swp-tint: #fffbeb`, `--color-bridge-bg: #fef3c7`, `--color-bridge-text: #78350f`.
+    - Range Slider Track & Thumbs: Updated `.accent-emerald-600` track fill to `#047857` and thumb border to `#047857`; updated `.accent-amber-500, .accent-amber-600` track fill to `#b45309` and thumb border to `#b45309`.
+    - Preset Chips: Updated `.preset-chip.is-active` to `background-color: #047857; border-color: #065f46; box-shadow: 0 1px 3px rgba(4, 120, 87, 0.3)`; updated `.preset-chip.is-active-amber` to `background-color: #b45309; border-color: #92400e; box-shadow: 0 1px 3px rgba(180, 83, 9, 0.3)`.
+  - **TypeScript Theme Tokens & Chart Engine (`assets/js/calculators/constants/ThemeTokens.ts`, `assets/js/calculators/chart/ChartDatasetBuilder.ts`):**
+    - Aligned `ThemeTokens.ts` tokens with `ThemeConstants.php`: `financial.growth = '#047857'`, `financial.growthDark = '#065f46'`, `financial.withdrawal = '#b45309'`, `financial.withdrawalDark = '#92400e'`, `financial.withdrawalBg = '#fef3c7'`, `financial.withdrawalBorder = '#fde68a'`.
+    - Chart Gradients & Fills: `chart.gradientCorpusTop = 'rgba(4, 120, 87, 0.22)'`, `chart.gradientCorpusMid = 'rgba(4, 120, 87, 0.05)'`, `chart.swpFillBg = 'rgba(180, 83, 9, 0.08)'`, `chart.milestoneLineActive = 'rgba(4, 120, 87, 0.50)'`, `chart.milestoneLineSubtle = 'rgba(4, 120, 87, 0.20)'`.
+    - Purged Sky-Blue from Chart Spline: Replaced hardcoded `#0284c7` (Sky-600) on Real Purchasing Power inflation discount curve with `#c2410c` (Orange-700 / terracotta) and `rgba(194, 65, 12, 0.04)`.
+  - **Strategy Blueprint Controller (`assets/js/calculators/controllers/StrategyBlueprintController.ts`):**
+    - Synchronized `resetActiveState()` and `updateButtonsVisualState()` with deep forest emerald styling (`border-emerald-700`, `bg-emerald-800`, `ring-emerald-600/25`).
+  - **Component Template Implementations (`src/Views/components/calculator-form.twig`, `src/Views/components/chart-visualization.twig`):**
+    - `calculator-form.twig`:
+      - Mode Selector Tabs: `#tab-combo`, `#tab-sip` active dot to `bg-emerald-700` with `text-emerald-950 font-black`; `#tab-swp` active dot to `bg-amber-700` with `text-amber-950 font-black`.
+      - Stage 1 Panel: Upgraded top accent to `border-t-4 border-emerald-700`.
+      - Stage 1 Header Canopy: Refined to `bg-gradient-to-r from-emerald-700 via-emerald-800 to-teal-800 border-2 border-emerald-600 text-white`.
+      - Stage Transition Divider: Updated bridge tracks to `from-emerald-500 via-teal-600 to-amber-600` and center pill to `from-emerald-800 via-teal-800 to-amber-800 border-2 border-white text-white`.
+      - Stage 2 Panel: Upgraded top accent to `border-t-4 border-amber-700`.
+      - Stage 2 Header Canopy: Refined to `bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 border-2 border-amber-600 text-white`.
+    - `chart-visualization.twig`:
+      - Card 3 (`#card-withdrawn`): Upgraded focus ring to `focus:ring-amber-600/40` and pill badge to `bg-amber-100/90 text-amber-950 border border-amber-300/90 font-extrabold`.
+      - Card 4 (`#card-corpus`): Elevated to `border-2 border-emerald-700`, radial shimmer `bg-emerald-600/12`, badge `bg-emerald-700 border border-emerald-800 text-white font-extrabold`, high-contrast numerals `text-slate-950 font-black`, gains subtext `text-emerald-800 font-bold`.
+  - **Pre-Commit Verification & Quality Gates:**
+    - `npm run typecheck && npm run build`: 0 errors (`dist/assets/app-D_p_vmBT.css` 220.02 kB, `dist/assets/app-D_pFyOA2.js` 335.50 kB).
+    - `php tests/parity_check.php`: 71/71 mathematical engine parity tests PASS.
+    - `vendor/bin/phpunit tests/Unit/...`: 35 tests, 197 assertions PASS (TypographyAndThemeTokens, DesignTokenAudit, TelemetryIntegration, StrategyStarterComponent, CalculatorForm).
+    - `vendor/bin/phpunit tests/Integration/HomepageLayoutAndAestheticsTest.php`: 1 test, 28 assertions PASS.
+    - `composer check-all`: 253/253 PHPStan files checked (Level Max OK), 253/253 PHPCS PSR-12 clean, 820/820 PHPUnit tests PASS (12,776 assertions).
 - **Implemented Features & Fixes (2026-11-21 Session 41 - Comprehensive Documentation & Rules Refinement):**
   - **Workspace & Agent Governance (`.agents/AGENTS.md`):**
     - Normalized section numbering and structured into 12 authoritative pillars (Development Standards, Design System Governance, SEO/Content Strategy, Product Mission, 5-Stage Lifecycle, Architectural Invariants, Planning Protocol, Junior Model Guardrails, Security Protocols, Software Engineering Models, Sandbox Rules, Clickable File Links).
