@@ -1,15 +1,15 @@
 ---
 og_image: "/assets/og/og-compound-interest-calculator.jpg"
-title: "Compound Interest Calculator (with Free Excel & Tax Table)"
+title: "Compound Interest Calculator India: Monthly, Daily & Free Excel"
 h1: "Compound Interest Calculator India"
 subtitle: "Calculate compound interest returns with annual, quarterly, and monthly compounding frequencies. Free calculator with Rule of 72 doubling timelines & downloadable Excel."
-meta_desc: "Calculate compound interest across monthly & annual frequencies. Model Rule of 72 doubling timelines & 2026 tax with free downloadable Excel cashflow table."
+meta_desc: "Calculate compound interest with monthly, quarterly, and daily compounding frequencies. Model Rule of 72 doubling periods with free instant Excel & PDF export."
 keywords: "compound interest calculator, ci calculator india, compounding calculator, rule of 72 calculator, monthly compounding calculator, investment compounding"
 schema_name: "Compound Interest Calculator India — Monthly & Annual Growth"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-01"
-updated_at: "2026-11-12"
+updated_at: "2026-11-22"
 ---
 
 ---

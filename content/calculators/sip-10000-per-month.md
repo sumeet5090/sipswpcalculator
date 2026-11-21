@@ -1,14 +1,14 @@
 ---
 og_image: "/assets/og/og-sip-10000-per-month.jpg"
-title: "₹10,000 Monthly SIP Calculator — Returns in 5, 10, 20 Years"
+title: "₹10,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"
 subtitle: "Calculate how a ₹10,000 monthly SIP in Indian mutual funds grows into ₹23.23 Lakhs in 10 years, ₹99.91 Lakhs in 20 years, and ₹4.28 Crores with a 10% annual step-up."
-meta_desc: "Calculate how a ₹10,000 monthly SIP in mutual funds grows into ₹99.91L in 20 years, and ₹4.28 Cr with 10% step-up. Review asset allocation and free Excel."
+meta_desc: "See how a ₹10,000 monthly SIP compounds into ₹23.2L in 10 yrs, ₹1 Cr in 20 yrs, and ₹4.28 Cr with step-up. Review 2026 LTCG tax with free downloadable Excel."
 keywords: "10000 sip per month, 10000 monthly sip returns, 10000 sip for 10 years, 10000 sip for 20 years, 10000 sip calculator india, best mutual fund for 10000 per month"
 schema_name: "₹10,000 Monthly SIP Investment Planner"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-05"
-updated_at: "2026-11-12"
+updated_at: "2026-11-22"
 ---
 
 ---
@@ -19,7 +19,7 @@ A **₹10,000 per month** Systematic Investment Plan (SIP) represents the premie
 
 At an expected annualized return of **12% CAGR** (consistent with the 25-year historical performance of the Nifty 50 TRI index), a ₹10,000 monthly investment accumulates to **₹23.23 Lakhs in 10 years**, crosses **₹50.46 Lakhs in 15 years**, and reaches **₹99.91 Lakhs (~₹1 Crore) in Year 20**. Furthermore, by activating a modest **10% annual step-up** (increasing your investment by ₹1,000/month in Year 2 to reflect salary increments), that exact same starting SIP expands into **₹4.28 Crores over 25 years**!
 
-This comprehensive planning guide breaks down the mathematics, milestone roadmaps, tax considerations under **Section 112A** (12.5% base LTCG rate; **13.0% effective** inclusive of 4% health & education cess above ₹1.25 Lakh annual exemption), and portfolio allocation architectures for a **₹10,000 per month SIP**. Use the interactive calculator above to test your custom tenure, evaluate flat versus stepped contributions, and review inflation-adjusted real purchasing power.
+This comprehensive planning guide breaks down the mathematics, milestone roadmaps, tax considerations under **Section 112A** (12.5% base LTCG rate; **13.0% effective** inclusive of 4% health & education cess above ₹1.25 Lakh annual exemption), and portfolio allocation architectures for a **₹10,000 per month SIP**. If your investible surplus differs from ₹10,000, use our [Custom SIP Calculator](/sip-calculator) to simulate any arbitrary monthly installment. Use the interactive calculator above to test your custom tenure, evaluate flat versus stepped contributions, and review inflation-adjusted real purchasing power.
 
 ---
 
@@ -175,6 +175,7 @@ To ensure your future wealth preserves the full purchasing power of a ₹1 Crore
 
 Accelerate your ₹10,000 monthly SIP wealth journey:
 
+* [SIP Calculator](/sip-calculator) — Simulate monthly wealth accumulation and step-up compounding for custom investment budgets beyond ₹10,000
 * [₹5,000 Monthly SIP Plan](/sip-5000-per-month) — Starting smaller? See how ₹5,000/month with 10% step-up compounds into serious wealth over 20+ years
 * [1 Crore SIP Calculator](/my-first-crore-calculator) — Calculate your exact timeline to reach ₹1 Crore with your ₹10,000 monthly SIP and annual step-ups
 * [Step-Up SIP Calculator](/sip-step-up-calculator) — Model the dramatic wealth difference between flat ₹10,000 SIPs and 10% annual step-up SIPs

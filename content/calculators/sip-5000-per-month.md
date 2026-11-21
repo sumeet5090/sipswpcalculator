@@ -1,14 +1,14 @@
 ---
 og_image: "/assets/og/og-sip-5000-per-month.jpg"
-title: "₹5,000 Monthly SIP Calculator — Returns in 5, 10, 20 Years"
+title: "₹5,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"
 subtitle: "See how investing ₹5,000 every month in Indian mutual funds compounds into ₹49.96 Lakhs in 20 years and ₹2.14 Crores in 25 years with a 10% annual step-up."
-meta_desc: "See how investing ₹5,000 monthly in mutual funds compounds into ₹49.96L to ₹2.14 Cr. Model 10% annual step-up compounding & LTCG tax rules with free Excel."
+meta_desc: "See how a ₹5,000 monthly SIP compounds into ₹11.6L in 10 yrs, ₹50L in 20 yrs, and ₹2.14 Cr with step-up. Review 2026 LTCG tax impacts with free Excel download."
 keywords: "5000 sip per month, 5000 monthly sip returns, 5000 sip for 10 years, 5000 sip for 20 years, 5000 sip calculator india, best mutual fund for 5000 per month"
 schema_name: "₹5,000 Monthly SIP Investment Planner"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-05"
-updated_at: "2026-11-12"
+updated_at: "2026-11-22"
 ---
 
 ---
@@ -19,7 +19,7 @@ Investing **₹5,000 per month** through a Systematic Investment Plan (SIP) is t
 
 At an annualized return of **12% CAGR** (the historical long-term average of the Nifty 50 TRI index), a ₹5,000 monthly investment accumulates to **₹11.62 Lakhs in 10 years**, **₹49.96 Lakhs in 20 years**, and crosses **₹1.08 Crore in Year 26**. Furthermore, by adding a simple **10% annual step-up** (increasing your monthly investment by ₹500 in year two, ₹550 in year three, and so forth), that same ₹5,000 starting SIP grows to **₹2.14 Crores** (`₹2,13,77,731`) in 25 years!
 
-This comprehensive guide analyzes the exact math of a **₹5,000 per month SIP**. Use the interactive calculator above to simulate your customized returns across various tenures, compare flat versus step-up contributions, analyze post-tax net realizations under **Section 112A** (12.5% base LTCG rate; **13.0% effective** with 4% cess above ₹1.25 Lakh annual exemption), and explore optimal portfolio allocations designed specifically for a ₹5,000 monthly budget.
+This comprehensive guide analyzes the exact math of a **₹5,000 per month SIP**. Looking to invest a different amount? Use our [Custom SIP Calculator](/sip-calculator) to simulate returns for any monthly contribution. Use the interactive calculator above to simulate your customized returns across various tenures, compare flat versus step-up contributions, analyze post-tax net realizations under **Section 112A** (12.5% base LTCG rate; **13.0% effective** with 4% cess above ₹1.25 Lakh annual exemption), and explore optimal portfolio allocations designed specifically for a ₹5,000 monthly budget.
 
 ---
 

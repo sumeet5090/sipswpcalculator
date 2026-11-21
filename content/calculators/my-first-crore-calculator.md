@@ -1,15 +1,15 @@
 ---
 og_image: "/assets/og/og-my-first-crore-calculator.jpg"
-title: "1 Crore SIP Calculator (with Free Excel & Tax Table)"
+title: "1 Crore SIP Calculator — Monthly SIP for ₹1 Cr (Free Excel)"
 h1: "1 Crore SIP Calculator"
 subtitle: "Find the exact monthly SIP needed to reach ₹1 Crore in 5, 10, 15, or 20 years. Free goal planning calculator with 10% annual step-up compounding & downloadable Excel."
-meta_desc: "Find the exact monthly SIP required to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% step-up compounding & 2026 LTCG tax impacts with free downloadable Excel."
+meta_desc: "Find the exact monthly SIP to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% step-up compounding & 2026 LTCG tax with free instant Excel & PDF download."
 keywords: "crore calculator, 1 crore in 5 years sip, reach 1 crore sip, how much sip for 1 crore, 1 crore mutual fund calculator, crorepathi sip planner, 1 crore in 10 years sip"
 schema_name: "1 Crore SIP Calculator — Monthly Investment to Reach ₹1 Cr"
 seo_category: "growth"
 type: "calculator"
 date: "2026-08-03"
-updated_at: "2026-11-12"
+updated_at: "2026-11-22"
 ---
 
 ---
@@ -18,7 +18,7 @@ updated_at: "2026-11-12"
 
 Accumulating your **first ₹1 Crore** is widely recognized across Indian personal finance as the single most critical psychological and financial milestone. In behavioral economics, this threshold is often described as escaping the "compounding gravitational pull." Because early wealth accumulation relies overwhelmingly on fresh savings out of monthly income, getting from ₹0 to ₹10 Lakhs or ₹1 Crore feels agonizingly slow. However, once an investor crosses the ₹1 Crore threshold, the portfolio generates more annual capital gains than most salaried professionals contribute in an entire year.
 
-This **1 Crore SIP Calculator** is engineered as a zero-latency **Goal-Seek Engine**. Traditional Systematic Investment Plan (SIP) calculators ask you to specify how much money you can spare each month and then calculate an arbitrary future value. In contrast, this calculator begins with the finish line: **₹1,00,00,000 (1 Crore)**—or any custom target milestone—and reverse-engineers the precise monthly investment required across various tenures, expected returns, and step-up increments to ensure you reach your goal without guesswork.
+This **1 Crore SIP Calculator** is engineered as a zero-latency **Goal-Seek Engine**. Traditional [Systematic Investment Plan (SIP) Calculators](/sip-calculator) ask you to specify how much money you can spare each month and then calculate an arbitrary future value. In contrast, this calculator begins with the finish line: **₹1,00,00,000 (1 Crore)**—or any custom target milestone—and reverse-engineers the precise monthly investment required across various tenures, expected returns, and step-up increments to ensure you reach your goal without guesswork.
 
 ---
 
@@ -41,6 +41,8 @@ Notice the staggering asymmetry:
 1. **The First ₹1 Crore** takes **13.5 years**, requiring ₹40.50 Lakhs of hard-earned post-tax monthly savings.
 2. **The Second ₹1 Crore** takes only **4.9 years**—nearly two-thirds faster—requiring less than ₹15 Lakhs of personal contributions because the initial ₹1 Crore is compounding simultaneously at ₹12 Lakhs per year.
 3. **The Third and Fourth ₹1 Crores** arrive in just 3.1 and 2.2 years respectively. By year 20, over 93% of every new Crore added to your net worth is created entirely by market returns, completely decoupling wealth generation from your physical labor.
+
+> **Planning Tip:** Already have a fixed monthly budget in mind rather than a rigid corpus target? If your monthly savings capacity is predetermined, use our [Custom Monthly SIP Calculator](/sip-calculator) to project your exact wealth accumulation and capital gains across any custom deposit amount.
 
 ---
 
@@ -273,7 +275,7 @@ Under Section 112A of the Income Tax Act (Finance No. 2 Act, 2024), Long-Term Ca
 ### What should I do after reaching my first ₹1 Crore?
 Once you hit your first ₹1 Crore milestone:
 1. **Rebalance Your Asset Allocation:** Shift a portion of your wealth into debt or liquid mutual funds to lock in capital and reduce equity volatility.
-2. **Transition to Wealth Decumulation (if retiring):** Use our [SWP Calculator](/swp-calculator) to set up a sustainable, tax-efficient monthly income stream.
+2. **Transition to Wealth Decumulation (if retiring):** Use our [SWP Calculator (Monthly Pension & Systematic Withdrawal Planner)](/swp-calculator) to set up a sustainable, tax-efficient monthly income stream.
 3. **Set Higher Milestones:** If you are still in your earning years, keep your portfolio invested. Thanks to compounding velocity, your ₹1 Crore will compound into ₹2 Crores in roughly 5 to 6 years without requiring aggressive extra savings.
 
 ---

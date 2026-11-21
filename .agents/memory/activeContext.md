@@ -1,65 +1,81 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-21*
+*Last Updated: 2026-11-22*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Deeper Executive Luxury Color Refinement Complete — Systematically elevated Stage 1 (SIP Wealth Accumulation) and Stage 2 (SWP Retirement Cashflow) to Deeper Executive Luxury colorways. Stage 1 now commands rich Forest Emerald (`#047857` / `emerald-700` / `emerald-800`) paired with deep emerald accent pills and borders. Stage 2 features rich Burnished Amber (`#b45309` / `amber-700` / `amber-800`) with high-contrast warm badges and slider accents. Completely eradicated the last remaining sky-blue spline from Chart.js (`#0284c7` -> `#c2410c` terracotta/burnt orange), aligned `ThemeTokens.ts` with `ThemeConstants.php` single source of truth, and elevated Card 4 (Climax Final Corpus Anchor) to `border-2 border-emerald-700`, deep emerald pill `bg-emerald-700`, and `text-slate-950 font-black`.
-- **Implemented Features & Fixes (2026-11-21 Session 42 - Deeper Executive Luxury Color Refinements):**
-  - **CSS Token Layer (`resources/css/input.css`, `resources/css/styles.css`):**
-    - Updated CSS variables: `--color-growth: #047857`, `--color-growth-emphasis: #065f46`, `--color-swp-accent: #b45309`, `--color-swp-tint: #fffbeb`, `--color-bridge-bg: #fef3c7`, `--color-bridge-text: #78350f`.
-    - Range Slider Track & Thumbs: Updated `.accent-emerald-600` track fill to `#047857` and thumb border to `#047857`; updated `.accent-amber-500, .accent-amber-600` track fill to `#b45309` and thumb border to `#b45309`.
-    - Preset Chips: Updated `.preset-chip.is-active` to `background-color: #047857; border-color: #065f46; box-shadow: 0 1px 3px rgba(4, 120, 87, 0.3)`; updated `.preset-chip.is-active-amber` to `background-color: #b45309; border-color: #92400e; box-shadow: 0 1px 3px rgba(180, 83, 9, 0.3)`.
-  - **TypeScript Theme Tokens & Chart Engine (`assets/js/calculators/constants/ThemeTokens.ts`, `assets/js/calculators/chart/ChartDatasetBuilder.ts`):**
-    - Aligned `ThemeTokens.ts` tokens with `ThemeConstants.php`: `financial.growth = '#047857'`, `financial.growthDark = '#065f46'`, `financial.withdrawal = '#b45309'`, `financial.withdrawalDark = '#92400e'`, `financial.withdrawalBg = '#fef3c7'`, `financial.withdrawalBorder = '#fde68a'`.
-    - Chart Gradients & Fills: `chart.gradientCorpusTop = 'rgba(4, 120, 87, 0.22)'`, `chart.gradientCorpusMid = 'rgba(4, 120, 87, 0.05)'`, `chart.swpFillBg = 'rgba(180, 83, 9, 0.08)'`, `chart.milestoneLineActive = 'rgba(4, 120, 87, 0.50)'`, `chart.milestoneLineSubtle = 'rgba(4, 120, 87, 0.20)'`.
-    - Purged Sky-Blue from Chart Spline: Replaced hardcoded `#0284c7` (Sky-600) on Real Purchasing Power inflation discount curve with `#c2410c` (Orange-700 / terracotta) and `rgba(194, 65, 12, 0.04)`.
-  - **Strategy Blueprint Controller (`assets/js/calculators/controllers/StrategyBlueprintController.ts`):**
-    - Synchronized `resetActiveState()` and `updateButtonsVisualState()` with deep forest emerald styling (`border-emerald-700`, `bg-emerald-800`, `ring-emerald-600/25`).
-  - **Component Template Implementations (`src/Views/components/calculator-form.twig`, `src/Views/components/chart-visualization.twig`):**
-    - `calculator-form.twig`:
-      - Mode Selector Tabs: `#tab-combo`, `#tab-sip` active dot to `bg-emerald-700` with `text-emerald-950 font-black`; `#tab-swp` active dot to `bg-amber-700` with `text-amber-950 font-black`.
-      - Stage 1 Panel: Upgraded top accent to `border-t-4 border-emerald-700`.
-      - Stage 1 Header Canopy: Refined to `bg-gradient-to-r from-emerald-700 via-emerald-800 to-teal-800 border-2 border-emerald-600 text-white`.
-      - Stage Transition Divider: Updated bridge tracks to `from-emerald-500 via-teal-600 to-amber-600` and center pill to `from-emerald-800 via-teal-800 to-amber-800 border-2 border-white text-white`.
-      - Stage 2 Panel: Upgraded top accent to `border-t-4 border-amber-700`.
-      - Stage 2 Header Canopy: Refined to `bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 border-2 border-amber-600 text-white`.
-    - `chart-visualization.twig`:
-      - Card 3 (`#card-withdrawn`): Upgraded focus ring to `focus:ring-amber-600/40` and pill badge to `bg-amber-100/90 text-amber-950 border border-amber-300/90 font-extrabold`.
-      - Card 4 (`#card-corpus`): Elevated to `border-2 border-emerald-700`, radial shimmer `bg-emerald-600/12`, badge `bg-emerald-700 border border-emerald-800 text-white font-extrabold`, high-contrast numerals `text-slate-950 font-black`, gains subtext `text-emerald-800 font-bold`.
-  - **Pre-Commit Verification & Quality Gates:**
-    - `npm run typecheck && npm run build`: 0 errors (`dist/assets/app-D_p_vmBT.css` 220.02 kB, `dist/assets/app-D_pFyOA2.js` 335.50 kB).
+- **Current Milestone:** High-Impression SERP CTR Optimization (Option A) Complete — Optimized `<title>` and `<meta name="description">` tags across 7 high-impression, low-CTR calculator guides (`/lumpsum-calculator`, `/my-first-crore-calculator`, `/inflation-calculator`, `/cagr-calculator`, `/compound-interest-calculator`, `/sip-5000-per-month`, `/sip-10000-per-month`) to aggressively elevate organic search CTR into the 4%–7% benchmark established by `/`; calibrated all titles against PHP `strlen()` byte-length bounds ($10 \le \text{strlen} \le 65$) and character length bounds ($\le 63$ chars); verified 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and live local route curl inspection.
+- **Implemented Features & Fixes (2026-11-22 Session 42 - High-Impression SERP CTR Optimization [Option A]):**
+  - **`content/calculators/lumpsum-calculator.md`:**
+    - `title: "Lumpsum Calculator India (with Free Excel & Tax Schedule)"` (57 chars / 57 bytes).
+    - `meta_desc: "Calculate mutual fund lumpsum returns across 1 to 30 years. Compare Lumpsum vs SIP, model 2026 Budget LTCG tax impact & download free yearly cashflow Excel."` (156 chars / 156 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/my-first-crore-calculator.md`:**
+    - `title: "1 Crore SIP Calculator — Monthly SIP for ₹1 Cr (Free Excel)"` (59 chars / 63 bytes).
+    - `meta_desc: "Find the exact monthly SIP to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% step-up compounding & 2026 LTCG tax with free instant Excel & PDF download."` (157 chars / 159 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/inflation-calculator.md`:**
+    - `title: "Inflation Calculator India — Purchasing Power & Free Excel"` (58 chars / 60 bytes).
+    - `meta_desc: "See what today's expenses will cost in 10, 20, or 30 years at Indian CPI inflation rates. Model purchasing power erosion with free instant Excel & PDF download."` (160 chars / 160 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/cagr-calculator.md`:**
+    - `title: "CAGR Calculator India — Annualized Growth Rate (Free Excel)"` (59 chars / 61 bytes).
+    - `meta_desc: "Calculate exact CAGR, absolute returns & annualized growth for mutual funds, stocks, and property. Free yearly growth schedule with instant Excel & PDF export."` (159 chars / 159 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/compound-interest-calculator.md`:**
+    - `title: "Compound Interest Calculator India: Monthly, Daily & Free Excel"` (63 chars / 63 bytes).
+    - `meta_desc: "Calculate compound interest with monthly, quarterly, and daily compounding frequencies. Model Rule of 72 doubling periods with free instant Excel & PDF export."` (159 chars / 159 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/sip-5000-per-month.md`:**
+    - `title: "₹5,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"` (61 chars / 63 bytes).
+    - `meta_desc: "See how a ₹5,000 monthly SIP compounds into ₹11.6L in 10 yrs, ₹50L in 20 yrs, and ₹2.14 Cr with step-up. Review 2026 LTCG tax impacts with free Excel download."` (159 chars / 167 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/sip-10000-per-month.md`:**
+    - `title: "₹10,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"` (62 chars / 64 bytes).
+    - `meta_desc: "See how a ₹10,000 monthly SIP compounds into ₹23.2L in 10 yrs, ₹1 Cr in 20 yrs, and ₹4.28 Cr with step-up. Review 2026 LTCG tax with free downloadable Excel."` (157 chars / 165 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **Verification & Quality Gates:**
     - `php tests/parity_check.php`: 71/71 mathematical engine parity tests PASS.
-    - `vendor/bin/phpunit tests/Unit/...`: 35 tests, 197 assertions PASS (TypographyAndThemeTokens, DesignTokenAudit, TelemetryIntegration, StrategyStarterComponent, CalculatorForm).
-    - `vendor/bin/phpunit tests/Integration/HomepageLayoutAndAestheticsTest.php`: 1 test, 28 assertions PASS.
-    - `composer check-all`: 253/253 PHPStan files checked (Level Max OK), 253/253 PHPCS PSR-12 clean, 820/820 PHPUnit tests PASS (12,776 assertions).
-- **Implemented Features & Fixes (2026-11-21 Session 41 - Comprehensive Documentation & Rules Refinement):**
-  - **Workspace & Agent Governance (`.agents/AGENTS.md`):**
-    - Normalized section numbering and structured into 12 authoritative pillars (Development Standards, Design System Governance, SEO/Content Strategy, Product Mission, 5-Stage Lifecycle, Architectural Invariants, Planning Protocol, Junior Model Guardrails, Security Protocols, Software Engineering Models, Sandbox Rules, Clickable File Links).
-    - Codified the sequential 5-Stage Lifecycle: Stage 1 (Context Anchoring via `ARCHITECTURE_MAP.md`), Stage 2 (Planning & Zero-Guesswork Artifact `implementation_plan.md`), Stage 3 (Implementation Protocol adhering to SOLID/POLA/CQS), Stage 4 (Deterministic Tiered Verification), Stage 5 (Anti-Drift Documentation & Handoff Ledger).
-    - Codified the Disciplined Dual-Engine Palette (Emerald Accumulation, Warm Amber Golden Harvest, Sovereign Indigo) and Authentic Frosted Glassmorphism standard (`backdrop-blur-md`, `bg-white/85` to `bg-white/95`, specular inner highlights, and ambient glow spheres).
-  - **Architecture Coordinate Map (`.agents/ARCHITECTURE_MAP.md`):**
-    - Updated Section 6.H semantic color pillars: replaced legacy blue with Warm Amber & Golden Harvest (`amber-600` / `#D97706`) for Stage 2 SWP, and defined Sovereign Indigo (`indigo-600`) for Fixed Deposit.
-    - Harmonized Section 6.G with the authentic frosted glassmorphic card elevation (`@utility fintech-glass-card`) and GPU compositor rules (`background-attachment: scroll`).
-    - Synchronized Section 7 verification commands and metrics (820 PHPUnit tests, 12,776 assertions, Level Max on 253 files, 71 parity tests).
-  - **System Patterns & Invariants (`.agents/memory/systemPatterns.md`):**
-    - Corrected duplicate "## 5." headings into clean sequential sections (1 through 7).
-    - Aligned Section 1 accent palettes with the Disciplined Dual-Engine standard and authentic frosted glassmorphism.
-    - Updated verification suite metrics to 820 tests (12,776 assertions) and 71 parity tests.
-  - **Public Documentation (`README.md`):**
-    - Purged legacy blue references in favor of Warm Amber & Golden Harvest for Stage 2 SWP and Sovereign Indigo for Fixed Deposit.
-    - Added dedicated `## Developer & AI Agent Governance Protocols` section linking directly to `.agents/AGENTS.md` and `.agents/ARCHITECTURE_MAP.md`.
-    - Updated Architecture Quality Standards table to 820 unit and integration tests (12,776 assertions) and 71 cross-runtime mathematical parity tests.
-  - **Architectural Decision Records (`docs/adr/0004-pure-light-mode-fintech-design-system.md`):**
-    - Updated ADR 0004 to record the accepted evolution: Pure Light-Mode FinTech Design System with Disciplined Dual-Engine Palette and Authentic Frosted Glassmorphism.
-  - **Agent Skills (`.agents/skills/architecture-nuances/SKILL.md`):**
-    - Added Section 8 detailing the Understated Executive FinTech Theme and Dual-Engine Palette rules.
-  - **Pre-Commit Verification & Quality Gates:**
-    - `npm run typecheck && npm run build`: 0 errors (Vite built `dist/assets/app-DZj4R3xu.css` `217.25 kB`, `dist/assets/app-Brg2aZ0w.js` `335.33 kB`).
+    - `vendor/bin/phpstan analyse --memory-limit=512M`: 253/253 files checked, 0 errors.
+    - `vendor/bin/phpcs`: 253/253 files checked, 0 violations (PSR-12 clean).
+    - `vendor/bin/phpunit tests/Integration/SeoMetadataValidatorTest.php`: 135/135 tests PASS, 3,654 assertions PASS.
+    - `vendor/bin/phpunit`: 820/820 tests PASS (12,776 assertions).
+    - `composer check-all`: 100% OK.
+    - Live local server route curl verification (`http://127.0.0.1:8889`): Verified exact matching of `<title>` and `<meta name="description">` across all 7 routes with 0 rendering errors.
+- **Implemented Features & Fixes (2026-11-22 Session 41 - Strategic In-Content PageRank Flow & Cross-Linking Optimization):**
+  - **`content/calculators/my-first-crore-calculator.md`:**
+    - Intro narrative (L21): Injected high-intent anchor linking to `[Systematic Investment Plan (SIP) Calculators](/sip-calculator)`.
+    - Section 2 Milestone Matrix (L45): Added high-visibility editorial bridge callout card linking to `[Custom Monthly SIP Calculator](/sip-calculator)`.
+    - Section 7 Decumulation Transition (L276): Enhanced retirement anchor text to `[SWP Calculator (Monthly Pension & Systematic Withdrawal Planner)](/swp-calculator)`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/lumpsum-calculator.md`:**
+    - Section 2 Narrative (L65): Injected editorial anchor `[Systematic Investment Plan (SIP)](/sip-calculator)`.
+    - Section 2.1 Head-to-Head Table: Anchored column header directly to `[Systematic Investment Plan (SIP)](/sip-calculator)`.
+    - Section 2 Decision Guide (L102): Added in-text recommendation linking to `[Monthly SIP Calculator](/sip-calculator)`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/reach-5-crore-via-sip.md`:**
+    - Section 8 Action Plan (L204): Added editorial bridge pointing to `[Custom SIP Calculator](/sip-calculator)`.
+    - Related Tools (L215): Resolved orphan omission by adding `* [SIP Calculator](/sip-calculator) — Calculate monthly accumulation, interest earned, and maturity value for custom investment budgets`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/sip-10000-per-month.md`:**
+    - Section 1 BLUF Narrative (L22): Added editorial link to `[Custom SIP Calculator](/sip-calculator)`.
+    - Related Tools (L177): Resolved orphan omission by adding `* [SIP Calculator](/sip-calculator) — Simulate monthly wealth accumulation and step-up compounding for custom investment budgets beyond ₹10,000`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/sip-5000-per-month.md`:**
+    - Section 1 BLUF Narrative (L22): Injected contextual editorial link to `[Custom SIP Calculator](/sip-calculator)`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/target-corpus-calculator.md`:**
+    - Section 1 BLUF Narrative (L18): Added contextual anchor `[Forward SIP Calculator](/sip-calculator)`.
+    - Section 6 FAQ (L281): Injected editorial anchor `[SIP Calculator](/sip-calculator)`.
+    - Related Tools (L292): Enhanced decumulation description for `[SWP Calculator](/swp-calculator)`.
+    - Updated frontmatter `updated_at: "2026-11-22"`.
+  - **Verification & Quality Gates:**
     - `php tests/parity_check.php`: 71/71 mathematical engine parity tests PASS.
-    - `vendor/bin/phpunit tests/Unit/...`: 26 tests, 149 assertions PASS (DesignTokenAudit, TelemetryIntegration, ArchetypeInjector, StrategyStarterComponent).
-    - `composer check-all`: 253/253 PHPStan files checked (Level Max OK), 253/253 PHPCS PSR-12 clean, 820/820 PHPUnit tests PASS (12,776 assertions).
+    - `vendor/bin/phpstan analyse --memory-limit=512M`: 253/253 files checked, 0 errors.
+    - `vendor/bin/phpcs`: 253/253 files checked, 0 violations (PSR-12 clean).
+    - `vendor/bin/phpunit`: 820/820 tests PASS (12,776 assertions).
+    - Local live PHP server curl verification (`http://127.0.0.1:8080`): Verified HTTP 200, valid HTML anchors, and non-broken link targets across all 6 modified calculator routes.
 - **Implemented Features & Fixes (2026-11-21 Session 40 - Strategy Blueprint & Persona Drawer Glassmorphic Refinement):**
   - **Component Template Implementations (`src/Views/components/strategy-starter.twig`):**
     - `#strategy-starter-container`: Upgraded toolbar surface to layered frosted glass (`bg-slate-50/80 backdrop-blur-md border border-slate-200/90 shadow-card relative overflow-hidden`) with ambient emerald (`-left-8 -top-8 bg-emerald-500/12 blur-2xl`) and amber (`-right-8 -bottom-8 bg-amber-500/12 blur-2xl`) glow spheres.

@@ -8,7 +8,7 @@ schema_name: "5 Crore SIP Financial Freedom Calculator"
 seo_category: "growth"
 type: "calculator"
 date: "2026-09-05"
-updated_at: "2026-11-12"
+updated_at: "2026-11-22"
 ---
 
 ---
@@ -201,7 +201,7 @@ While ₹5 Crores in 2046 will purchase what ₹1.56 Crores buys today, **it rem
 
 ## 8. Action Plan: How to Execute Your ₹5 Crore Wealth Plan
 
-1. **Lock In Your Starting Monthly SIP:** Use the sliders above to identify your starting commitment based on your target retirement date.
+1. **Lock In Your Starting Monthly SIP:** Use the sliders above or our [Custom SIP Calculator](/sip-calculator) to identify your starting commitment based on your target retirement date.
 2. **Automate e-Mandates:** Set up auto-debits via NPCI e-NACH for the 1st of every month across your chosen mutual fund schemes.
 3. **Mandate an Annual 10% to 15% Step-Up:** Treat every salary increment and bonus as capital for your financial independence engine.
 4. **Automate Rebalancing:** Review portfolio asset allocation once per year. Rebalance only when equity exceeds 75% or drops below 55% of your total net worth.
@@ -213,6 +213,7 @@ While ₹5 Crores in 2046 will purchase what ₹1.56 Crores buys today, **it rem
 
 Build your complete financial independence strategy with these tools:
 
+* [SIP Calculator](/sip-calculator) — Calculate monthly accumulation, interest earned, and maturity value for custom investment budgets
 * [SWP Calculator](/swp-calculator) — After reaching ₹5 Crores, plan sustainable inflation-adjusted monthly withdrawals using the 4% safe withdrawal rate
 * [Retirement Calculator](/retirement-calculator) — Model your full SIP accumulation to SWP retirement income lifecycle with dual-phase simulation
 * [1 Crore SIP Calculator](/my-first-crore-calculator) — Start with your first milestone — calculate the exact monthly SIP needed to reach ₹1 Crore
