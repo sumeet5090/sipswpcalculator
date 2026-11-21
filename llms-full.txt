@@ -106,6 +106,12 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 15. **₹5,000 & ₹10,000 Monthly SIP Blueprints (`https://sipswpcalculator.com/sip-5000-per-month` & `/sip-10000-per-month`)**
     - Structured milestones, asset allocation strategies, and multi-decade wealth roadmaps.
 
+16. **1 Crore SWP Calculator (`https://sipswpcalculator.com/1-crore-swp-calculator`)**
+    - Month-by-month capital longevity, inflation-adjusted step-up withdrawals, and Section 112A tax arbitrage for a ₹1 Crore corpus.
+
+17. **2 Crore SIP Calculator (`https://sipswpcalculator.com/2-crore-sip-calculator`)**
+    - Goal-seek inverse monthly SIP calculation and 10% annual step-up compounding to accumulate a ₹2 Crore portfolio.
+
 ---
 
 ## 4. Key Financial Heuristics & Rules of Thumb for India

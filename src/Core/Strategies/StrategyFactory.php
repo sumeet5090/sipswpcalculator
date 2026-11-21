@@ -25,6 +25,8 @@ class StrategyFactory
         'reach-5-crore-via-sip'        => TargetCorpusStrategy::class,
         'sip-5000-per-month'           => SipStrategy::class,
         'sip-10000-per-month'          => SipStrategy::class,
+        '1-crore-swp-calculator'       => SwpStrategy::class,
+        '2-crore-sip-calculator'       => TargetCorpusStrategy::class,
     ];
 
     private ConfigServiceInterface $configService;
@@ -63,6 +65,12 @@ class StrategyFactory
         }
         if ($key === 'reach-5-crore-via-sip') {
             return new TargetCorpusStrategy($this->configService, 50000000.0);
+        }
+        if ($key === '1-crore-swp-calculator') {
+            return new SwpStrategy($this->configService, 10000000.0, 65000.0);
+        }
+        if ($key === '2-crore-sip-calculator') {
+            return new TargetCorpusStrategy($this->configService, 20000000.0);
         }
 
         $strategyClass = $this->strategyMap[$key];

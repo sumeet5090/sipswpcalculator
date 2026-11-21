@@ -164,6 +164,26 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertSame('components/benchmarks/target-corpus.twig', $targetCorpus->getBenchmarkTemplate());
     }
 
+    public function testCreate1CroreSwpStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('1-crore-swp-calculator');
+        $this->assertInstanceOf(SwpStrategy::class, $strategy);
+        $this->assertSame('swp', $strategy->getType());
+        $this->assertSame(10000000.0, $strategy->getDefaultCorpus());
+        $this->assertSame(65000.0, $strategy->getDefaultWithdrawal());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(10000000.0, $inputs->getStartingCorpus());
+        $this->assertSame(65000.0, $inputs->getSwpWithdrawal());
+    }
+
+    public function testCreate2CroreSipStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('2-crore-sip-calculator');
+        $this->assertInstanceOf(TargetCorpusStrategy::class, $strategy);
+        $this->assertSame('target_corpus', $strategy->getType());
+        $this->assertSame(20000000.0, $strategy->getTargetCorpus());
+    }
+
     public function testCreateThrowsForUnmappedSlug(): void
     {
         $this->expectException(\DomainException::class);

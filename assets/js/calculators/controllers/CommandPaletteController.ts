@@ -30,6 +30,14 @@ export const COMMAND_ITEMS: CommandItem[] = [
         icon: '🏖️'
     },
     {
+        id: 'calc-1-cr-swp',
+        title: '1 Crore SWP Calculator',
+        description: 'Model monthly pension payouts, longevity & tax savings from a ₹1 Crore corpus.',
+        category: 'Calculator',
+        url: '/1-crore-swp-calculator',
+        icon: '🏦'
+    },
+    {
         id: 'calc-lumpsum',
         title: 'Lumpsum Calculator',
         description: 'Calculate wealth growth on one-time mutual fund investments.',
@@ -76,6 +84,14 @@ export const COMMAND_ITEMS: CommandItem[] = [
         category: 'Calculator',
         url: '/reach-5-crore-via-sip',
         icon: '🏆'
+    },
+    {
+        id: 'calc-reach-2-cr',
+        title: '2 Crore SIP Calculator',
+        description: 'Calculate monthly SIP and step-up compounding needed to reach ₹2 Crores.',
+        category: 'Calculator',
+        url: '/2-crore-sip-calculator',
+        icon: '🎯'
     },
     {
         id: 'calc-sip-5k',
