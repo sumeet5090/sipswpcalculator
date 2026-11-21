@@ -5,7 +5,42 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** High-Impression SERP CTR Optimization (Option A) Complete — Optimized `<title>` and `<meta name="description">` tags across 7 high-impression, low-CTR calculator guides (`/lumpsum-calculator`, `/my-first-crore-calculator`, `/inflation-calculator`, `/cagr-calculator`, `/compound-interest-calculator`, `/sip-5000-per-month`, `/sip-10000-per-month`) to aggressively elevate organic search CTR into the 4%–7% benchmark established by `/`; calibrated all titles against PHP `strlen()` byte-length bounds ($10 \le \text{strlen} \le 65$) and character length bounds ($\le 63$ chars); verified 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and live local route curl inspection.
+- **Current Milestone:** Wave 1 Programmatic Expansion Completed Locally & Committed — Added 3 high-intent milestone calculators (`/sip-25000-per-month`, `/50-lakh-swp-calculator`, and `/sip-50000-per-month`) following Batch 1 (`/1-crore-swp-calculator` and `/2-crore-sip-calculator`), scaling the platform's calculator hubs to 22; verified 100% Green across all 840 tests (13,513 assertions), PHPStan Level Max across 253 files, PSR-12, Parity, and local route inspection.
+- **Implemented Features & Fixes (2026-11-22 Session 43 - Wave 1 Milestone Expansion):**
+  - **`content/calculators/sip-25000-per-month.md`:**
+    - `title: "₹25,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"` (62 chars / 64 bytes).
+    - `h1: "₹25,000 Monthly SIP Calculator"`.
+    - `meta_desc: "See how a ₹25,000 monthly SIP in mutual funds compounds into ₹58L in 10 yrs, ₹2.5 Cr in 20 yrs & ₹10.7 Cr with step-up. Review 2026 LTCG tax with free Excel download."` (167 bytes).
+    - Canonical 5–25y horizon table, 10% step-up analysis, 4-fund asset allocation, and Section 112A tax rules.
+  - **`content/calculators/50-lakh-swp-calculator.md`:**
+    - `title: "50 Lakh SWP Calculator — Monthly Pension (with Free Excel)"` (58 chars / 60 bytes).
+    - `h1: "50 Lakh SWP Calculator"`.
+    - `meta_desc: "Calculate how much monthly pension a ₹50 Lakh mutual fund corpus generates across 10 to 30 years. Model 8% returns, 5% annual inflation hikes & download free Excel."` (166 bytes).
+    - Canonical longevity table, 5% inflation step-up matrix, Bank FD vs SWP tax comparison, and 3-bucket retirement strategy.
+  - **`content/calculators/sip-50000-per-month.md`:**
+    - `title: "₹50,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"` (61 chars / 64 bytes).
+    - `h1: "₹50,000 Monthly SIP Calculator"`.
+    - `meta_desc: "See how a ₹50,000 monthly SIP in mutual funds compounds into ₹1.16 Cr in 10 yrs, ₹5 Cr in 20 yrs & ₹21.4 Cr with step-up. Review 2026 LTCG tax with free Excel download."` (176 bytes).
+    - Canonical 5–25y horizon table, milestone acceleration timelines (₹1 Cr in 7.8 yrs, ₹5 Cr in 15.8 yrs), 4-fund portfolio, and Section 112A rules.
+  - **Architecture & Infrastructure:**
+    - `routes.php`: Registered `/sip-25000-per-month`, `/50-lakh-swp-calculator`, and `/sip-50000-per-month`.
+    - `StrategyFactory.php`: Registered strategies with respective defaults (`₹25k`, `₹50L / ₹32.5k`, `₹50k`).
+    - `SipStrategy.php`: Added `getDefaultSip(): ?float` getter and typed return.
+    - `calculator-dock.twig`: Added quick-switcher items for all 3 calculators.
+    - `header.twig`: Added navigation links under Calculators dropdown.
+    - `footer.twig`: Added links under SIP & Goal Calculators and Retirement & Tools.
+    - `CommandPaletteController.ts`: Registered `calc-sip-25k`, `calc-50-lakh-swp`, and `calc-sip-50k`.
+    - `calculator_links.json`: Added contextual related calculator links.
+    - `llms.txt` & `llms-full.txt`: Documented all 3 new calculators.
+    - `faqs.json`: Added 9 tagged FAQs (3 per new calculator) satisfying `FaqCoverageTest`.
+    - `StrategyFactoryContainerTest.php`: Added unit tests verifying container instantiation and default parameters.
+  - **Verification & Quality Gates:**
+    - `npm run typecheck && npm run build`: Clean Vite client build.
+    - `php tests/parity_check.php`: 71/71 mathematical parity tests PASS.
+    - `vendor/bin/phpstan analyse`: 253/253 files checked, 0 errors.
+    - `vendor/bin/phpcs`: 253/253 files checked, 0 violations (PSR-12 clean).
+    - `vendor/bin/phpunit`: 840/840 tests PASS (13,513 assertions).
+    - `composer check-all`: 100% PASS.
 - **Implemented Features & Fixes (2026-11-22 Session 42 - High-Impression SERP CTR Optimization [Option A]):**
   - **`content/calculators/lumpsum-calculator.md`:**
     - `title: "Lumpsum Calculator India (with Free Excel & Tax Schedule)"` (57 chars / 57 bytes).
