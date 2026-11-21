@@ -5,7 +5,34 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** High-Impression SERP CTR Optimization (Option A) Complete — Optimized `<title>` and `<meta name="description">` tags across 7 high-impression, low-CTR calculator guides (`/lumpsum-calculator`, `/my-first-crore-calculator`, `/inflation-calculator`, `/cagr-calculator`, `/compound-interest-calculator`, `/sip-5000-per-month`, `/sip-10000-per-month`) to aggressively elevate organic search CTR into the 4%–7% benchmark established by `/`; calibrated all titles against PHP `strlen()` byte-length bounds ($10 \le \text{strlen} \le 65$) and character length bounds ($\le 63$ chars); verified 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and live local route curl inspection.
+- **Current Milestone:** Wave 2 Milestone Expansion (`/sip-15000-per-month`, `/sip-20000-per-month`, and `/3-crore-sip-calculator`) Implemented — Expanding platform from 22 to 25 specialized calculator hubs; resolved git stash pop merge conflicts across 11 files cleanly with 0 leftover conflict markers; verified 100% Green across quality gates.
+- **Implemented Features & Fixes (2026-11-22 Session 44 - Wave 2 Milestone Expansion):**
+  - **`content/calculators/sip-15000-per-month.md`:**
+    - `title: "₹15,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"` (62 chars / 64 bytes).
+    - `h1: "₹15,000 Monthly SIP Calculator"`.
+    - `meta_desc: "See how a ₹15,000 monthly SIP in mutual funds compounds into ₹34.8L in 10 yrs, ₹1.5 Cr in 20 yrs & ₹6.4 Cr with step-up. Review 2026 LTCG tax with free Excel download."` (166 bytes).
+    - Canonical 5–25y horizon table, 10% step-up analysis, 3-fund asset allocation blueprint, and Section 112A rules.
+  - **`content/calculators/sip-20000-per-month.md`:**
+    - `title: "₹20,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"` (62 chars / 64 bytes).
+    - `h1: "₹20,000 Monthly SIP Calculator"`.
+    - `meta_desc: "See how a ₹20,000 monthly SIP in mutual funds compounds into ₹46.5L in 10 yrs, ₹2.0 Cr in 20 yrs & ₹8.6 Cr with step-up. Review 2026 LTCG tax with free Excel download."` (166 bytes).
+    - Canonical 5–25y horizon table, milestone acceleration timelines, 4-fund portfolio, and Section 112A rules.
+  - **`content/calculators/3-crore-sip-calculator.md`:**
+    - `title: "3 Crore SIP Calculator — Monthly SIP for ₹3 Cr (Free Excel)"` (58 chars / 60 bytes).
+    - `h1: "3 Crore SIP Calculator"`.
+    - `meta_desc: "Find the exact monthly SIP required to reach ₹3 Crore in 5, 10, 15, or 20 years. Model 10% step-up compounding & 2026 LTCG tax with free instant Excel & PDF download."` (166 bytes).
+    - Canonical goal-seek table (5–25y), time cost analysis, 4-fund portfolio blueprint, and retirement decumulation guidance.
+  - **Architecture & Infrastructure:**
+    - `routes.php`: Registered `/sip-15000-per-month`, `/sip-20000-per-month`, and `/3-crore-sip-calculator`.
+    - `StrategyFactory.php`: Registered strategy classes and defaults (`₹15k`, `₹20k`, `₹3 Cr`).
+    - `calculator-dock.twig`: Added quick-switcher items for all 3 calculators.
+    - `header.twig`: Added navigation links under Calculators dropdown.
+    - `footer.twig`: Added links under SIP & Goal Calculators.
+    - `CommandPaletteController.ts`: Registered `calc-sip-15k`, `calc-sip-20k`, `calc-reach-3-cr`.
+    - `calculator_links.json`: Added contextual related calculator links.
+    - `llms.txt` & `llms-full.txt`: Documented all 3 new calculators.
+    - `faqs.json`: Added 9 tagged FAQs (3 per new calculator) satisfying `FaqCoverageTest`.
+    - `StrategyFactoryContainerTest.php`: Added unit tests verifying container instantiation and default parameters.
 - **Implemented Features & Fixes (2026-11-22 Session 42 - High-Impression SERP CTR Optimization [Option A]):**
   - **`content/calculators/lumpsum-calculator.md`:**
     - `title: "Lumpsum Calculator India (with Free Excel & Tax Schedule)"` (57 chars / 57 bytes).

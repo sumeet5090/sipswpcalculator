@@ -184,6 +184,66 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertSame(20000000.0, $strategy->getTargetCorpus());
     }
 
+    public function testCreateSip25000StrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('sip-25000-per-month');
+        $this->assertInstanceOf(SipStrategy::class, $strategy);
+        $this->assertSame('sip', $strategy->getType());
+        $this->assertSame(25000.0, $strategy->getDefaultSip());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(25000.0, $inputs->getSip());
+    }
+
+    public function testCreate50LakhSwpStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('50-lakh-swp-calculator');
+        $this->assertInstanceOf(SwpStrategy::class, $strategy);
+        $this->assertSame('swp', $strategy->getType());
+        $this->assertSame(5000000.0, $strategy->getDefaultCorpus());
+        $this->assertSame(32500.0, $strategy->getDefaultWithdrawal());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(5000000.0, $inputs->getStartingCorpus());
+        $this->assertSame(32500.0, $inputs->getSwpWithdrawal());
+    }
+
+    public function testCreateSip50000StrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('sip-50000-per-month');
+        $this->assertInstanceOf(SipStrategy::class, $strategy);
+        $this->assertSame('sip', $strategy->getType());
+        $this->assertSame(50000.0, $strategy->getDefaultSip());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(50000.0, $inputs->getSip());
+    }
+
+    public function testCreateSip15000StrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('sip-15000-per-month');
+        $this->assertInstanceOf(SipStrategy::class, $strategy);
+        $this->assertSame('sip', $strategy->getType());
+        $this->assertSame(15000.0, $strategy->getDefaultSip());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(15000.0, $inputs->getSip());
+    }
+
+    public function testCreateSip20000StrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('sip-20000-per-month');
+        $this->assertInstanceOf(SipStrategy::class, $strategy);
+        $this->assertSame('sip', $strategy->getType());
+        $this->assertSame(20000.0, $strategy->getDefaultSip());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(20000.0, $inputs->getSip());
+    }
+
+    public function testCreate3CroreSipStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('3-crore-sip-calculator');
+        $this->assertInstanceOf(TargetCorpusStrategy::class, $strategy);
+        $this->assertSame('target_corpus', $strategy->getType());
+        $this->assertSame(30000000.0, $strategy->getTargetCorpus());
+    }
+
     public function testCreateThrowsForUnmappedSlug(): void
     {
         $this->expectException(\DomainException::class);

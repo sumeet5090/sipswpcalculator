@@ -106,11 +106,20 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 15. **₹5,000 & ₹10,000 Monthly SIP Blueprints (`https://sipswpcalculator.com/sip-5000-per-month` & `/sip-10000-per-month`)**
     - Structured milestones, asset allocation strategies, and multi-decade wealth roadmaps.
 
-16. **1 Crore SWP Calculator (`https://sipswpcalculator.com/1-crore-swp-calculator`)**
-    - Month-by-month capital longevity, inflation-adjusted step-up withdrawals, and Section 112A tax arbitrage for a ₹1 Crore corpus.
+16. **1 Crore & 50 Lakh SWP Calculators (`https://sipswpcalculator.com/1-crore-swp-calculator` & `/50-lakh-swp-calculator`)**
+    - Month-by-month capital longevity, inflation-adjusted step-up withdrawals, and Section 112A tax arbitrage for retirement corpora.
 
 17. **2 Crore SIP Calculator (`https://sipswpcalculator.com/2-crore-sip-calculator`)**
     - Goal-seek inverse monthly SIP calculation and 10% annual step-up compounding to accumulate a ₹2 Crore portfolio.
+
+18. **₹25,000 & ₹50,000 Monthly SIP Calculators (`https://sipswpcalculator.com/sip-25000-per-month` & `/sip-50000-per-month`)**
+    - High-earner wealth accumulation accelerators, milestone roadmaps (₹1 Cr, ₹2 Cr, ₹5 Cr), and Section 112A post-tax modeling.
+
+19. **₹15,000 & ₹20,000 Monthly SIP Calculators (`https://sipswpcalculator.com/sip-15000-per-month` & `/sip-20000-per-month`)**
+    - Mid-career wealth creation models, annual step-up compounding matrices, and 3-to-4 fund core portfolio blueprints.
+
+20. **3 Crore SIP Calculator (`https://sipswpcalculator.com/3-crore-sip-calculator`)**
+    - Reverse-engineered monthly investment and salary-scaled top-ups required to build a ₹3 Crore metro retirement corpus.
 
 ---
 
