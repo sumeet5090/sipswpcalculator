@@ -5,7 +5,44 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Strategic In-Content PageRank & Contextual Cross-Linking Optimization Complete — Channeled topical equity from high-ranking authority pages (`/my-first-crore-calculator` [Pos 1.0], `/lumpsum-calculator` [Pos 1.0], `/reach-5-crore-via-sip`, `/sip-10000-per-month`, `/sip-5000-per-month`, `/target-corpus-calculator`) directly into core `/sip-calculator` and `/swp-calculator` routes through high-visibility editorial bridges and comprehensive related tool lists; 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and local curl checks.
+- **Current Milestone:** High-Impression SERP CTR Optimization (Option A) Complete — Optimized `<title>` and `<meta name="description">` tags across 7 high-impression, low-CTR calculator guides (`/lumpsum-calculator`, `/my-first-crore-calculator`, `/inflation-calculator`, `/cagr-calculator`, `/compound-interest-calculator`, `/sip-5000-per-month`, `/sip-10000-per-month`) to aggressively elevate organic search CTR into the 4%–7% benchmark established by `/`; calibrated all titles against PHP `strlen()` byte-length bounds ($10 \le \text{strlen} \le 65$) and character length bounds ($\le 63$ chars); verified 100% Green across all 820 tests, PHPStan Level Max, PSR-12, Parity, and live local route curl inspection.
+- **Implemented Features & Fixes (2026-11-22 Session 42 - High-Impression SERP CTR Optimization [Option A]):**
+  - **`content/calculators/lumpsum-calculator.md`:**
+    - `title: "Lumpsum Calculator India (with Free Excel & Tax Schedule)"` (57 chars / 57 bytes).
+    - `meta_desc: "Calculate mutual fund lumpsum returns across 1 to 30 years. Compare Lumpsum vs SIP, model 2026 Budget LTCG tax impact & download free yearly cashflow Excel."` (156 chars / 156 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/my-first-crore-calculator.md`:**
+    - `title: "1 Crore SIP Calculator — Monthly SIP for ₹1 Cr (Free Excel)"` (59 chars / 63 bytes).
+    - `meta_desc: "Find the exact monthly SIP to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% step-up compounding & 2026 LTCG tax with free instant Excel & PDF download."` (157 chars / 159 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/inflation-calculator.md`:**
+    - `title: "Inflation Calculator India — Purchasing Power & Free Excel"` (58 chars / 60 bytes).
+    - `meta_desc: "See what today's expenses will cost in 10, 20, or 30 years at Indian CPI inflation rates. Model purchasing power erosion with free instant Excel & PDF download."` (160 chars / 160 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/cagr-calculator.md`:**
+    - `title: "CAGR Calculator India — Annualized Growth Rate (Free Excel)"` (59 chars / 61 bytes).
+    - `meta_desc: "Calculate exact CAGR, absolute returns & annualized growth for mutual funds, stocks, and property. Free yearly growth schedule with instant Excel & PDF export."` (159 chars / 159 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/compound-interest-calculator.md`:**
+    - `title: "Compound Interest Calculator India: Monthly, Daily & Free Excel"` (63 chars / 63 bytes).
+    - `meta_desc: "Calculate compound interest with monthly, quarterly, and daily compounding frequencies. Model Rule of 72 doubling periods with free instant Excel & PDF export."` (159 chars / 159 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/sip-5000-per-month.md`:**
+    - `title: "₹5,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"` (61 chars / 63 bytes).
+    - `meta_desc: "See how a ₹5,000 monthly SIP compounds into ₹11.6L in 10 yrs, ₹50L in 20 yrs, and ₹2.14 Cr with step-up. Review 2026 LTCG tax impacts with free Excel download."` (159 chars / 167 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **`content/calculators/sip-10000-per-month.md`:**
+    - `title: "₹10,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"` (62 chars / 64 bytes).
+    - `meta_desc: "See how a ₹10,000 monthly SIP compounds into ₹23.2L in 10 yrs, ₹1 Cr in 20 yrs, and ₹4.28 Cr with step-up. Review 2026 LTCG tax with free downloadable Excel."` (157 chars / 165 bytes).
+    - Frontmatter `updated_at: "2026-11-22"`.
+  - **Verification & Quality Gates:**
+    - `php tests/parity_check.php`: 71/71 mathematical engine parity tests PASS.
+    - `vendor/bin/phpstan analyse --memory-limit=512M`: 253/253 files checked, 0 errors.
+    - `vendor/bin/phpcs`: 253/253 files checked, 0 violations (PSR-12 clean).
+    - `vendor/bin/phpunit tests/Integration/SeoMetadataValidatorTest.php`: 135/135 tests PASS, 3,654 assertions PASS.
+    - `vendor/bin/phpunit`: 820/820 tests PASS (12,776 assertions).
+    - `composer check-all`: 100% OK.
+    - Live local server route curl verification (`http://127.0.0.1:8889`): Verified exact matching of `<title>` and `<meta name="description">` across all 7 routes with 0 rendering errors.
 - **Implemented Features & Fixes (2026-11-22 Session 41 - Strategic In-Content PageRank Flow & Cross-Linking Optimization):**
   - **`content/calculators/my-first-crore-calculator.md`:**
     - Intro narrative (L21): Injected high-intent anchor linking to `[Systematic Investment Plan (SIP) Calculators](/sip-calculator)`.
