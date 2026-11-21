@@ -1,8 +1,8 @@
 ---
 og_image: "/assets/og/og-sip-5000-per-month.jpg"
-title: "₹5,000 Monthly SIP Calculator — Returns in 5, 10, 20 Years"
+title: "₹5,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"
 subtitle: "See how investing ₹5,000 every month in Indian mutual funds compounds into ₹49.96 Lakhs in 20 years and ₹2.14 Crores in 25 years with a 10% annual step-up."
-meta_desc: "See how investing ₹5,000 monthly in mutual funds compounds into ₹49.96L to ₹2.14 Cr. Model 10% annual step-up compounding & LTCG tax rules with free Excel."
+meta_desc: "See how a ₹5,000 monthly SIP compounds into ₹11.6L in 10 yrs, ₹50L in 20 yrs, and ₹2.14 Cr with step-up. Review 2026 LTCG tax impacts with free Excel download."
 keywords: "5000 sip per month, 5000 monthly sip returns, 5000 sip for 10 years, 5000 sip for 20 years, 5000 sip calculator india, best mutual fund for 5000 per month"
 schema_name: "₹5,000 Monthly SIP Investment Planner"
 seo_category: "growth"

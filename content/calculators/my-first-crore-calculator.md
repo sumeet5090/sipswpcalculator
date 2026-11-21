@@ -1,9 +1,9 @@
 ---
 og_image: "/assets/og/og-my-first-crore-calculator.jpg"
-title: "1 Crore SIP Calculator (with Free Excel & Tax Table)"
+title: "1 Crore SIP Calculator — Monthly SIP for ₹1 Cr (Free Excel)"
 h1: "1 Crore SIP Calculator"
 subtitle: "Find the exact monthly SIP needed to reach ₹1 Crore in 5, 10, 15, or 20 years. Free goal planning calculator with 10% annual step-up compounding & downloadable Excel."
-meta_desc: "Find the exact monthly SIP required to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% step-up compounding & 2026 LTCG tax impacts with free downloadable Excel."
+meta_desc: "Find the exact monthly SIP to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% step-up compounding & 2026 LTCG tax with free instant Excel & PDF download."
 keywords: "crore calculator, 1 crore in 5 years sip, reach 1 crore sip, how much sip for 1 crore, 1 crore mutual fund calculator, crorepathi sip planner, 1 crore in 10 years sip"
 schema_name: "1 Crore SIP Calculator — Monthly Investment to Reach ₹1 Cr"
 seo_category: "growth"

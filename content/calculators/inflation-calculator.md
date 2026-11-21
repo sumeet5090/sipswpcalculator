@@ -1,14 +1,14 @@
 ---
 og_image: "/assets/og/og-inflation-calculator.jpg"
-title: "Inflation Calculator India — What Will Your Money Be Worth?"
+title: "Inflation Calculator India — Purchasing Power & Free Excel"
 subtitle: "Calculate future cost of living and purchasing power erosion in India. Understand consumer inflation impact on retirement and long-term financial goals."
-meta_desc: "See what ₹50,000/month or ₹1 Crore today will be worth in 10, 20, or 30 years at 6% Indian inflation. Calculate future living expenses & erosion instantly."
+meta_desc: "See what today's expenses will cost in 10, 20, or 30 years at Indian CPI inflation rates. Model purchasing power erosion with free instant Excel & PDF download."
 keywords: "inflation calculator, inflation calculator india, purchasing power calculator, future cost calculator, cpi inflation india, retirement inflation calculator"
 schema_name: "Inflation Calculator India — Purchasing Power & Future Value Planner"
 seo_category: "retirement"
 type: "calculator"
 date: "2026-09-01"
-updated_at: "2026-11-12"
+updated_at: "2026-11-22"
 ---
 
 ---
