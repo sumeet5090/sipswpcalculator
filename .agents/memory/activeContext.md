@@ -5,32 +5,36 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Option 2 — The Golden Retirement Bridge (`/25-lakh-swp-calculator`, `/2-crore-swp-calculator`, and `/swp-vs-annuity`) Implemented — Expanding platform from 25 to 27 specialized calculator hubs; added vanity redirects and modernized the SWP vs Annuity comparative mega-hub; verified 100% Green across quality gates.
-- **Implemented Features & Fixes (2026-11-22 Session 45 - The Golden Retirement Bridge):**
-  - **`content/calculators/25-lakh-swp-calculator.md`:**
-    - `title: "25 Lakh SWP Calculator — Monthly Pension (with Free Excel)"` (58 chars / 60 bytes).
-    - `h1: "25 Lakh SWP Calculator"`.
-    - `meta_desc: "Calculate how much monthly pension a ₹25 Lakh mutual fund corpus generates across 10 to 30 years. Model 8% returns, 5% annual inflation hikes & download free Excel."` (166 bytes).
-    - Canonical 30y longevity benchmark table, 5% inflation step-up matrix, Bank FD tax arbitrage comparison, and 3-bucket strategy.
-  - **`content/calculators/2-crore-swp-calculator.md`:**
-    - `title: "2 Crore SWP Calculator — Monthly Pension (with Free Excel)"` (58 chars / 60 bytes).
-    - `h1: "2 Crore SWP Calculator"`.
-    - `meta_desc: "Calculate how much monthly pension a ₹2 Crore mutual fund corpus generates across 10 to 30 years. Model 8% returns, 5% annual inflation hikes & download free Excel."` (166 bytes).
-    - Canonical 30y longevity benchmark table, 5% inflation step-up matrix, Bank FD tax arbitrage comparison, and HNI 3-bucket strategy.
-  - **`content/redirects.json` & Guide Modernization:**
-    - Mapped `/swp-vs-annuity` and `/swp-vs-annuity/` to `/resource/comparison/swp-vs-annuity-2026`.
-    - Updated `content/blog/comparison/swp-vs-annuity-2026.md` with direct CTAs to all 5 SWP milestone calculators.
-  - **Architecture & Infrastructure:**
-    - `routes.php`: Registered `/25-lakh-swp-calculator` and `/2-crore-swp-calculator`.
-    - `StrategyFactory.php`: Registered strategy classes and defaults (`₹25 Lakh / ₹16.25k`, `₹2 Crore / ₹130k`).
-    - `calculator-dock.twig`: Added quick-switcher items for both calculators.
-    - `header.twig`: Added navigation links under Calculators dropdown.
-    - `footer.twig`: Added links under Retirement & Tools.
-    - `CommandPaletteController.ts`: Registered `calc-25l-swp` and `calc-2cr-swp`.
-    - `calculator_links.json`: Added contextual related calculator links.
-    - `llms.txt` & `llms-full.txt`: Documented both new calculators.
-    - `faqs.json`: Added 6 tagged FAQs (3 per new calculator) satisfying `FaqCoverageTest`.
-    - `StrategyFactoryContainerTest.php`: Added unit tests verifying container instantiation and default parameters.
+- **Current Milestone:** Option 1 — Hub-and-Spoke Navigation Refactor & In-Flow Contextual Bridges Implemented — Refactored primary navigation from flat 27-item lists into a structured 2-tier Hub-and-Spoke architecture, avoiding PageRank dilution, introducing client-side reactive in-flow milestone bridges, and structuring footer clusters so zero routes are orphaned; verified 100% Green across quality gates.
+- **Implemented Features & Fixes (2026-11-22 Session 46 - Hub-and-Spoke Navigation Refactor):**
+  - **Tier-1 Clustered Header Dropdown (`src/Views/layouts/header.twig`):**
+    - Refactored flat 27-item dropdown into a structured 3-column Mega-Menu:
+      - Column 1 (5 cols): Core Engines (7 Tier-1 pillars: Dual SIP+SWP, SIP, SWP, Lumpsum, Target Corpus, Step-Up SIP, Retirement FIRE) with descriptions and forward navigation affordances.
+      - Column 2 (4 cols): Milestone Hubs (Monthly SIPs ₹5k–₹50k & Corpus Goals / SWP Payouts).
+      - Column 3 (3 cols): Utilities & Comparisons (Compound Interest, CAGR, Inflation, EMI, PPF, FD, SWP vs Annuity).
+      - Mega-menu bottom bar: Quick Command Search trigger (`⌘K`).
+    - Mobile navigation segmented into clear, labeled categories (Core, Milestones, Utilities), eliminating infinite scroll fatigue.
+  - **Tier-1 Quick Switcher Dock (`src/Views/components/calculator-dock.twig`):**
+    - Confined primary above-the-fold tabs strictly to the 7 Core Pillars.
+    - Added dynamic contextual active tab projection: when a user visits a specialized milestone route (e.g. `/1-crore-swp-calculator` or `/sip-25000-per-month`), the dock dynamically renders an active pill (`[Active: 1 Cr SWP]`) alongside the core pillars, preserving user orientation.
+    - Added "All 27 Blueprints (⌘K)" quick palette button at the right edge.
+  - **Contextual In-Flow Milestone Bridges (`assets/js/calculators/controllers/ContextualBridgeController.ts` & Twig partials):**
+    - Created `ContextualBridgeController.ts` wired directly into `CalculatorApp.ts` (`executeSettledUpdates` and initial calculation).
+    - Watches slider and threshold updates (SIP amounts, SWP withdrawals, corpus values):
+      - SIP: ₹5k, ₹10k, ₹15k, ₹20k, ₹25k, ₹50k dynamically surface dedicated blueprint pills (`/sip-25000-per-month`, etc.).
+      - SWP: 7.8% annualized withdrawal anchors (₹16.25k on ₹25L, ₹32.5k on ₹50L, ₹65k on ₹1 Cr, ₹1.3L on ₹2 Cr) and `/swp-vs-annuity` tax comparisons.
+      - Corpus / Goals: ₹1 Cr, ₹2 Cr, ₹3 Cr, ₹5 Cr targets surface dedicated milestone blueprints.
+      - Self-link suppression: Automatically hides bridges if the user is already on the target route.
+      - Sandboxed & isolated: Zero `window` global state pollution.
+    - Integrated bridge DOM containers into `sip-fields.twig`, `swp-fields.twig`, and `corpus-field.twig`.
+  - **Structured Semantic Footer Clusters (`src/Views/layouts/footer.twig`):**
+    - Reorganized footer into 6 distinct semantic columns: Core Calculators, Monthly SIPs, Wealth Goals, SWP Pensions, Utilities & Tools, and Guides & About.
+    - Guaranteed zero orphaned routes for search crawlers while eliminating unsegmented dumping.
+  - **Verification & Parity:**
+    - `npm run typecheck && npm run build`: Clean TypeScript check and Vite production bundle.
+    - `php tests/parity_check.php`: 71/71 mathematical parity tests PASS.
+    - `composer check-all`: **860 tests, 14,253 assertions, 100% PASS; PHPStan Level Max (0 errors); PSR-12 clean**.
+    - Local server curl integration tests verified for `/`, `/1-crore-swp-calculator`, `/sip-25000-per-month`, and footer semantic clusters.
 - **Implemented Features & Fixes (2026-11-22 Session 44 - Wave 2 Milestone Expansion):**
   - **`content/calculators/sip-15000-per-month.md`:**
     - `title: "₹15,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"` (62 chars / 64 bytes).

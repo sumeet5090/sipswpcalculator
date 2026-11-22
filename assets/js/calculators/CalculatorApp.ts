@@ -26,6 +26,7 @@ import { ResultsController } from './controllers/ResultsController.ts';
 import { SummaryMetricsController } from './controllers/SummaryMetricsController.ts';
 import { ChartScrubbingController } from './controllers/ChartScrubbingController.ts';
 import { LumpsumDisclosureController } from './controllers/LumpsumDisclosureController.ts';
+import { ContextualBridgeController } from './controllers/ContextualBridgeController.ts';
 import { A11yAnnouncer } from './helpers/A11yAnnouncer.ts';
 import { ModalScrollLockHelper } from './helpers/ModalScrollLockHelper.ts';
 import { SpecializedCalculatorController } from './controllers/SpecializedCalculatorController.ts';
@@ -52,6 +53,7 @@ export class CalculatorApp {
     private resultsController: ResultsController;
     private summaryMetricsController: SummaryMetricsController;
     private lumpsumDisclosureController: LumpsumDisclosureController;
+    private contextualBridgeController: ContextualBridgeController;
     private specializedController: SpecializedCalculatorController | null = null;
 
     private exportSubsystem: ExportSubsystem;
@@ -127,6 +129,8 @@ export class CalculatorApp {
             this.formatter,
             () => this.getInputs()
         );
+
+        this.contextualBridgeController = new ContextualBridgeController(this.dom);
 
         // Subsystems orchestration
         this.exportSubsystem = new ExportSubsystem({
@@ -974,6 +978,7 @@ export class CalculatorApp {
         this.engagementSubsystem.updateResults(combined, inputs);
         this.lifecycleSubsystem.updateResults(combined, inputs);
         this.ergonomicsSubsystem.updateResults(combined, inputs);
+        this.contextualBridgeController.update(inputs);
 
         const lastRow = combined[combined.length - 1];
         if (lastRow) {
@@ -1113,6 +1118,7 @@ export class CalculatorApp {
             }
 
             this.sliderManager.refreshVisuals();
+            this.contextualBridgeController.update(initialInputs);
         };
 
         if (typeof requestAnimationFrame !== 'undefined') {

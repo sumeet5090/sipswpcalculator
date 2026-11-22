@@ -1,38 +1,55 @@
-{% set nav_items = [
+{% set nav_calculator_groups = [
     {
-        'label': 'Calculators', 
-        'href': '#', 
-        'id': 'calculators',
-        'sub_items': [
-            {'label': 'SIP + SWP Dual Planner', 'href': '/'},
-            {'label': 'SIP Calculator', 'href': '/sip-calculator'},
-            {'label': 'SWP Calculator', 'href': '/swp-calculator'},
-            {'label': '1 Crore SWP Calculator', 'href': '/1-crore-swp-calculator'},
-            {'label': '50 Lakh SWP Calculator', 'href': '/50-lakh-swp-calculator'},
-            {'label': '25 Lakh SWP Calculator', 'href': '/25-lakh-swp-calculator'},
-            {'label': '2 Crore SWP Calculator', 'href': '/2-crore-swp-calculator'},
-            {'label': 'Lumpsum Calculator', 'href': '/lumpsum-calculator'},
-            {'label': 'Step-Up SIP Calculator', 'href': '/sip-step-up-calculator'},
-            {'label': 'Retirement Calculator', 'href': '/retirement-calculator'},
-            {'label': 'Target Corpus Calculator', 'href': '/target-corpus-calculator'},
-            {'label': '1 Crore SIP Calculator', 'href': '/my-first-crore-calculator'},
-            {'label': '2 Crore SIP Calculator', 'href': '/2-crore-sip-calculator'},
-            {'label': '3 Crore SIP Calculator', 'href': '/3-crore-sip-calculator'},
-            {'label': '5 Crore SIP Calculator', 'href': '/reach-5-crore-via-sip'},
-            {'label': '₹5,000 Monthly SIP', 'href': '/sip-5000-per-month'},
-            {'label': '₹10,000 Monthly SIP', 'href': '/sip-10000-per-month'},
-            {'label': '₹15,000 Monthly SIP', 'href': '/sip-15000-per-month'},
-            {'label': '₹20,000 Monthly SIP', 'href': '/sip-20000-per-month'},
-            {'label': '₹25,000 Monthly SIP', 'href': '/sip-25000-per-month'},
-            {'label': '₹50,000 Monthly SIP', 'href': '/sip-50000-per-month'},
-            {'label': 'Compound Interest', 'href': '/compound-interest-calculator'},
-            {'label': 'CAGR Calculator', 'href': '/cagr-calculator'},
-            {'label': 'EMI Calculator', 'href': '/emi-calculator'},
-            {'label': 'Inflation Calculator', 'href': '/inflation-calculator'},
-            {'label': 'PPF Calculator', 'href': '/ppf-calculator'},
-            {'label': 'FD Calculator', 'href': '/fd-calculator'}
+        'title': 'Core Calculators',
+        'badge': 'Tier 1',
+        'items': [
+            {'label': 'SIP + SWP Dual Planner', 'href': '/', 'desc': 'Lifetime accumulation & pension cashflow'},
+            {'label': 'SIP Calculator', 'href': '/sip-calculator', 'desc': 'Standard wealth accumulation & compounding'},
+            {'label': 'SWP Calculator', 'href': '/swp-calculator', 'desc': 'Systematic withdrawal & retirement income'},
+            {'label': 'Lumpsum Calculator', 'href': '/lumpsum-calculator', 'desc': 'One-time investment compounding'},
+            {'label': 'Target Corpus Calculator', 'href': '/target-corpus-calculator', 'desc': 'Find monthly SIP for wealth goal'},
+            {'label': 'Step-Up SIP Calculator', 'href': '/sip-step-up-calculator', 'desc': 'Annual salary appraisal escalation'},
+            {'label': 'Retirement FIRE Calculator', 'href': '/retirement-calculator', 'desc': 'Nest egg longevity & safe withdrawal'}
         ]
     },
+    {
+        'title': 'Milestone Blueprints',
+        'badge': 'Curated',
+        'monthly_sips': [
+            {'label': '₹5k/mo SIP', 'href': '/sip-5000-per-month'},
+            {'label': '₹10k/mo SIP', 'href': '/sip-10000-per-month'},
+            {'label': '₹15k/mo SIP', 'href': '/sip-15000-per-month'},
+            {'label': '₹20k/mo SIP', 'href': '/sip-20000-per-month'},
+            {'label': '₹25k/mo SIP', 'href': '/sip-25000-per-month'},
+            {'label': '₹50k/mo SIP', 'href': '/sip-50000-per-month'}
+        ],
+        'goals_and_swp': [
+            {'label': '1 Crore SIP Goal', 'href': '/my-first-crore-calculator'},
+            {'label': '2 Crore SIP Plan', 'href': '/2-crore-sip-calculator'},
+            {'label': '3 Crore SIP Plan', 'href': '/3-crore-sip-calculator'},
+            {'label': '5 Crore SIP Plan', 'href': '/reach-5-crore-via-sip'},
+            {'label': '25 Lakh SWP Pension', 'href': '/25-lakh-swp-calculator'},
+            {'label': '50 Lakh SWP Pension', 'href': '/50-lakh-swp-calculator'},
+            {'label': '1 Crore SWP Pension', 'href': '/1-crore-swp-calculator'},
+            {'label': '2 Crore SWP Pension', 'href': '/2-crore-swp-calculator'}
+        ]
+    },
+    {
+        'title': 'Utilities & Comparisons',
+        'badge': 'Tools',
+        'items': [
+            {'label': 'Compound Interest', 'href': '/compound-interest-calculator'},
+            {'label': 'CAGR Calculator', 'href': '/cagr-calculator'},
+            {'label': 'Inflation Calculator', 'href': '/inflation-calculator'},
+            {'label': 'Loan EMI Calculator', 'href': '/emi-calculator'},
+            {'label': 'PPF Scheme', 'href': '/ppf-calculator'},
+            {'label': 'Bank Fixed Deposit', 'href': '/fd-calculator'},
+            {'label': 'SWP vs Life Annuity', 'href': '/swp-vs-annuity'}
+        ]
+    }
+] %}
+
+{% set primary_nav_links = [
     {'label': 'Resources', 'href': '/resources', 'id': 'resources'},
     {'label': 'Glossary', 'href': '/glossary', 'id': 'glossary'},
     {'label': 'FAQ', 'href': '/faq', 'id': 'faq'},
@@ -89,28 +106,89 @@
 
         <!-- Desktop nav (visible on >= 1024px) -->
         <nav class="hidden lg:flex items-center gap-6 text-sm font-medium" aria-label="Main navigation">
-            {% for item in nav_items %}
-                {% set is_active = (active_page|default('') == item.id) or (item.id == 'resources' and active_page|default('') == 'blog_post') %}
-                {% if item.sub_items is defined %}
-                    <div class="relative nav-dropdown py-2">
-                        <button aria-haspopup="true" aria-expanded="false" class="{{ is_active ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600' }} transition-colors inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 rounded">
-                            {{ item.label }}
-                            <svg class="w-4 h-4 nav-chevron transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div role="menu" class="absolute left-0 mt-2 w-[440px] rounded-xl bg-white shadow-card-hover ring-1 ring-black ring-opacity-5 nav-dropdown-menu">
-                            <div class="grid grid-cols-2 gap-1 p-2">
-                                {% for sub in item.sub_items %}
-                                    <a href="{{ sub.href }}" role="menuitem" class="block px-3 py-1.5 rounded-lg text-xs sm:text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 focus:bg-emerald-50 focus:text-emerald-600 focus:outline-none truncate">{{ sub.label }}</a>
+            <!-- Tier 1 Clustered Calculators Mega-Menu -->
+            <div class="relative nav-dropdown py-2">
+                <button aria-haspopup="true" aria-expanded="false" class="{{ is_calculator_route|default(false) ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600' }} transition-colors inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 rounded">
+                    <span>Calculators</span>
+                    <svg class="w-4 h-4 nav-chevron transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+
+                <div role="menu" class="absolute -left-12 xl:left-0 mt-2 w-[760px] rounded-2xl bg-white shadow-modal ring-1 ring-black/5 nav-dropdown-menu p-4 border border-slate-200/90 z-50">
+                    <div class="grid grid-cols-12 gap-4">
+                        <!-- Column 1: Core Calculators (Tier 1 Pillars) -->
+                        <div class="col-span-5 border-r border-slate-100 pr-3">
+                            <div class="flex items-center justify-between mb-2 pb-1 border-b border-slate-100">
+                                <span class="text-micro font-black uppercase tracking-wider text-slate-500">Core Engines</span>
+                                <span class="text-micro font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-1.5 py-0.2 rounded-full">Tier 1</span>
+                            </div>
+                            <div class="space-y-1">
+                                {% for core in nav_calculator_groups[0].items %}
+                                    <a href="{{ core.href }}" role="menuitem" class="group/item block p-1.5 rounded-xl hover:bg-emerald-50/80 transition-colors">
+                                        <div class="text-xs font-bold text-slate-900 group-hover/item:text-emerald-700 flex items-center justify-between">
+                                            <span>{{ core.label }}</span>
+                                            <span class="text-slate-300 group-hover/item:text-emerald-600 text-micro">→</span>
+                                        </div>
+                                        <p class="text-micro text-slate-500 line-clamp-1 mt-0.5">{{ core.desc }}</p>
+                                    </a>
                                 {% endfor %}
                             </div>
                         </div>
+
+                        <!-- Column 2: Milestone Blueprints -->
+                        <div class="col-span-4 border-r border-slate-100 pr-3">
+                            <div class="flex items-center justify-between mb-2 pb-1 border-b border-slate-100">
+                                <span class="text-micro font-black uppercase tracking-wider text-slate-500">Milestone Hubs</span>
+                                <span class="text-micro font-extrabold text-amber-800 bg-amber-50 border border-amber-200/80 px-1.5 py-0.2 rounded-full">Curated</span>
+                            </div>
+                            <div class="mb-2.5">
+                                <span class="text-micro font-bold text-slate-400 uppercase tracking-wider block mb-1">Monthly SIPs</span>
+                                <div class="grid grid-cols-2 gap-1">
+                                    {% for sip in nav_calculator_groups[1].monthly_sips %}
+                                        <a href="{{ sip.href }}" role="menuitem" class="block px-2 py-1 rounded-lg text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 truncate transition-colors">{{ sip.label }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-micro font-bold text-slate-400 uppercase tracking-wider block mb-1">Goals &amp; SWP Payouts</span>
+                                <div class="space-y-0.5">
+                                    {% for goal in nav_calculator_groups[1].goals_and_swp %}
+                                        <a href="{{ goal.href }}" role="menuitem" class="block px-2 py-1 rounded-lg text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 truncate transition-colors">{{ goal.label }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column 3: Utilities & Tax Comparisons -->
+                        <div class="col-span-3">
+                            <div class="flex items-center justify-between mb-2 pb-1 border-b border-slate-100">
+                                <span class="text-micro font-black uppercase tracking-wider text-slate-500">Utilities</span>
+                                <span class="text-micro font-extrabold text-slate-700 bg-slate-100 px-1.5 py-0.2 rounded-full">Tools</span>
+                            </div>
+                            <div class="space-y-0.5">
+                                {% for util in nav_calculator_groups[2].items %}
+                                    <a href="{{ util.href }}" role="menuitem" class="block px-2 py-1 rounded-lg text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 truncate transition-colors">{{ util.label }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Mega Menu Footer Action -->
+                        <div class="col-span-12 pt-2.5 mt-1 border-t border-slate-100 flex items-center justify-between text-caption text-slate-500">
+                            <span>Explore all 27 specialized calculators &amp; benchmarks</span>
+                            <button type="button" onclick="document.getElementById('open-command-palette-btn')?.click()" class="inline-flex items-center gap-1.5 font-bold text-emerald-700 hover:text-emerald-800 cursor-pointer">
+                                <span>Quick Search</span>
+                                <kbd class="text-micro font-bold px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600">⌘K</kbd>
+                            </button>
+                        </div>
                     </div>
-                {% else %}
-                    <a href="{{ item.href }}"
-                        class="{{ is_active ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600' }} transition-colors">
-                        {{ item.label }}
-                    </a>
-                {% endif %}
+                </div>
+            </div>
+
+            {% for item in primary_nav_links %}
+                {% set is_active = (active_page|default('') == item.id) or (item.id == 'resources' and active_page|default('') == 'blog_post') %}
+                <a href="{{ item.href }}"
+                    class="{{ is_active ? 'text-emerald-600 font-semibold' : 'text-slate-600 hover:text-emerald-600' }} transition-colors">
+                    {{ item.label }}
+                </a>
             {% endfor %}
         </nav>
 
@@ -158,25 +236,66 @@
 
     <!-- Mobile & Tablet menu dropdown (Contained Scroll, visible on < 1024px) -->
     <div id="mobile-menu" class="lg:hidden hidden border-t border-slate-200 bg-white max-h-[calc(100vh-4.5rem)] overflow-y-auto custom-scrollbar shadow-modal overscroll-contain">
-        <div class="px-4 py-3 space-y-1">
-            {% for item in nav_items %}
-                {% set is_active = (active_page|default('') == item.id) or (item.id == 'resources' and active_page|default('') == 'blog_post') %}
-                {% if item.sub_items is defined %}
-                    <div class="text-slate-500 font-semibold px-3 py-2 text-xs uppercase tracking-wider">{{ item.label }}</div>
-                    <div class="pl-4 space-y-1">
-                        {% for sub in item.sub_items %}
-                            <a href="{{ sub.href }}" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-emerald-600 hover:bg-emerald-50/50 transition-colors">
-                                {{ sub.label }}
-                            </a>
-                        {% endfor %}
-                    </div>
-                {% else %}
+        <div class="px-4 py-3 space-y-3">
+            <!-- Mobile Category: Core Engines -->
+            <div>
+                <div class="text-slate-500 font-extrabold px-3 py-1.5 text-xs uppercase tracking-wider flex items-center justify-between">
+                    <span>Core Calculators</span>
+                    <span class="text-micro font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.2 rounded-full">Tier 1</span>
+                </div>
+                <div class="space-y-0.5 pl-2">
+                    {% for core in nav_calculator_groups[0].items %}
+                        <a href="{{ core.href }}" class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 hover:text-emerald-700 hover:bg-emerald-50/60 transition-colors">
+                            {{ core.label }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Mobile Category: Milestone Hubs -->
+            <div class="pt-2 border-t border-slate-100">
+                <div class="text-slate-500 font-extrabold px-3 py-1.5 text-xs uppercase tracking-wider flex items-center justify-between">
+                    <span>Milestone Blueprints</span>
+                    <span class="text-micro font-bold text-amber-800 bg-amber-50 px-1.5 py-0.2 rounded-full">Curated</span>
+                </div>
+                <div class="grid grid-cols-2 gap-1 pl-2">
+                    {% for sip in nav_calculator_groups[1].monthly_sips %}
+                        <a href="{{ sip.href }}" class="block px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/60 truncate transition-colors">
+                            {{ sip.label }}
+                        </a>
+                    {% endfor %}
+                    {% for goal in nav_calculator_groups[1].goals_and_swp %}
+                        <a href="{{ goal.href }}" class="block px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/60 truncate transition-colors">
+                            {{ goal.label }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Mobile Category: Utilities & Comparisons -->
+            <div class="pt-2 border-t border-slate-100">
+                <div class="text-slate-500 font-extrabold px-3 py-1.5 text-xs uppercase tracking-wider">
+                    <span>Utilities &amp; Tools</span>
+                </div>
+                <div class="grid grid-cols-2 gap-1 pl-2">
+                    {% for util in nav_calculator_groups[2].items %}
+                        <a href="{{ util.href }}" class="block px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/60 truncate transition-colors">
+                            {{ util.label }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Mobile Primary Links -->
+            <div class="pt-2 border-t border-slate-100 space-y-0.5">
+                {% for item in primary_nav_links %}
+                    {% set is_active = (active_page|default('') == item.id) or (item.id == 'resources' and active_page|default('') == 'blog_post') %}
                     <a href="{{ item.href }}"
-                        class="block px-3 py-3 rounded-lg text-base font-medium {{ is_active ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 hover:text-emerald-600 hover:bg-emerald-50/50' }} transition-colors">
+                        class="block px-3 py-2 rounded-lg text-sm font-semibold {{ is_active ? 'text-emerald-600 bg-emerald-50 font-bold' : 'text-slate-700 hover:text-emerald-600 hover:bg-emerald-50/50' }} transition-colors">
                         {{ item.label }}
                     </a>
-                {% endif %}
-            {% endfor %}
+                {% endfor %}
+            </div>
 
             <!-- Mobile & Tablet Quick Actions -->
             <div class="pt-3 border-t border-slate-200/80 grid grid-cols-1 sm:grid-cols-2 gap-2">

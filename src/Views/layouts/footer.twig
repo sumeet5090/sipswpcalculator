@@ -1,72 +1,89 @@
 <footer class="mt-16 text-ui-sm text-slate-700 bg-slate-200/90 border-t-2 border-slate-300/90 shadow-card relative overflow-hidden p-6 sm:p-10 {% if is_calculator_route %}pb-24 sm:pb-10{% else %}pb-8 sm:pb-10{% endif %}">
     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-amber-500"></div>
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 mb-8">
+        <!-- Cluster 1: Core Financial Engines (Tier 1) -->
         <div>
-            <h3 class="font-heading font-bold text-base mb-3 text-slate-900">SIP &amp; Goal Calculators</h3>
-            <ul class="space-y-2 text-ui-xs sm:text-ui-sm">
-                <li><a href="/" class="text-growth hover:underline">SIP + SWP Dual Planner</a></li>
-                <li><a href="/sip-calculator" class="text-growth hover:underline">SIP Calculator</a></li>
-                <li><a href="/sip-step-up-calculator" class="text-growth hover:underline">Step-Up SIP Calculator</a></li>
-                <li><a href="/lumpsum-calculator" class="text-growth hover:underline">Lumpsum Calculator</a></li>
-                <li><a href="/target-corpus-calculator" class="text-growth hover:underline">Target Corpus Calculator</a></li>
-                <li><a href="/my-first-crore-calculator" class="text-growth hover:underline">1 Crore SIP Calculator</a></li>
-                <li><a href="/2-crore-sip-calculator" class="text-growth hover:underline">2 Crore SIP Calculator</a></li>
-                <li><a href="/3-crore-sip-calculator" class="text-growth hover:underline">3 Crore SIP Calculator</a></li>
-                <li><a href="/reach-5-crore-via-sip" class="text-growth hover:underline">5 Crore SIP Calculator</a></li>
-                <li><a href="/sip-5000-per-month" class="text-growth hover:underline">₹5,000 Monthly SIP</a></li>
-                <li><a href="/sip-10000-per-month" class="text-growth hover:underline">₹10,000 Monthly SIP</a></li>
-                <li><a href="/sip-15000-per-month" class="text-growth hover:underline">₹15,000 Monthly SIP</a></li>
-                <li><a href="/sip-20000-per-month" class="text-growth hover:underline">₹20,000 Monthly SIP</a></li>
-                <li><a href="/sip-25000-per-month" class="text-growth hover:underline">₹25,000 Monthly SIP</a></li>
-                <li><a href="/sip-50000-per-month" class="text-growth hover:underline">₹50,000 Monthly SIP</a></li>
+            <h3 class="font-heading font-bold text-xs uppercase tracking-wider mb-3 text-slate-900 flex items-center gap-1.5">
+                <span>Core Calculators</span>
+            </h3>
+            <ul class="space-y-2 text-ui-xs">
+                <li><a href="/" class="text-slate-700 hover:text-emerald-700 hover:underline">SIP + SWP Dual</a></li>
+                <li><a href="/sip-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">SIP Calculator</a></li>
+                <li><a href="/swp-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">SWP Calculator</a></li>
+                <li><a href="/lumpsum-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">Lumpsum Calculator</a></li>
+                <li><a href="/target-corpus-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">Target Corpus</a></li>
+                <li><a href="/sip-step-up-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">Step-Up SIP</a></li>
+                <li><a href="/retirement-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">Retirement FIRE</a></li>
             </ul>
         </div>
+
+        <!-- Cluster 2: Monthly SIP Milestones -->
         <div>
-            <h3 class="font-heading font-bold text-base mb-3 text-slate-900">Retirement &amp; Tools</h3>
-            <ul class="space-y-2 text-ui-xs sm:text-ui-sm">
-                <li><a href="/swp-calculator" class="text-growth hover:underline">SWP Calculator</a></li>
-                <li><a href="/1-crore-swp-calculator" class="text-growth hover:underline">1 Crore SWP Calculator</a></li>
-                <li><a href="/50-lakh-swp-calculator" class="text-growth hover:underline">50 Lakh SWP Calculator</a></li>
-                <li><a href="/25-lakh-swp-calculator" class="text-growth hover:underline">25 Lakh SWP Calculator</a></li>
-                <li><a href="/2-crore-swp-calculator" class="text-growth hover:underline">2 Crore SWP Calculator</a></li>
-                <li><a href="/retirement-calculator" class="text-growth hover:underline">Retirement Calculator</a></li>
-                <li><a href="/compound-interest-calculator" class="text-growth hover:underline">Compound Interest Calculator</a></li>
-                <li><a href="/cagr-calculator" class="text-growth hover:underline">CAGR Calculator</a></li>
-                <li><a href="/emi-calculator" class="text-growth hover:underline">Loan EMI Calculator</a></li>
-                <li><a href="/inflation-calculator" class="text-growth hover:underline">Inflation Calculator</a></li>
-                <li><a href="/ppf-calculator" class="text-growth hover:underline">PPF Calculator</a></li>
-                <li><a href="/fd-calculator" class="text-growth hover:underline">FD Calculator</a></li>
+            <h3 class="font-heading font-bold text-xs uppercase tracking-wider mb-3 text-slate-900">Monthly SIPs</h3>
+            <ul class="space-y-2 text-ui-xs">
+                <li><a href="/sip-5000-per-month" class="text-slate-700 hover:text-emerald-700 hover:underline">₹5,000 / month</a></li>
+                <li><a href="/sip-10000-per-month" class="text-slate-700 hover:text-emerald-700 hover:underline">₹10,000 / month</a></li>
+                <li><a href="/sip-15000-per-month" class="text-slate-700 hover:text-emerald-700 hover:underline">₹15,000 / month</a></li>
+                <li><a href="/sip-20000-per-month" class="text-slate-700 hover:text-emerald-700 hover:underline">₹20,000 / month</a></li>
+                <li><a href="/sip-25000-per-month" class="text-slate-700 hover:text-emerald-700 hover:underline">₹25,000 / month</a></li>
+                <li><a href="/sip-50000-per-month" class="text-slate-700 hover:text-emerald-700 hover:underline">₹50,000 / month</a></li>
             </ul>
         </div>
+
+        <!-- Cluster 3: Wealth Goals & Target Corpus -->
         <div>
-            <h3 class="font-heading font-bold text-base mb-3 text-slate-900">Popular Guides</h3>
-            <ul class="space-y-2 text-ui-xs sm:text-ui-sm">
-                <li><a href="/resource/growth/sip-for-beginners" class="text-growth hover:underline">SIP for Beginners</a></li>
-                <li><a href="/resource/retirement/swp-retirement-planning" class="text-growth hover:underline">SWP Retirement Planning</a></li>
-                <li><a href="/resource/comparison/sip-vs-lumpsum" class="text-growth hover:underline">SIP vs Lumpsum</a></li>
-                <li><a href="/resource/comparison/sip-vs-fd-vs-ppf" class="text-growth hover:underline">SIP vs FD vs PPF</a></li>
-                <li><a href="/resource/retirement/retirement-planning-4-percent-swp-rule" class="text-growth hover:underline">The 4% SWP Rule</a></li>
-                <li><a href="/resources" class="text-growth hover:underline mt-2 inline-block font-semibold">View All Resources &rarr;</a></li>
+            <h3 class="font-heading font-bold text-xs uppercase tracking-wider mb-3 text-slate-900">Wealth Goals</h3>
+            <ul class="space-y-2 text-ui-xs">
+                <li><a href="/my-first-crore-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">1 Crore SIP Goal</a></li>
+                <li><a href="/2-crore-sip-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">2 Crore SIP Plan</a></li>
+                <li><a href="/3-crore-sip-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">3 Crore SIP Plan</a></li>
+                <li><a href="/reach-5-crore-via-sip" class="text-slate-700 hover:text-emerald-700 hover:underline">5 Crore SIP Plan</a></li>
             </ul>
         </div>
+
+        <!-- Cluster 4: SWP Retirement Tiers & Comparisons -->
         <div>
-            <h3 class="font-heading font-bold text-base mb-3 text-slate-900">Support & Legal</h3>
-            <ul class="space-y-2 text-ui-xs sm:text-ui-sm">
-                <li><a href="/about" class="text-growth hover:underline">About Me</a></li>
-                <li><a href="/glossary" class="text-growth hover:underline">Financial Glossary</a></li>
-                <li><a href="/faq" class="text-growth hover:underline">FAQ</a></li>
-                <li><a href="mailto:help@sipswpcalculator.com" class="text-growth hover:underline">Contact Us</a></li>
-                <li><a href="/privacy" class="text-growth hover:underline">Privacy Policy</a></li>
-                <li><a href="/terms" class="text-growth hover:underline">Terms of Service</a></li>
+            <h3 class="font-heading font-bold text-xs uppercase tracking-wider mb-3 text-slate-900">SWP Pensions</h3>
+            <ul class="space-y-2 text-ui-xs">
+                <li><a href="/25-lakh-swp-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">25 Lakh SWP</a></li>
+                <li><a href="/50-lakh-swp-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">50 Lakh SWP</a></li>
+                <li><a href="/1-crore-swp-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">1 Crore SWP</a></li>
+                <li><a href="/2-crore-swp-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">2 Crore SWP</a></li>
+                <li><a href="/swp-vs-annuity" class="text-slate-700 hover:text-emerald-700 hover:underline font-semibold">SWP vs Life Annuity</a></li>
             </ul>
         </div>
+
+        <!-- Cluster 5: Financial Utilities -->
         <div>
-            <h3 class="font-heading font-bold text-base mb-3 text-slate-900">About Calculator</h3>
-            <p class="leading-relaxed text-slate-600 text-ui-xs sm:text-ui-sm">A powerful, free tool designed to help investors visualize and plan their SIP and SWP strategies with precision and ease.</p>
+            <h3 class="font-heading font-bold text-xs uppercase tracking-wider mb-3 text-slate-900">Utilities &amp; Tools</h3>
+            <ul class="space-y-2 text-ui-xs">
+                <li><a href="/compound-interest-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">Compound Interest</a></li>
+                <li><a href="/cagr-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">CAGR Calculator</a></li>
+                <li><a href="/inflation-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">Inflation &amp; CPI</a></li>
+                <li><a href="/emi-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">Loan EMI</a></li>
+                <li><a href="/ppf-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">PPF Sovereign</a></li>
+                <li><a href="/fd-calculator" class="text-slate-700 hover:text-emerald-700 hover:underline">Fixed Deposit</a></li>
+            </ul>
+        </div>
+
+        <!-- Cluster 6: Guides, Legal & Support -->
+        <div>
+            <h3 class="font-heading font-bold text-xs uppercase tracking-wider mb-3 text-slate-900">Guides &amp; About</h3>
+            <ul class="space-y-2 text-ui-xs">
+                <li><a href="/resources" class="text-slate-700 hover:text-emerald-700 hover:underline font-semibold">All Guides &rarr;</a></li>
+                <li><a href="/resource/growth/sip-for-beginners" class="text-slate-700 hover:text-emerald-700 hover:underline">SIP for Beginners</a></li>
+                <li><a href="/resource/retirement/swp-retirement-planning" class="text-slate-700 hover:text-emerald-700 hover:underline">SWP Retirement</a></li>
+                <li><a href="/resource/retirement/retirement-planning-4-percent-swp-rule" class="text-slate-700 hover:text-emerald-700 hover:underline">4% SWP Rule</a></li>
+                <li><a href="/glossary" class="text-slate-700 hover:text-emerald-700 hover:underline">Financial Glossary</a></li>
+                <li><a href="/faq" class="text-slate-700 hover:text-emerald-700 hover:underline">FAQ</a></li>
+                <li><a href="/about" class="text-slate-700 hover:text-emerald-700 hover:underline">About Me</a></li>
+                <li><a href="/privacy" class="text-slate-700 hover:text-emerald-700 hover:underline">Privacy Policy</a></li>
+                <li><a href="/terms" class="text-slate-700 hover:text-emerald-700 hover:underline">Terms of Service</a></li>
+            </ul>
         </div>
     </div>
 
-    <div class="border-t border-slate-200 pt-6">
+    <div class="border-t border-slate-300/80 pt-6">
         <div class="bg-white/95 border border-slate-300/90 p-4 sm:p-5 rounded-2xl mb-6 text-caption text-slate-600 space-y-2">
             <div class="flex items-center gap-2 font-bold text-slate-800">
                 <span class="text-growth">⚖️</span>

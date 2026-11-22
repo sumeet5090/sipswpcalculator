@@ -1,11 +1,12 @@
 {#
-  Calculator Quick-Switcher Dock
-  Above-the-fold horizontal tab navigation providing 1-tap switching across all 17 calculators.
+  Calculator Quick-Switcher Dock (Tier 1 Hub-and-Spoke Navigation)
+  Above-the-fold horizontal tab navigation focused on the 7 core pillars.
+  If the user is on a secondary milestone hub, that hub is dynamically surfaced as an active tab.
   Clean institutional underline tab design (Zerodha / Stripe style) with zero visual clash.
 #}
 {% set current_slug = active_page|default('home') %}
 
-{% set dock_calculators = [
+{% set core_dock_calculators = [
     {
         'slug': 'home',
         'href': '/',
@@ -28,32 +29,18 @@
         'badge': 'Retire'
     },
     {
-        'slug': '1-crore-swp-calculator',
-        'href': '/1-crore-swp-calculator',
-        'icon_type': 'swp',
-        'short_title': '1 Cr SWP',
-        'badge': 'Pension'
+        'slug': 'lumpsum-calculator',
+        'href': '/lumpsum-calculator',
+        'icon_type': 'lumpsum',
+        'short_title': 'Lumpsum',
+        'badge': null
     },
     {
-        'slug': '50-lakh-swp-calculator',
-        'href': '/50-lakh-swp-calculator',
-        'icon_type': 'swp',
-        'short_title': '50L SWP',
-        'badge': 'Pension'
-    },
-    {
-        'slug': '25-lakh-swp-calculator',
-        'href': '/25-lakh-swp-calculator',
-        'icon_type': 'swp',
-        'short_title': '25L SWP',
-        'badge': 'Pension'
-    },
-    {
-        'slug': '2-crore-swp-calculator',
-        'href': '/2-crore-swp-calculator',
-        'icon_type': 'swp',
-        'short_title': '2 Cr SWP',
-        'badge': 'Pension'
+        'slug': 'target-corpus-calculator',
+        'href': '/target-corpus-calculator',
+        'icon_type': 'target',
+        'short_title': 'Target Corpus',
+        'badge': 'Goal'
     },
     {
         'slug': 'sip-step-up-calculator',
@@ -63,144 +50,43 @@
         'badge': 'Top-Up'
     },
     {
-        'slug': 'my-first-crore-calculator',
-        'href': '/my-first-crore-calculator',
-        'icon_type': 'target',
-        'short_title': '1 Cr SIP Goal',
-        'badge': 'Goal'
-    },
-    {
-        'slug': '2-crore-sip-calculator',
-        'href': '/2-crore-sip-calculator',
-        'icon_type': 'target',
-        'short_title': '2 Cr SIP Plan',
-        'badge': 'Goal'
-    },
-    {
-        'slug': '3-crore-sip-calculator',
-        'href': '/3-crore-sip-calculator',
-        'icon_type': 'target',
-        'short_title': '3 Cr SIP Plan',
-        'badge': 'Goal'
-    },
-    {
-        'slug': 'reach-5-crore-via-sip',
-        'href': '/reach-5-crore-via-sip',
-        'icon_type': 'target',
-        'short_title': '5 Cr SIP Plan',
-        'badge': null
-    },
-    {
-        'slug': 'sip-5000-per-month',
-        'href': '/sip-5000-per-month',
-        'icon_type': 'sip',
-        'short_title': '₹5k/mo SIP',
-        'badge': null
-    },
-    {
-        'slug': 'sip-10000-per-month',
-        'href': '/sip-10000-per-month',
-        'icon_type': 'sip',
-        'short_title': '₹10k/mo SIP',
-        'badge': null
-    },
-    {
-        'slug': 'sip-15000-per-month',
-        'href': '/sip-15000-per-month',
-        'icon_type': 'sip',
-        'short_title': '₹15k/mo SIP',
-        'badge': null
-    },
-    {
-        'slug': 'sip-20000-per-month',
-        'href': '/sip-20000-per-month',
-        'icon_type': 'sip',
-        'short_title': '₹20k/mo SIP',
-        'badge': null
-    },
-    {
-        'slug': 'sip-25000-per-month',
-        'href': '/sip-25000-per-month',
-        'icon_type': 'sip',
-        'short_title': '₹25k/mo SIP',
-        'badge': null
-    },
-    {
-        'slug': 'sip-50000-per-month',
-        'href': '/sip-50000-per-month',
-        'icon_type': 'sip',
-        'short_title': '₹50k/mo SIP',
-        'badge': null
-    },
-    {
-        'slug': 'compound-interest-calculator',
-        'href': '/compound-interest-calculator',
-        'icon_type': 'cagr',
-        'short_title': 'Compound Interest',
-        'badge': null
-    },
-    {
-        'slug': 'inflation-calculator',
-        'href': '/inflation-calculator',
-        'icon_type': 'inflation',
-        'short_title': 'Inflation & CPI',
-        'badge': null
-    },
-    {
-        'slug': 'lumpsum-calculator',
-        'href': '/lumpsum-calculator',
-        'icon_type': 'lumpsum',
-        'short_title': 'Lumpsum',
-        'badge': null
-    },
-    {
         'slug': 'retirement-calculator',
         'href': '/retirement-calculator',
         'icon_type': 'fire',
         'short_title': 'Retirement FIRE',
         'badge': null
-    },
-    {
-        'slug': 'target-corpus-calculator',
-        'href': '/target-corpus-calculator',
-        'icon_type': 'target',
-        'short_title': 'Target Corpus',
-        'badge': null
-    },
-    {
-        'slug': 'cagr-calculator',
-        'href': '/cagr-calculator',
-        'icon_type': 'cagr',
-        'short_title': 'CAGR Return',
-        'badge': null
-    },
-    {
-        'slug': 'emi-calculator',
-        'href': '/emi-calculator',
-        'icon_type': 'emi',
-        'short_title': 'Loan EMI',
-        'badge': null
-    },
-    {
-        'slug': 'ppf-calculator',
-        'href': '/ppf-calculator',
-        'icon_type': 'ppf',
-        'short_title': 'PPF Scheme',
-        'badge': 'Tax-Free'
-    },
-    {
-        'slug': 'fd-calculator',
-        'href': '/fd-calculator',
-        'icon_type': 'fd',
-        'short_title': 'Fixed Deposit',
-        'badge': null
     }
 ] %}
 
+{% set secondary_dock_items = {
+    '1-crore-swp-calculator': {'title': '1 Cr SWP', 'icon': 'swp', 'badge': 'Active'},
+    '50-lakh-swp-calculator': {'title': '50L SWP', 'icon': 'swp', 'badge': 'Active'},
+    '25-lakh-swp-calculator': {'title': '25L SWP', 'icon': 'swp', 'badge': 'Active'},
+    '2-crore-swp-calculator': {'title': '2 Cr SWP', 'icon': 'swp', 'badge': 'Active'},
+    'my-first-crore-calculator': {'title': '1 Cr SIP Goal', 'icon': 'target', 'badge': 'Active'},
+    '2-crore-sip-calculator': {'title': '2 Cr SIP Plan', 'icon': 'target', 'badge': 'Active'},
+    '3-crore-sip-calculator': {'title': '3 Cr SIP Plan', 'icon': 'target', 'badge': 'Active'},
+    'reach-5-crore-via-sip': {'title': '5 Cr SIP Plan', 'icon': 'target', 'badge': 'Active'},
+    'sip-5000-per-month': {'title': '₹5k/mo SIP', 'icon': 'sip', 'badge': 'Active'},
+    'sip-10000-per-month': {'title': '₹10k/mo SIP', 'icon': 'sip', 'badge': 'Active'},
+    'sip-15000-per-month': {'title': '₹15k/mo SIP', 'icon': 'sip', 'badge': 'Active'},
+    'sip-20000-per-month': {'title': '₹20k/mo SIP', 'icon': 'sip', 'badge': 'Active'},
+    'sip-25000-per-month': {'title': '₹25k/mo SIP', 'icon': 'sip', 'badge': 'Active'},
+    'sip-50000-per-month': {'title': '₹50k/mo SIP', 'icon': 'sip', 'badge': 'Active'},
+    'compound-interest-calculator': {'title': 'Compound Interest', 'icon': 'cagr', 'badge': 'Active'},
+    'inflation-calculator': {'title': 'Inflation & CPI', 'icon': 'inflation', 'badge': 'Active'},
+    'cagr-calculator': {'title': 'CAGR Return', 'icon': 'cagr', 'badge': 'Active'},
+    'emi-calculator': {'title': 'Loan EMI', 'icon': 'emi', 'badge': 'Active'},
+    'ppf-calculator': {'title': 'PPF Scheme', 'icon': 'ppf', 'badge': 'Active'},
+    'fd-calculator': {'title': 'Fixed Deposit', 'icon': 'fd', 'badge': 'Active'}
+} %}
+
+{% set is_secondary_active = secondary_dock_items[current_slug] is defined %}
+
 <nav aria-label="Financial Calculators Quick Switcher" class="relative mb-2.5 sm:mb-3 not-prose border-b border-slate-200/90">
-    <!-- Horizontal Scrollable Underline Tab Track (Institutional Stripe/Zerodha Style) -->
+    <!-- Horizontal Scrollable Underline Tab Track (Tier-1 Core Anchors) -->
     <div id="calculator-dock-track" class="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar scroll-smooth -mb-px">
-        {% for item in dock_calculators %}
+        {% for item in core_dock_calculators %}
             {% set is_active = (current_slug == item.slug) %}
             <a href="{{ item.href }}"
                id="dock-pill-{{ item.slug }}"
@@ -216,12 +102,8 @@
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     {% elseif item.icon_type == 'target' %}
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/><circle cx="12" cy="12" r="5" stroke-width="2"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
-                    {% elseif item.icon_type == 'inflation' %}
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
-                    {% elseif item.icon_type == 'lumpsum' or item.icon_type == 'fd' %}
+                    {% elseif item.icon_type == 'lumpsum' %}
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    {% elseif item.icon_type == 'emi' or item.icon_type == 'ppf' %}
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     {% else %}
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     {% endif %}
@@ -234,6 +116,40 @@
                 {% endif %}
             </a>
         {% endfor %}
+
+        {# Contextual Active Tab for Milestone Hubs #}
+        {% if is_secondary_active %}
+            {% set active_meta = secondary_dock_items[current_slug] %}
+            <a href="/{{ current_slug }}"
+               id="dock-pill-{{ current_slug }}"
+               class="shrink-0 flex items-center gap-1.5 px-3 sm:px-3.5 py-2.5 text-ui-xs transition-all duration-150 whitespace-nowrap border-b-2 border-emerald-600 text-slate-900 font-extrabold"
+               aria-current="page"
+               title="{{ active_meta.title }} — Active Milestone Blueprint">
+                <span class="inline-flex items-center shrink-0 text-emerald-700" aria-hidden="true">
+                    {% if active_meta.icon == 'swp' %}
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    {% elseif active_meta.icon == 'target' %}
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/><circle cx="12" cy="12" r="5" stroke-width="2"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+                    {% else %}
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    {% endif %}
+                </span>
+                <span>{{ active_meta.title }}</span>
+                <span class="text-micro font-extrabold uppercase px-1.5 py-0.2 rounded-full tracking-wider leading-none bg-emerald-100 text-emerald-800">
+                    {{ active_meta.badge }}
+                </span>
+            </a>
+        {% endif %}
+
+        <!-- Quick Access to All 27 Blueprints via Command Palette -->
+        <button type="button"
+            onclick="document.getElementById('open-command-palette-btn')?.click() || document.querySelector('.open-command-palette-btn')?.click()"
+            class="shrink-0 flex items-center gap-1.5 px-3 py-2 text-ui-xs text-slate-500 hover:text-emerald-700 hover:bg-emerald-50/70 rounded-xl font-bold transition-all ml-auto cursor-pointer"
+            title="Search all 27 blueprints (Cmd + K)">
+            <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <span>All 27 Blueprints</span>
+            <kbd class="hidden md:inline-block text-micro font-bold px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-500">⌘K</kbd>
+        </button>
     </div>
 </nav>
 
