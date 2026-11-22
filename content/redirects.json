@@ -39,6 +39,8 @@
         "/what-is-sip": "/sip-calculator",
         "/retirement-drawdown-planner": "/swp-calculator",
         "/swp-tax-calculator": "/swp-calculator",
+        "/swp-vs-annuity": "/resource/comparison/swp-vs-annuity-2026",
+        "/swp-vs-annuity/": "/resource/comparison/swp-vs-annuity-2026",
         "/resource/growth/what-is-cagr": "/cagr-calculator",
         "/resource/what-is-cagr": "/cagr-calculator",
         "/what-is-cagr": "/cagr-calculator",

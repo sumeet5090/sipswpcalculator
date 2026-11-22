@@ -5,7 +5,32 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Wave 2 Milestone Expansion (`/sip-15000-per-month`, `/sip-20000-per-month`, and `/3-crore-sip-calculator`) Implemented — Expanding platform from 22 to 25 specialized calculator hubs; resolved git stash pop merge conflicts across 11 files cleanly with 0 leftover conflict markers; verified 100% Green across quality gates.
+- **Current Milestone:** Option 2 — The Golden Retirement Bridge (`/25-lakh-swp-calculator`, `/2-crore-swp-calculator`, and `/swp-vs-annuity`) Implemented — Expanding platform from 25 to 27 specialized calculator hubs; added vanity redirects and modernized the SWP vs Annuity comparative mega-hub; verified 100% Green across quality gates.
+- **Implemented Features & Fixes (2026-11-22 Session 45 - The Golden Retirement Bridge):**
+  - **`content/calculators/25-lakh-swp-calculator.md`:**
+    - `title: "25 Lakh SWP Calculator — Monthly Pension (with Free Excel)"` (58 chars / 60 bytes).
+    - `h1: "25 Lakh SWP Calculator"`.
+    - `meta_desc: "Calculate how much monthly pension a ₹25 Lakh mutual fund corpus generates across 10 to 30 years. Model 8% returns, 5% annual inflation hikes & download free Excel."` (166 bytes).
+    - Canonical 30y longevity benchmark table, 5% inflation step-up matrix, Bank FD tax arbitrage comparison, and 3-bucket strategy.
+  - **`content/calculators/2-crore-swp-calculator.md`:**
+    - `title: "2 Crore SWP Calculator — Monthly Pension (with Free Excel)"` (58 chars / 60 bytes).
+    - `h1: "2 Crore SWP Calculator"`.
+    - `meta_desc: "Calculate how much monthly pension a ₹2 Crore mutual fund corpus generates across 10 to 30 years. Model 8% returns, 5% annual inflation hikes & download free Excel."` (166 bytes).
+    - Canonical 30y longevity benchmark table, 5% inflation step-up matrix, Bank FD tax arbitrage comparison, and HNI 3-bucket strategy.
+  - **`content/redirects.json` & Guide Modernization:**
+    - Mapped `/swp-vs-annuity` and `/swp-vs-annuity/` to `/resource/comparison/swp-vs-annuity-2026`.
+    - Updated `content/blog/comparison/swp-vs-annuity-2026.md` with direct CTAs to all 5 SWP milestone calculators.
+  - **Architecture & Infrastructure:**
+    - `routes.php`: Registered `/25-lakh-swp-calculator` and `/2-crore-swp-calculator`.
+    - `StrategyFactory.php`: Registered strategy classes and defaults (`₹25 Lakh / ₹16.25k`, `₹2 Crore / ₹130k`).
+    - `calculator-dock.twig`: Added quick-switcher items for both calculators.
+    - `header.twig`: Added navigation links under Calculators dropdown.
+    - `footer.twig`: Added links under Retirement & Tools.
+    - `CommandPaletteController.ts`: Registered `calc-25l-swp` and `calc-2cr-swp`.
+    - `calculator_links.json`: Added contextual related calculator links.
+    - `llms.txt` & `llms-full.txt`: Documented both new calculators.
+    - `faqs.json`: Added 6 tagged FAQs (3 per new calculator) satisfying `FaqCoverageTest`.
+    - `StrategyFactoryContainerTest.php`: Added unit tests verifying container instantiation and default parameters.
 - **Implemented Features & Fixes (2026-11-22 Session 44 - Wave 2 Milestone Expansion):**
   - **`content/calculators/sip-15000-per-month.md`:**
     - `title: "₹15,000 Monthly SIP Calculator (with 10% Step-Up & Free Excel)"` (62 chars / 64 bytes).

@@ -558,5 +558,49 @@
             "title": "1 Crore SWP Calculator",
             "description": "Explore monthly pension payouts and sustainable retirement cash flows."
         }
+    ],
+    "25-lakh-swp-calculator": [
+        {
+            "href": "/50-lakh-swp-calculator",
+            "title": "50 Lakh SWP Calculator",
+            "description": "Compare cash flow sustainability and monthly pension payouts from a ₹50 Lakh corpus."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Model custom monthly retirement pension withdrawals, inflation hikes, and 2026 LTCG tax savings."
+        },
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Plan your dual accumulation and distribution retirement roadmap using proven safe withdrawal rules."
+        },
+        {
+            "href": "/fd-calculator",
+            "title": "Fixed Deposit (FD) Calculator",
+            "description": "Compare post-tax returns between Bank Fixed Deposits and a tax-advantaged Mutual Fund SWP."
+        }
+    ],
+    "2-crore-swp-calculator": [
+        {
+            "href": "/1-crore-swp-calculator",
+            "title": "1 Crore SWP Calculator",
+            "description": "Compare cash flow sustainability and monthly pension payouts from a ₹1 Crore corpus."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Model custom monthly retirement pension withdrawals, inflation hikes, and 2026 LTCG tax savings."
+        },
+        {
+            "href": "/2-crore-sip-calculator",
+            "title": "2 Crore SIP Calculator",
+            "description": "See how to accumulate a ₹2 Crore corpus through monthly SIP compounding and annual top-ups."
+        },
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Plan your dual accumulation and distribution retirement roadmap using proven safe withdrawal rules."
+        }
     ]
 }

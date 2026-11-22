@@ -244,6 +244,30 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertSame(30000000.0, $strategy->getTargetCorpus());
     }
 
+    public function testCreate25LakhSwpStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('25-lakh-swp-calculator');
+        $this->assertInstanceOf(SwpStrategy::class, $strategy);
+        $this->assertSame('swp', $strategy->getType());
+        $this->assertSame(2500000.0, $strategy->getDefaultCorpus());
+        $this->assertSame(16250.0, $strategy->getDefaultWithdrawal());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(2500000.0, $inputs->getStartingCorpus());
+        $this->assertSame(16250.0, $inputs->getSwpWithdrawal());
+    }
+
+    public function testCreate2CroreSwpStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('2-crore-swp-calculator');
+        $this->assertInstanceOf(SwpStrategy::class, $strategy);
+        $this->assertSame('swp', $strategy->getType());
+        $this->assertSame(20000000.0, $strategy->getDefaultCorpus());
+        $this->assertSame(130000.0, $strategy->getDefaultWithdrawal());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(20000000.0, $inputs->getStartingCorpus());
+        $this->assertSame(130000.0, $inputs->getSwpWithdrawal());
+    }
+
     public function testCreateThrowsForUnmappedSlug(): void
     {
         $this->expectException(\DomainException::class);

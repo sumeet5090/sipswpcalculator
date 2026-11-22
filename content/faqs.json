@@ -1195,5 +1195,75 @@
         ],
         "q": "How much monthly pension can a ₹3 Crore mutual fund corpus generate in retirement?",
         "a": "At an expected 8% conservative return in a hybrid portfolio, a ₹3 Crore corpus safely yields ₹1,80,000 to ₹2,00,000 per month indefinitely without eroding the ₹3 Crore principal. Redemptions under an SWP are highly tax-efficient under Section 112A, as only the capital gains portion is taxed at 12.5% above the ₹1.25 Lakh annual exemption."
+    },
+    {
+        "id": "swp-25l-monthly-payout",
+        "category": "retirement",
+        "tags": [
+            "25-lakh-swp-calculator",
+            "swp-calculator",
+            "retirement-calculator",
+            "faq-page"
+        ],
+        "q": "How much monthly pension can I safely withdraw from a ₹25 Lakh mutual fund corpus?",
+        "a": "At an expected 8% annual return in a conservative hybrid portfolio, a ₹25 Lakh corpus safely generates ₹15,000 to ₹16,667 per month indefinitely without eroding your principal. If you include a 5% annual step-up to beat inflation, a starting withdrawal of ₹10,000/month sustains your cash flows for 30+ years, paying out ₹79.7 Lakhs in total while preserving ₹22.2 Lakhs in residual wealth."
+    },
+    {
+        "id": "swp-25l-vs-fd",
+        "category": "taxation",
+        "tags": [
+            "25-lakh-swp-calculator",
+            "swp-calculator",
+            "faq-page"
+        ],
+        "q": "Why is a ₹25 Lakh SWP more tax-efficient than a Bank FD for retirement income?",
+        "a": "Bank FD interest on ₹25 Lakh is fully taxable at your income tax slab rate (up to 31.2%), yielding only ~₹10,033/month post-tax at 30% slab. An SWP redemptions only taxes the capital gains portion under Section 112A (12.5% above ₹1.25L exemption). Because embedded gains in Year 1 are under ₹1.25 Lakh, your payouts are virtually 100% tax-free, yielding ₹16,250/month in hand—an extra ₹6,200+ monthly (+62%)."
+    },
+    {
+        "id": "swp-25l-bucket-strategy",
+        "category": "strategies",
+        "tags": [
+            "25-lakh-swp-calculator",
+            "strategies",
+            "retirement-calculator",
+            "faq-page"
+        ],
+        "q": "What is the best fund allocation for running an SWP from a ₹25 Lakh corpus?",
+        "a": "A 3-bucket strategy works best: Bucket 1 allocates ₹5 Lakhs (20%) in Liquid/Arbitrage funds for 1–3 years of uninterrupted cash flow; Bucket 2 places ₹10 Lakhs (40%) in Conservative Hybrid or Equity Savings funds for 7.5%–8.5% stable yields; Bucket 3 invests ₹10 Lakhs (40%) in Large-Cap Index or Balanced Advantage funds to beat inflation over 8+ years."
+    },
+    {
+        "id": "swp-2cr-monthly-payout",
+        "category": "retirement",
+        "tags": [
+            "2-crore-swp-calculator",
+            "swp-calculator",
+            "retirement-calculator",
+            "faq-page"
+        ],
+        "q": "How much monthly pension can I safely withdraw from a ₹2 Crore mutual fund corpus?",
+        "a": "At an expected 8% annual return in a conservative hybrid portfolio, a ₹2 Crore corpus safely generates ₹1,20,000 to ₹1,33,333 per month indefinitely without eroding your principal. If you include a 5% annual step-up to beat inflation, a starting withdrawal of ₹80,000/month sustains your cash flows for 30+ years, paying out ₹6.38 Crores in total while preserving ₹1.78 Crores in residual wealth."
+    },
+    {
+        "id": "swp-2cr-vs-fd",
+        "category": "taxation",
+        "tags": [
+            "2-crore-swp-calculator",
+            "swp-calculator",
+            "faq-page"
+        ],
+        "q": "Why is a ₹2 Crore SWP superior to a Bank Fixed Deposit for HNI retirees?",
+        "a": "Bank FD interest on ₹2 Crore is fully taxable at 31.2% slab, consuming ₹4.37 Lakhs/year in taxes and yielding only ~₹80,267/month in hand. An SWP taxes only capital gains under Section 112A (12.5% above ₹1.25L exemption), leaving ₹1,26,250/month net in hand—saving over ₹3.90 Lakhs annually in taxes and providing +57.3% higher monthly take-home cash."
+    },
+    {
+        "id": "swp-2cr-bucket-strategy",
+        "category": "strategies",
+        "tags": [
+            "2-crore-swp-calculator",
+            "strategies",
+            "retirement-calculator",
+            "faq-page"
+        ],
+        "q": "What is the optimal portfolio structure for running an SWP on a ₹2 Crore corpus?",
+        "a": "Financial planners recommend an institutional 3-bucket structure: Bucket 1 holds ₹40 Lakhs (20%) in Liquid & Arbitrage funds for 3 years of completely market-insulated cash flows; Bucket 2 holds ₹80 Lakhs (40%) in Conservative Hybrid and Multi-Asset Allocation funds generating 8%-9% yields; Bucket 3 holds ₹80 Lakhs (40%) in Nifty 50 and Flexi-Cap funds to ensure multi-decade capital growth."
     }
 ]

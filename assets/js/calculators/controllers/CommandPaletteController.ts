@@ -46,6 +46,22 @@ export const COMMAND_ITEMS: CommandItem[] = [
         icon: '🛡️'
     },
     {
+        id: 'calc-25-lakh-swp',
+        title: '25 Lakh SWP Calculator',
+        description: 'Model monthly pension payouts, longevity & tax savings from a ₹25 Lakh corpus.',
+        category: 'Calculator',
+        url: '/25-lakh-swp-calculator',
+        icon: '🛡️'
+    },
+    {
+        id: 'calc-2-crore-swp',
+        title: '2 Crore SWP Calculator',
+        description: 'Model monthly pension payouts, longevity & tax savings from a ₹2 Crore corpus.',
+        category: 'Calculator',
+        url: '/2-crore-swp-calculator',
+        icon: '🏦'
+    },
+    {
         id: 'calc-lumpsum',
         title: 'Lumpsum Calculator',
         description: 'Calculate wealth growth on one-time mutual fund investments.',

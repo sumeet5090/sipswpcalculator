@@ -341,15 +341,27 @@ date: "January 2026"
   </div>
   <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight text-slate-900">Model Your Perfect Retirement Income</h2>
   <p class="text-slate-600 mb-7 max-w-xl mx-auto text-sm sm:text-base leading-relaxed font-medium">Simulate an SWP with inflation step-ups and see exactly how its net-of-tax cash flow evolves over time — then decide how much to allocate to annuity vs SWP.</p>
-  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-    <a href="/retirement-calculator"
-       class="inline-flex items-center gap-2 px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm sm:text-base cursor-pointer">
-      Open Retirement Planner
+  <div class="flex flex-wrap items-center justify-center gap-3">
+    <a href="/swp-calculator"
+       class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-card shadow-emerald-600/20 transition-all duration-200 text-sm cursor-pointer">
+      Custom SWP Calculator
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
     </a>
-    <a href="/resource/comparison/swp-vs-fixed-deposit"
-       class="inline-flex items-center gap-2 px-8 py-3.5 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-bold rounded-xl border border-slate-200 shadow-sm transition-all duration-200 text-sm sm:text-base cursor-pointer">
-      Read: SWP vs Fixed Deposit →
+    <a href="/1-crore-swp-calculator"
+       class="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 font-bold rounded-xl border border-slate-200 shadow-sm transition-all duration-200 text-sm cursor-pointer">
+      ₹1 Crore SWP Plan →
+    </a>
+    <a href="/50-lakh-swp-calculator"
+       class="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 font-bold rounded-xl border border-slate-200 shadow-sm transition-all duration-200 text-sm cursor-pointer">
+      ₹50 Lakh SWP Plan →
+    </a>
+    <a href="/2-crore-swp-calculator"
+       class="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 font-bold rounded-xl border border-slate-200 shadow-sm transition-all duration-200 text-sm cursor-pointer">
+      ₹2 Crore SWP Plan →
+    </a>
+    <a href="/25-lakh-swp-calculator"
+       class="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 font-bold rounded-xl border border-slate-200 shadow-sm transition-all duration-200 text-sm cursor-pointer">
+      ₹25 Lakh SWP Plan →
     </a>
   </div>
 </div>
