@@ -127,6 +127,9 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 22. **Gratuity Calculator (`https://sipswpcalculator.com/gratuity-calculator`)**
     - Computes statutory gratuity payout under the Payment of Gratuity Act, 1972: $(15 \times \text{Salary} \times \text{Tenure}) / 26$ for covered establishments with >6 months tenure rounding and 5-year vesting cliff. Models Section 10(10) ₹20 Lakh statutory tax exemption ceiling and taxable income slab additions.
 
+23. **NPS Calculator (`https://sipswpcalculator.com/nps-calculator`)**
+    - Computes National Pension System Tier-1 wealth accumulation via monthly annuity due compounding: $C \times \frac{(1+r_m)[(1+r_m)^n - 1]}{r_m}$. Models PFRDA superannuation exit rules: mandatory $\ge 40\%$ annuity purchase for lifelong monthly pension, Section 10(12A) $60\%$ tax-free lump-sum withdrawal, and $\le ₹5\text{ Lakh}$ small corpus complete withdrawal exemption.
+
 ---
 
 ## 4. Key Financial Heuristics & Rules of Thumb for India

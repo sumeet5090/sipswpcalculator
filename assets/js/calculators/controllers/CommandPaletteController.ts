@@ -246,6 +246,14 @@ export const COMMAND_ITEMS: CommandItem[] = [
         icon: '💼'
     },
     {
+        id: 'calc-nps',
+        title: 'NPS Calculator',
+        description: 'Calculate National Pension System Tier-1 corpus, 60% tax-free lump sum & monthly annuity pension.',
+        category: 'Calculator',
+        url: '/nps-calculator',
+        icon: '🏛️'
+    },
+    {
         id: 'guide-cagr-xirr',
         title: 'CAGR vs XIRR Explained',
         description: 'Understand the difference between point-to-point and periodic cashflow returns.',

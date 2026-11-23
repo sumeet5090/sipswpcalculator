@@ -668,5 +668,27 @@
             "title": "PPF Calculator",
             "description": "Calculate Public Provident Fund tax-free compounding, Section 80C deductions, and maturity corpus."
         }
+    ],
+    "nps-calculator": [
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Plan your retirement corpus, post-retirement monthly expenses, and financial independence."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Pension Calculator",
+            "description": "Model monthly post-retirement withdrawals, capital longevity, and 2026 LTCG tax savings from mutual funds."
+        },
+        {
+            "href": "/gratuity-calculator",
+            "title": "Gratuity Calculator",
+            "description": "Calculate statutory gratuity payout under Payment of Gratuity Act 1972 & Section 10(10) tax exemption."
+        },
+        {
+            "href": "/ppf-calculator",
+            "title": "PPF Calculator",
+            "description": "Calculate Public Provident Fund tax-free compounding, Section 80C deductions, and maturity corpus."
+        }
     ]
 }

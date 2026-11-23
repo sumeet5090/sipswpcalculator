@@ -1369,5 +1369,39 @@
         ],
         "q": "Is the 5-year continuous service rule mandatory to receive gratuity?",
         "a": "Yes, under Section 4(1) of the Payment of Gratuity Act, an employee must complete at least 5 years of continuous service with an organization to be eligible for gratuity. The only statutory exceptions to the 5-year vesting rule are the death or permanent disablement of the employee due to accident or disease, in which case gratuity is payable to the employee or their nominee regardless of tenure."
+    },
+    {
+        "id": "nps-tax-exemption-rules",
+        "category": "taxation",
+        "tags": [
+            "nps-calculator",
+            "faq-page",
+            "tax & rules",
+            "retirement-calculator"
+        ],
+        "q": "Is the 60% NPS lump-sum withdrawal tax-free at retirement?",
+        "a": "Yes, under Section 10(12A) of the Income Tax Act, 100% of the 60% lump-sum withdrawal from NPS Tier-1 upon superannuation (age 60) is completely tax-free. The remaining 40% (mandatory minimum) must be used to purchase an annuity, which is exempt at purchase, though the periodic monthly pension received from the annuity is taxable at your applicable income slab rate."
+    },
+    {
+        "id": "nps-mandatory-annuity-rule",
+        "category": "rules",
+        "tags": [
+            "nps-calculator",
+            "faq-page",
+            "retirement-calculator"
+        ],
+        "q": "What is the mandatory annuity purchase rule under NPS at age 60?",
+        "a": "Under PFRDA exit regulations, an NPS Tier-1 subscriber must allocate at least 40% of their accumulated retirement corpus to purchase a life annuity from an IRDAI-registered Annuity Service Provider (ASP) like LIC, SBI Life, or HDFC Life. However, if the total accumulated corpus at retirement is ₹5,00,000 (₹5 Lakhs) or less, the subscriber has the option to withdraw 100% of the corpus as a lump sum without purchasing an annuity."
+    },
+    {
+        "id": "nps-tax-deduction-benefits",
+        "category": "taxation",
+        "tags": [
+            "nps-calculator",
+            "faq-page",
+            "tax & rules"
+        ],
+        "q": "What tax deductions can I claim for NPS contributions in India?",
+        "a": "NPS offers three distinct tax deduction windows: (1) Section 80CCD(1) allows self-contributions up to 10% of salary (or 20% of gross income for self-employed) within the overall ₹1.5 Lakh limit of Section 80C under the Old Tax Regime; (2) Section 80CCD(1B) provides an exclusive additional deduction of up to ₹50,000 above the 80C limit (Old Regime); and (3) Section 80CCD(2) covers employer contributions up to 10% of Basic + DA (14% for Central/State Govt), which is available under both the Old and New Tax Regimes without any upper monetary ceiling (subject to the aggregate ₹7.5 Lakh cap across PF, NPS, and superannuation)."
     }
 ]

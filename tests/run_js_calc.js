@@ -11,6 +11,7 @@ import { InflationEngine } from '../assets/js/calculators/engines/InflationEngin
 import { PpfEngine } from '../assets/js/calculators/engines/PpfEngine.ts';
 import { FdEngine } from '../assets/js/calculators/engines/FdEngine.ts';
 import { GratuityEngine } from '../assets/js/calculators/engines/GratuityEngine.ts';
+import { NpsEngine } from '../assets/js/calculators/engines/NpsEngine.ts';
 
 try {
     // Read input parameters JSON from command line arguments
@@ -194,6 +195,16 @@ try {
             inputArgs.tenure_years,
             inputArgs.tenure_months || 0,
             inputArgs.is_covered_by_act !== undefined ? inputArgs.is_covered_by_act : true
+        );
+        console.log(JSON.stringify(res));
+    } else if (inputArgs.action === 'nps') {
+        const res = NpsEngine.calculate(
+            inputArgs.monthly_contribution,
+            inputArgs.current_age,
+            inputArgs.retirement_age,
+            inputArgs.expected_return_rate,
+            inputArgs.annuity_percent !== undefined ? inputArgs.annuity_percent : 40.0,
+            inputArgs.annuity_return_rate !== undefined ? inputArgs.annuity_return_rate : 6.0
         );
         console.log(JSON.stringify(res));
     } else if (inputArgs.action === 'generate_qr_test') {

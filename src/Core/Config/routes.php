@@ -39,7 +39,8 @@ return [
         '/2-crore-swp-calculator'       => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
         '/75-lakh-swp-calculator'       => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
         '/sip-1-lakh-per-month'         => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/gratuity-calculator'          => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly']
+        '/gratuity-calculator'          => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
+        '/nps-calculator'               => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly']
     ],
     'pages' => [
         '/about'    => ['action' => [RenderAboutAction::class, '__invoke'], 'priority' => '0.5', 'changefreq' => 'yearly'],

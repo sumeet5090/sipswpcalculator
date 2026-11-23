@@ -338,6 +338,24 @@
                 {% include 'components/forms/gratuity-fields.twig' %}
             </div>
         </div>
+
+        {% elseif calculator_type == 'nps' %}
+        <input type="hidden" id="enable_swp" name="enable_swp" value="0">
+        <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
+            <div class="space-y-3 border-t-4 border-emerald-600 rounded-2xl bg-gradient-to-b from-emerald-50/70 via-emerald-50/30 to-white/90 backdrop-blur-md p-2.5 sm:p-3 border-2 border-emerald-300/90 shadow-card transition-all">
+                <div class="flex items-center justify-between px-3.5 py-2 rounded-xl bg-emerald-100/90 border-2 border-emerald-300/90 shadow-flat">
+                    <div class="flex items-center gap-2 text-slate-800">
+                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-600 text-white text-micro font-black shadow-flat">🏛️</span>
+                        <span class="text-ui-xs font-black text-emerald-950">National Pension System:</span>
+                        <span class="text-ui-xs font-bold text-slate-700">PFRDA Tier-1 Scheme</span>
+                    </div>
+                    <span class="text-micro font-black text-emerald-950 bg-emerald-200/90 border border-emerald-300/90 px-2.5 py-0.5 rounded-full shadow-flat">
+                        Sec 10(12A) 60% Tax-Free
+                    </span>
+                </div>
+                {% include 'components/forms/nps-fields.twig' %}
+            </div>
+        </div>
         {% endif %}
     </form>
 

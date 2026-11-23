@@ -1,11 +1,38 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-23*
+*Last Updated: 2026-11-24*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Statutory Gratuity Calculator (`/gratuity-calculator`) & SEO Verification Shipped — Built high-precision statutory gratuity engine in PHP & TypeScript with Payment of Gratuity Act 1972 rules (15/26 formula, >6 month rounding, 5-year vesting cliff, Section 10(10) ₹20 Lakh tax exemption ceiling); benchmark schedule matrix; verified 100% Green across quality gates (884 tests, 14,774 assertions, 79 parity tests, 48 SEO routes); submitted to Bing IndexNow.
+- **Current Milestone:** National Pension System (NPS) Calculator (`/nps-calculator`) Shipped & Verified — Built high-precision PFRDA Tier-1 compounding engine in PHP & TypeScript with statutory exit rules (min 40% annuity, Section 10(12A) 60% tax-free lump sum, small-corpus <= ₹5L exemption, monthly annuity pension cash flow); 4-card KPI summary; static benchmark schedule matrix; verified 100% Green across quality gates (891 tests, 14,841 assertions, 87 parity tests, 49 SEO routes); submitted to Bing IndexNow. Ready for Track 3 (Post-Retirement Asset Allocation Studio).
+- **Implemented Features & Fixes (2026-11-24 Session 51 - National Pension System Calculator):**
+  - **Statutory NPS Engine (`NpsEngine.php` & `NpsEngine.ts`):**
+    - PFRDA Tier-1 compounding formula: Month-by-month annuity due compounding at $r_m = r / 12$ across $(A_{\text{ret}} - A_{\text{curr}}) \times 12$ months.
+    - Superannuation Exit Modeling: 40% mandatory minimum annuity allocation ($\alpha \ge 0.40$), user-adjustable up to 100%.
+    - Tax-Free Lump Sum: Up to 60% lump-sum withdrawal is 100% tax-exempt under Section 10(12A) of the Income Tax Act.
+    - Small Corpus Exemption: Total corpus $\le ₹5,00,000$ flags `is_small_corpus_eligible: true` allowing 100% lump-sum exit.
+    - Monthly Annuity Pension: $K_{\text{annuity}} \times (r_{\text{ann}} / 12)$ reflecting Indian ASP life annuity payouts.
+    - Year-by-year schedule tracking invested capital, compounding returns, cumulative balance, and lump-sum/annuity splits.
+  - **Domain Strategy, Inputs & Drivers:**
+    - `NpsInputs`: Immutable typed value object implementing `CalculatorInputsInterface`.
+    - `NpsStrategy`: Container-managed strategy resolving defaults, template bindings, and benchmark schedule.
+    - `NpsDriver`: Interactive TypeScript driver with two-way synchronized sliders, age boundary constraints ($A_{\text{ret}} > A_{\text{curr}}$), 4-card odometer animations, and dynamic badge updates (`✓ 60% Tax-Free Lump Sum` or `100% Lump Sum Eligible (≤₹5L)`).
+  - **Templates & Presentation:**
+    - `src/Views/components/forms/nps-fields.twig`: Daylight frosted cards for Monthly Contribution, Current Age, Retirement Age, Expected Return, Annuity %, and Annuity Rate.
+    - `src/Views/components/benchmarks/nps-schedule.twig`: Static benchmark schedule matrix covering ₹3k to ₹25k monthly contributions over 30 years.
+    - `src/Views/components/calculator-form.twig` & `chart-visualization.twig`: 4-card summary (Principal Invested, Compounding Gains, Tax-Free Lump Sum, and Monthly Pension).
+    - Mega-menu header and footer clusters updated with NPS Calculator.
+  - **Educational Guide & SEO:**
+    - `content/calculators/nps-calculator.md`: Direct answer (BLUF), PFRDA exit rules, Section 80CCD(1), 80CCD(1B), and 80CCD(2) tax deductions under Old vs New Regime. Title tag: 59 bytes $\le 65$.
+    - Platform discovery: Registered in `CommandPaletteController.ts` (`calc-nps`), `calculator_links.json`, `content/faqs.json`, `llms.txt`, `llms-full.txt`, and `url.txt`.
+  - **Verification & Parity:**
+    - `npm run typecheck && npm run build`: 100% clean TypeScript build (Vite chunk generated in 278ms).
+    - `php tests/parity_check.php`: 87/87 mathematical parity tests PASS (8 new NPS cases).
+    - `tests/Unit/NpsEngineTest.php`: 6 tests, 39 assertions PASS.
+    - `tests/Unit/StrategyFactoryContainerTest.php`: 28/28 tests PASS (including `testCreateNpsStrategyFromContainer`).
+    - `tests/Integration/SeoMetadataValidatorTest.php`: 49/49 routes PASS (all title tags, H1, meta desc, canonical, OG tags).
+    - Bing IndexNow: Submitted `https://sipswpcalculator.com/nps-calculator` (`status_code: 200, success: true`).
 - **Implemented Features & Fixes (2026-11-23 Session 50 - Gratuity Calculator & SEO Verification):**
   - **IndexNow & GSC Inspection (Immediate Steps):**
     - Updated `url.txt` and submitted all canonical platform URLs + `/sitemap.xml` via Bing IndexNow MCP tool (`status_code: 200, success: true`).

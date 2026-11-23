@@ -894,6 +894,57 @@ foreach ($gratuityCases as $idx => $gParams) {
     }
 }
 
+// 9. Cross-Runtime Parity: National Pension System (NPS) Engine
+// -------------------------------------------------------------
+echo "\nTesting National Pension System (NPS) Engine Parity (PHP vs TypeScript)...\n";
+$npsCases = [
+    ['monthly_contribution' => 5000.0, 'current_age' => 30, 'retirement_age' => 60, 'expected_return_rate' => 10.0, 'annuity_percent' => 40.0, 'annuity_return_rate' => 6.0],
+    ['monthly_contribution' => 25000.0, 'current_age' => 25, 'retirement_age' => 60, 'expected_return_rate' => 12.0, 'annuity_percent' => 40.0, 'annuity_return_rate' => 6.5],
+    ['monthly_contribution' => 15000.0, 'current_age' => 45, 'retirement_age' => 60, 'expected_return_rate' => 9.0, 'annuity_percent' => 50.0, 'annuity_return_rate' => 6.0],
+    ['monthly_contribution' => 10000.0, 'current_age' => 40, 'retirement_age' => 60, 'expected_return_rate' => 10.0, 'annuity_percent' => 100.0, 'annuity_return_rate' => 6.0],
+    ['monthly_contribution' => 500.0, 'current_age' => 58, 'retirement_age' => 60, 'expected_return_rate' => 5.0, 'annuity_percent' => 40.0, 'annuity_return_rate' => 6.0],
+    ['monthly_contribution' => 5000.0, 'current_age' => 59, 'retirement_age' => 60, 'expected_return_rate' => 10.0, 'annuity_percent' => 40.0, 'annuity_return_rate' => 6.0],
+    ['monthly_contribution' => 50000.0, 'current_age' => 28, 'retirement_age' => 60, 'expected_return_rate' => 15.0, 'annuity_percent' => 40.0, 'annuity_return_rate' => 7.0],
+    ['monthly_contribution' => 3000.0, 'current_age' => 22, 'retirement_age' => 60, 'expected_return_rate' => 8.0, 'annuity_percent' => 40.0, 'annuity_return_rate' => 5.5],
+];
+
+foreach ($npsCases as $idx => $nParams) {
+    echo "NPS Parity Case " . ($idx + 1) . ": ";
+    $phpRes = \Core\Math\NpsEngine::calculate(
+        $nParams['monthly_contribution'],
+        $nParams['current_age'],
+        $nParams['retirement_age'],
+        $nParams['expected_return_rate'],
+        $nParams['annuity_percent'],
+        $nParams['annuity_return_rate']
+    );
+
+    $cmd = "node tests/run_js_calc.js " . escapeshellarg(json_encode([
+        'action' => 'nps',
+        'monthly_contribution' => $nParams['monthly_contribution'],
+        'current_age' => $nParams['current_age'],
+        'retirement_age' => $nParams['retirement_age'],
+        'expected_return_rate' => $nParams['expected_return_rate'],
+        'annuity_percent' => $nParams['annuity_percent'],
+        'annuity_return_rate' => $nParams['annuity_return_rate'],
+    ]));
+    $jsRes = json_decode((string)shell_exec($cmd), true);
+
+    $fields = ['total_invested', 'total_interest', 'total_corpus', 'lump_sum_amount', 'annuity_amount', 'monthly_pension'];
+    $mismatch = false;
+    foreach ($fields as $f) {
+        if (abs((float)$phpRes[$f] - (float)$jsRes[$f]) > 1.0) {
+            echo "FAIL: Field {$f} mismatch. PHP: {$phpRes[$f]}, JS: {$jsRes[$f]}\n";
+            $failed = true;
+            $mismatch = true;
+            break;
+        }
+    }
+    if (!$mismatch) {
+        echo "PASS\n";
+    }
+}
+
 echo "\n";
 if ($failed) {
     echo "=== CALCULATOR ENGINE PARITY TESTS FAILED ===\n";

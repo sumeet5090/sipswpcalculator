@@ -136,6 +136,17 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertArrayHasKey('gratuity_salary', $inputs->toTemplateData());
     }
 
+    public function testCreateNpsStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('nps-calculator');
+        $this->assertInstanceOf(\Core\Strategies\NpsStrategy::class, $strategy);
+        $this->assertSame('nps', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\NpsInputs::class, $inputs);
+        $this->assertArrayHasKey('nps_monthly_contribution', $inputs->toTemplateData());
+    }
+
     public function testCreateStepUpSipStrategyFromContainer(): void
     {
         $strategy = $this->factory->create('sip-step-up-calculator');
@@ -173,6 +184,9 @@ class StrategyFactoryContainerTest extends TestCase
 
         $targetCorpus = $this->factory->create('my-first-crore-calculator');
         $this->assertSame('components/benchmarks/target-corpus.twig', $targetCorpus->getBenchmarkTemplate());
+
+        $nps = $this->factory->create('nps-calculator');
+        $this->assertSame('components/benchmarks/nps-schedule.twig', $nps->getBenchmarkTemplate());
     }
 
     public function testCreate1CroreSwpStrategyFromContainer(): void
