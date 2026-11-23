@@ -1,11 +1,34 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-22*
+*Last Updated: 2026-11-23*
 
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Option 1 — Hub-and-Spoke Navigation Refactor & In-Flow Contextual Bridges Implemented — Refactored primary navigation from flat 27-item lists into a structured 2-tier Hub-and-Spoke architecture, avoiding PageRank dilution, introducing client-side reactive in-flow milestone bridges, and structuring footer clusters so zero routes are orphaned; verified 100% Green across quality gates.
+- **Current Milestone:** Wave 3 Surgical Expansion (Option 2) Implemented & Verified — Deployed two new specialized calculator hubs (`/75-lakh-swp-calculator` and `/sip-1-lakh-per-month`), bringing the total platform calculator count to 29. Fully integrated into the Hub-and-Spoke IA, Mega-Menu, Command Palette, Contextual In-Flow Bridges, and unit test suites; verified 100% Green across all quality gates (868 tests, 14,548 assertions).
+- **Implemented Features & Fixes (2026-11-23 Session 47 - Wave 3 Surgical Expansion):**
+  - **`content/calculators/75-lakh-swp-calculator.md`:**
+    - Title: `"75 Lakh SWP Calculator — Monthly Pension (with Free Excel)"` (60 bytes).
+    - Frontmatter: Pre-calibrated to ₹75 Lakh corpus, default withdrawal ₹48,750/mo (7.80% annualized benchmark), 20-year horizon, 8% expected return.
+    - Content: BLUF direct answer, 10–30y longevity benchmark matrix, 5% inflation step-up survival table, Bank FD vs SWP tax comparison (saving ₹1.25L+/year under Section 112A), 3-bucket asset allocation model.
+  - **`content/calculators/sip-1-lakh-per-month.md`:**
+    - Title: `"₹1 Lakh Monthly SIP Calculator (with 10% Step-Up & Free Excel)"` (63 bytes).
+    - Meta Description: `"See how a ₹1 Lakh monthly SIP in mutual funds compounds into ₹2.32 Cr flat (or ₹3.37 Cr with 10% step-up) in 10 yrs & ₹8.68 Cr in 15 yrs. Free Excel download."` (154 bytes).
+    - Frontmatter & Engine Parity: Pre-calibrated to ₹1,00,000 monthly SIP, 10y, 12% return, 10% annual step-up. Exact engine figures: Flat 10y = ₹2.32 Cr (₹1.20 Cr inv), 15y = ₹5.05 Cr, 20y = ₹9.99 Cr; 10% Step-Up 10y = ₹3.37 Cr (₹1.91 Cr inv), 15y = ₹8.68 Cr (₹3.81 Cr inv), 20y = ₹19.89 Cr (₹6.87 Cr inv), 25y = ₹42.76 Cr.
+    - Content: BLUF direct answer, 5–25y wealth growth matrix, 10% annual step-up schedule (Year 1 to Year 10), 4-fund HNI asset allocation blueprint (Large/Flexi 40%, Mid/Small 35%, International/Gold 15%, Arbitrage/Liquid 10%), Budget 2024 Section 112A tax rules.
+  - **Hub-and-Spoke IA & Platform Integration:**
+    - Registered routes in `src/Core/Config/routes.php` and `src/Core/Strategies/StrategyFactory.php`.
+    - Added both hubs to Mega-Menu dropdown (`src/Views/layouts/header.twig`) and Quick Switcher secondary dock items (`src/Views/components/calculator-dock.twig`).
+    - Added to footer clusters (`src/Views/layouts/footer.twig`: `/sip-1-lakh-per-month` in Monthly SIPs, `/75-lakh-swp-calculator` in SWP Pensions).
+    - Registered items in `assets/js/calculators/controllers/CommandPaletteController.ts` (`calc-75l-swp`, `calc-sip-1-lakh`).
+    - Registered thresholds in `assets/js/calculators/controllers/ContextualBridgeController.ts` (₹1L SIP threshold, ₹75L corpus threshold, ₹48,750 SWP withdrawal threshold).
+    - Added cross-links in `content/calculator_links.json`, 6 tagged FAQs in `content/faqs.json`, and documented in `llms.txt` and `llms-full.txt`.
+    - Added unit test coverage in `tests/Unit/StrategyFactoryContainerTest.php` (`testCreate75LakhSwpStrategyFromContainer` and `testCreate1LakhSipStrategyFromContainer`).
+  - **Verification & Parity:**
+    - `npm run typecheck && npm run build`: 100% clean TypeScript build.
+    - `php tests/parity_check.php`: 71/71 mathematical parity tests PASS.
+    - `composer check-all`: **868 tests, 14,548 assertions, 100% PASS; PHPStan Level Max (0 errors); PSR-12 clean**.
+    - `vendor/bin/phpunit tests/Integration/SeoMetadataValidatorTest.php`: 47 tests, 3,269 assertions PASS.
 - **Implemented Features & Fixes (2026-11-22 Session 46 - Hub-and-Spoke Navigation Refactor):**
   - **Tier-1 Clustered Header Dropdown (`src/Views/layouts/header.twig`):**
     - Refactored flat 27-item dropdown into a structured 3-column Mega-Menu:

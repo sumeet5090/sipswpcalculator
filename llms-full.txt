@@ -106,7 +106,7 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 15. **₹5,000 & ₹10,000 Monthly SIP Blueprints (`https://sipswpcalculator.com/sip-5000-per-month` & `/sip-10000-per-month`)**
     - Structured milestones, asset allocation strategies, and multi-decade wealth roadmaps.
 
-16. **1 Crore, 50 Lakh, 25 Lakh & 2 Crore SWP Calculators (`https://sipswpcalculator.com/1-crore-swp-calculator`, `/50-lakh-swp-calculator`, `/25-lakh-swp-calculator` & `/2-crore-swp-calculator`)**
+16. **1 Crore, 75 Lakh, 50 Lakh, 25 Lakh & 2 Crore SWP Calculators (`https://sipswpcalculator.com/1-crore-swp-calculator`, `/75-lakh-swp-calculator`, `/50-lakh-swp-calculator`, `/25-lakh-swp-calculator` & `/2-crore-swp-calculator`)**
     - Month-by-month capital longevity, inflation-adjusted step-up withdrawals, and Section 112A tax arbitrage for retirement corpora.
 
 17. **2 Crore SIP Calculator (`https://sipswpcalculator.com/2-crore-sip-calculator`)**
@@ -120,6 +120,9 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 
 20. **3 Crore SIP Calculator (`https://sipswpcalculator.com/3-crore-sip-calculator`)**
     - Reverse-engineered monthly investment and salary-scaled top-ups required to build a ₹3 Crore metro retirement corpus.
+
+21. **₹1 Lakh Monthly SIP Calculator (`https://sipswpcalculator.com/sip-1-lakh-per-month`)**
+    - Ultra-HNI wealth accumulation models, multi-decade compounding schedules (₹2.32 Cr flat / ₹3.37 Cr step-up in 10 yrs), and 4-fund asset allocation blueprints.
 
 ---
 

@@ -602,5 +602,49 @@
             "title": "Retirement Calculator",
             "description": "Plan your dual accumulation and distribution retirement roadmap using proven safe withdrawal rules."
         }
+    ],
+    "75-lakh-swp-calculator": [
+        {
+            "href": "/50-lakh-swp-calculator",
+            "title": "50 Lakh SWP Calculator",
+            "description": "Compare cash flow sustainability and monthly pension payouts from a ₹50 Lakh corpus."
+        },
+        {
+            "href": "/1-crore-swp-calculator",
+            "title": "1 Crore SWP Calculator",
+            "description": "Compare cash flow sustainability and monthly pension payouts from a ₹1 Crore corpus."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Model custom monthly retirement pension withdrawals, inflation hikes, and 2026 LTCG tax savings."
+        },
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Plan your dual accumulation and distribution retirement roadmap using proven safe withdrawal rules."
+        }
+    ],
+    "sip-1-lakh-per-month": [
+        {
+            "href": "/sip-50000-per-month",
+            "title": "₹50,000 Monthly SIP Plan",
+            "description": "Compare wealth compounding milestones between ₹50,000/month and ₹1 Lakh/month SIPs."
+        },
+        {
+            "href": "/2-crore-sip-calculator",
+            "title": "2 Crore SIP Calculator",
+            "description": "See how quickly a ₹1 Lakh monthly SIP achieves a ₹2 Crore wealth target."
+        },
+        {
+            "href": "/3-crore-sip-calculator",
+            "title": "3 Crore SIP Calculator",
+            "description": "Explore timelines and annual step-up compounding to accumulate ₹3 Crores."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Calculator India",
+            "description": "Plan regular systematic monthly withdrawals and retirement income streams from your accumulated corpus."
+        }
     ]
 }

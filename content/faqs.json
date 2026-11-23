@@ -1265,5 +1265,76 @@
         ],
         "q": "What is the optimal portfolio structure for running an SWP on a ₹2 Crore corpus?",
         "a": "Financial planners recommend an institutional 3-bucket structure: Bucket 1 holds ₹40 Lakhs (20%) in Liquid & Arbitrage funds for 3 years of completely market-insulated cash flows; Bucket 2 holds ₹80 Lakhs (40%) in Conservative Hybrid and Multi-Asset Allocation funds generating 8%-9% yields; Bucket 3 holds ₹80 Lakhs (40%) in Nifty 50 and Flexi-Cap funds to ensure multi-decade capital growth."
+    },
+    {
+        "id": "swp-75l-monthly-payout",
+        "category": "retirement",
+        "tags": [
+            "75-lakh-swp-calculator",
+            "swp-calculator",
+            "retirement-calculator",
+            "faq-page"
+        ],
+        "q": "How much monthly pension can I safely withdraw from a ₹75 Lakh mutual fund corpus?",
+        "a": "At an expected conservative 8.0% return in a hybrid portfolio, a ₹75 Lakh corpus generates ₹45,000 to ₹50,000 per month (₹5.40L to ₹6.00L/year) indefinitely without touching your principal. If adjusting for inflation with a 5% annual step-up, a starting withdrawal of ₹30,000/month comfortably survives 30+ years, delivering ₹2.39 Crores in cumulative cash payouts while leaving ₹66.6 Lakhs in residual capital."
+    },
+    {
+        "id": "swp-75l-vs-fd",
+        "category": "taxation",
+        "tags": [
+            "75-lakh-swp-calculator",
+            "swp-calculator",
+            "faq-page"
+        ],
+        "q": "Why is an SWP on ₹75 Lakh better than a Bank Fixed Deposit for regular pension?",
+        "a": "A Bank FD pays ~7% interest (₹5.25L/yr), which is 100% taxable at your slab rate. At a 30% tax bracket, taxes consume ₹1.64 Lakhs annually, reducing net income to ₹30,100/month. An SWP generates 8% blended returns (₹5.85L/yr at ₹48,750/mo) and taxes only the capital gains component under Section 112A (12.5% above ₹1.25L exemption), leaving ~₹46,800/month net in hand—delivering +₹16,700/month (+55.5%) more take-home cash."
+    },
+    {
+        "id": "swp-75l-bucket-strategy",
+        "category": "strategies",
+        "tags": [
+            "75-lakh-swp-calculator",
+            "strategies",
+            "retirement-calculator",
+            "faq-page"
+        ],
+        "q": "What is the recommended asset allocation for running an SWP from a ₹75 Lakh corpus?",
+        "a": "Planners recommend a 3-bucket strategy: Bucket 1 allocates ₹15 Lakhs (20%) in Liquid and Arbitrage funds for 3 years of cash outflows shielded from stock market volatility; Bucket 2 places ₹30 Lakhs (40%) in Conservative Hybrid and Multi-Asset Allocation funds generating steady 8%–9% yields; Bucket 3 invests ₹30 Lakhs (40%) in Flexi-Cap and Large-Cap Index funds to compound long-term capital and outpace inflation."
+    },
+    {
+        "id": "sip-1l-returns-10-years",
+        "category": "growth",
+        "tags": [
+            "sip-1-lakh-per-month",
+            "sip-calculator",
+            "sip-step-up-calculator",
+            "faq-page"
+        ],
+        "q": "What will be the value of a ₹1 Lakh monthly SIP after 10 years in mutual funds?",
+        "a": "At a standard 12% annualized return, a ₹1 Lakh monthly SIP compounds into ₹2.32 Crores on a flat contribution schedule (₹1.20 Crores invested + ₹1.12 Crores capital gains). If you add a 10% annual step-up to match salary raises, your corpus reaches ₹3.37 Crores (₹1.91 Crores invested + ₹1.46 Crores capital gains)—an additional ₹1.05 Crores in compounding gains."
+    },
+    {
+        "id": "sip-1l-crore-milestones",
+        "category": "milestones",
+        "tags": [
+            "sip-1-lakh-per-month",
+            "sip-calculator",
+            "my-first-crore-calculator",
+            "faq-page"
+        ],
+        "q": "How quickly can a ₹1 Lakh monthly SIP reach ₹1 Crore and ₹5 Crores?",
+        "a": "At 12% p.a. returns, a ₹1 Lakh/month SIP reaches ₹1 Crore in just under 5.5 years (5 years produces ₹82.49 Lakhs flat or ₹98.46 Lakhs with 10% step-up). Reaching ₹5 Crores takes approximately 15 years on a flat schedule (₹5.05 Cr) or under 12.5 years with a 10% annual step-up (which reaches ₹8.68 Cr by Year 15)."
+    },
+    {
+        "id": "sip-1l-portfolio-allocation",
+        "category": "strategies",
+        "tags": [
+            "sip-1-lakh-per-month",
+            "strategies",
+            "sip-calculator",
+            "faq-page"
+        ],
+        "q": "How should I distribute a ₹1 Lakh monthly SIP across mutual fund schemes?",
+        "a": "To avoid over-diversification and stock overlap, distribute across 4 core funds: ₹40,000 (40%) in Nifty 50 Index or Flexi-Cap funds for core large-cap stability; ₹35,000 (35%) split between Mid-Cap and Small-Cap funds for alpha generation; ₹15,000 (15%) in International (US Equity) or Gold ETFs for geographical and currency hedging; and ₹10,000 (10%) in Arbitrage or Liquid funds for tactical rebalancing."
     }
 ]

@@ -62,6 +62,14 @@ export const COMMAND_ITEMS: CommandItem[] = [
         icon: '🏦'
     },
     {
+        id: 'calc-75l-swp',
+        title: '75 Lakh SWP Calculator',
+        description: 'Model monthly pension payouts, longevity & tax savings from a ₹75 Lakh corpus.',
+        category: 'Calculator',
+        url: '/75-lakh-swp-calculator',
+        icon: '🛡️'
+    },
+    {
         id: 'calc-lumpsum',
         title: 'Lumpsum Calculator',
         description: 'Calculate wealth growth on one-time mutual fund investments.',
@@ -172,6 +180,14 @@ export const COMMAND_ITEMS: CommandItem[] = [
         category: 'Calculator',
         url: '/sip-50000-per-month',
         icon: '🚀'
+    },
+    {
+        id: 'calc-sip-1-lakh',
+        title: '₹1 Lakh Monthly SIP Calculator',
+        description: 'Ultra-HNI wealth acceleration, multi-decade compounding & step-up with ₹1 Lakh/month.',
+        category: 'Calculator',
+        url: '/sip-1-lakh-per-month',
+        icon: '💎'
     },
     {
         id: 'calc-ci',

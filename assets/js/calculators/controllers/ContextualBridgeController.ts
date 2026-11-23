@@ -25,12 +25,14 @@ export class ContextualBridgeController {
         { threshold: 15000, url: '/sip-15000-per-month', label: 'Dedicated ₹15k/mo Mid-Career Blueprint', action: 'Explore' },
         { threshold: 20000, url: '/sip-20000-per-month', label: 'Dedicated ₹20k/mo Dual-Income Blueprint', action: 'Explore' },
         { threshold: 25000, url: '/sip-25000-per-month', label: 'Dedicated ₹25k/mo IT/Corporate Blueprint', action: 'Explore' },
-        { threshold: 50000, url: '/sip-50000-per-month', label: 'Dedicated ₹50k/mo Wealth Accelerator', action: 'Explore' }
+        { threshold: 50000, url: '/sip-50000-per-month', label: 'Dedicated ₹50k/mo Wealth Accelerator', action: 'Explore' },
+        { threshold: 100000, url: '/sip-1-lakh-per-month', label: 'Dedicated ₹1L/mo Ultra-HNI Blueprint', action: 'Explore' }
     ];
 
     private static readonly CORPUS_MILESTONES: MilestoneBridgeItem[] = [
         { threshold: 2500000, url: '/25-lakh-swp-calculator', label: 'Dedicated ₹25 Lakh SWP Pension Guide', action: 'View Guide' },
         { threshold: 5000000, url: '/50-lakh-swp-calculator', label: 'Dedicated ₹50 Lakh Tier-2 Pension Blueprint', action: 'View Guide' },
+        { threshold: 7500000, url: '/75-lakh-swp-calculator', label: 'Dedicated ₹75 Lakh SWP Pension Guide', action: 'View Guide' },
         { threshold: 10000000, url: '/1-crore-swp-calculator', label: 'Dedicated ₹1 Crore Executive Pension Guide', action: 'View Guide' },
         { threshold: 20000000, url: '/2-crore-swp-calculator', label: 'Dedicated ₹2 Crore HNI Distribution Guide', action: 'View Guide' }
     ];
@@ -101,6 +103,9 @@ export class ContextualBridgeController {
         } else if (Math.abs(currentWithdrawal - 32500) <= 500) {
             matchUrl = '/50-lakh-swp-calculator';
             matchLabel = 'Dedicated ₹50 Lakh Tier-2 Pension Blueprint (₹32,500/mo)';
+        } else if (Math.abs(currentWithdrawal - 48750) <= 750) {
+            matchUrl = '/75-lakh-swp-calculator';
+            matchLabel = 'Dedicated ₹75 Lakh SWP Pension Guide (₹48,750/mo)';
         } else if (Math.abs(currentWithdrawal - 65000) <= 1000) {
             matchUrl = '/1-crore-swp-calculator';
             matchLabel = 'Dedicated ₹1 Crore Executive Pension Guide (₹65,000/mo)';

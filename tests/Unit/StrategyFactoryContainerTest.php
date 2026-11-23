@@ -268,6 +268,28 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertSame(130000.0, $inputs->getSwpWithdrawal());
     }
 
+    public function testCreate75LakhSwpStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('75-lakh-swp-calculator');
+        $this->assertInstanceOf(SwpStrategy::class, $strategy);
+        $this->assertSame('swp', $strategy->getType());
+        $this->assertSame(7500000.0, $strategy->getDefaultCorpus());
+        $this->assertSame(48750.0, $strategy->getDefaultWithdrawal());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(7500000.0, $inputs->getStartingCorpus());
+        $this->assertSame(48750.0, $inputs->getSwpWithdrawal());
+    }
+
+    public function testCreate1LakhSipStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('sip-1-lakh-per-month');
+        $this->assertInstanceOf(SipStrategy::class, $strategy);
+        $this->assertSame('sip', $strategy->getType());
+        $this->assertSame(100000.0, $strategy->getDefaultSip());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertSame(100000.0, $inputs->getSip());
+    }
+
     public function testCreateThrowsForUnmappedSlug(): void
     {
         $this->expectException(\DomainException::class);

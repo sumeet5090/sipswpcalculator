@@ -24,10 +24,12 @@
 - [1 Crore SWP Calculator](https://sipswpcalculator.com/1-crore-swp-calculator): Calculate monthly pension payouts, capital longevity & tax savings from a ₹1 Crore corpus
 - [50 Lakh SWP Calculator](https://sipswpcalculator.com/50-lakh-swp-calculator): Calculate monthly pension payouts, capital longevity & tax savings from a ₹50 Lakh corpus
 - [25 Lakh SWP Calculator](https://sipswpcalculator.com/25-lakh-swp-calculator): Calculate monthly pension payouts, capital longevity & tax savings from a ₹25 Lakh corpus
+- [75 Lakh SWP Calculator](https://sipswpcalculator.com/75-lakh-swp-calculator): Calculate monthly pension payouts, capital longevity & tax savings from a ₹75 Lakh corpus
 - [2 Crore SWP Calculator](https://sipswpcalculator.com/2-crore-swp-calculator): Calculate monthly pension payouts, capital longevity & tax savings from a ₹2 Crore corpus
 - [2 Crore SIP Calculator](https://sipswpcalculator.com/2-crore-sip-calculator): Reverse-engineer required monthly SIP to reach ₹2 Crores with step-up compounding
 - [₹25,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-25000-per-month): Multi-decade ₹25,000 monthly SIP returns, 10% annual step-up compounding, and HNI wealth roadmap
 - [₹50,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-50000-per-month): Multi-decade ₹50,000 monthly SIP returns, 10% annual step-up compounding, and accelerated FIRE path
+- [₹1 Lakh Monthly SIP Plan](https://sipswpcalculator.com/sip-1-lakh-per-month): Multi-decade ₹1 Lakh monthly SIP returns, 10% annual step-up compounding, and ultra-HNI wealth roadmap
 - [₹15,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-15000-per-month): Multi-decade ₹15,000 monthly SIP returns, 10% annual step-up compounding, and mid-career milestone roadmap
 - [₹20,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-20000-per-month): Multi-decade ₹20,000 monthly SIP returns, 10% annual step-up compounding, and urban wealth accelerator
 - [3 Crore SIP Calculator](https://sipswpcalculator.com/3-crore-sip-calculator): Reverse-engineer required monthly SIP to reach ₹3 Crores with step-up compounding
