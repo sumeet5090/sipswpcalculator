@@ -55,6 +55,7 @@ export class PdfExportController {
         const pdfModal = this.dom.getElement<HTMLDialogElement>('pdfModal');
         const openPdfBtn = this.dom.getElement('openPdfModalBtn');
         const customizePdfBtn = this.dom.getElement('customizePdfModalBtn');
+        const tableCustomizePdfBtn = this.dom.getElement('tableCustomizePdfModalBtn');
         const closePdfBtn = this.dom.getElement('closePdfModalBtn');
         const closePdfBtnX = this.dom.getElement('closePdfModalBtnX');
         const pdfForm = this.dom.getElement<HTMLFormElement>('pdfForm');
@@ -98,6 +99,11 @@ export class PdfExportController {
         // Optional Customized / Branded PDF Trigger
         if (customizePdfBtn && pdfModal) {
             customizePdfBtn.addEventListener('click', () => {
+                openModalFn(pdfModal);
+            });
+        }
+        if (tableCustomizePdfBtn && pdfModal) {
+            tableCustomizePdfBtn.addEventListener('click', () => {
                 openModalFn(pdfModal);
             });
         }

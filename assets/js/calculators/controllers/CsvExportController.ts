@@ -99,5 +99,13 @@ export class CsvExportController {
                 downloadBtn.innerHTML = origContent;
             }
         });
+
+        const tableBtn = this.dom.getElement<HTMLButtonElement>('tableDownloadCsvBtn');
+        if (tableBtn && downloadBtn) {
+            tableBtn.addEventListener('click', (e: Event) => {
+                e.preventDefault();
+                downloadBtn.click();
+            });
+        }
     }
 }

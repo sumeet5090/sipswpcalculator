@@ -38,10 +38,10 @@ final class YearlyBreakdownTableTest extends TestCase
         $this->assertStringContainsString('id="table-col-audit"', $content);
 
         // Assert dispatch dock buttons
-        $this->assertStringContainsString('id="downloadCsvBtn"', $content);
+        $this->assertStringContainsString('id="tableDownloadCsvBtn"', $content);
         $this->assertStringContainsString('id="openPdfModalBtn"', $content);
         $this->assertStringContainsString('id="shareCalcBtn"', $content);
-        $this->assertStringContainsString('id="customizePdfModalBtn"', $content);
+        $this->assertStringContainsString('id="tableCustomizePdfModalBtn"', $content);
 
         // Assert table container and sticky header
         $this->assertStringContainsString('id="results-table"', $content);

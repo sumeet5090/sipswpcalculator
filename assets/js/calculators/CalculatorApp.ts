@@ -707,6 +707,13 @@ export class CalculatorApp {
             });
         }
 
+        const resetBtn = this.dom.getElement('calculator-reset-btn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                this.resetToDefaults();
+            });
+        }
+
         const savePlanBtn = this.dom.getElement('saveCalculationBtn');
         if (savePlanBtn) {
             savePlanBtn.addEventListener('click', () => {

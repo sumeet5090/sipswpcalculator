@@ -32,6 +32,12 @@ final class ChartCardTest extends TestCase
         $this->assertStringContainsString('id="snapshot-scenario-btn"', $this->chartTwigContent);
         $this->assertStringContainsString('id="open-tax-waterfall-btn"', $this->chartTwigContent);
 
+        // Action Command Strip & Prominent CTAs
+        $this->assertStringContainsString('id="chart-action-strip"', $this->chartTwigContent);
+        $this->assertStringContainsString('id="customizePdfModalBtn"', $this->chartTwigContent);
+        $this->assertStringContainsString('id="downloadCsvBtn"', $this->chartTwigContent);
+        $this->assertStringContainsString('id="calculator-reset-btn"', $this->chartTwigContent);
+
         // Institutional Seal & Active Indicator
         $this->assertStringContainsString('AMFI Aligned', $this->chartTwigContent);
         $this->assertStringContainsString('id="active-lens-indicator"', $this->chartTwigContent);

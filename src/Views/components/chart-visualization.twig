@@ -313,16 +313,6 @@
                         </svg>
                         <span>Share Plan</span>
                     </button>
-                    {% if calculator_type not in ['ppf', 'fd', 'emi', 'inflation', 'cagr', 'compound_interest'] %}
-                    <button type="button" id="snapshot-scenario-btn" 
-                        class="p-1.5 rounded-xl border border-slate-200/80 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 transition-all active:scale-95 cursor-pointer shadow-flat"
-                        title="Snapshot scenario for comparison">
-                        <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                    </button>
-                    {% endif %}
                     {% if calculator_type not in ['emi', 'ppf', 'fd', 'inflation'] %}
                     <button type="button" id="open-tax-waterfall-btn" 
                         class="p-1.5 rounded-xl border border-tax-border bg-tax-surface hover:bg-violet-100 text-tax-emphasis transition-all active:scale-95 cursor-pointer shadow-flat"
@@ -343,6 +333,59 @@
                 </div>
             </div>
         </header>
+
+        <!-- ========================================================================= -->
+        <!-- TIER 1.5: DAYLIGHT ACTION COMMAND STRIP (Branded PDF · CSV · Snapshot · Reset) -->
+        <!-- ========================================================================= -->
+        <div id="chart-action-strip" class="flex flex-wrap items-center justify-between gap-2 p-2 sm:p-2.5 rounded-2xl bg-slate-50/90 border border-slate-200/80 shadow-subtle">
+            <!-- Left: Primary Dispatch Actions -->
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                <!-- 1. Branded Advisor PDF Proposal Trigger -->
+                <button type="button" id="customizePdfModalBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="pdfModal"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-ui-xs font-extrabold shadow-card hover:shadow-card-hover transition-all active:scale-95 cursor-pointer"
+                    title="Customize with Client Name, Advisor Logo & Branding to download institutional PDF proposal">
+                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4 4 4 0 014-4c1.1 0 2.1.4 2.8 1.1L12 16l2.2-2.2c.7-.7 1.7-1.1 2.8-1.1a4 4 0 014 4 4 4 0 01-4 4H7z"/>
+                    </svg>
+                    <span>Branded PDF</span>
+                </button>
+
+                <!-- 2. CSV / Excel Spreadsheet Download Trigger -->
+                <button type="submit" id="downloadCsvBtn" name="action" value="download_csv" form="calculator-form" formaction="/download-csv"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 hover:text-slate-950 border border-slate-300/90 hover:border-slate-400 text-ui-xs font-bold transition-all shadow-flat hover:shadow-card active:scale-95 cursor-pointer"
+                    title="Export complete yearly cashflow schedule to spreadsheet (.csv)">
+                    <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    </svg>
+                    <span>CSV / Excel</span>
+                </button>
+
+                <!-- 3. Scenario Snapshot Comparison Trigger -->
+                {% if calculator_type not in ['ppf', 'fd', 'emi', 'inflation', 'cagr', 'compound_interest'] %}
+                <button type="button" id="snapshot-scenario-btn"
+                    class="inline-flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200/90 hover:border-slate-300 text-ui-xs font-semibold transition-all shadow-flat active:scale-95 cursor-pointer"
+                    title="Snapshot scenario for comparison">
+                    <svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <span>Snapshot</span>
+                </button>
+                {% endif %}
+            </div>
+
+            <!-- Right: Quick Reset Trigger -->
+            <div class="flex items-center gap-1.5">
+                <button type="button" id="calculator-reset-btn"
+                    class="inline-flex items-center gap-1 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-white hover:bg-rose-50 text-slate-600 hover:text-rose-700 border border-slate-200/90 hover:border-rose-200 text-ui-xs font-semibold transition-all shadow-flat active:scale-95 cursor-pointer group"
+                    title="Reset all inputs to factory benchmark defaults (Shortcut: Alt+R)">
+                    <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-rose-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    <span>Reset</span>
+                </button>
+            </div>
+        </div>
 
         <!-- ========================================================================= -->
         <!-- TIER 2: REAL-TIME TIMELINE INSPECTION HUD DOCK                            -->

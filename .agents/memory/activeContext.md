@@ -5,7 +5,28 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Option 3 — Advisor & White-Label PDF Export Engine Implemented & Verified — Upgraded the platform's PDF export engine into an institutional-grade white-label client proposal generator for MFDs, RIAs, and financial advisors. Extracted DRY modal component (`pdf-modal.twig`), implemented `localStorage['advisor_profile_v1']` practice persistence, live proposal header preview, instant logo thumbnail preview, and Dompdf executive styling (`advisor-notes.twig`, ARN/RIA registration badges); verified 100% Green across quality gates (872 tests, 14,576 assertions).
+- **Current Milestone:** KPI & Chart Header Action Strip Refactor Implemented & Verified — Promoted prominent export and reset actions directly into the KPI / Chart zone (`src/Views/components/chart-visualization.twig`) right above the chart canvas and interactive timeline HUD; eliminated duplicate DOM IDs in `yearly-breakdown-table.twig` with seamless delegation; verified 100% Green across quality gates (872 tests, 14,580 assertions).
+- **Implemented Features & Fixes (2026-11-23 Session 49 - KPI & Chart Action Strip Refactor):**
+  - **Prominent Daylight Action Command Strip (`src/Views/components/chart-visualization.twig`):**
+    - Added `#chart-action-strip` right inside `#chart-card`, positioned directly between `<header>` and `#chart-inspection-hud` (above the chart canvas in normal document flow, avoiding any overlay or chart occlusion).
+    - Exposed quick 1-click access to:
+      - **Branded PDF** (`#customizePdfModalBtn`): Emerald/teal gradient pill trigger with modal dialog controls.
+      - **CSV / Excel** (`#downloadCsvBtn`): Clean frosted white button card with spreadsheet icon and direct form action.
+      - **Save Snapshot** (`#snapshot-scenario-btn`): Light mode button card triggering immediate scenario snapshot diffing.
+      - **Reset to Defaults** (`#calculator-reset-btn`): Frosted white card with rose hover feedback calling `this.resetToDefaults()`.
+  - **Zero Duplicate DOM IDs & Clean Delegation (`src/Views/components/yearly-breakdown-table.twig`):**
+    - Renamed ledger dropdown buttons to `#tableDownloadCsvBtn` and `#tableCustomizePdfModalBtn`.
+    - Wired click delegation from `#tableDownloadCsvBtn` to `#downloadCsvBtn` and from `#tableCustomizePdfModalBtn` to `#customizePdfModalBtn`.
+  - **TypeScript Event Architecture:**
+    - Updated `assets/js/calculators/CalculatorApp.ts` to bind `#calculator-reset-btn` to `this.resetToDefaults()`.
+    - Updated `assets/js/calculators/controllers/PdfExportController.ts` to bind `#tableCustomizePdfModalBtn` in addition to `#customizePdfModalBtn`.
+    - Updated `assets/js/calculators/controllers/CsvExportController.ts` to bind `#tableDownloadCsvBtn` in addition to `#downloadCsvBtn`.
+  - **Quality Gates & Test Synchronization:**
+    - Updated `tests/Unit/ChartCardTest.php` to assert `#chart-action-strip`, `#customizePdfModalBtn`, `#downloadCsvBtn`, and `#calculator-reset-btn`.
+    - Updated `tests/Unit/YearlyBreakdownTableTest.php` to assert `#tableDownloadCsvBtn` and `#tableCustomizePdfModalBtn`.
+    - `npm run typecheck && npm run build`: 100% clean TypeScript build.
+    - `php tests/parity_check.php`: 71/71 mathematical parity tests PASS.
+    - `composer check-all`: **872 tests, 14,580 assertions, 100% PASS; PHPStan Level Max (0 errors); PSR-12 clean**.
 - **Implemented Features & Fixes (2026-11-23 Session 48 - Option 3 White-Label Proposal Engine):**
   - **White-Label Practice Profile & Credentials:**
     - Added dedicated fields for Advisor Name, Advisory Firm / Company Name, AMFI ARN / SEBI RIA Registration Number, Contact Info (Phone/WhatsApp/Email), and Custom Compliance Notes.
