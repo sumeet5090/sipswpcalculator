@@ -13,7 +13,8 @@ import {
     EmiDriver,
     InflationDriver,
     PpfDriver,
-    FdDriver
+    FdDriver,
+    GratuityDriver
 } from '../drivers/index.ts';
 
 export class SpecializedCalculatorController {
@@ -36,7 +37,8 @@ export class SpecializedCalculatorController {
         emi: () => new EmiDriver(),
         inflation: () => new InflationDriver(),
         ppf: () => new PpfDriver(),
-        fd: () => new FdDriver()
+        fd: () => new FdDriver(),
+        gratuity: () => new GratuityDriver()
     };
 
     constructor(

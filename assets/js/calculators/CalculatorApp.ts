@@ -273,7 +273,7 @@ export class CalculatorApp {
         const mode = appEl?.dataset?.mode ?? 'combo';
         const isSwpMode = (mode === 'swp');
         const isLumpsumMode = (mode === 'lumpsum');
-        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
+        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd', 'gratuity'];
 
         if (specializedModes.includes(mode)) {
             return {
@@ -346,7 +346,7 @@ export class CalculatorApp {
     getExportPayload(): Record<string, string | number | boolean> {
         const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
         const mode = appEl?.dataset?.mode ?? 'combo';
-        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
+        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd', 'gratuity'];
 
         const payload: Record<string, string | number | boolean> = {
             calculator_type: mode,
@@ -602,7 +602,7 @@ export class CalculatorApp {
     init(): void {
         const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
         const mode = appEl?.dataset?.mode || 'combo';
-        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
+        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd', 'gratuity'];
 
         // Bind view switcher (line/donut) and benchmark chips across all calculators
         this.chartManager.initControls();

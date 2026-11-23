@@ -33,6 +33,7 @@
 - [₹15,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-15000-per-month): Multi-decade ₹15,000 monthly SIP returns, 10% annual step-up compounding, and mid-career milestone roadmap
 - [₹20,000 Monthly SIP Plan](https://sipswpcalculator.com/sip-20000-per-month): Multi-decade ₹20,000 monthly SIP returns, 10% annual step-up compounding, and urban wealth accelerator
 - [3 Crore SIP Calculator](https://sipswpcalculator.com/3-crore-sip-calculator): Reverse-engineer required monthly SIP to reach ₹3 Crores with step-up compounding
+- [Gratuity Calculator](https://sipswpcalculator.com/gratuity-calculator): Statutory gratuity payout calculation under Payment of Gratuity Act 1972 & Section 10(10) ₹20 Lakh tax exemption
 
 ## Core Features & Mechanics
 - All financial calculations execute client-side in the browser with zero latency and zero server roundtrips

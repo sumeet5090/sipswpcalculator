@@ -22,6 +22,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | `/inflation-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/inflation-fields.twig` | `Core\Strategies\InflationStrategy`<br/>`drivers/InflationDriver.ts` | `engines/InflationEngine.ts` | `inflation_*` |
 | `/ppf-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/ppf-fields.twig` | `Core\Strategies\PpfStrategy`<br/>`drivers/PpfDriver.ts` | `engines/PpfEngine.ts` | `ppf_*` |
 | `/fd-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/fd-fields.twig` | `Core\Strategies\FdStrategy`<br/>`drivers/FdDriver.ts` | `engines/FdEngine.ts` | `fd_*` |
+| `/gratuity-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/gratuity-fields.twig` | `Core\Strategies\GratuityStrategy`<br/>`drivers/GratuityDriver.ts` | `engines/GratuityEngine.ts`<br/>`Core\Math\GratuityEngine.php` | `gratuity_*` |
 | `/embed/{slug}` | `Controllers\RenderEmbedAction` | `calculators/embed.twig` | `CalculatorApp.ts` | `MathEngine.ts` | Embedded config |
 
 ---

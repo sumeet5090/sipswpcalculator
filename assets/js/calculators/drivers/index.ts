@@ -5,3 +5,4 @@ export { EmiDriver } from './EmiDriver.ts';
 export { InflationDriver } from './InflationDriver.ts';
 export { PpfDriver } from './PpfDriver.ts';
 export { FdDriver } from './FdDriver.ts';
+export { GratuityDriver } from './GratuityDriver.ts';

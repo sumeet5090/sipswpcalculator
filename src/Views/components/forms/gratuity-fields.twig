@@ -1,0 +1,99 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+
+<!-- Hidden legacy fields to prevent JS errors -->
+<input type="hidden" id="sip" name="sip" value="0">
+<input type="hidden" id="stepup" name="stepup" value="0">
+<input type="hidden" id="lumpsum" name="lumpsum" value="0">
+
+<div class="space-y-3">
+    <!-- Last Drawn Monthly Salary (Basic + DA) -->
+    {{ inputs.renderInputRangePair({
+        'id': 'gratuity_salary',
+        'label': 'Last Drawn Monthly Salary (Basic + DA)',
+        'tooltip': 'Your last drawn Basic Salary plus Dearness Allowance (DA). Exclude HRA, travel, performance bonus, and special allowances.',
+        'min': 5000,
+        'max': 1000000,
+        'slider_max': 300000,
+        'step': 1000,
+        'value': 50000,
+        'prefix': '₹',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '₹25k', 'value': 25000},
+            {'label': '₹50k (Avg)', 'value': 50000},
+            {'label': '₹75k', 'value': 75000},
+            {'label': '₹1L', 'value': 100000},
+            {'label': '₹1.5L', 'value': 150000}
+        ]
+    }) }}
+
+    <!-- Completed Years of Service -->
+    {{ inputs.renderInputRangePair({
+        'id': 'gratuity_years',
+        'label': 'Completed Years of Service',
+        'tooltip': 'Continuous tenure served with your current employer. Minimum 5 years required for statutory vesting under Section 4(1).',
+        'min': 1,
+        'max': 40,
+        'slider_max': 35,
+        'step': 1,
+        'value': 5,
+        'suffix': 'Yrs',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '5Y (Vesting Cliff)', 'value': 5},
+            {'label': '10Y', 'value': 10},
+            {'label': '15Y', 'value': 15},
+            {'label': '20Y', 'value': 20},
+            {'label': '25Y', 'value': 25}
+        ]
+    }) }}
+
+    <!-- Additional Months in Final Year -->
+    {{ inputs.renderInputRangePair({
+        'id': 'gratuity_months',
+        'label': 'Additional Months (Final Year)',
+        'tooltip': 'Under the Gratuity Act, service exceeding 6 months (>6M) in your final year is rounded UP to the next full year.',
+        'min': 0,
+        'max': 11,
+        'slider_max': 11,
+        'step': 1,
+        'value': 0,
+        'suffix': 'Mos',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '0M (Exact)', 'value': 0},
+            {'label': '3M', 'value': 3},
+            {'label': '6M (Threshold)', 'value': 6},
+            {'label': '7M (>6M Rounds Up)', 'value': 7},
+            {'label': '9M', 'value': 9}
+        ]
+    }) }}
+
+    <!-- Statutory Act Coverage Selector -->
+    <div class="group/field relative rounded-2xl bg-white/95 border border-slate-200/90 hover:border-slate-300 p-2.5 sm:p-3 transition-all duration-200 shadow-subtle hover:shadow-card">
+        <label class="block text-ui-xs font-bold tracking-tight text-slate-800 select-none mb-2">
+            Employer Gratuity Act Coverage
+        </label>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" role="radiogroup" aria-label="Gratuity Act Coverage">
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:border-emerald-500/80 bg-slate-50 hover:bg-emerald-50/40 cursor-pointer transition-all">
+                <input type="radio" name="gratuity_covered" value="1" checked
+                    class="w-4 h-4 text-emerald-600 focus:ring-emerald-500 border-slate-300 accent-emerald-600">
+                <div class="text-left">
+                    <span class="block text-ui-xs font-bold text-slate-800">Covered under Act</span>
+                    <span class="block text-micro text-slate-500">15/26 formula • &gt;6M rounds up</span>
+                </div>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:border-emerald-500/80 bg-slate-50 hover:bg-emerald-50/40 cursor-pointer transition-all">
+                <input type="radio" name="gratuity_covered" value="0"
+                    class="w-4 h-4 text-emerald-600 focus:ring-emerald-500 border-slate-300 accent-emerald-600">
+                <div class="text-left">
+                    <span class="block text-ui-xs font-bold text-slate-800">Not Covered</span>
+                    <span class="block text-micro text-slate-500">15/30 formula • Completed yrs only</span>
+                </div>
+            </label>
+        </div>
+        <p class="text-micro text-slate-500 mt-2 font-medium">
+            Most private companies with 10+ employees are legally covered under the Payment of Gratuity Act, 1972.
+        </p>
+    </div>
+</div>

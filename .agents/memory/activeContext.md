@@ -5,7 +5,35 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** KPI & Chart Header Action Strip Refactor Implemented & Verified — Promoted prominent export and reset actions directly into the KPI / Chart zone (`src/Views/components/chart-visualization.twig`) right above the chart canvas and interactive timeline HUD; eliminated duplicate DOM IDs in `yearly-breakdown-table.twig` with seamless delegation; verified 100% Green across quality gates (872 tests, 14,580 assertions).
+- **Current Milestone:** Statutory Gratuity Calculator (`/gratuity-calculator`) & SEO Verification Shipped — Built high-precision statutory gratuity engine in PHP & TypeScript with Payment of Gratuity Act 1972 rules (15/26 formula, >6 month rounding, 5-year vesting cliff, Section 10(10) ₹20 Lakh tax exemption ceiling); benchmark schedule matrix; verified 100% Green across quality gates (884 tests, 14,774 assertions, 79 parity tests, 48 SEO routes); submitted to Bing IndexNow.
+- **Implemented Features & Fixes (2026-11-23 Session 50 - Gratuity Calculator & SEO Verification):**
+  - **IndexNow & GSC Inspection (Immediate Steps):**
+    - Updated `url.txt` and submitted all canonical platform URLs + `/sitemap.xml` via Bing IndexNow MCP tool (`status_code: 200, success: true`).
+    - Queried Google Search Console performance and inspected new Wave 3 URLs (`/75-lakh-swp-calculator` and `/sip-1-lakh-per-month`).
+    - Enhanced all 5 SWP milestone guides (`₹25L`, `₹50L`, `₹75L`, `₹1 Cr`, `₹2 Cr`) with explicit callouts distinguishing flat nominal 7.8% sustainability from 5% inflation-stepped depletion (at Year 17–20) and calibrated 4.8% SWR rule.
+  - **Statutory Gratuity Engine (`GratuityEngine.php` & `GratuityEngine.ts`):**
+    - Statutory formula: $\text{Gratuity} = \frac{15 \times \text{Salary} \times \text{Tenure}}{26}$ (covered under Act) vs $\frac{15 \times \text{Salary} \times \text{Tenure}}{30}$ (not covered).
+    - 6-Month Rounding Rule: Months $> 6$ rounds up to next full year for covered establishments.
+    - 5-Year Vesting Cliff: Service $< 5$ years returns `₹0` (Section 4(1)).
+    - Tax Exemption Ceiling: Models Section 10(10) ₹20,00,000 exemption limit; returns exempt vs taxable breakdown.
+  - **Strategy, Inputs, Driver & Form Components:**
+    - `GratuityInputs`: Encapsulates salary, years, months, covered flag; provides `toTemplateData()`.
+    - `GratuityStrategy`: Strategy for container injection, defaults, benchmark template mapping.
+    - `GratuityDriver`: Client-side reactivity driver implementing `SpecializedDriverInterface`.
+    - `gratuity-fields.twig`: Clean daylight input form for salary, tenure years, months, and covered toggle.
+    - `src/Views/components/benchmarks/gratuity-schedule.twig`: Pre-calculated 5Y to 30Y accrual matrix and Section 10(10) tax status.
+  - **Educational Guide & Platform Integration:**
+    - `content/calculators/gratuity-calculator.md`: Direct answer (BLUF), formula proof, Section 10(10) tax rules, and FAQs.
+    - Registered `/gratuity-calculator` in `routes.php`, `StrategyFactory.php`, `CommandPaletteController.ts`, `calculator_links.json`, `content/faqs.json`, `llms.txt`, `llms-full.txt`, and `url.txt`.
+    - Mega-menu header and footer clusters updated with Gratuity Calculator link.
+  - **Verification & Parity:**
+    - `npm run typecheck && npm run build`: 100% clean TypeScript build.
+    - `php tests/parity_check.php`: 79/79 mathematical parity tests PASS (71 existing + 8 gratuity cases).
+    - `tests/Unit/GratuityEngineTest.php`: 8 unit tests, 43 assertions PASS.
+    - `tests/Unit/StrategyFactoryContainerTest.php`: 27/27 tests PASS.
+    - `tests/Integration/SeoMetadataValidatorTest.php`: 48/48 routes PASS.
+    - `composer check-all`: **884 tests, 14,774 assertions, 100% PASS; PHPStan Level Max (0 errors across 257 files); PSR-12 clean**.
+    - Bing IndexNow: Submitted `https://sipswpcalculator.com/gratuity-calculator` (HTTP 200).
 - **Implemented Features & Fixes (2026-11-23 Session 49 - KPI & Chart Action Strip Refactor):**
   - **Prominent Daylight Action Command Strip (`src/Views/components/chart-visualization.twig`):**
     - Added `#chart-action-strip` right inside `#chart-card`, positioned directly between `<header>` and `#chart-inspection-hud` (above the chart canvas in normal document flow, avoiding any overlay or chart occlusion).

@@ -10,6 +10,7 @@ import { EmiEngine } from '../assets/js/calculators/engines/EmiEngine.ts';
 import { InflationEngine } from '../assets/js/calculators/engines/InflationEngine.ts';
 import { PpfEngine } from '../assets/js/calculators/engines/PpfEngine.ts';
 import { FdEngine } from '../assets/js/calculators/engines/FdEngine.ts';
+import { GratuityEngine } from '../assets/js/calculators/engines/GratuityEngine.ts';
 
 try {
     // Read input parameters JSON from command line arguments
@@ -185,6 +186,14 @@ try {
             inputArgs.duration_years,
             inputArgs.is_senior_citizen || false,
             inputArgs.payout_frequency || 'cumulative'
+        );
+        console.log(JSON.stringify(res));
+    } else if (inputArgs.action === 'gratuity') {
+        const res = GratuityEngine.calculate(
+            inputArgs.monthly_salary,
+            inputArgs.tenure_years,
+            inputArgs.tenure_months || 0,
+            inputArgs.is_covered_by_act !== undefined ? inputArgs.is_covered_by_act : true
         );
         console.log(JSON.stringify(res));
     } else if (inputArgs.action === 'generate_qr_test') {

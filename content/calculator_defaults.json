@@ -107,6 +107,36 @@
         "label": "Target Corpus",
         "prefix": "₹"
     },
+    "gratuity_salary": {
+        "default": 50000,
+        "min": 5000,
+        "max": 1000000,
+        "slider_max": 300000,
+        "step": 1000,
+        "label": "Monthly Basic + DA",
+        "prefix": "₹"
+    },
+    "gratuity_years": {
+        "default": 5,
+        "min": 1,
+        "max": 40,
+        "slider_max": 35,
+        "step": 1,
+        "label": "Completed Years",
+        "suffix": "Yrs"
+    },
+    "gratuity_months": {
+        "default": 0,
+        "min": 0,
+        "max": 11,
+        "slider_max": 11,
+        "step": 1,
+        "label": "Additional Months",
+        "suffix": "Mos"
+    },
+    "gratuity_covered": {
+        "default": 1
+    },
     "ltcg_tax": {
         "exemption_threshold": 125000,
         "rate": 0.125

@@ -124,6 +124,9 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 21. **₹1 Lakh Monthly SIP Calculator (`https://sipswpcalculator.com/sip-1-lakh-per-month`)**
     - Ultra-HNI wealth accumulation models, multi-decade compounding schedules (₹2.32 Cr flat / ₹3.37 Cr step-up in 10 yrs), and 4-fund asset allocation blueprints.
 
+22. **Gratuity Calculator (`https://sipswpcalculator.com/gratuity-calculator`)**
+    - Computes statutory gratuity payout under the Payment of Gratuity Act, 1972: $(15 \times \text{Salary} \times \text{Tenure}) / 26$ for covered establishments with >6 months tenure rounding and 5-year vesting cliff. Models Section 10(10) ₹20 Lakh statutory tax exemption ceiling and taxable income slab additions.
+
 ---
 
 ## 4. Key Financial Heuristics & Rules of Thumb for India

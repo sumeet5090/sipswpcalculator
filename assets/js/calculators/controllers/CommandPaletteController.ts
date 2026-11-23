@@ -238,6 +238,14 @@ export const COMMAND_ITEMS: CommandItem[] = [
         icon: '🏦'
     },
     {
+        id: 'calc-gratuity',
+        title: 'Gratuity Calculator',
+        description: 'Calculate statutory gratuity payout under Payment of Gratuity Act 1972 & Section 10(10) tax exemption.',
+        category: 'Calculator',
+        url: '/gratuity-calculator',
+        icon: '💼'
+    },
+    {
         id: 'guide-cagr-xirr',
         title: 'CAGR vs XIRR Explained',
         description: 'Understand the difference between point-to-point and periodic cashflow returns.',

@@ -846,6 +846,54 @@ foreach ($fdCases as $idx => $fParams) {
     }
 }
 
+// -------------------------------------------------------------
+// 8. Cross-Runtime Parity: Gratuity Engine
+// -------------------------------------------------------------
+echo "\nTesting Statutory Gratuity Engine Parity (PHP vs TypeScript)...\n";
+$gratuityCases = [
+    ['monthly_salary' => 50000.0, 'tenure_years' => 5, 'tenure_months' => 0, 'is_covered_by_act' => true],
+    ['monthly_salary' => 50000.0, 'tenure_years' => 5, 'tenure_months' => 7, 'is_covered_by_act' => true], // >6M rounds up
+    ['monthly_salary' => 50000.0, 'tenure_years' => 5, 'tenure_months' => 6, 'is_covered_by_act' => true], // <=6M rounds down
+    ['monthly_salary' => 50000.0, 'tenure_years' => 5, 'tenure_months' => 7, 'is_covered_by_act' => false], // Not covered (no round)
+    ['monthly_salary' => 60000.0, 'tenure_years' => 3, 'tenure_months' => 0, 'is_covered_by_act' => true], // Below 5y vesting (₹0)
+    ['monthly_salary' => 150000.0, 'tenure_years' => 30, 'tenure_months' => 0, 'is_covered_by_act' => true], // Above ₹20L cap
+    ['monthly_salary' => 300000.0, 'tenure_years' => 15, 'tenure_months' => 8, 'is_covered_by_act' => true], // High earner
+    ['monthly_salary' => 25000.0, 'tenure_years' => 10, 'tenure_months' => 4, 'is_covered_by_act' => true],
+];
+
+foreach ($gratuityCases as $idx => $gParams) {
+    echo "Gratuity Parity Case " . ($idx + 1) . ": ";
+    $phpRes = \Core\Math\GratuityEngine::calculate(
+        $gParams['monthly_salary'],
+        $gParams['tenure_years'],
+        $gParams['tenure_months'],
+        $gParams['is_covered_by_act']
+    );
+
+    $cmd = "node tests/run_js_calc.js " . escapeshellarg(json_encode([
+        'action' => 'gratuity',
+        'monthly_salary' => $gParams['monthly_salary'],
+        'tenure_years' => $gParams['tenure_years'],
+        'tenure_months' => $gParams['tenure_months'],
+        'is_covered_by_act' => $gParams['is_covered_by_act']
+    ]));
+    $jsRes = json_decode((string)shell_exec($cmd), true);
+
+    $fields = ['monthly_salary', 'effective_years', 'gratuity_amount', 'tax_exempt_amount', 'taxable_amount'];
+    $mismatch = false;
+    foreach ($fields as $f) {
+        if (abs((float)$phpRes[$f] - (float)$jsRes[$f]) > 0.05) {
+            echo "FAIL: Field {$f} mismatch. PHP: {$phpRes[$f]}, JS: {$jsRes[$f]}\n";
+            $failed = true;
+            $mismatch = true;
+            break;
+        }
+    }
+    if (!$mismatch) {
+        echo "PASS\n";
+    }
+}
+
 echo "\n";
 if ($failed) {
     echo "=== CALCULATOR ENGINE PARITY TESTS FAILED ===\n";

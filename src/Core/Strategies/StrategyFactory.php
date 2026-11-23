@@ -37,6 +37,7 @@ class StrategyFactory
         '2-crore-swp-calculator'       => SwpStrategy::class,
         '75-lakh-swp-calculator'       => SwpStrategy::class,
         'sip-1-lakh-per-month'         => SipStrategy::class,
+        'gratuity-calculator'          => GratuityStrategy::class,
     ];
 
     private ConfigServiceInterface $configService;

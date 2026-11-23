@@ -646,5 +646,27 @@
             "title": "SWP Calculator India",
             "description": "Plan regular systematic monthly withdrawals and retirement income streams from your accumulated corpus."
         }
+    ],
+    "gratuity-calculator": [
+        {
+            "href": "/retirement-calculator",
+            "title": "Retirement Calculator",
+            "description": "Plan your retirement corpus, post-retirement monthly expenses, and financial independence."
+        },
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Pension Calculator",
+            "description": "Model monthly post-retirement withdrawals, capital longevity, and 2026 LTCG tax savings from mutual funds."
+        },
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator India",
+            "description": "Calculate monthly mutual fund SIP returns, step-up growth projections, and Section 112A capital gains."
+        },
+        {
+            "href": "/ppf-calculator",
+            "title": "PPF Calculator",
+            "description": "Calculate Public Provident Fund tax-free compounding, Section 80C deductions, and maturity corpus."
+        }
     ]
 }

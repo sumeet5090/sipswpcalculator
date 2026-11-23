@@ -62,7 +62,11 @@ The benchmark matrix below illustrates how a ₹2 Crore portfolio performs at an
 
 ## 2. Inflation-Adjusted SWP: Payouts with a 5% Annual Step-Up
 
-In reality, household expenditure rises over time. With Indian consumer inflation averaging 5% to 6%, an ₹80,000 monthly living budget today will require ₹1.73 Lakhs/month in Year 15 and ₹3.46 Lakhs/month in Year 30.
+> [!IMPORTANT]
+> **Nominal Longevity vs. Real Purchasing Power (The Inflation Reality Check):**
+> A 7.80% annualized withdrawal (₹1,30,000/month on ₹2 Crore) is mathematically sustainable in **nominal terms**—meaning your rupee capital balance stays intact at an 8% portfolio return if your monthly withdrawal stays flat. However, with Indian consumer inflation averaging 5% to 6%, a flat ₹1,30,000/month in Year 15 will buy only what ~₹60,000 buys today.
+>
+> If you demand **constant real purchasing power** with a 5% annual step-up to match inflation, an initial 7.8% withdrawal will exhaust the portfolio by **Year 17**. For a full 30-year inflation-indexed pension, financial planners recommend the **4.8% SWR rule** (starting at **₹80,000/month**), or using the 3-Bucket asset allocation model below to boost equity growth.
 
 The matrix below shows portfolio longevity when activating a **5% annual step-up** in monthly withdrawals to offset inflation:
 

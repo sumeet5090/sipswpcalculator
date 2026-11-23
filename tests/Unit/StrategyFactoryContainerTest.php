@@ -125,6 +125,17 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertArrayHasKey('fd_amount', $inputs->toTemplateData());
     }
 
+    public function testCreateGratuityStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('gratuity-calculator');
+        $this->assertInstanceOf(\Core\Strategies\GratuityStrategy::class, $strategy);
+        $this->assertSame('gratuity', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\GratuityInputs::class, $inputs);
+        $this->assertArrayHasKey('gratuity_salary', $inputs->toTemplateData());
+    }
+
     public function testCreateStepUpSipStrategyFromContainer(): void
     {
         $strategy = $this->factory->create('sip-step-up-calculator');

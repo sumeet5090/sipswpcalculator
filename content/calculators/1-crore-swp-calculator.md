@@ -49,6 +49,7 @@ The following canonical benchmark matrix details the performance of a ₹1 Crore
 | **₹40,000 / mo** | 4.8% p.a. | **₹1.44 Crores** | ₹1.35 Crores | **₹2.41 Crores** | Perpetual (Capital Expands +141%) |
 | **₹50,000 / mo** | 6.0% p.a. | **₹1.80 Crores** | ₹1.21 Crores | **₹1.93 Crores** | Perpetual (Capital Expands +93%) |
 | **₹60,000 / mo** | 7.2% p.a. | **₹2.16 Crores** | ₹1.07 Crores | **₹1.45 Crores** | Perpetual (Capital Intact) |
+| **₹65,000 / mo** | 7.8% p.a. | **₹2.34 Crores** | ₹1.00 Crore | **₹1.19 Crores** | Perpetual (Capital Intact) |
 | **₹66,667 / mo** | 8.0% p.a. | **₹2.40 Crores** | ₹1.00 Crore | **₹93.37 Lakhs** | Perpetual (Zero Net Depletion) |
 | **₹70,000 / mo** | 8.4% p.a. | **₹2.52 Crores** | ₹94.50 Lakhs | **₹43.37 Lakhs** | Survives 30+ Years |
 | **₹80,000 / mo** | 9.6% p.a. | **₹2.12 Crores** | ₹66.21 Lakhs | **₹0 (Depleted)** | Depleted in Year 23 |
@@ -59,7 +60,11 @@ The following canonical benchmark matrix details the performance of a ₹1 Crore
 
 ## 2. Inflation-Adjusted SWP: Payouts with a 5% Annual Step-Up
 
-In reality, living expenses do not remain flat over 30 years. With Indian consumer inflation averaging 5% to 6%, a ₹50,000 monthly lifestyle today will require ₹1.08 Lakhs/month in Year 15 and ₹2.16 Lakhs/month in Year 30.
+> [!IMPORTANT]
+> **Nominal Longevity vs. Real Purchasing Power (The Inflation Reality Check):**
+> A 7.80% annualized withdrawal (₹65,000/month on ₹1 Crore) is mathematically sustainable in **nominal terms**—meaning your rupee capital balance stays intact at an 8% portfolio return if your monthly withdrawal stays flat. However, with Indian consumer inflation averaging 5% to 6%, a flat ₹65,000/month in Year 15 will buy only what ~₹30,000 buys today.
+>
+> If you demand **constant real purchasing power** with a 5% annual step-up to match inflation, an initial 7.8% withdrawal will exhaust the portfolio by **Year 17**. For a full 30-year inflation-indexed pension, financial planners recommend the **4.8% SWR rule** (starting at **₹40,000/month**), or using the 3-Bucket asset allocation model below to boost equity growth.
 
 The matrix below shows what happens when you activate a **5% annual step-up** in your monthly withdrawals to match inflation:
 
