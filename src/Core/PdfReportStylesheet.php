@@ -28,9 +28,16 @@ class PdfReportStylesheet
             .header-table td { vertical-align: middle; }
             .doc-title { font-size: 20px; font-weight: bold; color: #0f172a; letter-spacing: -0.3px; margin: 0 0 2px 0; }
             .doc-subtitle { font-size: 9px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
-            .advisor-badge { background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 14px; border-radius: 6px; text-align: right; display: inline-block; }
+            .advisor-badge { background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 14px; border-radius: 6px; text-align: right; display: inline-block; max-width: 240px; }
             .advisor-label { font-size: 8px; color: #059669; font-weight: bold; text-transform: uppercase; letter-spacing: 0.8px; }
             .advisor-name { font-size: 11px; font-weight: bold; color: #0f172a; margin-top: 1px; }
+            .advisor-firm { font-size: 8.5px; font-weight: 600; color: #334155; margin-top: 1px; }
+            .advisor-reg { font-size: 8px; font-weight: bold; color: #059669; margin-top: 1px; }
+            .advisor-contact { font-size: 7.5px; color: #64748b; margin-top: 1px; }
+            .advisor-credentials-sub { font-size: 7.5px; color: #475569; font-weight: 600; margin-top: 3px; text-align: right; line-height: 1.25; }
+            .advisor-notes-box { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #059669; border-radius: 0 6px 6px 0; padding: 8px 12px; margin-bottom: 12px; page-break-inside: avoid; }
+            .advisor-notes-title { font-size: 8.5px; font-weight: bold; color: #059669; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+            .advisor-notes-body { font-size: 8px; color: #334155; line-height: 1.4; }
             .meta-ribbon { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px 14px; margin-bottom: 16px; }
             .meta-table { width: 100%; border-collapse: collapse; font-size: 9px; }
             .meta-table td { color: #64748b; }

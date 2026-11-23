@@ -89,4 +89,34 @@ class PdfReportTemplateTest extends TestCase
         $this->assertStringNotContainsString('<iframe', $html);
         $this->assertStringContainsString('&lt;script&gt;', $html);
     }
+
+    public function testRenderIncludesAdvisorPracticeProfileAndExecutiveCommentary(): void
+    {
+        $inputs = [
+            'client_name'       => 'Sanjay Singhania',
+            'proposal_title'    => 'Child Higher Education Corpus Plan',
+            'advisor_notes'     => 'Recommended allocation: 70% Equity Flexi-Cap, 30% Multi-Asset Allocation.',
+            'advisor_name'      => 'Kavita Iyer',
+            'advisor_firm'      => 'Horizon Wealth Advisory',
+            'advisor_reg_no'    => 'ARN-294810',
+            'advisor_contact'   => '+91 98111 22233 | kavita@horizonwealth.in',
+            'years'             => 10,
+            'summary_invested'  => '₹25 Lakh',
+            'summary_corpus'    => '₹58 Lakh',
+            'summary_withdrawn' => '0',
+            'raw_invested'      => 2500000,
+            'raw_corpus'        => 5800000,
+            'raw_withdrawn'     => 0,
+        ];
+
+        $html = $this->template->render($inputs);
+
+        $this->assertStringContainsString('Child Higher Education Corpus Plan', $html);
+        $this->assertStringContainsString('Advisor Executive Commentary', $html);
+        $this->assertStringContainsString('Recommended allocation: 70% Equity Flexi-Cap', $html);
+        $this->assertStringContainsString('Kavita Iyer', $html);
+        $this->assertStringContainsString('Horizon Wealth Advisory', $html);
+        $this->assertStringContainsString('ARN-294810', $html);
+        $this->assertStringContainsString('+91 98111 22233', $html);
+    }
 }

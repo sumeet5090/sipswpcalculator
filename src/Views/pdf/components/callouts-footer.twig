@@ -3,6 +3,9 @@
 {% endif %}
 <div class="disclaimer">
     <strong>Important Disclaimer &amp; Risk Disclosure</strong>
+    {% if advisor_contact %}
+    <div style="margin-bottom: 4px; font-weight: bold; color: #475569;">Advisor Contact: {{ advisor_contact }}</div>
+    {% endif %}
     {{ disclaimer_text|nl2br }}
 </div>
 <div class="doc-footer">

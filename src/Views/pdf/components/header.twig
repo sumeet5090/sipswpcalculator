@@ -1,16 +1,25 @@
 <table class="header-table">
     <tr>
-        <td>
+        <td style="vertical-align: top;">
             <div class="doc-title">{{ doc_title|default('Mutual Fund Investment Plan') }}</div>
             <div class="doc-subtitle">{{ doc_subtitle|default('Personalized Wealth Accumulation & Retirement Strategy') }}</div>
         </td>
-        <td style="text-align: right;">
+        <td style="text-align: right; vertical-align: top;">
             {% if logo_base64 %}
-                <img src="{{ logo_base64 }}" alt="Logo" style="max-width: 140px; max-height: 48px;">
+                <img src="{{ logo_base64 }}" alt="Logo" style="max-width: 150px; max-height: 50px;">
+                {% if advisor_firm or advisor_reg_no %}
+                    <div class="advisor-credentials-sub">
+                        {% if advisor_firm %}<div>{{ advisor_firm }}</div>{% endif %}
+                        {% if advisor_reg_no %}<div>{{ advisor_reg_no }}</div>{% endif %}
+                    </div>
+                {% endif %}
             {% else %}
                 <div class="advisor-badge">
                     <div class="advisor-label">Prepared By Advisor</div>
                     <div class="advisor-name">{{ advisor_name }}</div>
+                    {% if advisor_firm %}<div class="advisor-firm">{{ advisor_firm }}</div>{% endif %}
+                    {% if advisor_reg_no %}<div class="advisor-reg">{{ advisor_reg_no }}</div>{% endif %}
+                    {% if advisor_contact %}<div class="advisor-contact">{{ advisor_contact }}</div>{% endif %}
                 </div>
             {% endif %}
         </td>

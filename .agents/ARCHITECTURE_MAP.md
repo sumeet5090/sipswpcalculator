@@ -52,7 +52,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 
 | Export Type | HTTP Trigger Route | Backend Controller Action | Core Service / Template | Frontend Orchestrator |
 | :--- | :--- | :--- | :--- | :--- |
-| **PDF Report** | `POST /generate-pdf` | `Controllers\GeneratePdfAction` | `Services\PdfGeneratorService`<br/>`Services\SpecializedReportBuilder`<br/>`Core\PdfReportTemplate`<br/>`Views/pdf/report.twig`<br/>`Views/pdf/components/*.twig`<br/>`Core\PdfReportStylesheet`<br/>`Core\PdfReportTableBuilder` | `subsystems/ExportSubsystem.ts` (`downloadPdf()`) |
+| **PDF Report** | `POST /generate-pdf` | `Controllers\GeneratePdfAction` | `Services\PdfGeneratorService`<br/>`Services\SpecializedReportBuilder`<br/>`Core\PdfReportTemplate`<br/>`Views/pdf/report.twig`<br/>`Views/pdf/components/*.twig`<br/>`Views/components/pdf-modal.twig`<br/>`Core\PdfReportStylesheet`<br/>`Core\PdfReportTableBuilder` | `subsystems/ExportSubsystem.ts`<br/>`controllers/PdfExportController.ts` |
 | **CSV Amortization** | `POST /download-csv` | `Controllers\DownloadCsvAction` | `Services\CsvExportServiceInterface`<br/>(`Services\CsvExportService`, `generateDynamic()`)<br/>`Services\SpecializedReportBuilder`<br/>`Core\Math\CagrEngine::generateSchedule()` | `subsystems/ExportSubsystem.ts` (`downloadCsv()`) |
 
 ---

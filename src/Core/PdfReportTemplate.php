@@ -124,12 +124,22 @@ class PdfReportTemplate implements PdfTemplateInterface
             'multiplier' => 'Wealth Multiplier',
         ], is_array($inputs['kpi_labels'] ?? null) ? $inputs['kpi_labels'] : []);
 
+        $proposal_title = (string) ($inputs['proposal_title'] ?? '');
+        $doc_title = $proposal_title !== ''
+            ? $proposal_title
+            : (string) ($inputs['doc_title'] ?? 'Mutual Fund Investment Plan');
+
         $viewData = [
             'client_name' => $client_name,
             'advisor_name' => $advisor_name,
+            'advisor_firm' => $inputs['advisor_firm'] ?? null,
+            'advisor_reg_no' => $inputs['advisor_reg_no'] ?? null,
+            'advisor_contact' => $inputs['advisor_contact'] ?? null,
+            'advisor_notes' => $inputs['advisor_notes'] ?? null,
+            'proposal_title' => $proposal_title,
             'date_str' => date('d M Y'),
             'proposal_id' => $proposal_id,
-            'doc_title' => (string) ($inputs['doc_title'] ?? 'Mutual Fund Investment Plan'),
+            'doc_title' => $doc_title,
             'doc_subtitle' => (string) ($inputs['doc_subtitle'] ?? 'Personalized Wealth Accumulation & Retirement Strategy'),
             'logo_base64' => $inputs['logo_base64'] ?? null,
             'chart_base64' => $chart_base64,

@@ -31,6 +31,22 @@ class HtmlSanitizer
     }
 
     /**
+     * Extract clean base64 data URI for practice logo image with strict size constraint.
+     * Allows PNG, JPEG, and WebP formats only (rejects SVG or non-image types).
+     */
+    public function extractLogoData(string $logoRaw, int $maxBytes = 1572864): ?string
+    {
+        $logoRaw = trim($logoRaw);
+        if ($logoRaw === '' || strlen($logoRaw) > $maxBytes) {
+            return null;
+        }
+        if (preg_match('/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+\/=\s]+$/i', $logoRaw)) {
+            return $logoRaw;
+        }
+        return null;
+    }
+
+    /**
      * Sanitize HTML table strings allowing safe report tags only and auto-repairing unbalanced tags.
      */
     public function sanitizeTableHtml(string $tableRaw): string

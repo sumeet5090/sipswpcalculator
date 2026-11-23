@@ -1,0 +1,170 @@
+{#
+  PDF Generation & White-Label Proposal Modal (Option 3)
+  Native <dialog> with client-side persistence, live preview, and institutional AMFI/SEBI branding.
+#}
+<dialog id="pdfModal" class="fixed inset-0 m-auto z-modal rounded-3xl shadow-modal p-6 sm:p-8 w-full max-w-xl border border-slate-200/90 bg-white/98 max-h-[92vh] overflow-y-auto backdrop:bg-slate-900/40 backdrop:backdrop-blur-sm text-slate-800" aria-labelledby="branded-pdf-report">
+    <div class="flex items-start justify-between gap-4 mb-3">
+        <div>
+            <h2 id="branded-pdf-report" class="text-xl sm:text-2xl font-bold font-heading text-slate-900">Create Branded Client Proposal</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Generate an executive PDF proposal customized with your advisory branding and client commentary.</p>
+        </div>
+        <button type="button" id="closePdfModalBtnX" onclick="document.getElementById('pdfModal')?.close()" aria-label="Close modal"
+            class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+
+    <!-- Privacy & Sandbox Assurance -->
+    <div class="mb-5 p-3 rounded-2xl bg-emerald-50/80 border border-emerald-200/80 flex items-start gap-2.5 text-left">
+        <span class="flex items-center justify-center w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-black shrink-0 mt-0.5">
+            <svg class="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+        </span>
+        <div class="text-caption text-emerald-950 leading-relaxed">
+            <strong class="font-bold text-emerald-800 block">100% Client-Side Private Generation</strong>
+            Advisor credentials, client names, and logos are processed in browser memory. Zero financial data or uploaded files are permanently retained on any server.
+        </div>
+    </div>
+
+    <form id="pdfForm" class="space-y-5">
+        <!-- Section 1: Client & Proposal Details -->
+        <div class="space-y-3.5 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80">
+            <div class="text-micro font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
+                <span>1. Client &amp; Proposal Scope</span>
+                <span class="text-slate-400 font-medium lowercase">per-client details</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                    <label for="clientName" class="block text-xs font-semibold text-slate-700 mb-1">Investor / Client Name</label>
+                    <input type="text" id="clientName" name="clientName" placeholder="e.g., Rajesh Kumar"
+                        class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition text-xs shadow-flat">
+                </div>
+                <div>
+                    <label for="proposalTitle" class="block text-xs font-semibold text-slate-700 mb-1">Proposal Headline / Goal</label>
+                    <input type="text" id="proposalTitle" name="proposalTitle" placeholder="e.g., Retirement Freedom &amp; Wealth Plan"
+                        class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition text-xs shadow-flat">
+                </div>
+            </div>
+
+            <div>
+                <label for="advisorNotes" class="block text-xs font-semibold text-slate-700 mb-1">Advisor Executive Commentary (Page 1)</label>
+                <textarea id="advisorNotes" name="advisorNotes" rows="2"
+                    placeholder="e.g., Based on our discussion, this model outlines your systematic wealth accumulation and subsequent monthly pension cashflows..."
+                    class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition text-xs shadow-flat"></textarea>
+            </div>
+        </div>
+
+        <!-- Section 2: Advisor Practice Profile (White-Label) -->
+        <div class="space-y-3.5 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80">
+            <div class="text-micro font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
+                <span>2. Advisory Practice Profile</span>
+                <span class="text-emerald-700 font-bold">White-Label Branding</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                    <label for="advisorName" class="block text-xs font-semibold text-slate-700 mb-1">Advisor Name</label>
+                    <input type="text" id="advisorName" name="advisorName" placeholder="e.g., Rajesh V. Sharma"
+                        class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition text-xs shadow-flat">
+                </div>
+                <div>
+                    <label for="advisorFirm" class="block text-xs font-semibold text-slate-700 mb-1">Practice / Firm Name</label>
+                    <input type="text" id="advisorFirm" name="advisorFirm" placeholder="e.g., Apex Wealth Partners"
+                        class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition text-xs shadow-flat">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                    <label for="advisorRegNo" class="block text-xs font-semibold text-slate-700 mb-1">AMFI ARN / SEBI RIA Reg. No.</label>
+                    <input type="text" id="advisorRegNo" name="advisorRegNo" placeholder="e.g., ARN-189234 / SEBI INA000012345"
+                        class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition text-xs shadow-flat">
+                </div>
+                <div>
+                    <label for="advisorContact" class="block text-xs font-semibold text-slate-700 mb-1">Contact Info (Phone / Email)</label>
+                    <input type="text" id="advisorContact" name="advisorContact" placeholder="e.g., +91 98200 12345 | rajesh@apexwealth.in"
+                        class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition text-xs shadow-flat">
+                </div>
+            </div>
+
+            <div>
+                <label for="advisorLogo" class="block text-xs font-semibold text-slate-700 mb-1">Practice Logo (PNG, JPEG, WebP &bull; Max 1 MB)</label>
+                <input type="file" id="advisorLogo" name="advisorLogo" accept="image/png, image/jpeg, image/webp"
+                    class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer">
+                
+                <!-- Instant Logo Thumbnail Preview -->
+                <div id="logo-preview-container" class="hidden mt-2 items-center gap-3 p-2 rounded-xl bg-white border border-slate-200">
+                    <img id="logo-preview-img" src="" alt="Practice Logo Preview" class="max-h-9 max-w-[120px] object-contain">
+                    <span class="text-caption text-slate-500 flex-1 truncate" id="logo-preview-filename">logo.png</span>
+                    <button type="button" id="removeLogoBtn" class="text-caption text-rose-600 hover:text-rose-700 font-semibold px-2 py-1 rounded hover:bg-rose-50 transition-colors">
+                        Remove
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <label for="customDisclaimer" class="block text-xs font-semibold text-slate-700 mb-1">Custom Compliance / Advisory Note (Footer)</label>
+                <textarea id="customDisclaimer" name="customDisclaimer" rows="2"
+                    placeholder="Optional compliance note to override default statutory disclaimer..."
+                    class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition text-xs shadow-flat"></textarea>
+            </div>
+
+            <!-- Persistence Controls -->
+            <div class="flex items-center justify-between pt-1 text-xs">
+                <label class="flex items-center gap-2 cursor-pointer select-none text-slate-700 font-medium">
+                    <input type="checkbox" id="rememberProfile" name="rememberProfile" checked
+                        class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4">
+                    <span>Remember my practice details on this browser</span>
+                </label>
+                <button type="button" id="clearAdvisorProfileBtn" class="text-slate-400 hover:text-rose-600 text-micro font-semibold transition-colors">
+                    Clear saved details
+                </button>
+            </div>
+        </div>
+
+        <!-- Live Proposal Header Preview Card -->
+        <div id="pdf-live-preview-box" class="p-3.5 rounded-2xl bg-slate-50/90 border border-slate-200/90 text-left space-y-2">
+            <div class="flex items-center justify-between">
+                <span class="text-micro font-black uppercase tracking-wider text-slate-500">Live Proposal Header Preview</span>
+                <span class="text-micro font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full">Page 1 Simulation</span>
+            </div>
+            <div class="flex items-start justify-between border-t border-slate-200/80 pt-2 gap-4">
+                <div>
+                    <div id="preview-proposal-title" class="text-xs font-extrabold text-slate-900">Mutual Fund Investment Plan</div>
+                    <div class="text-caption text-slate-500 mt-0.5">Prepared for: <span id="preview-client-name" class="font-bold text-slate-700">Valued Investor</span></div>
+                </div>
+                <div class="text-right shrink-0">
+                    <img id="preview-logo-img" src="" alt="Preview Logo" class="hidden max-h-8 max-w-[110px] ml-auto object-contain mb-1">
+                    <div id="preview-advisor-badge" class="advisor-badge-preview inline-block text-right">
+                        <div id="preview-advisor-name" class="text-xs font-extrabold text-emerald-800">Financial Advisor</div>
+                        <div id="preview-firm-name" class="hidden text-caption text-slate-600 font-semibold"></div>
+                        <div id="preview-reg-no" class="hidden text-micro text-emerald-700 font-bold"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-3 pt-4 border-t border-slate-200">
+            <button type="button" id="fastInstantPdfBtn"
+                class="w-full sm:w-auto px-4 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300/80 font-bold rounded-xl transition text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-flat">
+                <svg class="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                <span>1-Click Fast Download</span>
+            </button>
+            <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                <button type="button" id="closePdfModalBtn" onclick="document.getElementById('pdfModal')?.close()"
+                    class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition text-xs cursor-pointer">
+                    Cancel
+                </button>
+                <button type="submit" id="generatePdfBtn"
+                    class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl shadow-card transition text-xs cursor-pointer">
+                    Download Proposal PDF
+                </button>
+            </div>
+        </div>
+    </form>
+</dialog>

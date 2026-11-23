@@ -60,12 +60,39 @@ class GeneratePdfAction
             $sym = $this->sanitizer->sanitizeText((string) ($post['currency_symbol'] ?? '₹'), 10);
             $calcType = strtolower(trim((string) ($post['calculator_type'] ?? '')));
 
+            // Process practice logo from multipart file upload or client-side cached base64
+            $logoBase64 = null;
+            $uploadedLogo = $request->files('advisorLogo');
+            if ($uploadedLogo !== null && ($uploadedLogo['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
+                try {
+                    $logoBase64 = $this->fileUploadService->processLogoUpload($uploadedLogo);
+                } catch (\Throwable $e) {
+                    error_log('Logo upload failed: ' . $e->getMessage());
+                    $logoBase64 = null;
+                }
+            } elseif (!empty($post['advisorLogoBase64']) && is_string($post['advisorLogoBase64'])) {
+                $logoBase64 = $this->sanitizer->extractLogoData($post['advisorLogoBase64']);
+            } elseif (!empty($post['advisorLogo']) && is_string($post['advisorLogo']) && str_starts_with($post['advisorLogo'], 'data:image/')) {
+                $logoBase64 = $this->sanitizer->extractLogoData($post['advisorLogo']);
+            }
+
+            $proposalTitle = $this->sanitizer->sanitizeText((string) ($post['proposalTitle'] ?? ''), 120);
+            $advisorNotes = $this->sanitizer->sanitizeText((string) ($post['advisorNotes'] ?? ''), 1000);
+            $advisorFirm = $this->sanitizer->sanitizeText((string) ($post['advisorFirm'] ?? ''), 100);
+            $advisorRegNo = $this->sanitizer->sanitizeText((string) ($post['advisorRegNo'] ?? ''), 50);
+            $advisorContact = $this->sanitizer->sanitizeText((string) ($post['advisorContact'] ?? ''), 100);
+
             $commonMeta = [
-                'client_name'       => $this->sanitizer->sanitizeText((string) ($post['clientName'] ?? 'N/A'), 100),
-                'advisor_name'      => $this->sanitizer->sanitizeText((string) ($post['advisorName'] ?? 'N/A'), 100),
+                'client_name'       => $this->sanitizer->sanitizeText((string) ($post['clientName'] ?? 'Valued Investor'), 100),
+                'proposal_title'    => $proposalTitle !== '' ? $proposalTitle : null,
+                'advisor_notes'     => $advisorNotes !== '' ? $advisorNotes : null,
+                'advisor_name'      => $this->sanitizer->sanitizeText((string) ($post['advisorName'] ?? 'Financial Advisor'), 100),
+                'advisor_firm'      => $advisorFirm !== '' ? $advisorFirm : null,
+                'advisor_reg_no'    => $advisorRegNo !== '' ? $advisorRegNo : null,
+                'advisor_contact'   => $advisorContact !== '' ? $advisorContact : null,
                 'custom_disclaimer' => $this->sanitizer->sanitizeText((string) ($post['customDisclaimer'] ?? ''), 1000),
                 'chart_base64'      => $this->sanitizer->extractChartData((string) ($post['chartData'] ?? '')),
-                'logo_base64'       => $this->fileUploadService->processLogoUpload($request->files('advisorLogo')),
+                'logo_base64'       => $logoBase64,
                 'currency_symbol'   => $sym,
             ];
 
@@ -109,7 +136,7 @@ class GeneratePdfAction
             if ($this->specializedReportBuilder->isSpecialized($calcType)) {
                 $baseFilename = $this->specializedReportBuilder->resolveFilename($calcType, 'pdf');
                 $rawClientName = trim((string) ($inputs['client_name'] ?? ''));
-                if ($rawClientName === '' || $rawClientName === 'N/A') {
+                if ($rawClientName === '' || $rawClientName === 'N/A' || $rawClientName === 'Valued Investor') {
                     $filename = $baseFilename;
                     $encodedFilename = rawurlencode($baseFilename);
                 } else {

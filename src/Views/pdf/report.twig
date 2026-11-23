@@ -9,6 +9,9 @@
     <div class="top-accent"></div>
     {% include 'pdf/components/header.twig' %}
     {% include 'pdf/components/meta-ribbon.twig' %}
+    {% if advisor_notes %}
+        {% include 'pdf/components/advisor-notes.twig' %}
+    {% endif %}
     {% include 'pdf/components/kpi-cards.twig' %}
     {% include 'pdf/components/config-card.twig' %}
     {% include 'pdf/components/chart-section.twig' %}

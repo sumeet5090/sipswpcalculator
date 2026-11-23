@@ -171,16 +171,16 @@ final class ModalArchitectureTest extends TestCase
 
     public function testPdfModalsHaveCenteringClasses(): void
     {
+        $modalContent = (string) file_get_contents(__DIR__ . '/../../src/Views/components/pdf-modal.twig');
         $homeContent = (string) file_get_contents(__DIR__ . '/../../src/Views/calculators/home.twig');
         $guideContent = (string) file_get_contents(__DIR__ . '/../../src/Views/calculators/calculator-guide.twig');
 
-        $this->assertStringContainsString('id="pdfModal"', $homeContent);
-        $this->assertStringContainsString('fixed inset-0 m-auto', $homeContent);
-        $this->assertStringContainsString('z-modal', $homeContent);
+        $this->assertStringContainsString('components/pdf-modal.twig', $homeContent);
+        $this->assertStringContainsString('components/pdf-modal.twig', $guideContent);
 
-        $this->assertStringContainsString('id="pdfModal"', $guideContent);
-        $this->assertStringContainsString('fixed inset-0 m-auto', $guideContent);
-        $this->assertStringContainsString('z-modal', $guideContent);
+        $this->assertStringContainsString('id="pdfModal"', $modalContent);
+        $this->assertStringContainsString('fixed inset-0 m-auto', $modalContent);
+        $this->assertStringContainsString('z-modal', $modalContent);
     }
 
     public function testStylesCssContainsUniversalDialogCenteringRules(): void

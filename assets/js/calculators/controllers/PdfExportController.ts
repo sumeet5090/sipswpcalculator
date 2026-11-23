@@ -4,7 +4,19 @@ import { AnalyticsService } from '../AnalyticsLogger';
 import { CurrencyFormatter } from '../CurrencyHelper';
 import { InvestmentInputs, YearResult } from '../../types';
 
+export interface AdvisorProfile {
+    advisorName?: string;
+    advisorFirm?: string;
+    advisorRegNo?: string;
+    advisorContact?: string;
+    customDisclaimer?: string;
+    logoBase64?: string;
+    logoFilename?: string;
+}
+
 export class PdfExportController {
+    private static readonly STORAGE_KEY = 'advisor_profile_v1';
+
     private dom: DOMAdapter;
     private chartManager: ChartManager;
     private analytics: AnalyticsService;
@@ -14,6 +26,8 @@ export class PdfExportController {
     private getInteractionCount: () => number;
     private formatter: CurrencyFormatter;
     private getExportPayload?: () => Record<string, string | number | boolean>;
+
+    private cachedLogoBase64: string | null = null;
 
     constructor(
         dom: DOMAdapter,
@@ -42,6 +56,7 @@ export class PdfExportController {
         const openPdfBtn = this.dom.getElement('openPdfModalBtn');
         const customizePdfBtn = this.dom.getElement('customizePdfModalBtn');
         const closePdfBtn = this.dom.getElement('closePdfModalBtn');
+        const closePdfBtnX = this.dom.getElement('closePdfModalBtnX');
         const pdfForm = this.dom.getElement<HTMLFormElement>('pdfForm');
 
         const openModalFn = (el: HTMLDialogElement | HTMLElement | null) => {
@@ -91,28 +106,187 @@ export class PdfExportController {
             if (closePdfBtn) {
                 closePdfBtn.addEventListener('click', () => closeModalFn(pdfModal));
             }
+            if (closePdfBtnX) {
+                closePdfBtnX.addEventListener('click', () => closeModalFn(pdfModal));
+            }
             pdfModal.addEventListener('click', (e: Event) => {
                 if (e.target === pdfModal) closeModalFn(pdfModal);
             });
         }
 
-        // Live Proposal Header Preview Listeners in Modal
+        // Form Inputs
         const clientInput = this.dom.getElement<HTMLInputElement>('clientName');
+        const proposalTitleInput = this.dom.getElement<HTMLInputElement>('proposalTitle');
         const advisorInput = this.dom.getElement<HTMLInputElement>('advisorName');
+        const firmInput = this.dom.getElement<HTMLInputElement>('advisorFirm');
+        const regInput = this.dom.getElement<HTMLInputElement>('advisorRegNo');
+        const contactInput = this.dom.getElement<HTMLInputElement>('advisorContact');
+        const logoInput = this.dom.getElement<HTMLInputElement>('advisorLogo');
+        const disclaimerInput = this.dom.getElement<HTMLTextAreaElement>('customDisclaimer');
+        const rememberCheckbox = this.dom.getElement<HTMLInputElement>('rememberProfile');
+        const clearProfileBtn = this.dom.getElement('clearAdvisorProfileBtn');
+        const removeLogoBtn = this.dom.getElement('removeLogoBtn');
+
+        // Preview Elements
         const previewClient = this.dom.getElement('preview-client-name');
+        const previewTitle = this.dom.getElement('preview-proposal-title');
         const previewAdvisor = this.dom.getElement('preview-advisor-name');
+        const previewFirm = this.dom.getElement('preview-firm-name');
+        const previewRegNo = this.dom.getElement('preview-reg-no');
+        const previewLogoImg = this.dom.getElement<HTMLImageElement>('preview-logo-img');
+        const logoPreviewContainer = this.dom.getElement('logo-preview-container');
+        const logoPreviewImg = this.dom.getElement<HTMLImageElement>('logo-preview-img');
+        const logoPreviewFilename = this.dom.getElement('logo-preview-filename');
 
-        if (clientInput && previewClient) {
-            clientInput.addEventListener('input', () => {
+        const updateLivePreview = () => {
+            if (previewClient && clientInput) {
                 previewClient.textContent = clientInput.value.trim() || 'Valued Investor';
-            });
-        }
-        if (advisorInput && previewAdvisor) {
-            advisorInput.addEventListener('input', () => {
+            }
+            if (previewTitle && proposalTitleInput) {
+                previewTitle.textContent = proposalTitleInput.value.trim() || 'Mutual Fund Investment Plan';
+            }
+            if (previewAdvisor && advisorInput) {
                 previewAdvisor.textContent = advisorInput.value.trim() || 'Financial Advisor';
+            }
+            if (previewFirm && firmInput) {
+                const firmVal = firmInput.value.trim();
+                if (firmVal) {
+                    previewFirm.textContent = firmVal;
+                    previewFirm.classList.remove('hidden');
+                } else {
+                    previewFirm.classList.add('hidden');
+                }
+            }
+            if (previewRegNo && regInput) {
+                const regVal = regInput.value.trim();
+                if (regVal) {
+                    previewRegNo.textContent = regVal;
+                    previewRegNo.classList.remove('hidden');
+                } else {
+                    previewRegNo.classList.add('hidden');
+                }
+            }
+            if (previewLogoImg) {
+                if (this.cachedLogoBase64) {
+                    previewLogoImg.src = this.cachedLogoBase64;
+                    previewLogoImg.classList.remove('hidden');
+                } else {
+                    previewLogoImg.classList.add('hidden');
+                    previewLogoImg.src = '';
+                }
+            }
+        };
+
+        // Hydrate from LocalStorage
+        try {
+            const rawStored = localStorage.getItem(PdfExportController.STORAGE_KEY);
+            if (rawStored) {
+                const profile: AdvisorProfile = JSON.parse(rawStored);
+                if (advisorInput && profile.advisorName) advisorInput.value = profile.advisorName;
+                if (firmInput && profile.advisorFirm) firmInput.value = profile.advisorFirm;
+                if (regInput && profile.advisorRegNo) regInput.value = profile.advisorRegNo;
+                if (contactInput && profile.advisorContact) contactInput.value = profile.advisorContact;
+                if (disclaimerInput && profile.customDisclaimer) disclaimerInput.value = profile.customDisclaimer;
+                if (rememberCheckbox) rememberCheckbox.checked = true;
+
+                if (profile.logoBase64 && previewLogoImg && logoPreviewContainer && logoPreviewImg) {
+                    this.cachedLogoBase64 = profile.logoBase64;
+                    logoPreviewImg.src = profile.logoBase64;
+                    if (logoPreviewFilename) logoPreviewFilename.textContent = profile.logoFilename || 'practice-logo.png';
+                    logoPreviewContainer.classList.remove('hidden');
+                    logoPreviewContainer.classList.add('flex');
+                }
+            }
+        } catch (e) {
+            console.warn('[PdfExportController] LocalStorage read failed:', e);
+        }
+
+        updateLivePreview();
+
+        // Reactive Listeners
+        [clientInput, proposalTitleInput, advisorInput, firmInput, regInput, contactInput].forEach(inp => {
+            if (inp) inp.addEventListener('input', updateLivePreview);
+        });
+
+        // Logo Upload Handling with Strict Security (PNG, JPEG, WebP, <= 1MB)
+        if (logoInput) {
+            logoInput.addEventListener('change', () => {
+                const file = logoInput.files?.[0];
+                if (!file) return;
+
+                const allowedTypes = ['image/png', 'image/jpeg', 'image/webp'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Invalid logo format. Only PNG, JPEG, and WebP images are allowed.');
+                    logoInput.value = '';
+                    return;
+                }
+
+                if (file.size > 1024 * 1024) {
+                    alert('Logo file too large. Maximum size is 1 MB.');
+                    logoInput.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const result = e.target?.result as string;
+                    if (result) {
+                        this.cachedLogoBase64 = result;
+                        if (logoPreviewImg) logoPreviewImg.src = result;
+                        if (logoPreviewFilename) logoPreviewFilename.textContent = file.name;
+                        if (logoPreviewContainer) {
+                            logoPreviewContainer.classList.remove('hidden');
+                            logoPreviewContainer.classList.add('flex');
+                        }
+                        updateLivePreview();
+                    }
+                };
+                reader.readAsDataURL(file);
             });
         }
 
+        // Remove Logo Action
+        if (removeLogoBtn) {
+            removeLogoBtn.addEventListener('click', () => {
+                this.cachedLogoBase64 = null;
+                if (logoInput) logoInput.value = '';
+                if (logoPreviewContainer) {
+                    logoPreviewContainer.classList.add('hidden');
+                    logoPreviewContainer.classList.remove('flex');
+                }
+                if (logoPreviewImg) logoPreviewImg.src = '';
+                updateLivePreview();
+            });
+        }
+
+        // Clear Saved Profile Action
+        if (clearProfileBtn) {
+            clearProfileBtn.addEventListener('click', () => {
+                if (advisorInput) advisorInput.value = '';
+                if (firmInput) firmInput.value = '';
+                if (regInput) regInput.value = '';
+                if (contactInput) contactInput.value = '';
+                if (disclaimerInput) disclaimerInput.value = '';
+                if (rememberCheckbox) rememberCheckbox.checked = false;
+                if (logoInput) logoInput.value = '';
+                this.cachedLogoBase64 = null;
+                if (logoPreviewContainer) {
+                    logoPreviewContainer.classList.add('hidden');
+                    logoPreviewContainer.classList.remove('flex');
+                }
+                if (logoPreviewImg) logoPreviewImg.src = '';
+
+                try {
+                    localStorage.removeItem(PdfExportController.STORAGE_KEY);
+                } catch (e) {
+                    console.warn('[PdfExportController] LocalStorage removal failed:', e);
+                }
+
+                updateLivePreview();
+            });
+        }
+
+        // Fast Instant Button in Modal
         const fastInstantPdfBtn = this.dom.getElement('fastInstantPdfBtn');
         if (fastInstantPdfBtn && pdfForm) {
             fastInstantPdfBtn.addEventListener('click', () => {
@@ -123,9 +297,35 @@ export class PdfExportController {
             });
         }
 
+        // Form Submit
         if (pdfForm) {
             pdfForm.addEventListener('submit', (e) => {
                 e.preventDefault();
+
+                // Persist or clear practice profile in localStorage
+                if (rememberCheckbox && rememberCheckbox.checked) {
+                    try {
+                        const profile: AdvisorProfile = {
+                            advisorName: advisorInput?.value.trim() || '',
+                            advisorFirm: firmInput?.value.trim() || '',
+                            advisorRegNo: regInput?.value.trim() || '',
+                            advisorContact: contactInput?.value.trim() || '',
+                            customDisclaimer: disclaimerInput?.value.trim() || '',
+                            logoBase64: this.cachedLogoBase64 || undefined,
+                            logoFilename: logoPreviewFilename?.textContent || 'practice-logo.png'
+                        };
+                        localStorage.setItem(PdfExportController.STORAGE_KEY, JSON.stringify(profile));
+                    } catch (err) {
+                        console.warn('[PdfExportController] LocalStorage save failed:', err);
+                    }
+                } else {
+                    try {
+                        localStorage.removeItem(PdfExportController.STORAGE_KEY);
+                    } catch (err) {
+                        console.warn('[PdfExportController] LocalStorage remove failed:', err);
+                    }
+                }
+
                 const generatePdfBtn = this.dom.getElement<HTMLButtonElement>('generatePdfBtn');
                 this.executeDirectDownload(generatePdfBtn, new FormData(pdfForm), () => {
                     closeModalFn(pdfModal);
@@ -168,6 +368,11 @@ export class PdfExportController {
 
         if (!formData.has('clientName')) formData.append('clientName', 'Valued Investor');
         if (!formData.has('advisorName')) formData.append('advisorName', '');
+
+        // If cached logo exists from LocalStorage and no new file was attached, send base64
+        if (this.cachedLogoBase64 && (!formData.has('advisorLogo') || !(formData.get('advisorLogo') as File)?.size)) {
+            formData.append('advisorLogoBase64', this.cachedLogoBase64);
+        }
 
         Object.entries(exportPayload).forEach(([key, val]) => {
             if (!formData.has(key) && val !== undefined && val !== null) {

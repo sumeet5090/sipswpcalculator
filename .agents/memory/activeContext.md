@@ -5,7 +5,33 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** Wave 3 Surgical Expansion (Option 2) Implemented & Verified — Deployed two new specialized calculator hubs (`/75-lakh-swp-calculator` and `/sip-1-lakh-per-month`), bringing the total platform calculator count to 29. Fully integrated into the Hub-and-Spoke IA, Mega-Menu, Command Palette, Contextual In-Flow Bridges, and unit test suites; verified 100% Green across all quality gates (868 tests, 14,548 assertions).
+- **Current Milestone:** Option 3 — Advisor & White-Label PDF Export Engine Implemented & Verified — Upgraded the platform's PDF export engine into an institutional-grade white-label client proposal generator for MFDs, RIAs, and financial advisors. Extracted DRY modal component (`pdf-modal.twig`), implemented `localStorage['advisor_profile_v1']` practice persistence, live proposal header preview, instant logo thumbnail preview, and Dompdf executive styling (`advisor-notes.twig`, ARN/RIA registration badges); verified 100% Green across quality gates (872 tests, 14,576 assertions).
+- **Implemented Features & Fixes (2026-11-23 Session 48 - Option 3 White-Label Proposal Engine):**
+  - **White-Label Practice Profile & Credentials:**
+    - Added dedicated fields for Advisor Name, Advisory Firm / Company Name, AMFI ARN / SEBI RIA Registration Number, Contact Info (Phone/WhatsApp/Email), and Custom Compliance Notes.
+    - Added dedicated field for Proposal Headline / Goal Scope (`proposalTitle`, e.g. "Retirement Freedom Roadmap") and Page-1 Advisor Executive Commentary (`advisorNotes`).
+  - **Security & Payload Hardening (`HtmlSanitizer.php` & `FileUploadService.php`):**
+    - `HtmlSanitizer::extractLogoData()` strictly enforces PNG, JPEG, and WebP data URIs up to ~1.5 MB string ceiling (~1 MB binary decoded), rejecting SVG or non-image payloads.
+    - `FileUploadService` enforces 1 MB file ceiling and re-encodes uploaded images via GD (PNG/JPEG/WebP) to strip EXIF metadata and neutralize polyglots.
+    - `GeneratePdfAction` sanitizes all text fields within strict character bounds and gracefully falls back if no logo is present.
+  - **Resilient Client-Side Persistence (`PdfExportController.ts`):**
+    - Wrapped all `localStorage` reads, writes, and removals in `try/catch`.
+    - Persists advisor practice details in `localStorage['advisor_profile_v1']` when "Remember my practice details" is checked.
+    - Includes 1-click "Clear saved details" button and instant "Remove Logo" action.
+    - FileReader client-side validation for logo file type (`image/png`, `image/jpeg`, `image/webp`) and size ($\le 1$ MB) with instant thumbnail preview.
+    - Reactive live preview card simulates Page 1 proposal header in real-time as user types.
+  - **DRY Modal Architecture:**
+    - Extracted `src/Views/components/pdf-modal.twig` and included it in `home.twig` and `calculator-guide.twig`, eliminating duplicated HTML.
+  - **Dompdf Template Polish (`src/Views/pdf/`):**
+    - Created `src/Views/pdf/components/advisor-notes.twig` rendering an executive commentary box on Page 1.
+    - Upgraded `header.twig` to display firm name, ARN, contact, and practice logo (`max-width: 150px; max-height: 50px`).
+    - Upgraded `meta-ribbon.twig` and `callouts-footer.twig` to include advisor credentials and contact lines alongside statutory risk disclaimers.
+    - Added CSS rules in `PdfReportStylesheet.php` (`.advisor-notes-box`, `.advisor-credentials-sub`, `.advisor-firm`, `.advisor-reg`, `.advisor-contact`).
+  - **Verification & Parity:**
+    - `npm run typecheck && npm run build`: 100% clean TypeScript build.
+    - `php tests/parity_check.php`: 71/71 mathematical parity tests PASS.
+    - `composer check-all`: **872 tests, 14,576 assertions, 100% PASS; PHPStan Level Max (0 errors); PSR-12 clean**.
+    - Unit tests (`GeneratePdfActionTest`, `PdfReportTemplateTest`, `ModalArchitectureTest`) and integration tests (`PdfGenerationDownloadTest`) passing 100%.
 - **Implemented Features & Fixes (2026-11-23 Session 47 - Wave 3 Surgical Expansion):**
   - **`content/calculators/75-lakh-swp-calculator.md`:**
     - Title: `"75 Lakh SWP Calculator — Monthly Pension (with Free Excel)"` (60 bytes).

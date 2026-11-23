@@ -2,8 +2,8 @@
     <table class="meta-table">
         <tr>
             <td style="width: 30%;">Investor: <strong>{{ client_name }}</strong></td>
-            <td style="width: 35%; text-align: center;">Advisor: <strong>{{ advisor_name }}</strong></td>
-            <td style="width: 35%; text-align: right;">Date: <strong>{{ date_str }}</strong> | Ref: <strong>{{ proposal_id }}</strong></td>
+            <td style="width: 40%; text-align: center;">Advisor: <strong>{{ advisor_name }}</strong>{% if advisor_firm %} ({{ advisor_firm }}){% endif %}{% if advisor_reg_no %} | <strong>{{ advisor_reg_no }}</strong>{% endif %}</td>
+            <td style="width: 30%; text-align: right;">Date: <strong>{{ date_str }}</strong> | Ref: <strong>{{ proposal_id }}</strong></td>
         </tr>
     </table>
 </div>
