@@ -7,3 +7,4 @@ export { PpfDriver } from './PpfDriver.ts';
 export { FdDriver } from './FdDriver.ts';
 export { GratuityDriver } from './GratuityDriver.ts';
 export { NpsDriver } from './NpsDriver.ts';
+export { PostRetirementDriver } from './PostRetirementDriver.ts';

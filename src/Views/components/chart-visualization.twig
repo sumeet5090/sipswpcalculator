@@ -1,5 +1,5 @@
 <div class="space-y-4">
-    {% set isFourCardMode = enable_swp or calculator_type in ['swp', 'combo', 'emi', 'gratuity', 'nps'] %}
+    {% set isFourCardMode = enable_swp or calculator_type in ['swp', 'combo', 'emi', 'gratuity', 'nps', 'post_retirement'] %}
     {% set card1Title = 'Total Invested' %}
     {% set card1Sub = 'Principal Capital' %}
     {% if calculator_type == 'emi' %}
@@ -26,6 +26,9 @@
     {% elseif calculator_type == 'nps' %}
         {% set card1Title = 'Total Invested' %}
         {% set card1Sub = 'Tier-1 Contribution' %}
+    {% elseif calculator_type == 'post_retirement' %}
+        {% set card1Title = 'Total Initial Nest Egg' %}
+        {% set card1Sub = 'Savings + Gratuity + NPS' %}
     {% endif %}
 
     {% set card2Title = 'Compound Gains' %}
@@ -45,6 +48,8 @@
         {% set card2Title = 'Tax-Exempt' %}
     {% elseif calculator_type == 'nps' %}
         {% set card2Title = 'Compounding Gains' %}
+    {% elseif calculator_type == 'post_retirement' %}
+        {% set card2Title = 'Guaranteed Pension' %}
     {% endif %}
 
     {% set card3Title = 'Total Payouts' %}
@@ -58,6 +63,9 @@
     {% elseif calculator_type == 'nps' %}
         {% set card3Title = 'Tax-Free Lump Sum' %}
         {% set card3Sub = 'Sec 10(12A) Payout' %}
+    {% elseif calculator_type == 'post_retirement' %}
+        {% set card3Title = 'Net Monthly SWP' %}
+        {% set card3Sub = 'Deficit After Pension' %}
     {% endif %}
 
     {% set card4Title = 'Final Wealth Corpus' %}
@@ -77,6 +85,8 @@
         {% set card4Title = 'Total Gratuity' %}
     {% elseif calculator_type == 'nps' %}
         {% set card4Title = 'Monthly Pension' %}
+    {% elseif calculator_type == 'post_retirement' %}
+        {% set card4Title = 'Portfolio Longevity' %}
     {% endif %}
 
     <!-- Fluid Quantum Wealth Ribbon Grid (Institutional Scoreboard: 3 Clean White Cards + 1 Dark Executive Anchor) -->
@@ -180,7 +190,7 @@
         </div>
     </div>
 
-    {% if calculator_type not in ['emi', 'ppf', 'fd', 'cagr', 'compound_interest', 'inflation', 'gratuity', 'nps'] %}
+    {% if calculator_type not in ['emi', 'ppf', 'fd', 'cagr', 'compound_interest', 'inflation', 'gratuity', 'nps', 'post_retirement'] %}
     <!-- Real Purchasing Power & Peace-of-Mind Telemetry Strip (Dynamic Risk Empathy) -->
     <div id="purchasing-power-telemetry-strip" class="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-teal-50/70 via-emerald-50/40 to-white border border-teal-200/80 shadow-card flex flex-col gap-2 sm:gap-2.5 transition-all">
         <!-- Row 1: Header (Icon, Reality Metric & Peace-of-Mind Score Pill) -->
@@ -283,6 +293,10 @@
                     <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 text-micro font-bold shadow-flat shrink-0">
                         <span>PFRDA Regulated</span>
                     </span>
+                    {% elseif calculator_type == 'post_retirement' %}
+                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 text-micro font-bold shadow-flat shrink-0">
+                        <span>Multi-Stream Drawdown</span>
+                    </span>
                     {% elseif calculator_type not in ['emi', 'inflation'] %}
                     <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.showModal()"
                         class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100/90 hover:bg-growth-surface border border-slate-200 hover:border-growth-border text-micro text-slate-600 hover:text-growth-emphasis transition-all cursor-pointer shadow-flat shrink-0"
@@ -341,7 +355,7 @@
                         </svg>
                         <span>Share Plan</span>
                     </button>
-                    {% if calculator_type not in ['emi', 'ppf', 'fd', 'inflation', 'gratuity', 'nps'] %}
+                    {% if calculator_type not in ['emi', 'ppf', 'fd', 'inflation', 'gratuity', 'nps', 'post_retirement'] %}
                     <button type="button" id="open-tax-waterfall-btn" 
                         class="p-1.5 rounded-xl border border-tax-border bg-tax-surface hover:bg-violet-100 text-tax-emphasis transition-all active:scale-95 cursor-pointer shadow-flat"
                         title="Open Section 112A Tax Waterfall Modal">
@@ -508,7 +522,7 @@
                 </div>
 
                 <div class="inline-flex items-center p-1 rounded-xl bg-slate-100/90 border border-slate-200/70 shadow-flat gap-1 max-w-full overflow-x-auto no-scrollbar" role="group" aria-label="Analytical Projection Lenses">
-                    {% if calculator_type not in ['ppf', 'fd', 'emi', 'gratuity', 'nps'] %}
+                    {% if calculator_type not in ['ppf', 'fd', 'emi', 'gratuity', 'nps', 'post_retirement'] %}
                     <!-- Lens: Section 112A LTCG Tax -->
                     <label id="overlay-chip-post-tax" 
                         class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-ui-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-white active:scale-95 border border-transparent has-checked:bg-white has-checked:text-violet-900 has-checked:shadow-flat has-checked:border-violet-200 has-checked:font-bold shrink-0" 

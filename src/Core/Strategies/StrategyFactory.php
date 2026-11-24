@@ -39,6 +39,7 @@ class StrategyFactory
         'sip-1-lakh-per-month'         => SipStrategy::class,
         'gratuity-calculator'          => GratuityStrategy::class,
         'nps-calculator'               => NpsStrategy::class,
+        'post-retirement-calculator'   => PostRetirementStrategy::class,
     ];
 
     private ConfigServiceInterface $configService;

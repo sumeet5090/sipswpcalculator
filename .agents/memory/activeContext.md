@@ -5,7 +5,35 @@
 ---
 
 ## 1. Active Focus & State
-- **Current Milestone:** National Pension System (NPS) Calculator (`/nps-calculator`) Shipped & Verified — Built high-precision PFRDA Tier-1 compounding engine in PHP & TypeScript with statutory exit rules (min 40% annuity, Section 10(12A) 60% tax-free lump sum, small-corpus <= ₹5L exemption, monthly annuity pension cash flow); 4-card KPI summary; static benchmark schedule matrix; verified 100% Green across quality gates (891 tests, 14,841 assertions, 87 parity tests, 49 SEO routes); submitted to Bing IndexNow. Ready for Track 3 (Post-Retirement Asset Allocation Studio).
+- **Current Milestone:** Post-Retirement Asset Allocation & Multi-Stream Drawdown Calculator (`/post-retirement-calculator`) Shipped & Verified — Built comprehensive decumulation and multi-stream asset planning engine in PHP & TypeScript synthesizing Day-1 separation capital (personal savings + Section 10(10) Gratuity + Section 10(12A) NPS lump sum) with guaranteed monthly pensions and deficit-only inflation-escalating SWP drawdowns; dynamic 3-Bucket asset allocation (Bucket 1: Cash Buffer 0-3Y, Bucket 2: Income Preservation 4-10Y, Bucket 3: Long-Term Growth 10Y+); 4-card KPI summary (Initial Nest Egg, Guaranteed Pension, Net Monthly SWP, Portfolio Longevity); static benchmark schedule matrix; verified 100% Green across quality gates (903 tests, 15,157 assertions, 95 parity tests, 50 SEO routes); submitted to Bing IndexNow. All 3 Tracks (NPS, GA4, Post-Retirement) fully delivered!
+- **Implemented Features & Fixes (2026-11-24 Session 52 - Post-Retirement Asset Allocation Calculator):**
+  - **Multi-Stream Decumulation Engine (`PostRetirementEngine.php` & `PostRetirementEngine.ts`):**
+    - Day-1 Capital Synthesizer: Merges existing savings/EPF/PPF with statutory Gratuity (tax-free under Sec 10(10)) and NPS 60% lump sum (Sec 10(12A)) into an investable retirement nest egg.
+    - Deficit-Only SWP Equation: $\text{Net Monthly SWP } (W_m) = \max(0, E_m - P_{\text{guaranteed}})$, escalating living expense $E_m$ annually by inflation $g$.
+    - Dynamic 3-Bucket Asset Allocation:
+      - Bucket 1 (Cash Buffer): $\min(K_0, 36 \times W_1)$ in Liquid/Arbitrage funds.
+      - Bucket 2 (Income): $\min(K_0 - B_1, K_0 \times 0.40)$ in Conservative Hybrid/Bonds.
+      - Bucket 3 (Growth): $K_0 - B_1 - B_2$ in Flexi-Cap/Index equities.
+    - Longevity Analysis: Calculates exact depletion month, depletion year, depletion age, or flags `is_perpetual: true` when growth outpaces drawdowns.
+  - **Domain Strategy, Inputs & Driver:**
+    - `PostRetirementInputs`: Value object encapsulating existing corpus, gratuity, NPS lump sum, pension, expense, ROI, inflation, age, and horizon.
+    - `PostRetirementStrategy`: Container-managed strategy resolving defaults and benchmark schedule.
+    - `PostRetirementDriver`: Interactive TypeScript driver with two-way synchronized sliders, 4-card odometer animations, dynamic badge updates (`✓ 100% Fully Funded (Age 90+)` or `⚠️ Depleted at Age X`), and table/chart integration.
+  - **Templates & Presentation:**
+    - `src/Views/components/forms/post-retirement-fields.twig`: Daylight frosted cards for capital inflows, monthly cash flows, and planning horizon.
+    - `src/Views/components/benchmarks/post-retirement-schedule.twig`: Static 3-bucket allocation matrices and withdrawal benchmarks.
+    - `src/Views/components/calculator-form.twig` & `chart-visualization.twig`: 4-card summary (Total Initial Nest Egg, Guaranteed Monthly Pension, Net Monthly SWP, Portfolio Longevity).
+    - Mega-menu header and footer clusters updated with Post-Retirement Planner.
+  - **Educational Guide & SEO:**
+    - `content/calculators/post-retirement-calculator.md`: Direct answer (BLUF), 3-bucket strategy guide, sequence of returns risk, and statutory tax callouts. Title tag: 62 bytes $\le 65$.
+    - Platform discovery: Registered in `CommandPaletteController.ts` (`calc-post-retirement`), `calculator_links.json`, `content/faqs.json`, `llms.txt`, `llms-full.txt`, and `url.txt`.
+  - **Verification & Parity:**
+    - `npm run typecheck && npm run build`: 100% clean TypeScript build (Vite chunk generated in 275ms).
+    - `php tests/parity_check.php`: 95/95 mathematical parity tests PASS (8 new Post-Retirement cases).
+    - `tests/Unit/PostRetirementEngineTest.php`: 5 tests, 26 assertions PASS.
+    - `tests/Unit/StrategyFactoryContainerTest.php`: 29/29 tests PASS.
+    - `tests/Integration/SeoMetadataValidatorTest.php`: 50/50 routes PASS (all title tags $\le 65$ chars, H1, meta desc, canonical, OG tags).
+    - `composer check-all`: 903/903 tests, 15,157 assertions PASS, PHPStan Level Max clean across 265 files, PSR-12 clean.
 - **Implemented Features & Fixes (2026-11-24 Session 51 - National Pension System Calculator):**
   - **Statutory NPS Engine (`NpsEngine.php` & `NpsEngine.ts`):**
     - PFRDA Tier-1 compounding formula: Month-by-month annuity due compounding at $r_m = r / 12$ across $(A_{\text{ret}} - A_{\text{curr}}) \times 12$ months.

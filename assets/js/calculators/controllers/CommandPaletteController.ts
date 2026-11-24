@@ -254,6 +254,14 @@ export const COMMAND_ITEMS: CommandItem[] = [
         icon: '🏛️'
     },
     {
+        id: 'calc-post-retirement',
+        title: 'Post-Retirement Calculator',
+        description: 'Multi-stream asset drawdown planner: Gratuity, NPS lump sum, guaranteed pension, and inflation-indexed SWP.',
+        category: 'Calculator',
+        url: '/post-retirement-calculator',
+        icon: '🌴'
+    },
+    {
         id: 'guide-cagr-xirr',
         title: 'CAGR vs XIRR Explained',
         description: 'Understand the difference between point-to-point and periodic cashflow returns.',

@@ -147,6 +147,18 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertArrayHasKey('nps_monthly_contribution', $inputs->toTemplateData());
     }
 
+    public function testCreatePostRetirementStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('post-retirement-calculator');
+        $this->assertInstanceOf(\Core\Strategies\PostRetirementStrategy::class, $strategy);
+        $this->assertSame('post_retirement', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\PostRetirementInputs::class, $inputs);
+        $this->assertArrayHasKey('post_ret_existing_corpus', $inputs->toTemplateData());
+        $this->assertSame('components/benchmarks/post-retirement-schedule.twig', $strategy->getBenchmarkTemplate());
+    }
+
     public function testCreateStepUpSipStrategyFromContainer(): void
     {
         $strategy = $this->factory->create('sip-step-up-calculator');

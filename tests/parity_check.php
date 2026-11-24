@@ -945,6 +945,93 @@ foreach ($npsCases as $idx => $nParams) {
     }
 }
 
+// 10. Cross-Runtime Parity: Post-Retirement Asset Allocation & Multi-Stream Drawdown Engine
+// ----------------------------------------------------------------------------------------
+echo "\nTesting Post-Retirement Engine Parity (PHP vs TypeScript)...\n";
+$postRetCases = [
+    // 1. Baseline
+    ['existing_corpus' => 5000000.0, 'gratuity_lump_sum' => 1500000.0, 'nps_lump_sum' => 4000000.0, 'guaranteed_pension' => 25000.0, 'monthly_expense' => 75000.0, 'expected_return' => 8.5, 'inflation_rate' => 6.0, 'current_age' => 60, 'planning_horizon_years' => 30],
+    // 2. Perpetual
+    ['existing_corpus' => 20000000.0, 'gratuity_lump_sum' => 2000000.0, 'nps_lump_sum' => 5000000.0, 'guaranteed_pension' => 40000.0, 'monthly_expense' => 60000.0, 'expected_return' => 9.0, 'inflation_rate' => 5.0, 'current_age' => 58, 'planning_horizon_years' => 35],
+    // 3. Zero Pension
+    ['existing_corpus' => 6000000.0, 'gratuity_lump_sum' => 1000000.0, 'nps_lump_sum' => 3000000.0, 'guaranteed_pension' => 0.0, 'monthly_expense' => 70000.0, 'expected_return' => 8.0, 'inflation_rate' => 6.0, 'current_age' => 60, 'planning_horizon_years' => 25],
+    // 4. Small Corpus (Early Depletion)
+    ['existing_corpus' => 1500000.0, 'gratuity_lump_sum' => 500000.0, 'nps_lump_sum' => 0.0, 'guaranteed_pension' => 10000.0, 'monthly_expense' => 50000.0, 'expected_return' => 7.5, 'inflation_rate' => 6.0, 'current_age' => 62, 'planning_horizon_years' => 20],
+    // 5. High Expense / HNI
+    ['existing_corpus' => 30000000.0, 'gratuity_lump_sum' => 2000000.0, 'nps_lump_sum' => 8000000.0, 'guaranteed_pension' => 50000.0, 'monthly_expense' => 200000.0, 'expected_return' => 10.0, 'inflation_rate' => 6.5, 'current_age' => 55, 'planning_horizon_years' => 35],
+    // 6. Zero Gratuity & Zero NPS
+    ['existing_corpus' => 10000000.0, 'gratuity_lump_sum' => 0.0, 'nps_lump_sum' => 0.0, 'guaranteed_pension' => 30000.0, 'monthly_expense' => 80000.0, 'expected_return' => 8.5, 'inflation_rate' => 6.0, 'current_age' => 60, 'planning_horizon_years' => 30],
+    // 7. Late Retirement (Age 70)
+    ['existing_corpus' => 4000000.0, 'gratuity_lump_sum' => 1500000.0, 'nps_lump_sum' => 2500000.0, 'guaranteed_pension' => 20000.0, 'monthly_expense' => 60000.0, 'expected_return' => 7.5, 'inflation_rate' => 5.5, 'current_age' => 70, 'planning_horizon_years' => 20],
+    // 8. High Inflation Stress Test
+    ['existing_corpus' => 8000000.0, 'gratuity_lump_sum' => 2000000.0, 'nps_lump_sum' => 4000000.0, 'guaranteed_pension' => 25000.0, 'monthly_expense' => 90000.0, 'expected_return' => 8.0, 'inflation_rate' => 8.0, 'current_age' => 60, 'planning_horizon_years' => 30],
+];
+
+foreach ($postRetCases as $idx => $prParams) {
+    echo "Post-Retirement Parity Case " . ($idx + 1) . ": ";
+    $phpRes = \Core\Math\PostRetirementEngine::calculate(
+        $prParams['existing_corpus'],
+        $prParams['gratuity_lump_sum'],
+        $prParams['nps_lump_sum'],
+        $prParams['guaranteed_pension'],
+        $prParams['monthly_expense'],
+        $prParams['expected_return'],
+        $prParams['inflation_rate'],
+        $prParams['current_age'],
+        $prParams['planning_horizon_years']
+    );
+
+    $cmd = "node tests/run_js_calc.js " . escapeshellarg(json_encode([
+        'action' => 'post_retirement',
+        'existing_corpus' => $prParams['existing_corpus'],
+        'gratuity_lump_sum' => $prParams['gratuity_lump_sum'],
+        'nps_lump_sum' => $prParams['nps_lump_sum'],
+        'guaranteed_pension' => $prParams['guaranteed_pension'],
+        'monthly_expense' => $prParams['monthly_expense'],
+        'expected_return' => $prParams['expected_return'],
+        'inflation_rate' => $prParams['inflation_rate'],
+        'current_age' => $prParams['current_age'],
+        'planning_horizon_years' => $prParams['planning_horizon_years'],
+    ]));
+    $jsRes = json_decode((string)shell_exec($cmd), true);
+
+    $fields = [
+        'total_initial_corpus',
+        'initial_monthly_swp',
+        'initial_swr_percent',
+        'final_balance',
+        'bucket_1_cash',
+        'bucket_2_income',
+        'bucket_3_growth'
+    ];
+    $mismatch = false;
+    if ($phpRes['is_perpetual'] !== $jsRes['is_perpetual']) {
+        echo "FAIL: is_perpetual mismatch. PHP: " . var_export($phpRes['is_perpetual'], true) . ", JS: " . var_export($jsRes['is_perpetual'], true) . "\n";
+        $failed = true;
+        $mismatch = true;
+    } elseif ($phpRes['depletion_year'] !== $jsRes['depletion_year']) {
+        echo "FAIL: depletion_year mismatch. PHP: " . var_export($phpRes['depletion_year'], true) . ", JS: " . var_export($jsRes['depletion_year'], true) . "\n";
+        $failed = true;
+        $mismatch = true;
+    } elseif ($phpRes['depletion_age'] !== $jsRes['depletion_age']) {
+        echo "FAIL: depletion_age mismatch. PHP: " . var_export($phpRes['depletion_age'], true) . ", JS: " . var_export($jsRes['depletion_age'], true) . "\n";
+        $failed = true;
+        $mismatch = true;
+    } else {
+        foreach ($fields as $f) {
+            if (abs((float)$phpRes[$f] - (float)$jsRes[$f]) > 1.0) {
+                echo "FAIL: Field {$f} mismatch. PHP: {$phpRes[$f]}, JS: {$jsRes[$f]}\n";
+                $failed = true;
+                $mismatch = true;
+                break;
+            }
+        }
+    }
+    if (!$mismatch) {
+        echo "PASS\n";
+    }
+}
+
 echo "\n";
 if ($failed) {
     echo "=== CALCULATOR ENGINE PARITY TESTS FAILED ===\n";

@@ -24,6 +24,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | `/fd-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/fd-fields.twig` | `Core\Strategies\FdStrategy`<br/>`drivers/FdDriver.ts` | `engines/FdEngine.ts` | `fd_*` |
 | `/gratuity-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/gratuity-fields.twig` | `Core\Strategies\GratuityStrategy`<br/>`drivers/GratuityDriver.ts` | `engines/GratuityEngine.ts`<br/>`Core\Math\GratuityEngine.php` | `gratuity_*` |
 | `/nps-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/nps-fields.twig` | `Core\Strategies\NpsStrategy`<br/>`drivers/NpsDriver.ts` | `engines/NpsEngine.ts`<br/>`Core\Math\NpsEngine.php` | `nps_*` |
+| `/post-retirement-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/post-retirement-fields.twig` | `Core\Strategies\PostRetirementStrategy`<br/>`drivers/PostRetirementDriver.ts` | `engines/PostRetirementEngine.ts`<br/>`Core\Math\PostRetirementEngine.php` | `post_ret_*` |
 | `/embed/{slug}` | `Controllers\RenderEmbedAction` | `calculators/embed.twig` | `CalculatorApp.ts` | `MathEngine.ts` | Embedded config |
 
 ---

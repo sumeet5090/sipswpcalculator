@@ -12,6 +12,7 @@ import { PpfEngine } from '../assets/js/calculators/engines/PpfEngine.ts';
 import { FdEngine } from '../assets/js/calculators/engines/FdEngine.ts';
 import { GratuityEngine } from '../assets/js/calculators/engines/GratuityEngine.ts';
 import { NpsEngine } from '../assets/js/calculators/engines/NpsEngine.ts';
+import { PostRetirementEngine } from '../assets/js/calculators/engines/PostRetirementEngine.ts';
 
 try {
     // Read input parameters JSON from command line arguments
@@ -205,6 +206,19 @@ try {
             inputArgs.expected_return_rate,
             inputArgs.annuity_percent !== undefined ? inputArgs.annuity_percent : 40.0,
             inputArgs.annuity_return_rate !== undefined ? inputArgs.annuity_return_rate : 6.0
+        );
+        console.log(JSON.stringify(res));
+    } else if (inputArgs.action === 'post_retirement') {
+        const res = PostRetirementEngine.calculate(
+            inputArgs.existing_corpus,
+            inputArgs.gratuity_lump_sum,
+            inputArgs.nps_lump_sum,
+            inputArgs.guaranteed_pension,
+            inputArgs.monthly_expense,
+            inputArgs.expected_return,
+            inputArgs.inflation_rate !== undefined ? inputArgs.inflation_rate : 6.0,
+            inputArgs.current_age !== undefined ? inputArgs.current_age : 60,
+            inputArgs.planning_horizon_years !== undefined ? inputArgs.planning_horizon_years : 30
         );
         console.log(JSON.stringify(res));
     } else if (inputArgs.action === 'generate_qr_test') {

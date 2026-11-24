@@ -191,6 +191,87 @@
         "label": "Annuity Rate",
         "suffix": "%"
     },
+    "post_ret_existing_corpus": {
+        "default": 5000000,
+        "min": 0,
+        "max": 100000000,
+        "slider_max": 20000000,
+        "step": 100000,
+        "label": "Existing Savings, EPF & Mutual Funds",
+        "prefix": "₹"
+    },
+    "post_ret_gratuity": {
+        "default": 1500000,
+        "min": 0,
+        "max": 50000000,
+        "slider_max": 3000000,
+        "step": 50000,
+        "label": "Gratuity Lump Sum",
+        "prefix": "₹"
+    },
+    "post_ret_nps_lump_sum": {
+        "default": 4000000,
+        "min": 0,
+        "max": 100000000,
+        "slider_max": 10000000,
+        "step": 100000,
+        "label": "NPS 60% Tax-Free Lump Sum",
+        "prefix": "₹"
+    },
+    "post_ret_pension": {
+        "default": 25000,
+        "min": 0,
+        "max": 500000,
+        "slider_max": 100000,
+        "step": 1000,
+        "label": "Guaranteed Monthly Pension",
+        "prefix": "₹"
+    },
+    "post_ret_expense": {
+        "default": 75000,
+        "min": 10000,
+        "max": 1000000,
+        "slider_max": 250000,
+        "step": 2500,
+        "label": "Monthly Living Expenses",
+        "prefix": "₹"
+    },
+    "post_ret_return": {
+        "default": 8.5,
+        "min": 4.0,
+        "max": 14.0,
+        "slider_max": 14.0,
+        "step": 0.25,
+        "label": "Expected Return",
+        "suffix": "%"
+    },
+    "post_ret_inflation": {
+        "default": 6.0,
+        "min": 3.0,
+        "max": 10.0,
+        "slider_max": 10.0,
+        "step": 0.5,
+        "label": "Annual Inflation Rate",
+        "suffix": "%"
+    },
+    "post_ret_age": {
+        "default": 60,
+        "min": 40,
+        "max": 80,
+        "slider_max": 75,
+        "step": 1,
+        "label": "Current Retirement Age",
+        "suffix": "Yrs"
+    },
+    "post_ret_horizon": {
+        "default": 30,
+        "min": 10,
+        "max": 45,
+        "slider_max": 40,
+        "step": 1,
+        "label": "Planning Horizon",
+        "suffix": "Yrs"
+    },
     "ltcg_tax": {
         "exemption_threshold": 125000,
         "rate": 0.125

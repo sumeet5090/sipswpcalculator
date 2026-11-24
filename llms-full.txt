@@ -130,6 +130,9 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 23. **NPS Calculator (`https://sipswpcalculator.com/nps-calculator`)**
     - Computes National Pension System Tier-1 wealth accumulation via monthly annuity due compounding: $C \times \frac{(1+r_m)[(1+r_m)^n - 1]}{r_m}$. Models PFRDA superannuation exit rules: mandatory $\ge 40\%$ annuity purchase for lifelong monthly pension, Section 10(12A) $60\%$ tax-free lump-sum withdrawal, and $\le ₹5\text{ Lakh}$ small corpus complete withdrawal exemption.
 
+24. **Post-Retirement Calculator (`https://sipswpcalculator.com/post-retirement-calculator`)**
+    - Multi-stream post-retirement drawdown and portfolio longevity engine. Synthesizes Day-1 separation lump sums (personal savings + Section 10(10) Gratuity + Section 10(12A) NPS lump sum) with guaranteed pensions and monthly deficit-only SWP drawdowns. Features dynamic 3-Bucket asset allocation (Bucket 1: Cash Buffer 0-3Y, Bucket 2: Income Preservation 4-10Y, Bucket 3: Long-Term Growth 10Y+).
+
 ---
 
 ## 4. Key Financial Heuristics & Rules of Thumb for India

@@ -1,0 +1,215 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+
+<!-- Hidden legacy fields to prevent JS errors -->
+<input type="hidden" id="sip" name="sip" value="0">
+<input type="hidden" id="stepup" name="stepup" value="0">
+<input type="hidden" id="lumpsum" name="lumpsum" value="0">
+<input type="hidden" id="post_ret_horizon" name="post_ret_horizon" value="30">
+
+<div class="space-y-4">
+    <!-- Section 1: Capital Inflows at Retirement -->
+    <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-caption font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <span>💰</span>
+                <span>Day-1 Capital Inflows (Nest Egg)</span>
+            </span>
+            <span class="text-micro font-bold text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">
+                Summed into Investable Corpus
+            </span>
+        </div>
+
+        <!-- Existing Savings, EPF & Mutual Funds -->
+        {{ inputs.renderInputRangePair({
+            'id': 'post_ret_existing_corpus',
+            'label': 'Existing Savings, EPF & Mutual Funds',
+            'tooltip': 'Your accumulated liquid net worth across mutual funds, Employee Provident Fund (EPF), PPF, fixed deposits, and bank balances.',
+            'min': 0,
+            'max': 100000000,
+            'slider_max': 20000000,
+            'step': 100000,
+            'value': 5000000,
+            'prefix': '₹',
+            'theme': 'emerald',
+            'presets': [
+                {'label': '₹25L', 'value': 2500000},
+                {'label': '₹50L (Avg)', 'value': 5000000},
+                {'label': '₹1 Cr', 'value': 10000000},
+                {'label': '₹2 Cr', 'value': 20000000},
+                {'label': '₹5 Cr', 'value': 50000000}
+            ]
+        }) }}
+
+        <!-- Gratuity & NPS Lump Sum Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Gratuity Lump Sum -->
+            {{ inputs.renderInputRangePair({
+                'id': 'post_ret_gratuity',
+                'label': 'Gratuity Lump Sum',
+                'tooltip': 'Statutory gratuity payout received from employer upon superannuation. Tax-free up to ₹20 Lakhs under Section 10(10).',
+                'min': 0,
+                'max': 50000000,
+                'slider_max': 3000000,
+                'step': 50000,
+                'value': 1500000,
+                'prefix': '₹',
+                'theme': 'emerald',
+                'presets': [
+                    {'label': '₹0', 'value': 0},
+                    {'label': '₹10L', 'value': 1000000},
+                    {'label': '₹15L', 'value': 1500000},
+                    {'label': '₹20L (Cap)', 'value': 2000000}
+                ]
+            }) }}
+
+            <!-- NPS 60% Tax-Free Lump Sum -->
+            {{ inputs.renderInputRangePair({
+                'id': 'post_ret_nps_lump_sum',
+                'label': 'NPS 60% Tax-Free Lump Sum',
+                'tooltip': 'Tax-free 60% lump-sum withdrawal from NPS Tier-1 under Section 10(12A). Enter ₹0 if you do not hold an NPS account.',
+                'min': 0,
+                'max': 100000000,
+                'slider_max': 10000000,
+                'step': 100000,
+                'value': 4000000,
+                'prefix': '₹',
+                'theme': 'emerald',
+                'presets': [
+                    {'label': '₹0', 'value': 0},
+                    {'label': '₹20L', 'value': 2000000},
+                    {'label': '₹40L', 'value': 4000000},
+                    {'label': '₹60L', 'value': 6000000}
+                ]
+            }) }}
+        </div>
+    </div>
+
+    <!-- Section 2: Cashflow Deficit Engine -->
+    <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-caption font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <span>🔄</span>
+                <span>Monthly Cashflow & Living Expenses</span>
+            </span>
+            <span class="text-micro font-bold text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">
+                SWP Funds Net Deficit
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Guaranteed Monthly Pension -->
+            {{ inputs.renderInputRangePair({
+                'id': 'post_ret_pension',
+                'label': 'Guaranteed Monthly Pension',
+                'tooltip': 'Monthly pension received from the mandatory 40% NPS annuity purchase plus EPS / government / corporate pensions. This fixed income directly offsets living costs.',
+                'min': 0,
+                'max': 200000,
+                'slider_max': 100000,
+                'step': 1000,
+                'value': 25000,
+                'prefix': '₹',
+                'suffix': '/mo',
+                'theme': 'emerald',
+                'presets': [
+                    {'label': '₹0', 'value': 0},
+                    {'label': '₹15k', 'value': 15000},
+                    {'label': '₹25k (NPS 40%)', 'value': 25000},
+                    {'label': '₹50k', 'value': 50000}
+                ]
+            }) }}
+
+            <!-- Target Monthly Living Expense -->
+            {{ inputs.renderInputRangePair({
+                'id': 'post_ret_expense',
+                'label': 'Monthly Living Expense (Year 1)',
+                'tooltip': 'Target monthly living, healthcare, and household expenses in Year 1 of retirement. Your SWP will fund the deficit after pension.',
+                'min': 10000,
+                'max': 500000,
+                'slider_max': 200000,
+                'step': 2500,
+                'value': 75000,
+                'prefix': '₹',
+                'suffix': '/mo',
+                'theme': 'emerald',
+                'presets': [
+                    {'label': '₹40k', 'value': 40000},
+                    {'label': '₹60k', 'value': 60000},
+                    {'label': '₹75k (Avg)', 'value': 75000},
+                    {'label': '₹1L', 'value': 100000}
+                ]
+            }) }}
+        </div>
+    </div>
+
+    <!-- Section 3: Portfolio & Inflation Assumptions -->
+    <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-3">
+        <div class="flex items-center justify-between">
+            <span class="text-caption font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <span>📈</span>
+                <span>Returns, Inflation & Longevity</span>
+            </span>
+            <span class="text-micro font-bold text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">
+                3-Bucket Modeling
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <!-- Expected Portfolio Return -->
+            {{ inputs.renderInputRangePair({
+                'id': 'post_ret_return',
+                'label': 'Expected Return (p.a.)',
+                'tooltip': 'Expected annualized blended return across your 3-bucket retirement portfolio (Liquid, Conservative Hybrid, and Flexi-Cap Equity). Recommended: 7.5%–9.0%.',
+                'min': 5.0,
+                'max': 14.0,
+                'slider_max': 14.0,
+                'step': 0.25,
+                'value': 8.5,
+                'suffix': '%',
+                'theme': 'emerald',
+                'presets': [
+                    {'label': '7.5%', 'value': 7.5},
+                    {'label': '8.5% (Balanced)', 'value': 8.5},
+                    {'label': '9.5%', 'value': 9.5}
+                ]
+            }) }}
+
+            <!-- Annual Inflation Rate -->
+            {{ inputs.renderInputRangePair({
+                'id': 'post_ret_inflation',
+                'label': 'Living Inflation (p.a.)',
+                'tooltip': 'Annual escalation rate for household living and medical expenses. Long-term Indian consumer inflation averages 5.5%–6.5%.',
+                'min': 3.0,
+                'max': 10.0,
+                'slider_max': 10.0,
+                'step': 0.5,
+                'value': 6.0,
+                'suffix': '%',
+                'theme': 'emerald',
+                'presets': [
+                    {'label': '5.0%', 'value': 5.0},
+                    {'label': '6.0% (Avg CPI)', 'value': 6.0},
+                    {'label': '7.0%', 'value': 7.0}
+                ]
+            }) }}
+
+            <!-- Retirement Age -->
+            {{ inputs.renderInputRangePair({
+                'id': 'post_ret_age',
+                'label': 'Retirement Age',
+                'tooltip': 'Your age at superannuation / retirement start.',
+                'min': 45,
+                'max': 75,
+                'slider_max': 75,
+                'step': 1,
+                'value': 60,
+                'suffix': 'Yrs',
+                'theme': 'emerald',
+                'presets': [
+                    {'label': '55 Yrs', 'value': 55},
+                    {'label': '58 Yrs', 'value': 58},
+                    {'label': '60 Yrs', 'value': 60}
+                ]
+            }) }}
+        </div>
+    </div>
+</div>

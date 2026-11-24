@@ -1,0 +1,60 @@
+{# Post-Retirement Asset Drawdown & Longevity Benchmark Reference Table #}
+<div class="bg-white/95 rounded-2xl border border-slate-200/90 shadow-subtle overflow-hidden">
+    <div class="overflow-x-auto custom-scrollbar">
+        <table class="w-full text-left text-xs sm:text-sm border-collapse" aria-label="Post-Retirement Multi-Stream Asset Drawdown Reference Table">
+            <caption class="sr-only">Post-retirement net monthly SWP drawdowns, safe withdrawal rates, and portfolio longevity across living expense tiers on a ₹1.05 Crore nest egg with ₹25,000 monthly pension at 8.5% return and 6% inflation</caption>
+            <thead>
+                <tr class="bg-slate-50/90 border-b border-slate-200 text-slate-700 font-bold">
+                    <th scope="col" class="py-3 px-3 sm:px-4 font-extrabold text-slate-900 table-sticky-col-th">Monthly Living Expense</th>
+                    <th scope="col" class="py-3 px-3 sm:px-4 text-center font-bold text-slate-700">Pension Offset</th>
+                    <th scope="col" class="py-3 px-3 sm:px-4 text-center font-extrabold text-amber-800">Net SWP Required</th>
+                    <th scope="col" class="py-3 px-3 sm:px-4 text-center">Initial SWR</th>
+                    <th scope="col" class="py-3 px-3 sm:px-4 text-right font-extrabold text-slate-900">Portfolio Longevity</th>
+                    <th scope="col" class="py-3 px-3 sm:px-4 text-right">Risk Status</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 font-financial-mono tabular-nums">
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                    <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 font-sans table-sticky-col-td">₹40,000 / month</td>
+                    <td class="py-3 px-3 sm:px-4 text-center text-emerald-700 font-bold">−₹25,000 / mo</td>
+                    <td class="py-3 px-3 sm:px-4 text-center font-bold text-amber-700">₹15,000 / mo</td>
+                    <td class="py-3 px-3 sm:px-4 text-center text-slate-700">1.71%</td>
+                    <td class="py-3 px-3 sm:px-4 text-right font-extrabold text-emerald-700">Fully Funded (Age 90+)</td>
+                    <td class="py-3 px-3 sm:px-4 text-right font-sans"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 text-micro font-bold border border-emerald-200">Perpetual</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                    <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 font-sans table-sticky-col-td">₹60,000 / month</td>
+                    <td class="py-3 px-3 sm:px-4 text-center text-emerald-700 font-bold">−₹25,000 / mo</td>
+                    <td class="py-3 px-3 sm:px-4 text-center font-bold text-amber-700">₹35,000 / mo</td>
+                    <td class="py-3 px-3 sm:px-4 text-center text-slate-700">4.00%</td>
+                    <td class="py-3 px-3 sm:px-4 text-right font-bold text-slate-800">Year 27.8 (Age 87)</td>
+                    <td class="py-3 px-3 sm:px-4 text-right font-sans"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 text-micro font-bold border border-emerald-200">Safe Rule (4% SWR)</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50/50 transition-colors bg-emerald-50/30">
+                    <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 font-sans table-sticky-col-td">₹75,000 / month (Default)</td>
+                    <td class="py-3 px-3 sm:px-4 text-center text-emerald-700 font-bold">−₹25,000 / mo</td>
+                    <td class="py-3 px-3 sm:px-4 text-center font-extrabold text-amber-800">₹50,000 / mo</td>
+                    <td class="py-3 px-3 sm:px-4 text-center font-extrabold text-slate-900">5.71%</td>
+                    <td class="py-3 px-3 sm:px-4 text-right font-extrabold text-amber-800">Year 19.7 (Age 79)</td>
+                    <td class="py-3 px-3 sm:px-4 text-right font-sans"><span class="px-2 py-0.5 rounded bg-amber-50 text-amber-900 text-micro font-bold border border-amber-300">Moderate Lifespan</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                    <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 font-sans table-sticky-col-td">₹1,00,000 / month</td>
+                    <td class="py-3 px-3 sm:px-4 text-center text-emerald-700 font-bold">−₹25,000 / mo</td>
+                    <td class="py-3 px-3 sm:px-4 text-center font-bold text-amber-700">₹75,000 / mo</td>
+                    <td class="py-3 px-3 sm:px-4 text-center text-slate-700">8.57%</td>
+                    <td class="py-3 px-3 sm:px-4 text-right font-bold text-rose-700">Year 13.2 (Age 73)</td>
+                    <td class="py-3 px-3 sm:px-4 text-right font-sans"><span class="px-2 py-0.5 rounded bg-rose-50 text-rose-800 text-micro font-bold border border-rose-200">Accelerated Depletion</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                    <td class="py-3 px-3 sm:px-4 font-bold text-slate-900 font-sans table-sticky-col-td">₹1,50,000 / month</td>
+                    <td class="py-3 px-3 sm:px-4 text-center text-emerald-700 font-bold">−₹25,000 / mo</td>
+                    <td class="py-3 px-3 sm:px-4 text-center font-bold text-amber-700">₹1,25,000 / mo</td>
+                    <td class="py-3 px-3 sm:px-4 text-center text-slate-700">14.29%</td>
+                    <td class="py-3 px-3 sm:px-4 text-right font-extrabold text-rose-800">Year 7.8 (Age 67)</td>
+                    <td class="py-3 px-3 sm:px-4 text-right font-sans"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-900 text-micro font-bold border border-rose-300">Critical Shortfall</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
