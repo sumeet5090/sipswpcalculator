@@ -108,4 +108,11 @@ This file codifies core invariant patterns to ensure Antigravity and developers 
 - **Tiered Verification Pipeline:**
   - *Tier 1 (Fast-Path Local Build & Parity):* Run `npm run build` and `php tests/parity_check.php` (verifying 71/71 parity tests).
   - *Tier 2 (Integration & Local Curl):* Run `vendor/bin/phpunit tests/Integration/HomepageLayoutAndAestheticsTest.php` and curl checks against the local server.
-  - *Tier 3 (Gate Tier):* Run `composer check-all` (820 tests, 12,776 assertions, PHPStan Level Max on 253 files, PSR-12 clean) before committing or concluding.
+  - *Tier 3 (Gate Tier):* Run `composer check-all` (820 tests, 12,776 assertions, PHPStan Level Max on 253 files, PSR-12 clean) before concluding and handing off to the human developer.
+
+---
+
+## 8. Git Commit & Branch Governance (Human-Only Invariant)
+- **Zero AI Commits & Merges:** Under NO circumstances should AI agents execute `git commit`, `git merge`, or `git push` on any branch.
+- **Human Developer Exclusivity:** The human administrator will inspect, stage, and commit changes on any branch regularly and merge branches to target branches as needed.
+- **Agent Scope Boundary:** The AI agent's task lifecycle strictly concludes at Tiered Verification and Anti-Drift Documentation. Working tree changes must remain uncommitted for the human developer.

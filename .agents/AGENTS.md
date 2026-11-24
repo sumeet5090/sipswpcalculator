@@ -10,6 +10,7 @@ Adhere to the following protocols for all development, architectural planning, d
 * **Zero-Ambiguity & Zero-Guesswork Mandate:** Under no circumstances should an agent guess, extrapolate, or assume requirements on the fly. If any question, confusion, trade-off, or fork in the road arises during the planning stage, the agent MUST immediately pause and approach the human admin for full clarification. In the implementation stage, there must be absolute zero ambiguity.
 * **Hook Compliance & Test Gates:** Before finalizing any task, ensure the implementation passes the complete quality verification pipeline (`npm run typecheck && npm run build`, `php tests/parity_check.php`, and `composer check-all`). If a build fails due to linting, typing, or test errors, prioritize fixing the issue before submitting the code.
 * **Avoid Hallucinations:** Ensure code is clean, structured, and strictly functional. Never invent phantom classes, un-routed endpoints, or un-imported dependencies.
+* **Strict Git Commit & Branch Governance (Human-Only Commits & Merges):** Under NO circumstances should AI agents execute `git commit`, `git merge`, `git push`, or switch/merge git branches (`git checkout stage`, `git checkout main`, etc.). The human administrator will inspect, stage, and commit all changes regularly and manage branch merges to target branches independently. AI agents must strictly limit their activities to code creation, editing, refactoring, documentation updates, and running verification tests (`npm run build`, `php tests/parity_check.php`, `composer check-all`). Leave the working tree uncommitted for human review and commit.
 
 ---
 
@@ -79,6 +80,7 @@ Every development task must follow this exact sequential 5-stage lifecycle:
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ Stage 5: Anti-Drift Documentation & Handoff Ledger                      │
 │ • Update README.md, ARCHITECTURE_MAP.md, activeContext.md               │
+│ • NEVER commit or merge branches; hand off to human admin for commit    │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -96,6 +98,7 @@ Every development task must follow this exact sequential 5-stage lifecycle:
   2. Check and update `.agents/ARCHITECTURE_MAP.md` if any route, controller, template, driver, engine, or subsystem coordinate shifted.
   3. Search and rectify any obsolete references or deprecated patterns in `.agents/memory/`, `.agents/skills/`, and `docs/`. Never leave stale file paths or outdated architectural guidelines in the repository.
   4. Update `.agents/memory/activeContext.md` with the latest task state and changes made, ensuring seamless continuity across subsequent conversations.
+  5. **Human-Only Commit & Merge Handoff:** NEVER run `git commit`, `git merge`, or `git push`. Hand off the verified, uncommitted changes directly to the human developer, who will review, commit to the appropriate branch, and merge branches as needed.
 
 ---
 
@@ -136,6 +139,7 @@ Every development task must follow this exact sequential 5-stage lifecycle:
 ---
 
 ### 9. Environment Security & Modifications
+* **Zero AI Git Commits or Branch Merging Mandate:** AI agents are strictly forbidden from committing changes on any branch (`git commit`), merging branches (`git merge`), or pushing (`git push`). The human developer personally and regularly commits changes to branches and merges branches to target branches as needed.
 * **No Direct Production SSH Modifications:** Under absolutely NO circumstances should you connect to a production or staging server via SSH to execute database schema alterations (e.g., `ALTER TABLE`), modify production files directly, or perform "quick fixes". All changes MUST be committed via Git and deployed through the standard CI/CD pipeline. No exceptions.
 * **CLI-Only Schema Migrations:** Database schema migrations are executed strictly via CLI (`php bin/migrate` or `php migrate.php`) for environment security; there are no administrative web migration endpoints.
 * **SQLite WAL Mode & Concurrency:** All SQLite PDO connections must configure `PRAGMA journal_mode = WAL;`, `PRAGMA synchronous = NORMAL;`, and `PRAGMA busy_timeout = 5000;`, eliminating concurrency lock contention during traffic surges.
