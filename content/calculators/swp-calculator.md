@@ -2,7 +2,7 @@
 title: "SWP Calculator India (with Free Excel & Longevity Table)"
 h1: "SWP Calculator India — Monthly Pension & Withdrawal Planner"
 subtitle: "Free SWP calculator with step-up withdrawals & inflation protection for Indian mutual funds. Plan retirement income & export free month-by-month cashflow tables."
-meta_desc: "Calculate monthly SWP payout, capital longevity & inflation-adjusted income for ₹10 Lakhs to ₹5 Crores. Model 2026 LTCG tax with free downloadable Excel report."
+meta_desc: "Calculate monthly SWP pension, portfolio longevity & 2026 Section 112A tax for ₹10L–₹5 Cr. Export native .xlsx Excel models with inflation-stepped drawdowns."
 keywords: "swp calculator, swp calculator india, step up swp calculator, 5 crore swp calculator, 1 crore swp calculator, 30 lakh swp calculator, 5 lakh swp calculator, best swp for monthly income, systematic withdrawal plan calculator india, swp mutual fund calculator, swp return calculator, swp tax calculator"
 schema_name: "SWP Calculator India — Monthly Pension & Withdrawal Planner"
 seo_category: "retirement"
@@ -24,7 +24,7 @@ While the working years are dedicated to wealth accumulation through Systematic 
 
 Historically, Indian retirees relied almost exclusively on Bank Fixed Deposits (FDs), Post Office Monthly Income Schemes (POMIS), and commercial life insurance annuities to generate monthly living cash flows. However, in 2026, against an economic backdrop of sticky 5.5%–6.5% retail inflation and punitive income tax slabs that tax traditional interest at rates exceeding 30%, traditional fixed-income instruments guarantee negative real returns. 
 
-An SWP executed from a tax-efficient mutual fund portfolio has emerged as the premier retirement income mechanism in India. It preserves purchasing power, offers unparalleled tax arbitrage, and ensures that your hard-earned retirement corpus outlives you.
+An SWP executed from a tax-efficient mutual fund portfolio has emerged as the premier retirement income mechanism in India. It preserves purchasing power, offers unparalleled tax arbitrage, and ensures that your hard-earned retirement corpus outlives you. For a complete multi-stream retirement blueprint integrating [Statutory Gratuity](/gratuity-calculator) and [NPS Tier-1 Annuity](/nps-calculator) alongside SWP, explore our [Post-Retirement Asset Allocation Studio](/post-retirement-calculator).
 
 ---
 

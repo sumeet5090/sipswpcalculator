@@ -336,6 +336,12 @@
             </div>
 
             <div class="grid grid-cols-2 gap-2">
+                <!-- Excel (.xlsx) Export -->
+                <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('downloadExcelBtn')?.click()"
+                    class="p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-900 text-ui-xs font-extrabold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
+                    <span class="text-ui-sm">📗</span>
+                    <span>Excel (.xlsx)</span>
+                </button>
                 <!-- CSV Export -->
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('downloadCsvBtn')?.click()"
                     class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">

@@ -1,12 +1,25 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-24*
+*Last Updated: 2026-11-25*
 
 ---
 
 ## 1. Active Focus & State
 - **Permanent Operational Governance Rule (Human-Only Git Commits & Merges):** Under NO circumstances should AI agents execute `git commit`, `git merge`, or `git push` on any branch, or switch/merge branches. The human administrator personally inspects, stages, and commits all changes regularly and merges branches to target branches as needed. AI agents strictly conclude their lifecycle at Tiered Verification and Anti-Drift Documentation, leaving the working tree uncommitted for the human developer.
-- **Current Milestone:** Post-Retirement Asset Allocation & Multi-Stream Drawdown Calculator (`/post-retirement-calculator`) Shipped & Verified — Built comprehensive decumulation and multi-stream asset planning engine in PHP & TypeScript synthesizing Day-1 separation capital (personal savings + Section 10(10) Gratuity + Section 10(12A) NPS lump sum) with guaranteed monthly pensions and deficit-only inflation-escalating SWP drawdowns; dynamic 3-Bucket asset allocation (Bucket 1: Cash Buffer 0-3Y, Bucket 2: Income Preservation 4-10Y, Bucket 3: Long-Term Growth 10Y+); 4-card KPI summary (Initial Nest Egg, Guaranteed Pension, Net Monthly SWP, Portfolio Longevity); static benchmark schedule matrix; verified 100% Green across quality gates (903 tests, 15,157 assertions, 95 parity tests, 50 SEO routes); submitted to Bing IndexNow. All 3 Tracks (NPS, GA4, Post-Retirement) fully delivered!
+- **Current Milestone:** Option B (Page-1 Snippet, CTR & Internal Bridge Optimization) + Option C (Native Client-Side `.xlsx` Excel Workbook Export) Implemented & Verified — Sharpened titles/meta descriptions on `/my-first-crore-calculator`, `/compound-interest-calculator`, and `/swp-calculator` for higher CTR; added contextual internal bridges to `/post-retirement-calculator`, `/nps-calculator`, and `/gratuity-calculator`; implemented lazy-loaded SheetJS (`xlsx`) multi-sheet Excel export (`ExcelExportController.ts`) with live Excel formulas (`SUM`, `MAX`, `POWER`), `₹#,##,##0` currency formatting, and zero initial bundle impact (`xlsx-*.js` split chunk).
+- **Implemented Features & Fixes (2026-11-25 Session 53 - Option B CTR + Option C Native `.xlsx` Export):**
+  - **Option B (SEO Snippet & Internal Link Equity):**
+    - `content/calculators/my-first-crore-calculator.md`: Updated `<title>` to `"1 Crore SIP Calculator: Reach ₹1 Cr in 5-15 Yrs (Free Excel)"` (62 bytes $\le 65$), tightened `meta_desc` with concrete SIP figures and `.xlsx` hook, and added inline contextual bridge to `/post-retirement-calculator`, `/nps-calculator`, and `/gratuity-calculator`.
+    - `content/calculators/compound-interest-calculator.md` & `swp-calculator.md`: Sharpened `meta_desc` with `.xlsx` Excel model hook and added contextual bridge to `/post-retirement-calculator`, `/nps-calculator`, and `/gratuity-calculator`.
+    - `content/calculator_links.json`: Updated cross-links on `sip-calculator`, `swp-calculator`, and `retirement-calculator` to flow link equity into `/post-retirement-calculator`, `/nps-calculator`, and `/gratuity-calculator`.
+  - **Option C (Native Client-Side `.xlsx` Export):**
+    - Installed `xlsx` (`package.json`) and created `assets/js/calculators/controllers/ExcelExportController.ts` using dynamic `import('xlsx')` inside the click handler (emitting async `dist/assets/xlsx-*.js` chunk without inflating initial `app-*.js`).
+    - Generates 2-sheet workbook: `Summary & Inputs` (parameters + KPIs with live Excel formulas) and `Yearly Cashflow Schedule` (year-by-year table with `₹#,##,##0` currency formatting and bold `=SUM(...)` totals).
+    - Preserved `#downloadCsvBtn` and added `#downloadExcelBtn` in `chart-visualization.twig`, `yearly-breakdown-table.twig`, `base.twig`, and updated hero `[Free Excel Model]` CTA in `home.twig`.
+  - **Verification:**
+    - `npm run typecheck && npm run build`: Clean build (`app-*.js` + lazy `xlsx-*.js` split chunk).
+    - `php tests/parity_check.php`: 95/95 parity tests PASS.
+    - `composer check-all`: PHPStan Level Max (265 files), PSR-12 (265 files), and 903 PHPUnit tests (15,157 assertions, including 50-route `SeoMetadataValidatorTest`) PASS.
 - **Implemented Features & Fixes (2026-11-24 Session 52 - Post-Retirement Asset Allocation Calculator):**
   - **Multi-Stream Decumulation Engine (`PostRetirementEngine.php` & `PostRetirementEngine.ts`):**
     - Day-1 Capital Synthesizer: Merges existing savings/EPF/PPF with statutory Gratuity (tax-free under Sec 10(10)) and NPS 60% lump sum (Sec 10(12A)) into an investable retirement nest egg.

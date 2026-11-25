@@ -392,14 +392,24 @@
                     <span>Branded PDF</span>
                 </button>
 
-                <!-- 2. CSV / Excel Spreadsheet Download Trigger -->
+                <!-- 2. Native Excel (.xlsx) Workbook Download Trigger -->
+                <button type="button" id="downloadExcelBtn"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-900 hover:text-emerald-950 border border-emerald-300/90 hover:border-emerald-400 text-ui-xs font-extrabold transition-all shadow-flat hover:shadow-card active:scale-95 cursor-pointer"
+                    title="Download multi-sheet Excel financial model (.xlsx) with live formulas">
+                    <svg class="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <span>Excel (.xlsx)</span>
+                </button>
+
+                <!-- 3. CSV Spreadsheet Download Trigger -->
                 <button type="submit" id="downloadCsvBtn" name="action" value="download_csv" form="calculator-form" formaction="/download-csv"
-                    class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 hover:text-slate-950 border border-slate-300/90 hover:border-slate-400 text-ui-xs font-bold transition-all shadow-flat hover:shadow-card active:scale-95 cursor-pointer"
+                    class="inline-flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-300/90 hover:border-slate-400 text-ui-xs font-bold transition-all shadow-flat hover:shadow-card active:scale-95 cursor-pointer"
                     title="Export complete yearly cashflow schedule to spreadsheet (.csv)">
-                    <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                     </svg>
-                    <span>CSV / Excel</span>
+                    <span>CSV</span>
                 </button>
 
                 <!-- 3. Scenario Snapshot Comparison Trigger -->

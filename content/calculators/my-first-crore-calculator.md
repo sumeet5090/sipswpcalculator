@@ -1,9 +1,9 @@
 ---
 og_image: "/assets/og/og-my-first-crore-calculator.jpg"
-title: "1 Crore SIP Calculator — Monthly SIP for ₹1 Cr (Free Excel)"
+title: "1 Crore SIP Calculator: Reach ₹1 Cr in 5-15 Yrs (Free Excel)"
 h1: "1 Crore SIP Calculator"
 subtitle: "Find the exact monthly SIP needed to reach ₹1 Crore in 5, 10, 15, or 20 years. Free goal planning calculator with 10% annual step-up compounding & downloadable Excel."
-meta_desc: "Find the exact monthly SIP to reach ₹1 Crore in 5, 10, 15, or 20 years. Model 10% step-up compounding & 2026 LTCG tax with free instant Excel & PDF download."
+meta_desc: "Find the exact monthly SIP for ₹1 Crore (₹43k/mo for 10 yrs or ₹11.5k/mo with 10% step-up). Includes 2026 Section 112A LTCG tax & native .xlsx Excel model."
 keywords: "crore calculator, 1 crore in 5 years sip, reach 1 crore sip, how much sip for 1 crore, 1 crore mutual fund calculator, crorepathi sip planner, 1 crore in 10 years sip"
 schema_name: "1 Crore SIP Calculator — Monthly Investment to Reach ₹1 Cr"
 seo_category: "growth"
@@ -42,7 +42,7 @@ Notice the staggering asymmetry:
 2. **The Second ₹1 Crore** takes only **4.9 years**—nearly two-thirds faster—requiring less than ₹15 Lakhs of personal contributions because the initial ₹1 Crore is compounding simultaneously at ₹12 Lakhs per year.
 3. **The Third and Fourth ₹1 Crores** arrive in just 3.1 and 2.2 years respectively. By year 20, over 93% of every new Crore added to your net worth is created entirely by market returns, completely decoupling wealth generation from your physical labor.
 
-> **Planning Tip:** Already have a fixed monthly budget in mind rather than a rigid corpus target? If your monthly savings capacity is predetermined, use our [Custom Monthly SIP Calculator](/sip-calculator) to project your exact wealth accumulation and capital gains across any custom deposit amount.
+> **Planning Tip:** Already have a fixed monthly budget in mind rather than a rigid corpus target? If your monthly savings capacity is predetermined, use our [Custom Monthly SIP Calculator](/sip-calculator) to project your exact wealth accumulation. Once your ₹1 Crore milestone is built, transition into our [Post-Retirement Drawdown Studio](/post-retirement-calculator) to combine mutual fund SWP with [NPS Pension](/nps-calculator) and [Statutory Gratuity](/gratuity-calculator).
 
 ---
 

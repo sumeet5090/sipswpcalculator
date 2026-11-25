@@ -43,9 +43,9 @@
             "description": "Plan regular systematic monthly withdrawals and retirement income streams from your accumulated corpus."
         },
         {
-            "href": "/lumpsum-calculator",
-            "title": "Lumpsum Calculator",
-            "description": "Calculate returns on one-time mutual fund investments and compare lumpsum vs SIP growth."
+            "href": "/nps-calculator",
+            "title": "NPS Calculator",
+            "description": "Calculate National Pension System Tier-1 corpus, 60% tax-free lump sum & monthly annuity pension."
         },
         {
             "href": "/my-first-crore-calculator",
@@ -55,24 +55,24 @@
     ],
     "swp-calculator": [
         {
+            "href": "/post-retirement-calculator",
+            "title": "Post-Retirement Drawdown Studio",
+            "description": "Combine personal savings, Gratuity, NPS lump sum, guaranteed pension & 3-bucket SWP longevity."
+        },
+        {
             "href": "/",
             "title": "SIP & SWP Calculator Together",
             "description": "Plan your complete investment lifecycle from SIP accumulation to SWP retirement cash flows in one unified tool."
         },
         {
+            "href": "/nps-calculator",
+            "title": "NPS Calculator",
+            "description": "Calculate National Pension System Tier-1 corpus, 60% tax-free lump sum & monthly annuity pension."
+        },
+        {
             "href": "/retirement-calculator",
             "title": "Retirement Calculator",
             "description": "Calculate retirement corpus requirements, pension drawdown periods, and the 4% safe withdrawal rule."
-        },
-        {
-            "href": "/sip-step-up-calculator",
-            "title": "Step-Up SIP Calculator",
-            "description": "Build your initial retirement corpus faster by stepping up your annual monthly investment."
-        },
-        {
-            "href": "/sip-calculator",
-            "title": "SIP Calculator",
-            "description": "Calculate standalone Systematic Investment Plan returns with customizable duration and rates."
         }
     ],
     "sip-step-up-calculator": [
@@ -121,24 +121,24 @@
     ],
     "retirement-calculator": [
         {
+            "href": "/post-retirement-calculator",
+            "title": "Post-Retirement Drawdown Studio",
+            "description": "Combine personal savings, Gratuity, NPS lump sum, guaranteed pension & 3-bucket SWP longevity."
+        },
+        {
+            "href": "/nps-calculator",
+            "title": "NPS Calculator",
+            "description": "Calculate National Pension System Tier-1 corpus, 60% tax-free lump sum & monthly annuity pension."
+        },
+        {
+            "href": "/gratuity-calculator",
+            "title": "Gratuity Calculator",
+            "description": "Calculate statutory gratuity payout under Payment of Gratuity Act 1972 & Section 10(10) tax exemption."
+        },
+        {
             "href": "/swp-calculator",
             "title": "SWP Calculator India",
             "description": "Simulate detailed month-by-month systematic withdrawals, longevity, and capital gains tax impact."
-        },
-        {
-            "href": "/",
-            "title": "SIP & SWP Calculator Together",
-            "description": "Model your accumulation years alongside retirement drawdown in an integrated simulation."
-        },
-        {
-            "href": "/sip-step-up-calculator",
-            "title": "Step-Up SIP Calculator",
-            "description": "Accelerate your retirement corpus buildup by stepping up annual contributions with salary hikes."
-        },
-        {
-            "href": "/target-corpus-calculator",
-            "title": "Target Corpus Calculator",
-            "description": "Calculate the precise target corpus required based on your anticipated post-retirement expenses."
         }
     ],
     "my-first-crore-calculator": [

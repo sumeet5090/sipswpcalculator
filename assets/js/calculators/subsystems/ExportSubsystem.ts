@@ -4,6 +4,7 @@ import { ChartManager } from '../ChartManager.ts';
 import { AnalyticsService } from '../AnalyticsLogger.ts';
 import { PdfExportController } from '../controllers/PdfExportController.ts';
 import { CsvExportController } from '../controllers/CsvExportController.ts';
+import { ExcelExportController } from '../controllers/ExcelExportController.ts';
 import { ShareController } from '../controllers/ShareController.ts';
 import { QrShareModalController } from '../controllers/QrShareModalController.ts';
 import { InvestmentInputs, YearResult } from '../../types';
@@ -32,6 +33,7 @@ export class ExportSubsystem {
 
     private pdfExportController: PdfExportController;
     private csvExportController: CsvExportController;
+    private excelExportController: ExcelExportController;
     private shareController: ShareController;
     private qrShareModalController: QrShareModalController;
 
@@ -64,6 +66,15 @@ export class ExportSubsystem {
             config.getExportPayload
         );
 
+        this.excelExportController = new ExcelExportController(
+            this.dom,
+            this.analytics,
+            this.getInputs,
+            this.getLatestResults,
+            this.getActiveGoalMode,
+            config.getExportPayload
+        );
+
         this.shareController = new ShareController(
             this.dom,
             this.getInputs,
@@ -80,6 +91,7 @@ export class ExportSubsystem {
     public init(): void {
         this.pdfExportController.init();
         this.csvExportController.init();
+        this.excelExportController.init();
         this.shareController.init();
         this.qrShareModalController.init();
     }
