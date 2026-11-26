@@ -43,6 +43,7 @@ final class LongevityGuardianTest extends TestCase
 
         $this->assertCount(20, $results);
         $lastRow = end($results);
+        $this->assertIsArray($lastRow);
         $this->assertGreaterThanOrEqual(0.0, $lastRow['combined_total'], "Safe SWP must leave non-negative terminal corpus");
 
         // Verify none of the intermediate years depleted to 0

@@ -14,6 +14,8 @@ class FileUploadService
 {
     /**
      * Process an uploaded logo image file into a safe Base64 Data URI string.
+     *
+     * @param array<string, mixed>|null $logoFile
      */
     public function processLogoUpload(?array $logoFile): ?string
     {

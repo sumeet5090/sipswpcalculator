@@ -106,6 +106,7 @@ class InsightPayloadTest extends TestCase
         $payload = InsightPayload::fromArray($data);
 
         $this->assertSame(32, mb_strlen($payload->calcType));
+        $this->assertIsString($payload->currency);
         $this->assertSame(10, mb_strlen($payload->currency));
         $this->assertSame(64, mb_strlen($payload->presetClicked));
         $this->assertSame(64, mb_strlen($payload->exitAction));

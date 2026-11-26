@@ -376,7 +376,7 @@ foreach ($testCases as $index => $inputs) {
         'swp_rate'       => $dto->getSwpRate(),
         'ltcg_exemption' => $dto->getLtcgExemption(),
         'ltcg_tax_rate'  => $dto->getLtcgTaxRate(),
-    ]));
+    ], JSON_THROW_ON_ERROR));
 
     $cmd = "node " . escapeshellarg(__DIR__ . '/run_js_calc.js') . " {$escapedJson}";
     $jsOutputRaw = shell_exec($cmd);
@@ -555,7 +555,7 @@ foreach ($helperTests as $hTest) {
         $jsPayload['starting_corpus'] = $hTest['starting_corpus'];
     }
 
-    $escapedJson = escapeshellarg(json_encode($jsPayload));
+    $escapedJson = escapeshellarg(json_encode($jsPayload, JSON_THROW_ON_ERROR));
     $cmd = "node " . escapeshellarg(__DIR__ . '/run_js_calc.js') . " {$escapedJson}";
     $jsOutputRaw = shell_exec($cmd);
     $jsRes = json_decode((string) $jsOutputRaw, true);
@@ -600,7 +600,7 @@ foreach ($ciCases as $idx => $ciParams) {
         'annual_rate' => $ciParams['annual_rate'],
         'years' => $ciParams['years'],
         'compounding_frequency' => $ciParams['compounding_frequency']
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = ['principal', 'final_amount', 'total_interest', 'effective_annual_rate'];
@@ -644,7 +644,7 @@ foreach ($cagrCases as $idx => $cagrParams) {
         'beginning_value' => $cagrParams['beginning_value'],
         'ending_value' => $cagrParams['ending_value'],
         'years' => $cagrParams['years']
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = ['cagr_percentage', 'absolute_return_percentage', 'total_gain', 'multiplier'];
@@ -688,7 +688,7 @@ foreach ($emiCases as $idx => $emiParams) {
         'principal' => $emiParams['principal'],
         'annual_rate' => $emiParams['annual_rate'],
         'tenure_years' => $emiParams['tenure_years']
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = ['monthly_emi', 'total_amount_payable', 'total_interest', 'interest_ratio_percentage'];
@@ -731,7 +731,7 @@ foreach ($inflationCases as $idx => $infParams) {
         'present_value' => $infParams['present_value'],
         'inflation_rate' => $infParams['inflation_rate'],
         'years' => $infParams['years']
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = ['future_cost', 'purchasing_power', 'cost_increase', 'purchasing_power_loss_percentage'];
@@ -777,7 +777,7 @@ foreach ($ppfCases as $idx => $pParams) {
         'interest_rate' => $pParams['interest_rate'],
         'tenure_years' => $pParams['tenure_years'],
         'deposit_timing' => $pParams['deposit_timing']
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = ['total_invested', 'total_interest', 'maturity_amount'];
@@ -828,7 +828,7 @@ foreach ($fdCases as $idx => $fParams) {
         'duration_years' => $fParams['duration_years'],
         'is_senior_citizen' => $fParams['is_senior_citizen'],
         'payout_frequency' => $fParams['payout_frequency']
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = ['principal', 'effective_rate', 'maturity_amount', 'total_interest', 'periodic_payout', 'estimated_annual_tds'];
@@ -876,7 +876,7 @@ foreach ($gratuityCases as $idx => $gParams) {
         'tenure_years' => $gParams['tenure_years'],
         'tenure_months' => $gParams['tenure_months'],
         'is_covered_by_act' => $gParams['is_covered_by_act']
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = ['monthly_salary', 'effective_years', 'gratuity_amount', 'tax_exempt_amount', 'taxable_amount'];
@@ -927,7 +927,7 @@ foreach ($npsCases as $idx => $nParams) {
         'expected_return_rate' => $nParams['expected_return_rate'],
         'annuity_percent' => $nParams['annuity_percent'],
         'annuity_return_rate' => $nParams['annuity_return_rate'],
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = ['total_invested', 'total_interest', 'total_corpus', 'lump_sum_amount', 'annuity_amount', 'monthly_pension'];
@@ -992,7 +992,7 @@ foreach ($postRetCases as $idx => $prParams) {
         'inflation_rate' => $prParams['inflation_rate'],
         'current_age' => $prParams['current_age'],
         'planning_horizon_years' => $prParams['planning_horizon_years'],
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = [
@@ -1069,7 +1069,7 @@ foreach ($epfCases as $idx => $eParams) {
         'interest_rate' => $eParams['interest_rate'],
         'current_balance' => $eParams['current_balance'],
         'cap_eps' => $eParams['cap_eps'],
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = [
@@ -1133,7 +1133,7 @@ foreach ($taxCases as $idx => $tParams) {
         'holding_years' => $tParams['holding_years'],
         'grandfather_fmv' => $tParams['grandfather_fmv'],
         'include_cess' => $tParams['include_cess'],
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = [
@@ -1200,7 +1200,7 @@ foreach ($itCases as $idx => $itParams) {
         'sec_80d' => $itParams['sec_80d'],
         'nps_80ccd1b' => $itParams['nps_80ccd1b'],
         'home_loan_24b' => $itParams['home_loan_24b'],
-    ]));
+    ], JSON_THROW_ON_ERROR));
     $jsRes = json_decode((string)shell_exec($cmd), true);
 
     $fields = [

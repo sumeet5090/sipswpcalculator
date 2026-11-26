@@ -11,6 +11,10 @@ use PHPUnit\Framework\TestCase;
  */
 final class TaxHarvestingCalculationTest extends TestCase
 {
+    /**
+     * @param array<string, mixed> $inputs
+     * @return array<string, mixed>
+     */
     private function calculateTaxHarvesting(array $inputs): array
     {
         $nodeScript = __DIR__ . '/../run_js_calc.js';

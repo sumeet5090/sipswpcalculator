@@ -15,7 +15,9 @@ class BlogRepository
     private ContentManager $contentManager;
     private string $categoriesJsonPath;
     private ConfigServiceInterface $configService;
+    /** @var array<string, mixed>|null */
     private ?array $cachedCategories = null;
+    /** @var list<array<string, mixed>>|null */
     private ?array $cachedPosts = null;
 
     public function __construct(
@@ -28,6 +30,9 @@ class BlogRepository
         $this->configService = $configService ?? new \Services\ConfigService($this->categoriesJsonPath);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getCategories(): array
     {
         if ($this->cachedCategories !== null) {
@@ -42,7 +47,7 @@ class BlogRepository
     /**
      * Parse and build blog list details dynamically from markdown files.
      *
-     * @return array
+     * @return list<array<string, mixed>>
      */
     public function getAllPosts(): array
     {
@@ -89,7 +94,7 @@ class BlogRepository
     /**
      * Group all blog posts by their SEO category.
      *
-     * @return array<string, array>
+     * @return array<string, list<array<string, mixed>>>
      */
     public function getPostsGroupedByCategory(): array
     {
@@ -153,6 +158,10 @@ class BlogRepository
         return $this->buildPostData($category, $slug, $meta, $readTime);
     }
 
+    /**
+     * @param array<string, mixed> $meta
+     * @return array<string, mixed>
+     */
     private function buildPostData(string $category, string $slug, array $meta, string $readTime): array
     {
         return [

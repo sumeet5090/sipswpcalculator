@@ -45,7 +45,7 @@ class DatabaseMigrator
         $this->bootstrap();
 
         $stmt = $this->pdo->query("SELECT migration FROM schema_migrations");
-        $executed = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        $executed = $stmt !== false ? $stmt->fetchAll(PDO::FETCH_COLUMN) : [];
 
         if (!is_dir($this->migrationsPath)) {
             return;

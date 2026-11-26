@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
 class ActionDispatcher
 {
     private ContainerInterface $container;
+    /** @var array<string, \ReflectionMethod> */
     private array $methodCache = [];
 
     public function __construct(ContainerInterface $container)
@@ -21,8 +22,8 @@ class ActionDispatcher
     /**
      * Dispatch request to controller action with parameter resolution.
      *
-     * @param array|string $controllerAction
-     * @param array $params
+     * @param array<int, string>|string $controllerAction
+     * @param array<int|string, mixed> $params
      * @param Request|null $request
      * @return Response
      */
@@ -81,7 +82,9 @@ class ActionDispatcher
                     }
                 }
 
-                $response = call_user_func_array([$controller, $action], $args);
+                /** @var callable $callable */
+                $callable = [$controller, $action];
+                $response = call_user_func_array($callable, $args);
                 if ($response instanceof Response) {
                     return $response;
                 }

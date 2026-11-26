@@ -12,6 +12,7 @@ use Services\ConfigServiceInterface;
  */
 class GlossaryRepository
 {
+    /** @var array<int, array<string, mixed>>|null */
     private ?array $terms = null;
     private string $jsonPath;
     private ConfigServiceInterface $configService;
@@ -22,31 +23,30 @@ class GlossaryRepository
         $this->configService = $configService ?? new \Services\ConfigService();
     }
 
-    private function load(): void
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function load(): array
     {
-        if ($this->terms !== null) {
-            return;
+        if ($this->terms === null) {
+            /** @var array<int, array<string, mixed>> $sortedTerms */
+            $sortedTerms = $this->configService->getJsonConfig($this->jsonPath);
+            usort($sortedTerms, function (array $a, array $b) {
+                return strcasecmp((string) ($a['q'] ?? ''), (string) ($b['q'] ?? ''));
+            });
+            $this->terms = $sortedTerms;
         }
-
-        $decoded = $this->configService->getJsonConfig($this->jsonPath);
-        $sortedTerms = $decoded;
-        usort($sortedTerms, function (array $a, array $b) {
-            return strcasecmp($a['q'] ?? '', $b['q'] ?? '');
-        });
-
-        $this->terms = $sortedTerms;
+        return $this->terms;
     }
 
     /**
      * Get all sorted glossary terms.
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
     public function getAll(): array
     {
-        $this->load();
-
-        return $this->terms;
+        return $this->load();
     }
 
     /**

@@ -12,7 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Critical CSS & Vite -->
-    {{ vite.css('assets/css/app.css')|raw }}
+    {{ vite_client() }}
+    {{ vite_css('resources/js/app.ts') }}
     <style>
         body {
             background-color: #f8fafc;
@@ -122,40 +123,22 @@
                                     </div>
                                 </div>
                             {% else %}
-                                <input type="hidden" id="enable_swp" name="enable_swp" value="{{ calculator_type == 'swp' ? '1' : '0' }}">
+                                {% set meta = calculator_mode_meta(calculator_type|default('')) %}
+                                <input type="hidden" id="enable_swp" name="enable_swp" value="{{ (calculator_type == 'swp' or (meta and meta.enable_swp_default)) ? '1' : '0' }}">
                                 <div class="space-y-4">
                                     {% if calculator_type in ['sip', 'sip-step-up'] %}
                                         {% include 'components/forms/sip-fields.twig' %}
-                                    {% endif %}
-                                    {% if calculator_type == 'lumpsum' %}
+                                    {% elseif calculator_type == 'lumpsum' %}
                                         {% include 'components/forms/lumpsum-only-fields.twig' %}
-                                    {% endif %}
-                                    {% if calculator_type == 'target_corpus' %}
+                                    {% elseif calculator_type == 'target_corpus' %}
                                         {% include 'components/forms/target-corpus-fields.twig' %}
-                                    {% endif %}
-                                    {% if calculator_type == 'swp' %}
+                                    {% elseif calculator_type == 'swp' %}
                                         {% include 'components/forms/corpus-field.twig' %}
                                         <div id="swp-fields" class="mt-4">
                                             {% include 'components/forms/swp-fields.twig' %}
                                         </div>
-                                    {% endif %}
-                                    {% if calculator_type == 'compound_interest' %}
-                                        {% include 'components/forms/compound-interest-fields.twig' %}
-                                    {% endif %}
-                                    {% if calculator_type == 'cagr' %}
-                                        {% include 'components/forms/cagr-fields.twig' %}
-                                    {% endif %}
-                                    {% if calculator_type == 'emi' %}
-                                        {% include 'components/forms/emi-fields.twig' %}
-                                    {% endif %}
-                                    {% if calculator_type == 'inflation' %}
-                                        {% include 'components/forms/inflation-fields.twig' %}
-                                    {% endif %}
-                                    {% if calculator_type == 'ppf' %}
-                                        {% include 'components/forms/ppf-fields.twig' %}
-                                    {% endif %}
-                                    {% if calculator_type == 'fd' %}
-                                        {% include 'components/forms/fd-fields.twig' %}
+                                    {% elseif meta and meta.form_partial %}
+                                        {% include meta.form_partial %}
                                     {% endif %}
                                 </div>
                             {% endif %}
@@ -182,6 +165,6 @@
     </div>
 
     <!-- Scripts -->
-    {{ vite.js('assets/js/app.ts')|raw }}
+    {{ vite_js('resources/js/app.ts') }}
 </body>
 </html>

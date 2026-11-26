@@ -24,10 +24,10 @@ class HomeSchemaBuilder
     /**
      * Builds all Home JSON-LD structured schemas.
      *
-     * @param array $page_config
-     * @param array $homeFaqs
+     * @param array<string, mixed> $page_config
+     * @param array<int, array<string, mixed>> $homeFaqs
      * @param string $siteModified
-     * @return array<string> Array of JSON-encoded schema strings
+     * @return list<string> Array of JSON-encoded schema strings
      */
     public function build(array $page_config, array $homeFaqs = [], string $siteModified = \Core\DateConstants::CONTENT_FALLBACK_DATE): array
     {
@@ -83,7 +83,7 @@ class HomeSchemaBuilder
                 "https://en.wikipedia.org/wiki/Systematic_investment_plan",
                 "https://www.wikidata.org/wiki/Q7662882"
             ]
-        ], SchemaHelper::JSON_FLAGS);
+        ], SchemaHelper::JSON_FLAGS | JSON_THROW_ON_ERROR);
 
         // 2. FinancialProduct Schema
         $schemas[] = json_encode([
@@ -110,7 +110,7 @@ class HomeSchemaBuilder
                 "https://en.wikipedia.org/wiki/Systematic_investment_plan",
                 "https://en.wikipedia.org/wiki/Systematic_withdrawal_plan"
             ]
-        ], SchemaHelper::JSON_FLAGS);
+        ], SchemaHelper::JSON_FLAGS | JSON_THROW_ON_ERROR);
 
         // 3. WebSite Schema
         $schemas[] = json_encode([
@@ -136,7 +136,7 @@ class HomeSchemaBuilder
                 ],
                 "query-input" => "required name=search_term_string"
             ]
-        ], SchemaHelper::JSON_FLAGS);
+        ], SchemaHelper::JSON_FLAGS | JSON_THROW_ON_ERROR);
 
         // 4. Organization Schema
         $schemas[] = json_encode([
@@ -162,7 +162,7 @@ class HomeSchemaBuilder
                 "availableLanguage" => "English"
             ],
             "sameAs" => ["https://www.linkedin.com/in/sumeet-boga/"]
-        ], SchemaHelper::JSON_FLAGS);
+        ], SchemaHelper::JSON_FLAGS | JSON_THROW_ON_ERROR);
 
         // 5. Person Schema
         $schemas[] = json_encode([
@@ -186,7 +186,7 @@ class HomeSchemaBuilder
                 "Compounding Mathematics"
             ],
             "worksFor" => ["@id" => $baseUrl . "/#organization"]
-        ], SchemaHelper::JSON_FLAGS);
+        ], SchemaHelper::JSON_FLAGS | JSON_THROW_ON_ERROR);
 
         // 6. HowTo Schema
         $schemas[] = json_encode([
@@ -220,7 +220,7 @@ class HomeSchemaBuilder
                     "url" => $baseUrl . "/#yearly-breakdown"
                 ]
             ]
-        ], SchemaHelper::JSON_FLAGS);
+        ], SchemaHelper::JSON_FLAGS | JSON_THROW_ON_ERROR);
 
         return $schemas;
     }

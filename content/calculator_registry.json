@@ -1,0 +1,314 @@
+{
+    "modes": {
+        "all": {
+            "is_specialized": false,
+            "is_four_card": true,
+            "enable_swp_default": true,
+            "show_lumpsum": true,
+            "form_partial": null,
+            "share_title": "SIP & SWP Comprehensive Plan",
+            "duration_field_id": "years",
+            "strategy_class": "Core\\Strategies\\ComboStrategy"
+        },
+        "combo": {
+            "is_specialized": false,
+            "is_four_card": true,
+            "enable_swp_default": true,
+            "show_lumpsum": true,
+            "form_partial": null,
+            "share_title": "SIP & SWP Comprehensive Plan",
+            "duration_field_id": "years",
+            "strategy_class": "Core\\Strategies\\ComboStrategy"
+        },
+        "sip": {
+            "is_specialized": false,
+            "is_four_card": false,
+            "enable_swp_default": false,
+            "show_lumpsum": true,
+            "form_partial": "components/forms/sip-fields.twig",
+            "share_title": "SIP Wealth Accumulation Plan",
+            "duration_field_id": "years",
+            "strategy_class": "Core\\Strategies\\SipStrategy"
+        },
+        "sip-step-up": {
+            "is_specialized": false,
+            "is_four_card": false,
+            "enable_swp_default": false,
+            "show_lumpsum": true,
+            "form_partial": "components/forms/sip-fields.twig",
+            "share_title": "Step-Up SIP Accelerated Plan",
+            "duration_field_id": "years",
+            "strategy_class": "Core\\Strategies\\StepUpSipStrategy"
+        },
+        "swp": {
+            "is_specialized": false,
+            "is_four_card": true,
+            "enable_swp_default": true,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/swp-fields.twig",
+            "share_title": "Retirement SWP Cash Flow Plan",
+            "duration_field_id": "swp_years",
+            "strategy_class": "Core\\Strategies\\SwpStrategy"
+        },
+        "lumpsum": {
+            "is_specialized": false,
+            "is_four_card": false,
+            "enable_swp_default": false,
+            "show_lumpsum": true,
+            "form_partial": "components/forms/lumpsum-only-fields.twig",
+            "share_title": "Lumpsum Investment Plan",
+            "duration_field_id": "years",
+            "strategy_class": "Core\\Strategies\\LumpsumStrategy"
+        },
+        "target_corpus": {
+            "is_specialized": false,
+            "is_four_card": false,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/target-corpus-fields.twig",
+            "share_title": "Target Corpus Wealth Plan",
+            "duration_field_id": "years",
+            "strategy_class": "Core\\Strategies\\TargetCorpusStrategy"
+        },
+        "compound_interest": {
+            "is_specialized": true,
+            "is_four_card": false,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/compound-interest-fields.twig",
+            "form_header": {
+                "theme": "emerald",
+                "icon": "✦",
+                "prefix": "Compound Interest:",
+                "subtitle": "Principal Compounding",
+                "badge": "AMFI Model"
+            },
+            "share_title": "Compound Interest Growth Plan",
+            "duration_field_id": "ci_years",
+            "strategy_class": "Core\\Strategies\\CompoundInterestStrategy"
+        },
+        "cagr": {
+            "is_specialized": true,
+            "is_four_card": false,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/cagr-fields.twig",
+            "form_header": {
+                "theme": "emerald",
+                "icon": "↗",
+                "prefix": "CAGR Engine:",
+                "subtitle": "Holding Period Returns",
+                "badge": "CAGR Solved"
+            },
+            "share_title": "CAGR Return Performance Plan",
+            "duration_field_id": "cagr_years",
+            "strategy_class": "Core\\Strategies\\CagrStrategy"
+        },
+        "emi": {
+            "is_specialized": true,
+            "is_four_card": true,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/emi-fields.twig",
+            "form_header": {
+                "theme": "indigo",
+                "icon": "#",
+                "prefix": "Loan Amortization:",
+                "subtitle": "Monthly EMI Planner",
+                "badge": "Reducing Balance"
+            },
+            "share_title": "Loan EMI Repayment Plan",
+            "duration_field_id": "emi_years",
+            "strategy_class": "Core\\Strategies\\EmiStrategy"
+        },
+        "inflation": {
+            "is_specialized": true,
+            "is_four_card": false,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/inflation-fields.twig",
+            "form_header": {
+                "theme": "amber",
+                "icon": "↘",
+                "prefix": "Purchasing Power:",
+                "subtitle": "Inflation Erosion",
+                "badge": "CPI Model"
+            },
+            "share_title": "Inflation Purchasing Power Plan",
+            "duration_field_id": "inf_years",
+            "strategy_class": "Core\\Strategies\\InflationStrategy"
+        },
+        "ppf": {
+            "is_specialized": true,
+            "is_four_card": false,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/ppf-fields.twig",
+            "form_header": {
+                "theme": "teal",
+                "icon": "✦",
+                "prefix": "Public Provident Fund:",
+                "subtitle": "PPF Sovereign Savings",
+                "badge": "7.1% EEE Tax-Free"
+            },
+            "share_title": "PPF Long-Term Savings Plan",
+            "duration_field_id": "ppf_years",
+            "strategy_class": "Core\\Strategies\\PpfStrategy"
+        },
+        "fd": {
+            "is_specialized": true,
+            "is_four_card": false,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/fd-fields.twig",
+            "form_header": {
+                "theme": "indigo",
+                "icon": "✦",
+                "prefix": "Bank Fixed Deposit:",
+                "subtitle": "Maturity Compounding",
+                "badge": "Quarterly Yield"
+            },
+            "share_title": "Fixed Deposit Returns Plan",
+            "duration_field_id": "fd_years",
+            "strategy_class": "Core\\Strategies\\FdStrategy"
+        },
+        "gratuity": {
+            "is_specialized": true,
+            "is_four_card": true,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/gratuity-fields.twig",
+            "form_header": {
+                "theme": "emerald",
+                "icon": "₹",
+                "prefix": "Statutory Gratuity:",
+                "subtitle": "Payment of Gratuity Act, 1972",
+                "badge": "Sec 10(10) Cap: ₹20L"
+            },
+            "share_title": "Statutory Gratuity Valuation Plan",
+            "duration_field_id": "gratuity_years",
+            "strategy_class": "Core\\Strategies\\GratuityStrategy"
+        },
+        "nps": {
+            "is_specialized": true,
+            "is_four_card": true,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/nps-fields.twig",
+            "form_header": {
+                "theme": "emerald",
+                "icon": "🏛️",
+                "prefix": "National Pension System:",
+                "subtitle": "PFRDA Tier-1 Scheme",
+                "badge": "Sec 10(12A) 60% Tax-Free"
+            },
+            "share_title": "NPS Tier-1 Wealth & Pension Plan",
+            "duration_field_id": "nps_retirement_age",
+            "strategy_class": "Core\\Strategies\\NpsStrategy"
+        },
+        "post_retirement": {
+            "is_specialized": true,
+            "is_four_card": true,
+            "enable_swp_default": true,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/post-retirement-fields.twig",
+            "form_header": {
+                "theme": "emerald",
+                "icon": "🌴",
+                "prefix": "Post-Retirement Studio:",
+                "subtitle": "Multi-Stream Asset Drawdown",
+                "badge": "3-Bucket Asset Allocation"
+            },
+            "share_title": "Post-Retirement Asset Drawdown Plan",
+            "duration_field_id": "post_ret_horizon",
+            "strategy_class": "Core\\Strategies\\PostRetirementStrategy"
+        },
+        "epf": {
+            "is_specialized": true,
+            "is_four_card": true,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/epf-fields.twig",
+            "form_header": {
+                "theme": "emerald",
+                "icon": "🏢",
+                "prefix": "EPF & VPF Retirement:",
+                "subtitle": "EPFO Statutory Ledger",
+                "badge": "8.25% Govt Backed"
+            },
+            "share_title": "EPF & VPF Retirement Plan",
+            "duration_field_id": "epf_retirement_age",
+            "strategy_class": "Core\\Strategies\\EpfStrategy"
+        },
+        "tax_harvest": {
+            "is_specialized": true,
+            "is_four_card": true,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/tax-harvest-fields.twig",
+            "form_header": {
+                "theme": "emerald",
+                "icon": "⚖️",
+                "prefix": "Section 112A Tax Studio:",
+                "subtitle": "LTCG & Harvesting Alpha",
+                "badge": "₹1.25L Tax-Free / FY"
+            },
+            "share_title": "LTCG Tax Harvesting Plan",
+            "duration_field_id": "tax_holding_years",
+            "strategy_class": "Core\\Strategies\\TaxHarvestStrategy"
+        },
+        "income_tax": {
+            "is_specialized": true,
+            "is_four_card": true,
+            "enable_swp_default": false,
+            "show_lumpsum": false,
+            "form_partial": "components/forms/income-tax-fields.twig",
+            "form_header": {
+                "theme": "emerald",
+                "icon": "🧾",
+                "prefix": "FY 2025-26 Income Tax:",
+                "subtitle": "Old vs. New + HRA",
+                "badge": "₹12L 87A Rebate"
+            },
+            "share_title": "Income Tax & HRA Comparison Plan",
+            "duration_field_id": "it_gross_salary",
+            "strategy_class": "Core\\Strategies\\IncomeTaxStrategy"
+        }
+    },
+    "routes": {
+        "/sip-calculator":            { "mode": "sip",               "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SipStrategy" },
+        "/swp-calculator":            { "mode": "swp",               "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SwpStrategy" },
+        "/sip-step-up-calculator":    { "mode": "sip-step-up",       "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\StepUpSipStrategy" },
+        "/lumpsum-calculator":        { "mode": "lumpsum",           "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\LumpsumStrategy" },
+        "/retirement-calculator":     { "mode": "combo",             "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\ComboStrategy" },
+        "/my-first-crore-calculator": { "mode": "target_corpus",     "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\TargetCorpusStrategy" },
+        "/target-corpus-calculator":  { "mode": "target_corpus",     "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\TargetCorpusStrategy" },
+        "/compound-interest-calculator": { "mode": "compound_interest", "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\CompoundInterestStrategy" },
+        "/cagr-calculator":           { "mode": "cagr",              "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\CagrStrategy" },
+        "/emi-calculator":            { "mode": "emi",               "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\EmiStrategy" },
+        "/inflation-calculator":      { "mode": "inflation",         "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\InflationStrategy" },
+        "/ppf-calculator":            { "mode": "ppf",               "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\PpfStrategy" },
+        "/fd-calculator":             { "mode": "fd",                "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\FdStrategy" },
+        "/reach-5-crore-via-sip":     { "mode": "target_corpus",     "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\TargetCorpusStrategy", "strategy_args": [50000000.0] },
+        "/sip-5000-per-month":        { "mode": "sip",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SipStrategy", "strategy_args": [5000.0] },
+        "/sip-10000-per-month":       { "mode": "sip",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SipStrategy" },
+        "/1-crore-swp-calculator":    { "mode": "swp",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SwpStrategy", "strategy_args": [10000000.0, 65000.0] },
+        "/2-crore-sip-calculator":    { "mode": "target_corpus",     "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\TargetCorpusStrategy", "strategy_args": [20000000.0] },
+        "/sip-25000-per-month":       { "mode": "sip",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SipStrategy", "strategy_args": [25000.0] },
+        "/50-lakh-swp-calculator":    { "mode": "swp",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SwpStrategy", "strategy_args": [5000000.0, 32500.0] },
+        "/sip-50000-per-month":       { "mode": "sip",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SipStrategy", "strategy_args": [50000.0] },
+        "/sip-15000-per-month":       { "mode": "sip",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SipStrategy", "strategy_args": [15000.0] },
+        "/sip-20000-per-month":       { "mode": "sip",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SipStrategy", "strategy_args": [20000.0] },
+        "/3-crore-sip-calculator":    { "mode": "target_corpus",     "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\TargetCorpusStrategy", "strategy_args": [30000000.0] },
+        "/25-lakh-swp-calculator":    { "mode": "swp",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SwpStrategy", "strategy_args": [2500000.0, 16250.0] },
+        "/2-crore-swp-calculator":    { "mode": "swp",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SwpStrategy", "strategy_args": [20000000.0, 130000.0] },
+        "/75-lakh-swp-calculator":    { "mode": "swp",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SwpStrategy", "strategy_args": [7500000.0, 48750.0] },
+        "/sip-1-lakh-per-month":      { "mode": "sip",               "priority": "0.8", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\SipStrategy", "strategy_args": [100000.0] },
+        "/gratuity-calculator":       { "mode": "gratuity",          "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\GratuityStrategy" },
+        "/nps-calculator":            { "mode": "nps",               "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\NpsStrategy" },
+        "/post-retirement-calculator": { "mode": "post_retirement",  "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\PostRetirementStrategy" },
+        "/epf-calculator":            { "mode": "epf",               "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\EpfStrategy" },
+        "/ltcg-tax-calculator":       { "mode": "tax_harvest",       "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\TaxHarvestStrategy" },
+        "/income-tax-calculator":     { "mode": "income_tax",        "priority": "0.9", "changefreq": "monthly", "strategy_class": "Core\\Strategies\\IncomeTaxStrategy" }
+    }
+}

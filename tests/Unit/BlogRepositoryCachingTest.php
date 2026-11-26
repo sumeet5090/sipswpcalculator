@@ -63,6 +63,7 @@ class BlogRepositoryCachingTest extends TestCase
 
         // Verify in-memory cache returns previous parse
         $parsed2 = $this->contentManager->getParsedContent('/blog/growth/test-slug');
+        $this->assertNotNull($parsed2);
         $this->assertSame('Test Title', $parsed2['metadata']['title']);
     }
 

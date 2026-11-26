@@ -18,7 +18,7 @@ class FaqCoverageTest extends TestCase
         $this->assertIsArray($faqs);
 
         foreach (array_keys($routesConfig['calculators']) as $path) {
-            $slug = ltrim($path, '/');
+            $slug = ltrim((string) $path, '/');
             $tagged = array_filter($faqs, static function (array $faq) use ($slug): bool {
                 return in_array($slug, $faq['tags'] ?? [], true);
             });

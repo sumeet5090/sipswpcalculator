@@ -7,7 +7,6 @@
 import { CalculatorApp } from '../../assets/js/calculators/CalculatorApp';
 import { CurrencyFormatter } from '../../assets/js/calculators/CurrencyHelper';
 import { WebHapticEngine } from '../../assets/js/calculators/helpers/WebHapticEngine';
-import { initSaveCalculationUI } from './save-calculation';
 
 /**
  * Hydrates any SSR `.dynamic-amount` spans with Indian Rupee formatting
@@ -115,7 +114,6 @@ export function initReadingProgress(): void {
 document.addEventListener('DOMContentLoaded', () => {
     const app = new CalculatorApp();
     app.init();
-    initSaveCalculationUI();
     hydrateDynamicAmounts();
     initReadingProgress();
 });

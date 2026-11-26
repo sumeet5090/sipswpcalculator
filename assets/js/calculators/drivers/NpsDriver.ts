@@ -119,7 +119,7 @@ export class NpsDriver implements ISpecializedDriver {
         if (gainBadge) {
             if (res.is_small_corpus_eligible) {
                 gainBadge.textContent = '100% Lump Sum Eligible (≤₹5L)';
-                gainBadge.className = 'inline-flex items-center text-micro font-bold px-1.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200/80 tabular-nums';
+                gainBadge.className = 'inline-flex items-center text-micro font-bold px-1.5 py-0.5 rounded-md bg-indigo-50 text-indigo-800 border border-indigo-200/80 tabular-nums';
             } else {
                 gainBadge.textContent = '✓ 60% Tax-Free Lump Sum';
                 gainBadge.className = 'inline-flex items-center text-micro font-bold px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/80 tabular-nums';

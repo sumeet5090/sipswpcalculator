@@ -8,8 +8,12 @@ class Response
 {
     private string $content;
     private int $statusCode;
+    /** @var array<string, string> */
     private array $headers;
 
+    /**
+     * @param array<string, string> $headers
+     */
     public function __construct(string $content = '', int $statusCode = 200, array $headers = [])
     {
         $this->content = $content;
@@ -32,6 +36,9 @@ class Response
         return $this->content;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getHeaders(): array
     {
         return $this->headers;
@@ -66,6 +73,9 @@ class Response
         echo $this->content;
     }
 
+    /**
+     * @param array<mixed> $data
+     */
     public static function json(array $data, int $statusCode = 200): self
     {
         return new self(
@@ -80,6 +90,9 @@ class Response
         return new self('', $statusCode, ['Location' => $url]);
     }
 
+    /**
+     * @param array<string, string> $headers
+     */
     public static function html(string $html, int $statusCode = 200, array $headers = []): self
     {
         if (!isset($headers['Content-Type'])) {

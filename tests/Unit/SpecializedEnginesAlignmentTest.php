@@ -270,6 +270,9 @@ final class SpecializedEnginesAlignmentTest extends TestCase
         $this->assertEqualsWithDelta($phpSafeSwp, $jsSafeSwp, 1.0, "Safe SWP monthly withdrawal mismatch between PHP and JS");
     }
 
+    /**
+     * @return array<string, array{0: float, 1: float, 2: int, 3: int}>
+     */
     public static function compoundInterestProvider(): array
     {
         return [
@@ -283,6 +286,9 @@ final class SpecializedEnginesAlignmentTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array{0: float, 1: float, 2: float}>
+     */
     public static function cagrProvider(): array
     {
         return [
@@ -294,6 +300,9 @@ final class SpecializedEnginesAlignmentTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array{0: float, 1: float, 2: int}>
+     */
     public static function emiProvider(): array
     {
         return [
@@ -304,6 +313,9 @@ final class SpecializedEnginesAlignmentTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array{0: float, 1: float, 2: float, 3: bool, 4: string}>
+     */
     public static function fdProvider(): array
     {
         return [
@@ -315,6 +327,9 @@ final class SpecializedEnginesAlignmentTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array{0: float, 1: float, 2: int, 3: string}>
+     */
     public static function ppfProvider(): array
     {
         return [
@@ -325,6 +340,9 @@ final class SpecializedEnginesAlignmentTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array{0: float, 1: float, 2: int}>
+     */
     public static function inflationProvider(): array
     {
         return [

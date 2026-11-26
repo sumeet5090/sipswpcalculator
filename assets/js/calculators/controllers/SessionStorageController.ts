@@ -1,4 +1,5 @@
 import { InvestmentInputs } from '../../types';
+import { CalculatorRegistry } from '../constants/CalculatorRegistry.ts';
 
 interface StoredDraft {
     mode: string;
@@ -162,7 +163,7 @@ export class SessionStorageController {
                 sessionStorage.removeItem(this.getStorageKey(mode));
             } else {
                 // Clear all modes
-                const modes = ['combo', 'sip', 'swp', 'lumpsum', 'sip-step-up', 'target_corpus', 'target', 'compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
+                const modes = CalculatorRegistry.getDraftClearModes();
                 modes.forEach(m => sessionStorage.removeItem(this.getStorageKey(m)));
                 sessionStorage.removeItem(SessionStorageController.LEGACY_STORAGE_KEY);
             }

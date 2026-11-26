@@ -32,6 +32,7 @@ class NpsEngineTest extends TestCase
 
         $this->assertCount(30, $res['schedule']);
         $lastYear = end($res['schedule']);
+        $this->assertIsArray($lastYear);
         $this->assertEquals(30, $lastYear['year']);
         $this->assertEquals(60, $lastYear['age']);
         $this->assertEquals(11396627.0, $lastYear['balance']);

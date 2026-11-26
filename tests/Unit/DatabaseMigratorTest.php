@@ -43,6 +43,7 @@ class DatabaseMigratorTest extends TestCase
         $migrator->bootstrap(); // Idempotency check
 
         $stmt = $this->pdo->query("SELECT name FROM sqlite_master WHERE type='table' AND name='schema_migrations'");
+        $this->assertInstanceOf(\PDOStatement::class, $stmt);
         $this->assertNotEmpty($stmt->fetchAll());
     }
 
@@ -62,9 +63,11 @@ PHP;
         $migrator->migrate();
 
         $stmt = $this->pdo->query("SELECT name FROM sqlite_master WHERE type='table' AND name='dummy_items'");
+        $this->assertInstanceOf(\PDOStatement::class, $stmt);
         $this->assertNotEmpty($stmt->fetchAll());
 
         $stmt = $this->pdo->query("SELECT migration FROM schema_migrations");
+        $this->assertInstanceOf(\PDOStatement::class, $stmt);
         $migrations = $stmt->fetchAll(PDO::FETCH_COLUMN);
         $this->assertContains('20260101000000_create_dummy_table.php', $migrations);
     }
@@ -93,10 +96,12 @@ PHP;
 
         // Verify table was rolled back
         $stmt = $this->pdo->query("SELECT name FROM sqlite_master WHERE type='table' AND name='failing_table'");
+        $this->assertInstanceOf(\PDOStatement::class, $stmt);
         $this->assertEmpty($stmt->fetchAll());
 
         // Verify migration was not recorded
         $stmt = $this->pdo->query("SELECT migration FROM schema_migrations");
+        $this->assertInstanceOf(\PDOStatement::class, $stmt);
         $migrations = $stmt->fetchAll(PDO::FETCH_COLUMN);
         $this->assertNotContains('20260101000001_fail_table.php', $migrations);
     }

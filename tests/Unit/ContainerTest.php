@@ -58,6 +58,9 @@ class DummyNoTypeNoDefault
 {
     public mixed $val;
 
+    /**
+     * @param mixed $val
+     */
     public function __construct($val)
     {
         $this->val = $val;
@@ -68,6 +71,9 @@ class DummyNoTypeWithDefault
 {
     public mixed $val;
 
+    /**
+     * @param mixed $val
+     */
     public function __construct($val = 'default_untyped')
     {
         $this->val = $val;

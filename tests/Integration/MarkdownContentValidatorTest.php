@@ -12,6 +12,8 @@ class MarkdownContentValidatorTest extends TestCase
 {
     /**
      * Dynamically discovers and yields all markdown files (calculators and blog posts).
+     *
+     * @return array<string, array{0: string, 1: string, 2: ?string}>
      */
     public static function markdownFilesProvider(): array
     {
@@ -52,10 +54,15 @@ class MarkdownContentValidatorTest extends TestCase
         $this->assertIsReadable($filePath, "File '$fileName' is not readable.");
 
         $content = file_get_contents($filePath);
+        $this->assertIsString($content, "Markdown file '$fileName' could not be read.");
         $this->assertNotEmpty($content, "Markdown file '$fileName' must not be empty.");
 
         $contentManager = new \Core\ContentManager(new \Parsedown(), __DIR__ . '/../../content');
-        $basePath = str_replace(realpath(__DIR__ . '/../../content'), '', realpath($filePath));
+        $contentRoot = realpath(__DIR__ . '/../../content');
+        $resolvedFilePath = realpath($filePath);
+        $this->assertIsString($contentRoot, 'Content root path could not be resolved.');
+        $this->assertIsString($resolvedFilePath, "Markdown file '$fileName' path could not be resolved.");
+        $basePath = str_replace($contentRoot, '', $resolvedFilePath);
         // Strip .md
         $basePath = substr($basePath, 0, -3);
         $parsed = $contentManager->getParsedContent($basePath);
@@ -148,6 +155,10 @@ class MarkdownContentValidatorTest extends TestCase
                 $found,
                 "Blog post file '$slug.md' in '$category' category is not registered or active in BlogRepository configs."
             );
+            $this->assertIsArray($postMetadata);
+            $this->assertArrayHasKey('tag', $postMetadata);
+            $this->assertArrayHasKey('tag_color', $postMetadata);
+            $this->assertArrayHasKey('date', $postMetadata);
 
             $this->assertNotEmpty($postMetadata['tag'], "Blog post '$slug' must have a non-empty tag config.");
             $this->assertNotEmpty($postMetadata['tag_color'], "Blog post '$slug' must have a non-empty tag_color config.");

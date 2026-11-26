@@ -84,6 +84,17 @@ export class UrlStateController {
                 return;
             }
 
+            const radioInputs = document.querySelectorAll<HTMLInputElement>(`input[type="radio"][name="${key}"]`);
+            if (radioInputs.length > 0) {
+                radioInputs.forEach(radio => {
+                    if (radio.value === val) {
+                        radio.checked = true;
+                        radio.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                });
+                return;
+            }
+
             const inputEl = this.dom.getElement<HTMLInputElement>(key);
             if (inputEl && inputEl.type === 'checkbox') {
                 inputEl.checked = (val === '1' || val === 'true' || val === 'on');

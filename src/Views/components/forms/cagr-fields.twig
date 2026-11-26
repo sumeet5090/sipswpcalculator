@@ -1,21 +1,16 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
-<!-- Hidden legacy fields to prevent JS errors -->
-<input type="hidden" id="sip" name="sip" value="0">
-<input type="hidden" id="stepup" name="stepup" value="0">
-<input type="hidden" id="lumpsum" name="lumpsum" value="0">
-
 <div class="space-y-3">
     <!-- Initial Investment Value (V_begin) -->
     {{ inputs.renderInputRangePair({
         'id': 'cagr_initial',
-        'label': 'Initial Investment',
+        'label': calc_config.cagr_initial.label|default('Initial Investment'),
         'tooltip': 'Starting portfolio value or capital invested at the beginning of the holding period.',
-        'min': 1000,
-        'max': 10000000,
-        'slider_max': 2500000,
-        'step': 5000,
-        'value': 100000,
+        'min': calc_config.cagr_initial.min|default(1000),
+        'max': calc_config.cagr_initial.max|default(10000000),
+        'slider_max': calc_config.cagr_initial.slider_max|default(2500000),
+        'step': calc_config.cagr_initial.step|default(5000),
+        'value': cagr_initial|default(calc_config.cagr_initial.default|default(100000)),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [
@@ -30,13 +25,13 @@
     <!-- Final Investment Value (V_final) -->
     {{ inputs.renderInputRangePair({
         'id': 'cagr_final',
-        'label': 'Target / Final Value',
+        'label': calc_config.cagr_final.label|default('Target / Final Value'),
         'tooltip': 'Current portfolio valuation or targeted final accumulated wealth.',
-        'min': 1000,
-        'max': 50000000,
-        'slider_max': 10000000,
-        'step': 10000,
-        'value': 250000,
+        'min': calc_config.cagr_final.min|default(1000),
+        'max': calc_config.cagr_final.max|default(50000000),
+        'slider_max': calc_config.cagr_final.slider_max|default(10000000),
+        'step': calc_config.cagr_final.step|default(10000),
+        'value': cagr_final|default(calc_config.cagr_final.default|default(250000)),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [
@@ -51,13 +46,13 @@
     <!-- Holding Duration (Years) -->
     {{ inputs.renderInputRangePair({
         'id': 'cagr_years',
-        'label': 'Investment Duration',
+        'label': calc_config.cagr_years.label|default('Investment Duration'),
         'tooltip': 'Total number of years between your initial investment and final value.',
-        'min': 0.5,
-        'max': 40,
-        'slider_max': 25,
-        'step': 0.5,
-        'value': 5.0,
+        'min': calc_config.cagr_years.min|default(0.5),
+        'max': calc_config.cagr_years.max|default(40),
+        'slider_max': calc_config.cagr_years.slider_max|default(25),
+        'step': calc_config.cagr_years.step|default(0.5),
+        'value': cagr_years|default(calc_config.cagr_years.default|default(5.0)),
         'suffix': 'Yrs',
         'theme': 'emerald',
         'presets': [

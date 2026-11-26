@@ -14,7 +14,7 @@ class CalculatorFrontmatterTest extends TestCase
         $calculatorsDir = __DIR__ . '/../../content/calculators';
 
         foreach (array_keys($routesConfig['calculators']) as $path) {
-            $slug = ltrim($path, '/');
+            $slug = ltrim((string) $path, '/');
             $filePath = $calculatorsDir . '/' . $slug . '.md';
 
             $this->assertFileExists($filePath, "Calculator markdown file missing: {$filePath}");
@@ -23,10 +23,11 @@ class CalculatorFrontmatterTest extends TestCase
             $this->assertStringStartsWith('---', $content, "Missing YAML frontmatter start in {$slug}.md");
 
             // Extract frontmatter
-            preg_match('/^---\s*\n(.*?)\n---/s', $content, $matches);
-            $this->assertNotEmpty($matches, "Failed to parse YAML frontmatter in {$slug}.md");
+            $matched = preg_match('/^---\s*\n(.*?)\n---/s', $content, $matches);
+            $this->assertSame(1, $matched, "Failed to parse YAML frontmatter in {$slug}.md");
 
             $frontmatter = $matches[1];
+            $this->assertNotEmpty($frontmatter, "Failed to parse YAML frontmatter in {$slug}.md");
 
             $this->assertMatchesRegularExpression('/^title:\s*.+/m', $frontmatter, "Missing title in {$slug}.md");
             $this->assertMatchesRegularExpression('/^type:\s*["\']?calculator["\']?/m', $frontmatter, "Type must be 'calculator' in {$slug}.md");

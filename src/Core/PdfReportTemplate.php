@@ -12,11 +12,15 @@ namespace Core;
 class PdfReportTemplate implements PdfTemplateInterface
 {
     private CurrencyFormatterInterface $currencyFormatter;
+    /** @var array<int, array<string, mixed>>|null */
     private ?array $milestoneConfig;
     private PdfReportStylesheet $stylesheet;
     private PdfReportTableBuilder $tableBuilder;
     private ?ViewRenderer $viewRenderer;
 
+    /**
+     * @param array<int, array<string, mixed>>|null $milestoneConfig
+     */
     public function __construct(
         CurrencyFormatterInterface $currencyFormatter,
         ?array $milestoneConfig = null,
@@ -175,6 +179,10 @@ class PdfReportTemplate implements PdfTemplateInterface
 
 
 
+    /**
+     * @param array<string, mixed> $inputs
+     * @return list<array<string, mixed>>
+     */
     private function generateMilestones(array $inputs): array
     {
         $milestoneTargets = [];

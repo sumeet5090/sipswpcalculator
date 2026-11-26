@@ -11,6 +11,9 @@ use PHPUnit\Framework\TestCase;
  */
 final class SliderCurveTest extends TestCase
 {
+    /**
+     * @return array<int|string, mixed>
+     */
     private function runSliderCurveTest(float $min, float $max, float $step, string $curve): array
     {
         $nodeScript = __DIR__ . '/../run_js_calc.js';

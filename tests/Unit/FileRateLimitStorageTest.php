@@ -55,6 +55,7 @@ class FileRateLimitStorageTest extends TestCase
 
         $this->assertFileExists($filePath);
         $content = file_get_contents($filePath);
+        $this->assertIsString($content);
         $this->assertNotEmpty($content);
         $data = json_decode($content, true);
         $this->assertIsArray($data);

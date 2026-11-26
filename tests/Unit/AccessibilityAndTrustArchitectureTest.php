@@ -71,6 +71,7 @@ final class AccessibilityAndTrustArchitectureTest extends TestCase
 
         $results = $this->calculator->calculate($inputs);
         $lastRow = end($results);
+        $this->assertIsArray($lastRow);
         $maturedCorpus = $lastRow['combined_total'];
 
         $this->assertGreaterThan(5000000.0, $maturedCorpus, "10-year SIP must generate matured wealth > ₹50L");
@@ -93,6 +94,7 @@ final class AccessibilityAndTrustArchitectureTest extends TestCase
         $this->assertCount(20, $swpResults);
 
         $swpLastRow = end($swpResults);
+        $this->assertIsArray($swpLastRow);
         $this->assertGreaterThan(0.0, $swpLastRow['combined_total'], "SWP starting with matured corpus must sustain across distribution phase");
     }
 

@@ -49,6 +49,7 @@ final class CanvasVisualizerTest extends TestCase
 
         $results = $this->calculator->calculate($inputs);
         $lastRow = end($results);
+        $this->assertIsArray($lastRow);
         $baselineCorpus = $lastRow['combined_total'];
 
         $this->assertGreaterThan(4500000.0, $baselineCorpus);
@@ -73,6 +74,7 @@ final class CanvasVisualizerTest extends TestCase
 
         $results = $this->calculator->calculate($inputs);
         $lastRow = end($results);
+        $this->assertIsArray($lastRow);
 
         $invested = $lastRow['cumulative_invested'];
         $corpus = $lastRow['combined_total'];
@@ -124,6 +126,7 @@ final class CanvasVisualizerTest extends TestCase
 
         $safeResults = $this->calculator->calculate($safeInputs);
         $finalRow = end($safeResults);
+        $this->assertIsArray($finalRow);
         $this->assertGreaterThanOrEqual(0.0, $finalRow['combined_total']);
     }
 
@@ -201,7 +204,9 @@ final class CanvasVisualizerTest extends TestCase
         );
 
         $results = $this->calculator->calculate($sipInputs);
-        $finalSipCorpus = end($results)['combined_total'];
+        $lastSipRow = end($results);
+        $this->assertIsArray($lastSipRow);
+        $finalSipCorpus = $lastSipRow['combined_total'];
 
         // Compute 6.5% FD
         $fdInputs = InvestmentInputs::fromValues(
@@ -218,7 +223,9 @@ final class CanvasVisualizerTest extends TestCase
         );
 
         $fdResults = $this->calculator->calculate($fdInputs);
-        $finalFdCorpus = end($fdResults)['combined_total'];
+        $lastFdRow = end($fdResults);
+        $this->assertIsArray($lastFdRow);
+        $finalFdCorpus = $lastFdRow['combined_total'];
 
         $alphaDelta = $finalSipCorpus - $finalFdCorpus;
         $this->assertGreaterThan(4500000.0, $alphaDelta, "Equity SIP must generate substantial Alpha Delta over Bank FD");

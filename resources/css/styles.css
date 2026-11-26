@@ -253,8 +253,7 @@
         box-shadow: 0 1px 3px rgba(4, 120, 87, 0.3);
     }
 
-    .preset-chip.is-active-amber,
-    .preset-chip.is-active-blue {
+    .preset-chip.is-active-amber {
         background-color: #b45309;
         color: #ffffff;
         border-color: #92400e;

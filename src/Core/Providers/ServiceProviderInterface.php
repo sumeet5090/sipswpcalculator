@@ -12,5 +12,8 @@ use Core\Container;
  */
 interface ServiceProviderInterface
 {
+    /**
+     * @param array<string, mixed> $config
+     */
     public function register(Container $container, array $config = []): void;
 }

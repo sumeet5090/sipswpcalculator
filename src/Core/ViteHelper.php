@@ -6,6 +6,7 @@ namespace Core;
 
 class ViteHelper
 {
+    /** @var array<string, array<string, mixed>>|null */
     private ?array $manifest = null;
     private ?bool $devServerActive = null;
     private string $environment;
@@ -132,23 +133,26 @@ class ViteHelper
     /**
      * Resolve a manifest entry by path, shorthand name, or bundled CSS association.
      * Implements Postel's Law (Robustness Principle) for asset discovery.
+     *
+     * @return array<string, mixed>|null
      */
     private function resolveManifestEntry(string $entry): ?array
     {
         $this->loadManifest();
+        $manifest = $this->manifest ?? [];
         $key = ltrim(trim($entry), '/');
 
         // 1. Exact key match (e.g. 'resources/js/app.ts')
-        if (isset($this->manifest[$key])) {
-            return $this->manifest[$key];
+        if (isset($manifest[$key])) {
+            return $manifest[$key];
         }
 
         // 2. Match by entry name or filename stem (e.g. 'app')
-        foreach ($this->manifest as $manifestKey => $item) {
+        foreach ($manifest as $manifestKey => $item) {
             if (isset($item['name']) && $item['name'] === $key) {
                 return $item;
             }
-            $stem = pathinfo($manifestKey, PATHINFO_FILENAME);
+            $stem = pathinfo((string) $manifestKey, PATHINFO_FILENAME);
             if ($stem === $key) {
                 return $item;
             }
@@ -156,7 +160,7 @@ class ViteHelper
 
         // 3. Match direct CSS paths against entries with bundled CSS (e.g. 'resources/css/input.css' or 'input.css')
         if (str_ends_with($key, '.css')) {
-            foreach ($this->manifest as $item) {
+            foreach ($manifest as $item) {
                 if (!empty($item['css']) && is_array($item['css'])) {
                     return $item;
                 }

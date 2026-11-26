@@ -29,6 +29,9 @@ class ContentManager
         $this->headingEnhancer = $headingEnhancer ?? new HtmlHeadingEnhancer();
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function listMarkdownFiles(string $subDir): array
     {
         $dir = $this->contentDir . '/' . trim($subDir, '/');
@@ -100,6 +103,9 @@ class ContentManager
         }
     }
 
+    /**
+     * @return array{metadata: array<string, mixed>, html: string}|null
+     */
     public function getParsedContent(string $path): ?array
     {
         $fullPath = $this->resolveSafePath($path);
@@ -139,6 +145,8 @@ class ContentManager
 
     /**
      * Get front-matter metadata only without rendering Markdown HTML.
+     *
+     * @return array<string, mixed>|null
      */
     public function getMetadataOnly(string $path): ?array
     {
@@ -166,6 +174,9 @@ class ContentManager
         return $metadata;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function parseFrontMatter(string $frontMatter): array
     {
         $metadata = [];

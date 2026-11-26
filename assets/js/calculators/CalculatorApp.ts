@@ -28,8 +28,23 @@ import { ChartScrubbingController } from './controllers/ChartScrubbingController
 import { LumpsumDisclosureController } from './controllers/LumpsumDisclosureController.ts';
 import { ContextualBridgeController } from './controllers/ContextualBridgeController.ts';
 import { A11yAnnouncer } from './helpers/A11yAnnouncer.ts';
+import { CalculatorRegistry } from './constants/CalculatorRegistry.ts';
 import { ModalScrollLockHelper } from './helpers/ModalScrollLockHelper.ts';
 import { SpecializedCalculatorController } from './controllers/SpecializedCalculatorController.ts';
+import {
+    readCoreInputs,
+    buildExportPayload,
+    applyCoreRestoredInputs
+} from './helpers/CoreInputReader.ts';
+import {
+    bindPassiveSeoClickListeners,
+    scheduleSettledAnalytics
+} from './helpers/PassiveTelemetryHelper.ts';
+import {
+    bindSavePlanAction,
+    bindCoreFormControls,
+    bindResizeObserver
+} from './helpers/CoreFormControlsBinder.ts';
 import {
     ExportSubsystem,
     EngagementSubsystem,
@@ -210,33 +225,13 @@ export class CalculatorApp {
      * Reapply a restored set of parameters across form inputs and trigger recalculation.
      */
     applyRestoredInputs(inputs: InvestmentInputs): void {
-        const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
-        const mode = appEl?.dataset?.mode ?? 'combo';
-        const isSwpMode = (mode === 'swp');
-
-        if (!isSwpMode) {
-            if (inputs.sip !== undefined && inputs.sip > 0) this.sliderManager.updateFieldValue('sip', inputs.sip, true);
-            if (inputs.years !== undefined && inputs.years > 0) this.sliderManager.updateFieldValue('years', inputs.years, true);
-            if (inputs.rate !== undefined && inputs.rate > 0) this.sliderManager.updateFieldValue('rate', inputs.rate, true);
-            if (inputs.stepup !== undefined) this.sliderManager.updateFieldValue('stepup', inputs.stepup, true);
-        }
-        if (inputs.inflation !== undefined) this.sliderManager.updateFieldValue('inflation', inputs.inflation, true);
-        if (inputs.lumpsum !== undefined) {
-            this.sliderManager.updateFieldValue('lumpsum', inputs.lumpsum, true);
-            this.sliderManager.updateFieldValue('corpus', inputs.lumpsum, true);
-            this.lumpsumDisclosureController.syncForValue(inputs.lumpsum, inputs.lumpsum <= 0);
-        }
-        if (inputs.swp_withdrawal !== undefined && inputs.swp_withdrawal > 0) this.sliderManager.updateFieldValue('swp_withdrawal', inputs.swp_withdrawal, true);
-        if (inputs.swp_years !== undefined && inputs.swp_years > 0) this.sliderManager.updateFieldValue('swp_years', inputs.swp_years, true);
-        if (inputs.swp_rate !== undefined && inputs.swp_rate > 0) this.sliderManager.updateFieldValue('swp_rate', inputs.swp_rate, true);
-        if (inputs.swp_stepup !== undefined) this.sliderManager.updateFieldValue('swp_stepup', inputs.swp_stepup, true);
-
-        const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
-        if (swpToggle && inputs.enable_swp !== undefined && swpToggle.checked !== inputs.enable_swp) {
-            swpToggle.checked = inputs.enable_swp;
-            this.syncSwpToggleState();
-        }
-
+        applyCoreRestoredInputs(
+            this.dom,
+            this.sliderManager,
+            inputs,
+            (val, programmatic) => this.lumpsumDisclosureController.syncForValue(val, programmatic),
+            () => this.syncSwpToggleState()
+        );
         this.triggerCalculation();
     }
 
@@ -269,116 +264,14 @@ export class CalculatorApp {
      * Gather form input parameters and run validation constraints.
      */
     getInputs(): InvestmentInputs {
-        const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
-        const mode = appEl?.dataset?.mode ?? 'combo';
-        const isSwpMode = (mode === 'swp');
-        const isLumpsumMode = (mode === 'lumpsum');
-        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd', 'gratuity', 'nps', 'post_retirement', 'epf', 'tax_harvest', 'income_tax'];
-
-        if (specializedModes.includes(mode)) {
-            return {
-                sip: 0,
-                years: 0,
-                rate: 0,
-                stepup: 0,
-                inflation: 0,
-                lumpsum: 0,
-                enable_swp: false,
-                swp_withdrawal: 0,
-                swp_years: 0,
-                swp_stepup: 0,
-                swp_rate: 0
-            };
-        }
-
-        if (isSwpMode) {
-            return {
-                sip: 0,
-                years: 0,
-                rate: 0,
-                stepup: 0,
-                inflation: this.validator.validate('inflation', this.dom.getValue('inflation') || 0),
-                lumpsum: this.validator.validate('corpus', this.dom.getValue('corpus') || 0),
-                enable_swp: true,
-                swp_withdrawal: this.validator.validate('swp_withdrawal', this.dom.getValue('swp_withdrawal') || 0),
-                swp_years: this.validator.validate('swp_years', this.dom.getValue('swp_years') || 0),
-                swp_stepup: this.validator.validate('swp_stepup', this.dom.getValue('swp_stepup') || 0),
-                swp_rate: this.validator.validate('swp_rate', this.dom.getValue('swp_rate') || 0)
-            };
-        }
-
-        if (isLumpsumMode) {
-            return {
-                sip: 0,
-                years: this.validator.validate('years', this.dom.getValue('years') || 0),
-                rate: this.validator.validate('rate', this.dom.getValue('rate') || 0),
-                stepup: 0,
-                inflation: this.validator.validate('inflation', this.dom.getValue('inflation') || 0),
-                lumpsum: this.validator.validate('lumpsum', this.dom.getValue('lumpsum') || 0),
-                enable_swp: false,
-                swp_withdrawal: 0,
-                swp_years: 0,
-                swp_stepup: 0,
-                swp_rate: 0
-            };
-        }
-
-        const lumpsumVal = this.validator.validate('lumpsum', this.dom.getValue('lumpsum') || 0);
-
-        return {
-            sip: this.validator.validate('sip', this.dom.getValue('sip') || 0),
-            years: this.validator.validate('years', this.dom.getValue('years') || 0),
-            rate: this.validator.validate('rate', this.dom.getValue('rate') || 0),
-            stepup: this.validator.validate('stepup', this.dom.getValue('stepup') || 0),
-            inflation: this.validator.validate('inflation', this.dom.getValue('inflation') || 0),
-            lumpsum: lumpsumVal,
-            enable_swp: (this.dom.getElement<HTMLInputElement>('enable_swp')?.checked) || false,
-            swp_withdrawal: this.validator.validate('swp_withdrawal', this.dom.getValue('swp_withdrawal') || 0),
-            swp_years: this.validator.validate('swp_years', this.dom.getValue('swp_years') || 0),
-            swp_stepup: this.validator.validate('swp_stepup', this.dom.getValue('swp_stepup') || 0),
-            swp_rate: this.validator.validate('swp_rate', this.dom.getValue('swp_rate') || 0)
-        };
+        return readCoreInputs(this.dom, this.validator);
     }
 
     /**
      * Collect active form inputs including specialized mode parameters and currency for CSV/PDF exports.
      */
     getExportPayload(): Record<string, string | number | boolean> {
-        const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
-        const mode = appEl?.dataset?.mode ?? 'combo';
-        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd', 'gratuity', 'nps', 'post_retirement', 'epf', 'tax_harvest', 'income_tax'];
-
-        const payload: Record<string, string | number | boolean> = {
-            calculator_type: mode,
-            currency: this.formatter.getCurrency(),
-            currency_symbol: this.formatter.getSymbol(),
-        };
-
-        if (specializedModes.includes(mode)) {
-            const form = this.dom.getElement<HTMLFormElement>('calculator-form');
-            if (form) {
-                const fields = form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select');
-                fields.forEach(field => {
-                    const name = field.name || field.id;
-                    if (!name || name === 'website_url' || name.endsWith('_range')) return;
-                    if (field instanceof HTMLInputElement && field.type === 'checkbox') {
-                        payload[name] = field.checked ? '1' : '0';
-                    } else {
-                        payload[name] = field.value;
-                    }
-                });
-            }
-            return payload;
-        }
-
-        const baseInputs = this.getInputs();
-        Object.entries(baseInputs).forEach(([k, v]) => {
-            payload[k] = v;
-        });
-        if (mode === 'swp') {
-            payload['corpus'] = baseInputs.lumpsum;
-        }
-        return payload;
+        return buildExportPayload(this.dom, this.formatter, this.validator);
     }
 
     /**
@@ -561,53 +454,24 @@ export class CalculatorApp {
     }
 
     /**
-     * Wire 1-Click SIP Matured Corpus -> SWP Bridge transition
-     */
-    private initLifecycleBridge(): void {
-        const bridgeBtn = this.dom.getElement('apply-sip-to-swp-btn') || this.dom.getElement('edit-as-standalone-swp-btn');
-        if (bridgeBtn) {
-            bridgeBtn.addEventListener('click', () => {
-                if (this.latestResults.length === 0) return;
-                const inputs = this.getInputs();
-                const sipYears = inputs.years || 0;
-                const maturedRow = (inputs.enable_swp && sipYears > 0 && sipYears <= this.latestResults.length)
-                    ? this.latestResults[sipYears - 1]
-                    : this.latestResults[this.latestResults.length - 1];
-                const maturedCorpus = maturedRow.combined_total;
-                if (maturedCorpus <= 0) return;
-
-                this.sliderManager.updateFieldValue('corpus', maturedCorpus);
-
-                const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
-                if (swpToggle) {
-                    swpToggle.checked = true;
-                    this.syncSwpToggleState();
-                }
-
-                const swpTab = this.dom.getElement('tab-swp');
-                if (swpTab) {
-                    swpTab.click();
-                }
-
-                this.engagementSubsystem.playChime();
-                this.engagementSubsystem.vibrate([15, 30, 15]);
-                A11yAnnouncer.announce(`Transferred matured SIP corpus of ${this.formatter.formatDynamic(maturedCorpus)} into SWP initial balance.`);
-            });
-        }
-    }
-
-    /**
      * Initialize app lifecycle.
      */
     init(): void {
         const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
         const mode = appEl?.dataset?.mode || 'combo';
-        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd', 'gratuity', 'nps', 'post_retirement', 'epf', 'tax_harvest', 'income_tax'];
 
         // Bind view switcher (line/donut) and benchmark chips across all calculators
         this.chartManager.initControls();
+        bindSavePlanAction({
+            dom: this.dom,
+            mode,
+            lifecycleSubsystem: this.lifecycleSubsystem,
+            getInputs: () => this.getInputs(),
+            getExportPayload: () => this.getExportPayload(),
+            getLatestResults: () => this.latestResults
+        });
 
-        if (specializedModes.includes(mode)) {
+        if (CalculatorRegistry.isSpecializedMode(mode)) {
             new StepperController(
                 this.dom,
                 this.validator,
@@ -615,8 +479,11 @@ export class CalculatorApp {
                 this.engagementSubsystem.getAudioController()
             ).init();
             this.initGlobalShortcuts();
-            this.initPassiveSeoClickListeners();
-            this.initResizeListeners();
+            bindPassiveSeoClickListeners(this.analytics);
+            bindResizeObserver(() => {
+                this.summaryMetricsController.resetBaseFontCache();
+                this.fitSummaryCards();
+            });
             ModalScrollLockHelper.initGlobalDialogs();
 
             this.specializedController = new SpecializedCalculatorController(
@@ -629,6 +496,7 @@ export class CalculatorApp {
                 this.summaryMetricsController,
                 this.analytics,
                 (results) => {
+                    this.latestResults = results;
                     this.ergonomicsSubsystem.updateResults(results, this.getInputs());
                 }
             );
@@ -654,12 +522,24 @@ export class CalculatorApp {
             this.activeGoalMode = 'target_corpus';
         }
 
-        this.initSliderSync();
-        this.initGoalModeControls();
-        this.initSwpHandlers();
-        this.initToggles();
-        this.initLifecycleBridge();
         this.initGlobalShortcuts();
+
+        bindCoreFormControls({
+            dom: this.dom,
+            formatter: this.formatter,
+            sliderManager: this.sliderManager,
+            chartManager: this.chartManager,
+            engagementSubsystem: this.engagementSubsystem,
+            lifecycleSubsystem: this.lifecycleSubsystem,
+            getInputs: () => this.getInputs(),
+            getExportPayload: () => this.getExportPayload(),
+            getLatestResults: () => this.latestResults,
+            getActiveGoalMode: () => this.activeGoalMode,
+            setGoalMode: (m) => this.setGoalMode(m),
+            syncSwpToggleState: () => this.syncSwpToggleState(),
+            triggerCalculation: () => this.triggerCalculation(),
+            onResizeFit: () => this.fitSummaryCards(),
+        });
 
         new TabController(this.dom, () => {
             this.syncSwpToggleState();
@@ -680,33 +560,6 @@ export class CalculatorApp {
         this.summaryMetricsController.initTaxWaterfallModal(() => this.analytics.setTaxWaterfallOpened());
         ModalScrollLockHelper.initGlobalDialogs();
 
-        const corridorToggle = this.dom.getElement<HTMLInputElement>('show_historical_corridor');
-        if (corridorToggle) {
-            corridorToggle.addEventListener('change', () => {
-                this.chartManager.setHistoricalCorridor(corridorToggle.checked);
-            });
-        }
-
-        const stepupBoostBtn = this.dom.getElement<HTMLButtonElement>('apply-10pct-stepup-btn');
-        if (stepupBoostBtn) {
-            stepupBoostBtn.addEventListener('click', () => {
-                const current = parseFloat(this.dom.getValue('stepup') || '0') || 0;
-                const nextVal = current === 0 ? 10 : Math.min(25, current + 5);
-                this.sliderManager.updateFieldValue('stepup', nextVal);
-                this.triggerCalculation();
-                this.engagementSubsystem.triggerMicroBurst();
-                A11yAnnouncer.announce(`Applied salary step-up: ${nextVal}%`);
-            });
-        }
-
-        const snapshotBtn = this.dom.getElement('snapshot-scenario-btn');
-        if (snapshotBtn) {
-            snapshotBtn.addEventListener('click', () => {
-                const inputs = this.getInputs();
-                this.lifecycleSubsystem.saveScenarioDiffSnapshot(inputs, this.latestResults);
-            });
-        }
-
         const resetBtn = this.dom.getElement('calculator-reset-btn');
         if (resetBtn) {
             resetBtn.addEventListener('click', () => {
@@ -714,16 +567,11 @@ export class CalculatorApp {
             });
         }
 
-        const savePlanBtn = this.dom.getElement('saveCalculationBtn');
-        if (savePlanBtn) {
-            savePlanBtn.addEventListener('click', () => {
-                const inputs = this.getInputs();
-                this.lifecycleSubsystem.saveScenarioDiffSnapshot(inputs, this.latestResults);
-            });
-        }
-
-        this.initPassiveSeoClickListeners();
-        this.initResizeListeners();
+        bindPassiveSeoClickListeners(this.analytics);
+        bindResizeObserver(() => {
+            this.summaryMetricsController.resetBaseFontCache();
+            this.fitSummaryCards();
+        });
 
         new UrlStateController(
             this.dom,
@@ -735,171 +583,6 @@ export class CalculatorApp {
 
         this.initEventBusSubscribers();
         this.initInitialCalculation();
-    }
-
-    private initPassiveSeoClickListeners(): void {
-        // FAQ Details toggles
-        document.querySelectorAll('details').forEach(details => {
-            details.addEventListener('toggle', () => {
-                if (details.open) {
-                    const summaryText = details.querySelector('summary')?.textContent?.trim() || details.id || 'faq';
-                    this.analytics.setFaqExpanded(summaryText.slice(0, 64));
-                }
-            });
-        });
-
-        // Glossary tooltips
-        document.querySelectorAll('[data-glossary]').forEach(el => {
-            el.addEventListener('click', () => {
-                const term = el.getAttribute('data-glossary') || el.textContent?.trim() || 'term';
-                this.analytics.setGlossaryClicked(term.slice(0, 64));
-            });
-        });
-
-        // Floating Discovery HUD shortcuts
-        document.querySelectorAll('#floating-discovery-hud a, .hud-nav-link').forEach(el => {
-            el.addEventListener('click', () => {
-                const target = el.getAttribute('href') || el.id || 'hud';
-                this.analytics.setHudShortcutClicked(target.slice(0, 64));
-            });
-        });
-
-        // City FIRE Benchmark choices
-        document.querySelectorAll('.city-choice-btn, [data-city]').forEach(el => {
-            el.addEventListener('click', () => {
-                const city = (el as HTMLElement).dataset.city || el.textContent?.trim() || 'city';
-                this.analytics.setCityBenchmarkCity(city.slice(0, 64));
-            });
-        });
-
-        // Stress Test Crisis Scenarios
-        document.querySelectorAll('.stress-card, [data-scenario]').forEach(el => {
-            el.addEventListener('click', () => {
-                const sc = (el as HTMLElement).dataset.scenario || el.textContent?.trim() || 'stress';
-                this.analytics.setStressTestScenario(sc.slice(0, 64));
-            });
-        });
-
-        // Related Resources internal links
-        document.querySelectorAll('#related-resources a').forEach(el => {
-            el.addEventListener('click', () => {
-                const href = el.getAttribute('href') || 'related';
-                this.analytics.setInternalHubClicked(href.slice(0, 64));
-            });
-        });
-    }
-
-    private initSliderSync(): void {
-        this.sliderManager.syncAll({
-            'sip': 'sip_range',
-            'years': 'years_range',
-            'rate': 'rate_range',
-            'stepup': 'stepup_range',
-            'inflation': 'inflation_range',
-            'lumpsum': 'lumpsum_range',
-            'corpus': 'corpus_range',
-            'target_corpus': 'target_corpus_range',
-            'swp_withdrawal': 'swp_withdrawal_range',
-            'swp_years': 'swp_years_range',
-            'swp_stepup': 'swp_stepup_range',
-            'swp_rate': 'swp_rate_range',
-        });
-    }
-
-    private initGoalModeControls(): void {
-        const growBtn = this.dom.getElement('goal-grow');
-        const targetBtn = this.dom.getElement('goal-target');
-        if (growBtn) {
-            growBtn.addEventListener('click', () => this.setGoalMode('grow'));
-        }
-        if (targetBtn) {
-            targetBtn.addEventListener('click', () => this.setGoalMode('target'));
-        }
-
-        const sipInput = this.dom.getElement('sip');
-        const sipRange = this.dom.getElement('sip_range');
-        const autoSwitchToGrow = () => {
-            if (this.activeGoalMode === 'target') {
-                this.setGoalMode('grow');
-            }
-        };
-        if (sipInput) sipInput.addEventListener('input', autoSwitchToGrow);
-        if (sipRange) sipRange.addEventListener('input', autoSwitchToGrow);
-    }
-
-    private initSwpHandlers(): void {
-        const swpWithdrawal = this.dom.getElement('swp_withdrawal');
-        const swpWithdrawalRange = this.dom.getElement('swp_withdrawal_range');
-        const swpYears = this.dom.getElement('swp_years');
-        const swpYearsRange = this.dom.getElement('swp_years_range');
-        let swpRaf: number | null = null;
-        const handleSwpInput = () => {
-            if (swpRaf) cancelAnimationFrame(swpRaf);
-            swpRaf = requestAnimationFrame(() => {
-                const inputs = this.getInputs();
-                if (inputs.enable_swp && inputs.swp_withdrawal > 0 && inputs.swp_years > 0) {
-                    const reqCorpus = MathEngine.calculateRequiredStartingCorpusForSwp(inputs);
-                    if (this.activeGoalMode === 'target') {
-                        this.dom.setValue('target_corpus', reqCorpus);
-
-                        const targetRangeEl = this.dom.getElement<HTMLInputElement>('target_corpus_range');
-                        if (targetRangeEl) {
-                            const defaultMax = parseFloat(targetRangeEl.getAttribute('max') || '50000000');
-                            if (reqCorpus > defaultMax) {
-                                targetRangeEl.max = String(reqCorpus);
-                            } else {
-                                targetRangeEl.max = String(defaultMax);
-                            }
-                            this.dom.setValue('target_corpus_range', reqCorpus);
-                        }
-                    }
-                }
-            });
-        };
-
-        if (swpWithdrawal) swpWithdrawal.addEventListener('input', handleSwpInput);
-        if (swpWithdrawalRange) swpWithdrawalRange.addEventListener('input', handleSwpInput);
-        if (swpYears) swpYears.addEventListener('input', handleSwpInput);
-        if (swpYearsRange) swpYearsRange.addEventListener('input', handleSwpInput);
-    }
-
-    private initToggles(): void {
-        const swpToggle = this.dom.getElement<HTMLInputElement>('enable_swp');
-        if (swpToggle) {
-            swpToggle.addEventListener('change', () => this.syncSwpToggleState());
-        }
-
-        const postTaxToggle = this.dom.getElement<HTMLInputElement>('show_post_tax');
-        if (postTaxToggle) {
-            postTaxToggle.addEventListener('change', () => {
-                const taxCols = this.dom.getElements<HTMLElement>('tax-col');
-                taxCols.forEach(el => {
-                    el.style.display = postTaxToggle.checked ? '' : 'none';
-                });
-                this.triggerCalculation();
-            });
-        }
-
-        const wealthMapToggle = this.dom.getElement('show_wealth_map');
-        if (wealthMapToggle) {
-            wealthMapToggle.addEventListener('change', () => this.triggerCalculation());
-        }
-    }
-
-    private initResizeListeners(): void {
-        let resizeTimer: ReturnType<typeof setTimeout> | undefined;
-        let lastWidth = window.innerWidth;
-        window.addEventListener('resize', () => {
-            if (window.innerWidth === lastWidth) {
-                return; // Ignore height-only resizes from mobile keyboards to prevent CLS
-            }
-            lastWidth = window.innerWidth;
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                this.summaryMetricsController.resetBaseFontCache();
-                this.fitSummaryCards();
-            }, 150);
-        });
     }
 
     private initEventBusSubscribers(): void {
@@ -1003,25 +686,7 @@ export class CalculatorApp {
 
         if (!this.userHasInteracted) return;
 
-        // Schedule layout-measuring analytics during requestIdleCallback to eliminate forced synchronous reflow
-        const runAnalytics = () => {
-            const breakdownEl = this.dom.getElement('yearly-breakdown-section') || this.dom.getElement('breakdown-body');
-            const tableViewed = breakdownEl
-                ? (breakdownEl.getBoundingClientRect().top < this.dom.getViewportHeight() ? 1 : 0)
-                : 0;
-            const deviceType = (window.innerWidth < 768) ? 'mobile' : 'desktop';
-
-            this.analytics.logInsight(inputs, combined, this.activeGoalMode, {
-                table_viewed: tableViewed,
-                device_type: deviceType
-            });
-        };
-
-        if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-            (window as any).requestIdleCallback(runAnalytics, { timeout: 1000 });
-        } else {
-            setTimeout(runAnalytics, 50);
-        }
+        scheduleSettledAnalytics(this.dom, this.analytics, inputs, combined, this.activeGoalMode);
     }
 
     private initInitialCalculation(): void {

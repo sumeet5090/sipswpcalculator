@@ -14,8 +14,12 @@ use PDO;
 class InsightRepository
 {
     private PDO $pdo;
+    /** @var array<string, mixed> */
     private array $bucketConfig;
 
+    /**
+     * @param array<string, mixed> $bucketConfig
+     */
     public function __construct(PDO $pdo, array $bucketConfig = [])
     {
         $this->pdo = $pdo;
@@ -23,6 +27,9 @@ class InsightRepository
         $this->bucketConfig = $bucketConfig;
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     private function validateBucketConfig(array $config): void
     {
         foreach ($config as $group => $buckets) {
@@ -43,6 +50,9 @@ class InsightRepository
         }
     }
 
+    /**
+     * @param array<int|string, mixed> $buckets
+     */
     private function buildCaseSql(array $buckets, string $column, string $alias = 'bucket'): string
     {
         $column = preg_replace('/[^a-zA-Z0-9_]/', '', $column);
@@ -64,6 +74,10 @@ class InsightRepository
         return "CASE " . implode(' ', $cases) . " END AS {$alias}";
     }
 
+    /**
+     * @param array<string, mixed> $range
+     * @return array<string, mixed>
+     */
     public function getDashboardData(array $range): array
     {
         $interval = $range['interval'] ?? '-30 days';
@@ -84,6 +98,10 @@ class InsightRepository
         ], $distributions, $engagement);
     }
 
+    /**
+     * @param array<int|string, mixed> $params
+     * @return array<string, mixed>
+     */
     private function getConsolidatedScalarMetrics(string $whereClause, array $params): array
     {
         $sql = "
@@ -115,6 +133,11 @@ class InsightRepository
         return is_array($result) ? $result : [];
     }
 
+    /**
+     * @param array<int|string, mixed> $params
+     * @param array<string, mixed> $scalars
+     * @return array<string, mixed>
+     */
     private function getOverviewMetrics(string $whereClause, array $params, array $scalars): array
     {
         $totalInRange = (int) ($scalars['total_in_range'] ?? 0);
@@ -123,7 +146,8 @@ class InsightRepository
         $conversionRate = $totalInRange > 0 ? round(($totalPdfDownloads / $totalInRange) * 100, 1) : 0.0;
 
         // Total all-time calculations
-        $totalAllTime = (int) $this->pdo->query("SELECT COUNT(*) FROM user_calculations")->fetchColumn();
+        $allTimeStmt = $this->pdo->query("SELECT COUNT(*) FROM user_calculations");
+        $totalAllTime = $allTimeStmt !== false ? (int) $allTimeStmt->fetchColumn() : 0;
 
         // Calculations breakdown by type
         $stmt = $this->pdo->prepare("SELECT calc_type, COUNT(*) AS cnt FROM user_calculations {$whereClause} GROUP BY calc_type ORDER BY cnt DESC");
@@ -158,6 +182,9 @@ class InsightRepository
         ];
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     private function getVolumeSeries(string $unit, string $cteStart, string $interval): array
     {
         if ($unit === 'hour') {
@@ -197,6 +224,11 @@ class InsightRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * @param array<int|string, mixed> $params
+     * @param array<string, mixed> $scalars
+     * @return array<string, mixed>
+     */
     private function getDistributionMetrics(string $whereClause, array $params, array $scalars): array
     {
         $currencyAndCorpus = $this->getCurrencyAndCorpusMetrics($whereClause, $params);
@@ -206,6 +238,10 @@ class InsightRepository
         return array_merge($currencyAndCorpus, $sipSwpAverages, $buckets);
     }
 
+    /**
+     * @param array<int|string, mixed> $params
+     * @return array<string, mixed>
+     */
     private function getCurrencyAndCorpusMetrics(string $whereClause, array $params): array
     {
         $stmt = $this->pdo->prepare("
@@ -235,6 +271,10 @@ class InsightRepository
         ];
     }
 
+    /**
+     * @param array<string, mixed> $scalars
+     * @return array<string, mixed>
+     */
     private function getSipAndSwpAverages(array $scalars): array
     {
         $totalSIP = (int) ($scalars['total_sip'] ?? 0);
@@ -256,6 +296,10 @@ class InsightRepository
         ];
     }
 
+    /**
+     * @param array<int|string, mixed> $params
+     * @return array<string, mixed>
+     */
     private function getBucketDistributions(string $whereClause, array $params): array
     {
         $durationCase = $this->buildCaseSql($this->bucketConfig['duration_buckets'] ?? [], 'duration', 'bucket');
@@ -318,6 +362,11 @@ class InsightRepository
         ];
     }
 
+    /**
+     * @param array<int|string, mixed> $params
+     * @param array<string, mixed> $scalars
+     * @return array<string, mixed>
+     */
     private function getEngagementMetrics(string $whereClause, array $params, array $scalars): array
     {
         $totalInRange = (int) ($scalars['total_in_range'] ?? 0);

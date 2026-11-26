@@ -1,21 +1,16 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
-<!-- Hidden legacy fields to prevent JS errors -->
-<input type="hidden" id="sip" name="sip" value="0">
-<input type="hidden" id="stepup" name="stepup" value="0">
-<input type="hidden" id="lumpsum" name="lumpsum" value="0">
-
 <div class="space-y-3">
     <!-- Principal Deposit Amount -->
     {{ inputs.renderInputRangePair({
         'id': 'ci_principal',
-        'label': 'Initial Principal',
+        'label': calc_config.ci_principal.label|default('Initial Principal'),
         'tooltip': 'Initial lump sum deposited or invested.',
-        'min': 10000,
-        'max': 10000000,
-        'slider_max': 5000000,
-        'step': 10000,
-        'value': 500000,
+        'min': calc_config.ci_principal.min|default(10000),
+        'max': calc_config.ci_principal.max|default(10000000),
+        'slider_max': calc_config.ci_principal.slider_max|default(5000000),
+        'step': calc_config.ci_principal.step|default(10000),
+        'value': ci_principal|default(calc_config.ci_principal.default|default(500000)),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [
@@ -30,13 +25,13 @@
     <!-- Annual Interest Rate -->
     {{ inputs.renderInputRangePair({
         'id': 'ci_rate',
-        'label': 'Annual Rate',
+        'label': calc_config.ci_rate.label|default('Annual Rate'),
         'tooltip': 'Nominal annual return rate or interest percentage.',
-        'min': 1,
-        'max': 30,
-        'slider_max': 25,
-        'step': 0.5,
-        'value': 12,
+        'min': calc_config.ci_rate.min|default(1),
+        'max': calc_config.ci_rate.max|default(30),
+        'slider_max': calc_config.ci_rate.slider_max|default(25),
+        'step': calc_config.ci_rate.step|default(0.5),
+        'value': ci_rate|default(calc_config.ci_rate.default|default(12)),
         'suffix': '%',
         'theme': 'emerald',
         'presets': [
@@ -51,13 +46,13 @@
     <!-- Time Period (Years) -->
     {{ inputs.renderInputRangePair({
         'id': 'ci_years',
-        'label': 'Investment Duration',
+        'label': calc_config.ci_years.label|default('Investment Duration'),
         'tooltip': 'Total investment period in years.',
-        'min': 1,
-        'max': 40,
-        'slider_max': 30,
-        'step': 1,
-        'value': 10,
+        'min': calc_config.ci_years.min|default(1),
+        'max': calc_config.ci_years.max|default(40),
+        'slider_max': calc_config.ci_years.slider_max|default(30),
+        'step': calc_config.ci_years.step|default(1),
+        'value': ci_years|default(calc_config.ci_years.default|default(10)),
         'suffix': 'Yrs',
         'theme': 'emerald',
         'presets': [

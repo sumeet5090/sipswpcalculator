@@ -11,6 +11,7 @@ namespace Core;
 class MetaManager
 {
     private SiteConfig $siteConfig;
+    /** @var array<string, array<string, mixed>>|null */
     private ?array $pageMap = null;
     private string $metaPagesPath;
 
@@ -22,10 +23,13 @@ class MetaManager
         $this->metaPagesPath = $metaPagesPath ?? 'content/meta_pages.json';
     }
 
-    private function loadPageMap(): void
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    private function loadPageMap(): array
     {
         if ($this->pageMap !== null) {
-            return;
+            return $this->pageMap;
         }
 
         $fullPath = (str_starts_with($this->metaPagesPath, '/') || (DIRECTORY_SEPARATOR === '\\' && str_contains($this->metaPagesPath, ':')))
@@ -46,31 +50,35 @@ class MetaManager
             throw new \Core\Exceptions\ConfigurationException("Failed to parse metadata pages configuration: " . json_last_error_msg());
         }
 
+        /** @var array<string, array<string, mixed>> $decoded */
         $this->pageMap = $decoded;
+        return $this->pageMap;
     }
 
     /**
      * Retrieve pre-configured page metadata by key.
+     *
+     * @return array<string, mixed>
      */
     public function getMeta(string $pageKey): array
     {
-        $this->loadPageMap();
+        $pageMap = $this->loadPageMap();
 
         $key = trim($pageKey, '/');
         if ($key === '') {
             $key = 'home';
         }
 
-        if (isset($this->pageMap[$key])) {
-            $meta = $this->pageMap[$key];
+        if (isset($pageMap[$key])) {
+            $meta = $pageMap[$key];
             if ($key === 'home' && !isset($meta['canonical'])) {
                 $meta['canonical'] = $this->siteConfig->getUrl('/');
             }
             return $meta;
         }
 
-        if (isset($this->pageMap[$pageKey])) {
-            $meta = $this->pageMap[$pageKey];
+        if (isset($pageMap[$pageKey])) {
+            $meta = $pageMap[$pageKey];
             if ($pageKey === 'home' && !isset($meta['canonical'])) {
                 $meta['canonical'] = $this->siteConfig->getUrl('/');
             }
@@ -83,6 +91,9 @@ class MetaManager
 
     /**
      * Build SEO metadata array from a markdown content metadata array.
+     *
+     * @param array<string, mixed> $metadata
+     * @return array<string, mixed>
      */
     public function buildFromMetadata(array $metadata, string $urlPath): array
     {
@@ -114,6 +125,8 @@ class MetaManager
 
     /**
      * Construct dynamic page metadata array.
+     *
+     * @return array<string, mixed>
      */
     public function setDynamicMeta(string $title, string $desc, ?string $canonical = null): array
     {

@@ -120,13 +120,7 @@
                 {% set card_header_bg = 'bg-emerald-50/90 border-b border-emerald-100' %}
                 {% set post_arrow_class = 'bg-emerald-600 group-hover:bg-emerald-700' %}
                 {% set post_title_hover = 'group-hover:text-emerald-700' %}
-                {% if accent_color == 'blue' %}
-                    {% set icon_badge_class = 'bg-blue-600 text-white shadow-blue-600/20' %}
-                    {% set top_bar_class = 'border-t-4 border-t-blue-500' %}
-                    {% set card_header_bg = 'bg-blue-50/90 border-b border-blue-100' %}
-                    {% set post_arrow_class = 'bg-blue-600 group-hover:bg-blue-700' %}
-                    {% set post_title_hover = 'group-hover:text-blue-700' %}
-                {% elseif accent_color == 'indigo' %}
+                {% if accent_color == 'indigo' %}
                     {% set icon_badge_class = 'bg-indigo-600 text-white shadow-indigo-600/20' %}
                     {% set top_bar_class = 'border-t-4 border-t-indigo-500' %}
                     {% set card_header_bg = 'bg-indigo-50/90 border-b border-indigo-100' %}
@@ -163,16 +157,22 @@
                             <a href="/compound-interest-calculator" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-micro font-bold transition-all shadow-flat">CI</a>
                             <a href="/cagr-calculator" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-micro font-bold transition-all shadow-flat">CAGR</a>
                         {% elseif cat_id == 'retirement' %}
-                            <a href="/" class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 text-micro font-bold transition-all shadow-flat">SIP + SWP</a>
-                            <a href="/swp-calculator" class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 text-micro font-bold transition-all shadow-flat">SWP</a>
-                            <a href="/retirement-calculator" class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 text-micro font-bold transition-all shadow-flat">Retirement</a>
-                            <a href="/target-corpus-calculator" class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 text-micro font-bold transition-all shadow-flat">Target Corpus</a>
-                            <a href="/reach-5-crore-via-sip" class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 text-micro font-bold transition-all shadow-flat">5 Cr Goal</a>
+                            <a href="/" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-micro font-bold transition-all shadow-flat">SIP + SWP</a>
+                            <a href="/swp-calculator" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-micro font-bold transition-all shadow-flat">SWP</a>
+                            <a href="/retirement-calculator" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-micro font-bold transition-all shadow-flat">Retirement</a>
+                            <a href="/target-corpus-calculator" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-micro font-bold transition-all shadow-flat">Target Corpus</a>
+                            <a href="/reach-5-crore-via-sip" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-micro font-bold transition-all shadow-flat">5 Cr Goal</a>
+                            <a href="/nps-calculator" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-micro font-bold transition-all shadow-flat">NPS</a>
+                            <a href="/post-retirement-calculator" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-micro font-bold transition-all shadow-flat">Post-Ret</a>
+                            <a href="/epf-calculator" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-micro font-bold transition-all shadow-flat">EPF</a>
+                            <a href="/gratuity-calculator" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-micro font-bold transition-all shadow-flat">Gratuity</a>
                         {% elseif cat_id == 'comparison' %}
                             <a href="/fd-calculator" class="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 text-micro font-bold transition-all shadow-flat">FD</a>
                             <a href="/ppf-calculator" class="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 text-micro font-bold transition-all shadow-flat">PPF</a>
                             <a href="/emi-calculator" class="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 text-micro font-bold transition-all shadow-flat">EMI</a>
                             <a href="/inflation-calculator" class="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 text-micro font-bold transition-all shadow-flat">Inflation</a>
+                            <a href="/tax-harvesting-calculator" class="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 text-micro font-bold transition-all shadow-flat">Tax Harvest</a>
+                            <a href="/income-tax-calculator" class="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 text-micro font-bold transition-all shadow-flat">Income Tax</a>
                         {% endif %}
                     </div>
                 </div>
@@ -188,9 +188,7 @@
                             {% set featured_rendered_count = featured_rendered_count + 1 %}
                         {% endif %}
                         {% set tag_badge_class = 'text-emerald-800 bg-emerald-50 border border-emerald-200' %}
-                        {% if accent_color == 'blue' %}
-                            {% set tag_badge_class = 'text-blue-800 bg-blue-50 border border-blue-200' %}
-                        {% elseif accent_color == 'indigo' %}
+                        {% if accent_color == 'indigo' %}
                             {% set tag_badge_class = 'text-indigo-800 bg-indigo-50 border border-indigo-200' %}
                         {% elseif accent_color == 'amber' %}
                             {% set tag_badge_class = 'text-amber-800 bg-amber-50 border border-amber-200' %}

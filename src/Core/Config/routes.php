@@ -5,52 +5,17 @@ declare(strict_types=1);
 use Controllers\RenderAboutAction;
 use Controllers\RenderFaqAction;
 use Controllers\RenderGlossaryAction;
-use Controllers\RenderGuideAction;
 use Controllers\RenderPrivacyAction;
 use Controllers\RenderTermsAction;
+use Core\Config\CalculatorRegistry;
 
 return [
-    'calculators' => [
-        '/sip-calculator'            => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/swp-calculator'            => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/sip-step-up-calculator'    => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/lumpsum-calculator'        => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/retirement-calculator'     => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/my-first-crore-calculator' => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/target-corpus-calculator'  => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/compound-interest-calculator' => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/cagr-calculator'              => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/emi-calculator'               => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/inflation-calculator'         => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/ppf-calculator'               => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/fd-calculator'                => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/reach-5-crore-via-sip'        => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/sip-5000-per-month'           => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/sip-10000-per-month'          => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/1-crore-swp-calculator'       => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/2-crore-sip-calculator'       => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/sip-25000-per-month'          => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/50-lakh-swp-calculator'       => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/sip-50000-per-month'          => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/sip-15000-per-month'          => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/sip-20000-per-month'          => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/3-crore-sip-calculator'       => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/25-lakh-swp-calculator'       => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/2-crore-swp-calculator'       => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/75-lakh-swp-calculator'       => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/sip-1-lakh-per-month'         => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.8', 'changefreq' => 'monthly'],
-        '/gratuity-calculator'          => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/nps-calculator'               => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/post-retirement-calculator'   => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/epf-calculator'               => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/ltcg-tax-calculator'          => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/income-tax-calculator'        => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly']
-    ],
+    'calculators' => CalculatorRegistry::getRouterCalculatorDefinitions(),
     'pages' => [
         '/about'    => ['action' => [RenderAboutAction::class, '__invoke'], 'priority' => '0.5', 'changefreq' => 'yearly'],
         '/faq'      => ['action' => [RenderFaqAction::class, '__invoke'], 'priority' => '0.5', 'changefreq' => 'yearly'],
         '/glossary' => ['action' => [RenderGlossaryAction::class, '__invoke'], 'priority' => '0.5', 'changefreq' => 'yearly'],
         '/privacy'  => ['action' => [RenderPrivacyAction::class, '__invoke'], 'priority' => '0.3', 'changefreq' => 'yearly', 'sitemap_exclude' => true],
-        '/terms'    => ['action' => [RenderTermsAction::class, '__invoke'], 'priority' => '0.3', 'changefreq' => 'yearly', 'sitemap_exclude' => true]
-    ]
+        '/terms'    => ['action' => [RenderTermsAction::class, '__invoke'], 'priority' => '0.3', 'changefreq' => 'yearly', 'sitemap_exclude' => true],
+    ],
 ];

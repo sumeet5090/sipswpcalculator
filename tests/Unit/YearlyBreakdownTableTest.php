@@ -103,6 +103,7 @@ final class YearlyBreakdownTableTest extends TestCase
 
         $results = $this->calculator->calculate($inputs);
         $finalRow = end($results);
+        $this->assertIsArray($finalRow);
 
         $invested = $finalRow['cumulative_invested'];
         $corpus = $finalRow['combined_total'];

@@ -370,4 +370,45 @@ final class DesignTokenAuditTest extends TestCase
             . implode(', ', $violations)
         );
     }
+
+    public function testZeroBlueTokensExistAcrossViewsCssAndTypeScript(): void
+    {
+        $violations = [];
+        $blueRegex = '/\b(?:text|bg|border|ring|from|to|via|accent)-blue-[0-9]{2,3}\b|is-active-blue|#0ea5e9|#0284c7/i';
+
+        $twigFiles = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->viewsDir));
+        /** @var \SplFileInfo $file */
+        foreach ($twigFiles as $file) {
+            if ($file->isFile() && $file->getExtension() === 'twig') {
+                $content = (string) file_get_contents($file->getPathname());
+                if (preg_match($blueRegex, $content, $matches)) {
+                    $violations[] = $file->getFilename() . ' (' . $matches[0] . ')';
+                }
+            }
+        }
+
+        $tsDir = (string) realpath(__DIR__ . '/../../assets/js');
+        $tsFiles = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($tsDir));
+        /** @var \SplFileInfo $file */
+        foreach ($tsFiles as $file) {
+            if ($file->isFile() && $file->getExtension() === 'ts') {
+                $content = (string) file_get_contents($file->getPathname());
+                if (preg_match($blueRegex, $content, $matches)) {
+                    $violations[] = $file->getFilename() . ' (' . $matches[0] . ')';
+                }
+            }
+        }
+
+        foreach (['input.css' => $this->inputCss, 'styles.css' => $this->stylesCss] as $name => $css) {
+            if (preg_match($blueRegex, $css, $matches)) {
+                $violations[] = $name . ' (' . $matches[0] . ')';
+            }
+        }
+
+        $this->assertEmpty(
+            $violations,
+            'Prohibited blue classes or hex colors detected (use Emerald, Amber, Indigo, or Cool Slate tokens): '
+            . implode(', ', $violations)
+        );
+    }
 }

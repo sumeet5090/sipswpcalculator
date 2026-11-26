@@ -4,6 +4,7 @@ import { QrCodeGenerator } from '../../utils/QrCodeGenerator';
 import { InvestmentInputs } from '../../types';
 
 import { THEME_COLORS } from '../constants/ThemeTokens.ts';
+import { CalculatorRegistry } from '../constants/CalculatorRegistry.ts';
 
 export class QrShareModalController {
     private dom: DOMAdapter;
@@ -121,16 +122,28 @@ export class QrShareModalController {
         try {
             const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
             const mode = appEl?.dataset?.mode;
-            const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
-
-            if (mode && specializedModes.includes(mode)) {
+            if (CalculatorRegistry.isSpecializedMode(mode)) {
                 const form = this.dom.getElement<HTMLFormElement>('calculator-form');
                 if (form) {
-                    const formData = new FormData(form);
                     const params = new URLSearchParams();
-                    formData.forEach((val, key) => {
-                        const strVal = String(val).trim();
-                        if (strVal !== '' && key !== 'website_url' && !['sip', 'stepup', 'lumpsum', 'enable_swp'].includes(key)) {
+                    const fields = form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select');
+                    fields.forEach((field) => {
+                        const key = field.name || field.id;
+                        if (!key || key === 'website_url' || key.endsWith('_range') || ['sip', 'stepup', 'lumpsum', 'enable_swp'].includes(key)) {
+                            return;
+                        }
+                        if (field instanceof HTMLInputElement && field.type === 'radio') {
+                            if (field.checked) {
+                                params.set(key, field.value);
+                            }
+                            return;
+                        }
+                        if (field instanceof HTMLInputElement && field.type === 'checkbox') {
+                            params.set(key, field.checked ? '1' : '0');
+                            return;
+                        }
+                        const strVal = field.value.trim();
+                        if (strVal !== '') {
                             params.set(key, strVal);
                         }
                     });

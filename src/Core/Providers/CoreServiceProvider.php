@@ -25,6 +25,9 @@ use Services\SessionManagerInterface;
 
 class CoreServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @param array<string, mixed> $config
+     */
     public function register(Container $container, array $config = []): void
     {
         $appUrl = (string) Env::get('APP_URL', 'https://sipswpcalculator.com');

@@ -100,6 +100,10 @@ class Env
             return $default;
         }
 
+        if ($delimiter === '') {
+            return $default;
+        }
+
         $parts = explode($delimiter, $trimmed);
         $result = [];
         foreach ($parts as $part) {

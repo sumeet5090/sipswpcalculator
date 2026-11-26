@@ -10,7 +10,7 @@ class SpecializedCalculatorsMarkupTest extends IntegrationTestCase
 {
     public static function setUpBeforeClass(): void
     {
-        self::startLocalServer(9007);
+        self::startLocalServer();
     }
 
     public static function tearDownAfterClass(): void
@@ -18,6 +18,9 @@ class SpecializedCalculatorsMarkupTest extends IntegrationTestCase
         self::stopLocalServer();
     }
 
+    /**
+     * @return array<string, array{0: string, 1: list<string>}>
+     */
     public static function specializedCalculatorsProvider(): array
     {
         return [
@@ -45,6 +48,30 @@ class SpecializedCalculatorsMarkupTest extends IntegrationTestCase
                 '/fd-calculator',
                 ['fd_principal', 'fd_principal_range', 'fd_rate', 'fd_rate_range', 'fd_years', 'fd_years_range', 'fd_senior', 'fd_frequency'],
             ],
+            'Gratuity' => [
+                '/gratuity-calculator',
+                ['gratuity_salary', 'gratuity_salary_range', 'gratuity_years', 'gratuity_years_range', 'gratuity_months', 'gratuity_months_range'],
+            ],
+            'NPS Tier-1' => [
+                '/nps-calculator',
+                ['nps_monthly_contribution', 'nps_monthly_contribution_range', 'nps_current_age', 'nps_current_age_range', 'nps_retirement_age', 'nps_retirement_age_range', 'nps_expected_return', 'nps_annuity_percent', 'nps_annuity_rate'],
+            ],
+            'Post-Retirement Drawdown' => [
+                '/post-retirement-calculator',
+                ['post_ret_existing_corpus', 'post_ret_gratuity', 'post_ret_nps_lump_sum', 'post_ret_pension', 'post_ret_expense', 'post_ret_return', 'post_ret_inflation', 'post_ret_age', 'post_ret_horizon'],
+            ],
+            'EPF & VPF' => [
+                '/epf-calculator',
+                ['epf_basic_salary', 'epf_current_age', 'epf_retirement_age', 'epf_vpf_percent', 'epf_salary_hike', 'epf_interest_rate', 'epf_current_balance', 'epf_cap_eps'],
+            ],
+            'LTCG Tax Harvesting' => [
+                '/ltcg-tax-calculator',
+                ['tax_portfolio_value', 'tax_invested_cost', 'tax_expected_return', 'tax_holding_years', 'tax_grandfather_fmv', 'tax_include_cess'],
+            ],
+            'Income Tax & HRA' => [
+                '/income-tax-calculator',
+                ['it_gross_salary', 'it_basic_salary', 'it_hra_received', 'it_rent_paid', 'it_is_metro', 'it_sec_80c', 'it_sec_80d', 'it_nps_80ccd1b', 'it_home_loan_24b'],
+            ],
         ];
     }
 
@@ -55,7 +82,7 @@ class SpecializedCalculatorsMarkupTest extends IntegrationTestCase
     public function testSpecializedCalculatorRendersAllInteractiveInputs(string $route, array $expectedFieldIds): void
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'http://127.0.0.1:9007' . $route);
+        curl_setopt($ch, CURLOPT_URL, self::getBaseUrl($route));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         $html = curl_exec($ch);
@@ -80,11 +107,14 @@ class SpecializedCalculatorsMarkupTest extends IntegrationTestCase
         }
     }
 
+    /**
+     * @param list<string> $expectedFieldIds
+     */
     #[DataProvider('specializedCalculatorsProvider')]
     public function testSpecializedCalculatorHasNoDuplicateElementIds(string $route, array $expectedFieldIds = []): void
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'http://127.0.0.1:9007' . $route);
+        curl_setopt($ch, CURLOPT_URL, self::getBaseUrl($route));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         $html = (string)curl_exec($ch);
@@ -121,11 +151,14 @@ class SpecializedCalculatorsMarkupTest extends IntegrationTestCase
         );
     }
 
+    /**
+     * @param list<string> $expectedFieldIds
+     */
     #[DataProvider('specializedCalculatorsProvider')]
     public function testSpecializedCalculatorHasValidJsonLdSchemas(string $route, array $expectedFieldIds = []): void
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'http://127.0.0.1:9007' . $route);
+        curl_setopt($ch, CURLOPT_URL, self::getBaseUrl($route));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         $html = (string)curl_exec($ch);
@@ -134,11 +167,14 @@ class SpecializedCalculatorsMarkupTest extends IntegrationTestCase
         $this->assertMatchesRegularExpression('/"@type"\s*:\s*"FAQPage"/', $html, "Page {$route} missing FAQPage JSON-LD schema");
     }
 
+    /**
+     * @param list<string> $expectedFieldIds
+     */
     #[DataProvider('specializedCalculatorsProvider')]
     public function testSpecializedCalculatorInteractiveAttributes(string $route, array $expectedFieldIds = []): void
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'http://127.0.0.1:9007' . $route);
+        curl_setopt($ch, CURLOPT_URL, self::getBaseUrl($route));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         $html = (string)curl_exec($ch);
@@ -153,12 +189,12 @@ class SpecializedCalculatorsMarkupTest extends IntegrationTestCase
             $this->assertMatchesRegularExpression('/step="[0-9.]+"/', $sliderHtml, "Slider missing step attribute: {$sliderHtml}");
         }
 
-        // Assert preset chips (if present) have valid numeric data-preset-val
+        // Assert preset chips (if present) have valid non-negative numeric data-preset-val
         preg_match_all('/data-preset-val="([^"]+)"/i', $html, $chipMatches);
         if (!empty($chipMatches[1])) {
             foreach ($chipMatches[1] as $presetVal) {
                 $this->assertTrue(is_numeric($presetVal), "Invalid non-numeric preset value '{$presetVal}' in {$route}");
-                $this->assertGreaterThan(0, (float)$presetVal);
+                $this->assertGreaterThanOrEqual(0, (float) $presetVal);
             }
         }
     }

@@ -67,6 +67,8 @@ readonly class InsightPayload
 
     /**
      * Create an InsightPayload instance from a decoded JSON request array.
+     *
+     * @param array<string, mixed> $data
      */
     public static function fromArray(array $data): self
     {
@@ -172,6 +174,9 @@ readonly class InsightPayload
         );
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     private static function toBoolInt(array $data, string $key): int
     {
         if (!isset($data[$key])) {
@@ -188,6 +193,9 @@ readonly class InsightPayload
         return $filtered === true ? 1 : 0;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     private static function toFloatOrNull(array $data, string $key): ?float
     {
         if (!isset($data[$key]) || $data[$key] === '') {
@@ -199,6 +207,9 @@ readonly class InsightPayload
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     private static function toIntOrNull(array $data, string $key): ?int
     {
         if (!isset($data[$key]) || $data[$key] === '') {
@@ -210,6 +221,9 @@ readonly class InsightPayload
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     private static function toStringOrNull(array $data, string $key, int $maxLen = 64): ?string
     {
         if (!isset($data[$key]) || !is_string($data[$key])) {

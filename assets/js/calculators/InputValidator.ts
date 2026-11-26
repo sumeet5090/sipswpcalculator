@@ -1,4 +1,4 @@
-import defaultsConfig from '../../../content/calculator_defaults.json';
+import defaultsConfig from '../../../content/calculator_defaults.json' with { type: 'json' };
 import { IndianNumberParser } from './helpers/IndianNumberParser';
 
 export interface FieldConstraint {

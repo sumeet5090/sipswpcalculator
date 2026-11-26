@@ -11,8 +11,12 @@ namespace Core;
  */
 class AdminDashboardPresenter
 {
+    /** @var array<string, string> */
     private array $currencyColorMap;
 
+    /**
+     * @param array<string, string> $currencyColorMap
+     */
     public function __construct(array $currencyColorMap = [])
     {
         $this->currencyColorMap = array_merge([
@@ -24,8 +28,8 @@ class AdminDashboardPresenter
     /**
      * Format the raw statistics array for the Twig view.
      *
-     * @param array $stats
-     * @return array
+     * @param array<string, mixed> $stats
+     * @return array<string, mixed>
      */
     public function formatForView(array $stats): array
     {

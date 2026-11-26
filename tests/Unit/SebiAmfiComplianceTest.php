@@ -118,6 +118,7 @@ final class SebiAmfiComplianceTest extends TestCase
         $this->assertCount($years, $results);
 
         $lastRow = end($results);
+        $this->assertIsArray($lastRow);
         $simulatedTerminalCorpus = (float) $lastRow['combined_total'];
 
         $theoreticalCorpus = $this->closedFormAnnuityDue($sip, $rate, $years);
@@ -171,7 +172,9 @@ final class SebiAmfiComplianceTest extends TestCase
             enableSwp: false
         );
         $results = $this->calculator->calculate($inputs);
-        $simulated = (float) end($results)['combined_total'];
+        $lastResult = end($results);
+        $this->assertIsArray($lastResult);
+        $simulated = (float) $lastResult['combined_total'];
 
         // Simulated must strictly match Annuity-Due, never Ordinary Annuity
         $this->assertEquals(round($annuityDue), $simulated);
@@ -196,7 +199,9 @@ final class SebiAmfiComplianceTest extends TestCase
         $this->assertCount($years, $results);
 
         $theoreticalCorpus = $this->closedFormStepUpSip($sip, $rate, $stepup, $years);
-        $simulatedCorpus = (float) end($results)['combined_total'];
+        $lastResult = end($results);
+        $this->assertIsArray($lastResult);
+        $simulatedCorpus = (float) $lastResult['combined_total'];
 
         // Dynamic tolerance of max(10.0, 0.001%) to account for 2-decimal rounding of monthly contributions
         $delta = max(10.0, $theoreticalCorpus * 0.00005);
@@ -223,8 +228,10 @@ final class SebiAmfiComplianceTest extends TestCase
         $i = ($rate / 100.0) / 12.0;
         $theoretical = $lumpsum * pow(1.0 + $i, $years * 12);
 
-        $this->assertEquals(round($theoretical), end($results)['combined_total']);
-        $this->assertEquals($lumpsum, end($results)['cumulative_invested']);
+        $lastRow = end($results);
+        $this->assertIsArray($lastRow);
+        $this->assertEquals(round($theoretical), $lastRow['combined_total']);
+        $this->assertEquals($lumpsum, $lastRow['cumulative_invested']);
     }
 
     /**
@@ -276,6 +283,7 @@ final class SebiAmfiComplianceTest extends TestCase
         $inputsBelow = InvestmentInputs::fromValues(2000.0, 1, 6.0, 0.0, false);
         $resBelow = $this->calculator->calculate($inputsBelow);
         $rowBelow = end($resBelow);
+        $this->assertIsArray($rowBelow);
 
         $this->assertEquals(0.0, $rowBelow['ltcg_tax']);
         $this->assertEquals($rowBelow['combined_total'], $rowBelow['post_tax_total']);
@@ -310,6 +318,7 @@ final class SebiAmfiComplianceTest extends TestCase
 
         $expectedCorpus = 50000.0 + (15000.0 * 12.0 * 10);
         $lastRow = end($results);
+        $this->assertIsArray($lastRow);
 
         $this->assertEquals($expectedCorpus, $lastRow['combined_total']);
         $this->assertEquals($expectedCorpus, $lastRow['cumulative_invested']);
@@ -340,6 +349,9 @@ final class SebiAmfiComplianceTest extends TestCase
         $this->assertEquals(250000.0, $row0['post_tax_total']);
     }
 
+    /**
+     * @return array<string, array{0: float, 1: float, 2: int}>
+     */
     public static function amfiSipScenariosProvider(): array
     {
         return [
@@ -361,6 +373,9 @@ final class SebiAmfiComplianceTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<string, array{0: float, 1: float, 2: float, 3: int}>
+     */
     public static function amfiStepUpScenariosProvider(): array
     {
         return [

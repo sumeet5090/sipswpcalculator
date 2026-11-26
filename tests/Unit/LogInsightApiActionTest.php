@@ -133,6 +133,7 @@ class LogInsightApiActionTest extends TestCase
         $this->assertSame(204, $response->getStatusCode());
 
         $stmt = $this->pdo->query("SELECT COUNT(*) FROM user_calculations");
+        $this->assertInstanceOf(\PDOStatement::class, $stmt);
         $this->assertSame(1, (int) $stmt->fetchColumn());
     }
 }

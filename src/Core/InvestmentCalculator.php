@@ -14,7 +14,7 @@ class InvestmentCalculator
      * Run simulation and build yearly breakdown projections.
      *
      * @param InvestmentInputs $inputs
-     * @return array List of yearly simulation rows
+     * @return list<array<string, mixed>> List of yearly simulation rows
      */
     public function calculate(InvestmentInputs $inputs): array
     {

@@ -1,21 +1,16 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
-<!-- Hidden legacy fields to prevent JS errors -->
-<input type="hidden" id="sip" name="sip" value="0">
-<input type="hidden" id="stepup" name="stepup" value="0">
-<input type="hidden" id="lumpsum" name="lumpsum" value="0">
-
 <div class="space-y-3">
     <!-- Current Equity MF Portfolio Value -->
     {{ inputs.renderInputRangePair({
         'id': 'tax_portfolio_value',
         'label': 'Current Equity MF Portfolio Value',
         'tooltip': 'Current market value of your equity mutual fund or stock holdings held for > 12 months (long-term).',
-        'min': 100000,
-        'max': 100000000,
-        'slider_max': 20000000,
-        'step': 50000,
-        'value': 2500000,
+        'min': calc_config.tax_portfolio_value.min|default(100000),
+        'max': calc_config.tax_portfolio_value.max|default(100000000),
+        'slider_max': calc_config.tax_portfolio_value.slider_max|default(20000000),
+        'step': calc_config.tax_portfolio_value.step|default(50000),
+        'value': tax_portfolio_value|default(calc_config.tax_portfolio_value.default|default(2500000)),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [
@@ -32,11 +27,11 @@
         'id': 'tax_invested_cost',
         'label': 'Original Purchase Cost (Cost Basis)',
         'tooltip': 'Total actual capital invested to acquire the units. Unrealized gain = Current Value minus Purchase Cost.',
-        'min': 50000,
-        'max': 100000000,
-        'slider_max': 20000000,
-        'step': 50000,
-        'value': 1500000,
+        'min': calc_config.tax_invested_cost.min|default(50000),
+        'max': calc_config.tax_invested_cost.max|default(100000000),
+        'slider_max': calc_config.tax_invested_cost.slider_max|default(20000000),
+        'step': calc_config.tax_invested_cost.step|default(50000),
+        'value': tax_invested_cost|default(calc_config.tax_invested_cost.default|default(1500000)),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [
@@ -54,11 +49,11 @@
             'id': 'tax_expected_return',
             'label': 'Expected Return (CAGR)',
             'tooltip': 'Expected annual portfolio compounding rate over your remaining investment horizon.',
-            'min': 4.0,
-            'max': 25.0,
-            'slider_max': 20.0,
-            'step': 0.5,
-            'value': 12.0,
+            'min': calc_config.tax_expected_return.min|default(4.0),
+            'max': calc_config.tax_expected_return.max|default(25.0),
+            'slider_max': calc_config.tax_expected_return.slider_max|default(20.0),
+            'step': calc_config.tax_expected_return.step|default(0.5),
+            'value': tax_expected_return|default(calc_config.tax_expected_return.default|default(12.0)),
             'suffix': '%',
             'theme': 'emerald',
             'presets': [
@@ -73,11 +68,11 @@
             'id': 'tax_holding_years',
             'label': 'Harvesting Horizon',
             'tooltip': 'Number of future financial years over which you systematically harvest up to ₹1.25 Lakh LTCG tax-free.',
-            'min': 1,
-            'max': 30,
-            'slider_max': 25,
-            'step': 1,
-            'value': 10,
+            'min': calc_config.tax_holding_years.min|default(1),
+            'max': calc_config.tax_holding_years.max|default(30),
+            'slider_max': calc_config.tax_holding_years.slider_max|default(25),
+            'step': calc_config.tax_holding_years.step|default(1),
+            'value': tax_holding_years|default(calc_config.tax_holding_years.default|default(10)),
             'suffix': 'Yrs',
             'theme': 'emerald',
             'presets': [
@@ -94,11 +89,11 @@
         'id': 'tax_grandfather_fmv',
         'label': 'Jan 31, 2018 FMV (Optional Grandfathering)',
         'tooltip': 'Leave at ₹0 for post-2018 purchases. For pre-Feb 2018 units, enter Fair Market Value on 31-Jan-2018 to step up your tax-free cost basis.',
-        'min': 0,
-        'max': 100000000,
-        'slider_max': 10000000,
-        'step': 50000,
-        'value': 0,
+        'min': calc_config.tax_grandfather_fmv.min|default(0),
+        'max': calc_config.tax_grandfather_fmv.max|default(100000000),
+        'slider_max': calc_config.tax_grandfather_fmv.slider_max|default(10000000),
+        'step': calc_config.tax_grandfather_fmv.step|default(50000),
+        'value': tax_grandfather_fmv|default(calc_config.tax_grandfather_fmv.default|default(0)),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [

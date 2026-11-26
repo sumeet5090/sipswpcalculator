@@ -119,4 +119,33 @@ class AppTwigExtensionTest extends TestCase
         $this->assertSame(['apple', 'banana'], $callable($associative));
         $this->assertSame('non_array', $callable('non_array'));
     }
+
+    public function testCalculatorRegistryFunctionsReturnLiveCountsAndRouteDetection(): void
+    {
+        $functionsByName = [];
+        foreach ($this->extension->getFunctions() as $fn) {
+            $functionsByName[$fn->getName()] = $fn->getCallable();
+        }
+
+        $this->assertArrayHasKey('calculator_route_count', $functionsByName);
+        $this->assertArrayHasKey('specialized_calculator_count', $functionsByName);
+        $this->assertArrayHasKey('is_calculator_route', $functionsByName);
+
+        $routeCountFn = $functionsByName['calculator_route_count'];
+        $specCountFn = $functionsByName['specialized_calculator_count'];
+        $isCalcRouteFn = $functionsByName['is_calculator_route'];
+
+        $this->assertIsCallable($routeCountFn);
+        $this->assertIsCallable($specCountFn);
+        $this->assertIsCallable($isCalcRouteFn);
+
+        $this->assertGreaterThanOrEqual(34, $routeCountFn());
+        $this->assertGreaterThanOrEqual(12, $specCountFn());
+        $this->assertTrue($isCalcRouteFn('home'));
+        $this->assertTrue($isCalcRouteFn('sip-calculator'));
+        $this->assertTrue($isCalcRouteFn('gratuity-calculator'));
+        $this->assertTrue($isCalcRouteFn('income-tax-calculator'));
+        $this->assertFalse($isCalcRouteFn('about'));
+        $this->assertFalse($isCalcRouteFn(''));
+    }
 }

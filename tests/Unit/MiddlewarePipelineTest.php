@@ -104,6 +104,7 @@ class MiddlewarePipelineTest extends TestCase
     {
         $sessionManager = new SessionManager();
         $sessionCookieName = session_name();
+        $this->assertIsString($sessionCookieName);
         $middleware = new SessionMiddleware($sessionManager);
 
         $request = new Request(

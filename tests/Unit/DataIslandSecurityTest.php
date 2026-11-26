@@ -41,6 +41,7 @@ class DataIslandSecurityTest extends TestCase
         }
 
         $this->assertNotNull($jsonIslandFilter, "json_island filter must be registered.");
+        $this->assertIsCallable($jsonIslandFilter, "json_island filter must be callable.");
         $escaped = $jsonIslandFilter($maliciousPayload);
 
         // Assert no raw HTML tags or script breakout characters exist

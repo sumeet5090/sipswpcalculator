@@ -1,21 +1,16 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
-<!-- Hidden legacy fields to prevent JS errors -->
-<input type="hidden" id="sip" name="sip" value="0">
-<input type="hidden" id="stepup" name="stepup" value="0">
-<input type="hidden" id="lumpsum" name="lumpsum" value="0">
-
 <div class="space-y-3">
     <!-- Last Drawn Monthly Salary (Basic + DA) -->
     {{ inputs.renderInputRangePair({
         'id': 'gratuity_salary',
         'label': 'Last Drawn Monthly Salary (Basic + DA)',
         'tooltip': 'Your last drawn Basic Salary plus Dearness Allowance (DA). Exclude HRA, travel, performance bonus, and special allowances.',
-        'min': 5000,
-        'max': 1000000,
-        'slider_max': 300000,
-        'step': 1000,
-        'value': 50000,
+        'min': calc_config.gratuity_salary.min|default(5000),
+        'max': calc_config.gratuity_salary.max|default(1000000),
+        'slider_max': calc_config.gratuity_salary.slider_max|default(300000),
+        'step': calc_config.gratuity_salary.step|default(1000),
+        'value': gratuity_salary|default(calc_config.gratuity_salary.default|default(50000)),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [
@@ -32,11 +27,11 @@
         'id': 'gratuity_years',
         'label': 'Completed Years of Service',
         'tooltip': 'Continuous tenure served with your current employer. Minimum 5 years required for statutory vesting under Section 4(1).',
-        'min': 1,
-        'max': 40,
-        'slider_max': 35,
-        'step': 1,
-        'value': 5,
+        'min': calc_config.gratuity_years.min|default(1),
+        'max': calc_config.gratuity_years.max|default(40),
+        'slider_max': calc_config.gratuity_years.slider_max|default(35),
+        'step': calc_config.gratuity_years.step|default(1),
+        'value': gratuity_years|default(calc_config.gratuity_years.default|default(5)),
         'suffix': 'Yrs',
         'theme': 'emerald',
         'presets': [
@@ -53,11 +48,11 @@
         'id': 'gratuity_months',
         'label': 'Additional Months (Final Year)',
         'tooltip': 'Under the Gratuity Act, service exceeding 6 months (>6M) in your final year is rounded UP to the next full year.',
-        'min': 0,
-        'max': 11,
-        'slider_max': 11,
-        'step': 1,
-        'value': 0,
+        'min': calc_config.gratuity_months.min|default(0),
+        'max': calc_config.gratuity_months.max|default(11),
+        'slider_max': calc_config.gratuity_months.slider_max|default(11),
+        'step': calc_config.gratuity_months.step|default(1),
+        'value': gratuity_months|default(calc_config.gratuity_months.default|default(0)),
         'suffix': 'Mos',
         'theme': 'emerald',
         'presets': [

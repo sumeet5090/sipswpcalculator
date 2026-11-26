@@ -26,6 +26,7 @@ class App
 {
     private Container $container;
     private ?Router $router = null;
+    /** @var array<string, mixed> */
     private array $routesConfig = [];
 
     public function __construct(?Container $container = null, ?Router $router = null)
@@ -70,6 +71,9 @@ class App
         if ($this->router === null) {
             $this->boot();
         }
+        if ($this->router === null) {
+            throw new \RuntimeException('Router failed to initialize during application boot.');
+        }
         return $this->router;
     }
 
@@ -81,9 +85,10 @@ class App
         $request = $request ?? Request::createFromGlobals();
 
         $this->boot();
+        $router = $this->getRouter();
 
         try {
-            $response = $this->router->dispatch($request);
+            $response = $router->dispatch($request);
         } catch (\Core\Exceptions\RouteNotFoundException $e) {
             /** @var \Controllers\ErrorController $errorController */
             $errorController = $this->container->get(\Controllers\ErrorController::class);
@@ -121,51 +126,56 @@ class App
      */
     private function registerRoutes(): void
     {
+        $router = $this->router;
+        if ($router === null) {
+            throw new \RuntimeException('Router must be initialized before registering routes.');
+        }
+
         // Pipe Global Security & Routing Middleware
-        $this->router->pipe(\Core\Middleware\TrailingSlashRedirectMiddleware::class);
-        $this->router->pipe(\Core\Middleware\SessionMiddleware::class);
-        $this->router->pipe(\Core\Middleware\HoneypotMiddleware::class);
-        $this->router->pipe(\Core\Middleware\AdminCsrfMiddleware::class);
+        $router->pipe(\Core\Middleware\TrailingSlashRedirectMiddleware::class);
+        $router->pipe(\Core\Middleware\SessionMiddleware::class);
+        $router->pipe(\Core\Middleware\HoneypotMiddleware::class);
+        $router->pipe(\Core\Middleware\AdminCsrfMiddleware::class);
 
         // Core landing pages & actions
-        $this->router->get('/', [RenderHomeAction::class, '__invoke']);
-        $this->router->post('/', [RenderHomeAction::class, '__invoke']);
-        $this->router->post('/download-csv', [DownloadCsvAction::class, '__invoke']);
-        $this->router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke'], ['middleware.ratelimit.pdf']);
+        $router->get('/', [RenderHomeAction::class, '__invoke']);
+        $router->post('/', [RenderHomeAction::class, '__invoke']);
+        $router->post('/download-csv', [DownloadCsvAction::class, '__invoke']);
+        $router->post('/generate-pdf', [GeneratePdfAction::class, '__invoke'], ['middleware.ratelimit.pdf']);
 
         // Dynamic Calculators Registration
         foreach ($this->routesConfig['calculators'] as $calc => $config) {
             $action = is_array($config) && isset($config['action']) ? $config['action'] : $config;
-            $this->router->get($calc, $action);
-            $this->router->post($calc, $action);
+            $router->get($calc, $action);
+            $router->post($calc, $action);
         }
 
         // Embeddable Calculator Widgets
-        $this->router->get('/embed/{slug}', [\Controllers\RenderEmbedAction::class, '__invoke']);
+        $router->get('/embed/{slug}', [\Controllers\RenderEmbedAction::class, '__invoke']);
 
         // Dynamic Pages Registration
         foreach ($this->routesConfig['pages'] as $uri => $config) {
             $action = is_array($config) && isset($config['action']) ? $config['action'] : $config;
-            $this->router->get($uri, $action);
+            $router->get($uri, $action);
         }
 
         // Dynamic Sitemap
-        $this->router->get('/sitemap.xml', [SitemapController::class, 'index']);
+        $router->get('/sitemap.xml', [SitemapController::class, 'index']);
 
         // Admin / Insight Routing
-        $this->router->get('/admin_insights', [ShowAdminDashboardAction::class, '__invoke'], [\Core\Middleware\AdminAuthMiddleware::class]);
-        $this->router->post('/admin_insights', [ProcessAdminLoginAction::class, '__invoke'], ['middleware.ratelimit.admin_auth']);
-        $this->router->post('/admin_insights/logout', [ProcessAdminLogoutAction::class, '__invoke']);
-        $this->router->post('/log_insight', [LogInsightApiAction::class, '__invoke'], ['middleware.ratelimit.insight']);
+        $router->get('/admin_insights', [ShowAdminDashboardAction::class, '__invoke'], [\Core\Middleware\AdminAuthMiddleware::class]);
+        $router->post('/admin_insights', [ProcessAdminLoginAction::class, '__invoke'], ['middleware.ratelimit.admin_auth']);
+        $router->post('/admin_insights/logout', [ProcessAdminLogoutAction::class, '__invoke']);
+        $router->post('/log_insight', [LogInsightApiAction::class, '__invoke'], ['middleware.ratelimit.insight']);
 
         // Blog / Resources Routing
-        $this->router->get('/resources', [ListResourcesAction::class, '__invoke']);
-        $this->router->get('/resource', [ListResourcesAction::class, '__invoke']);
-        $this->router->get('/resource/{category}', [ShowResourceCategoryAction::class, '__invoke']);
-        $this->router->get('/resource/{category}/{slug}', [ShowResourcePostAction::class, '__invoke']);
+        $router->get('/resources', [ListResourcesAction::class, '__invoke']);
+        $router->get('/resource', [ListResourcesAction::class, '__invoke']);
+        $router->get('/resource/{category}', [ShowResourceCategoryAction::class, '__invoke']);
+        $router->get('/resource/{category}/{slug}', [ShowResourcePostAction::class, '__invoke']);
 
         /** @var RedirectLoader $redirectLoader */
         $redirectLoader = $this->container->get(RedirectLoader::class);
-        $redirectLoader->loadAndRegister(__DIR__ . '/../../content/redirects.json', $this->router);
+        $redirectLoader->loadAndRegister(__DIR__ . '/../../content/redirects.json', $router);
     }
 }

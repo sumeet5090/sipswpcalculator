@@ -10,6 +10,7 @@ namespace Services;
  */
 class ConfigService implements ConfigServiceInterface
 {
+    /** @var array<string, mixed>|null */
     private ?array $calculatorDefaults = null;
     private string $configPath;
     /** @var array<string, array<string, mixed>> */
@@ -28,6 +29,10 @@ class ConfigService implements ConfigServiceInterface
             }
 
             $content = file_get_contents($this->configPath);
+            if ($content === false) {
+                throw new \RuntimeException("Failed to read configuration file at: {$this->configPath}");
+            }
+
             $decoded = json_decode($content, true);
 
             if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {

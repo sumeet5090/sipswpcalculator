@@ -17,11 +17,12 @@ class PpfStrategy extends BaseStrategy
     public function getInitialInputs(): CalculatorInputsInterface
     {
         $defaults = $this->configService->getCalculatorDefaults();
-        $annual = (float) ($defaults['ppf_annual_investment']['default'] ?? 150000.0);
+        $annual = (float) ($defaults['ppf_deposit']['default'] ?? $defaults['ppf_annual_investment']['default'] ?? 150000.0);
         $rate = (float) ($defaults['ppf_rate']['default'] ?? 7.1);
         $years = (int) ($defaults['ppf_years']['default'] ?? 15);
+        $timing = (string) ($defaults['ppf_timing']['default'] ?? 'beginning');
 
-        return new PpfInputs($annual, $rate, $years);
+        return new PpfInputs($annual, $rate, $years, $timing);
     }
 
     public function getBenchmarkTemplate(): string

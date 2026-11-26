@@ -11,7 +11,7 @@ final class PdfGenerationDownloadTest extends IntegrationTestCase
 {
     public static function setUpBeforeClass(): void
     {
-        self::startLocalServer(9014);
+        self::startLocalServer();
     }
 
     public static function tearDownAfterClass(): void
@@ -43,7 +43,7 @@ final class PdfGenerationDownloadTest extends IntegrationTestCase
             'tableHtml' => '<table><thead><tr><th>Year</th><th>Invested</th><th>Corpus</th></tr></thead><tbody><tr><td>1</td><td>₹2.4L</td><td>₹2.6L</td></tr></tbody></table>'
         ];
 
-        $ch = curl_init('http://127.0.0.1:9014/generate-pdf');
+        $ch = curl_init(self::getBaseUrl('/generate-pdf'));
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -101,7 +101,7 @@ final class PdfGenerationDownloadTest extends IntegrationTestCase
             'tableHtml'         => '<table><thead><tr><th>Year</th><th>Invested</th><th>Corpus</th></tr></thead><tbody><tr><td>1</td><td>₹6L</td><td>₹6.8L</td></tr></tbody></table>'
         ];
 
-        $ch = curl_init('http://127.0.0.1:9014/generate-pdf');
+        $ch = curl_init(self::getBaseUrl('/generate-pdf'));
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -9,7 +9,9 @@ use PHPUnit\Framework\TestCase;
 
 class EnvTest extends TestCase
 {
+    /** @var array<string, mixed> */
     private array $envBackup;
+    /** @var array<string, mixed> */
     private array $serverBackup;
 
     protected function setUp(): void

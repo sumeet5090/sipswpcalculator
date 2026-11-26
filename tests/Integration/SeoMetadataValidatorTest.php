@@ -14,7 +14,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
      */
     public static function setUpBeforeClass(): void
     {
-        self::startLocalServer(9000);
+        self::startLocalServer();
     }
 
     /**
@@ -27,6 +27,8 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
 
     /**
      * Data provider that yields all registered public URLs for testing.
+     *
+     * @return array<string, array{0: string}>
      */
     public static function pageRoutesProvider(): array
     {
@@ -66,7 +68,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
     #[DataProvider('pageRoutesProvider')]
     public function testPageSeoMetadata(string $path): void
     {
-        $url = 'http://127.0.0.1:9000' . $path;
+        $url = self::getBaseUrl($path);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -75,7 +77,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
         $html = curl_exec($ch);
         $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        if ($html === false || $html === '') {
+        if (!is_string($html) || $html === '') {
             $this->fail("Failed to query path '$path'. Server did not return a valid response.");
         }
 
@@ -95,22 +97,28 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
 
         // 1. Heading Integrity Check (Assert EXACTLY one <h1> per page)
         $h1s = $xpath->query('//h1');
+        $this->assertInstanceOf(\DOMNodeList::class, $h1s);
         $this->assertEquals(
             1,
             $h1s->length,
             "SEO Rule Violation: Page '$path' must contain exactly one <h1> tag. Found " . $h1s->length
         );
-        $h1Text = trim($h1s->item(0)->textContent);
+        $h1Node = $h1s->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $h1Node);
+        $h1Text = trim($h1Node->textContent);
         $this->assertNotEmpty($h1Text, "SEO Rule Violation: <h1> tag on page '$path' is empty.");
 
         // 2. SEO Title tag Validation
         $titles = $xpath->query('//title');
+        $this->assertInstanceOf(\DOMNodeList::class, $titles);
         $this->assertEquals(
             1,
             $titles->length,
             "SEO Rule Violation: Page '$path' must contain exactly one <title> element."
         );
-        $titleText = trim($titles->item(0)->textContent);
+        $titleNode = $titles->item(0);
+        $this->assertInstanceOf(\DOMElement::class, $titleNode);
+        $titleText = trim($titleNode->textContent);
         $this->assertNotEmpty($titleText, "SEO Rule Violation: <title> tag on page '$path' is empty.");
         $this->assertGreaterThanOrEqual(
             10,
@@ -125,6 +133,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
 
         // 3. Meta Description tag Validation
         $descriptions = $xpath->query('//meta[@name="description"]');
+        $this->assertInstanceOf(\DOMNodeList::class, $descriptions);
         $this->assertEquals(
             1,
             $descriptions->length,
@@ -147,6 +156,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
 
         // 4. Canonical Link tag Validation
         $canonicals = $xpath->query('//link[@rel="canonical"]');
+        $this->assertInstanceOf(\DOMNodeList::class, $canonicals);
         $this->assertEquals(
             1,
             $canonicals->length,
@@ -167,12 +177,14 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
 
         // 5. OpenGraph tag Validation
         $ogTitles = $xpath->query('//meta[@property="og:title"]');
+        $this->assertInstanceOf(\DOMNodeList::class, $ogTitles);
         $this->assertGreaterThanOrEqual(1, $ogTitles->length, "SEO Rule Violation: Missing meta og:title on page '$path'.");
         $ogTitleNode = $ogTitles->item(0);
         $this->assertInstanceOf(\DOMElement::class, $ogTitleNode);
         $this->assertNotEmpty(trim($ogTitleNode->getAttribute('content')), "SEO Rule Violation: og:title is empty on page '$path'.");
 
         $ogDescriptions = $xpath->query('//meta[@property="og:description"]');
+        $this->assertInstanceOf(\DOMNodeList::class, $ogDescriptions);
         $this->assertGreaterThanOrEqual(1, $ogDescriptions->length, "SEO Rule Violation: Missing meta og:description on page '$path'.");
         $ogDescNode = $ogDescriptions->item(0);
         $this->assertInstanceOf(\DOMElement::class, $ogDescNode);
@@ -190,6 +202,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
         );
 
         $ogUrls = $xpath->query('//meta[@property="og:url"]');
+        $this->assertInstanceOf(\DOMNodeList::class, $ogUrls);
         $this->assertGreaterThanOrEqual(1, $ogUrls->length, "SEO Rule Violation: Missing meta og:url on page '$path'.");
         $ogUrlNode = $ogUrls->item(0);
         $this->assertInstanceOf(\DOMElement::class, $ogUrlNode);
@@ -200,6 +213,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
         );
 
         $ogTypes = $xpath->query('//meta[@property="og:type"]');
+        $this->assertInstanceOf(\DOMNodeList::class, $ogTypes);
         $this->assertGreaterThanOrEqual(1, $ogTypes->length, "SEO Rule Violation: Missing meta og:type on page '$path'.");
         $ogTypeNode = $ogTypes->item(0);
         $this->assertInstanceOf(\DOMElement::class, $ogTypeNode);
@@ -211,6 +225,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
         );
 
         $authors = $xpath->query('//meta[@name="author"]');
+        $this->assertInstanceOf(\DOMNodeList::class, $authors);
         $this->assertGreaterThanOrEqual(1, $authors->length, "SEO Rule Violation: Missing meta name=author on page '$path'.");
         $authorNode = $authors->item(0);
         $this->assertInstanceOf(\DOMElement::class, $authorNode);
@@ -218,6 +233,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
 
         // 6. Robots Directive Validation
         $robots = $xpath->query('//meta[@name="robots"]');
+        $this->assertInstanceOf(\DOMNodeList::class, $robots);
         $this->assertGreaterThanOrEqual(1, $robots->length, "SEO Rule Violation: Missing meta name=robots on page '$path'.");
         $robotsNode = $robots->item(0);
         $this->assertInstanceOf(\DOMElement::class, $robotsNode);
@@ -231,6 +247,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
 
         // 7. JSON-LD Schema.org Validation
         $schemas = $xpath->query('//script[@type="application/ld+json"]');
+        $this->assertInstanceOf(\DOMNodeList::class, $schemas);
         $this->assertGreaterThanOrEqual(
             1,
             $schemas->length,
@@ -239,6 +256,7 @@ class SeoMetadataValidatorTest extends IntegrationTestCase
 
         $schemaTypes = [];
         foreach ($schemas as $schemaNode) {
+            $this->assertInstanceOf(\DOMNode::class, $schemaNode);
             $json = trim($schemaNode->textContent);
             $this->assertJson($json, "JSON-LD Validation Error: Invalid JSON syntax on page '$path'.");
 

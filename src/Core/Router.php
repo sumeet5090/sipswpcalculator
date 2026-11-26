@@ -10,10 +10,15 @@ use Psr\Container\ContainerInterface;
 
 class Router
 {
+    /** @var array<string, array<string, array<int, string>>> */
     private array $routes = [];
+    /** @var array<string, array<string, array<int, string|\Core\Middleware\MiddlewareInterface>>> */
     private array $routeMiddlewares = [];
+    /** @var array<string, array<string, string>> */
     private array $compiledPatterns = [];
+    /** @var array<string, string> */
     private array $redirects = [];
+    /** @var array<int, string|\Core\Middleware\MiddlewareInterface> */
     private array $middlewares = [];
     private ContainerInterface $container;
     private ActionDispatcher $actionDispatcher;
@@ -32,6 +37,10 @@ class Router
         $this->middlewares[] = $middleware;
     }
 
+    /**
+     * @param array<int, string> $controllerAction
+     * @param array<int, string|\Core\Middleware\MiddlewareInterface> $middlewares
+     */
     public function get(string $uri, array $controllerAction, array $middlewares = []): void
     {
         $this->routes['GET'][$uri] = $controllerAction;
@@ -43,6 +52,10 @@ class Router
         }
     }
 
+    /**
+     * @param array<int, string> $controllerAction
+     * @param array<int, string|\Core\Middleware\MiddlewareInterface> $middlewares
+     */
     public function post(string $uri, array $controllerAction, array $middlewares = []): void
     {
         $this->routes['POST'][$uri] = $controllerAction;
@@ -90,7 +103,7 @@ class Router
                 );
             }
 
-            if (isset($this->compiledPatterns[$lookupMethod]) && is_array($this->compiledPatterns[$lookupMethod])) {
+            if (isset($this->compiledPatterns[$lookupMethod])) {
                 foreach ($this->compiledPatterns[$lookupMethod] as $route => $pattern) {
                     if (preg_match($pattern, $uri, $matches)) {
                         $rawParams = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
@@ -127,6 +140,11 @@ class Router
         return $pipeline($request);
     }
 
+    /**
+     * @param array<int, string|\Core\Middleware\MiddlewareInterface> $routeMiddlewares
+     * @param array<int, string> $controllerAction
+     * @param array<string, mixed> $params
+     */
     private function dispatchWithRouteMiddlewares(
         array $routeMiddlewares,
         array $controllerAction,
@@ -156,16 +174,26 @@ class Router
         return $routePipeline($request);
     }
 
+    /**
+     * @param array<int, string> $controllerAction
+     * @param array<string, mixed> $params
+     */
     private function callAction(array $controllerAction, array $params = [], ?Request $request = null): Response
     {
         return $this->actionDispatcher->dispatch($controllerAction, $params, $request);
     }
 
+    /**
+     * @return array<string, array<string, array<int, string>>>
+     */
     public function getRoutes(): array
     {
         return $this->routes;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getRedirects(): array
     {
         return $this->redirects;

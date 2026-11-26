@@ -18,7 +18,7 @@ When fixing a bug (like a 500 internal server error or a syntax issue), **apply 
 ### 3. Missing Database Tables (SQLite)
 If you encounter a `500 Internal Server Error: SQLSTATE[HY000]: General error: 1 no such table: main.user_calculations`:
 - **Action:** DO NOT write PHP scripts or modify `DatabaseManager` to automatically create tables.
-- **Action:** Execute the database migrations via CLI: `php bin/migrate` (or `php migrate.php`). Database schema migrations are executed strictly via CLI for environment security; there are no administrative web migration endpoints.
+- **Action:** Execute the database migrations via CLI: `php bin/migrate`. Database schema migrations are executed strictly via CLI for environment security; there are no administrative web migration endpoints.
 
 ### 4. Broken Tailwind Styles in New Twig Files
 If a newly created Twig layout has broken CSS/styling:

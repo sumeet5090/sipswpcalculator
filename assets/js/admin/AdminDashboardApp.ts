@@ -93,7 +93,7 @@ export class AdminDashboardApp {
                     datasets: [{
                         data: hasRefData ? refData : [1],
                         backgroundColor: hasRefData
-                            ? ['#059669', '#0284c7', '#8b5cf6', '#f59e0b', '#ec4899', '#64748b']
+                            ? ['#059669', '#4f46e5', '#8b5cf6', '#f59e0b', '#ec4899', '#64748b']
                             : ['#e2e8f0'],
                         borderWidth: 0,
                         hoverOffset: hasRefData ? 4 : 0
@@ -239,7 +239,7 @@ export class AdminDashboardApp {
                             ? [
                                 '#059669', // Emerald
                                 '#0d9488', // Teal
-                                '#0284c7', // Sky
+                                '#d97706', // Amber
                                 '#6366f1', // Indigo
                                 '#8b5cf6', // Violet
                                 '#ec4899', // Pink

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Twig;
 
+use Core\Config\CalculatorRegistry;
 use Core\CurrencyFormatterInterface;
 use Core\ViteHelper;
 use Twig\Extension\AbstractExtension;
@@ -54,6 +55,12 @@ class AppTwigExtension extends AbstractExtension
             new TwigFunction('vite_client', [$this->viteHelper, 'client'], ['is_safe' => ['html']]),
             new TwigFunction('vite_css', [$this->viteHelper, 'css'], ['is_safe' => ['html']]),
             new TwigFunction('vite_js', [$this->viteHelper, 'js'], ['is_safe' => ['html']]),
+            new TwigFunction('calculator_mode_meta', fn(string $mode): ?array => CalculatorRegistry::getModeMetadata($mode)),
+            new TwigFunction('is_specialized_mode', fn(string $mode): bool => CalculatorRegistry::isSpecialized($mode)),
+            new TwigFunction('is_four_card_mode', fn(string $mode): bool => (bool) (CalculatorRegistry::getModeMetadata($mode)['is_four_card'] ?? false)),
+            new TwigFunction('calculator_route_count', fn(): int => CalculatorRegistry::getCalculatorRouteCount()),
+            new TwigFunction('specialized_calculator_count', fn(): int => CalculatorRegistry::getSpecializedCalculatorCount()),
+            new TwigFunction('is_calculator_route', fn(string $slug): bool => CalculatorRegistry::isCalculatorRouteSlug($slug)),
         ];
     }
 }

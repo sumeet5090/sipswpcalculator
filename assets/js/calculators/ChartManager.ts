@@ -3,14 +3,19 @@ import { InputValidator } from './InputValidator';
 import { DOMAdapter } from '../adapters/DOMAdapter';
 import { YearResult } from '../types';
 import { THEME_COLORS, THEME_FONTS } from './constants/ThemeTokens.ts';
-import { A11yAnnouncer } from './helpers/A11yAnnouncer';
 import { eventBus } from '../utils/EventBus';
 import { ChartGradientFactory } from './chart/ChartGradientFactory';
 import { ChartMilestoneCalculator, Milestone } from './chart/ChartMilestoneCalculator';
 import { ChartDatasetBuilder } from './chart/ChartDatasetBuilder';
 import { createChartPlugins } from './chart/ChartPlugins';
+import { ChartTelemetryController } from './chart/ChartTelemetryController';
+import {
+    computeDonutViewData,
+    buildDonutChartConfig,
+    buildLineChartConfig
+} from './chart/ChartConfigFactory';
 import type { ChartScrubbingController } from './controllers/ChartScrubbingController';
-import type { Chart, ChartConfiguration } from 'chart.js';
+import type { Chart, ChartConfiguration, Plugin } from 'chart.js';
 
 /**
  * ChartManager.ts
@@ -45,6 +50,7 @@ export class ChartManager {
     private gradientFactory: ChartGradientFactory;
     private milestoneCalculator: ChartMilestoneCalculator;
     private datasetBuilder: ChartDatasetBuilder;
+    private telemetryController: ChartTelemetryController;
     private plugins: ReturnType<typeof createChartPlugins>;
     private unsubscribeEvents: (() => void)[] = [];
 
@@ -59,6 +65,7 @@ export class ChartManager {
 
         this.gradientFactory = new ChartGradientFactory();
         this.milestoneCalculator = new ChartMilestoneCalculator(this.formatter, this.validator, this.dom);
+        this.telemetryController = new ChartTelemetryController(this.dom, this.formatter);
         this.datasetBuilder = new ChartDatasetBuilder({
             dom: this.dom,
             getActiveBenchmark: () => this.activeBenchmark,
@@ -148,62 +155,14 @@ export class ChartManager {
      * Formats axis tick numbers cleanly into Indian (Cr/L/k) or Western (B/M/k) scales.
      */
     formatAxisTick(value: number): string {
-        if (isNaN(value) || !isFinite(value) || value < 0) return '';
-
-        const symbol = this.formatter.getSymbol();
-        const currency = this.formatter.getCurrency();
-
-        if (currency === 'INR') {
-            if (value === 0) return `${symbol}0`;
-            if (value >= 10000000) {
-                const cr = value / 10000000;
-                return `${symbol}${Number.isInteger(cr) || cr >= 10 ? cr.toFixed(0) : cr.toFixed(1)} Cr`;
-            }
-            if (value >= 100000) {
-                const l = value / 100000;
-                return `${symbol}${Number.isInteger(l) || l >= 10 ? l.toFixed(0) : l.toFixed(1)} L`;
-            }
-            if (value >= 1000) {
-                return `${symbol}${(value / 1000).toFixed(0)}k`;
-            }
-            return `${symbol}${value.toFixed(0)}`;
-        }
-
-        if (value >= 1000000000) {
-            return `${symbol}${(value / 1000000000).toFixed(1)}B`;
-        }
-        if (value >= 1000000) {
-            return `${symbol}${(value / 1000000).toFixed(1)}M`;
-        }
-        if (value >= 1000) {
-            return `${symbol}${(value / 1000).toFixed(0)}k`;
-        }
-        return `${symbol}${value.toFixed(0)}`;
+        return this.telemetryController.formatAxisTick(value);
     }
 
     /**
      * Updates active lens text indicator in the header dock.
      */
     public updateActiveLensIndicator(): void {
-        const indicator = this.dom.getElement('active-lens-indicator');
-        if (!indicator) return;
-
-        const showCorridor = this.dom.getElement<HTMLInputElement>('show_historical_corridor')?.checked || false;
-        const showPostTax = this.dom.getElement<HTMLInputElement>('show_post_tax')?.checked || false;
-        const showWealthMap = this.dom.getElement<HTMLInputElement>('show_wealth_map')?.checked || false;
-
-        const active: string[] = [];
-        if (showPostTax) active.push('Post-Tax');
-        if (showCorridor) active.push('Range');
-        if (showWealthMap) active.push('Breakdown');
-
-        if (active.length === 0) {
-            indicator.textContent = 'Standard View';
-            indicator.className = 'inline-flex items-center text-micro font-bold text-slate-500 bg-slate-100/90 px-2 py-0.5 rounded-full border border-slate-200/70 shrink-0';
-        } else {
-            indicator.textContent = active.join(' + ');
-            indicator.className = 'inline-flex items-center text-micro font-bold text-emerald-800 bg-emerald-100/90 px-2 py-0.5 rounded-full border border-emerald-200/80 shadow-flat shrink-0';
-        }
+        this.telemetryController.updateActiveLensIndicator();
     }
 
     /**
@@ -284,67 +243,14 @@ export class ChartManager {
      * Update persistent Zero-CLS Heads-Up Display (HUD) telemetry console.
      */
     public updateInspectionRibbon(row: YearResult): void {
-        if (this.scrubbingController) {
-            this.scrubbingController.inspect(row, this.lastResults.length);
-            return;
-        }
-
-        const rYear = this.dom.getElement('ribbon-inspect-year');
-        const rInvested = this.dom.getElement('ribbon-inspect-invested');
-        const rGains = this.dom.getElement('ribbon-inspect-gains');
-        const rCorpus = this.dom.getElement('ribbon-inspect-corpus');
-
-        const hudYearLabel = this.dom.getElement('hud-year-label');
-        const hudInvested = this.dom.getElement('hud-invested-metric');
-        const hudGains = this.dom.getElement('hud-gains-metric');
-        const hudTotal = this.dom.getElement('hud-total-metric');
-        const hudTimelineIndicator = this.dom.getElement('hud-timeline-indicator');
-
-        if (row) {
-            const totalYears = this.lastResults?.length || row.year;
-            const investedStr = this.formatter.format(row.cumulative_invested);
-            const corpusStr = this.formatter.format(row.combined_total);
-            const gains = Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested);
-            const gainsStr = this.formatter.format(gains);
-
-            if (rYear) rYear.textContent = `Year ${row.year} of ${totalYears}`;
-            if (rInvested) rInvested.textContent = investedStr;
-            if (rCorpus) rCorpus.textContent = corpusStr;
-            if (rGains) rGains.textContent = `+${gainsStr}`;
-            const statusDot = this.dom.getElement('hud-status-dot');
-            if (statusDot) statusDot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse';
-
-            const appMode = this.dom.getElement('calculator-app')?.dataset?.mode || '';
-            if (hudYearLabel) hudYearLabel.textContent = `Year ${row.year} of ${totalYears}`;
-
-            if (appMode === 'emi') {
-                if (hudInvested) hudInvested.textContent = `Principal Paid: ${investedStr}`;
-                if (hudGains) hudGains.textContent = `Interest Paid: ${this.formatter.format(row.interest || 0)}`;
-                if (hudTotal) hudTotal.textContent = `Loan Balance: ${corpusStr}`;
-            } else if (appMode === 'inflation') {
-                if (hudInvested) hudInvested.textContent = `Today: ${investedStr}`;
-                if (hudGains) hudGains.textContent = `Escalation: +${gainsStr}`;
-                if (hudTotal) hudTotal.textContent = `Future Cost: ${corpusStr}`;
-            } else {
-                if (hudInvested) hudInvested.textContent = `Invested: ${investedStr}`;
-                if (hudGains) hudGains.textContent = `Gains: +${gainsStr}`;
-                if (hudTotal) hudTotal.textContent = `Total: ${corpusStr}`;
-            }
-            if (hudTimelineIndicator) hudTimelineIndicator.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0';
-        }
+        this.telemetryController.updateInspectionRibbon(row, this.lastResults, this.scrubbingController);
     }
 
     /**
      * Announce current data point for assistive technologies and update HUD.
      */
     private announceCurrentPoint(index: number): void {
-        const row = this.lastResults[index];
-        if (!row) return;
-        const invested = this.formatter.format(row.cumulative_invested);
-        const corpus = this.formatter.format(row.combined_total);
-        const gains = this.formatter.format(Math.max(0, (row.combined_total + (row.cumulative_withdrawals ?? 0)) - row.cumulative_invested));
-        A11yAnnouncer.announceYearInspection(row.year, invested, corpus, gains);
-        this.updateInspectionRibbon(row);
+        this.telemetryController.announceCurrentPoint(index, this.lastResults, this.scrubbingController);
     }
 
     /**
@@ -546,32 +452,7 @@ export class ChartManager {
         this.lastEnableSwp = enableSwp;
 
         const appMode = this.dom.getElement('calculator-app')?.dataset?.mode || '';
-        const finalRow = results[results.length - 1];
-        if (finalRow) {
-            const headerGrossEl = this.dom.getElement('chart-header-gross');
-            const headerGainEl = this.dom.getElement('chart-header-gain');
-            if (headerGrossEl) {
-                if (appMode === 'emi') {
-                    const totalInterest = results.reduce((acc, r) => acc + (r.interest ?? 0), 0);
-                    const totalPayment = finalRow.cumulative_invested + totalInterest;
-                    headerGrossEl.textContent = this.formatter.format(totalPayment);
-                } else {
-                    headerGrossEl.textContent = this.formatter.format(finalRow.combined_total);
-                }
-            }
-            if (headerGainEl) {
-                if (appMode === 'emi') {
-                    const totalInterest = results.reduce((acc, r) => acc + (r.interest ?? 0), 0);
-                    headerGainEl.textContent = `${this.formatter.format(totalInterest)} Total Interest`;
-                } else if (appMode === 'inflation') {
-                    const costIncrease = Math.max(0, finalRow.combined_total - finalRow.cumulative_invested);
-                    headerGainEl.textContent = `+${this.formatter.format(costIncrease)} Escalation`;
-                } else {
-                    const netGains = Math.max(0, (finalRow.combined_total + (finalRow.cumulative_withdrawals ?? 0)) - finalRow.cumulative_invested);
-                    headerGainEl.textContent = `+${this.formatter.format(netGains)} Gains`;
-                }
-            }
-        }
+        this.telemetryController.updateChartHeaderSummary(results);
 
         if (this.scrubbingController) {
             this.scrubbingController.syncResults(results);
@@ -609,104 +490,25 @@ export class ChartManager {
         const years = results.map(r => `Yr ${r.year}`);
         const allowedTicks = this.milestoneCalculator.computeHarmonicYearTicks(results.length);
 
-        const textColor = THEME_COLORS.chart.textMuted;
-        const gridColor = THEME_COLORS.chart.gridLine;
-
         // ── DONUT VIEW (Asset Allocation) ──
         if (this.activeViewType === 'donut') {
             const finalRow = results[results.length - 1];
             const activeYear = this.activeDonutScrubYear || results.length;
             const targetRow = results.find(r => r.year === activeYear) || finalRow;
 
-            let donutData: number[] = [];
-            let donutLabels: string[] = [];
-            let donutColors: string[] = [];
-
-            if (appMode === 'emi') {
-                const totalInterest = results.reduce((acc, r) => acc + (r.interest ?? 0), 0);
-                const principal = targetRow ? targetRow.cumulative_invested : 0;
-                donutData = [principal, totalInterest];
-                donutLabels = ['Principal Loan Amount', 'Total Interest Payable'];
-                donutColors = ['#0ea5e9', '#f43f5e'];
-            } else if (appMode === 'inflation') {
-                const baseCost = targetRow ? targetRow.cumulative_invested : 0;
-                const escalation = targetRow ? Math.max(0, targetRow.combined_total - baseCost) : 0;
-                donutData = [baseCost, escalation];
-                donutLabels = ['Current Living Cost', 'Inflation Escalation'];
-                donutColors = [THEME_COLORS.financial.invested, '#f59e0b'];
-            } else if (appMode === 'cagr' && targetRow && targetRow.combined_total < targetRow.cumulative_invested) {
-                const retained = targetRow.combined_total;
-                const loss = targetRow.cumulative_invested - targetRow.combined_total;
-                donutData = [retained, loss];
-                donutLabels = ['Retained Capital', 'Capital Loss'];
-                donutColors = [THEME_COLORS.financial.invested, '#f43f5e'];
-            } else {
-                const totalInvested = targetRow ? targetRow.cumulative_invested : 0;
-                const finalCorpus = targetRow ? (showPostTax ? (targetRow.post_tax_total ?? targetRow.combined_total) : targetRow.combined_total) : 0;
-                const totalWithdrawals = targetRow ? (targetRow.cumulative_withdrawals ?? 0) : 0;
-                const totalGains = Math.max(0, (finalCorpus + totalWithdrawals) - totalInvested);
-
-                if (totalWithdrawals > 0) {
-                    donutData = [totalInvested, totalGains, totalWithdrawals];
-                    donutLabels = ['Total Invested', 'Estimated Returns', 'Total Withdrawn'];
-                    donutColors = [THEME_COLORS.financial.invested, THEME_COLORS.financial.growth, THEME_COLORS.financial.withdrawal];
-                } else {
-                    donutData = [totalInvested, totalGains];
-                    donutLabels = ['Total Invested', 'Estimated Returns'];
-                    donutColors = [THEME_COLORS.financial.invested, THEME_COLORS.financial.growth];
-                }
-            }
-
-            const donutConfig = {
-                type: 'doughnut' as const,
-                data: {
-                    labels: donutLabels,
-                    datasets: [{
-                        data: donutData,
-                        backgroundColor: donutColors,
-                        borderColor: '#ffffff',
-                        borderWidth: 3,
-                        hoverOffset: 6,
-                    }],
-                },
-                plugins: [this.plugins.donutCenterTextPlugin],
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '74%',
-                    animation: {
-                        duration: isDragging ? 0 : 500,
-                        easing: 'easeOutQuart' as const,
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'bottom' as const,
-                            labels: {
-                                boxWidth: 12,
-                                usePointStyle: true,
-                                font: { family: THEME_FONTS.heading, size: 11, weight: 600 },
-                                color: textColor,
-                                padding: 16,
-                            },
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: (tooltipItem: any) => {
-                                    const val = Number(tooltipItem.raw) || 0;
-                                    const sum = donutData.reduce((a, b) => a + b, 0);
-                                    const pct = sum > 0 ? ((val / sum) * 100).toFixed(1) : '0';
-                                    return ` ${tooltipItem.label}: ${this.formatter.format(val)} (${pct}%)`;
-                                },
-                            },
-                        },
-                    },
-                },
-            };
+            const donut = computeDonutViewData(results, targetRow, appMode, showPostTax);
+            const donutConfig = buildDonutChartConfig(
+                donut,
+                isDragging,
+                this.plugins.donutCenterTextPlugin as unknown as Plugin<'doughnut'>,
+                this.formatter,
+                { textColor: THEME_COLORS.chart.textMuted, headingFont: THEME_FONTS.heading }
+            );
 
             if (this.chartInstance && this.currentChartType === 'doughnut' && this.chartInstance.ctx.canvas === ctxEl) {
-                this.chartInstance.data.labels = donutLabels;
-                this.chartInstance.data.datasets[0].data = donutData;
-                this.chartInstance.data.datasets[0].backgroundColor = donutColors;
+                this.chartInstance.data.labels = donut.labels;
+                this.chartInstance.data.datasets[0].data = donut.data;
+                this.chartInstance.data.datasets[0].backgroundColor = donut.colors;
                 this.chartInstance.update(isDragging ? 'none' : undefined);
                 this.milestoneCalculator.renderMilestoneGrid(
                     milestones,
@@ -739,10 +541,6 @@ export class ChartManager {
         if (this.chartInstance && this.currentChartType === 'line' && this.chartInstance.ctx.canvas === ctxEl) {
             const datasets = this.datasetBuilder.buildLineDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
 
-            // Declarative Lifecycle & Metaset Shield:
-            // Check if dataset count or stacked scale configuration shifted.
-            // If schema changed (e.g. toggling benchmarks, post-tax lens, corridor, or step-up baseline),
-            // destroy the instance cleanly so Chart.js rebuilds fresh internal _metasets controllers.
             const previousDatasetCount = this.chartInstance.data.datasets?.length ?? 0;
             const previousStacked = !!this.chartInstance.options.scales?.y?.stacked;
             const schemaChanged = previousDatasetCount !== datasets.length || previousStacked !== showWealthMap;
@@ -783,162 +581,35 @@ export class ChartManager {
         }
 
         const datasets = this.datasetBuilder.buildLineDatasets(results, gradients, enableSwp, showPostTax, showWealthMap, mode, milestones);
-
-        const config: ChartConfiguration<'line'> = {
-            type: 'line' as const,
-            data: {
-                labels: years,
-                datasets: datasets,
-            },
+        const config = buildLineChartConfig({
+            years,
+            datasets,
             plugins: [
-                this.plugins.clipGuardPlugin,
-                this.plugins.crosshairPlugin,
-                this.plugins.splineMilestonesPlugin,
-                this.plugins.compoundingIgnitionPlugin,
-                this.plugins.croreMilestoneLinePlugin,
-                this.plugins.fdAlphaDeltaPlugin,
+                this.plugins.clipGuardPlugin as unknown as Plugin<'line'>,
+                this.plugins.crosshairPlugin as unknown as Plugin<'line'>,
+                this.plugins.splineMilestonesPlugin as unknown as Plugin<'line'>,
+                this.plugins.compoundingIgnitionPlugin as unknown as Plugin<'line'>,
+                this.plugins.croreMilestoneLinePlugin as unknown as Plugin<'line'>,
+                this.plugins.fdAlphaDeltaPlugin as unknown as Plugin<'line'>,
             ],
-            options: {
-                clip: false,
-                responsive: true,
-                maintainAspectRatio: false,
-                devicePixelRatio: Math.min(typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1, 2.5),
-                onHover: (_event: any, activeElements: any[]) => {
-                    if (activeElements && activeElements.length > 0) {
-                        const index = activeElements[0].index;
-                        const row = this.lastResults[index];
-                        if (row) {
-                            this.updateInspectionRibbon(row);
-                            if (typeof navigator !== 'undefined' && 'vibrate' in navigator && (row.year % 5 === 0 || row.year === this.lastResults.length)) {
-                                try {
-                                    navigator.vibrate(10);
-                                } catch {
-                                    // Silent ignore
-                                }
-                            }
+            showWealthMap,
+            allowedTicks,
+            formatter: this.formatter,
+            formatAxisTick: (val) => this.formatAxisTick(val),
+            onHoverRowIndex: (index) => {
+                const row = this.lastResults[index];
+                if (row) {
+                    this.updateInspectionRibbon(row);
+                    if (typeof navigator !== 'undefined' && 'vibrate' in navigator && (row.year % 5 === 0 || row.year === this.lastResults.length)) {
+                        try {
+                            navigator.vibrate(10);
+                        } catch {
+                            // Silent ignore
                         }
                     }
-                },
-                animation: {
-                    duration: 650,
-                    easing: 'easeOutQuart',
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        align: 'center',
-                        onClick: (_e: any, legendItem: any, legend: any) => {
-                            const index = legendItem.datasetIndex;
-                            const ci = legend.chart;
-                            if (typeof index === 'number') {
-                                if (ci.isDatasetVisible(index)) {
-                                    ci.hide(index);
-                                    legendItem.hidden = true;
-                                } else {
-                                    ci.show(index);
-                                    legendItem.hidden = false;
-                                }
-                            }
-                        },
-                        labels: {
-                            filter: (legendItem, chartData) => {
-                                if (typeof legendItem.datasetIndex !== 'number') return true;
-                                if (!chartData || !chartData.datasets) return true;
-                                const ds = chartData.datasets[legendItem.datasetIndex];
-                                return ds !== undefined;
-                            },
-                            usePointStyle: true,
-                            pointStyle: 'circle',
-                            padding: 12,
-                            boxWidth: 8,
-                            boxHeight: 8,
-                            color: textColor,
-                            font: {
-                                family: THEME_FONTS.heading,
-                                size: 11,
-                                weight: 600,
-                            },
-                        },
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(255, 255, 255, 0.98)',
-                        titleColor: '#0f172a',
-                        bodyColor: '#334155',
-                        borderColor: '#e2e8f0',
-                        borderWidth: 1,
-                        padding: 12,
-                        boxPadding: 6,
-                        usePointStyle: true,
-                        titleFont: {
-                            family: THEME_FONTS.heading,
-                            size: 13,
-                            weight: 700,
-                        },
-                        bodyFont: {
-                            family: THEME_FONTS.mono,
-                            size: 11,
-                        },
-                        callbacks: {
-                            label: (context: any) => {
-                                const val = context.raw;
-                                if (val === null || val === undefined) return '';
-                                return ` ${context.dataset.label}: ${this.formatter.format(Number(val))}`;
-                            },
-                        },
-                    },
-                },
-                scales: {
-                    x: {
-                        grid: {
-                            display: false,
-                        },
-                        ticks: {
-                            color: textColor,
-                            font: {
-                                family: THEME_FONTS.mono,
-                                size: 10,
-                                weight: 500,
-                            },
-                            padding: 6,
-                            maxRotation: 0,
-                            autoSkip: false,
-                            callback: (_val: string | number, index: number) => {
-                                const yearNum = index + 1;
-                                if (allowedTicks.includes(yearNum)) {
-                                    return `Yr ${yearNum}`;
-                                }
-                                return '';
-                            },
-                        },
-                    },
-                    y: {
-                        position: 'right',
-                        stacked: showWealthMap,
-                        grid: {
-                            color: gridColor,
-                            tickBorderDash: [4, 4],
-                        },
-                        ticks: {
-                            color: textColor,
-                            font: {
-                                family: THEME_FONTS.mono,
-                                size: 10,
-                                weight: 500,
-                            },
-                            padding: 6,
-                            callback: (value: string | number) => {
-                                return this.formatAxisTick(typeof value === 'number' ? value : Number(value));
-                            },
-                        },
-                        beginAtZero: true,
-                    },
-                },
+                }
             },
-        };
+        });
 
         this.chartInstance = new ChartClass(ctx, config) as unknown as Chart<'line'>;
         this.currentChartType = 'line';

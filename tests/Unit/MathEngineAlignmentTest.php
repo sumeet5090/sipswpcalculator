@@ -13,6 +13,9 @@ class MathEngineAlignmentTest extends TestCase
 {
     /**
      * Helper to run calculations in JS using Node.js.
+     *
+     * @param array<string, mixed> $inputs
+     * @return array<int, array<string, mixed>>
      */
     private function runJsCalculation(array $inputs): array
     {
@@ -35,7 +38,7 @@ class MathEngineAlignmentTest extends TestCase
             'ltcg_tax_rate'  => $inputs['ltcg_tax_rate'] ?? 0.125,
         ];
 
-        $jsonArg = escapeshellarg(json_encode($jsInputs));
+        $jsonArg = escapeshellarg(json_encode($jsInputs, JSON_THROW_ON_ERROR));
         $cmd = "node --experimental-strip-types " . escapeshellarg($runnerPath) . " {$jsonArg}";
 
         $output = shell_exec($cmd);
@@ -53,6 +56,8 @@ class MathEngineAlignmentTest extends TestCase
 
     /**
      * Verify alignment on various input combinations.
+     *
+     * @param array<string, mixed> $inputsData
      */
     #[DataProvider('inputProvider')]
     public function testMathAlignment(array $inputsData): void
@@ -143,7 +148,7 @@ class MathEngineAlignmentTest extends TestCase
             'target_corpus' => $targetCorpus
         ];
 
-        $jsonArg = escapeshellarg(json_encode($jsPayload));
+        $jsonArg = escapeshellarg(json_encode($jsPayload, JSON_THROW_ON_ERROR));
         $output = shell_exec("node " . escapeshellarg($runnerPath) . " {$jsonArg}");
         $jsRes = json_decode((string) $output, true);
         $jsSip = (float) ($jsRes['result'] ?? -1);
@@ -178,7 +183,7 @@ class MathEngineAlignmentTest extends TestCase
             ]
         ];
 
-        $jsonArg = escapeshellarg(json_encode($jsPayload));
+        $jsonArg = escapeshellarg(json_encode($jsPayload, JSON_THROW_ON_ERROR));
         $output = shell_exec("node " . escapeshellarg($runnerPath) . " {$jsonArg}");
         $jsRes = json_decode((string) $output, true);
         $jsCorpus = (float) ($jsRes['result'] ?? -1);
@@ -201,7 +206,7 @@ class MathEngineAlignmentTest extends TestCase
             'inflation' => 6.0
         ];
 
-        $jsonArg = escapeshellarg(json_encode($jsPayload));
+        $jsonArg = escapeshellarg(json_encode($jsPayload, JSON_THROW_ON_ERROR));
         $output = shell_exec("node " . escapeshellarg($runnerPath) . " {$jsonArg}");
         $jsRes = json_decode((string) $output, true);
         $jsDiscount = (float) ($jsRes['result'] ?? -1);
@@ -236,7 +241,7 @@ class MathEngineAlignmentTest extends TestCase
             ]
         ];
 
-        $jsonArg = escapeshellarg(json_encode($jsPayload));
+        $jsonArg = escapeshellarg(json_encode($jsPayload, JSON_THROW_ON_ERROR));
         $output = shell_exec("node " . escapeshellarg($runnerPath) . " {$jsonArg}");
         $jsRes = json_decode((string) $output, true);
         $jsDelayCost = (float) ($jsRes['result'] ?? -1);
@@ -283,7 +288,7 @@ class MathEngineAlignmentTest extends TestCase
             'starting_corpus' => 10000000.0
         ];
 
-        $jsonArg = escapeshellarg(json_encode($jsPayload));
+        $jsonArg = escapeshellarg(json_encode($jsPayload, JSON_THROW_ON_ERROR));
         $output = shell_exec("node " . escapeshellarg($runnerPath) . " {$jsonArg}");
         $jsRes = json_decode((string) $output, true);
         $jsSafeSwp = (float) ($jsRes['result'] ?? -1);
@@ -291,6 +296,9 @@ class MathEngineAlignmentTest extends TestCase
         $this->assertEqualsWithDelta($phpSafeSwp, $jsSafeSwp, 1.0, "Safe SWP monthly withdrawal mismatch between PHP and JS");
     }
 
+    /**
+     * @return array<string, array{0: array<string, mixed>}>
+     */
     public static function inputProvider(): array
     {
         return [

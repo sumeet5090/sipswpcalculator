@@ -63,14 +63,8 @@ class RouterIntegrityTest extends TestCase
         $routes = $this->router->getRoutes();
         foreach ($routes as $method => $mappings) {
             foreach ($mappings as $uri => $action) {
-                if (is_array($action)) {
-                    $controllerClass = $action[0];
-                    $actionMethod = $action[1] ?? '__invoke';
-                } else {
-                    $parts = explode('@', $action);
-                    $controllerClass = $parts[0];
-                    $actionMethod = $parts[1] ?? '__invoke';
-                }
+                $controllerClass = $action[0];
+                $actionMethod = $action[1] ?? '__invoke';
 
                 if (!str_starts_with($controllerClass, '\\')) {
                     $controllerClass = '\\' . ltrim($controllerClass, '\\');
@@ -204,6 +198,7 @@ class RouterIntegrityTest extends TestCase
         $this->assertFileExists($robotsPath);
 
         $content = file_get_contents($robotsPath);
+        $this->assertIsString($content);
         $this->assertMatchesRegularExpression(
             '/Sitemap:\s*https:\/\/sipswpcalculator\.com\/sitemap\.xml/i',
             $content,

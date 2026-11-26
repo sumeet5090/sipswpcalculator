@@ -12,6 +12,9 @@ use PHPUnit\Framework\TestCase;
  */
 final class AccessibilityColorContrastTest extends TestCase
 {
+    /**
+     * @return array{r: int, g: int, b: int}
+     */
     private function hexToRgb(string $hex): array
     {
         $clean = ltrim($hex, '#');

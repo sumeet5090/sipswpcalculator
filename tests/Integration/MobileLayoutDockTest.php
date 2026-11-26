@@ -6,11 +6,9 @@ namespace Tests\Integration;
 
 class MobileLayoutDockTest extends IntegrationTestCase
 {
-    private static int $port = 9097;
-
     public static function setUpBeforeClass(): void
     {
-        self::startLocalServer(self::$port);
+        self::startLocalServer();
     }
 
     public static function tearDownAfterClass(): void
@@ -20,7 +18,7 @@ class MobileLayoutDockTest extends IntegrationTestCase
 
     private function fetchHtml(string $path): string
     {
-        $url = sprintf('http://127.0.0.1:%d%s', self::$port, $path);
+        $url = self::getBaseUrl($path);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

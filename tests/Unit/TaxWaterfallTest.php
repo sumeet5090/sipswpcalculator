@@ -40,6 +40,7 @@ final class TaxWaterfallTest extends TestCase
         $this->assertCount(10, $results);
 
         $lastRow = end($results);
+        $this->assertIsArray($lastRow);
         $invested = $lastRow['cumulative_invested'];
         $grossCorpus = $lastRow['combined_total'];
         $totalGains = $grossCorpus - $invested;

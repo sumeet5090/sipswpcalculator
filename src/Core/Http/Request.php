@@ -6,14 +6,26 @@ namespace Core\Http;
 
 class Request
 {
+    /** @var array<string, mixed> */
     private array $get;
+    /** @var array<string, mixed> */
     private array $post;
+    /** @var array<string, mixed> */
     private array $server;
+    /** @var array<string, array<string, mixed>> */
     private array $files;
+    /** @var array<string, mixed> */
     private array $cookies;
 
     private ?string $rawBody;
 
+    /**
+     * @param array<string, mixed> $get
+     * @param array<string, mixed> $post
+     * @param array<string, mixed> $server
+     * @param array<string, array<string, mixed>> $files
+     * @param array<string, mixed> $cookies
+     */
     public function __construct(
         array $get = [],
         array $post = [],
@@ -69,6 +81,9 @@ class Request
         return $this->server[$key] ?? $default;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function files(string $key): ?array
     {
         return $this->files[$key] ?? null;
@@ -79,6 +94,9 @@ class Request
         return $this->cookies[$key] ?? $default;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getCookies(): array
     {
         return $this->cookies;
@@ -135,6 +153,9 @@ class Request
         return $this->getMethod() === 'GET';
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getParsedBody(): array
     {
         if (!empty($this->post)) {
@@ -157,6 +178,9 @@ class Request
         return $this->rawBody;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getJsonBody(): ?array
     {
         $content = $this->getRawBody();

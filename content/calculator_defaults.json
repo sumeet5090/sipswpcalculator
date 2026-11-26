@@ -107,6 +107,180 @@
         "label": "Target Corpus",
         "prefix": "₹"
     },
+    "ci_principal": {
+        "default": 500000,
+        "min": 10000,
+        "max": 10000000,
+        "slider_max": 5000000,
+        "step": 10000,
+        "label": "Initial Principal",
+        "prefix": "₹"
+    },
+    "ci_rate": {
+        "default": 12.0,
+        "min": 1.0,
+        "max": 30.0,
+        "slider_max": 25.0,
+        "step": 0.5,
+        "label": "Annual Rate",
+        "suffix": "%"
+    },
+    "ci_years": {
+        "default": 10,
+        "min": 1,
+        "max": 40,
+        "slider_max": 30,
+        "step": 1,
+        "label": "Investment Duration",
+        "suffix": "Yrs"
+    },
+    "ci_frequency": {
+        "default": 12
+    },
+    "cagr_initial": {
+        "default": 100000,
+        "min": 1000,
+        "max": 10000000,
+        "slider_max": 2500000,
+        "step": 5000,
+        "label": "Initial Investment",
+        "prefix": "₹"
+    },
+    "cagr_final": {
+        "default": 250000,
+        "min": 1000,
+        "max": 50000000,
+        "slider_max": 10000000,
+        "step": 10000,
+        "label": "Target / Final Value",
+        "prefix": "₹"
+    },
+    "cagr_years": {
+        "default": 5.0,
+        "min": 0.5,
+        "max": 40.0,
+        "slider_max": 25.0,
+        "step": 0.5,
+        "label": "Investment Duration",
+        "suffix": "Yrs"
+    },
+    "emi_principal": {
+        "default": 3000000,
+        "min": 50000,
+        "max": 50000000,
+        "slider_max": 10000000,
+        "step": 25000,
+        "label": "Loan Amount",
+        "prefix": "₹"
+    },
+    "emi_rate": {
+        "default": 8.5,
+        "min": 5.0,
+        "max": 25.0,
+        "slider_max": 18.0,
+        "step": 0.1,
+        "label": "Interest Rate",
+        "suffix": "%"
+    },
+    "emi_years": {
+        "default": 20,
+        "min": 1,
+        "max": 30,
+        "slider_max": 30,
+        "step": 1,
+        "label": "Loan Tenure",
+        "suffix": "Yrs"
+    },
+    "inf_amount": {
+        "default": 50000,
+        "min": 1000,
+        "max": 10000000,
+        "slider_max": 500000,
+        "step": 1000,
+        "label": "Current Cost / Expense",
+        "prefix": "₹"
+    },
+    "inf_rate": {
+        "default": 6.0,
+        "min": 1.0,
+        "max": 20.0,
+        "slider_max": 15.0,
+        "step": 0.5,
+        "label": "Expected Inflation",
+        "suffix": "%"
+    },
+    "inf_years": {
+        "default": 15,
+        "min": 1,
+        "max": 40,
+        "slider_max": 30,
+        "step": 1,
+        "label": "Time Horizon",
+        "suffix": "Yrs"
+    },
+    "ppf_deposit": {
+        "default": 150000,
+        "min": 500,
+        "max": 150000,
+        "slider_max": 150000,
+        "step": 500,
+        "label": "Yearly Deposit",
+        "prefix": "₹"
+    },
+    "ppf_rate": {
+        "default": 7.1,
+        "min": 5.0,
+        "max": 12.0,
+        "slider_max": 10.0,
+        "step": 0.1,
+        "label": "Interest Rate",
+        "suffix": "%"
+    },
+    "ppf_years": {
+        "default": 15,
+        "min": 15,
+        "max": 35,
+        "slider_max": 35,
+        "step": 5,
+        "label": "PPF Duration",
+        "suffix": "Yrs"
+    },
+    "ppf_timing": {
+        "default": "beginning"
+    },
+    "fd_principal": {
+        "default": 500000,
+        "min": 10000,
+        "max": 10000000,
+        "slider_max": 2500000,
+        "step": 10000,
+        "label": "Deposit Amount",
+        "prefix": "₹"
+    },
+    "fd_rate": {
+        "default": 7.0,
+        "min": 3.0,
+        "max": 12.0,
+        "slider_max": 10.0,
+        "step": 0.1,
+        "label": "Interest Rate",
+        "suffix": "%"
+    },
+    "fd_years": {
+        "default": 3.0,
+        "min": 0.25,
+        "max": 10.0,
+        "slider_max": 10.0,
+        "step": 0.25,
+        "label": "Deposit Tenure",
+        "suffix": "Yrs"
+    },
+    "fd_senior": {
+        "default": 0
+    },
+    "fd_frequency": {
+        "default": "cumulative"
+    },
     "gratuity_salary": {
         "default": 50000,
         "min": 5000,

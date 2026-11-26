@@ -73,8 +73,8 @@ Every development task must follow this exact sequential 5-stage lifecycle:
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ Stage 4: Deterministic Tiered Verification                              │
 │ • Tier 1: Local asset build & parity checks                             │
-│ • Tier 2: Local server curl integration verification                    │
-│ • Tier 3: Full quality gate (composer check-all with 820 tests)         │
+│ • Tier 2: Local server curl / integration verification                  │
+│ • Tier 3: Full quality gate (composer check-all: PHPStan L8 + PHPUnit)  │
 └────────────────────────────────────┬────────────────────────────────────┘
                                      ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -90,9 +90,9 @@ Every development task must follow this exact sequential 5-stage lifecycle:
   - *Zero-Guesswork Mandate:* If any question, confusion, trade-off, or architectural fork in the road arises, the agent MUST immediately pause and approach the human admin for full clarification. Never guess, extrapolate, or assume requirements on the fly.
 * **Stage 3 (Implementation Protocol):** Follow the approved `implementation_plan.md` precisely. Do not rewrite architectures or introduce unapproved patterns. Strictly respect the "Trace the Data Flow" protocol: trace parameters back to their origins (`routes.php`, `InvestmentInputs`) before modifying routing or rendering.
 * **Stage 4 (Tiered Verification):**
-  - *Tier 1 (Fast-Path Local Build & Parity):* Run `npm run typecheck && npm run build` and `php tests/parity_check.php` (verifying all 71 mathematical parity tests).
-  - *Tier 2 (Local Server Curl Verification):* Run a `curl` command on the local PHP development server for any specific routes modified. Grep for expected DOM elements or JSON payloads to definitively verify rendering success.
-  - *Tier 3 (Pre-Commit Full Gate):* Run `composer check-all` (validating PHPStan Level Max across 253 files, PSR-12 coding standard, and all 820 PHPUnit tests with 12,776 assertions).
+  - *Tier 1 (Fast-Path Local Build & Parity):* Run `npm run typecheck && npm run build` and `php tests/parity_check.php` (verifying all 119 mathematical parity tests).
+  - *Tier 2 (Local Server Curl Verification):* Run a `curl` command on the local PHP development server for any specific routes modified (or `vendor/bin/phpunit tests/Integration` with `BypassSandbox: true` when testing ephemeral loopback server ports).
+  - *Tier 3 (Pre-Commit Full Gate):* Run `composer check-all` (validating PHPStan Level 8 across 285 files, PSR-12 coding standard, and all 957 PHPUnit tests [743 Unit + 214 Integration] with 18,710 assertions).
 * **Stage 5 (Documentation Maintenance & Anti-Drift Protocol):** Whenever any code, route, class, template, or configuration changes, immediately perform an audit of referencing documentation:
   1. Check and update `README.md` to reflect new/modified behavior.
   2. Check and update `.agents/ARCHITECTURE_MAP.md` if any route, controller, template, driver, engine, or subsystem coordinate shifted.
@@ -141,7 +141,7 @@ Every development task must follow this exact sequential 5-stage lifecycle:
 ### 9. Environment Security & Modifications
 * **Zero AI Git Commits or Branch Merging Mandate:** AI agents are strictly forbidden from committing changes on any branch (`git commit`), merging branches (`git merge`), or pushing (`git push`). The human developer personally and regularly commits changes to branches and merges branches to target branches as needed.
 * **No Direct Production SSH Modifications:** Under absolutely NO circumstances should you connect to a production or staging server via SSH to execute database schema alterations (e.g., `ALTER TABLE`), modify production files directly, or perform "quick fixes". All changes MUST be committed via Git and deployed through the standard CI/CD pipeline. No exceptions.
-* **CLI-Only Schema Migrations:** Database schema migrations are executed strictly via CLI (`php bin/migrate` or `php migrate.php`) for environment security; there are no administrative web migration endpoints.
+* **CLI-Only Schema Migrations:** Database schema migrations are executed strictly via CLI (`php bin/migrate`) for environment security; there are no administrative web migration endpoints.
 * **SQLite WAL Mode & Concurrency:** All SQLite PDO connections must configure `PRAGMA journal_mode = WAL;`, `PRAGMA synchronous = NORMAL;`, and `PRAGMA busy_timeout = 5000;`, eliminating concurrency lock contention during traffic surges.
 
 ---

@@ -2,7 +2,17 @@ import { InputValidator } from './InputValidator';
 import { DOMAdapter } from '../adapters/DOMAdapter';
 import { CurrencyFormatter } from './CurrencyHelper';
 import { IndianNumberParser } from './helpers/IndianNumberParser';
-import { A11yAnnouncer } from './helpers/A11yAnnouncer';
+import {
+    computeElasticMax,
+    formatSliderTooltipText,
+    updateTrackProgress,
+    updateSubtext,
+    updateWordBadge,
+    updatePresetChips,
+    updateSliderAria,
+    showFieldError,
+    clearFieldError
+} from './helpers/SliderUiHelper';
 
 interface SliderPair {
     input: HTMLInputElement;
@@ -14,10 +24,7 @@ interface SliderPair {
 
 /**
  * SliderManager.ts
- * Encapsulates all range slider ↔ input synchronization logic,
- * elastic dynamic scale expansion, WAI-ARIA extended keyboard controls,
- * dynamic progress track styling, quick-preset chips, and live subtext indicators.
- * Strictly adheres to SOLID, DRY, and POLA principles.
+ * Coordinates range slider ↔ input synchronization, elastic bounds, keyboard shortcuts, and visual UI helpers.
  */
 export class SliderManager {
     private static globalTooltipListenersInitialized = false;
@@ -74,40 +81,13 @@ export class SliderManager {
         this._onFieldResetToDefault = callback;
     }
 
-    /**
-     * Compute elastic slider upper bound when entered value exceeds default bounds.
-     */
-    private _computeElasticMax(val: number, defaultMax: number): number {
-        if (val <= defaultMax) {
-            return defaultMax;
-        }
-        const scaleFactor = 1.5;
-        const target = val * scaleFactor;
-        if (target >= 10000000) {
-            return Math.ceil(target / 5000000) * 5000000; // Step of 50 Lakhs
-        }
-        if (target >= 1000000) {
-            return Math.ceil(target / 500000) * 500000; // Step of 5 Lakhs
-        }
-        if (target >= 100000) {
-            return Math.ceil(target / 50000) * 50000; // Step of 50k
-        }
-        if (target >= 10000) {
-            return Math.ceil(target / 10000) * 10000; // Step of 10k
-        }
-        return Math.ceil(target);
-    }
-
-    /**
-     * Dynamically adjust slider upper boundary if manual input exceeds initial bounds.
-     */
     public adjustSliderBoundary(fieldId: string, enteredValue: number): void {
         const pair = this.pairs.find(p => p.fieldId === fieldId);
         if (!pair) return;
-        const newMax = this._computeElasticMax(enteredValue, pair.defaultSliderMax);
+        const newMax = computeElasticMax(enteredValue, pair.defaultSliderMax);
         pair.range.max = String(newMax);
         pair.range.setAttribute('aria-valuemax', String(newMax));
-        this._updateTrackProgress(pair.range);
+        updateTrackProgress(pair.range);
     }
 
     /**
@@ -152,14 +132,11 @@ export class SliderManager {
         // Initial visual sync
         const initialVal = parseFloat(input.value) || 0;
         if (initialVal > defaultSliderMax) {
-            const elasticMax = this._computeElasticMax(initialVal, defaultSliderMax);
+            const elasticMax = computeElasticMax(initialVal, defaultSliderMax);
             range.max = String(elasticMax);
             range.setAttribute('aria-valuemax', String(elasticMax));
         }
-        this._updateTrackProgress(range);
-        this._updateSubtext(inputId, initialVal);
-        this._updateWordBadge(inputId, initialVal);
-        this._updatePresetChips(inputId, initialVal);
+        this._refreshPairVisuals(inputId, range, initialVal);
 
         // Dynamic Floating Thumb Tooltip
         const tooltip = document.createElement('div');
@@ -175,18 +152,7 @@ export class SliderManager {
             const max = parseFloat(range.max) || 100;
             const pct = max > min ? ((val - min) / (max - min)) * 100 : 0;
             tooltip.style.left = `clamp(32px, ${pct.toFixed(2)}%, calc(100% - 32px))`;
-
-            const isCurrency = inputId === 'sip' || inputId === 'lumpsum' || inputId === 'target_corpus' || inputId === 'swp_withdrawal' ||
-                inputId.endsWith('_principal') || inputId.endsWith('_deposit') || inputId.endsWith('_amount') || inputId.endsWith('_initial') || inputId.endsWith('_final');
-            const isYears = inputId === 'years' || inputId === 'swp_years' || inputId.endsWith('_years');
-
-            if (isCurrency) {
-                tooltip.textContent = this.formatter.formatDynamic(val);
-            } else if (isYears) {
-                tooltip.textContent = `${val} Yrs`;
-            } else {
-                tooltip.textContent = `${val}%`;
-            }
+            tooltip.textContent = formatSliderTooltipText(this.formatter, inputId, val);
             tooltip.classList.add('is-active');
         };
 
@@ -223,12 +189,9 @@ export class SliderManager {
             try {
                 input.value = range.value;
                 const numericVal = parseFloat(range.value) || 0;
-                this._updateAria(range, range.value);
-                this._updateTrackProgress(range);
-                this._updateSubtext(inputId, numericVal);
-                this._updateWordBadge(inputId, numericVal);
-                this._updatePresetChips(inputId, numericVal);
-                this._clearError(inputId);
+                updateSliderAria(this.formatter, range, range.value);
+                this._refreshPairVisuals(inputId, range, numericVal);
+                clearFieldError(this.dom, inputId);
                 showTooltip(numericVal);
 
                 // Tactile Haptic Vibration at tiered landmark intervals (F6.3)
@@ -330,20 +293,20 @@ export class SliderManager {
                         const msg = rawVal < limits.min
                             ? `Minimum is ${limits.min}`
                             : `Maximum is ${limits.max}`;
-                        this._showError(inputId, msg);
+                        showFieldError(this.dom, inputId, msg);
                     }
                 } else {
-                    this._clearError(inputId);
+                    clearFieldError(this.dom, inputId);
                 }
 
                 // Elastic dynamic autoscaling of range max
-                const elasticMax = this._computeElasticMax(validated, defaultSliderMax);
+                const elasticMax = computeElasticMax(validated, defaultSliderMax);
                 range.max = String(elasticMax);
                 range.setAttribute('aria-valuemax', String(elasticMax));
 
                 range.value = String(validated);
-                this._updateAria(range, validated);
-                this._updateTrackProgress(range);
+                updateSliderAria(this.formatter, range, validated);
+                updateTrackProgress(range);
             } finally {
                 this.isInternalSyncing = false;
             }
@@ -353,9 +316,9 @@ export class SliderManager {
                 clearTimeout(this._inputDebounceTimer);
             }
             this._inputDebounceTimer = setTimeout(() => {
-                this._updateSubtext(inputId, validated);
-                this._updateWordBadge(inputId, validated);
-                this._updatePresetChips(inputId, validated);
+                updateSubtext(this.dom, this.formatter, inputId, validated);
+                updateWordBadge(this.dom, this.formatter, inputId, validated);
+                updatePresetChips(this.dom, inputId, validated);
                 this.triggerFn();
             }, 100);
         });
@@ -365,16 +328,13 @@ export class SliderManager {
             const validated = this.validator.validate(inputId, isNaN(rawVal) ? range.value : rawVal);
             input.value = String(validated);
             
-            const elasticMax = this._computeElasticMax(validated, defaultSliderMax);
+            const elasticMax = computeElasticMax(validated, defaultSliderMax);
             range.max = String(elasticMax);
             range.setAttribute('aria-valuemax', String(elasticMax));
 
             range.value = String(validated);
-            this._updateAria(range, validated);
-            this._updateTrackProgress(range);
-            this._updateSubtext(inputId, validated);
-            this._updateWordBadge(inputId, validated);
-            this._updatePresetChips(inputId, validated);
+            updateSliderAria(this.formatter, range, validated);
+            this._refreshPairVisuals(inputId, range, validated);
             this.triggerFn();
         });
 
@@ -411,9 +371,7 @@ export class SliderManager {
                     this._inputDebounceTimer = null;
                 }
                 const val = parseFloat(input.value) || 0;
-                this._updateTrackProgress(range);
-                this._updateSubtext(inputId, val);
-                this._updatePresetChips(inputId, val);
+                this._refreshPairVisuals(inputId, range, val);
                 this.triggerFn();
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
@@ -451,18 +409,15 @@ export class SliderManager {
         }
 
         const { input, range } = pair;
-        const elasticMax = this._computeElasticMax(val, pair.defaultSliderMax);
+        const elasticMax = computeElasticMax(val, pair.defaultSliderMax);
         range.max = String(elasticMax);
         range.setAttribute('aria-valuemax', String(elasticMax));
 
         input.value = String(val);
         range.value = String(val);
-        this._updateAria(range, val);
-        this._updateTrackProgress(range);
-        this._updateSubtext(fieldId, val);
-        this._updateWordBadge(fieldId, val);
-        this._updatePresetChips(fieldId, val);
-        this._clearError(fieldId);
+        updateSliderAria(this.formatter, range, val);
+        this._refreshPairVisuals(fieldId, range, val);
+        clearFieldError(this.dom, fieldId);
         input.dispatchEvent(new Event('input', { bubbles: true }));
         if (!silent) {
             this.triggerFn();
@@ -475,13 +430,10 @@ export class SliderManager {
     refreshVisuals(): void {
         this.pairs.forEach(({ input, range, fieldId, defaultSliderMax }) => {
             const val = parseFloat(input.value) || 0;
-            const elasticMax = this._computeElasticMax(val, defaultSliderMax);
+            const elasticMax = computeElasticMax(val, defaultSliderMax);
             range.max = String(elasticMax);
             range.setAttribute('aria-valuemax', String(elasticMax));
-            this._updateTrackProgress(range);
-            this._updateSubtext(fieldId, val);
-            this._updateWordBadge(fieldId, val);
-            this._updatePresetChips(fieldId, val);
+            this._refreshPairVisuals(fieldId, range, val);
         });
     }
 
@@ -495,6 +447,13 @@ export class SliderManager {
         });
     }
 
+    private _refreshPairVisuals(fieldId: string, range: HTMLInputElement, val: number): void {
+        updateTrackProgress(range);
+        updateSubtext(this.dom, this.formatter, fieldId, val);
+        updateWordBadge(this.dom, this.formatter, fieldId, val);
+        updatePresetChips(this.dom, fieldId, val);
+    }
+
     private _initPresetChips(fieldId: string): void {
         const chips = this.dom.getElements<HTMLButtonElement>(`button[data-preset-for="${fieldId}"]`);
         chips.forEach(chip => {
@@ -506,107 +465,5 @@ export class SliderManager {
                 this.updateFieldValue(fieldId, presetVal);
             });
         });
-    }
-
-    private _updateTrackProgress(rangeEl: HTMLInputElement): void {
-        const min = parseFloat(rangeEl.min) || 0;
-        const max = parseFloat(rangeEl.max) || 100;
-        const val = parseFloat(rangeEl.value) || 0;
-        const rangeSpan = Math.max(max - min, 1);
-        const percent = Math.min(Math.max(((val - min) / rangeSpan) * 100, 0), 100);
-
-        rangeEl.style.setProperty('--range-progress', `${percent}%`);
-    }
-
-    private _updateSubtext(fieldId: string, val: number): void {
-        const subtextEl = this.dom.getElement(`${fieldId}_subtext`);
-        if (!subtextEl) return;
-        const sipVal = parseFloat(this.dom.getValue('sip') || '0') || 0;
-        const text = this.formatter.formatSubtext(fieldId, val, { sip: sipVal });
-        subtextEl.textContent = text;
-
-        if (fieldId === 'sip') {
-            const stepupEl = this.dom.getElement('stepup_subtext');
-            if (stepupEl) {
-                const stepupVal = parseFloat(this.dom.getValue('stepup') || '0') || 0;
-                stepupEl.textContent = this.formatter.formatSubtext('stepup', stepupVal, { sip: val });
-            }
-        }
-    }
-
-    private _updateWordBadge(fieldId: string, val: number): void {
-        const badgeEl = this.dom.getElement(`${fieldId}_word_badge`);
-        if (!badgeEl) return;
-        const text = this.formatter.formatWordBadge(val);
-        badgeEl.textContent = text;
-        badgeEl.style.display = text ? 'inline-block' : 'none';
-    }
-
-    private _updatePresetChips(fieldId: string, currentVal: number): void {
-        const chips = this.dom.getElements<HTMLButtonElement>(`button[data-preset-for="${fieldId}"]`);
-        const inactiveClasses = [
-            'bg-slate-50', 'text-slate-700', 'border-slate-200/90', 'hover:border-slate-300', 'hover:bg-slate-100', 'hover:text-slate-900',
-            'bg-slate-50/90', 'text-slate-600', 'border-transparent', 'bg-slate-100/80', 'hover:bg-slate-200/80', 'shadow-none'
-        ];
-        const activeColorClasses = [
-            'is-active', 'is-active-rose', 'is-active-blue', 'is-active-amber',
-            'bg-emerald-600', 'bg-rose-600', 'bg-blue-600', 'bg-amber-600',
-            'text-white', 'border-emerald-600', 'border-rose-600', 'border-blue-600', 'border-amber-600', 'shadow-flat'
-        ];
-
-        chips.forEach(chip => {
-            const presetVal = parseFloat(chip.dataset.presetVal || '');
-            const isActive = (!isNaN(presetVal) && Math.abs(presetVal - currentVal) < 0.01);
-            const isAmberTheme = chip.classList.contains('is-active-amber') || chip.classList.contains('is-active-blue') || chip.closest('[data-field-id]')?.querySelector('.accent-amber-500, .accent-amber-600, .accent-blue-500, .accent-blue-600') !== null;
-            const isRoseTheme = chip.classList.contains('is-active-rose') || chip.closest('[data-field-id]')?.querySelector('.accent-rose-500, .accent-rose-600') !== null;
-
-            if (isActive) {
-                chip.setAttribute('aria-pressed', 'true');
-                chip.classList.remove(...inactiveClasses);
-                if (isAmberTheme) {
-                    chip.classList.add('is-active-amber', 'bg-amber-600', 'text-white', 'border-amber-600', 'shadow-flat');
-                } else if (isRoseTheme) {
-                    chip.classList.add('is-active-rose', 'bg-rose-600', 'text-white', 'border-rose-600', 'shadow-flat');
-                } else {
-                    chip.classList.add('is-active', 'bg-emerald-600', 'text-white', 'border-emerald-600', 'shadow-flat');
-                }
-            } else {
-                chip.setAttribute('aria-pressed', 'false');
-                chip.classList.remove(...activeColorClasses);
-                chip.classList.add('border-transparent', 'bg-slate-100/80', 'text-slate-600', 'hover:bg-slate-200/80', 'hover:text-slate-900', 'shadow-none');
-            }
-        });
-    }
-
-    private _updateAria(rangeEl: HTMLInputElement, val: number | string): void {
-        rangeEl.setAttribute('aria-valuenow', String(val));
-        const fieldId = rangeEl.id.replace(/_range$/, '');
-        const readableText = this.formatter.formatAriaAnnouncement(fieldId, Number(val));
-        rangeEl.setAttribute('aria-valuetext', readableText);
-        A11yAnnouncer.announce(readableText, 700);
-    }
-
-    private _showError(fieldId: string, message: string): void {
-        const errorEl = this.dom.getElement(`${fieldId}_error`);
-        if (!errorEl) return;
-        errorEl.textContent = message;
-        errorEl.classList.remove('hidden');
-
-        const input = this.dom.getElement(fieldId);
-        if (input) {
-            input.classList.add('border-rose-400', 'bg-rose-50');
-        }
-    }
-
-    private _clearError(fieldId: string): void {
-        const errorEl = this.dom.getElement(`${fieldId}_error`);
-        if (!errorEl) return;
-        errorEl.textContent = '';
-        errorEl.classList.add('hidden');
-
-        const input = this.dom.getElement(fieldId);
-        if (input) {
-            input.classList.remove('border-rose-400', 'bg-rose-50');
-        }
     }
 }

@@ -28,7 +28,7 @@ class CalculatorLinksValidatorTest extends TestCase
         );
 
         foreach (array_keys($routesConfig['calculators']) as $calcPath) {
-            $slug = ltrim($calcPath, '/');
+            $slug = ltrim((string) $calcPath, '/');
             $this->assertArrayHasKey($slug, $links, "calculator_links.json is missing key for '{$slug}'");
             $this->assertIsArray($links[$slug]);
             $this->assertGreaterThanOrEqual(2, count($links[$slug]), "Calculator '{$slug}' must have >= 2 related links");

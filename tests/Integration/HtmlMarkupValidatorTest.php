@@ -14,7 +14,7 @@ class HtmlMarkupValidatorTest extends IntegrationTestCase
      */
     public static function setUpBeforeClass(): void
     {
-        self::startLocalServer(9005);
+        self::startLocalServer();
     }
 
     /**
@@ -27,6 +27,8 @@ class HtmlMarkupValidatorTest extends IntegrationTestCase
 
     /**
      * Data provider that yields all registered public URLs for testing.
+     *
+     * @return array<string, array{0: string}>
      */
     public static function pageRoutesProvider(): array
     {
@@ -65,7 +67,7 @@ class HtmlMarkupValidatorTest extends IntegrationTestCase
     #[DataProvider('pageRoutesProvider')]
     public function testHtmlHasNoDuplicateIds(string $path): void
     {
-        $url = 'http://127.0.0.1:9005' . $path;
+        $url = self::getBaseUrl($path);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -74,7 +76,7 @@ class HtmlMarkupValidatorTest extends IntegrationTestCase
         $html = curl_exec($ch);
         $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        if ($html === false || $html === '') {
+        if (!is_string($html) || $html === '') {
             $this->fail("Failed to query path '$path'. Server did not return a valid response.");
         }
 
@@ -92,6 +94,7 @@ class HtmlMarkupValidatorTest extends IntegrationTestCase
 
         $xpath = new \DOMXPath($dom);
         $elementsWithId = $xpath->query('//*[@id]');
+        $this->assertInstanceOf(\DOMNodeList::class, $elementsWithId);
 
         $ids = [];
         foreach ($elementsWithId as $element) {

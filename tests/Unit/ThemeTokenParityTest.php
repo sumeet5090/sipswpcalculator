@@ -128,6 +128,29 @@ final class ThemeTokenParityTest extends TestCase
         );
     }
 
+    public function testTypeScriptThemeTokensBindDirectlyToCanonicalJsonAndAlignPrincipalColor(): void
+    {
+        $tsPath = (string) realpath(__DIR__ . '/../../assets/js/calculators/constants/ThemeTokens.ts');
+        $this->assertNotEmpty($tsPath);
+        $tsContent = (string) file_get_contents($tsPath);
+
+        $this->assertStringContainsString(
+            'content/theme_tokens.json',
+            $tsContent,
+            'ThemeTokens.ts must import content/theme_tokens.json directly as SSoT'
+        );
+        $this->assertStringContainsString(
+            'principal: jsonColors.financial.principal',
+            $tsContent,
+            'ThemeTokens.ts financial.principal must mirror theme_tokens.json financial.principal (#334155)'
+        );
+        $this->assertStringNotContainsString(
+            "principal: '#6366f1'",
+            $tsContent,
+            'ThemeTokens.ts must not drift principal color away from Cool Slate #334155'
+        );
+    }
+
     /**
      * Load and decode theme_tokens.json with type safety.
      *

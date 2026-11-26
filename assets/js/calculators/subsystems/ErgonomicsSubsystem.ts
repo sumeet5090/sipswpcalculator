@@ -12,6 +12,7 @@ import { FloatingHudController } from '../controllers/FloatingHudController.ts';
 import { StudioTabController } from '../controllers/StudioTabController.ts';
 import { BottomSheetGestureController } from '../controllers/BottomSheetGestureController.ts';
 import { InvestmentInputs, YearResult } from '../../types';
+import { CalculatorRegistry } from '../constants/CalculatorRegistry';
 
 export interface ErgonomicsSubsystemConfig {
     dom: DOMAdapter;
@@ -137,15 +138,24 @@ export class ErgonomicsSubsystem {
         const unlockedCount = milestoneCheckpoints.filter(target => finalCorpus >= target).length;
 
         // Context scenario caption update
+        const appMode = this.dom.getElement('calculator-app')?.dataset?.mode || '';
+        const isSpecialized = CalculatorRegistry.isSpecializedMode(appMode);
+        const horizonYears = isSpecialized ? results.length : inputs.years;
+
         const captionEl = this.dom.getElement('studio-active-scenario-caption');
         if (captionEl) {
             const formattedCorpus = this.formatter.formatDynamic(finalCorpus);
-            const modeLabel = inputs.enable_swp ? 'SWP Cashflow' : 'SIP Wealth Creation';
-            captionEl.textContent = `Simulating ${inputs.years} Yrs @ ${inputs.rate}% p.a. • Projecting ${formattedCorpus} (${modeLabel})`;
+            if (isSpecialized) {
+                const modeLabel = CalculatorRegistry.getShareTitle(appMode);
+                captionEl.textContent = `${horizonYears}-Period ${modeLabel} • Projecting ${formattedCorpus}`;
+            } else {
+                const modeLabel = inputs.enable_swp ? 'SWP Cashflow' : 'SIP Wealth Creation';
+                captionEl.textContent = `Simulating ${inputs.years} Yrs @ ${inputs.rate}% p.a. • Projecting ${formattedCorpus} (${modeLabel})`;
+            }
         }
 
         this.studioTabController.updateTelemetry({
-            years: inputs.years,
+            years: horizonYears,
             fireCoveragePercent: fireCoverage,
             fireCityName: 'Mumbai',
             milestonesUnlocked: unlockedCount,

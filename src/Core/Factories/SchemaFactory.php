@@ -32,6 +32,9 @@ class SchemaFactory
 
     /**
      * Generates home page structured schemas.
+     *
+     * @param array<string, mixed> $page_config
+     * @param array<int, array<string, mixed>> $homeFaqs
      */
     public function generateForHome(array $page_config, array $homeFaqs = [], string $siteModified = \Core\DateConstants::CONTENT_FALLBACK_DATE): string
     {
@@ -73,6 +76,10 @@ class SchemaFactory
 
     /**
      * Generates all necessary schemas for a page.
+     *
+     * @param array<string, mixed> $page_config
+     * @param array<int, array<string, mixed>> $faqs
+     * @param array<string, string> $customBreadcrumbs
      */
     public function generateForPage(
         string $slug,
@@ -209,7 +216,7 @@ class SchemaFactory
     /**
      * Format raw FAQ arrays into key-value pairs [question => answer].
      *
-     * @param array $faqs List of FAQ items
+     * @param array<int, array<string, mixed>> $faqs List of FAQ items
      * @return array<string, string>
      */
     private function formatFaqData(array $faqs): array

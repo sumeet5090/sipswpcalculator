@@ -12,6 +12,8 @@ class InvestmentCalculatorTest extends TestCase
 {
     /**
      * Helper to instantiate inputs directly from data.
+     *
+     * @param array<string, mixed> $data
      */
     private function createInputs(array $data): InvestmentInputs
     {
@@ -227,6 +229,7 @@ class InvestmentCalculatorTest extends TestCase
         $this->assertCount(100, $results);
 
         $finalYear = end($results);
+        $this->assertIsArray($finalYear);
         $this->assertFinite($finalYear['combined_total']);
         $this->assertGreaterThan(0.0, $finalYear['combined_total']);
     }
@@ -333,6 +336,7 @@ class InvestmentCalculatorTest extends TestCase
 
         $this->assertCount(5, $results); // 2 SIP + 3 SWP
         $lastRow = end($results);
+        $this->assertIsArray($lastRow);
         $this->assertGreaterThanOrEqual(0.0, $lastRow['combined_total']);
         $this->assertGreaterThan(0.0, $lastRow['cumulative_withdrawals']);
     }
@@ -431,6 +435,7 @@ class InvestmentCalculatorTest extends TestCase
 
         $this->assertCount(30, $results);
         $finalRow = end($results);
+        $this->assertIsArray($finalRow);
         $this->assertFinite($finalRow['combined_total']);
         $this->assertGreaterThan(0.0, $finalRow['combined_total']);
         $this->assertGreaterThan(0.0, $finalRow['cumulative_invested']);
@@ -629,6 +634,7 @@ class InvestmentCalculatorTest extends TestCase
         $inputsA = InvestmentInputs::fromValues(10000.0, 20, 12.0, 0.0, false, 0.0, 0.0, 0, 0.0);
         $resA = $calculator->calculate($inputsA);
         $lastA = end($resA);
+        $this->assertIsArray($lastA);
         $this->assertEquals(2400000.0, $lastA['cumulative_invested']);
         $this->assertEquals(9991479.0, $lastA['combined_total']);
         $this->assertEquals(7591479.0, $lastA['combined_total'] - $lastA['cumulative_invested']);
@@ -637,6 +643,7 @@ class InvestmentCalculatorTest extends TestCase
         $inputsB = InvestmentInputs::fromValues(20000.0, 15, 12.0, 10.0, false, 0.0, 0.0, 0, 0.0);
         $resB = $calculator->calculate($inputsB);
         $lastB = end($resB);
+        $this->assertIsArray($lastB);
         $this->assertEqualsWithDelta(7625395.56, $lastB['cumulative_invested'], 0.01);
         $this->assertEquals(17367699.0, $lastB['combined_total']);
         $this->assertEqualsWithDelta(9742303.44, $lastB['combined_total'] - $lastB['cumulative_invested'], 0.01);
@@ -652,6 +659,7 @@ class InvestmentCalculatorTest extends TestCase
         // 1. Flat SIP: ₹10,000/mo, 20 Years @ 12%
         $flat = $calculator->calculate(InvestmentInputs::fromValues(10000.0, 20, 12.0, 0.0, false, 0.0, 0.0, 0, 0.0));
         $lastFlat = end($flat);
+        $this->assertIsArray($lastFlat);
         $this->assertEquals(10000.0, $flat[19]['sip_monthly']);
         $this->assertEquals(2400000.0, $lastFlat['cumulative_invested']);
         $this->assertEquals(9991479.0, $lastFlat['combined_total']);
@@ -659,6 +667,7 @@ class InvestmentCalculatorTest extends TestCase
         // 2. 5% Step-Up: ₹10,000/mo, 20 Years @ 12%
         $step5 = $calculator->calculate(InvestmentInputs::fromValues(10000.0, 20, 12.0, 5.0, false, 0.0, 0.0, 0, 0.0));
         $last5 = end($step5);
+        $this->assertIsArray($last5);
         $this->assertEquals(25269.5, $step5[19]['sip_monthly']);
         $this->assertEqualsWithDelta(3967914.36, $last5['cumulative_invested'], 0.01);
         $this->assertEquals(13737623.0, $last5['combined_total']);
@@ -666,6 +675,7 @@ class InvestmentCalculatorTest extends TestCase
         // 3. 10% Step-Up: ₹10,000/mo, 20 Years @ 12%
         $step10 = $calculator->calculate(InvestmentInputs::fromValues(10000.0, 20, 12.0, 10.0, false, 0.0, 0.0, 0, 0.0));
         $last10 = end($step10);
+        $this->assertIsArray($last10);
         $this->assertEquals(61159.09, $step10[19]['sip_monthly']);
         $this->assertEqualsWithDelta(6872999.76, $last10['cumulative_invested'], 0.01);
         $this->assertEquals(19888715.0, $last10['combined_total']);
@@ -680,31 +690,45 @@ class InvestmentCalculatorTest extends TestCase
 
         // ₹1 Lakh @ 12% (10 Yrs) -> ₹3.30 Lakh
         $r1 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 10, 12.0, 0.0, false, 0.0, 0.0, 0, 100000.0));
-        $this->assertEquals(330039.0, end($r1)['combined_total']);
+        $last1 = end($r1);
+        $this->assertIsArray($last1);
+        $this->assertEquals(330039.0, $last1['combined_total']);
 
         // ₹1 Lakh @ 12% (20 Yrs) -> ₹10.89 Lakh
         $r2 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 20, 12.0, 0.0, false, 0.0, 0.0, 0, 100000.0));
-        $this->assertEquals(1089255.0, end($r2)['combined_total']);
+        $last2 = end($r2);
+        $this->assertIsArray($last2);
+        $this->assertEquals(1089255.0, $last2['combined_total']);
 
         // ₹5 Lakh @ 12% (10 Yrs) -> ₹16.50 Lakh
         $r3 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 10, 12.0, 0.0, false, 0.0, 0.0, 0, 500000.0));
-        $this->assertEquals(1650193.0, end($r3)['combined_total']);
+        $last3 = end($r3);
+        $this->assertIsArray($last3);
+        $this->assertEquals(1650193.0, $last3['combined_total']);
 
         // ₹5 Lakh @ 12% (20 Yrs) -> ₹54.46 Lakh
         $r4 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 20, 12.0, 0.0, false, 0.0, 0.0, 0, 500000.0));
-        $this->assertEquals(5446277.0, end($r4)['combined_total']);
+        $last4 = end($r4);
+        $this->assertIsArray($last4);
+        $this->assertEquals(5446277.0, $last4['combined_total']);
 
         // ₹10 Lakh @ 12% (10 Yrs) -> ₹33.00 Lakh
         $r5 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 10, 12.0, 0.0, false, 0.0, 0.0, 0, 1000000.0));
-        $this->assertEquals(3300387.0, end($r5)['combined_total']);
+        $last5 = end($r5);
+        $this->assertIsArray($last5);
+        $this->assertEquals(3300387.0, $last5['combined_total']);
 
         // ₹10 Lakh @ 12% (20 Yrs) -> ₹1.09 Crore
         $r6 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 20, 12.0, 0.0, false, 0.0, 0.0, 0, 1000000.0));
-        $this->assertEquals(10892554.0, end($r6)['combined_total']);
+        $last6 = end($r6);
+        $this->assertIsArray($last6);
+        $this->assertEquals(10892554.0, $last6['combined_total']);
 
         // ₹10 Lakh @ 15% (20 Yrs) -> ₹1.97 Crore
         $r7 = $calculator->calculate(InvestmentInputs::fromValues(0.0, 20, 15.0, 0.0, false, 0.0, 0.0, 0, 1000000.0));
-        $this->assertEquals(19715494.0, end($r7)['combined_total']);
+        $last7 = end($r7);
+        $this->assertIsArray($last7);
+        $this->assertEquals(19715494.0, $last7['combined_total']);
     }
 
     /**
@@ -774,6 +798,7 @@ class InvestmentCalculatorTest extends TestCase
         $inpBelow = InvestmentInputs::fromValues(2000.0, 2, 10.0, 0.0, false, 0.0, 0.0, 0, 0.0);
         $resBelow = $calculator->calculate($inpBelow);
         $lastBelow = end($resBelow);
+        $this->assertIsArray($lastBelow);
         $this->assertEquals(0.0, $lastBelow['ltcg_tax']);
         $this->assertEquals($lastBelow['combined_total'], $lastBelow['post_tax_total']);
 
@@ -781,6 +806,7 @@ class InvestmentCalculatorTest extends TestCase
         $inpAbove = InvestmentInputs::fromValues(10000.0, 10, 12.0, 0.0, false, 0.0, 0.0, 0, 0.0);
         $resAbove = $calculator->calculate($inpAbove);
         $lastAbove = end($resAbove);
+        $this->assertIsArray($lastAbove);
         // Total invested: 12,00,000, Total corpus: 23,23,391, Pre-tax gain: 11,23,391
         // Taxable gain: 11,23,391 - 1,25,000 = 9,98,391
         // LTCG Tax @ 12.5%: 9,98,391 * 0.125 = 124798.875 -> 124799

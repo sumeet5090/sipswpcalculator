@@ -17,9 +17,13 @@ class SitemapGenerator implements SitemapGeneratorInterface
 {
     private BlogRepository $blogRepository;
     private SiteConfig $siteConfig;
+    /** @var array<string, mixed> */
     private array $routesConfig;
     private ContentManager $contentManager;
 
+    /**
+     * @param array<string, mixed> $routesConfig
+     */
     public function __construct(
         BlogRepository $blogRepository,
         SiteConfig $siteConfig,

@@ -6,24 +6,30 @@ namespace Core\Providers;
 
 use Core\AdminDashboardPresenter;
 use Core\BlogRepository;
+use Core\Config\CalculatorRegistry;
 use Core\Container;
 use Core\ContentManager;
+use Core\CurrencyFormatterInterface;
 use Core\Factories\SchemaFactory;
 use Core\FaqRepository;
+use Core\InvestmentCalculator;
 use Core\MetaManager;
-use Core\Strategies\ComboStrategy;
-use Core\Strategies\LumpsumStrategy;
-use Core\Strategies\SipStrategy;
 use Core\Strategies\StrategyFactory;
-use Core\Strategies\SwpStrategy;
-use Core\Strategies\TargetCorpusStrategy;
 use Core\ViewRenderer;
 use Services\ConfigService;
 use Services\GuideRenderer;
+use Services\GuideSsrHydrationBuilder;
 use Services\GuideViewModelBuilder;
+use Services\Reports\LoanAndInflationReportHandler;
+use Services\Reports\RetirementAndTaxReportHandler;
+use Services\Reports\SavingsAndLoanReportHandler;
+use Services\SpecializedReportBuilder;
 
 class DomainServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @param array<string, mixed> $config
+     */
     public function register(Container $container, array $config = []): void
     {
         $container->singleton(AdminDashboardPresenter::class, function () use ($config) {
@@ -31,29 +37,17 @@ class DomainServiceProvider implements ServiceProviderInterface
             return new AdminDashboardPresenter($colorMap);
         });
 
-        // Strategy Bindings
-        $container->singleton(SipStrategy::class, function (Container $c) {
-            return new SipStrategy($c->get(ConfigService::class));
-        });
+        // Strategy Bindings across all core and specialized registered strategies
+        foreach (CalculatorRegistry::getUniqueStrategyClasses() as $strategyClass) {
+            if (class_exists($strategyClass) && !$container->has($strategyClass)) {
+                $container->singleton($strategyClass, function (Container $c) use ($strategyClass) {
+                    return new $strategyClass($c->get(ConfigService::class));
+                });
+            }
+        }
 
-        $container->singleton(\Core\Strategies\StepUpSipStrategy::class, function (Container $c) {
-            return new \Core\Strategies\StepUpSipStrategy($c->get(ConfigService::class));
-        });
-
-        $container->singleton(SwpStrategy::class, function (Container $c) {
-            return new SwpStrategy($c->get(ConfigService::class));
-        });
-
-        $container->singleton(LumpsumStrategy::class, function (Container $c) {
-            return new LumpsumStrategy($c->get(ConfigService::class));
-        });
-
-        $container->singleton(TargetCorpusStrategy::class, function (Container $c) {
-            return new TargetCorpusStrategy($c->get(ConfigService::class));
-        });
-
-        $container->singleton(ComboStrategy::class, function (Container $c) {
-            return new ComboStrategy($c->get(ConfigService::class));
+        $container->singleton(GuideSsrHydrationBuilder::class, function (Container $c) {
+            return new GuideSsrHydrationBuilder($c->get(InvestmentCalculator::class));
         });
 
         $container->singleton(GuideViewModelBuilder::class, function (Container $c) {
@@ -65,7 +59,31 @@ class DomainServiceProvider implements ServiceProviderInterface
                 $c->get(BlogRepository::class),
                 $c->get(StrategyFactory::class),
                 $c->get(ConfigService::class),
-                $c->get(\Core\InvestmentCalculator::class)
+                $c->get(InvestmentCalculator::class),
+                $c->get(GuideSsrHydrationBuilder::class)
+            );
+        });
+
+        $container->singleton(SavingsAndLoanReportHandler::class, function (Container $c) {
+            return new SavingsAndLoanReportHandler($c->get(CurrencyFormatterInterface::class));
+        });
+
+        $container->singleton(LoanAndInflationReportHandler::class, function (Container $c) {
+            return new LoanAndInflationReportHandler($c->get(CurrencyFormatterInterface::class));
+        });
+
+        $container->singleton(RetirementAndTaxReportHandler::class, function (Container $c) {
+            return new RetirementAndTaxReportHandler($c->get(CurrencyFormatterInterface::class));
+        });
+
+        $container->singleton(SpecializedReportBuilder::class, function (Container $c) {
+            return new SpecializedReportBuilder(
+                $c->get(CurrencyFormatterInterface::class),
+                [
+                    $c->get(SavingsAndLoanReportHandler::class),
+                    $c->get(LoanAndInflationReportHandler::class),
+                    $c->get(RetirementAndTaxReportHandler::class),
+                ]
             );
         });
 

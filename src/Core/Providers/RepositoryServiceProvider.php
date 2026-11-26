@@ -23,6 +23,9 @@ use Services\TelemetryPruningService;
 
 class RepositoryServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @param array<string, mixed> $config
+     */
     public function register(Container $container, array $config = []): void
     {
         $container->singleton(MetaManager::class, function (Container $c) {

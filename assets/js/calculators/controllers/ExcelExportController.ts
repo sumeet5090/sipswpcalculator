@@ -2,6 +2,8 @@ import { DOMAdapter } from '../../adapters/DOMAdapter.ts';
 import { AnalyticsService } from '../AnalyticsLogger.ts';
 import { MathEngine } from '../MathEngine.ts';
 import type { InvestmentInputs, YearResult } from '../../types';
+import { CalculatorRegistry } from '../constants/CalculatorRegistry.ts';
+import { ModeTableSchema } from '../constants/ModeTableSchema.ts';
 
 /**
  * ExcelExportController.ts
@@ -55,23 +57,14 @@ export class ExcelExportController {
                     : '₹';
                 const currFmt = `${sym}#,##,##0`;
                 const calcType = String(payload.calculator_type ?? 'combo');
+                const schema = ModeTableSchema.get(calcType);
+                const sheetName = schema.excel.sheetName.slice(0, 31);
 
                 const scheduleRows = this.buildScheduleRows(results);
                 const lastDataRow = scheduleRows.length + 1;
 
-                // Sheet 2: Yearly Cashflow Schedule
-                const scheduleHeaders = [
-                    'Year',
-                    'Opening Balance',
-                    'Monthly SIP',
-                    'Annual Contribution',
-                    'Cumulative Invested',
-                    'Monthly SWP',
-                    'Annual Withdrawal',
-                    'Annual Interest / Gains',
-                    'Closing Balance',
-                    'Post-Tax Value (Sec 112A)'
-                ];
+                // Sheet 2: Mode-Specific Yearly Schedule
+                const scheduleHeaders = [...schema.excel.headers];
 
                 const scheduleAoA: (string | number | { f: string; t: string; z: string })[][] = [
                     scheduleHeaders,
@@ -79,15 +72,17 @@ export class ExcelExportController {
                 ];
 
                 if (scheduleRows.length > 0) {
+                    const hasWithdrawnData = schema.excel.summary.includeWithdrawnRow
+                        || results.some((r) => (r.annual_withdrawal ?? 0) > 0 || (r.cumulative_withdrawals ?? 0) > 0);
                     scheduleAoA.push([
                         'TOTAL',
                         '',
                         '',
-                        { f: `SUM(D2:D${lastDataRow})`, t: 'n', z: currFmt },
+                        schema.excel.summary.useLastRowInsteadOfSum ? '' : { f: `SUM(D2:D${lastDataRow})`, t: 'n', z: currFmt },
                         '',
                         '',
-                        { f: `SUM(G2:G${lastDataRow})`, t: 'n', z: currFmt },
-                        { f: `SUM(H2:H${lastDataRow})`, t: 'n', z: currFmt },
+                        hasWithdrawnData ? { f: `SUM(G2:G${lastDataRow})`, t: 'n', z: currFmt } : '',
+                        schema.excel.summary.useLastRowInsteadOfSum ? { f: `H${lastDataRow}`, t: 'n', z: currFmt } : { f: `SUM(H2:H${lastDataRow})`, t: 'n', z: currFmt },
                         { f: `I${lastDataRow}`, t: 'n', z: currFmt },
                         { f: `J${lastDataRow}`, t: 'n', z: currFmt }
                     ]);
@@ -115,7 +110,8 @@ export class ExcelExportController {
                     payload,
                     results,
                     lastDataRow,
-                    currFmt
+                    currFmt,
+                    sheetName
                 );
                 const wsSummary = XLSX.utils.aoa_to_sheet(summaryAoA);
                 wsSummary['!cols'] = [
@@ -126,7 +122,7 @@ export class ExcelExportController {
 
                 const wb = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(wb, wsSummary, 'Summary & Inputs');
-                XLSX.utils.book_append_sheet(wb, wsSchedule, 'Yearly Cashflow Schedule');
+                XLSX.utils.book_append_sheet(wb, wsSchedule, sheetName);
 
                 const safeSlug = calcType.replace(/[^a-z0-9_-]/gi, '_').toUpperCase();
                 const filename = `SIPSWP_${safeSlug}_Financial_Model.xlsx`;
@@ -191,27 +187,16 @@ export class ExcelExportController {
         payload: Record<string, string | number | boolean>,
         results: YearResult[],
         lastDataRow: number,
-        currFmt: string
+        currFmt: string,
+        sheetName: string
     ): (string | number | { f: string; t: string; z: string })[][] {
-        const specializedModes = [
-            'compound_interest',
-            'cagr',
-            'emi',
-            'inflation',
-            'ppf',
-            'fd',
-            'gratuity',
-            'nps',
-            'post_retirement',
-            'epf',
-            'tax_harvest',
-            'income_tax'
-        ];
-        const isSpecialized = specializedModes.includes(calcType);
+        const isSpecialized = CalculatorRegistry.isSpecializedMode(calcType);
+        const schema = ModeTableSchema.get(calcType);
+        const summarySchema = schema.excel.summary;
         const generatedDate = new Date().toISOString().slice(0, 10);
 
         const rows: (string | number | { f: string; t: string; z: string })[][] = [
-            ['SIP & SWP Wealth Planner — Financial Projection Model'],
+            [`${CalculatorRegistry.getShareTitle(calcType)} — Financial Projection Model`],
             ['Generated On', generatedDate, 'https://sipswpcalculator.com'],
             ['Calculator Mode', calcType.toUpperCase(), ''],
             [],
@@ -255,33 +240,45 @@ export class ExcelExportController {
         }
 
         rows.push([]);
-        rows.push(['HEADLINE WEALTH KPI SUMMARY', 'Amount / Formula', 'Description']);
+        rows.push(['HEADLINE KPI SUMMARY', 'Amount / Formula', 'Description']);
 
         if (results.length > 0) {
+            const ref = `'${sheetName}'`;
+            const hasWithdrawnData = summarySchema.includeWithdrawnRow
+                || results.some((r) => (r.annual_withdrawal ?? 0) > 0 || (r.cumulative_withdrawals ?? 0) > 0);
+
             rows.push([
-                'Total Invested / Principal',
-                { f: `MAX('Yearly Cashflow Schedule'!E2:E${lastDataRow})`, t: 'n', z: currFmt },
-                'Total out-of-pocket capital'
+                summarySchema.investedLabel,
+                summarySchema.useLastRowInsteadOfSum
+                    ? { f: `${ref}!E${lastDataRow}`, t: 'n', z: currFmt }
+                    : { f: `MAX(${ref}!E2:E${lastDataRow})`, t: 'n', z: currFmt },
+                summarySchema.investedNote
             ]);
             rows.push([
-                'Total Compounding Gains',
-                { f: `SUM('Yearly Cashflow Schedule'!H2:H${lastDataRow})`, t: 'n', z: currFmt },
-                'Cumulative interest / returns earned'
+                summarySchema.gainsLabel,
+                summarySchema.useLastRowInsteadOfSum
+                    ? { f: `${ref}!H${lastDataRow}`, t: 'n', z: currFmt }
+                    : { f: `SUM(${ref}!H2:H${lastDataRow})`, t: 'n', z: currFmt },
+                summarySchema.gainsNote
             ]);
+
+            if (hasWithdrawnData && summarySchema.withdrawnLabel) {
+                rows.push([
+                    summarySchema.withdrawnLabel,
+                    { f: `SUM(${ref}!G2:G${lastDataRow})`, t: 'n', z: currFmt },
+                    summarySchema.withdrawnNote
+                ]);
+            }
+
             rows.push([
-                'Total SWP / Payouts Withdrawn',
-                { f: `SUM('Yearly Cashflow Schedule'!G2:G${lastDataRow})`, t: 'n', z: currFmt },
-                'Cumulative systematic withdrawals'
-            ]);
-            rows.push([
-                'Final Portfolio Corpus',
-                { f: `'Yearly Cashflow Schedule'!I${lastDataRow}`, t: 'n', z: currFmt },
-                'Closing balance at horizon end'
+                summarySchema.finalLabel,
+                { f: `${ref}!I${lastDataRow}`, t: 'n', z: currFmt },
+                summarySchema.finalNote
             ]);
             const corpusRowNum = rows.length;
             const totalYears = results.length;
 
-            if (inflationRowNum > 0) {
+            if (inflationRowNum > 0 && summarySchema.allowInflationDiscount) {
                 rows.push([
                     'Inflation-Adjusted Real Value',
                     { f: `B${corpusRowNum}/POWER(1+B${inflationRowNum}/100,${totalYears})`, t: 'n', z: currFmt },

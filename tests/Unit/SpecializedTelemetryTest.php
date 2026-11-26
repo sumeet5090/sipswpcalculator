@@ -160,11 +160,15 @@ class SpecializedTelemetryTest extends TestCase
         }
 
         // Verify all 6 records were inserted into SQLite
-        $count = (int) $this->pdo->query("SELECT COUNT(*) FROM user_calculations")->fetchColumn();
+        $countStmt = $this->pdo->query("SELECT COUNT(*) FROM user_calculations");
+        $this->assertInstanceOf(\PDOStatement::class, $countStmt);
+        $count = (int) $countStmt->fetchColumn();
         $this->assertSame(6, $count);
 
         // Verify calc_types are recorded with exact names
-        $calcTypes = $this->pdo->query("SELECT calc_type, COUNT(*) as cnt FROM user_calculations GROUP BY calc_type ORDER BY calc_type ASC")->fetchAll(PDO::FETCH_KEY_PAIR);
+        $calcTypesStmt = $this->pdo->query("SELECT calc_type, COUNT(*) as cnt FROM user_calculations GROUP BY calc_type ORDER BY calc_type ASC");
+        $this->assertInstanceOf(\PDOStatement::class, $calcTypesStmt);
+        $calcTypes = $calcTypesStmt->fetchAll(PDO::FETCH_KEY_PAIR);
         $this->assertArrayHasKey('Compound Interest', $calcTypes);
         $this->assertArrayHasKey('CAGR', $calcTypes);
         $this->assertArrayHasKey('EMI', $calcTypes);

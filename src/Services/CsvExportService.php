@@ -13,7 +13,7 @@ class CsvExportService implements CsvExportServiceInterface
     /**
      * Generate raw CSV content for investment schedule data.
      *
-     * @param array $combined Results array from InvestmentCalculator
+     * @param array<int, array<string, mixed>> $combined Results array from InvestmentCalculator
      * @param bool $enableSwp Whether SWP withdrawal columns should be included
      * @param string $currencySymbol Currency symbol to display in column headers
      */

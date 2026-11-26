@@ -2,6 +2,7 @@ import { DOMAdapter } from '../../adapters/DOMAdapter';
 import type { InvestmentInputs, YearResult } from '../../types';
 import { CanvasExportHelper } from '../helpers/CanvasExportHelper';
 import { WealthPassCanvasRenderer } from '../helpers/WealthPassCanvasRenderer';
+import { CalculatorRegistry } from '../constants/CalculatorRegistry.ts';
 
 export class ShareController {
     private dom: DOMAdapter;
@@ -21,16 +22,28 @@ export class ShareController {
     public buildShareUrl(): string {
         const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
         const mode = appEl?.dataset?.mode;
-        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
-
-        if (mode && specializedModes.includes(mode)) {
+        if (CalculatorRegistry.isSpecializedMode(mode)) {
             const form = this.dom.getElement<HTMLFormElement>('calculator-form');
             if (form) {
-                const formData = new FormData(form);
                 const params = new URLSearchParams();
-                formData.forEach((val, key) => {
-                    const strVal = String(val).trim();
-                    if (strVal !== '' && key !== 'website_url' && !['sip', 'stepup', 'lumpsum', 'enable_swp'].includes(key)) {
+                const fields = form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select');
+                fields.forEach((field) => {
+                    const key = field.name || field.id;
+                    if (!key || key === 'website_url' || key.endsWith('_range') || ['sip', 'stepup', 'lumpsum', 'enable_swp'].includes(key)) {
+                        return;
+                    }
+                    if (field instanceof HTMLInputElement && field.type === 'radio') {
+                        if (field.checked) {
+                            params.set(key, field.value);
+                        }
+                        return;
+                    }
+                    if (field instanceof HTMLInputElement && field.type === 'checkbox') {
+                        params.set(key, field.checked ? '1' : '0');
+                        return;
+                    }
+                    const strVal = field.value.trim();
+                    if (strVal !== '') {
                         params.set(key, strVal);
                     }
                 });
@@ -160,10 +173,8 @@ export class ShareController {
         const shareUrl = this.buildShareUrl();
         const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
         const mode = appEl?.dataset?.mode;
-        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
-
         let planSummary = '';
-        if (mode && specializedModes.includes(mode)) {
+        if (CalculatorRegistry.isSpecializedMode(mode)) {
             const h1 = document.querySelector('h1')?.textContent?.trim() || 'Financial Calculation';
             const corpus = this.dom.getElement('summary-corpus')?.textContent?.trim() || '';
             planSummary = `${h1}${corpus ? ` • Total: ${corpus}` : ''}`;
@@ -241,21 +252,7 @@ export class ShareController {
 
         const appEl = this.dom.getElement('calculator-app');
         const mode = appEl?.dataset?.mode || 'sip';
-        const titleMap: Record<string, string> = {
-            'sip': 'SIP Wealth Accumulation Plan',
-            'swp': 'Retirement SWP Cash Flow Plan',
-            'stepup': 'Step-Up SIP Accelerated Plan',
-            'combo': 'SIP & SWP Comprehensive Plan',
-            'lumpsum': 'Lumpsum Investment Plan',
-            'target_corpus': 'Target Corpus Wealth Plan',
-            'compound_interest': 'Compound Interest Growth Plan',
-            'cagr': 'CAGR Return Performance Plan',
-            'emi': 'Loan EMI Repayment Plan',
-            'inflation': 'Inflation Purchasing Power Plan',
-            'ppf': 'PPF Long-Term Savings Plan',
-            'fd': 'Fixed Deposit Returns Plan'
-        };
-        const planTitle = titleMap[mode] || 'Wealth Accumulation Plan';
+        const planTitle = CalculatorRegistry.getShareTitle(mode);
 
         const dataUrl = CanvasExportHelper.exportSocialSummaryCard(
             inputs,
@@ -274,7 +271,10 @@ export class ShareController {
         // Trigger file download
         const a = document.createElement('a');
         a.href = dataUrl;
-        const yearsFallback = inputs.years || parseFloat(this.dom.getValue('years') || this.dom.getValue('emi_years') || this.dom.getValue('ppf_years') || this.dom.getValue('fd_years') || '10');
+        const durationFallback = CalculatorRegistry.getDurationFieldIds()
+            .map((id) => this.dom.getValue(id))
+            .find((v) => v && v.trim() !== '') || '10';
+        const yearsFallback = inputs.years || parseFloat(durationFallback);
         a.download = `wealth-plan-${yearsFallback}yrs.png`;
         document.body.appendChild(a);
         a.click();
@@ -348,10 +348,8 @@ export class ShareController {
         const shareUrl = this.buildShareUrl();
         const appEl = this.dom.getElement('calculator-app') || document.querySelector<HTMLElement>('[data-js="calculator-app"]');
         const mode = appEl?.dataset?.mode;
-        const specializedModes = ['compound_interest', 'cagr', 'emi', 'inflation', 'ppf', 'fd'];
-
         let planSummary = '';
-        if (mode && specializedModes.includes(mode)) {
+        if (CalculatorRegistry.isSpecializedMode(mode)) {
             const h1 = document.querySelector('h1')?.textContent?.trim() || 'Financial Calculation';
             const corpus = this.dom.getElement('summary-corpus')?.textContent?.trim() || '';
             const invested = this.dom.getElement('summary-invested')?.textContent?.trim() || '';

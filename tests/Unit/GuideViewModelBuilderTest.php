@@ -140,7 +140,36 @@ class GuideViewModelBuilderTest extends TestCase
 
     public function testSsrHydrationAndModeAccurateTelemetryAcrossCalculators(): void
     {
-        foreach (['sip-calculator', 'swp-calculator', 'cagr-calculator', 'fd-calculator', 'my-first-crore-calculator'] as $slug) {
+        $allCalculatorSlugs = [
+            'sip-calculator',
+            'swp-calculator',
+            'cagr-calculator',
+            'fd-calculator',
+            'compound-interest-calculator',
+            'emi-calculator',
+            'inflation-calculator',
+            'ppf-calculator',
+            'gratuity-calculator',
+            'nps-calculator',
+            'post-retirement-calculator',
+            'epf-calculator',
+            'ltcg-tax-calculator',
+            'income-tax-calculator',
+            'my-first-crore-calculator',
+        ];
+
+        $fourCardSlugs = [
+            'swp-calculator',
+            'emi-calculator',
+            'gratuity-calculator',
+            'nps-calculator',
+            'post-retirement-calculator',
+            'epf-calculator',
+            'ltcg-tax-calculator',
+            'income-tax-calculator',
+        ];
+
+        foreach ($allCalculatorSlugs as $slug) {
             $vm = $this->builder->build($slug);
             $data = $vm['data'];
 
@@ -148,11 +177,30 @@ class GuideViewModelBuilderTest extends TestCase
             $this->assertNotEmpty($kpis, "SSR initial_kpis missing on {$slug}");
             $this->assertNotEmpty($data['initial_schedule'] ?? [], "SSR initial_schedule missing on {$slug}");
 
-            foreach (['invested_compact', 'maturity_compact', 'corpus_compact'] as $field) {
+            $requiredFields = ['invested_compact', 'maturity_compact', 'corpus_compact'];
+            if (in_array($slug, $fourCardSlugs, true)) {
+                $requiredFields[] = 'withdrawn_compact';
+                $requiredFields[] = 'withdrawn_exact';
+            }
+
+            foreach ($requiredFields as $field) {
                 $this->assertArrayHasKey($field, $kpis, "{$field} missing in initial_kpis on {$slug}");
                 $this->assertStringNotContainsString('--', (string) $kpis[$field], "{$field} contains placeholder on {$slug}");
             }
         }
+
+        $viewRenderer = new ViewRenderer(
+            new ViteHelper('testing'),
+            'testing',
+            'https://sipswpcalculator.com',
+            __DIR__ . '/../../src/Views'
+        );
+        $renderer = new GuideRenderer($this->builder, $viewRenderer);
+        $gratuityEmbedHtml = $renderer->renderEmbed('gratuity-calculator')->getContent();
+        $this->assertStringContainsString('id="gratuity_salary"', $gratuityEmbedHtml);
+        $this->assertStringNotContainsString('vite.css', $gratuityEmbedHtml);
+        $this->assertMatchesRegularExpression('/(?:dist\/assets\/app-[a-zA-Z0-9_-]+\.js|resources\/js\/app\.ts)/', $gratuityEmbedHtml);
+        $this->assertMatchesRegularExpression('/(?:dist\/assets\/app-[a-zA-Z0-9_-]+\.css|resources\/js\/app\.ts)/', $gratuityEmbedHtml);
 
         $sipVm = $this->builder->build('sip-calculator')['data'];
         $sipTelemetry = (string) ($sipVm['initial_telemetry']['anchor_text'] ?? '');

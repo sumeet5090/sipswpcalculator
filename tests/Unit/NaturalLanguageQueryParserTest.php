@@ -11,6 +11,9 @@ use PHPUnit\Framework\TestCase;
  */
 final class NaturalLanguageQueryParserTest extends TestCase
 {
+    /**
+     * @return array<string, mixed>
+     */
     private function parseQuery(string $query): array
     {
         $nodeScript = __DIR__ . '/../run_js_calc.js';

@@ -15,9 +15,13 @@ use Psr\Container\ContainerInterface;
  */
 class Container implements ContainerInterface
 {
+    /** @var array<string, callable|object|string> */
     private array $bindings = [];
+    /** @var array<string, mixed> */
     private array $instances = [];
+    /** @var array<string, bool> */
     private array $resolving = [];
+    /** @var array<string, \ReflectionClass<object>> */
     private array $reflectionCache = [];
 
     public function __construct()

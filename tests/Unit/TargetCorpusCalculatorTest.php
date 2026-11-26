@@ -88,6 +88,7 @@ final class TargetCorpusCalculatorTest extends TestCase
 
         $results = $this->calculator->calculate($forwardInputs);
         $finalRow = end($results);
+        $this->assertIsArray($finalRow);
         $finalCorpus = $finalRow['combined_total'];
 
         // Should achieve target corpus of ₹1 Crore within 0.1% tolerance

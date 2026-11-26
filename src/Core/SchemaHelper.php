@@ -24,6 +24,8 @@ class SchemaHelper
 
     /**
      * Generates BreadcrumbList Schema.org JSON-LD.
+     *
+     * @param array<string, string> $items
      */
     public function getBreadcrumbs(array $items): string
     {
@@ -42,11 +44,13 @@ class SchemaHelper
             "@context" => "https://schema.org",
             "@type" => "BreadcrumbList",
             "itemListElement" => $itemListElement,
-        ], self::JSON_FLAGS);
+        ], self::JSON_FLAGS | JSON_THROW_ON_ERROR);
     }
 
     /**
      * Generates FAQPage Schema.org JSON-LD.
+     *
+     * @param array<string, string> $faqs
      */
     public function getFAQ(array $faqs): string
     {
@@ -66,7 +70,7 @@ class SchemaHelper
             "@context" => "https://schema.org",
             "@type" => "FAQPage",
             "mainEntity" => $mainEntity,
-        ], self::JSON_FLAGS);
+        ], self::JSON_FLAGS | JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -110,7 +114,7 @@ class SchemaHelper
             ],
             "datePublished" => $datePublished,
             "dateModified" => $dateModified,
-        ], self::JSON_FLAGS);
+        ], self::JSON_FLAGS | JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -128,11 +132,13 @@ class SchemaHelper
                 "@type" => "SpeakableSpecification",
                 "cssSelector" => ["h1", ".markdown-content p:first-of-type"]
             ]
-        ], self::JSON_FLAGS);
+        ], self::JSON_FLAGS | JSON_THROW_ON_ERROR);
     }
 
     /**
      * Generates SoftwareApplication Schema.org JSON-LD for calculators.
+     *
+     * @param array<string, mixed> $rating
      */
     public function getSoftwareApplication(string $name, string $description, string $url, string $category = "FinanceApplication", array $rating = []): string
     {
@@ -161,6 +167,6 @@ class SchemaHelper
             ];
         }
 
-        return json_encode($schema, self::JSON_FLAGS);
+        return json_encode($schema, self::JSON_FLAGS | JSON_THROW_ON_ERROR);
     }
 }

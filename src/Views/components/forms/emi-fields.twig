@@ -1,21 +1,16 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
-<!-- Hidden legacy fields to prevent JS errors -->
-<input type="hidden" id="sip" name="sip" value="0">
-<input type="hidden" id="stepup" name="stepup" value="0">
-<input type="hidden" id="lumpsum" name="lumpsum" value="0">
-
 <div class="space-y-3">
     <!-- Loan Principal Amount -->
     {{ inputs.renderInputRangePair({
         'id': 'emi_principal',
-        'label': 'Loan Amount',
+        'label': calc_config.emi_principal.label|default('Loan Amount'),
         'tooltip': 'Total principal borrowed from the financial lender.',
-        'min': 50000,
-        'max': 50000000,
-        'slider_max': 10000000,
-        'step': 25000,
-        'value': 3000000,
+        'min': calc_config.emi_principal.min|default(50000),
+        'max': calc_config.emi_principal.max|default(50000000),
+        'slider_max': calc_config.emi_principal.slider_max|default(10000000),
+        'step': calc_config.emi_principal.step|default(25000),
+        'value': emi_principal|default(calc_config.emi_principal.default|default(3000000)),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [
@@ -30,13 +25,13 @@
     <!-- Annual Interest Rate -->
     {{ inputs.renderInputRangePair({
         'id': 'emi_rate',
-        'label': 'Interest Rate',
+        'label': calc_config.emi_rate.label|default('Interest Rate'),
         'tooltip': 'Annual interest rate charged by your lender on the borrowing.',
-        'min': 5.0,
-        'max': 25.0,
-        'slider_max': 18.0,
-        'step': 0.1,
-        'value': 8.5,
+        'min': calc_config.emi_rate.min|default(5.0),
+        'max': calc_config.emi_rate.max|default(25.0),
+        'slider_max': calc_config.emi_rate.slider_max|default(18.0),
+        'step': calc_config.emi_rate.step|default(0.1),
+        'value': emi_rate|default(calc_config.emi_rate.default|default(8.5)),
         'suffix': '%',
         'theme': 'emerald',
         'presets': [
@@ -51,13 +46,13 @@
     <!-- Loan Tenure (Years) -->
     {{ inputs.renderInputRangePair({
         'id': 'emi_years',
-        'label': 'Loan Tenure',
+        'label': calc_config.emi_years.label|default('Loan Tenure'),
         'tooltip': 'Total repayment duration in years.',
-        'min': 1,
-        'max': 30,
-        'slider_max': 30,
-        'step': 1,
-        'value': 20,
+        'min': calc_config.emi_years.min|default(1),
+        'max': calc_config.emi_years.max|default(30),
+        'slider_max': calc_config.emi_years.slider_max|default(30),
+        'step': calc_config.emi_years.step|default(1),
+        'value': emi_years|default(calc_config.emi_years.default|default(20)),
         'suffix': 'Yrs',
         'theme': 'emerald',
         'presets': [

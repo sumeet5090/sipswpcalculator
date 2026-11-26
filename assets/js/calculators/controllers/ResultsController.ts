@@ -3,6 +3,8 @@ import { CurrencyFormatter } from '../CurrencyHelper';
 import { MathEngine } from '../MathEngine';
 import { InvestmentInputs, YearResult } from '../../types';
 import { eventBus } from '../../utils/EventBus';
+import { ModeTableSchema } from '../constants/ModeTableSchema';
+import { renderMobileBreakdownView } from './MobileResultsRenderer';
 
 const TABLE_ROW_CLASS = "even:bg-slate-100/70 hover:bg-emerald-50/70 border-b border-slate-200/60 transition-colors cursor-pointer";
 const CELL_YEAR_CLASS = "px-3.5 lg:px-5 py-3.5 text-left font-extrabold text-slate-900 whitespace-nowrap sticky left-0 bg-white z-10 shadow-[2px_0_6px_-2px_rgba(0,0,0,0.08)] border-b border-slate-100";
@@ -296,22 +298,29 @@ export class ResultsController {
         const showEndCorpus = true;
 
         const appMode = this.dom.getElement('calculator-app')?.dataset?.mode || '';
-        const thWithdrawn = this.dom.getElement<HTMLElement>('th-total-withdrawn');
-        if (thWithdrawn) {
-            thWithdrawn.textContent = (appMode === 'fd') ? 'Interest Payouts' : 'Total Withdrawn';
-        }
-        const thInvested = this.dom.getElement<HTMLElement>('th-total-invested');
-        if (thInvested) {
-            thInvested.textContent = (appMode === 'emi') ? 'Principal Repaid' : ((appMode === 'inflation') ? 'Current Cost' : 'Total Invested');
-        }
-        const thInterest = this.dom.getElement<HTMLElement>('th-interest');
-        if (thInterest) {
-            thInterest.textContent = (appMode === 'emi') ? 'Interest Paid' : ((appMode === 'inflation') ? 'Annual Escalation' : 'Annual Gain');
-        }
-        const thEndCorpus = this.dom.getElement<HTMLElement>('th-end-corpus');
-        if (thEndCorpus) {
-            thEndCorpus.textContent = (appMode === 'emi') ? 'Remaining Debt' : ((appMode === 'inflation') ? 'Future Cost' : 'End Corpus');
-        }
+        const schema = ModeTableSchema.get(appMode);
+
+        const setHeaderText = (id: string, text: string) => {
+            const el = this.dom.getElement<HTMLElement>(id);
+            if (el) el.textContent = text;
+        };
+
+        setHeaderText('th-year', schema.desktop.year);
+        setHeaderText('th-begin-balance', schema.desktop.beginBalance);
+        setHeaderText('th-sip-monthly', schema.desktop.sipMonthly);
+        setHeaderText('th-annual-sip', schema.desktop.annualSip);
+        setHeaderText('th-total-invested', schema.desktop.totalInvested);
+        setHeaderText('th-swp-monthly', schema.desktop.swpMonthly);
+        setHeaderText('th-annual-swp', schema.desktop.annualSwp);
+        setHeaderText('th-total-withdrawn', schema.desktop.totalWithdrawn);
+        setHeaderText('th-interest', schema.desktop.interest);
+        setHeaderText('th-tax', schema.desktop.tax);
+        setHeaderText('th-end-corpus', schema.desktop.endCorpus);
+
+        setHeaderText('th-mobile-year', schema.mobileCompact.year);
+        setHeaderText('th-mobile-invested', schema.mobileCompact.invested);
+        setHeaderText('th-mobile-interest', schema.mobileCompact.interest);
+        setHeaderText('th-mobile-corpus', schema.mobileCompact.corpus);
 
         // Synchronize <thead> headers strictly with active column visibility
         const setHeaderVisibility = (id: string, isVisible: boolean) => {
@@ -448,10 +457,12 @@ export class ResultsController {
             if (showAnnualSwp) tr.appendChild(createCell(fmt(row.annual_withdrawal), CELL_ROSE_CLASS));
             if (showTotalWithdrawn) tr.appendChild(createCell(fmt(row.cumulative_withdrawals), CELL_MUTED_CLASS));
 
-            // 5. Annual Gain (always visible)
+            // 5. Annual Gain / Mode-Specific Interest Column (always visible)
             if (showInterest) {
-                const interestCell = createCell(`+${fmt(row.interest)}`, CELL_EMERALD_CLASS);
-                if (this.heatmapEnabled && row.interest > 0) {
+                const prefix = schema.mobileCard.interestPositivePrefix && row.interest >= 0 ? '+' : '';
+                const interestClass = schema.mobileCard.isDebtOrCostMode ? CELL_MUTED_CLASS : CELL_EMERALD_CLASS;
+                const interestCell = createCell(`${prefix}${fmt(row.interest)}`, interestClass);
+                if (this.heatmapEnabled && !schema.mobileCard.isDebtOrCostMode && row.interest > 0) {
                     const maxInterest = Math.max(1, ...data.map(r => r.interest));
                     const intensity = Math.min(1, row.interest / maxInterest);
                     interestCell.style.backgroundColor = `rgba(16, 185, 129, ${(0.06 + intensity * 0.22).toFixed(2)})`;
@@ -477,7 +488,7 @@ export class ResultsController {
                 corpusValDiv.textContent = fmt(finalCorpus);
                 corpusWrap.appendChild(corpusValDiv);
 
-                if (row.cumulative_invested > 0 && finalCorpus > 0) {
+                if (schema.showMultiplier && row.cumulative_invested > 0 && finalCorpus > 0) {
                     const multiplier = (finalCorpus / row.cumulative_invested).toFixed(1);
                     const multiplierBadge = document.createElement('span');
                     multiplierBadge.className = 'px-1.5 py-0.2 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/90 text-[10px] font-extrabold shadow-2xs';
@@ -496,232 +507,21 @@ export class ResultsController {
             tbody.appendChild(fragment);
         }
 
-        // Render Mobile Breakdown (Strictly render ONLY active view mode to eliminate duplicate DOM trees)
-        const listTbody = this.dom.getElement('mobile-compact-list-body');
-        const dotsContainer = this.dom.getElement('mobile-carousel-dots');
-
-        let mobileData = data;
-        if (this.searchYear !== null) {
-            mobileData = data.filter(r => r.year === this.searchYear);
-        } else if (this.density === '5y' && !this.mobileExpanded) {
-            mobileData = data.filter(r => r.year === 1 || r.year % 5 === 0 || r.year === data.length);
-        }
-
-        if (this.mobileViewMode === 'carousel') {
-            if (listTbody) listTbody.innerHTML = '';
-            if (mobileContainer) {
-                const mobileFragment = document.createDocumentFragment();
-                const maxInterest = Math.max(1, ...data.map(r => r.interest));
-
-            mobileData.forEach((row) => {
-                const card = document.createElement('div');
-                const isMilestone = row.year === 1 || row.year % 5 === 0 || row.year === data.length;
-                const isFinal = row.year === data.length;
-
-                card.className = "snap-center shrink-0 w-[84vw] max-w-[320px] p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-subtle space-y-2 transition-all flex flex-col justify-between";
-                card.dataset.cardYear = String(row.year);
-
-                if (this.heatmapEnabled && row.interest > 0) {
-                    const intensity = Math.min(1, row.interest / maxInterest);
-                    card.style.backgroundColor = `rgba(16, 185, 129, ${(0.04 + intensity * 0.10).toFixed(2)})`;
-                    card.style.borderColor = `rgba(16, 185, 129, ${(0.2 + intensity * 0.25).toFixed(2)})`;
-                }
-
-                let finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
-                if (inputs.inflation > 0) {
-                    finalCorpus = MathEngine.calculateInflationDiscount(
-                        finalCorpus,
-                        row.year,
-                        inputs.inflation
-                    );
-                }
-
-                const header = document.createElement('div');
-                header.className = "flex items-center justify-between";
-
-                const yearBadge = document.createElement('span');
-                yearBadge.className = isFinal
-                    ? "px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-600 text-white shadow-flat"
-                    : (isMilestone ? "px-2.5 py-0.5 rounded-lg text-xs font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-200" : "text-xs font-bold text-slate-700");
-                yearBadge.textContent = `Year ${row.year}${isFinal ? ' (Maturity)' : ''}`;
-                header.appendChild(yearBadge);
-
-                const corpusWrap = document.createElement('div');
-                corpusWrap.className = 'flex items-center gap-1.5';
-
-                const fmt = (v: number | null | undefined): string => {
-                    if (v === null || v === undefined) return '-';
-                    return this.denominationMode === 'lakh' ? this.formatter.formatDynamic(v) : this.formatter.format(v);
-                };
-
-                const corpusVal = document.createElement('span');
-                corpusVal.className = "text-base font-black font-financial-mono tabular-nums text-slate-900 whitespace-nowrap";
-                corpusVal.textContent = fmt(finalCorpus);
-                corpusWrap.appendChild(corpusVal);
-
-                if (appMode !== 'emi' && appMode !== 'inflation' && row.cumulative_invested > 0 && finalCorpus > 0) {
-                    const multiplier = (finalCorpus / row.cumulative_invested).toFixed(1);
-                    const multiplierBadge = document.createElement('span');
-                    multiplierBadge.className = 'px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-black shrink-0 shadow-flat';
-                    multiplierBadge.textContent = `${multiplier}×`;
-                    corpusWrap.appendChild(multiplierBadge);
-                }
-
-                header.appendChild(corpusWrap);
-                card.appendChild(header);
-
-                // Proportional Visual Progress Bar
-                if (appMode === 'emi') {
-                    const loanPrincipal = finalCorpus + row.cumulative_invested;
-                    const repaidPercent = loanPrincipal > 0 ? Math.min(100, Math.max(0, (row.cumulative_invested / loanPrincipal) * 100)) : 0;
-                    const remainingPercent = 100 - repaidPercent;
-
-                    const barContainer = document.createElement('div');
-                    barContainer.className = 'w-full h-1.5 bg-slate-100 rounded-full overflow-hidden flex my-1';
-
-                    const repaidSegment = document.createElement('div');
-                    repaidSegment.className = 'bg-emerald-500 h-full transition-all';
-                    repaidSegment.style.width = `${repaidPercent}%`;
-                    repaidSegment.title = `Repaid: ${repaidPercent.toFixed(0)}%`;
-
-                    const remainingSegment = document.createElement('div');
-                    remainingSegment.className = 'bg-slate-300 h-full transition-all';
-                    remainingSegment.style.width = `${remainingPercent}%`;
-                    remainingSegment.title = `Balance: ${remainingPercent.toFixed(0)}%`;
-
-                    barContainer.appendChild(repaidSegment);
-                    barContainer.appendChild(remainingSegment);
-                    card.appendChild(barContainer);
-                } else if (finalCorpus > 0 && row.cumulative_invested > 0) {
-                    const investedPercent = Math.min(100, Math.max(5, (row.cumulative_invested / finalCorpus) * 100));
-                    const gainsPercent = Math.max(0, 100 - investedPercent);
-
-                    const barContainer = document.createElement('div');
-                    barContainer.className = 'w-full h-1.5 bg-slate-100 rounded-full overflow-hidden flex my-1';
-
-                    const investedSegment = document.createElement('div');
-                    investedSegment.className = 'bg-slate-300 h-full transition-all';
-                    investedSegment.style.width = `${investedPercent}%`;
-                    investedSegment.title = `Invested: ${investedPercent.toFixed(0)}%`;
-
-                    const gainSegment = document.createElement('div');
-                    gainSegment.className = 'bg-emerald-500 h-full transition-all';
-                    gainSegment.style.width = `${gainsPercent}%`;
-                    gainSegment.title = `Gains: ${gainsPercent.toFixed(0)}%`;
-
-                    barContainer.appendChild(investedSegment);
-                    barContainer.appendChild(gainSegment);
-                    card.appendChild(barContainer);
-                }
-
-                const grid = document.createElement('div');
-                grid.className = "grid grid-cols-2 gap-2 text-xs pt-1.5 border-t border-slate-100";
-
-                const investedCol = document.createElement('div');
-                const investedLabel = document.createElement('span');
-                investedLabel.className = "text-slate-500 block text-caption font-semibold";
-                investedLabel.textContent = (appMode === 'emi') ? "Principal Paid" : ((appMode === 'inflation') ? "Base Living Cost" : "Total Invested");
-                const investedVal = document.createElement('span');
-                investedVal.className = "font-bold font-financial-mono tabular-nums text-slate-800 whitespace-nowrap text-ui-xs";
-                investedVal.textContent = fmt(row.cumulative_invested);
-                investedCol.appendChild(investedLabel);
-                investedCol.appendChild(investedVal);
-                grid.appendChild(investedCol);
-
-                const interestCol = document.createElement('div');
-                interestCol.className = "text-right";
-                const interestLabel = document.createElement('span');
-                interestLabel.className = (appMode === 'emi') ? "text-slate-600 block text-caption font-semibold" : "text-emerald-700 block text-caption font-semibold";
-                interestLabel.textContent = (appMode === 'emi') ? "Interest Paid" : ((appMode === 'inflation') ? "Cost Escalation" : "Annual Gain");
-                const interestVal = document.createElement('span');
-                interestVal.className = (appMode === 'emi') ? "font-extrabold font-financial-mono tabular-nums text-slate-700 whitespace-nowrap text-ui-xs" : "font-extrabold font-financial-mono tabular-nums text-emerald-700 whitespace-nowrap text-ui-xs";
-                interestVal.textContent = `${(appMode === 'emi') ? '' : '+'}${fmt(row.interest)}`;
-                interestCol.appendChild(interestLabel);
-                interestCol.appendChild(interestVal);
-                grid.appendChild(interestCol);
-
-                if (enableSwp && (row.cumulative_withdrawals ?? 0) > 0) {
-                    const withCol = document.createElement('div');
-                    withCol.className = "col-span-2 pt-1 border-t border-slate-100 flex items-center justify-between text-xs";
-                    const withLabel = document.createElement('span');
-                    withLabel.className = "text-rose-700 text-caption font-semibold";
-                    withLabel.textContent = "Total Withdrawn";
-                    const withVal = document.createElement('span');
-                    withVal.className = "font-extrabold font-financial-mono tabular-nums text-rose-700 whitespace-nowrap text-ui-xs";
-                    withVal.textContent = fmt(row.cumulative_withdrawals ?? 0);
-                    withCol.appendChild(withLabel);
-                    withCol.appendChild(withVal);
-                    grid.appendChild(withCol);
-                }
-
-                card.appendChild(grid);
-                mobileFragment.appendChild(card);
-            });
-
-            mobileContainer.innerHTML = '';
-            mobileContainer.appendChild(mobileFragment);
-
-            // Populate Carousel Pagination Dots
-            if (dotsContainer) {
-                dotsContainer.innerHTML = '';
-                const dotCount = Math.min(mobileData.length, 12);
-                for (let i = 0; i < dotCount; i++) {
-                    const dot = document.createElement('span');
-                    dot.className = i === 0
-                        ? "w-4 h-1.5 rounded-full bg-emerald-600 transition-all"
-                        : "w-1.5 h-1.5 rounded-full bg-slate-300 transition-all";
-                    dotsContainer.appendChild(dot);
-                }
-
-                if (!mobileContainer.dataset.scrollBound) {
-                    mobileContainer.dataset.scrollBound = 'true';
-                    mobileContainer.addEventListener('scroll', () => {
-                        const scrollLeft = mobileContainer.scrollLeft;
-                        const cardWidth = mobileContainer.firstElementChild?.clientWidth || 280;
-                        const activeIndex = Math.min(dotCount - 1, Math.round(scrollLeft / (cardWidth + 12)));
-                        const dots = dotsContainer.children;
-                        for (let i = 0; i < dots.length; i++) {
-                            if (i === activeIndex) {
-                                dots[i].className = "w-4 h-1.5 rounded-full bg-emerald-600 transition-all";
-                            } else {
-                                dots[i].className = "w-1.5 h-1.5 rounded-full bg-slate-300 transition-all";
-                            }
-                        }
-                    }, { passive: true });
-                }
-            }
-        }
-    } else {
-        // Mode is 'list'
-        if (mobileContainer) mobileContainer.innerHTML = '';
-        if (dotsContainer) dotsContainer.innerHTML = '';
-        if (listTbody) {
-            const listFragment = document.createDocumentFragment();
-            const fmt = (v: number | null | undefined): string => {
-                if (v === null || v === undefined) return '-';
-                return this.denominationMode === 'lakh' ? this.formatter.formatDynamic(v) : this.formatter.format(v);
-            };
-
-            mobileData.forEach((row) => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 transition-colors";
-
-                let finalCorpus = showPostTax ? (row.post_tax_total ?? row.combined_total) : row.combined_total;
-                if (inputs.inflation > 0) {
-                    finalCorpus = MathEngine.calculateInflationDiscount(finalCorpus, row.year, inputs.inflation);
-                }
-
-                tr.innerHTML = `
-                    <td class="py-2.5 px-2 font-bold text-slate-800 text-left">Yr ${row.year}</td>
-                    <td class="py-2.5 px-2 text-right text-slate-600 font-mono">${fmt(row.cumulative_invested)}</td>
-                    <td class="py-2.5 px-2 text-right text-emerald-700 font-bold font-mono">+${fmt(row.interest)}</td>
-                    <td class="py-2.5 px-2 text-right font-extrabold text-slate-900 font-mono">${fmt(finalCorpus)}</td>
-                `;
-                listFragment.appendChild(tr);
-            });
-            listTbody.innerHTML = '';
-            listTbody.appendChild(listFragment);
-        }
-    }
+        renderMobileBreakdownView({
+            dom: this.dom,
+            formatter: this.formatter,
+            data,
+            inputs,
+            appMode,
+            schema,
+            enableSwp,
+            showPostTax,
+            denominationMode: this.denominationMode,
+            heatmapEnabled: this.heatmapEnabled,
+            density: this.density,
+            mobileExpanded: this.mobileExpanded,
+            mobileViewMode: this.mobileViewMode,
+            searchYear: this.searchYear,
+        });
     }
 }

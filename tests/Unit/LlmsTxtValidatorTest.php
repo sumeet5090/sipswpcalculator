@@ -19,10 +19,11 @@ class LlmsTxtValidatorTest extends TestCase
 
         $routesConfig = require __DIR__ . '/../../src/Core/Config/routes.php';
         foreach (array_keys($routesConfig['calculators']) as $path) {
+            $pathStr = (string) $path;
             $this->assertStringContainsString(
-                $path,
+                $pathStr,
                 $content,
-                "llms.txt is missing calculator path: {$path}"
+                "llms.txt is missing calculator path: {$pathStr}"
             );
         }
     }

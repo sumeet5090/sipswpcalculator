@@ -3,8 +3,8 @@ import { CurrencyFormatter } from '../CurrencyHelper';
 import { MathEngine } from '../MathEngine';
 import { InvestmentInputs, YearResult } from '../../types';
 import { OdometerController } from './OdometerController';
-import { ModalScrollLockHelper } from '../helpers/ModalScrollLockHelper';
 import { PurchasingPowerController } from './PurchasingPowerController';
+import { ContextualInsightsController } from './ContextualInsightsController';
 
 export class SummaryMetricsController {
     private dom: DOMAdapter;
@@ -12,6 +12,7 @@ export class SummaryMetricsController {
     private getInputs: () => InvestmentInputs;
     private odometer: OdometerController;
     private purchasingPower: PurchasingPowerController;
+    private insightsController: ContextualInsightsController;
 
     constructor(
         dom: DOMAdapter,
@@ -23,6 +24,7 @@ export class SummaryMetricsController {
         this.getInputs = getInputs;
         this.odometer = new OdometerController(dom, formatter);
         this.purchasingPower = new PurchasingPowerController(dom, formatter);
+        this.insightsController = new ContextualInsightsController(dom, formatter);
         this.initDrawer();
         this.initCardClickHandlers();
     }
@@ -111,18 +113,29 @@ export class SummaryMetricsController {
         bindCard('card-invested', 0, () => 1, 'View initial investment row in Cashflow Ledger');
         bindCard('card-maturity', 1, () => {
             const inputs = this.getInputs();
-            return inputs.years > 0 ? inputs.years : 1;
-        }, 'View Phase 1 SIP Maturity row in Cashflow Ledger');
+            return inputs.years > 0 ? inputs.years : this.getFinalTableYear();
+        }, 'View Phase 1 Maturity row in Cashflow Ledger');
         bindCard('card-withdrawn', 2, () => {
             const inputs = this.getInputs();
             return inputs.enable_swp && inputs.years > 0 ? inputs.years + 1 : 1;
         }, 'View retirement withdrawal cashflows in Cashflow Ledger');
-        bindCard('card-corpus', 3, () => {
-            const inputs = this.getInputs();
-            const sipYears = inputs.years || 0;
-            const swpYears = inputs.swp_years || 0;
-            return inputs.enable_swp ? (sipYears + swpYears) : (sipYears > 0 ? sipYears : 1);
-        }, 'View final wealth corpus in Cashflow Ledger');
+        bindCard('card-corpus', 3, () => this.getFinalTableYear(), 'View final wealth corpus in Cashflow Ledger');
+    }
+
+    private getFinalTableYear(): number {
+        const inputs = this.getInputs();
+        const sipYears = inputs.years || 0;
+        const swpYears = inputs.swp_years || 0;
+        if (inputs.enable_swp && (sipYears > 0 || swpYears > 0)) {
+            return Math.max(1, sipYears + swpYears);
+        }
+        if (sipYears > 0) {
+            return sipYears;
+        }
+        const rows = this.dom.getElements<HTMLTableRowElement>('#breakdown-body tr[data-year]');
+        const lastRow = rows[rows.length - 1];
+        const parsed = lastRow ? parseInt(lastRow.dataset.year || '1', 10) : 1;
+        return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
     }
 
     /**
@@ -426,19 +439,6 @@ export class SummaryMetricsController {
             corpusCard.classList.add('metric-pulse-active');
         }
 
-        // Compounding Crossover Point (Year when annual return > annual investment)
-        const crossoverYear = data.find(r => r.annual_contribution > 0 && r.interest > r.annual_contribution)?.year;
-
-        const crossoverBadge = this.dom.getElement('summary-crossover-badge');
-        if (crossoverBadge) {
-            if (crossoverYear) {
-                crossoverBadge.textContent = `🚀 Crossover in Year ${crossoverYear} (Annual Gains > Annual SIP)`;
-                crossoverBadge.style.display = 'inline-flex';
-            } else {
-                crossoverBadge.style.display = 'none';
-            }
-        }
-
         // Live Cost of 1-Year Delay (SIP mode)
         const delayBadge = this.dom.getElement('summary-delay-cost-badge');
         if (delayBadge) {
@@ -487,201 +487,16 @@ export class SummaryMetricsController {
             }
         }
 
-        // Principal vs Profit Ratio Pill
-        const ratioPill = this.dom.getElement('summary-ratio-pill');
-        if (ratioPill) {
-            const totalSum = totalInvested + finalGains;
-            if (totalSum > 0) {
-                const invPct = Math.round((totalInvested / totalSum) * 100);
-                const gainPct = 100 - invPct;
-                ratioPill.textContent = `${invPct}% Invested • ${gainPct}% Compounded Profit`;
-                ratioPill.style.display = 'inline-flex';
-            } else {
-                ratioPill.style.display = 'none';
-            }
-        }
-
-        // Rule of 72 Doubling Time Indicator
-        const doublingBadge = this.dom.getElement('summary-doubling-badge');
-        if (doublingBadge) {
-            const effRate = inputs.years > 0 ? inputs.rate : (inputs.enable_swp ? inputs.swp_rate : inputs.rate);
-            if (effRate > 0) {
-                const doublingYrs = (72 / effRate).toFixed(1);
-                doublingBadge.textContent = `⏳ Capital doubles every ${doublingYrs} yrs (@${effRate}%)`;
-                doublingBadge.style.display = 'inline-flex';
-            } else {
-                doublingBadge.style.display = 'none';
-            }
-        }
-
-        // Daily Wealth Accrual at Maturity
-        const dailyAccrual = this.dom.getElement('summary-daily-accrual');
-        if (dailyAccrual) {
-            const lastInterest = lastRow.interest || 0;
-            if (lastInterest > 0) {
-                const daily = Math.round(lastInterest / 365);
-                dailyAccrual.textContent = `⚡ Compounding at ${this.formatter.format(daily)}/day at maturity`;
-                dailyAccrual.style.display = 'inline-flex';
-            } else {
-                dailyAccrual.style.display = 'none';
-            }
-        }
-
-        // Contextual Alpha Radar (Priority-Ranked Single Insight)
-        this._updateContextualRadar(data, inputs, totalInvested, finalGains);
-
-        // Populate Tax Waterfall Modal values
-        const taxGross = this.dom.getElement('tax-modal-gross-gains');
-        const taxTaxable = this.dom.getElement('tax-modal-taxable-gains');
-        const taxAmount = this.dom.getElement('tax-modal-tax-amount');
-        const taxNet = this.dom.getElement('tax-modal-net-corpus');
-        const taxHarvestSavings = this.dom.getElement('tax-modal-harvest-savings');
-        const taxHarvestEffective = this.dom.getElement('tax-modal-harvest-effective');
-
-        const ltcgExemption = inputs.ltcg_exemption ?? 125000;
-        if (taxGross) taxGross.textContent = this.formatter.format(preTaxGains);
-        if (taxTaxable) taxTaxable.textContent = this.formatter.format(Math.max(0, preTaxGains - ltcgExemption));
-        if (taxAmount) taxAmount.textContent = `- ${this.formatter.format(lastRow.ltcg_tax ?? 0)}`;
-        if (taxNet) taxNet.textContent = this.formatter.format(lastRow.post_tax_total ?? preTaxCorpus);
-
-        const harvestAlpha = MathEngine.calculateTaxHarvestingSavings(inputs, data);
-        if (taxHarvestSavings) taxHarvestSavings.textContent = `Save ${this.formatter.format(harvestAlpha.cumulativeSavings)}`;
-        if (taxHarvestEffective) taxHarvestEffective.textContent = this.formatter.format(harvestAlpha.harvestedTax);
-
+        this.insightsController.updateInsights(data, inputs, totalInvested, finalGains, preTaxCorpus, preTaxGains);
         this.fitSummaryCards();
     }
 
-    /**
-     * Determine single highest-priority contextual insight for progressive disclosure.
-     */
-    private _updateContextualRadar(data: YearResult[], inputs: InvestmentInputs, totalInvested: number, finalGains: number): void {
-        const radarContainer = this.dom.getElement('contextual-alpha-radar');
-        const radarIcon = this.dom.getElement('contextual-radar-icon');
-        const radarText = this.dom.getElement('contextual-radar-text');
-        if (!radarContainer || !radarText) return;
-
-        // 1. Priority 1: Depletion Risk in SWP Mode
-        if (inputs.enable_swp && inputs.swp_withdrawal > 0) {
-            const depletedRow = data.find(r => r.year > inputs.years && r.combined_total <= 0);
-            if (depletedRow) {
-                radarContainer.className = 'flex items-center justify-between p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-900 shadow-2xs mb-3 transition-all';
-                if (radarIcon) radarIcon.textContent = '🚨';
-                radarText.innerHTML = `<strong>Capital Exhaustion Warning:</strong> Portfolio depletes in Year ${depletedRow.year}. Consider safe-rate calibration.`;
-                radarContainer.style.display = 'flex';
-                return;
-            }
-        }
-
-        // 2. Priority 2: Wealth Crossover Point
-        const crossoverYear = data.find(r => r.annual_contribution > 0 && r.interest > r.annual_contribution)?.year;
-        if (crossoverYear) {
-            radarContainer.className = 'flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 text-emerald-900 shadow-2xs mb-3 transition-all';
-            if (radarIcon) radarIcon.textContent = '🚀';
-            radarText.innerHTML = `<strong>Wealth Crossover:</strong> In Year ${crossoverYear}, annual compounding gains surpass your annual invested principal.`;
-            radarContainer.style.display = 'flex';
-            return;
-        }
-
-        // 3. Priority 3: Milestone Doubling / Velocity
-        const effRate = inputs.years > 0 ? inputs.rate : (inputs.enable_swp ? inputs.swp_rate : inputs.rate);
-        if (effRate > 0 && finalGains > totalInvested) {
-            radarContainer.className = 'flex items-center justify-between p-3 rounded-2xl bg-indigo-50 border border-indigo-200 text-indigo-900 shadow-2xs mb-3 transition-all';
-            if (radarIcon) radarIcon.textContent = '💎';
-            const doublingYrs = (72 / effRate).toFixed(1);
-            radarText.innerHTML = `<strong>Compounding Multiplier:</strong> Capital doubles every ${doublingYrs} years with ${Math.round((finalGains / totalInvested) * 100)}% net wealth expansion.`;
-            radarContainer.style.display = 'flex';
-            return;
-        }
-
-        // 4. Default: Daily Compounding Velocity
-        const lastRow = data[data.length - 1];
-        const dailyRate = Math.round((lastRow?.interest || 0) / 365);
-        if (dailyRate > 0) {
-            radarContainer.className = 'flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/90 text-slate-800 shadow-2xs mb-3 transition-all';
-            if (radarIcon) radarIcon.textContent = '⚡';
-            radarText.innerHTML = `<strong>Compounding Velocity:</strong> Generating <span class="font-mono font-bold text-emerald-700">${this.formatter.format(dailyRate)} / day</span> in passive interest at maturity.`;
-            radarContainer.style.display = 'flex';
-            return;
-        }
-
-        radarContainer.style.display = 'none';
-    }
-
     initTaxWaterfallModal(onOpen?: () => void): void {
-        const modal = this.dom.getElement<HTMLDialogElement>('tax-waterfall-modal');
-        const openBtn = this.dom.getElement('open-tax-waterfall-btn');
-        const closeBtn = this.dom.getElement('close-tax-waterfall-btn');
-        const footerCloseBtn = this.dom.getElement('close-tax-waterfall-footer-btn');
-
-        if (!modal) return;
-
-        let cleanupFocusTrap: (() => void) | null = null;
-        const closeModal = () => {
-            modal.close();
-            if (cleanupFocusTrap) {
-                cleanupFocusTrap();
-                cleanupFocusTrap = null;
-            }
-            ModalScrollLockHelper.unlock();
-        };
-
-        if (openBtn) {
-            openBtn.addEventListener('click', () => {
-                modal.showModal();
-                ModalScrollLockHelper.lock(openBtn);
-                cleanupFocusTrap = ModalScrollLockHelper.bindFocusTrap(modal);
-                onOpen?.();
-            });
-        }
-        if (closeBtn) {
-            closeBtn.addEventListener('click', closeModal);
-        }
-        if (footerCloseBtn) {
-            footerCloseBtn.addEventListener('click', closeModal);
-        }
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
-        modal.addEventListener('cancel', () => {
-            if (cleanupFocusTrap) {
-                cleanupFocusTrap();
-                cleanupFocusTrap = null;
-            }
-            ModalScrollLockHelper.unlock();
-        });
+        this.insightsController.initTaxWaterfallModal(onOpen);
     }
 
-    /**
-     * Update conversational live narrative strip tokens.
-     */
     updateNarrative(inputs: InvestmentInputs): void {
-        const narrativeSip = this.dom.getElement('narrative-sip');
-        const narrativeLumpsumWrapper = this.dom.getElement('narrative-lumpsum-wrapper');
-        const narrativeLumpsum = this.dom.getElement('narrative-lumpsum');
-        const narrativeYears = this.dom.getElement('narrative-years');
-        const narrativeRate = this.dom.getElement('narrative-rate');
-
-        if (narrativeSip) {
-            narrativeSip.textContent = this.formatter.format(inputs.sip);
-        }
-        if (narrativeLumpsumWrapper && narrativeLumpsum) {
-            const lumpsumVal = inputs.lumpsum || 0;
-            if (lumpsumVal > 0) {
-                narrativeLumpsum.textContent = this.formatter.formatCompact(lumpsumVal);
-                narrativeLumpsumWrapper.classList.remove('hidden');
-                narrativeLumpsumWrapper.classList.add('inline-flex');
-            } else {
-                narrativeLumpsum.textContent = '';
-                narrativeLumpsumWrapper.classList.add('hidden');
-                narrativeLumpsumWrapper.classList.remove('inline-flex');
-            }
-        }
-        if (narrativeYears) {
-            narrativeYears.textContent = `${inputs.years} yrs`;
-        }
-        if (narrativeRate) {
-            narrativeRate.textContent = `${inputs.rate}% CAGR`;
-        }
+        this.insightsController.updateNarrative(inputs);
     }
 }
 

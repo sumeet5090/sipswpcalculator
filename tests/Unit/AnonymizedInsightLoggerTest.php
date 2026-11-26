@@ -126,6 +126,7 @@ class AnonymizedInsightLoggerTest extends TestCase
         $this->logger->logCalculation($payload, $request);
 
         $stmt = $this->pdo->query("SELECT * FROM user_calculations");
+        $this->assertInstanceOf(\PDOStatement::class, $stmt);
         $rows = $stmt->fetchAll();
 
         $this->assertCount(1, $rows);
@@ -161,6 +162,7 @@ class AnonymizedInsightLoggerTest extends TestCase
         $this->logger->logCalculation($payload, $request);
 
         $stmt = $this->pdo->query("SELECT country_code, referrer FROM user_calculations LIMIT 1");
+        $this->assertInstanceOf(\PDOStatement::class, $stmt);
         $row = $stmt->fetch();
 
         $this->assertSame(10, mb_strlen($row['country_code']));
@@ -233,6 +235,7 @@ class AnonymizedInsightLoggerTest extends TestCase
         $this->logger->logCalculation($payload, $request);
 
         $stmt = $this->pdo->query("SELECT * FROM user_calculations LIMIT 1");
+        $this->assertInstanceOf(\PDOStatement::class, $stmt);
         $row = $stmt->fetch();
 
         $this->assertNotEmpty($row);

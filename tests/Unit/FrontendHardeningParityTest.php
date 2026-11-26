@@ -33,6 +33,7 @@ class FrontendHardeningParityTest extends TestCase
 
         $results = $this->calculator->calculate($inputs);
         $lastRow = end($results);
+        $this->assertIsArray($lastRow);
 
         $totalInvested = $lastRow['cumulative_invested'];
         $preTaxCorpus = $lastRow['combined_total'];
@@ -62,6 +63,7 @@ class FrontendHardeningParityTest extends TestCase
 
         $results = $this->calculator->calculate($inputs);
         $lastRow = end($results);
+        $this->assertIsArray($lastRow);
 
         $totalInvested = $lastRow['cumulative_invested'];
         $preTaxCorpus = $lastRow['combined_total'];
@@ -173,6 +175,7 @@ class FrontendHardeningParityTest extends TestCase
         $forwardInputs = $inputs->withSip($requiredSip);
         $results = $this->calculator->calculate($forwardInputs);
         $lastRow = end($results);
+        $this->assertIsArray($lastRow);
         $achievedCorpus = $lastRow['combined_total'];
 
         // Must achieve target within ₹1,000 rounding tolerance

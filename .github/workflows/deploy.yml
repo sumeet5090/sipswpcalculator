@@ -114,10 +114,8 @@ jobs:
             
             # Run database migrations
             cd public_html || exit 1
-            if [ -f "migrate.php" ]; then
-              php migrate.php
-            elif [ -f "scripts/migrate.php" ]; then
-              php scripts/migrate.php
+            if [ -f "bin/migrate" ]; then
+              php bin/migrate
             fi
             cd ..
             

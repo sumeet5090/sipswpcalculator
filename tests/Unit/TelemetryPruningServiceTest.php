@@ -36,7 +36,9 @@ class TelemetryPruningServiceTest extends TestCase
 
         $this->assertSame(1, $pruned);
 
-        $remaining = (int) $this->pdo->query("SELECT COUNT(*) FROM user_calculations")->fetchColumn();
+        $countStmt = $this->pdo->query("SELECT COUNT(*) FROM user_calculations");
+        $this->assertInstanceOf(\PDOStatement::class, $countStmt);
+        $remaining = (int) $countStmt->fetchColumn();
         $this->assertSame(1, $remaining);
     }
 }

@@ -37,6 +37,7 @@ use Core\InsightRepository;
 use Core\InvestmentCalculator;
 use Core\MetaManager;
 use Core\PdfReportStylesheet;
+use Core\PdfReportTableBuilder;
 use Core\PdfReportTemplate;
 use Core\PdfTemplateInterface;
 use Core\SchemaHelper;
@@ -54,9 +55,13 @@ use Services\RateLimiter;
 use Services\RateLimitStorageInterface;
 use Services\SessionManager;
 use Services\SitemapGenerator;
+use Services\SpecializedReportBuilder;
 
 class ControllerServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @param array<string, mixed> $config
+     */
     public function register(Container $container, array $config = []): void
     {
         $routesConfig = $config['routesConfig'] ?? [];
@@ -73,6 +78,10 @@ class ControllerServiceProvider implements ServiceProviderInterface
             return new PdfReportStylesheet();
         });
 
+        $container->singleton(PdfReportTableBuilder::class, function (Container $c) {
+            return new PdfReportTableBuilder($c->get(CurrencyFormatterInterface::class));
+        });
+
         $container->singleton(PdfTemplateInterface::class, function (Container $c) {
             /** @var ConfigService $configService */
             $configService = $c->get(ConfigService::class);
@@ -82,7 +91,7 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(CurrencyFormatterInterface::class),
                 $milestones,
                 $c->get(PdfReportStylesheet::class),
-                null,
+                $c->get(PdfReportTableBuilder::class),
                 $c->get(ViewRenderer::class)
             );
         });
@@ -152,7 +161,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(InvestmentCalculator::class),
                 $c->get(ConfigService::class),
                 $c->get(CsvExportService::class),
-                $c->get(CurrencyFormatterInterface::class)
+                $c->get(CurrencyFormatterInterface::class),
+                $c->get(SpecializedReportBuilder::class)
             );
         });
 
@@ -168,7 +178,8 @@ class ControllerServiceProvider implements ServiceProviderInterface
                 $c->get(HtmlSanitizer::class),
                 $c->get(InvestmentCalculator::class),
                 $c->get(CurrencyFormatterInterface::class),
-                $c->get(FilenameSanitizer::class)
+                $c->get(FilenameSanitizer::class),
+                $c->get(SpecializedReportBuilder::class)
             );
         });
 

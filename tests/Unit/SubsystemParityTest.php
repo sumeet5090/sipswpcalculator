@@ -192,10 +192,12 @@ class SubsystemParityTest extends TestCase
         $this->assertEquals(100.0, $overview['conversionRate']);
 
         $stmt = $this->pdo->query("SELECT COUNT(*) FROM user_calculations");
+        $this->assertInstanceOf(\PDOStatement::class, $stmt);
         $count = (int) $stmt->fetchColumn();
         $this->assertEquals(1, $count);
 
         $rowStmt = $this->pdo->query("SELECT * FROM user_calculations LIMIT 1");
+        $this->assertInstanceOf(\PDOStatement::class, $rowStmt);
         $row = $rowStmt->fetch(PDO::FETCH_ASSOC);
         $this->assertIsArray($row);
         $this->assertEquals('sip_swp_combo', $row['calc_type']);

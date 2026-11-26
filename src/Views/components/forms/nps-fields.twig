@@ -1,21 +1,16 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
-<!-- Hidden legacy fields to prevent JS errors -->
-<input type="hidden" id="sip" name="sip" value="0">
-<input type="hidden" id="stepup" name="stepup" value="0">
-<input type="hidden" id="lumpsum" name="lumpsum" value="0">
-
 <div class="space-y-3">
     <!-- Monthly Contribution (Tier-1) -->
     {{ inputs.renderInputRangePair({
         'id': 'nps_monthly_contribution',
         'label': 'Monthly Contribution (Tier-1)',
         'tooltip': 'Your regular monthly deposit into NPS Tier-1 account. Eligible for Section 80CCD(1B) additional ₹50,000 tax deduction.',
-        'min': 500,
-        'max': 150000,
-        'slider_max': 50000,
-        'step': 500,
-        'value': 5000,
+        'min': calc_config.nps_monthly_contribution.min|default(500),
+        'max': calc_config.nps_monthly_contribution.max|default(150000),
+        'slider_max': calc_config.nps_monthly_contribution.slider_max|default(50000),
+        'step': calc_config.nps_monthly_contribution.step|default(500),
+        'value': nps_monthly_contribution|default(calc_config.nps_monthly_contribution.default|default(5000)),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [
@@ -34,11 +29,11 @@
             'id': 'nps_current_age',
             'label': 'Current Age',
             'tooltip': 'Your current age in years. NPS enrollment is open to Indian citizens between 18 and 65 years.',
-            'min': 18,
-            'max': 65,
-            'slider_max': 60,
-            'step': 1,
-            'value': 30,
+            'min': calc_config.nps_current_age.min|default(18),
+            'max': calc_config.nps_current_age.max|default(65),
+            'slider_max': calc_config.nps_current_age.slider_max|default(60),
+            'step': calc_config.nps_current_age.step|default(1),
+            'value': nps_current_age|default(calc_config.nps_current_age.default|default(30)),
             'suffix': 'Yrs',
             'theme': 'emerald',
             'presets': [
@@ -54,11 +49,11 @@
             'id': 'nps_retirement_age',
             'label': 'Retirement Age',
             'tooltip': 'Superannuation age when you exit NPS. Normal retirement age is 60 years, extendable up to 75 years.',
-            'min': 35,
-            'max': 75,
-            'slider_max': 70,
-            'step': 1,
-            'value': 60,
+            'min': calc_config.nps_retirement_age.min|default(35),
+            'max': calc_config.nps_retirement_age.max|default(75),
+            'slider_max': calc_config.nps_retirement_age.slider_max|default(70),
+            'step': calc_config.nps_retirement_age.step|default(1),
+            'value': nps_retirement_age|default(calc_config.nps_retirement_age.default|default(60)),
             'suffix': 'Yrs',
             'theme': 'emerald',
             'presets': [
@@ -75,11 +70,11 @@
         'id': 'nps_expected_return',
         'label': 'Expected Return (p.a.)',
         'tooltip': 'Expected annualized growth rate across your Equity (E), Corporate Debt (C), and Government Securities (G) asset allocation. Historical returns average 9%–12%.',
-        'min': 5.0,
-        'max': 15.0,
-        'slider_max': 15.0,
-        'step': 0.5,
-        'value': 10.0,
+        'min': calc_config.nps_expected_return.min|default(5.0),
+        'max': calc_config.nps_expected_return.max|default(15.0),
+        'slider_max': calc_config.nps_expected_return.slider_max|default(15.0),
+        'step': calc_config.nps_expected_return.step|default(0.5),
+        'value': nps_expected_return|default(calc_config.nps_expected_return.default|default(10.0)),
         'suffix': '%',
         'theme': 'emerald',
         'presets': [
@@ -97,11 +92,11 @@
             'id': 'nps_annuity_percent',
             'label': 'Annuity Reinvestment Share',
             'tooltip': 'Statutory minimum 40% of maturity corpus must be annuitized. The remaining (up to 60%) is 100% tax-free lump sum under Section 10(12A).',
-            'min': 40,
-            'max': 100,
-            'slider_max': 100,
-            'step': 5,
-            'value': 40,
+            'min': calc_config.nps_annuity_percent.min|default(40),
+            'max': calc_config.nps_annuity_percent.max|default(100),
+            'slider_max': calc_config.nps_annuity_percent.slider_max|default(100),
+            'step': calc_config.nps_annuity_percent.step|default(5),
+            'value': nps_annuity_percent|default(calc_config.nps_annuity_percent.default|default(40)),
             'suffix': '%',
             'theme': 'emerald',
             'presets': [
@@ -117,11 +112,11 @@
             'id': 'nps_annuity_rate',
             'label': 'Expected Annuity Rate (p.a.)',
             'tooltip': 'Annual pension yield paid by the insurance provider (e.g. LIC, SBI Life) on the annuitized corpus. Current market rates range from 5.5% to 6.5%.',
-            'min': 4.0,
-            'max': 10.0,
-            'slider_max': 10.0,
-            'step': 0.25,
-            'value': 6.0,
+            'min': calc_config.nps_annuity_rate.min|default(4.0),
+            'max': calc_config.nps_annuity_rate.max|default(10.0),
+            'slider_max': calc_config.nps_annuity_rate.slider_max|default(10.0),
+            'step': calc_config.nps_annuity_rate.step|default(0.25),
+            'value': nps_annuity_rate|default(calc_config.nps_annuity_rate.default|default(6.0)),
             'suffix': '%',
             'theme': 'emerald',
             'presets': [

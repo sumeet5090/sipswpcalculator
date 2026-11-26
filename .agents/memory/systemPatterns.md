@@ -106,9 +106,15 @@ This file codifies core invariant patterns to ensure Antigravity and developers 
 - **Unminified Source Debugging:** When debugging vendor crashes (Chart.js, plugins), immediately inspect unminified source code in `node_modules/` or build an isolated minimal Node.js test fixture.
 - **Hypothesis Transparency:** Clearly state the bug hypothesis, target vendor file, and next step to the user before running deep inspection commands.
 - **Tiered Verification Pipeline:**
-  - *Tier 1 (Fast-Path Local Build & Parity):* Run `npm run build` and `php tests/parity_check.php` (verifying 71/71 parity tests).
-  - *Tier 2 (Integration & Local Curl):* Run `vendor/bin/phpunit tests/Integration/HomepageLayoutAndAestheticsTest.php` and curl checks against the local server.
-  - *Tier 3 (Gate Tier):* Run `composer check-all` (820 tests, 12,776 assertions, PHPStan Level Max on 253 files, PSR-12 clean) before concluding and handing off to the human developer.
+  - *Tier 1 (Fast-Path Local Build & Parity):* Run `npm run typecheck && npm run build` and `php tests/parity_check.php` (verifying 119/119 parity tests).
+  - *Tier 2 (Integration & Local Curl):* Run `vendor/bin/phpunit tests/Integration` (dynamic ephemeral local ports) and curl checks against the local server.
+  - *Tier 3 (Gate Tier):* Run `composer check-all` (957 tests [743 Unit + 214 Integration], 18,710 assertions, PHPStan Level 8 across 285 files, PSR-12 clean) before concluding and handing off to the human developer.
+
+## 9. Registry SSoT, Table Schema & Static Analysis Governance
+- **Calculator Registry SSoT (`CalculatorRegistry`):** `content/calculator_registry.json` is the single declarative registry for all 19 calculator modes and 34 routes, consumed by `Core\Config\CalculatorRegistry` (`routes.php`, `StrategyFactory`, `DomainServiceProvider`, `AppTwigExtension`) and `assets/js/calculators/constants/CalculatorRegistry.ts` (`CalculatorApp`, `QrShareModalController`, `ExcelExportController`, `MobileErgonomicDeckController`, `SummaryMetricsController`). Twig exposes `calculator_route_count()`, `specialized_calculator_count()`, and `is_calculator_route(active_page)` directly from `CalculatorRegistry`.
+- **Table & Excel Multi-Mode Schema (`ModeTableSchema`):** `assets/js/calculators/constants/ModeTableSchema.ts` centralizes desktop/mobile headers, mobile card labels, multiplier denominators, interest polarity styles, and 10-column Excel sheet metadata across core and all 12 specialized modes.
+- **Theme Token SSoT & Zero-Blue Discipline:** `assets/js/calculators/constants/ThemeTokens.ts` imports `content/theme_tokens.json` with `with { type: 'json' }` (compatible across `tsc`, Vite 8, and Node 24 ESM `--experimental-strip-types`), guarded by `ThemeTokenParityTest.php` and zero-blue `DesignTokenAuditTest.php`.
+- **Canonical CLI Migrator & Ephemeral Test Ports:** `bin/migrate` is the sole database migration CLI entrypoint (executed in `.github/workflows/deploy.yml`). `IntegrationTestCase::findAvailablePort()` dynamically binds an ephemeral loopback port (`tcp://127.0.0.1:0`) per integration test class.
 
 ---
 

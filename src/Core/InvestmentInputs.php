@@ -68,6 +68,8 @@ class InvestmentInputs implements CalculatorInputsInterface
 
     /**
      * Helper to load the JSON defaults via ConfigServiceInterface or Container.
+     *
+     * @return array<string, mixed>
      */
     private static function loadDefaults(ConfigServiceInterface $config): array
     {
@@ -76,6 +78,9 @@ class InvestmentInputs implements CalculatorInputsInterface
 
     /**
      * Helper method to resolve and clamp a field from payload against config rules.
+     *
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $cfg
      */
     private static function resolveField(string $key, array $data, array $cfg): float
     {
@@ -90,6 +95,7 @@ class InvestmentInputs implements CalculatorInputsInterface
     /**
      * Helper method to resolve LTCG tax exemption and rate from config.
      *
+     * @param array<string, mixed> $cfg
      * @return array{0: float, 1: float} [exemption_threshold, rate]
      */
     private static function resolveLtcgConfig(array $cfg): array
@@ -103,7 +109,7 @@ class InvestmentInputs implements CalculatorInputsInterface
      * Create sanitized inputs from request POST/GET payload.
      * Bounds and defaults are read from the central calculator_defaults.json config.
      *
-     * @param array $data Typically $_POST or $_GET payload
+     * @param array<string, mixed> $data Typically $_POST or $_GET payload
      * @param ConfigServiceInterface $config ConfigServiceInterface instance
      * @return self
      */
@@ -154,7 +160,7 @@ class InvestmentInputs implements CalculatorInputsInterface
      * Maps the HTTP `corpus` field to startingRetirementCorpus and lumpsum for backward-compatibility.
      * SWP is always enabled; SIP accumulation fields default to zero/minimal values.
      *
-     * @param array $data POST/GET payload from the SWP calculator form
+     * @param array<string, mixed> $data POST/GET payload from the SWP calculator form
      * @param ConfigServiceInterface $config ConfigServiceInterface instance
      * @return self
      */
@@ -192,7 +198,7 @@ class InvestmentInputs implements CalculatorInputsInterface
     /**
      * Named constructor for the Lumpsum-only calculator.
      *
-     * @param array $data POST/GET payload from the Lumpsum calculator form
+     * @param array<string, mixed> $data POST/GET payload from the Lumpsum calculator form
      * @param ConfigServiceInterface $config ConfigServiceInterface instance
      * @return self
      */

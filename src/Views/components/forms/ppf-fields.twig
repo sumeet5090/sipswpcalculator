@@ -1,21 +1,16 @@
 {% import "components/form/input-range-pair.twig" as inputs %}
 
-<!-- Hidden legacy fields to prevent JS errors -->
-<input type="hidden" id="sip" name="sip" value="0">
-<input type="hidden" id="stepup" name="stepup" value="0">
-<input type="hidden" id="lumpsum" name="lumpsum" value="0">
-
 <div class="space-y-3">
     <!-- Annual PPF Deposit -->
     {{ inputs.renderInputRangePair({
         'id': 'ppf_deposit',
-        'label': 'Yearly Deposit',
+        'label': calc_config.ppf_deposit.label|default('Yearly Deposit'),
         'tooltip': 'Annual deposit to your PPF account (Statutory limit: ₹500 to ₹1,50,000 / FY).',
-        'min': 500,
-        'max': 150000,
-        'slider_max': 150000,
-        'step': 500,
-        'value': 150000,
+        'min': calc_config.ppf_deposit.min|default(500),
+        'max': calc_config.ppf_deposit.max|default(150000),
+        'slider_max': calc_config.ppf_deposit.slider_max|default(150000),
+        'step': calc_config.ppf_deposit.step|default(500),
+        'value': ppf_deposit|default(calc_config.ppf_deposit.default|default(150000)),
         'prefix': '₹',
         'theme': 'emerald',
         'presets': [
@@ -30,13 +25,13 @@
     <!-- Statutory Interest Rate -->
     {{ inputs.renderInputRangePair({
         'id': 'ppf_rate',
-        'label': 'Interest Rate',
+        'label': calc_config.ppf_rate.label|default('Interest Rate'),
         'tooltip': 'Current Govt of India notified PPF interest rate (compounded annually).',
-        'min': 5.0,
-        'max': 12.0,
-        'slider_max': 10.0,
-        'step': 0.1,
-        'value': 7.1,
+        'min': calc_config.ppf_rate.min|default(5.0),
+        'max': calc_config.ppf_rate.max|default(12.0),
+        'slider_max': calc_config.ppf_rate.slider_max|default(10.0),
+        'step': calc_config.ppf_rate.step|default(0.1),
+        'value': ppf_rate|default(calc_config.ppf_rate.default|default(7.1)),
         'suffix': '%',
         'theme': 'emerald',
         'presets': [
@@ -50,13 +45,13 @@
     <!-- Tenure with 5-Year Extensions -->
     {{ inputs.renderInputRangePair({
         'id': 'ppf_years',
-        'label': 'PPF Duration',
+        'label': calc_config.ppf_years.label|default('PPF Duration'),
         'tooltip': 'Mandatory 15-year base period, extendable in 5-year blocks.',
-        'min': 15,
-        'max': 35,
-        'slider_max': 35,
-        'step': 5,
-        'value': 15,
+        'min': calc_config.ppf_years.min|default(15),
+        'max': calc_config.ppf_years.max|default(35),
+        'slider_max': calc_config.ppf_years.slider_max|default(35),
+        'step': calc_config.ppf_years.step|default(5),
+        'value': ppf_years|default(calc_config.ppf_years.default|default(15)),
         'suffix': 'Yrs',
         'theme': 'emerald',
         'presets': [

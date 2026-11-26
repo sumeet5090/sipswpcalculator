@@ -127,6 +127,7 @@ class SeoTelemetryIntegrationTest extends TestCase
         $this->logger->logCalculation($payload, $request);
 
         $stmt = $this->pdo->query("SELECT referrer_category FROM user_calculations LIMIT 1");
+        $this->assertInstanceOf(\PDOStatement::class, $stmt);
         $category = $stmt->fetchColumn();
 
         $this->assertSame('bing_organic', $category);
