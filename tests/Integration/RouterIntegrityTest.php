@@ -142,7 +142,7 @@ class RouterIntegrityTest extends TestCase
 
         $sitemapPaths = [];
         foreach ($xml->url as $url) {
-            $loc = (string)$url->loc;
+            $loc = (string) $url->loc;
             $path = parse_url($loc, PHP_URL_PATH) ?: '/';
             $sitemapPaths[] = $path;
 
