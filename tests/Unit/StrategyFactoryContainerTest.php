@@ -171,6 +171,18 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertSame('components/benchmarks/epf-schedule.twig', $strategy->getBenchmarkTemplate());
     }
 
+    public function testCreateTaxHarvestStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('ltcg-tax-calculator');
+        $this->assertInstanceOf(\Core\Strategies\TaxHarvestStrategy::class, $strategy);
+        $this->assertSame('tax_harvest', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\TaxHarvestInputs::class, $inputs);
+        $this->assertArrayHasKey('tax_portfolio_value', $inputs->toTemplateData());
+        $this->assertSame('components/benchmarks/tax-harvest-schedule.twig', $strategy->getBenchmarkTemplate());
+    }
+
     public function testCreateStepUpSipStrategyFromContainer(): void
     {
         $strategy = $this->factory->create('sip-step-up-calculator');

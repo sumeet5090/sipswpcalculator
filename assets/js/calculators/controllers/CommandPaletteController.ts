@@ -262,6 +262,14 @@ export const COMMAND_ITEMS: CommandItem[] = [
         icon: '🏢'
     },
     {
+        id: 'calc-ltcg-tax',
+        title: 'LTCG Tax & Harvesting Calculator',
+        description: 'Calculate Section 112A 12.5% LTCG tax, ₹1.25L annual harvesting savings & March–April splits.',
+        category: 'Calculator',
+        url: '/ltcg-tax-calculator',
+        icon: '⚖️'
+    },
+    {
         id: 'calc-post-retirement',
         title: 'Post-Retirement Calculator',
         description: 'Multi-stream asset drawdown planner: Gratuity, NPS lump sum, guaranteed pension, and inflation-indexed SWP.',

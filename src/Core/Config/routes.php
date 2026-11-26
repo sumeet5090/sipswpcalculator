@@ -42,7 +42,8 @@ return [
         '/gratuity-calculator'          => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
         '/nps-calculator'               => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
         '/post-retirement-calculator'   => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
-        '/epf-calculator'               => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly']
+        '/epf-calculator'               => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly'],
+        '/ltcg-tax-calculator'          => ['action' => [RenderGuideAction::class, '__invoke'], 'priority' => '0.9', 'changefreq' => 'monthly']
     ],
     'pages' => [
         '/about'    => ['action' => [RenderAboutAction::class, '__invoke'], 'priority' => '0.5', 'changefreq' => 'yearly'],

@@ -1468,5 +1468,38 @@
         ],
         "q": "How does EPFO calculate interest on EPF balances each year?",
         "a": "EPFO calculates interest on the monthly running balance at (Annual Rate / 12) for each month of the financial year, but credits the accumulated interest to your account only once at the end of the financial year (March 31). Because interest is credited annually rather than compounded monthly, intra-year accrued interest does not earn interest until the next financial year."
+    },
+    {
+        "id": "section-112a-tax-harvesting-legal",
+        "category": "taxation",
+        "tags": [
+            "ltcg-tax-calculator",
+            "faq-page",
+            "tax & rules"
+        ],
+        "q": "Is mutual fund LTCG tax harvesting legal in India?",
+        "a": "Yes, tax harvesting under Section 112A is completely legal in India. Because Indian tax law has no wash-sale restriction, investors can redeem equity mutual fund units held for more than 12 months to realize up to ₹1,25,000 in LTCG tax-free each financial year and immediately reinvest the proceeds to permanently step up their purchase cost basis."
+    },
+    {
+        "id": "section-112a-march-april-split",
+        "category": "taxation",
+        "tags": [
+            "ltcg-tax-calculator",
+            "swp-calculator",
+            "faq-page"
+        ],
+        "q": "How does splitting a redemption across March 31 and April 1 save LTCG tax?",
+        "a": "Since the ₹1,25,000 Section 112A exemption resets every financial year on April 1, redeeming part of your equity mutual fund portfolio in late March and the remainder on or after April 1 lets you claim two separate ₹1.25 Lakh exemptions (₹2,50,000 total tax-free gains) within days, saving up to ₹16,250 in LTCG tax (at 13% effective rate including 4% cess)."
+    },
+    {
+        "id": "section-112a-grandfathering-2018",
+        "category": "taxation",
+        "tags": [
+            "ltcg-tax-calculator",
+            "faq-page",
+            "tax & rules"
+        ],
+        "q": "How does the January 31, 2018 grandfathering rule work for equity mutual funds?",
+        "a": "For equity mutual fund units purchased before February 1, 2018, gains accrued up to January 31, 2018 are protected from LTCG tax. Your effective cost of acquisition is calculated as the higher of your actual purchase cost or the lower of the Jan 31, 2018 Fair Market Value (FMV) and your eventual sale value."
     }
 ]

@@ -17,7 +17,8 @@ import {
     GratuityDriver,
     NpsDriver,
     PostRetirementDriver,
-    EpfDriver
+    EpfDriver,
+    TaxHarvestDriver
 } from '../drivers/index.ts';
 
 export class SpecializedCalculatorController {
@@ -44,7 +45,8 @@ export class SpecializedCalculatorController {
         gratuity: () => new GratuityDriver(),
         nps: () => new NpsDriver(),
         post_retirement: () => new PostRetirementDriver(),
-        epf: () => new EpfDriver()
+        epf: () => new EpfDriver(),
+        tax_harvest: () => new TaxHarvestDriver()
     };
 
     constructor(

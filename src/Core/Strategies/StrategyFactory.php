@@ -41,6 +41,7 @@ class StrategyFactory
         'nps-calculator'               => NpsStrategy::class,
         'post-retirement-calculator'   => PostRetirementStrategy::class,
         'epf-calculator'               => EpfStrategy::class,
+        'ltcg-tax-calculator'          => TaxHarvestStrategy::class,
     ];
 
     private ConfigServiceInterface $configService;

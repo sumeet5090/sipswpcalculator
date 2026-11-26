@@ -1100,6 +1100,67 @@ foreach ($epfCases as $idx => $eParams) {
     }
 }
 
+// 12. Cross-Runtime Parity: Section 112A LTCG Tax & Harvesting Engine
+// -------------------------------------------------------------------
+echo "\nTesting Section 112A Tax Harvesting Engine Parity (PHP vs TypeScript)...\n";
+$taxCases = [
+    ['portfolio_value' => 2500000.0, 'invested_cost' => 1500000.0, 'expected_return' => 12.0, 'holding_years' => 10, 'grandfather_fmv' => 0.0, 'include_cess' => true],
+    ['portfolio_value' => 5000000.0, 'invested_cost' => 3000000.0, 'expected_return' => 12.0, 'holding_years' => 15, 'grandfather_fmv' => 0.0, 'include_cess' => true],
+    ['portfolio_value' => 10000000.0, 'invested_cost' => 5000000.0, 'expected_return' => 14.0, 'holding_years' => 20, 'grandfather_fmv' => 0.0, 'include_cess' => true],
+    ['portfolio_value' => 3000000.0, 'invested_cost' => 500000.0, 'expected_return' => 10.0, 'holding_years' => 5, 'grandfather_fmv' => 1800000.0, 'include_cess' => true],
+    ['portfolio_value' => 3000000.0, 'invested_cost' => 500000.0, 'expected_return' => 10.0, 'holding_years' => 5, 'grandfather_fmv' => 3500000.0, 'include_cess' => false],
+    ['portfolio_value' => 1050000.0, 'invested_cost' => 1000000.0, 'expected_return' => 4.0, 'holding_years' => 1, 'grandfather_fmv' => 0.0, 'include_cess' => true],
+    ['portfolio_value' => 2500000.0, 'invested_cost' => 1500000.0, 'expected_return' => 12.0, 'holding_years' => 10, 'grandfather_fmv' => 0.0, 'include_cess' => false],
+    ['portfolio_value' => 20000000.0, 'invested_cost' => 8000000.0, 'expected_return' => 15.0, 'holding_years' => 25, 'grandfather_fmv' => 12000000.0, 'include_cess' => true],
+];
+
+foreach ($taxCases as $idx => $tParams) {
+    echo "Tax Harvest Parity Case " . ($idx + 1) . ": ";
+    $phpRes = \Core\Math\TaxHarvestEngine::calculate(
+        $tParams['portfolio_value'],
+        $tParams['invested_cost'],
+        $tParams['expected_return'],
+        $tParams['holding_years'],
+        $tParams['grandfather_fmv'],
+        $tParams['include_cess']
+    );
+
+    $cmd = "node tests/run_js_calc.js " . escapeshellarg(json_encode([
+        'action' => 'tax_harvest',
+        'portfolio_value' => $tParams['portfolio_value'],
+        'invested_cost' => $tParams['invested_cost'],
+        'expected_return' => $tParams['expected_return'],
+        'holding_years' => $tParams['holding_years'],
+        'grandfather_fmv' => $tParams['grandfather_fmv'],
+        'include_cess' => $tParams['include_cess'],
+    ]));
+    $jsRes = json_decode((string)shell_exec($cmd), true);
+
+    $fields = [
+        'effective_cost_basis',
+        'effective_tax_rate_pct',
+        'buy_hold_tax',
+        'harvested_tax',
+        'cumulative_tax_saved',
+        'total_gains_harvested',
+        'final_gross_corpus',
+        'net_post_tax_wealth',
+        'march_april_savings',
+    ];
+    $mismatch = false;
+    foreach ($fields as $f) {
+        if (abs((float)$phpRes[$f] - (float)$jsRes[$f]) > 1.0) {
+            echo "FAIL: Field {$f} mismatch. PHP: {$phpRes[$f]}, JS: {$jsRes[$f]}\n";
+            $failed = true;
+            $mismatch = true;
+            break;
+        }
+    }
+    if (!$mismatch) {
+        echo "PASS\n";
+    }
+}
+
 echo "\n";
 if ($failed) {
     echo "=== CALCULATOR ENGINE PARITY TESTS FAILED ===\n";

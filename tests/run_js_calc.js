@@ -14,6 +14,7 @@ import { GratuityEngine } from '../assets/js/calculators/engines/GratuityEngine.
 import { NpsEngine } from '../assets/js/calculators/engines/NpsEngine.ts';
 import { PostRetirementEngine } from '../assets/js/calculators/engines/PostRetirementEngine.ts';
 import { EpfEngine } from '../assets/js/calculators/engines/EpfEngine.ts';
+import { TaxHarvestEngine } from '../assets/js/calculators/engines/TaxHarvestEngine.ts';
 
 try {
     // Read input parameters JSON from command line arguments
@@ -232,6 +233,16 @@ try {
             inputArgs.interest_rate !== undefined ? inputArgs.interest_rate : 8.25,
             inputArgs.current_balance !== undefined ? inputArgs.current_balance : 0.0,
             inputArgs.cap_eps !== undefined ? inputArgs.cap_eps : true
+        );
+        console.log(JSON.stringify(res));
+    } else if (inputArgs.action === 'tax_harvest') {
+        const res = TaxHarvestEngine.calculate(
+            inputArgs.portfolio_value,
+            inputArgs.invested_cost,
+            inputArgs.expected_return !== undefined ? inputArgs.expected_return : 12.0,
+            inputArgs.holding_years !== undefined ? inputArgs.holding_years : 10,
+            inputArgs.grandfather_fmv !== undefined ? inputArgs.grandfather_fmv : 0.0,
+            inputArgs.include_cess !== undefined ? inputArgs.include_cess : true
         );
         console.log(JSON.stringify(res));
     } else if (inputArgs.action === 'generate_qr_test') {

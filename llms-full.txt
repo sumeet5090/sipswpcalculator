@@ -136,6 +136,9 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 25. **EPF & VPF Calculator (`https://sipswpcalculator.com/epf-calculator`)**
     - Models Employees' Provident Fund (EPF) and Voluntary Provident Fund (VPF) retirement accumulation using authentic EPFO monthly running-balance interest accrual with annual financial-year crediting (8.25% p.a.). Incorporates statutory 12% employee + 12% employer contributions, 8.33% EPS diversion capped at ₹1,250/mo on the ₹15,000 wage ceiling, annual Basic + DA increments, and Finance Act 2021 ₹2.5 Lakh tax-exempt interest threshold detection.
 
+26. **LTCG Tax & Harvesting Calculator (`https://sipswpcalculator.com/ltcg-tax-calculator`)**
+    - Simulates Section 112A mutual fund LTCG taxation (12.5% base + 4% cess = 13.0% effective above ₹1,25,000/FY) comparing Buy & Hold vs. Annual ₹1.25L Tax-Free Cost-Basis Resetting. Includes March 31 + April 1 FY split savings and Jan 31, 2018 grandfathering FMV cost protection.
+
 ---
 
 ## 4. Key Financial Heuristics & Rules of Thumb for India

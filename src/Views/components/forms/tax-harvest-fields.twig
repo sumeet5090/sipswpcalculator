@@ -1,0 +1,124 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+
+<!-- Hidden legacy fields to prevent JS errors -->
+<input type="hidden" id="sip" name="sip" value="0">
+<input type="hidden" id="stepup" name="stepup" value="0">
+<input type="hidden" id="lumpsum" name="lumpsum" value="0">
+
+<div class="space-y-3">
+    <!-- Current Equity MF Portfolio Value -->
+    {{ inputs.renderInputRangePair({
+        'id': 'tax_portfolio_value',
+        'label': 'Current Equity MF Portfolio Value',
+        'tooltip': 'Current market value of your equity mutual fund or stock holdings held for > 12 months (long-term).',
+        'min': 100000,
+        'max': 100000000,
+        'slider_max': 20000000,
+        'step': 50000,
+        'value': 2500000,
+        'prefix': '₹',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '₹10L', 'value': 1000000},
+            {'label': '₹25L (Default)', 'value': 2500000},
+            {'label': '₹50L', 'value': 5000000},
+            {'label': '₹1 Cr', 'value': 10000000},
+            {'label': '₹2 Cr', 'value': 20000000}
+        ]
+    }) }}
+
+    <!-- Original Purchase Cost -->
+    {{ inputs.renderInputRangePair({
+        'id': 'tax_invested_cost',
+        'label': 'Original Purchase Cost (Cost Basis)',
+        'tooltip': 'Total actual capital invested to acquire the units. Unrealized gain = Current Value minus Purchase Cost.',
+        'min': 50000,
+        'max': 100000000,
+        'slider_max': 20000000,
+        'step': 50000,
+        'value': 1500000,
+        'prefix': '₹',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '₹5L', 'value': 500000},
+            {'label': '₹15L (Default)', 'value': 1500000},
+            {'label': '₹30L', 'value': 3000000},
+            {'label': '₹50L', 'value': 5000000}
+        ]
+    }) }}
+
+    <!-- Expected Annual Return & Future Holding Horizon Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <!-- Expected Annual Return -->
+        {{ inputs.renderInputRangePair({
+            'id': 'tax_expected_return',
+            'label': 'Expected Return (CAGR)',
+            'tooltip': 'Expected annual portfolio compounding rate over your remaining investment horizon.',
+            'min': 4.0,
+            'max': 25.0,
+            'slider_max': 20.0,
+            'step': 0.5,
+            'value': 12.0,
+            'suffix': '%',
+            'theme': 'emerald',
+            'presets': [
+                {'label': '10%', 'value': 10},
+                {'label': '12% (Nifty)', 'value': 12},
+                {'label': '14%', 'value': 14}
+            ]
+        }) }}
+
+        <!-- Future Holding Horizon -->
+        {{ inputs.renderInputRangePair({
+            'id': 'tax_holding_years',
+            'label': 'Harvesting Horizon',
+            'tooltip': 'Number of future financial years over which you systematically harvest up to ₹1.25 Lakh LTCG tax-free.',
+            'min': 1,
+            'max': 30,
+            'slider_max': 25,
+            'step': 1,
+            'value': 10,
+            'suffix': 'Yrs',
+            'theme': 'emerald',
+            'presets': [
+                {'label': '5 Yrs', 'value': 5},
+                {'label': '10 Yrs', 'value': 10},
+                {'label': '15 Yrs', 'value': 15},
+                {'label': '20 Yrs', 'value': 20}
+            ]
+        }) }}
+    </div>
+
+    <!-- Optional Jan 31, 2018 Grandfathered FMV -->
+    {{ inputs.renderInputRangePair({
+        'id': 'tax_grandfather_fmv',
+        'label': 'Jan 31, 2018 FMV (Optional Grandfathering)',
+        'tooltip': 'Leave at ₹0 for post-2018 purchases. For pre-Feb 2018 units, enter Fair Market Value on 31-Jan-2018 to step up your tax-free cost basis.',
+        'min': 0,
+        'max': 100000000,
+        'slider_max': 10000000,
+        'step': 50000,
+        'value': 0,
+        'prefix': '₹',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '₹0 (Post-2018)', 'value': 0},
+            {'label': '₹10L FMV', 'value': 1000000},
+            {'label': '₹20L FMV', 'value': 2000000}
+        ]
+    }) }}
+
+    <!-- 4% Health & Education Cess Toggle -->
+    <div class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-slate-50/90 border border-slate-200/80 shadow-flat">
+        <div class="pr-2">
+            <label for="tax_include_cess" class="text-ui-xs font-extrabold text-slate-800 cursor-pointer block">
+                Include 4% Health &amp; Education Cess (13.0% Effective LTCG)
+            </label>
+            <p class="text-micro text-slate-500 mt-0.5">
+                Section 112A base rate is 12.5% above ₹1.25L/FY; adding statutory 4% cess gives 13.0% effective tax.
+            </p>
+        </div>
+        <input type="checkbox" id="tax_include_cess" name="tax_include_cess" value="1" checked
+            class="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer shrink-0">
+    </div>
+</div>

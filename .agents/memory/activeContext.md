@@ -1,12 +1,26 @@
 # Active Task Context & Session Ledger
 
-*Last Updated: 2026-11-25*
+*Last Updated: 2026-11-26*
 
 ---
 
 ## 1. Active Focus & State
 - **Permanent Operational Governance Rule (Human-Only Git Commits & Merges):** Under NO circumstances should AI agents execute `git commit`, `git merge`, or `git push` on any branch, or switch/merge branches. The human administrator personally inspects, stages, and commits all changes regularly and merges branches to target branches as needed. AI agents strictly conclude their lifecycle at Tiered Verification and Anti-Drift Documentation, leaving the working tree uncommitted for the human developer.
-- **Current Milestone:** Employees' Provident Fund (EPF & VPF) Calculator (`/epf-calculator`) Implemented & Verified — Built statutory EPFO calculation engine in PHP & TypeScript (`EpfEngine.php` & `EpfEngine.ts`) modeling monthly running-balance interest accrual with annual financial-year crediting (8.25% p.a.), 12% employee + VPF (0%–50%) contributions, 12% employer split with optional ₹1,250/mo EPS cap on the ₹15,000 wage ceiling, annual salary hikes, and Finance Act 2021 ₹2.5 Lakh tax-exempt interest threshold detection; verified 100% Green across all quality gates (912 tests, 15,337 assertions, 103/103 parity tests, 51 SEO routes).
+- **Current Milestone:** Section 112A LTCG & Tax-Harvesting Studio (`/ltcg-tax-calculator`) Implemented & Verified — Built statutory Indian equity LTCG & Tax Harvesting calculator in PHP & TypeScript (`TaxHarvestEngine.php` & `TaxHarvestEngine.ts`) modeling Finance (No. 2) Act 2024 `12.5%` LTCG (`13.0%` effective with 4% cess) above `₹1,25,000/FY`, annual tax-free cost-basis resetting, March 31 + April 1 FY split savings (`₹2.50L` across 48 hours), and Jan 31, 2018 grandfathering FMV protection; verified 100% Green across all quality gates (920 tests, 15,507 assertions, 111/111 parity tests, 52 SEO routes).
+- **Implemented Features & Fixes (2026-11-26 Session 55 - Option D: Section 112A LTCG & Tax-Harvesting Studio):**
+  - **Section 112A Engine (`TaxHarvestEngine.php` & `TaxHarvestEngine.ts`):**
+    - Simulates Buy & Hold vs. Annual ₹1.25 Lakh tax-free cost-basis reset over 1–30 years.
+    - Computes immediate March 31 + April 1 FY split tax savings (`2 × ₹1.25L = ₹2.50L` tax-free).
+    - Models Jan 31, 2018 Grandfathering FMV ($\max(\text{Cost}, \min(\text{FMV}_{2018}, \text{Value}))$) and optional 4% Health & Education Cess (`13.0%` effective LTCG vs. `12.5%` base).
+  - **Domain Strategy, Inputs, Driver & UI:**
+    - `TaxHarvestInputs.php`, `TaxHarvestStrategy.php`, `TaxHarvestDriver.ts`, `tax-harvest-fields.twig`, `tax-harvest-schedule.twig`, `calculator-form.twig`, `chart-visualization.twig`, `header.twig`, `footer.twig`.
+  - **Content, SEO & Discovery:**
+    - `content/calculators/ltcg-tax-calculator.md` (`title`: 59 bytes $\le 65$, `meta_desc`: 158 bytes $\le 200$).
+    - Registered in `routes.php`, `StrategyFactory.php`, `calculator_defaults.json`, `CommandPaletteController.ts` (`calc-ltcg-tax`), `calculator_links.json`, `content/faqs.json`, `llms.txt`, `llms-full.txt`, `url.txt`.
+  - **Verification:**
+    - `npm run typecheck && npm run build`: Clean build (325ms).
+    - `php tests/parity_check.php`: 111/111 parity cases PASS (8 new Tax Harvesting cases).
+    - `composer check-all`: PHPStan Level Max (273 files), PSR-12 (273 files), and 920 PHPUnit tests (15,507 assertions, including 52-route `SeoMetadataValidatorTest`) PASS.
 - **Implemented Features & Fixes (2026-11-25 Session 54 - Option A: EPF & VPF Calculator):**
   - **Statutory EPFO Engine (`EpfEngine.php` & `EpfEngine.ts`):**
     - Monthly running-balance interest accrual at $r_m = r / 12$, credited annually at financial-year end.

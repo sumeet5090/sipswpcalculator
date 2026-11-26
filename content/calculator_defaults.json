@@ -338,6 +338,54 @@
     "epf_cap_eps": {
         "default": 1
     },
+    "tax_portfolio_value": {
+        "default": 2500000,
+        "min": 100000,
+        "max": 100000000,
+        "slider_max": 20000000,
+        "step": 50000,
+        "label": "Current Portfolio Value",
+        "prefix": "₹"
+    },
+    "tax_invested_cost": {
+        "default": 1500000,
+        "min": 50000,
+        "max": 100000000,
+        "slider_max": 20000000,
+        "step": 50000,
+        "label": "Original Purchase Cost",
+        "prefix": "₹"
+    },
+    "tax_expected_return": {
+        "default": 12.0,
+        "min": 4.0,
+        "max": 25.0,
+        "slider_max": 20.0,
+        "step": 0.5,
+        "label": "Expected Return",
+        "suffix": "%"
+    },
+    "tax_holding_years": {
+        "default": 10,
+        "min": 1,
+        "max": 30,
+        "slider_max": 25,
+        "step": 1,
+        "label": "Harvesting Horizon",
+        "suffix": "Yrs"
+    },
+    "tax_grandfather_fmv": {
+        "default": 0,
+        "min": 0,
+        "max": 100000000,
+        "slider_max": 10000000,
+        "step": 50000,
+        "label": "Jan 31, 2018 FMV",
+        "prefix": "₹"
+    },
+    "tax_include_cess": {
+        "default": 1
+    },
     "ltcg_tax": {
         "exemption_threshold": 125000,
         "rate": 0.125

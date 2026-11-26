@@ -734,5 +734,27 @@
             "title": "PPF Calculator",
             "description": "Calculate Public Provident Fund tax-free compounding, Section 80C deductions, and maturity corpus."
         }
+    ],
+    "ltcg-tax-calculator": [
+        {
+            "href": "/swp-calculator",
+            "title": "SWP Pension Calculator",
+            "description": "Model monthly post-retirement withdrawals, capital longevity, and 2026 LTCG tax savings from mutual funds."
+        },
+        {
+            "href": "/post-retirement-calculator",
+            "title": "Post-Retirement Drawdown Studio",
+            "description": "Combine personal savings, Gratuity, NPS lump sum, guaranteed pension & 3-bucket SWP longevity."
+        },
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator India",
+            "description": "Calculate monthly mutual fund SIP returns, step-up growth projections, and Section 112A capital gains."
+        },
+        {
+            "href": "/epf-calculator",
+            "title": "EPF & VPF Calculator",
+            "description": "Calculate Employees Provident Fund & VPF retirement corpus at 8.25% EPFO interest."
+        }
     ]
 }

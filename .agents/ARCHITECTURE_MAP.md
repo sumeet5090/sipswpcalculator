@@ -26,6 +26,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | `/nps-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/nps-fields.twig` | `Core\Strategies\NpsStrategy`<br/>`drivers/NpsDriver.ts` | `engines/NpsEngine.ts`<br/>`Core\Math\NpsEngine.php` | `nps_*` |
 | `/post-retirement-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/post-retirement-fields.twig` | `Core\Strategies\PostRetirementStrategy`<br/>`drivers/PostRetirementDriver.ts` | `engines/PostRetirementEngine.ts`<br/>`Core\Math\PostRetirementEngine.php` | `post_ret_*` |
 | `/epf-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/epf-fields.twig` | `Core\Strategies\EpfStrategy`<br/>`drivers/EpfDriver.ts` | `engines/EpfEngine.ts`<br/>`Core\Math\EpfEngine.php` | `epf_*` |
+| `/ltcg-tax-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/tax-harvest-fields.twig` | `Core\Strategies\TaxHarvestStrategy`<br/>`drivers/TaxHarvestDriver.ts` | `engines/TaxHarvestEngine.ts`<br/>`Core\Math\TaxHarvestEngine.php` | `tax_*` |
 | `/embed/{slug}` | `Controllers\RenderEmbedAction` | `calculators/embed.twig` | `CalculatorApp.ts` | `MathEngine.ts` | Embedded config |
 
 ---
