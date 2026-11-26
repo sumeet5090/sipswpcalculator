@@ -156,5 +156,14 @@ class AppTwigExtensionTest extends TestCase
         $this->assertFalse($taxWaterfallFn('inflation'));
         $this->assertTrue($postTaxFn('inflation'));
         $this->assertFalse($postTaxFn('emi'));
+
+        $snapshotFn = $functionsByName['supports_snapshot'];
+        $amfiFn = $functionsByName['supports_amfi_badge'];
+        $this->assertIsCallable($snapshotFn);
+        $this->assertIsCallable($amfiFn);
+        $this->assertTrue($snapshotFn('sip'));
+        $this->assertFalse($snapshotFn('gratuity'));
+        $this->assertTrue($amfiFn('sip'));
+        $this->assertFalse($amfiFn('emi'));
     }
 }

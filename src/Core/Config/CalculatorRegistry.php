@@ -214,4 +214,16 @@ final class CalculatorRegistry
         $meta = self::getModeMetadata($mode);
         return (bool) ($meta['supports_post_tax_toggle'] ?? false);
     }
+
+    public static function supportsSnapshot(string $mode): bool
+    {
+        $meta = self::getModeMetadata($mode);
+        return (bool) ($meta['supports_snapshot'] ?? false);
+    }
+
+    public static function supportsAmfiBadge(string $mode): bool
+    {
+        $meta = self::getModeMetadata($mode);
+        return (bool) ($meta['supports_amfi_badge'] ?? false);
+    }
 }

@@ -10,7 +10,9 @@
             "duration_field_id": "years",
             "strategy_class": "Core\\Strategies\\ComboStrategy",
             "supports_tax_waterfall": true,
-            "supports_post_tax_toggle": true
+            "supports_post_tax_toggle": true,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         },
         "combo": {
             "is_specialized": false,
@@ -22,7 +24,9 @@
             "duration_field_id": "years",
             "strategy_class": "Core\\Strategies\\ComboStrategy",
             "supports_tax_waterfall": true,
-            "supports_post_tax_toggle": true
+            "supports_post_tax_toggle": true,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         },
         "sip": {
             "is_specialized": false,
@@ -34,7 +38,9 @@
             "duration_field_id": "years",
             "strategy_class": "Core\\Strategies\\SipStrategy",
             "supports_tax_waterfall": true,
-            "supports_post_tax_toggle": true
+            "supports_post_tax_toggle": true,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         },
         "sip-step-up": {
             "is_specialized": false,
@@ -46,7 +52,9 @@
             "duration_field_id": "years",
             "strategy_class": "Core\\Strategies\\StepUpSipStrategy",
             "supports_tax_waterfall": true,
-            "supports_post_tax_toggle": true
+            "supports_post_tax_toggle": true,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         },
         "swp": {
             "is_specialized": false,
@@ -58,7 +66,9 @@
             "duration_field_id": "swp_years",
             "strategy_class": "Core\\Strategies\\SwpStrategy",
             "supports_tax_waterfall": true,
-            "supports_post_tax_toggle": true
+            "supports_post_tax_toggle": true,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         },
         "lumpsum": {
             "is_specialized": false,
@@ -70,7 +80,9 @@
             "duration_field_id": "years",
             "strategy_class": "Core\\Strategies\\LumpsumStrategy",
             "supports_tax_waterfall": true,
-            "supports_post_tax_toggle": true
+            "supports_post_tax_toggle": true,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         },
         "target_corpus": {
             "is_specialized": false,
@@ -82,7 +94,9 @@
             "duration_field_id": "years",
             "strategy_class": "Core\\Strategies\\TargetCorpusStrategy",
             "supports_tax_waterfall": true,
-            "supports_post_tax_toggle": true
+            "supports_post_tax_toggle": true,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         },
         "compound_interest": {
             "is_specialized": true,
@@ -101,7 +115,9 @@
             "duration_field_id": "ci_years",
             "strategy_class": "Core\\Strategies\\CompoundInterestStrategy",
             "supports_tax_waterfall": true,
-            "supports_post_tax_toggle": true
+            "supports_post_tax_toggle": true,
+            "supports_snapshot": false,
+            "supports_amfi_badge": true
         },
         "cagr": {
             "is_specialized": true,
@@ -120,7 +136,9 @@
             "duration_field_id": "cagr_years",
             "strategy_class": "Core\\Strategies\\CagrStrategy",
             "supports_tax_waterfall": true,
-            "supports_post_tax_toggle": true
+            "supports_post_tax_toggle": true,
+            "supports_snapshot": false,
+            "supports_amfi_badge": true
         },
         "emi": {
             "is_specialized": true,
@@ -139,7 +157,9 @@
             "duration_field_id": "emi_years",
             "strategy_class": "Core\\Strategies\\EmiStrategy",
             "supports_tax_waterfall": false,
-            "supports_post_tax_toggle": false
+            "supports_post_tax_toggle": false,
+            "supports_snapshot": false,
+            "supports_amfi_badge": false
         },
         "inflation": {
             "is_specialized": true,
@@ -158,7 +178,9 @@
             "duration_field_id": "inf_years",
             "strategy_class": "Core\\Strategies\\InflationStrategy",
             "supports_tax_waterfall": false,
-            "supports_post_tax_toggle": true
+            "supports_post_tax_toggle": true,
+            "supports_snapshot": false,
+            "supports_amfi_badge": false
         },
         "ppf": {
             "is_specialized": true,
@@ -177,7 +199,9 @@
             "duration_field_id": "ppf_years",
             "strategy_class": "Core\\Strategies\\PpfStrategy",
             "supports_tax_waterfall": false,
-            "supports_post_tax_toggle": false
+            "supports_post_tax_toggle": false,
+            "supports_snapshot": false,
+            "supports_amfi_badge": true
         },
         "fd": {
             "is_specialized": true,
@@ -196,7 +220,9 @@
             "duration_field_id": "fd_years",
             "strategy_class": "Core\\Strategies\\FdStrategy",
             "supports_tax_waterfall": false,
-            "supports_post_tax_toggle": false
+            "supports_post_tax_toggle": false,
+            "supports_snapshot": false,
+            "supports_amfi_badge": true
         },
         "gratuity": {
             "is_specialized": true,
@@ -215,7 +241,9 @@
             "duration_field_id": "gratuity_years",
             "strategy_class": "Core\\Strategies\\GratuityStrategy",
             "supports_tax_waterfall": false,
-            "supports_post_tax_toggle": false
+            "supports_post_tax_toggle": false,
+            "supports_snapshot": false,
+            "supports_amfi_badge": true
         },
         "nps": {
             "is_specialized": true,
@@ -234,7 +262,9 @@
             "duration_field_id": "nps_retirement_age",
             "strategy_class": "Core\\Strategies\\NpsStrategy",
             "supports_tax_waterfall": false,
-            "supports_post_tax_toggle": false
+            "supports_post_tax_toggle": false,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         },
         "post_retirement": {
             "is_specialized": true,
@@ -253,7 +283,9 @@
             "duration_field_id": "post_ret_horizon",
             "strategy_class": "Core\\Strategies\\PostRetirementStrategy",
             "supports_tax_waterfall": false,
-            "supports_post_tax_toggle": false
+            "supports_post_tax_toggle": false,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         },
         "epf": {
             "is_specialized": true,
@@ -272,7 +304,9 @@
             "duration_field_id": "epf_retirement_age",
             "strategy_class": "Core\\Strategies\\EpfStrategy",
             "supports_tax_waterfall": false,
-            "supports_post_tax_toggle": false
+            "supports_post_tax_toggle": false,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         },
         "tax_harvest": {
             "is_specialized": true,
@@ -291,7 +325,9 @@
             "duration_field_id": "tax_holding_years",
             "strategy_class": "Core\\Strategies\\TaxHarvestStrategy",
             "supports_tax_waterfall": false,
-            "supports_post_tax_toggle": false
+            "supports_post_tax_toggle": false,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         },
         "income_tax": {
             "is_specialized": true,
@@ -310,7 +346,9 @@
             "duration_field_id": "it_gross_salary",
             "strategy_class": "Core\\Strategies\\IncomeTaxStrategy",
             "supports_tax_waterfall": false,
-            "supports_post_tax_toggle": false
+            "supports_post_tax_toggle": false,
+            "supports_snapshot": true,
+            "supports_amfi_badge": true
         }
     },
     "routes": {

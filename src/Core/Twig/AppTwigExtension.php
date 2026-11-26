@@ -63,6 +63,8 @@ class AppTwigExtension extends AbstractExtension
             new TwigFunction('is_calculator_route', fn(string $slug): bool => CalculatorRegistry::isCalculatorRouteSlug($slug)),
             new TwigFunction('supports_tax_waterfall', fn(string $mode): bool => CalculatorRegistry::supportsTaxWaterfall($mode)),
             new TwigFunction('supports_post_tax_toggle', fn(string $mode): bool => CalculatorRegistry::supportsPostTaxToggle($mode)),
+            new TwigFunction('supports_snapshot', fn(string $mode): bool => CalculatorRegistry::supportsSnapshot($mode)),
+            new TwigFunction('supports_amfi_badge', fn(string $mode): bool => CalculatorRegistry::supportsAmfiBadge($mode)),
         ];
     }
 }

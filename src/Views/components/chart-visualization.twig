@@ -339,7 +339,7 @@
                     <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 text-micro font-bold shadow-flat shrink-0">
                         <span>FY 2025-26 Slabs</span>
                     </span>
-                    {% elseif calculator_type not in ['emi', 'inflation'] %}
+                    {% elseif supports_amfi_badge(calculator_type|default('all')) %}
                     <button type="button" onclick="document.getElementById('sebiBenchmarkModal')?.showModal()"
                         class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100/90 hover:bg-growth-surface border border-slate-200 hover:border-growth-border text-micro text-slate-600 hover:text-growth-emphasis transition-all cursor-pointer shadow-flat shrink-0"
                         title="Click to view AMFI/SEBI regulatory modeling assumptions">
@@ -455,7 +455,7 @@
                 </button>
 
                 <!-- 3. Scenario Snapshot Comparison Trigger -->
-                {% if calculator_type not in ['ppf', 'fd', 'emi', 'inflation', 'cagr', 'compound_interest', 'gratuity'] %}
+                {% if supports_snapshot(calculator_type|default('all')) %}
                 <button type="button" id="snapshot-scenario-btn"
                     class="inline-flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200/90 hover:border-slate-300 text-ui-xs font-semibold transition-all shadow-flat active:scale-95 cursor-pointer"
                     title="Snapshot scenario for comparison">

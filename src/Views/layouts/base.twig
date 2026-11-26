@@ -367,7 +367,7 @@
                     <span>Copy Link</span>
                 </button>
                 <!-- Snapshot Scenario -->
-                {% if calculator_type not in ['ppf', 'fd', 'emi', 'inflation', 'cagr', 'compound_interest'] %}
+                {% if supports_snapshot(calculator_type|default('all')) %}
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('snapshot-scenario-btn')?.click()"
                     class="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
                     <span class="text-ui-sm">📸</span>
@@ -375,7 +375,7 @@
                 </button>
                 {% endif %}
                 <!-- §112A Tax Waterfall -->
-                {% if calculator_type not in ['emi', 'ppf', 'fd', 'inflation'] %}
+                {% if supports_tax_waterfall(calculator_type|default('all')) %}
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('open-tax-waterfall-btn')?.click()"
                     class="p-2.5 rounded-xl bg-violet-50 hover:bg-violet-100 border border-violet-200 text-violet-900 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
                     <span class="text-ui-sm">⚖️</span>
@@ -389,7 +389,7 @@
                     <span>Embed</span>
                 </button>
                 <!-- AMFI Regulatory Rules -->
-                {% if calculator_type not in ['emi', 'inflation'] %}
+                {% if supports_amfi_badge(calculator_type|default('all')) %}
                 <button type="button" onclick="document.getElementById('mobile-actions-sheet')?.close(); document.getElementById('sebiBenchmarkModal')?.showModal()"
                     class="p-2.5 rounded-xl bg-emerald-50/70 hover:bg-emerald-100/70 border border-emerald-200 text-emerald-800 text-ui-xs font-bold active:scale-95 transition-all flex flex-col items-center gap-1 cursor-pointer">
                     <span class="text-ui-sm">📜</span>
