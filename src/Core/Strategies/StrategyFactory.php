@@ -42,6 +42,7 @@ class StrategyFactory
         'post-retirement-calculator'   => PostRetirementStrategy::class,
         'epf-calculator'               => EpfStrategy::class,
         'ltcg-tax-calculator'          => TaxHarvestStrategy::class,
+        'income-tax-calculator'        => IncomeTaxStrategy::class,
     ];
 
     private ConfigServiceInterface $configService;

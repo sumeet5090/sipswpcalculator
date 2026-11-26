@@ -1,0 +1,182 @@
+{% import "components/form/input-range-pair.twig" as inputs %}
+
+<!-- Hidden legacy fields to prevent JS errors -->
+<input type="hidden" id="sip" name="sip" value="0">
+<input type="hidden" id="stepup" name="stepup" value="0">
+<input type="hidden" id="lumpsum" name="lumpsum" value="0">
+
+<div class="space-y-3">
+    <!-- Annual Gross Salary -->
+    {{ inputs.renderInputRangePair({
+        'id': 'it_gross_salary',
+        'label': 'Annual Gross Salary (CTC / Income)',
+        'tooltip': 'Your total annual salary before deductions. New Regime includes a ₹75,000 standard deduction; Old Regime includes ₹50,000.',
+        'min': 300000,
+        'max': 50000000,
+        'slider_max': 10000000,
+        'step': 50000,
+        'value': 1500000,
+        'prefix': '₹',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '₹10L', 'value': 1000000},
+            {'label': '₹12.75L', 'value': 1275000},
+            {'label': '₹15L (Default)', 'value': 1500000},
+            {'label': '₹25L', 'value': 2500000},
+            {'label': '₹50L', 'value': 5000000}
+        ]
+    }) }}
+
+    <!-- Annual Basic + DA & HRA Received Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <!-- Annual Basic + DA -->
+        {{ inputs.renderInputRangePair({
+            'id': 'it_basic_salary',
+            'label': 'Annual Basic + DA',
+            'tooltip': 'Your annual Basic Pay plus Dearness Allowance (typically 40%–50% of CTC). Used for Section 10(13A) HRA exemption calculation.',
+            'min': 100000,
+            'max': 25000000,
+            'slider_max': 5000000,
+            'step': 25000,
+            'value': 750000,
+            'prefix': '₹',
+            'theme': 'emerald',
+            'presets': [
+                {'label': '₹5L', 'value': 500000},
+                {'label': '₹7.5L', 'value': 750000},
+                {'label': '₹12L', 'value': 1200000}
+            ]
+        }) }}
+
+        <!-- Annual HRA Received -->
+        {{ inputs.renderInputRangePair({
+            'id': 'it_hra_received',
+            'label': 'Annual HRA Received',
+            'tooltip': 'Total House Rent Allowance component received from your employer per year.',
+            'min': 0,
+            'max': 10000000,
+            'slider_max': 2500000,
+            'step': 10000,
+            'value': 300000,
+            'prefix': '₹',
+            'theme': 'emerald',
+            'presets': [
+                {'label': '₹0', 'value': 0},
+                {'label': '₹3L (Default)', 'value': 300000},
+                {'label': '₹6L', 'value': 600000}
+            ]
+        }) }}
+    </div>
+
+    <!-- Annual Rent Paid & Metro Toggle -->
+    {{ inputs.renderInputRangePair({
+        'id': 'it_rent_paid',
+        'label': 'Annual House Rent Paid',
+        'tooltip': 'Total annual rent paid by you (e.g., ₹30,000/month = ₹3,60,000/year).',
+        'min': 0,
+        'max': 10000000,
+        'slider_max': 2500000,
+        'step': 12000,
+        'value': 360000,
+        'prefix': '₹',
+        'theme': 'emerald',
+        'presets': [
+            {'label': '₹0 (Own)', 'value': 0},
+            {'label': '₹2.4L', 'value': 240000},
+            {'label': '₹3.6L (Default)', 'value': 360000},
+            {'label': '₹6.0L', 'value': 600000}
+        ]
+    }) }}
+
+    <div class="flex items-center justify-between px-3.5 py-2 rounded-2xl bg-slate-50/90 border border-slate-200/80 shadow-flat">
+        <div class="pr-2">
+            <label for="it_is_metro" class="text-ui-xs font-extrabold text-slate-800 cursor-pointer block">
+                Residing in Metro City (Mumbai, Delhi, Kolkata, Chennai)
+            </label>
+            <p class="text-micro text-slate-500 mt-0.5">
+                Metro HRA ceiling is 50% of Basic + DA; Non-Metro cities (incl. Bengaluru, Pune, Hyderabad) cap at 40%.
+            </p>
+        </div>
+        <input type="checkbox" id="it_is_metro" name="it_is_metro" value="1" checked
+            class="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer shrink-0">
+    </div>
+
+    <!-- Chapter VI-A Deductions (Old Regime) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <!-- Section 80C -->
+        {{ inputs.renderInputRangePair({
+            'id': 'it_sec_80c',
+            'label': 'Section 80C (EPF/PPF/ELSS)',
+            'tooltip': 'Old Regime deduction up to ₹1,50,000 across EPF, VPF, PPF, ELSS mutual funds, and life insurance.',
+            'min': 0,
+            'max': 150000,
+            'slider_max': 150000,
+            'step': 10000,
+            'value': 150000,
+            'prefix': '₹',
+            'theme': 'emerald',
+            'presets': [
+                {'label': '₹0', 'value': 0},
+                {'label': '₹1.5L (Max)', 'value': 150000}
+            ]
+        }) }}
+
+        <!-- Section 80D -->
+        {{ inputs.renderInputRangePair({
+            'id': 'it_sec_80d',
+            'label': 'Section 80D (Health Insurance)',
+            'tooltip': 'Health insurance premium deduction: ₹25,000 for self/family + up to ₹50,000 for senior citizen parents.',
+            'min': 0,
+            'max': 100000,
+            'slider_max': 100000,
+            'step': 5000,
+            'value': 25000,
+            'prefix': '₹',
+            'theme': 'emerald',
+            'presets': [
+                {'label': '₹0', 'value': 0},
+                {'label': '₹25k', 'value': 25000},
+                {'label': '₹75k', 'value': 75000}
+            ]
+        }) }}
+    </div>
+
+    <!-- NPS 80CCD(1B) & Home Loan 24(b) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <!-- NPS 80CCD(1B) -->
+        {{ inputs.renderInputRangePair({
+            'id': 'it_nps_80ccd1b',
+            'label': 'NPS Sec 80CCD(1B)',
+            'tooltip': 'Exclusive additional ₹50,000 NPS Tier-1 deduction available under the Old Tax Regime.',
+            'min': 0,
+            'max': 50000,
+            'slider_max': 50000,
+            'step': 5000,
+            'value': 50000,
+            'prefix': '₹',
+            'theme': 'emerald',
+            'presets': [
+                {'label': '₹0', 'value': 0},
+                {'label': '₹50k (Max)', 'value': 50000}
+            ]
+        }) }}
+
+        <!-- Home Loan Section 24(b) -->
+        {{ inputs.renderInputRangePair({
+            'id': 'it_home_loan_24b',
+            'label': 'Home Loan Interest Sec 24(b)',
+            'tooltip': 'Self-occupied home loan interest deduction up to ₹2,00,000 per year under the Old Tax Regime.',
+            'min': 0,
+            'max': 200000,
+            'slider_max': 200000,
+            'step': 10000,
+            'value': 0,
+            'prefix': '₹',
+            'theme': 'emerald',
+            'presets': [
+                {'label': '₹0', 'value': 0},
+                {'label': '₹2L (Max)', 'value': 200000}
+            ]
+        }) }}
+    </div>
+</div>

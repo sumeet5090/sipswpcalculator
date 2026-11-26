@@ -153,6 +153,60 @@ $calculators = [
         'tag2' => '3-Fund Core Portfolio',
         'tag3' => '₹2.7 Cr Step-Up Boost',
         'accent' => [16, 185, 129], // emerald-500
+    ],
+    'gratuity-calculator' => [
+        'category' => 'STATUTORY SEPARATION',
+        'title' => 'Gratuity Calculator India',
+        'subtitle' => 'Calculate statutory gratuity payout under the Payment of Gratuity Act, 1972 with 5-year vesting and ₹20L Section 10(10) tax exemption.',
+        'tag1' => '15/26 Statutory Formula',
+        'tag2' => 'Sec 10(10) ₹20L Cap',
+        'tag3' => '6-Month Tenure Rounding',
+        'accent' => [5, 150, 105], // emerald-600
+    ],
+    'nps-calculator' => [
+        'category' => 'PFRDA RETIREMENT PENSION',
+        'title' => 'NPS Tier-1 Calculator India',
+        'subtitle' => 'Project your National Pension System corpus, 60% tax-free lump-sum exit under Section 10(12A), and lifelong monthly annuity pension.',
+        'tag1' => '60% Tax-Free Lump Sum',
+        'tag2' => '40% Annuity Pension',
+        'tag3' => 'Sec 80CCD(1B) & (2)',
+        'accent' => [13, 148, 136], // teal-600
+    ],
+    'post-retirement-calculator' => [
+        'category' => 'MULTI-STREAM DRAWDOWN',
+        'title' => 'Post-Retirement Asset Studio',
+        'subtitle' => 'Harmonize personal savings, Gratuity, and NPS lump sums with guaranteed pension, deficit-only SWP, and 3-Bucket asset allocation.',
+        'tag1' => '3-Bucket Allocation',
+        'tag2' => 'Deficit-Only SWP',
+        'tag3' => 'Portfolio Longevity',
+        'accent' => [217, 119, 6], // amber-600
+    ],
+    'epf-calculator' => [
+        'category' => 'EPFO STATUTORY LEDGER',
+        'title' => 'EPF & VPF Calculator (8.25%)',
+        'subtitle' => 'Calculate EPF & VPF corpus with monthly running-balance compounding, ₹15,000 EPS wage ceiling split, and ₹2.5L tax-free cap tracking.',
+        'tag1' => '8.25% EPFO Rate',
+        'tag2' => '₹15k EPS Wage Ceiling',
+        'tag3' => '₹2.5L EEE Tax Threshold',
+        'accent' => [5, 150, 105], // emerald-600
+    ],
+    'ltcg-tax-calculator' => [
+        'category' => 'SECTION 112A ALPHA',
+        'title' => 'LTCG Tax & Harvesting Studio',
+        'subtitle' => 'Model 12.5% + 4% cess LTCG tax above ₹1.25L/FY, annual tax-free cost-basis resets, March-April split savings & 2018 grandfathering.',
+        'tag1' => '₹1.25L/FY Tax Reset',
+        'tag2' => 'March-April FY Split',
+        'tag3' => 'Jan 2018 Grandfathering',
+        'accent' => [124, 58, 237], // violet-600
+    ],
+    'income-tax-calculator' => [
+        'category' => 'FY 2025-26 TAX PLANNER',
+        'title' => 'Old vs New Tax Regime & HRA',
+        'subtitle' => 'Compare Old Regime (HRA Sec 10(13A), 80C, 80D, NPS) against FY 2025-26 New Regime slabs with ₹12L Section 87A tax rebate.',
+        'tag1' => '₹12L New Regime Rebate',
+        'tag2' => 'Sec 10(13A) HRA Solver',
+        'tag3' => 'Old vs New Breakeven',
+        'accent' => [5, 150, 105], // emerald-600
     ]
 ];
 

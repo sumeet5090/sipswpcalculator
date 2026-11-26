@@ -183,6 +183,18 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertSame('components/benchmarks/tax-harvest-schedule.twig', $strategy->getBenchmarkTemplate());
     }
 
+    public function testCreateIncomeTaxStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('income-tax-calculator');
+        $this->assertInstanceOf(\Core\Strategies\IncomeTaxStrategy::class, $strategy);
+        $this->assertSame('income_tax', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\IncomeTaxInputs::class, $inputs);
+        $this->assertArrayHasKey('it_gross_salary', $inputs->toTemplateData());
+        $this->assertSame('components/benchmarks/income-tax-schedule.twig', $strategy->getBenchmarkTemplate());
+    }
+
     public function testCreateStepUpSipStrategyFromContainer(): void
     {
         $strategy = $this->factory->create('sip-step-up-calculator');

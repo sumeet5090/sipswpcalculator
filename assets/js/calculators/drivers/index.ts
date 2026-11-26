@@ -10,3 +10,4 @@ export { NpsDriver } from './NpsDriver.ts';
 export { PostRetirementDriver } from './PostRetirementDriver.ts';
 export { EpfDriver } from './EpfDriver.ts';
 export { TaxHarvestDriver } from './TaxHarvestDriver.ts';
+export { IncomeTaxDriver } from './IncomeTaxDriver.ts';

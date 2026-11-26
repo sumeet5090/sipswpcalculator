@@ -6,7 +6,22 @@
 
 ## 1. Active Focus & State
 - **Permanent Operational Governance Rule (Human-Only Git Commits & Merges):** Under NO circumstances should AI agents execute `git commit`, `git merge`, or `git push` on any branch, or switch/merge branches. The human administrator personally inspects, stages, and commits all changes regularly and merges branches to target branches as needed. AI agents strictly conclude their lifecycle at Tiered Verification and Anti-Drift Documentation, leaving the working tree uncommitted for the human developer.
-- **Current Milestone:** Section 112A LTCG & Tax-Harvesting Studio (`/ltcg-tax-calculator`) Implemented & Verified — Built statutory Indian equity LTCG & Tax Harvesting calculator in PHP & TypeScript (`TaxHarvestEngine.php` & `TaxHarvestEngine.ts`) modeling Finance (No. 2) Act 2024 `12.5%` LTCG (`13.0%` effective with 4% cess) above `₹1,25,000/FY`, annual tax-free cost-basis resetting, March 31 + April 1 FY split savings (`₹2.50L` across 48 hours), and Jan 31, 2018 grandfathering FMV protection; verified 100% Green across all quality gates (920 tests, 15,507 assertions, 111/111 parity tests, 52 SEO routes).
+- **Current Milestone:** OG Preview Images Audit + FY 2025-26 Income Tax & HRA Calculator (`/income-tax-calculator`) Implemented & Verified — Generated all 6 missing `1200×630` OpenGraph images in `assets/og/` (`og-gratuity-calculator.jpg`, `og-nps-calculator.jpg`, `og-post-retirement-calculator.jpg`, `og-epf-calculator.jpg`, `og-ltcg-tax-calculator.jpg`, `og-income-tax-calculator.jpg`) via `scripts/generate_og_images.php`; built `IncomeTaxEngine.php` & `IncomeTaxEngine.ts` comparing Old Regime (Section 10(13A) HRA, 80C, 80D, 80CCD(1B), 24(b), ₹50k standard deduction, ₹5L 87A rebate) against FY 2025-26 New Regime (₹75k standard deduction, 0%–30% slabs up to ₹24L, ₹12L 87A rebate with marginal relief, surcharge + 4% cess); verified 100% Green across all quality gates (928 tests, 15,671 assertions, 119/119 parity tests, 53 SEO routes).
+- **Implemented Features & Fixes (2026-11-26 Session 56 - OG Image Audit + Income Tax & HRA Calculator):**
+  - **OG Preview Images (`scripts/generate_og_images.php` & `assets/og/*.jpg`):**
+    - Audited `assets/og/` and generated 6 missing `1200×630` branded OpenGraph JPEGs matching each calculator's topic and daylight palette.
+  - **Income Tax & HRA Engine (`IncomeTaxEngine.php` & `IncomeTaxEngine.ts`):**
+    - Section 10(13A) HRA Exemption solver supporting 50% Metro (Mumbai, Delhi, Kolkata, Chennai) vs. 40% Non-Metro ceilings.
+    - Old vs. FY 2025-26 New Tax Regime comparison with ₹12L Section 87A rebate (₹12.75L gross tax-free for salaried), marginal relief, surcharge tiers, and 4% Health & Education Cess.
+  - **Domain Strategy, Inputs, Driver & UI:**
+    - `IncomeTaxInputs.php`, `IncomeTaxStrategy.php`, `IncomeTaxDriver.ts`, `income-tax-fields.twig`, `income-tax-schedule.twig`, `calculator-form.twig`, `chart-visualization.twig`, `header.twig`, `footer.twig`.
+  - **Content, SEO & Discovery:**
+    - `content/calculators/income-tax-calculator.md` (`title`: 61 bytes $\le 65$, `meta_desc`: 153 bytes $\le 200$).
+    - Registered in `routes.php`, `StrategyFactory.php`, `calculator_defaults.json`, `CommandPaletteController.ts` (`calc-income-tax`), `calculator_links.json`, `content/faqs.json`, `llms.txt`, `llms-full.txt`, `url.txt`.
+  - **Verification:**
+    - `npm run typecheck && npm run build`: Clean build (280ms).
+    - `php tests/parity_check.php`: 119/119 parity cases PASS (8 new Income Tax & HRA cases).
+    - `composer check-all`: PHPStan Level Max (277 files), PSR-12 (277 files), and 928 PHPUnit tests (15,671 assertions, including 53-route `SeoMetadataValidatorTest`) PASS.
 - **Implemented Features & Fixes (2026-11-26 Session 55 - Option D: Section 112A LTCG & Tax-Harvesting Studio):**
   - **Section 112A Engine (`TaxHarvestEngine.php` & `TaxHarvestEngine.ts`):**
     - Simulates Buy & Hold vs. Annual ₹1.25 Lakh tax-free cost-basis reset over 1–30 years.

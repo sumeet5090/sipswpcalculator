@@ -1161,6 +1161,79 @@ foreach ($taxCases as $idx => $tParams) {
     }
 }
 
+// 13. Cross-Runtime Parity: FY 2025-26 Old vs New Income Tax & HRA Engine
+// ----------------------------------------------------------------------
+echo "\nTesting Income Tax & HRA Engine Parity (PHP vs TypeScript)...\n";
+$itCases = [
+    ['gross_salary' => 1500000.0, 'basic_salary' => 750000.0, 'hra_received' => 300000.0, 'rent_paid' => 360000.0, 'is_metro' => true, 'sec_80c' => 150000.0, 'sec_80d' => 25000.0, 'nps_80ccd1b' => 50000.0, 'home_loan_24b' => 0.0],
+    ['gross_salary' => 1275000.0, 'basic_salary' => 600000.0, 'hra_received' => 240000.0, 'rent_paid' => 0.0, 'is_metro' => true, 'sec_80c' => 0.0, 'sec_80d' => 0.0, 'nps_80ccd1b' => 0.0, 'home_loan_24b' => 0.0],
+    ['gross_salary' => 1320000.0, 'basic_salary' => 650000.0, 'hra_received' => 200000.0, 'rent_paid' => 180000.0, 'is_metro' => false, 'sec_80c' => 150000.0, 'sec_80d' => 25000.0, 'nps_80ccd1b' => 50000.0, 'home_loan_24b' => 0.0],
+    ['gross_salary' => 1500000.0, 'basic_salary' => 750000.0, 'hra_received' => 360000.0, 'rent_paid' => 480000.0, 'is_metro' => true, 'sec_80c' => 150000.0, 'sec_80d' => 100000.0, 'nps_80ccd1b' => 50000.0, 'home_loan_24b' => 200000.0],
+    ['gross_salary' => 2500000.0, 'basic_salary' => 1200000.0, 'hra_received' => 480000.0, 'rent_paid' => 600000.0, 'is_metro' => false, 'sec_80c' => 150000.0, 'sec_80d' => 50000.0, 'nps_80ccd1b' => 50000.0, 'home_loan_24b' => 200000.0],
+    ['gross_salary' => 6500000.0, 'basic_salary' => 3000000.0, 'hra_received' => 1200000.0, 'rent_paid' => 900000.0, 'is_metro' => true, 'sec_80c' => 150000.0, 'sec_80d' => 75000.0, 'nps_80ccd1b' => 50000.0, 'home_loan_24b' => 200000.0],
+    ['gross_salary' => 12000000.0, 'basic_salary' => 5000000.0, 'hra_received' => 2000000.0, 'rent_paid' => 1200000.0, 'is_metro' => true, 'sec_80c' => 150000.0, 'sec_80d' => 50000.0, 'nps_80ccd1b' => 50000.0, 'home_loan_24b' => 0.0],
+    ['gross_salary' => 500000.0, 'basic_salary' => 250000.0, 'hra_received' => 100000.0, 'rent_paid' => 120000.0, 'is_metro' => false, 'sec_80c' => 50000.0, 'sec_80d' => 0.0, 'nps_80ccd1b' => 0.0, 'home_loan_24b' => 0.0],
+];
+
+foreach ($itCases as $idx => $itParams) {
+    echo "Income Tax Parity Case " . ($idx + 1) . ": ";
+    $phpRes = \Core\Math\IncomeTaxEngine::calculate(
+        $itParams['gross_salary'],
+        $itParams['basic_salary'],
+        $itParams['hra_received'],
+        $itParams['rent_paid'],
+        $itParams['is_metro'],
+        $itParams['sec_80c'],
+        $itParams['sec_80d'],
+        $itParams['nps_80ccd1b'],
+        $itParams['home_loan_24b']
+    );
+
+    $cmd = "node tests/run_js_calc.js " . escapeshellarg(json_encode([
+        'action' => 'income_tax',
+        'gross_salary' => $itParams['gross_salary'],
+        'basic_salary' => $itParams['basic_salary'],
+        'hra_received' => $itParams['hra_received'],
+        'rent_paid' => $itParams['rent_paid'],
+        'is_metro' => $itParams['is_metro'],
+        'sec_80c' => $itParams['sec_80c'],
+        'sec_80d' => $itParams['sec_80d'],
+        'nps_80ccd1b' => $itParams['nps_80ccd1b'],
+        'home_loan_24b' => $itParams['home_loan_24b'],
+    ]));
+    $jsRes = json_decode((string)shell_exec($cmd), true);
+
+    $fields = [
+        'hra_exemption',
+        'old_total_deductions',
+        'old_taxable_income',
+        'old_total_tax',
+        'old_effective_rate',
+        'new_taxable_income',
+        'new_total_tax',
+        'new_effective_rate',
+        'tax_savings',
+    ];
+    $mismatch = false;
+    if ($phpRes['recommended_regime'] !== $jsRes['recommended_regime']) {
+        echo "FAIL: recommended_regime mismatch.\n";
+        $failed = true;
+        $mismatch = true;
+    } else {
+        foreach ($fields as $f) {
+            if (abs((float)$phpRes[$f] - (float)$jsRes[$f]) > 1.0) {
+                echo "FAIL: Field {$f} mismatch. PHP: {$phpRes[$f]}, JS: {$jsRes[$f]}\n";
+                $failed = true;
+                $mismatch = true;
+                break;
+            }
+        }
+    }
+    if (!$mismatch) {
+        echo "PASS\n";
+    }
+}
+
 echo "\n";
 if ($failed) {
     echo "=== CALCULATOR ENGINE PARITY TESTS FAILED ===\n";

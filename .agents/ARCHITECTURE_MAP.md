@@ -27,6 +27,7 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 | `/post-retirement-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/post-retirement-fields.twig` | `Core\Strategies\PostRetirementStrategy`<br/>`drivers/PostRetirementDriver.ts` | `engines/PostRetirementEngine.ts`<br/>`Core\Math\PostRetirementEngine.php` | `post_ret_*` |
 | `/epf-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/epf-fields.twig` | `Core\Strategies\EpfStrategy`<br/>`drivers/EpfDriver.ts` | `engines/EpfEngine.ts`<br/>`Core\Math\EpfEngine.php` | `epf_*` |
 | `/ltcg-tax-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/tax-harvest-fields.twig` | `Core\Strategies\TaxHarvestStrategy`<br/>`drivers/TaxHarvestDriver.ts` | `engines/TaxHarvestEngine.ts`<br/>`Core\Math\TaxHarvestEngine.php` | `tax_*` |
+| `/income-tax-calculator` | `Controllers\RenderGuideAction` | `calculators/calculator-guide.twig`<br/>`forms/income-tax-fields.twig` | `Core\Strategies\IncomeTaxStrategy`<br/>`drivers/IncomeTaxDriver.ts` | `engines/IncomeTaxEngine.ts`<br/>`Core\Math\IncomeTaxEngine.php` | `it_*` |
 | `/embed/{slug}` | `Controllers\RenderEmbedAction` | `calculators/embed.twig` | `CalculatorApp.ts` | `MathEngine.ts` | Embedded config |
 
 ---

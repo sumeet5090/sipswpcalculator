@@ -756,5 +756,27 @@
             "title": "EPF & VPF Calculator",
             "description": "Calculate Employees Provident Fund & VPF retirement corpus at 8.25% EPFO interest."
         }
+    ],
+    "income-tax-calculator": [
+        {
+            "href": "/ltcg-tax-calculator",
+            "title": "LTCG Tax & Harvesting Calculator",
+            "description": "Calculate Section 112A 12.5% LTCG tax, ₹1.25L annual harvesting savings & March–April splits."
+        },
+        {
+            "href": "/epf-calculator",
+            "title": "EPF & VPF Calculator",
+            "description": "Calculate Employees Provident Fund & VPF retirement corpus at 8.25% EPFO interest."
+        },
+        {
+            "href": "/nps-calculator",
+            "title": "NPS Calculator",
+            "description": "Calculate National Pension System Tier-1 corpus, 60% tax-free lump sum & monthly annuity pension."
+        },
+        {
+            "href": "/sip-calculator",
+            "title": "SIP Calculator India",
+            "description": "Channel your annual tax savings into systematic mutual fund compounding."
+        }
     ]
 }

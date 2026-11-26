@@ -139,6 +139,9 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 26. **LTCG Tax & Harvesting Calculator (`https://sipswpcalculator.com/ltcg-tax-calculator`)**
     - Simulates Section 112A mutual fund LTCG taxation (12.5% base + 4% cess = 13.0% effective above ₹1,25,000/FY) comparing Buy & Hold vs. Annual ₹1.25L Tax-Free Cost-Basis Resetting. Includes March 31 + April 1 FY split savings and Jan 31, 2018 grandfathering FMV cost protection.
 
+27. **Income Tax & HRA Calculator (`https://sipswpcalculator.com/income-tax-calculator`)**
+    - Compares Old Tax Regime (Section 10(13A) HRA exemption with 50% Metro vs 40% Non-Metro rules, 80C, 80D, 80CCD(1B), 24(b), ₹50k standard deduction) against FY 2025-26 New Tax Regime (₹75k standard deduction, 0%-30% slabs up to ₹24L, ₹12L Section 87A rebate with marginal relief, surcharge, and 4% cess).
+
 ---
 
 ## 4. Key Financial Heuristics & Rules of Thumb for India

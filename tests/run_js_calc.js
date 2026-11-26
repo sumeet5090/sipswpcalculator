@@ -15,6 +15,7 @@ import { NpsEngine } from '../assets/js/calculators/engines/NpsEngine.ts';
 import { PostRetirementEngine } from '../assets/js/calculators/engines/PostRetirementEngine.ts';
 import { EpfEngine } from '../assets/js/calculators/engines/EpfEngine.ts';
 import { TaxHarvestEngine } from '../assets/js/calculators/engines/TaxHarvestEngine.ts';
+import { IncomeTaxEngine } from '../assets/js/calculators/engines/IncomeTaxEngine.ts';
 
 try {
     // Read input parameters JSON from command line arguments
@@ -243,6 +244,19 @@ try {
             inputArgs.holding_years !== undefined ? inputArgs.holding_years : 10,
             inputArgs.grandfather_fmv !== undefined ? inputArgs.grandfather_fmv : 0.0,
             inputArgs.include_cess !== undefined ? inputArgs.include_cess : true
+        );
+        console.log(JSON.stringify(res));
+    } else if (inputArgs.action === 'income_tax') {
+        const res = IncomeTaxEngine.calculate(
+            inputArgs.gross_salary,
+            inputArgs.basic_salary,
+            inputArgs.hra_received !== undefined ? inputArgs.hra_received : 300000.0,
+            inputArgs.rent_paid !== undefined ? inputArgs.rent_paid : 360000.0,
+            inputArgs.is_metro !== undefined ? inputArgs.is_metro : true,
+            inputArgs.sec_80c !== undefined ? inputArgs.sec_80c : 150000.0,
+            inputArgs.sec_80d !== undefined ? inputArgs.sec_80d : 25000.0,
+            inputArgs.nps_80ccd1b !== undefined ? inputArgs.nps_80ccd1b : 50000.0,
+            inputArgs.home_loan_24b !== undefined ? inputArgs.home_loan_24b : 0.0
         );
         console.log(JSON.stringify(res));
     } else if (inputArgs.action === 'generate_qr_test') {

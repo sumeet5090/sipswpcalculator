@@ -270,6 +270,14 @@ export const COMMAND_ITEMS: CommandItem[] = [
         icon: '⚖️'
     },
     {
+        id: 'calc-income-tax',
+        title: 'Income Tax & HRA Calculator',
+        description: 'Compare Old vs FY 2025-26 New Tax Regime (₹12L 87A rebate) & Section 10(13A) HRA exemption.',
+        category: 'Calculator',
+        url: '/income-tax-calculator',
+        icon: '🧾'
+    },
+    {
         id: 'calc-post-retirement',
         title: 'Post-Retirement Calculator',
         description: 'Multi-stream asset drawdown planner: Gratuity, NPS lump sum, guaranteed pension, and inflation-indexed SWP.',

@@ -386,6 +386,81 @@
     "tax_include_cess": {
         "default": 1
     },
+    "it_gross_salary": {
+        "default": 1500000,
+        "min": 300000,
+        "max": 50000000,
+        "slider_max": 10000000,
+        "step": 50000,
+        "label": "Annual Gross Salary",
+        "prefix": "₹"
+    },
+    "it_basic_salary": {
+        "default": 750000,
+        "min": 100000,
+        "max": 25000000,
+        "slider_max": 5000000,
+        "step": 25000,
+        "label": "Annual Basic + DA",
+        "prefix": "₹"
+    },
+    "it_hra_received": {
+        "default": 300000,
+        "min": 0,
+        "max": 10000000,
+        "slider_max": 2500000,
+        "step": 10000,
+        "label": "Annual HRA Received",
+        "prefix": "₹"
+    },
+    "it_rent_paid": {
+        "default": 360000,
+        "min": 0,
+        "max": 10000000,
+        "slider_max": 2500000,
+        "step": 12000,
+        "label": "Annual Rent Paid",
+        "prefix": "₹"
+    },
+    "it_is_metro": {
+        "default": 1
+    },
+    "it_sec_80c": {
+        "default": 150000,
+        "min": 0,
+        "max": 150000,
+        "slider_max": 150000,
+        "step": 10000,
+        "label": "Section 80C",
+        "prefix": "₹"
+    },
+    "it_sec_80d": {
+        "default": 25000,
+        "min": 0,
+        "max": 100000,
+        "slider_max": 100000,
+        "step": 5000,
+        "label": "Section 80D",
+        "prefix": "₹"
+    },
+    "it_nps_80ccd1b": {
+        "default": 50000,
+        "min": 0,
+        "max": 50000,
+        "slider_max": 50000,
+        "step": 5000,
+        "label": "NPS 80CCD(1B)",
+        "prefix": "₹"
+    },
+    "it_home_loan_24b": {
+        "default": 0,
+        "min": 0,
+        "max": 200000,
+        "slider_max": 200000,
+        "step": 10000,
+        "label": "Home Loan 24(b)",
+        "prefix": "₹"
+    },
     "ltcg_tax": {
         "exemption_threshold": 125000,
         "rate": 0.125

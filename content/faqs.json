@@ -1501,5 +1501,37 @@
         ],
         "q": "How does the January 31, 2018 grandfathering rule work for equity mutual funds?",
         "a": "For equity mutual fund units purchased before February 1, 2018, gains accrued up to January 31, 2018 are protected from LTCG tax. Your effective cost of acquisition is calculated as the higher of your actual purchase cost or the lower of the Jan 31, 2018 Fair Market Value (FMV) and your eventual sale value."
+    },
+    {
+        "id": "income-tax-12-lakh-rebate-fy2526",
+        "category": "taxation",
+        "tags": [
+            "income-tax-calculator",
+            "faq-page",
+            "tax & rules"
+        ],
+        "q": "Is ₹12.75 Lakh salary completely tax-free under the FY 2025-26 New Tax Regime?",
+        "a": "Yes. Under the FY 2025-26 New Tax Regime, salaried individuals receive a ₹75,000 Standard Deduction plus a full Section 87A tax rebate on taxable income up to ₹12,00,000, resulting in zero income tax for gross salaries up to ₹12,75,000."
+    },
+    {
+        "id": "income-tax-hra-metro-rule",
+        "category": "rules",
+        "tags": [
+            "income-tax-calculator",
+            "faq-page"
+        ],
+        "q": "Which Indian cities qualify for 50% HRA exemption under Section 10(13A)?",
+        "a": "Under Income Tax Rules, only Mumbai, Delhi, Kolkata, and Chennai qualify for the 50% of Basic + DA HRA ceiling. All other Indian cities—including Bengaluru, Pune, Hyderabad, Gurugram, Noida, and Ahmedabad—are classified as Non-Metro with a 40% ceiling."
+    },
+    {
+        "id": "income-tax-old-vs-new-deductions",
+        "category": "taxation",
+        "tags": [
+            "income-tax-calculator",
+            "faq-page",
+            "tax & rules"
+        ],
+        "q": "Can I claim HRA, Section 80C, or Section 80D under the New Tax Regime?",
+        "a": "No. HRA (Section 10(13A)), Section 80C (EPF/PPF/ELSS), Section 80D (health insurance), Section 80CCD(1B) (self NPS), and self-occupied home loan interest under Section 24(b) are only available under the Old Tax Regime. The New Tax Regime offers lower slab rates, a ₹75,000 standard deduction, and Section 80CCD(2) employer NPS deduction."
     }
 ]
