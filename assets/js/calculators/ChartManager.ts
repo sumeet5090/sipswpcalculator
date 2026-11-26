@@ -429,6 +429,34 @@ export class ChartManager {
         }
 
         this.updateActiveLensIndicator();
+        this.bindMoreMenuDismiss();
+    }
+
+    /**
+     * Dismisses #chart-more-menu on Escape, outside click, or menu action click.
+     */
+    private bindMoreMenuDismiss(): void {
+        const moreMenu = this.dom.getElement<HTMLDetailsElement>('chart-more-menu');
+        if (!moreMenu || typeof document === 'undefined') return;
+
+        moreMenu.querySelectorAll('button, a').forEach(item => {
+            item.addEventListener('click', () => {
+                moreMenu.open = false;
+            });
+        });
+
+        document.addEventListener('click', (e: MouseEvent) => {
+            if (moreMenu.open && e.target instanceof Node && !moreMenu.contains(e.target)) {
+                moreMenu.open = false;
+            }
+        });
+
+        document.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && moreMenu.open) {
+                moreMenu.open = false;
+                moreMenu.querySelector<HTMLElement>('summary')?.focus();
+            }
+        });
     }
 
     /**

@@ -119,20 +119,20 @@ final class PurchasingPowerHelper
             return [
                 'score' => $clamped,
                 'tier'  => 'bulletproof',
-                'label' => '🛡️ Bulletproof Resilience (Institutional Grade)',
+                'label' => 'Bulletproof Resilience (Institutional Grade)',
             ];
         }
         if ($clamped >= 72) {
             return [
                 'score' => $clamped,
                 'tier'  => 'prudent',
-                'label' => '⚖️ Prudent & Realistic Balanced Model',
+                'label' => 'Prudent & Realistic Balanced Model',
             ];
         }
         return [
             'score' => $clamped,
             'tier'  => 'vulnerable',
-            'label' => '⚠️ High Market Volatility Sensitivity',
+            'label' => 'High Market Volatility Sensitivity',
         ];
     }
 }

@@ -16,9 +16,9 @@ This file codifies core invariant patterns to ensure Antigravity and developers 
   - **Specialized & Strategic Goals:** `teal-600`, `amber-500`.
 - **Ambient Lighting:** Soft pastel aurora blur gradients (`emerald-500/12`, `amber-500/12`, `teal-400/6`).
 - **Design Review Intent Translation Matrix:** When visual design critiques suggest dark surfaces, map them immediately:
-  - *Dark navy/slate card (#0F172A)* $\rightarrow$ **Executive Light-Mode Anchor:** `bg-emerald-50/90 border-2 border-emerald-600 shadow-card ring-2 ring-emerald-500/15` with `text-slate-900` typography and solid emerald pill badge.
-  - *Dark drop shadows / ambient vignette* $\rightarrow$ **Crisp Subtle Elevation:** `shadow-card border-slate-200/90` with soft aurora glow (`emerald-500/12`, `amber-500/12`).
-  - *Dark hero header* $\rightarrow$ **Luminous Architectural Daylight Canopy:** `from-slate-50 via-white to-slate-50/60 text-slate-900 border-b border-slate-200/90 shadow-subtle` with soft ambient emerald aura (`bg-emerald-500/8 blur-3xl`), commanding dark slate-900 typography, and solid emerald conversion CTA (`bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold`).
+  - *Dark navy/slate card (#0F172A)* $\rightarrow$ **Executive Light-Mode Anchor:** `bg-gradient-to-br from-white via-emerald-50/45 to-teal-50/30 border border-emerald-500/85 shadow-card ring-1 ring-emerald-500/20` with `text-slate-900` typography and solid emerald pill badge (`bg-emerald-600 text-white`).
+  - *Dark drop shadows / ambient vignette* $\rightarrow$ **Crisp Subtle Elevation:** `shadow-card border-slate-200/85` with soft aurora glow (`emerald-500/8`, `amber-500/8`).
+  - *Dark hero header* $\rightarrow$ **Luminous Architectural Daylight Canopy:** `from-white via-slate-50/75 to-slate-50/25 bg-dot-grid text-slate-900 border-b border-slate-200/85 shadow-subtle` with soft ambient emerald aura (`bg-emerald-500/8 blur-3xl`), commanding dark slate-900 typography, and solid emerald conversion CTA (`bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold`).
 
 ---
 

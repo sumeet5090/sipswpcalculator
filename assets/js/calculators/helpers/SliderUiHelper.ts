@@ -64,7 +64,7 @@ export function updatePresetChips(dom: DOMAdapter, fieldId: string, currentVal: 
     const chips = dom.getElements<HTMLButtonElement>(`button[data-preset-for="${fieldId}"]`);
     const inactiveClasses = [
         'bg-slate-50', 'text-slate-700', 'border-slate-200/90', 'hover:border-slate-300', 'hover:bg-slate-100', 'hover:text-slate-900',
-        'bg-slate-50/90', 'text-slate-600', 'border-transparent', 'bg-slate-100/80', 'hover:bg-slate-200/80', 'shadow-none'
+        'bg-slate-50/90', 'text-slate-600', 'border-transparent', 'bg-slate-100/80', 'hover:bg-slate-200/80', 'border-slate-200/80', 'shadow-none'
     ];
     const activeColorClasses = [
         'is-active', 'is-active-rose', 'is-active-amber',
@@ -93,7 +93,7 @@ export function updatePresetChips(dom: DOMAdapter, fieldId: string, currentVal: 
         } else {
             chip.setAttribute('aria-pressed', 'false');
             chip.classList.remove(...activeColorClasses);
-            chip.classList.add('border-transparent', 'bg-slate-100/80', 'text-slate-600', 'hover:bg-slate-200/80', 'hover:text-slate-900', 'shadow-none');
+            chip.classList.add('border-slate-200/80', 'bg-slate-50', 'text-slate-600', 'hover:bg-slate-100', 'hover:text-slate-900', 'hover:border-slate-300', 'shadow-none');
         }
     });
 }

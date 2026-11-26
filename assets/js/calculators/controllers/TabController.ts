@@ -30,7 +30,7 @@ export class TabController {
                 tab.setAttribute('aria-selected', 'true');
                 tab.setAttribute('tabindex', '0');
                 if (span) {
-                    span.className = `flex items-center justify-center w-4 h-4 rounded-full text-micro font-extrabold ${badgeActiveClasses[0]}`;
+                    span.className = `w-2 h-2 rounded-full ${badgeActiveClasses[0]}`;
                 }
             } else {
                 tab.classList.remove('bg-white', 'shadow-flat', 'border', 'border-slate-200/60', ...activeColorClasses);
@@ -38,7 +38,7 @@ export class TabController {
                 tab.setAttribute('aria-selected', 'false');
                 tab.setAttribute('tabindex', '-1');
                 if (span) {
-                    span.className = `flex items-center justify-center w-4 h-4 rounded-full text-micro font-extrabold ${badgeActiveClasses[1]}`;
+                    span.className = `w-2 h-2 rounded-full ${badgeActiveClasses[1]}`;
                 }
             }
         };
@@ -78,9 +78,9 @@ export class TabController {
                     childInputs.forEach(input => { input.disabled = false; });
                 }
 
-                setTabState(comboTab, true, ['text-emerald-800'], ['bg-emerald-100 text-emerald-800', 'bg-slate-200 text-slate-600']);
-                setTabState(sipTab, false, ['text-growth-emphasis'], ['bg-growth-surface text-growth-emphasis', 'bg-slate-200 text-slate-600']);
-                setTabState(swpTab, false, ['text-rose-600'], ['bg-rose-100 text-rose-800', 'bg-slate-200 text-slate-600']);
+                setTabState(comboTab, true, ['text-emerald-950'], ['bg-emerald-700', 'bg-slate-300']);
+                setTabState(sipTab, false, ['text-emerald-950'], ['bg-emerald-700', 'bg-slate-300']);
+                setTabState(swpTab, false, ['text-amber-950'], ['bg-amber-700', 'bg-slate-300']);
 
                 this.onSwpModeActivated?.();
                 if (shouldFocus && comboTab) comboTab.focus();
@@ -108,9 +108,9 @@ export class TabController {
                     childInputs.forEach(input => { input.disabled = true; });
                 }
 
-                setTabState(comboTab, false, ['text-emerald-800'], ['bg-emerald-100 text-emerald-800', 'bg-slate-200 text-slate-600']);
-                setTabState(sipTab, true, ['text-growth-emphasis'], ['bg-growth-surface text-growth-emphasis', 'bg-slate-200 text-slate-600']);
-                setTabState(swpTab, false, ['text-rose-600'], ['bg-rose-100 text-rose-800', 'bg-slate-200 text-slate-600']);
+                setTabState(comboTab, false, ['text-emerald-950'], ['bg-emerald-700', 'bg-slate-300']);
+                setTabState(sipTab, true, ['text-emerald-950'], ['bg-emerald-700', 'bg-slate-300']);
+                setTabState(swpTab, false, ['text-amber-950'], ['bg-amber-700', 'bg-slate-300']);
 
                 this.onSwpModeActivated?.();
                 if (shouldFocus && sipTab) sipTab.focus();
@@ -155,9 +155,9 @@ export class TabController {
                     childInputs.forEach(input => { input.disabled = false; });
                 }
 
-                setTabState(comboTab, false, ['text-emerald-800'], ['bg-emerald-100 text-emerald-800', 'bg-slate-200 text-slate-600']);
-                setTabState(sipTab, false, ['text-growth-emphasis'], ['bg-growth-surface text-growth-emphasis', 'bg-slate-200 text-slate-600']);
-                setTabState(swpTab, true, ['text-rose-600'], ['bg-rose-100 text-rose-800', 'bg-slate-200 text-slate-600']);
+                setTabState(comboTab, false, ['text-emerald-950'], ['bg-emerald-700', 'bg-slate-300']);
+                setTabState(sipTab, false, ['text-emerald-950'], ['bg-emerald-700', 'bg-slate-300']);
+                setTabState(swpTab, true, ['text-amber-950'], ['bg-amber-700', 'bg-slate-300']);
 
                 this.onSwpModeActivated?.();
                 if (shouldFocus && swpTab) swpTab.focus();

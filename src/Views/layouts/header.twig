@@ -86,7 +86,7 @@
     }
 </style>
 
-<header class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/98 transition-all duration-300 shadow-flat">
+<header class="navbar-glass fixed w-full z-50 top-0 start-0 border-b border-slate-200/80 transition-all duration-300 shadow-flat">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse group">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 40px; height: 40px;"
@@ -121,7 +121,7 @@
                     <svg class="w-4 h-4 nav-chevron transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
 
-                <div role="menu" class="absolute -left-12 xl:left-0 mt-2 w-[760px] rounded-2xl bg-white shadow-modal ring-1 ring-black/5 nav-dropdown-menu p-4 border border-slate-200/90 z-50">
+                <div role="menu" class="absolute -left-12 xl:left-0 mt-2 w-[760px] rounded-2xl bg-white/98 backdrop-blur-xl shadow-modal ring-1 ring-slate-950/5 nav-dropdown-menu p-4 border border-slate-200/85 z-50">
                     <div class="grid grid-cols-12 gap-4">
                         <!-- Column 1: Core Calculators (Tier 1 Pillars) -->
                         <div class="col-span-5 border-r border-slate-100 pr-3">
@@ -203,28 +203,38 @@
         <!-- Actions (Search, QR & Audio Toggle - visible on >= 1024px) -->
         <div class="hidden lg:flex items-center gap-2">
             <button type="button" id="open-qr-modal-btn"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-500 hover:text-slate-800 text-xs font-semibold shadow-flat transition-all cursor-pointer"
+                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/85 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-900 text-xs font-semibold shadow-flat transition-all cursor-pointer"
                 title="Scan Plan on Mobile"
                 aria-label="Scan Plan on Mobile">
-                <span class="text-xs">📱</span>
+                <svg class="w-3.5 h-3.5 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                </svg>
                 <span class="hidden xl:inline text-caption">QR Sync</span>
             </button>
 
             <button type="button" id="open-command-palette-btn"
-                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-500 hover:text-slate-800 text-xs font-semibold shadow-flat transition-all cursor-pointer group"
+                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200/85 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-900 text-xs font-semibold shadow-flat transition-all cursor-pointer group"
                 aria-label="Open Command Palette (Cmd + K)">
                 <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
                 <span>Search...</span>
-                <kbd class="hidden md:inline-block text-micro font-bold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-500 shadow-flat">⌘K</kbd>
+                <kbd class="hidden md:inline-block text-micro font-bold px-1.5 py-0.5 rounded bg-slate-50 border border-slate-200 text-slate-500">⌘K</kbd>
             </button>
 
             <button type="button" id="sound-toggle-btn"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/90 bg-slate-50/80 hover:bg-slate-100/90 text-slate-500 hover:text-slate-700 text-xs font-semibold shadow-flat transition-all cursor-pointer"
+                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/85 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 text-xs font-semibold shadow-flat transition-all cursor-pointer"
                 title="Toggle UI Sound Effects"
                 aria-label="Toggle UI Sound Effects">
-                <span class="sound-icon text-xs">🔇</span>
+                <span class="sound-icon inline-flex items-center justify-center shrink-0" aria-hidden="true">
+                    <svg class="sound-svg-muted w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+                    </svg>
+                    <svg class="sound-svg-active w-3.5 h-3.5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                    </svg>
+                </span>
                 <span class="sound-text hidden lg:inline text-caption">Muted</span>
             </button>
         </div>

@@ -59,15 +59,15 @@
         <div class="space-y-2 xl:space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
             
             <!-- Stage 1 / SIP Panel -->
-            <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2 xl:space-y-2.5 border-t-4 border-emerald-700 rounded-2xl bg-gradient-to-b from-emerald-50/70 via-emerald-50/30 to-white/90 backdrop-blur-md p-2.5 xl:p-3 border-2 border-emerald-300/90 shadow-card transition-all">
+            <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2 xl:space-y-2.5 rounded-2xl bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-emerald-600 p-2.5 xl:p-3 shadow-flat transition-all">
                 <!-- Stage 1 Header (Visible in Dual Mode) -->
-                <div id="stage-1-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-700 via-emerald-800 to-teal-800 text-white shadow-card border-2 border-emerald-600">
-                    <div class="flex items-center gap-2 text-white">
-                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-white text-emerald-900 text-ui-xs font-black shadow-flat">1</span>
-                        <span class="text-ui-xs font-black text-white">Stage 1:</span>
-                        <span class="text-ui-xs font-bold text-emerald-50">Accumulation (SIP)</span>
+                <div id="stage-1-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50/90 text-emerald-950 border border-emerald-200/80 shadow-flat">
+                    <div class="flex items-center gap-2">
+                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-600 text-white text-micro font-black shadow-flat">1</span>
+                        <span class="text-ui-xs font-black text-emerald-950">Stage 1:</span>
+                        <span class="text-ui-xs font-bold text-slate-700">Accumulation (SIP)</span>
                     </div>
-                    <span class="text-micro font-extrabold text-white bg-white/20 border border-white/40 px-2.5 py-0.5 rounded-full shadow-flat">
+                    <span class="text-micro font-extrabold text-emerald-800 bg-white border border-emerald-200/80 px-2.5 py-0.5 rounded-full shadow-flat">
                         Phase 1
                     </span>
                 </div>
@@ -77,28 +77,28 @@
             </div><!-- /panel-sip -->
 
             <!-- Stage Transition Indicator (Visible only in Dual Mode) -->
-            <div id="stage-transition-divider" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center gap-2 py-1 xl:py-2 select-none">
-                <div class="flex-1 h-0.5 bg-gradient-to-r from-emerald-500 via-teal-600 to-amber-600"></div>
-                <div class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-emerald-800 via-teal-800 to-amber-800 text-white border-2 border-white text-micro font-black shadow-card">
-                    <svg class="w-3.5 h-3.5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            <div id="stage-transition-divider" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center gap-2 py-1 xl:py-1.5 select-none">
+                <div class="flex-1 h-px bg-gradient-to-r from-emerald-400 via-teal-500 to-amber-500"></div>
+                <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-slate-800 border border-slate-200/90 text-micro font-extrabold shadow-flat">
+                    <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                     </svg>
                     <span>Matured SIP Seeds Retirement SWP</span>
-                    <span class="text-amber-200">↓</span>
+                    <span class="text-amber-600 font-black">↓</span>
                 </div>
-                <div class="flex-1 h-0.5 bg-gradient-to-r from-amber-600 to-amber-700"></div>
+                <div class="flex-1 h-px bg-gradient-to-r from-amber-500 to-amber-600"></div>
             </div>
 
             <!-- Stage 2 / SWP Panel -->
-            <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="space-y-2 xl:space-y-3 border-t-4 border-amber-700 rounded-2xl bg-gradient-to-b from-amber-50/70 via-amber-50/30 to-white/90 backdrop-blur-md p-2.5 xl:p-3 border-2 border-amber-300/90 shadow-card transition-all">
+            <div id="panel-swp" role="tabpanel" aria-labelledby="tab-swp" class="space-y-2 xl:space-y-3 rounded-2xl bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-amber-600 p-2.5 xl:p-3 shadow-flat transition-all">
                 <!-- Stage 2 Header (Visible in Dual Mode) -->
-                <div id="stage-2-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 text-white shadow-card border-2 border-amber-600">
-                    <div class="flex items-center gap-2 text-white">
-                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-white text-amber-950 text-ui-xs font-black shadow-flat">2</span>
-                        <span class="text-ui-xs font-black text-white">Stage 2:</span>
-                        <span class="text-ui-xs font-bold text-amber-50">Retirement Cashflow (SWP)</span>
+                <div id="stage-2-header" class="{% if calculator_type|default('combo') != 'combo' %}hidden {% endif %}flex items-center justify-between px-3 py-2 rounded-xl bg-amber-50/90 text-amber-950 border border-amber-200/80 shadow-flat">
+                    <div class="flex items-center gap-2">
+                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-amber-600 text-white text-micro font-black shadow-flat">2</span>
+                        <span class="text-ui-xs font-black text-amber-950">Stage 2:</span>
+                        <span class="text-ui-xs font-bold text-slate-700">Retirement Cashflow (SWP)</span>
                     </div>
-                    <span class="text-micro font-extrabold text-white bg-white/20 border border-white/40 px-2.5 py-0.5 rounded-full shadow-flat">
+                    <span class="text-micro font-extrabold text-amber-900 bg-white border border-amber-200/80 px-2.5 py-0.5 rounded-full shadow-flat">
                         Phase 2
                     </span>
                 </div>
@@ -130,8 +130,8 @@
         {% elseif calculator_type in ['sip', 'sip-step-up'] %}
         <input type="hidden" id="enable_swp" name="enable_swp" value="0">
         <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
-            <div id="panel-sip" class="space-y-2.5 border-t-4 border-emerald-600 rounded-2xl bg-gradient-to-b from-emerald-50/80 via-emerald-50/40 to-white p-2.5 sm:p-3 border-2 border-emerald-300/90 shadow-card transition-all">
-                <div id="stage-1-header" class="flex items-center justify-between px-3.5 py-2 rounded-xl bg-emerald-100/90 border-2 border-emerald-300/90 shadow-flat">
+            <div id="panel-sip" class="space-y-2.5 rounded-2xl bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-emerald-600 p-2.5 sm:p-3 shadow-flat transition-all">
+                <div id="stage-1-header" class="flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50/90 border border-emerald-200/80 shadow-flat">
                     <div class="flex items-center gap-2 text-slate-800">
                         <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-600 text-white text-micro font-black shadow-flat">
                             {% if calculator_type == 'sip-step-up' %}↗{% else %}1{% endif %}
@@ -143,7 +143,7 @@
                             {% if calculator_type == 'sip-step-up' %}Top-Up Growth Model{% else %}Accumulation (SIP){% endif %}
                         </span>
                     </div>
-                    <span class="text-micro font-black text-emerald-950 bg-emerald-200/90 border border-emerald-300/90 px-2.5 py-0.5 rounded-full shadow-flat">
+                    <span class="text-micro font-extrabold text-emerald-800 bg-white border border-emerald-200/80 px-2.5 py-0.5 rounded-full shadow-flat">
                         {% if calculator_type == 'sip-step-up' %}10% Step-Up{% else %}Phase 1{% endif %}
                     </span>
                 </div>
@@ -154,14 +154,14 @@
         {% elseif calculator_type == 'swp' %}
         <input type="hidden" id="enable_swp" name="enable_swp" value="1">
         <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
-            <div id="panel-swp" class="space-y-3 border-t-4 border-amber-600 rounded-2xl bg-gradient-to-b from-amber-50/70 via-amber-50/30 to-white/90 backdrop-blur-md p-2.5 sm:p-3 border-2 border-amber-300/90 shadow-card transition-all">
-                <div id="stage-2-header" class="flex items-center justify-between px-3.5 py-2 rounded-xl bg-amber-100/90 border-2 border-amber-300/90 shadow-flat">
+            <div id="panel-swp" class="space-y-3 rounded-2xl bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-amber-600 p-2.5 sm:p-3 shadow-flat transition-all">
+                <div id="stage-2-header" class="flex items-center justify-between px-3 py-2 rounded-xl bg-amber-50/90 border border-amber-200/80 shadow-flat">
                     <div class="flex items-center gap-2 text-slate-800">
                         <span class="flex items-center justify-center w-5 h-5 rounded-full bg-amber-600 text-white text-micro font-black shadow-flat">2</span>
                         <span class="text-ui-xs font-black text-amber-950">Stage 2:</span>
                         <span class="text-ui-xs font-bold text-slate-700">Retirement Cashflow (SWP)</span>
                     </div>
-                    <span class="text-micro font-black text-amber-950 bg-amber-200/90 border border-amber-300/90 px-2.5 py-0.5 rounded-full shadow-flat">
+                    <span class="text-micro font-extrabold text-amber-900 bg-white border border-amber-200/80 px-2.5 py-0.5 rounded-full shadow-flat">
                         Phase 2
                     </span>
                 </div>
@@ -180,14 +180,14 @@
         {% elseif calculator_type == 'lumpsum' %}
         <input type="hidden" id="enable_swp" name="enable_swp" value="0">
         <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
-            <div class="space-y-3 border-t-4 border-emerald-600 rounded-2xl bg-gradient-to-b from-emerald-50/80 via-emerald-50/40 to-white p-2.5 sm:p-3 border-2 border-emerald-300/90 shadow-card transition-all">
-                <div class="flex items-center justify-between px-3.5 py-2 rounded-xl bg-emerald-100/90 border-2 border-emerald-300/90 shadow-flat">
+            <div class="space-y-3 rounded-2xl bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-emerald-600 p-2.5 sm:p-3 shadow-flat transition-all">
+                <div class="flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50/90 border border-emerald-200/80 shadow-flat">
                     <div class="flex items-center gap-2 text-slate-800">
                         <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-600 text-white text-micro font-black shadow-flat">✦</span>
                         <span class="text-ui-xs font-black text-emerald-950">One-Time Capital:</span>
                         <span class="text-ui-xs font-bold text-slate-700">Lumpsum Growth</span>
                     </div>
-                    <span class="text-micro font-black text-emerald-950 bg-emerald-200/90 border border-emerald-300/90 px-2.5 py-0.5 rounded-full shadow-flat">
+                    <span class="text-micro font-extrabold text-emerald-800 bg-white border border-emerald-200/80 px-2.5 py-0.5 rounded-full shadow-flat">
                         Single Deposit
                     </span>
                 </div>
@@ -198,14 +198,19 @@
         {% elseif calculator_type == 'target_corpus' %}
         <input type="hidden" id="enable_swp" name="enable_swp" value="0">
         <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
-            <div class="space-y-3 border-t-4 border-emerald-600 rounded-2xl bg-gradient-to-b from-emerald-50/80 via-emerald-50/40 to-white p-2.5 sm:p-3 border-2 border-emerald-300/90 shadow-card transition-all">
-                <div class="flex items-center justify-between px-3.5 py-2 rounded-xl bg-emerald-100/90 border-2 border-emerald-300/90 shadow-flat">
+            <div class="space-y-3 rounded-2xl bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-emerald-600 p-2.5 sm:p-3 shadow-flat transition-all">
+                <div class="flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50/90 border border-emerald-200/80 shadow-flat">
                     <div class="flex items-center gap-2 text-slate-800">
-                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-600 text-white text-micro font-black shadow-flat">🎯</span>
+                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-600 text-white shadow-flat">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="9" stroke-width="2.2"/>
+                                <circle cx="12" cy="12" r="4" stroke-width="2.2"/>
+                            </svg>
+                        </span>
                         <span class="text-ui-xs font-black text-emerald-950">Goal-Seek Engine:</span>
                         <span class="text-ui-xs font-bold text-slate-700">Target Corpus</span>
                     </div>
-                    <span class="text-micro font-black text-emerald-950 bg-emerald-200/90 border border-emerald-300/90 px-2.5 py-0.5 rounded-full shadow-flat">
+                    <span class="text-micro font-extrabold text-emerald-800 bg-white border border-emerald-200/80 px-2.5 py-0.5 rounded-full shadow-flat">
                         Inverse Math
                     </span>
                 </div>
@@ -218,32 +223,32 @@
         {% set hdr = meta.form_header|default({}) %}
         {% set theme_map = {
             'emerald': {
-                'wrapper': 'border-t-4 border-emerald-600 bg-gradient-to-b from-emerald-50/80 via-emerald-50/40 to-white border-2 border-emerald-300/90',
-                'header': 'bg-emerald-100/90 border-2 border-emerald-300/90',
+                'wrapper': 'bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-emerald-600',
+                'header': 'bg-emerald-50/90 border border-emerald-200/80',
                 'icon_bg': 'bg-emerald-600 text-white',
                 'title': 'text-emerald-950',
-                'badge': 'text-emerald-950 bg-emerald-200/90 border border-emerald-300/90'
+                'badge': 'text-emerald-800 bg-white border border-emerald-200/80'
             },
             'indigo': {
-                'wrapper': 'border-t-4 border-indigo-600 bg-gradient-to-b from-indigo-50/80 via-indigo-50/40 to-white border-2 border-indigo-300/90',
-                'header': 'bg-indigo-100/90 border-2 border-indigo-300/90',
+                'wrapper': 'bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-indigo-600',
+                'header': 'bg-indigo-50/90 border border-indigo-200/80',
                 'icon_bg': 'bg-indigo-600 text-white',
                 'title': 'text-indigo-950',
-                'badge': 'text-indigo-950 bg-indigo-200/90 border border-indigo-300/90'
+                'badge': 'text-indigo-800 bg-white border border-indigo-200/80'
             },
             'amber': {
-                'wrapper': 'border-t-4 border-amber-600 bg-gradient-to-b from-amber-50/80 via-amber-50/40 to-white border-2 border-amber-300/90',
-                'header': 'bg-amber-100/90 border-2 border-amber-300/90',
+                'wrapper': 'bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-amber-600',
+                'header': 'bg-amber-50/90 border border-amber-200/80',
                 'icon_bg': 'bg-amber-600 text-white',
                 'title': 'text-amber-950',
-                'badge': 'text-amber-950 bg-amber-200/90 border border-amber-300/90'
+                'badge': 'text-amber-900 bg-white border border-amber-200/80'
             },
             'teal': {
-                'wrapper': 'border-t-4 border-teal-600 bg-gradient-to-b from-teal-50/80 via-teal-50/40 to-white border-2 border-teal-300/90',
-                'header': 'bg-teal-100/90 border-2 border-teal-300/90',
+                'wrapper': 'bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-teal-600',
+                'header': 'bg-teal-50/90 border border-teal-200/80',
                 'icon_bg': 'bg-teal-600 text-white',
                 'title': 'text-teal-950',
-                'badge': 'text-teal-950 bg-teal-200/90 border border-teal-300/90'
+                'badge': 'text-teal-800 bg-white border border-teal-200/80'
             }
         } %}
         {% set tc = theme_map[hdr.theme|default('emerald')]|default(theme_map.emerald) %}

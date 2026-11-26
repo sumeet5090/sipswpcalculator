@@ -247,12 +247,12 @@ export class StrategyBlueprintController {
                 'shadow-card',
                 'shadow-flat'
             );
-            btn.classList.add('border-slate-200/80', 'bg-white/90', 'text-slate-800');
+            btn.classList.add('border-slate-200/85', 'bg-white', 'text-slate-800');
         });
 
         const badge = this.dom.getElement('narrative-strategy-badge');
         if (badge) {
-            badge.textContent = '✨ Custom Strategy';
+            badge.textContent = 'Custom Strategy';
             badge.className = 'inline-flex items-center gap-1 font-bold text-micro px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-300 shadow-flat shrink-0 transition-all';
         }
     }
@@ -297,8 +297,8 @@ export class StrategyBlueprintController {
                     'border-emerald-600',
                     'bg-emerald-700',
                     'ring-emerald-500/25',
-                    'border-slate-200/80',
-                    'bg-white/90',
+                    'border-slate-200/85',
+                    'bg-white',
                     'text-slate-800'
                 );
             } else {
@@ -313,7 +313,7 @@ export class StrategyBlueprintController {
                     'ring-emerald-600/25',
                     'shadow-card'
                 );
-                btn.classList.add('border-slate-200/80', 'bg-white/90', 'text-slate-800');
+                btn.classList.add('border-slate-200/85', 'bg-white', 'text-slate-800');
             }
         });
     }

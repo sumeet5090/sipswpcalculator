@@ -47,10 +47,10 @@ export function createChartPlugins(context: ChartPluginsContext) {
                 ctx.save();
                 try {
                     ctx.beginPath();
-                    ctx.setLineDash([4, 4]);
+                    ctx.setLineDash([3, 3]);
                     ctx.moveTo(x, topY);
                     ctx.lineTo(x, bottomY);
-                    ctx.lineWidth = 1.5;
+                    ctx.lineWidth = 1;
                     ctx.strokeStyle = THEME_COLORS.chart.milestoneLineActive;
                     ctx.stroke();
 
@@ -60,6 +60,13 @@ export function createChartPlugins(context: ChartPluginsContext) {
                     ctx.lineTo(x, y);
                     ctx.strokeStyle = THEME_COLORS.chart.milestoneLineSubtle;
                     ctx.stroke();
+
+                    // Crisp active point outer halo
+                    ctx.setLineDash([]);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 7, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(16, 185, 129, 0.18)';
+                    ctx.fill();
                 } finally {
                     ctx.restore();
                 }
@@ -144,7 +151,7 @@ export function createChartPlugins(context: ChartPluginsContext) {
                 ctx.stroke();
 
                 // Pure Light Ignition Beacon annotation (pinned to top edge)
-                const tagText = '⚡ Compounding Ignition';
+                const tagText = 'Compounding Ignition';
                 ctx.font = '700 9px "Plus Jakarta Sans", "Inter", sans-serif';
                 const textWidth = ctx.measureText(tagText).width;
                 const pillWidth = textWidth + 14;
@@ -191,7 +198,7 @@ export function createChartPlugins(context: ChartPluginsContext) {
             ctx.save();
             try {
                 // Milestone badge geometry
-                const badgeText = '👑 ₹1 Crore Target';
+                const badgeText = '₹1 Crore Target';
                 ctx.font = '700 9.5px "Plus Jakarta Sans", "Inter", sans-serif';
                 const textWidth = ctx.measureText(badgeText).width;
                 const badgeW = textWidth + 16;

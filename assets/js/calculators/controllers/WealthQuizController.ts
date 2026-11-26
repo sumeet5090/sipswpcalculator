@@ -79,11 +79,11 @@ export class WealthQuizController {
         step3.querySelectorAll<HTMLButtonElement>('.quiz-choice').forEach(btn => {
             btn.addEventListener('click', () => {
                 step3.querySelectorAll('.quiz-choice').forEach(c => {
-                    c.classList.remove('border-emerald-500', 'border-2', 'bg-white', 'shadow-sm');
-                    c.classList.add('border-slate-200', 'bg-slate-50');
+                    c.classList.remove('border-emerald-600', 'ring-1', 'ring-emerald-500/20', 'bg-white', 'shadow-flat');
+                    c.classList.add('border-slate-200/85', 'bg-slate-50');
                 });
-                btn.classList.add('border-emerald-500', 'border-2', 'bg-white', 'shadow-sm');
-                btn.classList.remove('border-slate-200', 'bg-slate-50');
+                btn.classList.add('border-emerald-600', 'ring-1', 'ring-emerald-500/20', 'bg-white', 'shadow-flat');
+                btn.classList.remove('border-slate-200/85', 'bg-slate-50');
             });
         });
 

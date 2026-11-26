@@ -195,11 +195,13 @@ export function buildLineChartConfig(params: {
                     },
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(255, 255, 255, 0.98)',
-                    titleColor: '#0f172a',
-                    bodyColor: '#334155',
-                    borderColor: '#e2e8f0',
+                    backgroundColor: THEME_COLORS.chart.tooltipBg,
+                    titleColor: THEME_COLORS.chart.tooltipTitle,
+                    bodyColor: THEME_COLORS.chart.tooltipBody,
+                    borderColor: THEME_COLORS.chart.tooltipBorder,
                     borderWidth: 1,
+                    cornerRadius: 12,
+                    caretSize: 6,
                     padding: 12,
                     boxPadding: 6,
                     usePointStyle: true,
@@ -223,6 +225,7 @@ export function buildLineChartConfig(params: {
             },
             scales: {
                 x: {
+                    border: { display: false },
                     grid: { display: false },
                     ticks: {
                         color: textColor,
@@ -239,6 +242,7 @@ export function buildLineChartConfig(params: {
                 y: {
                     position: 'right',
                     stacked: params.showWealthMap,
+                    border: { display: false },
                     grid: {
                         color: gridColor,
                         tickBorderDash: [4, 4],

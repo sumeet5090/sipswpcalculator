@@ -67,7 +67,7 @@
       "gold_border": "#fde68a"
     },
     "chart": {
-      "grid_line": "rgba(0, 0, 0, 0.05)",
+      "grid_line": "rgba(15, 23, 42, 0.045)",
       "text_muted": "#64748b",
       "text_dark": "#0f172a",
       "point_bg_white": "#ffffff",
@@ -75,18 +75,18 @@
       "tooltip_title": "#0f172a",
       "tooltip_body": "#334155",
       "tooltip_border": "rgba(203, 213, 225, 0.9)",
-      "gradient_invested_top": "rgba(99, 102, 241, 0.16)",
-      "gradient_invested_mid": "rgba(99, 102, 241, 0.04)",
-      "gradient_invested_bottom": "rgba(99, 102, 241, 0.0)",
-      "gradient_corpus_top": "rgba(16, 185, 129, 0.25)",
-      "gradient_corpus_mid": "rgba(16, 185, 129, 0.06)",
+      "gradient_invested_top": "rgba(79, 70, 229, 0.12)",
+      "gradient_invested_mid": "rgba(79, 70, 229, 0.03)",
+      "gradient_invested_bottom": "rgba(79, 70, 229, 0.0)",
+      "gradient_corpus_top": "rgba(16, 185, 129, 0.18)",
+      "gradient_corpus_mid": "rgba(16, 185, 129, 0.04)",
       "gradient_corpus_bottom": "rgba(16, 185, 129, 0.0)",
-      "gradient_post_tax_top": "rgba(139, 92, 246, 0.20)",
-      "gradient_post_tax_mid": "rgba(139, 92, 246, 0.04)",
+      "gradient_post_tax_top": "rgba(139, 92, 246, 0.16)",
+      "gradient_post_tax_mid": "rgba(139, 92, 246, 0.03)",
       "gradient_post_tax_bottom": "rgba(139, 92, 246, 0.0)",
-      "swp_fill_bg": "rgba(244, 63, 94, 0.08)",
-      "milestone_line_active": "rgba(16, 185, 129, 0.50)",
-      "milestone_line_subtle": "rgba(16, 185, 129, 0.20)"
+      "swp_fill_bg": "rgba(244, 63, 94, 0.07)",
+      "milestone_line_active": "rgba(5, 150, 105, 0.40)",
+      "milestone_line_subtle": "rgba(100, 116, 139, 0.22)"
     },
     "celebration": [
       "#10b981",

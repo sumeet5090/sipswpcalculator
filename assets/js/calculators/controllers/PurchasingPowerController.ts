@@ -138,19 +138,19 @@ export class PurchasingPowerController {
             return {
                 score: clamped,
                 tier: 'bulletproof',
-                badgeText: '🛡️ Bulletproof Resilience (Institutional Grade)'
+                badgeText: 'Bulletproof Resilience (Institutional Grade)'
             };
         } else if (clamped >= 72) {
             return {
                 score: clamped,
                 tier: 'prudent',
-                badgeText: '⚖️ Prudent & Realistic Balanced Model'
+                badgeText: 'Prudent & Realistic Balanced Model'
             };
         }
         return {
             score: clamped,
             tier: 'vulnerable',
-            badgeText: '⚠️ High Market Volatility Sensitivity'
+            badgeText: 'High Market Volatility Sensitivity'
         };
     }
 

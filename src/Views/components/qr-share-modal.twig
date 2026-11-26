@@ -9,7 +9,11 @@
         <div class="w-10 h-1 bg-slate-300 rounded-full mx-auto mb-2 sm:hidden"></div>
         <div class="flex items-center justify-between w-full">
             <div class="flex items-center gap-2.5 text-left">
-                <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-growth-surface text-growth-emphasis border border-growth-border text-ui-xs font-black shadow-flat">✨</span>
+                <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-growth-surface text-growth-emphasis border border-growth-border shadow-flat">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                    </svg>
+                </span>
                 <div>
                     <h3 id="qr-modal-title" class="text-ui-sm sm:text-body font-extrabold text-slate-900">Share Wealth Plan</h3>
                     <p class="text-caption text-slate-500 font-medium">Wealth Horizon Pass & Mobile Proposal Sync</p>
@@ -34,10 +38,12 @@
             <div class="grid grid-cols-2 gap-2">
                 <button type="button" id="mobile-native-share-btn"
                     class="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-ui-xs shadow-flat transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-1.5">
-                    <span>📤</span> <span>Share via OS</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                    <span>Share via OS</span>
                 </button>
                 <button type="button" class="whatsapp-share-btn p-2.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-800 font-extrabold text-ui-xs border border-emerald-300 shadow-flat transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-1.5">
-                    <span>💬</span> <span>WhatsApp</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                    <span>WhatsApp</span>
                 </button>
             </div>
         </div>

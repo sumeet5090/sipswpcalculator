@@ -22,7 +22,7 @@ export class StudioTabController {
 
     // Strict pure light-mode active and inactive class descriptors
     private readonly activeClasses = [
-        'bg-white', 'text-emerald-900', 'shadow-xs', 'border-slate-200/90', 'font-black'
+        'bg-white', 'text-emerald-900', 'shadow-flat', 'border-slate-200/90', 'font-black'
     ];
     private readonly inactiveClasses = [
         'text-slate-600', 'hover:text-slate-900', 'hover:bg-white/60', 'font-bold', 'border-transparent'
@@ -61,10 +61,10 @@ export class StudioTabController {
                     tab.classList.remove(...this.inactiveClasses);
 
                     if (statusDot) {
-                        statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500 shadow-2xs';
+                        statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500 shadow-flat';
                     }
                     if (badge) {
-                        badge.className = 'text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/70';
+                        badge.className = 'text-micro font-extrabold px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200/70';
                     }
 
                     // Smooth horizontal auto-center on mobile viewports
@@ -78,7 +78,7 @@ export class StudioTabController {
                         statusDot.className = 'w-2 h-2 rounded-full bg-slate-300 group-hover:bg-slate-400';
                     }
                     if (badge) {
-                        badge.className = 'text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-md bg-slate-200/70 text-slate-700 group-hover:bg-emerald-50 group-hover:text-emerald-800 transition-colors';
+                        badge.className = 'text-micro font-extrabold px-1.5 py-0.5 rounded-md bg-slate-200/70 text-slate-700 group-hover:bg-emerald-50 group-hover:text-emerald-800 transition-colors';
                     }
                 }
             });
@@ -128,22 +128,22 @@ export class StudioTabController {
         const exactBtn = this.dom.getElement('studio-unit-exact');
         if (lakhBtn && exactBtn) {
             lakhBtn.addEventListener('click', () => {
-                lakhBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                lakhBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-flat', 'border', 'border-slate-200/60');
                 lakhBtn.classList.remove('text-slate-500');
                 lakhBtn.setAttribute('aria-pressed', 'true');
 
-                exactBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                exactBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-flat', 'border', 'border-slate-200/60');
                 exactBtn.classList.add('text-slate-500');
                 exactBtn.setAttribute('aria-pressed', 'false');
 
                 this.onDenominationChange?.('lakh');
             });
             exactBtn.addEventListener('click', () => {
-                exactBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                exactBtn.classList.add('bg-white', 'text-emerald-800', 'shadow-flat', 'border', 'border-slate-200/60');
                 exactBtn.classList.remove('text-slate-500');
                 exactBtn.setAttribute('aria-pressed', 'true');
 
-                lakhBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-2xs', 'border', 'border-slate-200/60');
+                lakhBtn.classList.remove('bg-white', 'text-emerald-800', 'shadow-flat', 'border', 'border-slate-200/60');
                 lakhBtn.classList.add('text-slate-500');
                 lakhBtn.setAttribute('aria-pressed', 'false');
 
