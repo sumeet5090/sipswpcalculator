@@ -118,6 +118,9 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 19. **₹15,000 & ₹20,000 Monthly SIP Calculators (`https://sipswpcalculator.com/sip-15000-per-month` & `/sip-20000-per-month`)**
     - Mid-career wealth creation models, annual step-up compounding matrices, and 3-to-4 fund core portfolio blueprints.
 
+20. **Compound Interest Calculator (`https://sipswpcalculator.com/compound-interest-calculator`)**
+    - Models discrete compounding across annual, semi-annual, quarterly, monthly, and daily frequencies alongside effective annual rate (EAR) yields.
+
 20. **3 Crore SIP Calculator (`https://sipswpcalculator.com/3-crore-sip-calculator`)**
     - Reverse-engineered monthly investment and salary-scaled top-ups required to build a ₹3 Crore metro retirement corpus.
 

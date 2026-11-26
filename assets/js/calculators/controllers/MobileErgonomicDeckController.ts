@@ -213,37 +213,33 @@ export class MobileErgonomicDeckController {
         }
 
         if (this.deckCashflowEl) {
-            if (mode === 'emi') {
-                const emiEl = this.dom.getElement('summary-corpus');
-                const emiVal = emiEl?.textContent?.trim() || '₹ --';
-                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'EMI/mo';
-                this.deckCashflowEl.textContent = emiVal;
-                this.deckCashflowEl.className = 'text-ui-xs font-black text-rose-700 font-financial-mono tabular-nums truncate';
-            } else if (mode === 'ppf') {
-                const deposit = parseFloat(this.dom.getValue('ppf_deposit') || '0');
-                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Deposit';
-                this.deckCashflowEl.textContent = deposit > 0 ? `${this.formatter.formatDynamic(deposit)}/yr` : '₹ --';
-                this.deckCashflowEl.className = 'text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums truncate';
-            } else if (mode === 'fd') {
-                const principal = parseFloat(this.dom.getValue('fd_principal') || '0');
-                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Deposit';
-                this.deckCashflowEl.textContent = principal > 0 ? this.formatter.formatDynamic(principal) : '₹ --';
-                this.deckCashflowEl.className = 'text-ui-xs font-black text-slate-800 font-financial-mono tabular-nums truncate';
-            } else if (mode === 'cagr') {
-                const initial = parseFloat(this.dom.getValue('cagr_initial') || '0');
-                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Initial';
-                this.deckCashflowEl.textContent = initial > 0 ? this.formatter.formatDynamic(initial) : '₹ --';
-                this.deckCashflowEl.className = 'text-ui-xs font-black text-emerald-800 font-financial-mono tabular-nums truncate';
-            } else if (mode === 'inflation') {
-                const cost = parseFloat(this.dom.getValue('inf_amount') || '0');
-                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Today';
-                this.deckCashflowEl.textContent = cost > 0 ? this.formatter.formatDynamic(cost) : '₹ --';
-                this.deckCashflowEl.className = 'text-ui-xs font-black text-slate-800 font-financial-mono tabular-nums truncate';
-            } else if (mode === 'compound_interest') {
-                const ciPrincipal = parseFloat(this.dom.getValue('ci_principal') || '0');
-                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'Principal';
-                this.deckCashflowEl.textContent = ciPrincipal > 0 ? this.formatter.formatDynamic(ciPrincipal) : '₹ --';
-                this.deckCashflowEl.className = 'text-ui-xs font-black text-slate-800 font-financial-mono tabular-nums truncate';
+            const specializedDockMap: Record<string, { fieldId: string; label: string; suffix?: string; readSummary?: boolean; tone: string }> = {
+                emi: { fieldId: 'summary-corpus', label: 'EMI/mo', readSummary: true, tone: 'text-rose-700' },
+                ppf: { fieldId: 'ppf_deposit', label: 'Deposit', suffix: '/yr', tone: 'text-emerald-800' },
+                fd: { fieldId: 'fd_principal', label: 'Deposit', tone: 'text-slate-800' },
+                cagr: { fieldId: 'cagr_initial', label: 'Initial', tone: 'text-emerald-800' },
+                inflation: { fieldId: 'inf_amount', label: 'Today', tone: 'text-slate-800' },
+                compound_interest: { fieldId: 'ci_principal', label: 'Principal', tone: 'text-slate-800' },
+                gratuity: { fieldId: 'gratuity_salary', label: 'Salary', suffix: '/m', tone: 'text-emerald-800' },
+                nps: { fieldId: 'nps_monthly_contribution', label: 'NPS/mo', suffix: '/m', tone: 'text-emerald-800' },
+                post_retirement: { fieldId: 'post_ret_expense', label: 'Expense', suffix: '/m', tone: 'text-amber-800' },
+                epf: { fieldId: 'epf_basic_salary', label: 'Basic', suffix: '/m', tone: 'text-emerald-800' },
+                tax_harvest: { fieldId: 'tax_portfolio_value', label: 'Portfolio', tone: 'text-indigo-800' },
+                income_tax: { fieldId: 'it_gross_salary', label: 'Income', suffix: '/yr', tone: 'text-emerald-800' }
+            };
+
+            const specCfg = mode ? specializedDockMap[mode] : undefined;
+            if (specCfg) {
+                if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = specCfg.label;
+                if (specCfg.readSummary) {
+                    const summaryVal = this.dom.getElement(specCfg.fieldId)?.textContent?.trim() || '₹ --';
+                    this.deckCashflowEl.textContent = summaryVal;
+                } else {
+                    const rawVal = parseFloat(this.dom.getValue(specCfg.fieldId) || '0');
+                    const suffix = specCfg.suffix ?? '';
+                    this.deckCashflowEl.textContent = rawVal > 0 ? `${this.formatter.formatDynamic(rawVal)}${suffix}` : '₹ --';
+                }
+                this.deckCashflowEl.className = `text-ui-xs font-black ${specCfg.tone} font-financial-mono tabular-nums truncate`;
             } else if (inputs && inputs.enable_swp && inputs.swp_withdrawal > 0) {
                 if (this.deckCashflowLabelEl) this.deckCashflowLabelEl.textContent = 'SWP Out';
                 this.deckCashflowEl.textContent = `+${this.formatter.formatDynamic(inputs.swp_withdrawal)}/m`;

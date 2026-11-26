@@ -158,5 +158,5 @@ This document is the authoritative coordinate map and architectural cheat-sheet 
 
 - **Asset Compilation & TypeScript Validation:** `npm run typecheck && npm run build` (0 TypeScript errors, Vite CSS & JS production bundle)
 - **Parity Verification Script:** `php tests/parity_check.php` (119/119 TypeScript vs. PHP mathematical engine parity tests)
-- **Full PHPUnit Test Suite:** `vendor/bin/phpunit` (957 tests [743 Unit + 214 Integration], 18,710 assertions; dynamic ephemeral OS ports in `IntegrationTestCase`)
+- **Full PHPUnit Test Suite:** `vendor/bin/phpunit` (957 tests [743 Unit + 214 Integration], 18,722 assertions; dynamic ephemeral OS ports in `IntegrationTestCase`)
 - **Strict Linter & Static Analysis Gate:** `composer check-all` (PHPStan Level 8 across 285 files + PSR-12 CodeSniffer across 285 files + all 957 PHPUnit tests)

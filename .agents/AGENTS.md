@@ -92,7 +92,7 @@ Every development task must follow this exact sequential 5-stage lifecycle:
 * **Stage 4 (Tiered Verification):**
   - *Tier 1 (Fast-Path Local Build & Parity):* Run `npm run typecheck && npm run build` and `php tests/parity_check.php` (verifying all 119 mathematical parity tests).
   - *Tier 2 (Local Server Curl Verification):* Run a `curl` command on the local PHP development server for any specific routes modified (or `vendor/bin/phpunit tests/Integration` with `BypassSandbox: true` when testing ephemeral loopback server ports).
-  - *Tier 3 (Pre-Commit Full Gate):* Run `composer check-all` (validating PHPStan Level 8 across 285 files, PSR-12 coding standard, and all 957 PHPUnit tests [743 Unit + 214 Integration] with 18,710 assertions).
+  - *Tier 3 (Pre-Commit Full Gate):* Run `composer check-all` (validating PHPStan Level 8 across 285 files, PSR-12 coding standard, and all 957 PHPUnit tests [743 Unit + 214 Integration] with 18,722 assertions).
 * **Stage 5 (Documentation Maintenance & Anti-Drift Protocol):** Whenever any code, route, class, template, or configuration changes, immediately perform an audit of referencing documentation:
   1. Check and update `README.md` to reflect new/modified behavior.
   2. Check and update `.agents/ARCHITECTURE_MAP.md` if any route, controller, template, driver, engine, or subsystem coordinate shifted.

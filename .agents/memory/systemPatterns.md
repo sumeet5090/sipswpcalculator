@@ -108,7 +108,7 @@ This file codifies core invariant patterns to ensure Antigravity and developers 
 - **Tiered Verification Pipeline:**
   - *Tier 1 (Fast-Path Local Build & Parity):* Run `npm run typecheck && npm run build` and `php tests/parity_check.php` (verifying 119/119 parity tests).
   - *Tier 2 (Integration & Local Curl):* Run `vendor/bin/phpunit tests/Integration` (dynamic ephemeral local ports) and curl checks against the local server.
-  - *Tier 3 (Gate Tier):* Run `composer check-all` (957 tests [743 Unit + 214 Integration], 18,710 assertions, PHPStan Level 8 across 285 files, PSR-12 clean) before concluding and handing off to the human developer.
+  - *Tier 3 (Gate Tier):* Run `composer check-all` (957 tests [743 Unit + 214 Integration], 18,722 assertions, PHPStan Level 8 across 285 files, PSR-12 clean) before concluding and handing off to the human developer.
 
 ## 9. Registry SSoT, Table Schema & Static Analysis Governance
 - **Calculator Registry SSoT (`CalculatorRegistry`):** `content/calculator_registry.json` is the single declarative registry for all 19 calculator modes and 34 routes, consumed by `Core\Config\CalculatorRegistry` (`routes.php`, `StrategyFactory`, `DomainServiceProvider`, `AppTwigExtension`) and `assets/js/calculators/constants/CalculatorRegistry.ts` (`CalculatorApp`, `QrShareModalController`, `ExcelExportController`, `MobileErgonomicDeckController`, `SummaryMetricsController`). Twig exposes `calculator_route_count()`, `specialized_calculator_count()`, and `is_calculator_route(active_page)` directly from `CalculatorRegistry`.
