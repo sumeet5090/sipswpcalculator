@@ -17,22 +17,6 @@
             flex-shrink: 0 !important;
         }
 
-        @keyframes fadeInUpScale {
-            from {
-                opacity: 0;
-                transform: translateY(40px) scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .glossary-card {
-            animation: fadeInUpScale 0.7s var(--ease-spring-smooth) backwards;
-        }
-
         html {
             scroll-behavior: smooth;
         }
@@ -54,25 +38,25 @@
 } %}
 {% include 'components/page-hero.twig' %}
 
-<div class="max-w-7xl mx-auto pb-32 px-4 relative">
+<div class="max-w-7xl mx-auto pb-16 px-4 relative">
     <!-- Search Bar -->
-    <div class="relative max-w-xl mx-auto mb-6 sm:mb-10">
+    <div class="relative max-w-xl mx-auto mb-6 sm:mb-8">
         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
         </div>
         <input id="glossarySearch" type="text" placeholder="Search glossary terms or definitions..."
-            class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-flat transition-all text-sm font-medium"
+            class="w-full pl-10 pr-4 py-2.5 border border-slate-200/90 rounded-xl bg-white/95 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 shadow-subtle transition-all text-ui-sm font-medium"
             autocomplete="off">
     </div>
 
-    <!-- A-Z Navigation (Single-line swipeable track on mobile, centered pill on desktop) -->
-    <nav class="sticky top-16 sm:top-24 z-30 mb-4 sm:mb-8 py-2 sm:py-4 flex justify-center w-full max-w-full overflow-hidden">
-        <div class="nav-pill flex items-center bg-white/95 backdrop-blur-xl border border-slate-200/80 rounded-2xl sm:rounded-full px-2.5 sm:px-4 py-1.5 sm:py-3 shadow-card overflow-x-auto no-scrollbar max-w-full gap-1 sm:gap-2 touch-pan-x sm:flex-wrap sm:justify-center">
+    <!-- A-Z Navigation (Single-line swipeable track on mobile, centered dock on desktop) -->
+    <nav class="sticky top-16 sm:top-20 z-30 mb-6 sm:mb-8 py-2 flex justify-center w-full max-w-full overflow-hidden">
+        <div class="nav-pill flex items-center bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl px-2.5 sm:px-3 py-1.5 sm:py-2 shadow-subtle overflow-x-auto no-scrollbar max-w-full gap-1 sm:gap-1.5 touch-pan-x sm:flex-wrap sm:justify-center">
             {% for letter in letters %}
             <a href="#letter-{{ letter }}"
-                class="letter-link flex-shrink-0 w-8 h-8 sm:min-w-[44px] sm:h-11 flex items-center justify-center rounded-xl sm:rounded-full text-xs sm:text-base font-extrabold text-slate-500 hover:text-white hover:bg-emerald-600 active:scale-95 transition-all duration-200"
+                class="letter-link flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg text-xs sm:text-ui-sm font-bold text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 active:scale-95 transition-colors duration-150"
                 aria-label="Jump to letter {{ letter }}">
                 {{ letter }}
             </a>
@@ -81,49 +65,49 @@
     </nav>
 
     <!-- Empty State -->
-    <div id="emptyState" class="hidden text-center py-20 animate-entry">
-        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-50 border border-slate-100 text-slate-400 mb-4">
-            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <div id="emptyState" class="hidden text-center py-16">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-100 border border-slate-200/80 text-slate-400 mb-4">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
         </div>
-        <h3 class="text-xl font-bold text-slate-800">No terms found</h3>
-        <p class="mt-2 text-slate-500 max-w-xs mx-auto text-sm leading-relaxed">We couldn't find any terms matching your search. Try another query.</p>
+        <h3 class="text-lg font-bold text-slate-900">No terms found</h3>
+        <p class="mt-1.5 text-slate-600 max-w-xs mx-auto text-ui-sm leading-relaxed">We couldn't find any terms matching your search. Try another query.</p>
     </div>
 
     <!-- Glossary Content Grid -->
-    <div id="glossaryContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+    <div id="glossaryContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
         {% set currentLetter = '' %}
         {% for term in glossary_terms %}
             {% set firstChar = term.q|slice(0, 1)|upper %}
             {% if firstChar != currentLetter %}
                 {% set currentLetter = firstChar %}
                 <!-- Mandatory Section Break -->
-                <div id="letter-{{ currentLetter }}" class="section-header col-span-full pt-3 pb-1 sm:pt-10 sm:pb-4 scroll-mt-32">
-                    <div class="flex items-center gap-3 sm:gap-6">
-                        <span class="text-4xl sm:text-6xl font-black text-slate-900/10 leading-none select-none">
+                <div id="letter-{{ currentLetter }}" class="section-header col-span-full pt-4 pb-1 sm:pt-6 sm:pb-2 scroll-mt-32">
+                    <div class="flex items-center gap-3.5">
+                        <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-base font-extrabold flex items-center justify-center shadow-flat shrink-0 select-none">
                             {{ currentLetter }}
                         </span>
-                        <div class="h-[1.5px] w-full bg-slate-200/80 rounded-full flex-grow"></div>
+                        <div class="h-px w-full bg-slate-200/80 flex-grow"></div>
                     </div>
                 </div>
             {% endif %}
 
-            <!-- Premium Glossary Card -->
+            <!-- Crisp Executive Glossary Card -->
             <article
-                class="glossary-card fintech-glass-card bg-white rounded-3xl p-6 border border-slate-100 shadow-flat hover:shadow-floating hover:border-emerald-500/10 hover:-translate-y-4 transition-all duration-500 group relative flex flex-col h-full overflow-hidden"
+                class="glossary-card fintech-glass-card rounded-2xl p-5 border border-slate-200/90 shadow-subtle hover:shadow-card hover:border-slate-300/90 transition-all duration-200 group relative flex flex-col h-full overflow-hidden"
                 data-term="{{ term.q|lower }}" data-desc="{{ term.a|lower }}">
 
                 <div class="relative z-10 flex flex-col h-full">
-                    <span class="inline-flex self-start px-2.5 py-1 rounded-full text-micro font-bold bg-slate-50 text-slate-500 border border-slate-100 uppercase tracking-wider mb-4">
+                    <span class="inline-flex self-start px-2 py-0.5 rounded-md text-micro font-bold bg-slate-100/90 text-slate-600 border border-slate-200/80 uppercase tracking-wider mb-3">
                         {{ term.category }}
                     </span>
                     <h3
-                        class="text-base sm:text-lg font-bold text-slate-900 mb-2 leading-tight group-hover:text-emerald-700 transition-colors">
+                        class="text-base sm:text-lg font-bold text-slate-900 mb-2 leading-snug group-hover:text-emerald-700 transition-colors">
                         {{ term.q }}
                     </h3>
 
-                    <p class="text-xs sm:text-sm leading-relaxed flex-grow text-slate-600">
+                    <p class="text-xs sm:text-ui-sm leading-relaxed flex-grow text-slate-600">
                         {{ term.a }}
                     </p>
                 </div>

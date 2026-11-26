@@ -12,23 +12,23 @@
 }
 
 .faq-item {
-    background-color: #ffffff;
-    border: 1.5px solid #f1f5f9;
-    border-radius: 24px;
-    padding: 0.5rem 1.25rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02);
-    transition: all 0.3s var(--ease-spring-smooth);
+    background-color: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 16px;
+    padding: 0.25rem 1.25rem;
+    box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .faq-item:hover {
-    border-color: #e2e8f0;
-    box-shadow: 0 12px 30px -15px rgba(0, 0, 0, 0.04);
-    transform: translateY(-2px);
+    border-color: rgba(203, 213, 225, 0.95);
+    box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.06);
 }
 
 .faq-item.active {
-    border-color: rgba(16, 185, 129, 0.2);
-    box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.08);
+    border-color: rgba(5, 150, 105, 0.35);
+    box-shadow: 0 8px 20px -6px rgba(5, 150, 105, 0.12);
 }
 
 .faq-trigger {
@@ -37,7 +37,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 1.25rem;
-    padding: 1.25rem 0.5rem;
+    padding: 1.125rem 0.25rem;
     background: none;
     border: none;
     cursor: pointer;
@@ -51,39 +51,39 @@
 }
 
 .faq-question {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
-    color: #1e293b;
+    color: #0f172a;
     line-height: 1.5;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
 }
 
 .faq-item:hover .faq-question,
 .faq-item.active .faq-question {
-    color: #059669;
+    color: #047857;
 }
 
 .faq-icon-wrap {
     flex-shrink: 0;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: 8px;
     background: #f1f5f9;
-    transition: all 0.3s var(--ease-spring-smooth);
+    transition: background-color 0.2s ease;
 }
 
 .faq-chevron {
     width: 14px;
     height: 14px;
-    color: #64748b;
-    transition: transform 0.3s ease, color 0.3s ease;
+    color: #475569;
+    transition: transform 0.25s ease, color 0.2s ease;
 }
 
 .faq-item.active .faq-icon-wrap {
-    background: #10b981;
+    background: #059669;
 }
 
 .faq-item.active .faq-chevron {
@@ -94,7 +94,7 @@
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s var(--ease-spring-smooth), opacity 0.3s ease;
+    transition: max-height 0.35s var(--ease-spring-smooth), opacity 0.25s ease;
     opacity: 0;
 }
 
@@ -104,11 +104,11 @@
 }
 
 .faq-answer p {
-    padding: 0 0.5rem 1.25rem 0.5rem;
-    font-size: 0.95rem;
-    line-height: 1.8;
-    color: #64748b;
-    font-weight: 500;
+    padding: 0 0.25rem 1.125rem 0.25rem;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #475569;
+    font-weight: 400;
 }
 
 /* --- Category Chip Styles --- */
@@ -118,32 +118,32 @@
     justify-content: center;
     appearance: none;
     -webkit-appearance: none;
-    background-color: #ffffff;
-    color: #64748b;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 9999px;
-    padding: 0.5rem 1.25rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #475569;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 10px;
+    padding: 0.45rem 1rem;
     font-size: 0.75rem;
     font-weight: 700;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.3s var(--ease-spring-smooth);
+    transition: all 0.2s ease;
     white-space: nowrap;
     outline: none;
 }
 
 .category-chip:hover {
-    border-color: #10b981;
+    border-color: #059669;
     color: #047857;
-    background-color: #f0fdf4;
+    background-color: #ecfdf5;
 }
 
 .category-chip.active {
-    background-color: #10b981;
+    background-color: #047857;
     color: #ffffff;
-    border-color: #10b981;
-    box-shadow: 0 10px 20px -10px rgba(16, 185, 129, 0.4);
+    border-color: #047857;
+    box-shadow: 0 2px 8px -2px rgba(4, 120, 87, 0.35);
 }
 </style>
 
@@ -180,61 +180,63 @@
 } %}
 {% include 'components/page-hero.twig' %}
 
-<!-- Search Bar -->
-<div class="relative max-w-xl mx-auto mb-6 sm:mb-8">
-    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-        </svg>
-    </div>
-    <input id="faqSearch" type="text" placeholder="Search questions..."
-        class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-flat transition-all text-sm font-medium"
-        autocomplete="off">
-</div>
-
-<!-- Category Filter Chips (Single-line swipe carousel on mobile, centered grid on desktop) -->
-<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-1 -mx-1 sm:mx-0 sm:flex-wrap sm:justify-center mb-8 sm:mb-12 touch-pan-x">
-    <button data-category="all" class="category-chip active flex-shrink-0">All</button>
-    {% for cat in faq_categories %}
-    <button data-category="{{ cat.id }}" class="category-chip flex-shrink-0">{{ cat.label }}</button>
-    {% endfor %}
-</div>
-
-<!-- Empty State -->
-<div id="emptyState" class="hidden text-center py-20 animate-entry">
-    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-50 border border-slate-100 text-slate-400 mb-4">
-        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-    </div>
-    <h3 class="text-xl font-bold text-slate-800">No questions found</h3>
-    <p class="mt-2 text-slate-500 max-w-xs mx-auto text-sm leading-relaxed">We couldn't find any questions matching your search. Try another query.</p>
-</div>
-
-<!-- FAQ Accordion -->
-<div id="faqAccordion" class="faq-list">
-    {% for faq in faqs %}
-    <div class="faq-item" data-category="{{ faq.category }}" data-question="{{ faq.q|lower }}"
-        data-answer="{{ faq.a|lower }}">
-
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-            <span class="faq-question">
-                {{ faq.q }}
-            </span>
-            <span class="faq-icon-wrap">
-                <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
-                </svg>
-            </span>
-        </button>
-
-        <div class="faq-answer">
-            <p>
-                {{ faq.a|raw }}
-            </p>
+<div class="max-w-4xl mx-auto pb-16 px-4 relative">
+    <!-- Search Bar -->
+    <div class="relative max-w-xl mx-auto mb-6 sm:mb-8">
+        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <svg class="h-4.5 w-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
         </div>
+        <input id="faqSearch" type="text" placeholder="Search questions..."
+            class="w-full pl-10 pr-4 py-2.5 border border-slate-200/90 rounded-xl bg-white/95 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 shadow-subtle transition-all text-ui-sm font-medium"
+            autocomplete="off">
     </div>
-    {% endfor %}
+
+    <!-- Category Filter Chips (Single-line swipe carousel on mobile, centered grid on desktop) -->
+    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-1 -mx-1 sm:mx-0 sm:flex-wrap sm:justify-center mb-8 sm:mb-10 touch-pan-x">
+        <button data-category="all" class="category-chip active flex-shrink-0">All</button>
+        {% for cat in faq_categories %}
+        <button data-category="{{ cat.id }}" class="category-chip flex-shrink-0">{{ cat.label }}</button>
+        {% endfor %}
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-16">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-100 border border-slate-200/80 text-slate-400 mb-4">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900">No questions found</h3>
+        <p class="mt-1.5 text-slate-600 max-w-xs mx-auto text-ui-sm leading-relaxed">We couldn't find any questions matching your search. Try another query.</p>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div id="faqAccordion" class="faq-list">
+        {% for faq in faqs %}
+        <div class="faq-item" data-category="{{ faq.category }}" data-question="{{ faq.q|lower }}"
+            data-answer="{{ faq.a|lower }}">
+
+            <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span class="faq-question">
+                    {{ faq.q }}
+                </span>
+                <span class="faq-icon-wrap">
+                    <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </span>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    {{ faq.a|raw }}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 
 {% endblock %}
