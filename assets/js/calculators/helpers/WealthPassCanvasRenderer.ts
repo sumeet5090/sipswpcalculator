@@ -118,7 +118,7 @@ export class WealthPassCanvasRenderer {
 
         ctx.fillStyle = '#3730a3';
         ctx.font = `800 11.5px ${THEME_FONTS.heading}`;
-        ctx.fillText(`RESILIENCE: ${score}/100 🛡️`, scoreX + 22, y - 2);
+        ctx.fillText(`RESILIENCE: ${score}/100`, scoreX + 28, y - 2);
 
         y += 52;
 
@@ -159,8 +159,8 @@ export class WealthPassCanvasRenderer {
         let displayCorpus: string;
         if (isDiscreetMode) {
             displayCorpus = finalCorpus >= 10000000
-                ? '₹ **,**,*** [ Crore Club Verified 🏅 ]'
-                : '₹ **,**,*** [ 100% On-Track 🎯 ]';
+                ? '₹ **,**,*** [ Crore Club Verified ]'
+                : '₹ **,**,*** [ 100% On-Track ]';
         } else {
             displayCorpus = '₹ ' + Math.round(finalCorpus).toLocaleString('en-IN');
         }
@@ -214,7 +214,7 @@ export class WealthPassCanvasRenderer {
         const footY = cardY + cardH - 24;
         ctx.fillStyle = '#64748b';
         ctx.font = `600 13px ${THEME_FONTS.sans}`;
-        ctx.fillText('🔗 Verify scenario live at sipswpcalculator.com', pad, footY);
+        ctx.fillText('Verify scenario live at sipswpcalculator.com', pad, footY);
 
         ctx.textAlign = 'right';
         ctx.fillStyle = '#94a3b8';

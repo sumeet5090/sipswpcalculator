@@ -200,7 +200,7 @@
             {% endfor %}
         </nav>
 
-        <!-- Actions (Search, QR & Audio Toggle - visible on >= 1024px) -->
+        <!-- Actions (Search & QR - visible on >= 1024px) -->
         <div class="hidden lg:flex items-center gap-2">
             <button type="button" id="open-qr-modal-btn"
                 class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/85 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-900 text-xs font-semibold shadow-flat transition-all cursor-pointer"
@@ -220,22 +220,6 @@
                 </svg>
                 <span>Search...</span>
                 <kbd class="hidden md:inline-block text-micro font-bold px-1.5 py-0.5 rounded bg-slate-50 border border-slate-200 text-slate-500">⌘K</kbd>
-            </button>
-
-            <button type="button" id="sound-toggle-btn"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200/85 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 text-xs font-semibold shadow-flat transition-all cursor-pointer"
-                title="Toggle UI Sound Effects"
-                aria-label="Toggle UI Sound Effects">
-                <span class="sound-icon inline-flex items-center justify-center shrink-0" aria-hidden="true">
-                    <svg class="sound-svg-muted w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
-                    </svg>
-                    <svg class="sound-svg-active w-3.5 h-3.5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
-                    </svg>
-                </span>
-                <span class="sound-text hidden lg:inline text-caption">Muted</span>
             </button>
         </div>
 

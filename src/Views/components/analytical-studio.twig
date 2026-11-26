@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <!-- Right: Studio Utility Action Deck -->
+            <!-- Right: Studio Utility Action Deck (Denomination Unit Switcher) -->
             <div class="flex flex-wrap items-center gap-2 self-start xl:self-center shrink-0 max-w-full">
                 <!-- Currency Denomination Mode -->
                 <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/80 text-caption font-bold text-slate-600" role="group" aria-label="Denomination Unit">
@@ -41,25 +41,6 @@
                         Lakh / Cr
                     </button>
                 </div>
-
-                <!-- Export / PDF Trigger -->
-                <button type="button" id="studio-export-pdf-btn" onclick="document.getElementById('pdfModal').showModal()"
-                    class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-ui-xs font-extrabold shadow-card hover:shadow-card-hover transition-all active:scale-95 cursor-pointer">
-                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                    <span>Export Plan</span>
-                </button>
-
-                <!-- Embed Widget Trigger -->
-                <button type="button" id="studio-embed-btn" onclick="document.getElementById('embedModal')?.showModal()"
-                    class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 hover:text-emerald-700 border border-slate-200/90 hover:border-emerald-300 transition-all text-ui-xs font-bold shadow-flat cursor-pointer"
-                    title="Embed this interactive calculator on your blog or website">
-                    <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                    </svg>
-                    <span>Embed</span>
-                </button>
             </div>
         </div>
 

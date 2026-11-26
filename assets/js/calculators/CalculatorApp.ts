@@ -202,7 +202,6 @@ export class CalculatorApp {
                 const tabSwp = this.dom.getElement<HTMLButtonElement>('tab-swp');
                 if (tabSwp) tabSwp.click();
                 this.triggerCalculation();
-                this.engagementSubsystem.triggerMicroBurst();
             }
         });
 

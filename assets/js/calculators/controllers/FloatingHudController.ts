@@ -13,6 +13,7 @@ export class FloatingHudController {
     private dom: DOMAdapter;
     private formatter: CurrencyFormatter;
     private observer: IntersectionObserver | null = null;
+    private isMiniHudEligible: boolean = false;
 
     constructor(
         dom: DOMAdapter = new DOMAdapter(),
@@ -31,10 +32,12 @@ export class FloatingHudController {
 
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // If top summary cards are scrolled above the viewport on tablet/desktop (>= 768px)
                 const isTabletOrDesktop = window.innerWidth >= 768;
                 const isOffScreenAbove = isTabletOrDesktop && !entry.isIntersecting && entry.boundingClientRect.top < 80;
-                if (isOffScreenAbove) {
+                this.isMiniHudEligible = isOffScreenAbove;
+                const inEditorialZone = window.scrollY >= 1400;
+
+                if (isOffScreenAbove && !inEditorialZone) {
                     hud.classList.remove('-translate-y-4', '-translate-y-full', 'opacity-0', 'pointer-events-none');
                     hud.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
                 } else {
@@ -54,6 +57,7 @@ export class FloatingHudController {
 
     private initDiscoveryHudScrollListener(): void {
         const discoveryHud = this.dom.getElement('floating-discovery-hud');
+        const miniHud = this.dom.getElement('mobile-sticky-mini-hud');
         if (!discoveryHud) return;
 
         let lastScrollY = window.scrollY;
@@ -64,15 +68,26 @@ export class FloatingHudController {
                 window.requestAnimationFrame(() => {
                     const currentScrollY = window.scrollY;
                     const delta = currentScrollY - lastScrollY;
+                    const inEditorialZone = currentScrollY >= 1400;
+
+                    if (miniHud) {
+                        if (this.isMiniHudEligible && !inEditorialZone) {
+                            miniHud.classList.remove('-translate-y-4', '-translate-y-full', 'opacity-0', 'pointer-events-none');
+                            miniHud.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+                        } else {
+                            miniHud.classList.add('-translate-y-4', 'opacity-0', 'pointer-events-none');
+                            miniHud.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+                        }
+                    }
                     
                     const keyboardCapsule = document.getElementById('keyboard-docked-preview');
                     const isKeyboardOpen = keyboardCapsule && !keyboardCapsule.classList.contains('hidden') && !keyboardCapsule.classList.contains('opacity-0');
 
                     if (!isKeyboardOpen) {
-                        if (currentScrollY < 400 || delta > 20) {
+                        if (!inEditorialZone || delta > 20) {
                             discoveryHud.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
                             discoveryHud.classList.remove('translate-y-0');
-                        } else if (delta < -10 && currentScrollY >= 400) {
+                        } else if (delta < -10 && inEditorialZone) {
                             discoveryHud.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
                             discoveryHud.classList.add('translate-y-0');
                         }

@@ -117,7 +117,7 @@ export class MobileErgonomicDeckController {
     private initScrollAutoVisibility(): void {
         if (typeof window === 'undefined' || typeof IntersectionObserver === 'undefined') return;
         const dock = this.dom.getElement('mobile-action-dock');
-        const targetSection = document.getElementById('chart-visualization') || document.getElementById('calculator-section');
+        const targetSection = document.getElementById('chart-card') || document.getElementById('calculator-section');
         if (!dock || !targetSection) return;
 
         const observer = new IntersectionObserver((entries) => {

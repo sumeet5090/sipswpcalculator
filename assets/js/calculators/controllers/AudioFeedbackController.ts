@@ -10,25 +10,7 @@ export class AudioFeedbackController {
     }
 
     init(): void {
-        this.isEnabled = localStorage.getItem('sip_sound_enabled') === 'true';
-        this.updateToggleButton();
-
-        const soundBtn = this.dom.getElement('sound-toggle-btn');
-        if (soundBtn) {
-            soundBtn.addEventListener('click', () => {
-                this.toggleSound();
-            });
-        }
-
-        // Cross-tab preference synchronization
-        if (typeof window !== 'undefined') {
-            window.addEventListener('storage', (e: StorageEvent) => {
-                if (e.key === 'sip_sound_enabled') {
-                    this.isEnabled = e.newValue === 'true';
-                    this.updateToggleButton();
-                }
-            });
-        }
+        this.isEnabled = false;
     }
 
     toggleSound(): boolean {

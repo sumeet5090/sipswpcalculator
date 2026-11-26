@@ -47,22 +47,6 @@ export class KeyboardViewportController {
                 if (window.innerWidth >= 768) return;
                 this.activeInput = input;
                 this.showCapsule();
-
-                // Auto-select text on focus to prevent caret misplacement in formatted numerals
-                setTimeout(() => {
-                    try {
-                        input.select();
-                    } catch {
-                        // Silent fallback
-                    }
-                }, 50);
-
-                // Prevent sticky header occlusion by scrolling input into comfortable center view
-                setTimeout(() => {
-                    if (this.activeInput === input) {
-                        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                }, 280);
             });
 
             input.addEventListener('keydown', (e: KeyboardEvent) => {

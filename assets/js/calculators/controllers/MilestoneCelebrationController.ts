@@ -66,21 +66,17 @@ export class MilestoneCelebrationController {
         // Update roadmap checkpoints with dynamic ETAs and purchasing power
         this.updateRoadmap(corpus, results);
 
-        // Check if a major threshold was just crossed
+        // Track threshold attainment silently without disruptive particle bursts on slider scrubs
         this.checkpoints.forEach(m => {
             if (corpus >= m.threshold && !this.celebratedMilestones.has(m.threshold)) {
                 this.celebratedMilestones.add(m.threshold);
-                if (m.threshold >= 10000000) {
-                    this.triggerMicroBurst();
-                    this.triggerSheenSweep();
-                }
             } else if (corpus < m.threshold && this.celebratedMilestones.has(m.threshold)) {
                 this.celebratedMilestones.delete(m.threshold);
             }
         });
     }
 
-    private triggerSheenSweep(): void {
+    public triggerSheenSweep(): void {
         if (typeof window === 'undefined') return;
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -132,22 +128,22 @@ export class MilestoneCelebrationController {
             const crossoverRow = results.find(r => r.combined_total >= target);
             if (etaEl) {
                 if (crossoverRow) {
-                    etaEl.textContent = `🎯 Achieved Year ${crossoverRow.year}`;
-                    etaEl.className = 'checkpoint-eta text-[10.5px] font-extrabold text-emerald-800';
+                    etaEl.textContent = `Achieved Year ${crossoverRow.year}`;
+                    etaEl.className = 'checkpoint-eta text-micro font-extrabold text-emerald-800';
                 } else if (corpus > 0 && target > corpus) {
                     const finalRow = results.length > 0 ? results[results.length - 1] : null;
                     const finalCorpus = finalRow ? finalRow.combined_total : corpus;
                     const gap = target - finalCorpus;
                     if (gap > 0) {
                         etaEl.textContent = `Gap: ${this.formatter.formatDynamic(gap)}`;
-                        etaEl.className = 'checkpoint-eta text-[10.5px] font-semibold text-slate-500';
+                        etaEl.className = 'checkpoint-eta text-micro font-semibold text-slate-500';
                     } else {
                         etaEl.textContent = 'ETA: --';
-                        etaEl.className = 'checkpoint-eta text-[10.5px] font-semibold text-slate-500';
+                        etaEl.className = 'checkpoint-eta text-micro font-semibold text-slate-500';
                     }
                 } else {
                     etaEl.textContent = 'ETA: --';
-                    etaEl.className = 'checkpoint-eta text-[10.5px] font-semibold text-slate-500';
+                    etaEl.className = 'checkpoint-eta text-micro font-semibold text-slate-500';
                 }
             }
 
@@ -195,37 +191,23 @@ export class MilestoneCelebrationController {
             const y5Cr = results.find(r => r.combined_total >= 50000000)?.year;
 
             if (velocityPivot) {
-                velocityText.innerHTML = `⚡ <strong>Velocity Pivot in Year ${velocityPivot.year}</strong>: Compounding returns (<strong>${this.formatter.format(Math.round(velocityPivot.annualInterest))}/yr</strong>) officially surpass your annual savings (<strong>${this.formatter.format(Math.round(velocityPivot.annualDeposit))}/yr</strong>)!`;
+                velocityText.innerHTML = `<strong>Compounding Crossover in Year ${velocityPivot.year}</strong>: Annual returns (<strong>${this.formatter.format(Math.round(velocityPivot.annualInterest))}/yr</strong>) surpass your annual contributions (<strong>${this.formatter.format(Math.round(velocityPivot.annualDeposit))}/yr</strong>).`;
             } else if (y1Cr && y5Cr) {
                 const deltaYears = y5Cr - y1Cr;
-                velocityText.innerHTML = `Your 1st Crore takes <strong>Year ${y1Cr}</strong>. Compounding accelerates 5× to reach <strong>₹5 Crore</strong> in just <strong>+${deltaYears} more years</strong>!`;
+                velocityText.innerHTML = `First ₹1 Crore reached in <strong>Year ${y1Cr}</strong>; compounding scales 5× to <strong>₹5 Crore</strong> in <strong>+${deltaYears} years</strong>.`;
             } else if (y10L && y1Cr) {
                 const deltaYears = y1Cr - y10L;
-                velocityText.innerHTML = `Seed ₹10 Lakh reached in <strong>Year ${y10L}</strong>. Compounding velocity accelerates to unlock <strong>₹1 Crore</strong> in <strong>+${deltaYears} years</strong>!`;
+                velocityText.innerHTML = `₹10 Lakh milestone reached in <strong>Year ${y10L}</strong>; compounding reaches <strong>₹1 Crore</strong> in <strong>+${deltaYears} years</strong>.`;
             } else {
-                velocityText.innerHTML = `The first ₹1 Crore takes the longest (~13 years). The second ₹1 Crore typically arrives in under 5 years because your accumulated interest overtakes fresh contributions!`;
+                velocityText.innerHTML = `Early years build the capital base; later years accelerate as annual compounding returns overtake fresh contributions.`;
             }
         }
     }
 
     public triggerMicroBurst(): void {
-        const now = Date.now();
-        if (now - this.lastBurstTime < 2500) return;
-        this.lastBurstTime = now;
-
-        const targetContainer = this.dom.getElement('summary-corpus');
-        let originX = typeof window !== 'undefined' ? window.innerWidth / 2 : 300;
-        let originY = typeof window !== 'undefined' ? window.innerHeight / 3 : 200;
-
-        if (targetContainer) {
-            const rect = targetContainer.getBoundingClientRect();
-            if (rect.width > 0 && rect.height > 0) {
-                originX = rect.left + rect.width / 2;
-                originY = rect.top + rect.height / 2;
-            }
-        }
-
-        this.particlePool.burst(originX, originY, 36);
+        // Intentionally disabled particle bursts for institutional daylight focus
+        void this.lastBurstTime;
+        void this.particlePool;
     }
 }
 

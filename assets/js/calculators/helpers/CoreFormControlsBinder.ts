@@ -217,18 +217,6 @@ export function bindCoreFormControls(deps: CoreFormControlsDeps): void {
         });
     }
 
-    const stepupBoostBtn = dom.getElement<HTMLButtonElement>('apply-10pct-stepup-btn');
-    if (stepupBoostBtn) {
-        stepupBoostBtn.addEventListener('click', () => {
-            const current = parseFloat(dom.getValue('stepup') || '0') || 0;
-            const nextVal = current === 0 ? 10 : Math.min(25, current + 5);
-            sliderManager.updateFieldValue('stepup', nextVal);
-            triggerCalculation();
-            engagementSubsystem.triggerMicroBurst();
-            A11yAnnouncer.announce(`Applied salary step-up: ${nextVal}%`);
-        });
-    }
-
     const snapshotBtn = dom.getElement('snapshot-scenario-btn');
     if (snapshotBtn) {
         snapshotBtn.addEventListener('click', () => {

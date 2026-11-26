@@ -92,7 +92,7 @@ final class StudioTabControllerTest extends TestCase
     {
         $this->assertStringContainsString('id="studio-unit-lakh"', $this->studioTwigContent);
         $this->assertStringContainsString('id="studio-unit-exact"', $this->studioTwigContent);
-        $this->assertStringContainsString('id="studio-export-pdf-btn"', $this->studioTwigContent);
+        $this->assertStringNotContainsString('id="studio-export-pdf-btn"', $this->studioTwigContent);
         $this->assertStringContainsString('bg-gradient-to-r from-white to-transparent', $this->studioTwigContent);
         $this->assertStringContainsString('bg-gradient-to-l from-white to-transparent', $this->studioTwigContent);
     }

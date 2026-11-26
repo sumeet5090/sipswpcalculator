@@ -7,10 +7,14 @@
     <!-- Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/80 shrink-0">
         <div class="flex items-center gap-2.5">
-            <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-growth-surface text-growth-emphasis border border-growth-border text-sm font-black shadow-flat">📜</span>
+            <span class="flex items-center justify-center w-8 h-8 rounded-xl bg-growth-surface text-growth-emphasis border border-growth-border shadow-flat">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+            </span>
             <div>
-                <h3 id="pledge-modal-title" class="text-sm sm:text-base font-extrabold text-slate-900">Investor Goal Commitment Certificate</h3>
-                <p class="text-caption text-slate-500 font-medium">Anchor your compounding discipline with a certified goal pledge</p>
+                <h3 id="pledge-modal-title" class="text-sm sm:text-base font-extrabold text-slate-900">Investment Goal Commitment Summary</h3>
+                <p class="text-caption text-slate-500 font-medium">Document your systematic investment plan and target horizon</p>
             </div>
         </div>
         <button type="button" id="close-pledge-modal-btn" onclick="document.getElementById('goal-commitment-modal')?.close()" class="text-slate-400 hover:text-slate-700 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition-all cursor-pointer" aria-label="Close Modal">
@@ -23,9 +27,12 @@
     <!-- Modal Body (Scrollable) -->
     <div class="p-5 sm:p-7 overflow-y-auto custom-scrollbar flex-1 space-y-5">
         <!-- Certificate Card -->
-        <div id="pledge-certificate-card" class="p-5 sm:p-6 rounded-2xl bg-slate-50 border-2 border-emerald-500/40 relative shadow-inner text-center space-y-4">
+        <div id="pledge-certificate-card" class="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-emerald-500/40 relative text-center space-y-4">
             <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-growth-surface text-growth-emphasis border border-growth-border text-micro font-extrabold uppercase tracking-wider shadow-flat">
-                🛡️ SOVEREIGN DISCIPLINE CONTRACT
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                <span>Systematic Investment Commitment</span>
             </div>
 
             <!-- iOS-safe 16px text-base input on mobile to eliminate auto-zoom -->
@@ -35,12 +42,12 @@
                     class="text-center font-extrabold text-slate-900 bg-white border-b-2 border-emerald-500 px-3 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400/40 transition-all text-base md:text-sm inline-block max-w-[220px] shadow-flat" 
                     placeholder="Enter Your Name" 
                     aria-label="Investor Name">, 
-                hereby pledge to systematically invest:
+                hereby commit to systematically investing:
             </div>
 
             <div class="py-2">
                 <div id="pledge-sip-display" class="text-2xl sm:text-3xl font-black text-growth-emphasis font-financial-mono tracking-tight">₹25,000 / month</div>
-                <div class="text-caption text-slate-500 mt-1 font-medium">Every month without emotional interruption</div>
+                <div class="text-caption text-slate-500 mt-1 font-medium">Monthly SIP contribution across market cycles</div>
             </div>
 
             <div class="grid grid-cols-2 gap-3 text-left pt-3 border-t border-slate-200">
@@ -63,21 +70,25 @@
         <div class="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-slate-100">
             <div class="flex items-center gap-2">
                 <button type="button" id="copy-pledge-btn" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center gap-1.5 shadow-flat active:scale-95">
-                    <span>📋</span> <span class="hidden sm:inline">Copy Text</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    <span class="hidden sm:inline">Copy Text</span>
                 </button>
                 <button type="button" id="save-pledge-png-btn" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-all cursor-pointer flex items-center gap-1.5 shadow-flat active:scale-95">
-                    <span>📥</span> <span class="hidden sm:inline">Save Image</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span class="hidden sm:inline">Save Image</span>
                 </button>
             </div>
 
             <div class="flex items-center gap-2">
                 <button type="button" id="whatsapp-pledge-share-btn" 
                     class="px-3.5 py-2 rounded-xl bg-growth-surface hover:bg-emerald-100 text-growth-emphasis border border-growth-border text-xs font-extrabold transition-all active:scale-95 cursor-pointer flex items-center gap-1.5 shadow-flat">
-                    <span>💬</span> <span>Share on WhatsApp</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                    <span>Share on WhatsApp</span>
                 </button>
                 <button type="button" id="print-pledge-btn" 
                     class="px-4 py-2 rounded-xl bg-growth hover:bg-growth-emphasis text-white text-xs font-extrabold shadow-flat transition-all active:scale-95 cursor-pointer flex items-center gap-1.5">
-                    <span>🖨️</span> <span>Certificate PDF</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                    <span>Certificate PDF</span>
                 </button>
             </div>
         </div>

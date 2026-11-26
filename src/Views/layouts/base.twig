@@ -190,8 +190,8 @@
     {% include 'layouts/footer.twig' %}
 
     {% if is_calculator_route %}
-    <!-- Bottom spacer for mobile action dock occlusion prevention (F5.1) -->
-    <div class="md:hidden h-36" aria-hidden="true"></div>
+    <!-- Bottom spacer for mobile action dock occlusion prevention -->
+    <div class="md:hidden h-20" aria-hidden="true"></div>
     {% endif %}
 
     <script>
@@ -267,7 +267,7 @@
         <!-- Right: Action Pod (View Chart Jump + PDF Trigger + More Options Sheet) -->
         <div class="flex items-center gap-1.5 shrink-0">
             <!-- 1. Jump to Chart Action -->
-            <a href="#chart-visualization"
+            <a href="#chart-card"
                 class="min-h-[40px] py-1.5 px-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200/90 text-slate-700 hover:text-slate-900 text-ui-xs font-bold active:scale-95 transition-all shadow-flat flex items-center justify-center gap-1 cursor-pointer">
                 <svg class="w-3.5 h-3.5 text-slate-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
@@ -276,7 +276,7 @@
             </a>
 
             <!-- 2. Hero Action: PDF Report -->
-            <button type="button" id="dock-pdf-btn" onclick="document.getElementById('openPdfModalBtn')?.click()"
+            <button type="button" id="dock-pdf-btn" onclick="document.getElementById('customizePdfModalBtn')?.click()"
                 class="min-h-[40px] py-1.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-ui-xs font-extrabold active:scale-95 transition-all shadow-card flex items-center justify-center gap-1 cursor-pointer">
                 <svg class="w-3.5 h-3.5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>

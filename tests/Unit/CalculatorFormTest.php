@@ -62,10 +62,8 @@ final class CalculatorFormTest extends TestCase
         $this->assertStringContainsString('data-rate="18"', $this->sipContent);
         $this->assertStringContainsString("'label': '18% Small Cap'", $this->sipContent);
 
-        // Step-Up & Appraisal Booster
+        // Step-Up & Inflation
         $this->assertStringContainsString("'id': 'stepup'", $this->sipContent);
-        $this->assertStringContainsString('id="salary-stepup-nudge-box"', $this->sipContent);
-        $this->assertStringContainsString('id="apply-10pct-stepup-btn"', $this->sipContent);
         $this->assertStringContainsString("'id': 'inflation'", $this->sipContent);
     }
 

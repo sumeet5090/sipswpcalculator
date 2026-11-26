@@ -54,7 +54,7 @@ final class MobileErgonomicDeckTest extends TestCase
         $baseTwig = (string) file_get_contents(__DIR__ . '/../../src/Views/layouts/base.twig');
         $this->assertStringContainsString('id="mobile-action-dock"', $baseTwig);
         $this->assertStringContainsString('z-dock', $baseTwig);
-        $this->assertStringContainsString('h-36', $baseTwig);
+        $this->assertStringContainsString('h-20', $baseTwig);
         $this->assertStringContainsString('id="mobile-deck-corpus-val"', $baseTwig);
         $this->assertStringContainsString('id="mobile-deck-sip-btn"', $baseTwig);
         $this->assertStringContainsString('id="mobile-deck-swp-btn"', $baseTwig);
@@ -227,7 +227,8 @@ final class MobileErgonomicDeckTest extends TestCase
         $keyboardCode = (string) file_get_contents(__DIR__ . '/../../assets/js/calculators/controllers/KeyboardViewportController.ts');
         $this->assertStringContainsString('floating-discovery-hud', $keyboardCode);
         $this->assertStringContainsString('pointer-events-none', $keyboardCode);
-        $this->assertStringContainsString('input.select()', $keyboardCode);
+        $this->assertStringContainsString('target.select()', $keyboardCode);
+        $this->assertStringNotContainsString('input.select()', $keyboardCode);
     }
 
     public function testTaxWaterfallModalHasDragHandle(): void

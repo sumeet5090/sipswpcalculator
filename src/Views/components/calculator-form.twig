@@ -55,8 +55,8 @@
             </div>
         </div>
 
-        <!-- Scrollable Form Panels Container -->
-        <div class="space-y-2 xl:space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
+        <!-- Form Panels Container (No nested scroll trap) -->
+        <div class="space-y-2.5 xl:space-y-3 flex-1 min-h-0">
             
             <!-- Stage 1 / SIP Panel -->
             <div id="panel-sip" role="tabpanel" aria-labelledby="tab-sip" class="space-y-2 xl:space-y-2.5 rounded-2xl bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-emerald-600 p-2.5 xl:p-3 shadow-flat transition-all">
@@ -129,7 +129,7 @@
 
         {% elseif calculator_type in ['sip', 'sip-step-up'] %}
         <input type="hidden" id="enable_swp" name="enable_swp" value="0">
-        <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
+        <div class="space-y-3 flex-1 min-h-0">
             <div id="panel-sip" class="space-y-2.5 rounded-2xl bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-emerald-600 p-2.5 sm:p-3 shadow-flat transition-all">
                 <div id="stage-1-header" class="flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50/90 border border-emerald-200/80 shadow-flat">
                     <div class="flex items-center gap-2 text-slate-800">
@@ -153,7 +153,7 @@
 
         {% elseif calculator_type == 'swp' %}
         <input type="hidden" id="enable_swp" name="enable_swp" value="1">
-        <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
+        <div class="space-y-3 flex-1 min-h-0">
             <div id="panel-swp" class="space-y-3 rounded-2xl bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-amber-600 p-2.5 sm:p-3 shadow-flat transition-all">
                 <div id="stage-2-header" class="flex items-center justify-between px-3 py-2 rounded-xl bg-amber-50/90 border border-amber-200/80 shadow-flat">
                     <div class="flex items-center gap-2 text-slate-800">
@@ -179,7 +179,7 @@
 
         {% elseif calculator_type == 'lumpsum' %}
         <input type="hidden" id="enable_swp" name="enable_swp" value="0">
-        <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
+        <div class="space-y-3 flex-1 min-h-0">
             <div class="space-y-3 rounded-2xl bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-emerald-600 p-2.5 sm:p-3 shadow-flat transition-all">
                 <div class="flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50/90 border border-emerald-200/80 shadow-flat">
                     <div class="flex items-center gap-2 text-slate-800">
@@ -197,7 +197,7 @@
 
         {% elseif calculator_type == 'target_corpus' %}
         <input type="hidden" id="enable_swp" name="enable_swp" value="0">
-        <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
+        <div class="space-y-3 flex-1 min-h-0">
             <div class="space-y-3 rounded-2xl bg-slate-50/75 border border-slate-200/85 border-l-[3px] border-l-emerald-600 p-2.5 sm:p-3 shadow-flat transition-all">
                 <div class="flex items-center justify-between px-3 py-2 rounded-xl bg-emerald-50/90 border border-emerald-200/80 shadow-flat">
                     <div class="flex items-center gap-2 text-slate-800">
@@ -253,7 +253,7 @@
         } %}
         {% set tc = theme_map[hdr.theme|default('emerald')]|default(theme_map.emerald) %}
         <input type="hidden" id="enable_swp" name="enable_swp" value="{{ meta.enable_swp_default ? '1' : '0' }}">
-        <div class="space-y-3 flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar pr-1.5 scroll-smooth">
+        <div class="space-y-3 flex-1 min-h-0">
             <div class="space-y-3 {{ tc.wrapper }} rounded-2xl p-2.5 sm:p-3 shadow-card transition-all">
                 <div class="flex items-center justify-between px-3.5 py-2 rounded-xl {{ tc.header }} shadow-flat">
                     <div class="flex items-center gap-2 text-slate-800">
@@ -269,8 +269,60 @@
             </div>
         </div>
         {% endif %}
-    </form>
 
-    <!-- Bottom Scroll Fade Overlay Affordance -->
-    <div class="pointer-events-none absolute bottom-0 left-0 right-0 h-8 rounded-b-3xl bg-gradient-to-t from-white/90 to-transparent z-10 hidden lg:block"></div>
+        <!-- Non-Shifting Contextual Milestone Bridges Dock (Anchored below inputs to avoid mid-drag layout shifts) -->
+        <div id="contextual-bridges-dock" class="space-y-2">
+            <div id="contextual-sip-milestone-bridge" class="hidden p-2 sm:p-2.5 rounded-2xl bg-emerald-50/80 border border-emerald-200/85 shadow-flat transition-all" role="region" aria-label="Related Milestone Blueprint">
+                <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-1.5 text-micro sm:text-ui-xs font-bold text-slate-800 min-w-0">
+                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-emerald-600 text-white shadow-flat shrink-0">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="9" stroke-width="2.2"/>
+                                <circle cx="12" cy="12" r="4" stroke-width="2.2"/>
+                            </svg>
+                        </span>
+                        <span id="sip-bridge-message" class="truncate font-semibold text-slate-900">Dedicated Wealth Blueprint available</span>
+                    </div>
+                    <a id="sip-bridge-link" href="#" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-caption shadow-flat shrink-0 transition-transform active:scale-95">
+                        <span id="sip-bridge-action">Explore</span>
+                        <span>↗</span>
+                    </a>
+                </div>
+            </div>
+
+            <div id="contextual-swp-milestone-bridge" class="hidden p-2 sm:p-2.5 rounded-2xl bg-amber-50/80 border border-amber-200/85 shadow-flat transition-all" role="region" aria-label="Related Retirement Milestone Blueprint">
+                <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-1.5 text-micro sm:text-ui-xs font-bold text-slate-800 min-w-0">
+                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-amber-600 text-white shadow-flat shrink-0">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </span>
+                        <span id="swp-bridge-message" class="truncate font-semibold text-slate-900">Dedicated Pension Blueprint available</span>
+                    </div>
+                    <a id="swp-bridge-link" href="#" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-caption shadow-flat shrink-0 transition-transform active:scale-95">
+                        <span id="swp-bridge-action">View Guide</span>
+                        <span>↗</span>
+                    </a>
+                </div>
+            </div>
+
+            <div id="contextual-corpus-milestone-bridge" class="hidden p-2 sm:p-2.5 rounded-2xl bg-amber-50/80 border border-amber-200/85 shadow-flat transition-all" role="region" aria-label="Related SWP Milestone Blueprint">
+                <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-1.5 text-micro sm:text-ui-xs font-bold text-slate-800 min-w-0">
+                        <span class="flex items-center justify-center w-5 h-5 rounded-full bg-amber-600 text-white shadow-flat shrink-0">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </span>
+                        <span id="corpus-bridge-message" class="truncate font-semibold text-slate-900">Dedicated Corpus Blueprint available</span>
+                    </div>
+                    <a id="corpus-bridge-link" href="#" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-caption shadow-flat shrink-0 transition-transform active:scale-95">
+                        <span id="corpus-bridge-action">View Guide</span>
+                        <span>↗</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>

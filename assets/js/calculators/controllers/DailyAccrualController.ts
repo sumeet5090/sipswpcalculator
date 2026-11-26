@@ -45,22 +45,22 @@ export class DailyAccrualController {
 
     private getLifestyleEquivalent(dailyInterest: number): string {
         if (dailyInterest >= 10000) {
-            return '🌴 Full Financial Independence (₹3.0L+/mo passive cashflow)';
+            return 'Institutional Passive Tier (₹3.0L+/mo sustained yield)';
         }
         if (dailyInterest >= 5000) {
-            return '🏡 Fully covers monthly Home Rent / EMI (₹1.5L/mo passive)';
+            return 'Primary Housing Coverage (₹1.5L+/mo passive yield)';
         }
         if (dailyInterest >= 2000) {
-            return '🛒 Complete Monthly Household Groceries & Utilities (₹60k/mo passive)';
+            return 'Core Household Cashflow Tier (₹60k+/mo passive yield)';
         }
         if (dailyInterest >= 800) {
-            return '🍽️ Daily Family Dining & Commute funded by interest (₹24k/mo)';
+            return 'Monthly Utility & Living Offset (₹24k+/mo passive yield)';
         }
         if (dailyInterest >= 250) {
-            return '☕ Daily Gourmet Coffee & Fuel funded purely by interest';
+            return 'Sustained Daily Accrual (₹7.5k+/mo passive yield)';
         }
         if (dailyInterest > 0) {
-            return '🌱 Early Wealth Seed (Daily compounding acceleration)';
+            return 'Early Compounding Accrual Base';
         }
         return 'Daily compounding velocity at maturity';
     }
