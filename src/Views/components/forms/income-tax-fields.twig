@@ -28,7 +28,7 @@
     }) }}
 
     <!-- Annual Basic + DA & HRA Received Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="space-y-3">
         <!-- Annual Basic + DA -->
         {{ inputs.renderInputRangePair({
             'id': 'it_basic_salary',
@@ -102,7 +102,7 @@
     </div>
 
     <!-- Chapter VI-A Deductions (Old Regime) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="space-y-3">
         <!-- Section 80C -->
         {{ inputs.renderInputRangePair({
             'id': 'it_sec_80c',
@@ -142,7 +142,7 @@
     </div>
 
     <!-- NPS 80CCD(1B) & Home Loan 24(b) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="space-y-3">
         <!-- NPS 80CCD(1B) -->
         {{ inputs.renderInputRangePair({
             'id': 'it_nps_80ccd1b',

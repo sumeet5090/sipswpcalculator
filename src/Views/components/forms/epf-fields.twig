@@ -28,7 +28,7 @@
     }) }}
 
     <!-- Current Age & Retirement Age Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="space-y-3">
         <!-- Current Age -->
         {{ inputs.renderInputRangePair({
             'id': 'epf_current_age',
@@ -71,7 +71,7 @@
     </div>
 
     <!-- VPF % & Annual Salary Hike Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="space-y-3">
         <!-- Additional VPF % -->
         {{ inputs.renderInputRangePair({
             'id': 'epf_vpf_percent',
@@ -114,7 +114,7 @@
     </div>
 
     <!-- EPFO Interest Rate & Existing Balance Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="space-y-3">
         <!-- EPFO Interest Rate -->
         {{ inputs.renderInputRangePair({
             'id': 'epf_interest_rate',
