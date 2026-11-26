@@ -70,7 +70,7 @@ sipswpcalculator/
 │   │   │   ├── subsystems/   # Decomposed subsystems (Export, Engagement, Lifecycle, Ergonomics)
 │   │   │   └── views/        # RollingOdometerView, chart views
 │   │   └── types/            # Strict TypeScript interfaces and type definitions
-│   ├── og/                   # 1200x630 branded OpenGraph images (23 calculator & preset assets)
+│   ├── og/                   # 1200x630 branded OpenGraph images (34 calculator & preset assets + home)
 │   └── favicon.svg           # Application icons and identity assets
 │
 ├── content/                  # Single Sources of Truth (SSoT) & Markdown Content
@@ -343,7 +343,7 @@ The site includes several modern SEO optimizations built into the core services:
 - **Universal Excel (`.xlsx`), CSV & Branded PDF Exports Across All 34 Calculator Routes:** `DownloadCsvAction`, `GeneratePdfAction`, `Services\SpecializedReportBuilder`, `ExcelExportController.ts`, and `ModeTableSchema.ts` deliver mode-accurate multi-column Excel/CSV schedules (UTF-8 BOM + DDE-safe) and Dompdf reports for core modes and all 12 specialized calculators.
 - **Deterministic Sitemap & Redirect Consolidation:** `SitemapGenerator` resolves `<lastmod>` from deterministic frontmatter `updated_at` / `date` fields rather than volatile CI `filemtime()`, and `robots.txt` permits legacy URL crawling so `301` redirects in `content/redirects.json` consolidate ranking signals onto canonical routes.
 - **Static Pre-Calculated Scenario & Benchmark Tables (`scenario-benchmark-table.twig`):** Semantic HTML tables embedded on the homepage and across all calculator sub-pages, enabling Google rich answers and AI search engines (Gemini, Copilot, Perplexity) to scrape and quote verified numerical projections without client-side JavaScript execution.
-- **Dedicated OpenGraph Images for Calculator & Preset Routes:** Curated `1200×630` branded OpenGraph images (`assets/og/og-{slug}.jpg`, 23 assets) with pure light-mode fintech styling, eliminating generic OG fallbacks and unlocking Google Discover eligibility.
+- **Dedicated OpenGraph Images for Calculator & Preset Routes:** Dedicated `1200×630` branded OpenGraph images (`assets/og/og-{slug}.jpg`, 34 calculator/preset assets) with pure light-mode fintech styling, eliminating generic OG fallbacks and unlocking Google Discover eligibility.
 - **Google Image XML Sitemap (`/sitemap.xml`):** `SitemapGenerator` emits standard `xmlns:image` extension tags (`<image:image><image:loc>...</image:loc><image:title>...</image:title></image:image>`) for all calculators, blog posts, and home page to optimize Google Image search visibility.
 - **Top-of-Funnel Pillar Guides & Hub-and-Spoke Architecture:** Comprehensive 2,500+ word educational pillar guides (`what-is-sip`, `what-is-compound-interest`, `what-is-cagr`, `what-is-emi`, `what-is-ppf`, `what-is-fd`) targeting 1M+ monthly top-of-funnel search volume, linked bi-directionally to core calculators via `content/calculator_pillar_guides.json` and `related-pillar-guides.twig`.
 - **Programmatic Milestone & Goal Calculators:** Specialized high-intent long-tail calculators (`/my-first-crore-calculator`, `/reach-5-crore-via-sip`, `/sip-5000-per-month`, `/sip-10000-per-month`) delivering >2,800 words of actionable financial roadmap data, portfolio asset allocations, and sequence-of-returns simulations.

@@ -202,4 +202,16 @@ final class CalculatorRegistry
         $routePath = '/' . ltrim($normalized, '/');
         return array_key_exists($routePath, self::getRoutes());
     }
+
+    public static function supportsTaxWaterfall(string $mode): bool
+    {
+        $meta = self::getModeMetadata($mode);
+        return (bool) ($meta['supports_tax_waterfall'] ?? false);
+    }
+
+    public static function supportsPostTaxToggle(string $mode): bool
+    {
+        $meta = self::getModeMetadata($mode);
+        return (bool) ($meta['supports_post_tax_toggle'] ?? false);
+    }
 }

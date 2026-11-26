@@ -33,6 +33,12 @@ class CalculatorFrontmatterTest extends TestCase
             $this->assertMatchesRegularExpression('/^keywords:\s*.+/m', $frontmatter, "Missing keywords in {$slug}.md");
             $this->assertMatchesRegularExpression('/^schema_name:\s*.+/m', $frontmatter, "Missing schema_name in {$slug}.md");
             $this->assertMatchesRegularExpression('/^meta_desc:\s*.+/m', $frontmatter, "Missing meta_desc in {$slug}.md");
+
+            if (preg_match('/^og_image:\s*["\']?([^\s"\'\r\n]+)/m', $frontmatter, $ogMatches) === 1) {
+                $ogRelativePath = ltrim($ogMatches[1], '/');
+                $ogFullPath = __DIR__ . '/../../' . $ogRelativePath;
+                $this->assertFileExists($ogFullPath, "Referenced og_image missing on disk for {$slug}.md: {$ogRelativePath}");
+            }
         }
     }
 }

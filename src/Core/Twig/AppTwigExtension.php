@@ -61,6 +61,8 @@ class AppTwigExtension extends AbstractExtension
             new TwigFunction('calculator_route_count', fn(): int => CalculatorRegistry::getCalculatorRouteCount()),
             new TwigFunction('specialized_calculator_count', fn(): int => CalculatorRegistry::getSpecializedCalculatorCount()),
             new TwigFunction('is_calculator_route', fn(string $slug): bool => CalculatorRegistry::isCalculatorRouteSlug($slug)),
+            new TwigFunction('supports_tax_waterfall', fn(string $mode): bool => CalculatorRegistry::supportsTaxWaterfall($mode)),
+            new TwigFunction('supports_post_tax_toggle', fn(string $mode): bool => CalculatorRegistry::supportsPostTaxToggle($mode)),
         ];
     }
 }

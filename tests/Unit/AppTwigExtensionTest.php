@@ -147,5 +147,14 @@ class AppTwigExtensionTest extends TestCase
         $this->assertTrue($isCalcRouteFn('income-tax-calculator'));
         $this->assertFalse($isCalcRouteFn('about'));
         $this->assertFalse($isCalcRouteFn(''));
+
+        $taxWaterfallFn = $functionsByName['supports_tax_waterfall'];
+        $postTaxFn = $functionsByName['supports_post_tax_toggle'];
+        $this->assertIsCallable($taxWaterfallFn);
+        $this->assertIsCallable($postTaxFn);
+        $this->assertTrue($taxWaterfallFn('sip'));
+        $this->assertFalse($taxWaterfallFn('inflation'));
+        $this->assertTrue($postTaxFn('inflation'));
+        $this->assertFalse($postTaxFn('emi'));
     }
 }

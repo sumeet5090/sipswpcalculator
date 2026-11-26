@@ -137,10 +137,8 @@ class SchemaHelper
 
     /**
      * Generates SoftwareApplication Schema.org JSON-LD for calculators.
-     *
-     * @param array<string, mixed> $rating
      */
-    public function getSoftwareApplication(string $name, string $description, string $url, string $category = "FinanceApplication", array $rating = []): string
+    public function getSoftwareApplication(string $name, string $description, string $url, string $category = "FinanceApplication"): string
     {
         $schema = [
             "@context" => "https://schema.org",
@@ -156,16 +154,6 @@ class SchemaHelper
                 "priceCurrency" => "INR"
             ]
         ];
-
-        if (!empty($rating) && isset($rating['ratingValue'], $rating['ratingCount'])) {
-            $schema['aggregateRating'] = [
-                "@type" => "AggregateRating",
-                "ratingValue" => $rating['ratingValue'],
-                "ratingCount" => $rating['ratingCount'],
-                "bestRating" => "5",
-                "worstRating" => "1"
-            ];
-        }
 
         return json_encode($schema, self::JSON_FLAGS | JSON_THROW_ON_ERROR);
     }

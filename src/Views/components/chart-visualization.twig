@@ -397,7 +397,7 @@
                         </svg>
                         <span>Share Plan</span>
                     </button>
-                    {% if calculator_type not in ['emi', 'ppf', 'fd', 'inflation', 'gratuity', 'nps', 'post_retirement', 'epf', 'tax_harvest', 'income_tax'] %}
+                    {% if supports_tax_waterfall(calculator_type|default('all')) %}
                     <button type="button" id="open-tax-waterfall-btn" 
                         class="p-1.5 rounded-xl border border-tax-border bg-tax-surface hover:bg-violet-100 text-tax-emphasis transition-all active:scale-95 cursor-pointer shadow-flat"
                         title="Open Section 112A Tax Waterfall Modal">
@@ -574,7 +574,7 @@
                 </div>
 
                 <div class="inline-flex items-center p-1 rounded-xl bg-slate-100/90 border border-slate-200/70 shadow-flat gap-1 max-w-full overflow-x-auto no-scrollbar" role="group" aria-label="Analytical Projection Lenses">
-                    {% if calculator_type not in ['ppf', 'fd', 'emi', 'gratuity', 'nps', 'post_retirement', 'epf', 'tax_harvest', 'income_tax'] %}
+                    {% if supports_post_tax_toggle(calculator_type|default('all')) %}
                     <!-- Lens: Section 112A LTCG Tax -->
                     <label id="overlay-chip-post-tax" 
                         class="group relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg cursor-pointer select-none transition-all duration-150 text-ui-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-white active:scale-95 border border-transparent has-checked:bg-white has-checked:text-violet-900 has-checked:shadow-flat has-checked:border-violet-200 has-checked:font-bold shrink-0" 

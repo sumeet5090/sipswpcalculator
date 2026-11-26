@@ -53,7 +53,7 @@ $calculators = [
         'tag1' => 'Full Lifecycle Engine',
         'tag2' => 'Post-Tax Net Cash Flow',
         'tag3' => '30-Year Survival Test',
-        'accent' => [14, 165, 233], // sky-600
+        'accent' => [217, 119, 6], // amber-600
     ],
     'my-first-crore-calculator' => [
         'category' => 'MILESTONE GOAL-SEEK',
@@ -207,7 +207,115 @@ $calculators = [
         'tag2' => 'Sec 10(13A) HRA Solver',
         'tag3' => 'Old vs New Breakeven',
         'accent' => [5, 150, 105], // emerald-600
-    ]
+    ],
+    '2-crore-sip-calculator' => [
+        'category' => 'MILESTONE GOAL-SEEK',
+        'title' => '2 Crore SIP Calculator',
+        'subtitle' => 'Back-calculate the monthly SIP required to accumulate ₹2 Crore with annual 10% step-up & LTCG tax modeling.',
+        'tag1' => '10% Step-Up Acceleration',
+        'tag2' => '10–25 Yr Roadmaps',
+        'tag3' => 'Section 112A Post-Tax',
+        'accent' => [5, 150, 105],
+    ],
+    '3-crore-sip-calculator' => [
+        'category' => 'MILESTONE GOAL-SEEK',
+        'title' => '3 Crore SIP Calculator',
+        'subtitle' => 'Plan your ₹3 Crore wealth goal with step-up compounding, inflation adjustments & free Excel cashflow schedules.',
+        'tag1' => '₹3 Cr Freedom Target',
+        'tag2' => 'Annual Step-Up Math',
+        'tag3' => 'Free Excel Schedule',
+        'accent' => [5, 150, 105],
+    ],
+    '25-lakh-swp-calculator' => [
+        'category' => 'RETIREMENT DECUMULATION',
+        'title' => '25 Lakh SWP Calculator',
+        'subtitle' => 'Simulate monthly pension payouts from a ₹25 Lakh corpus with 5% inflation step-up & depletion stress tests.',
+        'tag1' => 'Monthly Pension Model',
+        'tag2' => 'Inflation Escalation',
+        'tag3' => 'Longevity Survival',
+        'accent' => [217, 119, 6],
+    ],
+    '50-lakh-swp-calculator' => [
+        'category' => 'RETIREMENT DECUMULATION',
+        'title' => '50 Lakh SWP Calculator',
+        'subtitle' => 'Calculate sustainable monthly SWP withdrawals from ₹50 Lakh across 15–30 year retirement horizons.',
+        'tag1' => '4%–6% SWR Testing',
+        'tag2' => 'Sequence Risk Guard',
+        'tag3' => 'Tax-Efficient Income',
+        'accent' => [217, 119, 6],
+    ],
+    '75-lakh-swp-calculator' => [
+        'category' => 'RETIREMENT DECUMULATION',
+        'title' => '75 Lakh SWP Calculator',
+        'subtitle' => 'Model inflation-indexed monthly retirement income from ₹75 Lakh corpus with bucket longevity projections.',
+        'tag1' => '5% Annual Step-Up',
+        'tag2' => 'Zero-Debt Clamping',
+        'tag3' => 'PDF Audit Report',
+        'accent' => [217, 119, 6],
+    ],
+    '1-crore-swp-calculator' => [
+        'category' => 'RETIREMENT DECUMULATION',
+        'title' => '1 Crore SWP Calculator',
+        'subtitle' => 'Evaluate monthly SWP pension sustainability on a ₹1 Crore nest egg vs fixed deposit interest.',
+        'tag1' => '₹1 Cr Corpus Longevity',
+        'tag2' => 'SWP vs FD Tax Alpha',
+        'tag3' => 'Safe Withdrawal Rate',
+        'accent' => [217, 119, 6],
+    ],
+    '2-crore-swp-calculator' => [
+        'category' => 'RETIREMENT DECUMULATION',
+        'title' => '2 Crore SWP Calculator',
+        'subtitle' => 'Design perpetual retirement cashflows on a ₹2 Crore corpus with 5% annual inflation adjustments.',
+        'tag1' => '₹2 Cr Financial Freedom',
+        'tag2' => 'Capital Preservation',
+        'tag3' => 'Multi-Decade Stress Test',
+        'accent' => [217, 119, 6],
+    ],
+    'sip-15000-per-month' => [
+        'category' => 'MONTHLY SIP BLUEPRINT',
+        'title' => '₹15,000/mo SIP Calculator',
+        'subtitle' => 'Project 10, 15, 20 & 25-year mutual fund wealth for ₹15,000 monthly SIP with optional 10% step-up.',
+        'tag1' => '12% AMFI Benchmark',
+        'tag2' => 'Step-Up Wealth Boost',
+        'tag3' => 'Section 112A Post-Tax',
+        'accent' => [5, 150, 105],
+    ],
+    'sip-20000-per-month' => [
+        'category' => 'MONTHLY SIP BLUEPRINT',
+        'title' => '₹20,000/mo SIP Calculator',
+        'subtitle' => 'Simulate ₹20,000 monthly SIP compounding with inflation discounting, milestone unlocks & Excel export.',
+        'tag1' => '₹1 Cr Unlock Timeline',
+        'tag2' => 'Real Purchasing Power',
+        'tag3' => 'Free Excel Model',
+        'accent' => [5, 150, 105],
+    ],
+    'sip-25000-per-month' => [
+        'category' => 'MONTHLY SIP BLUEPRINT',
+        'title' => '₹25,000/mo SIP Calculator',
+        'subtitle' => 'Model ₹25,000/month SIP trajectories across Index, Flexi Cap & Mid Cap return benchmarks.',
+        'tag1' => '10% Appraisal Step-Up',
+        'tag2' => 'Crorepati Acceleration',
+        'tag3' => 'AMFI Category Matrix',
+        'accent' => [5, 150, 105],
+    ],
+    'sip-50000-per-month' => [
+        'category' => 'MONTHLY SIP BLUEPRINT',
+        'title' => '₹50,000/mo SIP Calculator',
+        'subtitle' => 'High-velocity wealth projection for ₹50,000/month SIP investors targeting ₹1 Cr–₹5 Cr milestones.',
+        'tag1' => 'Fast-Track ₹5 Cr Plan',
+        'tag2' => 'LTCG Tax Waterfall',
+        'tag3' => 'Branded PDF Report',
+        'accent' => [5, 150, 105],
+    ],
+    'sip-1-lakh-per-month' => [
+        'category' => 'MONTHLY SIP BLUEPRINT',
+        'title' => '₹1 Lakh/mo SIP Calculator',
+        'subtitle' => 'HNI systematic investment compounding for ₹1,00,000/month SIP with step-up & SWP transition.',
+        'tag1' => '₹1L/mo Wealth Engine',
+        'tag2' => 'SIP to SWP Transition',
+        'tag3' => 'Post-Tax LTCG Audit',
+        'accent' => [5, 150, 105],
+    ],
 ];
 
 $width = 1200;
@@ -335,4 +443,4 @@ foreach ($calculators as $slug => $data) {
     echo "Generated: assets/og/og-{$slug}.jpg (" . filesize($outputPath) . " bytes)\n";
 }
 
-echo "\nAll 13 OpenGraph images successfully generated in assets/og/!\n";
+echo "\nAll " . count($calculators) . " OpenGraph images successfully generated in assets/og/!\n";
