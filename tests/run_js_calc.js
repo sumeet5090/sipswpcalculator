@@ -13,6 +13,7 @@ import { FdEngine } from '../assets/js/calculators/engines/FdEngine.ts';
 import { GratuityEngine } from '../assets/js/calculators/engines/GratuityEngine.ts';
 import { NpsEngine } from '../assets/js/calculators/engines/NpsEngine.ts';
 import { PostRetirementEngine } from '../assets/js/calculators/engines/PostRetirementEngine.ts';
+import { EpfEngine } from '../assets/js/calculators/engines/EpfEngine.ts';
 
 try {
     // Read input parameters JSON from command line arguments
@@ -219,6 +220,18 @@ try {
             inputArgs.inflation_rate !== undefined ? inputArgs.inflation_rate : 6.0,
             inputArgs.current_age !== undefined ? inputArgs.current_age : 60,
             inputArgs.planning_horizon_years !== undefined ? inputArgs.planning_horizon_years : 30
+        );
+        console.log(JSON.stringify(res));
+    } else if (inputArgs.action === 'epf') {
+        const res = EpfEngine.calculate(
+            inputArgs.basic_salary,
+            inputArgs.current_age,
+            inputArgs.retirement_age,
+            inputArgs.vpf_percent !== undefined ? inputArgs.vpf_percent : 0.0,
+            inputArgs.salary_hike !== undefined ? inputArgs.salary_hike : 7.0,
+            inputArgs.interest_rate !== undefined ? inputArgs.interest_rate : 8.25,
+            inputArgs.current_balance !== undefined ? inputArgs.current_balance : 0.0,
+            inputArgs.cap_eps !== undefined ? inputArgs.cap_eps : true
         );
         console.log(JSON.stringify(res));
     } else if (inputArgs.action === 'generate_qr_test') {

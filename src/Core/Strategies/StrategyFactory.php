@@ -40,6 +40,7 @@ class StrategyFactory
         'gratuity-calculator'          => GratuityStrategy::class,
         'nps-calculator'               => NpsStrategy::class,
         'post-retirement-calculator'   => PostRetirementStrategy::class,
+        'epf-calculator'               => EpfStrategy::class,
     ];
 
     private ConfigServiceInterface $configService;

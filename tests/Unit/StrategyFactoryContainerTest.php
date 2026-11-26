@@ -159,6 +159,18 @@ class StrategyFactoryContainerTest extends TestCase
         $this->assertSame('components/benchmarks/post-retirement-schedule.twig', $strategy->getBenchmarkTemplate());
     }
 
+    public function testCreateEpfStrategyFromContainer(): void
+    {
+        $strategy = $this->factory->create('epf-calculator');
+        $this->assertInstanceOf(\Core\Strategies\EpfStrategy::class, $strategy);
+        $this->assertSame('epf', $strategy->getType());
+        $inputs = $strategy->getInitialInputs();
+        $this->assertInstanceOf(\Core\Inputs\CalculatorInputsInterface::class, $inputs);
+        $this->assertInstanceOf(\Core\Inputs\EpfInputs::class, $inputs);
+        $this->assertArrayHasKey('epf_basic_salary', $inputs->toTemplateData());
+        $this->assertSame('components/benchmarks/epf-schedule.twig', $strategy->getBenchmarkTemplate());
+    }
+
     public function testCreateStepUpSipStrategyFromContainer(): void
     {
         $strategy = $this->factory->create('sip-step-up-calculator');

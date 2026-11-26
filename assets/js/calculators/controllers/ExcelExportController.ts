@@ -202,7 +202,8 @@ export class ExcelExportController {
             'fd',
             'gratuity',
             'nps',
-            'post_retirement'
+            'post_retirement',
+            'epf'
         ];
         const isSpecialized = specializedModes.includes(calcType);
         const generatedDate = new Date().toISOString().slice(0, 10);
@@ -222,7 +223,7 @@ export class ExcelExportController {
             Object.entries(payload).forEach(([key, val]) => {
                 if (skipKeys.has(key) || val === '' || val === undefined || val === null) return;
                 const label = key
-                    .replace(/^(post_ret_|nps_|gratuity_|fd_|ppf_|emi_|cagr_|ci_|inflation_)/, '')
+                    .replace(/^(post_ret_|nps_|gratuity_|fd_|ppf_|emi_|cagr_|ci_|inflation_|epf_)/, '')
                     .replace(/_/g, ' ')
                     .replace(/\b\w/g, (ch) => ch.toUpperCase());
                 const numVal = Number(val);

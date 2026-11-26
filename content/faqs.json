@@ -1436,5 +1436,37 @@
         ],
         "q": "What is a Safe Withdrawal Rate (SWR) for retirement in India?",
         "a": "In the United States, the traditional Bengen 4% rule assumes 30-year horizons with 2%–3% inflation. In India, where consumer inflation averages 5%–7%, financial advisors recommend an initial Safe Withdrawal Rate between 3.5% and 4.5% of your total investable corpus if you have no other income streams. However, when paired with guaranteed pensions (such as NPS annuity or EPF pension) that absorb a portion of living expenses, an initial net SWP rate of 4.5% to 5.5% remains resilient and sustainable across market cycles."
+    },
+    {
+        "id": "epf-eps-15000-wage-ceiling",
+        "category": "rules",
+        "tags": [
+            "epf-calculator",
+            "faq-page",
+            "retirement-calculator"
+        ],
+        "q": "How does the ₹15,000 EPS wage ceiling affect my Employer EPF contribution?",
+        "a": "Employers contribute 12% of your Basic + DA toward provident fund, out of which 8.33% is diverted to the Employees' Pension Scheme (EPS). Under EPFO rules, EPS is capped at 8.33% of ₹15,000 (₹1,250 per month). Therefore, if your Basic + DA is ₹50,000, the employer's ₹6,000 total contribution sends ₹1,250 to EPS and the remaining ₹4,750 directly into your interest-earning EPF balance."
+    },
+    {
+        "id": "epf-250000-tax-limit",
+        "category": "taxation",
+        "tags": [
+            "epf-calculator",
+            "faq-page",
+            "tax & rules"
+        ],
+        "q": "When is EPF and VPF interest taxable in India?",
+        "a": "Under the Finance Act 2021, interest earned on Employee EPF + Voluntary Provident Fund (VPF) contributions up to ₹2,50,000 per financial year is 100% tax-free. If your combined Employee EPF + VPF exceeds ₹2.5 Lakhs in a year, only the interest accrued on the excess amount above ₹2.5 Lakhs is taxed at your slab rate. Employer contributions do not count toward this ₹2.5 Lakh employee limit."
+    },
+    {
+        "id": "epf-monthly-accrual-annual-crediting",
+        "category": "mechanics",
+        "tags": [
+            "epf-calculator",
+            "faq-page"
+        ],
+        "q": "How does EPFO calculate interest on EPF balances each year?",
+        "a": "EPFO calculates interest on the monthly running balance at (Annual Rate / 12) for each month of the financial year, but credits the accumulated interest to your account only once at the end of the financial year (March 31). Because interest is credited annually rather than compounded monthly, intra-year accrued interest does not earn interest until the next financial year."
     }
 ]

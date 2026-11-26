@@ -254,6 +254,14 @@ export const COMMAND_ITEMS: CommandItem[] = [
         icon: '🏛️'
     },
     {
+        id: 'calc-epf',
+        title: 'EPF & VPF Calculator',
+        description: 'Calculate Employees Provident Fund & VPF maturity at 8.25% EPFO interest with ₹15k EPS cap.',
+        category: 'Calculator',
+        url: '/epf-calculator',
+        icon: '🏢'
+    },
+    {
         id: 'calc-post-retirement',
         title: 'Post-Retirement Calculator',
         description: 'Multi-stream asset drawdown planner: Gratuity, NPS lump sum, guaranteed pension, and inflation-indexed SWP.',

@@ -133,6 +133,9 @@ Our calculation models incorporate the latest Indian tax regime under Sections 1
 24. **Post-Retirement Calculator (`https://sipswpcalculator.com/post-retirement-calculator`)**
     - Multi-stream post-retirement drawdown and portfolio longevity engine. Synthesizes Day-1 separation lump sums (personal savings + Section 10(10) Gratuity + Section 10(12A) NPS lump sum) with guaranteed pensions and monthly deficit-only SWP drawdowns. Features dynamic 3-Bucket asset allocation (Bucket 1: Cash Buffer 0-3Y, Bucket 2: Income Preservation 4-10Y, Bucket 3: Long-Term Growth 10Y+).
 
+25. **EPF & VPF Calculator (`https://sipswpcalculator.com/epf-calculator`)**
+    - Models Employees' Provident Fund (EPF) and Voluntary Provident Fund (VPF) retirement accumulation using authentic EPFO monthly running-balance interest accrual with annual financial-year crediting (8.25% p.a.). Incorporates statutory 12% employee + 12% employer contributions, 8.33% EPS diversion capped at ₹1,250/mo on the ₹15,000 wage ceiling, annual Basic + DA increments, and Finance Act 2021 ₹2.5 Lakh tax-exempt interest threshold detection.
+
 ---
 
 ## 4. Key Financial Heuristics & Rules of Thumb for India

@@ -16,7 +16,8 @@ import {
     FdDriver,
     GratuityDriver,
     NpsDriver,
-    PostRetirementDriver
+    PostRetirementDriver,
+    EpfDriver
 } from '../drivers/index.ts';
 
 export class SpecializedCalculatorController {
@@ -42,7 +43,8 @@ export class SpecializedCalculatorController {
         fd: () => new FdDriver(),
         gratuity: () => new GratuityDriver(),
         nps: () => new NpsDriver(),
-        post_retirement: () => new PostRetirementDriver()
+        post_retirement: () => new PostRetirementDriver(),
+        epf: () => new EpfDriver()
     };
 
     constructor(

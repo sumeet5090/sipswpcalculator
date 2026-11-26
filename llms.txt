@@ -35,6 +35,7 @@
 - [3 Crore SIP Calculator](https://sipswpcalculator.com/3-crore-sip-calculator): Reverse-engineer required monthly SIP to reach ₹3 Crores with step-up compounding
 - [Gratuity Calculator](https://sipswpcalculator.com/gratuity-calculator): Statutory gratuity payout calculation under Payment of Gratuity Act 1972 & Section 10(10) ₹20 Lakh tax exemption
 - [NPS Calculator](https://sipswpcalculator.com/nps-calculator): National Pension System Tier-1 wealth accumulation, 60% tax-free lump-sum exit, and monthly annuity pension
+- [EPF & VPF Calculator](https://sipswpcalculator.com/epf-calculator): Employees' Provident Fund & VPF retirement corpus at 8.25% EPFO interest with ₹15k EPS ceiling & ₹2.5L tax cap
 - [Post-Retirement Calculator](https://sipswpcalculator.com/post-retirement-calculator): Multi-stream retirement drawdown planner: Gratuity, NPS 60% lump sum, guaranteed pension, and 3-bucket SWP longevity
 
 ## Core Features & Mechanics

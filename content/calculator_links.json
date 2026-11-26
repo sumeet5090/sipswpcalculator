@@ -712,5 +712,27 @@
             "title": "Retirement Calculator",
             "description": "Plan your retirement corpus, post-retirement monthly expenses, and financial independence."
         }
+    ],
+    "epf-calculator": [
+        {
+            "href": "/post-retirement-calculator",
+            "title": "Post-Retirement Drawdown Studio",
+            "description": "Combine EPF, Gratuity, NPS lump sum, guaranteed pension & 3-bucket SWP longevity."
+        },
+        {
+            "href": "/gratuity-calculator",
+            "title": "Gratuity Calculator",
+            "description": "Calculate statutory gratuity payout under Payment of Gratuity Act 1972 & Section 10(10) tax exemption."
+        },
+        {
+            "href": "/nps-calculator",
+            "title": "NPS Calculator",
+            "description": "Calculate National Pension System Tier-1 corpus, 60% tax-free lump sum & monthly annuity pension."
+        },
+        {
+            "href": "/ppf-calculator",
+            "title": "PPF Calculator",
+            "description": "Calculate Public Provident Fund tax-free compounding, Section 80C deductions, and maturity corpus."
+        }
     ]
 }

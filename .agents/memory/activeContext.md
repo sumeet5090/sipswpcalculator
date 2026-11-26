@@ -6,7 +6,21 @@
 
 ## 1. Active Focus & State
 - **Permanent Operational Governance Rule (Human-Only Git Commits & Merges):** Under NO circumstances should AI agents execute `git commit`, `git merge`, or `git push` on any branch, or switch/merge branches. The human administrator personally inspects, stages, and commits all changes regularly and merges branches to target branches as needed. AI agents strictly conclude their lifecycle at Tiered Verification and Anti-Drift Documentation, leaving the working tree uncommitted for the human developer.
-- **Current Milestone:** Option B (Page-1 Snippet, CTR & Internal Bridge Optimization) + Option C (Native Client-Side `.xlsx` Excel Workbook Export) Implemented & Verified — Sharpened titles/meta descriptions on `/my-first-crore-calculator`, `/compound-interest-calculator`, and `/swp-calculator` for higher CTR; added contextual internal bridges to `/post-retirement-calculator`, `/nps-calculator`, and `/gratuity-calculator`; implemented lazy-loaded SheetJS (`xlsx`) multi-sheet Excel export (`ExcelExportController.ts`) with live Excel formulas (`SUM`, `MAX`, `POWER`), `₹#,##,##0` currency formatting, and zero initial bundle impact (`xlsx-*.js` split chunk).
+- **Current Milestone:** Employees' Provident Fund (EPF & VPF) Calculator (`/epf-calculator`) Implemented & Verified — Built statutory EPFO calculation engine in PHP & TypeScript (`EpfEngine.php` & `EpfEngine.ts`) modeling monthly running-balance interest accrual with annual financial-year crediting (8.25% p.a.), 12% employee + VPF (0%–50%) contributions, 12% employer split with optional ₹1,250/mo EPS cap on the ₹15,000 wage ceiling, annual salary hikes, and Finance Act 2021 ₹2.5 Lakh tax-exempt interest threshold detection; verified 100% Green across all quality gates (912 tests, 15,337 assertions, 103/103 parity tests, 51 SEO routes).
+- **Implemented Features & Fixes (2026-11-25 Session 54 - Option A: EPF & VPF Calculator):**
+  - **Statutory EPFO Engine (`EpfEngine.php` & `EpfEngine.ts`):**
+    - Monthly running-balance interest accrual at $r_m = r / 12$, credited annually at financial-year end.
+    - Statutory 12% Employer split: 8.33% EPS (capped at ₹1,250/mo on ₹15,000 wage ceiling when enabled) + remaining Employer EPF share.
+    - VPF top-up (`0%–50%`), annual Basic + DA increments (`0%–20%`), existing balance compounding, and ₹2,50,000 annual Employee+VPF tax-exempt threshold flag (`exceeds_250k_cap`).
+  - **Domain Strategy, Inputs, Driver & UI:**
+    - `EpfInputs.php`, `EpfStrategy.php`, `EpfDriver.ts`, `epf-fields.twig`, `epf-schedule.twig`, `calculator-form.twig`, `chart-visualization.twig`, `header.twig`, `footer.twig`.
+  - **Content, SEO & Discovery:**
+    - `content/calculators/epf-calculator.md` (`title`: 60 bytes $\le 65$, `meta_desc`: 160 bytes $\le 200$).
+    - Registered in `routes.php`, `StrategyFactory.php`, `calculator_defaults.json`, `CommandPaletteController.ts` (`calc-epf`), `calculator_links.json`, `content/faqs.json`, `llms.txt`, `llms-full.txt`, `url.txt`.
+  - **Verification:**
+    - `npm run typecheck && npm run build`: Clean build (267ms).
+    - `php tests/parity_check.php`: 103/103 parity cases PASS (8 new EPF cases).
+    - `composer check-all`: PHPStan Level Max (269 files), PSR-12 (269 files), and 912 PHPUnit tests (15,337 assertions, including 51-route `SeoMetadataValidatorTest`) PASS.
 - **Implemented Features & Fixes (2026-11-25 Session 53 - Option B CTR + Option C Native `.xlsx` Export):**
   - **Option B (SEO Snippet & Internal Link Equity):**
     - `content/calculators/my-first-crore-calculator.md`: Updated `<title>` to `"1 Crore SIP Calculator: Reach ₹1 Cr in 5-15 Yrs (Free Excel)"` (62 bytes $\le 65$), tightened `meta_desc` with concrete SIP figures and `.xlsx` hook, and added inline contextual bridge to `/post-retirement-calculator`, `/nps-calculator`, and `/gratuity-calculator`.

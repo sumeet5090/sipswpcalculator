@@ -1032,6 +1032,74 @@ foreach ($postRetCases as $idx => $prParams) {
     }
 }
 
+// 11. Cross-Runtime Parity: Employees' Provident Fund (EPF & VPF) Engine
+// ----------------------------------------------------------------------
+echo "\nTesting EPF & VPF Engine Parity (PHP vs TypeScript)...\n";
+$epfCases = [
+    ['basic_salary' => 50000.0, 'current_age' => 28, 'retirement_age' => 58, 'vpf_percent' => 0.0, 'salary_hike' => 7.0, 'interest_rate' => 8.25, 'current_balance' => 0.0, 'cap_eps' => true],
+    ['basic_salary' => 25000.0, 'current_age' => 24, 'retirement_age' => 58, 'vpf_percent' => 0.0, 'salary_hike' => 7.0, 'interest_rate' => 8.25, 'current_balance' => 0.0, 'cap_eps' => true],
+    ['basic_salary' => 100000.0, 'current_age' => 30, 'retirement_age' => 60, 'vpf_percent' => 10.0, 'salary_hike' => 8.0, 'interest_rate' => 8.25, 'current_balance' => 500000.0, 'cap_eps' => true],
+    ['basic_salary' => 75000.0, 'current_age' => 35, 'retirement_age' => 58, 'vpf_percent' => 15.0, 'salary_hike' => 5.0, 'interest_rate' => 8.5, 'current_balance' => 1200000.0, 'cap_eps' => true],
+    ['basic_salary' => 50000.0, 'current_age' => 28, 'retirement_age' => 58, 'vpf_percent' => 0.0, 'salary_hike' => 7.0, 'interest_rate' => 8.25, 'current_balance' => 0.0, 'cap_eps' => false],
+    ['basic_salary' => 12000.0, 'current_age' => 22, 'retirement_age' => 58, 'vpf_percent' => 0.0, 'salary_hike' => 0.0, 'interest_rate' => 8.15, 'current_balance' => 0.0, 'cap_eps' => true],
+    ['basic_salary' => 150000.0, 'current_age' => 42, 'retirement_age' => 58, 'vpf_percent' => 25.0, 'salary_hike' => 6.0, 'interest_rate' => 8.25, 'current_balance' => 3500000.0, 'cap_eps' => true],
+    ['basic_salary' => 40000.0, 'current_age' => 50, 'retirement_age' => 60, 'vpf_percent' => 5.0, 'salary_hike' => 4.0, 'interest_rate' => 7.5, 'current_balance' => 2000000.0, 'cap_eps' => false],
+];
+
+foreach ($epfCases as $idx => $eParams) {
+    echo "EPF Parity Case " . ($idx + 1) . ": ";
+    $phpRes = \Core\Math\EpfEngine::calculate(
+        $eParams['basic_salary'],
+        $eParams['current_age'],
+        $eParams['retirement_age'],
+        $eParams['vpf_percent'],
+        $eParams['salary_hike'],
+        $eParams['interest_rate'],
+        $eParams['current_balance'],
+        $eParams['cap_eps']
+    );
+
+    $cmd = "node tests/run_js_calc.js " . escapeshellarg(json_encode([
+        'action' => 'epf',
+        'basic_salary' => $eParams['basic_salary'],
+        'current_age' => $eParams['current_age'],
+        'retirement_age' => $eParams['retirement_age'],
+        'vpf_percent' => $eParams['vpf_percent'],
+        'salary_hike' => $eParams['salary_hike'],
+        'interest_rate' => $eParams['interest_rate'],
+        'current_balance' => $eParams['current_balance'],
+        'cap_eps' => $eParams['cap_eps'],
+    ]));
+    $jsRes = json_decode((string)shell_exec($cmd), true);
+
+    $fields = [
+        'total_employee_contribution',
+        'total_employer_contribution',
+        'total_invested',
+        'total_interest',
+        'maturity_corpus',
+        'total_eps_diverted',
+    ];
+    $mismatch = false;
+    if ($phpRes['exceeds_250k_cap'] !== $jsRes['exceeds_250k_cap']) {
+        echo "FAIL: exceeds_250k_cap mismatch.\n";
+        $failed = true;
+        $mismatch = true;
+    } else {
+        foreach ($fields as $f) {
+            if (abs((float)$phpRes[$f] - (float)$jsRes[$f]) > 1.0) {
+                echo "FAIL: Field {$f} mismatch. PHP: {$phpRes[$f]}, JS: {$jsRes[$f]}\n";
+                $failed = true;
+                $mismatch = true;
+                break;
+            }
+        }
+    }
+    if (!$mismatch) {
+        echo "PASS\n";
+    }
+}
+
 echo "\n";
 if ($failed) {
     echo "=== CALCULATOR ENGINE PARITY TESTS FAILED ===\n";
