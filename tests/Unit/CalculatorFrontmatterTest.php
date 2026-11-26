@@ -27,7 +27,6 @@ class CalculatorFrontmatterTest extends TestCase
             $this->assertSame(1, $matched, "Failed to parse YAML frontmatter in {$slug}.md");
 
             $frontmatter = $matches[1];
-            $this->assertNotEmpty($frontmatter, "Failed to parse YAML frontmatter in {$slug}.md");
 
             $this->assertMatchesRegularExpression('/^title:\s*.+/m', $frontmatter, "Missing title in {$slug}.md");
             $this->assertMatchesRegularExpression('/^type:\s*["\']?calculator["\']?/m', $frontmatter, "Type must be 'calculator' in {$slug}.md");
