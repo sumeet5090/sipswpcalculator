@@ -51,6 +51,11 @@
             "href": "/my-first-crore-calculator",
             "title": "1 Crore SIP Calculator",
             "description": "Reverse-engineer the exact monthly SIP needed to reach ₹1 Crore across 5, 10, 15, or 20 years."
+        },
+        {
+            "href": "/lumpsum-calculator",
+            "title": "Lumpsum Calculator",
+            "description": "Compare one-time mutual fund lumpsum compounding against monthly SIPs with 2026 LTCG tax schedules."
         }
     ],
     "swp-calculator": [
@@ -73,6 +78,11 @@
             "href": "/retirement-calculator",
             "title": "Retirement Calculator",
             "description": "Calculate retirement corpus requirements, pension drawdown periods, and the 4% safe withdrawal rule."
+        },
+        {
+            "href": "/inflation-calculator",
+            "title": "Inflation Calculator India",
+            "description": "Project how 6% Indian CPI inflation erodes future retirement expenses and monthly SWP purchasing power."
         }
     ],
     "sip-step-up-calculator": [

@@ -1,13 +1,13 @@
 ---
-title: "SIP Calculator India — Returns with Step-Up & 2026 Tax"
+title: "Mutual Fund SIP Calculator India — Step-Up & Free Excel (2026)"
 subtitle: "Free SIP calculator with step-up (top-up) compounding for Indian mutual funds. Calculate SIP returns, view interactive charts, and export PDF reports — no signup needed."
-meta_desc: "Free SIP calculator for Indian mutual funds. Model monthly returns, 10% annual step-up compounding, 2026 capital gains taxes (12.5% LTCG) & download PDF."
+meta_desc: "Calculate mutual fund SIP returns with 10% annual step-up, inflation & 2026 Section 112A LTCG tax (12.5%). Instant year-by-year charts, .xlsx Excel & PDF."
 keywords: "sip calculator, free sip calculator, sip return calculator, step up sip calculator, mutual fund sip calculator india, sip calculation formula, sip tax rules"
 schema_name: "SIP Calculator India — Mutual Fund SIP Return Planner"
 seo_category: "growth"
 type: "calculator"
 date: "2026-02-25"
-updated_at: "2026-11-12"
+updated_at: "2026-11-27"
 og_image: "/assets/og/og-sip-calculator.jpg"
 ---
 
