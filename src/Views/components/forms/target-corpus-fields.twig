@@ -169,4 +169,12 @@
             {'label': '15%', 'value': 15}
         ]
     }) }}
+
+    {% include 'components/forms/next-step-bridges.twig' with {
+        'bridges': [
+            {'href': '/1-crore-swp-calculator', 'label': 'Monthly pension from ₹1 Cr'},
+            {'href': '/2-crore-sip-calculator', 'label': 'Scale goal to ₹2 Crore'},
+            {'href': '/sip-step-up-calculator', 'label': 'Compare flat vs 10% step-up'}
+        ]
+    } %}
 </div>

@@ -63,4 +63,12 @@
             {'label': '10Y', 'value': 10.0}
         ]
     }) }}
+
+    {% include 'components/forms/next-step-bridges.twig' with {
+        'bridges': [
+            {'href': '/sip-calculator', 'label': 'Project monthly SIP at this rate'},
+            {'href': '/inflation-calculator', 'label': 'Check real return after inflation'},
+            {'href': '/ltcg-tax-calculator', 'label': 'Calculate 12.5% LTCG tax'}
+        ]
+    } %}
 </div>

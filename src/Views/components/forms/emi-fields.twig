@@ -63,4 +63,11 @@
             {'label': '25Y', 'value': 25}
         ]
     }) }}
+
+    {% include 'components/forms/next-step-bridges.twig' with {
+        'bridges': [
+            {'href': '/sip-calculator', 'label': 'Offset EMI interest with a SIP'},
+            {'href': '/target-corpus-calculator', 'label': 'Build a loan prepayment fund'}
+        ]
+    } %}
 </div>

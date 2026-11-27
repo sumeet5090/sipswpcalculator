@@ -91,4 +91,12 @@
             Cumulative mode maximizes wealth through quarterly compounding.
         </p>
     </div>
+
+    {% include 'components/forms/next-step-bridges.twig' with {
+        'bridges': [
+            {'href': '/swp-calculator', 'label': 'Compare FD vs tax-efficient SWP'},
+            {'href': '/ppf-calculator', 'label': 'Check tax-free PPF (7.1%)'},
+            {'href': '/inflation-calculator', 'label': 'Test FD against 6% inflation'}
+        ]
+    } %}
 </div>
