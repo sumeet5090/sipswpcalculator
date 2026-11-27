@@ -1,0 +1,52 @@
+name: CI Quality Gates
+
+on:
+  push:
+    branches:
+      - development
+      - stage
+      - main
+  pull_request:
+    branches:
+      - development
+      - stage
+      - main
+
+jobs:
+  quality-gates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: pdo_sqlite, sqlite3, gd, mbstring, dom, curl
+          tools: composer:v2
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Install Composer Dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install Node Dependencies
+        run: npm ci
+
+      - name: Typecheck & Build Frontend Assets
+        run: npm run build
+
+      - name: Run PHP/TypeScript Math Parity Suite
+        run: php tests/parity_check.php
+
+      - name: Run PHPStan, PSR-12 & PHPUnit Suite
+        run: composer check-all

@@ -6,7 +6,43 @@ on:
       - main
 
 jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: pdo_sqlite, sqlite3, gd, mbstring, dom, curl
+          tools: composer:v2
+
+      - name: Install Composer Dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install Node Dependencies
+        run: npm ci
+
+      - name: Typecheck & Build Frontend Assets
+        run: npm run build
+
+      - name: Run PHP/TypeScript Math Parity Suite
+        run: php tests/parity_check.php
+
+      - name: Run PHPStan, PSR-12 & PHPUnit Suite
+        run: composer check-all
+
   build-and-deploy:
+    needs: verify
     runs-on: ubuntu-latest
 
     steps:
@@ -122,3 +158,32 @@ jobs:
             # Clean up old releases (keep latest 3)
             ls -1dt releases/* | tail -n +4 | xargs -I {} rm -rf "{}" || true
           EOF
+
+      - name: Post-Deploy Live HTTP Smoke Check
+        if: github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          BASE_URL="https://sipswpcalculator.com"
+          for path in / /sip-calculator /swp-calculator /epf-calculator /ltcg-tax-calculator /income-tax-calculator /about /resources /glossary /embed/sip-calculator; do
+            code=$(curl -sS -o /dev/null -w "%{http_code}" "${BASE_URL}${path}")
+            echo "GET ${path} -> ${code}"
+            if [ "$code" != "200" ]; then
+              echo "Smoke check failed for ${path} (HTTP ${code})"
+              exit 1
+            fi
+          done
+
+          curl -fsS "${BASE_URL}/sitemap.xml" | grep -q "<urlset"
+          echo "GET /sitemap.xml -> 200 (<urlset> verified)"
+
+          csv_code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST -d "mode=sip&sip=10000&years=10&rate=12&stepup=0&lumpsum=0" "${BASE_URL}/download-csv")
+          echo "POST /download-csv -> ${csv_code}"
+          [ "$csv_code" = "200" ]
+
+          pdf_code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST -d "mode=sip&sip=10000&years=10&rate=12&stepup=0&lumpsum=0" "${BASE_URL}/generate-pdf")
+          echo "POST /generate-pdf -> ${pdf_code}"
+          [ "$pdf_code" = "200" ]
+
+      - name: Submit Updated URLs to IndexNow
+        if: github.ref == 'refs/heads/main'
+        run: php bin/indexnow || true
