@@ -70,6 +70,80 @@ export function clearCalculations(): void {
     }
 }
 
+export interface SavedPlansBackupPayload {
+    version: number;
+    exportedAt: string;
+    plans: SavedCalculation[];
+}
+
+export interface ImportPlansResult {
+    imported: number;
+    total: number;
+    error?: string;
+}
+
+export function exportCalculationsJson(): string {
+    const payload: SavedPlansBackupPayload = {
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        plans: loadCalculations()
+    };
+    return JSON.stringify(payload, null, 2);
+}
+
+function isValidSavedCalculation(item: unknown): item is SavedCalculation {
+    if (!item || typeof item !== 'object') return false;
+    const obj = item as Record<string, unknown>;
+    return (
+        typeof obj.title === 'string' && obj.title.trim().length > 0 &&
+        typeof obj.calcType === 'string' && obj.calcType.trim().length > 0 &&
+        typeof obj.sipAmount === 'number' && Number.isFinite(obj.sipAmount) &&
+        typeof obj.sipDuration === 'number' && Number.isFinite(obj.sipDuration) &&
+        typeof obj.interestRate === 'number' && Number.isFinite(obj.interestRate)
+    );
+}
+
+export function importCalculationsJson(rawJson: string): ImportPlansResult {
+    try {
+        const parsed: unknown = JSON.parse(rawJson);
+        const candidates = Array.isArray(parsed)
+            ? parsed
+            : (parsed && typeof parsed === 'object' && Array.isArray((parsed as Record<string, unknown>).plans))
+                ? (parsed as Record<string, unknown>).plans as unknown[]
+                : null;
+
+        if (!candidates) {
+            return { imported: 0, total: loadCalculations().length, error: 'Invalid backup format.' };
+        }
+
+        const existing = loadCalculations();
+        const seenIds = new Set(existing.map(p => p.id));
+        const validNew: SavedCalculation[] = [];
+
+        for (const item of candidates) {
+            if (!isValidSavedCalculation(item)) continue;
+            const id = typeof item.id === 'string' && item.id.trim() !== ''
+                ? item.id
+                : 'calc_' + Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
+            if (seenIds.has(id)) continue;
+            seenIds.add(id);
+            validNew.push({
+                ...item,
+                id,
+                savedAt: typeof item.savedAt === 'string' && item.savedAt !== ''
+                    ? item.savedAt
+                    : new Date().toISOString()
+            });
+        }
+
+        const merged = [...validNew, ...existing].slice(0, MAX_SAVED);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+        return { imported: validNew.length, total: merged.length };
+    } catch {
+        return { imported: 0, total: loadCalculations().length, error: 'Could not parse JSON file.' };
+    }
+}
+
 function fmtInr(val: unknown): string {
     const num = typeof val === 'number' ? val : parseFloat(String(val ?? '0'));
     return Number.isFinite(num) ? Math.round(num).toLocaleString('en-IN') : '0';

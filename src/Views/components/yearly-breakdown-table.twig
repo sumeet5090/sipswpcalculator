@@ -131,6 +131,29 @@
                         </span>
                         <span id="saveBtnText">Save Plan Snapshot</span>
                     </button>
+
+                    <div class="my-1 border-t border-slate-100"></div>
+
+                    <!-- 6. Export Saved Plans (.json) -->
+                    <button type="button" id="exportSavedPlansBtn"
+                        class="w-full px-3.5 py-2 text-left text-ui-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-emerald-700 transition-colors flex items-center gap-2.5 cursor-pointer"
+                        title="Download saved browser plans as a JSON backup">
+                        <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        <span>Export Plans (.json)</span>
+                    </button>
+
+                    <!-- 7. Import Saved Plans (.json) -->
+                    <button type="button" id="importSavedPlansBtn"
+                        class="w-full px-3.5 py-2 text-left text-ui-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-emerald-700 transition-colors flex items-center gap-2.5 cursor-pointer"
+                        title="Restore saved plans from a JSON backup file">
+                        <svg class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                        </svg>
+                        <span id="importPlansBtnText">Import Plans (.json)</span>
+                    </button>
+                    <input type="file" id="importSavedPlansInput" accept=".json,application/json" class="hidden" aria-label="Import saved plans JSON file">
                 </div>
             </details>
         </div>

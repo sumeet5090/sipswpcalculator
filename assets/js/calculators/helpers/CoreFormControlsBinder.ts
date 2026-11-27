@@ -5,7 +5,12 @@ import { SliderManager } from '../SliderManager.ts';
 import { ChartManager } from '../ChartManager.ts';
 import { CalculatorRegistry } from '../constants/CalculatorRegistry.ts';
 import { A11yAnnouncer } from './A11yAnnouncer.ts';
-import { saveCalculation, buildSavedPlanTitle } from './SavedPlansStorage.ts';
+import {
+    saveCalculation,
+    buildSavedPlanTitle,
+    exportCalculationsJson,
+    importCalculationsJson
+} from './SavedPlansStorage.ts';
 import type { EngagementSubsystem, LifecycleSubsystem } from '../subsystems/index.ts';
 import type { InvestmentInputs, YearResult } from '../../types';
 
@@ -34,6 +39,58 @@ export function bindSavePlanAction(deps: {
     getExportPayload: () => Record<string, string | number | boolean>;
     getLatestResults: () => YearResult[];
 }): void {
+    const exportPlansBtn = deps.dom.getElement<HTMLButtonElement>('exportSavedPlansBtn');
+    if (exportPlansBtn) {
+        exportPlansBtn.addEventListener('click', () => {
+            const json = exportCalculationsJson();
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const anchor = document.createElement('a');
+            anchor.href = url;
+            anchor.download = `sipswp-saved-plans-${new Date().toISOString().slice(0, 10)}.json`;
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+            URL.revokeObjectURL(url);
+            A11yAnnouncer.announce('Saved plans exported as JSON backup.');
+        });
+    }
+
+    const importPlansBtn = deps.dom.getElement<HTMLButtonElement>('importSavedPlansBtn');
+    const importPlansInput = deps.dom.getElement<HTMLInputElement>('importSavedPlansInput');
+    if (importPlansBtn && importPlansInput) {
+        importPlansBtn.addEventListener('click', () => importPlansInput.click());
+        importPlansInput.addEventListener('change', async () => {
+            const file = importPlansInput.files?.[0];
+            if (!file) return;
+            try {
+                const text = await file.text();
+                const result = importCalculationsJson(text);
+                const labelEl = deps.dom.getElement('importPlansBtnText');
+                if (labelEl) {
+                    const orig = labelEl.textContent || 'Import Plans (.json)';
+                    labelEl.textContent = result.error
+                        ? result.error
+                        : `Imported ${result.imported} plan${result.imported === 1 ? '' : 's'} ✓`;
+                    setTimeout(() => { labelEl.textContent = orig; }, 2500);
+                }
+                A11yAnnouncer.announce(
+                    result.error ? result.error : `Imported ${result.imported} saved plans.`
+                );
+            } catch {
+                const labelEl = deps.dom.getElement('importPlansBtnText');
+                if (labelEl) {
+                    const orig = labelEl.textContent || 'Import Plans (.json)';
+                    labelEl.textContent = 'Could not read file';
+                    setTimeout(() => { labelEl.textContent = orig; }, 2500);
+                }
+                A11yAnnouncer.announce('Could not read backup file.');
+            } finally {
+                importPlansInput.value = '';
+            }
+        });
+    }
+
     const savePlanBtn = deps.dom.getElement<HTMLButtonElement>('saveCalculationBtn');
     if (!savePlanBtn) return;
 
