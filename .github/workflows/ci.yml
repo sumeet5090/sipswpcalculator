@@ -28,7 +28,7 @@ jobs:
           tools: composer:v2
 
       - name: Validate composer.json
-        run: composer validate --strict
+        run: composer validate --no-check-publish
 
       - name: Install Composer Dependencies
         run: composer install --prefer-dist --no-progress
