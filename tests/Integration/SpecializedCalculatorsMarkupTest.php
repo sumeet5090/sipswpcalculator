@@ -105,6 +105,29 @@ class SpecializedCalculatorsMarkupTest extends IntegrationTestCase
                 "Page {$route} missing required interactive form input or slider: id=\"{$fieldId}\""
             );
         }
+
+        $statutoryRoutes = [
+            '/income-tax-calculator',
+            '/ltcg-tax-calculator',
+            '/epf-calculator',
+            '/nps-calculator',
+            '/gratuity-calculator',
+            '/ppf-calculator',
+        ];
+
+        if (in_array($route, $statutoryRoutes, true)) {
+            $this->assertStringContainsString(
+                'Rules &amp; Rates Verified for FY 2025–26',
+                $html,
+                "Statutory page {$route} must render the FY 2025-26 verification trust badge"
+            );
+        } else {
+            $this->assertStringNotContainsString(
+                'Rules &amp; Rates Verified for FY 2025–26',
+                $html,
+                "Non-statutory page {$route} must not render the statutory verification badge"
+            );
+        }
     }
 
     /**

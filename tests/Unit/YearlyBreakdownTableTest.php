@@ -42,6 +42,9 @@ final class YearlyBreakdownTableTest extends TestCase
         $this->assertStringContainsString('id="tableDownloadExcelBtn"', $content);
         $this->assertStringContainsString('id="shareCalcBtn"', $content);
         $this->assertStringContainsString('id="tableCustomizePdfModalBtn"', $content);
+        $this->assertStringContainsString('id="exportSavedPlansBtn"', $content);
+        $this->assertStringContainsString('id="importSavedPlansBtn"', $content);
+        $this->assertStringContainsString('id="importSavedPlansInput"', $content);
 
         // Assert table container and sticky header
         $this->assertStringContainsString('id="results-table"', $content);
